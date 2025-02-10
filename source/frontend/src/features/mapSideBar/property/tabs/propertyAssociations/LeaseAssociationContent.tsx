@@ -72,6 +72,7 @@ export const LeaseAssociationContent: React.FunctionComponent<
       const lease = find(props.leases, lease => x?.id === lease?.id);
       const leaseRenewals = props.renewals?.filter(renewal => x.id === renewal?.leaseId);
       const calculatedExpiry = getCalculatedExpiry(lease, leaseRenewals ?? []);
+
       return {
         id: x.id?.toString() || '',
         linkUrl: props.linkUrlMask.replace('|id|', x.id?.toString() || ''),

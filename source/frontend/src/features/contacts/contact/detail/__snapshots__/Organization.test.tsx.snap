@@ -42,7 +42,7 @@ exports[`Contact OrganizationView component > renders as expected 1`] = `
   border-bottom: solid 0.2rem;
   width: 100%;
   text-align: left;
-  margin-bottom: 2.4rem;
+  margin-bottom: 1.6rem;
 }
 
 .c6 {
@@ -352,7 +352,7 @@ exports[`Contact OrganizationView component > renders as expected 1`] = `
   border-bottom: solid 0.2rem;
   width: 100%;
   text-align: left;
-  margin-bottom: 2.4rem;
+  margin-bottom: 1.6rem;
 }
 
 <div

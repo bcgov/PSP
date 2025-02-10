@@ -1,7 +1,5 @@
 ﻿using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
-using System.Diagnostics;
-using System.Security.Policy;
 using System.Text.RegularExpressions;
 
 namespace PIMS.Tests.Automation.PageObjects
@@ -342,16 +340,19 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(projectSaveButton).Click();
 
             Wait();
-            if (webDriver.FindElements(projectOverrideConfirmationModal).Count() > 0)
+            if (webDriver.FindElements(projectOverrideConfirmationModal).Count() > 0 && sharedModals.ModalHeader() != "Error")
             {
                 if (sharedModals.ModalHeader().Equals("User Override Required"))
                 {
                     Assert.Contains("can also be found in one or more other projects. Please verify the correct product is being added", sharedModals.ModalContent());
                 }
                 sharedModals.ModalClickOKBttn();
+                AssertTrueIsDisplayed(projectNavigationDetailsTab);
             }
-
-            AssertTrueIsDisplayed(projectNavigationDetailsTab);
+            else if (sharedModals.ModalHeader().Contains("Error"))
+            {
+                return;
+            }
         }
 
         public void CancelProject()
@@ -545,10 +546,16 @@ namespace PIMS.Tests.Automation.PageObjects
             }
         }
 
-        public Boolean DuplicateProject()
+        public void DuplicateProject()
         {
             Wait();
-            return webDriver.FindElements(projectDuplicateToast).Count > 0;
+
+            Wait();
+            if (webDriver.FindElements(projectOverrideConfirmationModal).Count() > 0 && sharedModals.ModalHeader().Equals("Error"))
+            {
+              Assert.Contains("Project will not be duplicated.", sharedModals.ModalContent());
+              sharedModals.ModalClickOKBttn();
+            }
         }
 
         public string GetProjectName()

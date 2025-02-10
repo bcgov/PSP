@@ -1,4 +1,5 @@
-﻿using PIMS.Tests.Automation.Classes;
+﻿using OpenQA.Selenium;
+using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
 using System.Data;
 
@@ -22,14 +23,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private SearchProperty searchProperty;
         private PropertyManagement propertyManagement;
 
-        public PropertiesSteps(BrowserDriver driver)
+        public PropertiesSteps(IWebDriver driver)
         {
             loginSteps = new LoginSteps(driver);
-            searchProperties = new SearchProperties(driver.Current);
-            propertyInformation = new PropertyInformation(driver.Current);
-            propertyManagementTab = new PropertyManagementTab(driver.Current);
-            pimsFiles = new PropertyPIMSFiles(driver.Current);
-            sharedPagination = new SharedPagination(driver.Current);
+            searchProperties = new SearchProperties(driver);
+            propertyInformation = new PropertyInformation(driver);
+            propertyManagementTab = new PropertyManagementTab(driver);
+            pimsFiles = new PropertyPIMSFiles(driver);
+            sharedPagination = new SharedPagination(driver);
             genericSteps = new GenericSteps(driver);
 
             property = new Property();
@@ -471,7 +472,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Validate that the result gives only one pin
             Assert.True(searchProperties.PropertiesMapFoundCount() == 0);
-            searchProperties.Dispose();
         }
 
         [StepDefinition(@"A Property Information is saved successfully")]
@@ -481,7 +481,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyInformation.NavigatePropertyDetailsTab();
             propertyInformation.VerifyPropertyInformationHeader(true);
             propertyInformation.VerifyUpdatePropertyDetailsView(property);
-            propertyInformation.Dispose();
         }
 
         [StepDefinition(@"Non-Inventory property renders correctly")]
@@ -492,14 +491,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Validate correct tabs are displayed
             propertyInformation.VerifyNonInventoryPropertyTabs();
-            propertyInformation.Dispose();
         }
 
         [StepDefinition(@"Property Management Tab has been updated successfully")]
         public void PropertyManagementSuccess()
         {
             propertyManagementTab.VerifyInitManagementTabView();
-            propertyManagementTab.Dispose();
         }
 
         [StepDefinition(@"PIMS Files Tab has rendered successfully")]
@@ -509,15 +506,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.True(pimsFiles.GetAcquisitionFilesCount() > 0);
             Assert.True(pimsFiles.GetLeasesCount() > 0);
             Assert.True(pimsFiles.GetDispositionFilesCount() > 0);
-
-            pimsFiles.Dispose();
         }
 
         [StepDefinition(@"Properties filters works successfully")]
         public void PropertySearchBarSuccess()
         {
             searchProperties.SearchPropertyReset();
-            searchProperties.Dispose();
         }
 
         private void PopulateProperty(int rowNumber)

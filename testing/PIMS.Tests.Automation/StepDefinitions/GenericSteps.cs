@@ -1,4 +1,8 @@
-﻿using OpenQA.Selenium;
+﻿using DotNetEnv;
+using DotNetEnv.Configuration;
+using Microsoft.Extensions.Configuration;
+using OpenQA.Selenium;
+using PIMS.Tests.Automation.Reports;
 
 namespace PIMS.Tests.Automation.StepDefinitions
 {
@@ -7,9 +11,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
     {
         private readonly IWebDriver webDriver;
 
-        public GenericSteps(BrowserDriver driver)
+        public GenericSteps(IWebDriver driver)
         {
-            webDriver = driver.Current;
+            this.webDriver = driver;
         }
 
         [Then(@"I am on path (.*)")]
@@ -31,5 +35,13 @@ namespace PIMS.Tests.Automation.StepDefinitions
             result.Sort();
             return result;
         }
+
+        public IConfiguration ReadConfiguration() =>
+           new ConfigurationBuilder()
+               .AddUserSecrets<TestHooks>()
+               .AddDotNetEnv(".env", LoadOptions.TraversePath())
+               .AddEnvironmentVariables()
+               .Build();
     }
 }
+

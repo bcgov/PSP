@@ -1,4 +1,5 @@
-﻿using PIMS.Tests.Automation.Classes;
+﻿using OpenQA.Selenium;
+using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
 using System.Data;
 
@@ -29,24 +30,24 @@ namespace PIMS.Tests.Automation.StepDefinitions
         protected string acquisitionFileCode = "";
         protected string compensationNumber = "";
 
-        public AcquisitionFileSteps(BrowserDriver driver)
+        public AcquisitionFileSteps(IWebDriver driver)
         {
             loginSteps = new LoginSteps(driver);
             genericSteps = new GenericSteps(driver);
 
-            acquisitionFilesDetails = new AcquisitionDetails(driver.Current);
-            searchAcquisitionFiles = new SearchAcquisitionFiles(driver.Current);
-            sharedFileProperties = new SharedFileProperties(driver.Current);
-            sharedPagination = new SharedPagination(driver.Current);
-            searchProperties = new SearchProperties(driver.Current);
-            acquisitionTakes = new AcquisitionTakes(driver.Current);
-            propertyInformation = new PropertyInformation(driver.Current);
-            checklist = new AcquisitionChecklist(driver.Current);
-            agreements = new AcquisitionAgreements(driver.Current);
-            stakeholders = new AcquisitionStakeholders(driver.Current);
-            h120 = new SharedCompensations(driver.Current);
-            expropriation = new AcquisitionExpropriation(driver.Current);
-            notes = new Notes(driver.Current);
+            acquisitionFilesDetails = new AcquisitionDetails(driver);
+            searchAcquisitionFiles = new SearchAcquisitionFiles(driver);
+            sharedFileProperties = new SharedFileProperties(driver);
+            sharedPagination = new SharedPagination(driver);
+            searchProperties = new SearchProperties(driver);
+            acquisitionTakes = new AcquisitionTakes(driver);
+            propertyInformation = new PropertyInformation(driver);
+            checklist = new AcquisitionChecklist(driver);
+            agreements = new AcquisitionAgreements(driver);
+            stakeholders = new AcquisitionStakeholders(driver);
+            h120 = new SharedCompensations(driver);
+            expropriation = new AcquisitionExpropriation(driver);
+            notes = new Notes(driver);
 
             acquisitionFile = new AcquisitionFile();
         }
@@ -1016,7 +1017,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchAcquisitionFiles.SearchAcquisitionFileByAFile(acquisitionFileCode);
 
             Assert.True(searchAcquisitionFiles.SearchFoundResults());
-            searchAcquisitionFiles.Dispose();
         }
 
         [StepDefinition(@"An existing Acquisition file has been edited successfully")]
@@ -1024,7 +1024,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             acquisitionFilesDetails.NavigateToFileDetailsTab();
             acquisitionFilesDetails.VerifyAcquisitionFileView(acquisitionFile, "Main");
-            searchAcquisitionFiles.Dispose();
         }
 
         [StepDefinition(@"Expected Acquisition File Content is displayed on Acquisition File Table")]
@@ -1035,8 +1034,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Verify List View
             searchAcquisitionFiles.VerifyAcquisitionFileListView();
             searchAcquisitionFiles.VerifyAcquisitionFileTableContent(acquisitionFile);
-            searchAcquisitionFiles.Dispose();
-
         }
 
         [StepDefinition(@"Acquisition File's Checklist has been saved successfully")]
@@ -1044,7 +1041,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             //Verify Checklist Content after update
             checklist.VerifyChecklistViewForm(acquisitionFile.AcquisitionFileChecklist);
-            searchAcquisitionFiles.Dispose();
         }
 
         [StepDefinition(@"Acquisition File cannot be completed due to Draft items")]
@@ -1052,7 +1048,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             //TEST COVERAGE:
             acquisitionFilesDetails.VerifyErrorMessageDraftItems();
-            acquisitionFilesDetails.Dispose();
         }
 
         [StepDefinition(@"Acquisition File cannot be completed without Takes")]
@@ -1060,7 +1055,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             //TEST COVERAGE: PSP-8209
             acquisitionFilesDetails.VerifyErrorCannotCompleteWithoutTakes();
-            acquisitionFilesDetails.Dispose();
         }
 
         [StepDefinition(@"Acquisition File cannot be completed due to In-Progress Takes")]
@@ -1068,7 +1062,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             //TEST COVERAGE: PSP-7991
             acquisitionFilesDetails.VerifyErrorCannotCompleteInProgressTakes();
-            acquisitionFilesDetails.Dispose();
         }
 
         [StepDefinition(@"Main Acquisition File totals are verified successfully from row number (.*)")]
@@ -1094,8 +1087,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Verify Compensation requisition Main File totals
             h120.VerifyCompensationsTotalDetails(acquisitionFile, "Main");
-
-            acquisitionFilesDetails.Dispose();
         }
 
         private void PopulateAcquisitionFile(int rowNumber)
