@@ -169,14 +169,7 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
       {formikProps => (
         <MapSideBarLayout
           title="Create Research File"
-          icon={
-            <ResearchFileIcon
-              title="Research file Icon"
-              width="2.8rem"
-              height="2.8rem"
-              fill="currentColor"
-            />
-          }
+          icon={<ResearchFileIcon title="Research file Icon" fill="currentColor" />}
           footer={
             <SidebarFooter
               isOkDisabled={formikProps?.isSubmitting || bcaLoading}

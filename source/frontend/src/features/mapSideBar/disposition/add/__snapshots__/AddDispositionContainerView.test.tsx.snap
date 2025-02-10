@@ -332,6 +332,11 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
   color: #474543;
 }
 
+.c0.collapsed svg:first-of-type {
+  width: 2.6rem;
+  height: 2.6rem;
+}
+
 .c0.expanded {
   min-width: 90rem;
   height: 100%;
@@ -344,6 +349,11 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
   -ms-flex-direction: column;
   flex-direction: column;
   overflow: hidden;
+}
+
+.c0.expanded svg {
+  width: 2.8rem;
+  height: 2.8rem;
 }
 
 .c2 {
@@ -562,10 +572,10 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
           >
             <svg
               fill="currentColor"
-              height="2.8rem"
+              height="24"
               title="Disposition file Icon"
               viewBox="0 0 24 24"
-              width="2.8rem"
+              width="24"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path

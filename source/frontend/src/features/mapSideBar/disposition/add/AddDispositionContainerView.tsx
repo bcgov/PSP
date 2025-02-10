@@ -47,14 +47,7 @@ const AddDispositionContainerView: React.FunctionComponent<IAddDispositionContai
     <MapSideBarLayout
       showCloseButton
       title="Create Disposition File"
-      icon={
-        <DispositionFileIcon
-          title="Disposition file Icon"
-          width="2.8rem"
-          height="2.8rem"
-          fill="currentColor"
-        />
-      }
+      icon={<DispositionFileIcon title="Disposition file Icon" fill="currentColor" />}
       onClose={onCancel}
       footer={
         <SidebarFooter
