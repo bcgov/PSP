@@ -27,14 +27,6 @@ interface OrganizationContactSummary
   middleNames?: never;
 }
 
-export function isPersonResult(contactResult: ApiGen_Concepts_ContactSummary): boolean {
-  return contactResult.id.startsWith('P') && contactResult.personId !== undefined;
-}
-
-export function isOrganizationResult(contactResult: ApiGen_Concepts_ContactSummary): boolean {
-  return contactResult.id.startsWith('O');
-}
-
 export function isPersonSummary(
   contactResult: IContactSearchResult,
 ): contactResult is PersonContactSummary {

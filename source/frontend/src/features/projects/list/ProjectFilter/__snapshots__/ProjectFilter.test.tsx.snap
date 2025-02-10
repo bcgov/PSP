@@ -220,7 +220,7 @@ exports[`Project Filter > matches snapshot 1`] = `
 }
 
 .c1 {
-  border-left: 2px solid white;
+  border-left: 0.2rem solid white;
 }
 
 <form

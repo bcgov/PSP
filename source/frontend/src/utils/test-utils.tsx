@@ -180,7 +180,6 @@ export const fillInput = async (
 };
 
 window.setImmediate = window.setTimeout as any;
-export const flushPromises = () => new Promise(window.setImmediate);
 
 export const deferred = () => {
   let resolve: (value?: unknown) => void = noop;
