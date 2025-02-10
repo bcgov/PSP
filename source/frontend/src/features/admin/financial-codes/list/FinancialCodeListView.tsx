@@ -21,7 +21,6 @@ import {
   IFinancialCodeFilter,
 } from './FinancialCodeFilter/FinancialCodeFilter';
 import { FinancialCodeResults } from './FinancialCodeResults/FinancialCodeResults';
-import * as Styled from './styles';
 
 /**
  * Page that displays acquisition files information.
@@ -98,8 +97,8 @@ export const FinancialCodeListView: React.FC = () => {
   }, [filter, financialCodeResults, sort]);
 
   return (
-    <Styled.ListPage>
-      <Styled.Scrollable>
+    <CommonStyled.ListPage>
+      <CommonStyled.PaddedScrollable>
         <CommonStyled.H1>
           <FlexDiv>
             <div>
@@ -119,13 +118,13 @@ export const FinancialCodeListView: React.FC = () => {
             )}
           </FlexDiv>
         </CommonStyled.H1>
-        <Styled.PageToolbar>
+        <CommonStyled.PageToolbar>
           <Row>
             <Col>
               <FinancialCodeFilter filter={filter} setFilter={setFilter} />
             </Col>
           </Row>
-        </Styled.PageToolbar>
+        </CommonStyled.PageToolbar>
 
         <FinancialCodeResults
           results={sortedFilteredFinancialCodes}
@@ -133,8 +132,8 @@ export const FinancialCodeListView: React.FC = () => {
           sort={sort}
           setSort={setSort}
         />
-      </Styled.Scrollable>
-    </Styled.ListPage>
+      </CommonStyled.PaddedScrollable>
+    </CommonStyled.ListPage>
   );
 };
 

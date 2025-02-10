@@ -16,7 +16,6 @@ import { IProjectFilter } from '../interfaces';
 import { defaultFilter, ProjectFilter } from './ProjectFilter/ProjectFilter';
 import { ProjectSearchResultModel } from './ProjectSearchResults/models';
 import { ProjectSearchResults } from './ProjectSearchResults/ProjectSearchResults';
-import * as Styled from './styles';
 
 /**
  * Page that displays Project files information.
@@ -54,8 +53,8 @@ export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<un
   );
 
   return (
-    <Styled.ListPage>
-      <Styled.Scrollable>
+    <CommonStyled.ListPage>
+      <CommonStyled.PaddedScrollable>
         <CommonStyled.H1>
           <FlexDiv>
             <div>
@@ -71,7 +70,7 @@ export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<un
             )}
           </FlexDiv>
         </CommonStyled.H1>
-        <Styled.PageToolbar>
+        <CommonStyled.PageToolbar>
           <Row>
             <Col>
               <ProjectFilter
@@ -81,7 +80,7 @@ export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<un
               />
             </Col>
           </Row>
-        </Styled.PageToolbar>
+        </CommonStyled.PageToolbar>
 
         <ProjectSearchResults
           results={results.map(x => ProjectSearchResultModel.fromApi(x))}
@@ -95,8 +94,8 @@ export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<un
           setPageIndex={setCurrentPage}
           loading={loading}
         ></ProjectSearchResults>
-      </Styled.Scrollable>
-    </Styled.ListPage>
+      </CommonStyled.PaddedScrollable>
+    </CommonStyled.ListPage>
   );
 };
 

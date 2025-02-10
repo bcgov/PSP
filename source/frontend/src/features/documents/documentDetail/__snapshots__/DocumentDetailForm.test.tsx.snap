@@ -209,6 +209,15 @@ exports[`DocumentDetailForm component > renders as expected 1`] = `
   margin-right: 0;
 }
 
+.c6 {
+  width: 100%;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
 .c5 {
   font-weight: bold;
   color: var(--theme-blue-100);
@@ -232,15 +241,6 @@ exports[`DocumentDetailForm component > renders as expected 1`] = `
 
 .c1 {
   font-weight: bold;
-}
-
-.c6 {
-  width: 100%;
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-  overflow-y: auto;
 }
 
 .c9 {
