@@ -87,14 +87,7 @@ export const SideTray = ({ context, setContext }: ISideTrayProps) => {
     [
       SidebarContextType.CONTACT,
       <SideTrayLayout
-        icon={
-          <ContactIcon
-            title="Contact manager icon"
-            width="2.6rem"
-            height="2.6rem"
-            fill="currentColor"
-          />
-        }
+        icon={<ContactIcon title="Contact manager icon" fill="currentColor" />}
         title="Contacts"
         onClose={onClose}
       >
@@ -104,14 +97,7 @@ export const SideTray = ({ context, setContext }: ISideTrayProps) => {
     [
       SidebarContextType.ACQUISITION,
       <SideTrayLayout
-        icon={
-          <AcquisitionFileIcon
-            title="Acquisition file icon"
-            width="2.6rem"
-            height="2.6rem"
-            fill="currentColor"
-          />
-        }
+        icon={<AcquisitionFileIcon title="Acquisition file icon" fill="currentColor" />}
         title="Acquisition Files"
         onClose={onClose}
       >
@@ -131,14 +117,7 @@ export const SideTray = ({ context, setContext }: ISideTrayProps) => {
     [
       SidebarContextType.DISPOSITION,
       <SideTrayLayout
-        icon={
-          <DispositionFileIcon
-            title="Disposition file Icon"
-            width="2.6rem"
-            height="2.6rem"
-            fill="currentColor"
-          />
-        }
+        icon={<DispositionFileIcon title="Disposition file Icon" fill="currentColor" />}
         title="Disposition Files"
         onClose={onClose}
       >
@@ -148,14 +127,7 @@ export const SideTray = ({ context, setContext }: ISideTrayProps) => {
     [
       SidebarContextType.SUBDCONS,
       <SideTrayLayout
-        icon={
-          <SubdivisionIcon
-            width="2.6rem"
-            height="2.6rem"
-            title="Subdivision Cons Icon"
-            fill="currentColor"
-          />
-        }
+        icon={<SubdivisionIcon title="Subdivision Cons Icon" fill="currentColor" />}
         title="Subdivision & Consolidation"
         onClose={onClose}
       >
