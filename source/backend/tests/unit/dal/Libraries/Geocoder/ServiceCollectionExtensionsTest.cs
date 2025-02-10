@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using Pims.Core.Http;
 using Pims.Geocoder;
+using Polly.Registry;
 using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Geocoder
@@ -28,6 +29,8 @@ namespace Pims.Dal.Test.Libraries.Geocoder
             services.AddScoped((s) => mockHttpClientFactory.Object);
             var mockLogger = new Mock<ILogger<HttpRequestClient>>();
             services.AddScoped((s) => mockLogger.Object);
+            var mockResiliencyPipeline = new Mock<ResiliencePipelineProvider<string>>();
+            services.AddScoped((s) => mockResiliencyPipeline.Object);
 
             // Act
             var result = services.AddGeocoderService(mockConfig.Object);
@@ -37,7 +40,7 @@ namespace Pims.Dal.Test.Libraries.Geocoder
 
             // Assert
             result.Should().NotBeNull();
-            result.Count.Should().Be(11);
+            result.Count.Should().Be(12);
             provider.Should().NotBeNull();
             service.Should().NotBeNull();
             client.Should().NotBeNull();

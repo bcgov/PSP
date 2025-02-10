@@ -8,7 +8,7 @@ import styled from 'styled-components';
 
 import AcquisitionFileIcon from '@/assets/images/acquisition-icon.svg?react';
 import { StyledIconButton } from '@/components/common/buttons/IconButton';
-import { StyledAddButton } from '@/components/common/styles';
+import { PaddedScrollable, StyledAddButton } from '@/components/common/styles';
 import * as CommonStyled from '@/components/common/styles';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import Claims from '@/constants/claims';
@@ -25,7 +25,6 @@ import { AcquisitionFilter } from './AcquisitionFilter/AcquisitionFilter';
 import { AcquisitionSearchResults } from './AcquisitionSearchResults/AcquisitionSearchResults';
 import { AcquisitionSearchResultModel } from './AcquisitionSearchResults/models';
 import { AcquisitionFilterModel, ApiGen_Concepts_AcquisitionFilter } from './interfaces';
-import * as Styled from './styles';
 
 /**
  * Page that displays acquisition files information.
@@ -96,8 +95,8 @@ export const AcquisitionListView: React.FunctionComponent<
   }, [loadAcquisitionTeam]);
 
   return (
-    <Styled.ListPage>
-      <Styled.Scrollable>
+    <CommonStyled.ListPage>
+      <PaddedScrollable>
         <CommonStyled.H1>
           <FlexDiv>
             <div>
@@ -112,7 +111,7 @@ export const AcquisitionListView: React.FunctionComponent<
             )}
           </FlexDiv>
         </CommonStyled.H1>
-        <Styled.PageToolbar>
+        <CommonStyled.PageToolbar>
           <Row>
             <Col>
               <AcquisitionFilter
@@ -129,7 +128,7 @@ export const AcquisitionListView: React.FunctionComponent<
               </TooltipWrapper>
             </Col>
           </Row>
-        </Styled.PageToolbar>
+        </CommonStyled.PageToolbar>
 
         <AcquisitionSearchResults
           results={results.map(a => AcquisitionSearchResultModel.fromApi(a))}
@@ -143,8 +142,8 @@ export const AcquisitionListView: React.FunctionComponent<
           setPageIndex={setCurrentPage}
           loading={loading}
         />
-      </Styled.Scrollable>
-    </Styled.ListPage>
+      </PaddedScrollable>
+    </CommonStyled.ListPage>
   );
 };
 

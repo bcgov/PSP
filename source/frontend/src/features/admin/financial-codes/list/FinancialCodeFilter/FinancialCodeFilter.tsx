@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { ResetButton, SearchButton } from '@/components/common/buttons';
 import { Form, Input, Select } from '@/components/common/form';
 import ActiveFilterCheck from '@/components/common/form/ActiveFilterCheck';
+import { ColButtons } from '@/components/common/styles';
 import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
 
 import { formatAsSelectOptions } from '../../financialCodeUtils';
@@ -98,8 +99,4 @@ export default FinancialCodeFilter;
 const FilterBoxForm = styled(Form)`
   background-color: ${({ theme }) => theme.css.filterBoxColor};
   border-radius: 0.5rem;
-`;
-
-const ColButtons = styled(Col)`
-  border-left: 0.2rem solid white;
 `;

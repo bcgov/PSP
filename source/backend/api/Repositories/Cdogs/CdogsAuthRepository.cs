@@ -10,6 +10,7 @@ using Pims.Api.Models.Cdogs;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Requests.Http;
 using Pims.Core.Api.Exceptions;
+using Polly.Registry;
 
 namespace Pims.Api.Repositories.Cdogs
 {
@@ -28,12 +29,14 @@ namespace Pims.Api.Repositories.Cdogs
         /// <param name="httpClientFactory">Injected Httpclient factory.</param>
         /// <param name="configuration">The injected configuration provider.</param>
         /// <param name="jsonOptions">The jsonOptions.</param>
+        /// <param name="pollyPipelineProvider">The polly retry policy.</param>
         public CdogsAuthRepository(
             ILogger<CdogsAuthRepository> logger,
             IHttpClientFactory httpClientFactory,
             IConfiguration configuration,
-            IOptions<JsonSerializerOptions> jsonOptions)
-            : base(logger, httpClientFactory, configuration, jsonOptions)
+            IOptions<JsonSerializerOptions> jsonOptions,
+            ResiliencePipelineProvider<string> pollyPipelineProvider)
+            : base(logger, httpClientFactory, configuration, jsonOptions, pollyPipelineProvider)
         {
             _currentToken = null;
             _lastSucessfullRequest = DateTime.UnixEpoch;

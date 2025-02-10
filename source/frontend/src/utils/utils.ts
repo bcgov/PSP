@@ -156,17 +156,6 @@ export const resolveSortCriteriaFromUrl = (
   }, {});
 };
 
-/**
- * @param pageIndex the current index of the page, 0 based.
- * @param pageSize the size of the current page.
- * @param data all of the data that is being paged.
- * @returns the current page from the passed data array.
- */
-export const getPage = <T>(pageIndex: number, pageSize: number, data: T[]) => {
-  const pageStart = (pageIndex ?? 0) * pageSize;
-  return data.slice(pageStart, pageStart + pageSize);
-};
-
 export function unique<T>(value: T, index: number, array: T[]) {
   return array.indexOf(value) === index;
 }

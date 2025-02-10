@@ -16,6 +16,8 @@ using Pims.Api.Models.Requests.Http;
 using Pims.Core.Api.Repositories.Rest;
 using Pims.Core.Extensions;
 using Pims.Core.Test.Http;
+using Polly;
+using Polly.Registry;
 using Xunit;
 
 namespace Pims.Core.Test.Repositories.Rest
@@ -26,16 +28,20 @@ namespace Pims.Core.Test.Repositories.Rest
         private readonly Mock<IHttpClientFactory> _httpClientFactory;
         private readonly Mock<IOptions<JsonSerializerOptions>> _jsonOptions;
         private readonly TestBaseRestRepository _repository;
+        private readonly Mock<ResiliencePipelineProvider<string>> _pipelineProvider;
 
         public BaseRestRepositoryTest()
         {
             _logger = new Mock<ILogger<BaseRestRepository>>();
             _httpClientFactory = new Mock<IHttpClientFactory>();
             _jsonOptions = new Mock<IOptions<JsonSerializerOptions>>();
+            _pipelineProvider = new Mock<ResiliencePipelineProvider<string>>();
+            _pipelineProvider.Setup(_pipelineProvider => _pipelineProvider.GetPipeline<HttpResponseMessage>(It.IsAny<string>())).Returns(ResiliencePipeline<HttpResponseMessage>.Empty);
             _repository = new TestBaseRestRepository(
                 _logger.Object,
                 _httpClientFactory.Object,
-                _jsonOptions.Object);
+                _jsonOptions.Object,
+                _pipelineProvider.Object);
         }
 
         [Fact]
@@ -388,8 +394,8 @@ namespace Pims.Core.Test.Repositories.Rest
         // Helper class to test the abstract BaseRestRepository
         private class TestBaseRestRepository : BaseRestRepository
         {
-            public TestBaseRestRepository(ILogger logger, IHttpClientFactory httpClientFactory, IOptions<JsonSerializerOptions> jsonOptions)
-                : base(logger, httpClientFactory, jsonOptions)
+            public TestBaseRestRepository(ILogger logger, IHttpClientFactory httpClientFactory, IOptions<JsonSerializerOptions> jsonOptions, ResiliencePipelineProvider<string> provider)
+                : base(logger, httpClientFactory, jsonOptions, provider)
             {
             }
 

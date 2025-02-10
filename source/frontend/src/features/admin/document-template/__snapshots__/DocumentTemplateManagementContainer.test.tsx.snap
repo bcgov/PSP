@@ -6,7 +6,16 @@ exports[`DocumentTemplateManagementContainer component > matches snapshot 1`] = 
     class="Toastify"
   />
   <div />
-  .c3 {
+  .c1 {
+  width: 100%;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.c3 {
   color: #474543;
   font-family: 'BCSans-Bold';
   font-size: 3.2rem;
@@ -16,21 +25,9 @@ exports[`DocumentTemplateManagementContainer component > matches snapshot 1`] = 
   margin-bottom: 2.4rem;
 }
 
-.c1 {
+.c2 {
+  padding: 1.6rem 3.2rem;
   width: 100%;
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-  overflow-y: auto;
-}
-
-.c4 {
-  margin: 1.6rem;
-  padding: 1.6rem;
-  background-color: white;
-  text-align: left;
-  border-radius: 0.5rem;
 }
 
 .c0 {
@@ -50,9 +47,12 @@ exports[`DocumentTemplateManagementContainer component > matches snapshot 1`] = 
   padding: 0;
 }
 
-.c2 {
-  padding: 1.6rem 3.2rem;
-  width: 100%;
+.c4 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
 }
 
 <div

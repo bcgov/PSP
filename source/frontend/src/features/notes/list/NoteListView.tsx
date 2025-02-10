@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import GenericModal from '@/components/common/GenericModal';
 import { Section } from '@/components/common/Section/Section';
 import { SectionListHeader } from '@/components/common/SectionListHeader';
+import { ListPage, PaddedScrollable } from '@/components/common/styles';
 import { TableSort } from '@/components/Table/TableSort';
 import { Claims } from '@/constants/claims';
 import { NoteTypes } from '@/constants/noteTypes';
@@ -17,7 +18,6 @@ import { ApiGen_Concepts_Note } from '@/models/api/generated/ApiGen_Concepts_Not
 import { AddNotesContainer } from '../add/AddNotesContainer';
 import { NoteContainer } from '../NoteContainer';
 import { NoteResults } from './NoteResults/NoteResults';
-import * as Styled from './styles';
 
 export interface INoteListViewProps {
   type: NoteTypes;
@@ -93,8 +93,8 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
   };
 
   return (
-    <Styled.ListPage>
-      <Styled.Scrollable vertical={true}>
+    <ListPage>
+      <PaddedScrollable vertical={true}>
         <Section
           header={
             <SectionListHeader
@@ -155,8 +155,8 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
             setDisplay={setShowDeleteConfirm}
           />
         </Section>
-      </Styled.Scrollable>
-    </Styled.ListPage>
+      </PaddedScrollable>
+    </ListPage>
   );
 };
 

@@ -22,6 +22,8 @@ namespace Pims.Api.Test.Repositories
     using Pims.Api.Models.Mayan.Metadata;
     using Pims.Api.Models.Requests.Http;
     using Pims.Api.Repositories.Mayan;
+    using Polly;
+    using Polly.Registry;
     using Xunit;
 
     public class MayanMetadataRepositoryTest
@@ -32,6 +34,7 @@ namespace Pims.Api.Test.Repositories
         private readonly Mock<IOptions<JsonSerializerOptions>> _jsonOptions;
         private readonly IConfiguration _configuration;
         private readonly MayanMetadataRepository _repository;
+        private readonly Mock<ResiliencePipelineProvider<string>> _pipelineProvider;
 
         public MayanMetadataRepositoryTest()
         {
@@ -40,12 +43,15 @@ namespace Pims.Api.Test.Repositories
             _authRepository = new Mock<IEdmsAuthRepository>();
             _jsonOptions = new Mock<IOptions<JsonSerializerOptions>>();
             _configuration = new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string> { { "Mayan:BaseUri", "http://mayan" } }).Build();
+            _pipelineProvider = new Mock<ResiliencePipelineProvider<string>>();
+            _pipelineProvider.Setup(_pipelineProvider => _pipelineProvider.GetPipeline<HttpResponseMessage>(It.IsAny<string>())).Returns(ResiliencePipeline<HttpResponseMessage>.Empty);
             _repository = new MayanMetadataRepository(
                 _logger.Object,
                 _httpClientFactory.Object,
                 _authRepository.Object,
                 _configuration,
-                _jsonOptions.Object);
+                _jsonOptions.Object,
+                _pipelineProvider.Object);
         }
 
         [Fact]

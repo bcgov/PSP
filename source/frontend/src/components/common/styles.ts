@@ -1,9 +1,10 @@
 import { CSSProperties } from 'react';
-import { Breadcrumb as BsBreadcrumb } from 'react-bootstrap';
+import { Breadcrumb as BsBreadcrumb, Col } from 'react-bootstrap';
 import { FaWindowClose } from 'react-icons/fa';
 import styled, { css } from 'styled-components';
 
 import { LoadingBackdropProps } from '@/components/common/LoadingBackdrop';
+import { Scrollable as ScrollableBase } from '@/components/common/Scrollable/Scrollable';
 
 import { Button } from './buttons';
 import { Form } from './form';
@@ -205,4 +206,28 @@ export const CloseIcon = styled(FaWindowClose)`
   color: ${props => props.theme.css.textColor};
   font-size: 2.4rem;
   cursor: pointer;
+`;
+
+export const PageToolbar = styled.div`
+  align-items: center;
+  padding: 0;
+  padding-bottom: 2rem;
+`;
+
+export const ColButtons = styled(Col)`
+  border-left: 0.2rem solid white;
+`;
+
+export const PaddedScrollable = styled(ScrollableBase)`
+  padding: 1.6rem 3.2rem;
+  width: 100%;
+`;
+
+export const ListPage = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 100%;
+  gap: 2.5rem;
+  padding: 0;
 `;

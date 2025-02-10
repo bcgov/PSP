@@ -22,14 +22,6 @@ export interface IMapProperty {
   areaUnit?: AreaUnitTypes;
 }
 
-export interface SearchResultProperty extends IMapProperty {
-  id: string;
-}
-
-export interface PimsMapProperty extends IMapProperty {
-  pimsId: string;
-}
-
 export interface ILayerSearchCriteria {
   pid?: string;
   pin?: string;

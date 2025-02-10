@@ -13,6 +13,7 @@ using Pims.Core.Http;
 using Pims.Core.Test;
 using Pims.Ltsa;
 using Pims.Ltsa.Configuration;
+using Polly.Registry;
 using Xunit;
 
 namespace Pims.Dal.Test.Libraries.Ltsa
@@ -55,11 +56,13 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             var mockIOptionsMonitor = new Mock<IOptionsMonitor<JsonSerializerOptions>>();
             var mockIlogger = new Mock<ILogger<HttpRequestClient>>();
             var mockILtsaService = new Mock<ILogger<ILtsaService>>();
+            var mockPipeline = new Mock<ResiliencePipelineProvider<string>>();
 
             helper.AddSingleton(mockClientFactory.Object);
             helper.AddSingleton(mockIOptionsMonitor.Object);
             helper.AddSingleton(mockIlogger.Object);
             helper.AddSingleton(mockILtsaService.Object);
+            helper.AddSingleton(mockPipeline.Object);
 
             // Act
             _ = helper.Services.AddLtsaService(section: ltsaConfig.GetSection("Ltsa"));

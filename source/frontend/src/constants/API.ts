@@ -9,23 +9,6 @@ export interface IPaginateParams {
   sort?: string | string[];
 }
 
-export interface IGetUsersParams extends IPaginateParams {
-  businessIdentifierValue?: string;
-  firstName?: string;
-  surname?: string;
-  email?: string;
-  organization?: string;
-  role?: string;
-  isDisabled?: boolean;
-  position?: string;
-}
-
-export interface IGetOrganizationsParams extends IPaginateParams {
-  name?: string;
-  description?: string;
-  isDisabled?: boolean;
-}
-
 export interface IPaginateAccessRequests extends IPaginateParams {
   status?: AccessRequestStatus | null;
 }
