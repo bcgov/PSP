@@ -5,13 +5,12 @@ import { Col, Row } from 'react-bootstrap';
 import { ResetButton, SearchButton } from '@/components/common/buttons';
 import { Input, Select, SelectOption, TypeaheadSelect } from '@/components/common/form';
 import { SelectInput } from '@/components/common/List/SelectInput';
-import { FilterBoxForm } from '@/components/common/styles';
+import { ColButtons, FilterBoxForm } from '@/components/common/styles';
 import { Api_DispositionFilter } from '@/models/api/DispositionFilter';
 import { ApiGen_Concepts_DispositionFileTeam } from '@/models/api/generated/ApiGen_Concepts_DispositionFileTeam';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { DispositionFilterModel } from '../models';
-import { ColButtons } from '../styles';
 
 export interface IDispositionFilterProps {
   filter?: Api_DispositionFilter;

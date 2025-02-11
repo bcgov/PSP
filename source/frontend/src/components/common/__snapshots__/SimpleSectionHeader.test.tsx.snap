@@ -26,7 +26,7 @@ exports[`SimpleSectionHeader component > renders as expected 1`] = `
     class="c0 no-gutters row"
   >
     <div
-      class="d-flex justify-content-start px-2 my-1 col-auto"
+      class="d-flex justify-content-start align-items-end col-auto"
     >
       TEST TITLE
     </div>

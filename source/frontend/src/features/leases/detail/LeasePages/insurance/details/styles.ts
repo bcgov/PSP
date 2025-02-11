@@ -1,35 +1,4 @@
-import { Col } from 'react-bootstrap';
 import styled from 'styled-components';
-
-export const LabelCol = styled(Col)`
-  border-right: solid 1px ${props => props.theme.css.headerBorderColor};
-  padding-bottom: 1rem;
-`;
-
-export const SectionHeader = styled.h2`
-  font-size: 2rem;
-  color: ${props => props.theme.bcTokens.typographyColorSecondary};
-  text-align: left;
-  font-family: BcSans-Bold;
-`;
-
-export const SubTitle = styled.h3`
-  font-family: 'BcSans-Bold';
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  text-align: left;
-  padding: 1rem 0 0.5rem 0;
-  color: ${props => props.theme.bcTokens.typographyColorSecondary};
-  border-bottom: solid 0.3rem ${props => props.theme.css.headerBorderColor};
-`;
-
-export const BoldHeader = styled.h3`
-  font-size: 1.6rem;
-  color: ${props => props.theme.bcTokens.typographyColorPrimary};
-  text-align: left;
-  padding-top: 1.5rem;
-  font-family: BcSans-Bold;
-`;
 
 export const InsuranceTypeList = styled.ul`
   padding: 1rem;
@@ -41,8 +10,4 @@ export const InsuranceTypeList = styled.ul`
       font-size: 1rem;
     }
   }
-`;
-
-export const BoldValueText = styled(Col)`
-  font-family: 'BCSans-Bold';
 `;

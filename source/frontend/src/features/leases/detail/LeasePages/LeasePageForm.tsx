@@ -56,7 +56,7 @@ export const LeaseViewPageForm: React.FunctionComponent<
           )}
           {updateSolver.canEditLeasePage(leasePageName) ||
           (hasRole(Roles.SYSTEM_ADMINISTRATOR) && leasePageName === LeasePageNames.DETAILS) ? (
-            <LeaseEditButton onEdit={onEdit} isEditing={isEditing} />
+            <LeaseEditButton onEdit={onEdit} isEditing={isEditing} pageName={leasePageName} />
           ) : (
             exists(onEdit) && (
               <TooltipIcon

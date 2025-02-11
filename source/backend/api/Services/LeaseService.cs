@@ -273,7 +273,7 @@ namespace Pims.Api.Services
                 _entityNoteRepository.Add(newLeaseNote);
             }
 
-            ValidateRenewalDates(lease, lease.PimsLeaseRenewals);
+            ValidateRenewalDates(lease, lease.PimsLeaseRenewals, userOverrides);
 
             ValidateNewTotalAllowableCompensation(lease.LeaseId, lease.TotalAllowableCompensation);
 
@@ -485,7 +485,7 @@ namespace Pims.Api.Services
             return deleteResult;
         }
 
-        private static void ValidateRenewalDates(PimsLease lease, ICollection<PimsLeaseRenewal> renewals)
+        private static void ValidateRenewalDates(PimsLease lease, ICollection<PimsLeaseRenewal> renewals, IEnumerable<UserOverrideCode> userOverrides)
         {
             if (lease.LeaseStatusTypeCode != PimsLeaseStatusTypes.ACTIVE)
             {
@@ -539,10 +539,11 @@ namespace Pims.Api.Services
                     throw new BusinessRuleViolationException("The expiry date of your renewal should be later than its commencement date");
                 }
 
-                if (DateTime.Compare(currentEndDate, startDate) >= 0)
+                if (DateTime.Compare(currentEndDate, startDate) >= 0 && !userOverrides.Contains(UserOverrideCode.CommencementOverlapExpiryDate))
                 {
-                    throw new BusinessRuleViolationException("The commencement date of your renewal should be later than the previous expiry date (agreement or renewal)");
+                    throw new UserOverrideException(UserOverrideCode.CommencementOverlapExpiryDate, "The commencement date of your renewal should be later than the previous expiry date (agreement or renewal).\n\nDo you want to proceed?");
                 }
+
                 currentEndDate = endDate;
             }
         }

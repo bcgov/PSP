@@ -7,15 +7,16 @@ import { Claims } from '@/constants/claims';
 interface ILeaseEditButtonProps {
   onEdit?: () => void;
   isEditing: boolean;
+  pageName: string;
 }
 
 export const LeaseEditButton: React.FunctionComponent<
   React.PropsWithChildren<ILeaseEditButtonProps>
-> = ({ onEdit, isEditing }) => {
+> = ({ onEdit, isEditing, pageName }) => {
   return (
     <ProtectedComponent hideIfNotAuthorized claims={[Claims.LEASE_EDIT]}>
       {!isEditing && !!onEdit && (
-        <LinkButton onClick={onEdit} className="float-right">
+        <LinkButton id={`edit-${pageName}-btn`} onClick={onEdit} className="float-right">
           <FaEdit size={22} title="lease-edit" />
         </LinkButton>
       )}

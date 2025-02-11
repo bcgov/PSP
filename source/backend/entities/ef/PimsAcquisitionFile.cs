@@ -351,7 +351,13 @@ public partial class PimsAcquisitionFile
     public virtual ICollection<PimsCompensationRequisition> PimsCompensationRequisitions { get; set; } = new List<PimsCompensationRequisition>();
 
     [InverseProperty("AcquisitionFile")]
+    public virtual ICollection<PimsExpropriationNotice> PimsExpropriationNotices { get; set; } = new List<PimsExpropriationNotice>();
+
+    [InverseProperty("AcquisitionFile")]
     public virtual ICollection<PimsExpropriationPayment> PimsExpropriationPayments { get; set; } = new List<PimsExpropriationPayment>();
+
+    [InverseProperty("AcquisitionFile")]
+    public virtual ICollection<PimsExpropriationVesting> PimsExpropriationVestings { get; set; } = new List<PimsExpropriationVesting>();
 
     [InverseProperty("AcquisitionFile")]
     public virtual ICollection<PimsInterestHolder> PimsInterestHolders { get; set; } = new List<PimsInterestHolder>();

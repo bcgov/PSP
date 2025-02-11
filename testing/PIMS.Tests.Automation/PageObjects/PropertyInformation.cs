@@ -43,9 +43,9 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By propertyInformationHeaderHistoricFileContent = By.XPath("//label[contains(text(),'Historical file #:')]/parent::div/following-sibling::div/span");
         private readonly By propertyInformationHeaderPIDLabel = By.XPath("//label[contains(text(),'PID')]");
         private readonly By propertyInformationHeaderPIDContent = By.XPath("//label[contains(text(),'PID')]/parent::div/following-sibling::div");
-        private readonly By propertyInformationHeaderLandTypeLabel = By.XPath("//h1/parent::div/parent::div/following-sibling::div/div/div/div[2]/div/div/div/label[contains(text(),'Land parcel type')]");
-        private readonly By propertyInformationHeaderLandTypeContent = By.XPath("//h1/parent::div/parent::div/following-sibling::div/div/div/div[2]/div/div/div/label[contains(text(),'Land parcel type')]/parent::div/following-sibling::div");
-        private readonly By propertyInformationHeaderZoomBttn = By.CssSelector("button[title='Zoom Map']");
+        private readonly By propertyInformationHeaderLandTypeLabel = By.XPath("//button[@title='Zoom into parcel']/parent::div/preceding-sibling::div/div/div/div/label[contains(text(),'Land parcel type')]");
+        private readonly By propertyInformationHeaderLandTypeContent = By.XPath("//button[@title='Zoom into parcel']/parent::div/preceding-sibling::div/div/div/div[2]");
+        private readonly By propertyInformationHeaderZoomBttn = By.CssSelector("button[title='Zoom into parcel']");
 
         //Title Tab Elements
         private readonly By propertyTitleInfo = By.XPath("//div[contains(text(),'This data was retrieved from LTSA')]");

@@ -16,7 +16,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchContactResetBttn = By.Id("reset-button");
         private By searchContactActiveChckBox = By.Id("input-activeContactsOnly");
         private By searchContactActiveSpan = By.XPath("//span[contains(text(),'contacts only')]");
-        private By searchContactAddNewBttn = By.XPath("//body/div[@id='root']/div[2]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/button[1]/div[1]");
+        private By searchContactAddNewBttn = By.XPath("//body/div[@id='root']/div[2]/div[2]/div[1]/div[1]/h1[1]/div[1]/button[1]");
 
         private By searchContactTableSummaryColumn = By.XPath("//div[contains(text(),'Summary')]");
         private By searchContactOrderBySummaryBttn = By.CssSelector("div[data-testid='sort-column-summary']");
