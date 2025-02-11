@@ -1176,7 +1176,7 @@ namespace Pims.Api.Test.Services
               });
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
-            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(false);
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>(), It.IsAny<bool?>())).Returns(false);
 
             // Act
             Action act = () => service.DeleteCompensation(1);
@@ -1204,7 +1204,7 @@ namespace Pims.Api.Test.Services
               });
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
-            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(false);
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>(), It.IsAny<bool?>())).Returns(false);
 
             // Act
             service.DeleteCompensation(1);
