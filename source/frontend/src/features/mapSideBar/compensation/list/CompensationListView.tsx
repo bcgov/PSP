@@ -8,6 +8,7 @@ import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { SectionListHeader } from '@/components/common/SectionListHeader';
+import TooltipIcon from '@/components/common/TooltipIcon';
 import Claims from '@/constants/claims';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
@@ -16,6 +17,7 @@ import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { exists, formatMoney } from '@/utils';
 
+import { cannotEditMessage } from '../../acquisition/common/constants';
 import { IUpdateCompensationStrategy } from '../models/IUpdateCompensationStrategy';
 import { CompensationResults } from './CompensationResults';
 
@@ -101,6 +103,13 @@ export const CompensationListView: React.FunctionComponent<ICompensationListView
             addButtonText="Add Requisition"
             addButtonIcon={<FaPlus size={'2rem'} />}
             onAdd={statusUpdateSolver?.canEditOrDeleteCompensation() ? onAdd : null}
+            isAddEnabled={statusUpdateSolver?.canEditOrDeleteCompensation()}
+            cannotAddComponent={
+              <TooltipIcon
+                toolTipId={`deposit-notes-cannot-edit-tooltip`}
+                toolTip={cannotEditMessage}
+              />
+            }
           />
         }
       >
