@@ -114,9 +114,9 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
       .map(f => f.totalAmount)
       .reduce((prev, next) => prev + next, 0);
 
-    formikRef.current?.setFieldValue(`payee.pretaxAmount`, pretaxAmount);
-    formikRef.current?.setFieldValue(`payee.taxAmount`, taxAmount);
-    formikRef.current?.setFieldValue(`payee.totalAmount`, totalAmount);
+    formikRef.current?.setFieldValue(`pretaxAmount`, pretaxAmount);
+    formikRef.current?.setFieldValue(`taxAmount`, taxAmount);
+    formikRef.current?.setFieldValue(`totalAmount`, totalAmount);
   };
 
   useEffect(() => {
