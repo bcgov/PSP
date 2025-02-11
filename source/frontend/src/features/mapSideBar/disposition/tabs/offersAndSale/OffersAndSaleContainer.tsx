@@ -6,17 +6,20 @@ import { ApiGen_Concepts_DispositionFileAppraisal } from '@/models/api/generated
 import { ApiGen_Concepts_DispositionFileOffer } from '@/models/api/generated/ApiGen_Concepts_DispositionFileOffer';
 import { ApiGen_Concepts_DispositionFileSale } from '@/models/api/generated/ApiGen_Concepts_DispositionFileSale';
 
+import DispositionStatusUpdateSolver from '../fileDetails/detail/DispositionStatusUpdateSolver';
 import { IOffersAndSaleViewProps } from './OffersAndSaleView';
 
 export interface IOffersAndSaleContainerProps {
   dispositionFile?: ApiGen_Concepts_DispositionFile;
   View: React.FC<IOffersAndSaleViewProps>;
+  statusSolver: DispositionStatusUpdateSolver;
   onSuccess: () => void;
 }
 
 const OffersAndSaleContainer: React.FunctionComponent<IOffersAndSaleContainerProps> = ({
   dispositionFile,
   View,
+  statusSolver,
   onSuccess,
 }) => {
   const {
@@ -85,6 +88,7 @@ const OffersAndSaleContainer: React.FunctionComponent<IOffersAndSaleContainerPro
       dispositionSale={dispositionSale}
       dispositionAppraisal={dispositionAppraisal}
       onDispositionOfferDeleted={handleOfferDeleted}
+      isFileFinalStatus={!statusSolver?.canEditOfferSalesValues()}
     ></View>
   ) : null;
 };

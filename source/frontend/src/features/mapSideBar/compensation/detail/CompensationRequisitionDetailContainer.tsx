@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 
 import { useOrganizationRepository } from '@/features/contacts/repositories/useOrganizationRepository';
 import { usePersonRepository } from '@/features/contacts/repositories/usePersonRepository';
+import { LeaseStatusUpdateSolver } from '@/features/leases/models/LeaseStatusUpdateSolver';
 import { useGenerateH120 } from '@/features/mapSideBar/acquisition/common/GenerateForm/hooks/useGenerateH120';
 import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
 import { IApiError } from '@/interfaces/IApiError';
@@ -16,6 +17,7 @@ import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Le
 import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
 import { exists, isValidId } from '@/utils';
 
+import AcquisitionFileStatusUpdateSolver from '../../acquisition/tabs/fileDetails/detail/AcquisitionFileStatusUpdateSolver';
 import { CompensationRequisitionDetailViewProps } from './CompensationRequisitionDetailView';
 
 export interface CompensationRequisitionDetailContainerProps {
@@ -39,6 +41,11 @@ export const CompensationRequisitionDetailContainer: React.FunctionComponent<
   const [compensationRequisitionProperties, setCompensationRequisitionProperties] = useState<
     ApiGen_Concepts_FileProperty[]
   >([]);
+
+  const statusSolver =
+    fileType === ApiGen_CodeTypes_FileTypes.Acquisition
+      ? new AcquisitionFileStatusUpdateSolver(file?.fileStatusTypeCode)
+      : new LeaseStatusUpdateSolver(file?.fileStatusTypeCode);
 
   const {
     getCompensationRequisitionProperties: {
@@ -138,6 +145,7 @@ export const CompensationRequisitionDetailContainer: React.FunctionComponent<
       clientConstant={clientConstant}
       onGenerate={onGenerate}
       compensationLeaseStakeHolders={compensationLeaseStakeHolders}
+      isFileFinalStatus={!statusSolver?.canEditOrDeleteCompensation()}
     ></View>
   ) : null;
 };

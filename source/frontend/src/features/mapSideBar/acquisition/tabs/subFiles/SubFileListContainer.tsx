@@ -5,16 +5,19 @@ import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvi
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { exists } from '@/utils';
 
+import AcquisitionFileStatusUpdateSolver from '../fileDetails/detail/AcquisitionFileStatusUpdateSolver';
 import { ISubFileListViewProps } from './SubFileListView';
 
 export interface ISubFileListContainerProps {
   View: React.FC<ISubFileListViewProps>;
   acquisitionFile: ApiGen_Concepts_AcquisitionFile;
+  statusUpdateSolver?: AcquisitionFileStatusUpdateSolver;
 }
 
 export const SubFileListContainer: React.FunctionComponent<ISubFileListContainerProps> = ({
   View,
   acquisitionFile,
+  statusUpdateSolver,
 }) => {
   const history = useHistory();
 
@@ -76,6 +79,7 @@ export const SubFileListContainer: React.FunctionComponent<ISubFileListContainer
       loading={loadingParentAcquisitionFile || loadingSubFiles}
       acquisitionFile={acquisitionFile}
       subFiles={acquisitionSubFiles}
+      isFileFinalStatus={!statusUpdateSolver?.canEditSubfiles()}
       onAdd={onAddSubFile}
     />
   );

@@ -7,17 +7,20 @@ import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import { SimpleSectionHeader } from '@/components/common/SimpleSectionHeader';
 import { StyledSectionAddButton } from '@/components/common/styles';
+import TooltipIcon from '@/components/common/TooltipIcon';
 import { Claims } from '@/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { exists } from '@/utils';
 
+import { cannotEditMessage } from '../../common/constants';
 import { SubFilesResultsTable } from './table/SubFilesResultsTable';
 
 export interface ISubFileListViewProps {
   loading: boolean;
   acquisitionFile: ApiGen_Concepts_AcquisitionFile;
   subFiles: ApiGen_Concepts_AcquisitionFile[];
+  isFileFinalStatus?: boolean;
   onAdd: () => void;
 }
 
@@ -25,6 +28,7 @@ export const SubFileListView: React.FunctionComponent<ISubFileListViewProps> = (
   loading,
   acquisitionFile,
   subFiles,
+  isFileFinalStatus,
   onAdd,
 }) => {
   const location = useLocation();
@@ -42,12 +46,16 @@ export const SubFileListView: React.FunctionComponent<ISubFileListViewProps> = (
           <SimpleSectionHeader title="Linked Files">
             {!exists(acquisitionFile.parentAcquisitionFileId) &&
               hasClaim(Claims.ACQUISITION_ADD) &&
+              !isFileFinalStatus &&
               exists(onAdd) && (
                 <StyledSectionAddButton onClick={onAdd}>
                   <FaPlus size="2rem" className="mr-2" />
                   Add Sub-interest File
                 </StyledSectionAddButton>
               )}
+            {isFileFinalStatus && (
+              <TooltipIcon toolTipId={`subfile-cannot-add-tooltip`} toolTip={cannotEditMessage} />
+            )}
           </SimpleSectionHeader>
         }
       >

@@ -28,7 +28,7 @@ const mockViewProps: IChecklistViewProps = {
 };
 
 describe('ChecklistView component', () => {
-  const setup = (renderOptions: RenderOptions = {}) => {
+  const setup = (renderOptions: RenderOptions & { props?: Partial<IChecklistViewProps> } = {}) => {
     const utils = render(
       <ChecklistView
         apiFile={mockViewProps.apiFile}
@@ -36,6 +36,7 @@ describe('ChecklistView component', () => {
         onEdit={mockViewProps.onEdit}
         sectionTypeName={API.ACQUISITION_CHECKLIST_SECTION_TYPES}
         editClaim={Claims.ACQUISITION_EDIT}
+        isFileFinalStatus={renderOptions?.props?.isFileFinalStatus ?? false}
       />,
       {
         store: {
@@ -79,6 +80,13 @@ describe('ChecklistView component', () => {
     const { queryByTitle } = setup({ claims: [] });
     const editResearchFile = queryByTitle('Edit checklist');
     expect(editResearchFile).toBeNull();
+  });
+
+  it('does not render the edit button when file in final status', () => {
+    const { queryByTitle, getByTestId } = setup({ props: { isFileFinalStatus: true }, claims: [] });
+    const editResearchFile = queryByTitle('Edit checklist');
+    expect(editResearchFile).toBeNull();
+    expect(getByTestId('tooltip-icon-lease-checklist-cannot-edit-tooltip')).toBeVisible();
   });
 
   it('renders last updated by and last updated on for the overall checklist', () => {

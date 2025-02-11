@@ -2,6 +2,9 @@ import { Claims } from '@/constants/index';
 import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import ResearchMenu, { IResearchMenuProps } from './ResearchMenu';
+import { getMockResearchFile } from '@/mocks/researchFile.mock';
+import { toTypeCode } from '@/utils/formUtils';
+import { ApiGen_CodeTypes_ResearchFileStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_ResearchFileStatusTypes';
 
 // mock auth library
 
@@ -18,6 +21,7 @@ describe('ResearchMenu component', () => {
         items={props.items}
         onChange={props.onChange}
         onEdit={props.onEdit}
+        researchFile={props.researchFile}
       />,
       {
         useMockAuthentication: true,
@@ -39,6 +43,7 @@ describe('ResearchMenu component', () => {
       selectedIndex: 0,
       onChange,
       onEdit,
+      researchFile: getMockResearchFile(),
     });
     expect(asFragment()).toMatchSnapshot();
   });
@@ -49,6 +54,7 @@ describe('ResearchMenu component', () => {
       selectedIndex: 0,
       onChange,
       onEdit,
+      researchFile: getMockResearchFile(),
     });
 
     expect(getByText(testItems[0])).toBeVisible();
@@ -62,6 +68,7 @@ describe('ResearchMenu component', () => {
       selectedIndex: 1,
       onChange,
       onEdit,
+      researchFile: getMockResearchFile(),
     });
 
     expect(getByTestId('menu-item-row-0')).not.toHaveClass('selected');
@@ -75,6 +82,7 @@ describe('ResearchMenu component', () => {
       selectedIndex: 1,
       onChange,
       onEdit,
+      researchFile: getMockResearchFile(),
     });
 
     const lastItem = getByText(testItems[2]);
@@ -90,6 +98,7 @@ describe('ResearchMenu component', () => {
         selectedIndex: 0,
         onChange,
         onEdit,
+        researchFile: getMockResearchFile(),
       },
       { claims: [Claims.RESEARCH_EDIT] },
     );
@@ -98,7 +107,7 @@ describe('ResearchMenu component', () => {
     expect(button).toBeVisible();
     await act(async () => userEvent.click(button));
 
-    expect(onEdit).toHaveBeenCalledWith();
+    expect(onEdit).toHaveBeenCalled();
   });
 
   it(`doesn't render the edit button for users without edit permissions`, () => {
@@ -108,11 +117,32 @@ describe('ResearchMenu component', () => {
         selectedIndex: 1,
         onChange,
         onEdit,
+        researchFile: getMockResearchFile(),
       },
       { claims: [Claims.RESEARCH_VIEW] }, // no edit permissions, just view.
     );
 
     const button = queryByTitle('Change properties');
     expect(button).toBeNull();
+  });
+
+  it(`doesn't render the edit button and displays tooltip for files in final status`, () => {
+    const { queryByTitle, queryByTestId } = setup(
+      {
+        items: testItems,
+        selectedIndex: 1,
+        onChange,
+        onEdit,
+        researchFile: {
+          ...getMockResearchFile(),
+          fileStatusTypeCode: toTypeCode(ApiGen_CodeTypes_ResearchFileStatusTypes.CLOSED),
+        },
+      },
+      { claims: [Claims.RESEARCH_VIEW] }, // no edit permissions, just view.
+    );
+
+    const button = queryByTitle('Change properties');
+    expect(button).toBeNull();
+    expect(queryByTestId('tooltip-icon-1-summary-cannot-edit-tooltip'));
   });
 });

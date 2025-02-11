@@ -9,6 +9,7 @@ import { InlineFlexDiv } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { ColumnWithProps, renderDate, renderMoney, renderTypeCode } from '@/components/Table';
 import { Claims } from '@/constants';
+import { cannotEditMessage } from '@/features/mapSideBar/acquisition/common/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
 import { ApiGen_CodeTypes_LeasePaymentCategoryTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePaymentCategoryTypes';
@@ -19,11 +20,20 @@ import { formatMoney, stringToFragment } from '@/utils';
 import { FormLeasePayment } from '../../models';
 
 const actualsActions = (
+  isFileFinalStatus: boolean,
   onEdit: (values: FormLeasePayment) => void,
   onDelete: (values: FormLeasePayment) => void,
 ) => {
   return function ({ row: { original, index } }: CellProps<FormLeasePayment, unknown>) {
     const { hasClaim } = useKeycloakWrapper();
+    if (isFileFinalStatus) {
+      return (
+        <TooltipIcon
+          toolTipId={`payments-actions-cannot-edit-tooltip`}
+          toolTip={cannotEditMessage}
+        />
+      );
+    }
     return (
       <StyledIcons>
         {hasClaim(Claims.LEASE_EDIT) && (
@@ -64,6 +74,7 @@ export interface IPaymentColumnProps {
   isReceivable?: boolean;
   isGstEligible?: boolean;
   payments: FormLeasePayment[];
+  isFileFinalStatus?: boolean;
 }
 
 export const getActualsColumns = ({
@@ -72,6 +83,7 @@ export const getActualsColumns = ({
   onSave,
   isReceivable,
   isGstEligible,
+  isFileFinalStatus,
 }: IPaymentColumnProps): ColumnWithProps<
   FormLeasePayment,
   { properties: ApiGen_Concepts_Payment[] }
@@ -210,7 +222,7 @@ export const getActualsColumns = ({
       Header: 'Actions',
       align: 'right',
       maxWidth: 30,
-      Cell: actualsActions(onEdit, onDelete),
+      Cell: actualsActions(isFileFinalStatus, onEdit, onDelete),
     },
   ];
 };
