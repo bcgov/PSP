@@ -124,7 +124,7 @@ export class BatchUploadResponseModel {
     if (exists(apiResponse)) {
       if (isApiError(apiResponse)) {
         this.isSuccess = false;
-        this.errorMessage = (apiResponse as IApiError).details;
+        this.errorMessage = (apiResponse as IApiError).error;
       } else {
         this.isSuccess = true;
       }
