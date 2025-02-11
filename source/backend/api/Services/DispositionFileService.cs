@@ -117,7 +117,7 @@ namespace Pims.Api.Services
             DispositionFileStatusTypes? currentDispositionStatus = GetCurrentDispositionStatus(dispositionFile.Internal_Id);
             if (!_dispositionStatusSolver.CanEditDetails(currentDispositionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
             {
-                throw new BusinessRuleViolationException("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
 
             ValidateVersion(id, dispositionFile.ConcurrencyControlNumber);
@@ -224,9 +224,9 @@ namespace Pims.Api.Services
             }
 
             DispositionFileStatusTypes? currentDispositionStatus = GetCurrentDispositionStatus(dispositionFileParent.Internal_Id);
-            if (!_dispositionStatusSolver.CanEditDetails(currentDispositionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
+            if (!_dispositionStatusSolver.CanEditOfferSalesValues(currentDispositionStatus))
             {
-                throw new BusinessRuleViolationException("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
 
             ValidateDispositionOfferStatus(dispositionFileParent, dispositionOffer);
@@ -249,9 +249,9 @@ namespace Pims.Api.Services
             }
 
             DispositionFileStatusTypes? currentDispositionStatus = GetCurrentDispositionStatus(dispositionFileParent.Internal_Id);
-            if (!_dispositionStatusSolver.CanEditDetails(currentDispositionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
+            if (!_dispositionStatusSolver.CanEditOfferSalesValues(currentDispositionStatus))
             {
-                throw new BusinessRuleViolationException("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
 
             ValidateDispositionOfferStatus(dispositionFileParent, dispositionOffer);
@@ -269,9 +269,9 @@ namespace Pims.Api.Services
 
             var dispositionFile = _dispositionFileRepository.GetById(dispositionFileId);
             DispositionFileStatusTypes? currentDispositionStatus = GetCurrentDispositionStatus(dispositionFile.Internal_Id);
-            if (!_dispositionStatusSolver.CanEditDetails(currentDispositionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
+            if (!_dispositionStatusSolver.CanEditOfferSalesValues(currentDispositionStatus))
             {
-                throw new BusinessRuleViolationException("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
 
             var deleteResult = _dispositionFileRepository.TryDeleteDispositionOffer(dispositionFileId, offerId);
@@ -294,9 +294,9 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
 
             DispositionFileStatusTypes? currentDispositionStatus = GetCurrentDispositionStatus(dispositionSale.DispositionFileId);
-            if (!_dispositionStatusSolver.CanEditDetails(currentDispositionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
+            if (!_dispositionStatusSolver.CanEditOfferSalesValues(currentDispositionStatus))
             {
-                throw new BusinessRuleViolationException("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
 
             var updatedSale = _dispositionFileRepository.UpdateDispositionFileSale(dispositionSale);
@@ -312,9 +312,9 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
 
             DispositionFileStatusTypes? currentDispositionStatus = GetCurrentDispositionStatus(dispositionSale.DispositionFileId);
-            if (!_dispositionStatusSolver.CanEditDetails(currentDispositionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
+            if (!_dispositionStatusSolver.CanEditOfferSalesValues(currentDispositionStatus))
             {
-                throw new BusinessRuleViolationException("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
 
             var dispositionFileParent = _dispositionFileRepository.GetById(dispositionSale.DispositionFileId);
@@ -354,9 +354,9 @@ namespace Pims.Api.Services
             }
 
             DispositionFileStatusTypes? currentDispositionStatus = GetCurrentDispositionStatus(dispositionFileParent.Internal_Id);
-            if (!_dispositionStatusSolver.CanEditDetails(currentDispositionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
+            if (!_dispositionStatusSolver.CanEditOfferSalesValues(currentDispositionStatus))
             {
-                throw new BusinessRuleViolationException("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
 
             var newAppraisal = _dispositionFileRepository.AddDispositionFileAppraisal(dispositionAppraisal);
@@ -377,9 +377,9 @@ namespace Pims.Api.Services
             }
 
             DispositionFileStatusTypes? currentDispositionStatus = GetCurrentDispositionStatus(dispositionFileParent.Internal_Id);
-            if (!_dispositionStatusSolver.CanEditDetails(currentDispositionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
+            if (!_dispositionStatusSolver.CanEditOfferSalesValues(currentDispositionStatus))
             {
-                throw new BusinessRuleViolationException("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
 
             var updatedAppraisal = _dispositionFileRepository.UpdateDispositionFileAppraisal(appraisalId, dispositionAppraisal);
@@ -411,6 +411,13 @@ namespace Pims.Api.Services
             var dispositionFileId = checklistItems.FirstOrDefault().DispositionFileId;
             _logger.LogInformation("Updating disposition file checklist with DispositionFile id: {id}", dispositionFileId);
             _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
+
+            var currentDispositionFile = _dispositionFileRepository.GetById(dispositionFileId);
+            var currentDispositionStatus = _dispositionStatusSolver.GetCurrentDispositionStatus(currentDispositionFile?.DispositionFileStatusTypeCode);
+            if (!_dispositionStatusSolver.CanEditChecklists(currentDispositionStatus))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+            }
 
             // Get the current checklist items for this disposition file.
             var currentItems = _checklistRepository.GetAllChecklistItemsByDispositionFileId(dispositionFileId).ToDictionary(ci => ci.Internal_Id);
@@ -491,6 +498,13 @@ namespace Pims.Api.Services
             _logger.LogInformation("Updating disposition file properties with DispositionFile id: {id}", dispositionFile.Internal_Id);
             _user.ThrowIfNotAllAuthorized(Permissions.DispositionEdit, Permissions.PropertyView, Permissions.PropertyAdd);
             _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, dispositionFile.Internal_Id);
+
+            var currentDispositionFile = _dispositionFileRepository.GetById(dispositionFile.DispositionFileId);
+            var currentDispositionStatus = _dispositionStatusSolver.GetCurrentDispositionStatus(currentDispositionFile?.DispositionFileStatusTypeCode);
+            if (!_dispositionStatusSolver.CanEditProperties(currentDispositionStatus))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+            }
 
             ValidateVersion(dispositionFile.Internal_Id, dispositionFile.ConcurrencyControlNumber);
 

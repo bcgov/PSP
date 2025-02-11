@@ -15,6 +15,7 @@ import AreaContainer from '@/components/measurements/AreaContainer';
 import { Claims, Roles } from '@/constants';
 import * as API from '@/constants/API';
 import { isAcquisitionFile } from '@/features/mapSideBar/acquisition/add/models';
+import { cannotEditMessage } from '@/features/mapSideBar/acquisition/common/constants';
 import AcquisitionFileStatusUpdateSolver from '@/features/mapSideBar/acquisition/tabs/fileDetails/detail/AcquisitionFileStatusUpdateSolver';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
@@ -108,7 +109,11 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
             claims={[Claims.PROPERTY_EDIT]}
             addButtonIcon={<FaPlus />}
             addButtonText="Add Take"
-            onAdd={statusSolver.canEditTakes() ? onAdd : undefined}
+            onAdd={onAdd}
+            cannotAddComponent={
+              <TooltipIcon toolTipId={`takes-cannot-add-tooltip`} toolTip={cannotEditMessage} />
+            }
+            isAddEnabled={statusSolver?.canEditTakes()}
           />
         </H2>
         {[...nonCancelledTakes, ...cancelledTakes].map((take, index) => {

@@ -20,12 +20,11 @@ import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concept
 import { exists, formatMoney, prettyFormatDate } from '@/utils';
 
 import { cannotEditMessage } from '../../../common/constants';
-import AcquisitionFileStatusUpdateSolver from '../../fileDetails/detail/AcquisitionFileStatusUpdateSolver';
 
 export interface IAgreementViewProps {
   loading: boolean;
   agreements: ApiGen_Concepts_Agreement[];
-  statusUpdateSolver: AcquisitionFileStatusUpdateSolver;
+  isFileFinalStatus?: boolean;
   onGenerate: (agreement: ApiGen_Concepts_Agreement) => void;
   onDelete: (agreementId: number) => void;
 }
@@ -33,7 +32,7 @@ export interface IAgreementViewProps {
 export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
   loading,
   agreements,
-  statusUpdateSolver,
+  isFileFinalStatus,
   onGenerate,
   onDelete,
 }) => {
@@ -56,6 +55,10 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
             onAdd={() => {
               history.push(`${match.url}/add`);
             }}
+            isAddEnabled={!isFileFinalStatus}
+            cannotAddComponent={
+              <TooltipIcon toolTipId={`agreement-cannot-add-tooltip`} toolTip={cannotEditMessage} />
+            }
           />
         }
       >
@@ -68,64 +71,58 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                   <div>
                     {exists(agreement.agreementType) && (
                       <StyledButtonContainer>
-                        <StyledAddButton
-                          title="Download File"
-                          onClick={() => {
-                            onGenerate(agreement);
-                          }}
-                        >
-                          <FaFileContract size={28} className="mr-2" />
-                          {`Generate ${getAgreementFormName(agreement.agreementType.id)}`}
-                        </StyledAddButton>
+                        {isFileFinalStatus ? (
+                          <></>
+                        ) : (
+                          <>
+                            <StyledAddButton
+                              title="Download File"
+                              onClick={() => {
+                                onGenerate(agreement);
+                              }}
+                            >
+                              <FaFileContract size={28} className="mr-2" />
+                              {`Generate ${getAgreementFormName(agreement.agreementType.id)}`}
+                            </StyledAddButton>
 
-                        {!statusUpdateSolver.canEditOrDeleteAgreement(
-                          agreement.agreementStatusType?.id ?? null,
-                        ) && (
-                          <TooltipIcon
-                            toolTipId={`${agreement?.agreementId}-agreement-cannot-edit-tooltip`}
-                            toolTip={cannotEditMessage}
-                          />
-                        )}
-
-                        {statusUpdateSolver.canEditOrDeleteAgreement(
-                          agreement.agreementStatusType?.id ?? null,
-                        ) &&
-                          keycloak.hasClaim(Claims.ACQUISITION_EDIT) && (
-                            <>
-                              <EditButton
-                                title="Edit Agreement"
-                                data-testId={`agreements[${index}].edit-btn`}
-                                onClick={() =>
-                                  history.push(`${match.url}/${agreement.agreementId}/update`)
-                                }
-                                icon={<FaEdit size={'2rem'} />}
-                              />
-                              <RemoveIconButton
-                                title="Delete Agreement"
-                                data-testId={`agreements[${index}].delete-btn`}
-                                icon={<FaTrash size={'1.75rem'} />}
-                                onRemove={() => {
-                                  setModalContent({
-                                    ...getDeleteModalProps(),
-                                    variant: 'error',
-                                    title: 'Delete Agreement',
-                                    message: `You have selected to delete this Agreement.
+                            {keycloak.hasClaim(Claims.ACQUISITION_EDIT) && (
+                              <>
+                                <EditButton
+                                  title="Edit Agreement"
+                                  data-testId={`agreements[${index}].edit-btn`}
+                                  onClick={() =>
+                                    history.push(`${match.url}/${agreement.agreementId}/update`)
+                                  }
+                                  icon={<FaEdit size={'2rem'} />}
+                                />
+                                <RemoveIconButton
+                                  title="Delete Agreement"
+                                  data-testId={`agreements[${index}].delete-btn`}
+                                  icon={<FaTrash size={'1.75rem'} />}
+                                  onRemove={() => {
+                                    setModalContent({
+                                      ...getDeleteModalProps(),
+                                      variant: 'error',
+                                      title: 'Delete Agreement',
+                                      message: `You have selected to delete this Agreement.
                                         Do you want to proceed?`,
-                                    okButtonText: 'Yes',
-                                    cancelButtonText: 'No',
-                                    handleOk: async () => {
-                                      agreement.agreementId && onDelete(agreement.agreementId);
-                                      setDisplayModal(false);
-                                    },
-                                    handleCancel: () => {
-                                      setDisplayModal(false);
-                                    },
-                                  });
-                                  setDisplayModal(true);
-                                }}
-                              />
-                            </>
-                          )}
+                                      okButtonText: 'Yes',
+                                      cancelButtonText: 'No',
+                                      handleOk: async () => {
+                                        agreement.agreementId && onDelete(agreement.agreementId);
+                                        setDisplayModal(false);
+                                      },
+                                      handleCancel: () => {
+                                        setDisplayModal(false);
+                                      },
+                                    });
+                                    setDisplayModal(true);
+                                  }}
+                                />
+                              </>
+                            )}
+                          </>
+                        )}
                       </StyledButtonContainer>
                     )}
                   </div>

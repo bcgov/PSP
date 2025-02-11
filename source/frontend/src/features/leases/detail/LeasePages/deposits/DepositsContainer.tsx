@@ -6,6 +6,7 @@ import GenericModal from '@/components/common/GenericModal';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { LeaseFormModel } from '@/features/leases/models';
+import { LeaseStatusUpdateSolver } from '@/features/leases/models/LeaseStatusUpdateSolver';
 import { useSecurityDepositRepository } from '@/hooks/repositories/useSecurityDepositRepository';
 import { useSecurityDepositReturnRepository } from '@/hooks/repositories/useSecurityDepositReturnRepository';
 import { ApiGen_Concepts_SecurityDeposit } from '@/models/api/generated/ApiGen_Concepts_SecurityDeposit';
@@ -30,6 +31,7 @@ export const DepositsContainer: React.FunctionComponent<
   React.PropsWithChildren<IDepositsContainerProps>
 > = props => {
   const { lease } = useContext(LeaseStateContext);
+  const statusSolver = new LeaseStatusUpdateSolver(lease?.fileStatusTypeCode);
   const {
     getSecurityDeposits: {
       execute: getSecurityDeposits,
@@ -204,6 +206,7 @@ export const DepositsContainer: React.FunctionComponent<
         {formikProps => (
           <Styled.DepositsContainer>
             <DepositsReceivedContainer
+              statusSolver={statusSolver}
               securityDeposits={securityDeposits}
               onAdd={onAddDeposit}
               onEdit={onEditDeposit}
@@ -216,11 +219,13 @@ export const DepositsContainer: React.FunctionComponent<
               depositReturns={depositReturns}
               onEdit={onEditReturnDeposit}
               onDelete={onDeleteDepositReturn}
+              statusSolver={statusSolver}
             />
 
             <DepositNotes
               disabled={!editNotes}
               onEdit={() => setEditNotes(true)}
+              isFileFinalStatus={!statusSolver?.canEditDeposits()}
               onSave={async (notes: string) => {
                 lease?.id && (await updateSecurityDepositNote(lease.id, notes));
                 setEditNotes(false);

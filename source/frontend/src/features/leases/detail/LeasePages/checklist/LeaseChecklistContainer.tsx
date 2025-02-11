@@ -5,6 +5,7 @@ import ProtectedComponent from '@/components/common/ProtectedComponent';
 import { Claims } from '@/constants';
 import * as API from '@/constants/API';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
+import { LeaseStatusUpdateSolver } from '@/features/leases/models/LeaseStatusUpdateSolver';
 import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
 import { ChecklistView } from '@/features/mapSideBar/shared/tabs/checklist/detail/ChecklistView';
 import { ChecklistFormModel } from '@/features/mapSideBar/shared/tabs/checklist/update/models';
@@ -16,6 +17,7 @@ const LeaseChecklistContainer: React.FunctionComponent<
   React.PropsWithChildren<LeasePageProps<void>>
 > = ({ isEditing, formikRef, onEdit, onSuccess }) => {
   const { lease } = React.useContext(LeaseStateContext);
+  const statusSolver = new LeaseStatusUpdateSolver(lease?.fileStatusTypeCode);
 
   return !!isEditing && !!onEdit ? (
     <ProtectedComponent claims={[Claims.LEASE_EDIT]}>
@@ -34,6 +36,7 @@ const LeaseChecklistContainer: React.FunctionComponent<
         sectionTypeName={API.LEASE_CHECKLIST_SECTION_TYPES}
         editClaim={Claims.LEASE_EDIT}
         prefix="lease"
+        isFileFinalStatus={!statusSolver.canEditChecklists()}
       />
     )
   );

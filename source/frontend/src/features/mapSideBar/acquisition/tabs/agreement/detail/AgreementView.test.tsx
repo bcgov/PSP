@@ -12,21 +12,20 @@ import { ApiGen_CodeTypes_AcquisitionStatusTypes } from '@/models/api/generated/
 
 const mockViewProps: IAgreementViewProps = {
   agreements: [],
-  statusUpdateSolver: new AcquisitionFileStatusUpdateSolver(),
   onGenerate: vi.fn(),
   loading: false,
   onDelete: vi.fn(),
 };
 
 describe('AgreementView component', () => {
-  const setup = (renderOptions: RenderOptions = {}) => {
+  const setup = (renderOptions: RenderOptions & { props?: Partial<IAgreementViewProps> } = {}) => {
     const utils = render(
       <AgreementView
         loading={mockViewProps.loading}
         agreements={mockViewProps.agreements}
-        statusUpdateSolver={mockViewProps.statusUpdateSolver}
         onGenerate={mockViewProps.onGenerate}
         onDelete={mockViewProps.onDelete}
+        isFileFinalStatus={renderOptions?.props?.isFileFinalStatus ?? false}
       />,
       {
         store: {
@@ -45,7 +44,6 @@ describe('AgreementView component', () => {
 
   beforeEach(() => {
     mockViewProps.agreements = mockAgreementsResponse();
-    mockViewProps.statusUpdateSolver = new AcquisitionFileStatusUpdateSolver();
   });
 
   afterEach(() => {
@@ -73,13 +71,6 @@ describe('AgreementView component', () => {
   });
 
   it('displays confirmation modal when Delete Agreement button is clicked', async () => {
-    mockViewProps.statusUpdateSolver = new AcquisitionFileStatusUpdateSolver({
-      id: ApiGen_CodeTypes_AcquisitionStatusTypes.ACTIVE,
-      description: '',
-      displayOrder: 1,
-      isDisabled: false,
-    });
-
     const { getAllByTitle } = setup({
       claims: [Claims.ACQUISITION_EDIT],
     });
@@ -91,5 +82,20 @@ describe('AgreementView component', () => {
     expect(
       screen.getByText(/You have selected to delete this Agreement/i, { exact: false }),
     ).toBeVisible();
+  });
+
+  it('displays warning tooltips instead of edit/add buttons when file in final status', async () => {
+    const { queryByText } = setup({
+      claims: [Claims.ACQUISITION_EDIT],
+      props: { isFileFinalStatus: true },
+    });
+
+    const removeButton = queryByText(/Delete Agreement/i);
+    expect(removeButton).toBeNull();
+
+    const editButton = queryByText(/Edit Agreement/i);
+    expect(removeButton).toBeNull();
+
+    expect(screen.getByTestId(/tooltip-icon-agreement-cannot-add-tooltip/i)).toBeVisible();
   });
 });

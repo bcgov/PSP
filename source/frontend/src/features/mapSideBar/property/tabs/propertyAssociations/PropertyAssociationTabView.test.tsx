@@ -168,7 +168,13 @@ describe('PropertyAssociationTabView component', () => {
     const { getByText } = setup({
       isLoading: false,
       associations: fakeAssociations,
-      associatedLeases: [{ id: 34, expiryDate: '2024-01-01', fileStatusTypeCode: { id: 'Active' }  } as ApiGen_Concepts_Lease],
+      associatedLeases: [
+        {
+          id: 34,
+          expiryDate: '2024-01-01',
+          fileStatusTypeCode: { id: 'Active' },
+        } as ApiGen_Concepts_Lease,
+      ],
       associatedLeaseStakeholders: [],
       associatedLeaseRenewals: [
         {

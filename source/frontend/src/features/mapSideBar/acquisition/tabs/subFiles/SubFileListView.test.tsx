@@ -3,7 +3,7 @@ import {
   mockAcquisitionFileResponse,
   mockAcquisitionFileSubFilesResponse,
 } from '@/mocks/acquisitionFiles.mock';
-import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
+import { act, queryByTestId, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import SubFileListView, { ISubFileListViewProps } from './SubFileListView';
 
@@ -115,5 +115,21 @@ describe('SubFileListView component', () => {
 
     const addButton = queryByText(/Add Sub-interest File/i);
     expect(addButton).toBeNull();
+  });
+
+  it('hides the "Add Sub-file" button when looking at a sub-file', () => {
+    const { queryByText, queryByTestId } = setup({
+      props: {
+        acquisitionFile: {
+          ...mockAcquisitionFileResponse(1, 'ACQ-200-01'),
+        },
+        isFileFinalStatus: true,
+      },
+      claims: [Claims.ACQUISITION_ADD, Claims.ACQUISITION_VIEW],
+    });
+
+    const addButton = queryByText(/Add Sub-interest File/i);
+    expect(addButton).toBeNull();
+    expect(queryByTestId('tooltip-icon-subfile-cannot-add-tooltip'));
   });
 });

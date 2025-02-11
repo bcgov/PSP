@@ -332,6 +332,12 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
   color: #474543;
 }
 
+.c0.collapsed .row:first svg {
+  width: 2.6rem;
+  height: 2.6rem;
+  margin-right: 0;
+}
+
 .c0.expanded {
   min-width: 90rem;
   height: 100%;
@@ -344,6 +350,11 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
   -ms-flex-direction: column;
   flex-direction: column;
   overflow: hidden;
+}
+
+.c0.expanded h1 svg {
+  width: 2.8rem;
+  height: 2.8rem;
 }
 
 .c2 {
@@ -562,22 +573,14 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
           >
             <svg
               fill="currentColor"
-              height="28"
-              stroke="currentColor"
-              stroke-width="0"
+              height="24"
+              title="Disposition file Icon"
               viewBox="0 0 24 24"
-              width="28"
+              width="24"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <title>
-                Disposition file Icon
-              </title>
               <path
-                d="M0 0h24v24H0z"
-                fill="none"
-              />
-              <path
-                d="M18.21 9.21C15.93 10.78 13.45 13.3 13 17h2v2H9v-2h2c-.5-4.5-4.37-8-9-8V7c4.39 0 8.22 2.55 10 6.3 1.13-2.43 2.99-4.25 4.78-5.52L14 5h7v7l-2.79-2.79z"
+                d="M21.3987 5.625C18.1918 7.77086 14.3226 15.3433 14.3226 21.1389H16.9566V24H7.59054V21.1389H10.4516C10.4516 15 6 6.75 0 6.75V3.61114C6.75 3.61114 10.4516 9 12.2598 14.25C13.875 9 15.871 5.625 19.7419 2.84712H14.8748V0H24V9.98597H21.3987V6V5.625Z"
               />
             </svg>
           </span>
