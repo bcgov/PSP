@@ -33,7 +33,7 @@ export class CompensationRequisitionFormModel {
   detailedRemarks = '';
   financials: FinancialActivityFormModel[] = [];
   payees: PayeeOption[] = [];
-  leaseStakeholderId: string;
+  leaseStakeholderId: number | null = null;
   legacyPayee: string | null = null;
   alternateProject: IAutocompletePrediction | null = null;
   selectedProperties: ApiGen_Concepts_FileProperty[] = [];
@@ -209,7 +209,7 @@ export class CompensationRequisitionFormModel {
     }
 
     compensation.leaseStakeholderId = apiModel.compReqLeaseStakeholders?.length
-      ? apiModel?.compReqLeaseStakeholders[0].leaseStakeholderId.toString()
+      ? apiModel?.compReqLeaseStakeholders[0].leaseStakeholderId
       : null;
     compensation.pretaxAmount = payeePretaxAmount ?? 0;
     compensation.taxAmount = payeeTaxAmount ?? 0;

@@ -78,7 +78,7 @@ const PropertyAssociationTabView: React.FunctionComponent<
           <AssociationHeader
             icon={<LeaseIcon title="Leases-Licences" />}
             title="Leases/Licences"
-            count={props.associations?.leaseAssociations?.length}
+            count={leaseAssociations?.length}
           />
         }
         isCollapsable
