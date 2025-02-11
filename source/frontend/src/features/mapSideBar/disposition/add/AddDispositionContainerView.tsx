@@ -1,8 +1,8 @@
 import { FormikHelpers, FormikProps } from 'formik';
 import { useCallback } from 'react';
-import { MdAirlineStops } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 
+import DispositionFileIcon from '@/assets/images/disposition-icon.svg?react';
 import ConfirmNavigation from '@/components/common/ConfirmNavigation';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 
@@ -47,7 +47,7 @@ const AddDispositionContainerView: React.FunctionComponent<IAddDispositionContai
     <MapSideBarLayout
       showCloseButton
       title="Create Disposition File"
-      icon={<MdAirlineStops title="Disposition file Icon" size={28} fill="currentColor" />}
+      icon={<DispositionFileIcon title="Disposition file Icon" fill="currentColor" />}
       onClose={onCancel}
       footer={
         <SidebarFooter
