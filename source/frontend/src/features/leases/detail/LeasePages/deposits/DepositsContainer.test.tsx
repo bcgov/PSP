@@ -81,6 +81,7 @@ describe('DepositsContainer', () => {
     const { getByText, getByTestId, container } = setup({
       lease: {
         ...new LeaseFormModel(),
+        statusTypeCode: ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE,
         id: 1,
         returnNotes: 'Tenant no longer has a dog, deposit returned, less fee for carpet cleaning',
         securityDeposits: getMockDeposits().map(s => FormLeaseDeposit.fromApi(s)),

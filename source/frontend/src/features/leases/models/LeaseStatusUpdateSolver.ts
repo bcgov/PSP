@@ -280,6 +280,7 @@ export class LeaseStatusUpdateSolver
     switch (statusCode) {
       case ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE:
       case ApiGen_CodeTypes_LeaseStatusTypes.DRAFT:
+      case ApiGen_CodeTypes_LeaseStatusTypes.INACTIVE:
         canEdit = isDraftCompensation ?? isAdmin ?? true;
         break;
       case ApiGen_CodeTypes_LeaseStatusTypes.ARCHIVED:
@@ -287,7 +288,6 @@ export class LeaseStatusUpdateSolver
       case ApiGen_CodeTypes_LeaseStatusTypes.DUPLICATE:
       case ApiGen_CodeTypes_LeaseStatusTypes.TERMINATED:
       case ApiGen_CodeTypes_LeaseStatusTypes.EXPIRED:
-      case ApiGen_CodeTypes_LeaseStatusTypes.INACTIVE:
         canEdit = false;
         break;
       default:
