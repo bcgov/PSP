@@ -3,7 +3,14 @@ import noop from 'lodash/noop';
 
 import { Claims } from '@/constants/claims';
 import { LeaseFormModel } from '@/features/leases/models';
-import { act, fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
+import {
+  act,
+  fillInput,
+  queryByTestId,
+  render,
+  RenderOptions,
+  userEvent,
+} from '@/utils/test-utils';
 
 import { DepositNotes, IDepositNotesProps } from './DepositNotes';
 
@@ -22,6 +29,7 @@ const setup = (
         onCancel={onCancel}
         onSave={onSave}
         onEdit={onEdit}
+        isFileFinalStatus={renderOptions.isFileFinalStatus}
       />
     </Formik>,
     {
@@ -107,5 +115,15 @@ describe('DepositNotes component', () => {
     const cancelButton = getByText('Cancel');
     await act(async () => userEvent.click(cancelButton));
     expect(onCancel).toHaveBeenCalled();
+  });
+
+  it('edit button does not display if file in final state', async () => {
+    const { queryByTestId } = await setup({
+      lease: { ...new LeaseFormModel(), returnNotes: 'security deposit notes' },
+      claims: [Claims.LEASE_EDIT],
+      isFileFinalStatus: true,
+    });
+    const editButton = queryByTestId('edit-comments');
+    expect(editButton).toBeNull();
   });
 });

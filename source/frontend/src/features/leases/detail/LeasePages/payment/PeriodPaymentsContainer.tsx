@@ -9,6 +9,7 @@ import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { ModalContext } from '@/contexts/modalContext';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { LeaseFormModel } from '@/features/leases/models';
+import { LeaseStatusUpdateSolver } from '@/features/leases/models/LeaseStatusUpdateSolver';
 import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
 import { useLeasePaymentRepository } from '@/hooks/repositories/useLeasePaymentRepository';
 import { useLeasePeriodRepository } from '@/hooks/repositories/useLeasePeriodRepository';
@@ -55,6 +56,7 @@ export const PeriodPaymentsContainer: React.FunctionComponent<
     },
     [getLeasePeriodsFunc],
   );
+  const statusSolver = new LeaseStatusUpdateSolver(lease?.fileStatusTypeCode);
 
   useDeepCompareEffect(() => {
     if (isValidId(leaseId)) {
@@ -213,6 +215,7 @@ export const PeriodPaymentsContainer: React.FunctionComponent<
         onDelete={onDeletePeriod}
         onDeletePayment={onDeletePayment}
         onSavePayment={onSavePayment}
+        isFileFinalStatus={!statusSolver.canEditPayments()}
         isReceivable={
           lease?.paymentReceivableType?.id === ApiGen_CodeTypes_LeaseAccountTypes.RCVBL.toString()
         }

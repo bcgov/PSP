@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 
+import { LeaseStatusUpdateSolver } from '@/features/leases/models/LeaseStatusUpdateSolver';
 import { useConsultationProvider } from '@/hooks/repositories/useConsultationProvider';
 import { ApiGen_Concepts_ConsultationLease } from '@/models/api/generated/ApiGen_Concepts_ConsultationLease';
 import { isValidId } from '@/utils';
@@ -11,11 +12,12 @@ import { IConsultationListViewProps } from './ConsultationListView';
 export interface IConsultationListProps {
   leaseId: number;
   View: React.FunctionComponent<React.PropsWithChildren<IConsultationListViewProps>>;
+  statusSolver: LeaseStatusUpdateSolver;
 }
 
 export const ConsultationListContainer: React.FunctionComponent<
   React.PropsWithChildren<IConsultationListProps>
-> = ({ leaseId, View }) => {
+> = ({ leaseId, statusSolver, View }) => {
   const [leaseConsultations, setLeaseConsultations] = useState<ApiGen_Concepts_ConsultationLease[]>(
     [],
   );
@@ -70,6 +72,7 @@ export const ConsultationListContainer: React.FunctionComponent<
     <View
       loading={isLoading}
       consultations={leaseConsultations}
+      isFileFinalStatus={!statusSolver.canEditConsulations()}
       onAdd={handleConsultationAdd}
       onEdit={handleConsultationEdit}
       onDelete={handleConsultationDeleted}

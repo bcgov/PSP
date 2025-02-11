@@ -1,7 +1,8 @@
+import { IUpdateChecklistStrategy } from '@/features/mapSideBar/compensation/models/IUpdateChecklistStrategy';
 import { ApiGen_CodeTypes_DispositionFileStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_DispositionFileStatusTypes';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 
-class DispositionStatusUpdateSolver {
+class DispositionStatusUpdateSolver implements IUpdateChecklistStrategy {
   private readonly dispositionFile: ApiGen_Concepts_DispositionFile | null;
 
   constructor(apiModel: ApiGen_Concepts_DispositionFile | undefined | null) {
@@ -119,12 +120,16 @@ class DispositionStatusUpdateSolver {
     switch (statusCode) {
       case ApiGen_CodeTypes_DispositionFileStatusTypes.ACTIVE:
       case ApiGen_CodeTypes_DispositionFileStatusTypes.DRAFT:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.HOLD:
+        canEdit = true;
+        break;
       case ApiGen_CodeTypes_DispositionFileStatusTypes.ARCHIVED:
       case ApiGen_CodeTypes_DispositionFileStatusTypes.CANCELLED:
       case ApiGen_CodeTypes_DispositionFileStatusTypes.COMPLETE:
-      case ApiGen_CodeTypes_DispositionFileStatusTypes.HOLD:
+        canEdit = false;
+        break;
       default:
-        canEdit = true;
+        canEdit = false;
         break;
     }
 

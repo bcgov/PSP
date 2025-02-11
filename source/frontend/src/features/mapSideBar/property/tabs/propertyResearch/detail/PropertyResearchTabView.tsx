@@ -4,7 +4,9 @@ import EditButton from '@/components/common/buttons/EditButton';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledEditWrapper } from '@/components/common/Section/SectionStyles';
+import TooltipIcon from '@/components/common/TooltipIcon';
 import { Claims } from '@/constants/index';
+import { cannotEditMessage } from '@/features/mapSideBar/acquisition/common/constants';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
 import { exists } from '@/utils/utils';
@@ -21,6 +23,7 @@ interface PropertyResearchFile {
 
 export interface IPropertyResearchTabViewProps {
   researchFileProperty: ApiGen_Concepts_ResearchFileProperty;
+  isFileFinalStatus: boolean;
   setEditMode: (isEditing: boolean) => void;
 }
 
@@ -53,13 +56,19 @@ export const PropertyResearchTabView: React.FunctionComponent<
   return (
     <StyledSummarySection>
       <StyledEditWrapper className="mr-3 my-1">
-        {hasClaim(Claims.RESEARCH_EDIT) ? (
+        {hasClaim(Claims.RESEARCH_EDIT) && !props.isFileFinalStatus ? (
           <EditButton
             title="Edit Property Research"
             onClick={() => {
               props.setEditMode(true);
             }}
             style={{ float: 'right' }}
+          />
+        ) : null}
+        {hasClaim(Claims.RESEARCH_EDIT) && props.isFileFinalStatus ? (
+          <TooltipIcon
+            toolTipId={`property-research-cannot-edit-tooltip`}
+            toolTip={cannotEditMessage}
           />
         ) : null}
       </StyledEditWrapper>

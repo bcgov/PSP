@@ -26,6 +26,7 @@ import { exists, getLatLng, isValidId } from '@/utils';
 import { getLeaseInfo, LeaseAssociationInfo } from '../../property/PropertyContainer';
 import CrownDetailsTabView from '../../property/tabs/crown/CrownDetailsTabView';
 import PropertyResearchTabView from '../../property/tabs/propertyResearch/detail/PropertyResearchTabView';
+import ResearchStatusUpdateSolver from '../../research/tabs/fileDetails/ResearchStatusUpdateSolver';
 
 export interface IPropertyFileContainerProps {
   fileProperty: ApiGen_Concepts_FileProperty;
@@ -34,6 +35,7 @@ export interface IPropertyFileContainerProps {
   customTabs: TabInventoryView[];
   defaultTab: InventoryTabNames;
   fileContext?: ApiGen_CodeTypes_FileTypes;
+  statusSolver?: ResearchStatusUpdateSolver;
 }
 
 export const PropertyFileContainer: React.FunctionComponent<
@@ -141,6 +143,7 @@ export const PropertyFileContainer: React.FunctionComponent<
         <PropertyResearchTabView
           researchFileProperty={props.fileProperty as ApiGen_Concepts_ResearchFileProperty}
           setEditMode={props.setEditing}
+          isFileFinalStatus={!props.statusSolver?.canEditProperties()}
         />
       ),
       key: InventoryTabNames.research,

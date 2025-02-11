@@ -11,6 +11,7 @@ import { useConsultationProvider } from '@/hooks/repositories/useConsultationPro
 import { IConsultationListViewProps } from './ConsultationListView';
 import ConsultationListContainer, { IConsultationListProps } from './ConsultationListContainer';
 import { getMockApiConsultation } from '@/mocks/consultations.mock';
+import { LeaseStatusUpdateSolver } from '@/features/leases/models/LeaseStatusUpdateSolver';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -57,6 +58,7 @@ describe('ConsultationListContainer component', () => {
         {...renderOptions.props}
         leaseId={renderOptions?.props?.leaseId ?? 1}
         View={View}
+        statusSolver={new LeaseStatusUpdateSolver()}
       />,
       {
         ...renderOptions,

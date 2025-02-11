@@ -540,11 +540,13 @@ namespace Pims.Api
             services.AddScoped<IAcquisitionStatusSolver, AcquisitionStatusSolver>();
             services.AddScoped<IDispositionFileService, DispositionFileService>();
             services.AddScoped<IDispositionStatusSolver, DispositionStatusSolver>();
+            services.AddScoped<ILeaseStatusSolver, LeaseStatusSolver>();
             services.AddScoped<IPropertyOperationService, PropertyOperationService>();
             services.AddScoped<ITakeInteractionSolver, TakeInteractionSolver>();
             services.AddScoped<IDocumentQueueService, DocumentQueueService>();
             services.AddScoped<IEnvironmentService, EnvironmentService>();
             services.AddScoped<IDocumentQueueService, DocumentQueueService>();
+            services.AddScoped<IResearchStatusSolver, ResearchStatusSolver>();
         }
 
         /// <summary>
