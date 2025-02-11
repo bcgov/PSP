@@ -192,7 +192,6 @@ export const CompensationListContainer: React.FC<ICompensationListContainerProps
       financials: [],
       compReqPayees: [],
       acquisitionFile: null,
-      legacyPayee: null,
       isPaymentInTrust: null,
       gstNumber: null,
       compReqLeaseStakeholders: null,
