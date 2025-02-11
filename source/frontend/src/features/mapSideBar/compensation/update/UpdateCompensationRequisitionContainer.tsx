@@ -57,7 +57,7 @@ const UpdateCompensationRequisitionContainer: React.FC<
 
   const {
     getAcquisitionInterestHolders: {
-      execute: fetchInterestHolders,
+      execute: fetchAcquisitionInterestHolders,
       loading: loadingInterestHolders,
     },
   } = useInterestHolderRepository();
@@ -106,46 +106,71 @@ const UpdateCompensationRequisitionContainer: React.FC<
 
   const fetchPayeeOptions = useCallback(async () => {
     if (file.id) {
-      const acquisitionOwnersCall = retrieveAcquisitionOwners(file.id);
-      const interestHoldersCall = fetchInterestHolders(file.id);
+      switch (fileType) {
+        case ApiGen_CodeTypes_FileTypes.Acquisition:
+          {
+            const acquisitionOwnersCall = retrieveAcquisitionOwners(file.id);
+            const interestHoldersCall = fetchAcquisitionInterestHolders(file.id);
 
-      await Promise.all([acquisitionOwnersCall, interestHoldersCall]).then(
-        ([acquisitionOwners, interestHolders]) => {
-          const options = payeeOptions ?? [];
+            await Promise.all([acquisitionOwnersCall, interestHoldersCall]).then(
+              ([acquisitionOwners, interestHolders]) => {
+                const options = payeeOptions ?? [];
 
-          if (acquisitionOwners !== undefined) {
-            const ownersOptions: PayeeOption[] = acquisitionOwners.map(x =>
-              PayeeOption.createOwner(x, getEmptyCompReqPayee(compensation.id)),
+                if (acquisitionOwners !== undefined) {
+                  const ownersOptions: PayeeOption[] = acquisitionOwners.map(x =>
+                    PayeeOption.createOwner(x, getEmptyCompReqPayee(compensation.id)),
+                  );
+                  options.push(...ownersOptions);
+                }
+
+                if (interestHolders !== undefined) {
+                  const interestHolderOptions: PayeeOption[] = interestHolders.map(x =>
+                    PayeeOption.createInterestHolder(x, getEmptyCompReqPayee(compensation.id)),
+                  );
+                  options.push(...interestHolderOptions);
+                }
+
+                const teamMemberOptions: PayeeOption[] =
+                  (file as ApiGen_Concepts_AcquisitionFile).acquisitionTeam
+                    ?.filter(
+                      (x): x is ApiGen_Concepts_AcquisitionFileTeam =>
+                        exists(x) && x.teamProfileTypeCode === 'MOTILAWYER',
+                    )
+                    .map(x =>
+                      PayeeOption.createTeamMember(x, getEmptyCompReqPayee(compensation.id)),
+                    ) || [];
+                options.push(...teamMemberOptions);
+
+                if (compensation.legacyPayee) {
+                  options.push(PayeeOption.createLegacyPayee(compensation, null, compensation.id));
+                }
+
+                setPayeeOptions(options);
+              },
             );
-            options.push(...ownersOptions);
           }
-
-          if (interestHolders !== undefined) {
-            const interestHolderOptions: PayeeOption[] = interestHolders.map(x =>
-              PayeeOption.createInterestHolder(x, getEmptyCompReqPayee(compensation.id)),
+          break;
+        case ApiGen_CodeTypes_FileTypes.Lease:
+          {
+            const leaseStakeHolders = await getLeaseStakeholders(file.id);
+            const stakeHoldersOptions = leaseStakeHolders.map(x =>
+              PayeeOption.createLeaseStakeholder(compensation.id, x),
             );
-            options.push(...interestHolderOptions);
+
+            setPayeeOptions(stakeHoldersOptions);
           }
-
-          const teamMemberOptions: PayeeOption[] =
-            (file as ApiGen_Concepts_AcquisitionFile).acquisitionTeam
-              ?.filter(
-                (x): x is ApiGen_Concepts_AcquisitionFileTeam =>
-                  exists(x) && x.teamProfileTypeCode === 'MOTILAWYER',
-              )
-              .map(x => PayeeOption.createTeamMember(x, getEmptyCompReqPayee(compensation.id))) ||
-            [];
-          options.push(...teamMemberOptions);
-
-          if (compensation.legacyPayee) {
-            options.push(PayeeOption.createLegacyPayee(compensation, null, compensation.id));
-          }
-
-          setPayeeOptions(options);
-        },
-      );
+          break;
+      }
     }
-  }, [file, retrieveAcquisitionOwners, fetchInterestHolders, compensation, payeeOptions]);
+  }, [
+    file,
+    fileType,
+    retrieveAcquisitionOwners,
+    fetchAcquisitionInterestHolders,
+    payeeOptions,
+    compensation,
+    getLeaseStakeholders,
+  ]);
 
   const fetchFinancialCodes = useCallback(async () => {
     const fetchFinancialActivitiesCall = fetchFinancialActivities();
