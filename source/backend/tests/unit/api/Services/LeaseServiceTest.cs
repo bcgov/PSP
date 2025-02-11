@@ -748,6 +748,11 @@ namespace Pims.Api.Test.Services
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
             userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.GetCurrentLeaseStatus(It.IsAny<string>())).Returns(LeaseStatusTypes.ACTIVE);
+            solver.Setup(x => x.CanEditDetails(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+            solver.Setup(x => x.CanEditProperties(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             propertyService.Setup(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), false));
 
@@ -796,6 +801,11 @@ namespace Pims.Api.Test.Services
 
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             propertyService.Setup(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), false));
+
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.GetCurrentLeaseStatus(It.IsAny<string>())).Returns(LeaseStatusTypes.ACTIVE);
+            solver.Setup(x => x.CanEditDetails(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+            solver.Setup(x => x.CanEditProperties(It.IsAny<LeaseStatusTypes?>())).Returns(true);
 
             lease.PimsLeaseRenewals = new List<PimsLeaseRenewal>()
             {

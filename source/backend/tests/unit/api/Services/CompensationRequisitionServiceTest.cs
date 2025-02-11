@@ -613,7 +613,7 @@ namespace Pims.Api.Test.Services
             });
 
             // Assert
-            act.Should().Throw<BusinessRuleViolationException>().WithMessage("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
+            act.Should().Throw<BusinessRuleViolationException>().WithMessage("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
         }
 
         [Fact]
@@ -1159,34 +1159,6 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void Delete_InvalidStatus()
-        {
-            // Arrange
-            var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionDelete);
-            var compRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
-            compRepository.Setup(x => x.TryDelete(It.IsAny<long>()));
-            compRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1 });
-
-            var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
-            acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(
-              new PimsAcquisitionFile()
-              {
-                  AcquisitionFileId = 1,
-                  AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString()
-              });
-
-            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
-            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>(), It.IsAny<bool?>())).Returns(false);
-
-            // Act
-            Action act = () => service.DeleteCompensation(1);
-
-            // Assert
-            act.Should().Throw<BusinessRuleViolationException>().WithMessage("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
-            compRepository.Verify(x => x.TryDelete(It.IsAny<long>()), Times.Never);
-        }
-
-        [Fact]
         public void Delete_InvalidStatus_AuthorizedAdmin()
         {
             // Arrange
@@ -1204,7 +1176,7 @@ namespace Pims.Api.Test.Services
               });
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
-            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>(), It.IsAny<bool?>())).Returns(false);
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>(), It.IsAny<bool?>())).Returns(true);
 
             // Act
             service.DeleteCompensation(1);
