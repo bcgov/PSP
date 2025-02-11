@@ -335,9 +335,10 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   color: #474543;
 }
 
-.c0.collapsed svg:first-of-type {
+.c0.collapsed .row:first svg {
   width: 2.6rem;
   height: 2.6rem;
+  margin-right: 0;
 }
 
 .c0.expanded {
@@ -354,7 +355,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   overflow: hidden;
 }
 
-.c0.expanded svg {
+.c0.expanded h1 svg {
   width: 2.8rem;
   height: 2.8rem;
 }
@@ -3206,9 +3207,10 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
   color: #474543;
 }
 
-.c0.collapsed svg:first-of-type {
+.c0.collapsed .row:first svg {
   width: 2.6rem;
   height: 2.6rem;
+  margin-right: 0;
 }
 
 .c0.expanded {
@@ -3225,7 +3227,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
   overflow: hidden;
 }
 
-.c0.expanded svg {
+.c0.expanded h1 svg {
   width: 2.8rem;
   height: 2.8rem;
 }
