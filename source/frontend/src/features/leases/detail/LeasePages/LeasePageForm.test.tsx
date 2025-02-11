@@ -1,63 +1,94 @@
+import { screen } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
 import { LeasePageNames } from '@/features/mapSideBar/lease/LeaseContainer';
+import { LeaseStateContext } from '../../context/LeaseContext';
 import LeaseViewPageForm, { ILeasePageFormProps } from './LeasePageForm';
+import { Claims, Roles } from '@/constants';
+import { getMockApiLease } from '@/mocks/lease.mock';
 import noop from 'lodash/noop';
-
 import { RenderOptions, render } from '@/utils/test-utils';
-import { Claims } from '@/constants/claims';
-import Roles from '@/constants/roles';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
+import { toTypeCode } from '@/utils/formUtils';
 
-import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
-import { getDefaultFormLease, LeaseFormModel } from '@/features/leases/models';
-
-const onEdit = vi.fn();
-
-describe('LeasePageForm component', () => {
-  // render component under test
-  const setup = async (
-    renderOptions: RenderOptions & {
-      props?: Partial<ILeasePageFormProps>;
-    } = {},
-  ) => {
-    const utils = render(
-      <LeaseStateContext.Provider
-        value={{
-          lease: LeaseFormModel.toApi({ ...getDefaultFormLease(), id: 1 }),
-          setLease: noop,
-        }}
-      >
-        <LeaseViewPageForm
-          onEdit={onEdit}
-          leasePageName={renderOptions.props?.leasePageName ?? LeasePageNames.DETAILS}
-          isEditing={false}
-        >
-          <p>Dummy child</p>
-        </LeaseViewPageForm>
-      </LeaseStateContext.Provider>,
-      {
-        useMockAuthentication: true,
-        claims: renderOptions?.claims ?? [],
-        roles: renderOptions?.roles ?? [Roles.SYSTEM_ADMINISTRATOR],
-        ...renderOptions,
-      },
-    );
-
-    return {
-      ...utils,
-      getEditButton: (pageName: string) =>
-        utils.container.querySelector(`button#edit-${pageName}-btn`) as HTMLElement,
-    };
+const setup = (
+  renderOptions: RenderOptions & {
+    props?: Partial<ILeasePageFormProps>;
+    lease?: ApiGen_Concepts_Lease;
+  } = {},
+) => {
+  const defaultProps: ILeasePageFormProps = {
+    leasePageName: LeasePageNames.DETAILS,
+    isEditing: false,
+    onEdit: vi.fn(),
+    ...renderOptions.props,
   };
 
-  it('matches snapshot', async () => {
-    const { asFragment } = await setup({ claims: [Claims.LEASE_EDIT] });
+  return render(
+    <LeaseStateContext.Provider
+      value={{ lease: renderOptions?.lease ?? getMockApiLease(), setLease: noop }}
+    >
+      <LeaseViewPageForm {...defaultProps} />
+    </LeaseStateContext.Provider>,
+    {
+      ...renderOptions,
+      claims: renderOptions?.claims ?? [Claims.LEASE_ADD],
+      roles: renderOptions.roles,
+    },
+  );
+};
 
-    expect(asFragment()).toMatchSnapshot();
+describe('LeaseViewPageForm', () => {
+  it('renders', () => {
+    setup();
   });
 
-  it('renders the child and edit button', async () => {
-    const { getByText, getEditButton } = await setup({ claims: [Claims.LEASE_EDIT] });
+  it('renders edit button when user has permission', () => {
+    setup({
+      props: {
+        leasePageName: LeasePageNames.DETAILS,
+        isEditing: false,
+      },
+      roles: [Roles.SYSTEM_ADMINISTRATOR],
+      claims: [Claims.LEASE_EDIT],
+      lease: {
+        ...getMockApiLease(),
+        fileStatusTypeCode: toTypeCode(ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE),
+      },
+    });
 
-    expect(getByText('Dummy child')).toBeInTheDocument();
-    expect(getEditButton('details')).toBeInTheDocument();
+    expect(screen.getByTitle('lease-edit')).toBeInTheDocument();
+  });
+
+  it('renders tooltip when user does not have permission to edit', () => {
+    setup({
+      props: {
+        leasePageName: LeasePageNames.DETAILS,
+        isEditing: false,
+      },
+      roles: [],
+    });
+
+    expect(
+      screen.getByTestId(/tooltip-icon-lease-actions-cannot-edit-tooltip/i),
+    ).toBeInTheDocument();
+  });
+
+  it('renders tooltip when user does not have permission to edit due to ', () => {
+    setup({
+      props: {
+        leasePageName: LeasePageNames.DETAILS,
+        isEditing: false,
+      },
+      roles: [],
+      lease: {
+        ...getMockApiLease(),
+        fileStatusTypeCode: toTypeCode(ApiGen_CodeTypes_LeaseStatusTypes.TERMINATED),
+      },
+    });
+
+    expect(
+      screen.getByTestId(/tooltip-icon-lease-actions-cannot-edit-tooltip/i),
+    ).toBeInTheDocument();
   });
 });

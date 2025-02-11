@@ -6,6 +6,9 @@ import { getAllByRole as getAllByRoleBase, render, RenderOptions } from '@/utils
 import DepositsReceivedContainer, {
   IDepositsReceivedContainerProps,
 } from './DepositsReceivedContainer';
+import { LeaseStatusUpdateSolver } from '@/features/leases/models/LeaseStatusUpdateSolver';
+import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
+import { toTypeCode } from '@/utils/formUtils';
 
 const mockVoidCallback = (): void => {};
 const mockCallback = (id: number): void => {};
@@ -19,6 +22,9 @@ const setup = (renderOptions: RenderOptions & IDepositsReceivedContainerProps) =
       onEdit={mockCallback}
       onDelete={mockCallback}
       onReturn={mockCallback}
+      statusSolver={
+        new LeaseStatusUpdateSolver(toTypeCode(ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE))
+      }
     />,
     {
       ...renderOptions,

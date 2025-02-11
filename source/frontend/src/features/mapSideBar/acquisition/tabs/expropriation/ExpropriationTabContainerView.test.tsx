@@ -23,6 +23,7 @@ describe('Expropriation Tab Container View', () => {
         acquisitionFile={renderOptions.props?.acquisitionFile ?? getMockExpropriationFile()}
         form8s={renderOptions.props?.form8s ?? []}
         onForm8Deleted={vi.fn()}
+        isFileFinalStatus={renderOptions?.props?.isFileFinalStatus ?? false}
       />,
       {
         ...renderOptions,
@@ -64,5 +65,17 @@ describe('Expropriation Tab Container View', () => {
     expect(queryByTestId('form-5-section')).not.toBeInTheDocument();
     expect(queryByTestId('form-8-section')).toBeInTheDocument();
     expect(queryByTestId('form-9-section')).not.toBeInTheDocument();
+  });
+
+  it('displays tooltip instead of add button when file in final status', async () => {
+    const { queryByTestId, queryByText } = await setup({
+      props: {
+        acquisitionFile: getMockExpropriationFile(EnumAcquisitionFileType.SECTN3),
+        isFileFinalStatus: true,
+      },
+    });
+
+    expect(queryByText('Add Form 8')).toBeNull();
+    expect(queryByTestId('tooltip-icon-deposit-notes-cannot-edit-tooltip')).toBeVisible();
   });
 });

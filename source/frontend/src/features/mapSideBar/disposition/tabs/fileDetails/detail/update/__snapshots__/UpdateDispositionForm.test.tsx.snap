@@ -811,6 +811,11 @@ exports[`UpdateDispositionForm component > renders as expected 1`] = `
                 required=""
               >
                 <option
+                  value=""
+                >
+                  N/A
+                </option>
+                <option
                   class="option"
                   data-testid="select-option-LISTED"
                   value="LISTED"

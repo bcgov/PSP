@@ -347,6 +347,61 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void AddCompensationsRequisitions_FinalFile_Acquisition()
+        {
+            // Arrange
+            var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionAdd);
+            var repository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            var acqFilerepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            var newCompensationReq = EntityHelper.CreateCompensationRequisition(1, 1);
+            var acquisitionFile = EntityHelper.CreateAcquisitionFile(1);
+
+            acqFilerepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acquisitionFile);
+            repository.Setup(x => x.Add(It.IsAny<PimsCompensationRequisition>())).Returns(newCompensationReq);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>(), It.IsAny<bool?>())).Returns(false);
+
+            newCompensationReq.AcquisitionFileId = 100;
+            // Act
+            Action act = () => service.AddCompensationRequisition(FileTypes.Acquisition, newCompensationReq);
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+        }
+
+        [Fact]
+        public void AddCompensationsRequisitions_FinalFile_Lease()
+        {
+            // Arrange
+            var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionAdd);
+            var repository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            var acqFilerepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            var newCompensationReq = EntityHelper.CreateCompensationRequisition(1);
+            newCompensationReq.LeaseId = 1;
+            var acquisitionFile = EntityHelper.CreateAcquisitionFile(1);
+
+            acqFilerepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acquisitionFile);
+            repository.Setup(x => x.Add(It.IsAny<PimsCompensationRequisition>())).Returns(newCompensationReq);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<LeaseStatusTypes?>(), It.IsAny<bool?>(), It.IsAny<bool?>())).Returns(false);
+
+            newCompensationReq.AcquisitionFileId = 100;
+            // Act
+            Action act = () => service.AddCompensationRequisition(FileTypes.Lease, newCompensationReq);
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+        }
+
+        [Fact]
         public void AddCompensationsRequisitions_Success()
         {
             // Arrange
@@ -361,6 +416,9 @@ namespace Pims.Api.Test.Services
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>(), It.IsAny<bool?>())).Returns(true);
 
             newCompensationReq.AcquisitionFileId = 1;
             newCompensationReq.LeaseId = null;
@@ -462,7 +520,7 @@ namespace Pims.Api.Test.Services
             });
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
-            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(true);
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>(), It.IsAny<bool?>())).Returns(true);
 
             // Act
             var result = service.Update(
@@ -504,7 +562,7 @@ namespace Pims.Api.Test.Services
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = true });
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
-            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(true);
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>(), It.IsAny<bool?>())).Returns(true);
 
 
             // Act
@@ -543,7 +601,7 @@ namespace Pims.Api.Test.Services
               });
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
-            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(false);
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>(), It.IsAny<bool?>())).Returns(false);
 
             // Act
             Action act = () => service.Update(FileTypes.Acquisition, new PimsCompensationRequisition()
@@ -555,7 +613,7 @@ namespace Pims.Api.Test.Services
             });
 
             // Assert
-            act.Should().Throw<BusinessRuleViolationException>().WithMessage("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
+            act.Should().Throw<BusinessRuleViolationException>().WithMessage("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
         }
 
         [Fact]
@@ -577,7 +635,7 @@ namespace Pims.Api.Test.Services
               });
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
-            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(false);
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>(), It.IsAny<bool?>())).Returns(false);
 
             // Act
             Action act = () => service.Update(FileTypes.Acquisition, new PimsCompensationRequisition()
@@ -614,7 +672,7 @@ namespace Pims.Api.Test.Services
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = true });
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
-            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(false);
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>(), It.Is<bool>(b => b == true))).Returns(true);
 
             // Act
             var result = service.Update(FileTypes.Acquisition, new PimsCompensationRequisition()
@@ -655,7 +713,7 @@ namespace Pims.Api.Test.Services
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = null });
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
-            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(false);
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>(), It.Is<bool>(b => b == true))).Returns(true);
 
             // Act
             var result = service.Update(FileTypes.Acquisition, new PimsCompensationRequisition()
@@ -695,7 +753,7 @@ namespace Pims.Api.Test.Services
                 .Returns(new PimsCompensationRequisition { Internal_Id = 1, AcquisitionFileId = 1, IsDraft = null });
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
-            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(true);
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>(), It.IsAny<bool?>())).Returns(true);
 
             // Act
             var result = service.Update(FileTypes.Acquisition, new PimsCompensationRequisition()
@@ -739,7 +797,7 @@ namespace Pims.Api.Test.Services
             });
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
-            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(true);
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>(), It.IsAny<bool?>())).Returns(true);
 
             // Act
             var result = service.Update(FileTypes.Acquisition, new PimsCompensationRequisition()
@@ -783,7 +841,7 @@ namespace Pims.Api.Test.Services
             });
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
-            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(true);
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>(), It.IsAny<bool?>())).Returns(true);
 
             // Act
             var result = service.Update(FileTypes.Acquisition, new PimsCompensationRequisition()
@@ -825,7 +883,7 @@ namespace Pims.Api.Test.Services
             });
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
-            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(true);
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>(), It.IsAny<bool?>())).Returns(true);
 
             // Act
             var result = service.Update(FileTypes.Acquisition, new PimsCompensationRequisition()
@@ -868,7 +926,7 @@ namespace Pims.Api.Test.Services
             });
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
-            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(true);
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>(), It.IsAny<bool?>())).Returns(true);
 
 
             // Act
@@ -912,7 +970,7 @@ namespace Pims.Api.Test.Services
             });
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
-            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(true);
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>(), It.IsAny<bool?>())).Returns(true);
 
             // Act
             // Assert
@@ -1039,7 +1097,7 @@ namespace Pims.Api.Test.Services
               });
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
-            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(true);
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>(), It.IsAny<bool?>())).Returns(true);
 
             // Act
             var result = service.DeleteCompensation(1);
@@ -1049,7 +1107,7 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void Delete_InvalidStatus()
+        public void Delete_Acquisition_FinalFile()
         {
             // Arrange
             var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionDelete);
@@ -1061,19 +1119,43 @@ namespace Pims.Api.Test.Services
             acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(
               new PimsAcquisitionFile()
               {
-                  AcquisitionFileId = 1,
                   AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString()
               });
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
-            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(false);
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>(), It.IsAny<bool?>())).Returns(false);
 
             // Act
             Action act = () => service.DeleteCompensation(1);
 
             // Assert
-            act.Should().Throw<BusinessRuleViolationException>().WithMessage("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
-            compRepository.Verify(x => x.TryDelete(It.IsAny<long>()), Times.Never);
+            act.Should().Throw<BusinessRuleViolationException>("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+        }
+
+        [Fact]
+        public void Delete_Lease_FinalFile()
+        {
+            // Arrange
+            var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionDelete);
+            var compRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            compRepository.Setup(x => x.TryDelete(It.IsAny<long>()));
+            compRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsCompensationRequisition { Internal_Id = 1, LeaseId = 1 });
+
+            var leaseFileRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            leaseFileRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(
+              new PimsLease()
+              {
+                 LeaseStatusTypeCode = LeaseStatusTypes.ACTIVE.ToString()
+              });
+
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<LeaseStatusTypes?>(), It.IsAny<bool?>(), It.IsAny<bool?>())).Returns(false);
+
+            // Act
+            Action act = () => service.DeleteCompensation(1);
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
         }
 
         [Fact]
@@ -1094,7 +1176,7 @@ namespace Pims.Api.Test.Services
               });
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
-            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(false);
+            solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>(), It.IsAny<bool?>())).Returns(true);
 
             // Act
             service.DeleteCompensation(1);

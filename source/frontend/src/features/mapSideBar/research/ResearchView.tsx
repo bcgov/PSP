@@ -103,6 +103,7 @@ const ResearchView: React.FunctionComponent<IResearchViewProps> = props => {
               onEdit={() => {
                 props.setIsShowingPropertySelector(true);
               }}
+              researchFile={props.researchFile}
             />
           }
           bodyComponent={
