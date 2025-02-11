@@ -1,7 +1,6 @@
 ﻿using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
-using PIMS.Tests.Automation.PageObjects;
 using System.Data;
 
 namespace PIMS.Tests.Automation.StepDefinitions
@@ -639,46 +638,46 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 DataTable dispositionFileChecklistSheet = ExcelDataContext.GetInstance().Sheets["DispositionChecklist"]!;
                 ExcelDataContext.PopulateInCollection(dispositionFileChecklistSheet);
 
-                dispositionFile.DispositionFileChecklist.FileInitiationSelect1 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "FileInitiationSelect1");
-                dispositionFile.DispositionFileChecklist.FileInitiationSelect2 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "FileInitiationSelect2");
-                dispositionFile.DispositionFileChecklist.FileInitiationSelect3 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "FileInitiationSelect3");
-                dispositionFile.DispositionFileChecklist.FileInitiationSelect4 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "FileInitiationSelect4");
-                dispositionFile.DispositionFileChecklist.FileInitiationSelect5 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "FileInitiationSelect5");
+                dispositionFile.DispositionFileChecklist.FileInitiationSelect1 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispFileInitiationSelect1");
+                dispositionFile.DispositionFileChecklist.FileInitiationSelect2 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispFileInitiationSelect2");
+                dispositionFile.DispositionFileChecklist.FileInitiationSelect3 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispFileInitiationSelect3");
+                dispositionFile.DispositionFileChecklist.FileInitiationSelect4 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispFileInitiationSelect4");
+                dispositionFile.DispositionFileChecklist.FileInitiationSelect5 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispFileInitiationSelect5");
 
-                dispositionFile.DispositionFileChecklist.DispositionPreparationSelect1 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispositionPreparationSelect1");
-                dispositionFile.DispositionFileChecklist.DispositionPreparationSelect2 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispositionPreparationSelect2");
-                dispositionFile.DispositionFileChecklist.DispositionPreparationSelect3 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispositionPreparationSelect3");
-                dispositionFile.DispositionFileChecklist.DispositionPreparationSelect4 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispositionPreparationSelect4");
+                dispositionFile.DispositionFileChecklist.DispositionPreparationSelect1 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispDispositionPreparationSelect1");
+                dispositionFile.DispositionFileChecklist.DispositionPreparationSelect2 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispDispositionPreparationSelect2");
+                dispositionFile.DispositionFileChecklist.DispositionPreparationSelect3 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispDispositionPreparationSelect3");
+                dispositionFile.DispositionFileChecklist.DispositionPreparationSelect4 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispDispositionPreparationSelect4");
 
-                dispositionFile.DispositionFileChecklist.ReferralsAndConsultationsSelect1 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "ReferralsAndConsultationsSelect1");
-                dispositionFile.DispositionFileChecklist.ReferralsAndConsultationsSelect2 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "ReferralsAndConsultationsSelect2");
-                dispositionFile.DispositionFileChecklist.ReferralsAndConsultationsSelect3 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "ReferralsAndConsultationsSelect3");
-                dispositionFile.DispositionFileChecklist.ReferralsAndConsultationsSelect4 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "ReferralsAndConsultationsSelect4");
-                dispositionFile.DispositionFileChecklist.ReferralsAndConsultationsSelect5 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "ReferralsAndConsultationsSelect5");
-                dispositionFile.DispositionFileChecklist.ReferralsAndConsultationsSelect6 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "ReferralsAndConsultationsSelect6");
-                dispositionFile.DispositionFileChecklist.ReferralsAndConsultationsSelect7 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "ReferralsAndConsultationsSelect7");
+                dispositionFile.DispositionFileChecklist.ReferralsAndConsultationsSelect1 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispReferralsAndConsultationsSelect1");
+                dispositionFile.DispositionFileChecklist.ReferralsAndConsultationsSelect2 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispReferralsAndConsultationsSelect2");
+                dispositionFile.DispositionFileChecklist.ReferralsAndConsultationsSelect3 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispReferralsAndConsultationsSelect3");
+                dispositionFile.DispositionFileChecklist.ReferralsAndConsultationsSelect4 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispReferralsAndConsultationsSelect4");
+                dispositionFile.DispositionFileChecklist.ReferralsAndConsultationsSelect5 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispReferralsAndConsultationsSelect5");
+                dispositionFile.DispositionFileChecklist.ReferralsAndConsultationsSelect6 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispReferralsAndConsultationsSelect6");
+                dispositionFile.DispositionFileChecklist.ReferralsAndConsultationsSelect7 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispReferralsAndConsultationsSelect7");
 
-                dispositionFile.DispositionFileChecklist.DirectSaleRoadClosureSelect1 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DirectSaleRoadClosureSelect1");
-                dispositionFile.DispositionFileChecklist.DirectSaleRoadClosureSelect2 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DirectSaleRoadClosureSelect2");
-                dispositionFile.DispositionFileChecklist.DirectSaleRoadClosureSelect3 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DirectSaleRoadClosureSelect3");
-                dispositionFile.DispositionFileChecklist.DirectSaleRoadClosureSelect4 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DirectSaleRoadClosureSelect4");
-                dispositionFile.DispositionFileChecklist.DirectSaleRoadClosureSelect5 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DirectSaleRoadClosureSelect5");
-                dispositionFile.DispositionFileChecklist.DirectSaleRoadClosureSelect6 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DirectSaleRoadClosureSelect6");
-                dispositionFile.DispositionFileChecklist.DirectSaleRoadClosureSelect7 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DirectSaleRoadClosureSelect7");
-                dispositionFile.DispositionFileChecklist.DirectSaleRoadClosureSelect8 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DirectSaleRoadClosureSelect8");
-                dispositionFile.DispositionFileChecklist.DirectSaleRoadClosureSelect9 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DirectSaleRoadClosureSelect9");
+                dispositionFile.DispositionFileChecklist.DirectSaleRoadClosureSelect1 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispDirectSaleRoadClosureSelect1");
+                dispositionFile.DispositionFileChecklist.DirectSaleRoadClosureSelect2 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispDirectSaleRoadClosureSelect2");
+                dispositionFile.DispositionFileChecklist.DirectSaleRoadClosureSelect3 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispDirectSaleRoadClosureSelect3");
+                dispositionFile.DispositionFileChecklist.DirectSaleRoadClosureSelect4 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispDirectSaleRoadClosureSelect4");
+                dispositionFile.DispositionFileChecklist.DirectSaleRoadClosureSelect5 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispDirectSaleRoadClosureSelect5");
+                dispositionFile.DispositionFileChecklist.DirectSaleRoadClosureSelect6 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispDirectSaleRoadClosureSelect6");
+                dispositionFile.DispositionFileChecklist.DirectSaleRoadClosureSelect7 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispDirectSaleRoadClosureSelect7");
+                dispositionFile.DispositionFileChecklist.DirectSaleRoadClosureSelect8 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispDirectSaleRoadClosureSelect8");
+                dispositionFile.DispositionFileChecklist.DirectSaleRoadClosureSelect9 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispDirectSaleRoadClosureSelect9");
 
-                dispositionFile.DispositionFileChecklist.SaleInformationSelect1 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "SaleInformationSelect1");
-                dispositionFile.DispositionFileChecklist.SaleInformationSelect2 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "SaleInformationSelect2");
-                dispositionFile.DispositionFileChecklist.SaleInformationSelect3 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "SaleInformationSelect3");
-                dispositionFile.DispositionFileChecklist.SaleInformationSelect4 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "SaleInformationSelect4");
-                dispositionFile.DispositionFileChecklist.SaleInformationSelect5 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "SaleInformationSelect5");
-                dispositionFile.DispositionFileChecklist.SaleInformationSelect6 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "SaleInformationSelect6");
-                dispositionFile.DispositionFileChecklist.SaleInformationSelect7 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "SaleInformationSelect7");
-                dispositionFile.DispositionFileChecklist.SaleInformationSelect8 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "SaleInformationSelect8");
-                dispositionFile.DispositionFileChecklist.SaleInformationSelect9 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "SaleInformationSelect9");
-                dispositionFile.DispositionFileChecklist.SaleInformationSelect10 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "SaleInformationSelect10");
-                dispositionFile.DispositionFileChecklist.SaleInformationSelect11 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "SaleInformationSelect11");
+                dispositionFile.DispositionFileChecklist.SaleInformationSelect1 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispSaleInformationSelect1");
+                dispositionFile.DispositionFileChecklist.SaleInformationSelect2 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispSaleInformationSelect2");
+                dispositionFile.DispositionFileChecklist.SaleInformationSelect3 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispSaleInformationSelect3");
+                dispositionFile.DispositionFileChecklist.SaleInformationSelect4 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispSaleInformationSelect4");
+                dispositionFile.DispositionFileChecklist.SaleInformationSelect5 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispSaleInformationSelect5");
+                dispositionFile.DispositionFileChecklist.SaleInformationSelect6 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispSaleInformationSelect6");
+                dispositionFile.DispositionFileChecklist.SaleInformationSelect7 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispSaleInformationSelect7");
+                dispositionFile.DispositionFileChecklist.SaleInformationSelect8 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispSaleInformationSelect8");
+                dispositionFile.DispositionFileChecklist.SaleInformationSelect9 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispSaleInformationSelect9");
+                dispositionFile.DispositionFileChecklist.SaleInformationSelect10 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispSaleInformationSelect10");
+                dispositionFile.DispositionFileChecklist.SaleInformationSelect11 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispSaleInformationSelect11");
             }
 
             // Disposition Offer and Sales - Appraisal & Assessment
