@@ -28,6 +28,11 @@ jobs:
         with:
           dotnet-version: 8.0.x
 
+      - name: Install SSH Client
+        uses: webfactory/ssh-agent@v0.2.0
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_KEY }}
+
       - name: Install Chrome Browser
         run: |
           sudo apt update
@@ -53,5 +58,6 @@ jobs:
         if: always()
         uses: JamesIves/github-pages-deploy-action@v4.5.0
         with:
+          SSH: true
           branch: gh-pages
           folder: ./testing/PIMS.Tests.Automation/Reports/Extent Reports
