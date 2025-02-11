@@ -11,16 +11,7 @@ import { mockAcquisitionFileResponse, mockLookups } from '@/mocks/index.mock';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { toTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
-import {
-  act,
-  getByTestId,
-  queryByTestId,
-  render,
-  RenderOptions,
-  userEvent,
-  waitFor,
-  waitForEffects,
-} from '@/utils/test-utils';
+import { act, render, RenderOptions, userEvent, waitFor, waitForEffects } from '@/utils/test-utils';
 
 import CompensationListView, { ICompensationListViewProps } from './CompensationListView';
 import { ApiGen_CodeTypes_AcquisitionStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionStatusTypes';
@@ -40,7 +31,12 @@ const onUpdateTotalCompensation = vi.fn();
 const mockAcquisitionfile = mockAcquisitionFileResponse();
 
 describe('compensation list view', () => {
-  const setup = (renderOptions?: RenderOptions & Partial<ICompensationListViewProps>) => {
+  const setup = (
+    renderOptions?: RenderOptions &
+      Partial<ICompensationListViewProps> & {
+        fileStatus?: ApiGen_CodeTypes_AcquisitionStatusTypes;
+      },
+  ) => {
     // render component under test
     const component = render(
       <CompensationListView
@@ -54,7 +50,7 @@ describe('compensation list view', () => {
         onUpdateTotalCompensation={onUpdateTotalCompensation}
         statusUpdateSolver={
           new AcquisitionFileStatusUpdateSolver(
-            toTypeCode(ApiGen_CodeTypes_AcquisitionStatusTypes.ACTIVE),
+            toTypeCode(renderOptions?.fileStatus ?? ApiGen_CodeTypes_AcquisitionStatusTypes.ACTIVE),
           )
         }
       />,
@@ -266,6 +262,24 @@ describe('compensation list view', () => {
       compensationsResults: compensations,
       claims: [Claims.COMPENSATION_REQUISITION_DELETE],
       roles: [Roles.SYSTEM_ADMINISTRATOR],
+    });
+
+    const icon = queryByTestId('tooltip-icon-1-summary-cannot-edit-tooltip');
+    expect(icon).toBeVisible();
+  });
+
+  it('displays warning icon if file in final state', async () => {
+    const compensations = [getMockApiCompensationList()[0]];
+    compensations[0].isDraft = true;
+    const { queryByTestId } = setup({
+      file: {
+        ...mockAcquisitionFileResponse(),
+        fileStatusTypeCode: toTypeCode(ApiGen_CodeTypes_AcquisitionStatusTypes.COMPLT),
+      },
+      compensationsResults: compensations,
+      claims: [Claims.COMPENSATION_REQUISITION_DELETE],
+      roles: [Roles.SYSTEM_ADMINISTRATOR],
+      fileStatus: ApiGen_CodeTypes_AcquisitionStatusTypes.COMPLT,
     });
 
     const icon = queryByTestId('tooltip-icon-1-summary-cannot-edit-tooltip');

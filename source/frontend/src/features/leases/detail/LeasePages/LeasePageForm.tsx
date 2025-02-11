@@ -34,13 +34,13 @@ export const LeaseViewPageForm: React.FunctionComponent<
     return (
       lease &&
       leasePageName === LeasePageNames.DETAILS &&
-      (lease.fileStatusTypeCode.id === ApiGen_CodeTypes_LeaseStatusTypes.DISCARD ||
-        lease.fileStatusTypeCode.id === ApiGen_CodeTypes_LeaseStatusTypes.TERMINATED)
+      (lease.fileStatusTypeCode?.id === ApiGen_CodeTypes_LeaseStatusTypes.DISCARD ||
+        lease.fileStatusTypeCode?.id === ApiGen_CodeTypes_LeaseStatusTypes.TERMINATED)
     );
   };
 
   const getTerminationMessage = (): string => {
-    if (lease.fileStatusTypeCode.id === ApiGen_CodeTypes_LeaseStatusTypes.DISCARD) {
+    if (lease.fileStatusTypeCode?.id === ApiGen_CodeTypes_LeaseStatusTypes.DISCARD) {
       return lease.cancellationReason;
     } else {
       return lease.terminationReason;

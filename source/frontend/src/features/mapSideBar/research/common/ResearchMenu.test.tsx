@@ -3,6 +3,8 @@ import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-uti
 
 import ResearchMenu, { IResearchMenuProps } from './ResearchMenu';
 import { getMockResearchFile } from '@/mocks/researchFile.mock';
+import { toTypeCode } from '@/utils/formUtils';
+import { ApiGen_CodeTypes_ResearchFileStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_ResearchFileStatusTypes';
 
 // mock auth library
 
@@ -122,5 +124,25 @@ describe('ResearchMenu component', () => {
 
     const button = queryByTitle('Change properties');
     expect(button).toBeNull();
+  });
+
+  it(`doesn't render the edit button and displays tooltip for files in final status`, () => {
+    const { queryByTitle, queryByTestId } = setup(
+      {
+        items: testItems,
+        selectedIndex: 1,
+        onChange,
+        onEdit,
+        researchFile: {
+          ...getMockResearchFile(),
+          fileStatusTypeCode: toTypeCode(ApiGen_CodeTypes_ResearchFileStatusTypes.CLOSED),
+        },
+      },
+      { claims: [Claims.RESEARCH_VIEW] }, // no edit permissions, just view.
+    );
+
+    const button = queryByTitle('Change properties');
+    expect(button).toBeNull();
+    expect(queryByTestId('tooltip-icon-1-summary-cannot-edit-tooltip'));
   });
 });

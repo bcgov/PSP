@@ -18,13 +18,14 @@ const mockViewProps: IAgreementViewProps = {
 };
 
 describe('AgreementView component', () => {
-  const setup = (renderOptions: RenderOptions = {}) => {
+  const setup = (renderOptions: RenderOptions & { props?: Partial<IAgreementViewProps> } = {}) => {
     const utils = render(
       <AgreementView
         loading={mockViewProps.loading}
         agreements={mockViewProps.agreements}
         onGenerate={mockViewProps.onGenerate}
         onDelete={mockViewProps.onDelete}
+        isFileFinalStatus={renderOptions?.props?.isFileFinalStatus ?? false}
       />,
       {
         store: {
@@ -81,5 +82,20 @@ describe('AgreementView component', () => {
     expect(
       screen.getByText(/You have selected to delete this Agreement/i, { exact: false }),
     ).toBeVisible();
+  });
+
+  it('displays warning tooltips instead of edit/add buttons when file in final status', async () => {
+    const { queryByText } = setup({
+      claims: [Claims.ACQUISITION_EDIT],
+      props: { isFileFinalStatus: true },
+    });
+
+    const removeButton = queryByText(/Delete Agreement/i);
+    expect(removeButton).toBeNull();
+
+    const editButton = queryByText(/Edit Agreement/i);
+    expect(removeButton).toBeNull();
+
+    expect(screen.getByTestId(/tooltip-icon-agreement-cannot-add-tooltip/i)).toBeVisible();
   });
 });

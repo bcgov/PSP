@@ -160,4 +160,23 @@ describe('DispositionMenu component', () => {
     expect(button).toBeNull();
     expect(icon).toBeVisible();
   });
+
+  it(`it renders the warning icon instead of the edit button when file in final state`, () => {
+    const { queryByTitle, queryByTestId } = setup(
+      {
+        dispositionFile: {
+          ...mockDispositionFileResponse(),
+          fileStatusTypeCode: toTypeCode(ApiGen_CodeTypes_DispositionFileStatusTypes.COMPLETE),
+        },
+        items: testData,
+        selectedIndex: 1,
+      },
+      { claims: [Claims.DISPOSITION_EDIT] },
+    );
+
+    const button = queryByTitle('Change properties');
+    const icon = queryByTestId('tooltip-icon-1-summary-cannot-edit-tooltip');
+    expect(button).toBeNull();
+    expect(icon).toBeVisible();
+  });
 });

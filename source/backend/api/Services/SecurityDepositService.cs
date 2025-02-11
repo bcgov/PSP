@@ -103,13 +103,14 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
             ValidateDeletionRules(deposit);
 
-            var securityDeposit = _securityDepositRepository.Update(deposit);
-            var currentLease = _leaseService.GetById(securityDeposit.LeaseId);
+            var currentLease = _leaseService.GetById(deposit.LeaseId);
             var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease?.LeaseStatusTypeCode);
             if (!_leaseStatusSolver.CanEditDeposits(currentLeaseStatus))
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
+
+            _securityDepositRepository.Update(deposit);
 
             bool deleted = _securityDepositRepository.Delete(deposit.SecurityDepositId);
             _securityDepositRepository.CommitTransaction();

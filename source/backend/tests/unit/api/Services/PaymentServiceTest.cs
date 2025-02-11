@@ -10,6 +10,7 @@ using Pims.Dal.Repositories;
 using Pims.Core.Security;
 using Xunit;
 using static Pims.Dal.Entities.PimsLeasePaymentStatusType;
+using Pims.Core.Exceptions;
 
 namespace Pims.Api.Test.Services
 {
@@ -68,6 +69,31 @@ namespace Pims.Api.Test.Services
 
             // Assert
             this.leasePaymentRepository.Verify(x => x.Add(payment), Times.Once);
+        }
+
+        [Fact]
+        public void AddPayment_FinalFile()
+        {
+            // Arrange
+            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit, Permissions.LeaseView);
+
+            var lease = EntityHelper.CreateLease(1);
+            this.helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
+            var period = new PimsLeasePeriod() { PeriodStartDate = DateTime.Now, PeriodExpiryDate = DateTime.Now.AddDays(10) };
+
+            this.MockCommonServices();
+            this.LeasePeriodRepository.Setup(x => x.GetById(It.IsAny<long>(), true)).Returns(period);
+
+            var solver = this.helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.CanEditPayments(It.IsAny<LeaseStatusTypes?>())).Returns(false);
+
+            // Act
+            var payment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now, LeasePaymentCategoryTypeCode = LeasePaymentCategoryTypes.BASE.ToString() };
+
+            Action act = () => this.paymentService.AddPayment(lease.Internal_Id, payment);
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
         }
 
         [Fact]
@@ -153,6 +179,32 @@ namespace Pims.Api.Test.Services
 
             // Assert
             this.leasePaymentRepository.Verify(x => x.Update(payment), Times.Once);
+        }
+
+        [Fact]
+        public void UpdatePayment_FinalFile()
+        {
+            // Arrange
+            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit, Permissions.LeaseView);
+
+            var lease = EntityHelper.CreateLease(1);
+            var originalPayment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now };
+            var period = new PimsLeasePeriod() { PeriodStartDate = DateTime.Now, PeriodExpiryDate = DateTime.Now.AddDays(10) };
+            this.helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
+
+            this.MockCommonServices();
+            this.LeasePeriodRepository.Setup(x => x.GetById(It.IsAny<long>(), true)).Returns(period);
+
+            var solver = this.helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.CanEditPayments(It.IsAny<LeaseStatusTypes?>())).Returns(false);
+
+            // Act
+            var payment = new PimsLeasePayment() { LeasePaymentId = originalPayment.LeasePaymentId, PaymentReceivedDate = DateTime.Now, LeasePaymentCategoryTypeCode = LeasePaymentCategoryTypes.BASE.ToString() };
+
+            Action act = () => this.paymentService.UpdatePayment(lease.Internal_Id, 1, payment);
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
         }
 
         [Fact]
@@ -259,6 +311,30 @@ namespace Pims.Api.Test.Services
 
             // Assert
             this.leasePaymentRepository.Verify(x => x.Delete(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void DeletePayment_FinalFile()
+        {
+            // Arrange
+            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit, Permissions.LeaseView);
+
+            var lease = EntityHelper.CreateLease(1);
+            var period = new PimsLeasePeriod() { PeriodStartDate = DateTime.Now, PeriodExpiryDate = DateTime.Now.AddDays(10) };
+            this.helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
+
+            this.MockCommonServices();
+
+            var solver = this.helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.CanEditPayments(It.IsAny<LeaseStatusTypes?>())).Returns(false);
+
+            // Act
+            var payment = new PimsLeasePayment();
+
+            Action act = () => this.paymentService.DeletePayment(lease.Internal_Id, payment);
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
         }
         #endregion
         #endregion

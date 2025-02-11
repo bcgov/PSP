@@ -145,6 +145,35 @@ namespace Pims.Api.Test.Services
 
         #region UpdateProperties
         [Fact]
+        public void UpdateProperties_Fail_InvalidState()
+        {
+            // Arrange
+            var property = EntityHelper.CreateProperty(12345);
+            var researchFile = EntityHelper.CreateResearchFile(1);
+            researchFile.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>()
+            {
+                new () { Internal_Id = 1, Property = property, PimsPrfPropResearchPurposeTypes = new List<PimsPrfPropResearchPurposeType>() { new PimsPrfPropResearchPurposeType() { } } }
+            };
+
+            var updatedResearchFile = EntityHelper.CreateResearchFile(1);
+            updatedResearchFile.PimsPropertyResearchFiles.Clear();
+
+            var service = this.CreateResearchFileServiceWithPermissions(Permissions.ResearchFileEdit, Permissions.PropertyView, Permissions.PropertyAdd);
+            var repository = this._helper.GetService<Mock<IResearchFileRepository>>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(researchFile);
+
+            var solver = this._helper.GetService<Mock<IResearchStatusSolver>>();
+            solver.Setup(x => x.CanEditProperties(It.IsAny<ResearchFileStatusTypes?>())).Returns(false);
+
+            // Act
+            Action act = () => service.UpdateProperties(updatedResearchFile, new List<UserOverrideCode>());
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>().WithMessage("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+        }
+
+        [Fact]
         public void UpdateProperties_RemovePropertyFile_Success()
         {
             // Arrange
@@ -634,6 +663,28 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void Update_FinalState()
+        {
+            // Arrange
+            var service = this.CreateResearchFileServiceWithPermissions(Permissions.ResearchFileEdit);
+
+            var researchFile = EntityHelper.CreateResearchFile(1);
+
+            var repository = this._helper.GetService<Mock<IResearchFileRepository>>();
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(researchFile);
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+
+            var solver = this._helper.GetService<Mock<IResearchStatusSolver>>();
+            solver.Setup(x => x.CanEditDetails(It.IsAny<ResearchFileStatusTypes?>())).Returns(false);
+
+            // Act
+            Action act = () => service.Update(researchFile);
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+        }
+
+        [Fact]
         public void Update_ThrowIf_Null()
         {
             // Arrange
@@ -723,6 +774,33 @@ namespace Pims.Api.Test.Services
             // Assert
             noteEntityRepositoryMock.Verify(x => x.Add(It.IsAny<PimsResearchFileNote>()), Times.Never());
         }
+        #endregion
+
+        #region UpdateProperty
+
+        #region Update
+        [Fact]
+        public void UpdateProperty_Success()
+        {
+            // Arrange
+
+            var service = this.CreateResearchFileServiceWithPermissions(Permissions.ResearchFileEdit);
+            var researchFile = EntityHelper.CreateResearchFile(1);
+
+            var repository = this._helper.GetService<Mock<IResearchFileRepository>>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(researchFile);
+
+            var solver = this._helper.GetService<Mock<IResearchStatusSolver>>();
+            solver.Setup(x => x.CanEditDetails(It.IsAny<ResearchFileStatusTypes?>())).Returns(true);
+
+            // Act
+            Action act = () => service.UpdateProperty(1, 1, new());
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+        }
+        #endregion
         #endregion
 
         #endregion

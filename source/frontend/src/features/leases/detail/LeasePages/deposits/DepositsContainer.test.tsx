@@ -34,10 +34,11 @@ const setup = (renderOptions: RenderOptions & { lease?: LeaseFormModel } = {}): 
   const result = render(
     <LeaseStateContext.Provider
       value={{
-        lease: {
-          ...getMockApiLease(),
-          fileStatusTypeCode: toTypeCode(ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE),
-        },
+        lease: renderOptions?.lease
+          ? LeaseFormModel.toApi(renderOptions?.lease)
+          : {
+              ...getMockApiLease(),
+            },
         setLease: noop,
       }}
     >
@@ -100,6 +101,7 @@ describe('DepositsContainer', () => {
     const { getByText, getByTestId, container } = await setup({
       lease: {
         ...new LeaseFormModel(),
+        statusTypeCode: ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE,
         id: 1,
         returnNotes: '',
         securityDeposits: getMockDeposits().map(s => FormLeaseDeposit.fromApi(s)),

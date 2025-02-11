@@ -1079,6 +1079,25 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void AddConsultation_FinalFile()
+        {
+            // Arrange
+            var service = this.CreateLeaseService(Permissions.LeaseEdit);
+            var consultationRepository = this._helper.GetService<Mock<IConsultationRepository>>();
+
+            consultationRepository.Setup(x => x.AddConsultation(It.IsAny<PimsLeaseConsultation>())).Returns(new PimsLeaseConsultation());
+
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.CanEditOrDeleteConsultation(It.IsAny<LeaseStatusTypes?>())).Returns(false);
+
+            // Act
+            Action act = () => service.AddConsultation(new PimsLeaseConsultation());
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+        }
+
+        [Fact]
         public void Update_Consultation_NoPermission()
         {
             // Arrange
@@ -1093,6 +1112,25 @@ namespace Pims.Api.Test.Services
             // Assert
             act.Should().Throw<NotAuthorizedException>();
             consultationRepository.Verify(x => x.UpdateConsultation(It.IsAny<PimsLeaseConsultation>()), Times.Never);
+        }
+
+        [Fact]
+        public void Update_Consultation_FinalFile()
+        {
+            // Arrange
+            var service = this.CreateLeaseService(Permissions.LeaseEdit);
+            var consultationRepository = this._helper.GetService<Mock<IConsultationRepository>>();
+
+            consultationRepository.Setup(x => x.UpdateConsultation(It.IsAny<PimsLeaseConsultation>())).Returns(new PimsLeaseConsultation());
+
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.CanEditOrDeleteConsultation(It.IsAny<LeaseStatusTypes?>())).Returns(false);
+
+            // Act
+            Action act = () => service.UpdateConsultation(new PimsLeaseConsultation());
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
         }
 
         [Fact]
@@ -1132,6 +1170,28 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void Delete_Consultation_FinalFile()
+        {
+            // Arrange
+            var service = this.CreateLeaseService(Permissions.LeaseEdit);
+            var consultationRepository = this._helper.GetService<Mock<IConsultationRepository>>();
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+
+            consultationRepository.Setup(x => x.TryDeleteConsultation(It.IsAny<long>())).Returns(true);
+            consultationRepository.Setup(x => x.GetConsultationById(It.IsAny<long>())).Returns(EntityHelper.CreateLeaseConsultationItem());
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
+
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.CanEditOrDeleteConsultation(It.IsAny<LeaseStatusTypes?>())).Returns(false);
+
+            // Act
+            Action act = () => service.DeleteConsultation(1);
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+        }
+
+        [Fact]
         public void Delete_Consultation_Success()
         {
             // Arrange
@@ -1152,6 +1212,107 @@ namespace Pims.Api.Test.Services
             // Assert
             consultationRepository.Verify(x => x.TryDeleteConsultation(It.IsAny<long>()), Times.Once);
             result.Should().BeTrue();
+        }
+        #endregion
+
+        #region Insurance
+        [Fact]
+        public void UpdateInsurance_FinalFile()
+        {
+            // Arrange
+            var service = this.CreateLeaseService(Permissions.LeaseEdit);
+            var insuranceRepository = this._helper.GetService<Mock<IInsuranceRepository>>();
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+
+            var user = EntityHelper.CreateUser("Test");
+            user.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = 1 });
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
+
+            insuranceRepository.Setup(x => x.UpdateLeaseInsurance(It.IsAny<long>(), It.IsAny<IEnumerable<PimsInsurance>>())).Returns(new List<PimsInsurance>());
+
+            // Act
+            Action act = () => service.UpdateInsuranceByLeaseId(1, new List<PimsInsurance>());
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+        }
+        #endregion
+
+        #region Improvements
+        [Fact]
+        public void UpdateImprovements_FinalFile()
+        {
+            // Arrange
+            var service = this.CreateLeaseService(Permissions.LeaseEdit);
+            var improvementsRepository = this._helper.GetService<Mock<IPropertyImprovementRepository>>();
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+
+            var user = EntityHelper.CreateUser("Test");
+            user.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = 1 });
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
+
+            improvementsRepository.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<IEnumerable<PimsPropertyImprovement>>())).Returns(new List<PimsPropertyImprovement>());
+
+            // Act
+            Action act = () => service.UpdateImprovementsByLeaseId(1, new List<PimsPropertyImprovement>());
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+        }
+        #endregion
+
+        #region Stakeholders
+        [Fact]
+        public void UpdateStakeholders_FinalFile()
+        {
+            // Arrange
+            var service = this.CreateLeaseService(Permissions.LeaseEdit);
+            var stakeholderRepository = this._helper.GetService<Mock<ILeaseStakeholderRepository>>();
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+
+            var user = EntityHelper.CreateUser("Test");
+            user.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = 1 });
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
+
+            stakeholderRepository.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<IEnumerable<PimsLeaseStakeholder>>())).Returns(new List<PimsLeaseStakeholder>());
+
+            // Act
+            Action act = () => service.UpdateStakeholdersByLeaseId(1, new List<PimsLeaseStakeholder>());
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+        }
+        #endregion
+
+        #region Checklists
+        [Fact]
+        public void UpdateChecklists_FinalFile()
+        {
+            // Arrange
+            var service = this.CreateLeaseService(Permissions.LeaseEdit);
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+
+            var user = EntityHelper.CreateUser("Test");
+            user.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = 1 });
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
+
+            // Act
+            Action act = () => service.UpdateChecklistItems(1, new List<PimsLeaseChecklistItem>());
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
         }
         #endregion
 

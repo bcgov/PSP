@@ -10,6 +10,7 @@ using Pims.Dal.Repositories;
 using Pims.Core.Security;
 using Xunit;
 using Pims.Api.Models.CodeTypes;
+using Pims.Core.Exceptions;
 
 namespace Pims.Api.Test.Services
 {
@@ -56,6 +57,27 @@ namespace Pims.Api.Test.Services
 
             // Assert
             leasePeriodRepository.Verify(x => x.Add(period), Times.Once);
+        }
+
+        [Fact]
+        public void AddPeriod_FinalFile()
+        {
+            // Arrange
+            var lease = EntityHelper.CreateLease(1);
+
+            var service = this.CreateLeaseServicePeriodWithPermissions(Permissions.LeaseEdit, Permissions.LeaseView);
+            var leasePeriodRepository = this._helper.GetService<Mock<ILeasePeriodRepository>>();
+
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.CanEditPayments(It.IsAny<LeaseStatusTypes?>())).Returns(false);
+
+            // Act
+            var period = new PimsLeasePeriod() { PeriodStartDate = DateTime.Now, LeaseId = lease.Internal_Id, Lease = lease };
+
+            Action act = () => service.AddPeriod(lease.Internal_Id, period);
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
         }
 
         [Fact]
@@ -161,6 +183,30 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void UpdatePeriod_FinalFile()
+        {
+            // Arrange
+            var lease = EntityHelper.CreateLease(1);
+            var originalTerm = new PimsLeasePeriod() { PeriodStartDate = DateTime.Now, LeaseId = lease.Internal_Id, Lease = lease };
+            lease.PimsLeasePeriods = new List<PimsLeasePeriod>() { originalTerm };
+
+            var service = this.CreateLeaseServicePeriodWithPermissions(Permissions.LeaseEdit, Permissions.LeaseView);
+            var leasePeriodRepository = this._helper.GetService<Mock<ILeasePeriodRepository>>();
+            leasePeriodRepository.Setup(x => x.GetById(It.IsAny<long>(), It.IsAny<bool>())).Returns(originalTerm);
+
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.CanEditPayments(It.IsAny<LeaseStatusTypes?>())).Returns(false);
+
+            // Act
+            var period = new PimsLeasePeriod() { PeriodStartDate = DateTime.Now, LeaseId = lease.Internal_Id, Lease = lease };
+
+            Action act = () => service.UpdatePeriod(lease.Internal_Id, 1, period);
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+        }
+
+        [Fact]
         public void UpdatePeriod_OverlappingDates()
         {
             // Arrange
@@ -225,6 +271,30 @@ namespace Pims.Api.Test.Services
 
             // Assert
             leasePeriodRepository.Verify(x => x.Delete(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void DeletePeriod_FinalFile()
+        {
+            // Arrange
+            var lease = EntityHelper.CreateLease(1);
+            var originalTerm = new PimsLeasePeriod() { PeriodStartDate = DateTime.Now, LeaseId = lease.Internal_Id, Lease = lease };
+            lease.PimsLeasePeriods = new List<PimsLeasePeriod>() { originalTerm };
+
+            var service = this.CreateLeaseServicePeriodWithPermissions(Permissions.LeaseEdit);
+            var leasePeriodRepository = this._helper.GetService<Mock<ILeasePeriodRepository>>();
+            leasePeriodRepository.Setup(x => x.GetById(It.IsAny<long>(), It.IsAny<bool>())).Returns(originalTerm);
+
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.CanEditPayments(It.IsAny<LeaseStatusTypes?>())).Returns(false);
+
+            // Act
+            var period = new PimsLeasePeriod() { PeriodStartDate = DateTime.Now, LeaseId = lease.Internal_Id, Lease = lease };
+
+            Action act = () => service.DeletePeriod(lease.Internal_Id, period);
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
         }
 
         [Fact]

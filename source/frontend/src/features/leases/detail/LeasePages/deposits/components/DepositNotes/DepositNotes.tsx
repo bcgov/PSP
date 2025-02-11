@@ -8,14 +8,13 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionListHeader } from '@/components/common/SectionListHeader';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { Claims } from '@/constants/index';
-import { LeaseStatusUpdateSolver } from '@/features/leases/models/LeaseStatusUpdateSolver';
 import SaveCancelButtons from '@/features/leases/SaveCancelButtons';
 import { cannotEditMessage } from '@/features/mapSideBar/acquisition/common/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 
 export interface IDepositNotesProps {
   disabled?: boolean;
-  statusSolver?: LeaseStatusUpdateSolver;
+  isFileFinalStatus: boolean;
   onSave: (notes: string) => Promise<void>;
   onEdit: () => void;
   onCancel: () => void;
@@ -27,7 +26,7 @@ export interface IDepositNotesProps {
  */
 export const DepositNotes: FunctionComponent<PropsWithChildren<IDepositNotesProps>> = ({
   disabled,
-  statusSolver,
+  isFileFinalStatus,
   onEdit,
   onSave,
   onCancel,
@@ -58,7 +57,7 @@ export const DepositNotes: FunctionComponent<PropsWithChildren<IDepositNotesProp
                 toolTip={cannotEditMessage}
               />
             }
-            isAddEnabled={statusSolver?.canEditDeposits()}
+            isAddEnabled={!isFileFinalStatus}
           />
         ) : (
           <span>Deposit Comments</span>

@@ -22,7 +22,6 @@ import { createRef } from 'react';
 import PeriodPaymentsContainer from './PeriodPaymentsContainer';
 import { defaultTestFormLeasePayment } from './table/payments/PaymentsView.test';
 import { createMemoryHistory } from 'history';
-import { ApiGen_CodeTypes_LeaseStakeholderTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStakeholderTypes';
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 
 const defaultRepositoryResponse = {

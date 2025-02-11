@@ -16,11 +16,11 @@ namespace Pims.Api.Services
             switch (researchStatus)
             {
                 case ResearchFileStatusTypes.ACTIVE:
+                case ResearchFileStatusTypes.INACTIVE:
                     canEdit = true;
                     break;
                 case ResearchFileStatusTypes.ARCHIVED:
                 case ResearchFileStatusTypes.CLOSED:
-                case ResearchFileStatusTypes.INACTIVE:
                     canEdit = false;
                     break;
                 default:
@@ -42,11 +42,11 @@ namespace Pims.Api.Services
             switch (researchStatus)
             {
                 case ResearchFileStatusTypes.ACTIVE:
+                case ResearchFileStatusTypes.INACTIVE:
                     canEdit = true;
                     break;
                 case ResearchFileStatusTypes.ARCHIVED:
                 case ResearchFileStatusTypes.CLOSED:
-                case ResearchFileStatusTypes.INACTIVE:
                     canEdit = false;
                     break;
                 default:

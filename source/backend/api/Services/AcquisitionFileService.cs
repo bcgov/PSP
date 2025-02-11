@@ -456,7 +456,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.AgreementView);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
 
-            ValidateAcquisitionFileStatusForAgreement(acquisitionFileId, agreement.AgreementStatusTypeCode);
+            ValidateAcquisitionFileStatusForAgreement(acquisitionFileId);
 
             var newAgreement = _agreementRepository.AddAgreement(agreement);
             _agreementRepository.CommitTransaction();
@@ -492,9 +492,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.AgreementView);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
 
-            var currentAgreement = _agreementRepository.GetAgreementById(agreement.AgreementId);
-
-            ValidateAcquisitionFileStatusForAgreement(acquisitionFileId, currentAgreement.AgreementStatusTypeCode);
+            ValidateAcquisitionFileStatusForAgreement(acquisitionFileId);
 
             var updatedAgreement = _agreementRepository.UpdateAgreement(agreement);
             _agreementRepository.CommitTransaction();
@@ -507,9 +505,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.AgreementView);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
 
-            var agreement = _agreementRepository.GetAgreementById(agreementId);
-
-            ValidateAcquisitionFileStatusForAgreement(acquisitionFileId, agreement.AgreementStatusTypeCode);
+            ValidateAcquisitionFileStatusForAgreement(acquisitionFileId);
 
             bool deleteResult = _agreementRepository.TryDeleteAgreement(acquisitionFileId, agreementId);
             _agreementRepository.CommitTransaction();
@@ -762,7 +758,7 @@ namespace Pims.Api.Services
             }
         }
 
-        private void ValidateAcquisitionFileStatusForAgreement(long acquisitionFileId, string agreementCurrentStatusTypeCode)
+        private void ValidateAcquisitionFileStatusForAgreement(long acquisitionFileId)
         {
             var currentAcquisitionStatus = GetCurrentAcquisitionStatus(acquisitionFileId);
 

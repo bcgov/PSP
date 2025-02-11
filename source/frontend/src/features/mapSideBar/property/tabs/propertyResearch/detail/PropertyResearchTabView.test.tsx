@@ -45,6 +45,16 @@ describe('PropertyResearchTabView component', () => {
     });
     expect(asFragment()).toMatchSnapshot();
   });
+
+  it('does not render edit icon, but does render a warning tooltip when file in final state', () => {
+    const { getByTestId, queryByTitle } = setup({
+      researchFileProperty: fakePropertyResearch,
+      setEditMode,
+      isFileFinalStatus: true,
+    });
+    expect(queryByTitle('Edit Property Research')).toBeNull();
+    expect(getByTestId('tooltip-icon-property-research-cannot-edit-tooltip')).toBeVisible();
+  });
 });
 
 const fakePropertyResearch: ApiGen_Concepts_ResearchFileProperty = {

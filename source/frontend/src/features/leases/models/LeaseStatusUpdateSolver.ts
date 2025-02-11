@@ -7,7 +7,7 @@ import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen
 export class LeaseStatusUpdateSolver
   implements IUpdateCompensationStrategy, IUpdateChecklistStrategy
 {
-  constructor(private readonly fileStatus: ApiGen_Base_CodeType<string> | null = null) {
+  constructor(readonly fileStatus: ApiGen_Base_CodeType<string> | null = null) {
     this.fileStatus = fileStatus;
   }
 

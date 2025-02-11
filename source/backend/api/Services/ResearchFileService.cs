@@ -119,14 +119,14 @@ namespace Pims.Api.Services
 
             ValidateVersion(researchFile.Internal_Id, researchFile.ConcurrencyControlNumber);
 
-            MatchProperties(researchFile, userOverrideCodes);
-
             var currentResearchFile = _researchFileRepository.GetById(researchFile.ResearchFileId);
             var currentResearchStatus = _researchStatusSolver.GetCurrentResearchStatus(currentResearchFile?.ResearchFileStatusTypeCode);
             if (!_researchStatusSolver.CanEditProperties(currentResearchStatus))
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
+
+            MatchProperties(researchFile, userOverrideCodes);
 
             // Get the current properties in the research file
             var currentFileProperties = _researchFilePropertyRepository.GetAllByResearchFileId(researchFile.Internal_Id);

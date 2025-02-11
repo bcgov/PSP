@@ -225,7 +225,7 @@ export const DepositsContainer: React.FunctionComponent<
             <DepositNotes
               disabled={!editNotes}
               onEdit={() => setEditNotes(true)}
-              statusSolver={statusSolver}
+              isFileFinalStatus={!statusSolver?.canEditDeposits()}
               onSave={async (notes: string) => {
                 lease?.id && (await updateSecurityDepositNote(lease.id, notes));
                 setEditNotes(false);

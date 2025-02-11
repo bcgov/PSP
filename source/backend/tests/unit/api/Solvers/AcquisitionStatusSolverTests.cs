@@ -67,6 +67,33 @@ namespace Pims.Api.Test.Services
             Assert.Equal(expectedResult, result);
         }
 
+        public static IEnumerable<object[]> CanEditPropertiesParameters =>
+            new List<object[]>
+            {
+                new object[] {null, false},
+                new object[] {AcquisitionStatusTypes.ACTIVE, true},
+                new object[] {AcquisitionStatusTypes.DRAFT, true},
+                new object[] {AcquisitionStatusTypes.ARCHIV, false},
+                new object[] {AcquisitionStatusTypes.CANCEL, false},
+                new object[] {AcquisitionStatusTypes.CLOSED, false},
+                new object[] {AcquisitionStatusTypes.COMPLT, false},
+                new object[] {AcquisitionStatusTypes.HOLD, true},
+            };
+
+        [Theory]
+        [MemberData(nameof(CanEditPropertiesParameters))]
+        public void CanEditProperties_Parametrized(AcquisitionStatusTypes? status, bool expectedResult)
+        {
+            // Arrange
+            var solver = new AcquisitionStatusSolver();
+
+            // Act
+            var result = solver.CanEditProperties(status);
+
+            // Assert
+            Assert.Equal(expectedResult, result);
+        }
+
         public static IEnumerable<object[]> CanEditOrDeleteAgreementParameters =>
             new List<object[]>
             {
@@ -226,6 +253,33 @@ namespace Pims.Api.Test.Services
 
             // Act
             var result = solver.CanEditStakeholders(status);
+
+            // Assert
+            Assert.Equal(expectedResult, result);
+        }
+
+        public static IEnumerable<object[]> CanEditExpropriationParameters =>
+            new List<object[]>
+            {
+                new object[] {null, false},
+                new object[] {AcquisitionStatusTypes.ACTIVE, true},
+                new object[] {AcquisitionStatusTypes.DRAFT, true},
+                new object[] {AcquisitionStatusTypes.ARCHIV, false},
+                new object[] {AcquisitionStatusTypes.CANCEL, false},
+                new object[] {AcquisitionStatusTypes.CLOSED, false},
+                new object[] {AcquisitionStatusTypes.COMPLT, false},
+                new object[] {AcquisitionStatusTypes.HOLD, true},
+            };
+
+        [Theory]
+        [MemberData(nameof(CanEditExpropriationParameters))]
+        public void CanEditExpropriation_Parametrized(AcquisitionStatusTypes? status, bool expectedResult)
+        {
+            // Arrange
+            var solver = new AcquisitionStatusSolver();
+
+            // Act
+            var result = solver.CanEditExpropriation(status);
 
             // Assert
             Assert.Equal(expectedResult, result);
