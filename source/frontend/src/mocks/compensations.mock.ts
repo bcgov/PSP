@@ -29,7 +29,6 @@ export const emptyCompensationRequisition: ApiGen_Concepts_CompensationRequisiti
   compReqLeaseStakeholders: [],
   compReqAcquisitionProperties: [],
   compReqLeaseProperties: [],
-  legacyPayee: null,
   isPaymentInTrust: null,
   gstNumber: null,
   specialInstruction: null,
@@ -666,4 +665,5 @@ export const getMockCompReqPayee = (compReqPayeeId = 1): ApiGen_Concepts_CompReq
   acquisitionOwner: null,
   compensationRequisition: null,
   compensationRequisitionId: null,
+  legacyPayee: null,
 });
