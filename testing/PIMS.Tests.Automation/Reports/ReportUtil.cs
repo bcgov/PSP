@@ -18,7 +18,7 @@ namespace PIMS.Tests.Automation.Reports
 
         public static void ExtentReportInit()
         {
-            ExtentSparkReporter spark = new ExtentSparkReporter(reportPath + "\\PIMS_AutomationReport.html");
+            ExtentSparkReporter spark = new ExtentSparkReporter(reportPath + "/PIMS_AutomationReport.html");
             spark.Config.ReportName = "Automation Status Report";
             spark.Config.DocumentTitle = "Automation Status Report";
             spark.Config.Theme = Theme.Standard;
@@ -32,6 +32,7 @@ namespace PIMS.Tests.Automation.Reports
 
         public static void ExtentReportTearDown()
         {
+
             _extentReports.Flush();
         }
 
