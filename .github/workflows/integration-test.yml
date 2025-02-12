@@ -39,6 +39,9 @@ jobs:
           wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
           sudo apt install -y ./google-chrome-stable_current_amd64.deb
 
+      - name: Create report directory
+        run: mkdir -p ${{github.workspace}}/Reports/Extent_Reports
+
       # - name: Install GeckoDriver
       #   run: |
       #     sudo apt update
