@@ -13,7 +13,7 @@ namespace PIMS.Tests.Automation.Reports
 
         private static String dir = AppDomain.CurrentDomain.BaseDirectory;
         //private static String reportPath = dir.Replace("bin\\Debug\\net8.0", "Reports\\Extent_Reports");
-        private static String reportPath = Path.Combine(Environment.GetEnvironmentVariable("GITHUB_WORKSPACE")!, "Reports\\Extent_Reports");
+        private static String reportPath = Path.Combine(Environment.GetEnvironmentVariable("GITHUB_WORKSPACE")!, "Extent_Reports");
 
 
         public static void ExtentReportInit()
