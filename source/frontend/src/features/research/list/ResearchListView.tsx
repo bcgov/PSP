@@ -21,7 +21,7 @@ import ResearchFilter, { defaultResearchFilter } from './ResearchFilter/Research
 import { ResearchSearchResults } from './ResearchSearchResults/ResearchSearchResults';
 
 /**
- * Page that displays leases information.
+ * Page that displays Research files information.
  */
 export const ResearchListView: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
   const history = useHistory();

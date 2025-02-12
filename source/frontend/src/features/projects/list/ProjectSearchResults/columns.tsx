@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 
 import { ColumnWithProps } from '@/components/Table';
-import { prettyFormatUTCDate } from '@/utils';
+import { UtcDateCell } from '@/components/Table/DateCell';
 
 import { ProjectSearchResultModel } from './models';
 
@@ -68,13 +68,6 @@ export const columns: ColumnWithProps<ProjectSearchResultModel>[] = [
     align: 'left',
     sortable: true,
     width: 10,
-    Cell: (props: CellProps<ProjectSearchResultModel>) => {
-      const updateDate = props.row.original.lastUpdatedDate;
-      return (
-        <>
-          <span>{prettyFormatUTCDate(updateDate)}</span>
-        </>
-      );
-    },
+    Cell: UtcDateCell,
   },
 ];
