@@ -7,9 +7,9 @@ import styled from 'styled-components';
 import { StyledIconButton } from '@/components/common/buttons';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
+import { Scrollable } from '@/components/common/Scrollable/Scrollable';
 import SimplePagination from '@/components/common/SimplePagination';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
-import { Scrollable } from '@/features/projects/styles';
 import { exists, isValidId, pidParser, pinParser } from '@/utils';
 
 import { LayerPopupContent } from './components/LayerPopupContent';

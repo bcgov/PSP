@@ -8,6 +8,7 @@ import { InlineFlexDiv } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { ColumnWithProps, renderDate, renderMoney } from '@/components/Table';
 import Claims from '@/constants/claims';
+import { cannotEditMessage } from '@/features/mapSideBar/acquisition/common/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_Contact } from '@/models/api/generated/ApiGen_Concepts_Contact';
 import { ApiGen_Concepts_SecurityDeposit } from '@/models/api/generated/ApiGen_Concepts_SecurityDeposit';
@@ -60,12 +61,21 @@ function renderHolder({
 }
 
 function depositActions(
+  isFileFinalStatus: boolean,
   onEdit: (id: number) => void,
   onDelete: (id: number) => void,
   onReturn: (id: number) => void,
 ) {
   return function ({ row: { original, index } }: CellProps<DepositListEntry, string>) {
     const { hasClaim } = useKeycloakWrapper();
+    if (isFileFinalStatus) {
+      return (
+        <TooltipIcon
+          toolTipId={`deposit-actions-cannot-edit-tooltip`}
+          toolTip={cannotEditMessage}
+        />
+      );
+    }
     return (
       <InlineFlexDiv>
         {hasClaim(Claims.LEASE_EDIT) && original.depositReturnCount > 0 && (
@@ -101,12 +111,14 @@ export interface IPaymentColumnProps {
   onEdit: (id: number) => void;
   onDelete: (id: number) => void;
   onReturn: (id: number) => void;
+  isFileFinalStatus?: boolean;
 }
 
 export const getColumns = ({
   onEdit,
   onDelete,
   onReturn,
+  isFileFinalStatus,
 }: IPaymentColumnProps): ColumnWithProps<DepositListEntry>[] => {
   return [
     {
@@ -143,7 +155,7 @@ export const getColumns = ({
       Header: 'Actions',
       align: 'right',
       maxWidth: 30,
-      Cell: depositActions(onEdit, onDelete, onReturn),
+      Cell: depositActions(isFileFinalStatus, onEdit, onDelete, onReturn),
     },
   ];
 };

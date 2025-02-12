@@ -32,13 +32,13 @@ const MapSideBarLayout: React.FunctionComponent<
   }, [onClose]);
 
   return (
-    <StyledSidebarWrapper className={mapSideBarViewState.isCollapsed ? '' : 'expanded'}>
+    <StyledSidebarWrapper className={mapSideBarViewState.isCollapsed ? 'collapsed' : 'expanded'}>
       {mapSideBarViewState.isCollapsed ? (
         <>
           <Row>
-            <Col xs={12} className="justify-content-center d-flex">
+            <StyledCollapsedIconWrapper xs={12} className="justify-content-center d-flex">
               {icon}
-            </Col>
+            </StyledCollapsedIconWrapper>
           </Row>
           <Styled.Underline className="mb-4" />
           <Row>
@@ -104,6 +104,14 @@ const MapSideBarLayout: React.FunctionComponent<
 };
 
 const StyledSidebarWrapper = styled.div`
+  &.collapsed .row:first {
+    svg {
+      width: 2.6rem;
+      height: 2.6rem;
+      margin-right: 0;
+    }
+  }
+
   &.expanded {
     min-width: 90rem;
     height: 100%;
@@ -112,9 +120,18 @@ const StyledSidebarWrapper = styled.div`
     display: flex;
     flex-direction: column;
     overflow: hidden;
+
+    h1 svg {
+      width: 2.8rem;
+      height: 2.8rem;
+    }
   }
   padding: 1.6rem;
   color: ${props => props.theme.bcTokens.typographyColorSecondary};
+`;
+
+const StyledCollapsedIconWrapper = styled(Col)`
+  margin-bottom: 0.3rem;
 `;
 
 const StyledButtonBar = styled(Col)`

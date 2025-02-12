@@ -216,7 +216,7 @@ describe('UpdateCompensationRequisition Container component', () => {
     const updatedCompensationModel = new CompensationRequisitionFormModel(1, null, 1, '');
     updatedCompensationModel.detailedRemarks = 'my update';
 
-    updatedCompensationModel.leaseStakeholderId = '2';
+    updatedCompensationModel.leaseStakeholderId = 2;
 
     await act(async () => {
       viewProps?.onSave(updatedCompensationModel);

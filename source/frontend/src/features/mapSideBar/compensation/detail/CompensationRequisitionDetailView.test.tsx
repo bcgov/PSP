@@ -196,6 +196,27 @@ describe('Compensation Detail View Component', () => {
     expect(warningIcon).toBeVisible();
   });
 
+  it('User does not have the option to Edit Compensation when the file is in "FINAL" status', async () => {
+    const acquisition = mockAcquisitionFileResponse();
+    const mockFinalCompensation = getMockApiDefaultCompensation();
+    const { queryByTitle, getByTestId } = await setup({
+      claims: [Claims.COMPENSATION_REQUISITION_EDIT],
+      props: {
+        file: {
+          ...acquisition,
+          fileStatusTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_AcquisitionStatusTypes.DRAFT),
+        },
+        compensation: { ...mockFinalCompensation, isDraft: false },
+        isFileFinalStatus: true,
+      },
+    });
+
+    const editButton = queryByTitle('Edit compensation requisition');
+    expect(editButton).not.toBeInTheDocument();
+    const warningIcon = getByTestId(`tooltip-icon-1-compensation-cannot-edit-tooltip`);
+    expect(warningIcon).toBeVisible();
+  });
+
   it('Admin user should be able to Edit Compensation when is in "FINAL" status', async () => {
     const mockFinalCompensation = getMockApiDefaultCompensation();
     const { queryByTitle } = await setup({

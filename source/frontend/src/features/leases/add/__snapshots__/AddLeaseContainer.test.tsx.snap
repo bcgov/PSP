@@ -302,7 +302,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
   border-bottom: solid 0.2rem;
   width: 100%;
   text-align: left;
-  margin-bottom: 2.4rem;
+  margin-bottom: 1.6rem;
 }
 
 .c5 {
@@ -350,6 +350,12 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
   color: #474543;
 }
 
+.c0.collapsed .row:first svg {
+  width: 2.6rem;
+  height: 2.6rem;
+  margin-right: 0;
+}
+
 .c0.expanded {
   min-width: 90rem;
   height: 100%;
@@ -362,6 +368,11 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
   -ms-flex-direction: column;
   flex-direction: column;
   overflow: hidden;
+}
+
+.c0.expanded h1 svg {
+  width: 2.8rem;
+  height: 2.8rem;
 }
 
 .c2 {
@@ -400,7 +411,8 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
+  font-size: 2.6rem;
 }
 
 .c11 {
@@ -597,12 +609,11 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
             class="mr-2"
           >
             <svg
-              class="mr-2"
               fill="currentColor"
-              height="2.8rem"
+              height="24"
               title="Lease and Licence Icon"
               viewBox="0 0 24 24"
-              width="2.8rem"
+              width="24"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
@@ -692,7 +703,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                 class="no-gutters row"
               >
                 <div
-                  class="col"
+                  class="align-items-end col"
                 >
                   Original Agreement
                 </div>
@@ -1087,7 +1098,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                 class="no-gutters row"
               >
                 <div
-                  class="col"
+                  class="align-items-end col"
                 >
                   Properties to include in this file:
                 </div>
@@ -1628,7 +1639,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                     class="no-gutters row"
                   >
                     <div
-                      class="col"
+                      class="align-items-end col"
                     >
                       Selected properties
                     </div>
@@ -1688,7 +1699,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                 class="no-gutters row"
               >
                 <div
-                  class="col"
+                  class="align-items-end col"
                 >
                   Administration
                 </div>
@@ -1697,7 +1708,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
             <div
               class="collapse show"
             >
-              <h2
+              <div
                 class="c30"
               >
                 <div
@@ -1745,7 +1756,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                     </svg>
                   </div>
                 </div>
-              </h2>
+              </div>
               <div
                 class="c34 collapse"
               >

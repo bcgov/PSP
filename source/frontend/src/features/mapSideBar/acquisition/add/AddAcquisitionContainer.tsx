@@ -197,14 +197,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
     <MapSideBarLayout
       showCloseButton
       title={isSubFile ? 'Create Acquisition Sub-Interest File' : 'Create Acquisition File'}
-      icon={
-        <AcquisitionFileIcon
-          title="Acquisition file Icon"
-          width="2.8rem"
-          height="2.8rem"
-          fill="currentColor"
-        />
-      }
+      icon={<AcquisitionFileIcon title="Acquisition file Icon" fill="currentColor" />}
       onClose={handleCancel}
       footer={
         <SidebarFooter

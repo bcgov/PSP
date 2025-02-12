@@ -24,6 +24,7 @@ describe('PropertyResearchTabView component', () => {
       <PropertyResearchTabView
         researchFileProperty={renderOptions.researchFileProperty}
         setEditMode={renderOptions.setEditMode}
+        isFileFinalStatus={renderOptions.isFileFinalStatus}
       />,
       {
         history,
@@ -37,8 +38,22 @@ describe('PropertyResearchTabView component', () => {
   };
 
   it('renders as expected when provided valid data object', () => {
-    const { asFragment } = setup({ researchFileProperty: fakePropertyResearch, setEditMode });
+    const { asFragment } = setup({
+      researchFileProperty: fakePropertyResearch,
+      setEditMode,
+      isFileFinalStatus: false,
+    });
     expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('does not render edit icon, but does render a warning tooltip when file in final state', () => {
+    const { getByTestId, queryByTitle } = setup({
+      researchFileProperty: fakePropertyResearch,
+      setEditMode,
+      isFileFinalStatus: true,
+    });
+    expect(queryByTitle('Edit Property Research')).toBeNull();
+    expect(getByTestId('tooltip-icon-property-research-cannot-edit-tooltip')).toBeVisible();
   });
 });
 

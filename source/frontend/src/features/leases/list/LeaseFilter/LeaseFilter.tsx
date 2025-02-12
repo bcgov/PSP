@@ -3,14 +3,13 @@ import Multiselect from 'multiselect-react-dropdown';
 import React, { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaTimes } from 'react-icons/fa';
-import styled from 'styled-components';
 
 import { ResetButton, SearchButton } from '@/components/common/buttons';
 import { FastDatePicker, Input } from '@/components/common/form';
 import { UserRegionSelectContainer } from '@/components/common/form/UserRegionSelect/UserRegionSelectContainer';
 import { SelectInput } from '@/components/common/List/SelectInput';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { FilterBoxForm } from '@/components/common/styles';
+import { ColButtons, FilterBoxForm } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { LEASE_PROGRAM_TYPES, LEASE_STATUS_TYPES } from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
@@ -273,7 +272,3 @@ export const LeaseFilter: React.FunctionComponent<React.PropsWithChildren<ILease
 };
 
 export default LeaseFilter;
-
-const ColButtons = styled(Col)`
-  border-left: 2px solid white;
-`;

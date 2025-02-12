@@ -263,6 +263,10 @@ exports[`Lease Filter > matches snapshot 1`] = `
   border-radius: 0.5rem;
 }
 
+.c7 {
+  border-left: 0.2rem solid white;
+}
+
 .c4.required::before {
   content: '*';
   position: absolute;
@@ -272,10 +276,6 @@ exports[`Lease Filter > matches snapshot 1`] = `
 
 .c3 {
   font-weight: bold;
-}
-
-.c7 {
-  border-left: 2px solid white;
 }
 
 <form

@@ -9,6 +9,8 @@ using Moq;
 using Pims.Core.Http;
 using Pims.Core.Http.Configuration;
 using Pims.Core.Test;
+using Polly;
+using Polly.Registry;
 using Xunit;
 
 namespace Pims.Api.Test.Helpers
@@ -36,9 +38,10 @@ namespace Pims.Api.Test.Helpers
             mockOpenIdConnectOptions.Setup(m => m.CurrentValue).Returns(openIdConnectOptions);
             var mockJsonSerializeOptions = new Mock<IOptionsMonitor<JsonSerializerOptions>>();
             var mockLogger = new Mock<ILogger<OpenIdConnectRequestClient>>();
+            var mockPipeline = new Mock<ResiliencePipelineProvider<string>>();
 
             // Act
-            var client = new OpenIdConnectRequestClient(clientFactory, tokenHandler, mockAuthClientOptions.Object, mockOpenIdConnectOptions.Object, mockJsonSerializeOptions.Object, mockLogger.Object);
+            var client = new OpenIdConnectRequestClient(clientFactory, tokenHandler, mockAuthClientOptions.Object, mockOpenIdConnectOptions.Object, mockJsonSerializeOptions.Object, mockLogger.Object, mockPipeline.Object);
 
             // Assert
             Assert.NotNull(client);

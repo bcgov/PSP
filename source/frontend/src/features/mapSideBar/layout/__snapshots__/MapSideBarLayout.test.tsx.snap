@@ -264,6 +264,12 @@ exports[`MapSideBarLayout component > matches snapshot 1`] = `
   color: #474543;
 }
 
+.c0.collapsed .row:first svg {
+  width: 2.6rem;
+  height: 2.6rem;
+  margin-right: 0;
+}
+
 .c0.expanded {
   min-width: 90rem;
   height: 100%;
@@ -276,6 +282,11 @@ exports[`MapSideBarLayout component > matches snapshot 1`] = `
   -ms-flex-direction: column;
   flex-direction: column;
   overflow: hidden;
+}
+
+.c0.expanded h1 svg {
+  width: 2.8rem;
+  height: 2.8rem;
 }
 
 .c2 {

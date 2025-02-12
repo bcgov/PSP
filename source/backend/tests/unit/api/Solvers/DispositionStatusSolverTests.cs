@@ -59,7 +59,7 @@ namespace Pims.Api.Test.Services
             var solver = new DispositionStatusSolver();
 
             // Act
-            var result = solver.CanEditDetails(status);
+            var result = solver.CanEditProperties(status);
 
             // Assert
             Assert.Equal(expectedResult, result);
@@ -85,7 +85,33 @@ namespace Pims.Api.Test.Services
             var solver = new DispositionStatusSolver();
 
             // Act
-            var result = solver.CanEditDetails(status);
+            var result = solver.CanEditOfferSalesValues(status);
+
+            // Assert
+            Assert.Equal(expectedResult, result);
+        }
+
+        public static IEnumerable<object[]> CanEditOrDeleteChecklistsParameters =>
+            new List<object[]>
+            {
+                new object[] {null, false},
+                new object[] {DispositionFileStatusTypes.ACTIVE, true},
+                new object[] {DispositionFileStatusTypes.DRAFT, true},
+                new object[] {DispositionFileStatusTypes.HOLD, true},
+                new object[] {DispositionFileStatusTypes.ARCHIVED, false},
+                new object[] {DispositionFileStatusTypes.CANCELLED, false},
+                new object[] {DispositionFileStatusTypes.COMPLETE, false},
+            };
+
+        [Theory]
+        [MemberData(nameof(CanEditOrDeleteChecklistsParameters))]
+        public void CanEditOrDeleteChecklists_Parametrized(DispositionFileStatusTypes? status, bool expectedResult)
+        {
+            // Arrange
+            var solver = new DispositionStatusSolver();
+
+            // Act
+            var result = solver.CanEditChecklists(status);
 
             // Assert
             Assert.Equal(expectedResult, result);

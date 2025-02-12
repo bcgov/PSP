@@ -2,11 +2,13 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Pims.Core.Http.Configuration;
 using Pims.Keycloak.Configuration;
 using Pims.Tools.Keycloak.Sync.Configuration;
+using Polly.Registry;
 
 namespace Pims.Tools.Keycloak.Sync
 {
@@ -33,6 +35,7 @@ namespace Pims.Tools.Keycloak.Sync
         /// <param name="requestOptions"></param>
         /// <param name="serializerOptions"></param>
         /// <param name="logger"></param>
+        /// <param name="pollyPipelineProvider">The polly retry policy.</param>
         public PimsRequestClient(
             IHttpClientFactory clientFactory,
             JwtSecurityTokenHandler tokenHandler,
@@ -41,8 +44,9 @@ namespace Pims.Tools.Keycloak.Sync
             IOptionsMonitor<ToolOptions> options,
             IOptionsMonitor<RequestOptions> requestOptions,
             IOptionsMonitor<JsonSerializerOptions> serializerOptions,
-            ILogger<RequestClient> logger)
-            : base(clientFactory, tokenHandler, keycloakOptions, openIdConnectOptions, requestOptions, serializerOptions, logger)
+            ILogger<RequestClient> logger,
+            ResiliencePipelineProvider<string> pollyPipelineProvider)
+            : base(clientFactory, tokenHandler, keycloakOptions, openIdConnectOptions, requestOptions, serializerOptions, logger, pollyPipelineProvider)
         {
             this.OpenIdConnectOptions.Token = $"{keycloakOptions.CurrentValue.Authority}{this.OpenIdConnectOptions.Token}";
             _options = options.CurrentValue;

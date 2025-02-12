@@ -6,15 +6,18 @@ import styled from 'styled-components';
 import { StyledSectionAddButton } from '@/components/common/styles';
 import { Claims } from '@/constants/index';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
+import { exists } from '@/utils';
 
 export interface ISectionListHeaderProps {
   title: string;
   addButtonText?: string;
   addButtonIcon?: JSX.Element;
+  cannotAddComponent?: JSX.Element;
   onAdd?: () => void;
   claims: Claims[];
   'data-testId'?: string;
   className?: string;
+  isAddEnabled?: boolean;
 }
 
 export const SectionListHeader: React.FunctionComponent<
@@ -25,16 +28,17 @@ export const SectionListHeader: React.FunctionComponent<
 
   return (
     <StyledRow className={clsx('no-gutters', props.className)}>
-      <Col xs="auto" className="px-2 my-1">
+      <Col xs="auto" className="align-items-end">
         {props.title}
       </Col>
       <Col xs="auto" className="my-1">
-        {hasClaim(props.claims) && props.onAdd && (
+        {hasClaim(props.claims) && exists(props.onAdd) && props.isAddEnabled !== false && (
           <StyledSectionAddButton onClick={onClick} data-testid={props['data-testId']}>
             {props.addButtonIcon}
             &nbsp;{props.addButtonText ?? 'Add'}
           </StyledSectionAddButton>
         )}
+        {!props.isAddEnabled && exists(props.cannotAddComponent) && <>{props.cannotAddComponent}</>}
       </Col>
     </StyledRow>
   );

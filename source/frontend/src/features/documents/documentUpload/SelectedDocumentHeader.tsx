@@ -92,7 +92,7 @@ export const SelectedDocumentHeader: React.FunctionComponent<ISelectedDocumentHe
   }
 
   return (
-    <>
+    <div style={{ fontSize: '1.6rem' }}>
       <Row className={clsx('no-gutters', 'pb-3', className)}>
         <Col>
           <span>File {index + 1}:</span>
@@ -141,7 +141,7 @@ export const SelectedDocumentHeader: React.FunctionComponent<ISelectedDocumentHe
           <StyledPurposeText>{selectedDocumentType}</StyledPurposeText>
         </Row>
       )}
-    </>
+    </div>
   );
 };
 

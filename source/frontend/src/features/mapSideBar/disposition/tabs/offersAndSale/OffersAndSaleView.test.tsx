@@ -35,6 +35,7 @@ describe('Disposition Offer Detail View component', () => {
         dispositionSale={renderOptions.props?.dispositionSale ?? null}
         dispositionAppraisal={renderOptions.props?.dispositionAppraisal ?? null}
         onDispositionOfferDeleted={onDelete}
+        isFileFinalStatus={renderOptions.props?.isFileFinalStatus}
       />,
       {
         ...renderOptions,
@@ -123,6 +124,7 @@ describe('Disposition Offer Detail View component', () => {
           ...(mockDispositionFileResponse() as unknown as ApiGen_Concepts_DispositionFile),
           fileStatusTypeCode: toTypeCode(ApiGen_CodeTypes_DispositionFileStatusTypes.COMPLETE),
         },
+        isFileFinalStatus: true,
       },
       claims: [Claims.DISPOSITION_EDIT],
     });
@@ -191,6 +193,7 @@ describe('Disposition Offer Detail View component', () => {
           ...mockDispositionFileResponse(),
           fileStatusTypeCode: toTypeCode(ApiGen_CodeTypes_DispositionFileStatusTypes.COMPLETE),
         },
+        isFileFinalStatus: true,
       },
       claims: [Claims.DISPOSITION_EDIT],
     });
