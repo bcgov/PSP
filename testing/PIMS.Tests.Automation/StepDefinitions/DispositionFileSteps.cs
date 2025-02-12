@@ -644,10 +644,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 dispositionFile.DispositionFileChecklist.FileInitiationSelect4 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispFileInitiationSelect4");
                 dispositionFile.DispositionFileChecklist.FileInitiationSelect5 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispFileInitiationSelect5");
 
-                dispositionFile.DispositionFileChecklist.DispositionPreparationSelect1 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispDispositionPreparationSelect1");
-                dispositionFile.DispositionFileChecklist.DispositionPreparationSelect2 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispDispositionPreparationSelect2");
-                dispositionFile.DispositionFileChecklist.DispositionPreparationSelect3 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispDispositionPreparationSelect3");
-                dispositionFile.DispositionFileChecklist.DispositionPreparationSelect4 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispDispositionPreparationSelect4");
+                dispositionFile.DispositionFileChecklist.DispositionPreparationSelect1 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispositionPreparationSelect1");
+                dispositionFile.DispositionFileChecklist.DispositionPreparationSelect2 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispositionPreparationSelect2");
+                dispositionFile.DispositionFileChecklist.DispositionPreparationSelect3 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispositionPreparationSelect3");
+                dispositionFile.DispositionFileChecklist.DispositionPreparationSelect4 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispositionPreparationSelect4");
 
                 dispositionFile.DispositionFileChecklist.ReferralsAndConsultationsSelect1 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispReferralsAndConsultationsSelect1");
                 dispositionFile.DispositionFileChecklist.ReferralsAndConsultationsSelect2 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispReferralsAndConsultationsSelect2");
