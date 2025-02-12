@@ -60,4 +60,4 @@ jobs:
         with:
           SSH: true
           branch: gh-pages
-          folder: ./testing/PIMS.Tests.Automation/Reports/Extent Reports
+          folder: ./testing/PIMS.Tests.Automation/Reports/Extent_Reports
