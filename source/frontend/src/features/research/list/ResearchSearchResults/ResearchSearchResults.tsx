@@ -6,9 +6,10 @@ import { ColumnWithProps, DateCell, renderTypeCode, Table } from '@/components/T
 import { TableSort } from '@/components/Table/TableSort';
 import { Claims } from '@/constants/claims';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
-import { ResearchSearchResultModel } from '@/interfaces/IResearchSearchResult';
 import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
 import { stringToFragment } from '@/utils';
+
+import { ResearchSearchResultModel } from '../models';
 
 const columns: ColumnWithProps<ResearchSearchResultModel>[] = [
   {
@@ -21,7 +22,7 @@ const columns: ColumnWithProps<ResearchSearchResultModel>[] = [
     maxWidth: 20,
     Cell: (props: CellProps<ResearchSearchResultModel>) => {
       const { hasClaim } = useKeycloakWrapper();
-      if (hasClaim(Claims.CONTACT_VIEW)) {
+      if (hasClaim(Claims.RESEARCH_VIEW)) {
         return (
           <Link to={`/mapview/sidebar/research/${props.row.original.id}`}>
             {props.row.original.rfileNumber}
