@@ -25,6 +25,7 @@ import {
   screen,
   userEvent,
   waitFor,
+  waitForEffects,
 } from '@/utils/test-utils';
 
 import { PayeeOption } from '../../acquisition/models/PayeeOptionModel';
@@ -129,6 +130,10 @@ describe('Compensation Requisition UpdateForm component', () => {
         utils.container.querySelector(`textarea[name="specialInstruction"]`) as HTMLInputElement,
       getDetailedRemarksTextbox: () =>
         utils.container.querySelector(`textarea[name="detailedRemarks"]`) as HTMLInputElement,
+      getFinancialActivityPreTaxAmountInput: (index = 0) =>
+        utils.container.querySelector(
+          `input[name="financials[${index}].pretaxAmount"]`,
+        ) as HTMLInputElement,
     };
   };
 
@@ -206,6 +211,7 @@ describe('Compensation Requisition UpdateForm component', () => {
         {
           ...emptyCompensationFinancial,
           pretaxAmount: 30000,
+          isGstRequired: true,
           taxAmount: 1500,
           totalAmount: 31500,
         },
@@ -225,6 +231,50 @@ describe('Compensation Requisition UpdateForm component', () => {
     expect(getPayeePreTaxAmount()).toHaveValue('$30,000.00');
     expect(getPayeeTaxAmount()).toHaveValue('$1,500.00');
     expect(getPayeeTotalAmount()).toHaveValue('$31,500.00');
+  });
+
+  it('should update the payment information when modified', async () => {
+    const apiCompensation = getMockApiDefaultCompensation();
+    const compensationWithPayeeInformation = CompensationRequisitionFormModel.fromApi({
+      ...apiCompensation,
+      fiscalYear: '2020',
+      isDraft: true,
+      gstNumber: '9999',
+      isPaymentInTrust: true,
+      financials: [
+        {
+          ...emptyCompensationFinancial,
+          pretaxAmount: 30000,
+          isGstRequired: true,
+          taxAmount: 1500,
+          totalAmount: 31500,
+        },
+      ],
+    });
+
+    const {
+      getPayeePreTaxAmount,
+      getPayeeTaxAmount,
+      getPayeeTotalAmount,
+      getPayeeGSTNumber,
+      getPayeePaymentInTrust,
+      getFinancialActivityPreTaxAmountInput,
+    } = await setup({ props: { initialValues: compensationWithPayeeInformation } });
+
+    expect(getPayeePaymentInTrust()).toBeChecked();
+    expect(getPayeeGSTNumber()).toHaveValue('9999');
+    expect(getPayeePreTaxAmount()).toHaveValue('$30,000.00');
+    expect(getPayeeTaxAmount()).toHaveValue('$1,500.00');
+    expect(getPayeeTotalAmount()).toHaveValue('$31,500.00');
+
+    await act(async () => {
+      fireEvent.change(getFinancialActivityPreTaxAmountInput(), { target: { value: '$100.00' } });
+    });
+    await waitForEffects();
+
+    expect(getPayeePreTaxAmount()).toHaveValue('$100.00');
+    expect(getPayeeTaxAmount()).toHaveValue('$5.00');
+    expect(getPayeeTotalAmount()).toHaveValue('$105.00');
   });
 
   it('should NOT display confirmation modal when saving a compensation with Status as "Draft"', async () => {
