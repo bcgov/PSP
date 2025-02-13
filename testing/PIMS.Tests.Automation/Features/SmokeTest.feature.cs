@@ -82,14 +82,14 @@ namespace PIMS.Tests.Automation.Features
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="01. Individual Contact")]
+        [Xunit.SkippableFactAttribute(DisplayName="01._Individual_Contact")]
         [Xunit.TraitAttribute("FeatureTitle", "SmokeTest")]
-        [Xunit.TraitAttribute("Description", "01. Individual Contact")]
-        public void _01_IndividualContact()
+        [Xunit.TraitAttribute("Description", "01._Individual_Contact")]
+        public void _01__Individual_Contact()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("01. Individual Contact", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("01._Individual_Contact", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 6
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -113,14 +113,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="02. Organization Contact")]
+        [Xunit.SkippableFactAttribute(DisplayName="02._Organization_Contact")]
         [Xunit.TraitAttribute("FeatureTitle", "SmokeTest")]
-        [Xunit.TraitAttribute("Description", "02. Organization Contact")]
-        public void _02_OrganizationContact()
+        [Xunit.TraitAttribute("Description", "02._Organization_Contact")]
+        public void _02__Organization_Contact()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("02. Organization Contact", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("02._Organization_Contact", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 11
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -144,14 +144,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="03. Lease and License Tenants")]
+        [Xunit.SkippableFactAttribute(DisplayName="03._Lease_and_License_Tenants")]
         [Xunit.TraitAttribute("FeatureTitle", "SmokeTest")]
-        [Xunit.TraitAttribute("Description", "03. Lease and License Tenants")]
-        public void _03_LeaseAndLicenseTenants()
+        [Xunit.TraitAttribute("Description", "03._Lease_and_License_Tenants")]
+        public void _03__Lease_And_License_Tenants()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("03. Lease and License Tenants", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("03._Lease_and_License_Tenants", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 16
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -175,14 +175,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="04. Lease and License Improvements")]
+        [Xunit.SkippableFactAttribute(DisplayName="04._Lease_and_License_Improvements")]
         [Xunit.TraitAttribute("FeatureTitle", "SmokeTest")]
-        [Xunit.TraitAttribute("Description", "04. Lease and License Improvements")]
-        public void _04_LeaseAndLicenseImprovements()
+        [Xunit.TraitAttribute("Description", "04._Lease_and_License_Improvements")]
+        public void _04__Lease_And_License_Improvements()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("04. Lease and License Improvements", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("04._Lease_and_License_Improvements", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 21
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -206,14 +206,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="05. Lease and License Insurance")]
+        [Xunit.SkippableFactAttribute(DisplayName="05._Lease_and_License_Insurance")]
         [Xunit.TraitAttribute("FeatureTitle", "SmokeTest")]
-        [Xunit.TraitAttribute("Description", "05. Lease and License Insurance")]
-        public void _05_LeaseAndLicenseInsurance()
+        [Xunit.TraitAttribute("Description", "05._Lease_and_License_Insurance")]
+        public void _05__Lease_And_License_Insurance()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("05. Lease and License Insurance", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("05._Lease_and_License_Insurance", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 26
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -237,14 +237,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="06. Lease and License Deposits")]
+        [Xunit.SkippableFactAttribute(DisplayName="06._Lease_and_License_Deposits")]
         [Xunit.TraitAttribute("FeatureTitle", "SmokeTest")]
-        [Xunit.TraitAttribute("Description", "06. Lease and License Deposits")]
-        public void _06_LeaseAndLicenseDeposits()
+        [Xunit.TraitAttribute("Description", "06._Lease_and_License_Deposits")]
+        public void _06__Lease_And_License_Deposits()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("06. Lease and License Deposits", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("06._Lease_and_License_Deposits", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 31
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -268,14 +268,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="07. Lease and License Payments")]
+        [Xunit.SkippableFactAttribute(DisplayName="07._Lease_and_License_Payments")]
         [Xunit.TraitAttribute("FeatureTitle", "SmokeTest")]
-        [Xunit.TraitAttribute("Description", "07. Lease and License Payments")]
-        public void _07_LeaseAndLicensePayments()
+        [Xunit.TraitAttribute("Description", "07._Lease_and_License_Payments")]
+        public void _07__Lease_And_License_Payments()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("07. Lease and License Payments", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("07._Lease_and_License_Payments", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 36
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -299,14 +299,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="08. Research File Properties")]
+        [Xunit.SkippableFactAttribute(DisplayName="08._Research_File_Properties")]
         [Xunit.TraitAttribute("FeatureTitle", "SmokeTest")]
-        [Xunit.TraitAttribute("Description", "08. Research File Properties")]
-        public void _08_ResearchFileProperties()
+        [Xunit.TraitAttribute("Description", "08._Research_File_Properties")]
+        public void _08__Research_File_Properties()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("08. Research File Properties", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("08._Research_File_Properties", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 41
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -330,14 +330,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="09. Research File Notes")]
+        [Xunit.SkippableFactAttribute(DisplayName="09._Research_File_Notes")]
         [Xunit.TraitAttribute("FeatureTitle", "SmokeTest")]
-        [Xunit.TraitAttribute("Description", "09. Research File Notes")]
-        public void _09_ResearchFileNotes()
+        [Xunit.TraitAttribute("Description", "09._Research_File_Notes")]
+        public void _09__Research_File_Notes()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("09. Research File Notes", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("09._Research_File_Notes", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 46
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -361,14 +361,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="10. Acquisition Checklist Tab")]
+        [Xunit.SkippableFactAttribute(DisplayName="10._Acquisition_Checklist_Tab")]
         [Xunit.TraitAttribute("FeatureTitle", "SmokeTest")]
-        [Xunit.TraitAttribute("Description", "10. Acquisition Checklist Tab")]
-        public void _10_AcquisitionChecklistTab()
+        [Xunit.TraitAttribute("Description", "10._Acquisition_Checklist_Tab")]
+        public void _10__Acquisition_Checklist_Tab()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("10. Acquisition Checklist Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("10._Acquisition_Checklist_Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 51
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -392,14 +392,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="11. Acquisition File Agreements Tab")]
+        [Xunit.SkippableFactAttribute(DisplayName="11._Acquisition_File_Agreements_Tab")]
         [Xunit.TraitAttribute("FeatureTitle", "SmokeTest")]
-        [Xunit.TraitAttribute("Description", "11. Acquisition File Agreements Tab")]
-        public void _11_AcquisitionFileAgreementsTab()
+        [Xunit.TraitAttribute("Description", "11._Acquisition_File_Agreements_Tab")]
+        public void _11__Acquisition_File_Agreements_Tab()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("11. Acquisition File Agreements Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("11._Acquisition_File_Agreements_Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 56
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -423,14 +423,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="12. Acquisition File Compensation Tab")]
+        [Xunit.SkippableFactAttribute(DisplayName="12._Acquisition_File_Compensation_Tab")]
         [Xunit.TraitAttribute("FeatureTitle", "SmokeTest")]
-        [Xunit.TraitAttribute("Description", "12. Acquisition File Compensation Tab")]
-        public void _12_AcquisitionFileCompensationTab()
+        [Xunit.TraitAttribute("Description", "12._Acquisition_File_Compensation_Tab")]
+        public void _12__Acquisition_File_Compensation_Tab()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("12. Acquisition File Compensation Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("12._Acquisition_File_Compensation_Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 61
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -463,14 +463,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="13. Disposition Checklist Tab")]
+        [Xunit.SkippableFactAttribute(DisplayName="13._Disposition_Checklist_Tab")]
         [Xunit.TraitAttribute("FeatureTitle", "SmokeTest")]
-        [Xunit.TraitAttribute("Description", "13. Disposition Checklist Tab")]
-        public void _13_DispositionChecklistTab()
+        [Xunit.TraitAttribute("Description", "13._Disposition_Checklist_Tab")]
+        public void _13__Disposition_Checklist_Tab()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("13. Disposition Checklist Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("13._Disposition_Checklist_Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 69
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -494,14 +494,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="14. Disposition Offers and Sale Tab")]
+        [Xunit.SkippableFactAttribute(DisplayName="14._Disposition_Offers_and_Sale_Tab")]
         [Xunit.TraitAttribute("FeatureTitle", "SmokeTest")]
-        [Xunit.TraitAttribute("Description", "14. Disposition Offers and Sale Tab")]
-        public void _14_DispositionOffersAndSaleTab()
+        [Xunit.TraitAttribute("Description", "14._Disposition_Offers_and_Sale_Tab")]
+        public void _14__Disposition_Offers_And_Sale_Tab()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("14. Disposition Offers and Sale Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("14._Disposition_Offers_and_Sale_Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 74
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
