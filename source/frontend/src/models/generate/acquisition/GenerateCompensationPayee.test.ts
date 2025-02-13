@@ -134,9 +134,12 @@ describe('GenerateCompensationPayee tests', () => {
   it('can generate with legacy payee', () => {
     const compensation: ApiGen_Concepts_CompensationRequisition = {
       ...getMockApiDefaultCompensation(),
-      legacyPayee: 'Chester Tester',
     };
-    const payee = new Api_GenerateCompensationPayee(compensation, [], []);
+    const payee = new Api_GenerateCompensationPayee(
+      compensation,
+      [{ ...getMockCompReqPayee(), legacyPayee: 'Chester Tester' }],
+      [],
+    );
     expect(payee.name).toBe('Chester Tester');
   });
 });

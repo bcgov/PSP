@@ -23,5 +23,7 @@ namespace Pims.Api.Models.Concepts.CompensationRequisition
         public long? AcquisitionFileTeamId { get; set; }
 
         public AcquisitionFileTeamModel AcquisitionFileTeam { get; set; }
+
+        public string LegacyPayee { get; set; }
     }
 }

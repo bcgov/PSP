@@ -19,4 +19,5 @@ export interface ApiGen_Concepts_CompReqPayee extends ApiGen_Base_BaseAudit {
   interestHolder: ApiGen_Concepts_InterestHolder | null;
   acquisitionFileTeamId: number | null;
   acquisitionFileTeam: ApiGen_Concepts_AcquisitionFileTeam | null;
+  legacyPayee: string | null;
 }

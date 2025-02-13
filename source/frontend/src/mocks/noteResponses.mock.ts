@@ -59,7 +59,7 @@ export const mockEntityNote = (
   ...getEmptyBaseAudit(),
 });
 
-export const mockNoteResponse = (
+export const getMockApiNote = (
   id = 1,
   note = 'Test Note',
   rowVersion = 1,

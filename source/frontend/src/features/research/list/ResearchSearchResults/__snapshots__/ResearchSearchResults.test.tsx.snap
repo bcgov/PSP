@@ -385,23 +385,239 @@ exports[`Research Search Results Table > matches snapshot 1`] = `
       </div>
     </div>
     <div
-      class="no-rows-message"
+      class="tbody"
+      role="rowgroup"
     >
-      No matching Research Files found
+      <div
+        class="tr-wrapper"
+      >
+        <div
+          class="tr"
+          role="row"
+          style="display: flex; flex: 1 0 auto; min-width: 240px;"
+        >
+          <div
+            class="td clickable"
+            role="cell"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            <a
+              href="/mapview/sidebar/research/109"
+            />
+          </div>
+          <div
+            class="td clickable"
+            role="cell"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          />
+          <div
+            class="td clickable"
+            role="cell"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            South Coast Region
+          </div>
+          <div
+            class="td clickable"
+            role="cell"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            admin
+          </div>
+          <div
+            class="td clickable"
+            role="cell"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            Sep 2, 2022
+          </div>
+          <div
+            class="td clickable"
+            role="cell"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            admin
+          </div>
+          <div
+            class="td clickable"
+            role="cell"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            Sep 2, 2022
+          </div>
+          <div
+            class="td clickable"
+            role="cell"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          />
+        </div>
+      </div>
     </div>
   </div>
-  <div
+  .c0 {
+  margin-top: 0.3rem;
+}
+
+.c1 {
+  min-width: 5rem;
+  max-width: 5rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  text-align: center;
+  padding: 0;
+}
+
+.c1:-moz-read-only {
+  background: white;
+}
+
+.c1:read-only {
+  background: white;
+}
+
+<div
     class="row"
   >
     <div
       class="align-self-center col-auto"
-    />
+    >
+      <span>
+        1 - 1 of 1
+      </span>
+    </div>
     <div
       class="ml-auto align-self-center col-auto"
     />
     <div
       class="align-self-center col-auto"
-    />
+    >
+      <div
+        class="Menu-root"
+      >
+        <div
+          class="Menu-button"
+        >
+          <div
+            class="d-flex"
+          >
+            <span
+              class="c0"
+            >
+              Show
+            </span>
+            <input
+              class="c1 form-control"
+              data-testid="input-page-size"
+              readonly=""
+              type="number"
+              value="10"
+            />
+            <span
+              class="c0"
+            >
+              Entries
+            </span>
+          </div>
+        </div>
+        <div
+          class="Menu-items"
+          style="width: 10.0rem;"
+        >
+          <div
+            class="Menu-options scrollable list-group"
+          >
+            <div
+              class="Menu-item list-group-item"
+              title="menu-item-5"
+            >
+              5
+            </div>
+            <div
+              class="Menu-item list-group-item"
+              title="menu-item-10"
+            >
+              10
+            </div>
+            <div
+              class="Menu-item list-group-item"
+              title="menu-item-20"
+            >
+              20
+            </div>
+            <div
+              class="Menu-item list-group-item"
+              title="menu-item-50"
+            >
+              50
+            </div>
+            <div
+              class="Menu-item list-group-item"
+              title="menu-item-100"
+            >
+              100
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="align-self-center col-auto"
+    >
+      <ul
+        class="pagination"
+      >
+        <li
+          class="page-item disabled"
+        >
+          <a
+            aria-disabled="true"
+            aria-label="Previous page"
+            class="page-link "
+            rel="prev"
+            role="button"
+            tabindex="-1"
+          >
+            &lt;
+          </a>
+        </li>
+        <li
+          class="page-item active"
+        >
+          <a
+            aria-current="page"
+            aria-label="Page 1 is your current page"
+            class="page-link"
+            rel="canonical"
+            role="button"
+            tabindex="-1"
+          >
+            1
+          </a>
+        </li>
+        <li
+          class="page-item disabled"
+        >
+          <a
+            aria-disabled="true"
+            aria-label="Next page"
+            class="page-link "
+            rel="next"
+            role="button"
+            tabindex="-1"
+          >
+            &gt;
+          </a>
+        </li>
+      </ul>
+    </div>
   </div>
 </DocumentFragment>
 `;

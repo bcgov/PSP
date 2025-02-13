@@ -31,6 +31,7 @@ namespace Pims.Dal.Repositories
         {
             return Context.PimsCompensationRequisitions
                 .Include(c => c.PimsCompReqFinancials)
+                .Include(p => p.PimsCompReqPayees)
                 .AsNoTracking()
                 .Where(c => c.AcquisitionFileId == acquisitionFileId).ToList();
         }
@@ -83,9 +84,6 @@ namespace Pims.Dal.Repositories
         {
             var existingCompensationRequisition = Context.PimsCompensationRequisitions
                 .FirstOrDefault(x => x.CompensationRequisitionId.Equals(compensationRequisition.CompensationRequisitionId)) ?? throw new KeyNotFoundException();
-
-            // Don't let the frontend override the legacy payee - this is only intended to be populated via ETL
-            //compensationRequisition.LegacyPayee = existingCompensationRequisition.LegacyPayee; TODO: Fix this
 
             Context.Entry(existingCompensationRequisition).CurrentValues.SetValues(compensationRequisition);
             Context.UpdateChild<PimsCompensationRequisition, long, PimsCompReqFinancial, long>(a => a.PimsCompReqFinancials, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsCompReqFinancials.ToArray(), true);
