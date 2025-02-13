@@ -1,12 +1,18 @@
 import moment from 'moment';
 
+import { InterestHolderType } from '@/constants/interestHolderTypes';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useFinancialCodeRepository } from '@/hooks/repositories/useFinancialCodeRepository';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
 import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
 import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
-import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
-import { getMockApiDefaultCompensation } from '@/mocks/compensations.mock';
+import {
+  getMockApiAcquisitionFileOwnerPerson,
+  mockAcquisitionFileResponse,
+  mockApiAcquisitionFileTeamPerson,
+} from '@/mocks/acquisitionFiles.mock';
+import { getMockApiDefaultCompensation, getMockCompReqPayee } from '@/mocks/compensations.mock';
+import { getMockApiInterestHolderPerson } from '@/mocks/interestHolders.mock';
 import { getMockApiLease, getMockLeaseStakeholders } from '@/mocks/lease.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
@@ -15,13 +21,7 @@ import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGe
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { systemConstantsSlice } from '@/store/slices/systemConstants/systemConstantsSlice';
-import {
-  act,
-  getMockRepositoryObj,
-  render,
-  RenderOptions,
-  waitForEffects,
-} from '@/utils/test-utils';
+import { act, getMockRepositoryObj, render, RenderOptions } from '@/utils/test-utils';
 
 import { CompensationRequisitionFormModel } from '../models/CompensationRequisitionFormModel';
 import UpdateCompensationRequisitionContainer, {
@@ -35,10 +35,10 @@ vi.mock('@/hooks/repositories/useLeaseStakeholderRepository');
 vi.mock('@/hooks/repositories/useInterestHolderRepository');
 vi.mock('@/hooks/repositories/useRequisitionCompensationRepository');
 
-const getMockAcquisitionOwnersApi = getMockRepositoryObj();
+const getAcquisitionOwnersApi = getMockRepositoryObj();
 
 vi.mocked(useAcquisitionProvider, { partial: true }).mockReturnValue({
-  getAcquisitionOwners: getMockAcquisitionOwnersApi,
+  getAcquisitionOwners: getAcquisitionOwnersApi,
 });
 
 const mockGetFinancialCodesApi = getMockRepositoryObj();
@@ -56,14 +56,18 @@ vi.mocked(useLeaseStakeholderRepository, { partial: true }).mockReturnValue({
   getLeaseStakeholders: getLeaseFileInterestHoldersApi,
 });
 
+const getAcquisitionInterestHoldersApi = getMockRepositoryObj();
+
 vi.mocked(useInterestHolderRepository, { partial: true }).mockReturnValue({
-  getAcquisitionInterestHolders: getMockRepositoryObj(),
+  getAcquisitionInterestHolders: getAcquisitionInterestHoldersApi,
 });
 
 const putCompensationRequisitionApi = getMockRepositoryObj();
+const getCompensationRequisitionPayeesApi = getMockRepositoryObj();
+
 vi.mocked(useCompensationRequisitionRepository, { partial: true }).mockReturnValue({
   updateCompensationRequisition: putCompensationRequisitionApi,
-  getCompensationRequisitionPayees: getMockRepositoryObj(),
+  getCompensationRequisitionPayees: getCompensationRequisitionPayeesApi,
 });
 
 let viewProps: CompensationRequisitionFormProps | undefined;
@@ -112,6 +116,20 @@ describe('UpdateCompensationRequisition Container component', () => {
 
   beforeEach(() => {
     viewProps = undefined;
+    // owners
+    getAcquisitionOwnersApi.execute.mockResolvedValue([getMockApiAcquisitionFileOwnerPerson()]);
+    // interest holders
+    const ownerSolicitor = getMockApiInterestHolderPerson();
+    ownerSolicitor.interestHolderType.id = InterestHolderType.OWNER_SOLICITOR;
+    const ownerRep = getMockApiInterestHolderPerson();
+    ownerRep.interestHolderType.id = InterestHolderType.OWNER_REPRESENTATIVE;
+    getAcquisitionInterestHoldersApi.execute.mockResolvedValue([ownerSolicitor, ownerRep]);
+    // legacy payee
+    getCompensationRequisitionPayeesApi.execute.mockImplementation(async () => {
+      const existingPayees = [{ ...getMockCompReqPayee(1), legacyPayee: 'Sample LEGACY payee' }];
+      getCompensationRequisitionPayeesApi.response = [...existingPayees];
+      return [...existingPayees];
+    });
   });
 
   afterEach(() => {
@@ -193,47 +211,75 @@ describe('UpdateCompensationRequisition Container component', () => {
     expect(viewProps?.yearlyFinancialOptions).toHaveLength(1);
   });
 
-  it('LEASE - makes request to update the compensation with payees', async () => {
-    const mockCompensationUpdate = {
-      ...getMockApiDefaultCompensation(1, null),
-      acquisitionOwnerId: null,
-    };
-    getLeaseFileInterestHoldersApi.execute.mockResolvedValue(getMockLeaseStakeholders());
+  describe('ACQUISITION compensation', () => {
+    it('calls several endpoints for the list of compensation payees (Owners, Interest Holders, Team members, Legacy Payee)', async () => {
+      await setup({
+        props: {
+          file: {
+            ...mockAcquisitionFileResponse(1),
+            acquisitionTeam: [
+              {
+                ...mockApiAcquisitionFileTeamPerson(),
+                teamProfileTypeCode: 'MOTILAWYER',
+                teamProfileType: {
+                  id: 'MOTILAWYER',
+                  description: 'MOTI Layer',
+                  isDisabled: false,
+                  displayOrder: null,
+                },
+              },
+            ],
+          },
+        },
+      });
 
-    await act(async () => {
-      setup({
+      expect(getAcquisitionOwnersApi.execute).toHaveBeenCalled();
+      expect(getAcquisitionInterestHoldersApi.execute).toHaveBeenCalled();
+      // 1 owner + 2 interest holders + 1 team member + 1 legacy payee
+      expect(viewProps.payeeOptions).toHaveLength(5);
+    });
+  });
+
+  describe('LEASE compensation', () => {
+    it('makes request to update the compensation with payees', async () => {
+      const mockCompensationUpdate = {
+        ...getMockApiDefaultCompensation(1, null),
+        acquisitionOwnerId: null,
+      };
+      getLeaseFileInterestHoldersApi.execute.mockResolvedValue(getMockLeaseStakeholders());
+
+      await setup({
         props: {
           compensation: mockCompensationUpdate,
           fileType: ApiGen_CodeTypes_FileTypes.Lease,
           file: { ...getMockApiLease() },
         },
       });
+
+      expect(getLeaseFileInterestHoldersApi.execute).toHaveBeenCalled();
+
+      const updatedCompensationModel = new CompensationRequisitionFormModel(1, null, 1, '');
+      updatedCompensationModel.detailedRemarks = 'my update';
+
+      updatedCompensationModel.leaseStakeholderId = 2;
+
+      await act(async () => {
+        viewProps?.onSave(updatedCompensationModel);
+      });
+
+      expect(putCompensationRequisitionApi.execute).toHaveBeenCalledWith(
+        ApiGen_CodeTypes_FileTypes.Lease,
+        expect.objectContaining({
+          compReqLeaseStakeholders: [
+            expect.objectContaining({
+              compReqLeaseStakeholderId: null,
+              compensationRequisitionId: 1,
+              leaseStakeholder: null,
+              leaseStakeholderId: 2,
+            }),
+          ],
+        }),
+      );
     });
-    await waitForEffects();
-
-    expect(getLeaseFileInterestHoldersApi.execute).toHaveBeenCalled();
-
-    const updatedCompensationModel = new CompensationRequisitionFormModel(1, null, 1, '');
-    updatedCompensationModel.detailedRemarks = 'my update';
-
-    updatedCompensationModel.leaseStakeholderId = 2;
-
-    await act(async () => {
-      viewProps?.onSave(updatedCompensationModel);
-    });
-
-    expect(putCompensationRequisitionApi.execute).toHaveBeenCalledWith(
-      ApiGen_CodeTypes_FileTypes.Lease,
-      expect.objectContaining({
-        compReqLeaseStakeholders: [
-          expect.objectContaining({
-            compReqLeaseStakeholderId: null,
-            compensationRequisitionId: 1,
-            leaseStakeholder: null,
-            leaseStakeholderId: 2,
-          }),
-        ],
-      }),
-    );
   });
 });
