@@ -873,7 +873,7 @@ namespace Pims.Api.Services
                     && !acquisitionFile.PimsAcquisitionOwners.Any(x => x.Internal_Id.Equals(payee.AcquisitionOwnerId))
                     && currentAcquisitionFile.PimsAcquisitionOwners.Any(x => x.Internal_Id.Equals(payee.AcquisitionOwnerId)))
                 {
-                    throw new ForeignKeyDependencyException("Acquisition File Owner can not be removed since it's assigned as a payee for a compensation requisition");
+                    throw new BusinessRuleViolationException("Acquisition File Owner can not be removed since it's assigned as a payee for a compensation requisition");
                 }
 
                 //// Check for Acquisition InterestHolders
@@ -881,7 +881,7 @@ namespace Pims.Api.Services
                     && !acquisitionFile.PimsInterestHolders.Any(x => x.Internal_Id.Equals(payee.InterestHolderId))
                     && currentAcquisitionFile.PimsInterestHolders.Any(x => x.Internal_Id.Equals(payee.InterestHolderId)))
                 {
-                    throw new ForeignKeyDependencyException("Acquisition File Interest Holders can not be removed since it's assigned as a payee for a compensation requisition");
+                    throw new BusinessRuleViolationException("Acquisition File Interest Holders can not be removed since it's assigned as a payee for a compensation requisition");
                 }
 
                 //// Check for File Person
@@ -889,7 +889,7 @@ namespace Pims.Api.Services
                     && !acquisitionFile.PimsAcquisitionFileTeams.Any(x => x.Internal_Id.Equals(payee.AcquisitionFileTeamId))
                     && currentAcquisitionFile.PimsAcquisitionFileTeams.Any(x => x.Internal_Id.Equals(payee.AcquisitionFileTeamId)))
                 {
-                    throw new ForeignKeyDependencyException("Acquisition File team member can not be removed since it's assigned as a payee for a compensation requisition");
+                    throw new BusinessRuleViolationException("Acquisition File team member can not be removed since it's assigned as a payee for a compensation requisition");
                 }
             }
         }
@@ -912,7 +912,7 @@ namespace Pims.Api.Services
                     && !interestHolders.Any(x => x.InterestHolderId.Equals(payee.InterestHolderId))
                     && currentAcquisitionFile.PimsInterestHolders.Any(x => x.Internal_Id.Equals(payee.InterestHolderId)))
                 {
-                    throw new ForeignKeyDependencyException("Acquisition File Interest Holder can not be removed since it's assigned as a payee for a compensation requisition");
+                    throw new BusinessRuleViolationException("Acquisition File Interest Holder can not be removed since it's assigned as a payee for a compensation requisition");
                 }
             }
         }
