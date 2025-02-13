@@ -38,7 +38,7 @@ const UpdateCompensationRequisitionContainer: React.FC<
   const [payeeOptions, setPayeeOptions] = useState<PayeeOption[]>(null);
   const [financialActivityOptions, setFinancialActivityOptions] = useState<SelectOption[]>([]);
   const [chartOfAccountOptions, setChartOfAccountOptions] = useState<SelectOption[]>([]);
-  const [yearlyFinancialOptions, setyearlyFinancialOptions] = useState<SelectOption[]>([]);
+  const [yearlyFinancialOptions, setYearlyFinancialOptions] = useState<SelectOption[]>([]);
   const [responsibilityCentreOptions, setResponsibilityCentreOptions] = useState<SelectOption[]>(
     [],
   );
@@ -262,7 +262,7 @@ const UpdateCompensationRequisitionContainer: React.FC<
       setFinancialActivityOptions(activityOptions);
       setChartOfAccountOptions(chartsOptions);
       setResponsibilityCentreOptions(responsibilitiesOptions);
-      setyearlyFinancialOptions(yearlyOptions);
+      setYearlyFinancialOptions(yearlyOptions);
     });
   }, [
     fetchChartOfAccounts,
