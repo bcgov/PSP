@@ -22,6 +22,7 @@ PSP_PIMS | Development Sprint: S100.00 | Design Sprint: 99 | Date: 2025-Feb-12
   - 164_DML_PIMS_LL_TEAM_PROFILE_TYPE.sql
 - Altered seed scripts:
   - 087_PIMS_COMP_REQ_ACQ_PAYEE.sql
+  - 092_DML_PIMS_ACQ_PHYS_FILE_STATUS_TYPE.sql
   - 100_PIMS_COMP_REQ_LEASE_PAYEE.sql
   - 163_DML_PIMS_ACQ_FILE_EXPROP_RISK_TYPE.sql
 - Added test scripts:
