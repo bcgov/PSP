@@ -16,7 +16,8 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
+  font-size: 2.6rem;
 }
 
 .c0 {
@@ -52,7 +53,7 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
         class="no-gutters row"
       >
         <div
-          class="col"
+          class="align-items-end col"
         >
           Administration
         </div>
@@ -423,24 +424,6 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
           </div>
         </div>
       </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-3"
-        >
-          <label
-            class="c3"
-          >
-            Lease comments:
-          </label>
-        </div>
-        <div
-          class="c4 text-left col"
-        >
-          a test note
-        </div>
-      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -462,7 +445,8 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
+  font-size: 2.6rem;
 }
 
 .c0 {
@@ -498,7 +482,7 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
         class="no-gutters row"
       >
         <div
-          class="col"
+          class="align-items-end col"
         >
           Administration
         </div>
@@ -863,22 +847,6 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
             />
           </div>
         </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-3"
-        >
-          <label
-            class="c3"
-          >
-            Lease comments:
-          </label>
-        </div>
-        <div
-          class="c4 text-left col"
-        />
       </div>
     </div>
   </div>

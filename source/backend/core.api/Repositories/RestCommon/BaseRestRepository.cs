@@ -14,6 +14,9 @@ using Microsoft.Extensions.Options;
 using Pims.Api.Models;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Requests.Http;
+using Pims.Core.Http;
+using Polly;
+using Polly.Registry;
 
 namespace Pims.Core.Api.Repositories.Rest
 {
@@ -25,20 +28,25 @@ namespace Pims.Core.Api.Repositories.Rest
         protected readonly IHttpClientFactory _httpClientFactory;
         protected readonly ILogger _logger;
         protected readonly IOptions<JsonSerializerOptions> _jsonOptions;
+        private readonly ResiliencePipeline<HttpResponseMessage> _resiliencePipeline;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseRestRepository"/> class.
         /// </summary>
         /// <param name="logger">Injected Logger Provider.</param>
         /// <param name="httpClientFactory">Injected Httpclient factory.</param>
+        /// <param name="jsonOptions"></param>
+        /// <param name="pollyPipelineProvider"></param>
         protected BaseRestRepository(
             ILogger logger,
             IHttpClientFactory httpClientFactory,
-            IOptions<JsonSerializerOptions> jsonOptions)
+            IOptions<JsonSerializerOptions> jsonOptions,
+            ResiliencePipelineProvider<string> pollyPipelineProvider)
         {
             _logger = logger;
             _httpClientFactory = httpClientFactory;
             _jsonOptions = jsonOptions;
+            _resiliencePipeline = pollyPipelineProvider.GetPipeline<HttpResponseMessage>(HttpRequestClient.NetworkPolicyName);
         }
 
         public abstract void AddAuthentication(HttpClient client, string authenticationToken = null);
@@ -51,7 +59,7 @@ namespace Pims.Core.Api.Repositories.Rest
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
             try
             {
-                HttpResponseMessage response = await client.GetAsync(endpoint).ConfigureAwait(true);
+                HttpResponseMessage response = await _resiliencePipeline.ExecuteAsync(async cancellation => await client.GetAsync(endpoint, cancellation).ConfigureAwait(true));
                 var result = await ProcessResponse<T>(response);
                 return result;
             }
@@ -74,7 +82,7 @@ namespace Pims.Core.Api.Repositories.Rest
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
             try
             {
-                HttpResponseMessage response = await client.GetAsync(endpoint).ConfigureAwait(true);
+                HttpResponseMessage response = await _resiliencePipeline.ExecuteAsync(async cancellation => await client.GetAsync(endpoint, cancellation).ConfigureAwait(true));
                 return response;
             }
             catch (Exception e)
@@ -96,7 +104,7 @@ namespace Pims.Core.Api.Repositories.Rest
 
             try
             {
-                HttpResponseMessage response = await client.PostAsync(endpoint, content).ConfigureAwait(true);
+                HttpResponseMessage response = await _resiliencePipeline.ExecuteAsync(async cancellation => await client.PostAsync(endpoint, content, cancellation).ConfigureAwait(true));
                 var result = await ProcessResponse<T>(response);
                 return result;
             }
@@ -120,7 +128,7 @@ namespace Pims.Core.Api.Repositories.Rest
 
             try
             {
-                HttpResponseMessage response = await client.PutAsync(endpoint, content).ConfigureAwait(true);
+                HttpResponseMessage response = await _resiliencePipeline.ExecuteAsync(async cancellation => await client.PutAsync(endpoint, content, cancellation).ConfigureAwait(true));
                 var result = await ProcessResponse<T>(response);
                 return result;
             }
@@ -150,7 +158,7 @@ namespace Pims.Core.Api.Repositories.Rest
 
             try
             {
-                HttpResponseMessage response = await client.DeleteAsync(endpoint).ConfigureAwait(true);
+                HttpResponseMessage response = await _resiliencePipeline.ExecuteAsync(async cancellation => await client.DeleteAsync(endpoint, cancellation).ConfigureAwait(true));
 
                 _logger.LogTrace("Response: {response}", response);
 

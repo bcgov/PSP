@@ -21,7 +21,8 @@ exports[`PropertyAssociationTabView component > renders as expected when provide
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
+  font-size: 2.6rem;
 }
 
 .c1 {
@@ -67,7 +68,27 @@ exports[`PropertyAssociationTabView component > renders as expected when provide
       <div
         class="collapse show"
       >
-        This property is associated with the following files:
+        This property is associated with the following files: 
+        <span
+          class="tooltip-icon"
+          data-testid="tooltip-icon-duplicate-files-tooltip"
+          id="duplicate-files-tooltip"
+        >
+          <svg
+            class="tooltip-icon"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 512 512"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+            />
+          </svg>
+        </span>
       </div>
     </div>
     <div
@@ -80,7 +101,7 @@ exports[`PropertyAssociationTabView component > renders as expected when provide
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             <div
               class="c3"
@@ -92,23 +113,16 @@ exports[`PropertyAssociationTabView component > renders as expected when provide
                   class="col-auto"
                 >
                   <svg
-                    fill="currentColor"
-                    height="2.5rem"
-                    stroke="currentColor"
-                    stroke-width="0"
+                    fill="none"
+                    height="24"
+                    title="User Profile"
                     viewBox="0 0 24 24"
-                    width="2.5rem"
+                    width="24"
                     xmlns="http://www.w3.org/2000/svg"
                   >
-                    <title>
-                      User Profile
-                    </title>
                     <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />
-                    <path
-                      d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm-6 10H6v-2h8v2zm4-4H6v-2h12v2z"
+                      d="M19.2118 13.0611H4.80296V10.1458H19.2118V13.0611ZM14.4089 19.7098H4.80296V16.7765H14.4089V19.7098ZM21.6059 4.75623H16.803H12L9.60591 0H2.39409C0 0 0 3.1546 0 4.75623V21.0847C0 22.6863 1.06404 24 2.39409 24H21.6059C22.9212 24 24 22.6863 24 21.0847V7.67157C24 6.06993 22.9212 4.75623 21.6059 4.75623Z"
+                      fill="#494949"
                     />
                   </svg>
                 </div>
@@ -314,7 +328,7 @@ exports[`PropertyAssociationTabView component > renders as expected when provide
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             <div
               class="c3"
@@ -326,23 +340,16 @@ exports[`PropertyAssociationTabView component > renders as expected when provide
                   class="col-auto"
                 >
                   <svg
-                    fill="currentColor"
-                    height="2.5rem"
-                    stroke="currentColor"
-                    stroke-width="0"
+                    fill="none"
+                    height="24"
+                    title="Acquisition-Files"
                     viewBox="0 0 24 24"
-                    width="2.5rem"
+                    width="24"
                     xmlns="http://www.w3.org/2000/svg"
                   >
-                    <title>
-                      Acquisition-Files
-                    </title>
                     <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />
-                    <path
-                      d="M21 6.5V14h-2V7.5L14 4 9 7.5V9H7V6.5l7-5 7 5zm-5.5.5h-1v1h1V7zm-2 0h-1v1h1V7zm2 2h-1v1h1V9zm-2 0h-1v1h1V9zm5.5 7h-2c0-1.2-.75-2.28-1.87-2.7L8.97 11H1v11h6v-1.44l7 1.94 8-2.5v-1c0-1.66-1.34-3-3-3zM3 20v-7h2v7H3zm10.97.41L7 18.48V13h1.61l5.82 2.17c.34.13.57.46.57.83 0 0-1.99-.05-2.3-.15l-2.38-.79-.63 1.9 2.38.79c.51.17 1.04.26 1.58.26H19c.39 0 .74.23.9.56l-5.93 1.84z"
+                      d="M16.5896 7.61509H15.446V6.44474H16.5896V7.61509ZM16.5896 9.95579H15.446V8.78544H16.5896V9.95579ZM14.3024 7.61509H13.1588V6.44474H14.3024V7.61509ZM14.3024 9.95579H13.1588V8.78544H14.3024V9.95579ZM14.8666 0L6.8615 5.85175V8.78544H9.14867L18.4498 12.6086C19.7306 13.1391 20.5845 14.4031 20.5845 15.8075H22.8717V5.85175L14.8666 0ZM21.7281 18.1482H13.723L11.3291 17.29L11.7103 16.1821L13.723 16.9623H16.9403C17.6874 16.9623 18.2973 16.3381 18.2973 15.5735C18.2973 14.9961 17.9466 14.4812 17.413 14.2783L9.10292 11.1105H6.84625V21.6593L14.8513 23.9844L24 20.4734C24 19.1782 22.9784 18.1327 21.7128 18.1327L21.7281 18.1482ZM0 24H5.32433V11.1261H0V24Z"
+                      fill="#494949"
                     />
                   </svg>
                 </div>
@@ -548,7 +555,7 @@ exports[`PropertyAssociationTabView component > renders as expected when provide
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             <div
               class="c3"
@@ -560,23 +567,16 @@ exports[`PropertyAssociationTabView component > renders as expected when provide
                   class="col-auto"
                 >
                   <svg
-                    fill="currentColor"
-                    height="2.5rem"
-                    stroke="currentColor"
-                    stroke-width="0"
+                    fill="none"
+                    height="24"
+                    title="Leases-Licences"
                     viewBox="0 0 24 24"
-                    width="2.5rem"
+                    width="24"
                     xmlns="http://www.w3.org/2000/svg"
                   >
-                    <title>
-                      Leases-Licences
-                    </title>
                     <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />
-                    <path
-                      d="M21 12v-2h-2V7l-3-3-2 2-2-2-2 2-2-2-3 3v3H3v2h2v2H3v2h2v4h14v-4h2v-2h-2v-2h2zm-5-5.17 1 1V10h-2V7.83l.41-.41.59-.59zm-4 0 .59.59.41.41V10h-2V7.83l.41-.41.59-.59zM11 14v-2h2v2h-2zm2 2v2h-2v-2h2zM7 7.83l1-1 .59.59.41.41V10H7V7.83zM7 12h2v2H7v-2zm0 4h2v2H7v-2zm10 2h-2v-2h2v2zm0-4h-2v-2h2v2z"
+                      d="M18.6667 15H16V12H18.6667V15ZM18.6667 21H16V18H18.6667V21ZM5.33333 18H8V21H5.33333V18ZM5.33333 12H8V15H5.33333V12ZM5.33333 5.72331L6.66667 4.22329L7.45333 5.11164L8 5.72331V8.98544H5.33333V5.72331ZM13.3333 18V21H10.6667V18H13.3333ZM10.6667 15V12H13.3333V15H10.6667ZM12 4.22329L12.7867 5.11164L13.3333 5.72331V8.98544H10.6667V5.72331L11.2133 5.11164L12 4.22329ZM17.3333 4.22329L18.6667 5.72331V8.98544H16V5.72331L16.5467 5.11164L17.3333 4.22329ZM24 12V9.00001H21.3333V4.5L17.3333 0L14.6667 3L12 0L9.33333 3L6.66667 0L2.66667 4.5V9.00001H0V12H2.66667V15H0V18H2.66667V24H21.3333V18H24V15H21.3333V12H24Z"
+                      fill="#494949"
                     />
                   </svg>
                 </div>
@@ -780,7 +780,7 @@ exports[`PropertyAssociationTabView component > renders as expected when provide
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             <div
               class="c3"
@@ -792,23 +792,16 @@ exports[`PropertyAssociationTabView component > renders as expected when provide
                   class="col-auto"
                 >
                   <svg
-                    fill="currentColor"
-                    height="2.5rem"
-                    stroke="currentColor"
-                    stroke-width="0"
+                    fill="none"
+                    height="24"
+                    title="Disposition-Files"
                     viewBox="0 0 24 24"
-                    width="2.5rem"
+                    width="24"
                     xmlns="http://www.w3.org/2000/svg"
                   >
-                    <title>
-                      Disposition-Files
-                    </title>
                     <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />
-                    <path
-                      d="m3 8.41 9 9 7-7V15h2V7h-8v2h4.59L12 14.59 4.41 7 3 8.41z"
+                      d="M21.3987 5.625C18.1918 7.77086 14.3226 15.3433 14.3226 21.1389H16.9566V24H7.59054V21.1389H10.4516C10.4516 15 6 6.75 0 6.75V3.61114C6.75 3.61114 10.4516 9 12.2598 14.25C13.875 9 15.871 5.625 19.7419 2.84712H14.8748V0H24V9.98597H21.3987V6V5.625Z"
+                      fill="#494949"
                     />
                   </svg>
                 </div>

@@ -29,6 +29,7 @@ describe('Disposition Offer Detail View component', () => {
         dispositionOffer={renderOptions.props?.dispositionOffer ?? mockDispositionOffer}
         onDelete={onDelete}
         dispositionFile={renderOptions.props?.dispositionFile ?? mockDispositionFileResponse()}
+        isFileFinalStatus={renderOptions.props?.isFileFinalStatus}
       />,
       {
         ...renderOptions,
@@ -88,6 +89,7 @@ describe('Disposition Offer Detail View component', () => {
           ...mockDispositionFileResponse(),
           fileStatusTypeCode: toTypeCode(ApiGen_CodeTypes_DispositionFileStatusTypes.COMPLETE),
         },
+        isFileFinalStatus: true,
       },
     });
 

@@ -145,6 +145,35 @@ namespace Pims.Api.Test.Services
 
         #region UpdateProperties
         [Fact]
+        public void UpdateProperties_Fail_InvalidState()
+        {
+            // Arrange
+            var property = EntityHelper.CreateProperty(12345);
+            var researchFile = EntityHelper.CreateResearchFile(1);
+            researchFile.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>()
+            {
+                new () { Internal_Id = 1, Property = property, PimsPrfPropResearchPurposeTypes = new List<PimsPrfPropResearchPurposeType>() { new PimsPrfPropResearchPurposeType() { } } }
+            };
+
+            var updatedResearchFile = EntityHelper.CreateResearchFile(1);
+            updatedResearchFile.PimsPropertyResearchFiles.Clear();
+
+            var service = this.CreateResearchFileServiceWithPermissions(Permissions.ResearchFileEdit, Permissions.PropertyView, Permissions.PropertyAdd);
+            var repository = this._helper.GetService<Mock<IResearchFileRepository>>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(researchFile);
+
+            var solver = this._helper.GetService<Mock<IResearchStatusSolver>>();
+            solver.Setup(x => x.CanEditProperties(It.IsAny<ResearchFileStatusTypes?>())).Returns(false);
+
+            // Act
+            Action act = () => service.UpdateProperties(updatedResearchFile, new List<UserOverrideCode>());
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>().WithMessage("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+        }
+
+        [Fact]
         public void UpdateProperties_RemovePropertyFile_Success()
         {
             // Arrange
@@ -173,6 +202,9 @@ namespace Pims.Api.Test.Services
 
             var propertyOperationService = this._helper.GetService<Mock<IPropertyOperationService>>();
             propertyOperationService.Setup(x => x.GetOperationsForProperty(It.IsAny<long>())).Returns(new List<PimsPropertyOperation>());
+
+            var solver = this._helper.GetService<Mock<IResearchStatusSolver>>();
+            solver.Setup(x => x.CanEditProperties(It.IsAny<ResearchFileStatusTypes?>())).Returns(true);
 
             // Act
             updatedResearchFile = service.UpdateProperties(updatedResearchFile, new List<UserOverrideCode>());
@@ -213,6 +245,9 @@ namespace Pims.Api.Test.Services
             var propertyOperationService = this._helper.GetService<Mock<IPropertyOperationService>>();
             propertyOperationService.Setup(x => x.GetOperationsForProperty(It.IsAny<long>())).Returns(new List<PimsPropertyOperation>() { new() { Internal_Id = 1, SourcePropertyId = deletedProperty.Internal_Id, SourceProperty = deletedProperty } });
 
+            var solver = this._helper.GetService<Mock<IResearchStatusSolver>>();
+            solver.Setup(x => x.CanEditProperties(It.IsAny<ResearchFileStatusTypes?>())).Returns(true);
+
             // Act
             Action act = () => service.UpdateProperties(updatedResearchFile, new List<UserOverrideCode>());
 
@@ -250,6 +285,9 @@ namespace Pims.Api.Test.Services
             var propertyOperationService = this._helper.GetService<Mock<IPropertyOperationService>>();
             propertyOperationService.Setup(x => x.GetOperationsForProperty(It.IsAny<long>())).Returns(new List<PimsPropertyOperation>());
 
+            var solver = this._helper.GetService<Mock<IResearchStatusSolver>>();
+            solver.Setup(x => x.CanEditProperties(It.IsAny<ResearchFileStatusTypes?>())).Returns(true);
+
             // Act
             updatedResearchFile = service.UpdateProperties(updatedResearchFile, new List<UserOverrideCode>());
 
@@ -283,6 +321,9 @@ namespace Pims.Api.Test.Services
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             propertyService.Setup(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), true));
             propertyService.Setup(x => x.UpdateFilePropertyLocation<PimsPropertyResearchFile>(It.IsAny<PimsPropertyResearchFile>(), It.IsAny<PimsPropertyResearchFile>()));
+
+            var solver = this._helper.GetService<Mock<IResearchStatusSolver>>();
+            solver.Setup(x => x.CanEditProperties(It.IsAny<ResearchFileStatusTypes?>())).Returns(true);
 
             // Act
             service.UpdateProperties(researchFile, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
@@ -319,6 +360,9 @@ namespace Pims.Api.Test.Services
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             propertyService.Setup(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), true));
             propertyService.Setup(x => x.UpdateFilePropertyLocation<PimsPropertyResearchFile>(It.IsAny<PimsPropertyResearchFile>(), It.IsAny<PimsPropertyResearchFile>()));
+
+            var solver = this._helper.GetService<Mock<IResearchStatusSolver>>();
+            solver.Setup(x => x.CanEditProperties(It.IsAny<ResearchFileStatusTypes?>())).Returns(true);
 
             // Act
             service.UpdateProperties(researchFile, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
@@ -366,6 +410,9 @@ namespace Pims.Api.Test.Services
 
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Throws<KeyNotFoundException>();
+
+            var solver = this._helper.GetService<Mock<IResearchStatusSolver>>();
+            solver.Setup(x => x.CanEditProperties(It.IsAny<ResearchFileStatusTypes?>())).Returns(true);
 
             // Act
             service.UpdateProperties(researchFile, new List<UserOverrideCode>());
@@ -422,6 +469,9 @@ namespace Pims.Api.Test.Services
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Throws<KeyNotFoundException>();
 
+            var solver = this._helper.GetService<Mock<IResearchStatusSolver>>();
+            solver.Setup(x => x.CanEditProperties(It.IsAny<ResearchFileStatusTypes?>())).Returns(true);
+
             // Act
             service.UpdateProperties(researchFile, new List<UserOverrideCode>());
 
@@ -470,6 +520,9 @@ namespace Pims.Api.Test.Services
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Throws<KeyNotFoundException>();
 
+            var solver = this._helper.GetService<Mock<IResearchStatusSolver>>();
+            solver.Setup(x => x.CanEditProperties(It.IsAny<ResearchFileStatusTypes?>())).Returns(true);
+
             // Act
             var updatedResearchFile = service.UpdateProperties(researchFile, new List<UserOverrideCode>());
 
@@ -515,6 +568,9 @@ namespace Pims.Api.Test.Services
                 RegionCode = 1
             });
             propertyService.Setup(x => x.PopulateNewFileProperty(It.IsAny<PimsPropertyResearchFile>())).Returns<PimsPropertyResearchFile>(x => x);
+
+            var solver = this._helper.GetService<Mock<IResearchStatusSolver>>();
+            solver.Setup(x => x.CanEditProperties(It.IsAny<ResearchFileStatusTypes?>())).Returns(true);
 
             // Act
             service.UpdateProperties(researchFile, new List<UserOverrideCode>());
@@ -581,6 +637,9 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(researchFile);
 
+            var solver = this._helper.GetService<Mock<IResearchStatusSolver>>();
+            solver.Setup(x => x.CanEditDetails(It.IsAny<ResearchFileStatusTypes?>())).Returns(true);
+
             // Act
             var result = service.Update(researchFile);
 
@@ -601,6 +660,28 @@ namespace Pims.Api.Test.Services
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void Update_FinalState()
+        {
+            // Arrange
+            var service = this.CreateResearchFileServiceWithPermissions(Permissions.ResearchFileEdit);
+
+            var researchFile = EntityHelper.CreateResearchFile(1);
+
+            var repository = this._helper.GetService<Mock<IResearchFileRepository>>();
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(researchFile);
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+
+            var solver = this._helper.GetService<Mock<IResearchStatusSolver>>();
+            solver.Setup(x => x.CanEditDetails(It.IsAny<ResearchFileStatusTypes?>())).Returns(false);
+
+            // Act
+            Action act = () => service.Update(researchFile);
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
         }
 
         [Fact]
@@ -645,6 +726,9 @@ namespace Pims.Api.Test.Services
             lookupRepositoryMock.Setup(x => x.GetAllResearchFileStatusTypes()).Returns(new List<PimsResearchFileStatusType>() { newStatusType, oldStatusType });
             var noteEntityRepositoryMock = this._helper.GetService<Mock<IEntityNoteRepository>>();
 
+            var solver = this._helper.GetService<Mock<IResearchStatusSolver>>();
+            solver.Setup(x => x.CanEditDetails(It.IsAny<ResearchFileStatusTypes?>())).Returns(true);
+
             // Act
             var updatedResearchFile = service.Update(updatedResearchFileRequest);
 
@@ -680,12 +764,43 @@ namespace Pims.Api.Test.Services
             lookupRepositoryMock.Setup(x => x.GetAllResearchFileStatusTypes()).Returns(new List<PimsResearchFileStatusType>() { sameStatusType });
             var noteEntityRepositoryMock = this._helper.GetService<Mock<IEntityNoteRepository>>();
 
+
+            var solver = this._helper.GetService<Mock<IResearchStatusSolver>>();
+            solver.Setup(x => x.CanEditDetails(It.IsAny<ResearchFileStatusTypes?>())).Returns(true);
+
             // Act
             var updatedResearchFile = service.Update(updatedResearchFileRequest);
 
             // Assert
             noteEntityRepositoryMock.Verify(x => x.Add(It.IsAny<PimsResearchFileNote>()), Times.Never());
         }
+        #endregion
+
+        #region UpdateProperty
+
+        #region Update
+        [Fact]
+        public void UpdateProperty_Success()
+        {
+            // Arrange
+
+            var service = this.CreateResearchFileServiceWithPermissions(Permissions.ResearchFileEdit);
+            var researchFile = EntityHelper.CreateResearchFile(1);
+
+            var repository = this._helper.GetService<Mock<IResearchFileRepository>>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(researchFile);
+
+            var solver = this._helper.GetService<Mock<IResearchStatusSolver>>();
+            solver.Setup(x => x.CanEditDetails(It.IsAny<ResearchFileStatusTypes?>())).Returns(true);
+
+            // Act
+            Action act = () => service.UpdateProperty(1, 1, new());
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+        }
+        #endregion
         #endregion
 
         #endregion

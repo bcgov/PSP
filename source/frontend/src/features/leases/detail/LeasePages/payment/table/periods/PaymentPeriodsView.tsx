@@ -6,9 +6,11 @@ import { MdArrowDropDown, MdArrowRight } from 'react-icons/md';
 
 import { Section } from '@/components/common/Section/Section';
 import { SectionListHeader } from '@/components/common/SectionListHeader';
+import TooltipIcon from '@/components/common/TooltipIcon';
 import { Table } from '@/components/Table';
 import { Claims, LeasePeriodStatusTypes } from '@/constants';
 import { LeaseFormModel } from '@/features/leases/models';
+import { cannotEditMessage } from '@/features/mapSideBar/acquisition/common/constants';
 import useDeepCompareMemo from '@/hooks/util/useDeepCompareMemo';
 import { prettyFormatDate } from '@/utils';
 
@@ -26,18 +28,29 @@ export interface IPeriodPaymentsViewProps {
   isReceivable?: boolean;
   lease?: LeaseFormModel;
   formikRef: React.RefObject<FormikProps<LeaseFormModel>>;
+  isFileFinalStatus?: boolean;
 }
 
 export const PeriodPaymentsView: React.FunctionComponent<
   React.PropsWithChildren<IPeriodPaymentsViewProps>
-> = ({ onEdit, onEditPayment, onDelete, onDeletePayment, onSavePayment, isReceivable, lease }) => {
+> = ({
+  onEdit,
+  onEditPayment,
+  onDelete,
+  onDeletePayment,
+  onSavePayment,
+  isReceivable,
+  lease,
+  isFileFinalStatus,
+}) => {
   const columns = useMemo(
     () =>
       getLeasePeriodColumns({
         onEdit,
-        onDelete: onDelete,
+        onDelete,
+        isFileFinalStatus,
       }),
-    [onEdit, onDelete],
+    [onEdit, onDelete, isFileFinalStatus],
   );
   const leaseForm = { ...new LeaseFormModel(), ...lease };
 
@@ -62,6 +75,7 @@ export const PeriodPaymentsView: React.FunctionComponent<
           isExercised={row?.statusTypeCode?.id === LeasePeriodStatusTypes.EXERCISED}
           isGstEligible={row.isGstEligible}
           isReceivable={isReceivable}
+          isFileFinalStatus={isFileFinalStatus}
           periodId={row.id ?? undefined}
         />
       );
@@ -78,6 +92,13 @@ export const PeriodPaymentsView: React.FunctionComponent<
           addButtonIcon={<FaPlus size="2rem" />}
           claims={[Claims.LEASE_EDIT]}
           onAdd={() => onEdit(defaultFormLeasePeriod)}
+          cannotAddComponent={
+            <TooltipIcon
+              toolTipId={`period-actions-cannot-add-tooltip`}
+              toolTip={cannotEditMessage}
+            />
+          }
+          isAddEnabled={!isFileFinalStatus}
         />
       }
     >

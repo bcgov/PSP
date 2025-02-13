@@ -1,8 +1,10 @@
+import { ApiGen_CodeTypes_DispositionFileStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_DispositionFileStatusTypes';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { ApiGen_Concepts_DispositionFileAppraisal } from '@/models/api/generated/ApiGen_Concepts_DispositionFileAppraisal';
 import { ApiGen_Concepts_DispositionFileOffer } from '@/models/api/generated/ApiGen_Concepts_DispositionFileOffer';
 import { ApiGen_Concepts_DispositionFileSale } from '@/models/api/generated/ApiGen_Concepts_DispositionFileSale';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
+import { toTypeCode } from '@/utils/formUtils';
 
 import { getEmptyPerson } from './contacts.mock';
 import { getEmptyOrganization } from './organization.mock';
@@ -63,7 +65,7 @@ export const mockDispositionFileResponse = (
     isDisabled: false,
     displayOrder: 10,
   },
-  dispositionStatusTypeCode: null,
+  dispositionStatusTypeCode: toTypeCode(ApiGen_CodeTypes_DispositionFileStatusTypes.ACTIVE),
   initiatingBranchTypeCode: {
     id: 'PLMB',
     description: 'PLMB',

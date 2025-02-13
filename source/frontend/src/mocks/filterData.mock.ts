@@ -15,7 +15,6 @@ import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Con
 import { ApiGen_Concepts_PropertyView } from '@/models/api/generated/ApiGen_Concepts_PropertyView';
 import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
 import { getEmptyBaseAudit, getEmptyProperty } from '@/models/defaultInitializers';
-import { ILookupCode } from '@/store/slices/lookupCodes';
 import { toTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
 
 import { getEmptyContactMethod, getEmptyPerson } from './contacts.mock';
@@ -24,60 +23,6 @@ import { getEmptyRole } from './role.mock';
 import { getEmptyUser } from './user.mock';
 
 // TODO: PSP-4410 This needs to be removed as Administrative Areas no longer exist.
-export const mockAdministrativeAreaLookups = [
-  {
-    code: '0',
-    name: 'Victoria',
-    id: 0,
-    isDisabled: false,
-    type: 'AdministrativeArea',
-  },
-  {
-    code: '1',
-    name: 'Royal Oak',
-    id: 1,
-    isDisabled: false,
-    type: 'AdministrativeArea',
-  },
-] as ILookupCode[];
-
-export const mockOrganizationLookups = [
-  {
-    id: 1,
-    code: 'AEST',
-    name: 'AEST',
-    isDisabled: false,
-    type: 'Organization',
-  },
-  {
-    id: 2,
-    code: 'HTLH',
-    name: 'HTLH',
-    isDisabled: false,
-    type: 'Organization',
-  },
-  {
-    id: 3,
-    code: 'MOTI',
-    name: 'MOTI',
-    isDisabled: false,
-    type: 'Organization',
-  },
-  {
-    id: 4,
-    code: 'FLNR',
-    name: 'FLNR',
-    isDisabled: false,
-    type: 'Organization',
-  },
-  {
-    id: 5,
-    code: 'MAH',
-    name: 'MAH',
-    isDisabled: false,
-    type: 'Organization',
-  },
-] as ILookupCode[];
 
 export const mockApiOrganization: ApiGen_Concepts_Organization = {
   id: 1,

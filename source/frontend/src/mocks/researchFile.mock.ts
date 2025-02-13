@@ -136,6 +136,23 @@ export const getMockResearchFile = (): ApiGen_Concepts_ResearchFile => ({
   requestSourceDescription: null,
 });
 
+export const getEmptyResearchFileProperty = (): ApiGen_Concepts_ResearchFileProperty => ({
+  id: 0,
+  fileId: 0,
+  propertyId: 0,
+  property: null,
+  file: null,
+  displayOrder: null,
+  documentReference: null,
+  isLegalOpinionObtained: null,
+  isLegalOpinionRequired: null,
+  propertyName: null,
+  propertyResearchPurposeTypes: null,
+  researchSummary: null,
+  location: null,
+  ...getEmptyBaseAudit(),
+});
+
 export const getMockResearchFileProperty = (
   id = 1,
   fileId = 100,

@@ -10,6 +10,7 @@ using Microsoft.Extensions.Options;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Core.Http.Configuration;
+using Polly.Registry;
 
 namespace Pims.Core.Http
 {
@@ -58,8 +59,9 @@ namespace Pims.Core.Http
             IOptionsMonitor<AuthClientOptions> authClientOptions,
             IOptionsMonitor<OpenIdConnectOptions> openIdConnectOptions,
             IOptionsMonitor<JsonSerializerOptions> serializerOptions,
-            ILogger<OpenIdConnectRequestClient> logger)
-            : base(clientFactory, serializerOptions, logger)
+            ILogger<OpenIdConnectRequestClient> logger,
+            ResiliencePipelineProvider<string> pollyPipelineProvider)
+            : base(clientFactory, serializerOptions, logger, pollyPipelineProvider)
         {
             this.AuthClientOptions = authClientOptions.CurrentValue;
             this.OpenIdConnectOptions = openIdConnectOptions.CurrentValue;
@@ -78,7 +80,7 @@ namespace Pims.Core.Http
             var authority = this.AuthClientOptions.Authority ??
                 throw new ConfigurationException($"Configuration 'OpenIdConnect:Authority' is missing or invalid.");
 
-            var response = await this.Client.GetAsync($"{authority}/.well-known/openid-configuration");
+            var response = await _resiliencePipeline.ExecuteAsync(async cancellation => await this.Client.GetAsync($"{authority}/.well-known/openid-configuration", cancellation));
 
             if (response.IsSuccessStatusCode)
             {
@@ -170,18 +172,21 @@ namespace Pims.Core.Http
                 keycloakTokenUrl = $"{authority}{keycloakTokenUrl}";
             }
 
-            using var tokenMessage = new HttpRequestMessage(HttpMethod.Post, keycloakTokenUrl);
-            var p = new Dictionary<string, string>
+            return await _resiliencePipeline.ExecuteAsync(async cancellation =>
+            {
+                using var tokenMessage = new HttpRequestMessage(HttpMethod.Post, keycloakTokenUrl);
+                var p = new Dictionary<string, string>
                 {
                     { "client_id", client },
                     { "grant_type", "client_credentials" },
                     { "client_secret", clientSecret },
                     { "audience", audience },
                 };
-            var form = new FormUrlEncodedContent(p);
-            form.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/x-www-form-urlencoded");
-            tokenMessage.Content = form;
-            return await this.Client.SendAsync(tokenMessage);
+                var form = new FormUrlEncodedContent(p);
+                form.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/x-www-form-urlencoded");
+                tokenMessage.Content = form;
+                return await this.Client.SendAsync(tokenMessage, cancellation);
+            });
         }
 
         /// <summary>
@@ -210,18 +215,21 @@ namespace Pims.Core.Http
                 keycloakTokenUrl = $"{authority}{keycloakTokenUrl}";
             }
 
-            using var tokenMessage = new HttpRequestMessage(HttpMethod.Post, keycloakTokenUrl);
-            var p = new Dictionary<string, string>
+            return await _resiliencePipeline.ExecuteAsync(async cancellation =>
+            {
+                using var tokenMessage = new HttpRequestMessage(HttpMethod.Post, keycloakTokenUrl);
+                var p = new Dictionary<string, string>
                 {
                     { "client_id", client },
                     { "grant_type", "refresh_token" },
                     { "client_secret", clientSecret },
                     { "refresh_token", refreshToken },
                 };
-            var form = new FormUrlEncodedContent(p);
-            form.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/x-www-form-urlencoded");
-            tokenMessage.Content = form;
-            return await this.Client.SendAsync(tokenMessage);
+                var form = new FormUrlEncodedContent(p);
+                form.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/x-www-form-urlencoded");
+                tokenMessage.Content = form;
+                return await this.Client.SendAsync(tokenMessage, cancellation);
+            });
         }
         #endregion
 

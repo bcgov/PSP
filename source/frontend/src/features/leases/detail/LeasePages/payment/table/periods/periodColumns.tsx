@@ -17,6 +17,7 @@ import {
 } from '@/components/Table';
 import { Claims } from '@/constants';
 import { LeasePeriodStatusTypes } from '@/constants/leaseStatusTypes';
+import { cannotEditMessage } from '@/features/mapSideBar/acquisition/common/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ISystemConstant } from '@/store/slices/systemConstants';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
@@ -31,11 +32,13 @@ export interface IPeriodColumnProps {
   onDelete: (values: FormLeasePeriod) => void;
   leaseTypeCode?: string;
   gstConstant?: ISystemConstant;
+  isFileFinalStatus?: boolean;
 }
 
 export const getLeasePeriodColumns = ({
   onEdit,
   onDelete,
+  isFileFinalStatus,
 }: IPeriodColumnProps): ColumnWithProps<FormLeasePeriod>[] => {
   return [
     {
@@ -159,17 +162,24 @@ export const getLeasePeriodColumns = ({
       Header: 'Actions',
       align: 'right',
       maxWidth: 30,
-      Cell: paymentActions(onEdit, onDelete),
+      Cell: paymentActions(isFileFinalStatus, onEdit, onDelete),
     },
   ];
 };
 
 const paymentActions = (
+  isFileFinalStatus: boolean,
   onEdit: (values: FormLeasePeriod) => void,
   onDelete: (values: FormLeasePeriod) => void,
 ) => {
   return function ({ row: { original, index } }: CellProps<FormLeasePeriod, string>) {
     const { hasClaim } = useKeycloakWrapper();
+    if (isFileFinalStatus) {
+      return (
+        <TooltipIcon toolTipId={`period-actions-cannot-edit-tooltip`} toolTip={cannotEditMessage} />
+      );
+    }
+
     return (
       <StyledIcons>
         {hasClaim(Claims.LEASE_EDIT) && (

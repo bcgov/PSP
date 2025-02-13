@@ -31,6 +31,7 @@ describe('Form 8 Detail View component', () => {
         }
         onDelete={onDelete}
         onGenerate={onGenerate}
+        isFileFinalStatus={renderOptions?.props?.isFileFinalStatus ?? false}
       />,
       {
         ...renderOptions,
@@ -86,6 +87,16 @@ describe('Form 8 Detail View component', () => {
 
   it('does not render the edit and delete button for users without acquisition edit permissions', async () => {
     const { queryByTestId } = await setup({ claims: [Claims.ACQUISITION_VIEW] });
+
+    expect(queryByTestId('form8[0].edit-form8')).not.toBeInTheDocument();
+    expect(queryByTestId('form8[0].delete-form8')).not.toBeInTheDocument();
+  });
+
+  it('does not render the edit and delete button when file in final status', async () => {
+    const { queryByTestId } = await setup({
+      claims: [Claims.ACQUISITION_EDIT],
+      props: { isFileFinalStatus: true },
+    });
 
     expect(queryByTestId('form8[0].edit-form8')).not.toBeInTheDocument();
     expect(queryByTestId('form8[0].delete-form8')).not.toBeInTheDocument();

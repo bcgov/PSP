@@ -11,6 +11,7 @@ import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeTyp
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
 import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
+import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 
 const history = createMemoryHistory();
 
@@ -25,6 +26,7 @@ const fakeAssociations: ApiGen_Concepts_PropertyAssociations = {
       createdDateTime: '2022-05-13T11:51:29.23',
       createdBy: 'Acquisition File Data',
       status: 'Active',
+      statusCode: 'ACTIVE',
       createdByGuid: null,
     },
   ],
@@ -36,6 +38,7 @@ const fakeAssociations: ApiGen_Concepts_PropertyAssociations = {
       createdDateTime: '2022-05-13T11:51:29.23',
       createdBy: 'Lease Seed Data',
       status: 'Active',
+      statusCode: ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE,
       createdByGuid: null,
     },
   ],
@@ -47,6 +50,7 @@ const fakeAssociations: ApiGen_Concepts_PropertyAssociations = {
       createdDateTime: '2022-05-17T19:49:16.647',
       createdBy: 'admin',
       status: 'Active',
+      statusCode: 'ACTIVE',
       createdByGuid: null,
     },
   ],
@@ -164,7 +168,13 @@ describe('PropertyAssociationTabView component', () => {
     const { getByText } = setup({
       isLoading: false,
       associations: fakeAssociations,
-      associatedLeases: [{ id: 34, expiryDate: '2024-01-01' } as ApiGen_Concepts_Lease],
+      associatedLeases: [
+        {
+          id: 34,
+          expiryDate: '2024-01-01',
+          fileStatusTypeCode: { id: 'Active' },
+        } as ApiGen_Concepts_Lease,
+      ],
       associatedLeaseStakeholders: [],
       associatedLeaseRenewals: [
         {

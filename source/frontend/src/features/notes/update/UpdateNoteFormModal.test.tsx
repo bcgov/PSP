@@ -4,7 +4,7 @@ import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
 
 import { mockLookups } from '@/mocks/lookups.mock';
-import { mockNoteResponse } from '@/mocks/noteResponses.mock';
+import { getMockApiNote } from '@/mocks/noteResponses.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, fakeText, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
@@ -54,7 +54,7 @@ describe('UpdateNoteFormModal component', () => {
 
   beforeEach(() => {
     mockAxios.onGet(new RegExp('users/info/*')).reply(200, {});
-    initialValues = NoteForm.fromApi(mockNoteResponse(1));
+    initialValues = NoteForm.fromApi(getMockApiNote(1));
   });
 
   afterEach(() => {

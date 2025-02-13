@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using PIMS.Tests.Automation.Data;
 using PIMS.Tests.Automation.Classes;
+using OpenQA.Selenium;
 
 namespace PIMS.Tests.Automation.StepDefinitions
 {
@@ -17,12 +18,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private IndividualContact individualContact;
         private OrganizationContact organizationContact;
 
-        public ContactsSteps(BrowserDriver driver)
+        public ContactsSteps(IWebDriver driver)
         {
             loginSteps = new LoginSteps(driver);
-            contacts = new Contacts(driver.Current);
-            searchContacts = new SearchContacts(driver.Current);
-            sharedPagination = new SharedPagination(driver.Current);
+            contacts = new Contacts(driver);
+            searchContacts = new SearchContacts(driver);
+            sharedPagination = new SharedPagination(driver);
 
             individualContact = new IndividualContact();
             organizationContact = new OrganizationContact();
@@ -270,7 +271,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             /* TEST COVERAGE: PSP-4200 */
             Assert.Equal("No Contacts match the search criteria", searchContacts.GetNoSearchMessage());
-            searchContacts.Dispose();
         }
 
         [StepDefinition(@"Expected Content is displayed on Contacts Table from contact type ""(.*)""")]
@@ -282,8 +282,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 searchContacts.VerifyContactTableContent(individualContact.FullName, individualContact.FirstName, individualContact.LastName, individualContact.Organization, individualContact.IndEmail1, individualContact.IndMailAddress.AddressLine1, individualContact.IndMailAddress.City, individualContact.IndMailAddress.ProvinceView, individualContact.IndMailAddress.Country);
             else
                 searchContacts.VerifyContactTableContent(organizationContact.OrganizationName, "", "", organizationContact.OrganizationName, organizationContact.OrgEmail1, organizationContact.OrgMailAddress.AddressLine1, organizationContact.OrgMailAddress.City, organizationContact.OrgMailAddress.ProvinceView, organizationContact.OrgMailAddress.Country);
-
-            searchContacts.Dispose();
         }
 
         private void PopulateIndividualContact(int rowNumber)

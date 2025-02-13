@@ -1,4 +1,5 @@
 ﻿
+using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
 using System.Data;
@@ -33,26 +34,26 @@ namespace PIMS.Tests.Automation.StepDefinitions
         protected string leaseCode = "";
         protected string compensationNumber = "";
 
-        public LeaseLicenseSteps(BrowserDriver driver)
+        public LeaseLicenseSteps(IWebDriver driver)
         {
             loginSteps = new LoginSteps(driver);
             genericSteps = new GenericSteps(driver);
-            leaseDetails = new LeaseDetails(driver.Current);
-            leaseConsultation = new LeaseConsultations(driver.Current);
-            checklist = new LeasesChecklist(driver.Current);
-            tenant = new LeaseTenants(driver.Current);
-            periodPayments = new LeasePeriodPayments(driver.Current);
-            improvements = new LeaseImprovements(driver.Current);
-            insurance = new LeaseInsurance(driver.Current);
-            deposits = new LeaseDeposits(driver.Current);
-            surplus = new LeaseSurplus(driver.Current);
-            searchLeases = new SearchLease(driver.Current);
-            searchProperties = new SearchProperties(driver.Current);
-            propertyInformation = new PropertyInformation(driver.Current);
-            sharedSearchProperties = new SharedFileProperties(driver.Current);
-            sharedPagination = new SharedPagination(driver.Current);
-            h120 = new SharedCompensations(driver.Current);
-            notes = new Notes(driver.Current);
+            leaseDetails = new LeaseDetails(driver);
+            leaseConsultation = new LeaseConsultations(driver);
+            checklist = new LeasesChecklist(driver);
+            tenant = new LeaseTenants(driver);
+            periodPayments = new LeasePeriodPayments(driver);
+            improvements = new LeaseImprovements(driver);
+            insurance = new LeaseInsurance(driver);
+            deposits = new LeaseDeposits(driver);
+            surplus = new LeaseSurplus(driver);
+            searchLeases = new SearchLease(driver);
+            searchProperties = new SearchProperties(driver);
+            propertyInformation = new PropertyInformation(driver);
+            sharedSearchProperties = new SharedFileProperties(driver);
+            sharedPagination = new SharedPagination(driver);
+            h120 = new SharedCompensations(driver);
+            notes = new Notes(driver);
 
             lease = new Lease();
         }
@@ -878,7 +879,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchLeases.SearchLicenseByLFile(leaseCode);
 
             Assert.True(searchLeases.SearchFoundResults());
-            searchLeases.Dispose();
         }
 
         [StepDefinition(@"Expected Lease File Content is displayed on Leases Table")]
@@ -889,7 +889,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Verify List View
             searchLeases.VerifySearchLeasesView();
             searchLeases.VerifyLeaseTableContent(lease);
-            searchLeases.Dispose();
         }
 
         [StepDefinition(@"I create Compensation Requisition within an Lease/Licence")]
@@ -923,7 +922,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                     //Add Details to the Compensation Requisition
                     h120.EditCompensationDetails();
                     //h120.VerifyCompensationDetailsInitCreateForm();
-                    h120.UpdateCompensationDetails(lease.LeaseCompensations[i]);
+                    h120.UpdateCompensationDetails(lease.LeaseCompensations[i], "Lease");
 
                     //Save new Compensation Requisition Details
                     h120.SaveAcquisitionFileCompensation();
@@ -959,14 +958,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
             h120.EditCompensationDetails();
 
             //Make changes on created Compensation Requisition Form
-            h120.UpdateCompensationDetails(lease.LeaseCompensations[0]);
+            h120.UpdateCompensationDetails(lease.LeaseCompensations[0], "Lease");
 
             //Cancel changes
             h120.CancelAcquisitionFileCompensation();
 
             //Make changes on created Compensation Requisition Form
             h120.EditCompensationDetails();
-            h120.UpdateCompensationDetails(lease.LeaseCompensations[0]);
+            h120.UpdateCompensationDetails(lease.LeaseCompensations[0], "Lease");
 
             //Save changes
             h120.SaveAcquisitionFileCompensation();
@@ -1108,35 +1107,35 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 DataTable leaseChecklistSheet = ExcelDataContext.GetInstance().Sheets["LeasesChecklist"]!;
                 ExcelDataContext.PopulateInCollection(leaseChecklistSheet);
 
-                lease.LeaseChecklist.FileInitiationSelect1 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "FileInitiationSelect1");
-                lease.LeaseChecklist.FileInitiationSelect2 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "FileInitiationSelect2");
-                lease.LeaseChecklist.FileInitiationSelect3 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "FileInitiationSelect3");
-                lease.LeaseChecklist.FileInitiationSelect4 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "FileInitiationSelect4");
-                lease.LeaseChecklist.FileInitiationSelect5 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "FileInitiationSelect5");
-                lease.LeaseChecklist.FileInitiationSelect6 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "FileInitiationSelect6");
+                lease.LeaseChecklist.FileInitiationSelect1 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseFileInitiationSelect1");
+                lease.LeaseChecklist.FileInitiationSelect2 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseFileInitiationSelect2");
+                lease.LeaseChecklist.FileInitiationSelect3 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseFileInitiationSelect3");
+                lease.LeaseChecklist.FileInitiationSelect4 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseFileInitiationSelect4");
+                lease.LeaseChecklist.FileInitiationSelect5 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseFileInitiationSelect5");
+                lease.LeaseChecklist.FileInitiationSelect6 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseFileInitiationSelect6");
 
-                lease.LeaseChecklist.ReferralsApprovalsSelect1 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "ReferralsApprovalsSelect1");
-                lease.LeaseChecklist.ReferralsApprovalsSelect2 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "ReferralsApprovalsSelect2");
-                lease.LeaseChecklist.ReferralsApprovalsSelect3 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "ReferralsApprovalsSelect3");
-                lease.LeaseChecklist.ReferralsApprovalsSelect4 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "ReferralsApprovalsSelect4");
-                lease.LeaseChecklist.ReferralsApprovalsSelect5 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "ReferralsApprovalsSelect5");
-                lease.LeaseChecklist.ReferralsApprovalsSelect6 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "ReferralsApprovalsSelect6");
-                lease.LeaseChecklist.ReferralsApprovalsSelect7 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "ReferralsApprovalsSelect7");
-                lease.LeaseChecklist.ReferralsApprovalsSelect8 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "ReferralsApprovalsSelect8");
+                lease.LeaseChecklist.ReferralsApprovalsSelect1 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseReferralsApprovalsSelect1");
+                lease.LeaseChecklist.ReferralsApprovalsSelect2 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseReferralsApprovalsSelect2");
+                lease.LeaseChecklist.ReferralsApprovalsSelect3 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseReferralsApprovalsSelect3");
+                lease.LeaseChecklist.ReferralsApprovalsSelect4 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseReferralsApprovalsSelect4");
+                lease.LeaseChecklist.ReferralsApprovalsSelect5 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseReferralsApprovalsSelect5");
+                lease.LeaseChecklist.ReferralsApprovalsSelect6 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseReferralsApprovalsSelect6");
+                lease.LeaseChecklist.ReferralsApprovalsSelect7 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseReferralsApprovalsSelect7");
+                lease.LeaseChecklist.ReferralsApprovalsSelect8 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseReferralsApprovalsSelect8");
 
-                lease.LeaseChecklist.AgreementPreparationSelect1 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "AgreementPreparationSelect1");
-                lease.LeaseChecklist.AgreementPreparationSelect2 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "AgreementPreparationSelect2");
-                lease.LeaseChecklist.AgreementPreparationSelect3 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "AgreementPreparationSelect3");
-                lease.LeaseChecklist.AgreementPreparationSelect4 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "AgreementPreparationSelect4");
-                lease.LeaseChecklist.AgreementPreparationSelect5 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "AgreementPreparationSelect5");
-                lease.LeaseChecklist.AgreementPreparationSelect6 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "AgreementPreparationSelect6");
-                lease.LeaseChecklist.AgreementPreparationSelect7 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "AgreementPreparationSelect7");
-                lease.LeaseChecklist.AgreementPreparationSelect8 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "AgreementPreparationSelect8");
-                lease.LeaseChecklist.AgreementPreparationSelect9 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "AgreementPreparationSelect9");
-                lease.LeaseChecklist.AgreementPreparationSelect10 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "AgreementPreparationSelect10");
-                lease.LeaseChecklist.AgreementPreparationSelect11 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "AgreementPreparationSelect11");
-                lease.LeaseChecklist.AgreementPreparationSelect12 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "AgreementPreparationSelect12");
-                lease.LeaseChecklist.AgreementPreparationSelect13 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "AgreementPreparationSelect13");
+                lease.LeaseChecklist.AgreementPreparationSelect1 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseAgreementPreparationSelect1");
+                lease.LeaseChecklist.AgreementPreparationSelect2 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseAgreementPreparationSelect2");
+                lease.LeaseChecklist.AgreementPreparationSelect3 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseAgreementPreparationSelect3");
+                lease.LeaseChecklist.AgreementPreparationSelect4 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseAgreementPreparationSelect4");
+                lease.LeaseChecklist.AgreementPreparationSelect5 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseAgreementPreparationSelect5");
+                lease.LeaseChecklist.AgreementPreparationSelect6 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseAgreementPreparationSelect6");
+                lease.LeaseChecklist.AgreementPreparationSelect7 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseAgreementPreparationSelect7");
+                lease.LeaseChecklist.AgreementPreparationSelect8 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseAgreementPreparationSelect8");
+                lease.LeaseChecklist.AgreementPreparationSelect9 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseAgreementPreparationSelect9");
+                lease.LeaseChecklist.AgreementPreparationSelect10 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseAgreementPreparationSelect10");
+                lease.LeaseChecklist.AgreementPreparationSelect11 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseAgreementPreparationSelect11");
+                lease.LeaseChecklist.AgreementPreparationSelect12 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseAgreementPreparationSelect12");
+                lease.LeaseChecklist.AgreementPreparationSelect13 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseAgreementPreparationSelect13");
 
                 lease.LeaseChecklist.LeaseLicenceCompletionSelect1 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseLicenceCompletionSelect1");
                 lease.LeaseChecklist.LeaseLicenceCompletionSelect2 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseLicenceCompletionSelect2");
@@ -1445,7 +1444,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 compensation.CompensationSTOB = ExcelDataContext.ReadData(i, "CompensationSTOB");
                 compensation.CompensationServiceLine = ExcelDataContext.ReadData(i, "CompensationServiceLine");
                 compensation.CompensationResponsibilityCentre = ExcelDataContext.ReadData(i, "CompensationResponsibilityCentre");
-                compensation.CompensationPayee = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "CompensationPayee"));
+                compensation.LeaseCompensationPayee = ExcelDataContext.ReadData(i, "CompensationPayee");
                 compensation.CompensationPayeeDisplay = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "CompensationPayeeDisplay"));
                 compensation.CompensationPaymentInTrust = Boolean.Parse(ExcelDataContext.ReadData(i, "CompensationPaymentInTrust"));
                 compensation.CompensationGSTNumber = ExcelDataContext.ReadData(i, "CompensationGSTNumber");
@@ -1454,10 +1453,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 compensation.ActivitiesCount = int.Parse(ExcelDataContext.ReadData(i, "ActivitiesCount"));
 
                 if (compensation.ActivitiesStartRow != 0 && compensation.ActivitiesCount != 0)
-                {
                     PopulateActivitiesCollection(compensation.ActivitiesStartRow, compensation.ActivitiesCount, compensation.CompensationActivities);
-                }
-
+                
                 lease.LeaseCompensations.Add(compensation);
             }
         }

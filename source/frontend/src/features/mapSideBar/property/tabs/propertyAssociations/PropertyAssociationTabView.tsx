@@ -1,12 +1,11 @@
-import {
-  MdFence,
-  MdOutlineCallMissedOutgoing,
-  MdOutlineRealEstateAgent,
-  MdTopic,
-} from 'react-icons/md';
-
+import AcquisitionIcon from '@/assets/images/acquisition-grey-icon.svg?react';
+import DispositionIcon from '@/assets/images/disposition-grey-icon.svg?react';
+import LeaseIcon from '@/assets/images/lease-grey-icon.svg?react';
+import ResearchIcon from '@/assets/images/research-grey-icon.svg?react';
 import { Section } from '@/components/common/Section/Section';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
+import TooltipIcon from '@/components/common/TooltipIcon';
+import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_LeaseRenewal } from '@/models/api/generated/ApiGen_Concepts_LeaseRenewal';
 import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
@@ -27,14 +26,25 @@ export interface IPropertyAssociationTabViewProps {
 const PropertyAssociationTabView: React.FunctionComponent<
   React.PropsWithChildren<IPropertyAssociationTabViewProps>
 > = props => {
+  const leaseAssociations =
+    props.associations?.leaseAssociations?.filter(
+      x => x.statusCode !== ApiGen_CodeTypes_LeaseStatusTypes.DUPLICATE,
+    ) ?? [];
+
   return (
     <StyledSummarySection>
-      <Section>This property is associated with the following files:</Section>
+      <Section>
+        This property is associated with the following files:{' '}
+        <TooltipIcon
+          toolTipId="duplicate-files-tooltip"
+          toolTip="Duplicated files are hidden on the Property Information, PIMS files tab, underneath the Leases/Licenses."
+        ></TooltipIcon>
+      </Section>
 
       <Section
         header={
           <AssociationHeader
-            icon={<MdTopic title="User Profile" size="2.5rem" />}
+            icon={<ResearchIcon title="User Profile" />}
             title="Research"
             count={props.associations?.researchAssociations?.length}
           />
@@ -50,7 +60,7 @@ const PropertyAssociationTabView: React.FunctionComponent<
       <Section
         header={
           <AssociationHeader
-            icon={<MdOutlineRealEstateAgent title="Acquisition-Files" size="2.5rem" />}
+            icon={<AcquisitionIcon title="Acquisition-Files" />}
             title="Acquisition"
             count={props.associations?.acquisitionAssociations?.length}
           />
@@ -66,16 +76,16 @@ const PropertyAssociationTabView: React.FunctionComponent<
       <Section
         header={
           <AssociationHeader
-            icon={<MdFence title="Leases-Licences" size="2.5rem" />}
+            icon={<LeaseIcon title="Leases-Licences" />}
             title="Leases/Licences"
-            count={props.associations?.leaseAssociations?.length}
+            count={leaseAssociations?.length}
           />
         }
         isCollapsable
       >
         <LeaseAssociationContent
           associationName="lease"
-          associations={props.associations?.leaseAssociations ?? undefined}
+          associations={leaseAssociations}
           linkUrlMask="/mapview/sidebar/lease/|id|"
           stakeholders={props.associatedLeaseStakeholders}
           renewals={props.associatedLeaseRenewals}
@@ -85,7 +95,7 @@ const PropertyAssociationTabView: React.FunctionComponent<
       <Section
         header={
           <AssociationHeader
-            icon={<MdOutlineCallMissedOutgoing title="Disposition-Files" size="2.5rem" />}
+            icon={<DispositionIcon title="Disposition-Files" />}
             title="Disposition"
             count={props.associations?.dispositionAssociations?.length}
           />

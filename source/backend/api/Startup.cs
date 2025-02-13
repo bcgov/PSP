@@ -5,6 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
 using System.Security.Claims;
 using System.Text;
@@ -44,6 +45,7 @@ using Pims.Av;
 using Pims.Core.Api.Exceptions;
 using Pims.Core.Api.Helpers;
 using Pims.Core.Api.Middleware;
+using Pims.Core.Configuration;
 using Pims.Core.Converters;
 using Pims.Core.Http;
 using Pims.Core.Json;
@@ -52,6 +54,7 @@ using Pims.Dal.Keycloak;
 using Pims.Dal.Repositories;
 using Pims.Geocoder;
 using Pims.Ltsa;
+using Polly;
 using Prometheus;
 
 namespace Pims.Api
@@ -100,6 +103,7 @@ namespace Pims.Api
             services.AddSerilogging(this.Configuration);
             var jsonSerializerOptions = this.Configuration.GenerateJsonSerializerOptions();
             var pimsOptions = this.Configuration.GeneratePimsOptions();
+
             services.AddMapster(jsonSerializerOptions, pimsOptions, options =>
             {
                 options.Default.IgnoreNonMapped(true);
@@ -231,6 +235,20 @@ namespace Pims.Api
             {
                 x.ValueLengthLimit = maxFileSize;
                 x.MultipartBodyLengthLimit = maxFileSize; // In case of multipart
+            });
+
+            PollyOptions pollyOptions = new();
+            this.Configuration.GetSection("Polly").Bind(pollyOptions);
+
+            services.AddResiliencePipeline<string, HttpResponseMessage>(HttpRequestClient.NetworkPolicyName, (builder) =>
+            {
+                builder.AddRetry(new()
+                {
+                    BackoffType = DelayBackoffType.Exponential,
+                    Delay = TimeSpan.FromSeconds(pollyOptions.DelayInSeconds),
+                    MaxRetryAttempts = pollyOptions.MaxRetries,
+                    ShouldHandle = new PredicateBuilder<HttpResponseMessage>().Handle<HttpRequestException>().HandleResult(response => (int)response.StatusCode >= 500 && (int)response.StatusCode <= 599),
+                });
             });
 
             // Export metrics from all HTTP clients registered in services
@@ -522,11 +540,13 @@ namespace Pims.Api
             services.AddScoped<IAcquisitionStatusSolver, AcquisitionStatusSolver>();
             services.AddScoped<IDispositionFileService, DispositionFileService>();
             services.AddScoped<IDispositionStatusSolver, DispositionStatusSolver>();
+            services.AddScoped<ILeaseStatusSolver, LeaseStatusSolver>();
             services.AddScoped<IPropertyOperationService, PropertyOperationService>();
             services.AddScoped<ITakeInteractionSolver, TakeInteractionSolver>();
             services.AddScoped<IDocumentQueueService, DocumentQueueService>();
             services.AddScoped<IEnvironmentService, EnvironmentService>();
             services.AddScoped<IDocumentQueueService, DocumentQueueService>();
+            services.AddScoped<IResearchStatusSolver, ResearchStatusSolver>();
         }
 
         /// <summary>

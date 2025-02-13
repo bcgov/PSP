@@ -31,6 +31,7 @@ namespace Pims.Dal.Repositories
         {
             return Context.PimsCompensationRequisitions
                 .Include(c => c.PimsCompReqFinancials)
+                .Include(p => p.PimsCompReqPayees)
                 .AsNoTracking()
                 .Where(c => c.AcquisitionFileId == acquisitionFileId).ToList();
         }
@@ -84,9 +85,6 @@ namespace Pims.Dal.Repositories
             var existingCompensationRequisition = Context.PimsCompensationRequisitions
                 .FirstOrDefault(x => x.CompensationRequisitionId.Equals(compensationRequisition.CompensationRequisitionId)) ?? throw new KeyNotFoundException();
 
-            // Don't let the frontend override the legacy payee - this is only intended to be populated via ETL
-            compensationRequisition.LegacyPayee = existingCompensationRequisition.LegacyPayee;
-
             Context.Entry(existingCompensationRequisition).CurrentValues.SetValues(compensationRequisition);
             Context.UpdateChild<PimsCompensationRequisition, long, PimsCompReqFinancial, long>(a => a.PimsCompReqFinancials, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsCompReqFinancials.ToArray(), true);
             Context.UpdateChild<PimsCompensationRequisition, long, PimsPropAcqFlCompReq, long>(a => a.PimsPropAcqFlCompReqs, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsPropAcqFlCompReqs.ToArray(), true);
@@ -104,6 +102,7 @@ namespace Pims.Dal.Repositories
                 .Include(p => p.PimsPropAcqFlCompReqs)
                 .Include(l => l.PimsPropLeaseCompReqs)
                 .Include(s => s.PimsLeaseStakeholderCompReqs)
+                .Include(ap => ap.PimsCompReqPayees)
                 .AsNoTracking()
                 .FirstOrDefault(c => c.CompensationRequisitionId == compensationId);
 
@@ -127,6 +126,11 @@ namespace Pims.Dal.Repositories
                 foreach (var compReqLeaseStakeholder in deletedEntity.PimsLeaseStakeholderCompReqs)
                 {
                     Context.PimsLeaseStakeholderCompReqs.Remove(new PimsLeaseStakeholderCompReq() { LeaseStakeholderCompReqId = compReqLeaseStakeholder.LeaseStakeholderCompReqId });
+                }
+
+                foreach (var compReqAcqPayee in deletedEntity.PimsCompReqPayees)
+                {
+                    Context.PimsCompReqPayees.Remove(new() { CompReqPayeeId = compReqAcqPayee.CompReqPayeeId });
                 }
 
                 Context.CommitTransaction(); // TODO: required to enforce delete order. Can be removed when cascade deletes are implemented.

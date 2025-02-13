@@ -1,28 +1,8 @@
 import { Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
-import { Scrollable as ScrollableBase } from '@/components/common/Scrollable/Scrollable';
-
-export const H1 = styled.h1`
-  text-align: left;
-`;
-
-export const H2 = styled.h2`
-  text-align: left;
-`;
-
-export const H2Primary = styled.h2`
-  text-align: left;
-  color: ${props => props.theme.css.headerTextColor};
-`;
-
 export const RowAligned = styled(Row)`
   text-align: left;
-`;
-
-export const Scrollable = styled(ScrollableBase)`
-  padding: 1.6rem 3.2rem;
-  width: 100%;
 `;
 
 export const StatusIndicators = styled.div`
@@ -64,13 +44,4 @@ export const ContactLink = styled.div`
     font-weight: bold;
     color: ${props => props.theme.css.activeActionColor} !important;
   }
-`;
-
-export const ListPage = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  width: 100%;
-  gap: 2.5rem;
-  padding: 0;
 `;

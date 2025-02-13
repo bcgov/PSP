@@ -7,7 +7,7 @@ import EditButton from '@/components/common/buttons/EditButton';
 import { EditPropertiesIcon } from '@/components/common/buttons/EditPropertiesButton';
 import { LinkButton } from '@/components/common/buttons/LinkButton';
 import TooltipIcon from '@/components/common/TooltipIcon';
-import { Claims, Roles } from '@/constants/index';
+import { Claims } from '@/constants/index';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 
@@ -27,7 +27,7 @@ export interface IAcquisitionMenuProps {
 const AcquisitionMenu: React.FunctionComponent<
   React.PropsWithChildren<IAcquisitionMenuProps>
 > = props => {
-  const { hasClaim, hasRole } = useKeycloakWrapper();
+  const { hasClaim } = useKeycloakWrapper();
   const handleClick = (index: number) => {
     props.onChange(index);
   };
@@ -35,7 +35,7 @@ const AcquisitionMenu: React.FunctionComponent<
     props.acquisitionFile.fileStatusTypeCode,
   );
   const canEditDetails = () => {
-    if (hasRole(Roles.SYSTEM_ADMINISTRATOR) || statusSolver.canEditProperties()) {
+    if (statusSolver.canEditProperties()) {
       return true;
     }
     return false;

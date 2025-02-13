@@ -21,6 +21,9 @@ import {
 
 import DepositsContainer from './DepositsContainer';
 import { FormLeaseDeposit } from './models/FormLeaseDeposit';
+import { toTypeCode } from '@/utils/formUtils';
+import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
+import { getMockApiLease } from '@/mocks/lease.mock';
 
 const onSuccessMock = vi.fn();
 
@@ -31,7 +34,11 @@ const setup = (renderOptions: RenderOptions & { lease?: LeaseFormModel } = {}): 
   const result = render(
     <LeaseStateContext.Provider
       value={{
-        lease: LeaseFormModel.toApi(renderOptions.lease ?? { ...getDefaultFormLease(), id: 1 }),
+        lease: renderOptions?.lease
+          ? LeaseFormModel.toApi(renderOptions?.lease)
+          : {
+              ...getMockApiLease(),
+            },
         setLease: noop,
       }}
     >
@@ -74,6 +81,7 @@ describe('DepositsContainer', () => {
     const { getByText, getByTestId, container } = setup({
       lease: {
         ...new LeaseFormModel(),
+        statusTypeCode: ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE,
         id: 1,
         returnNotes: 'Tenant no longer has a dog, deposit returned, less fee for carpet cleaning',
         securityDeposits: getMockDeposits().map(s => FormLeaseDeposit.fromApi(s)),
@@ -94,6 +102,7 @@ describe('DepositsContainer', () => {
     const { getByText, getByTestId, container } = await setup({
       lease: {
         ...new LeaseFormModel(),
+        statusTypeCode: ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE,
         id: 1,
         returnNotes: '',
         securityDeposits: getMockDeposits().map(s => FormLeaseDeposit.fromApi(s)),

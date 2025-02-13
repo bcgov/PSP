@@ -351,6 +351,15 @@ exports[`DocumentUploadModal component > renders correctly 1`] = `
   cursor: pointer;
 }
 
+.c8 {
+  width: 100%;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
 .c4 {
   border: 1px solid #606060;
   border-style: dashed;
@@ -391,15 +400,6 @@ exports[`DocumentUploadModal component > renders correctly 1`] = `
 
 .c2 {
   font-weight: bold;
-}
-
-.c8 {
-  width: 100%;
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-  overflow-y: auto;
 }
 
 .c9 {

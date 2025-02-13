@@ -639,6 +639,36 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void Update_DraftsToCancel_TakesInProgress_Violation()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+
+            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            var takeRepository = this._helper.GetService<Mock<ITakeRepository>>();
+            takeRepository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsTake>() { new PimsTake() { TakeStatusTypeCode = AcquisitionTakeStatusTypes.INPROGRESS.ToString() } });
+
+            // Act
+            var pimsAcquisitionUpdate = EntityHelper.CreateAcquisitionFile(acqFile.AcquisitionFileId, acqFile.FileName);
+            pimsAcquisitionUpdate.AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.CANCEL.ToString();
+            pimsAcquisitionUpdate.AcquisitionFileStatusTypeCodeNavigation = null;
+
+            Action act = () => service.Update(pimsAcquisitionUpdate, new List<UserOverrideCode>());
+
+            // Assert
+            var exception = act.Should().Throw<BusinessRuleViolationException>();
+            exception.WithMessage("Please ensure all in-progress property takes have been completed or cancelled before cancelling an Acquisition File.");
+        }
+
+        [Fact]
         public void Update_Drafts_TakesNotInFile_Violation()
         {
             // Arrange
@@ -1021,7 +1051,7 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void Update_FKException_Removed_AcqFileOwner()
+        public void Update_Exception_Removed_AcqFileOwner()
         {
             // Arrange
             var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
@@ -1070,7 +1100,7 @@ namespace Pims.Api.Test.Services
             Action act = () => service.Update(updatedAcqFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
 
             // Assert
-            act.Should().Throw<ForeignKeyDependencyException>();
+            act.Should().Throw<BusinessRuleViolationException>();
             repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
         }
 
@@ -1125,7 +1155,7 @@ namespace Pims.Api.Test.Services
             Action act = () => service.Update(updatedAcqFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
 
             // Assert
-            act.Should().Throw<ForeignKeyDependencyException>();
+            act.Should().Throw<BusinessRuleViolationException>();
             repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
         }
 
@@ -1180,7 +1210,7 @@ namespace Pims.Api.Test.Services
             Action act = () => service.Update(updatedAcqFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
 
             // Assert
-            act.Should().Throw<ForeignKeyDependencyException>();
+            act.Should().Throw<BusinessRuleViolationException>();
             repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
         }
 
@@ -1234,7 +1264,7 @@ namespace Pims.Api.Test.Services
             Action act = () => service.Update(updatedAcqFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
 
             // Assert
-            act.Should().Throw<ForeignKeyDependencyException>();
+            act.Should().Throw<BusinessRuleViolationException>();
             repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
         }
 
@@ -1454,6 +1484,9 @@ namespace Pims.Api.Test.Services
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditProperties(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
 
             // Act
             service.UpdateProperties(acqFile, new List<UserOverrideCode>());
@@ -1957,7 +1990,7 @@ namespace Pims.Api.Test.Services
             Action act = () => service.UpdateProperties(acqFile, new List<UserOverrideCode>());
 
             // Assert
-            act.Should().Throw<BusinessRuleViolationException>().WithMessage("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
+            act.Should().Throw<BusinessRuleViolationException>().WithMessage("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
         }
 
         [Fact]
@@ -2524,102 +2557,139 @@ namespace Pims.Api.Test.Services
             act.Should().Throw<NotAuthorizedException>();
         }
 
-        // TODO: fix
-        /*
-                [Fact]
-                public void UpdateInterestHolders_Success()
-                {
-                    // Arrange
-                    var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
-                    var repository = _helper.GetService<Mock<IInterestHolderRepository>>();
-                    var acqFilerepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
-                    var acquisitionFile = EntityHelper.CreateAcquisitionFile(1);
+        [Fact]
+        public void UpdateInterestHolders_Success()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+            var repository = _helper.GetService<Mock<IInterestHolderRepository>>();
+            var acqFilerepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            var acquisitionFile = EntityHelper.CreateAcquisitionFile(1);
 
-                    acquisitionFile.PimsInterestHolders = new List<PimsInterestHolder>() {
+            acquisitionFile.PimsInterestHolders = new List<PimsInterestHolder>() {
                         new PimsInterestHolder() {
                             InterestHolderId = 100,
                         },
                     };
 
-                    acqFilerepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acquisitionFile);
-                    repository.Setup(x => x.UpdateAllForAcquisition(It.IsAny<long>(), It.IsAny<List<PimsInterestHolder>>())).Returns(new List<PimsInterestHolder>() { new PimsInterestHolder() });
+            acqFilerepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acquisitionFile);
+            repository.Setup(x => x.UpdateAllForAcquisition(It.IsAny<long>(), It.IsAny<List<PimsInterestHolder>>())).Returns(new List<PimsInterestHolder>() { new PimsInterestHolder() });
+            repository.Setup(x => x.GetInterestHoldersByAcquisitionFile(It.IsAny<long>()))
+                .Returns(new List<PimsInterestHolder>()
+                {
+                            new PimsInterestHolder()
+                            {
+                                InterestHolderId = 100,
+                            },
+                });
 
-                    var userRepository = _helper.GetService<Mock<IUserRepository>>();
-                    userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
-                    var compReqRepository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
-                    compReqRepository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>()))
-                        .Returns(new List<PimsCompensationRequisition>() {
+            var compReqRepository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            compReqRepository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>()))
+                .Returns(new List<PimsCompensationRequisition>() {
                             new PimsCompensationRequisition() {
                                 CompensationRequisitionId = 1,
                                 AcquisitionFileId = acquisitionFile.Internal_Id,
-                                PimsAcquisitionPayees = new List<PimsAcquisitionPayee>()
-                                {
-                                    new PimsAcquisitionPayee()
-                                    {
-                                        Internal_Id = 1,
-                                        CompensationRequisitionId = 1,
-                                        AcquisitionOwnerId = null,
-                                        InterestHolderId = null,
-                                        AcquisitionFileTeamId = null
-                                    },
-                                },
                             },
-                        });
+                });
 
-                    // Act
-                    var result = service.UpdateInterestHolders(1, new List<PimsInterestHolder>() { new PimsInterestHolder() });
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditStakeholders(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
 
-                    // Assert
-                    repository.Verify(x => x.UpdateAllForAcquisition(It.IsAny<long>(), It.IsAny<List<PimsInterestHolder>>()), Times.Once);
-                }
+            // Act
+            var result = service.UpdateInterestHolders(1, new List<PimsInterestHolder>() { new PimsInterestHolder() });
 
+            // Assert
+            repository.Verify(x => x.UpdateAllForAcquisition(It.IsAny<long>(), It.IsAny<List<PimsInterestHolder>>()), Times.Once);
+        }
 
+        [Fact]
+        public void UpdateInterestHolders_FinalStatus()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+            var repository = _helper.GetService<Mock<IInterestHolderRepository>>();
+            var acqFilerepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            var acquisitionFile = EntityHelper.CreateAcquisitionFile(1);
 
-                [Fact]
-                public void UpdateInterestHolders_FKExeption_Removed_InterestHolder()
-                {
-                    // Arrange
-                    var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
-                    var acqFile = EntityHelper.CreateAcquisitionFile();
-                    acqFile.PimsInterestHolders = new List<PimsInterestHolder>() {
+            acquisitionFile.PimsInterestHolders = new List<PimsInterestHolder>() {
                         new PimsInterestHolder() {
                             InterestHolderId = 100,
                         },
                     };
 
-                    var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
-                    repository.Setup(x => x.Update(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
-                    repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+            acqFilerepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acquisitionFile);
+            repository.Setup(x => x.UpdateAllForAcquisition(It.IsAny<long>(), It.IsAny<List<PimsInterestHolder>>())).Returns(new List<PimsInterestHolder>() { new PimsInterestHolder() });
 
-                    var compReqRepository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
-                    compReqRepository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>()))
-                        .Returns(new List<PimsCompensationRequisition>() {
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditStakeholders(It.IsAny<AcquisitionStatusTypes?>())).Returns(false);
+
+            // Act
+            Action act = () => service.UpdateInterestHolders(1, new List<PimsInterestHolder>() { new PimsInterestHolder() });
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+        }
+
+        [Fact]
+        public void UpdateInterestHolders_FKExeption_Removed_InterestHolder()
+        {
+            // Arrange
+            var service = CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.PimsInterestHolders = new List<PimsInterestHolder>() {
+                        new PimsInterestHolder() {
+                            InterestHolderId = 100,
+                        },
+                    };
+
+            var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.Update(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+
+            var compReqRepository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            compReqRepository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>()))
+                .Returns(new List<PimsCompensationRequisition>() {
                             new PimsCompensationRequisition() {
                                 CompensationRequisitionId = 1,
                                 AcquisitionFileId = acqFile.Internal_Id,
-                                PimsAcquisitionPayees = new List<PimsAcquisitionPayee>()
+                                PimsCompReqPayees = new List<PimsCompReqPayee>()
                                 {
-                                    new PimsAcquisitionPayee()
+                                    new PimsCompReqPayee()
                                     {
-                                        Internal_Id = 1,
-                                        CompensationRequisitionId = 1,
-                                        AcquisitionOwnerId = null,
                                         InterestHolderId = 100,
-                                        AcquisitionFileTeamId = null
                                     },
                                 },
                             },
-                        });
+                });
 
-                    // Act
-                    var updatedAcqFile = EntityHelper.CreateAcquisitionFile();
-                    Action act = () => service.UpdateInterestHolders(1, new List<PimsInterestHolder>() { new PimsInterestHolder() });
+            var interestHolderRepository = _helper.GetService<Mock<IInterestHolderRepository>>();
+            interestHolderRepository.Setup(x => x.GetInterestHoldersByAcquisitionFile(It.IsAny<long>()))
+                .Returns(new List<PimsInterestHolder>()
+                {
+                            new PimsInterestHolder()
+                            {
+                                InterestHolderId = 100,
+                            },
+                });
 
-                    // Assert
-                    act.Should().Throw<ForeignKeyDependencyException>();
-                    repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
-                }*/
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditStakeholders(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
+
+            // Act
+            var updatedAcqFile = EntityHelper.CreateAcquisitionFile();
+            Action act = () => service.UpdateInterestHolders(1, new List<PimsInterestHolder>() { new PimsInterestHolder() });
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>();
+            repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
+        }
         #endregion
 
         #region Agreements
@@ -2820,6 +2890,31 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void UpdateAgreement_FinalFile()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView, Permissions.AgreementView);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+
+            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+            var user = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: false);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditOrDeleteAgreement(It.IsAny<AcquisitionStatusTypes?>())).Returns(false);
+
+            // Act
+            Action act = () => service.UpdateAgreement(1, It.IsAny<PimsAgreement>());
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+        }
+
+        [Fact]
         public void DeleteAgreement_Fail_NoPermission()
         {
             // Arrange
@@ -2852,6 +2947,31 @@ namespace Pims.Api.Test.Services
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void DeleteAgreement_FinalFile_Acquisition()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AgreementView);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+
+            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+            var user = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: false);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditOrDeleteAgreement(It.IsAny<AcquisitionStatusTypes?>())).Returns(false);
+
+            // Act
+            Action act = () => service.DeleteAgreement(1, 10);
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
         }
 
         #endregion
@@ -3079,6 +3199,32 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void AddExpPayment_FinalStatus()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+            var repository = this._helper.GetService<Mock<IExpropriationPaymentRepository>>();
+            var acqFilerepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            var newExpPayment = EntityHelper.CreateExpropriationPayment(1, 1);
+            var acquisitionFile = EntityHelper.CreateAcquisitionFile(1);
+
+            acqFilerepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acquisitionFile);
+            repository.Setup(x => x.Add(It.IsAny<PimsExpropriationPayment>())).Returns(newExpPayment);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditExpropriation(It.IsAny<AcquisitionStatusTypes?>())).Returns(false);
+
+            // Act
+            Action act = () => service.AddExpropriationPayment(1, newExpPayment);
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+        }
+
+        [Fact]
         public void AddExpPayment_Success()
         {
             // Arrange
@@ -3093,6 +3239,9 @@ namespace Pims.Api.Test.Services
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditExpropriation(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
 
             // Act
             var result = service.AddExpropriationPayment(1, newExpPayment);

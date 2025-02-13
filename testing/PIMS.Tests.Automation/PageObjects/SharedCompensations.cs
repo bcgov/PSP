@@ -98,7 +98,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By requisitionServiceLineOptions = By.CssSelector("div[id='typeahead-select-serviceLine']");
         private readonly By requisitionServiceLine1stOption = By.CssSelector("div[id='typeahead-select-serviceLine'] a:nth-child(1)");
         private readonly By requisitionResponsibilityCentreLabel = By.XPath("//label[contains(text(),'Responsibility centre')]");
-        private readonly By requisitionResponsibilityCentreContent = By.XPath("//label[contains(text(),'Responsibility centre')]/parent::div/following-sibling::div/label");
+        private readonly By requisitionResponsibilityCentreContent = By.XPath("//label[contains(text(),'Responsibility centre')]/parent::div/following-sibling::div");
         private readonly By requisitionResponsibilityCentreInput = By.Id("typeahead-select-responsibilityCentre");
         private readonly By requisitionResponsibilityCentreOptions = By.CssSelector("div[id='typeahead-select-responsibilityCentre']");
         private readonly By requisitionResponsibilityCentre1stOption = By.CssSelector("div[id='typeahead-select-responsibilityCentre'] a:nth-child(1)");
@@ -106,6 +106,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By requisitionPaymentSubtitle = By.XPath("//h2/div/div[contains(text(),'Payment')]");
         private readonly By requisitionPayeeLabel = By.XPath("//label[contains(text(),'Payee')]");
         private readonly By requisitionPayeeContentCount = By.XPath("//label[contains(text(),'Payee')]/parent::div/following-sibling::div/div");
+        private readonly By requisitionPayeeSelect = By.Id("input-leaseStakeholderId");
         private readonly By requisitionPayeeMultiselect = By.Id("multiselect-payees_input");
         private readonly By requisitionPayeeDeleteBttns = By.CssSelector("div[id='multiselect-payees'] i[class='custom-close']");
         private readonly By requisitionPayeeOptions = By.XPath("//input[@id='multiselect-payees_input']/parent::div/following-sibling::div/ul[@class='optionContainer']");
@@ -264,7 +265,7 @@ namespace PIMS.Tests.Automation.PageObjects
             FocusAndClick(requisitionEditBttn);
         }
 
-        public void UpdateCompensationDetails(Compensation compensation)
+        public void UpdateCompensationDetails(Compensation compensation, string fileType)
         {
             Wait();
 
@@ -294,27 +295,6 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(requisitionAgreementInput).SendKeys(Keys.Enter);
             }
 
-            //if (compensation.CompensationExpropriationNoticeDate != "")
-            //{
-            //    ClearInput(requisitionExpropriationServedInput);
-            //    webDriver.FindElement(requisitionExpropriationServedInput).SendKeys(compensation.CompensationExpropriationNoticeDate);
-            //    webDriver.FindElement(requisitionExpropriationServedInput).SendKeys(Keys.Enter);
-            //}
-
-            //if (compensation.CompensationExpropriationVestingDate != "")
-            //{
-            //    ClearInput(requisitionExpropriationVestingInput);
-            //    webDriver.FindElement(requisitionExpropriationVestingInput).SendKeys(compensation.CompensationExpropriationVestingDate);
-            //    webDriver.FindElement(requisitionExpropriationVestingInput).SendKeys(Keys.Enter);
-            //}
-
-            //if (compensation.CompensationAdvancedPaymentDate != "")
-            //{
-            //    ClearInput(requisitionAdvancePaymentInput);
-            //    webDriver.FindElement(requisitionAdvancePaymentInput).SendKeys(compensation.CompensationAdvancedPaymentDate);
-            //    webDriver.FindElement(requisitionAdvancePaymentInput).SendKeys(Keys.Enter);
-            //}
-
             if (compensation.CompensationSpecialInstructions != "")
             {
                 ClearInput(requisitionSpecialInstructionTextarea);
@@ -342,7 +322,6 @@ namespace PIMS.Tests.Automation.PageObjects
                 FocusAndClick(requisitionServiceLine1stOption);
             }
 
-
             if (compensation.CompensationResponsibilityCentre != "")
             {
                 webDriver.FindElement(requisitionResponsibilityCentreInput).SendKeys(compensation.CompensationResponsibilityCentre);
@@ -364,21 +343,26 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(requisitionPayeeLabel).Click();
             }
 
-            if (compensation.CompensationPayee.First() != "")
+            if (fileType == "Acquisition File")
             {
-                foreach (string payee in compensation.CompensationPayee)
+                if (compensation.AcquisitionCompensationPayee.First() != "")
                 {
-                    Wait(2000);
-                    webDriver.FindElement(requisitionPayeeLabel).Click();
-                    FocusAndClick(requisitionPayeeMultiselect);
+                    foreach (string payee in compensation.AcquisitionCompensationPayee)
+                    {
+                        Wait(2000);
+                        webDriver.FindElement(requisitionPayeeLabel).Click();
+                        FocusAndClick(requisitionPayeeMultiselect);
 
-                    Wait(2000);
-                    ChooseMultiSelectSpecificOption(requisitionPayeeOptions, payee);
-                    webDriver.FindElement(requisitionPayeeLabel).Click();
-                }
+                        Wait(2000);
+                        ChooseMultiSelectSpecificOption(requisitionPayeeOptions, payee);
+                        webDriver.FindElement(requisitionPayeeLabel).Click();
+                    }
 
-                webDriver.FindElement(requisitionPayeeLabel).Click();
+                    webDriver.FindElement(requisitionPayeeLabel).Click();
+                } 
             }
+            else if (compensation.LeaseCompensationPayee != "" && fileType == "Lease")
+                 ChooseSpecificSelectOption(requisitionPayeeSelect, compensation.LeaseCompensationPayee);
 
             if (compensation.CompensationPaymentInTrust)
                 FocusAndClick(requisitionPaymentInTrustCheckbox);
@@ -627,9 +611,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Payee
             AssertTrueIsDisplayed(requisitionPayeeLabel);
+           
 
             if (webDriver.FindElements(requisitionPayeeContentCount).Count > 0)
-                for (int i = 0; i < compensation.CompensationPayee.Count; i++)
+                for (int i = 0; i < compensation.AcquisitionCompensationPayee.Count; i++)
                 {
                     var elementIndex = i + 1;
                     AssertTrueElementContains(By.XPath("//label[contains(text(),'Payee')]/parent::div/following-sibling::div/div["+ elementIndex +"]"), compensation.CompensationPayeeDisplay[i]);

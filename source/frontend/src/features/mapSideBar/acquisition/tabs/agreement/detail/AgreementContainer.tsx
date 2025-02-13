@@ -18,9 +18,6 @@ export interface IAgreementContainerProps {
 export const AgreementContainer: React.FunctionComponent<
   React.PropsWithChildren<IAgreementContainerProps>
 > = ({ acquisitionFileId, View }) => {
-  const [statusUpdateSolver, setStatusUpdateSolver] = useState<AcquisitionFileStatusUpdateSolver>(
-    new AcquisitionFileStatusUpdateSolver(),
-  );
   const [acquisitionAgreements, setAcquisitionAgreements] = useState<ApiGen_Concepts_Agreement[]>(
     [],
   );
@@ -31,7 +28,11 @@ export const AgreementContainer: React.FunctionComponent<
   } = useAgreementProvider();
 
   const {
-    getAcquisitionFile: { execute: getAcquisition, loading: loadingAcquisition },
+    getAcquisitionFile: {
+      execute: getAcquisition,
+      loading: loadingAcquisition,
+      response: acquisitionFile,
+    },
   } = useAcquisitionProvider();
 
   const generateAgreement = useGenerateAgreement();
@@ -45,20 +46,10 @@ export const AgreementContainer: React.FunctionComponent<
     const agreementsPromise = getAgreements(acquisitionFileId);
     const acquisitionFilePromise = getAcquisition(acquisitionFileId);
 
-    const [agreementsResponse, acquisitionFileResponse] = await Promise.all([
-      agreementsPromise,
-      acquisitionFilePromise,
-    ]);
+    const [agreementsResponse] = await Promise.all([agreementsPromise, acquisitionFilePromise]);
 
     if (agreementsResponse) {
       setAcquisitionAgreements(agreementsResponse);
-    }
-
-    if (acquisitionFileResponse) {
-      const solverStatus = new AcquisitionFileStatusUpdateSolver(
-        acquisitionFileResponse.fileStatusTypeCode,
-      );
-      setStatusUpdateSolver(solverStatus);
     }
   }, [acquisitionFileId, getAcquisition, getAgreements]);
 
@@ -76,13 +67,15 @@ export const AgreementContainer: React.FunctionComponent<
     fetchData();
   }, [fetchData]);
 
+  const statusSolver = new AcquisitionFileStatusUpdateSolver(acquisitionFile?.fileStatusTypeCode);
+
   return file?.id ? (
     <View
       loading={loadingAgreements || loadingAcquisition || deletingAgreement}
       agreements={acquisitionAgreements}
-      statusUpdateSolver={statusUpdateSolver}
       onGenerate={generateAgreement}
       onDelete={handleAgreementDeleted}
+      isFileFinalStatus={!statusSolver.canEditOrDeleteAgreement()}
     />
   ) : null;
 };
