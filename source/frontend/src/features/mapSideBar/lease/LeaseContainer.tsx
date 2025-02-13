@@ -9,13 +9,14 @@ import React, {
   useRef,
   useState,
 } from 'react';
+import { Route, Switch } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import LeaseIcon from '@/assets/images/lease-icon.svg?react';
 import GenericModal from '@/components/common/GenericModal';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { Claims } from '@/constants';
+import { Claims, Roles } from '@/constants';
 import { useLeaseDetail } from '@/features/leases';
 import { AddLeaseYupSchema } from '@/features/leases/add/AddLeaseYupSchema';
 import LeaseChecklistContainer from '@/features/leases/detail/LeasePages/checklist/LeaseChecklistContainer';
@@ -33,16 +34,21 @@ import LeaseStakeholderContainer from '@/features/leases/detail/LeasePages/stake
 import Surplus from '@/features/leases/detail/LeasePages/surplus/Surplus';
 import { LeaseFormModel } from '@/features/leases/models';
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { exists, getLatLng, locationFromFileProperty } from '@/utils';
 
 import { SideBarContext } from '../context/sidebarContext';
+import FileLayout from '../layout/FileLayout';
 import MapSideBarLayout from '../layout/MapSideBarLayout';
+import FileMenuView from '../shared/fileMenuView';
 import SidebarFooter from '../shared/SidebarFooter';
+import usePathSolver from '../shared/sidebarPathSolver';
 import { StyledFormWrapper } from '../shared/styles';
 import LeaseHeader from './common/LeaseHeader';
 import { LeaseFileTabNames } from './detail/LeaseFileTabs';
 import LeaseRouter from './tabs/LeaseRouter';
 import ViewSelector from './ViewSelector';
+import UpdateProperties from '../shared/update/properties/UpdateProperties';
 
 export interface ILeaseContainerProps {
   leaseId: number;
@@ -216,6 +222,10 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
 
   const [isValid, setIsValid] = useState<boolean>(true);
 
+  const { hasClaim, hasRole } = useKeycloakWrapper();
+
+  const pathSolver = usePathSolver();
+
   const activeTab = containerState.activeTab;
   const { setFullWidthSideBar } = useMapStateMachine();
 
@@ -324,63 +334,115 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
     setFilePropertyLocations(locations);
   }, [setFilePropertyLocations, locations]);
 
+  const leaseProperties = useMemo(() => lease?.fileProperties ?? [], [lease?.fileProperties]);
+
+  const onSelectFileSummary = () => {
+    pathSolver.showFile('lease', lease.id);
+  };
+
+  const onSelectProperty = (propertyId: number) => {
+    const leaseProperty = leaseProperties.find(x => x.id === propertyId);
+
+    pathSolver.showFileProperty('lease', lease.id, propertyId);
+  };
+
+  const onEditProperties = () => {
+    pathSolver.editProperties('lease', lease.id);
+  };
+
   return (
-    <MapSideBarLayout
-      showCloseButton
-      onClose={close}
-      title={containerState.isEditing ? 'Update Lease / Licence' : 'Lease / Licence'}
-      icon={
-        <LeaseIcon
-          title="Lease file icon"
-          width="2.6rem"
-          height="2.6rem"
-          fill="currentColor"
-          className="mr-2"
-        />
-      }
-      header={<LeaseHeader lease={lease} lastUpdatedBy={lastUpdatedBy} />}
-      footer={
-        containerState.isEditing && (
-          <SidebarFooter
-            isOkDisabled={formikRef?.current?.isSubmitting}
-            onSave={handleSaveClick}
-            onCancel={handleCancelClick}
-            displayRequiredFieldError={isValid === false}
+    <Switch>
+      <Route path={`${stripTrailingSlash(match.path)}/property/selector`}>
+        {lease && (
+          <UpdateProperties
+            file={lease}
+            setIsShowingPropertySelector={closePropertySelector}
+            onSuccess={onSuccess}
+            updateFileProperties={onUpdateProperties}
+            confirmBeforeAdd={confirmBeforeAdd}
+            canRemove={canRemove}
+            formikRef={formikRef}
+            confirmBeforeAddMessage={
+              <>
+                <p>This property has already been added to one or more lease files.</p>
+                <p>Do you want to proceed?</p>
+              </>
+            }
           />
-        )
-      }
-    >
-      <GenericModal
-        variant="info"
-        display={containerState.showConfirmModal}
-        title={'Confirm Changes'}
-        message={
-          <>
-            <p>If you choose to cancel now, your changes will not be saved.</p>
-            <p>Do you want to proceed?</p>
-          </>
-        }
-        handleOk={handleCancelConfirm}
-        handleCancel={() => setContainerState({ showConfirmModal: false })}
-        okButtonText="Yes"
-        cancelButtonText="No"
-        show
-      />
-      <StyledFormWrapper>
-        <LoadingBackdrop show={loading || getLastUpdatedByLoading} />
-        <ViewSelector
-          formikRef={formikRef}
-          lease={lease}
-          refreshLease={refresh}
-          setLease={setLease}
-          isEditing={containerState.isEditing}
-          activeEditForm={containerState.activeEditForm}
-          activeTab={containerState.activeTab}
-          setContainerState={setContainerState}
-          onSuccess={onChildSuccess}
-        />
-      </StyledFormWrapper>
-    </MapSideBarLayout>
+        )}
+      </Route>
+      <Route>
+        <MapSideBarLayout
+          showCloseButton
+          onClose={close}
+          title={containerState.isEditing ? 'Update Lease / Licence' : 'Lease / Licence'}
+          icon={
+            <LeaseIcon
+              title="Lease file icon"
+              width="2.6rem"
+              height="2.6rem"
+              fill="currentColor"
+              className="mr-2"
+            />
+          }
+          header={<LeaseHeader lease={lease} lastUpdatedBy={lastUpdatedBy} />}
+          footer={
+            containerState.isEditing && (
+              <SidebarFooter
+                isOkDisabled={formikRef?.current?.isSubmitting}
+                onSave={handleSaveClick}
+                onCancel={handleCancelClick}
+                displayRequiredFieldError={isValid === false}
+              />
+            )
+          }
+        >
+          <FileLayout
+            leftComponent={
+              <FileMenuView
+                properties={leaseProperties}
+                canEdit={hasRole(Roles.SYSTEM_ADMINISTRATOR) || hasClaim(Claims.LEASE_EDIT)}
+                onSelectFileSummary={onSelectFileSummary}
+                onSelectProperty={onSelectProperty}
+                onEditProperties={onEditProperties}
+              />
+            }
+            bodyComponent={
+              <StyledFormWrapper>
+                <LoadingBackdrop show={loading || getLastUpdatedByLoading} />
+                <ViewSelector
+                  formikRef={formikRef}
+                  lease={lease}
+                  refreshLease={refresh}
+                  setLease={setLease}
+                  isEditing={containerState.isEditing}
+                  activeEditForm={containerState.activeEditForm}
+                  activeTab={containerState.activeTab}
+                  setContainerState={setContainerState}
+                  onSuccess={onChildSuccess}
+                />
+              </StyledFormWrapper>
+            }
+          />
+          <GenericModal
+            variant="info"
+            display={containerState.showConfirmModal}
+            title={'Confirm Changes'}
+            message={
+              <>
+                <p>If you choose to cancel now, your changes will not be saved.</p>
+                <p>Do you want to proceed?</p>
+              </>
+            }
+            handleOk={handleCancelConfirm}
+            handleCancel={() => setContainerState({ showConfirmModal: false })}
+            okButtonText="Yes"
+            cancelButtonText="No"
+            show
+          />
+        </MapSideBarLayout>
+      </Route>
+    </Switch>
   );
 };
 

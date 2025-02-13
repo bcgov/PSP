@@ -40,7 +40,7 @@ export const LeaseDetailView: React.FunctionComponent<
   return (
     <Section
       header={
-        <SimpleSectionHeader title="Details">
+        <SimpleSectionHeader title="Original Agreement">
           {hasClaim(Claims.LEASE_VIEW) &&
             exists(leaseTypeCode) &&
             leaseTypeCode === ApiGen_CodeTypes_LeaseLicenceTypes.LOOBCTFA && (
