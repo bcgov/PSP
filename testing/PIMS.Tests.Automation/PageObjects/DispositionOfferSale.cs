@@ -8,7 +8,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By offersAndSaleTab = By.XPath("//a[contains(text(),'Offers & Sale')]");
 
         //Appraisal and Assessment section view elements 
-        private By offersAndSaleAppraisalAndAssessmentSubtitle = By.XPath("//h2/div/div/div/label[contains(text(), 'Appraisal and Assessment')]");
+        private By offersAndSaleAppraisalAndAssessmentSubtitle = By.XPath("//h2/div/div/div/div[contains(text(), 'Appraisal and Assessment')]");
         private By dispositionAppraisalEditButton = By.CssSelector("button[title='Edit Appraisal']");
         private By dispositionAppraisalAndAssessmentMessage = By.XPath("//p[contains(text(),'There are no Appraisal and Assessment details indicated with this disposition file.')]");
 
@@ -30,7 +30,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By dispositionListPriceInput = By.Id("input-listPriceAmount");
 
         //Offers section view elements
-        private By offersAndSaleOffersSubtitle = By.XPath("//div[contains(text(), 'Offers')]");
+        private By offersAndSaleOffersSubtitle = By.XPath("//h2/div/div/div/div[contains(text(), 'Offers')]");
         private By addOffersButton = By.XPath("//div[contains(text(),'Offers')]/following-sibling::div/button");
         private By dispositionOffersMessage = By.XPath("//p[contains(text(),'There are no offers indicated with this disposition file.')]");
 
@@ -51,7 +51,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By dispositionOfferNotesTooltip = By.XPath("//label[contains(text(),'Comments')]/span/span[@data-testid='tooltip-icon-section-field-tooltip']");
 
         //Sales Details section view elements
-        private By offersAndSaleSalesDetailsSubtitle = By.XPath("//label[contains(text(), 'Sales Details')]");
+        private By offersAndSaleSalesDetailsSubtitle = By.XPath("//h2/div/div/div/div[contains(text(), 'Sales Details')]");
         private By dispositionSalesDetailsEditButton = By.CssSelector("button[title='Edit Sale']");
         private By dispositionSalesDetailsMessage = By.XPath("//p[contains(text(),'There are no sale details indicated with this disposition file.')]");
 

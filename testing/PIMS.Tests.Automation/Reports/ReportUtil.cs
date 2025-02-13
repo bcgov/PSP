@@ -11,13 +11,14 @@ namespace PIMS.Tests.Automation.Reports
         public static ExtentTest _feature;
         public static ExtentTest _scenario;
 
-        public static String dir = AppDomain.CurrentDomain.BaseDirectory;
-        public static String reportPath = dir.Replace("bin\\Debug\\net8.0", "Reports");
+        private static String dir = AppDomain.CurrentDomain.BaseDirectory;
+        //private static String reportPath = dir.Replace($"bin{Path.DirectorySeparatorChar}Debug{Path.DirectorySeparatorChar}net8.0", $"Reports{Path.DirectorySeparatorChar}Extent_Reports");
+        private static String reportPath = Path.Combine(Environment.GetEnvironmentVariable("GITHUB_WORKSPACE")!, "Extent_Reports");
 
 
         public static void ExtentReportInit()
         {
-            ExtentSparkReporter spark = new ExtentSparkReporter(reportPath + "\\PIMS_AutomationReport.html");
+            ExtentSparkReporter spark = new ExtentSparkReporter(reportPath + $"{Path.DirectorySeparatorChar}PIMS_AutomationReport.html");
             spark.Config.ReportName = "Automation Status Report";
             spark.Config.DocumentTitle = "Automation Status Report";
             spark.Config.Theme = Theme.Standard;
@@ -31,6 +32,7 @@ namespace PIMS.Tests.Automation.Reports
 
         public static void ExtentReportTearDown()
         {
+
             _extentReports.Flush();
         }
 
