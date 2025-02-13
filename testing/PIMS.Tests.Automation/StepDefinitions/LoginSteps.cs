@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
+using OpenQA.Selenium;
+using PIMS.Tests.Automation.Reports;
 
 
 namespace PIMS.Tests.Automation.StepDefinitions
@@ -8,11 +10,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
     {
         private readonly IEnumerable<IdirUser> idirUsers;
         private readonly Login login;
+        private readonly GenericSteps genericSteps;
 
-        public LoginSteps(BrowserDriver driver)
+
+        public LoginSteps(IWebDriver driver)
         {
-            login = new Login(driver.Current);
-            idirUsers = driver.Configuration.GetSection("Users").Get<IEnumerable<IdirUser>>()!;
+            login = new Login(driver);
+            genericSteps = new GenericSteps(driver);
+            this.idirUsers = genericSteps.ReadConfiguration().GetSection("Users").Get<IEnumerable<IdirUser>>()!;
         }
 
         [StepDefinition(@"I log in with IDIR credentials (.*)")]
@@ -20,7 +25,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             login.LoginToPIMS();
 
-            var user = idirUsers.SingleOrDefault(u => u.User.Equals(userName, StringComparison.OrdinalIgnoreCase));
+            var user = this.idirUsers.SingleOrDefault(u => u.User.Equals(userName, StringComparison.OrdinalIgnoreCase));
             if (user == null) throw new InvalidOperationException($"User {userName} not found in the test configuration");
 
             login.LoginUsingIDIR(user.User, user.Password);

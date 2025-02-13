@@ -52,6 +52,7 @@ describe('PeriodsForm component', () => {
         onSavePayment={noop}
         formikRef={createRef()}
         lease={renderOptions.initialValues ?? ({} as any)}
+        isFileFinalStatus={renderOptions.isFileFinalStatus ?? false}
       />,
       {
         ...renderOptions,
@@ -467,6 +468,35 @@ describe('PeriodsForm component', () => {
     expect(rows).toHaveLength(2);
 
     expect(getAllByTitle('delete period')[0]).toBeVisible();
+  });
+
+  it('renders a tooltip instead of a delete/edit icon when file is in final state', async () => {
+    const {
+      component: { getByTestId, queryByTitle },
+    } = await setup({
+      initialValues: {
+        ...new LeaseFormModel(),
+        periods: [
+          {
+            ...defaultTestFormLeasePeriod,
+            isTermExercised: true,
+            statusTypeCode: {
+              id: LeasePeriodStatusTypes.EXERCISED,
+              description: null,
+              displayOrder: null,
+              isDisabled: false,
+            },
+            payments: [] as FormLeasePayment[],
+          },
+        ],
+      },
+      isFileFinalStatus: true,
+    });
+
+    const tooltip = getByTestId('tooltip-icon-period-actions-cannot-edit-tooltip');
+    expect(queryByTitle('delete period')).toBeNull();
+    expect(queryByTitle('edit period')).toBeNull();
+    expect(tooltip).toBeVisible();
   });
 
   it('renders a tooltip instead of a delete icon when period is exercised', async () => {

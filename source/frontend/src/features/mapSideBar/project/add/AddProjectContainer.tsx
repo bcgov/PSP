@@ -1,9 +1,9 @@
 import { AxiosError } from 'axios';
 import { FormikProps } from 'formik';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { FaBriefcase } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
 
+import ProjectIcon from '@/assets/images/projects-icon.svg?react';
 import ConfirmNavigation from '@/components/common/ConfirmNavigation';
 import * as API from '@/constants/API';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
@@ -114,7 +114,7 @@ const AddProjectContainer: React.FC<React.PropsWithChildren<IAddProjectContainer
     <MapSideBarLayout
       showCloseButton
       title="Create Project"
-      icon={<FaBriefcase title="Project Icon" size={28} />}
+      icon={<ProjectIcon title="Project Icon" fill="currentColor" />}
       onClose={close}
       footer={
         <SidebarFooter onSave={handleSave} onCancel={close} displayRequiredFieldError={!isValid} />

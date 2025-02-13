@@ -10,14 +10,14 @@ namespace PIMS.Tests.Automation.PageObjects
         private By manageProjectButton = By.XPath("//a[contains(text(),'Manage Project')]");
 
         //Search Projects Filters Elements
-        private By searchProjectSubtitle = By.XPath("//div[@data-testid='projectsTable']/preceding-sibling::h1/span[contains(text(),'Projects')]");
+        private By searchProjectSubtitle = By.XPath("//h1/div/div/span[contains(text(),'Projects')]");
         private By searchProjectNumberInput = By.Id("input-projectNumber");
         private By searchProjectNameInput = By.Id("input-projectName");
         private By searchProjectRegionSelect = By.Id("input-projectRegionCode");
         private By searchProjectStatusSelect = By.Id("input-projectStatusCode");
         private By searchProjectButton = By.Id("search-button");
         private By searchProjectResetButton = By.Id("reset-button");
-        private By searchProjectAddProjectBttn = By.XPath("//span[contains(text(),'Projects')]/parent::h1/parent::div/button");
+        private By searchProjectAddProjectBttn = By.XPath("//div[contains(text(),'Create Project')]/parent::button");
 
         //Search Projects Table Column header Elements
         private By searchProjectNbrHeaderColumn = By.XPath("//div[@data-testid='projectsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Project #')]");

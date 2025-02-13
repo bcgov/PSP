@@ -93,7 +93,8 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
+  font-size: 2.6rem;
 }
 
 .c0 {
@@ -131,7 +132,7 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
         class="no-gutters row"
       >
         <div
-          class="col"
+          class="align-items-end col"
         >
           Administration
         </div>
@@ -140,7 +141,7 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
     <div
       class="collapse show"
     >
-      <h2
+      <div
         class="c2"
       >
         <div
@@ -188,7 +189,7 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
             </svg>
           </div>
         </div>
-      </h2>
+      </div>
       <div
         class="c6 collapse"
       >
@@ -1113,35 +1114,6 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
               name="primaryArbitrationCity"
               style="word-break: break-all;"
               value=""
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-3"
-        >
-          <label
-            class="c7"
-          >
-            Lease comments:
-          </label>
-        </div>
-        <div
-          class="c8 text-left col"
-        >
-          <div
-            class="c12 textarea input form-group"
-          >
-            <textarea
-              class="form-control"
-              id="input-note"
-              name="note"
-              readonly=""
-              style="word-break: break-all;"
-              title=""
             />
           </div>
         </div>

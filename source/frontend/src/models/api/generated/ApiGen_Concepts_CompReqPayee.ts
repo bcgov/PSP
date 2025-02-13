@@ -11,12 +11,13 @@ import { ApiGen_Concepts_InterestHolder } from './ApiGen_Concepts_InterestHolder
 // LINK: @backend/apimodels/Models/Concepts/CompensationRequisition/CompReqPayeeModel.cs
 export interface ApiGen_Concepts_CompReqPayee extends ApiGen_Base_BaseAudit {
   compReqPayeeId: number | null;
-  compensationRequisitionId: number;
+  compensationRequisitionId: number | null;
   compensationRequisition: ApiGen_Concepts_CompensationRequisition | null;
-  acquisitionOwnerId: number;
+  acquisitionOwnerId: number | null;
   acquisitionOwner: ApiGen_Concepts_AcquisitionFileOwner | null;
-  interestHolderId: number;
+  interestHolderId: number | null;
   interestHolder: ApiGen_Concepts_InterestHolder | null;
-  acquisitionFileTeamId: number;
+  acquisitionFileTeamId: number | null;
   acquisitionFileTeam: ApiGen_Concepts_AcquisitionFileTeam | null;
+  legacyPayee: string | null;
 }

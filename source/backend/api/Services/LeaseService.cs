@@ -39,6 +39,7 @@ namespace Pims.Api.Services
         private readonly ILookupRepository _lookupRepository;
         private readonly ICompReqFinancialService _compReqFinancialService;
         private readonly IPropertyOperationService _propertyOperationService;
+        private readonly ILeaseStatusSolver _leaseStatusSolver;
 
         public LeaseService(
             ClaimsPrincipal user,
@@ -57,7 +58,8 @@ namespace Pims.Api.Services
             IPropertyService propertyService,
             ILookupRepository lookupRepository,
             ICompReqFinancialService compReqFinancialService,
-            IPropertyOperationService propertyOperationService)
+            IPropertyOperationService propertyOperationService,
+            ILeaseStatusSolver leaseStatusSolver)
             : base(user, logger)
         {
             _logger = logger;
@@ -77,6 +79,7 @@ namespace Pims.Api.Services
             _lookupRepository = lookupRepository;
             _compReqFinancialService = compReqFinancialService;
             _propertyOperationService = propertyOperationService;
+            _leaseStatusSolver = leaseStatusSolver;
         }
 
         public PimsLease GetById(long leaseId)
@@ -137,7 +140,14 @@ namespace Pims.Api.Services
             _logger.LogInformation("Updating insurance on lease {leaseId}", leaseId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
             var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
-            pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(leaseId).RegionCode);
+            var currentLease = _leaseRepository.GetNoTracking(leaseId);
+            pimsUser.ThrowInvalidAccessToLeaseFile(currentLease.RegionCode);
+
+            var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease?.LeaseStatusTypeCode);
+            if (!_leaseStatusSolver.CanEditInsurance(currentLeaseStatus))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+            }
 
             _insuranceRepository.UpdateLeaseInsurance(leaseId, pimsInsurances);
             _insuranceRepository.CommitTransaction();
@@ -160,7 +170,14 @@ namespace Pims.Api.Services
             _logger.LogInformation("Updating property improvements on lease {leaseId}", leaseId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
             var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
-            pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(leaseId).RegionCode);
+            var currentLease = _leaseRepository.GetNoTracking(leaseId);
+            pimsUser.ThrowInvalidAccessToLeaseFile(currentLease?.RegionCode);
+
+            var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease?.LeaseStatusTypeCode);
+            if (!_leaseStatusSolver.CanEditImprovements(currentLeaseStatus))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+            }
 
             _propertyImprovementRepository.Update(leaseId, pimsPropertyImprovements);
             _propertyImprovementRepository.CommitTransaction();
@@ -183,7 +200,14 @@ namespace Pims.Api.Services
             _logger.LogInformation("Updating stakeholders on lease {leaseId}", leaseId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
             var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
-            pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(leaseId).RegionCode);
+            var currentLease = _leaseRepository.GetNoTracking(leaseId);
+            pimsUser.ThrowInvalidAccessToLeaseFile(currentLease?.RegionCode);
+
+            var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease?.LeaseStatusTypeCode);
+            if (!_leaseStatusSolver.CanEditStakeholders(currentLeaseStatus))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+            }
 
             ValidateStakeholdersDependency(leaseId, pimsLeaseStakeholders);
             _stakeholderRepository.Update(leaseId, pimsLeaseStakeholders);
@@ -231,6 +255,12 @@ namespace Pims.Api.Services
             var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
             var currentLease = _leaseRepository.GetNoTracking(lease.LeaseId);
 
+            var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease?.LeaseStatusTypeCode);
+            if (!_leaseStatusSolver.CanEditDetails(currentLeaseStatus) && !_user.HasPermission(Permissions.SystemAdmin))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+            }
+
             pimsUser.ThrowInvalidAccessToLeaseFile(currentLease.RegionCode); // need to check that the user is able to access the current lease as well as has the region for the updated lease.
             pimsUser.ThrowInvalidAccessToLeaseFile(lease.RegionCode);
 
@@ -243,7 +273,7 @@ namespace Pims.Api.Services
                 _entityNoteRepository.Add(newLeaseNote);
             }
 
-            ValidateRenewalDates(lease, lease.PimsLeaseRenewals);
+            ValidateRenewalDates(lease, lease.PimsLeaseRenewals, userOverrides);
 
             ValidateNewTotalAllowableCompensation(lease.LeaseId, lease.TotalAllowableCompensation);
 
@@ -279,6 +309,10 @@ namespace Pims.Api.Services
                 }
             }
 
+            if (!_leaseStatusSolver.CanEditProperties(currentLeaseStatus) && !_user.HasPermission(Permissions.SystemAdmin))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+            }
             _propertyLeaseRepository.UpdatePropertyLeases(lease.Internal_Id, leaseWithProperties.PimsPropertyLeases);
 
             _leaseRepository.UpdateLeaseRenewals(lease.Internal_Id, lease.ConcurrencyControlNumber, lease.PimsLeaseRenewals);
@@ -343,7 +377,14 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
 
             var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
-            pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(leaseId).RegionCode);
+            var currentLease = _leaseRepository.GetNoTracking(leaseId);
+            pimsUser.ThrowInvalidAccessToLeaseFile(currentLease?.RegionCode);
+
+            var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease?.LeaseStatusTypeCode);
+            if (!_leaseStatusSolver.CanEditChecklists(currentLeaseStatus))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+            }
 
             // Get the current checklist items for this acquisition file.
             var currentItems = _leaseRepository.GetAllChecklistItemsByLeaseId(leaseId).ToDictionary(ci => ci.LeaseChecklistItemId);
@@ -396,6 +437,13 @@ namespace Pims.Api.Services
         {
             _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
 
+            var currentLease = _leaseRepository.GetNoTracking(consultation.LeaseId);
+            var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease?.LeaseStatusTypeCode);
+            if (!_leaseStatusSolver.CanEditOrDeleteConsultation(currentLeaseStatus))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+            }
+
             var newConsultation = _consultationRepository.AddConsultation(consultation);
             _consultationRepository.CommitTransaction();
 
@@ -405,6 +453,13 @@ namespace Pims.Api.Services
         public PimsLeaseConsultation UpdateConsultation(PimsLeaseConsultation consultation)
         {
             _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
+
+            var currentLease = _leaseRepository.GetNoTracking(consultation.LeaseId);
+            var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease?.LeaseStatusTypeCode);
+            if (!_leaseStatusSolver.CanEditOrDeleteConsultation(currentLeaseStatus))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+            }
 
             var updatedConsultation = _consultationRepository.UpdateConsultation(consultation);
             _consultationRepository.CommitTransaction();
@@ -416,13 +471,21 @@ namespace Pims.Api.Services
         {
             _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
 
+            var consultation = _consultationRepository.GetConsultationById(consultationId);
+            var currentLease = _leaseRepository.GetNoTracking(consultation.LeaseId);
+            var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease?.LeaseStatusTypeCode);
+            if (!_leaseStatusSolver.CanEditOrDeleteConsultation(currentLeaseStatus))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+            }
+
             bool deleteResult = _consultationRepository.TryDeleteConsultation(consultationId);
             _consultationRepository.CommitTransaction();
 
             return deleteResult;
         }
 
-        private static void ValidateRenewalDates(PimsLease lease, ICollection<PimsLeaseRenewal> renewals)
+        private static void ValidateRenewalDates(PimsLease lease, ICollection<PimsLeaseRenewal> renewals, IEnumerable<UserOverrideCode> userOverrides)
         {
             if (lease.LeaseStatusTypeCode != PimsLeaseStatusTypes.ACTIVE)
             {
@@ -476,10 +539,11 @@ namespace Pims.Api.Services
                     throw new BusinessRuleViolationException("The expiry date of your renewal should be later than its commencement date");
                 }
 
-                if (DateTime.Compare(currentEndDate, startDate) >= 0)
+                if (DateTime.Compare(currentEndDate, startDate) >= 0 && !userOverrides.Contains(UserOverrideCode.CommencementOverlapExpiryDate))
                 {
-                    throw new BusinessRuleViolationException("The commencement date of your renewal should be later than the previous expiry date (agreement or renewal)");
+                    throw new UserOverrideException(UserOverrideCode.CommencementOverlapExpiryDate, "The commencement date of your renewal should be later than the previous expiry date (agreement or renewal).\n\nDo you want to proceed?");
                 }
+
                 currentEndDate = endDate;
             }
         }

@@ -3,13 +3,13 @@ import { matchPath, useLocation } from 'react-router-dom';
 import { Table } from '@/components/Table';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 
-import { UpdateCompensationContext } from '../models/UpdateCompensationContext';
+import { IUpdateCompensationStrategy } from '../models/IUpdateCompensationStrategy';
 import { createCompensationTableColumns } from './columns';
 
 export interface ICompensationResultProps {
   isLoading: boolean;
   results: ApiGen_Concepts_CompensationRequisition[];
-  statusSolver: UpdateCompensationContext;
+  statusSolver: IUpdateCompensationStrategy;
   onShow: (compensationId: number) => void;
   onDelete: (compensationId: number) => void;
 }

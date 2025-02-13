@@ -9,7 +9,7 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { SectionListHeader } from '@/components/common/SectionListHeader';
 import TooltipIcon from '@/components/common/TooltipIcon';
-import { Claims, Roles } from '@/constants';
+import { Claims } from '@/constants';
 import { cannotEditMessage } from '@/features/mapSideBar/acquisition/common/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
@@ -24,7 +24,6 @@ import {
   calculateNetProceedsAfterSppAmount,
   calculateNetProceedsBeforeSppAmount,
 } from '../../models/DispositionSaleFormModel';
-import DispositionStatusUpdateSolver from '../fileDetails/detail/DispositionStatusUpdateSolver';
 import DispositionOfferDetails from './dispositionOffer/dispositionOfferDetails/DispositionOfferDetails';
 import DispositionSaleContactDetails from './dispositionOffer/dispositionSaleContactDetails/DispositionSaleContactDetails';
 
@@ -34,6 +33,7 @@ export interface IOffersAndSaleViewProps {
   dispositionOffers: ApiGen_Concepts_DispositionFileOffer[];
   dispositionSale: ApiGen_Concepts_DispositionFileSale | null;
   dispositionAppraisal: ApiGen_Concepts_DispositionFileAppraisal | null;
+  isFileFinalStatus?: boolean;
   onDispositionOfferDeleted: (offerId: number) => void;
 }
 
@@ -43,6 +43,7 @@ const OffersAndSaleView: React.FunctionComponent<IOffersAndSaleViewProps> = ({
   dispositionOffers,
   dispositionSale,
   dispositionAppraisal,
+  isFileFinalStatus,
   onDispositionOfferDeleted,
 }) => {
   const history = useHistory();
@@ -51,14 +52,6 @@ const OffersAndSaleView: React.FunctionComponent<IOffersAndSaleViewProps> = ({
 
   const purchaserAgent = dispositionSale?.dispositionPurchaserAgent;
   const purchaserAgentSolicitor = dispositionSale?.dispositionPurchaserSolicitor;
-  const statusSolver = new DispositionStatusUpdateSolver(dispositionFile);
-
-  const canEditDetails = () => {
-    if (keycloak.hasRole(Roles.SYSTEM_ADMINISTRATOR) || statusSolver.canEditOfferSalesValues()) {
-      return true;
-    }
-    return false;
-  };
 
   return (
     <>
@@ -67,17 +60,19 @@ const OffersAndSaleView: React.FunctionComponent<IOffersAndSaleViewProps> = ({
         isCollapsable={false}
         header={
           <StyledSubHeader>
-            <label>Appraisal and Assessment</label>
-            {keycloak.hasClaim(Claims.DISPOSITION_EDIT) && canEditDetails() && (
-              <EditButton
-                title="Edit Appraisal"
-                data-testId={`appraisal-edit-btn`}
-                onClick={() => {
-                  history.push(`${match.url}/appraisal/update`);
-                }}
-              />
+            <div>Appraisal and Assessment</div>
+            {keycloak.hasClaim(Claims.DISPOSITION_EDIT) && !isFileFinalStatus && (
+              <div>
+                <EditButton
+                  title="Edit Appraisal"
+                  data-testId={`appraisal-edit-btn`}
+                  onClick={() => {
+                    history.push(`${match.url}/appraisal/update`);
+                  }}
+                />
+              </div>
             )}
-            {keycloak.hasClaim(Claims.DISPOSITION_EDIT) && !canEditDetails() && (
+            {keycloak.hasClaim(Claims.DISPOSITION_EDIT) && isFileFinalStatus && (
               <TooltipIcon
                 toolTipId={`${dispositionFile?.id || 0}-values-summary-cannot-edit-tooltip`}
                 toolTip={cannotEditMessage}
@@ -141,6 +136,13 @@ const OffersAndSaleView: React.FunctionComponent<IOffersAndSaleViewProps> = ({
             onAdd={() => {
               history.push(`${match.url}/offers/new`);
             }}
+            cannotAddComponent={
+              <TooltipIcon
+                toolTipId={`deposit-notes-cannot-edit-tooltip`}
+                toolTip={cannotEditMessage}
+              />
+            }
+            isAddEnabled={!isFileFinalStatus}
           />
         }
       >
@@ -151,6 +153,7 @@ const OffersAndSaleView: React.FunctionComponent<IOffersAndSaleViewProps> = ({
             index={index}
             onDelete={onDispositionOfferDeleted}
             dispositionFile={dispositionFile}
+            isFileFinalStatus={isFileFinalStatus}
           ></DispositionOfferDetails>
         ))}
         {dispositionOffers.length === 0 && (
@@ -162,8 +165,8 @@ const OffersAndSaleView: React.FunctionComponent<IOffersAndSaleViewProps> = ({
         isCollapsable={false}
         header={
           <StyledSubHeader>
-            <label>Sales Details</label>
-            {keycloak.hasClaim(Claims.DISPOSITION_EDIT) && canEditDetails() && (
+            <div>Sales Details</div>
+            {keycloak.hasClaim(Claims.DISPOSITION_EDIT) && !isFileFinalStatus && (
               <EditButton
                 title="Edit Sale"
                 data-testId={`sale-edit-btn`}
@@ -172,7 +175,7 @@ const OffersAndSaleView: React.FunctionComponent<IOffersAndSaleViewProps> = ({
                 }}
               />
             )}
-            {keycloak.hasClaim(Claims.DISPOSITION_EDIT) && !canEditDetails() && (
+            {keycloak.hasClaim(Claims.DISPOSITION_EDIT) && isFileFinalStatus && (
               <TooltipIcon
                 toolTipId={`${dispositionFile?.id || 0}-sale-summary-cannot-edit-tooltip`}
                 toolTip={cannotEditMessage}
@@ -338,8 +341,8 @@ const StyledSpacer = styled.div`
 const StyledSubHeader = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
+  align-items: end;
+  justify-content: space-between;
 
   label {
     color: ${props => props.theme.bcTokens.surfaceColorPrimaryButtonDefault};
@@ -348,9 +351,5 @@ const StyledSubHeader = styled.div`
     width: 100%;
     text-align: left;
     margin-bottom: 0;
-  }
-
-  button {
-    margin-bottom: 1rem;
   }
 `;

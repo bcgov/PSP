@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Security.Claims;
+using Microsoft.Extensions.Logging;
 using Pims.Api.Models.CodeTypes;
+using Pims.Core.Exceptions;
 using Pims.Dal.Entities;
 using Pims.Dal.Repositories;
 using static Pims.Dal.Entities.PimsLeasePaymentStatusType;
@@ -12,11 +13,17 @@ namespace Pims.Api.Services
     {
         private readonly ILeasePeriodRepository _leasePeriodRepository;
         private readonly ILeasePaymentRepository _leasePaymentRepository;
+        private readonly ILeaseService _leaseService;
+        private readonly ILeaseStatusSolver _leaseStatusSolver;
+        private readonly ILogger _logger;
 
-        public LeasePaymentService(ILeasePeriodRepository leasePeriodRepository, ILeasePaymentRepository leasePaymentRepository, ClaimsPrincipal user)
+        public LeasePaymentService(ILeasePeriodRepository leasePeriodRepository, ILeasePaymentRepository leasePaymentRepository, ILeaseService leaseService, ILeaseStatusSolver leaseStatusSolver, ILogger<LeasePaymentService> logger)
         {
             _leasePeriodRepository = leasePeriodRepository;
             _leasePaymentRepository = leasePaymentRepository;
+            _leaseService = leaseService;
+            _leaseStatusSolver = leaseStatusSolver;
+            _logger = logger;
         }
 
         public IEnumerable<PimsLeasePayment> GetAllByDateRange(DateTime startDate, DateTime endDate)
@@ -26,6 +33,14 @@ namespace Pims.Api.Services
 
         public bool DeletePayment(long leaseId, PimsLeasePayment payment)
         {
+            _logger.LogInformation("Deleting payment to lease with id: {id}", leaseId);
+
+            var currentLease = _leaseService.GetById(leaseId);
+            var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease?.LeaseStatusTypeCode);
+            if (!_leaseStatusSolver.CanEditPayments(currentLeaseStatus))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+            }
 
             _leasePaymentRepository.Delete(payment.Internal_Id);
             _leasePaymentRepository.CommitTransaction();
@@ -35,7 +50,15 @@ namespace Pims.Api.Services
 
         public PimsLeasePayment UpdatePayment(long leaseId, long paymentId, PimsLeasePayment payment)
         {
+            _logger.LogInformation("Updating payment to lease with id: {id}", leaseId);
             ValidatePaymentRules(payment);
+
+            var currentLease = _leaseService.GetById(leaseId);
+            var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease?.LeaseStatusTypeCode);
+            if (!_leaseStatusSolver.CanEditPayments(currentLeaseStatus))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+            }
 
             var updatedPayment = _leasePaymentRepository.Update(payment);
             _leasePaymentRepository.CommitTransaction();
@@ -45,6 +68,15 @@ namespace Pims.Api.Services
 
         public PimsLeasePayment AddPayment(long leaseId, PimsLeasePayment payment)
         {
+            _logger.LogInformation("Adding payment to lease with id: {id}", leaseId);
+
+            var currentLease = _leaseService.GetById(leaseId);
+            var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease?.LeaseStatusTypeCode);
+            if (!_leaseStatusSolver.CanEditPayments(currentLeaseStatus))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+            }
+
             ValidatePaymentRules(payment);
 
             var updatedPayment = _leasePaymentRepository.Add(payment);

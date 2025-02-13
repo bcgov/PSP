@@ -13,7 +13,6 @@ import { StyledSummarySection } from '@/components/common/Section/SectionStyles'
 import { StyledAddButton } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { Claims, Roles } from '@/constants';
-import { LeaseStatusUpdateSolver } from '@/features/leases/models/LeaseStatusUpdateSolver';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
@@ -22,11 +21,16 @@ import { ApiGen_Concepts_CompReqPayee } from '@/models/api/generated/ApiGen_Conc
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
-import { exists, formatMoney, getFilePropertyName, isValidId, prettyFormatDate } from '@/utils';
+import {
+  exists,
+  formatMoney,
+  getFilePropertyName,
+  isValidId,
+  isValidString,
+  prettyFormatDate,
+} from '@/utils';
 
 import { cannotEditMessage } from '../../acquisition/common/constants';
-import AcquisitionFileStatusUpdateSolver from '../../acquisition/tabs/fileDetails/detail/AcquisitionFileStatusUpdateSolver';
-import { UpdateCompensationContext } from '../models/UpdateCompensationContext';
 import { PayeeDetail } from './PayeeDetail';
 
 export interface CompensationRequisitionDetailViewProps {
@@ -38,6 +42,7 @@ export interface CompensationRequisitionDetailViewProps {
   compensationLeaseStakeHolders: ApiGen_Concepts_LeaseStakeholder[];
   clientConstant: string;
   loading: boolean;
+  isFileFinalStatus?: boolean;
   setEditMode: (editMode: boolean) => void;
   onGenerate: (
     fileType: ApiGen_CodeTypes_FileTypes,
@@ -56,6 +61,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
   compensationLeaseStakeHolders,
   clientConstant,
   loading,
+  isFileFinalStatus,
   setEditMode,
   onGenerate,
 }) => {
@@ -101,6 +107,8 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
               currentPayee.acquisitionFileTeam.organization,
             );
           }
+        } else if (isValidString(currentPayee?.legacyPayee)) {
+          currentPayeeDetail = PayeeDetail.createFromLegacyPayee(currentPayee.legacyPayee);
         }
         currentPayeeDetail.compReqPayeeId = currentPayee.compReqPayeeId;
         currentPayeeDetail.isPaymentInTrust = compensation.isPaymentInTrust;
@@ -116,10 +124,6 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
         payeeDetail = PayeeDetail.createFromOrganization(stakeHolder.organization);
       }
       payeeDetail.isPaymentInTrust = compensation.isPaymentInTrust;
-      tempPayeeDetails.push(payeeDetail);
-    } else if (compensation.legacyPayee) {
-      const payeeDetail = PayeeDetail.createFromLegacyPayee(compensation.legacyPayee);
-      payeeDetail.isPaymentInTrust = compensation?.isPaymentInTrust ?? false;
       tempPayeeDetails.push(payeeDetail);
     }
 
@@ -141,33 +145,13 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
   const fileProject = file?.project;
   const fileProduct = file?.product;
 
-  let updateCompensationContext: UpdateCompensationContext | null;
-  switch (fileType) {
-    case ApiGen_CodeTypes_FileTypes.Acquisition:
-      {
-        const solver = new AcquisitionFileStatusUpdateSolver(file.fileStatusTypeCode);
-        updateCompensationContext = new UpdateCompensationContext(solver);
-      }
-      break;
-    case ApiGen_CodeTypes_FileTypes.Lease:
-      {
-        const solver = new LeaseStatusUpdateSolver(file.fileStatusTypeCode);
-        updateCompensationContext = new UpdateCompensationContext(solver);
-      }
-      break;
-    default:
-      updateCompensationContext = null;
-      break;
-  }
-
   const userCanEditCompensationReq = (): boolean => {
-    if (
-      updateCompensationContext &&
-      updateCompensationContext.canEditCompensations(compensation.isDraft) &&
-      hasClaim(Claims.COMPENSATION_REQUISITION_EDIT)
+    if (isFileFinalStatus) {
+      return false;
+    } else if (
+      (compensation.isDraft && hasClaim(Claims.COMPENSATION_REQUISITION_EDIT)) ||
+      hasRole(Roles.SYSTEM_ADMINISTRATOR)
     ) {
-      return true;
-    } else if (hasRole(Roles.SYSTEM_ADMINISTRATOR)) {
       return true;
     }
 

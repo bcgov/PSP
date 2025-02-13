@@ -1,5 +1,6 @@
 import { Section } from '@/components/common/Section/Section';
 import { Table } from '@/components/Table';
+import { LeaseStatusUpdateSolver } from '@/features/leases/models/LeaseStatusUpdateSolver';
 import { ApiGen_Concepts_SecurityDeposit } from '@/models/api/generated/ApiGen_Concepts_SecurityDeposit';
 import { ApiGen_Concepts_SecurityDepositReturn } from '@/models/api/generated/ApiGen_Concepts_SecurityDepositReturn';
 
@@ -10,12 +11,17 @@ export interface IDepositsReturnedContainerProps {
   depositReturns: ApiGen_Concepts_SecurityDepositReturn[];
   onEdit: (id: number) => void;
   onDelete: (id: number) => void;
+  statusSolver?: LeaseStatusUpdateSolver;
 }
 
 const DepositsReturnedContainer: React.FC<
   React.PropsWithChildren<IDepositsReturnedContainerProps>
-> = ({ securityDeposits, depositReturns, onEdit, onDelete }) => {
-  const columns = getColumns({ onEdit, onDelete });
+> = ({ securityDeposits, depositReturns, statusSolver, onEdit, onDelete }) => {
+  const columns = getColumns({
+    onEdit,
+    onDelete,
+    isFileFinalStatus: !statusSolver.canEditDeposits(),
+  });
   const dataSource = depositReturns.reduce(
     (accumulator: ReturnListEntry[], returnDeposit: ApiGen_Concepts_SecurityDepositReturn) => {
       const parentDeposit = securityDeposits.find(r => r?.id === returnDeposit?.parentDepositId);

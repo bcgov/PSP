@@ -5,8 +5,8 @@ using Pims.Api.Models.Base;
 using Pims.Api.Models.Concepts.Claim;
 using Pims.Core.Api.Policies;
 using Pims.Core.Json;
-using Pims.Dal.Repositories;
 using Pims.Core.Security;
+using Pims.Dal.Repositories;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Areas.Admin.Controllers

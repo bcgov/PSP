@@ -4,7 +4,7 @@ import { createMemoryHistory } from 'history';
 
 import { NoteTypes } from '@/constants/index';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { mockNoteResponse } from '@/mocks/noteResponses.mock';
+import { getMockApiNote } from '@/mocks/noteResponses.mock';
 import { ApiGen_Concepts_Note } from '@/models/api/generated/ApiGen_Concepts_Note';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
@@ -23,7 +23,7 @@ const BASIC_PROPS: IUpdateNoteContainerProps = {
   isOpened: true,
   loading: false,
   type: NoteTypes.Activity,
-  note: mockNoteResponse(1),
+  note: getMockApiNote(1),
   onSuccess,
   onCancelClick,
   onSaveClick,
@@ -91,7 +91,7 @@ describe('UpdateNoteContainer component', () => {
   });
 
   it('should save the form when Submit button is clicked', async () => {
-    const formValues = NoteForm.fromApi(mockNoteResponse(1));
+    const formValues = NoteForm.fromApi(getMockApiNote(1));
     formValues.note = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.';
 
     const { getSaveButton, findByLabelText } = setup({ ...BASIC_PROPS });
@@ -102,7 +102,7 @@ describe('UpdateNoteContainer component', () => {
       userEvent.type(textarea, formValues.note as string);
     });
 
-    mockAxios.onPut().reply(200, mockNoteResponse(1));
+    mockAxios.onPut().reply(200, getMockApiNote(1));
     await act(async () => userEvent.click(getSaveButton()));
 
     const axiosData: ApiGen_Concepts_Note = JSON.parse(mockAxios.history.put[0].data);
@@ -129,7 +129,7 @@ describe('UpdateNoteContainer component', () => {
       userEvent.type(textarea, formValues.note as string);
     });
 
-    mockAxios.onPut().reply(200, mockNoteResponse(1));
+    mockAxios.onPut().reply(200, getMockApiNote(1));
     await act(async () => userEvent.click(getSaveButton()));
 
     expect(onSaveClick).toBeCalled();

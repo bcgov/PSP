@@ -1,43 +1,50 @@
-import userEvent from '@testing-library/user-event';
+import { createMemoryHistory } from 'history';
 
 import { Claims } from '@/constants/index';
 import { useApiResearchFile } from '@/hooks/pims-api/useApiResearchFile';
-import { IResearchSearchResult } from '@/interfaces/IResearchSearchResult';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockApiProperty } from '@/mocks/properties.mock';
+import { getEmptyResearchFileProperty } from '@/mocks/researchFile.mock';
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
-import { getEmptyBaseAudit } from '@/models/defaultInitializers';
+import { getEmptyResearchFile } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
   fillInput,
   render,
   RenderOptions,
+  screen,
+  userEvent,
   waitFor,
   waitForElementToBeRemoved,
 } from '@/utils/test-utils';
 
 import { ResearchListView } from './ResearchListView';
-import { useKeycloak } from '@react-keycloak/web';
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
+const history = createMemoryHistory();
+
 vi.mock('@/hooks/pims-api/useApiResearchFile');
 const getResearchFiles = vi.fn();
-vi.mocked(useApiResearchFile).mockReturnValue({
+vi.mocked(useApiResearchFile, { partial: true }).mockReturnValue({
   getResearchFiles,
-} as unknown as ReturnType<typeof useApiResearchFile>);
+});
 
 // render component under test
 const setup = (renderOptions: RenderOptions = { store: storeState }) => {
-  const utils = render(<ResearchListView />, { ...renderOptions, claims: [Claims.LEASE_VIEW] });
+  const utils = render(<ResearchListView />, {
+    ...renderOptions,
+    history,
+    claims: renderOptions?.claims ?? [Claims.RESEARCH_VIEW],
+  });
   const searchButton = utils.getByTestId('search');
   return { searchButton, ...utils };
 };
 
-const setupMockSearch = (searchResults?: IResearchSearchResult[]) => {
+const setupMockSearch = (searchResults?: ApiGen_Concepts_ResearchFile[]) => {
   const results = searchResults ?? mockResearchListViewResponse;
   const len = results.length;
   getResearchFiles.mockResolvedValue({
@@ -99,6 +106,7 @@ describe('Research List View', () => {
   it('regions are not duplicated', async () => {
     setupMockSearch([
       {
+        ...getEmptyResearchFile(),
         id: 1,
         fileStatusTypeCode: {
           id: 'ACTIVE',
@@ -114,41 +122,41 @@ describe('Research List View', () => {
         appLastUpdateTimestamp: '2021-01-01',
         fileProperties: [
           {
+            ...getEmptyResearchFileProperty(),
             id: 1,
-            isDisabled: false,
             property: {
+              ...getMockApiProperty(),
               id: 1,
               region: {
                 id: 1,
                 description: 'Southern Interior Region',
                 isDisabled: false,
+                displayOrder: null,
               },
-              dataSourceEffectiveDate: '2021-08-31T00:00:00',
-              isSensitive: false,
-              pid: '007-723-385',
+              pid: 7723385,
               pin: 90069930,
               landArea: 1,
               rowVersion: 2,
             },
             rowVersion: 0,
-          } as any,
+          },
           {
+            ...getEmptyResearchFileProperty(),
             id: 2,
-            isDisabled: false,
             property: {
+              ...getMockApiProperty(),
               id: 2,
               region: {
                 id: 1,
                 description: 'Southern Interior Region',
                 isDisabled: false,
+                displayOrder: null,
               },
-              dataSourceEffectiveDate: '2021-08-31T00:00:00',
-              isSensitive: false,
-              pid: '011-041-404',
+              pid: 11041404,
               pin: 90072652,
               landArea: 1,
               rowVersion: 2,
-            } as any,
+            },
             rowVersion: 0,
           },
         ],
@@ -165,6 +173,7 @@ describe('Research List View', () => {
   it('all unique regions are listed', async () => {
     setupMockSearch([
       {
+        ...getEmptyResearchFile(),
         id: 1,
         fileStatusTypeCode: {
           id: 'ACTIVE',
@@ -180,41 +189,41 @@ describe('Research List View', () => {
         appLastUpdateTimestamp: '2021-01-01',
         fileProperties: [
           {
+            ...getEmptyResearchFileProperty(),
             id: 1,
-            isDisabled: false,
             property: {
+              ...getMockApiProperty(),
               id: 1,
               region: {
                 id: 1,
                 description: 'Southern Interior Region',
                 isDisabled: false,
+                displayOrder: null,
               },
-              dataSourceEffectiveDate: '2021-08-31T00:00:00',
-              isSensitive: false,
-              pid: '007-723-385',
+              pid: 7723385,
               pin: 90069930,
               landArea: 1,
               rowVersion: 2,
             },
             rowVersion: 0,
-          } as any,
+          },
           {
+            ...getEmptyResearchFileProperty(),
             id: 2,
-            isDisabled: false,
             property: {
+              ...getMockApiProperty(),
               id: 2,
               region: {
                 id: 2,
                 description: 'South Coast Region',
                 isDisabled: false,
+                displayOrder: null,
               },
-              dataSourceEffectiveDate: '2021-08-31T00:00:00',
-              isSensitive: false,
-              pid: '011-041-404',
+              pid: 11041404,
               pin: 90072652,
               landArea: 1,
               rowVersion: 2,
-            } as any,
+            },
             rowVersion: 0,
           },
         ],
@@ -509,35 +518,40 @@ describe('Research List View', () => {
     const toasts = await findAllByText('network error');
     expect(toasts[0]).toBeVisible();
   });
-});
 
-const emptyResearchFile: ApiGen_Concepts_ResearchFile = {
-  roadName: null,
-  roadAlias: null,
-  fileProperties: null,
-  requestDate: null,
-  requestDescription: null,
-  requestSourceDescription: null,
-  researchResult: null,
-  researchCompletionDate: null,
-  isExpropriation: null,
-  expropriationNotes: null,
-  requestSourceType: null,
-  requestorPerson: null,
-  requestorOrganization: null,
-  researchFilePurposes: null,
-  researchFileProjects: null,
-  id: 0,
-  fileName: null,
-  fileNumber: null,
-  fileStatusTypeCode: null,
-  totalAllowableCompensation: null,
-  ...getEmptyBaseAudit(),
-};
+  it(`renders the 'Create a Research File' button when user has permissions`, async () => {
+    setupMockSearch([]);
+    setup({ claims: [Claims.RESEARCH_VIEW, Claims.RESEARCH_ADD] });
+
+    await waitForElementToBeRemoved(screen.getByTitle('table-loading'));
+    const button = await screen.findByText(/Create a Research File/i);
+    expect(button).toBeVisible();
+  });
+
+  it(`hides the 'Create a Research File' button when user has no permissions`, async () => {
+    setupMockSearch([]);
+    setup({ claims: [Claims.RESEARCH_VIEW] });
+
+    await waitForElementToBeRemoved(screen.getByTitle('table-loading'));
+    const button = await screen.queryByText(/Create a Research File/i);
+    expect(button).toBeNull();
+  });
+
+  it('navigates to create research route when user clicks the create button', async () => {
+    setupMockSearch([]);
+    setup({ claims: [Claims.RESEARCH_VIEW, Claims.RESEARCH_ADD] });
+
+    await waitForElementToBeRemoved(screen.getByTitle('table-loading'));
+    const button = await screen.findByText(/Create a Research File/i);
+    expect(button).toBeVisible();
+    await act(async () => userEvent.click(button));
+    expect(history.location.pathname).toBe('/mapview/sidebar/research/new');
+  });
+});
 
 const mockResearchListViewResponse: ApiGen_Concepts_ResearchFile[] = [
   {
-    ...emptyResearchFile,
+    ...getEmptyResearchFile(),
     id: 1,
     fileName: 'name',
     fileNumber: 'R100-100-100',
@@ -614,7 +628,7 @@ const mockResearchListViewResponse: ApiGen_Concepts_ResearchFile[] = [
     rowVersion: 1,
   },
   {
-    ...emptyResearchFile,
+    ...getEmptyResearchFile(),
     id: 2,
     fileName: 'name',
     roadName: 'a road name',
@@ -627,7 +641,7 @@ const mockResearchListViewResponse: ApiGen_Concepts_ResearchFile[] = [
     rowVersion: 1,
   },
   {
-    ...emptyResearchFile,
+    ...getEmptyResearchFile(),
     id: 3,
     fileName: 'test file name 1',
     fileNumber: 'R100-100-102',
@@ -639,7 +653,7 @@ const mockResearchListViewResponse: ApiGen_Concepts_ResearchFile[] = [
     rowVersion: 1,
   },
   {
-    ...emptyResearchFile,
+    ...getEmptyResearchFile(),
     id: 4,
     fileName: 'name',
     fileNumber: 'R100-100-103',
@@ -651,7 +665,7 @@ const mockResearchListViewResponse: ApiGen_Concepts_ResearchFile[] = [
     rowVersion: 1,
   },
   {
-    ...emptyResearchFile,
+    ...getEmptyResearchFile(),
     id: 5,
     fileName: 'name',
     fileNumber: 'R100-100-104',

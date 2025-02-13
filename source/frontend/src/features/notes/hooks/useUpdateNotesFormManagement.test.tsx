@@ -8,7 +8,7 @@ import thunk from 'redux-thunk';
 import { ValidationError } from 'yup';
 
 import { NoteTypes } from '@/constants/index';
-import { mockNoteResponse } from '@/mocks/noteResponses.mock';
+import { getMockApiNote } from '@/mocks/noteResponses.mock';
 import { fakeText } from '@/utils/test-utils';
 import TestCommonWrapper from '@/utils/TestCommonWrapper';
 
@@ -26,7 +26,7 @@ const onSuccess = vi.fn();
 
 const BASIC_PROPS: IUseUpdateNotesFormManagementProps = {
   type: NoteTypes.Activity,
-  note: mockNoteResponse(1),
+  note: getMockApiNote(1),
   onSuccess,
 };
 
@@ -45,7 +45,7 @@ describe('useUpdateNotesFormManagement hook', () => {
 
   beforeEach(() => {
     mockAxios.reset();
-    mockAxios.onPut('/notes/1').reply(200, mockNoteResponse(1));
+    mockAxios.onPut('/notes/1').reply(200, getMockApiNote(1));
   });
 
   afterEach(() => {
@@ -54,7 +54,7 @@ describe('useUpdateNotesFormManagement hook', () => {
 
   it('should return valid initial values', async () => {
     const { initialValues } = setup();
-    expect(initialValues).toEqual(NoteForm.fromApi(mockNoteResponse(1)));
+    expect(initialValues).toEqual(NoteForm.fromApi(getMockApiNote(1)));
   });
 
   it('should provide form validation schema', async () => {
@@ -75,7 +75,7 @@ describe('useUpdateNotesFormManagement hook', () => {
   it('should provide form submission handler', async () => {
     const { handleSubmit } = setup();
 
-    const formValues = NoteForm.fromApi(mockNoteResponse(1));
+    const formValues = NoteForm.fromApi(getMockApiNote(1));
 
     const formikHelpers: Partial<FormikHelpers<NoteForm>> = {
       setSubmitting: vi.fn(),

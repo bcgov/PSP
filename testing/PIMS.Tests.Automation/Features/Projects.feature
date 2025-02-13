@@ -32,5 +32,5 @@ Scenario: 04. Project List View
 	Then Expected Project Content is displayed on Projects Table
 
 Scenario: 05. Duplicate Project
-	Given I create a new Project from row number 2
+	Given I create a duplicate Project from row number 2
 	Then Duplicate Project Alert is displayed

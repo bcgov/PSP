@@ -11,6 +11,7 @@ namespace Pims.Dal.Entities;
 /// </summary>
 [Table("PIMS_COMP_REQ_PAYEE")]
 [Index("AcquisitionFileTeamId", Name = "CMPRQP_ACQUISITION_FILE_TEAM_ID_IDX")]
+[Index("AcquisitionOwnerId", Name = "CMPRQP_ACQUISITION_OWNER_ID_IDX")]
 [Index("CompensationRequisitionId", Name = "CMPRQP_COMPENSATION_REQUISITION_ID_IDX")]
 [Index("InterestHolderId", Name = "CMPRQP_INTEREST_HOLDER_ID_IDX")]
 public partial class PimsCompReqPayee
@@ -45,6 +46,13 @@ public partial class PimsCompReqPayee
     /// </summary>
     [Column("ACQUISITION_FILE_TEAM_ID")]
     public long? AcquisitionFileTeamId { get; set; }
+
+    /// <summary>
+    /// Payee where only the name is known from the PAIMS system,
+    /// </summary>
+    [Column("LEGACY_PAYEE")]
+    [StringLength(1000)]
+    public string LegacyPayee { get; set; }
 
     /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o

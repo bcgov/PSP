@@ -13,6 +13,7 @@ using Pims.Core.Extensions;
 using Pims.Core.Http;
 using Pims.Dal.Entities.Models;
 using Pims.Scheduler.Http.Configuration;
+using Polly.Registry;
 
 namespace Pims.Scheduler.Repositories
 {
@@ -34,13 +35,15 @@ namespace Pims.Scheduler.Repositories
         /// <param name="authRepository">Injected repository that handles authentication.</param>
         /// <param name="configuration">The injected configuration provider.</param>
         /// <param name="jsonOptions">The injected json options.</param>
+        /// <param name="pollyPipelineProvider"></param>
         public PimsDocumentQueueRepository(
             ILogger<PimsDocumentQueueRepository> logger,
             IHttpClientFactory httpClientFactory,
             IOpenIdConnectRequestClient authRepository,
             IOptionsMonitor<PimsOptions> configuration,
-            IOptions<JsonSerializerOptions> jsonOptions)
-            : base(logger, httpClientFactory, jsonOptions)
+            IOptions<JsonSerializerOptions> jsonOptions,
+            ResiliencePipelineProvider<string> pollyPipelineProvider)
+            : base(logger, httpClientFactory, jsonOptions, pollyPipelineProvider)
         {
             _authRepository = authRepository;
             _configuration = configuration;

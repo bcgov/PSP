@@ -32,7 +32,7 @@ export const StakeHolderView: React.FunctionComponent<IStakeHolderViewProps> = (
 
   const organizer = new StakeholderOrganizer(acquisitionFile, interestHolders);
 
-  const statusSolver = new AcquisitionFileStatusUpdateSolver(acquisitionFile.fileStatusTypeCode);
+  const statusSolver = new AcquisitionFileStatusUpdateSolver(acquisitionFile?.fileStatusTypeCode);
 
   const groupedInterestProperties = organizer.getInterestProperties();
   const groupedNonInterestProperties = organizer.getNonInterestProperties();

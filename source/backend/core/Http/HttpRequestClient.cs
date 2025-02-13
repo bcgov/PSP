@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Pims.Core.Exceptions;
+using Polly;
+using Polly.Registry;
 
 namespace Pims.Core.Http
 {
@@ -17,6 +19,8 @@ namespace Pims.Core.Http
     public class HttpRequestClient : IHttpRequestClient
     {
         #region Variables
+        public static string NetworkPolicyName = "retry-network-policy";
+        protected readonly ResiliencePipeline<HttpResponseMessage> _resiliencePipeline;
         private readonly JsonSerializerOptions _serializeOptions;
         private readonly ILogger<HttpRequestClient> _logger;
         #endregion
@@ -37,7 +41,8 @@ namespace Pims.Core.Http
         /// <param name="clientFactory"></param>
         /// <param name="options"></param>
         /// <param name="logger"></param>
-        public HttpRequestClient(IHttpClientFactory clientFactory, IOptionsMonitor<JsonSerializerOptions> options, ILogger<HttpRequestClient> logger)
+        /// <param name="pollyPipelineProvider">The polly retry policy.</param>
+        public HttpRequestClient(IHttpClientFactory clientFactory, IOptionsMonitor<JsonSerializerOptions> options, ILogger<HttpRequestClient> logger, ResiliencePipelineProvider<string> pollyPipelineProvider)
         {
             this.Client = clientFactory.CreateClient();
             _serializeOptions = options?.CurrentValue ?? new JsonSerializerOptions()
@@ -47,6 +52,7 @@ namespace Pims.Core.Http
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
             };
             _logger = logger;
+            _resiliencePipeline = pollyPipelineProvider.GetPipeline<HttpResponseMessage>(HttpRequestClient.NetworkPolicyName);
         }
         #endregion
 
@@ -563,20 +569,23 @@ namespace Pims.Core.Http
                 method = HttpMethod.Get;
             }
 
-            using var message = new HttpRequestMessage(method, url);
-            message.Headers.Add("User-Agent", "Pims.Api");
-            message.Content = content;
-
-            if (headers != null)
+            return await _resiliencePipeline.ExecuteAsync(async cancellation =>
             {
-                foreach (var header in headers)
-                {
-                    message.Headers.Add(header.Key, header.Value);
-                }
-            }
+                using var message = new HttpRequestMessage(method, url);
+                message.Headers.Add("User-Agent", "Pims.Api");
+                message.Content = content;
 
-            _logger.LogInformation("HTTP request made '{message.RequestUri}'", message.RequestUri);
-            return await this.Client.SendAsync(message);
+                if (headers != null)
+                {
+                    foreach (var header in headers)
+                    {
+                        message.Headers.Add(header.Key, header.Value);
+                    }
+                }
+
+                _logger.LogInformation("HTTP request made '{message.RequestUri}'", message.RequestUri);
+                return await this.Client.SendAsync(message, cancellation);
+            });
         }
         #endregion
         #endregion

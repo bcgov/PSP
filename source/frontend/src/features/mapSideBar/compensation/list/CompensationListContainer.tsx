@@ -18,11 +18,13 @@ import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_Fil
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 
+import { IUpdateCompensationStrategy } from '../models/IUpdateCompensationStrategy';
 import { ICompensationListViewProps } from './CompensationListView';
 
 export interface ICompensationListContainerProps {
   fileType: ApiGen_CodeTypes_FileTypes;
   file: ApiGen_Concepts_AcquisitionFile | ApiGen_Concepts_Lease;
+  statusUpdateSolver?: IUpdateCompensationStrategy;
   View: React.FunctionComponent<React.PropsWithChildren<ICompensationListViewProps>>;
 }
 
@@ -32,6 +34,7 @@ export interface ICompensationListContainerProps {
 export const CompensationListContainer: React.FC<ICompensationListContainerProps> = ({
   fileType,
   file,
+  statusUpdateSolver,
   View,
 }: ICompensationListContainerProps) => {
   const sidebar = useContext(SideBarContext);
@@ -189,7 +192,6 @@ export const CompensationListContainer: React.FC<ICompensationListContainerProps
       financials: [],
       compReqPayees: [],
       acquisitionFile: null,
-      legacyPayee: null,
       isPaymentInTrust: null,
       gstNumber: null,
       compReqLeaseStakeholders: null,
@@ -265,6 +267,7 @@ export const CompensationListContainer: React.FC<ICompensationListContainerProps
     <View
       fileType={fileType}
       file={file}
+      statusUpdateSolver={statusUpdateSolver}
       isLoading={resultsLoading}
       onUpdateTotalCompensation={onUpdateTotalCompensation}
       compensationsResults={fileCompensationResults}
