@@ -13,17 +13,15 @@ import Claims from '@/constants/claims';
 import { useApiResearchFile } from '@/hooks/pims-api/useApiResearchFile';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { useSearch } from '@/hooks/useSearch';
-import {
-  IResearchSearchResult,
-  ResearchSearchResultModel,
-} from '@/interfaces/IResearchSearchResult';
+import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 
 import { IResearchFilter } from '../interfaces';
+import { ResearchSearchResultModel } from './models';
 import ResearchFilter, { defaultResearchFilter } from './ResearchFilter/ResearchFilter';
 import { ResearchSearchResults } from './ResearchSearchResults/ResearchSearchResults';
 
 /**
- * Page that displays leases information.
+ * Page that displays Research files information.
  */
 export const ResearchListView: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
   const history = useHistory();
@@ -43,7 +41,7 @@ export const ResearchListView: React.FunctionComponent<React.PropsWithChildren<u
     setCurrentPage,
     setPageSize,
     loading,
-  } = useSearch<IResearchSearchResult, IResearchFilter>(
+  } = useSearch<ApiGen_Concepts_ResearchFile, IResearchFilter>(
     defaultResearchFilter,
     getResearchFiles,
     'No matching results can be found. Try widening your search criteria.',
