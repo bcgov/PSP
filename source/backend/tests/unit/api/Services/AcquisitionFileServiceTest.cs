@@ -1051,7 +1051,7 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void Update_FKException_Removed_AcqFileOwner()
+        public void Update_Exception_Removed_AcqFileOwner()
         {
             // Arrange
             var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
@@ -1100,7 +1100,7 @@ namespace Pims.Api.Test.Services
             Action act = () => service.Update(updatedAcqFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
 
             // Assert
-            act.Should().Throw<ForeignKeyDependencyException>();
+            act.Should().Throw<BusinessRuleViolationException>();
             repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
         }
 
@@ -1155,7 +1155,7 @@ namespace Pims.Api.Test.Services
             Action act = () => service.Update(updatedAcqFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
 
             // Assert
-            act.Should().Throw<ForeignKeyDependencyException>();
+            act.Should().Throw<BusinessRuleViolationException>();
             repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
         }
 
@@ -1210,7 +1210,7 @@ namespace Pims.Api.Test.Services
             Action act = () => service.Update(updatedAcqFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
 
             // Assert
-            act.Should().Throw<ForeignKeyDependencyException>();
+            act.Should().Throw<BusinessRuleViolationException>();
             repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
         }
 
@@ -1264,7 +1264,7 @@ namespace Pims.Api.Test.Services
             Action act = () => service.Update(updatedAcqFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
 
             // Assert
-            act.Should().Throw<ForeignKeyDependencyException>();
+            act.Should().Throw<BusinessRuleViolationException>();
             repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
         }
 
@@ -2687,7 +2687,7 @@ namespace Pims.Api.Test.Services
             Action act = () => service.UpdateInterestHolders(1, new List<PimsInterestHolder>() { new PimsInterestHolder() });
 
             // Assert
-            act.Should().Throw<ForeignKeyDependencyException>();
+            act.Should().Throw<BusinessRuleViolationException>();
             repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
         }
         #endregion

@@ -2,13 +2,15 @@ import { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 
-import { ColumnWithProps, DateCell, renderTypeCode, Table } from '@/components/Table';
+import { ColumnWithProps, renderTypeCode, Table } from '@/components/Table';
+import { UtcDateCell } from '@/components/Table/DateCell';
 import { TableSort } from '@/components/Table/TableSort';
 import { Claims } from '@/constants/claims';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
-import { ResearchSearchResultModel } from '@/interfaces/IResearchSearchResult';
 import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
 import { stringToFragment } from '@/utils';
+
+import { ResearchSearchResultModel } from '../models';
 
 const columns: ColumnWithProps<ResearchSearchResultModel>[] = [
   {
@@ -21,7 +23,7 @@ const columns: ColumnWithProps<ResearchSearchResultModel>[] = [
     maxWidth: 20,
     Cell: (props: CellProps<ResearchSearchResultModel>) => {
       const { hasClaim } = useKeycloakWrapper();
-      if (hasClaim(Claims.CONTACT_VIEW)) {
+      if (hasClaim(Claims.RESEARCH_VIEW)) {
         return (
           <Link to={`/mapview/sidebar/research/${props.row.original.id}`}>
             {props.row.original.rfileNumber}
@@ -69,7 +71,7 @@ const columns: ColumnWithProps<ResearchSearchResultModel>[] = [
     sortable: true,
     width: 10,
     maxWidth: 20,
-    Cell: DateCell,
+    Cell: UtcDateCell,
   },
   {
     Header: 'Last updated by',
@@ -88,7 +90,7 @@ const columns: ColumnWithProps<ResearchSearchResultModel>[] = [
     sortable: true,
     width: 10,
     maxWidth: 20,
-    Cell: DateCell,
+    Cell: UtcDateCell,
   },
   {
     Header: 'Status',

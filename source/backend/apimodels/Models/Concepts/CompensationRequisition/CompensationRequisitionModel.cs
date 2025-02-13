@@ -41,8 +41,6 @@ namespace Pims.Api.Models.Concepts.CompensationRequisition
 
         public List<CompensationFinancialModel> Financials { get; set; }
 
-        public string LegacyPayee { get; set; }
-
         public bool? IsPaymentInTrust { get; set; }
 
         public string GstNumber { get; set; }
