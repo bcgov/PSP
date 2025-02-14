@@ -776,7 +776,7 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void Update_CommencementDate_Overlap_ExpiryDate_ThrowOverride()
+        public void Update_CommencementDate_Overlap_ExpiryDate_MODIFIED_ThrowOverride()
         {
             // Arrange
             var lease = EntityHelper.CreateLease(1);
@@ -807,19 +807,27 @@ namespace Pims.Api.Test.Services
             solver.Setup(x => x.CanEditDetails(It.IsAny<LeaseStatusTypes?>())).Returns(true);
             solver.Setup(x => x.CanEditProperties(It.IsAny<LeaseStatusTypes?>())).Returns(true);
 
-            lease.PimsLeaseRenewals = new List<PimsLeaseRenewal>()
+            PimsLease updatedLease = EntityHelper.CreateLease(1);
+            updatedLease.LeaseId = 1;
+            updatedLease.LeaseStatusTypeCode = LeaseStatusTypes.ACTIVE.ToString();
+            updatedLease.LeaseStatusTypeCodeNavigation = new PimsLeaseStatusType()
             {
-                new()
-                {
-                    LeaseId = lease.LeaseId,
-                    CommencementDt = new DateTime(2025, 1 , 1),
-                    ExpiryDt = new DateTime(2025, 12, 31),
-                    IsExercised = true,
-                },
+                Id = LeaseStatusTypes.ACTIVE.ToString(),
             };
-
+            updatedLease.PimsLeaseRenewals = new List<PimsLeaseRenewal>(){
+                    new()
+                    {
+                        LeaseId = lease.LeaseId,
+                        CommencementDt = new DateTime(2025, 1 , 1),
+                        ExpiryDt = new DateTime(2025, 12, 31),
+                        IsExercised = true,
+                    },
+                };
+            updatedLease.OrigStartDate = new DateTime(2024, 1, 1);
+            updatedLease.OrigExpiryDate = new DateTime(2025, 1, 31);
+            
             // Act
-            Action act = () => service.Update(lease, new List<UserOverrideCode>() { });
+            Action act = () => service.Update(updatedLease, new List<UserOverrideCode>() { });
 
             // Assert
             var ex = act.Should().Throw<UserOverrideException>();
