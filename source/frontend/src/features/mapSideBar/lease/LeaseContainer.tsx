@@ -10,6 +10,7 @@ import React, {
   useState,
 } from 'react';
 import { Route, Switch } from 'react-router-dom';
+import { useRouteMatch } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import LeaseIcon from '@/assets/images/lease-icon.svg?react';
@@ -33,9 +34,10 @@ import PeriodPaymentsView, {
 import LeaseStakeholderContainer from '@/features/leases/detail/LeasePages/stakeholders/LeaseStakeholderContainer';
 import Surplus from '@/features/leases/detail/LeasePages/surplus/Surplus';
 import { LeaseFormModel } from '@/features/leases/models';
+import LeasePropertySelector from '@/features/leases/shared/propertyPicker/LeasePropertySelector';
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { exists, getLatLng, locationFromFileProperty } from '@/utils';
+import { exists, getLatLng, locationFromFileProperty, stripTrailingSlash } from '@/utils';
 
 import { SideBarContext } from '../context/sidebarContext';
 import FileLayout from '../layout/FileLayout';
@@ -48,7 +50,6 @@ import LeaseHeader from './common/LeaseHeader';
 import { LeaseFileTabNames } from './detail/LeaseFileTabs';
 import LeaseRouter from './tabs/LeaseRouter';
 import ViewSelector from './ViewSelector';
-import UpdateProperties from '../shared/update/properties/UpdateProperties';
 
 export interface ILeaseContainerProps {
   leaseId: number;
@@ -210,6 +211,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
   const formikRef = useRef<FormikProps<LeaseFormModel>>(null);
 
   const close = useCallback(() => onClose && onClose(), [onClose]);
+  const match = useRouteMatch();
   const { lease, setLease, refresh, loading } = useLeaseDetail(leaseId);
   const {
     setStaleFile,
@@ -350,26 +352,40 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
     pathSolver.editProperties('lease', lease.id);
   };
 
+  /*
+  const onPropertySuccess = () => {
+    //setIsEditing(false);
+    //history.push(`${match.url}`);
+    console.log('ehehe');
+  };
+
+  const onUpdateProperties = () => {
+    //setIsEditing(false);
+    //history.push(`${match.url}`);
+    console.log('ehehe');
+  };
+
+  const closePropertySelector = () => {
+    //history.push(`${match.url}`);
+    pathSolver.showFile('lease', lease.id);
+    console.log('ehehe');
+  };
+
+  const confirmBeforeAdd = (propertyForm: PropertyForm) => {
+    console.log('ehehe');
+    return true;
+  };
+
+  const canRemove = () => {
+    console.log('ehehe');
+    return true;
+  };
+  */
+
   return (
     <Switch>
       <Route path={`${stripTrailingSlash(match.path)}/property/selector`}>
-        {lease && (
-          <UpdateProperties
-            file={lease}
-            setIsShowingPropertySelector={closePropertySelector}
-            onSuccess={onSuccess}
-            updateFileProperties={onUpdateProperties}
-            confirmBeforeAdd={confirmBeforeAdd}
-            canRemove={canRemove}
-            formikRef={formikRef}
-            confirmBeforeAddMessage={
-              <>
-                <p>This property has already been added to one or more lease files.</p>
-                <p>Do you want to proceed?</p>
-              </>
-            }
-          />
-        )}
+        {exists(lease) && <LeasePropertySelector lease={lease} />}
       </Route>
       <Route>
         <MapSideBarLayout
