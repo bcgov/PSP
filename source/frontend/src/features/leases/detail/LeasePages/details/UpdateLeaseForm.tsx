@@ -34,15 +34,15 @@ export const UpdateLeaseForm: React.FunctionComponent<IUpdateLeaseFormProps> = (
       values.statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.DUPLICATE
     ) {
       setModalContent({
+        title: 'Acknowledgement',
         variant: 'warning',
-        okButtonText: 'Yes',
-        cancelButtonText: 'No',
-        message: `Selecting the Duplicate file status will hide the file within the Property Information, PIMS Files tab. The file will remain searchable in the Manage Lease/Licence Files advanced search.
+        message: `You've marked this status file as a duplicate. If you save it, you'll still see it in the management table.
 
         Please ensure that all related documents and notes are moved to the active file.
 
-        Do you want to proceed?`,
-        title: 'Warning',
+        Do you want to acknowledge and proceed?`,
+        okButtonText: 'Yes',
+        cancelButtonText: 'No',
         handleCancel: () => {
           formikHelpers.setFieldValue('statusTypeCode', initialValues.statusTypeCode);
           setDisplayModal(false);
