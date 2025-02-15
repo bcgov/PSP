@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { ExpandCollapseButton } from '@/components/common/buttons/ExpandCollapseButton';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import * as Styled from '@/components/common/styles';
+import { H1 } from '@/components/common/styles';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 
 export interface IMapSideBarLayoutProps {
@@ -63,12 +64,12 @@ const MapSideBarLayout: React.FunctionComponent<
         <>
           <Row>
             <Col>
-              <Styled.H1 className="mr-auto">
+              <StyledExpandedHeader>
                 <>
-                  <span className="mr-2">{icon}</span>
+                  <div className="mr-2 mb-1">{icon}</div>
                   {title}
                 </>
-              </Styled.H1>
+              </StyledExpandedHeader>
             </Col>
 
             <StyledButtonBar xs="auto" className="d-flex">
@@ -120,11 +121,6 @@ const StyledSidebarWrapper = styled.div`
     display: flex;
     flex-direction: column;
     overflow: hidden;
-
-    h1 svg {
-      width: 2.8rem;
-      height: 2.8rem;
-    }
   }
   padding: 1.6rem;
   color: ${props => props.theme.bcTokens.typographyColorSecondary};
@@ -157,5 +153,16 @@ const Header = styled.div`
 `;
 
 const Footer = styled.div``;
+
+const StyledExpandedHeader = styled(H1)`
+  display: flex;
+  align-items: end;
+
+  svg {
+    width: 24;
+    height: 24;
+    margin-right: 0;
+  }
+`;
 
 export default MapSideBarLayout;

@@ -28,7 +28,7 @@ exports[`Contact OrganizationView component > renders as expected 1`] = `
 .c1 {
   color: var(--theme-blue-100);
   font-family: 'BCSans-Bold';
-  font-size: 2.6rem;
+  font-size: 2.2rem;
   border-bottom: solid 0.2rem var(--theme-blue-90);
   width: 100%;
   text-align: left;
@@ -338,7 +338,7 @@ exports[`Contact OrganizationView component > renders as expected 1`] = `
 .c1 {
   color: var(--theme-blue-100);
   font-family: 'BCSans-Bold';
-  font-size: 2.6rem;
+  font-size: 2.2rem;
   border-bottom: solid 0.2rem var(--theme-blue-90);
   width: 100%;
   text-align: left;
@@ -409,7 +409,7 @@ exports[`Contact OrganizationView component > renders as expected 1`] = `
 .c1 {
   color: var(--theme-blue-100);
   font-family: 'BCSans-Bold';
-  font-size: 2.6rem;
+  font-size: 2.2rem;
   border-bottom: solid 0.2rem var(--theme-blue-90);
   width: 100%;
   text-align: left;

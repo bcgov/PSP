@@ -299,7 +299,7 @@ exports[`Research List View > matches snapshot 1`] = `
 .c3 {
   color: #474543;
   font-family: 'BCSans-Bold';
-  font-size: 3.2rem;
+  font-size: 2.8rem;
   border-bottom: solid 0.5rem var(--theme-blue-90);
   width: 100%;
   text-align: left;

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaWindowClose } from 'react-icons/fa';
 import styled from 'styled-components';
 
+import { CloseIcon, Underline } from '@/components/common/styles';
 import * as BaseStyles from '@/components/common/styles';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 
@@ -44,21 +44,16 @@ export const FormTitleBar: React.FC<IFormTitleBarProps> = ({
   );
 };
 
-const Underline = styled.div`
-  width: 100%;
-  border-bottom: solid 0.5rem ${props => props.theme.bcTokens.surfaceColorBackgroundDarkBlue};
-`;
-
-const CloseIcon = styled(FaWindowClose)`
-  color: ${props => props.theme.bcTokens.typographyColorSecondary};
-  font-size: 30px;
-  cursor: pointer;
-`;
-
 // override default H1 styling for the title bar
 const TitleBarH1 = styled(BaseStyles.H1)`
   && {
     border-bottom: none;
     margin-bottom: 0.2rem;
+  }
+
+  svg {
+    width: 2.8rem;
+    height: 2.8rem;
+    margin-right: 0;
   }
 `;

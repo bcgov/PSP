@@ -5,8 +5,16 @@ import styled from 'styled-components';
 import { H1 } from '@/components/common/styles';
 
 export const TrayHeader = styled(H1)`
+  display: flex;
+  align-items: end;
   border-bottom: 0;
   margin-bottom: 0.2rem;
+
+  svg {
+    width: 24;
+    height: 24;
+    margin-right: 0;
+  }
 `;
 
 export const SideNavBar = styled.div`

@@ -1,7 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`ResearchContainer component > renders as expected 1`] = `
-.c3.btn {
+.c4.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -30,19 +30,19 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c3.btn .Button__value {
+.c4.btn .Button__value {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
-.c3.btn:hover {
+.c4.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c3.btn:focus {
+.c4.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -50,31 +50,31 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   box-shadow: none;
 }
 
-.c3.btn.btn-primary {
+.c4.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c3.btn.btn-primary:hover,
-.c3.btn.btn-primary:active,
-.c3.btn.btn-primary:focus {
+.c4.btn.btn-primary:hover,
+.c4.btn.btn-primary:active,
+.c4.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c3.btn.btn-secondary {
+.c4.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c3.btn.btn-secondary:hover,
-.c3.btn.btn-secondary:active,
-.c3.btn.btn-secondary:focus {
+.c4.btn.btn-secondary:hover,
+.c4.btn.btn-secondary:active,
+.c4.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c3.btn.btn-info {
+.c4.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -82,66 +82,66 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   padding-right: 0.6rem;
 }
 
-.c3.btn.btn-info:hover,
-.c3.btn.btn-info:active,
-.c3.btn.btn-info:focus {
+.c4.btn.btn-info:hover,
+.c4.btn.btn-info:active,
+.c4.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c3.btn.btn-light {
+.c4.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c3.btn.btn-light:hover,
-.c3.btn.btn-light:active,
-.c3.btn.btn-light:focus {
+.c4.btn.btn-light:hover,
+.c4.btn.btn-light:active,
+.c4.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c3.btn.btn-dark {
+.c4.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c3.btn.btn-dark:hover,
-.c3.btn.btn-dark:active,
-.c3.btn.btn-dark:focus {
+.c4.btn.btn-dark:hover,
+.c4.btn.btn-dark:active,
+.c4.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c3.btn.btn-danger {
+.c4.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c3.btn.btn-danger:hover,
-.c3.btn.btn-danger:active,
-.c3.btn.btn-danger:focus {
+.c4.btn.btn-danger:hover,
+.c4.btn.btn-danger:active,
+.c4.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c3.btn.btn-warning {
+.c4.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c3.btn.btn-warning:hover,
-.c3.btn.btn-warning:active,
-.c3.btn.btn-warning:focus {
+.c4.btn.btn-warning:hover,
+.c4.btn.btn-warning:active,
+.c4.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c3.btn.btn-link {
+.c4.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -165,9 +165,9 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   text-decoration: underline;
 }
 
-.c3.btn.btn-link:hover,
-.c3.btn.btn-link:active,
-.c3.btn.btn-link:focus {
+.c4.btn.btn-link:hover,
+.c4.btn.btn-link:active,
+.c4.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -177,15 +177,15 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   outline: none;
 }
 
-.c3.btn.btn-link:disabled,
-.c3.btn.btn-link.disabled {
+.c4.btn.btn-link:disabled,
+.c4.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c3.btn:disabled,
-.c3.btn:disabled:hover {
+.c4.btn:disabled,
+.c4.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -197,19 +197,19 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   cursor: not-allowed;
 }
 
-.c3.Button .Button__icon {
+.c4.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c3.Button--icon-only:focus {
+.c4.Button--icon-only:focus {
   outline: none;
 }
 
-.c3.Button--icon-only .Button__icon {
+.c4.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c15 {
+.c16 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -222,31 +222,31 @@ exports[`ResearchContainer component > renders as expected 1`] = `
 .c1 {
   color: #474543;
   font-family: 'BCSans-Bold';
-  font-size: 3.2rem;
+  font-size: 2.8rem;
   border-bottom: solid 0.5rem var(--theme-blue-90);
   width: 100%;
   text-align: left;
   margin-bottom: 2.4rem;
 }
 
-.c5 {
+.c6 {
   border-left: 0.1rem solid #ECEAE8;
   width: 0.1rem;
   height: 80%;
   margin: auto;
 }
 
-.c7 {
+.c8 {
   width: 100%;
   border-bottom: solid 0.5rem #3470B1;
 }
 
-.c6 {
+.c7 {
   font-size: 2.4rem;
   cursor: pointer;
 }
 
-.c27 {
+.c28 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -263,38 +263,38 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   overflow-y: auto;
 }
 
-.c18 {
-  height: 100%;
-}
-
 .c19 {
+  height: 100%;
+}
+
+.c20 {
   overflow: auto;
   height: 100%;
   width: 100%;
 }
 
-.c26 {
+.c27 {
   overflow: auto;
   height: 100%;
   width: 100%;
 }
 
-.c4.btn.btn-light.Button {
+.c5.btn.btn-light.Button {
   padding: 0;
   border: 0.1rem solid #9F9D9C;
   background-color: white;
   color: #474543;
 }
 
-.c4.btn.btn-light.Button:focus,
-.c4.btn.btn-light.Button:active {
+.c5.btn.btn-light.Button:focus,
+.c5.btn.btn-light.Button:active {
   background-color: white;
   color: #474543;
 }
 
-.c4.btn,
-.c4 .Button__icon,
-.c4 svg {
+.c5.btn,
+.c5 .Button__icon,
+.c5 svg {
   max-width: 2.4rem;
   min-width: 2.4rem;
   max-height: 2.4rem;
@@ -327,12 +327,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   overflow: hidden;
 }
 
-.c0.expanded h1 svg {
-  width: 2.8rem;
-  height: 2.8rem;
-}
-
-.c2 {
+.c3 {
   gap: 1.5rem;
   -webkit-align-items: center;
   -webkit-box-align: center;
@@ -340,7 +335,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   align-items: center;
 }
 
-.c17 {
+.c18 {
   width: 100%;
   position: relative;
   overflow: auto;
@@ -349,42 +344,59 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   flex: 1;
 }
 
-.c8 {
+.c9 {
   width: 100%;
   height: 100%;
   display: contents;
 }
 
-.c9 {
+.c10 {
   position: relative;
 }
 
-.c28 {
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: end;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: end;
+}
+
+.c2 svg {
+  width: 24;
+  height: 24;
+  margin-right: 0;
+}
+
+.c29 {
   height: 100%;
 }
 
-.c28 .tab-content {
+.c29 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
   overflow-y: auto;
   background-color: #f2f2f2;
 }
 
-.c28 .tab-content .tab-pane {
+.c29 .tab-content .tab-pane {
   position: relative;
 }
 
-.c29 {
+.c30 {
   background-color: white;
   color: var(--surface-color-primary-button-default);
   font-size: 1.4rem;
   border-color: transparent;
 }
 
-.c29 .nav-tabs {
+.c30 .nav-tabs {
   height: auto;
 }
 
-.c29 .nav-item {
+.c30 .nav-item {
   color: var(--surface-color-primary-button-default);
   min-width: 5rem;
   padding: 0.1rem 1.3rem;
@@ -392,7 +404,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   margin-left: 0.1rem;
 }
 
-.c29 .nav-item:hover {
+.c30 .nav-item:hover {
   color: #f2f2f2;
   background-color: #1e5189;
   border-color: transparent;
@@ -402,7 +414,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   text-shadow: 0.1rem 0 0 currentColor;
 }
 
-.c29 .nav-item.active {
+.c30 .nav-item.active {
   border-radius: 0.4rem;
   color: #f2f2f2;
   background-color: #053662;
@@ -410,25 +422,24 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   text-shadow: 0.1rem 0 0 currentColor;
 }
 
-.c30 {
+.c31 {
   background-color: #f2f2f2;
   padding-top: 1rem;
 }
 
-.c31 {
+.c32 {
   text-align: right;
   overflow: hidden;
 }
 
-.c33 {
+.c34 {
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2.4rem;
-  font-size: 2.6rem;
 }
 
-.c32 {
+.c33 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
@@ -436,28 +447,28 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c35.required::before {
+.c36.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c34 {
+.c35 {
   font-weight: bold;
 }
 
-.c13 {
+.c14 {
   font-size: 0.87em;
   line-height: 1.9;
 }
 
-.c11 {
+.c12 {
   font-weight: bold;
   white-space: nowrap;
 }
 
-.c16 {
+.c17 {
   font-family: 'BCSans-Bold';
   font-size: 1.4rem;
   border-radius: 0.4rem;
@@ -476,13 +487,13 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   background-color: #dff0d8;
 }
 
-.c14 {
+.c15 {
   margin-top: auto;
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
 
-.c10 {
+.c11 {
   margin-top: 0.5rem;
   margin-bottom: 1.5rem;
   border-bottom-style: solid;
@@ -490,7 +501,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   border-bottom-width: 0.1rem;
 }
 
-.c12 {
+.c13 {
   height: 100%;
   display: -webkit-box;
   display: -webkit-flex;
@@ -501,7 +512,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   flex-direction: column;
 }
 
-.c20 {
+.c21 {
   text-align: left;
   padding: 0px;
   margin: 0px;
@@ -509,28 +520,28 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   color: var(--surface-color-primary-button-default);
 }
 
-.c22 {
+.c23 {
   min-height: 2.5rem;
   line-height: 3rem;
 }
 
-.c21 {
+.c22 {
   font-size: 1.4rem;
   font-weight: normal;
   cursor: pointer;
   padding-bottom: 0.5rem;
 }
 
-.c21.selected {
+.c22.selected {
   font-weight: bold;
   cursor: default;
 }
 
-.c21 div.Button__value {
+.c22 div.Button__value {
   font-size: 1.4rem;
 }
 
-.c25 {
+.c26 {
   background-color: #fcba19;
   font-size: 1.5rem;
   border-radius: 50%;
@@ -552,11 +563,11 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   align-items: center;
 }
 
-.c25.selected {
+.c26.selected {
   background-color: #FCBA19;
 }
 
-.c23 {
+.c24 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -573,7 +584,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   border-bottom: 1px solid #606060;
 }
 
-.c24 {
+.c25 {
   font-weight: bold;
   font-size: 1.6rem;
   color: #474543;
@@ -596,10 +607,10 @@ exports[`ResearchContainer component > renders as expected 1`] = `
           class="col"
         >
           <h1
-            class="c1 mr-auto"
+            class="c1 c2"
           >
-            <span
-              class="mr-2"
+            <div
+              class="mr-2 mb-1"
             >
               <svg
                 fill="currentColor"
@@ -613,16 +624,16 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                   d="M19.2118 13.0611H4.80296V10.1458H19.2118V13.0611ZM14.4089 19.7098H4.80296V16.7765H14.4089V19.7098ZM21.6059 4.75623H16.803H12L9.60591 0H2.39409C0 0 0 3.1546 0 4.75623V21.0847C0 22.6863 1.06404 24 2.39409 24H21.6059C22.9212 24 24 22.6863 24 21.0847V7.67157C24 6.06993 22.9212 4.75623 21.6059 4.75623Z"
                 />
               </svg>
-            </span>
+            </div>
             Research File
           </h1>
         </div>
         <div
-          class="c2 d-flex col-auto"
+          class="c3 d-flex col-auto"
         >
           <span>
             <button
-              class="c3 Button Button--icon-only c4 btn btn-light"
+              class="c4 Button Button--icon-only c5 btn btn-light"
               title="collapse"
               type="button"
             >
@@ -653,10 +664,10 @@ exports[`ResearchContainer component > renders as expected 1`] = `
             </button>
           </span>
           <div
-            class="c5"
+            class="c6"
           />
           <svg
-            class="c6"
+            class="c7"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -675,16 +686,16 @@ exports[`ResearchContainer component > renders as expected 1`] = `
         </div>
       </div>
       <div
-        class="c7"
+        class="c8"
       />
       <div
-        class="c8"
+        class="c9"
       >
         <div
-          class="c9"
+          class="c10"
         >
           <div
-            class="c10 no-gutters row"
+            class="c11 no-gutters row"
           >
             <div
               class="col-7"
@@ -696,7 +707,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                   class="pr-0 text-left col-3"
                 >
                   <label
-                    class="c11"
+                    class="c12"
                   >
                     File #:
                   </label>
@@ -714,7 +725,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                   class="pr-0 text-left col-3"
                 >
                   <label
-                    class="c11"
+                    class="c12"
                   >
                     File name:
                   </label>
@@ -732,7 +743,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                   class="pr-0 text-left col-3"
                 >
                   <label
-                    class="c11"
+                    class="c12"
                   >
                     MOTI region:
                   </label>
@@ -748,7 +759,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                   class="pr-0 text-left col-3"
                 >
                   <label
-                    class="c11"
+                    class="c12"
                   >
                     Ministry district:
                   </label>
@@ -764,7 +775,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                   class="pr-0 text-left col-3"
                 >
                   <label
-                    class="c11"
+                    class="c12"
                   >
                     Historical file #:
                   </label>
@@ -778,7 +789,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
               class="col"
             >
               <div
-                class="c12"
+                class="c13"
               >
                 <div
                   class="no-gutters row"
@@ -787,7 +798,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                     class="text-right col"
                   >
                     <span
-                      class="c13"
+                      class="c14"
                     >
                       <strong>
                         Created: 
@@ -814,7 +825,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                     class="text-right col"
                   >
                     <span
-                      class="c13"
+                      class="c14"
                     >
                       <strong>
                         Updated: 
@@ -836,7 +847,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                   </div>
                 </div>
                 <div
-                  class="c14"
+                  class="c15"
                 >
                   <div
                     class="no-gutters justify-content-end align-items-end row"
@@ -848,14 +859,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                       class="align-self-end d-flex col-auto"
                     >
                       <span
-                        class="c13"
+                        class="c14"
                       >
                         <b>
                           File:
                         </b>
                       </span>
                       <div
-                        class="c15 c16"
+                        class="c16 c17"
                       >
                         <svg
                           fill="currentColor"
@@ -884,23 +895,23 @@ exports[`ResearchContainer component > renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="c17"
+          class="c18"
         >
           <div
-            class="c18 no-gutters row"
+            class="c19 no-gutters row"
           >
             <div
-              class="c19 d-flex flex-column col-3"
+              class="c20 d-flex flex-column col-3"
             >
               <div
-                class="c20"
+                class="c21"
               >
                 <div
-                  class="c21 no-gutters selected row"
+                  class="c22 no-gutters selected row"
                   data-testid="menu-item-row-0"
                 >
                   <div
-                    class="c22 col"
+                    class="c23 col"
                   >
                     <span
                       title="File Details"
@@ -909,17 +920,17 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                     </span>
                   </div>
                   <div
-                    class="c23"
+                    class="c24"
                   >
                     <span
-                      class="c24"
+                      class="c25"
                     >
                       Properties
                     </span>
                   </div>
                 </div>
                 <div
-                  class="c21 no-gutters  row"
+                  class="c22 no-gutters  row"
                   data-testid="menu-item-row-1"
                 >
                   <div
@@ -929,7 +940,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                     class="pr-2 col-auto"
                   >
                     <div
-                      class="c25"
+                      class="c26"
                     >
                       1
                     </div>
@@ -938,7 +949,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                     class="col"
                   >
                     <button
-                      class="c3 Button btn btn-link"
+                      class="c4 Button btn btn-link"
                       title="View"
                       type="button"
                     >
@@ -953,16 +964,16 @@ exports[`ResearchContainer component > renders as expected 1`] = `
               </div>
             </div>
             <div
-              class="c26 col-9"
+              class="c27 col-9"
             >
               <div
-                class="c27"
+                class="c28"
               >
                 <div
-                  class="c28"
+                  class="c29"
                 >
                   <nav
-                    class="c29 nav nav-tabs"
+                    class="c30 nav nav-tabs"
                     role="tablist"
                   >
                     <a
@@ -984,22 +995,22 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                       role="tabpanel"
                     >
                       <div
-                        class="c30"
+                        class="c31"
                       >
                         <div
-                          class="c31 mr-3 my-1"
+                          class="c32 mr-3 my-1"
                         />
                         <div
-                          class="c32 form-section"
+                          class="c33 form-section"
                         >
                           <h2
-                            class="c33"
+                            class="c34"
                           >
                             <div
                               class="no-gutters row"
                             >
                               <div
-                                class="align-items-end col"
+                                class="align-content-end col"
                               >
                                 Project
                               </div>
@@ -1015,14 +1026,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c34"
+                                  class="c35"
                                 >
                                   Ministry project
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c35 text-left col"
+                                class="c36 text-left col"
                               >
                                 <div>
                                   00048 CLAIMS
@@ -1032,16 +1043,16 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                           </div>
                         </div>
                         <div
-                          class="c32 form-section"
+                          class="c33 form-section"
                         >
                           <h2
-                            class="c33"
+                            class="c34"
                           >
                             <div
                               class="no-gutters row"
                             >
                               <div
-                                class="align-items-end col"
+                                class="align-content-end col"
                               >
                                 Roads
                               </div>
@@ -1057,14 +1068,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c34"
+                                  class="c35"
                                 >
                                   Road name
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c35 text-left col"
+                                class="c36 text-left col"
                               >
                                 Test road name
                               </div>
@@ -1076,14 +1087,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c34"
+                                  class="c35"
                                 >
                                   Road alias
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c35 text-left col"
+                                class="c36 text-left col"
                               >
                                 Test road alias
                               </div>
@@ -1091,16 +1102,16 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                           </div>
                         </div>
                         <div
-                          class="c32 form-section"
+                          class="c33 form-section"
                         >
                           <h2
-                            class="c33"
+                            class="c34"
                           >
                             <div
                               class="no-gutters row"
                             >
                               <div
-                                class="align-items-end col"
+                                class="align-content-end col"
                               >
                                 Research Request
                               </div>
@@ -1116,14 +1127,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c34"
+                                  class="c35"
                                 >
                                   Research purpose
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c35 text-left col"
+                                class="c36 text-left col"
                               />
                             </div>
                             <div
@@ -1133,14 +1144,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c34"
+                                  class="c35"
                                 >
                                   Request date
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c35 text-left col"
+                                class="c36 text-left col"
                               >
                                  
                                 Apr 14, 2022
@@ -1153,14 +1164,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c34"
+                                  class="c35"
                                 >
                                   Source of request
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c35 text-left col"
+                                class="c36 text-left col"
                               >
                                 Headquarters (HQ)
                               </div>
@@ -1172,14 +1183,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c34"
+                                  class="c35"
                                 >
                                   Requester
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c35 text-left col"
+                                class="c36 text-left col"
                               >
                                 Dairy Queen Forever! Property Management
                               </div>
@@ -1191,30 +1202,30 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c34"
+                                  class="c35"
                                 >
                                   Description of request
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c35 text-left col"
+                                class="c36 text-left col"
                               />
                             </div>
                             a request description
                           </div>
                         </div>
                         <div
-                          class="c32 form-section"
+                          class="c33 form-section"
                         >
                           <h2
-                            class="c33"
+                            class="c34"
                           >
                             <div
                               class="no-gutters row"
                             >
                               <div
-                                class="align-items-end col"
+                                class="align-content-end col"
                               >
                                 Result
                               </div>
@@ -1230,14 +1241,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c34"
+                                  class="c35"
                                 >
                                   Research completed on
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c35 text-left col"
+                                class="c36 text-left col"
                               >
                                 Mar 30, 2022
                               </div>
@@ -1249,30 +1260,30 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c34"
+                                  class="c35"
                                 >
                                   Result of request
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c35 text-left col"
+                                class="c36 text-left col"
                               />
                             </div>
                             A research result
                           </div>
                         </div>
                         <div
-                          class="c32 form-section"
+                          class="c33 form-section"
                         >
                           <h2
-                            class="c33"
+                            class="c34"
                           >
                             <div
                               class="no-gutters row"
                             >
                               <div
-                                class="align-items-end col"
+                                class="align-content-end col"
                               >
                                 Expropriation
                               </div>
@@ -1288,14 +1299,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c34"
+                                  class="c35"
                                 >
                                   Expropriation?
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c35 text-left col"
+                                class="c36 text-left col"
                               >
                                 No
                               </div>
@@ -1307,14 +1318,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c34"
+                                  class="c35"
                                 >
                                   Expropriation comments
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c35 text-left col"
+                                class="c36 text-left col"
                               />
                             </div>
                             An expropriation note
