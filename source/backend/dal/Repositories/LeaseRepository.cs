@@ -718,6 +718,8 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(r => r.PimsSecurityDepositReturnHolder)
                     .ThenInclude(s => s.Organization)
 
+                .Include(r => r.PimsLeaseRenewals)
+
                 .Include(l => l.PimsLeasePeriods)
                      .ThenInclude(t => t.LeasePmtFreqTypeCodeNavigation)
                 .Include(t => t.PimsLeasePeriods)
