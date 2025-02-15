@@ -124,7 +124,7 @@ public partial class PimsLeaseStakeholder
     public virtual PimsPerson Person { get; set; }
 
     [InverseProperty("LeaseStakeholder")]
-    public virtual ICollection<PimsLeaseStakeholderCompReq> PimsLeaseStakeholderCompReqs { get; set; } = new List<PimsLeaseStakeholderCompReq>();
+    public virtual ICollection<PimsCompReqLeasePayee> PimsCompReqLeasePayees { get; set; } = new List<PimsCompReqLeasePayee>();
 
     [ForeignKey("PrimaryContactId")]
     [InverseProperty("PimsLeaseStakeholderPrimaryContacts")]

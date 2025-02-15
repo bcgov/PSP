@@ -6,12 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-[Table("PIMS_COMP_REQ_PAYEE_HIST")]
-public partial class PimsCompReqPayeeHist
+[Table("PIMS_COMP_REQ_ACQ_PAYEE_HIST")]
+[Index("CompReqAcqPayeeHistId", "EndDateHist", Name = "PIMS_CRACQP_H_UK", IsUnique = true)]
+public partial class PimsCompReqAcqPayeeHist
 {
     [Key]
-    [Column("_COMP_REQ_PAYEE_HIST_ID")]
-    public long CompReqPayeeHistId { get; set; }
+    [Column("_COMP_REQ_ACQ_PAYEE_HIST_ID")]
+    public long CompReqAcqPayeeHistId { get; set; }
 
     [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
     public DateTime EffectiveDateHist { get; set; }
@@ -19,8 +20,8 @@ public partial class PimsCompReqPayeeHist
     [Column("END_DATE_HIST", TypeName = "datetime")]
     public DateTime? EndDateHist { get; set; }
 
-    [Column("COMP_REQ_PAYEE_ID")]
-    public long CompReqPayeeId { get; set; }
+    [Column("COMP_REQ_ACQ_PAYEE_ID")]
+    public long CompReqAcqPayeeId { get; set; }
 
     [Column("COMPENSATION_REQUISITION_ID")]
     public long? CompensationRequisitionId { get; set; }
