@@ -356,12 +356,6 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
   align-items: end;
 }
 
-.c2 svg {
-  width: 24;
-  height: 24;
-  margin-right: 0;
-}
-
 .c11 {
   display: -webkit-box;
   display: -webkit-flex;

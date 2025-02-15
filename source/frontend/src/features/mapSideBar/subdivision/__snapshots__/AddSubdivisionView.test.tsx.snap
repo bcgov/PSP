@@ -413,12 +413,6 @@ exports[`Add Subdivision View > matches snapshot 1`] = `
   align-items: end;
 }
 
-.c2 svg {
-  width: 24;
-  height: 24;
-  margin-right: 0;
-}
-
 .c19 {
   font-size: 1.6rem;
   color: #9F9D9C;

@@ -389,12 +389,6 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   align-items: end;
 }
 
-.c2 svg {
-  width: 24;
-  height: 24;
-  margin-right: 0;
-}
-
 .c34 {
   position: -webkit-sticky;
   position: sticky;
@@ -3270,12 +3264,6 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
   -webkit-box-align: end;
   -ms-flex-align: end;
   align-items: end;
-}
-
-.c2 svg {
-  width: 24;
-  height: 24;
-  margin-right: 0;
 }
 
 .c35 {

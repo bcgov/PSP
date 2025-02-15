@@ -318,12 +318,6 @@ exports[`MapSideBarLayout component > matches snapshot 1`] = `
   align-items: end;
 }
 
-.c2 svg {
-  width: 24;
-  height: 24;
-  margin-right: 0;
-}
-
 <div
     class="c0 expanded"
   >

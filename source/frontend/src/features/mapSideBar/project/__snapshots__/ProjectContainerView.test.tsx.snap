@@ -337,12 +337,6 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
   align-items: end;
 }
 
-.c2 svg {
-  width: 24;
-  height: 24;
-  margin-right: 0;
-}
-
 .c19 {
   display: -webkit-box;
   display: -webkit-flex;

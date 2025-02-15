@@ -157,12 +157,6 @@ const Footer = styled.div``;
 const StyledExpandedHeader = styled(H1)`
   display: flex;
   align-items: end;
-
-  svg {
-    width: 24;
-    height: 24;
-    margin-right: 0;
-  }
 `;
 
 export default MapSideBarLayout;
