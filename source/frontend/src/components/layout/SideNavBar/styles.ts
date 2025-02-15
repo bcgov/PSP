@@ -9,12 +9,6 @@ export const TrayHeader = styled(H1)`
   align-items: end;
   border-bottom: 0;
   margin-bottom: 0.2rem;
-
-  svg {
-    width: 24;
-    height: 24;
-    margin-right: 0;
-  }
 `;
 
 export const SideNavBar = styled.div`
