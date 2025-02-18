@@ -6,12 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-[Table("PIMS_COMP_REQ_PAYEE_HIST")]
-public partial class PimsCompReqPayeeHist
+[Table("PIMS_LEASE_LICENSE_TEAM_HIST")]
+[Index("LeaseLicenseTeamHistId", "EndDateHist", Name = "PIMS_LSLITM_H_UK", IsUnique = true)]
+public partial class PimsLeaseLicenseTeamHist
 {
     [Key]
-    [Column("_COMP_REQ_PAYEE_HIST_ID")]
-    public long CompReqPayeeHistId { get; set; }
+    [Column("_LEASE_LICENSE_TEAM_HIST_ID")]
+    public long LeaseLicenseTeamHistId { get; set; }
 
     [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
     public DateTime EffectiveDateHist { get; set; }
@@ -19,24 +20,25 @@ public partial class PimsCompReqPayeeHist
     [Column("END_DATE_HIST", TypeName = "datetime")]
     public DateTime? EndDateHist { get; set; }
 
-    [Column("COMP_REQ_PAYEE_ID")]
-    public long CompReqPayeeId { get; set; }
+    [Column("LEASE_LICENSE_TEAM_ID")]
+    public long LeaseLicenseTeamId { get; set; }
 
-    [Column("COMPENSATION_REQUISITION_ID")]
-    public long? CompensationRequisitionId { get; set; }
+    [Column("LEASE_ID")]
+    public long LeaseId { get; set; }
 
-    [Column("ACQUISITION_OWNER_ID")]
-    public long? AcquisitionOwnerId { get; set; }
+    [Column("PERSON_ID")]
+    public long? PersonId { get; set; }
 
-    [Column("INTEREST_HOLDER_ID")]
-    public long? InterestHolderId { get; set; }
+    [Column("ORGANIZATION_ID")]
+    public long? OrganizationId { get; set; }
 
-    [Column("ACQUISITION_FILE_TEAM_ID")]
-    public long? AcquisitionFileTeamId { get; set; }
+    [Column("PRIMARY_CONTACT_ID")]
+    public long? PrimaryContactId { get; set; }
 
-    [Column("LEGACY_PAYEE")]
-    [StringLength(1000)]
-    public string LegacyPayee { get; set; }
+    [Required]
+    [Column("LL_TEAM_PROFILE_TYPE_CODE")]
+    [StringLength(20)]
+    public string LlTeamProfileTypeCode { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }

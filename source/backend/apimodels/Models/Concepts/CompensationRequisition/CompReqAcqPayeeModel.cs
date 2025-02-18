@@ -4,9 +4,9 @@ using Pims.Api.Models.Concepts.InterestHolder;
 
 namespace Pims.Api.Models.Concepts.CompensationRequisition
 {
-    public class CompReqPayeeModel : BaseAuditModel
+    public class CompReqAcqPayeeModel : BaseAuditModel
     {
-        public long? CompReqPayeeId { get; set; }
+        public long? CompReqAcqPayeeId { get; set; }
 
         public long? CompensationRequisitionId { get; set; }
 

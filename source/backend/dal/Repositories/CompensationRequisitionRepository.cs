@@ -31,7 +31,7 @@ namespace Pims.Dal.Repositories
         {
             return Context.PimsCompensationRequisitions
                 .Include(c => c.PimsCompReqFinancials)
-                .Include(p => p.PimsCompReqPayees)
+                .Include(p => p.PimsCompReqAcqPayees)
                 .AsNoTracking()
                 .Where(c => c.AcquisitionFileId == acquisitionFileId).ToList();
         }
@@ -40,7 +40,7 @@ namespace Pims.Dal.Repositories
         {
             return Context.PimsCompensationRequisitions
                 .Include(c => c.PimsCompReqFinancials)
-                .Include(c => c.PimsLeaseStakeholderCompReqs)
+                .Include(c => c.PimsCompReqLeasePayees)
                 .AsNoTracking()
                 .Where(c => c.LeaseId == leaseFileId).ToList();
         }
@@ -60,12 +60,12 @@ namespace Pims.Dal.Repositories
                 .Include(x => x.Responsibility)
                 .Include(c => c.PimsCompReqFinancials)
                     .ThenInclude(y => y.FinancialActivityCode)
-                .Include(c => c.PimsCompReqPayees)
+                .Include(c => c.PimsCompReqAcqPayees)
                 .Include(x => x.AlternateProject)
-                .Include(x => x.PimsLeaseStakeholderCompReqs)
+                .Include(x => x.PimsCompReqLeasePayees)
                     .ThenInclude(y => y.LeaseStakeholder)
                         .ThenInclude(z => z.LeaseStakeholderTypeCodeNavigation)
-                .Include(x => x.PimsLeaseStakeholderCompReqs)
+                .Include(x => x.PimsCompReqLeasePayees)
                     .ThenInclude(y => y.LeaseStakeholder)
                         .ThenInclude(z => z.LessorTypeCodeNavigation)
                 .Include(x => x.PimsPropAcqFlCompReqs)
@@ -89,8 +89,8 @@ namespace Pims.Dal.Repositories
             Context.UpdateChild<PimsCompensationRequisition, long, PimsCompReqFinancial, long>(a => a.PimsCompReqFinancials, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsCompReqFinancials.ToArray(), true);
             Context.UpdateChild<PimsCompensationRequisition, long, PimsPropAcqFlCompReq, long>(a => a.PimsPropAcqFlCompReqs, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsPropAcqFlCompReqs.ToArray(), true);
             Context.UpdateChild<PimsCompensationRequisition, long, PimsPropLeaseCompReq, long>(a => a.PimsPropLeaseCompReqs, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsPropLeaseCompReqs.ToArray(), true);
-            Context.UpdateChild<PimsCompensationRequisition, long, PimsLeaseStakeholderCompReq, long>(a => a.PimsLeaseStakeholderCompReqs, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsLeaseStakeholderCompReqs.ToArray(), true);
-            Context.UpdateChild<PimsCompensationRequisition, long, PimsCompReqPayee, long>(a => a.PimsCompReqPayees, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsCompReqPayees.ToArray(), true);
+            Context.UpdateChild<PimsCompensationRequisition, long, PimsCompReqLeasePayee, long>(a => a.PimsCompReqLeasePayees, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsCompReqLeasePayees.ToArray(), true);
+            Context.UpdateChild<PimsCompensationRequisition, long, PimsCompReqAcqPayee, long>(a => a.PimsCompReqLeasePayees, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsCompReqAcqPayees.ToArray(), true);
 
             return compensationRequisition;
         }
@@ -101,8 +101,8 @@ namespace Pims.Dal.Repositories
                 .Include(fa => fa.PimsCompReqFinancials)
                 .Include(p => p.PimsPropAcqFlCompReqs)
                 .Include(l => l.PimsPropLeaseCompReqs)
-                .Include(s => s.PimsLeaseStakeholderCompReqs)
-                .Include(ap => ap.PimsCompReqPayees)
+                .Include(s => s.PimsCompReqLeasePayees)
+                .Include(ap => ap.PimsCompReqAcqPayees)
                 .AsNoTracking()
                 .FirstOrDefault(c => c.CompensationRequisitionId == compensationId);
 
@@ -123,14 +123,14 @@ namespace Pims.Dal.Repositories
                     Context.PimsPropLeaseCompReqs.Remove(new PimsPropLeaseCompReq() { PropLeaseCompReqId = propLeaseFile.PropLeaseCompReqId });
                 }
 
-                foreach (var compReqLeaseStakeholder in deletedEntity.PimsLeaseStakeholderCompReqs)
+                foreach (var compReqLeaseStakeholder in deletedEntity.PimsCompReqLeasePayees)
                 {
-                    Context.PimsLeaseStakeholderCompReqs.Remove(new PimsLeaseStakeholderCompReq() { LeaseStakeholderCompReqId = compReqLeaseStakeholder.LeaseStakeholderCompReqId });
+                    Context.PimsCompReqLeasePayees.Remove(new PimsCompReqLeasePayee() { CompReqLeasePayeeId = compReqLeaseStakeholder.CompReqLeasePayeeId });
                 }
 
-                foreach (var compReqAcqPayee in deletedEntity.PimsCompReqPayees)
+                foreach (var compReqAcqPayee in deletedEntity.PimsCompReqAcqPayees)
                 {
-                    Context.PimsCompReqPayees.Remove(new() { CompReqPayeeId = compReqAcqPayee.CompReqPayeeId });
+                    Context.PimsCompReqAcqPayees.Remove(new() { CompReqAcqPayeeId = compReqAcqPayee.CompReqAcqPayeeId });
                 }
 
                 Context.CommitTransaction(); // TODO: required to enforce delete order. Can be removed when cascade deletes are implemented.
@@ -196,9 +196,9 @@ namespace Pims.Dal.Repositories
                 .ToList();
         }
 
-        public IEnumerable<PimsCompReqPayee> GetCompensationRequisitionPayees(long compReqId)
+        public IEnumerable<PimsCompReqAcqPayee> GetCompensationRequisitionAcquisitionPayees(long compReqId)
         {
-            return Context.PimsCompReqPayees
+            return Context.PimsCompReqAcqPayees
                 .AsNoTracking()
                 .Include(x => x.AcquisitionOwner)
                 .Include(x => x.AcquisitionFileTeam)

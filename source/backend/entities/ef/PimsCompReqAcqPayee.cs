@@ -7,47 +7,67 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Desribes the relationship between a lease stakeholder and a compensation requisition.
+/// Table to support multiple payees on a compensation requisition.
 /// </summary>
-[Table("PIMS_LEASE_STAKEHOLDER_COMP_REQ")]
-[Index("CompensationRequisitionId", Name = "LSKCRQ_COMPENSATION_REQUISITION_ID_IDX")]
-[Index("LeaseStakeholderId", Name = "LSKCRQ_LEASE_STAKEHOLDER_ID_IDX")]
-[Index("LeaseStakeholderId", "CompensationRequisitionId", Name = "LSKCRQ_LS_TNT_COMP_REQ_IDX", IsUnique = true)]
-public partial class PimsLeaseStakeholderCompReq
+[Table("PIMS_COMP_REQ_ACQ_PAYEE")]
+[Index("AcquisitionFileTeamId", Name = "CRACQP_ACQUISITION_FILE_TEAM_ID_IDX")]
+[Index("AcquisitionOwnerId", Name = "CRACQP_ACQUISITION_OWNER_ID_IDX")]
+[Index("CompensationRequisitionId", Name = "CRACQP_COMPENSATION_REQUISITION_ID_IDX")]
+[Index("InterestHolderId", Name = "CRACQP_INTEREST_HOLDER_ID_IDX")]
+public partial class PimsCompReqAcqPayee
 {
     /// <summary>
     /// Generated surrogate primary key.
     /// </summary>
     [Key]
-    [Column("LEASE_STAKEHOLDER_COMP_REQ_ID")]
-    public long LeaseStakeholderCompReqId { get; set; }
+    [Column("COMP_REQ_ACQ_PAYEE_ID")]
+    public long CompReqAcqPayeeId { get; set; }
 
     /// <summary>
-    /// Foreign key to the LEASE_STAKEHOLDER table.
-    /// </summary>
-    [Column("LEASE_STAKEHOLDER_ID")]
-    public long LeaseStakeholderId { get; set; }
-
-    /// <summary>
-    /// Foreign key to the PIMS_COMPENSATION_REQUISITION table.
+    /// Foreign key reference to the PIMS_COMPENSATION_REQUISITION table.
     /// </summary>
     [Column("COMPENSATION_REQUISITION_ID")]
-    public long CompensationRequisitionId { get; set; }
+    public long? CompensationRequisitionId { get; set; }
 
     /// <summary>
-    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any
+    /// Foreign key reference to the PIMS_ACQUISITION_OWNER table.
+    /// </summary>
+    [Column("ACQUISITION_OWNER_ID")]
+    public long? AcquisitionOwnerId { get; set; }
+
+    /// <summary>
+    /// Foreign key reference to the PIMS_INTEREST_HOLDER table.
+    /// </summary>
+    [Column("INTEREST_HOLDER_ID")]
+    public long? InterestHolderId { get; set; }
+
+    /// <summary>
+    /// Foreign key reference to the PIMS_ACQUISITION_FILE_TEAM table.
+    /// </summary>
+    [Column("ACQUISITION_FILE_TEAM_ID")]
+    public long? AcquisitionFileTeamId { get; set; }
+
+    /// <summary>
+    /// Payee where only the name is known from the PAIMS system,
+    /// </summary>
+    [Column("LEGACY_PAYEE")]
+    [StringLength(1000)]
+    public string LegacyPayee { get; set; }
+
+    /// <summary>
+    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
     /// </summary>
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
 
     /// <summary>
-    /// The date and time the record was created by the user.
+    /// The date and time the user created the record.
     /// </summary>
     [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime AppCreateTimestamp { get; set; }
 
     /// <summary>
-    /// The user that created the record.
+    /// The user account that created the record.
     /// </summary>
     [Required]
     [Column("APP_CREATE_USERID")]
@@ -55,13 +75,13 @@ public partial class PimsLeaseStakeholderCompReq
     public string AppCreateUserid { get; set; }
 
     /// <summary>
-    /// GUID of the user that created the record.
+    /// The GUID of the user account that created the record.
     /// </summary>
     [Column("APP_CREATE_USER_GUID")]
     public Guid? AppCreateUserGuid { get; set; }
 
     /// <summary>
-    /// User directory of the user that created the record.
+    /// The directory of the user account that created the record.
     /// </summary>
     [Required]
     [Column("APP_CREATE_USER_DIRECTORY")]
@@ -69,13 +89,13 @@ public partial class PimsLeaseStakeholderCompReq
     public string AppCreateUserDirectory { get; set; }
 
     /// <summary>
-    /// The date and time the record was updated by the user.
+    /// The date and time the user updated the record.
     /// </summary>
     [Column("APP_LAST_UPDATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime AppLastUpdateTimestamp { get; set; }
 
     /// <summary>
-    /// The user that updated the record.
+    /// The user account that updated the record.
     /// </summary>
     [Required]
     [Column("APP_LAST_UPDATE_USERID")]
@@ -83,13 +103,13 @@ public partial class PimsLeaseStakeholderCompReq
     public string AppLastUpdateUserid { get; set; }
 
     /// <summary>
-    /// GUID of the user that updated the record.
+    /// The GUID of the user account that updated the record.
     /// </summary>
     [Column("APP_LAST_UPDATE_USER_GUID")]
     public Guid? AppLastUpdateUserGuid { get; set; }
 
     /// <summary>
-    /// User directory of the user that updated the record.
+    /// The directory of the user account that updated the record.
     /// </summary>
     [Required]
     [Column("APP_LAST_UPDATE_USER_DIRECTORY")]
@@ -124,11 +144,19 @@ public partial class PimsLeaseStakeholderCompReq
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
+    [ForeignKey("AcquisitionFileTeamId")]
+    [InverseProperty("PimsCompReqAcqPayees")]
+    public virtual PimsAcquisitionFileTeam AcquisitionFileTeam { get; set; }
+
+    [ForeignKey("AcquisitionOwnerId")]
+    [InverseProperty("PimsCompReqAcqPayees")]
+    public virtual PimsAcquisitionOwner AcquisitionOwner { get; set; }
+
     [ForeignKey("CompensationRequisitionId")]
-    [InverseProperty("PimsLeaseStakeholderCompReqs")]
+    [InverseProperty("PimsCompReqAcqPayees")]
     public virtual PimsCompensationRequisition CompensationRequisition { get; set; }
 
-    [ForeignKey("LeaseStakeholderId")]
-    [InverseProperty("PimsLeaseStakeholderCompReqs")]
-    public virtual PimsLeaseStakeholder LeaseStakeholder { get; set; }
+    [ForeignKey("InterestHolderId")]
+    [InverseProperty("PimsCompReqAcqPayees")]
+    public virtual PimsInterestHolder InterestHolder { get; set; }
 }

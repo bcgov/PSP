@@ -3,9 +3,9 @@ using Pims.Api.Models.Concepts.Lease;
 
 namespace Pims.Api.Models.Concepts.CompensationRequisition
 {
-    public class CompReqLeaseStakeholderModel : BaseAuditModel
+    public class CompReqLeasePayeeModel : BaseAuditModel
     {
-        public long? CompReqLeaseStakeholderId { get; set; }
+        public long? CompReqLeasePayeeId { get; set; }
 
         public long CompensationRequisitionId { get; set; }
 

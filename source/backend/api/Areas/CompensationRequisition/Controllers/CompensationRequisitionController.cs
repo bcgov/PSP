@@ -229,22 +229,22 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
         [HttpGet("{id:long}/payees")]
         [HasPermission(Permissions.CompensationRequisitionView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(List<CompReqPayeeModel>), 200)]
+        [ProducesResponseType(typeof(List<CompReqAcqPayeeModel>), 200)]
         [SwaggerOperation(Tags = new[] { "compensation-requisition" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult GetCompensationRequisitionPayees([FromRoute] long id)
+        public IActionResult GetCompensationRequisitionAcquisitionPayees([FromRoute] long id)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
                 nameof(CompensationRequisitionController),
-                nameof(GetCompensationRequisitionPayees),
+                nameof(GetCompensationRequisitionAcquisitionPayees),
                 User.GetUsername(),
                 DateTime.Now);
             _logger.LogInformation("Dispatching to service: {Service}", _compensationRequisitionService.GetType());
 
-            var compReqPayees = _compensationRequisitionService.GetCompensationRequisitionPayees(id);
+            var compReqPayees = _compensationRequisitionService.GetCompensationRequisitionAcquisitionPayees(id);
 
-            return new JsonResult(_mapper.Map<IEnumerable<CompReqPayeeModel>>(compReqPayees));
+            return new JsonResult(_mapper.Map<IEnumerable<CompReqAcqPayeeModel>>(compReqPayees));
         }
     }
 }

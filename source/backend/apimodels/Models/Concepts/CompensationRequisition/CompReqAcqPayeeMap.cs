@@ -4,12 +4,12 @@ using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts.CompensationRequisition
 {
-    public class CompReqPayeeMap : IRegister
+    public class CompReqAcqPayeeMap : IRegister
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.PimsCompReqPayee, CompReqPayeeModel>()
-                .Map(dest => dest.CompReqPayeeId, src => src.CompReqPayeeId)
+            config.NewConfig<Entity.PimsCompReqAcqPayee, CompReqAcqPayeeModel>()
+                .Map(dest => dest.CompReqAcqPayeeId, src => src.CompReqAcqPayeeId)
                 .Map(dest => dest.CompensationRequisitionId, src => src.CompensationRequisitionId)
                 .Map(dest => dest.AcquisitionFileTeamId, src => src.AcquisitionFileTeamId)
                 .Map(dest => dest.AcquisitionFileTeam, src => src.AcquisitionFileTeam)
@@ -20,8 +20,8 @@ namespace Pims.Api.Models.Concepts.CompensationRequisition
                 .Map(dest => dest.LegacyPayee, src => src.LegacyPayee)
                 .Inherits<Entity.IBaseEntity, BaseConcurrentModel>();
 
-            config.NewConfig<CompReqPayeeModel, Entity.PimsCompReqPayee>()
-                .Map(dest => dest.CompReqPayeeId, src => src.CompReqPayeeId)
+            config.NewConfig<CompReqAcqPayeeModel, Entity.PimsCompReqAcqPayee>()
+                .Map(dest => dest.CompReqAcqPayeeId, src => src.CompReqAcqPayeeId)
                 .Map(dest => dest.CompensationRequisitionId, src => src.CompensationRequisitionId)
                 .Map(dest => dest.AcquisitionFileTeamId, src => src.AcquisitionFileTeamId)
                 .Map(dest => dest.AcquisitionOwnerId, src => src.AcquisitionOwnerId)

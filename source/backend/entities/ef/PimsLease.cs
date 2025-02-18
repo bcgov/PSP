@@ -442,6 +442,9 @@ public partial class PimsLease
     public virtual ICollection<PimsLeaseLeasePurpose> PimsLeaseLeasePurposes { get; set; } = new List<PimsLeaseLeasePurpose>();
 
     [InverseProperty("Lease")]
+    public virtual ICollection<PimsLeaseLicenseTeam> PimsLeaseLicenseTeams { get; set; } = new List<PimsLeaseLicenseTeam>();
+
+    [InverseProperty("Lease")]
     public virtual ICollection<PimsLeaseNote> PimsLeaseNotes { get; set; } = new List<PimsLeaseNote>();
 
     [InverseProperty("Lease")]
