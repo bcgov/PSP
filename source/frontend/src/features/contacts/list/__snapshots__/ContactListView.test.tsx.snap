@@ -527,6 +527,10 @@ exports[`Contact List View > matches snapshot 1`] = `
   margin-bottom: 0.25rem;
 }
 
+.c4 svg {
+  vertical-align: baseline;
+}
+
 @media only screen and (max-width:1199px) {
   .c5 {
     max-width: 50%;

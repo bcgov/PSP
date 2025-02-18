@@ -403,6 +403,7 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
       <svg
         fill="currentColor"
         height="2.6rem"
+        style="vertical-align: baseline;"
         title="Admin Tools icon"
         viewBox="0 0 24 24"
         width="2.6rem"

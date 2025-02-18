@@ -411,6 +411,10 @@ exports[`Disposition List View > matches snapshot 1`] = `
   margin-bottom: 0.25rem;
 }
 
+.c4 svg {
+  vertical-align: baseline;
+}
+
 <div
     class="c0"
   >
