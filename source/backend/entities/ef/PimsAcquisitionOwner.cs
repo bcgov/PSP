@@ -158,7 +158,7 @@ public partial class PimsAcquisitionOwner
     public virtual PimsAddress Address { get; set; }
 
     [InverseProperty("AcquisitionOwner")]
-    public virtual ICollection<PimsCompReqPayee> PimsCompReqPayees { get; set; } = new List<PimsCompReqPayee>();
+    public virtual ICollection<PimsCompReqAcqPayee> PimsCompReqAcqPayees { get; set; } = new List<PimsCompReqAcqPayee>();
 
     [InverseProperty("AcquisitionOwner")]
     public virtual ICollection<PimsExpropriationNotice> PimsExpropriationNotices { get; set; } = new List<PimsExpropriationNotice>();

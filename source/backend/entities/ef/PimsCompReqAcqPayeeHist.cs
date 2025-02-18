@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-[Table("PIMS_LEASE_STAKEHOLDER_COMP_REQ_HIST")]
-[Index("LeaseStakeholderCompReqHistId", "EndDateHist", Name = "PIMS_LSKCRQ_H_UK", IsUnique = true)]
-public partial class PimsLeaseStakeholderCompReqHist
+[Table("PIMS_COMP_REQ_ACQ_PAYEE_HIST")]
+[Index("CompReqAcqPayeeHistId", "EndDateHist", Name = "PIMS_CRACQP_H_UK", IsUnique = true)]
+public partial class PimsCompReqAcqPayeeHist
 {
     [Key]
-    [Column("_LEASE_STAKEHOLDER_COMP_REQ_HIST_ID")]
-    public long LeaseStakeholderCompReqHistId { get; set; }
+    [Column("_COMP_REQ_ACQ_PAYEE_HIST_ID")]
+    public long CompReqAcqPayeeHistId { get; set; }
 
     [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
     public DateTime EffectiveDateHist { get; set; }
@@ -20,14 +20,24 @@ public partial class PimsLeaseStakeholderCompReqHist
     [Column("END_DATE_HIST", TypeName = "datetime")]
     public DateTime? EndDateHist { get; set; }
 
-    [Column("LEASE_STAKEHOLDER_COMP_REQ_ID")]
-    public long LeaseStakeholderCompReqId { get; set; }
-
-    [Column("LEASE_STAKEHOLDER_ID")]
-    public long LeaseStakeholderId { get; set; }
+    [Column("COMP_REQ_ACQ_PAYEE_ID")]
+    public long CompReqAcqPayeeId { get; set; }
 
     [Column("COMPENSATION_REQUISITION_ID")]
-    public long CompensationRequisitionId { get; set; }
+    public long? CompensationRequisitionId { get; set; }
+
+    [Column("ACQUISITION_OWNER_ID")]
+    public long? AcquisitionOwnerId { get; set; }
+
+    [Column("INTEREST_HOLDER_ID")]
+    public long? InterestHolderId { get; set; }
+
+    [Column("ACQUISITION_FILE_TEAM_ID")]
+    public long? AcquisitionFileTeamId { get; set; }
+
+    [Column("LEGACY_PAYEE")]
+    [StringLength(1000)]
+    public string LegacyPayee { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }

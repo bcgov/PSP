@@ -7,52 +7,54 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Table to support multiple payees on a compensation requisition.
+/// Table containing lease and license team members.
 /// </summary>
-[Table("PIMS_COMP_REQ_PAYEE")]
-[Index("AcquisitionFileTeamId", Name = "CMPRQP_ACQUISITION_FILE_TEAM_ID_IDX")]
-[Index("AcquisitionOwnerId", Name = "CMPRQP_ACQUISITION_OWNER_ID_IDX")]
-[Index("CompensationRequisitionId", Name = "CMPRQP_COMPENSATION_REQUISITION_ID_IDX")]
-[Index("InterestHolderId", Name = "CMPRQP_INTEREST_HOLDER_ID_IDX")]
-public partial class PimsCompReqPayee
+[Table("PIMS_LEASE_LICENSE_TEAM")]
+[Index("LeaseId", Name = "LSLITM_LEASE_ID_IDX")]
+[Index("LeaseId", "LlTeamProfileTypeCode", Name = "LSLITM_LEASE_TEAM_PROFILE_TUC", IsUnique = true)]
+[Index("OrganizationId", Name = "LSLITM_ORGANIZATION_ID_IDX")]
+[Index("PersonId", Name = "LSLITM_PERSON_ID_IDX")]
+[Index("PrimaryContactId", Name = "LSLITM_PRIMARY_CONTACT_ID_IDX")]
+public partial class PimsLeaseLicenseTeam
 {
     /// <summary>
-    /// Generated surrogate primary key.
+    /// Generated surrogate primary key
     /// </summary>
     [Key]
-    [Column("COMP_REQ_PAYEE_ID")]
-    public long CompReqPayeeId { get; set; }
+    [Column("LEASE_LICENSE_TEAM_ID")]
+    public long LeaseLicenseTeamId { get; set; }
 
     /// <summary>
-    /// Foreign key reference to the PIMS_COMPENSATION_REQUISITION table.
+    /// Foreign key to the PIMS_LEASE table.
     /// </summary>
-    [Column("COMPENSATION_REQUISITION_ID")]
-    public long? CompensationRequisitionId { get; set; }
+    [Column("LEASE_ID")]
+    public long LeaseId { get; set; }
 
     /// <summary>
-    /// Foreign key reference to the PIMS_ACQUISITION_OWNER table.
+    /// Foreign key to the team member (PIMS_PERSON).
     /// </summary>
-    [Column("ACQUISITION_OWNER_ID")]
-    public long? AcquisitionOwnerId { get; set; }
+    [Column("PERSON_ID")]
+    public long? PersonId { get; set; }
 
     /// <summary>
-    /// Foreign key reference to the PIMS_INTEREST_HOLDER table.
+    /// Foreign key to the team member&apos;s organization (PIMS_ORGANIZATION).
     /// </summary>
-    [Column("INTEREST_HOLDER_ID")]
-    public long? InterestHolderId { get; set; }
+    [Column("ORGANIZATION_ID")]
+    public long? OrganizationId { get; set; }
 
     /// <summary>
-    /// Foreign key reference to the PIMS_ACQUISITION_FILE_TEAM table.
+    /// Foreign key to the primary contact for the organization  (PIMS_PERSON).
     /// </summary>
-    [Column("ACQUISITION_FILE_TEAM_ID")]
-    public long? AcquisitionFileTeamId { get; set; }
+    [Column("PRIMARY_CONTACT_ID")]
+    public long? PrimaryContactId { get; set; }
 
     /// <summary>
-    /// Payee where only the name is known from the PAIMS system,
+    /// Foreign key to the PIMS_LL_TEAM_PROFILE_TYPE table.
     /// </summary>
-    [Column("LEGACY_PAYEE")]
-    [StringLength(1000)]
-    public string LegacyPayee { get; set; }
+    [Required]
+    [Column("LL_TEAM_PROFILE_TYPE_CODE")]
+    [StringLength(20)]
+    public string LlTeamProfileTypeCode { get; set; }
 
     /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
@@ -144,19 +146,26 @@ public partial class PimsCompReqPayee
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    [ForeignKey("AcquisitionFileTeamId")]
-    [InverseProperty("PimsCompReqPayees")]
-    public virtual PimsAcquisitionFileTeam AcquisitionFileTeam { get; set; }
+    [ForeignKey("LeaseId")]
+    [InverseProperty("PimsLeaseLicenseTeams")]
+    public virtual PimsLease Lease { get; set; }
 
-    [ForeignKey("AcquisitionOwnerId")]
-    [InverseProperty("PimsCompReqPayees")]
-    public virtual PimsAcquisitionOwner AcquisitionOwner { get; set; }
+    [ForeignKey("LlTeamProfileTypeCode")]
+    [InverseProperty("PimsLeaseLicenseTeams")]
+    public virtual PimsLlTeamProfileType LlTeamProfileTypeCodeNavigation { get; set; }
 
-    [ForeignKey("CompensationRequisitionId")]
-    [InverseProperty("PimsCompReqPayees")]
-    public virtual PimsCompensationRequisition CompensationRequisition { get; set; }
+    [ForeignKey("OrganizationId")]
+    [InverseProperty("PimsLeaseLicenseTeams")]
+    public virtual PimsOrganization Organization { get; set; }
 
-    [ForeignKey("InterestHolderId")]
-    [InverseProperty("PimsCompReqPayees")]
-    public virtual PimsInterestHolder InterestHolder { get; set; }
+    [ForeignKey("PersonId")]
+    [InverseProperty("PimsLeaseLicenseTeamPeople")]
+    public virtual PimsPerson Person { get; set; }
+
+    [InverseProperty("LeaseLicenseTeam")]
+    public virtual ICollection<PimsCompReqLeasePayee> PimsCompReqLeasePayees { get; set; } = new List<PimsCompReqLeasePayee>();
+
+    [ForeignKey("PrimaryContactId")]
+    [InverseProperty("PimsLeaseLicenseTeamPrimaryContacts")]
+    public virtual PimsPerson PrimaryContact { get; set; }
 }

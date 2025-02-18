@@ -1074,9 +1074,9 @@ namespace Pims.Api.Test.Services
                     new PimsCompensationRequisition() {
                         CompensationRequisitionId = 1,
                         AcquisitionFileId = acqFile.Internal_Id,
-                        PimsCompReqPayees = new List<PimsCompReqPayee>()
+                        PimsCompReqAcqPayees = new List<PimsCompReqAcqPayee>()
                         {
-                            new PimsCompReqPayee()
+                            new PimsCompReqAcqPayee()
                             {
                                 AcquisitionOwnerId = 100,
                             },
@@ -1129,9 +1129,9 @@ namespace Pims.Api.Test.Services
                     new PimsCompensationRequisition() {
                         CompensationRequisitionId = 1,
                         AcquisitionFileId = acqFile.Internal_Id,
-                        PimsCompReqPayees = new List<PimsCompReqPayee>()
+                        PimsCompReqAcqPayees = new List<PimsCompReqAcqPayee>()
                         {
-                            new PimsCompReqPayee()
+                            new PimsCompReqAcqPayee()
                             {
                                 InterestHolderId = 100,
                             },
@@ -1184,9 +1184,9 @@ namespace Pims.Api.Test.Services
                     new PimsCompensationRequisition() {
                         CompensationRequisitionId = 1,
                         AcquisitionFileId = acqFile.Internal_Id,
-                        PimsCompReqPayees = new List<PimsCompReqPayee>()
+                        PimsCompReqAcqPayees = new List<PimsCompReqAcqPayee>()
                         {
-                            new PimsCompReqPayee()
+                            new PimsCompReqAcqPayee()
                             {
                                 InterestHolderId = 100,
                             },
@@ -1238,9 +1238,9 @@ namespace Pims.Api.Test.Services
                     new PimsCompensationRequisition() {
                         CompensationRequisitionId = 1,
                         AcquisitionFileId = acqFile.Internal_Id,
-                        PimsCompReqPayees = new List<PimsCompReqPayee>()
+                        PimsCompReqAcqPayees = new List<PimsCompReqAcqPayee>()
                         {
-                            new PimsCompReqPayee()
+                            new PimsCompReqAcqPayee()
                             {
                                 AcquisitionFileTeamId = 100,
                             },
@@ -2659,9 +2659,9 @@ namespace Pims.Api.Test.Services
                             new PimsCompensationRequisition() {
                                 CompensationRequisitionId = 1,
                                 AcquisitionFileId = acqFile.Internal_Id,
-                                PimsCompReqPayees = new List<PimsCompReqPayee>()
+                                PimsCompReqAcqPayees = new List<PimsCompReqAcqPayee>()
                                 {
-                                    new PimsCompReqPayee()
+                                    new PimsCompReqAcqPayee()
                                     {
                                         InterestHolderId = 100,
                                     },

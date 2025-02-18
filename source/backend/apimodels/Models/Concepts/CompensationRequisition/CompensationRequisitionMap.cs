@@ -8,7 +8,8 @@ namespace Pims.Api.Models.Concepts.CompensationRequisition
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.PimsCompensationRequisition, CompensationRequisitionModel>()
+            config
+                .NewConfig<Entity.PimsCompensationRequisition, CompensationRequisitionModel>()
                 .Map(dest => dest.Id, src => src.CompensationRequisitionId)
                 .Map(dest => dest.AcquisitionFileId, src => src.AcquisitionFileId)
                 .Map(dest => dest.AcquisitionFile, src => src.AcquisitionFile)
@@ -32,13 +33,14 @@ namespace Pims.Api.Models.Concepts.CompensationRequisition
                 .Map(dest => dest.DetailedRemarks, src => src.DetailedRemarks)
                 .Map(dest => dest.AlternateProjectId, src => src.AlternateProjectId)
                 .Map(dest => dest.AlternateProject, src => src.AlternateProject)
-                .Map(dest => dest.CompReqLeaseStakeholders, src => src.PimsLeaseStakeholderCompReqs)
+                //.Map(dest => dest.CompReqLeaseStakeholders, src => src.PimsLeaseStakeholderCompReqs) TODO: Needs fixing
                 .Map(dest => dest.CompReqAcquisitionProperties, src => src.PimsPropAcqFlCompReqs)
                 .Map(dest => dest.CompReqLeaseProperties, src => src.PimsPropLeaseCompReqs)
-                .Map(dest => dest.CompReqPayees, src => src.PimsCompReqPayees)
+                //.Map(dest => dest.CompReqPayees, src => src.PimsCompReqPayees) TODO: Needs fixing
                 .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
 
-            config.NewConfig<CompensationRequisitionModel, Entity.PimsCompensationRequisition>()
+            config
+                .NewConfig<CompensationRequisitionModel, Entity.PimsCompensationRequisition>()
                 .Map(dest => dest.CompensationRequisitionId, src => src.Id)
                 .Map(dest => dest.AcquisitionFileId, src => src.AcquisitionFileId)
                 .Map(dest => dest.LeaseId, src => src.LeaseId)
@@ -58,10 +60,10 @@ namespace Pims.Api.Models.Concepts.CompensationRequisition
                 .Map(dest => dest.DetailedRemarks, src => src.DetailedRemarks)
                 .Map(dest => dest.AlternateProjectId, src => src.AlternateProjectId)
                 .Map(dest => dest.AlternateProject, src => src.AlternateProject)
-                .Map(dest => dest.PimsLeaseStakeholderCompReqs, src => src.CompReqLeaseStakeholders)
+                //.Map(dest => dest.PimsLeaseStakeholderCompReqs, src => src.CompReqLeaseStakeholders) TODO: Needs fixing
                 .Map(dest => dest.PimsPropAcqFlCompReqs, src => src.CompReqAcquisitionProperties)
                 .Map(dest => dest.PimsPropLeaseCompReqs, src => src.CompReqLeaseProperties)
-                .Map(dest => dest.PimsCompReqPayees, src => src.CompReqPayees)
+                //.Map(dest => dest.PimsCompReqPayees, src => src.CompReqPayees) TODO: Needs fixing
                 .Inherits<BaseAuditModel, Entity.IBaseAppEntity>();
         }
     }
