@@ -1,9 +1,9 @@
 import { getIn } from 'formik';
 import React from 'react';
-import { MdContactMail } from 'react-icons/md';
 import { useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
+import ContactIcon from '@/assets/images/contact-icon.svg?react';
 import { FormTitleBar } from '@/components/common/form/FormTitleBar';
 import { ContactTypeSelector, HalfWidthLayout } from '@/features/contacts';
 import { ContactTypes } from '@/features/contacts/interfaces';
@@ -32,7 +32,7 @@ export const CreateContactContainer: React.FunctionComponent<
       <FormTitleBar
         showCloseButton
         title="Add Contact"
-        icon={<MdContactMail className="mr-2 mb-2" size={28} />}
+        icon={<ContactIcon className="mr-2 mb-2" fill="currentColor" />}
         onClose={onClose}
       />
       <StyledFormWrapper>
