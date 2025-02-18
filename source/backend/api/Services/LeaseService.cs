@@ -768,17 +768,17 @@ namespace Pims.Api.Services
 
             foreach (var compReq in compensationRequisitions)
             {
-                var leaseStakeholderCompensationRequisitions = compReq.PimsLeaseStakeholderCompReqs;
-                if (leaseStakeholderCompensationRequisitions is null || leaseStakeholderCompensationRequisitions.Count == 0)
+                var leasePayeesCompensationRequisitions = compReq.PimsCompReqLeasePayees;
+                if (leasePayeesCompensationRequisitions is null || leasePayeesCompensationRequisitions.Count == 0)
                 {
                     continue;
                 }
 
-                // Check for lease stakeholders
-                foreach (var leaseStakeholderCompReq in leaseStakeholderCompensationRequisitions)
+                // Check for lease payees
+                foreach (var leasePayeeCompReq in leasePayeesCompensationRequisitions)
                 {
-                    if (!stakeholders.Any(x => x.Internal_Id.Equals(leaseStakeholderCompReq.LeaseStakeholderId))
-                        && currentLease.PimsLeaseStakeholders.Any(x => x.Internal_Id.Equals(leaseStakeholderCompReq.LeaseStakeholderId)))
+                    if (!stakeholders.Any(x => x.Internal_Id.Equals(leasePayeeCompReq.LeaseStakeholderId))
+                        && currentLease.PimsLeaseStakeholders.Any(x => x.Internal_Id.Equals(leasePayeeCompReq.LeaseStakeholderId)))
                     {
                         throw new ForeignKeyDependencyException("Lease File Stakeholder can not be removed since it's assigned as a payee for a compensation requisition");
                     }
