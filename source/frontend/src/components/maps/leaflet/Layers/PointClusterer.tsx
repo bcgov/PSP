@@ -153,7 +153,14 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
     points: featurePoints,
     bounds,
     zoom,
-    options: { radius: 60, extent: 256, minZoom, maxZoom, enableClustering: !filterState.changed },
+    options: {
+      radius: 60,
+      extent: 256,
+      minZoom,
+      maxZoom,
+      enableClustering: !filterState.changed,
+      log: true,
+    },
   });
 
   // Register event handlers to shrink and expand clusters when map is interacted with
@@ -252,122 +259,135 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
     }
   }, [featureGroupRef, mapInstance, clusters, selectedFeature, tilesLoaded]);
 
-  return (
-    <>
-      <FeatureGroup ref={featureGroupRef}>
-        {/**
-         * Render all visible clusters
-         */}
-        {clusters.map((cluster, index) => {
-          // every cluster point has coordinates
-          const [longitude, latitude] = cluster.geometry.coordinates;
+  const mapMarkerClickFn = mapMachine.mapMarkerClick;
+  const renderedPoints = useMemo(() => {
+    return (
+      <>
+        <FeatureGroup ref={featureGroupRef}>
+          {/**
+           * Render all visible clusters
+           */}
+          {(clusters ?? []).map((cluster, index) => {
+            // every cluster point has coordinates
+            const [longitude, latitude] = cluster.geometry.coordinates;
 
-          // Only clusters have the cluster property, if so we have a cluster to render
-          if ('cluster' in cluster.properties) {
-            const clusterFeature = cluster as ClusterFeature<ClusterProperties>;
-            const { point_count: pointCount, point_count_abbreviated } = clusterFeature.properties;
+            // Only clusters have the cluster property, if so we have a cluster to render
+            if ('cluster' in cluster.properties) {
+              const clusterFeature = cluster as ClusterFeature<ClusterProperties>;
+              const { point_count: pointCount, point_count_abbreviated } =
+                clusterFeature.properties;
 
-            const sizeClass = pointCount < 100 ? 'small' : pointCount < 1000 ? 'medium' : 'large';
-            return (
-              // render the cluster marker
-              <Marker
-                key={index}
-                position={[latitude, longitude]}
-                eventHandlers={{
-                  click: e => {
-                    zoomOrSpiderfy(clusterFeature);
-                    e.target.closePopup();
-                  },
-                }}
-                icon={
-                  new L.DivIcon({
-                    html: `<div><span>${point_count_abbreviated}</span></div>`,
-                    className: `marker-cluster marker-cluster-${sizeClass}`,
-                    iconSize: [40, 40],
-                  })
-                }
-              />
-            );
-          } else {
-            const clusterFeature = cluster as PointFeature<
+              const sizeClass = pointCount < 100 ? 'small' : pointCount < 1000 ? 'medium' : 'large';
+              return (
+                // render the cluster marker
+                <Marker
+                  key={index}
+                  position={[latitude, longitude]}
+                  eventHandlers={{
+                    click: e => {
+                      zoomOrSpiderfy(clusterFeature);
+                      e.target.closePopup();
+                    },
+                  }}
+                  icon={
+                    new L.DivIcon({
+                      html: `<div><span>${point_count_abbreviated}</span></div>`,
+                      className: `marker-cluster marker-cluster-${sizeClass}`,
+                      iconSize: [40, 40],
+                    })
+                  }
+                />
+              );
+            } else {
+              const clusterFeature = cluster as PointFeature<
+                | PIMS_Property_Location_View
+                | PIMS_Property_Boundary_View
+                | PMBC_FullyAttributed_Feature_Properties
+              >;
+
+              const isSelected =
+                selectedFeature !== null ? clusterFeature.id === selectedFeature.clusterId : false;
+
+              const latlng = { lat: latitude, lng: longitude };
+
+              return (
+                <SinglePropertyMarker
+                  key={index}
+                  pointFeature={clusterFeature}
+                  markerPosition={latlng}
+                  isSelected={isSelected}
+                />
+              );
+            }
+          })}
+          {/**
+           * Render markers from a spiderfied cluster click
+           */}
+          {spider.markers?.map((m, index: number) => {
+            const clusterFeature = m as PointFeature<
               | PIMS_Property_Location_View
               | PIMS_Property_Boundary_View
               | PMBC_FullyAttributed_Feature_Properties
             >;
 
-            const isSelected =
-              selectedFeature !== null ? clusterFeature.id === selectedFeature.clusterId : false;
-
-            const latlng = { lat: latitude, lng: longitude };
-
             return (
               <SinglePropertyMarker
                 key={index}
                 pointFeature={clusterFeature}
-                markerPosition={latlng}
-                isSelected={isSelected}
+                markerPosition={m.position}
+                isSelected={false}
               />
             );
-          }
-        })}
+          })}
+          {/**
+           * Render lines/legs from a spiderfied cluster click
+           */}
+          {spider.lines?.map((m, index: number) => (
+            <Polyline key={index} positions={m.coords} {...m.options} />
+          ))}
+        </FeatureGroup>
         {/**
-         * Render markers from a spiderfied cluster click
-         */}
-        {spider.markers?.map((m, index: number) => {
-          const clusterFeature = m as PointFeature<
-            | PIMS_Property_Location_View
-            | PIMS_Property_Boundary_View
-            | PMBC_FullyAttributed_Feature_Properties
-          >;
+         * Render all of the unclustered DRAFT MARKERS.
+         **/}
+        <FeatureGroup ref={draftFeatureGroupRef}>
+          {draftPoints.map((draftPoint, index) => {
+            return (
+              <Marker
+                key={index}
+                position={draftPoint}
+                icon={getDraftIcon((index + 1).toString())}
+                zIndexOffset={500}
+                eventHandlers={{
+                  click: e => {
+                    // stop propagation of 'click' event to the underlying leaflet map
+                    e.originalEvent.preventDefault();
+                    e.originalEvent.stopPropagation();
 
-          return (
-            <SinglePropertyMarker
-              key={index}
-              pointFeature={clusterFeature}
-              markerPosition={m.position}
-              isSelected={false}
-            />
-          );
-        })}
-        {/**
-         * Render lines/legs from a spiderfied cluster click
-         */}
-        {spider.lines?.map((m, index: number) => (
-          <Polyline key={index} positions={m.coords} {...m.options} />
-        ))}
-      </FeatureGroup>
-      {/**
-       * Render all of the unclustered DRAFT MARKERS.
-       **/}
-      <FeatureGroup ref={draftFeatureGroupRef}>
-        {draftPoints.map((draftPoint, index) => {
-          return (
-            <Marker
-              key={index}
-              position={draftPoint}
-              icon={getDraftIcon((index + 1).toString())}
-              zIndexOffset={500}
-              eventHandlers={{
-                click: e => {
-                  // stop propagation of 'click' event to the underlying leaflet map
-                  e.originalEvent.preventDefault();
-                  e.originalEvent.stopPropagation();
-
-                  mapMachine.mapMarkerClick({
-                    clusterId: 'NO_ID',
-                    latlng: draftPoint,
-                    pimsLocationFeature: null,
-                    pimsBoundaryFeature: null,
-                    fullyAttributedFeature: null,
-                  });
-                },
-              }}
-            ></Marker>
-          );
-        })}
-      </FeatureGroup>
-    </>
-  );
+                    mapMarkerClickFn({
+                      clusterId: 'NO_ID',
+                      latlng: draftPoint,
+                      pimsLocationFeature: null,
+                      pimsBoundaryFeature: null,
+                      fullyAttributedFeature: null,
+                    });
+                  },
+                }}
+              ></Marker>
+            );
+          })}
+        </FeatureGroup>
+      </>
+    );
+  }, [
+    clusters,
+    draftPoints,
+    selectedFeature,
+    spider.lines,
+    spider.markers,
+    zoomOrSpiderfy,
+    mapMarkerClickFn,
+  ]);
+  return renderedPoints;
 };
 
 export default PointClusterer;

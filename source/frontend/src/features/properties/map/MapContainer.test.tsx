@@ -36,6 +36,7 @@ import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import MapContainer from './MapContainer';
 import { PropertyFilterFormModel } from '@/components/maps/leaflet/Control/AdvancedFilter/models';
+import debounce from 'lodash/debounce';
 
 const mockAxios = new MockAdapter(axios);
 
@@ -50,6 +51,9 @@ vi.mock('@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer');
 vi.mock('@/hooks/repositories/mapLayer/usePimsPropertyLayer');
 vi.mock('@/hooks/repositories/mapLayer/useLegalAdminBoundariesMapLayer');
 vi.mock('@/hooks/repositories/mapLayer/useIndianReserveBandMapLayer');
+vi.mock('lodash/debounce');
+
+vi.mocked(debounce).mockImplementation((fn, wait, args) => fn as any);
 
 // Need to mock this library for unit tests
 vi.mock('react-visibility-sensor', () => {
