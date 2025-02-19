@@ -2,7 +2,10 @@ import EditButton from '@/components/common/buttons/EditButton';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Section/SectionStyles';
+import TooltipIcon from '@/components/common/TooltipIcon';
 import Claims from '@/constants/claims';
+import Roles from '@/constants/roles';
+import { cannotEditMessage } from '@/features/mapSideBar/acquisition/common/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { exists, formatApiProjectName, prettyFormatDate } from '@/utils';
@@ -32,6 +35,7 @@ interface DetailResearchFile {
 export interface IResearchSummaryViewProps {
   researchFile?: ApiGen_Concepts_ResearchFile;
   setEditMode: (editable: boolean) => void;
+  isFileFinalStatus: boolean;
 }
 
 const ResearchSummaryView: React.FunctionComponent<IResearchSummaryViewProps> = props => {
@@ -80,7 +84,9 @@ const ResearchSummaryView: React.FunctionComponent<IResearchSummaryViewProps> = 
   return (
     <StyledSummarySection>
       <StyledEditWrapper className="mr-3 my-1">
-        {keycloak.hasClaim(Claims.RESEARCH_EDIT) && props.researchFile !== undefined ? (
+        {keycloak.hasClaim(Claims.RESEARCH_EDIT) &&
+        (!props.isFileFinalStatus || keycloak.hasRole(Roles.SYSTEM_ADMINISTRATOR)) &&
+        props.researchFile !== undefined ? (
           <EditButton
             title="Edit research file"
             onClick={() => {
@@ -89,6 +95,11 @@ const ResearchSummaryView: React.FunctionComponent<IResearchSummaryViewProps> = 
             style={{ float: 'right' }}
           />
         ) : null}
+        {keycloak.hasClaim(Claims.RESEARCH_EDIT) &&
+          props.isFileFinalStatus &&
+          !keycloak.hasRole(Roles.SYSTEM_ADMINISTRATOR) && (
+            <TooltipIcon toolTipId={`research-cannot-edit-tooltip`} toolTip={cannotEditMessage} />
+          )}
       </StyledEditWrapper>
       <Section header="Project">
         <SectionField label="Ministry project">
