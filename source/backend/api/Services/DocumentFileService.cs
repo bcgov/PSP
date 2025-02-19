@@ -451,10 +451,15 @@ namespace Pims.Api.Services
         private void DeleteQueuedDocumentItem(long documentId)
         {
             var documentQueuedItem = _documentQueueRepository.GetByDocumentId(documentId);
+            if (documentQueuedItem == null)
+            {
+                Logger.LogWarning("Document Queue item not found for document {documentId}", documentId);
+                return;
+            }
             if (documentQueuedItem.DocumentQueueStatusTypeCode == DocumentQueueStatusTypes.PENDING.ToString()
                 || documentQueuedItem.DocumentQueueStatusTypeCode == DocumentQueueStatusTypes.PROCESSING.ToString())
             {
-                throw new BadRequestException("Doucment in process can not be deleted");
+                throw new BadRequestException("Document in process can not be deleted");
             }
 
             bool deleted = _documentQueueRepository.Delete(documentQueuedItem);
