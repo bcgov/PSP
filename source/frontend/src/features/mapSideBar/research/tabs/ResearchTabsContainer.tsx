@@ -13,6 +13,7 @@ import { SideBarContext } from '../../context/sidebarContext';
 import { FileTabs, FileTabType, TabFileView } from '../../shared/detail/FileTabs';
 import DocumentsTab from '../../shared/tabs/DocumentsTab';
 import ResearchSummaryView from './fileDetails/details/ResearchSummaryView';
+import ResearchStatusUpdateSolver from './fileDetails/ResearchStatusUpdateSolver';
 
 export interface IResearchTabsContainerProps {
   researchFile?: ApiGen_Concepts_ResearchFile;
@@ -35,6 +36,7 @@ export const ResearchTabsContainer: React.FunctionComponent<
   const defaultTab = FileTabType.FILE_DETAILS;
   const { tab } = useParams<{ tab?: string }>();
   const activeTab = Object.values(FileTabType).find(value => value === tab) ?? defaultTab;
+  const statusSolver = new ResearchStatusUpdateSolver(researchFile);
 
   const setActiveTab = (tab: FileTabType) => {
     if (activeTab !== tab) {
@@ -47,7 +49,13 @@ export const ResearchTabsContainer: React.FunctionComponent<
   };
 
   tabViews.push({
-    content: <ResearchSummaryView researchFile={researchFile} setEditMode={setIsEditing} />,
+    content: (
+      <ResearchSummaryView
+        researchFile={researchFile}
+        setEditMode={setIsEditing}
+        isFileFinalStatus={!statusSolver.canEditDetails()}
+      />
+    ),
     key: FileTabType.FILE_DETAILS,
     name: 'File Details',
   });
