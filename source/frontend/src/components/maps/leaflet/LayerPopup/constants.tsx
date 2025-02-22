@@ -150,7 +150,14 @@ export const highwayLayerPopupConfig: PopupContentConfig = {
     label: 'Related gazettes',
     display: (data: { [key: string]: any }) => data.RELATED_GAZETTES,
   },
-  HYPERLINK: { label: 'Hyperlink', display: (data: { [key: string]: any }) => data.HYPERLINK },
+  HYPERLINK: {
+    label: 'Hyperlink',
+    display: (data: { [key: string]: any }) => (
+      <a href={`${data.HYPERLINK}`} target="_blank" rel="noreferrer">
+        {decodeURI(data.HYPERLINK)}
+      </a>
+    ),
+  },
   RELATIVE_PATH: {
     label: 'Relative path',
     display: (data: { [key: string]: any }) => data.RELATIVE_PATH,
