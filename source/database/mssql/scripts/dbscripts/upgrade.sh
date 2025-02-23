@@ -73,7 +73,7 @@ fi
 
 echo "Current db version installed: ${currentdbversion}";
 
-NEWEST_PSP_DIR=$(find ./*PSP* -type d -prune | tail -n 1 | cut -c 3-)
+NEWEST_PSP_DIR=$(find ./*PSP* -type d -prune | sort -V | tail -n 1 | cut -c 3-)
 if [ -z "$TARGET_SPRINT" ];
 then
   echo "Targeting Latest";

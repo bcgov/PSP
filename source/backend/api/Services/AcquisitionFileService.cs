@@ -859,14 +859,14 @@ namespace Pims.Api.Services
         {
             var currentAcquisitionFile = _acqFileRepository.GetById(acquisitionFile.Internal_Id);
             var compensationRequisitions = _compensationRequisitionRepository.GetAllByAcquisitionFileId(acquisitionFile.Internal_Id);
-            var compReqPayees = compensationRequisitions.SelectMany(x => x.PimsCompReqPayees).ToList();
+            var compReqAcqPayees = compensationRequisitions.SelectMany(x => x.PimsCompReqAcqPayees).ToList();
 
-            if (compReqPayees.Count == 0)
+            if (compReqAcqPayees.Count == 0)
             {
                 return;
             }
 
-            foreach (var payee in compReqPayees)
+            foreach (var payee in compReqAcqPayees)
             {
                 // Check for Acquisition File Owner removed
                 if (payee.AcquisitionOwnerId is not null
@@ -898,14 +898,14 @@ namespace Pims.Api.Services
         {
             var currentAcquisitionFile = _acqFileRepository.GetById(acquisitionFileId);
             var compensationRequisitions = _compensationRequisitionRepository.GetAllByAcquisitionFileId(acquisitionFileId);
-            var compReqPayees = compensationRequisitions.SelectMany(x => x.PimsCompReqPayees).ToList();
+            var compReqAcqPayees = compensationRequisitions.SelectMany(x => x.PimsCompReqAcqPayees).ToList();
 
-            if (compReqPayees.Count == 0)
+            if (compReqAcqPayees.Count == 0)
             {
                 return;
             }
 
-            foreach (var payee in compReqPayees)
+            foreach (var payee in compReqAcqPayees)
             {
                 // Check for Interest Holder
                 if (payee.InterestHolderId is not null

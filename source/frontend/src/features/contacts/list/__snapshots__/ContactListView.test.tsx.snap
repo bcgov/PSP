@@ -383,7 +383,7 @@ exports[`Contact List View > matches snapshot 1`] = `
 .c3 {
   color: #474543;
   font-family: 'BCSans-Bold';
-  font-size: 3.2rem;
+  font-size: 2.8rem;
   border-bottom: solid 0.5rem var(--theme-blue-90);
   width: 100%;
   text-align: left;
@@ -525,6 +525,10 @@ exports[`Contact List View > matches snapshot 1`] = `
   -ms-flex-align: center;
   align-items: center;
   margin-bottom: 0.25rem;
+}
+
+.c4 svg {
+  vertical-align: baseline;
 }
 
 @media only screen and (max-width:1199px) {
@@ -737,7 +741,7 @@ exports[`Contact List View > matches snapshot 1`] = `
                         class="form-control"
                         id="input-summary"
                         name="summary"
-                        placeholder="Name of person or organization"
+                        placeholder="Name"
                         style="word-break: break-all;"
                         title=""
                         value=""

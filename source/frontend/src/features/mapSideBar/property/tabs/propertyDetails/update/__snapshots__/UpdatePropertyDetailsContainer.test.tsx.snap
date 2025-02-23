@@ -342,7 +342,6 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2.4rem;
-  font-size: 2.6rem;
 }
 
 .c2 {
@@ -417,7 +416,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
             class="no-gutters row"
           >
             <div
-              class="align-items-end col"
+              class="align-content-end col"
             >
               Property Address
             </div>
@@ -1184,7 +1183,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
             class="no-gutters row"
           >
             <div
-              class="align-items-end col"
+              class="align-content-end col"
             >
               Property Attributes
             </div>
@@ -1822,7 +1821,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
             class="no-gutters row"
           >
             <div
-              class="align-items-end col"
+              class="align-content-end col"
             >
               Tenure Status
             </div>
@@ -2288,7 +2287,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
             class="no-gutters row"
           >
             <div
-              class="align-items-end col"
+              class="align-content-end col"
             >
               Measurements
             </div>
@@ -2634,7 +2633,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
             class="no-gutters row"
           >
             <div
-              class="align-items-end col"
+              class="align-content-end col"
             >
               Comments
             </div>
