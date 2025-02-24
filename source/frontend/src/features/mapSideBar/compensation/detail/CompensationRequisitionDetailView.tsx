@@ -21,7 +21,14 @@ import { ApiGen_Concepts_CompReqPayee } from '@/models/api/generated/ApiGen_Conc
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
-import { exists, formatMoney, getFilePropertyName, isValidId, prettyFormatDate } from '@/utils';
+import {
+  exists,
+  formatMoney,
+  getFilePropertyName,
+  isValidId,
+  isValidString,
+  prettyFormatDate,
+} from '@/utils';
 
 import { cannotEditMessage } from '../../acquisition/common/constants';
 import { PayeeDetail } from './PayeeDetail';
@@ -100,6 +107,8 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
               currentPayee.acquisitionFileTeam.organization,
             );
           }
+        } else if (isValidString(currentPayee?.legacyPayee)) {
+          currentPayeeDetail = PayeeDetail.createFromLegacyPayee(currentPayee.legacyPayee);
         }
         currentPayeeDetail.compReqPayeeId = currentPayee.compReqPayeeId;
         currentPayeeDetail.isPaymentInTrust = compensation.isPaymentInTrust;
@@ -115,10 +124,6 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
         payeeDetail = PayeeDetail.createFromOrganization(stakeHolder.organization);
       }
       payeeDetail.isPaymentInTrust = compensation.isPaymentInTrust;
-      tempPayeeDetails.push(payeeDetail);
-    } else if (compensation.legacyPayee) {
-      const payeeDetail = PayeeDetail.createFromLegacyPayee(compensation.legacyPayee);
-      payeeDetail.isPaymentInTrust = compensation?.isPaymentInTrust ?? false;
       tempPayeeDetails.push(payeeDetail);
     }
 

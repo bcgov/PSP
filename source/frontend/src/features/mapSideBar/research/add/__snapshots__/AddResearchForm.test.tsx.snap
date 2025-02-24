@@ -252,7 +252,6 @@ exports[`AddResearchForm component > renders as expected 1`] = `
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2.4rem;
-  font-size: 2.6rem;
 }
 
 .c1 {
@@ -569,7 +568,7 @@ exports[`AddResearchForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="align-items-end col"
+            class="align-content-end col"
           >
             Project
           </div>
@@ -601,7 +600,7 @@ exports[`AddResearchForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="align-items-end col"
+            class="align-content-end col"
           >
             Properties to include in this file:
           </div>
@@ -1142,7 +1141,7 @@ exports[`AddResearchForm component > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="align-items-end col"
+                class="align-content-end col"
               >
                 Selected properties
               </div>

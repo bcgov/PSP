@@ -98,7 +98,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By requisitionServiceLineOptions = By.CssSelector("div[id='typeahead-select-serviceLine']");
         private readonly By requisitionServiceLine1stOption = By.CssSelector("div[id='typeahead-select-serviceLine'] a:nth-child(1)");
         private readonly By requisitionResponsibilityCentreLabel = By.XPath("//label[contains(text(),'Responsibility centre')]");
-        private readonly By requisitionResponsibilityCentreContent = By.XPath("//label[contains(text(),'Responsibility centre')]/parent::div/following-sibling::div/label");
+        private readonly By requisitionResponsibilityCentreContent = By.XPath("//label[contains(text(),'Responsibility centre')]/parent::div/following-sibling::div");
         private readonly By requisitionResponsibilityCentreInput = By.Id("typeahead-select-responsibilityCentre");
         private readonly By requisitionResponsibilityCentreOptions = By.CssSelector("div[id='typeahead-select-responsibilityCentre']");
         private readonly By requisitionResponsibilityCentre1stOption = By.CssSelector("div[id='typeahead-select-responsibilityCentre'] a:nth-child(1)");

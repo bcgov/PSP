@@ -9,7 +9,7 @@ import thunk from 'redux-thunk';
 
 import { NoteTypes } from '@/constants/index';
 import * as MOCK from '@/mocks/data.mock';
-import { mockEntityNote, mockNoteResponse } from '@/mocks/noteResponses.mock';
+import { mockEntityNote, getMockApiNote } from '@/mocks/noteResponses.mock';
 import { networkSlice } from '@/store/slices/network/networkSlice';
 
 import { useNoteRepository } from './useNoteRepository';
@@ -103,12 +103,12 @@ describe('useNoteRepository hook', () => {
     });
 
     it('Dispatches success with correct response when request is successful', async () => {
-      mockAxios.onGet(url).reply(200, mockNoteResponse(1));
+      mockAxios.onGet(url).reply(200, getMockApiNote(1));
       const { getNote } = setup();
 
       await act(async () => {
         const response = await getNote.execute(1);
-        expect(response).toEqual(mockNoteResponse(1));
+        expect(response).toEqual(getMockApiNote(1));
       });
 
       expect(find(currentStore.getActions(), { type: 'loading-bar/SHOW' })).toBeDefined();
@@ -134,12 +134,12 @@ describe('useNoteRepository hook', () => {
     });
 
     it('Dispatches success with correct response when request is successful', async () => {
-      mockAxios.onPut(url).reply(200, mockNoteResponse(1));
+      mockAxios.onPut(url).reply(200, getMockApiNote(1));
       const { updateNote } = setup();
 
       await act(async () => {
-        const response = await updateNote.execute(mockNoteResponse(1));
-        expect(response).toEqual(mockNoteResponse(1));
+        const response = await updateNote.execute(getMockApiNote(1));
+        expect(response).toEqual(getMockApiNote(1));
       });
 
       expect(find(currentStore.getActions(), { type: 'loading-bar/SHOW' })).toBeDefined();
@@ -152,7 +152,7 @@ describe('useNoteRepository hook', () => {
       const { updateNote } = setup();
 
       await act(async () => {
-        await updateNote.execute(mockNoteResponse(1));
+        await updateNote.execute(getMockApiNote(1));
       });
 
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeDefined();
@@ -164,7 +164,7 @@ describe('useNoteRepository hook', () => {
       const { updateNote } = setup();
 
       await act(async () => {
-        await updateNote.execute(mockNoteResponse(1));
+        await updateNote.execute(getMockApiNote(1));
       });
 
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBe(undefined);

@@ -270,7 +270,6 @@ exports[`UpdateOrganizationForm > renders as expected 1`] = `
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2.4rem;
-  font-size: 2.6rem;
 }
 
 .c3 {
@@ -400,7 +399,7 @@ exports[`UpdateOrganizationForm > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="align-items-end col"
+                class="align-content-end col"
               >
                 Contact Details
               </div>
@@ -508,7 +507,7 @@ exports[`UpdateOrganizationForm > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="align-items-end col"
+                class="align-content-end col"
               >
                 <div
                   class="d-flex align-items-center"
@@ -820,7 +819,7 @@ exports[`UpdateOrganizationForm > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="align-items-end col"
+                class="align-content-end col"
               >
                 Individual Contacts
               </div>
@@ -879,7 +878,7 @@ exports[`UpdateOrganizationForm > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="align-items-end col"
+                class="align-content-end col"
               >
                 Mailing Address
               </div>
@@ -1136,7 +1135,7 @@ exports[`UpdateOrganizationForm > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="align-items-end col"
+                class="align-content-end col"
               >
                 Property Address
               </div>
@@ -1393,7 +1392,7 @@ exports[`UpdateOrganizationForm > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="align-items-end col"
+                class="align-content-end col"
               >
                 Billing Address
               </div>
@@ -1650,7 +1649,7 @@ exports[`UpdateOrganizationForm > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="align-items-end col"
+                class="align-content-end col"
               >
                 Comments
               </div>

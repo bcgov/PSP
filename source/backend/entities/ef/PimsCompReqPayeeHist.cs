@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 [Table("PIMS_COMP_REQ_PAYEE_HIST")]
-[Index("CompReqPayeeHistId", "EndDateHist", Name = "PIMS_CMPRQP_H_UK", IsUnique = true)]
 public partial class PimsCompReqPayeeHist
 {
     [Key]

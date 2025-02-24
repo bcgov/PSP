@@ -4,7 +4,7 @@ import { createMemoryHistory } from 'history';
 
 import { Claims, NoteTypes } from '@/constants/index';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { mockNoteResponse } from '@/mocks/noteResponses.mock';
+import { getMockApiNote } from '@/mocks/noteResponses.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
@@ -63,7 +63,7 @@ describe('NoteContainer component', () => {
 
   beforeEach(() => {
     mockAxios.onGet(new RegExp('users/info/*')).reply(200, {});
-    mockAxios.onGet(new RegExp('notes/*')).reply(200, mockNoteResponse(1));
+    mockAxios.onGet(new RegExp('notes/*')).reply(200, getMockApiNote(1));
   });
 
   afterEach(() => {
@@ -208,7 +208,7 @@ describe('NoteContainer component', () => {
         userEvent.type(textarea, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'),
       );
 
-      mockAxios.onPut().reply(200, mockNoteResponse(1));
+      mockAxios.onPut().reply(200, getMockApiNote(1));
       await act(async () => userEvent.click(getSaveButton()));
 
       expect(closeModal).toBeCalled();
