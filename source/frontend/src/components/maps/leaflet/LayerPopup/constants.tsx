@@ -67,6 +67,14 @@ export const highwayLayerPopupConfig: PopupContentConfig = {
   },
   GLOBALID: { label: 'Global Id', display: (data: { [key: string]: any }) => data.GLOBALID },
   UNIQUE_ID: { label: 'Unique Id', display: (data: { [key: string]: any }) => data.UNIQUE_ID },
+  HYPERLINK: {
+    label: 'Hyperlink to plan documents',
+    display: (data: { [key: string]: any }) => (
+      <a href={`${data.HYPERLINK}`} target="_blank" rel="noreferrer">
+        {decodeURI(data.HYPERLINK)}
+      </a>
+    ),
+  },
   PLAN_ANNOTATION: {
     label: 'Plan annotation',
     display: (data: { [key: string]: any }) => data.PLAN_ANNOTATION,
@@ -149,14 +157,6 @@ export const highwayLayerPopupConfig: PopupContentConfig = {
   RELATED_GAZETTES: {
     label: 'Related gazettes',
     display: (data: { [key: string]: any }) => data.RELATED_GAZETTES,
-  },
-  HYPERLINK: {
-    label: 'Hyperlink',
-    display: (data: { [key: string]: any }) => (
-      <a href={`${data.HYPERLINK}`} target="_blank" rel="noreferrer">
-        {decodeURI(data.HYPERLINK)}
-      </a>
-    ),
   },
   RELATIVE_PATH: {
     label: 'Relative path',
