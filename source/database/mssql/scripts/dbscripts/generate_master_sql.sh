@@ -97,7 +97,7 @@ then
   generate_file "$TARGET_SPRINT/Alter Up"
   generate_file "$TARGET_SPRINT/Alter Down"
 else
-  NEWEST_PSP_DIR=$(find ./*PSP* -type d -prune | tail -n 1 | cut -c 3-)
+  NEWEST_PSP_DIR=$(find ./*PSP* -type d -prune | sort -V | tail -n 1 | cut -c 3-)
   generate_file "$NEWEST_PSP_DIR/Alter Up"
   generate_file "$NEWEST_PSP_DIR/Alter Down"
 fi

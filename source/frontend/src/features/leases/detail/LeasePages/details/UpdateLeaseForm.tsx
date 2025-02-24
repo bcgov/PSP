@@ -36,11 +36,10 @@ export const UpdateLeaseForm: React.FunctionComponent<IUpdateLeaseFormProps> = (
       setModalContent({
         title: 'Acknowledgement',
         variant: 'warning',
-        message: `You've marked this status file as a duplicate. If you save it, you'll still see it in the management table.
-
+        message: `Selecting the Duplicate file status will hide the file within the Property Information, PIMS Files tab. The file will remain searchable in the Manage Lease/Licence Files advanced search.
         Please ensure that all related documents and notes are moved to the active file.
 
-        Do you want to acknowledge and proceed?`,
+        Do you want to proceed?`,
         okButtonText: 'Yes',
         cancelButtonText: 'No',
         handleCancel: () => {
