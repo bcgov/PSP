@@ -41,8 +41,6 @@ namespace Pims.Api.Models.Concepts.CompensationRequisition
 
         public List<CompensationFinancialModel> Financials { get; set; }
 
-        public string LegacyPayee { get; set; }
-
         public bool? IsPaymentInTrust { get; set; }
 
         public string GstNumber { get; set; }
@@ -55,9 +53,9 @@ namespace Pims.Api.Models.Concepts.CompensationRequisition
 
         public ProjectModel AlternateProject { get; set; }
 
-        public IEnumerable<CompReqPayeeModel> CompReqPayees { get; set; }
+        public IEnumerable<CompReqAcqPayeeModel> CompReqAcqPayees { get; set; }
 
-        public IEnumerable<CompReqLeaseStakeholderModel> CompReqLeaseStakeholders { get; set; }
+        public IEnumerable<CompReqLeasePayeeModel> CompReqLeasePayees { get; set; }
 
         public IEnumerable<CompReqAcquisitionPropertyModel> CompReqAcquisitionProperties { get; set; }
 

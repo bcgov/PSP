@@ -11,7 +11,6 @@ exports[`Add Improvements container component > displays the improvement types i
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2.4rem;
-  font-size: 2.6rem;
 }
 
 .c2 {
@@ -112,7 +111,7 @@ exports[`Add Improvements container component > displays the improvement types i
             class="no-gutters row"
           >
             <div
-              class="align-items-end col"
+              class="align-content-end col"
             >
               Commercial Improvements
             </div>
@@ -221,7 +220,7 @@ exports[`Add Improvements container component > displays the improvement types i
             class="no-gutters row"
           >
             <div
-              class="align-items-end col"
+              class="align-content-end col"
             >
               Residential Improvements
             </div>
@@ -330,7 +329,7 @@ exports[`Add Improvements container component > displays the improvement types i
             class="no-gutters row"
           >
             <div
-              class="align-items-end col"
+              class="align-content-end col"
             >
               <div
                 class="d-flex align-items-center"
@@ -474,7 +473,6 @@ exports[`Add Improvements container component > renders as expected 1`] = `
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2.4rem;
-  font-size: 2.6rem;
 }
 
 .c2 {
@@ -575,7 +573,7 @@ exports[`Add Improvements container component > renders as expected 1`] = `
             class="no-gutters row"
           >
             <div
-              class="align-items-end col"
+              class="align-content-end col"
             >
               Commercial Improvements
             </div>
@@ -684,7 +682,7 @@ exports[`Add Improvements container component > renders as expected 1`] = `
             class="no-gutters row"
           >
             <div
-              class="align-items-end col"
+              class="align-content-end col"
             >
               Residential Improvements
             </div>
@@ -793,7 +791,7 @@ exports[`Add Improvements container component > renders as expected 1`] = `
             class="no-gutters row"
           >
             <div
-              class="align-items-end col"
+              class="align-content-end col"
             >
               <div
                 class="d-flex align-items-center"

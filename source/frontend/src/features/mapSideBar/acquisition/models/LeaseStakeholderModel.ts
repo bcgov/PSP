@@ -63,7 +63,7 @@ export class CompReqLeaseStakeholderModel {
     }
     compReqPayeeModel.fullText = `${payeeName} (${payeeDescription})`;
     compReqPayeeModel.text = `${truncateName(payeeName, 50)} (${payeeDescription})`;
-    compReqPayeeModel.stakeholderId = apiLeaseStakeholder?.leaseStakeholderId;
+    compReqPayeeModel.stakeholderId = apiLeaseStakeholder?.leaseStakeholderId || null;
 
     return compReqPayeeModel;
   }

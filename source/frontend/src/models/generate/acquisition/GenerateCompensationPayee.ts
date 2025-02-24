@@ -3,7 +3,7 @@ import { ApiGen_Concepts_CompensationFinancial } from '@/models/api/generated/Ap
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { ApiGen_Concepts_CompReqPayee } from '@/models/api/generated/ApiGen_Concepts_CompReqPayee';
 import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
-import { exists, formatMoney } from '@/utils';
+import { exists, formatMoney, isValidString } from '@/utils';
 import { formatApiPersonNames, formatNames } from '@/utils/personUtils';
 
 export class Api_GenerateCompensationPayee {
@@ -52,6 +52,8 @@ export class Api_GenerateCompensationPayee {
         } else {
           names.push(payee?.acquisitionFileTeam?.organization?.name ?? '');
         }
+      } else if (isValidString(payee?.legacyPayee)) {
+        names.push(payee?.legacyPayee ?? '');
       }
     });
 
@@ -65,9 +67,6 @@ export class Api_GenerateCompensationPayee {
       }
     }
 
-    if (exists(compensation?.legacyPayee)) {
-      names.push(compensation?.legacyPayee ?? '');
-    }
     this.name = names.join(', ');
 
     const preTaxAmount: number = financialActivities

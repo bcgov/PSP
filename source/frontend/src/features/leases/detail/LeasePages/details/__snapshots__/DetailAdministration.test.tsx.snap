@@ -17,7 +17,6 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2.4rem;
-  font-size: 2.6rem;
 }
 
 .c0 {
@@ -53,7 +52,7 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
         class="no-gutters row"
       >
         <div
-          class="align-items-end col"
+          class="align-content-end col"
         >
           Administration
         </div>
@@ -446,7 +445,6 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2.4rem;
-  font-size: 2.6rem;
 }
 
 .c0 {
@@ -482,7 +480,7 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
         class="no-gutters row"
       >
         <div
-          class="align-items-end col"
+          class="align-content-end col"
         >
           Administration
         </div>

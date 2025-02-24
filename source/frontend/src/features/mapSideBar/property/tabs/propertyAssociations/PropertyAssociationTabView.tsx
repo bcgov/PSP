@@ -37,7 +37,7 @@ const PropertyAssociationTabView: React.FunctionComponent<
         This property is associated with the following files:{' '}
         <TooltipIcon
           toolTipId="duplicate-files-tooltip"
-          toolTip="Duplicated files are hidden on the Property Information, PIMS files tab, underneath the Leases/Licenses."
+          toolTip="Duplicate Lease/Licence files are hidden in the Property Information, PIMS Files tab. Duplicate files can be located in the Manage Lease/Licence Files advanced search."
         ></TooltipIcon>
       </Section>
 
@@ -78,7 +78,7 @@ const PropertyAssociationTabView: React.FunctionComponent<
           <AssociationHeader
             icon={<LeaseIcon title="Leases-Licences" />}
             title="Leases/Licences"
-            count={props.associations?.leaseAssociations?.length}
+            count={leaseAssociations?.length}
           />
         }
         isCollapsable

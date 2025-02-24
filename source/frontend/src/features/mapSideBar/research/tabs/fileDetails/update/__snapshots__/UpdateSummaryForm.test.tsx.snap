@@ -369,7 +369,6 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2.4rem;
-  font-size: 2.6rem;
 }
 
 .c1 {
@@ -443,7 +442,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
           class="no-gutters row"
         >
           <div
-            class="align-items-end col"
+            class="align-content-end col"
           >
             Research File Information
           </div>
@@ -636,7 +635,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
           class="no-gutters row"
         >
           <div
-            class="align-items-end col"
+            class="align-content-end col"
           >
             Project
           </div>
@@ -668,7 +667,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
           class="no-gutters row"
         >
           <div
-            class="align-items-end col"
+            class="align-content-end col"
           >
             Roads
           </div>
@@ -747,7 +746,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
           class="no-gutters row"
         >
           <div
-            class="align-items-end col"
+            class="align-content-end col"
           >
             Research Request
           </div>
@@ -1117,7 +1116,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
           class="no-gutters row"
         >
           <div
-            class="align-items-end col"
+            class="align-content-end col"
           >
             Result
           </div>
@@ -1214,7 +1213,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
           class="no-gutters row"
         >
           <div
-            class="align-items-end col"
+            class="align-content-end col"
           >
             Expropriation
           </div>
