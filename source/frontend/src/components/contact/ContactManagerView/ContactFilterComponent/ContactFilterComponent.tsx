@@ -83,7 +83,7 @@ export const ContactFilterComponent: React.FunctionComponent<
                 />
               </Col>
               <Col lg="auto" className="pl-0">
-                <StyledNameInput field="summary" placeholder="Name of person or organization" />
+                <StyledNameInput field="summary" placeholder="Name" />
               </Col>
             </Row>
             <Col xl="auto">

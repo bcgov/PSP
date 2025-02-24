@@ -143,4 +143,8 @@ const FlexDiv = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 0.25rem;
+
+  svg {
+    vertical-align: baseline;
+  }
 `;

@@ -240,7 +240,7 @@ namespace Pims.Dal.Test.Repositories
                     }
                 });
 
-            compReq.PimsCompReqPayees.Add(
+            compReq.PimsCompReqAcqPayees.Add(
                 new()
                 {
                     Internal_Id = 1,
@@ -261,7 +261,7 @@ namespace Pims.Dal.Test.Repositories
             context.PimsCompensationRequisitions.Should().BeEmpty();
             context.PimsCompReqFinancials.Should().BeEmpty();
             context.PimsPropAcqFlCompReqs.Should().BeEmpty();
-            context.PimsCompReqPayees.Should().BeEmpty();
+            context.PimsCompReqAcqPayees.Should().BeEmpty();
         }
 
         [Fact]
@@ -297,7 +297,7 @@ namespace Pims.Dal.Test.Repositories
                     }
                 });
 
-            compReq.PimsLeaseStakeholderCompReqs.Add(
+            compReq.PimsCompReqLeasePayees.Add(
                 new()
                 {
                     Internal_Id = 1,
@@ -318,7 +318,7 @@ namespace Pims.Dal.Test.Repositories
             context.PimsCompensationRequisitions.Should().BeEmpty();
             context.PimsCompReqFinancials.Should().BeEmpty();
             context.PimsPropLeaseCompReqs.Should().BeEmpty();
-            context.PimsLeaseStakeholderCompReqs.Should().BeEmpty();
+            context.PimsCompReqLeasePayees.Should().BeEmpty();
         }
 
         [Fact]
@@ -427,7 +427,7 @@ namespace Pims.Dal.Test.Repositories
         public void GetCompensationRequisitionPayees_Success()
         {
             // Arrange
-            PimsCompReqPayee[] payees =
+            PimsCompReqAcqPayee[] payees =
             {
                 new ()
                 {
@@ -442,14 +442,14 @@ namespace Pims.Dal.Test.Repositories
             };
 
             var repository = CreateWithPermissions(Permissions.CompensationRequisitionView);
-            _helper.AddAndSaveChanges<PimsCompReqPayee>(payees);
+            _helper.AddAndSaveChanges<PimsCompReqAcqPayee>(payees);
 
             // Act
-            var result = repository.GetCompensationRequisitionPayees(1);
+            var result = repository.GetCompensationRequisitionAcquisitionPayees(1);
 
             // Assert
             result.Should().NotBeNull();
-            result.Should().BeAssignableTo<IEnumerable<PimsCompReqPayee>>();
+            result.Should().BeAssignableTo<IEnumerable<PimsCompReqAcqPayee>>();
             result.Should().HaveCount(2);
             result.First().CompensationRequisitionId.Should().Be(1);
         }

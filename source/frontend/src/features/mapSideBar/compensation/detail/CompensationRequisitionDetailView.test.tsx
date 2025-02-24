@@ -339,11 +339,13 @@ describe('Compensation Detail View Component', () => {
     const { findByText } = await setup({
       claims: [Claims.COMPENSATION_REQUISITION_EDIT],
       props: {
-        compensationPayees: [],
-        compensation: {
-          ...getMockApiDefaultCompensation(),
-          legacyPayee: 'Legacy Test Value',
-        },
+        compensationPayees: [
+          {
+            ...getMockCompReqPayee(1),
+            legacyPayee: 'Legacy Test Value',
+          },
+        ],
+        compensation: getMockApiDefaultCompensation(),
       },
     });
 

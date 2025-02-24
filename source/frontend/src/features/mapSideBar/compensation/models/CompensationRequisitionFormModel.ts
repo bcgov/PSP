@@ -33,8 +33,7 @@ export class CompensationRequisitionFormModel {
   detailedRemarks = '';
   financials: FinancialActivityFormModel[] = [];
   payees: PayeeOption[] = [];
-  leaseStakeholderId: string;
-  legacyPayee: string | null = null;
+  leaseStakeholderId: number | null = null;
   alternateProject: IAutocompletePrediction | null = null;
   selectedProperties: ApiGen_Concepts_FileProperty[] = [];
   isPaymentInTrust = false;
@@ -88,7 +87,6 @@ export class CompensationRequisitionFormModel {
       generationDate: isValidIsoDateTime(this.generationDateTime) ? this.generationDateTime : null,
       specialInstruction: stringToNull(this.specialInstruction),
       detailedRemarks: stringToNull(this.detailedRemarks),
-      legacyPayee: this.legacyPayee,
       isPaymentInTrust: this.isPaymentInTrust,
       gstNumber: this.gstNumber,
 
@@ -201,15 +199,8 @@ export class CompensationRequisitionFormModel {
         ?.map(compReqPayee => PayeeOption.fromApi(compReqPayee))
         ?.filter(exists) ?? [];
 
-    // support legacy payee when updating compensation requisition
-    compensation.legacyPayee = apiModel?.legacyPayee ?? null;
-
-    if (exists(compensation.legacyPayee) && compensation.payees.length === 0) {
-      compensation.payees.push(PayeeOption.createLegacyPayee(apiModel, null, apiModel?.id));
-    }
-
     compensation.leaseStakeholderId = apiModel.compReqLeaseStakeholders?.length
-      ? apiModel?.compReqLeaseStakeholders[0].leaseStakeholderId.toString()
+      ? apiModel?.compReqLeaseStakeholders[0].leaseStakeholderId
       : null;
     compensation.pretaxAmount = payeePretaxAmount ?? 0;
     compensation.taxAmount = payeeTaxAmount ?? 0;

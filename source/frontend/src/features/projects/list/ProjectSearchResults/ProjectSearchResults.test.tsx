@@ -1,6 +1,6 @@
-import { render, RenderOptions } from '@testing-library/react';
-
+import { mockProjectGetResponse } from '@/mocks/projects.mock';
 import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
+import { render, RenderOptions, screen } from '@/utils/test-utils';
 
 import { ProjectSearchResultModel } from './models';
 import { IProjectSearchResultsProps, ProjectSearchResults } from './ProjectSearchResults';
@@ -45,5 +45,18 @@ describe('Project Search Results Table', () => {
 
     expect(tableRows.length).toBe(0);
     expect(toasts[0]).toBeVisible();
+  });
+
+  it('displays the correct date when project is created after 5pm PST', async () => {
+    setup({
+      results: [
+        ProjectSearchResultModel.fromApi({
+          ...mockProjectGetResponse(),
+          appCreateTimestamp: '2025-02-12T00:59:37.953',
+          appLastUpdateTimestamp: '2025-02-12T00:59:37.953',
+        }),
+      ],
+    });
+    expect(await screen.findByText('Feb 11, 2025')).toBeVisible();
   });
 });
