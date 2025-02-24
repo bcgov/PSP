@@ -255,7 +255,7 @@ describe('MapSelectorContainer component', () => {
         regionFeature: {},
         districtFeature: {},
         municipalityFeature: null,
-        highwayFeature: null,
+        highwayFeatures: null,
         id: 'PID-009-727-493-48.76613749999999--123.46163749999998',
       },
     ]);
