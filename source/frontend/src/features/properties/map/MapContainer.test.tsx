@@ -249,7 +249,7 @@ describe('MapContainer', () => {
 
   afterEach(() => {
     vi.useRealTimers();
-    cleanup;
+    cleanup();
   });
 
   it('Renders the map', async () => {
@@ -268,6 +268,12 @@ describe('MapContainer', () => {
     await act(async () => userEvent.click(basemapToggle));
     // expect image to change
     expect(basemapToggle).toHaveAttribute('src', '/streets.jpg');
+  });
+
+  it('shows the current map scale', async () => {
+    await setup();
+    expect(document.querySelector('.leaflet-control-scale')).toBeVisible();
+    expect(document.querySelector('.leaflet-control-scale-line')).toHaveTextContent(/100 km/i);
   });
 
   it('Renders markers when provided', async () => {
