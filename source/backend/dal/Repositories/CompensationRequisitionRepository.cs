@@ -90,7 +90,7 @@ namespace Pims.Dal.Repositories
             Context.UpdateChild<PimsCompensationRequisition, long, PimsPropAcqFlCompReq, long>(a => a.PimsPropAcqFlCompReqs, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsPropAcqFlCompReqs.ToArray(), true);
             Context.UpdateChild<PimsCompensationRequisition, long, PimsPropLeaseCompReq, long>(a => a.PimsPropLeaseCompReqs, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsPropLeaseCompReqs.ToArray(), true);
             Context.UpdateChild<PimsCompensationRequisition, long, PimsCompReqLeasePayee, long>(a => a.PimsCompReqLeasePayees, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsCompReqLeasePayees.ToArray(), true);
-            Context.UpdateChild<PimsCompensationRequisition, long, PimsCompReqAcqPayee, long>(a => a.PimsCompReqLeasePayees, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsCompReqAcqPayees.ToArray(), true);
+            Context.UpdateChild<PimsCompensationRequisition, long, PimsCompReqAcqPayee, long>(a => a.PimsCompReqAcqPayees, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsCompReqAcqPayees.ToArray(), true);
 
             return compensationRequisition;
         }
@@ -211,6 +211,20 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(y => y.Person)
                 .Include(x => x.InterestHolder)
                     .ThenInclude(y => y.Organization)
+                .Where(x => x.CompensationRequisitionId == compReqId)
+                .ToList();
+        }
+
+        public IEnumerable<PimsCompReqLeasePayee> GetCompensationRequisitionLeasePayees(long compReqId)
+        {
+            return Context.PimsCompReqLeasePayees
+                .AsNoTracking()
+                .Include(x => x.LeaseStakeholder)
+                    .ThenInclude(y => y.Person)
+                .Include(x => x.LeaseStakeholder)
+                    .ThenInclude(y => y.Organization)
+                .Include(x => x.LeaseStakeholder)
+                    .ThenInclude(y => y.LeaseStakeholderTypeCodeNavigation)
                 .Where(x => x.CompensationRequisitionId == compReqId)
                 .ToList();
         }

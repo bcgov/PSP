@@ -1,3 +1,7 @@
+import {
+  getMockCompReqAcqPayee,
+  getMockCompReqLeasePayee,
+} from './../../../mocks/compensations.mock';
 import moment from 'moment';
 
 import { getMockApiCompensationList } from '@/mocks/compensations.mock';
@@ -6,16 +10,23 @@ import { getMockH120Categories } from '@/mocks/mockH120Categories.mock';
 
 import { Api_GenerateAcquisitionFile } from './GenerateAcquisitionFile';
 import { Api_GenerateCompensation } from './GenerateCompensation';
+import { getMockLeaseStakeholders } from '@/mocks/lease.mock';
+import {
+  getMockApiAcquisitionFileOwnerPerson,
+  mockApiAcquisitionFileTeamPerson,
+} from '@/mocks/acquisitionFiles.mock';
+import { getMockApiInterestHolderPerson } from '@/mocks/interestHolders.mock';
 
 describe('GenerateCompensation tests', () => {
   it('Can Generate an empty compensation without throwing an error', () => {
-    const compensation = new Api_GenerateCompensation(null, [], [], null, [], []);
+    const compensation = new Api_GenerateCompensation(null, [], [], [], null, [], []);
     expect(compensation.generated_date).toBe(moment().format('MMM DD, YYYY'));
   });
 
   it('Builds an empty list of summary financials using the passed h120 categories and compensation financials', () => {
     const compensation = new Api_GenerateCompensation(
       getMockApiCompensationList()[0],
+      [],
       [],
       [],
       {} as any,
@@ -28,6 +39,7 @@ describe('GenerateCompensation tests', () => {
   it('Builds a list of summary financials using the passed h120 categories and compensation financials', () => {
     const compensation = new Api_GenerateCompensation(
       getMockApiCompensationList()[1],
+      [],
       [],
       [],
       {} as any,
@@ -52,6 +64,7 @@ describe('GenerateCompensation tests', () => {
       getMockApiCompensationList()[0],
       [],
       [],
+      [],
       {} as any,
       getMockH120Categories(),
       mockCompReqH120s(),
@@ -74,6 +87,7 @@ describe('GenerateCompensation tests', () => {
       getMockApiCompensationList()[1],
       [],
       [],
+      [],
       {} as any,
       getMockH120Categories(),
       mockCompReqH120s(),
@@ -87,6 +101,7 @@ describe('GenerateCompensation tests', () => {
       {} as any,
       [],
       [],
+      [],
       {} as any,
       getMockH120Categories(),
       mockCompReqH120s(),
@@ -97,6 +112,7 @@ describe('GenerateCompensation tests', () => {
   it('adds h120 financial pre-tax totals', () => {
     const compensation = new Api_GenerateCompensation(
       getMockApiCompensationList()[1],
+      [],
       [],
       [],
       {} as any,
@@ -113,6 +129,7 @@ describe('GenerateCompensation tests', () => {
       { ...mockCompensations[0], gstNumber: '1' },
       [],
       [],
+      [],
       new Api_GenerateAcquisitionFile({ file: null }),
       getMockH120Categories(),
       [],
@@ -123,6 +140,7 @@ describe('GenerateCompensation tests', () => {
     mockCompensations[0].isPaymentInTrust = true;
     const compensationInTrust = new Api_GenerateCompensation(
       mockCompensations[0],
+      [],
       [],
       [],
       new Api_GenerateAcquisitionFile({ file: null }),
@@ -138,11 +156,47 @@ describe('GenerateCompensation tests', () => {
       getMockApiCompensationList()[1],
       [],
       [],
+      [],
       new Api_GenerateAcquisitionFile({ file: null }),
       getMockH120Categories(),
       [],
     );
     expect(compensation.payee.total_amount).toBe('$35.00');
     expect(compensation.payee.payment_in_trust).toBe(false);
+  });
+
+  it('generates with acq comp req payees', () => {
+    const mockCompensations = getMockApiCompensationList();
+    const compensation = new Api_GenerateCompensation(
+      { ...mockCompensations[0], gstNumber: '1' },
+      [],
+      [
+        { ...getMockCompReqAcqPayee(), legacyPayee: 'legacy payee' },
+        { ...getMockCompReqAcqPayee(), acquisitionFileTeam: mockApiAcquisitionFileTeamPerson() },
+        { ...getMockCompReqAcqPayee(), interestHolder: getMockApiInterestHolderPerson() },
+        { ...getMockCompReqAcqPayee(), acquisitionOwner: getMockApiAcquisitionFileOwnerPerson() },
+      ],
+      [],
+      new Api_GenerateAcquisitionFile({ file: null }),
+      getMockH120Categories(),
+      [],
+    );
+
+    expect(compensation.payee.name).toBe('legacy payee, first last, Chester Tester, JOHH DOE');
+  });
+
+  it('generates with lease comp req payees', () => {
+    const mockCompensations = getMockApiCompensationList();
+    const compensation = new Api_GenerateCompensation(
+      { ...mockCompensations[0], gstNumber: '1' },
+      [],
+      [],
+      [{ ...getMockCompReqLeasePayee(), leaseStakeholder: getMockLeaseStakeholders()[0] }],
+      new Api_GenerateAcquisitionFile({ file: null }),
+      getMockH120Categories(),
+      [],
+    );
+
+    expect(compensation.payee.name).toBe('Alejandro Sanchez');
   });
 });
