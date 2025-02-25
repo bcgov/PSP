@@ -225,6 +225,8 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(y => y.Organization)
                 .Include(x => x.LeaseStakeholder)
                     .ThenInclude(y => y.LeaseStakeholderTypeCodeNavigation)
+                .Include(x => x.LeaseStakeholder)
+                    .ThenInclude(y => y.LessorTypeCodeNavigation)
                 .Where(x => x.CompensationRequisitionId == compReqId)
                 .ToList();
         }

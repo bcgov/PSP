@@ -60,9 +60,9 @@ export class Api_GenerateCompensationPayee {
 
     compReqLeasePayees.forEach((payee: ApiGen_Concepts_CompReqLeasePayee) => {
       if (exists(payee?.leaseStakeholder)) {
-        if (payee?.leaseStakeholder.lessorType.id === ApiGen_CodeTypes_LessorTypes.ORG) {
+        if (payee?.leaseStakeholder?.lessorType?.id === ApiGen_CodeTypes_LessorTypes.ORG) {
           names.push(payee?.leaseStakeholder.organization?.name ?? '');
-        } else if (payee?.leaseStakeholder.lessorType.id === ApiGen_CodeTypes_LessorTypes.PER) {
+        } else if (payee?.leaseStakeholder?.lessorType?.id === ApiGen_CodeTypes_LessorTypes.PER) {
           names.push(formatApiPersonNames(payee?.leaseStakeholder.person));
         }
       }

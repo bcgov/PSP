@@ -3,7 +3,6 @@ import chunk from 'lodash/chunk';
 import { ConvertToTypes } from '@/constants/convertToTypes';
 import { createFileDownload } from '@/features/documents/DownloadDocumentButton';
 import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
-import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useAdminBoundaryMapLayer } from '@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useH120CategoryRepository } from '@/hooks/repositories/useH120CategoryRepository';
@@ -29,7 +28,6 @@ export const useGenerateH120 = () => {
   const { getSystemConstant } = useSystemConstants();
   const client = getSystemConstant(SystemConstants.CLIENT);
 
-  const { getPersonConcept, getOrganizationConcept } = useApiContacts();
   const { getAcquisitionFile, getAcquisitionProperties } = useAcquisitionProvider();
   const { getAcquisitionInterestHolders } = useInterestHolderRepository();
   const {

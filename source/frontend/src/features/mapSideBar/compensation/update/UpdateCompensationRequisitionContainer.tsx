@@ -80,11 +80,7 @@ const UpdateCompensationRequisitionContainer: React.FC<
   } = useFinancialCodeRepository();
 
   const {
-    getLeaseStakeholders: {
-      execute: getLeaseStakeholders,
-      loading: loadingLeaseStakeholders,
-      response: leaseStakeholders,
-    },
+    getLeaseStakeholders: { execute: getLeaseStakeholders, loading: loadingLeaseStakeholders },
   } = useLeaseStakeholderRepository();
 
   const {
