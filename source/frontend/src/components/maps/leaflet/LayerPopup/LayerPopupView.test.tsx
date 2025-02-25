@@ -9,6 +9,7 @@ import { pidParser, pinParser } from '@/utils/propertyUtils';
 import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { ILayerPopupViewProps, LayerPopupView } from './LayerPopupView';
+import getMockISSResult from '@/mocks/mockISSResult';
 
 vi.mock('react-leaflet');
 
@@ -102,7 +103,7 @@ describe('LayerPopupView component', () => {
           regionFeature: null,
           districtFeature: null,
           municipalityFeature: null,
-          highwayFeature: null,
+          highwayFeatures: null,
           selectingComponentId: null,
           crownLandLeasesFeature: null,
           crownLandLicensesFeature: null,
@@ -144,7 +145,7 @@ describe('LayerPopupView component', () => {
           regionFeature: null,
           districtFeature: null,
           municipalityFeature: null,
-          highwayFeature: null,
+          highwayFeatures: null,
           selectingComponentId: null,
           crownLandLeasesFeature: null,
           crownLandLicensesFeature: null,
@@ -188,7 +189,7 @@ describe('LayerPopupView component', () => {
           regionFeature: null,
           districtFeature: null,
           municipalityFeature: null,
-          highwayFeature: null,
+          highwayFeatures: null,
           selectingComponentId: null,
           crownLandLeasesFeature: null,
           crownLandLicensesFeature: null,
@@ -235,7 +236,7 @@ describe('LayerPopupView component', () => {
           regionFeature: null,
           districtFeature: null,
           municipalityFeature: null,
-          highwayFeature: null,
+          highwayFeatures: null,
           selectingComponentId: null,
           crownLandLeasesFeature: null,
           crownLandLicensesFeature: null,
@@ -290,7 +291,7 @@ describe('LayerPopupView component', () => {
           regionFeature: null,
           districtFeature: null,
           municipalityFeature: null,
-          highwayFeature: null,
+          highwayFeatures: null,
           selectingComponentId: null,
           crownLandLeasesFeature: null,
           crownLandLicensesFeature: null,
@@ -338,7 +339,7 @@ describe('LayerPopupView component', () => {
           regionFeature: null,
           districtFeature: null,
           municipalityFeature: null,
-          highwayFeature: null,
+          highwayFeatures: null,
           selectingComponentId: null,
           crownLandLeasesFeature: null,
           crownLandLicensesFeature: null,
@@ -389,7 +390,7 @@ describe('LayerPopupView component', () => {
           regionFeature: null,
           districtFeature: null,
           municipalityFeature: null,
-          highwayFeature: null,
+          highwayFeatures: null,
           selectingComponentId: null,
           crownLandLeasesFeature: null,
           crownLandLicensesFeature: null,
@@ -427,7 +428,7 @@ describe('LayerPopupView component', () => {
           regionFeature: null,
           districtFeature: null,
           municipalityFeature: null,
-          highwayFeature: null,
+          highwayFeatures: null,
           selectingComponentId: null,
           crownLandLeasesFeature: null,
           crownLandLicensesFeature: null,
@@ -464,7 +465,7 @@ describe('LayerPopupView component', () => {
           regionFeature: null,
           districtFeature: null,
           municipalityFeature: null,
-          highwayFeature: null,
+          highwayFeatures: null,
           selectingComponentId: null,
           crownLandLeasesFeature: null,
           crownLandLicensesFeature: null,

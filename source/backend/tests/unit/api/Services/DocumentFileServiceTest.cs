@@ -904,6 +904,48 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public async void DeleteDocumentResearch_QueueNull_Status_Success()
+        {
+            // Arrange
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentDelete, Permissions.ResearchFileEdit);
+            var documentService = this._helper.GetService<Mock<IDocumentService>>();
+            var documentRepository = this._helper.GetService<Mock<IDocumentRepository>>();
+            var documentQueueRepository = this._helper.GetService<Mock<IDocumentQueueRepository>>();
+            var researchDocumentRepository = this._helper.GetService<Mock<IResearchFileDocumentRepository>>();
+
+            documentRepository.Setup(x => x.Find(It.IsAny<long>())).Returns(new PimsDocument() { DocumentId = 2, MayanId = 200 });
+            documentRepository.Setup(x => x.BeginTransaction()).Returns(new Mock<IDbContextTransaction>().Object);
+            documentService.Setup(x => x.DeleteMayanStorageDocumentAsync(It.IsAny<long>())).ReturnsAsync(new ExternalResponse<string>()
+            {
+                Status = ExternalResponseStatus.Success,
+                HttpStatusCode = System.Net.HttpStatusCode.OK,
+            });
+            documentRepository.Setup(x => x.Update(It.IsAny<PimsDocument>(), false)).Returns(new PimsDocument() { DocumentId = 2, MayanId = null });
+            documentQueueRepository.Setup(x => x.Delete(It.IsAny<PimsDocumentQueue>())).Returns(true);
+            researchDocumentRepository.Setup(x => x.DeleteResearch(It.IsAny<PimsResearchFileDocument>())).Returns(true);
+            documentRepository.Setup(x => x.DeleteDocument(It.IsAny<PimsDocument>())).Returns(true);
+
+            PimsResearchFileDocument doc = new()
+            {
+                Internal_Id = 1,
+                DocumentId = 2,
+                Document = new PimsDocument()
+                {
+                    DocumentId = 2,
+                    MayanId = 200,
+                }
+            };
+
+            // Act
+            documentQueueRepository.Setup(x => x.GetByDocumentId(It.IsAny<long>())).Returns((PimsDocumentQueue)null); // mimic the queued document not found.
+            var result = await service.DeleteResearchDocumentAsync(doc);
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.Equal(result.Status, ExternalResponseStatus.Success);
+        }
+
+        [Fact]
         public async void DeleteDocumentResearch_Success_Status_NotFound()
         {
             // Arrange

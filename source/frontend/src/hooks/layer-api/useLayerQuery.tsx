@@ -20,6 +20,17 @@ export interface IUserLayerQuery {
     spatialReferenceId?: number,
   ) => Promise<FeatureCollection>;
   /**
+   * function to find all GeoJSON shapes containing a point (x, y)
+   * @param latlng = {lat, lng}
+   * @param geometryName the name of the geometry field for this layer; can be 'GEOMETRY' or 'SHAPE'
+   * @param spatialReferenceId the spatial reference of the location argument; common values are: 4326 (WGS84 - lat/lng) and 3005 (BC Albers)
+   */
+  findAllWhereContains: (
+    latlng: LatLngLiteral,
+    geometryName?: string,
+    spatialReferenceId?: number,
+  ) => Promise<FeatureCollection>;
+  /**
    * function to find GeoJSON shape matching the passed non-zero padded pid.
    * @param pid
    */
@@ -51,6 +62,14 @@ export interface IUserLayerQuery {
   ) => Promise<Record<string, any>>;
 
   findOneWhereContainsWrapped: IResponseWrapper<
+    (
+      latlng: LatLngLiteral,
+      geometryName?: string,
+      spatialReferenceId?: number,
+      sortBy?: string,
+    ) => Promise<AxiosResponse<FeatureCollection<Geometry, GeoJsonProperties>>>
+  >;
+  findMultipleWhereContainsWrapped: IResponseWrapper<
     (
       latlng: LatLngLiteral,
       geometryName?: string,
@@ -99,6 +118,22 @@ export const useLayerQuery = (
     [baseUrl, authenticated, withCredentials],
   );
 
+  const findAllWhereContains = useCallback(
+    async (
+      latlng: LatLngLiteral,
+      geometryName = 'SHAPE',
+      spatialReferenceId = 4326,
+    ): Promise<FeatureCollection> => {
+      const data: FeatureCollection = (
+        await wfsAxios2({ authenticated, withCredentials }).get<FeatureCollection>(
+          `${baseAllUrl}&cql_filter=CONTAINS(${geometryName},SRID=${spatialReferenceId};POINT ( ${latlng.lng} ${latlng.lat}))`,
+        )
+      )?.data;
+      return data;
+    },
+    [baseAllUrl, authenticated, withCredentials],
+  );
+
   const executeWfs = useCallback(
     async (
       object: Record<string, any>,
@@ -139,6 +174,31 @@ export const useLayerQuery = (
       [baseUrl, authenticated],
     ),
     requestName: `findOneWhereContainsWrapped-${baseUrl}`,
+  });
+
+  // NOTE: sortby is used here to ensure that if there are multiple features at a given location the non-retired feature will be returned first.
+  const findMultipleWhereContainsWrapped = useApiRequestWrapper({
+    requestFunction: useCallback(
+      async (
+        latlng: LatLngLiteral,
+        geometryName = 'SHAPE',
+        spatialReferenceId = 4326,
+        sortBy = '',
+      ): Promise<AxiosResponse<FeatureCollection<Geometry, GeoJsonProperties>>> => {
+        const data = await wfsAxios2({ authenticated }).get<
+          FeatureCollection<Geometry, GeoJsonProperties>
+        >(
+          `${baseAllUrl}${
+            sortBy ? '&' + sortBy : ''
+          }&cql_filter=CONTAINS(${geometryName},SRID=${spatialReferenceId};POINT ( ${latlng.lng} ${
+            latlng.lat
+          }))`,
+        );
+        return data;
+      },
+      [baseAllUrl, authenticated],
+    ),
+    requestName: `findOneWhereContainsWrapped-${baseAllUrl}`,
   });
 
   const findOneWhereExactWrapped = useApiRequestWrapper({
@@ -219,6 +279,7 @@ export const useLayerQuery = (
 
   return {
     findOneWhereContains,
+    findAllWhereContains,
     findByPid,
     findByPidLoading,
     findByPin,
@@ -227,6 +288,7 @@ export const useLayerQuery = (
     findByPlanNumberLoading,
     findMetadataByLocation,
     findOneWhereContainsWrapped,
+    findMultipleWhereContainsWrapped,
     findOneWhereExactWrapped,
   };
 };
