@@ -43,10 +43,7 @@ export const handlers = [
 
   http.get('http://localhost:3000/ogs-internal/ows', ({ request }) => {
     const search = new URL(request.url).search;
-    if (
-      search.includes('typeName=ISS_PROVINCIAL_PUBLIC_HIGHWAY') &&
-      search.includes('service=wfs')
-    ) {
+    if (search.includes('typeName=plan_footprint') && search.includes('service=wfs')) {
       return HttpResponse.json(getMockISSResult(), { status: 200 });
     }
   }),

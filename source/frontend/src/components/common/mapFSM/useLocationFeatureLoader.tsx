@@ -101,7 +101,7 @@ const useLocationFeatureLoader = () => {
       const fullyAttributedTask = fullyAttributedServiceFindOne(latLng);
       const regionTask = adminBoundaryLayerServiceFindRegion(latLng, 'SHAPE');
       const districtTask = adminBoundaryLayerServiceFindDistrict(latLng, 'SHAPE');
-      const highwayTask = highwayLayerServiceFindMultiple(latLng, 'GEOMETRY');
+      const highwayTask = highwayLayerServiceFindMultiple(latLng, 'the_geom');
       const crownLandLeaseTask = crownLandLayerServiceFindOneLease(latLng);
       const crownLandLicensesTask = crownLandLayerServiceFindOneLicense(latLng);
       const crownLandTenuresTask = crownLandLayerServiceFindOneTenure(latLng);
