@@ -19,6 +19,7 @@ import {
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { MAP_MAX_NATIVE_ZOOM, MAP_MAX_ZOOM, MAX_ZOOM } from '@/constants/strings';
+import { useTenant } from '@/tenants';
 import { exists } from '@/utils';
 
 import { DEFAULT_MAP_ZOOM, defaultBounds, defaultLatLng } from './constants';
@@ -64,6 +65,9 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
   const layers = useConfiguredMapLayers();
 
   const [activeFeatureLayer, setActiveFeatureLayer] = useState<L.GeoJSON>();
+  const { doubleClickInterval } = useTenant();
+
+  const timer = useRef(null);
 
   // add geojson layer to the map
   if (!!mapRef.current && !activeFeatureLayer) {
@@ -71,7 +75,18 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
   }
 
   const handleMapClickEvent = (latlng: LatLng) => {
-    mapMachine.mapClick(latlng);
+    if (timer?.current !== null) {
+      return;
+    }
+    timer.current = setTimeout(() => {
+      mapMachine.mapClick(latlng);
+      timer.current = null;
+    }, doubleClickInterval ?? 250);
+  };
+
+  const handleDoubleClickEvent = () => {
+    clearTimeout(timer?.current);
+    timer.current = null;
   };
 
   const handleZoomUpdate = (zoomLevel: number) => {
@@ -224,9 +239,11 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
         maxZoom={MAP_MAX_ZOOM}
         closePopupOnClick={false}
         ref={handleMapCreated}
+        doubleClickZoom
       >
         <MapEvents
           click={e => handleMapClickEvent(e.latlng)}
+          dblclick={() => handleDoubleClickEvent()}
           zoomend={e => handleZoomUpdate(e.sourceTarget.getZoom())}
           moveend={handleBounds}
         />
