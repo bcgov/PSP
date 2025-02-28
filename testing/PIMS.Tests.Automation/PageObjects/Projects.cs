@@ -349,7 +349,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 sharedModals.ModalClickOKBttn();
                 AssertTrueIsDisplayed(projectNavigationDetailsTab);
             }
-            else if (sharedModals.ModalHeader().Contains("Error"))
+            else if (webDriver.FindElements(projectOverrideConfirmationModal).Count() > 0 && sharedModals.ModalHeader().Contains("Error"))
             {
                 return;
             }
