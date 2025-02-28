@@ -14,22 +14,13 @@ const history = createMemoryHistory();
 
 describe('DetailAdministration component', () => {
   const setup = (
-    renderOptions: RenderOptions &
-      IDetailAdministrationProps & { lease?: ApiGen_Concepts_Lease } = {},
+    renderOptions: RenderOptions & IDetailAdministrationProps = { lease: getEmptyLease() },
   ) => {
     // render component under test
-    const component = render(
-      <Formik onSubmit={noop} initialValues={renderOptions.lease ?? getEmptyLease()}>
-        <DetailAdministration
-          disabled={renderOptions.disabled}
-          nameSpace={renderOptions.nameSpace}
-        />
-      </Formik>,
-      {
-        ...renderOptions,
-        history,
-      },
-    );
+    const component = render(<DetailAdministration lease={renderOptions.lease} />, {
+      ...renderOptions,
+      history,
+    });
 
     return {
       component,
