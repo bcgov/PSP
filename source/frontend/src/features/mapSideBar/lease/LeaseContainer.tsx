@@ -28,28 +28,33 @@ import { ImprovementsContainer } from '@/features/leases/detail/LeasePages/impro
 import InsuranceContainer from '@/features/leases/detail/LeasePages/insurance/InsuranceContainer';
 import PeriodPaymentsContainer from '@/features/leases/detail/LeasePages/payment/PeriodPaymentsContainer';
 import { PeriodPaymentsYupSchema } from '@/features/leases/detail/LeasePages/payment/PeriodPaymentsYupSchema';
-import PeriodPaymentsView, {
-  IPeriodPaymentsViewProps,
-} from '@/features/leases/detail/LeasePages/payment/table/periods/PaymentPeriodsView';
+import PeriodPaymentsView from '@/features/leases/detail/LeasePages/payment/table/periods/PaymentPeriodsView';
 import LeaseStakeholderContainer from '@/features/leases/detail/LeasePages/stakeholders/LeaseStakeholderContainer';
 import Surplus from '@/features/leases/detail/LeasePages/surplus/Surplus';
 import { LeaseFormModel } from '@/features/leases/models';
 import LeasePropertySelector from '@/features/leases/shared/propertyPicker/LeasePropertySelector';
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { exists, getLatLng, locationFromFileProperty, stripTrailingSlash } from '@/utils';
 
+import GenerateFormView from '../acquisition/common/GenerateForm/GenerateFormView';
 import { SideBarContext } from '../context/sidebarContext';
 import FileLayout from '../layout/FileLayout';
 import MapSideBarLayout from '../layout/MapSideBarLayout';
+import { InventoryTabNames } from '../property/InventoryTabs';
+import { FilePropertyRouter } from '../router/FilePropertyRouter';
+import { FileTabType } from '../shared/detail/FileTabs';
 import FileMenuView from '../shared/fileMenuView';
 import SidebarFooter from '../shared/SidebarFooter';
 import usePathSolver from '../shared/sidebarPathSolver';
 import { StyledFormWrapper } from '../shared/styles';
 import LeaseHeader from './common/LeaseHeader';
 import { LeaseFileTabNames } from './detail/LeaseFileTabs';
+import LeaseGenerateContainer from './LeaseGenerateFormContainer';
 import LeaseRouter from './tabs/LeaseRouter';
 import ViewSelector from './ViewSelector';
+import LeaseUpdatePropertySelector from '@/features/leases/shared/propertyPicker/LeaseUpdatePropertySelector';
 
 export interface ILeaseContainerProps {
   leaseId: number;
@@ -144,7 +149,7 @@ export const leasePages: Map<LeasePageNames, ILeasePage<any>> = new Map<
       title: 'Payments',
       validation: PeriodPaymentsYupSchema,
       componentView: PeriodPaymentsView,
-    } as ILeasePage<IPeriodPaymentsViewProps>,
+    },
   ],
   [
     LeasePageNames.IMPROVEMENTS,
@@ -343,49 +348,20 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
   };
 
   const onSelectProperty = (propertyId: number) => {
-    const leaseProperty = leaseProperties.find(x => x.id === propertyId);
+    const menuIndex = leaseProperties.findIndex(x => x.id === propertyId);
 
-    pathSolver.showFileProperty('lease', lease.id, propertyId);
+    // The index needs to be offset to match the menu index
+    pathSolver.showFilePropertyIndex('lease', lease.id, menuIndex + 1);
   };
 
   const onEditProperties = () => {
     pathSolver.editProperties('lease', lease.id);
   };
 
-  /*
-  const onPropertySuccess = () => {
-    //setIsEditing(false);
-    //history.push(`${match.url}`);
-    console.log('ehehe');
-  };
-
-  const onUpdateProperties = () => {
-    //setIsEditing(false);
-    //history.push(`${match.url}`);
-    console.log('ehehe');
-  };
-
-  const closePropertySelector = () => {
-    //history.push(`${match.url}`);
-    pathSolver.showFile('lease', lease.id);
-    console.log('ehehe');
-  };
-
-  const confirmBeforeAdd = (propertyForm: PropertyForm) => {
-    console.log('ehehe');
-    return true;
-  };
-
-  const canRemove = () => {
-    console.log('ehehe');
-    return true;
-  };
-  */
-
   return (
     <Switch>
       <Route path={`${stripTrailingSlash(match.path)}/property/selector`}>
-        {exists(lease) && <LeasePropertySelector lease={lease} />}
+        {exists(lease) && <LeaseUpdatePropertySelector lease={lease} />}
       </Route>
       <Route>
         <MapSideBarLayout
@@ -421,42 +397,70 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
                 onSelectFileSummary={onSelectFileSummary}
                 onSelectProperty={onSelectProperty}
                 onEditProperties={onEditProperties}
-              />
+              >
+                <LeaseGenerateContainer lease={lease} View={GenerateFormView} />
+              </FileMenuView>
             }
             bodyComponent={
               <StyledFormWrapper>
                 <LoadingBackdrop show={loading || getLastUpdatedByLoading} />
-                <ViewSelector
-                  formikRef={formikRef}
-                  lease={lease}
-                  refreshLease={refresh}
-                  setLease={setLease}
-                  isEditing={containerState.isEditing}
-                  activeEditForm={containerState.activeEditForm}
-                  activeTab={containerState.activeTab}
-                  setContainerState={setContainerState}
-                  onSuccess={onChildSuccess}
+                <Route
+                  path={`${stripTrailingSlash(match.path)}/property/:menuIndex`}
+                  render={({ match }) => (
+                    <FilePropertyRouter
+                      formikRef={formikRef}
+                      selectedMenuIndex={Number(match.params.menuIndex)}
+                      file={lease}
+                      fileType={ApiGen_CodeTypes_FileTypes.Lease}
+                      isEditing={false}
+                      setIsEditing={() => {
+                        console.log('onSuccess');
+                      }}
+                      defaultFileTab={FileTabType.FILE_DETAILS}
+                      defaultPropertyTab={InventoryTabNames.property}
+                      onSuccess={() => {
+                        console.log('onSuccess');
+                      }}
+                    />
+                  )}
+                />
+                <Route
+                  path={`${stripTrailingSlash(match.path)}`}
+                  exact={true}
+                  render={({ match }) => (
+                    <ViewSelector
+                      formikRef={formikRef}
+                      lease={lease}
+                      refreshLease={refresh}
+                      setLease={setLease}
+                      isEditing={containerState.isEditing}
+                      activeEditForm={containerState.activeEditForm}
+                      activeTab={containerState.activeTab}
+                      setContainerState={setContainerState}
+                      onSuccess={onChildSuccess}
+                    />
+                  )}
                 />
               </StyledFormWrapper>
             }
           />
-          <GenericModal
-            variant="info"
-            display={containerState.showConfirmModal}
-            title={'Confirm Changes'}
-            message={
-              <>
-                <p>If you choose to cancel now, your changes will not be saved.</p>
-                <p>Do you want to proceed?</p>
-              </>
-            }
-            handleOk={handleCancelConfirm}
-            handleCancel={() => setContainerState({ showConfirmModal: false })}
-            okButtonText="Yes"
-            cancelButtonText="No"
-            show
-          />
         </MapSideBarLayout>
+        <GenericModal
+          variant="info"
+          display={containerState.showConfirmModal}
+          title={'Confirm Changes'}
+          message={
+            <>
+              <p>If you choose to cancel now, your changes will not be saved.</p>
+              <p>Do you want to proceed?</p>
+            </>
+          }
+          handleOk={handleCancelConfirm}
+          handleCancel={() => setContainerState({ showConfirmModal: false })}
+          okButtonText="Yes"
+          cancelButtonText="No"
+          show
+        />
       </Route>
     </Switch>
   );

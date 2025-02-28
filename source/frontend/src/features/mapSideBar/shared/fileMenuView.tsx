@@ -32,16 +32,17 @@ const FileMenu: React.FunctionComponent<React.PropsWithChildren<IFileMenuProps>>
 
   const currentPropertyIndex = useMemo(() => {
     const match = matchPath(location.pathname, {
-      path: '*/file_property/:filePropertyId/',
+      path: '*/property/:menuIndex/',
       exact: false,
       strict: false,
     });
     if (exists(match)) {
-      const filePropertyId = Number(match.params['filePropertyId']);
-      return properties.findIndex(x => x.id === filePropertyId);
+      const propertyIndex = Number(match.params['menuIndex']);
+      // the index on the url starts at 1, so remove one to make it match the index on the JS side.
+      return propertyIndex - 1;
     }
     return null;
-  }, [location.pathname, properties]);
+  }, [location.pathname]);
 
   const isSummary = useMemo(() => !exists(currentPropertyIndex), [currentPropertyIndex]);
 

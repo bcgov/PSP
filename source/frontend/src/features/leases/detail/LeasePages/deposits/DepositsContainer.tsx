@@ -20,7 +20,6 @@ import ReturnedDepositModal from './modal/returnedDepositModal/ReturnedDepositMo
 import { FormLeaseDeposit } from './models/FormLeaseDeposit';
 import { FormLeaseDepositReturn } from './models/FormLeaseDepositReturn';
 import { LeaseDepositForm } from './models/LeaseDepositForm';
-import * as Styled from './styles';
 
 export interface IDepositsContainerProps {
   onSuccess: () => void;
@@ -202,7 +201,7 @@ export const DepositsContainer: React.FunctionComponent<
       <LoadingBackdrop show={loading} parentScreen />
       <Formik initialValues={{ ...new LeaseDepositForm(), ...initialValues }} onSubmit={noop}>
         {formikProps => (
-          <Styled.DepositsContainer>
+          <>
             <DepositsReceivedContainer
               securityDeposits={securityDeposits}
               onAdd={onAddDeposit}
@@ -270,7 +269,7 @@ export const DepositsContainer: React.FunctionComponent<
               }}
               onSave={onSaveReturnDeposit}
             />
-          </Styled.DepositsContainer>
+          </>
         )}
       </Formik>
     </>

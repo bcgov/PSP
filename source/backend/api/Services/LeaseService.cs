@@ -248,7 +248,51 @@ namespace Pims.Api.Services
             ValidateNewTotalAllowableCompensation(lease.LeaseId, lease.TotalAllowableCompensation);
 
             _leaseRepository.Update(lease, false);
+
+            _leaseRepository.UpdateLeaseRenewals(lease.Internal_Id, lease.ConcurrencyControlNumber, lease.PimsLeaseRenewals);
+
+            List<PimsPropertyLease> differenceSet = currentFileProperties.Where(x => !lease.PimsPropertyLeases.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
+            foreach (var deletedProperty in differenceSet)
+            {
+                if (_propertyLeaseRepository.LeaseFilePropertyInCompensationReq(deletedProperty.PropertyLeaseId))
+                {
+                    throw new BusinessRuleViolationException("Lease File property can not be removed since it's assigned as a property for a compensation requisition");
+                }
+
+                if (_propertyOperationService.GetOperationsForProperty(deletedProperty.PropertyId).Count > 0)
+                {
+                    throw new BusinessRuleViolationException("This property cannot be deleted because it is part of a subdivision or consolidation");
+                }
+
+                var totalAssociationCount = _propertyRepository.GetAllAssociationsCountById(deletedProperty.PropertyId);
+                if (totalAssociationCount <= 1)
+                {
+                    _leaseRepository.CommitTransaction(); // TODO: this can only be removed if cascade deletes are implemented. EF executes deletes in alphabetic order.
+                    _propertyRepository.Delete(deletedProperty.Property);
+                }
+            }
+
+            _leaseRepository.CommitTransaction();
+
+            return _leaseRepository.GetNoTracking(lease.LeaseId);
+        }
+
+        public PimsLease UpdateProperties(PimsLease lease, IEnumerable<UserOverrideCode> userOverrides)
+        {
+            _logger.LogInformation("Updating lease properties with lease id {id}", lease.LeaseId);
+            _user.ThrowIfNotAuthorized(Permissions.LeaseEdit, Permissions.PropertyView, Permissions.PropertyAdd);
+
+            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
+            var currentLease = _leaseRepository.GetNoTracking(lease.LeaseId);
+
+            pimsUser.ThrowInvalidAccessToLeaseFile(currentLease.RegionCode); // need to check that the user is able to access the current lease as well as has the region for the updated lease.
+            pimsUser.ThrowInvalidAccessToLeaseFile(lease.RegionCode);
+
+            MatchProperties(lease, userOverrides);
+
             var leaseWithProperties = AssociatePropertyLeases(lease, userOverrides);
+
+            var currentFileProperties = _propertyLeaseRepository.GetAllByLeaseId(lease.LeaseId);
 
             // Update marker locations in the context of this file
             foreach (var incomingLeaseProperty in leaseWithProperties.PimsPropertyLeases)
@@ -280,33 +324,9 @@ namespace Pims.Api.Services
             }
 
             _propertyLeaseRepository.UpdatePropertyLeases(lease.Internal_Id, leaseWithProperties.PimsPropertyLeases);
+            _propertyLeaseRepository.CommitTransaction();
 
-            _leaseRepository.UpdateLeaseRenewals(lease.Internal_Id, lease.ConcurrencyControlNumber, lease.PimsLeaseRenewals);
-
-            List<PimsPropertyLease> differenceSet = currentFileProperties.Where(x => !lease.PimsPropertyLeases.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
-            foreach (var deletedProperty in differenceSet)
-            {
-                if (_propertyLeaseRepository.LeaseFilePropertyInCompensationReq(deletedProperty.PropertyLeaseId))
-                {
-                    throw new BusinessRuleViolationException("Lease File property can not be removed since it's assigned as a property for a compensation requisition");
-                }
-
-                if (_propertyOperationService.GetOperationsForProperty(deletedProperty.PropertyId).Count > 0)
-                {
-                    throw new BusinessRuleViolationException("This property cannot be deleted because it is part of a subdivision or consolidation");
-                }
-
-                var totalAssociationCount = _propertyRepository.GetAllAssociationsCountById(deletedProperty.PropertyId);
-                if (totalAssociationCount <= 1)
-                {
-                    _leaseRepository.CommitTransaction(); // TODO: this can only be removed if cascade deletes are implemented. EF executes deletes in alphabetic order.
-                    _propertyRepository.Delete(deletedProperty.Property);
-                }
-            }
-
-            _leaseRepository.CommitTransaction();
-
-            return _leaseRepository.GetNoTracking(lease.LeaseId);
+            return _leaseRepository.Get(lease.Internal_Id);
         }
 
         public IEnumerable<PimsLeaseRenewal> GetRenewalsByLeaseId(long leaseId)

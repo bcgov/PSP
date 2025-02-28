@@ -10,7 +10,7 @@ export interface IPathSolverMethods {
   editDetail: (fileType: string, fileId: number, detailType: string, detailId: number) => void;
   addDetail: (fileType: string, fileId: number, detailType: string) => void;
   editProperties: (fileType: string, fileId: number) => void;
-  showFileProperty: (fileType: string, fileId: number, propertyId: number) => void;
+  showFilePropertyIndex: (fileType: string, fileId: number, propertyIndex: number) => void;
   showFilePropertyDetail: (
     fileType: string,
     fileId: number,
@@ -103,12 +103,12 @@ const usePathSolver: IPathSolver = () => {
     history.push(path);
   };
 
-  const showFileProperty = (fileType: string, fileId: number, filePropertyId: number) => {
-    const a = `${sidebarBasePath}/:fileType/:fileId/file_property/:filePropertyId`;
+  const showFilePropertyIndex = (fileType: string, fileId: number, menuIndex: number) => {
+    const a = `${sidebarBasePath}/:fileType/:fileId/property/:menuIndex`;
     const path = generatePath(a, {
       fileType: fileType,
       fileId: fileId,
-      filePropertyId: filePropertyId,
+      menuIndex: menuIndex,
     });
 
     history.push(path);
@@ -144,7 +144,7 @@ const usePathSolver: IPathSolver = () => {
     editDetails,
     addDetail,
     editProperties,
-    showFileProperty,
+    showFilePropertyIndex,
     showFilePropertyDetail,
   };
 };

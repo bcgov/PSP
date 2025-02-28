@@ -1,7 +1,7 @@
-import { FieldArray, FieldArrayRenderProps, Formik, FormikProps } from 'formik';
+import { FieldArray, FieldArrayRenderProps, FormikProps } from 'formik';
 import { LatLngLiteral } from 'leaflet';
 import isNumber from 'lodash/isNumber';
-import { useCallback, useContext, useRef, useState } from 'react';
+import { useCallback, useContext, useRef } from 'react';
 import { Col, Row } from 'react-bootstrap';
 
 import { ModalProps } from '@/components/common/GenericModal';
@@ -11,14 +11,10 @@ import { Section } from '@/components/common/Section/Section';
 import MapSelectorContainer from '@/components/propertySelector/MapSelectorContainer';
 import { IMapProperty } from '@/components/propertySelector/models';
 import { ModalContext } from '@/contexts/modalContext';
-import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { AddressForm } from '@/features/mapSideBar/shared/models';
-import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
 import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
 import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
 import { useProperties } from '@/hooks/repositories/useProperties';
-import { getCancelModalProps } from '@/hooks/useModalContext';
-import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_PropertyView } from '@/models/api/generated/ApiGen_Concepts_PropertyView';
 import { exists, isLatLngInFeatureSetBoundary, isValidId, isValidString } from '@/utils';
 
@@ -27,43 +23,39 @@ import SelectedPropertyHeaderRow from './selectedPropertyList/SelectedPropertyHe
 import SelectedPropertyRow from './selectedPropertyList/SelectedPropertyRow';
 
 interface LeasePropertySelectorProp {
-  lease: ApiGen_Concepts_Lease;
-  maybeSomething?: boolean;
+  formikProps: FormikProps<LeaseFormModel>;
 }
 
 export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelectorProp> = ({
-  maybeSomething,
-  lease,
+  formikProps,
 }) => {
-  const [showSaveConfirmModal, setShowSaveConfirmModal] = useState<boolean>(false);
-
-  const formikRef = useRef<FormikProps<LeaseFormModel>>(null);
-
-  const [isValid, setIsValid] = useState<boolean>(true);
+  const { values, setFieldValue } = formikProps;
   const { getPropertiesFromView: getProperties } = useProperties();
   const { setModalContent, setDisplayModal } = useContext(ModalContext);
   const { getPrimaryAddressByPid, bcaLoading } = useBcaAddress();
 
   const arrayHelpersRef = useRef<FieldArrayRenderProps | null>(null);
 
-  const addProperties = useCallback((properties: FormLeaseProperty[]) => {
-    const formikProps = formikRef.current;
-    if (arrayHelpersRef.current !== null && properties.length > 0) {
-      properties.forEach((leaseProperty, index) => {
-        const property = leaseProperty?.property;
-        if (
-          formikProps.values.properties?.length === 0 &&
-          index === 0 &&
-          property !== undefined &&
-          property.regionName !== 'Cannot determine'
-        ) {
-          formikProps.setFieldValue('regionId', property.region ? property.region.toString() : '');
-        }
+  const addProperties = useCallback(
+    (properties: FormLeaseProperty[]) => {
+      if (arrayHelpersRef.current !== null && properties.length > 0) {
+        properties.forEach((leaseProperty, index) => {
+          const property = leaseProperty?.property;
+          if (
+            values.properties?.length === 0 &&
+            index === 0 &&
+            property !== undefined &&
+            property.regionName !== 'Cannot determine'
+          ) {
+            setFieldValue('regionId', property.region ? property.region.toString() : '');
+          }
 
-        arrayHelpersRef.current && arrayHelpersRef.current.push(leaseProperty);
-      });
-    }
-  }, []);
+          arrayHelpersRef.current && arrayHelpersRef.current.push(leaseProperty);
+        });
+      }
+    },
+    [arrayHelpersRef, setFieldValue, values.properties?.length],
+  );
 
   const searchProperty = async (
     newProperty: IMapProperty,
@@ -195,139 +187,79 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
     [getRemoveModalProps, setDisplayModal, setModalContent],
   );
 
-  // todo fix these
-  const handleCancelConfirm = () => {
-    if (formikRef !== undefined) {
-      formikRef.current?.resetForm();
-    }
-    //resetFilePropertyLocations();
-    //props.setIsShowingPropertySelector(false);
-  };
-
-  const handleSaveClick = async () => {
-    await formikRef?.current?.validateForm();
-    if (!formikRef?.current?.isValid) {
-      setIsValid(false);
-    } else {
-      setIsValid(true);
-    }
-    setShowSaveConfirmModal(true);
-  };
-
-  const handleCancelClick = () => {
-    if (formikRef !== undefined) {
-      if (formikRef.current?.dirty) {
-        setModalContent({
-          ...getCancelModalProps(),
-          handleOk: () => {
-            handleCancelConfirm();
-            setDisplayModal(false);
-          },
-          handleCancel: () => setDisplayModal(false),
-        });
-        setDisplayModal(true);
-      } else {
-        handleCancelConfirm();
-      }
-    } else {
-      handleCancelConfirm();
-    }
-  };
-
-  const initialValues = LeaseFormModel.fromApi(lease);
-
   return (
     <>
       <LoadingBackdrop show={bcaLoading} />
-      <MapSideBarLayout
-        title={'Property selection'}
-        icon={undefined}
-        footer={
-          <SidebarFooter
-            isOkDisabled={formikRef.current?.isSubmitting}
-            onSave={handleSaveClick}
-            onCancel={handleCancelClick}
-            displayRequiredFieldError={isValid === false}
-          />
-        }
-      >
-        <Formik<LeaseFormModel>
-          innerRef={formikRef}
-          initialValues={initialValues}
-          //validationSchema={UpdatePropertiesYupSchema}
-          onSubmit={async (values: LeaseFormModel) => {
-            const file: ApiGen_Concepts_Lease = LeaseFormModel.toApi(values);
-            console.log(file);
-            //await saveFile(file);
-          }}
-        >
-          {formikProps => (
-            <FieldArray
-              name="properties"
-              render={arrayHelpers => {
-                arrayHelpersRef.current = arrayHelpers;
-                return (
-                  <>
-                    <Row className="py-3 no-gutters">
-                      <Col>
-                        <MapSelectorContainer
-                          addSelectedProperties={processAddedProperties}
-                          repositionSelectedProperty={(
-                            featureset: LocationFeatureDataset,
-                            latLng: LatLngLiteral,
-                            index: number | null,
-                          ) => {
-                            // As long as the marker is repositioned within the boundary of the originally selected property simply reposition the marker without further notification.
-                            if (
-                              isNumber(index) &&
-                              index >= 0 &&
-                              isLatLngInFeatureSetBoundary(latLng, featureset)
-                            ) {
-                              const formProperty = formikProps.values.properties[index];
-                              const updatedFormProperty =
-                                FormLeaseProperty.fromFormLeaseProperty(formProperty);
-                              updatedFormProperty.property.fileLocation = latLng;
+      <Section header="Properties to include in this file:">
+        <div className="py-2">
+          Select one or more properties that you want to include in this lease/licence file. You can
+          choose a location from the map, or search by other criteria.
+        </div>
 
-                              // Find property within formik values and reposition it based on incoming file marker position
-                              arrayHelpers.replace(index, updatedFormProperty);
-                            }
-                          }}
-                          modifiedProperties={LeaseFormModel.getPropertiesAsForm(
-                            formikProps.values,
-                          ).map(p => p.toFeatureDataset())}
-                        />
-                      </Col>
-                    </Row>
-                    <Section header="Selected properties">
-                      <SelectedPropertyHeaderRow />
-                      {formikProps.values.properties.map((leaseProperty, index) => {
-                        const property = leaseProperty?.property;
-                        if (property !== undefined) {
-                          return (
-                            <SelectedPropertyRow
-                              formikProps={formikProps}
-                              key={`property.${property.latitude}-${property.longitude}-${property.pid}-${property.apiId}`}
-                              onRemove={() => onRemoveClick(index)}
-                              nameSpace={`properties.${index}`}
-                              index={index}
-                              property={property.toFeatureDataset()}
-                              showSeparator={index < formikProps.values.properties.length - 1}
-                            />
-                          );
+        <FieldArray
+          name="properties"
+          render={arrayHelpers => {
+            arrayHelpersRef.current = arrayHelpers;
+            return (
+              <>
+                <Row className="py-3 no-gutters">
+                  <Col>
+                    <MapSelectorContainer
+                      addSelectedProperties={processAddedProperties}
+                      repositionSelectedProperty={(
+                        featureset: LocationFeatureDataset,
+                        latLng: LatLngLiteral,
+                        index: number | null,
+                      ) => {
+                        // As long as the marker is repositioned within the boundary of the originally selected property simply reposition the marker without further notification.
+                        if (
+                          isNumber(index) &&
+                          index >= 0 &&
+                          isLatLngInFeatureSetBoundary(latLng, featureset)
+                        ) {
+                          const formProperty = formikProps.values.properties[index];
+                          const updatedFormProperty =
+                            FormLeaseProperty.fromFormLeaseProperty(formProperty);
+                          updatedFormProperty.property.fileLocation = latLng;
+
+                          // Find property within formik values and reposition it based on incoming file marker position
+                          arrayHelpers.replace(index, updatedFormProperty);
                         }
-                        return <></>;
-                      })}
-                      {formikProps.values.properties.length === 0 && (
-                        <span>No Properties selected</span>
+                      }}
+                      modifiedProperties={LeaseFormModel.getPropertiesAsForm(values).map(p =>
+                        p.toFeatureDataset(),
                       )}
-                    </Section>
-                  </>
-                );
-              }}
-            />
-          )}
-        </Formik>
-      </MapSideBarLayout>
+                    />
+                  </Col>
+                </Row>
+                <Section header="Selected properties">
+                  <SelectedPropertyHeaderRow />
+                  {formikProps.values.properties.map((leaseProperty, index) => {
+                    const property = leaseProperty?.property;
+                    if (property !== undefined) {
+                      return (
+                        <SelectedPropertyRow
+                          formikProps={formikProps}
+                          key={`property.${property.latitude}-${property.longitude}-${property.pid}-${property.apiId}`}
+                          onRemove={() => onRemoveClick(index)}
+                          nameSpace={`properties.${index}`}
+                          index={index}
+                          property={property.toFeatureDataset()}
+                          showSeparator={index < formikProps.values.properties.length - 1}
+                        />
+                      );
+                    }
+                    return <></>;
+                  })}
+                  {formikProps.values.properties.length === 0 && (
+                    <span>No Properties selected</span>
+                  )}
+                </Section>
+              </>
+            );
+          }}
+        />
+      </Section>
     </>
   );
 };

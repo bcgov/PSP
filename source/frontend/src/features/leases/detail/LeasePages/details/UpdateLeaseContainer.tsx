@@ -71,7 +71,6 @@ export const UpdateLeaseContainer: React.FunctionComponent<UpdateLeaseContainerP
       if (isValidId(updatedLease?.id)) {
         formikRef?.current?.resetForm({ values: formikRef?.current?.values });
         await refresh();
-        mapMachine.refreshMapProperties();
         onEdit(false);
       }
     },

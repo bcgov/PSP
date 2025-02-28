@@ -11,7 +11,7 @@ import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { exists } from '@/utils';
 
-import LeaseDetailsForm from './LeaseDetailsForm';
+import LeaseDetailsWrapperView from './LeaseDetailsWrapperView';
 import UpdateLeaseForm from './UpdateLeaseForm';
 
 const DetailContainer: React.FunctionComponent<React.PropsWithChildren<LeasePageProps<void>>> = ({
@@ -40,7 +40,7 @@ const DetailContainer: React.FunctionComponent<React.PropsWithChildren<LeasePage
       />
     </ProtectedComponent>
   ) : (
-    <LeaseDetailsForm lease={lease} onGenerate={onGenerate} />
+    <LeaseDetailsWrapperView lease={lease} onGenerate={onGenerate} />
   );
 };
 

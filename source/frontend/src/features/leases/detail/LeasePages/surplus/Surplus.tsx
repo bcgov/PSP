@@ -20,13 +20,13 @@ const columns: ColumnWithProps<IDeclaration>[] = [
   {
     Header: 'PID / Identifier',
     accessor: 'identifier',
-    maxWidth: 40,
+    maxWidth: 50,
     Cell: PidCell,
   },
   {
     Header: 'Surplus Declaration',
     accessor: 'declarationType',
-    maxWidth: 40,
+    maxWidth: 45,
     Cell: ({ row: { original } }) => {
       const declarationType = original.declarationType;
       const isYesDeclarationType = declarationType.toUpperCase() === 'YES';
@@ -50,7 +50,7 @@ const columns: ColumnWithProps<IDeclaration>[] = [
   {
     Header: 'Declaration Comments',
     accessor: 'comments',
-    minWidth: 150,
+    minWidth: 100,
   },
 ];
 
