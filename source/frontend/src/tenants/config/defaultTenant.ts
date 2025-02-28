@@ -20,7 +20,7 @@ const INDIAN_RESERVES_LAYER_URL =
 const PIMS_BOUNDARY_LAYER_URL =
   '/ogs-internal/ows?service=wfs&request=GetFeature&typeName=PIMS_PROPERTY_BOUNDARY_VW&outputformat=json&version=2.0.0';
 const PIMS_HIGHWAY_LAYER_URL =
-  '/ogs-internal/ows?service=wfs&request=GetFeature&typeName=plan_footprint&outputformat=json&version=2.0.0';
+  '/ogs-internal/ows?service=wfs&request=GetFeature&typeName=ISS_PROVINCIAL_PUBLIC_HIGHWAY&outputformat=json&version=2.0.0';
 
 const CROWN_LAND_LICENSES_LAYER_URL =
   'https://openmaps.gov.bc.ca/geo/pub/WHSE_TANTALIS.TA_CROWN_LICENSES_SVW/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_TANTALIS.TA_CROWN_LICENSES_SVW';

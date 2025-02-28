@@ -226,7 +226,7 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
             return new JsonResult(_mapper.Map<IEnumerable<CompensationFinancialModel>>(compReqFinancials));
         }
 
-        [HttpGet("{id:long}/payees")]
+        [HttpGet("{id:long}/acquisition-payees")]
         [HasPermission(Permissions.CompensationRequisitionView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(List<CompReqAcqPayeeModel>), 200)]
@@ -245,6 +245,27 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
             var compReqPayees = _compensationRequisitionService.GetCompensationRequisitionAcquisitionPayees(id);
 
             return new JsonResult(_mapper.Map<IEnumerable<CompReqAcqPayeeModel>>(compReqPayees));
+        }
+
+        [HttpGet("{id:long}/lease-payees")]
+        [HasPermission(Permissions.CompensationRequisitionView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(List<CompReqLeasePayeeModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "compensation-requisition" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetCompensationRequisitionLeasePayees([FromRoute] long id)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(CompensationRequisitionController),
+                nameof(GetCompensationRequisitionLeasePayees),
+                User.GetUsername(),
+                DateTime.Now);
+            _logger.LogInformation("Dispatching to service: {Service}", _compensationRequisitionService.GetType());
+
+            var compReqPayees = _compensationRequisitionService.GetCompensationRequisitionLeasePayees(id);
+
+            return new JsonResult(_mapper.Map<IEnumerable<CompReqLeasePayeeModel>>(compReqPayees));
         }
     }
 }
