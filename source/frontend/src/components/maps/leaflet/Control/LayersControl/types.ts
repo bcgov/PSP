@@ -5,5 +5,4 @@ export interface ILayerItem extends TreeNodeInArray, WMSOptions {
   on?: boolean;
   url?: string;
   authenticated?: boolean;
-  clickable?: boolean;
 }
