@@ -109,21 +109,25 @@ export class CompensationRequisitionFormModel {
               } as ApiGen_Concepts_CompReqLeaseProperty;
             })
           : null,
-      compReqLeasePayees: this.payees
-        .filter(payee => payee.payeeType === PayeeType.LeaseStakeholder)
-        .map(payee => payee.toLeaseApi()),
-      compReqAcqPayees: this.payees
-        .filter(payee =>
-          [
-            PayeeType.AcquisitionTeam,
-            PayeeType.InterestHolder,
-            PayeeType.LegacyPayee,
-            PayeeType.Owner,
-            PayeeType.OwnerRepresentative,
-            PayeeType.OwnerSolicitor,
-          ].includes(payee.payeeType),
-        )
-        .map(payee => payee.toAcquisitionApi()),
+      compReqLeasePayees:
+        this.payees
+          .filter(payee => payee.payeeType === PayeeType.LeaseStakeholder)
+          .map(payee => payee.toLeaseApi())
+          .filter(exists) ?? [],
+      compReqAcqPayees:
+        this.payees
+          .filter(payee =>
+            [
+              PayeeType.AcquisitionTeam,
+              PayeeType.InterestHolder,
+              PayeeType.LegacyPayee,
+              PayeeType.Owner,
+              PayeeType.OwnerRepresentative,
+              PayeeType.OwnerSolicitor,
+            ].includes(payee.payeeType),
+          )
+          .map(payee => payee.toAcquisitionApi())
+          .filter(exists) ?? [],
       rowVersion: this.rowVersion ?? null,
       acquisitionFile: null,
       alternateProject: null,
@@ -193,7 +197,7 @@ export class CompensationRequisitionFormModel {
 
     compensation.payees = (
       apiModel?.compReqAcqPayees
-        ?.map(compReqPayee => PayeeOption.fromApiAcq(compReqPayee))
+        ?.map(compReqPayee => PayeeOption.fromApiAcquisition(compReqPayee))
         ?.filter(exists) ?? []
     ).concat(
       apiModel?.compReqLeasePayees

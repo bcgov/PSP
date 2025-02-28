@@ -1,10 +1,10 @@
-import {
-  getMockCompReqAcqPayee,
-  getMockCompReqLeasePayee,
-} from './../../../mocks/compensations.mock';
 import moment from 'moment';
 
-import { getMockApiCompensationList } from '@/mocks/compensations.mock';
+import {
+  getMockApiCompensationList,
+  getMockCompReqAcqPayee,
+  getMockCompReqLeasePayee,
+} from '@/mocks/compensations.mock';
 import { mockCompReqH120s } from '@/mocks/mockCompReqH120s.mock';
 import { getMockH120Categories } from '@/mocks/mockH120Categories.mock';
 

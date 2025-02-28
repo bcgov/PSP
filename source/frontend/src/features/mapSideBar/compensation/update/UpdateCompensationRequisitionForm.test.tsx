@@ -483,7 +483,7 @@ describe('Compensation Requisition UpdateForm component', () => {
 
     const payeesAndLegacyOptions = [
       ...payeeOptions,
-      PayeeOption.fromApiAcq({ ...getMockCompReqAcqPayee(1), legacyPayee: 'Stark, Tony' }),
+      PayeeOption.fromApiAcquisition({ ...getMockCompReqAcqPayee(1), legacyPayee: 'Stark, Tony' }),
     ];
 
     const {

@@ -3,6 +3,7 @@ import { ApiGen_CodeTypes_LeaseStakeholderTypes } from '@/models/api/generated/A
 import { ApiGen_CodeTypes_LessorTypes } from '@/models/api/generated/ApiGen_CodeTypes_LessorTypes';
 import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
+import { ApiGen_Concepts_CompReqAcqPayee } from '@/models/api/generated/ApiGen_Concepts_CompReqAcqPayee';
 import { ApiGen_Concepts_CompReqLeasePayee } from '@/models/api/generated/ApiGen_Concepts_CompReqLeasePayee';
 import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
 import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
@@ -10,7 +11,6 @@ import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { exists, isValidId, isValidString, truncateName } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
-import { ApiGen_Concepts_CompReqAcqPayee } from './../../../../models/api/generated/ApiGen_Concepts_CompReqAcqPayee';
 import { PayeeType } from './PayeeTypeModel';
 
 export class PayeeOption {
@@ -74,7 +74,7 @@ export class PayeeOption {
     return '';
   }
 
-  public static fromApiAcq(compReqPayee: ApiGen_Concepts_CompReqAcqPayee): PayeeOption {
+  public static fromApiAcquisition(compReqPayee: ApiGen_Concepts_CompReqAcqPayee): PayeeOption {
     let payee: PayeeOption = null;
     if (isValidId(compReqPayee.acquisitionOwnerId)) {
       payee = PayeeOption.createOwner(compReqPayee.acquisitionOwner, compReqPayee);
