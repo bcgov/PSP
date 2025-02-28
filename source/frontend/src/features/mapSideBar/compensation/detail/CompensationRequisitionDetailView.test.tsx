@@ -14,7 +14,8 @@ import {
   getMockApiCompensationWithProperty,
   getMockApiDefaultCompensation,
   getMockCompensationPropertiesReq,
-  getMockCompReqPayee,
+  getMockCompReqAcqPayee,
+  getMockCompReqLeasePayee,
 } from '@/mocks/compensations.mock';
 import {
   getMockApiInterestHolderOrganization,
@@ -23,13 +24,15 @@ import {
 import { ApiGen_CodeTypes_AcquisitionStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionStatusTypes';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
-import { ApiGen_Concepts_CompReqPayee } from '@/models/api/generated/ApiGen_Concepts_CompReqPayee';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 import { act, render, RenderOptions, userEvent, waitForEffects } from '@/utils/test-utils';
 
 import CompensationRequisitionDetailView, {
   CompensationRequisitionDetailViewProps,
 } from './CompensationRequisitionDetailView';
+import { getMockLeaseStakeholders } from '@/mocks/lease.mock';
+import { ApiGen_Concepts_CompReqLeasePayee } from '@/models/api/generated/ApiGen_Concepts_CompReqLeasePayee';
+import { ApiGen_Concepts_CompReqAcqPayee } from '@/models/api/generated/ApiGen_Concepts_CompReqAcqPayee';
 
 const setEditMode = vi.fn();
 const onGenerate = vi.fn();
@@ -53,8 +56,8 @@ describe('Compensation Detail View Component', () => {
         setEditMode={setEditMode}
         clientConstant={renderOptions.props?.clientConstant ?? '034'}
         onGenerate={onGenerate}
-        compensationLeaseStakeHolders={[]}
-        compensationPayees={renderOptions?.props?.compensationPayees ?? []}
+        compensationLeasePayees={renderOptions?.props?.compensationLeasePayees ?? []}
+        compensationAcqPayees={renderOptions?.props?.compensationAcqPayees ?? []}
       />,
       {
         ...renderOptions,
@@ -274,12 +277,12 @@ describe('Compensation Detail View Component', () => {
       'OWNERS',
       [
         {
-          ...getMockCompReqPayee(1),
+          ...getMockCompReqAcqPayee(1),
           compensationRequisitionId: 11,
           acquisitionOwner: getMockApiAcquisitionFileOwnerPerson(),
         },
         {
-          ...getMockCompReqPayee(2),
+          ...getMockCompReqAcqPayee(2),
           compensationRequisitionId: 11,
           acquisitionOwner: getMockApiAcquisitionFileOwnerOrganization(),
         },
@@ -290,13 +293,13 @@ describe('Compensation Detail View Component', () => {
       'INTEREST HOLDERS',
       [
         {
-          ...getMockCompReqPayee(1),
+          ...getMockCompReqAcqPayee(1),
           compensationRequisitionId: 11,
           interestHolderId: 14,
           interestHolder: getMockApiInterestHolderPerson(14),
         },
         {
-          ...getMockCompReqPayee(2),
+          ...getMockCompReqAcqPayee(2),
           interestHolderId: 15,
           interestHolder: getMockApiInterestHolderOrganization(15),
         },
@@ -307,12 +310,12 @@ describe('Compensation Detail View Component', () => {
       'ACQUITISION TEAM',
       [
         {
-          ...getMockCompReqPayee(1),
+          ...getMockCompReqAcqPayee(1),
           acquisitionFileTeamId: 11,
           acquisitionFileTeam: mockApiAcquisitionFileTeamPerson(11),
         },
         {
-          ...getMockCompReqPayee(2),
+          ...getMockCompReqAcqPayee(2),
           acquisitionFileTeamId: 12,
           acquisitionFileTeam: mockApiAcquisitionFileTeamOrganization(12),
         },
@@ -321,11 +324,15 @@ describe('Compensation Detail View Component', () => {
     ],
   ])(
     'displays the compensation payees - for %s',
-    async (_: string, compReqPayees: ApiGen_Concepts_CompReqPayee[], expectedValues: string[]) => {
+    async (
+      _: string,
+      compReqPayees: ApiGen_Concepts_CompReqAcqPayee[],
+      expectedValues: string[],
+    ) => {
       const { findByText } = await setup({
         claims: [Claims.COMPENSATION_REQUISITION_EDIT],
         props: {
-          compensationPayees: compReqPayees,
+          compensationAcqPayees: compReqPayees,
         },
       });
 
@@ -339,9 +346,9 @@ describe('Compensation Detail View Component', () => {
     const { findByText } = await setup({
       claims: [Claims.COMPENSATION_REQUISITION_EDIT],
       props: {
-        compensationPayees: [
+        compensationAcqPayees: [
           {
-            ...getMockCompReqPayee(1),
+            ...getMockCompReqAcqPayee(1),
             legacyPayee: 'Legacy Test Value',
           },
         ],
@@ -356,9 +363,9 @@ describe('Compensation Detail View Component', () => {
     const { findByTestId } = await setup({
       claims: [Claims.COMPENSATION_REQUISITION_EDIT],
       props: {
-        compensationPayees: [
+        compensationAcqPayees: [
           {
-            ...getMockCompReqPayee(1),
+            ...getMockCompReqAcqPayee(1),
             acquisitionFileTeam: null,
             acquisitionFileTeamId: null,
             interestHolder: null,
@@ -381,4 +388,42 @@ describe('Compensation Detail View Component', () => {
 
     expect(onGenerate).toHaveBeenCalled();
   });
+
+  it.each([
+    [
+      'STAKEHOLDERS',
+      [
+        {
+          ...getMockCompReqLeasePayee(1),
+          compensationRequisitionId: 11,
+          leaseStakeholder: getMockLeaseStakeholders()[0],
+        },
+        {
+          ...getMockCompReqLeasePayee(2),
+          compensationRequisitionId: 11,
+          leaseStakeholder: getMockLeaseStakeholders()[1],
+        },
+      ],
+      ['Alejandro Sanchez', 'Bob Billy Smith'],
+    ],
+  ])(
+    'displays the lease compensation payees - for %s',
+    async (
+      _: string,
+      compReqPayees: ApiGen_Concepts_CompReqLeasePayee[],
+      expectedValues: string[],
+    ) => {
+      const { findByText } = await setup({
+        claims: [Claims.COMPENSATION_REQUISITION_EDIT],
+        props: {
+          compensationLeasePayees: compReqPayees,
+          fileType: ApiGen_CodeTypes_FileTypes.Lease,
+        },
+      });
+
+      for (const expected of expectedValues) {
+        expect(await findByText(new RegExp(expected, 'i'))).toBeVisible();
+      }
+    },
+  );
 });

@@ -8,9 +8,9 @@ import { ApiGen_Concepts_AcquisitionFileTeam } from './ApiGen_Concepts_Acquisiti
 import { ApiGen_Concepts_CompensationRequisition } from './ApiGen_Concepts_CompensationRequisition';
 import { ApiGen_Concepts_InterestHolder } from './ApiGen_Concepts_InterestHolder';
 
-// LINK: @backend/apimodels/Models/Concepts/CompensationRequisition/CompReqPayeeModel.cs
-export interface ApiGen_Concepts_CompReqPayee extends ApiGen_Base_BaseAudit {
-  compReqPayeeId: number | null;
+// LINK: @backend/apimodels/Models/Concepts/CompensationRequisition/CompReqAcqPayeeModel.cs
+export interface ApiGen_Concepts_CompReqAcqPayee extends ApiGen_Base_BaseAudit {
+  compReqAcqPayeeId: number | null;
   compensationRequisitionId: number | null;
   compensationRequisition: ApiGen_Concepts_CompensationRequisition | null;
   acquisitionOwnerId: number | null;

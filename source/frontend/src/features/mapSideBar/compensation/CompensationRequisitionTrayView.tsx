@@ -66,7 +66,7 @@ export const CompensationRequisitionTrayView: React.FunctionComponent<
       </HalfHeightDiv>
     ) : undefined;
 
-  const updateViewConent =
+  const updateViewContent =
     editMode && compensation ? (
       <HalfHeightDiv>
         <UpdateCompensationRequisitionContainer
@@ -85,7 +85,7 @@ export const CompensationRequisitionTrayView: React.FunctionComponent<
       </HalfHeightDiv>
     ) : undefined;
 
-  let trayContent = editMode ? updateViewConent : detailViewContent;
+  let trayContent = editMode ? updateViewContent : detailViewContent;
 
   if (error) {
     trayContent = (

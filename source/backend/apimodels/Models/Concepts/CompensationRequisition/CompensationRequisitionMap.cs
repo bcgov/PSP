@@ -33,10 +33,10 @@ namespace Pims.Api.Models.Concepts.CompensationRequisition
                 .Map(dest => dest.DetailedRemarks, src => src.DetailedRemarks)
                 .Map(dest => dest.AlternateProjectId, src => src.AlternateProjectId)
                 .Map(dest => dest.AlternateProject, src => src.AlternateProject)
-                //.Map(dest => dest.CompReqLeaseStakeholders, src => src.PimsLeaseStakeholderCompReqs) TODO: Needs fixing
+                .Map(dest => dest.CompReqAcqPayees, src => src.PimsCompReqAcqPayees)
+                .Map(dest => dest.CompReqLeasePayees, src => src.PimsCompReqLeasePayees)
                 .Map(dest => dest.CompReqAcquisitionProperties, src => src.PimsPropAcqFlCompReqs)
                 .Map(dest => dest.CompReqLeaseProperties, src => src.PimsPropLeaseCompReqs)
-                //.Map(dest => dest.CompReqPayees, src => src.PimsCompReqPayees) TODO: Needs fixing
                 .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
 
             config
@@ -60,10 +60,10 @@ namespace Pims.Api.Models.Concepts.CompensationRequisition
                 .Map(dest => dest.DetailedRemarks, src => src.DetailedRemarks)
                 .Map(dest => dest.AlternateProjectId, src => src.AlternateProjectId)
                 .Map(dest => dest.AlternateProject, src => src.AlternateProject)
-                //.Map(dest => dest.PimsLeaseStakeholderCompReqs, src => src.CompReqLeaseStakeholders) TODO: Needs fixing
+                .Map(dest => dest.PimsCompReqAcqPayees, src => src.CompReqAcqPayees)
+                .Map(dest => dest.PimsCompReqLeasePayees, src => src.CompReqLeasePayees)
                 .Map(dest => dest.PimsPropAcqFlCompReqs, src => src.CompReqAcquisitionProperties)
                 .Map(dest => dest.PimsPropLeaseCompReqs, src => src.CompReqLeaseProperties)
-                //.Map(dest => dest.PimsCompReqPayees, src => src.CompReqPayees) TODO: Needs fixing
                 .Inherits<BaseAuditModel, Entity.IBaseAppEntity>();
         }
     }

@@ -3,7 +3,6 @@ import chunk from 'lodash/chunk';
 import { ConvertToTypes } from '@/constants/convertToTypes';
 import { createFileDownload } from '@/features/documents/DownloadDocumentButton';
 import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
-import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useAdminBoundaryMapLayer } from '@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useH120CategoryRepository } from '@/hooks/repositories/useH120CategoryRepository';
@@ -15,7 +14,6 @@ import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRe
 import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_CodeTypes_FormTypes } from '@/models/api/generated/ApiGen_CodeTypes_FormTypes';
-import { ApiGen_CodeTypes_LessorTypes } from '@/models/api/generated/ApiGen_CodeTypes_LessorTypes';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { Api_GenerateAcquisitionFile } from '@/models/generate/acquisition/GenerateAcquisitionFile';
 import { Api_GenerateCompensation } from '@/models/generate/acquisition/GenerateCompensation';
@@ -30,13 +28,13 @@ export const useGenerateH120 = () => {
   const { getSystemConstant } = useSystemConstants();
   const client = getSystemConstant(SystemConstants.CLIENT);
 
-  const { getPersonConcept, getOrganizationConcept } = useApiContacts();
   const { getAcquisitionFile, getAcquisitionProperties } = useAcquisitionProvider();
   const { getAcquisitionInterestHolders } = useInterestHolderRepository();
   const {
     getCompensationRequisitionProperties,
     getCompensationRequisitionFinancials,
-    getCompensationRequisitionPayees,
+    getCompensationRequisitionAcqPayees,
+    getCompensationRequisitionLeasePayees,
   } = useCompensationRequisitionRepository();
   const { generateDocumentDownloadWrappedRequest: generate } = useDocumentGenerationRepository();
   const getH120Categories = useH120CategoryRepository();
@@ -116,17 +114,6 @@ export const useGenerateH120 = () => {
 
           file.fileProperties = fileProperties;
 
-          if (compensation.compReqLeaseStakeholders?.length > 0) {
-            const leaseStakeHolder = compensation.compReqLeaseStakeholders[0].leaseStakeholder;
-            if (leaseStakeHolder.lessorType.id === ApiGen_CodeTypes_LessorTypes.PER) {
-              const { data } = await getPersonConcept(leaseStakeHolder.personId);
-              compensation.compReqLeaseStakeholders[0].leaseStakeholder.person = data;
-            } else if (leaseStakeHolder.lessorType.id === ApiGen_CodeTypes_LessorTypes.ORG) {
-              const { data } = await getOrganizationConcept(leaseStakeHolder.organizationId);
-              compensation.compReqLeaseStakeholders[0].leaseStakeholder.organization = data;
-            }
-          }
-
           fileData = new Api_GenerateCompReqFileLease(file, fileProperties, leaseStakeHolders);
         }
         break;
@@ -137,21 +124,31 @@ export const useGenerateH120 = () => {
       compensation.id,
     );
     const compReqFinalH120sPromise = getCompensationRequisitionFinancials.execute(compensation.id);
-    const compReqPayeesPromise = getCompensationRequisitionPayees.execute(compensation.id);
+    const compReqPayeesAcqPromise = getCompensationRequisitionAcqPayees.execute(compensation.id);
+    const compReqPayeesLeasePromise = getCompensationRequisitionLeasePayees.execute(
+      compensation.id,
+    );
     const h120CategoriesPromise = getH120Categories.execute();
 
-    const [compReqProperties, h120Categories, compReqFinancialActivities, compReqPayees] =
-      await Promise.all([
-        compReqPropertiesPromise,
-        h120CategoriesPromise,
-        compReqFinalH120sPromise,
-        compReqPayeesPromise,
-      ]);
+    const [
+      compReqProperties,
+      h120Categories,
+      compReqFinancialActivities,
+      compReqAcqPayees,
+      compReqLeasePayees,
+    ] = await Promise.all([
+      compReqPropertiesPromise,
+      h120CategoriesPromise,
+      compReqFinalH120sPromise,
+      compReqPayeesAcqPromise,
+      compReqPayeesLeasePromise,
+    ]);
 
     const compensationData = new Api_GenerateCompensation(
       compensation,
       compReqProperties ?? [],
-      compReqPayees ?? [],
+      compReqAcqPayees ?? [],
+      compReqLeasePayees ?? [],
       fileData,
       h120Categories ?? [],
       compReqFinancialActivities ?? [],

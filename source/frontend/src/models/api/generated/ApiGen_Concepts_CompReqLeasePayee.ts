@@ -5,9 +5,9 @@
 import { ApiGen_Base_BaseAudit } from './ApiGen_Base_BaseAudit';
 import { ApiGen_Concepts_LeaseStakeholder } from './ApiGen_Concepts_LeaseStakeholder';
 
-// LINK: @backend/apimodels/Models/Concepts/CompensationRequisition/CompReqLeaseStakeholderModel.cs
-export interface ApiGen_Concepts_CompReqLeaseStakeholder extends ApiGen_Base_BaseAudit {
-  compReqLeaseStakeholderId: number | null;
+// LINK: @backend/apimodels/Models/Concepts/CompensationRequisition/CompReqLeasePayeeModel.cs
+export interface ApiGen_Concepts_CompReqLeasePayee extends ApiGen_Base_BaseAudit {
+  compReqLeasePayeeId: number | null;
   compensationRequisitionId: number;
   leaseStakeholderId: number;
   leaseStakeholder: ApiGen_Concepts_LeaseStakeholder | null;
