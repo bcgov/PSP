@@ -33,7 +33,7 @@ export interface LocationFeatureDataset {
   regionFeature: Feature<Geometry, MOT_RegionalBoundary_Feature_Properties> | null;
   districtFeature: Feature<Geometry, MOT_DistrictBoundary_Feature_Properties> | null;
   municipalityFeature: Feature<Geometry, WHSE_Municipalities_Feature_Properties> | null;
-  highwayFeature: Feature<Geometry, ISS_ProvincialPublicHighway> | null;
+  highwayFeatures: Feature<Geometry, ISS_ProvincialPublicHighway>[] | null;
   crownLandLeasesFeature: Feature<Geometry, TANTALIS_CrownLandLeases_Feature_Properties> | null;
   crownLandLicensesFeature: Feature<Geometry, TANTALIS_CrownLandLicenses_Feature_Properties> | null;
   crownLandTenuresFeature: Feature<Geometry, TANTALIS_CrownLandTenures_Feature_Properties> | null;
@@ -64,7 +64,7 @@ const useLocationFeatureLoader = () => {
   const adminBoundaryLayerServiceFindDistrict = adminBoundaryLayerService.findDistrict;
   const adminLegalBoundaryLayerServiceFindOneMunicipality =
     adminLegalBoundaryLayerService.findOneMunicipality;
-  const highwayLayerServiceFindOne = highwayLayerService.findOne;
+  const highwayLayerServiceFindMultiple = highwayLayerService.findMultiple;
 
   const crownLandLayerServiceFindOneLicense = crownLandLayerService.findOneCrownLandLicense;
   const crownLandLayerServiceFindOneTenure = crownLandLayerService.findOneCrownLandTenure;
@@ -89,7 +89,7 @@ const useLocationFeatureLoader = () => {
         regionFeature: null,
         districtFeature: null,
         municipalityFeature: null,
-        highwayFeature: null,
+        highwayFeatures: null,
         crownLandLeasesFeature: null,
         crownLandLicensesFeature: null,
         crownLandTenuresFeature: null,
@@ -101,7 +101,7 @@ const useLocationFeatureLoader = () => {
       const fullyAttributedTask = fullyAttributedServiceFindOne(latLng);
       const regionTask = adminBoundaryLayerServiceFindRegion(latLng, 'SHAPE');
       const districtTask = adminBoundaryLayerServiceFindDistrict(latLng, 'SHAPE');
-      const highwayTask = highwayLayerServiceFindOne(latLng, 'GEOMETRY');
+      const highwayTask = highwayLayerServiceFindMultiple(latLng, 'the_geom');
       const crownLandLeaseTask = crownLandLayerServiceFindOneLease(latLng);
       const crownLandLicensesTask = crownLandLayerServiceFindOneLicense(latLng);
       const crownLandTenuresTask = crownLandLayerServiceFindOneTenure(latLng);
@@ -113,7 +113,7 @@ const useLocationFeatureLoader = () => {
         parcelFeature,
         regionFeature,
         districtFeature,
-        highwayFeature,
+        highwayFeatures,
         crownLandLeaseFeature,
         crownLandLicensesFeature,
         crownLandTenuresFeature,
@@ -167,7 +167,7 @@ const useLocationFeatureLoader = () => {
       result.regionFeature = regionFeature ?? null;
       result.districtFeature = districtFeature ?? null;
       result.municipalityFeature = municipalityFeature ?? null;
-      result.highwayFeature = highwayFeature ?? null;
+      result.highwayFeatures = highwayFeatures ?? null;
       result.crownLandLeasesFeature = crownLandLeaseFeature ?? null;
       result.crownLandLicensesFeature = crownLandLicensesFeature ?? null;
       result.crownLandTenuresFeature = crownLandTenuresFeature ?? null;
@@ -180,7 +180,7 @@ const useLocationFeatureLoader = () => {
       fullyAttributedServiceFindOne,
       adminBoundaryLayerServiceFindRegion,
       adminBoundaryLayerServiceFindDistrict,
-      highwayLayerServiceFindOne,
+      highwayLayerServiceFindMultiple,
       crownLandLayerServiceFindOneLease,
       crownLandLayerServiceFindOneLicense,
       crownLandLayerServiceFindOneTenure,

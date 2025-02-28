@@ -40,7 +40,7 @@ export const Section: React.FC<
       {exists(header) && (
         <StyledSectionHeader isStyledHeader={isStyledHeader}>
           <Row className="no-gutters">
-            <Col className="align-items-end">{header}</Col>
+            <Col className="align-content-end">{header}</Col>
             {isCollapsable && (
               <Col xs="auto" className="pl-2 d-flex align-items-end">
                 {isCollapsed && (
@@ -80,7 +80,6 @@ export const StyledSectionHeader = styled.h2<{ isStyledHeader?: boolean }>`
   color: ${props => props.theme.css.headerTextColor};
   border-bottom: 0.2rem ${props => props.theme.css.headerBorderColor} solid;
   margin-bottom: 2.4rem;
-  font-size: 2.6rem;
 `;
 
 const StyledFormSection = styled.div<{ noPadding?: boolean }>`

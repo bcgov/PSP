@@ -11,8 +11,10 @@ import {
 
 import { mockDistrictLayerResponse } from '../districtLayerResponse.mock';
 import { mockMotiRegionLayerResponse } from '../index.mock';
+import getMockISSResult from '../mockISSResult';
 
 export const handlers = [
+  // mock requests to the bc assessment services
   http.get('https://delivery.apps.gov.bc.ca/ext/sgw/geo.bca', ({ request }) => {
     const search = new URL(request.url).search;
     if (search.includes('BCA_FOLIO_ADDRESSES_SV')) {
@@ -29,12 +31,20 @@ export const handlers = [
       return HttpResponse.json(getMockLandChars(), { status: 200 });
     }
   }),
+  // mock requests that would normally go to the moti geoserver
   http.get('https://maps.th.gov.bc.ca/geoV05', ({ request }) => {
     const search = new URL(request.url).search;
     if (search.includes('hwy:DSA_REGION_BOUNDARY')) {
       return HttpResponse.json(mockMotiRegionLayerResponse, { status: 200 });
     } else if (search.includes('hwy:DSA_DISTRICT_BOUNDARY')) {
       return HttpResponse.json(mockDistrictLayerResponse, { status: 200 });
+    }
+  }),
+
+  http.get('http://localhost:3000/ogs-internal/ows', ({ request }) => {
+    const search = new URL(request.url).search;
+    if (search.includes('typeName=plan_footprint') && search.includes('service=wfs')) {
+      return HttpResponse.json(getMockISSResult(), { status: 200 });
     }
   }),
 ];

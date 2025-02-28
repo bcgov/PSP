@@ -77,7 +77,7 @@ export const FlexBox = styled.div<IFlexBoxProps>`
 export const H1 = styled.h1`
   color: ${props => props.theme.bcTokens.typographyColorSecondary};
   font-family: 'BCSans-Bold';
-  font-size: 3.2rem;
+  font-size: 2.8rem;
   border-bottom: solid 0.5rem ${props => props.theme.css.headerBorderColor};
   width: 100%;
   text-align: left;
@@ -87,7 +87,7 @@ export const H1 = styled.h1`
 export const H2 = styled.h2`
   color: ${props => props.theme.css.headerTextColor};
   font-family: 'BCSans-Bold';
-  font-size: 2.6rem;
+  font-size: 2.2rem;
   border-bottom: solid 0.2rem ${props => props.theme.css.headerBorderColor};
   width: 100%;
   text-align: left;
@@ -143,9 +143,7 @@ export const StyledSectionParagraph = styled.p`
   text-decoration: none;
 `;
 
-export const TrayHeader = styled.div`
-  font-size: 2rem;
-  font-weight: bold;
+export const TrayHeader = styled(H1)`
   padding: 1rem;
   background-color: ${props => props.theme.bcTokens.surfaceColorPrimaryButtonDefault};
   color: white;

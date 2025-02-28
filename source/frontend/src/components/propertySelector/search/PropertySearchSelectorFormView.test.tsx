@@ -222,7 +222,7 @@ describe('PropertySearchSelectorFormView component', () => {
             lng: -121.60834946062499,
           },
           municipalityFeature: null,
-          highwayFeature: null,
+          highwayFeatures: null,
           parcelFeature: {
             geometry: {
               coordinates: [

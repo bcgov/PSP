@@ -11,21 +11,20 @@ import { useApiGeocoder } from './hooks/pims-api/useApiGeocoder';
 import { useApiLeases } from './hooks/pims-api/useApiLeases';
 import { useApiProperties } from './hooks/pims-api/useApiProperties';
 import { useApiResearchFile } from './hooks/pims-api/useApiResearchFile';
+import { useApiTenants } from './hooks/pims-api/useApiTenants';
 import { useApiUsers } from './hooks/pims-api/useApiUsers';
-import { IResearchSearchResult } from './interfaces/IResearchSearchResult';
 import { mockLookups } from './mocks/lookups.mock';
 import { getMockPagedUsers, getUserMock } from './mocks/user.mock';
 import { ApiGen_Base_Page } from './models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_AcquisitionFile } from './models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_Lease } from './models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_Property } from './models/api/generated/ApiGen_Concepts_Property';
+import { ApiGen_Concepts_ResearchFile } from './models/api/generated/ApiGen_Concepts_ResearchFile';
 import { lookupCodesSlice } from './store/slices/lookupCodes';
 import { networkSlice } from './store/slices/network/networkSlice';
 import { tenantsSlice, useTenants } from './store/slices/tenants';
 import { defaultTenant } from './tenants/config/defaultTenant';
 import { act, renderAsync, RenderOptions, screen, waitFor } from './utils/test-utils';
-import { vi } from 'vitest';
-import { useApiTenants } from './hooks/pims-api/useApiTenants';
 
 vi.mock('axios');
 const mockedAxios = vi.mocked(axios);
@@ -167,7 +166,7 @@ vi.mocked(useApiResearchFile).mockReturnValue({
       page: 1,
       total: 1,
       quantity: 1,
-    } as ApiGen_Base_Page<IResearchSearchResult>,
+    } as ApiGen_Base_Page<ApiGen_Concepts_ResearchFile>,
   }),
   getResearchFile: vi.fn(),
   postResearchFile: vi.fn(),
