@@ -38,7 +38,7 @@ namespace PIMS.Tests.Automation.Data
             return instance;
         }
 
-        public static void PopulateInCollection(DataTable ExcelSheetFile)
+        public static void PopulateInCollection(System.Data.DataTable ExcelSheetFile)
         {
             //Iterate through the columns and rows 
             for (int row = 1; row <= ExcelSheetFile.Rows.Count; row++)

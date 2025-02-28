@@ -1,6 +1,6 @@
 ﻿using AventStack.ExtentReports.Gherkin.Model;
 using AventStack.ExtentReports;
-using BoDi;
+using Reqnroll.BoDi;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using Microsoft.Extensions.Configuration;

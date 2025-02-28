@@ -159,7 +159,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateSubdivisionData(int rowNumber)
         {
-            DataTable subdivisionConsolidationSheet = ExcelDataContext.GetInstance().Sheets["SubdivisionConsolidation"]!;
+            System.Data.DataTable subdivisionConsolidationSheet = ExcelDataContext.GetInstance().Sheets["SubdivisionConsolidation"]!;
             ExcelDataContext.PopulateInCollection(subdivisionConsolidationSheet);
 
             propertySubdivision = new PropertySubdivision();
@@ -188,7 +188,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateConsolidationData(int rowNumber)
         {
-            DataTable subdivisionConsolidationSheet = ExcelDataContext.GetInstance().Sheets["SubdivisionConsolidation"]!;
+            System.Data.DataTable subdivisionConsolidationSheet = ExcelDataContext.GetInstance().Sheets["SubdivisionConsolidation"]!;
             ExcelDataContext.PopulateInCollection(subdivisionConsolidationSheet);
 
             propertyConsolidation = new PropertyConsolidation();
