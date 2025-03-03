@@ -74,7 +74,7 @@ export const UpdateLeaseContainer: React.FunctionComponent<UpdateLeaseContainerP
         onEdit(false);
       }
     },
-    [formikRef, mapMachine, onEdit, refresh],
+    [formikRef, onEdit, refresh],
   );
 
   const onSubmit = useCallback(

@@ -3,14 +3,12 @@ import { Col, Row } from 'react-bootstrap';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import TooltipIcon from '@/components/common/TooltipIcon';
-import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { exists, prettyFormatDate } from '@/utils';
 
 export interface ILeaseDetailViewProps {
   lease: ApiGen_Concepts_Lease;
-  onGenerate: (lease?: ApiGen_Concepts_Lease) => void;
 }
 
 /**
@@ -19,9 +17,7 @@ export interface ILeaseDetailViewProps {
  */
 export const LeaseDetailView: React.FunctionComponent<
   React.PropsWithChildren<ILeaseDetailViewProps>
-> = ({ lease, onGenerate }) => {
-  const { hasClaim } = useKeycloakWrapper();
-
+> = ({ lease }) => {
   const projectName = exists(lease?.project)
     ? `${lease?.project?.code} - ${lease?.project?.description}`
     : '';
@@ -29,8 +25,6 @@ export const LeaseDetailView: React.FunctionComponent<
   const productName = exists(lease?.product)
     ? lease?.product?.code + ' ' + lease?.product?.description
     : '';
-
-  const leaseTypeCode = exists(lease?.type?.id) ? lease?.type?.id : null;
 
   return (
     <Section header={'Original Agreement'}>

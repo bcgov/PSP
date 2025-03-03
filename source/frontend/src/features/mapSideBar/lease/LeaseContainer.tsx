@@ -453,7 +453,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
                 <Route
                   path={`${stripTrailingSlash(match.path)}`}
                   exact={true}
-                  render={({ match }) => (
+                  render={() => (
                     <ViewSelector
                       formikRef={formikRef}
                       lease={lease}

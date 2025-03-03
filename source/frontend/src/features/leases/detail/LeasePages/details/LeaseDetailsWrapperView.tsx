@@ -11,12 +11,10 @@ import { PropertiesInformation } from './PropertiesInformation';
 
 export interface ILeaseDetailsWrapperViewProps {
   lease?: ApiGen_Concepts_Lease;
-  onGenerate: (lease?: ApiGen_Concepts_Lease) => void;
 }
 
 export const LeaseDetailsWrapperView: React.FunctionComponent<ILeaseDetailsWrapperViewProps> = ({
   lease,
-  onGenerate,
 }) => {
   if (!exists(lease)) {
     return <></>;
@@ -24,7 +22,7 @@ export const LeaseDetailsWrapperView: React.FunctionComponent<ILeaseDetailsWrapp
 
   return (
     <>
-      <LeaseDetailView lease={lease} onGenerate={onGenerate} />
+      <LeaseDetailView lease={lease} />
       <LeaseRenewalsView renewals={lease.renewals} />
       <PropertiesInformation lease={lease} />
       <DetailAdministration lease={lease} />

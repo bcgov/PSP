@@ -21,7 +21,6 @@ describe('LeaseDetailView component', () => {
     const utils = render(
       <LeaseDetailView
         lease={renderOptions?.props?.lease ?? getEmptyLease()}
-        onGenerate={renderOptions?.props?.onGenerate ?? onGenerate}
       />,
       {
         ...renderOptions,
