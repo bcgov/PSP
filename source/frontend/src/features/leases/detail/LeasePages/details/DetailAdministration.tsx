@@ -41,11 +41,11 @@ export const DetailAdministration: React.FunctionComponent<
           )}
         </SectionField>
         <SectionField label="Account type" labelWidth="3">
-          {lease.type.description}
+          {lease.type?.description}
           {lease.otherType && lease?.type?.id === 'OTHER' && <>{lease.otherType}</>}
         </SectionField>
         <SectionField label="Receivable to" labelWidth="3">
-          {lease.paymentReceivableType.description}
+          {lease.paymentReceivableType?.description}
         </SectionField>
         <SectionField label="Purpose(s)" labelWidth="3">
           <Multiselect
@@ -62,10 +62,10 @@ export const DetailAdministration: React.FunctionComponent<
           ) && <>{lease.leasePurposes[otherPurposeIndex].purposeOtherDescription}</>}
         </SectionField>
         <SectionField label="Initiator" labelWidth="3">
-          {lease.initiatorType.description}
+          {lease.initiatorType?.description}
         </SectionField>
         <SectionField label="Responsibility" labelWidth="3">
-          {lease.responsibilityType.description}
+          {lease.responsibilityType?.description}
         </SectionField>
         <SectionField label="Effective date" labelWidth="3">
           {prettyFormatDate(responsibilityDate)}

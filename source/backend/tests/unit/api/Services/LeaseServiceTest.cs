@@ -8,12 +8,12 @@ using NetTopologySuite.Geometries;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;
+using Pims.Core.Security;
 using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
-using Pims.Core.Security;
 using Xunit;
 
 namespace Pims.Api.Test.Services
@@ -537,7 +537,6 @@ namespace Pims.Api.Test.Services
 
             // Assert
             leaseRepository.Verify(x => x.Update(lease, false), Times.Once);
-            propertyService.Verify(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), false), Times.Once);
         }
 
         [Fact]
@@ -587,7 +586,7 @@ namespace Pims.Api.Test.Services
             solver.Setup(x => x.CanEditProperties(It.IsAny<LeaseStatusTypes?>())).Returns(true);
 
             // Act
-            Action act = () => service.Update(lease, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
+            Action act = () => service.UpdateProperties(lease, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
 
             // Assert
             var ex = act.Should().Throw<BusinessRuleViolationException>();
@@ -647,11 +646,11 @@ namespace Pims.Api.Test.Services
             solver.Setup(x => x.CanEditProperties(It.IsAny<LeaseStatusTypes?>())).Returns(true);
 
             // Act
-            Action act = () => service.Update(lease, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
+            Action act = () => service.UpdateProperties(lease, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
 
             // Assert
             var ex = act.Should().NotThrow<BusinessRuleViolationException>();
-            leaseRepository.Verify(x => x.Update(lease, false), Times.Once);
+            propertyLeaseRepository.Verify(x => x.UpdatePropertyLeases(lease.LeaseId, It.IsAny<List<PimsPropertyLease>>()), Times.Once);
         }
 
         [Fact]
@@ -684,7 +683,7 @@ namespace Pims.Api.Test.Services
             solver.Setup(x => x.CanEditProperties(It.IsAny<LeaseStatusTypes?>())).Returns(true);
 
             // Act
-            Action act = () => service.Update(lease, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
+            Action act = () => service.UpdateProperties(lease, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
 
             // Assert
             var ex = act.Should().Throw<BusinessRuleViolationException>();
@@ -717,10 +716,10 @@ namespace Pims.Api.Test.Services
             solver.Setup(x => x.CanEditProperties(It.IsAny<LeaseStatusTypes?>())).Returns(true);
 
             // Act
-            var updatedLease = service.Update(lease, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
+            var updatedLease = service.UpdateProperties(lease, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
 
             // Assert
-            leaseRepository.Verify(x => x.Update(lease, false), Times.Once);
+            propertyLeaseRepository.Verify(x => x.UpdatePropertyLeases(lease.LeaseId, It.IsAny<List<PimsPropertyLease>>()), Times.Once);
             propertyService.Verify(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), false), Times.Once);
         }
 
@@ -772,7 +771,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             leaseRepository.Verify(x => x.Update(lease, false), Times.Once);
-            propertyService.Verify(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), false), Times.Once);
+            propertyService.Verify(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), false), Times.Never);
         }
 
         [Fact]
@@ -825,7 +824,7 @@ namespace Pims.Api.Test.Services
                 };
             updatedLease.OrigStartDate = new DateTime(2024, 1, 1);
             updatedLease.OrigExpiryDate = new DateTime(2025, 1, 31);
-            
+
             // Act
             Action act = () => service.Update(updatedLease, new List<UserOverrideCode>() { });
 
@@ -917,20 +916,10 @@ namespace Pims.Api.Test.Services
             solver.Setup(x => x.CanEditProperties(It.IsAny<LeaseStatusTypes?>())).Returns(true);
 
             // Act
-            var updatedLease = service.Update(lease, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
-            PimsPropertyLease updatedLeaseProperty = updatedLease.PimsPropertyLeases.First();
+            var updatedLease = service.UpdateProperties(lease, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
 
             // Assert
-            // since this is a new property, the following default fields should be set.
-            var updatedProperty = updatedLeaseProperty.Property;
-            newProperty.PropertyTypeCode.Should().Be("UNKNOWN");
-            newProperty.PropertyStatusTypeCode.Should().Be("UNKNOWN");
-            newProperty.SurplusDeclarationTypeCode.Should().Be("UNKNOWN");
-            newProperty.PropertyDataSourceEffectiveDate.Should().Be(DateOnly.FromDateTime(DateTime.Now));
-            newProperty.PropertyDataSourceTypeCode.Should().Be("PMBC");
-            newProperty.IsOwned.Should().Be(false);
-
-            leaseRepository.Verify(x => x.Update(lease, false), Times.Once);
+            propertyLeaseRepository.Verify(x => x.UpdatePropertyLeases(lease.LeaseId, It.IsAny<List<PimsPropertyLease>>()), Times.Once);
             propertyService.Verify(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), It.IsAny<Boolean>(), It.IsAny<Boolean>()), Times.Once);
         }
 
@@ -962,7 +951,7 @@ namespace Pims.Api.Test.Services
             solver.Setup(x => x.CanEditProperties(It.IsAny<LeaseStatusTypes?>())).Returns(true);
 
             // Act
-            updatedLease = service.Update(updatedLease, new List<UserOverrideCode>());
+            updatedLease = service.UpdateProperties(updatedLease, new List<UserOverrideCode>());
 
             // Assert
             propertyLeaseRepository.Verify(x => x.UpdatePropertyLeases(It.IsAny<long>(), It.IsAny<ICollection<PimsPropertyLease>>()));
@@ -1000,7 +989,7 @@ namespace Pims.Api.Test.Services
             solver.Setup(x => x.CanEditProperties(It.IsAny<LeaseStatusTypes?>())).Returns(true);
 
             // Act
-            Action act = () => service.Update(updatedLease, new List<UserOverrideCode>());
+            Action act = () => service.UpdateProperties(updatedLease, new List<UserOverrideCode>());
 
             // Assert
             act.Should().Throw<BusinessRuleViolationException>().WithMessage("Lease File property can not be removed since it's assigned as a property for a compensation requisition");
@@ -1037,7 +1026,7 @@ namespace Pims.Api.Test.Services
             solver.Setup(x => x.CanEditProperties(It.IsAny<LeaseStatusTypes?>())).Returns(true);
 
             // Act
-            Action act = () => service.Update(updatedLease, new List<UserOverrideCode>());
+            Action act = () => service.UpdateProperties(updatedLease, new List<UserOverrideCode>());
 
             // Assert
             act.Should().Throw<BusinessRuleViolationException>().WithMessage("This property cannot be deleted because it is part of a subdivision or consolidation");
@@ -1074,7 +1063,7 @@ namespace Pims.Api.Test.Services
             solver.Setup(x => x.CanEditProperties(It.IsAny<LeaseStatusTypes?>())).Returns(true);
 
             // Act
-            updatedLease = service.Update(updatedLease, new List<UserOverrideCode>());
+            updatedLease = service.UpdateProperties(updatedLease, new List<UserOverrideCode>());
 
             // Assert
             propertyLeaseRepository.Verify(x => x.UpdatePropertyLeases(It.IsAny<long>(), It.IsAny<ICollection<PimsPropertyLease>>()));

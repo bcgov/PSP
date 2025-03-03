@@ -41,10 +41,10 @@ const LeaseGenerateContainer: React.FunctionComponent<
   const formEntries: FormDocumentEntry[] = [];
 
   if (lease?.type.id === ApiGen_CodeTypes_LeaseLicenceTypes.LOOBCTFA) {
-    formEntries.push({ formType: FormDocumentType.H1005A, text: 'Generate H1005(a)' });
+    formEntries.push({ formType: FormDocumentType.H1005A, text: 'Generate H-1005(a)' });
   }
   if (lease?.type.id === ApiGen_CodeTypes_LeaseLicenceTypes.LIPPUBHWY) {
-    formEntries.push({ formType: FormDocumentType.H1005, text: 'Generate H1005 ' });
+    formEntries.push({ formType: FormDocumentType.H1005, text: 'Generate H-1005' });
   }
 
   return (

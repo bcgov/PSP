@@ -24,7 +24,7 @@ export interface IAddImprovementsFormProps {
 
 export const AddImprovementsForm: React.FunctionComponent<
   React.PropsWithChildren<IAddImprovementsFormProps>
-> = ({ onSubmit, initialValues, formikRef, loading }) => {
+> = ({ onSubmit, initialValues, formikRef, children, loading }) => {
   return (
     <>
       <LoadingBackdrop show={loading} parentScreen />
@@ -97,6 +97,7 @@ export const AddImprovementsForm: React.FunctionComponent<
                 })
               }
             />
+            {children}
           </StyledSummarySection>
         )}
       </Formik>

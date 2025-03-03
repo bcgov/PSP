@@ -396,6 +396,9 @@ exports[`Add Improvements container component > displays the improvement types i
         </div>
       </div>
     </div>
+    <button>
+      Save
+    </button>
   </div>
 </DocumentFragment>
 `;
@@ -796,6 +799,9 @@ exports[`Add Improvements container component > renders as expected 1`] = `
         </div>
       </div>
     </div>
+    <button>
+      Save
+    </button>
   </div>
 </DocumentFragment>
 `;

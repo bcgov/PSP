@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -254,8 +255,12 @@ namespace Pims.Api.Services
 
             var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
             var currentLease = _leaseRepository.GetNoTracking(lease.LeaseId);
+            if (currentLease == null)
+            {
+                throw new InvalidDataException("Invalid lease");
+            }
 
-            var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease?.LeaseStatusTypeCode);
+            var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease.LeaseStatusTypeCode);
             if (!_leaseStatusSolver.CanEditDetails(currentLeaseStatus) && !_user.HasPermission(Permissions.SystemAdmin))
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
@@ -263,8 +268,6 @@ namespace Pims.Api.Services
 
             pimsUser.ThrowInvalidAccessToLeaseFile(currentLease.RegionCode); // need to check that the user is able to access the current lease as well as has the region for the updated lease.
             pimsUser.ThrowInvalidAccessToLeaseFile(lease.RegionCode);
-
-            var currentFileProperties = _propertyLeaseRepository.GetAllByLeaseId(lease.LeaseId);
 
             if (currentLease.LeaseStatusTypeCode != lease.LeaseStatusTypeCode)
             {
@@ -281,27 +284,6 @@ namespace Pims.Api.Services
 
             _leaseRepository.UpdateLeaseRenewals(lease.Internal_Id, lease.ConcurrencyControlNumber, lease.PimsLeaseRenewals);
 
-            List<PimsPropertyLease> differenceSet = currentFileProperties.Where(x => !lease.PimsPropertyLeases.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
-            foreach (var deletedProperty in differenceSet)
-            {
-                if (_propertyLeaseRepository.LeaseFilePropertyInCompensationReq(deletedProperty.PropertyLeaseId))
-                {
-                    throw new BusinessRuleViolationException("Lease File property can not be removed since it's assigned as a property for a compensation requisition");
-                }
-
-                if (_propertyOperationService.GetOperationsForProperty(deletedProperty.PropertyId).Count > 0)
-                {
-                    throw new BusinessRuleViolationException("This property cannot be deleted because it is part of a subdivision or consolidation");
-                }
-
-                var totalAssociationCount = _propertyRepository.GetAllAssociationsCountById(deletedProperty.PropertyId);
-                if (totalAssociationCount <= 1)
-                {
-                    _leaseRepository.CommitTransaction(); // TODO: this can only be removed if cascade deletes are implemented. EF executes deletes in alphabetic order.
-                    _propertyRepository.Delete(deletedProperty.Property);
-                }
-            }
-
             _leaseRepository.CommitTransaction();
 
             return _leaseRepository.GetNoTracking(lease.LeaseId);
@@ -314,11 +296,10 @@ namespace Pims.Api.Services
 
             var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
             var currentLease = _leaseRepository.GetNoTracking(lease.LeaseId);
+            var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease?.LeaseStatusTypeCode);
 
             pimsUser.ThrowInvalidAccessToLeaseFile(currentLease.RegionCode); // need to check that the user is able to access the current lease as well as has the region for the updated lease.
             pimsUser.ThrowInvalidAccessToLeaseFile(lease.RegionCode);
-
-            MatchProperties(lease, userOverrides);
 
             var leaseWithProperties = AssociatePropertyLeases(lease, userOverrides);
 
@@ -357,7 +338,30 @@ namespace Pims.Api.Services
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
+
             _propertyLeaseRepository.UpdatePropertyLeases(lease.Internal_Id, leaseWithProperties.PimsPropertyLeases);
+
+            List<PimsPropertyLease> differenceSet = currentFileProperties.Where(x => !lease.PimsPropertyLeases.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
+            foreach (var deletedProperty in differenceSet)
+            {
+                if (_propertyLeaseRepository.LeaseFilePropertyInCompensationReq(deletedProperty.PropertyLeaseId))
+                {
+                    throw new BusinessRuleViolationException("Lease File property can not be removed since it's assigned as a property for a compensation requisition");
+                }
+
+                if (_propertyOperationService.GetOperationsForProperty(deletedProperty.PropertyId).Count > 0)
+                {
+                    throw new BusinessRuleViolationException("This property cannot be deleted because it is part of a subdivision or consolidation");
+                }
+
+                var totalAssociationCount = _propertyRepository.GetAllAssociationsCountById(deletedProperty.PropertyId);
+                if (totalAssociationCount <= 1)
+                {
+                    _leaseRepository.CommitTransaction(); // TODO: this can only be removed if cascade deletes are implemented. EF executes deletes in alphabetic order.
+                    _propertyRepository.Delete(deletedProperty.Property);
+                }
+            }
+
             _propertyLeaseRepository.CommitTransaction();
 
             return _leaseRepository.Get(lease.Internal_Id);
@@ -525,7 +529,7 @@ namespace Pims.Api.Services
                 {
                     if (renewal.CommencementDt.HasValue && renewal.ExpiryDt.HasValue)
                     {
-                        renewalDates.Add(new Tuple<long, DateTime, DateTime>(renewal.LeaseRenewalId, renewal.CommencementDt.Value, renewal.ExpiryDt.Value)) ;
+                        renewalDates.Add(new Tuple<long, DateTime, DateTime>(renewal.LeaseRenewalId, renewal.CommencementDt.Value, renewal.ExpiryDt.Value));
                     }
                     else
                     {
