@@ -22,17 +22,14 @@ describe('LeasePropertiesInformation component', () => {
   const setup = (
     renderOptions: RenderOptions & IPropertiesInformationProps = { lease: getEmptyLease() },
   ) => {
-    const utils = render(
-        <PropertiesInformation lease={renderOptions.lease} />,
-      {
-        ...renderOptions,
-        history,
-        mockMapMachine: {
-          ...mapMachineBaseMock,
-          setFilePropertyLocations: customSetFilePropertyLocations,
-        },
+    const utils = render(<PropertiesInformation lease={renderOptions.lease} />, {
+      ...renderOptions,
+      history,
+      mockMapMachine: {
+        ...mapMachineBaseMock,
+        setFilePropertyLocations: customSetFilePropertyLocations,
       },
-    );
+    });
 
     return { ...utils };
   };

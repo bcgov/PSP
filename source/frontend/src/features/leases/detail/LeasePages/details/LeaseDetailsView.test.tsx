@@ -19,9 +19,7 @@ describe('LeaseDetailView component', () => {
     renderOptions: RenderOptions & { props?: Partial<ILeaseDetailViewProps> } = {},
   ) => {
     const utils = render(
-      <LeaseDetailView
-        lease={renderOptions?.props?.lease ?? getEmptyLease()}
-      />,
+      <LeaseDetailView lease={renderOptions?.props?.lease ?? getEmptyLease()} />,
       {
         ...renderOptions,
         claims: renderOptions?.claims ?? [Claims.LEASE_VIEW],
