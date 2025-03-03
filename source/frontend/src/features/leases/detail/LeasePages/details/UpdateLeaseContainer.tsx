@@ -3,7 +3,6 @@ import { FormikProps } from 'formik/dist/types';
 import { useCallback, useContext } from 'react';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
-import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import * as API from '@/constants/API';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { useLeaseDetail } from '@/features/leases/hooks/useLeaseDetail';
@@ -39,8 +38,6 @@ export const UpdateLeaseContainer: React.FunctionComponent<UpdateLeaseContainerP
   >('Failed to update Lease File');
 
   const { setModalContent, setDisplayModal } = useModalContext();
-
-  const mapMachine = useMapStateMachine();
 
   const { getByType } = useLookupCodeHelpers();
   const consultationTypes = getByType(API.CONSULTATION_TYPES);
