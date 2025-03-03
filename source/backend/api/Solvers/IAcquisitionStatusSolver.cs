@@ -10,12 +10,14 @@ namespace Pims.Api.Services
 
         bool CanEditTakes(AcquisitionStatusTypes? acquisitionStatus);
 
-        bool CanEditOrDeleteCompensation(AcquisitionStatusTypes? acquisitionStatus, bool? isDraftCompensation);
+        bool CanEditOrDeleteCompensation(AcquisitionStatusTypes? acquisitionStatus, bool? isDraftCompensation, bool? isAdmin);
 
-        bool CanEditOrDeleteAgreement(AcquisitionStatusTypes? acquisitionStatus, AgreementStatusTypes? agreementStatus);
+        bool CanEditOrDeleteAgreement(AcquisitionStatusTypes? acquisitionStatus);
 
         bool CanEditChecklists(AcquisitionStatusTypes? acquisitionStatus);
 
         bool CanEditStakeholders(AcquisitionStatusTypes? acquisitionStatus);
+
+        bool CanEditExpropriation(AcquisitionStatusTypes? acquisitionStatus);
     }
 }

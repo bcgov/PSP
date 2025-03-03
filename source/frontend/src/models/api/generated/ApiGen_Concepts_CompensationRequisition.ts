@@ -7,10 +7,10 @@ import { UtcIsoDate } from '@/models/api/UtcIsoDateTime';
 import { ApiGen_Base_BaseAudit } from './ApiGen_Base_BaseAudit';
 import { ApiGen_Concepts_AcquisitionFile } from './ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_CompensationFinancial } from './ApiGen_Concepts_CompensationFinancial';
+import { ApiGen_Concepts_CompReqAcqPayee } from './ApiGen_Concepts_CompReqAcqPayee';
 import { ApiGen_Concepts_CompReqAcquisitionProperty } from './ApiGen_Concepts_CompReqAcquisitionProperty';
+import { ApiGen_Concepts_CompReqLeasePayee } from './ApiGen_Concepts_CompReqLeasePayee';
 import { ApiGen_Concepts_CompReqLeaseProperty } from './ApiGen_Concepts_CompReqLeaseProperty';
-import { ApiGen_Concepts_CompReqLeaseStakeholder } from './ApiGen_Concepts_CompReqLeaseStakeholder';
-import { ApiGen_Concepts_CompReqPayee } from './ApiGen_Concepts_CompReqPayee';
 import { ApiGen_Concepts_FinancialCode } from './ApiGen_Concepts_FinancialCode';
 import { ApiGen_Concepts_Project } from './ApiGen_Concepts_Project';
 
@@ -32,15 +32,14 @@ export interface ApiGen_Concepts_CompensationRequisition extends ApiGen_Base_Bas
   agreementDate: UtcIsoDate | null;
   generationDate: UtcIsoDate | null;
   financials: ApiGen_Concepts_CompensationFinancial[] | null;
-  legacyPayee: string | null;
   isPaymentInTrust: boolean | null;
   gstNumber: string | null;
   specialInstruction: string | null;
   detailedRemarks: string | null;
   alternateProjectId: number | null;
   alternateProject: ApiGen_Concepts_Project | null;
-  compReqPayees: ApiGen_Concepts_CompReqPayee[] | null;
-  compReqLeaseStakeholders: ApiGen_Concepts_CompReqLeaseStakeholder[] | null;
+  compReqAcqPayees: ApiGen_Concepts_CompReqAcqPayee[] | null;
+  compReqLeasePayees: ApiGen_Concepts_CompReqLeasePayee[] | null;
   compReqAcquisitionProperties: ApiGen_Concepts_CompReqAcquisitionProperty[] | null;
   compReqLeaseProperties: ApiGen_Concepts_CompReqLeaseProperty[] | null;
 }

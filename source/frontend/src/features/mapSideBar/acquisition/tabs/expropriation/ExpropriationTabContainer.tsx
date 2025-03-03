@@ -7,16 +7,18 @@ import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_C
 import { ApiGen_Concepts_ExpropriationPayment } from '@/models/api/generated/ApiGen_Concepts_ExpropriationPayment';
 import { isValidId } from '@/utils/utils';
 
+import AcquisitionFileStatusUpdateSolver from '../fileDetails/detail/AcquisitionFileStatusUpdateSolver';
 import { IExpropriationTabContainerViewProps } from './ExpropriationTabContainerView';
 
 export interface IExpropriationTabContainerProps {
   acquisitionFile: ApiGen_Concepts_AcquisitionFile;
+  statusUpdateSolver: AcquisitionFileStatusUpdateSolver;
   View: React.FunctionComponent<IExpropriationTabContainerViewProps>;
 }
 
 export const ExpropriationTabContainer: React.FunctionComponent<
   React.PropsWithChildren<IExpropriationTabContainerProps>
-> = ({ View, acquisitionFile }) => {
+> = ({ View, acquisitionFile, statusUpdateSolver }) => {
   const { fileLoading, setStaleLastUpdatedBy } = useContext(SideBarContext);
   const [form8s, setForm8s] = useState<ApiGen_Concepts_ExpropriationPayment[]>([]);
 
@@ -63,6 +65,7 @@ export const ExpropriationTabContainer: React.FunctionComponent<
       acquisitionFile={acquisitionFile}
       form8s={form8s}
       onForm8Deleted={handleForm8Deleted}
+      isFileFinalStatus={!statusUpdateSolver.canEditExpropriation()}
     ></View>
   ) : null;
 };

@@ -842,51 +842,6 @@ namespace Pims.Dal.Test.Repositories
         }
 
         [Fact]
-        public void Update_Lease_Properties_Update()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit, Permissions.LeaseView);
-
-            var lease = EntityHelper.CreateLease(1, addProperty: false);
-            var propertyOne = EntityHelper.CreateProperty(1);
-            lease.PimsPropertyLeases.Add(new Dal.Entities.PimsPropertyLease() { LeaseId = lease.LeaseId, PropertyId = propertyOne.PropertyId, Property = propertyOne });
-            var context = helper.CreatePimsContext(user, true);
-            context.AddRange(lease, propertyOne);
-            var service = helper.Create<LeaseService>(user);
-            helper.SaveChanges();
-
-            var propertyRepository = helper.GetService<Mock<IPropertyRepository>>();
-            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(propertyOne);
-
-            var repository = helper.GetService<Mock<IPropertyLeaseRepository>>();
-            repository.Setup(x => x.GetAllByPropertyId(It.IsAny<long>())).Returns(new List<PimsPropertyLease>());
-
-            var leaseRepository = helper.GetService<Mock<ILeaseRepository>>();
-            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
-            leaseRepository.Setup(x => x.Update(It.IsAny<PimsLease>(), false));
-
-            var propertyLeaseRepository = helper.GetService<Mock<IPropertyLeaseRepository>>();
-            propertyLeaseRepository.Setup(x => x.UpdatePropertyLeases(It.IsAny<long>(), It.IsAny<List<PimsPropertyLease>>()));
-
-            var userRepository = helper.GetService<Mock<IUserRepository>>();
-            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("test"));
-
-            // Act
-            var updateProperty = EntityHelper.CreateProperty(context, 2);
-            helper.SaveChanges();
-            var propertyToUpdate = lease.PimsPropertyLeases.FirstOrDefault();
-            propertyToUpdate.PropertyId = updateProperty.PropertyId;
-            propertyToUpdate.Property = updateProperty;
-            context.ChangeTracker.Clear();
-            var updatedLease = service.Update(lease, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
-
-            // Assert
-            leaseRepository.Verify(x => x.Update(lease, false), Times.Once);
-            propertyLeaseRepository.Verify(x => x.UpdatePropertyLeases(lease.LeaseId, lease.PimsPropertyLeases), Times.Once);
-        }
-
-        [Fact]
         public void Update_Lease_Properties_UpdateNonExistantProperty()
         {
             // Arrange

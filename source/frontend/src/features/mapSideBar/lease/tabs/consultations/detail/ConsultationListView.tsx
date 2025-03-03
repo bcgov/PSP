@@ -15,6 +15,7 @@ import TooltipIcon from '@/components/common/TooltipIcon';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import * as API from '@/constants/API';
 import Claims from '@/constants/claims';
+import { cannotEditMessage } from '@/features/mapSideBar/acquisition/common/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
@@ -26,6 +27,7 @@ import { booleanToYesNoString } from '@/utils/formUtils';
 export interface IConsultationListViewProps {
   loading: boolean;
   consultations: ApiGen_Concepts_ConsultationLease[];
+  isFileFinalStatus?: boolean;
   onAdd: () => void;
   onEdit: (consultationId: number) => void;
   onDelete: (consultationId: number) => void;
@@ -41,6 +43,7 @@ interface GroupedConsultations {
 export const ConsultationListView: React.FunctionComponent<IConsultationListViewProps> = ({
   loading,
   consultations,
+  isFileFinalStatus,
   onAdd,
   onEdit,
   onDelete,
@@ -78,6 +81,10 @@ export const ConsultationListView: React.FunctionComponent<IConsultationListView
             addButtonText="Add Approval / Consultation"
             addButtonIcon={<FaPlus size="2rem" />}
             onAdd={onAdd}
+            cannotAddComponent={
+              <TooltipIcon toolTipId={`agreement-cannot-add-tooltip`} toolTip={cannotEditMessage} />
+            }
+            isAddEnabled={!isFileFinalStatus}
           />
         }
       >
@@ -103,7 +110,7 @@ export const ConsultationListView: React.FunctionComponent<IConsultationListView
                     <div>
                       <Row>
                         <Col>{consultation.consultationOutcomeTypeCode?.description}</Col>
-                        {keycloak.hasClaim(Claims.LEASE_EDIT) && (
+                        {keycloak.hasClaim(Claims.LEASE_EDIT) && !isFileFinalStatus && (
                           <>
                             <Col xs="auto" className="px-1">
                               <RemoveIconButton
@@ -140,6 +147,12 @@ export const ConsultationListView: React.FunctionComponent<IConsultationListView
                               </StyledButtonContainer>
                             </Col>
                           </>
+                        )}
+                        {keycloak.hasClaim(Claims.LEASE_EDIT) && isFileFinalStatus && (
+                          <TooltipIcon
+                            toolTipId={`consultation-edit-actions-cannot-edit-tooltip`}
+                            toolTip={cannotEditMessage}
+                          />
                         )}
                       </Row>
                     </div>

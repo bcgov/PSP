@@ -8,17 +8,18 @@ import { useFinancialCodeRepository } from '@/hooks/repositories/useFinancialCod
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
 import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
 import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
+import { usePrevious } from '@/hooks/usePrevious';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
-import { ApiGen_Concepts_CompReqPayee } from '@/models/api/generated/ApiGen_Concepts_CompReqPayee';
+import { ApiGen_Concepts_CompReqAcqPayee } from '@/models/api/generated/ApiGen_Concepts_CompReqAcqPayee';
+import { ApiGen_Concepts_CompReqLeasePayee } from '@/models/api/generated/ApiGen_Concepts_CompReqLeasePayee';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
-import { exists, isValidId } from '@/utils';
+import { exists, isValidId, isValidString } from '@/utils';
 
-import { CompReqLeaseStakeholderModel } from '../../acquisition/models/LeaseStakeholderModel';
 import { CompensationRequisitionFormModel } from '../models/CompensationRequisitionFormModel';
 import { CompensationRequisitionFormProps } from './UpdateCompensationRequisitionForm';
 
@@ -37,7 +38,7 @@ const UpdateCompensationRequisitionContainer: React.FC<
   const [payeeOptions, setPayeeOptions] = useState<PayeeOption[]>(null);
   const [financialActivityOptions, setFinancialActivityOptions] = useState<SelectOption[]>([]);
   const [chartOfAccountOptions, setChartOfAccountOptions] = useState<SelectOption[]>([]);
-  const [yearlyFinancialOptions, setyearlyFinancialOptions] = useState<SelectOption[]>([]);
+  const [yearlyFinancialOptions, setYearlyFinancialOptions] = useState<SelectOption[]>([]);
   const [responsibilityCentreOptions, setResponsibilityCentreOptions] = useState<SelectOption[]>(
     [],
   );
@@ -57,7 +58,7 @@ const UpdateCompensationRequisitionContainer: React.FC<
 
   const {
     getAcquisitionInterestHolders: {
-      execute: fetchInterestHolders,
+      execute: fetchAcquisitionInterestHolders,
       loading: loadingInterestHolders,
     },
   } = useInterestHolderRepository();
@@ -79,20 +80,25 @@ const UpdateCompensationRequisitionContainer: React.FC<
   } = useFinancialCodeRepository();
 
   const {
-    getLeaseStakeholders: {
-      execute: getLeaseStakeholders,
-      loading: loadingLeaseStakeholders,
-      response: leaseStakeholders,
-    },
+    getLeaseStakeholders: { execute: getLeaseStakeholders, loading: loadingLeaseStakeholders },
   } = useLeaseStakeholderRepository();
 
   const {
-    getCompensationRequisitionPayees: {
-      execute: getCompReqPayees,
-      loading: loadingCompReqPayees,
-      response: existingPayees,
+    getCompensationRequisitionAcqPayees: {
+      execute: getCompReqAcqPayees,
+      loading: loadingCompReqAcqPayees,
+      response: existingAcqPayees,
+    },
+    getCompensationRequisitionLeasePayees: {
+      execute: getCompReqLeasePayees,
+      loading: loadingCompReqLeasePayees,
+      response: existingLeasePayees,
     },
   } = useCompensationRequisitionRepository();
+
+  // update payees when request to child endpoint returns
+  const previousAcqPayees = usePrevious(existingAcqPayees);
+  compensation.compReqAcqPayees = existingAcqPayees ?? [];
 
   const updateCompensation = async (compensation: CompensationRequisitionFormModel) => {
     const compensationApiModel = compensation.toApi();
@@ -104,48 +110,99 @@ const UpdateCompensationRequisitionContainer: React.FC<
     return result;
   };
 
-  const fetchPayeeOptions = useCallback(async () => {
-    if (file.id) {
-      const acquisitionOwnersCall = retrieveAcquisitionOwners(file.id);
-      const interestHoldersCall = fetchInterestHolders(file.id);
+  const fetchPayeeOptions = useCallback(
+    async (
+      fileType: ApiGen_CodeTypes_FileTypes,
+      existingCompPayees: ApiGen_Concepts_CompReqAcqPayee[],
+    ) => {
+      if (file.id) {
+        switch (fileType) {
+          case ApiGen_CodeTypes_FileTypes.Acquisition:
+            {
+              const acquisitionOwnersCall = retrieveAcquisitionOwners(file.id);
+              const interestHoldersCall = fetchAcquisitionInterestHolders(file.id);
 
-      await Promise.all([acquisitionOwnersCall, interestHoldersCall]).then(
-        ([acquisitionOwners, interestHolders]) => {
-          const options = payeeOptions ?? [];
+              const [acquisitionOwners, interestHolders] = await Promise.all([
+                acquisitionOwnersCall,
+                interestHoldersCall,
+              ]);
 
-          if (acquisitionOwners !== undefined) {
-            const ownersOptions: PayeeOption[] = acquisitionOwners.map(x =>
-              PayeeOption.createOwner(x, getEmptyCompReqPayee(compensation.id)),
-            );
-            options.push(...ownersOptions);
-          }
+              const options = [];
 
-          if (interestHolders !== undefined) {
-            const interestHolderOptions: PayeeOption[] = interestHolders.map(x =>
-              PayeeOption.createInterestHolder(x, getEmptyCompReqPayee(compensation.id)),
-            );
-            options.push(...interestHolderOptions);
-          }
+              if (exists(acquisitionOwners)) {
+                const ownersOptions: PayeeOption[] = acquisitionOwners.map(acquisitionOwner =>
+                  PayeeOption.createOwner(
+                    acquisitionOwner,
+                    getEmptyCompReqAcqPayee(compensation.id),
+                  ),
+                );
+                options.push(...ownersOptions);
+              }
 
-          const teamMemberOptions: PayeeOption[] =
-            (file as ApiGen_Concepts_AcquisitionFile).acquisitionTeam
-              ?.filter(
-                (x): x is ApiGen_Concepts_AcquisitionFileTeam =>
-                  exists(x) && x.teamProfileTypeCode === 'MOTILAWYER',
-              )
-              .map(x => PayeeOption.createTeamMember(x, getEmptyCompReqPayee(compensation.id))) ||
-            [];
-          options.push(...teamMemberOptions);
+              if (exists(interestHolders)) {
+                const interestHolderOptions: PayeeOption[] = interestHolders.map(interestHolder =>
+                  PayeeOption.createInterestHolder(
+                    interestHolder,
+                    getEmptyCompReqAcqPayee(compensation.id),
+                  ),
+                );
+                options.push(...interestHolderOptions);
+              }
 
-          if (compensation.legacyPayee) {
-            options.push(PayeeOption.createLegacyPayee(compensation, null, compensation.id));
-          }
+              const teamMemberOptions: PayeeOption[] =
+                (file as ApiGen_Concepts_AcquisitionFile).acquisitionTeam
+                  ?.filter(
+                    (teamMember): teamMember is ApiGen_Concepts_AcquisitionFileTeam =>
+                      exists(teamMember) && teamMember.teamProfileTypeCode === 'MOTILAWYER',
+                  )
+                  .map(teamMember =>
+                    PayeeOption.createTeamMember(
+                      teamMember,
+                      getEmptyCompReqAcqPayee(compensation.id),
+                    ),
+                  ) || [];
+              options.push(...teamMemberOptions);
 
-          setPayeeOptions(options);
-        },
-      );
-    }
-  }, [file, retrieveAcquisitionOwners, fetchInterestHolders, compensation, payeeOptions]);
+              const legacy = (existingCompPayees ?? []).find(p => isValidString(p.legacyPayee));
+              if (exists(legacy)) {
+                options.push(
+                  PayeeOption.createLegacyPayee(
+                    legacy.legacyPayee,
+                    getEmptyCompReqAcqPayee(compensation.id),
+                  ),
+                );
+              }
+
+              setPayeeOptions(options);
+            }
+            break;
+          case ApiGen_CodeTypes_FileTypes.Lease:
+            {
+              const leaseStakeHolders = await getLeaseStakeholders(file.id);
+              if (exists(leaseStakeHolders)) {
+                const stakeHoldersOptions: PayeeOption[] = leaseStakeHolders.map(leaseStakeHolder =>
+                  PayeeOption.createLeaseStakeholder(
+                    compensation.id,
+                    leaseStakeHolder,
+                    getEmptyCompReqLeasePayee(compensation.id),
+                  ),
+                );
+
+                setPayeeOptions(stakeHoldersOptions);
+              }
+            }
+            break;
+        }
+      }
+    },
+    [
+      file,
+      retrieveAcquisitionOwners,
+      fetchAcquisitionInterestHolders,
+      compensation.id,
+      getLeaseStakeholders,
+    ],
+  );
 
   const fetchFinancialCodes = useCallback(async () => {
     const fetchFinancialActivitiesCall = fetchFinancialActivities();
@@ -219,7 +276,7 @@ const UpdateCompensationRequisitionContainer: React.FC<
       setFinancialActivityOptions(activityOptions);
       setChartOfAccountOptions(chartsOptions);
       setResponsibilityCentreOptions(responsibilitiesOptions);
-      setyearlyFinancialOptions(yearlyOptions);
+      setYearlyFinancialOptions(yearlyOptions);
     });
   }, [
     fetchChartOfAccounts,
@@ -230,9 +287,11 @@ const UpdateCompensationRequisitionContainer: React.FC<
 
   const fetchCompensationPayees = useCallback(async () => {
     if (isValidId(compensation.id)) {
-      await getCompReqPayees(compensation.id);
+      fileType === ApiGen_CodeTypes_FileTypes.Acquisition
+        ? await getCompReqAcqPayees(compensation.id)
+        : await getCompReqLeasePayees(compensation.id);
     }
-  }, [compensation.id, getCompReqPayees]);
+  }, [compensation.id, fileType, getCompReqAcqPayees, getCompReqLeasePayees]);
 
   const fetchLeaseStakeholders = useCallback(async () => {
     if (isValidId(file.id) && fileType === ApiGen_CodeTypes_FileTypes.Lease) {
@@ -249,16 +308,21 @@ const UpdateCompensationRequisitionContainer: React.FC<
   }, [fetchLeaseStakeholders]);
 
   useEffect(() => {
-    if (payeeOptions === null) {
-      fetchPayeeOptions();
+    if (payeeOptions === null || previousAcqPayees !== existingAcqPayees) {
+      fetchPayeeOptions(fileType, existingAcqPayees);
     }
-  }, [fetchPayeeOptions, payeeOptions]);
+  }, [existingAcqPayees, fetchPayeeOptions, fileType, payeeOptions, previousAcqPayees]);
+
+  useEffect(() => {
+    if (payeeOptions === null) {
+      fetchPayeeOptions(fileType, []);
+    }
+  }, [existingLeasePayees, fetchPayeeOptions, fileType, payeeOptions]);
 
   useEffect(() => {
     fetchFinancialCodes();
   }, [fetchFinancialCodes]);
 
-  compensation.compReqPayees = existingPayees ?? [];
   return (
     <View
       isLoading={
@@ -270,7 +334,8 @@ const UpdateCompensationRequisitionContainer: React.FC<
         loadingYearlyFinancials ||
         loadingInterestHolders ||
         loadingLeaseStakeholders ||
-        loadingCompReqPayees
+        loadingCompReqAcqPayees ||
+        loadingCompReqLeasePayees
       }
       initialValues={CompensationRequisitionFormModel.fromApi(
         compensation,
@@ -280,9 +345,6 @@ const UpdateCompensationRequisitionContainer: React.FC<
         financialActivityOptions,
       )}
       payeeOptions={payeeOptions ?? []}
-      leaseStakeholders={
-        leaseStakeholders?.map(l => CompReqLeaseStakeholderModel.createFromStakeholder(l)) ?? []
-      }
       gstConstant={gstDecimalPercentage ?? 0}
       financialActivityOptions={financialActivityOptions}
       chartOfAccountsOptions={chartOfAccountOptions}
@@ -298,17 +360,30 @@ const UpdateCompensationRequisitionContainer: React.FC<
   );
 };
 
-const getEmptyCompReqPayee = (compensationRequisitionId): ApiGen_Concepts_CompReqPayee => {
+const getEmptyCompReqAcqPayee = (compensationRequisitionId): ApiGen_Concepts_CompReqAcqPayee => {
   return {
     compensationRequisitionId: compensationRequisitionId,
     acquisitionFileTeamId: null,
     interestHolderId: null,
-    compReqPayeeId: null,
+    compReqAcqPayeeId: null,
     acquisitionOwnerId: null,
     acquisitionOwner: null,
     interestHolder: null,
     acquisitionFileTeam: null,
     compensationRequisition: null,
+    legacyPayee: null,
+    ...getEmptyBaseAudit(),
+  };
+};
+
+const getEmptyCompReqLeasePayee = (
+  compensationRequisitionId,
+): ApiGen_Concepts_CompReqLeasePayee => {
+  return {
+    compensationRequisitionId: compensationRequisitionId,
+    leaseStakeholderId: null,
+    compReqLeasePayeeId: null,
+    leaseStakeholder: null,
     ...getEmptyBaseAudit(),
   };
 };

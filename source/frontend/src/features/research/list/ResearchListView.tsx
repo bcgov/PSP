@@ -2,28 +2,26 @@ import React, { useEffect } from 'react';
 import { useCallback } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaPlus } from 'react-icons/fa';
-import { MdTopic } from 'react-icons/md';
 import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
+import ResearchFileIcon from '@/assets/images/research-icon.svg?react';
 import * as CommonStyled from '@/components/common/styles';
 import { StyledAddButton } from '@/components/common/styles';
 import Claims from '@/constants/claims';
 import { useApiResearchFile } from '@/hooks/pims-api/useApiResearchFile';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { useSearch } from '@/hooks/useSearch';
-import {
-  IResearchSearchResult,
-  ResearchSearchResultModel,
-} from '@/interfaces/IResearchSearchResult';
+import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 
 import { IResearchFilter } from '../interfaces';
+import { ResearchSearchResultModel } from './models';
 import ResearchFilter, { defaultResearchFilter } from './ResearchFilter/ResearchFilter';
 import { ResearchSearchResults } from './ResearchSearchResults/ResearchSearchResults';
 
 /**
- * Page that displays leases information.
+ * Page that displays Research files information.
  */
 export const ResearchListView: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
   const history = useHistory();
@@ -43,7 +41,7 @@ export const ResearchListView: React.FunctionComponent<React.PropsWithChildren<u
     setCurrentPage,
     setPageSize,
     loading,
-  } = useSearch<IResearchSearchResult, IResearchFilter>(
+  } = useSearch<ApiGen_Concepts_ResearchFile, IResearchFilter>(
     defaultResearchFilter,
     getResearchFiles,
     'No matching results can be found. Try widening your search criteria.',
@@ -69,7 +67,7 @@ export const ResearchListView: React.FunctionComponent<React.PropsWithChildren<u
         <CommonStyled.H1>
           <FlexDiv>
             <div>
-              <MdTopic title="Research file icon" />
+              <ResearchFileIcon title="Research file icon" fill="currentColor" />
               <span className="ml-2">Research Files</span>
             </div>
             {hasClaim(Claims.RESEARCH_ADD) && (
@@ -113,4 +111,8 @@ const FlexDiv = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 0.25rem;
+
+  svg {
+    vertical-align: baseline;
+  }
 `;

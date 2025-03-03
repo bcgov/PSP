@@ -1,6 +1,6 @@
 ﻿using AventStack.ExtentReports.Gherkin.Model;
 using AventStack.ExtentReports;
-using BoDi;
+using Reqnroll.BoDi;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using Microsoft.Extensions.Configuration;
@@ -26,7 +26,7 @@ namespace PIMS.Tests.Automation.Reports
             configurationLazy = new Lazy<IConfiguration>(ReadConfiguration);
             closeBrowserOnDispose = Configuration.GetValue("CloseBrowserAfterEachTest", true);
             runAutomationHeadless = Configuration.GetValue("RunHeadless", true);
-            
+
             _container.RegisterInstanceAs<IWebDriver>(Current);
         }
 
@@ -67,7 +67,7 @@ namespace PIMS.Tests.Automation.Reports
         [BeforeScenario(Order = 1)]
         public void FirstBeforeScenario(ScenarioContext scenarioContext)
         {
-            Console.WriteLine("Running before scenario...");           
+            Console.WriteLine("Running before scenario...");
             _scenario = _feature.CreateNode<Scenario>(scenarioContext.ScenarioInfo.Title);
         }
 
@@ -77,10 +77,8 @@ namespace PIMS.Tests.Automation.Reports
             Console.WriteLine("Running after scenario...");
             var driver = _container.Resolve<IWebDriver>();
 
-            if (driver != null)
-            {
+            if (driver != null && closeBrowserOnDispose)
                 driver.Quit();
-            }
         }
 
         [AfterStep]

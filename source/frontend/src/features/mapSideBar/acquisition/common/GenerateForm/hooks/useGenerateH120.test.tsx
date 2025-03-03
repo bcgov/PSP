@@ -30,13 +30,15 @@ import {
   getMockLeaseProperties,
   getMockLeaseStakeholders,
 } from '@/mocks/lease.mock';
+import { getCompensationRequisitionAcqPayeesApi } from '@/hooks/pims-api/useApiRequisitionCompensations';
 
 const generateFn = vi
   .fn()
   .mockResolvedValue({ status: ApiGen_CodeTypes_ExternalResponseStatus.Success, payload: {} });
 const getAcquisitionFileFn = vi.fn();
 const getCompensationRequisitionPropertiesFn = vi.fn();
-const getCompensationRequisitionPayeesFn = vi.fn();
+const getCompensationRequisitionAcqPayeesFn = vi.fn();
+const getCompensationRequisitionLeasePayeesFn = vi.fn();
 const getAcquisitionPropertiesFn = vi.fn();
 const getH120sCategoryFn = vi.fn();
 const getInterestHoldersFn = vi.fn();
@@ -88,7 +90,8 @@ vi.mocked(useCompensationRequisitionRepository).mockImplementation(
     ({
       getCompensationRequisitionProperties: { execute: getCompensationRequisitionPropertiesFn },
       getCompensationRequisitionFinancials: { execute: getCompReqFinancialsFn },
-      getCompensationRequisitionPayees: { execute: getCompensationRequisitionPayeesFn },
+      getCompensationRequisitionAcqPayees: { execute: getCompensationRequisitionAcqPayeesFn },
+      getCompensationRequisitionLeasePayees: { execute: getCompensationRequisitionLeasePayeesFn },
     } as unknown as ReturnType<typeof useCompensationRequisitionRepository>),
 );
 
@@ -209,7 +212,8 @@ describe('useGenerateH120 functions', () => {
     expect(generateFn).toHaveBeenCalled();
     expect(getAcquisitionPropertiesFn).toHaveBeenCalled();
     expect(getCompensationRequisitionPropertiesFn).toHaveBeenCalled();
-    expect(getCompensationRequisitionPayeesFn).toHaveBeenCalled();
+    expect(getCompensationRequisitionAcqPayeesFn).toHaveBeenCalled();
+    expect(getCompensationRequisitionLeasePayeesFn).toHaveBeenCalled();
     expect(findElectoralDistrictFn).toHaveBeenCalled();
   });
 

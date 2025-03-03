@@ -7,13 +7,13 @@ import { ApiGen_Concepts_CompensationFinancial } from '@/models/api/generated/Ap
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { ApiGen_Concepts_CompReqAcquisitionProperty } from '@/models/api/generated/ApiGen_Concepts_CompReqAcquisitionProperty';
 import { ApiGen_Concepts_CompReqLeaseProperty } from '@/models/api/generated/ApiGen_Concepts_CompReqLeaseProperty';
-import { ApiGen_Concepts_CompReqPayee } from '@/models/api/generated/ApiGen_Concepts_CompReqPayee';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Concepts_FinancialCode';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { exists, isValidId, isValidIsoDateTime } from '@/utils';
 import { stringToNull } from '@/utils/formUtils';
 
+import { PayeeType } from '../../acquisition/models/PayeeTypeModel';
 import { FinancialActivityFormModel } from './FinancialActivityFormModel';
 
 export class CompensationRequisitionFormModel {
@@ -33,8 +33,6 @@ export class CompensationRequisitionFormModel {
   detailedRemarks = '';
   financials: FinancialActivityFormModel[] = [];
   payees: PayeeOption[] = [];
-  leaseStakeholderId: string;
-  legacyPayee: string | null = null;
   alternateProject: IAutocompletePrediction | null = null;
   selectedProperties: ApiGen_Concepts_FileProperty[] = [];
   isPaymentInTrust = false;
@@ -57,11 +55,6 @@ export class CompensationRequisitionFormModel {
   }
 
   toApi(): ApiGen_Concepts_CompensationRequisition {
-    const compReqPayees =
-      this.payees
-        ?.map<ApiGen_Concepts_CompReqPayee>(formPayee => formPayee.toApi())
-        ?.filter(exists) ?? [];
-
     return {
       ...getEmptyBaseAudit(),
       id: this.id,
@@ -88,7 +81,6 @@ export class CompensationRequisitionFormModel {
       generationDate: isValidIsoDateTime(this.generationDateTime) ? this.generationDateTime : null,
       specialInstruction: stringToNull(this.specialInstruction),
       detailedRemarks: stringToNull(this.detailedRemarks),
-      legacyPayee: this.legacyPayee,
       isPaymentInTrust: this.isPaymentInTrust,
       gstNumber: this.gstNumber,
 
@@ -117,18 +109,25 @@ export class CompensationRequisitionFormModel {
               } as ApiGen_Concepts_CompReqLeaseProperty;
             })
           : null,
-      compReqPayees: compReqPayees ?? [],
-      compReqLeaseStakeholders: isValidId(+this.leaseStakeholderId)
-        ? [
-            {
-              ...getEmptyBaseAudit(),
-              leaseStakeholderId: +this.leaseStakeholderId,
-              compensationRequisitionId: this.id,
-              compReqLeaseStakeholderId: null,
-              leaseStakeholder: null,
-            },
-          ]
-        : [],
+      compReqLeasePayees:
+        this.payees
+          .filter(payee => payee.payeeType === PayeeType.LeaseStakeholder)
+          .map(payee => payee.toLeaseApi())
+          .filter(exists) ?? [],
+      compReqAcqPayees:
+        this.payees
+          .filter(payee =>
+            [
+              PayeeType.AcquisitionTeam,
+              PayeeType.InterestHolder,
+              PayeeType.LegacyPayee,
+              PayeeType.Owner,
+              PayeeType.OwnerRepresentative,
+              PayeeType.OwnerSolicitor,
+            ].includes(payee.payeeType),
+          )
+          .map(payee => payee.toAcquisitionApi())
+          .filter(exists) ?? [],
       rowVersion: this.rowVersion ?? null,
       acquisitionFile: null,
       alternateProject: null,
@@ -196,21 +195,16 @@ export class CompensationRequisitionFormModel {
       apiModel?.financials?.map(f => f.totalAmount ?? 0).reduce((prev, next) => prev + next, 0) ??
       0;
 
-    compensation.payees =
-      apiModel?.compReqPayees
-        ?.map(compReqPayee => PayeeOption.fromApi(compReqPayee))
-        ?.filter(exists) ?? [];
+    compensation.payees = (
+      apiModel?.compReqAcqPayees
+        ?.map(compReqPayee => PayeeOption.fromApiAcquisition(compReqPayee))
+        ?.filter(exists) ?? []
+    ).concat(
+      apiModel?.compReqLeasePayees
+        ?.map(compReqLeasePayee => PayeeOption.fromApiLease(compReqLeasePayee))
+        ?.filter(exists) ?? [],
+    );
 
-    // support legacy payee when updating compensation requisition
-    compensation.legacyPayee = apiModel?.legacyPayee ?? null;
-
-    if (exists(compensation.legacyPayee) && compensation.payees.length === 0) {
-      compensation.payees.push(PayeeOption.createLegacyPayee(apiModel, null, apiModel?.id));
-    }
-
-    compensation.leaseStakeholderId = apiModel.compReqLeaseStakeholders?.length
-      ? apiModel?.compReqLeaseStakeholders[0].leaseStakeholderId.toString()
-      : null;
     compensation.pretaxAmount = payeePretaxAmount ?? 0;
     compensation.taxAmount = payeeTaxAmount ?? 0;
     compensation.totalAmount = payeeTotalAmount ?? 0;

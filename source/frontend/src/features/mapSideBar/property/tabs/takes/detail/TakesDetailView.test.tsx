@@ -13,6 +13,7 @@ import TakesDetailView, { ITakesDetailViewProps } from './TakesDetailView';
 import { ApiGen_CodeTypes_AcquisitionStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionStatusTypes';
 import { ApiGen_CodeTypes_AcquisitionTakeStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionTakeStatusTypes';
 import Roles from '@/constants/roles';
+import { getEmptyAcquisitionFile } from '@/models/defaultInitializers';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -230,9 +231,41 @@ describe('TakesDetailView component', () => {
     expect(removeButton).toBeNull();
   });
 
+  it('hides the delete button when the file has been completed', () => {
+    const { queryByTitle } = setup({
+      props: {
+        fileProperty: {
+          ...getMockApiPropertyFiles[0],
+          file: {
+            ...getEmptyAcquisitionFile(),
+            fileStatusTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_AcquisitionStatusTypes.COMPLT),
+          },
+        },
+        takes: [
+          {
+            ...getMockApiTakes()[0],
+            takeStatusTypeCode: toTypeCodeNullable(
+              ApiGen_CodeTypes_AcquisitionTakeStatusTypes.INPROGRESS.toString(),
+            ),
+          },
+        ],
+      },
+      claims: [Claims.PROPERTY_EDIT],
+    });
+    const removeButton = queryByTitle('Remove take');
+    expect(removeButton).toBeNull();
+  });
+
   it('does not hide delete button when the take has been completed and user is an admin', () => {
     const { queryByTitle } = setup({
       props: {
+        fileProperty: {
+          ...getMockApiPropertyFiles[0],
+          file: {
+            ...getEmptyAcquisitionFile(),
+            fileStatusTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_AcquisitionStatusTypes.ACTIVE),
+          },
+        },
         takes: [
           {
             ...getMockApiTakes()[0],

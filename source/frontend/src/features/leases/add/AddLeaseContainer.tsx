@@ -100,15 +100,7 @@ export const AddLeaseContainer: React.FunctionComponent<
   return (
     <MapSideBarLayout
       title="Create Lease/Licence"
-      icon={
-        <LeaseIcon
-          title="Lease and Licence Icon"
-          width="2.8rem"
-          height="2.8rem"
-          fill="currentColor"
-          className="mr-2"
-        />
-      }
+      icon={<LeaseIcon title="Lease and Licence Icon" fill="currentColor" />}
       footer={
         <SidebarFooter
           isOkDisabled={formikRef.current?.isSubmitting || bcaLoading}

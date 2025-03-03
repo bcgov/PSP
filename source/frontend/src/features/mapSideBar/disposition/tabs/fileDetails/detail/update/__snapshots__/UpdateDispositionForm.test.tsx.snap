@@ -283,7 +283,6 @@ exports[`UpdateDispositionForm component > renders as expected 1`] = `
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2.4rem;
-  font-size: 2.6rem;
 }
 
 .c1 {
@@ -455,7 +454,7 @@ exports[`UpdateDispositionForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="align-items-end col"
+            class="align-content-end col"
           >
             Project
           </div>
@@ -581,7 +580,7 @@ exports[`UpdateDispositionForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="align-items-end col"
+            class="align-content-end col"
           >
             Schedule
           </div>
@@ -697,7 +696,7 @@ exports[`UpdateDispositionForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="align-items-end col"
+            class="align-content-end col"
           >
             Disposition Details
           </div>
@@ -810,6 +809,11 @@ exports[`UpdateDispositionForm component > renders as expected 1`] = `
                 name="dispositionStatusTypeCode"
                 required=""
               >
+                <option
+                  value=""
+                >
+                  N/A
+                </option>
                 <option
                   class="option"
                   data-testid="select-option-LISTED"
@@ -1248,7 +1252,7 @@ exports[`UpdateDispositionForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="align-items-end col"
+            class="align-content-end col"
           >
             Disposition Team
           </div>

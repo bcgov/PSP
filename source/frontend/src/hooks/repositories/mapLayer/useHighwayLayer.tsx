@@ -17,19 +17,19 @@ export const usePimsHighwayLayer = () => {
   } = useContext(TenantContext);
 
   const {
-    findOneWhereContainsWrapped: {
-      execute: findOneWhereContainsWrappedExecute,
-      loading: findOneWhereContainsWrappedLoading,
+    findMultipleWhereContainsWrapped: {
+      execute: findMultipleWhereContainsWrappedExecute,
+      loading: findMultipleWhereContainsWrappedLoading,
     },
   } = useLayerQuery(highwayLayerUrl, true);
 
-  const findOne = useCallback(
+  const findMultiple = useCallback(
     async (
       latlng: LatLngLiteral,
       geometryName?: string | undefined,
       spatialReferenceId?: number | undefined,
     ) => {
-      const featureCollection = await findOneWhereContainsWrappedExecute(
+      const featureCollection = await findMultipleWhereContainsWrappedExecute(
         latlng,
         geometryName,
         spatialReferenceId,
@@ -42,17 +42,17 @@ export const usePimsHighwayLayer = () => {
       >;
 
       return forceCasted !== undefined && forceCasted.features.length > 0
-        ? forceCasted.features[0]
+        ? forceCasted.features
         : undefined;
     },
-    [findOneWhereContainsWrappedExecute],
+    [findMultipleWhereContainsWrappedExecute],
   );
 
   return useMemo(
     () => ({
-      findOne,
-      findOneLoading: findOneWhereContainsWrappedLoading,
+      findMultiple,
+      findMultipleLoading: findMultipleWhereContainsWrappedLoading,
     }),
-    [findOne, findOneWhereContainsWrappedLoading],
+    [findMultiple, findMultipleWhereContainsWrappedLoading],
   );
 };

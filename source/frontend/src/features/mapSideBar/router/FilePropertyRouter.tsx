@@ -17,6 +17,7 @@ import UpdatePropertyResearchContainer from '../property/tabs/propertyResearch/u
 import TakesAddContainer from '../property/tabs/takes/add/TakesAddContainer';
 import { TakeForm } from '../property/tabs/takes/update/TakeForm';
 import { TakesUpdateContainer } from '../property/tabs/takes/update/TakeUpdateContainer';
+import ResearchStatusUpdateSolver from '../research/tabs/fileDetails/ResearchStatusUpdateSolver';
 import { PropertyFileContainer } from '../shared/detail/PropertyFileContainer';
 
 export interface IFilePropertyRouterProps {
@@ -35,6 +36,7 @@ export const FilePropertyRouter: React.FC<IFilePropertyRouterProps> = props => {
   const { path, url } = useRouteMatch();
 
   const { setStaleLastUpdatedBy } = useContext(SideBarContext);
+  const statusSolver = new ResearchStatusUpdateSolver(props?.file);
 
   const onChildSuccess = () => {
     props.setIsEditing(false);
@@ -111,6 +113,7 @@ export const FilePropertyRouter: React.FC<IFilePropertyRouterProps> = props => {
             customTabs={[]}
             View={InventoryTabs}
             fileContext={props.fileType}
+            statusSolver={statusSolver}
           />
         </Route>
         <Redirect

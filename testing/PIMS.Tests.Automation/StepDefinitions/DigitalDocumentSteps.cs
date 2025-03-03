@@ -2,8 +2,7 @@
 using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
 using System.Data;
-using System.Linq.Expressions;
-using Xunit;
+
 
 namespace PIMS.Tests.Automation.StepDefinitions
 {
@@ -360,7 +359,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateDigitalDocumentIndex(int rowNumber)
         {
-            DataTable documentsIndexSheet = ExcelDataContext.GetInstance().Sheets["DocumentsIndex"]!;
+            System.Data.DataTable documentsIndexSheet = ExcelDataContext.GetInstance().Sheets["DocumentsIndex"]!;
             ExcelDataContext.PopulateInCollection(documentsIndexSheet);
 
             digitalDocumentList = new List<DigitalDocument>();
@@ -376,7 +375,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateDigitalDocumentsDetails(int rowNumber)
         {
-            DataTable documentDetailsSheet = ExcelDataContext.GetInstance().Sheets["DocumentsDetails"]!;
+            System.Data.DataTable documentDetailsSheet = ExcelDataContext.GetInstance().Sheets["DocumentsDetails"]!;
             ExcelDataContext.PopulateInCollection(documentDetailsSheet);
 
             DigitalDocument digitalDocument = new DigitalDocument();

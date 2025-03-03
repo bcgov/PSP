@@ -398,15 +398,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
           showCloseButton
           onClose={close}
           title={containerState.isEditing ? 'Update Lease / Licence' : 'Lease / Licence'}
-          icon={
-            <LeaseIcon
-              title="Lease file icon"
-              width="2.6rem"
-              height="2.6rem"
-              fill="currentColor"
-              className="mr-2"
-            />
-          }
+          icon={<LeaseIcon title="Lease file icon" fill="currentColor" />}
           header={<LeaseHeader lease={lease} lastUpdatedBy={lastUpdatedBy} />}
           footer={
             containerState.isEditing && (

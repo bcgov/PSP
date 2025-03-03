@@ -1,6 +1,16 @@
 import { CellProps } from 'react-table';
 
-import { prettyFormatDate, prettyFormatDateTime, stringToFragment } from '@/utils';
+import {
+  prettyFormatDate,
+  prettyFormatDateTime,
+  prettyFormatUTCDate,
+  stringToFragment,
+} from '@/utils';
+
+export const UtcDateCell = ({
+  cell: { value },
+}: CellProps<any, string | Date | undefined | null>) =>
+  stringToFragment(prettyFormatUTCDate(value));
 
 export const DateCell = ({ cell: { value } }: CellProps<any, string | Date | undefined | null>) =>
   stringToFragment(prettyFormatDate(value));

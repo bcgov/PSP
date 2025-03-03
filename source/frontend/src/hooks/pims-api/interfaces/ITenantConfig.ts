@@ -61,6 +61,8 @@ export interface ITenantConfig2 {
   idlePromptTimeout: number;
   // the amount of time it takes to display the idle prompt (in minutes)
   idleTimeout: number;
+  // the amount of time where the system will treat two clicks as a double click instead of two single clicks.
+  doubleClickInterval: number;
   pimsTrainingResourceUrl: string;
 }
 

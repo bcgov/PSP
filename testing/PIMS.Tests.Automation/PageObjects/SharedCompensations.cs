@@ -41,7 +41,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By compensationH120TotalCount = By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper']");
 
         //Compensation Requisition Details Elements
-        private readonly By compensationDetailsTitle = By.XPath("//div[contains(text(),'Compensation Requisition (H120)')]");
+        private readonly By compensationDetailsTitle = By.XPath("//h1[contains(text(),'Compensation Requisition (H120)')]");
         private readonly By compensationClientLabel = By.XPath("//label[contains(text(),'Client')]");
         private readonly By compensationClientContent = By.CssSelector("div[data-testid='compensation-client']");
 
@@ -98,7 +98,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By requisitionServiceLineOptions = By.CssSelector("div[id='typeahead-select-serviceLine']");
         private readonly By requisitionServiceLine1stOption = By.CssSelector("div[id='typeahead-select-serviceLine'] a:nth-child(1)");
         private readonly By requisitionResponsibilityCentreLabel = By.XPath("//label[contains(text(),'Responsibility centre')]");
-        private readonly By requisitionResponsibilityCentreContent = By.XPath("//label[contains(text(),'Responsibility centre')]/parent::div/following-sibling::div/label");
+        private readonly By requisitionResponsibilityCentreContent = By.XPath("//label[contains(text(),'Responsibility centre')]/parent::div/following-sibling::div");
         private readonly By requisitionResponsibilityCentreInput = By.Id("typeahead-select-responsibilityCentre");
         private readonly By requisitionResponsibilityCentreOptions = By.CssSelector("div[id='typeahead-select-responsibilityCentre']");
         private readonly By requisitionResponsibilityCentre1stOption = By.CssSelector("div[id='typeahead-select-responsibilityCentre'] a:nth-child(1)");
@@ -147,8 +147,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By requisitionFinancialActivitiesCount = By.XPath("//div[contains(text(),'Activities')]/parent::div/parent::h2/following-sibling::div/div/div/label");
 
         //Compensation Details Elements
-        private readonly By requisitionCancelBttn = By.XPath("//button[@id='close-tray']/parent::div/following-sibling::div/div/div/div/div/div/button/div[contains(text(),'Cancel')]");
-
+        private readonly By requisitionCancelBttn = By.XPath("//button[@id='close-tray']/parent::h1/following-sibling::div/div/div/div[2]/div/div[2]/button");
         //Acquisition File Confirmation Modal Elements
         private readonly By acquisitionFileConfirmationModal = By.CssSelector("div[class='modal-content']");
 
@@ -611,9 +610,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Payee
             AssertTrueIsDisplayed(requisitionPayeeLabel);
-           
 
-            if (webDriver.FindElements(requisitionPayeeContentCount).Count > 0)
+
+            if (compensation.CompensationPayeeDisplay.Count > 0)
                 for (int i = 0; i < compensation.AcquisitionCompensationPayee.Count; i++)
                 {
                     var elementIndex = i + 1;

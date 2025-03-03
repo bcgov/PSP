@@ -1,9 +1,9 @@
 import { ApiGen_CodeTypes_LessorTypes } from '@/models/api/generated/ApiGen_CodeTypes_LessorTypes';
 import { ApiGen_Concepts_CompensationFinancial } from '@/models/api/generated/ApiGen_Concepts_CompensationFinancial';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
-import { ApiGen_Concepts_CompReqPayee } from '@/models/api/generated/ApiGen_Concepts_CompReqPayee';
-import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
-import { exists, formatMoney } from '@/utils';
+import { ApiGen_Concepts_CompReqAcqPayee } from '@/models/api/generated/ApiGen_Concepts_CompReqAcqPayee';
+import { ApiGen_Concepts_CompReqLeasePayee } from '@/models/api/generated/ApiGen_Concepts_CompReqLeasePayee';
+import { exists, formatMoney, isValidString } from '@/utils';
 import { formatApiPersonNames, formatNames } from '@/utils/personUtils';
 
 export class Api_GenerateCompensationPayee {
@@ -16,13 +16,14 @@ export class Api_GenerateCompensationPayee {
 
   constructor(
     compensation: ApiGen_Concepts_CompensationRequisition | null,
-    compReqPayees: ApiGen_Concepts_CompReqPayee[],
+    compReqAcqPayees: ApiGen_Concepts_CompReqAcqPayee[],
+    compReqLeasePayees: ApiGen_Concepts_CompReqLeasePayee[],
     financialActivities: ApiGen_Concepts_CompensationFinancial[] | [],
   ) {
     this.gst_number = compensation?.gstNumber ?? '';
     const names: string[] = [];
 
-    compReqPayees.forEach((payee: ApiGen_Concepts_CompReqPayee) => {
+    compReqAcqPayees.forEach((payee: ApiGen_Concepts_CompReqAcqPayee) => {
       if (exists(payee?.acquisitionOwner)) {
         names.push(
           formatNames([
@@ -52,22 +53,21 @@ export class Api_GenerateCompensationPayee {
         } else {
           names.push(payee?.acquisitionFileTeam?.organization?.name ?? '');
         }
+      } else if (isValidString(payee?.legacyPayee)) {
+        names.push(payee?.legacyPayee ?? '');
       }
     });
 
-    if (compensation?.compReqLeaseStakeholders?.length > 0) {
-      const stakeHolder: ApiGen_Concepts_LeaseStakeholder =
-        compensation?.compReqLeaseStakeholders[0].leaseStakeholder;
-      if (stakeHolder.lessorType.id === ApiGen_CodeTypes_LessorTypes.ORG) {
-        names.push(stakeHolder.organization?.name ?? '');
-      } else if (stakeHolder.lessorType.id === ApiGen_CodeTypes_LessorTypes.PER) {
-        names.push(formatApiPersonNames(stakeHolder.person));
+    compReqLeasePayees.forEach((payee: ApiGen_Concepts_CompReqLeasePayee) => {
+      if (exists(payee?.leaseStakeholder)) {
+        if (payee?.leaseStakeholder?.lessorType?.id === ApiGen_CodeTypes_LessorTypes.ORG) {
+          names.push(payee?.leaseStakeholder.organization?.name ?? '');
+        } else if (payee?.leaseStakeholder?.lessorType?.id === ApiGen_CodeTypes_LessorTypes.PER) {
+          names.push(formatApiPersonNames(payee?.leaseStakeholder.person));
+        }
       }
-    }
+    });
 
-    if (exists(compensation?.legacyPayee)) {
-      names.push(compensation?.legacyPayee ?? '');
-    }
     this.name = names.join(', ');
 
     const preTaxAmount: number = financialActivities

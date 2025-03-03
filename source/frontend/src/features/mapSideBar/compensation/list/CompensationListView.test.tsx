@@ -11,20 +11,12 @@ import { mockAcquisitionFileResponse, mockLookups } from '@/mocks/index.mock';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { toTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
-import {
-  act,
-  getByTestId,
-  queryByTestId,
-  render,
-  RenderOptions,
-  userEvent,
-  waitFor,
-  waitForEffects,
-} from '@/utils/test-utils';
+import { act, render, RenderOptions, userEvent, waitFor, waitForEffects } from '@/utils/test-utils';
 
 import CompensationListView, { ICompensationListViewProps } from './CompensationListView';
 import { ApiGen_CodeTypes_AcquisitionStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionStatusTypes';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
+import AcquisitionFileStatusUpdateSolver from '../../acquisition/tabs/fileDetails/detail/AcquisitionFileStatusUpdateSolver';
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
@@ -39,7 +31,12 @@ const onUpdateTotalCompensation = vi.fn();
 const mockAcquisitionfile = mockAcquisitionFileResponse();
 
 describe('compensation list view', () => {
-  const setup = (renderOptions?: RenderOptions & Partial<ICompensationListViewProps>) => {
+  const setup = (
+    renderOptions?: RenderOptions &
+      Partial<ICompensationListViewProps> & {
+        fileStatus?: ApiGen_CodeTypes_AcquisitionStatusTypes;
+      },
+  ) => {
     // render component under test
     const component = render(
       <CompensationListView
@@ -51,6 +48,11 @@ describe('compensation list view', () => {
         onDelete={onDelete}
         onAdd={onAddCompensationRequisition}
         onUpdateTotalCompensation={onUpdateTotalCompensation}
+        statusUpdateSolver={
+          new AcquisitionFileStatusUpdateSolver(
+            toTypeCode(renderOptions?.fileStatus ?? ApiGen_CodeTypes_AcquisitionStatusTypes.ACTIVE),
+          )
+        }
       />,
       {
         ...renderOptions,
@@ -250,7 +252,7 @@ describe('compensation list view', () => {
     expect(icon).toBeVisible();
   });
 
-  it('does not display warning icon if compensation in final state and user is admin', async () => {
+  it('displays warning icon if compensation in final state and user is admin', async () => {
     const compensations = getMockApiCompensationList();
     const { queryByTestId } = setup({
       file: {
@@ -263,7 +265,25 @@ describe('compensation list view', () => {
     });
 
     const icon = queryByTestId('tooltip-icon-1-summary-cannot-edit-tooltip');
-    expect(icon).toBeNull();
+    expect(icon).toBeVisible();
+  });
+
+  it('displays warning icon if file in final state', async () => {
+    const compensations = [getMockApiCompensationList()[0]];
+    compensations[0].isDraft = true;
+    const { queryByTestId } = setup({
+      file: {
+        ...mockAcquisitionFileResponse(),
+        fileStatusTypeCode: toTypeCode(ApiGen_CodeTypes_AcquisitionStatusTypes.COMPLT),
+      },
+      compensationsResults: compensations,
+      claims: [Claims.COMPENSATION_REQUISITION_DELETE],
+      roles: [Roles.SYSTEM_ADMINISTRATOR],
+      fileStatus: ApiGen_CodeTypes_AcquisitionStatusTypes.COMPLT,
+    });
+
+    const icon = queryByTestId('tooltip-icon-1-summary-cannot-edit-tooltip');
+    expect(icon).toBeVisible();
   });
 
   it('delete action hidden if delete claim missing', async () => {

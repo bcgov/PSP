@@ -1024,7 +1024,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateLeaseLicense(int rowNumber)
         {
-            DataTable leaseSheet = ExcelDataContext.GetInstance().Sheets["Leases"]!;
+            System.Data.DataTable leaseSheet = ExcelDataContext.GetInstance().Sheets["Leases"]!;
             ExcelDataContext.PopulateInCollection(leaseSheet);
 
             lease = new Lease
@@ -1079,7 +1079,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             if (lease.SearchPropertiesIndex > 0)
             {
-                DataTable searchPropertiesSheet = ExcelDataContext.GetInstance().Sheets["SearchProperties"]!;
+                System.Data.DataTable searchPropertiesSheet = ExcelDataContext.GetInstance().Sheets["SearchProperties"]!;
                 ExcelDataContext.PopulateInCollection(searchPropertiesSheet);
 
                 lease.SearchProperties.PID = ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "PID");
@@ -1104,38 +1104,38 @@ namespace PIMS.Tests.Automation.StepDefinitions
             lease.LeaseChecklistIndex = int.Parse(ExcelDataContext.ReadData(rowNumber, "LeaseChecklistIndex"));
             if (lease.LeaseChecklistIndex > 0)
             {
-                DataTable leaseChecklistSheet = ExcelDataContext.GetInstance().Sheets["LeasesChecklist"]!;
+                System.Data.DataTable leaseChecklistSheet = ExcelDataContext.GetInstance().Sheets["LeasesChecklist"]!;
                 ExcelDataContext.PopulateInCollection(leaseChecklistSheet);
 
-                lease.LeaseChecklist.FileInitiationSelect1 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "FileInitiationSelect1");
-                lease.LeaseChecklist.FileInitiationSelect2 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "FileInitiationSelect2");
-                lease.LeaseChecklist.FileInitiationSelect3 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "FileInitiationSelect3");
-                lease.LeaseChecklist.FileInitiationSelect4 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "FileInitiationSelect4");
-                lease.LeaseChecklist.FileInitiationSelect5 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "FileInitiationSelect5");
-                lease.LeaseChecklist.FileInitiationSelect6 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "FileInitiationSelect6");
+                lease.LeaseChecklist.FileInitiationSelect1 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseFileInitiationSelect1");
+                lease.LeaseChecklist.FileInitiationSelect2 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseFileInitiationSelect2");
+                lease.LeaseChecklist.FileInitiationSelect3 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseFileInitiationSelect3");
+                lease.LeaseChecklist.FileInitiationSelect4 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseFileInitiationSelect4");
+                lease.LeaseChecklist.FileInitiationSelect5 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseFileInitiationSelect5");
+                lease.LeaseChecklist.FileInitiationSelect6 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseFileInitiationSelect6");
 
-                lease.LeaseChecklist.ReferralsApprovalsSelect1 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "ReferralsApprovalsSelect1");
-                lease.LeaseChecklist.ReferralsApprovalsSelect2 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "ReferralsApprovalsSelect2");
-                lease.LeaseChecklist.ReferralsApprovalsSelect3 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "ReferralsApprovalsSelect3");
-                lease.LeaseChecklist.ReferralsApprovalsSelect4 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "ReferralsApprovalsSelect4");
-                lease.LeaseChecklist.ReferralsApprovalsSelect5 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "ReferralsApprovalsSelect5");
-                lease.LeaseChecklist.ReferralsApprovalsSelect6 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "ReferralsApprovalsSelect6");
-                lease.LeaseChecklist.ReferralsApprovalsSelect7 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "ReferralsApprovalsSelect7");
-                lease.LeaseChecklist.ReferralsApprovalsSelect8 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "ReferralsApprovalsSelect8");
+                lease.LeaseChecklist.ReferralsApprovalsSelect1 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseReferralsApprovalsSelect1");
+                lease.LeaseChecklist.ReferralsApprovalsSelect2 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseReferralsApprovalsSelect2");
+                lease.LeaseChecklist.ReferralsApprovalsSelect3 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseReferralsApprovalsSelect3");
+                lease.LeaseChecklist.ReferralsApprovalsSelect4 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseReferralsApprovalsSelect4");
+                lease.LeaseChecklist.ReferralsApprovalsSelect5 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseReferralsApprovalsSelect5");
+                lease.LeaseChecklist.ReferralsApprovalsSelect6 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseReferralsApprovalsSelect6");
+                lease.LeaseChecklist.ReferralsApprovalsSelect7 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseReferralsApprovalsSelect7");
+                lease.LeaseChecklist.ReferralsApprovalsSelect8 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseReferralsApprovalsSelect8");
 
-                lease.LeaseChecklist.AgreementPreparationSelect1 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "AgreementPreparationSelect1");
-                lease.LeaseChecklist.AgreementPreparationSelect2 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "AgreementPreparationSelect2");
-                lease.LeaseChecklist.AgreementPreparationSelect3 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "AgreementPreparationSelect3");
-                lease.LeaseChecklist.AgreementPreparationSelect4 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "AgreementPreparationSelect4");
-                lease.LeaseChecklist.AgreementPreparationSelect5 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "AgreementPreparationSelect5");
-                lease.LeaseChecklist.AgreementPreparationSelect6 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "AgreementPreparationSelect6");
-                lease.LeaseChecklist.AgreementPreparationSelect7 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "AgreementPreparationSelect7");
-                lease.LeaseChecklist.AgreementPreparationSelect8 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "AgreementPreparationSelect8");
-                lease.LeaseChecklist.AgreementPreparationSelect9 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "AgreementPreparationSelect9");
-                lease.LeaseChecklist.AgreementPreparationSelect10 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "AgreementPreparationSelect10");
-                lease.LeaseChecklist.AgreementPreparationSelect11 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "AgreementPreparationSelect11");
-                lease.LeaseChecklist.AgreementPreparationSelect12 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "AgreementPreparationSelect12");
-                lease.LeaseChecklist.AgreementPreparationSelect13 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "AgreementPreparationSelect13");
+                lease.LeaseChecklist.AgreementPreparationSelect1 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseAgreementPreparationSelect1");
+                lease.LeaseChecklist.AgreementPreparationSelect2 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseAgreementPreparationSelect2");
+                lease.LeaseChecklist.AgreementPreparationSelect3 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseAgreementPreparationSelect3");
+                lease.LeaseChecklist.AgreementPreparationSelect4 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseAgreementPreparationSelect4");
+                lease.LeaseChecklist.AgreementPreparationSelect5 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseAgreementPreparationSelect5");
+                lease.LeaseChecklist.AgreementPreparationSelect6 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseAgreementPreparationSelect6");
+                lease.LeaseChecklist.AgreementPreparationSelect7 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseAgreementPreparationSelect7");
+                lease.LeaseChecklist.AgreementPreparationSelect8 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseAgreementPreparationSelect8");
+                lease.LeaseChecklist.AgreementPreparationSelect9 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseAgreementPreparationSelect9");
+                lease.LeaseChecklist.AgreementPreparationSelect10 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseAgreementPreparationSelect10");
+                lease.LeaseChecklist.AgreementPreparationSelect11 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseAgreementPreparationSelect11");
+                lease.LeaseChecklist.AgreementPreparationSelect12 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseAgreementPreparationSelect12");
+                lease.LeaseChecklist.AgreementPreparationSelect13 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseAgreementPreparationSelect13");
 
                 lease.LeaseChecklist.LeaseLicenceCompletionSelect1 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseLicenceCompletionSelect1");
                 lease.LeaseChecklist.LeaseLicenceCompletionSelect2 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseLicenceCompletionSelect2");
@@ -1238,7 +1238,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateRenewalsCollection(int startRow, int rowsCount)
         {
-            DataTable leasesRenewalsSheet = ExcelDataContext.GetInstance().Sheets["LeasesRenewals"]!;
+            System.Data.DataTable leasesRenewalsSheet = ExcelDataContext.GetInstance().Sheets["LeasesRenewals"]!;
             ExcelDataContext.PopulateInCollection(leasesRenewalsSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -1257,7 +1257,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulatePropertiesCollection(int startRow, int rowsCount)
         {
-            DataTable propertiesSheet = ExcelDataContext.GetInstance().Sheets["LeasesProperties"]!;
+            System.Data.DataTable propertiesSheet = ExcelDataContext.GetInstance().Sheets["LeasesProperties"]!;
             ExcelDataContext.PopulateInCollection(propertiesSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -1284,7 +1284,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateConsultationsCollection(int startRow, int rowsCount)
         {
-            DataTable leasesConsultationsSheet = ExcelDataContext.GetInstance().Sheets["LeasesConsultations"]!;
+            System.Data.DataTable leasesConsultationsSheet = ExcelDataContext.GetInstance().Sheets["LeasesConsultations"]!;
             ExcelDataContext.PopulateInCollection(leasesConsultationsSheet);
 
             lease.LeaseConsultations = new List<LeaseConsultation>();
@@ -1311,7 +1311,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateTenantsCollection(int startRow, int rowsCount)
         {
-            DataTable leasesTenantsSheet = ExcelDataContext.GetInstance().Sheets["LeasesTenants"]!;
+            System.Data.DataTable leasesTenantsSheet = ExcelDataContext.GetInstance().Sheets["LeasesTenants"]!;
             ExcelDataContext.PopulateInCollection(leasesTenantsSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -1330,7 +1330,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateDepositsCollection(int startRow, int rowsCount)
         {
-            DataTable leasesDepositsSheet = ExcelDataContext.GetInstance().Sheets["LeasesDeposits"]!;
+            System.Data.DataTable leasesDepositsSheet = ExcelDataContext.GetInstance().Sheets["LeasesDeposits"]!;
             ExcelDataContext.PopulateInCollection(leasesDepositsSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -1359,7 +1359,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulatePeriodsCollection(int startRow, int rowsCount)
         {
-            DataTable leasesPeriodsSheet = ExcelDataContext.GetInstance().Sheets["LeasesPeriods"]!;
+            System.Data.DataTable leasesPeriodsSheet = ExcelDataContext.GetInstance().Sheets["LeasesPeriods"]!;
             ExcelDataContext.PopulateInCollection(leasesPeriodsSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -1398,7 +1398,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulatePaymentsCollection(int startRow, int rowsCount)
         {
-            DataTable leasesDepositsPaymentsSheet = ExcelDataContext.GetInstance().Sheets["LeasesPayments"]!;
+            System.Data.DataTable leasesDepositsPaymentsSheet = ExcelDataContext.GetInstance().Sheets["LeasesPayments"]!;
             ExcelDataContext.PopulateInCollection(leasesDepositsPaymentsSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -1423,7 +1423,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateCompensationsCollection(int startRow, int rowsCount)
         {
-            DataTable compensationSheet = ExcelDataContext.GetInstance().Sheets["Compensation"]!;
+            System.Data.DataTable compensationSheet = ExcelDataContext.GetInstance().Sheets["Compensation"]!;
             ExcelDataContext.PopulateInCollection(compensationSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -1461,7 +1461,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateActivitiesCollection(int startRow, int rowsCount, List<CompensationActivity> activities)
         {
-            DataTable activitiesSheet = ExcelDataContext.GetInstance().Sheets["CompensationActivities"]!;
+            System.Data.DataTable activitiesSheet = ExcelDataContext.GetInstance().Sheets["CompensationActivities"]!;
             ExcelDataContext.PopulateInCollection(activitiesSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)

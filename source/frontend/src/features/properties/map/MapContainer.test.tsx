@@ -36,6 +36,7 @@ import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import MapContainer from './MapContainer';
 import { PropertyFilterFormModel } from '@/components/maps/leaflet/Control/AdvancedFilter/models';
+import debounce from 'lodash/debounce';
 
 const mockAxios = new MockAdapter(axios);
 
@@ -50,6 +51,9 @@ vi.mock('@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer');
 vi.mock('@/hooks/repositories/mapLayer/usePimsPropertyLayer');
 vi.mock('@/hooks/repositories/mapLayer/useLegalAdminBoundariesMapLayer');
 vi.mock('@/hooks/repositories/mapLayer/useIndianReserveBandMapLayer');
+vi.mock('lodash/debounce');
+
+vi.mocked(debounce).mockImplementation((fn, wait, args) => fn as any);
 
 // Need to mock this library for unit tests
 vi.mock('react-visibility-sensor', () => {
@@ -190,13 +194,18 @@ describe('MapContainer', () => {
           mp => mp.properties.PROPERTY_ID,
         );
     }
-    const utils = render(<MapContainer />, {
-      store,
-      history,
-      mockMapMachine: defaultMapMachine,
-      ...renderOptions,
-      useMockAuthentication: true,
-    });
+    const utils = render(
+      <>
+        <MapContainer />
+      </>,
+      {
+        store,
+        history,
+        mockMapMachine: defaultMapMachine,
+        ...renderOptions,
+        useMockAuthentication: true,
+      },
+    );
     await act(async () => {}); // Wait for async mount actions to settle
 
     return { ...utils };
@@ -238,15 +247,18 @@ describe('MapContainer', () => {
     history.push('/mapview');
   });
 
-  afterEach(cleanup);
+  afterEach(() => {
+    vi.useRealTimers();
+    cleanup();
+  });
 
-  it('renders the map', async () => {
+  it('Renders the map', async () => {
     const { asFragment } = await setup();
     expect(asFragment()).toMatchSnapshot();
     expect(document.querySelector('.leaflet-container')).toBeVisible();
   });
 
-  it('toggles the base map', async () => {
+  it('Can toggle the base map', async () => {
     await setup();
     // find basemap toggle button
     const basemapToggle = await screen.findByAltText(/Map Thumbnail/i);
@@ -264,7 +276,7 @@ describe('MapContainer', () => {
     expect(document.querySelector('.leaflet-control-scale-line')).toHaveTextContent(/100 km/i);
   });
 
-  it('renders markers when provided', async () => {
+  it('Renders markers when provided', async () => {
     await setup();
     expect(document.querySelector('.leaflet-marker-icon')).toBeVisible();
   });
@@ -291,7 +303,7 @@ describe('MapContainer', () => {
     expect(cluster).toBeNull();
   });
 
-  it('can handle features with invalid geometry', async () => {
+  it('the map can handle features with invalid geometry', async () => {
     const { container } = await setup({
       mockMapMachine: {
         ...mapMachineBaseMock,
@@ -306,7 +318,7 @@ describe('MapContainer', () => {
     expect(map).toBeVisible();
   });
 
-  it('can zoom out until the markers are clustered', async () => {
+  it('the map can zoom out until the markers are clustered', async () => {
     const { container } = await setup();
 
     // click the zoom-out button 10 times
@@ -333,10 +345,13 @@ describe('MapContainer', () => {
 
   it('the map can be clicked', async () => {
     const { container } = await setup();
+    vi.useFakeTimers();
 
     const map = container.querySelector('.leaflet-container');
     expect(map).toBeVisible();
     await act(async () => userEvent.click(map!));
+
+    vi.advanceTimersByTime(500);
 
     expect(mapMachineBaseMock.mapClick).toHaveBeenLastCalledWith({
       lat: 52.81604319154934,

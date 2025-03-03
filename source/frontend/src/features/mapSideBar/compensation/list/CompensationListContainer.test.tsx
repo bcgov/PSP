@@ -274,7 +274,7 @@ describe('compensation list view container', () => {
         },
       ],
       compReqLeaseProperties: null,
-      compReqLeaseStakeholders: null,
+      compReqLeasePayees: [],
     } as ApiGen_Concepts_CompensationRequisition;
 
     expect(mockPostApi.execute).toHaveBeenCalledWith(
@@ -343,7 +343,7 @@ describe('compensation list view container', () => {
         },
       ],
       compReqAcquisitionProperties: null,
-      compReqLeaseStakeholders: null,
+      compReqLeasePayees: [],
     } as ApiGen_Concepts_CompensationRequisition;
 
     expect(mockPostApi.execute).toHaveBeenCalledWith(

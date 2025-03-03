@@ -6,7 +6,7 @@ exports[`AddProjectContainer component > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c3.btn {
+  .c4.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,19 +35,19 @@ exports[`AddProjectContainer component > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c3.btn .Button__value {
+.c4.btn .Button__value {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
-.c3.btn:hover {
+.c4.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c3.btn:focus {
+.c4.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -55,31 +55,31 @@ exports[`AddProjectContainer component > renders as expected 1`] = `
   box-shadow: none;
 }
 
-.c3.btn.btn-primary {
+.c4.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c3.btn.btn-primary:hover,
-.c3.btn.btn-primary:active,
-.c3.btn.btn-primary:focus {
+.c4.btn.btn-primary:hover,
+.c4.btn.btn-primary:active,
+.c4.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c3.btn.btn-secondary {
+.c4.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c3.btn.btn-secondary:hover,
-.c3.btn.btn-secondary:active,
-.c3.btn.btn-secondary:focus {
+.c4.btn.btn-secondary:hover,
+.c4.btn.btn-secondary:active,
+.c4.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c3.btn.btn-info {
+.c4.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -87,66 +87,66 @@ exports[`AddProjectContainer component > renders as expected 1`] = `
   padding-right: 0.6rem;
 }
 
-.c3.btn.btn-info:hover,
-.c3.btn.btn-info:active,
-.c3.btn.btn-info:focus {
+.c4.btn.btn-info:hover,
+.c4.btn.btn-info:active,
+.c4.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c3.btn.btn-light {
+.c4.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c3.btn.btn-light:hover,
-.c3.btn.btn-light:active,
-.c3.btn.btn-light:focus {
+.c4.btn.btn-light:hover,
+.c4.btn.btn-light:active,
+.c4.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c3.btn.btn-dark {
+.c4.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c3.btn.btn-dark:hover,
-.c3.btn.btn-dark:active,
-.c3.btn.btn-dark:focus {
+.c4.btn.btn-dark:hover,
+.c4.btn.btn-dark:active,
+.c4.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c3.btn.btn-danger {
+.c4.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c3.btn.btn-danger:hover,
-.c3.btn.btn-danger:active,
-.c3.btn.btn-danger:focus {
+.c4.btn.btn-danger:hover,
+.c4.btn.btn-danger:active,
+.c4.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c3.btn.btn-warning {
+.c4.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c3.btn.btn-warning:hover,
-.c3.btn.btn-warning:active,
-.c3.btn.btn-warning:focus {
+.c4.btn.btn-warning:hover,
+.c4.btn.btn-warning:active,
+.c4.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c3.btn.btn-link {
+.c4.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -170,9 +170,9 @@ exports[`AddProjectContainer component > renders as expected 1`] = `
   text-decoration: underline;
 }
 
-.c3.btn.btn-link:hover,
-.c3.btn.btn-link:active,
-.c3.btn.btn-link:focus {
+.c4.btn.btn-link:hover,
+.c4.btn.btn-link:active,
+.c4.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -182,15 +182,15 @@ exports[`AddProjectContainer component > renders as expected 1`] = `
   outline: none;
 }
 
-.c3.btn.btn-link:disabled,
-.c3.btn.btn-link.disabled {
+.c4.btn.btn-link:disabled,
+.c4.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c3.btn:disabled,
-.c3.btn:disabled:hover {
+.c4.btn:disabled,
+.c4.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -202,61 +202,61 @@ exports[`AddProjectContainer component > renders as expected 1`] = `
   cursor: not-allowed;
 }
 
-.c3.Button .Button__icon {
+.c4.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c3.Button--icon-only:focus {
+.c4.Button--icon-only:focus {
   outline: none;
 }
 
-.c3.Button--icon-only .Button__icon {
+.c4.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
 .c1 {
   color: #474543;
   font-family: 'BCSans-Bold';
-  font-size: 3.2rem;
+  font-size: 2.8rem;
   border-bottom: solid 0.5rem var(--theme-blue-90);
   width: 100%;
   text-align: left;
   margin-bottom: 2.4rem;
 }
 
-.c5 {
+.c6 {
   border-left: 0.1rem solid #ECEAE8;
   width: 0.1rem;
   height: 80%;
   margin: auto;
 }
 
-.c7 {
+.c8 {
   width: 100%;
   border-bottom: solid 0.5rem #3470B1;
 }
 
-.c6 {
+.c7 {
   font-size: 2.4rem;
   cursor: pointer;
 }
 
-.c4.btn.btn-light.Button {
+.c5.btn.btn-light.Button {
   padding: 0;
   border: 0.1rem solid #9F9D9C;
   background-color: white;
   color: #474543;
 }
 
-.c4.btn.btn-light.Button:focus,
-.c4.btn.btn-light.Button:active {
+.c5.btn.btn-light.Button:focus,
+.c5.btn.btn-light.Button:active {
   background-color: white;
   color: #474543;
 }
 
-.c4.btn,
-.c4 .Button__icon,
-.c4 svg {
+.c5.btn,
+.c5 .Button__icon,
+.c5 svg {
   max-width: 2.4rem;
   min-width: 2.4rem;
   max-height: 2.4rem;
@@ -267,6 +267,12 @@ exports[`AddProjectContainer component > renders as expected 1`] = `
 .c0 {
   padding: 1.6rem;
   color: #474543;
+}
+
+.c0.collapsed .row:first svg {
+  width: 2.6rem;
+  height: 2.6rem;
+  margin-right: 0;
 }
 
 .c0.expanded {
@@ -283,7 +289,7 @@ exports[`AddProjectContainer component > renders as expected 1`] = `
   overflow: hidden;
 }
 
-.c2 {
+.c3 {
   gap: 1.5rem;
   -webkit-align-items: center;
   -webkit-box-align: center;
@@ -291,7 +297,7 @@ exports[`AddProjectContainer component > renders as expected 1`] = `
   align-items: center;
 }
 
-.c9 {
+.c10 {
   width: 100%;
   position: relative;
   overflow: auto;
@@ -300,13 +306,24 @@ exports[`AddProjectContainer component > renders as expected 1`] = `
   flex: 1;
 }
 
-.c8 {
+.c9 {
   width: 100%;
   height: 100%;
   display: contents;
 }
 
-.c10 {
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: end;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: end;
+}
+
+.c11 {
   position: -webkit-sticky;
   position: sticky;
   padding-top: 2rem;
@@ -325,37 +342,33 @@ exports[`AddProjectContainer component > renders as expected 1`] = `
         class="col"
       >
         <h1
-          class="c1 mr-auto"
+          class="c1 c2"
         >
-          <span
-            class="mr-2"
+          <div
+            class="mr-2 mb-1"
           >
             <svg
               fill="currentColor"
-              height="28"
-              stroke="currentColor"
-              stroke-width="0"
-              viewBox="0 0 512 512"
-              width="28"
+              height="24"
+              title="Project Icon"
+              viewBox="0 0 24 24"
+              width="24"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <title>
-                Project Icon
-              </title>
               <path
-                d="M320 336c0 8.84-7.16 16-16 16h-96c-8.84 0-16-7.16-16-16v-48H0v144c0 25.6 22.4 48 48 48h416c25.6 0 48-22.4 48-48V288H320v48zm144-208h-80V80c0-25.6-22.4-48-48-48H176c-25.6 0-48 22.4-48 48v48H48c-25.6 0-48 22.4-48 48v80h512v-80c0-25.6-22.4-48-48-48zm-144 0H192V96h128v32z"
+                d="M24 14.3972H15V15.9905C15 16.8726 14.3333 17.5839 13.5067 17.5839H10.5067C9.68 17.5839 9.01333 16.8726 9.01333 15.9905V14.3972H0V20.7991C0 22.5631 1.34667 24 3 24H21C22.6533 24 24 22.5631 24 20.7991V14.3972ZM6 2.8026V4.80853H3C1.34667 4.80853 0 6.2454 0 8.00948V12.018H24V8.00948C24 6.2454 22.6533 4.80853 21 4.80853H18V2.8026C18 1.25192 16.8267 0 15.3733 0H8.62667C7.17333 0 6 1.25192 6 2.8026ZM8.62667 2.40427H15.3733C15.5733 2.40427 15.7467 2.58921 15.7467 2.8026V4.80853H8.25333V2.8026C8.25333 2.58921 8.42667 2.40427 8.62667 2.40427Z"
               />
             </svg>
-          </span>
+          </div>
           Create Project
         </h1>
       </div>
       <div
-        class="c2 d-flex col-auto"
+        class="c3 d-flex col-auto"
       >
         <span>
           <button
-            class="c3 Button Button--icon-only c4 btn btn-light"
+            class="c4 Button Button--icon-only c5 btn btn-light"
             title="collapse"
             type="button"
           >
@@ -386,10 +399,10 @@ exports[`AddProjectContainer component > renders as expected 1`] = `
           </button>
         </span>
         <div
-          class="c5"
+          class="c6"
         />
         <svg
-          class="c6"
+          class="c7"
           fill="currentColor"
           height="1em"
           stroke="currentColor"
@@ -408,13 +421,13 @@ exports[`AddProjectContainer component > renders as expected 1`] = `
       </div>
     </div>
     <div
-      class="c7"
+      class="c8"
     />
     <div
-      class="c8"
+      class="c9"
     >
       <div
-        class="c9"
+        class="c10"
       >
         Content Rendered - 
       </div>
@@ -422,7 +435,7 @@ exports[`AddProjectContainer component > renders as expected 1`] = `
         class=""
       >
         <div
-          class="c10 justify-content-end mb-6 mt-6 p-0 no-gutters row"
+          class="c11 justify-content-end mb-6 mt-6 p-0 no-gutters row"
         >
           <div
             class="pr-3 col-auto"
@@ -431,7 +444,7 @@ exports[`AddProjectContainer component > renders as expected 1`] = `
             class="pr-6 col-auto"
           >
             <button
-              class="c3 Button btn btn-secondary"
+              class="c4 Button btn btn-secondary"
               type="button"
             >
               <div
@@ -445,7 +458,7 @@ exports[`AddProjectContainer component > renders as expected 1`] = `
             class="col-auto"
           >
             <button
-              class="c3 Button mr-9 btn btn-primary"
+              class="c4 Button mr-9 btn btn-primary"
               type="button"
             >
               <div

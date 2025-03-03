@@ -232,13 +232,13 @@ public partial class PimsCompensationRequisition
     public virtual PimsLease Lease { get; set; }
 
     [InverseProperty("CompensationRequisition")]
+    public virtual ICollection<PimsCompReqAcqPayee> PimsCompReqAcqPayees { get; set; } = new List<PimsCompReqAcqPayee>();
+
+    [InverseProperty("CompensationRequisition")]
     public virtual ICollection<PimsCompReqFinancial> PimsCompReqFinancials { get; set; } = new List<PimsCompReqFinancial>();
 
     [InverseProperty("CompensationRequisition")]
-    public virtual ICollection<PimsCompReqPayee> PimsCompReqPayees { get; set; } = new List<PimsCompReqPayee>();
-
-    [InverseProperty("CompensationRequisition")]
-    public virtual ICollection<PimsLeaseStakeholderCompReq> PimsLeaseStakeholderCompReqs { get; set; } = new List<PimsLeaseStakeholderCompReq>();
+    public virtual ICollection<PimsCompReqLeasePayee> PimsCompReqLeasePayees { get; set; } = new List<PimsCompReqLeasePayee>();
 
     [InverseProperty("CompensationRequisition")]
     public virtual ICollection<PimsPropAcqFlCompReq> PimsPropAcqFlCompReqs { get; set; } = new List<PimsPropAcqFlCompReq>();
