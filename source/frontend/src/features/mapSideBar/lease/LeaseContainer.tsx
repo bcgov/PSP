@@ -9,7 +9,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import { useRouteMatch } from 'react-router-dom';
 import * as Yup from 'yup';
 
@@ -32,8 +32,9 @@ import PeriodPaymentsView from '@/features/leases/detail/LeasePages/payment/tabl
 import LeaseStakeholderContainer from '@/features/leases/detail/LeasePages/stakeholders/LeaseStakeholderContainer';
 import Surplus from '@/features/leases/detail/LeasePages/surplus/Surplus';
 import { LeaseFormModel } from '@/features/leases/models';
-import LeasePropertySelector from '@/features/leases/shared/propertyPicker/LeasePropertySelector';
+import LeaseUpdatePropertySelector from '@/features/leases/shared/propertyPicker/LeaseUpdatePropertySelector';
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
+import { useQuery } from '@/hooks/use-query';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { exists, getLatLng, locationFromFileProperty, stripTrailingSlash } from '@/utils';
@@ -54,7 +55,6 @@ import { LeaseFileTabNames } from './detail/LeaseFileTabs';
 import LeaseGenerateContainer from './LeaseGenerateFormContainer';
 import LeaseRouter from './tabs/LeaseRouter';
 import ViewSelector from './ViewSelector';
-import LeaseUpdatePropertySelector from '@/features/leases/shared/propertyPicker/LeaseUpdatePropertySelector';
 
 export interface ILeaseContainerProps {
   leaseId: number;
@@ -227,6 +227,9 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
     lastUpdatedBy,
   } = useContext(SideBarContext);
 
+  const query = useQuery();
+  const history = useHistory();
+
   const [isValid, setIsValid] = useState<boolean>(true);
 
   const { hasClaim, hasRole } = useKeycloakWrapper();
@@ -293,6 +296,8 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
     } else {
       handleCancelConfirm();
     }
+
+    setIsPropertyEditing(false);
   };
 
   const fetchLastUpdatedBy = useCallback(async () => {
@@ -358,6 +363,31 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
     pathSolver.editProperties('lease', lease.id);
   };
 
+  const setIsPropertyEditing = useCallback(
+    (value: boolean) => {
+      if (value) {
+        query.set('edit', value.toString());
+      } else {
+        query.delete('edit');
+      }
+
+      setContainerState({
+        isEditing: value,
+      });
+      history.push({ search: query.toString() });
+    },
+    [history, query],
+  );
+
+  useEffect(() => {
+    setIsPropertyEditing(query.get('edit') === 'true');
+  }, [query, setIsPropertyEditing]);
+
+  const onPropertyUpdate = () => {
+    setIsPropertyEditing(false);
+    refresh();
+  };
+
   return (
     <Switch>
       <Route path={`${stripTrailingSlash(match.path)}/property/selector`}>
@@ -412,15 +442,11 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
                       selectedMenuIndex={Number(match.params.menuIndex)}
                       file={lease}
                       fileType={ApiGen_CodeTypes_FileTypes.Lease}
-                      isEditing={false}
-                      setIsEditing={() => {
-                        console.log('onSuccess');
-                      }}
+                      isEditing={containerState.isEditing}
+                      setIsEditing={setIsPropertyEditing}
                       defaultFileTab={FileTabType.FILE_DETAILS}
                       defaultPropertyTab={InventoryTabNames.property}
-                      onSuccess={() => {
-                        console.log('onSuccess');
-                      }}
+                      onSuccess={onPropertyUpdate}
                     />
                   )}
                 />

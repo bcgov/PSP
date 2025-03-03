@@ -96,7 +96,6 @@ export const FilePropertyRouter: React.FC<IFilePropertyRouterProps> = props => {
             View={UpdatePropertyForm}
           />
         </Route>
-
         <Redirect from={`${path}`} to={`${url}/${InventoryTabNames.property}?edit=true`} />
       </Switch>
     );
