@@ -244,7 +244,26 @@ exports[`LeasePropertiesInformation component > renders as expected 1`] = `
           </div>
           <div
             class="c5 text-left col"
-          />
+          >
+            <div>
+              1234 mock Street
+            </div>
+            <div>
+              N/A 
+            </div>
+            <div>
+              Victoria
+            </div>
+            <div>
+              V1V1V1
+            </div>
+            <div>
+               British Columbia 
+            </div>
+            <div>
+              Canada 
+            </div>
+          </div>
         </div>
         <div
           class="pb-2 row"

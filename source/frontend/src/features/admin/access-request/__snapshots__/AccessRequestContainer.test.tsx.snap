@@ -324,9 +324,9 @@ exports[`AccessRequestContainer component > makes a request based on the access 
             placeholder="desmith@idir"
             readonly=""
             style="word-break: break-all;"
-            title=""
+            title="desmith@idir"
             type="text"
-            value=""
+            value="desmith@idir"
           />
         </div>
       </div>
@@ -356,9 +356,9 @@ exports[`AccessRequestContainer component > makes a request based on the access 
             placeholder="Devin"
             readonly=""
             style="word-break: break-all;"
-            title=""
+            title="Devin"
             type="text"
-            value=""
+            value="Devin"
           />
         </div>
       </div>
@@ -388,9 +388,9 @@ exports[`AccessRequestContainer component > makes a request based on the access 
             placeholder="Smith"
             readonly=""
             style="word-break: break-all;"
-            title=""
+            title="Smith"
             type="text"
-            value=""
+            value="Smith"
           />
         </div>
       </div>
@@ -451,9 +451,9 @@ exports[`AccessRequestContainer component > makes a request based on the access 
             name="position"
             placeholder="e.g. Property Analyst, Integrated Transportation & Infrastructure Services"
             style="word-break: break-all;"
-            title=""
+            title="pos"
             type="text"
-            value=""
+            value="pos"
           />
         </div>
       </div>

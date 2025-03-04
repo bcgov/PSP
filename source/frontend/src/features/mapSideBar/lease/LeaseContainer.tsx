@@ -46,9 +46,9 @@ import MapSideBarLayout from '../layout/MapSideBarLayout';
 import { InventoryTabNames } from '../property/InventoryTabs';
 import { FilePropertyRouter } from '../router/FilePropertyRouter';
 import { FileTabType } from '../shared/detail/FileTabs';
-import FileMenuView from '../shared/fileMenuView';
+import FileMenuView from '../shared/FileMenuView';
 import SidebarFooter from '../shared/SidebarFooter';
-import usePathSolver from '../shared/sidebarPathSolver';
+import usePathGenerator from '../shared/sidebarPathGenerator';
 import { StyledFormWrapper } from '../shared/styles';
 import LeaseHeader from './common/LeaseHeader';
 import { LeaseFileTabNames } from './detail/LeaseFileTabs';
@@ -234,7 +234,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
 
   const { hasClaim, hasRole } = useKeycloakWrapper();
 
-  const pathSolver = usePathSolver();
+  const pathSolver = usePathGenerator();
 
   const activeTab = containerState.activeTab;
   const { setFullWidthSideBar } = useMapStateMachine();

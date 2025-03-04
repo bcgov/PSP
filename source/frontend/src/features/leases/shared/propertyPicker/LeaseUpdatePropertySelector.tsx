@@ -18,7 +18,8 @@ import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { AddressForm } from '@/features/mapSideBar/shared/models';
 import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
-import usePathSolver from '@/features/mapSideBar/shared/sidebarPathSolver';
+import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator';
+import { UpdatePropertiesYupSchema } from '@/features/mapSideBar/shared/update/properties/UpdatePropertiesYupSchema';
 import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
 import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
 import { useProperties } from '@/hooks/repositories/useProperties';
@@ -52,13 +53,13 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
   const { setModalContent, setDisplayModal } = useContext(ModalContext);
   const { getPrimaryAddressByPid, bcaLoading } = useBcaAddress();
 
-  const pathSolver = usePathSolver();
+  const pathSolver = usePathGenerator();
 
   const { updateLeaseProperties } = usePropertyLeaseRepository();
 
   const arrayHelpersRef = useRef<FieldArrayRenderProps | null>(null);
 
-  const { refresh } = useLeaseDetail(lease?.id ?? undefined);
+  const { getCompleteLease } = useLeaseDetail(lease?.id ?? undefined);
 
   const mapMachine = useMapStateMachine();
 
@@ -211,7 +212,6 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
     [getRemoveModalProps, setDisplayModal, setModalContent],
   );
 
-  // todo fix these
   const handleCancelConfirm = () => {
     if (formikRef !== undefined) {
       formikRef.current?.resetForm();
@@ -270,13 +270,28 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
           );
         }
         formikRef.current?.resetForm();
-        await refresh();
+        await getCompleteLease();
         mapMachine.refreshMapProperties();
         pathSolver.showFile('lease', lease.id);
       }
     } catch (e) {
       if (axios.isAxiosError(e) && (e as AxiosError).code === '409') {
         setShowAssociatedEntityWarning(true);
+      } else if (e?.response?.data?.type === 'BusinessRuleViolationException') {
+        setShowSaveConfirmModal(false);
+        setModalContent({
+          title: 'Warning',
+          message: e.response.data.error,
+          okButtonText: 'Close',
+          variant: 'error',
+          handleOk: async () => {
+            await getCompleteLease();
+            setDisplayModal(false);
+          },
+        });
+        setDisplayModal(true);
+      } else {
+        throw e;
       }
     }
   };
@@ -301,7 +316,7 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
         <Formik<LeaseFormModel>
           innerRef={formikRef}
           initialValues={initialValues}
-          //validationSchema={UpdatePropertiesYupSchema}
+          validationSchema={UpdatePropertiesYupSchema}
           onSubmit={async (values: LeaseFormModel) => {
             const file: ApiGen_Concepts_Lease = LeaseFormModel.toApi(values);
             await saveFile(file);

@@ -6,7 +6,7 @@ exports[`EditUserContainer component > makes a request based on the user id 1`] 
     class="Toastify"
   />
   <div />
-  .c6.btn {
+  .c5.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,19 +35,19 @@ exports[`EditUserContainer component > makes a request based on the user id 1`] 
   cursor: pointer;
 }
 
-.c6.btn .Button__value {
+.c5.btn .Button__value {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
-.c6.btn:hover {
+.c5.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c6.btn:focus {
+.c5.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -55,31 +55,31 @@ exports[`EditUserContainer component > makes a request based on the user id 1`] 
   box-shadow: none;
 }
 
-.c6.btn.btn-primary {
+.c5.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c6.btn.btn-primary:hover,
-.c6.btn.btn-primary:active,
-.c6.btn.btn-primary:focus {
+.c5.btn.btn-primary:hover,
+.c5.btn.btn-primary:active,
+.c5.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c6.btn.btn-secondary {
+.c5.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c6.btn.btn-secondary:hover,
-.c6.btn.btn-secondary:active,
-.c6.btn.btn-secondary:focus {
+.c5.btn.btn-secondary:hover,
+.c5.btn.btn-secondary:active,
+.c5.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c6.btn.btn-info {
+.c5.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -87,66 +87,66 @@ exports[`EditUserContainer component > makes a request based on the user id 1`] 
   padding-right: 0.6rem;
 }
 
-.c6.btn.btn-info:hover,
-.c6.btn.btn-info:active,
-.c6.btn.btn-info:focus {
+.c5.btn.btn-info:hover,
+.c5.btn.btn-info:active,
+.c5.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c6.btn.btn-light {
+.c5.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c6.btn.btn-light:hover,
-.c6.btn.btn-light:active,
-.c6.btn.btn-light:focus {
+.c5.btn.btn-light:hover,
+.c5.btn.btn-light:active,
+.c5.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c6.btn.btn-dark {
+.c5.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c6.btn.btn-dark:hover,
-.c6.btn.btn-dark:active,
-.c6.btn.btn-dark:focus {
+.c5.btn.btn-dark:hover,
+.c5.btn.btn-dark:active,
+.c5.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c6.btn.btn-danger {
+.c5.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c6.btn.btn-danger:hover,
-.c6.btn.btn-danger:active,
-.c6.btn.btn-danger:focus {
+.c5.btn.btn-danger:hover,
+.c5.btn.btn-danger:active,
+.c5.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c6.btn.btn-warning {
+.c5.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c6.btn.btn-warning:hover,
-.c6.btn.btn-warning:active,
-.c6.btn.btn-warning:focus {
+.c5.btn.btn-warning:hover,
+.c5.btn.btn-warning:active,
+.c5.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c6.btn.btn-link {
+.c5.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -170,9 +170,9 @@ exports[`EditUserContainer component > makes a request based on the user id 1`] 
   text-decoration: underline;
 }
 
-.c6.btn.btn-link:hover,
-.c6.btn.btn-link:active,
-.c6.btn.btn-link:focus {
+.c5.btn.btn-link:hover,
+.c5.btn.btn-link:active,
+.c5.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -182,15 +182,15 @@ exports[`EditUserContainer component > makes a request based on the user id 1`] 
   outline: none;
 }
 
-.c6.btn.btn-link:disabled,
-.c6.btn.btn-link.disabled {
+.c5.btn.btn-link:disabled,
+.c5.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c6.btn:disabled,
-.c6.btn:disabled:hover {
+.c5.btn:disabled,
+.c5.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -202,26 +202,16 @@ exports[`EditUserContainer component > makes a request based on the user id 1`] 
   cursor: not-allowed;
 }
 
-.c6.Button .Button__icon {
+.c5.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c6.Button--icon-only:focus {
+.c5.Button--icon-only:focus {
   outline: none;
 }
 
-.c6.Button--icon-only .Button__icon {
+.c5.Button--icon-only .Button__icon {
   margin-right: 0;
-}
-
-.c4 {
-  margin-left: 0.5rem;
-  cursor: pointer;
-  fill: #474543;
-}
-
-.c4:hover {
-  fill: #CE3E39;
 }
 
 .c3 {
@@ -293,7 +283,7 @@ exports[`EditUserContainer component > makes a request based on the user id 1`] 
   font-weight: bold;
 }
 
-.c5 {
+.c4 {
   position: absolute;
   top: 1rem;
   right: -0.5rem;
@@ -328,9 +318,9 @@ exports[`EditUserContainer component > makes a request based on the user id 1`] 
             name="businessIdentifierValue"
             readonly=""
             style="word-break: break-all;"
-            title="desmith@idir"
+            title=""
             type="text"
-            value="desmith@idir"
+            value=""
           />
         </div>
       </div>
@@ -358,11 +348,11 @@ exports[`EditUserContainer component > makes a request based on the user id 1`] 
             data-testid="firstName"
             id="input-firstName"
             name="firstName"
-            placeholder="Devin"
+            placeholder=""
             style="word-break: break-all;"
-            title="Devin"
+            title=""
             type="text"
-            value="Devin"
+            value=""
           />
         </div>
       </div>
@@ -390,11 +380,11 @@ exports[`EditUserContainer component > makes a request based on the user id 1`] 
             data-testid="surname"
             id="input-surname"
             name="surname"
-            placeholder="Smith"
+            placeholder=""
             style="word-break: break-all;"
-            title="Smith"
+            title=""
             type="text"
-            value="Smith"
+            value=""
           />
         </div>
       </div>
@@ -422,11 +412,11 @@ exports[`EditUserContainer component > makes a request based on the user id 1`] 
             data-testid="email"
             id="input-email"
             name="email"
-            placeholder="devin.smith@gov.bc.ca"
+            placeholder=""
             style="word-break: break-all;"
-            title="devin.smith@gov.bc.ca"
+            title=""
             type="email"
-            value="devin.smith@gov.bc.ca"
+            value=""
           />
         </div>
       </div>
@@ -456,9 +446,9 @@ exports[`EditUserContainer component > makes a request based on the user id 1`] 
             name="position"
             placeholder="e.g) Director, Real Estate and Stakeholder Engagement"
             style="word-break: break-all;"
-            title="pos"
+            title=""
             type="text"
-            value="pos"
+            value=""
           />
         </div>
       </div>
@@ -561,54 +551,6 @@ exports[`EditUserContainer component > makes a request based on the user id 1`] 
                 class="search-wrapper searchWrapper "
                 style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
               >
-                <span
-                  class="chip  false false"
-                  style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em; white-space: normal;"
-                >
-                  Functional
-                  <i
-                    class="custom-close"
-                  >
-                    <svg
-                      class="c4"
-                      fill="currentColor"
-                      height="16"
-                      stroke="currentColor"
-                      stroke-width="0"
-                      viewBox="0 0 512 512"
-                      width="16"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
-                      />
-                    </svg>
-                  </i>
-                </span>
-                <span
-                  class="chip  false false"
-                  style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em; white-space: normal;"
-                >
-                  System Administrator
-                  <i
-                    class="custom-close"
-                  >
-                    <svg
-                      class="c4"
-                      fill="currentColor"
-                      height="16"
-                      stroke="currentColor"
-                      stroke-width="0"
-                      viewBox="0 0 512 512"
-                      width="16"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
-                      />
-                    </svg>
-                  </i>
-                </span>
                 <input
                   autocomplete="off"
                   class="searchBox "
@@ -685,13 +627,18 @@ exports[`EditUserContainer component > makes a request based on the user id 1`] 
                   >
                     Research read-only
                   </li>
+                  <li
+                    class="option    "
+                  >
+                    System Administrator
+                  </li>
                 </ul>
               </div>
             </div>
           </div>
         </div>
         <svg
-          class="c5 tooltip-icon"
+          class="c4 tooltip-icon"
           fill="currentColor"
           height="1em"
           stroke="currentColor"
@@ -734,30 +681,6 @@ exports[`EditUserContainer component > makes a request based on the user id 1`] 
                 class="search-wrapper searchWrapper "
                 style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
               >
-                <span
-                  class="chip  false false"
-                  style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em; white-space: normal;"
-                >
-                  South Coast Region
-                  <i
-                    class="custom-close"
-                  >
-                    <svg
-                      class="c4"
-                      fill="currentColor"
-                      height="16"
-                      stroke="currentColor"
-                      stroke-width="0"
-                      viewBox="0 0 512 512"
-                      width="16"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
-                      />
-                    </svg>
-                  </i>
-                </span>
                 <input
                   autocomplete="off"
                   class="searchBox "
@@ -776,6 +699,11 @@ exports[`EditUserContainer component > makes a request based on the user id 1`] 
                 >
                   <li
                     class="option  highlightOption highlight  "
+                  >
+                    South Coast Region
+                  </li>
+                  <li
+                    class="option    "
                   >
                     Southern Interior Region
                   </li>
@@ -867,7 +795,7 @@ exports[`EditUserContainer component > makes a request based on the user id 1`] 
         role="toolbar"
       >
         <button
-          class="c6 Button mr-5 btn btn-secondary"
+          class="c5 Button mr-5 btn btn-secondary"
           type="button"
         >
           <div
@@ -877,7 +805,7 @@ exports[`EditUserContainer component > makes a request based on the user id 1`] 
           </div>
         </button>
         <button
-          class="c6 Button mr-5 btn btn-primary"
+          class="c5 Button mr-5 btn btn-primary"
           type="submit"
         >
           <div

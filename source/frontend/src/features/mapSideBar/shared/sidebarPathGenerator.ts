@@ -2,7 +2,7 @@ import { generatePath, useHistory } from 'react-router-dom';
 
 export const sidebarBasePath = '/mapview/sidebar';
 
-export interface IPathSolverMethods {
+export interface IPathGeneratorMethods {
   newFile: (fileType: string) => void;
   showFile: (fileType: string, fileId: number) => void;
   showDetail: (fileType: string, fileId: number, detailType: string, replace: boolean) => void;
@@ -20,9 +20,9 @@ export interface IPathSolverMethods {
   ) => void;
 }
 
-export type IPathSolver = () => IPathSolverMethods;
+export type IPathGenerator = () => IPathGeneratorMethods;
 
-const usePathSolver: IPathSolver = () => {
+const usePathGenerator: IPathGenerator = () => {
   const history = useHistory();
 
   const newFile = (fileType: string) => {
@@ -149,4 +149,4 @@ const usePathSolver: IPathSolver = () => {
   };
 };
 
-export default usePathSolver;
+export default usePathGenerator;

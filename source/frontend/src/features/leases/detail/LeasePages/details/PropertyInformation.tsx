@@ -8,6 +8,8 @@ import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeTyp
 import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
 import { isValidId, pidFormatter } from '@/utils';
 
+import AddressView from '../AddressView';
+
 export interface IPropertyInformationProps {
   hideAddress?: boolean;
   property: ApiGen_Concepts_PropertyLease;
@@ -44,7 +46,7 @@ export const PropertyInformation: React.FunctionComponent<
       </SectionField>
       {!hideAddress ? (
         <SectionField label="Address" labelWidth="3" className="py-2">
-          <>{property.property.address.streetAddress3}</>
+          <AddressView address={property.property.address} />
         </SectionField>
       ) : null}
       <SectionField label="Legal description" labelWidth="3">
