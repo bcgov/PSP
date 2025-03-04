@@ -26,9 +26,11 @@ import { TenantConsumer, TenantProvider } from '@/tenants';
 import getKeycloakEventHandler from '@/utils/getKeycloakEventHandler';
 
 import App from './App';
+import { VITE_ANALYTICS_ENDPOINT, VITE_DEPLOY_ENV, VITE_SERVICE_NAME } from './config';
 import { DocumentViewerContextProvider } from './features/documents/context/DocumentViewerContext';
 import { ITenantConfig2 } from './hooks/pims-api/interfaces/ITenantConfig';
 import { useRefreshSiteminder } from './hooks/useRefreshSiteminder';
+import { configureTelemetry } from './telemetry/metrics';
 
 async function prepare() {
   if (process.env.NODE_ENV === 'development') {
@@ -83,4 +85,11 @@ const InnerComponent = ({ tenant }: { tenant: ITenantConfig2 }) => {
 prepare().then(() => {
   const root = createRoot(document.getElementById('root') as Element);
   root.render(<Index />);
+
+  // configure browser telemetry
+  configureTelemetry({
+    name: VITE_SERVICE_NAME,
+    environment: VITE_DEPLOY_ENV,
+    otlpEndpoint: VITE_ANALYTICS_ENDPOINT,
+  });
 });
