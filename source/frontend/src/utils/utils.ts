@@ -8,6 +8,14 @@ import { TableSort } from '@/components/Table/TableSort';
 import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { logRequest, logSuccess } from '@/store/slices/network/networkSlice';
 
+export const isBrowserEnvironment = () => {
+  return typeof window !== 'undefined';
+};
+
+export const isNodeEnvironment = () => {
+  return typeof process !== 'undefined' && process.release && process.release.name === 'node';
+};
+
 /**
  * Removes a trailing slash from a string.
  * Useful when creating nested URLs or routes.
