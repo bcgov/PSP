@@ -6,7 +6,7 @@ exports[`Edit user page > EditUserPage renders 1`] = `
     class="Toastify"
   />
   <div />
-  .c7.btn {
+  .c8.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,19 +35,19 @@ exports[`Edit user page > EditUserPage renders 1`] = `
   cursor: pointer;
 }
 
-.c7.btn .Button__value {
+.c8.btn .Button__value {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
-.c7.btn:hover {
+.c8.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c7.btn:focus {
+.c8.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -55,31 +55,31 @@ exports[`Edit user page > EditUserPage renders 1`] = `
   box-shadow: none;
 }
 
-.c7.btn.btn-primary {
+.c8.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c7.btn.btn-primary:hover,
-.c7.btn.btn-primary:active,
-.c7.btn.btn-primary:focus {
+.c8.btn.btn-primary:hover,
+.c8.btn.btn-primary:active,
+.c8.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c7.btn.btn-secondary {
+.c8.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c7.btn.btn-secondary:hover,
-.c7.btn.btn-secondary:active,
-.c7.btn.btn-secondary:focus {
+.c8.btn.btn-secondary:hover,
+.c8.btn.btn-secondary:active,
+.c8.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c7.btn.btn-info {
+.c8.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -87,66 +87,66 @@ exports[`Edit user page > EditUserPage renders 1`] = `
   padding-right: 0.6rem;
 }
 
-.c7.btn.btn-info:hover,
-.c7.btn.btn-info:active,
-.c7.btn.btn-info:focus {
+.c8.btn.btn-info:hover,
+.c8.btn.btn-info:active,
+.c8.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c7.btn.btn-light {
+.c8.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c7.btn.btn-light:hover,
-.c7.btn.btn-light:active,
-.c7.btn.btn-light:focus {
+.c8.btn.btn-light:hover,
+.c8.btn.btn-light:active,
+.c8.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c7.btn.btn-dark {
+.c8.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c7.btn.btn-dark:hover,
-.c7.btn.btn-dark:active,
-.c7.btn.btn-dark:focus {
+.c8.btn.btn-dark:hover,
+.c8.btn.btn-dark:active,
+.c8.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c7.btn.btn-danger {
+.c8.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c7.btn.btn-danger:hover,
-.c7.btn.btn-danger:active,
-.c7.btn.btn-danger:focus {
+.c8.btn.btn-danger:hover,
+.c8.btn.btn-danger:active,
+.c8.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c7.btn.btn-warning {
+.c8.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c7.btn.btn-warning:hover,
-.c7.btn.btn-warning:active,
-.c7.btn.btn-warning:focus {
+.c8.btn.btn-warning:hover,
+.c8.btn.btn-warning:active,
+.c8.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c7.btn.btn-link {
+.c8.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -170,9 +170,9 @@ exports[`Edit user page > EditUserPage renders 1`] = `
   text-decoration: underline;
 }
 
-.c7.btn.btn-link:hover,
-.c7.btn.btn-link:active,
-.c7.btn.btn-link:focus {
+.c8.btn.btn-link:hover,
+.c8.btn.btn-link:active,
+.c8.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -182,15 +182,15 @@ exports[`Edit user page > EditUserPage renders 1`] = `
   outline: none;
 }
 
-.c7.btn.btn-link:disabled,
-.c7.btn.btn-link.disabled {
+.c8.btn.btn-link:disabled,
+.c8.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c7.btn:disabled,
-.c7.btn:disabled:hover {
+.c8.btn:disabled,
+.c8.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -202,16 +202,26 @@ exports[`Edit user page > EditUserPage renders 1`] = `
   cursor: not-allowed;
 }
 
-.c7.Button .Button__icon {
+.c8.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c7.Button--icon-only:focus {
+.c8.Button--icon-only:focus {
   outline: none;
 }
 
-.c7.Button--icon-only .Button__icon {
+.c8.Button--icon-only .Button__icon {
   margin-right: 0;
+}
+
+.c6 {
+  margin-left: 0.5rem;
+  cursor: pointer;
+  fill: #474543;
+}
+
+.c6:hover {
+  fill: #CE3E39;
 }
 
 .c5 {
@@ -293,7 +303,7 @@ exports[`Edit user page > EditUserPage renders 1`] = `
   font-weight: bold;
 }
 
-.c6 {
+.c7 {
   position: absolute;
   top: 1rem;
   right: -0.5rem;
@@ -367,9 +377,9 @@ exports[`Edit user page > EditUserPage renders 1`] = `
                   name="businessIdentifierValue"
                   readonly=""
                   style="word-break: break-all;"
-                  title=""
+                  title="desmith@idir"
                   type="text"
-                  value=""
+                  value="desmith@idir"
                 />
               </div>
             </div>
@@ -397,11 +407,11 @@ exports[`Edit user page > EditUserPage renders 1`] = `
                   data-testid="firstName"
                   id="input-firstName"
                   name="firstName"
-                  placeholder=""
+                  placeholder="Devin"
                   style="word-break: break-all;"
-                  title=""
+                  title="Devin"
                   type="text"
-                  value=""
+                  value="Devin"
                 />
               </div>
             </div>
@@ -429,11 +439,11 @@ exports[`Edit user page > EditUserPage renders 1`] = `
                   data-testid="surname"
                   id="input-surname"
                   name="surname"
-                  placeholder=""
+                  placeholder="Smith"
                   style="word-break: break-all;"
-                  title=""
+                  title="Smith"
                   type="text"
-                  value=""
+                  value="Smith"
                 />
               </div>
             </div>
@@ -461,11 +471,11 @@ exports[`Edit user page > EditUserPage renders 1`] = `
                   data-testid="email"
                   id="input-email"
                   name="email"
-                  placeholder=""
+                  placeholder="devin.smith@gov.bc.ca"
                   style="word-break: break-all;"
-                  title=""
+                  title="devin.smith@gov.bc.ca"
                   type="email"
-                  value=""
+                  value="devin.smith@gov.bc.ca"
                 />
               </div>
             </div>
@@ -495,9 +505,9 @@ exports[`Edit user page > EditUserPage renders 1`] = `
                   name="position"
                   placeholder="e.g) Director, Real Estate and Stakeholder Engagement"
                   style="word-break: break-all;"
-                  title=""
+                  title="pos"
                   type="text"
-                  value=""
+                  value="pos"
                 />
               </div>
             </div>
@@ -600,6 +610,54 @@ exports[`Edit user page > EditUserPage renders 1`] = `
                       class="search-wrapper searchWrapper "
                       style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
                     >
+                      <span
+                        class="chip  false false"
+                        style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em; white-space: normal;"
+                      >
+                        Functional
+                        <i
+                          class="custom-close"
+                        >
+                          <svg
+                            class="c6"
+                            fill="currentColor"
+                            height="16"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 512 512"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
+                            />
+                          </svg>
+                        </i>
+                      </span>
+                      <span
+                        class="chip  false false"
+                        style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em; white-space: normal;"
+                      >
+                        System Administrator
+                        <i
+                          class="custom-close"
+                        >
+                          <svg
+                            class="c6"
+                            fill="currentColor"
+                            height="16"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 512 512"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
+                            />
+                          </svg>
+                        </i>
+                      </span>
                       <input
                         autocomplete="off"
                         class="searchBox "
@@ -627,7 +685,7 @@ exports[`Edit user page > EditUserPage renders 1`] = `
                 </div>
               </div>
               <svg
-                class="c6 tooltip-icon"
+                class="c7 tooltip-icon"
                 fill="currentColor"
                 height="1em"
                 stroke="currentColor"
@@ -774,7 +832,7 @@ exports[`Edit user page > EditUserPage renders 1`] = `
               role="toolbar"
             >
               <button
-                class="c7 Button mr-5 btn btn-secondary"
+                class="c8 Button mr-5 btn btn-secondary"
                 type="button"
               >
                 <div
@@ -784,7 +842,7 @@ exports[`Edit user page > EditUserPage renders 1`] = `
                 </div>
               </button>
               <button
-                class="c7 Button mr-5 btn btn-primary"
+                class="c8 Button mr-5 btn btn-primary"
                 type="submit"
               >
                 <div
