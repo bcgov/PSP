@@ -1799,7 +1799,9 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                                 rel="noopener noreferrer"
                                 target="_blank"
                               >
-                                <span />
+                                <span>
+                                  Luke Skywalker
+                                </span>
                                 <svg
                                   class="m1-2"
                                   fill="currentColor"
