@@ -35,7 +35,6 @@ import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Le
 import { isValidId } from '@/utils';
 import { prettyFormatDate } from '@/utils/dateUtils';
 
-import { CompReqLeaseStakeholderModel } from '../../acquisition/models/LeaseStakeholderModel';
 import { CompensationRequisitionFormModel } from '../models/CompensationRequisitionFormModel';
 import { CompensationRequisitionYupSchema } from './CompensationRequisitionYupSchema';
 import FinancialActivitiesSubForm from './financials/FinancialActivitiesSubForm';
@@ -45,7 +44,6 @@ export interface CompensationRequisitionFormProps {
   fileType: ApiGen_CodeTypes_FileTypes;
   file: ApiGen_Concepts_AcquisitionFile | ApiGen_Concepts_Lease;
   payeeOptions: PayeeOption[];
-  leaseStakeholders: CompReqLeaseStakeholderModel[];
   initialValues: CompensationRequisitionFormModel;
   gstConstant: number;
   financialActivityOptions: SelectOption[];
@@ -65,7 +63,6 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
   fileType,
   file,
   payeeOptions,
-  leaseStakeholders,
   initialValues,
   gstConstant,
   financialActivityOptions,
@@ -258,31 +255,21 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
 
               <Section header="Payment" isCollapsable initiallyExpanded>
                 <SectionField label="Payee" labelWidth="4" required>
-                  {fileType === ApiGen_CodeTypes_FileTypes.Acquisition ? (
-                    <Multiselect<PayeeOption, PayeeOption>
-                      field="payees"
-                      selectFunction={(optionPayees, selectedPayees) =>
-                        optionPayees.filter(payee =>
-                          selectedPayees?.find(
-                            selectedPayee =>
-                              selectedPayee.api_id === payee.api_id &&
-                              selectedPayee.payeeType === payee.payeeType,
-                          ),
-                        )
-                      }
-                      options={payeeOptions}
-                      displayValue="fullText"
-                      placeholder="Select..."
-                    />
-                  ) : (
-                    <Select
-                      field="leaseStakeholderId"
-                      options={leaseStakeholders?.map<SelectOption>(x => {
-                        return { label: x.text, value: x.stakeholderId, title: x.fullText };
-                      })}
-                      placeholder="Select..."
-                    />
-                  )}
+                  <Multiselect<PayeeOption, PayeeOption>
+                    field="payees"
+                    selectFunction={(optionPayees, selectedPayees) =>
+                      optionPayees.filter(payee =>
+                        selectedPayees?.find(
+                          selectedPayee =>
+                            selectedPayee.api_id === payee.api_id &&
+                            selectedPayee.payeeType === payee.payeeType,
+                        ),
+                      )
+                    }
+                    options={payeeOptions}
+                    displayValue="fullText"
+                    placeholder="Select..."
+                  />
                 </SectionField>
                 <SectionField label="Payment in Trust?">
                   <Check field="isPaymentInTrust" />

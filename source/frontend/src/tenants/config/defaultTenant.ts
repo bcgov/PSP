@@ -89,6 +89,7 @@ export const defaultTenant: ITenantConfig2 = {
   },
   idlePromptTimeout: 15,
   idleTimeout: 15,
+  doubleClickInterval: 250,
   pimsTrainingResourceUrl:
     'https://sp.th.gov.bc.ca/sites/PropertiesServices/Project%20Management/03.%20Execution%20and%20Control/PIMS%20Training',
 };

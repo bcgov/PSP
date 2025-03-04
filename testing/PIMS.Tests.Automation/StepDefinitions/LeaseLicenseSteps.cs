@@ -1024,7 +1024,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateLeaseLicense(int rowNumber)
         {
-            DataTable leaseSheet = ExcelDataContext.GetInstance().Sheets["Leases"]!;
+            System.Data.DataTable leaseSheet = ExcelDataContext.GetInstance().Sheets["Leases"]!;
             ExcelDataContext.PopulateInCollection(leaseSheet);
 
             lease = new Lease
@@ -1079,7 +1079,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             if (lease.SearchPropertiesIndex > 0)
             {
-                DataTable searchPropertiesSheet = ExcelDataContext.GetInstance().Sheets["SearchProperties"]!;
+                System.Data.DataTable searchPropertiesSheet = ExcelDataContext.GetInstance().Sheets["SearchProperties"]!;
                 ExcelDataContext.PopulateInCollection(searchPropertiesSheet);
 
                 lease.SearchProperties.PID = ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "PID");
@@ -1104,7 +1104,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             lease.LeaseChecklistIndex = int.Parse(ExcelDataContext.ReadData(rowNumber, "LeaseChecklistIndex"));
             if (lease.LeaseChecklistIndex > 0)
             {
-                DataTable leaseChecklistSheet = ExcelDataContext.GetInstance().Sheets["LeasesChecklist"]!;
+                System.Data.DataTable leaseChecklistSheet = ExcelDataContext.GetInstance().Sheets["LeasesChecklist"]!;
                 ExcelDataContext.PopulateInCollection(leaseChecklistSheet);
 
                 lease.LeaseChecklist.FileInitiationSelect1 = ExcelDataContext.ReadData(lease.LeaseChecklistIndex, "LeaseFileInitiationSelect1");
@@ -1238,7 +1238,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateRenewalsCollection(int startRow, int rowsCount)
         {
-            DataTable leasesRenewalsSheet = ExcelDataContext.GetInstance().Sheets["LeasesRenewals"]!;
+            System.Data.DataTable leasesRenewalsSheet = ExcelDataContext.GetInstance().Sheets["LeasesRenewals"]!;
             ExcelDataContext.PopulateInCollection(leasesRenewalsSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -1257,7 +1257,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulatePropertiesCollection(int startRow, int rowsCount)
         {
-            DataTable propertiesSheet = ExcelDataContext.GetInstance().Sheets["LeasesProperties"]!;
+            System.Data.DataTable propertiesSheet = ExcelDataContext.GetInstance().Sheets["LeasesProperties"]!;
             ExcelDataContext.PopulateInCollection(propertiesSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -1284,7 +1284,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateConsultationsCollection(int startRow, int rowsCount)
         {
-            DataTable leasesConsultationsSheet = ExcelDataContext.GetInstance().Sheets["LeasesConsultations"]!;
+            System.Data.DataTable leasesConsultationsSheet = ExcelDataContext.GetInstance().Sheets["LeasesConsultations"]!;
             ExcelDataContext.PopulateInCollection(leasesConsultationsSheet);
 
             lease.LeaseConsultations = new List<LeaseConsultation>();
@@ -1311,7 +1311,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateTenantsCollection(int startRow, int rowsCount)
         {
-            DataTable leasesTenantsSheet = ExcelDataContext.GetInstance().Sheets["LeasesTenants"]!;
+            System.Data.DataTable leasesTenantsSheet = ExcelDataContext.GetInstance().Sheets["LeasesTenants"]!;
             ExcelDataContext.PopulateInCollection(leasesTenantsSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -1330,7 +1330,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateDepositsCollection(int startRow, int rowsCount)
         {
-            DataTable leasesDepositsSheet = ExcelDataContext.GetInstance().Sheets["LeasesDeposits"]!;
+            System.Data.DataTable leasesDepositsSheet = ExcelDataContext.GetInstance().Sheets["LeasesDeposits"]!;
             ExcelDataContext.PopulateInCollection(leasesDepositsSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -1359,7 +1359,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulatePeriodsCollection(int startRow, int rowsCount)
         {
-            DataTable leasesPeriodsSheet = ExcelDataContext.GetInstance().Sheets["LeasesPeriods"]!;
+            System.Data.DataTable leasesPeriodsSheet = ExcelDataContext.GetInstance().Sheets["LeasesPeriods"]!;
             ExcelDataContext.PopulateInCollection(leasesPeriodsSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -1398,7 +1398,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulatePaymentsCollection(int startRow, int rowsCount)
         {
-            DataTable leasesDepositsPaymentsSheet = ExcelDataContext.GetInstance().Sheets["LeasesPayments"]!;
+            System.Data.DataTable leasesDepositsPaymentsSheet = ExcelDataContext.GetInstance().Sheets["LeasesPayments"]!;
             ExcelDataContext.PopulateInCollection(leasesDepositsPaymentsSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -1423,7 +1423,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateCompensationsCollection(int startRow, int rowsCount)
         {
-            DataTable compensationSheet = ExcelDataContext.GetInstance().Sheets["Compensation"]!;
+            System.Data.DataTable compensationSheet = ExcelDataContext.GetInstance().Sheets["Compensation"]!;
             ExcelDataContext.PopulateInCollection(compensationSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -1461,7 +1461,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateActivitiesCollection(int startRow, int rowsCount, List<CompensationActivity> activities)
         {
-            DataTable activitiesSheet = ExcelDataContext.GetInstance().Sheets["CompensationActivities"]!;
+            System.Data.DataTable activitiesSheet = ExcelDataContext.GetInstance().Sheets["CompensationActivities"]!;
             ExcelDataContext.PopulateInCollection(activitiesSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)

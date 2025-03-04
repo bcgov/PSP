@@ -1,6 +1,6 @@
 ﻿using AventStack.ExtentReports.Gherkin.Model;
 using AventStack.ExtentReports;
-using BoDi;
+using Reqnroll.BoDi;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using Microsoft.Extensions.Configuration;
@@ -77,7 +77,7 @@ namespace PIMS.Tests.Automation.Reports
             Console.WriteLine("Running after scenario...");
             var driver = _container.Resolve<IWebDriver>();
 
-            if (driver != null)
+            if (driver != null && closeBrowserOnDispose)
                 driver.Quit();
         }
 

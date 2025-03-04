@@ -17,10 +17,10 @@ import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
-import { ApiGen_Concepts_CompReqPayee } from '@/models/api/generated/ApiGen_Concepts_CompReqPayee';
+import { ApiGen_Concepts_CompReqAcqPayee } from '@/models/api/generated/ApiGen_Concepts_CompReqAcqPayee';
+import { ApiGen_Concepts_CompReqLeasePayee } from '@/models/api/generated/ApiGen_Concepts_CompReqLeasePayee';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
-import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
 import {
   exists,
   formatMoney,
@@ -38,8 +38,8 @@ export interface CompensationRequisitionDetailViewProps {
   file: ApiGen_Concepts_AcquisitionFile | ApiGen_Concepts_Lease;
   compensation: ApiGen_Concepts_CompensationRequisition;
   compensationProperties: ApiGen_Concepts_FileProperty[];
-  compensationPayees: ApiGen_Concepts_CompReqPayee[];
-  compensationLeaseStakeHolders: ApiGen_Concepts_LeaseStakeholder[];
+  compensationAcqPayees: ApiGen_Concepts_CompReqAcqPayee[];
+  compensationLeasePayees: ApiGen_Concepts_CompReqLeasePayee[];
   clientConstant: string;
   loading: boolean;
   isFileFinalStatus?: boolean;
@@ -57,8 +57,8 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
   file,
   compensation,
   compensationProperties,
-  compensationPayees,
-  compensationLeaseStakeHolders,
+  compensationAcqPayees,
+  compensationLeasePayees,
   clientConstant,
   loading,
   isFileFinalStatus,
@@ -84,8 +84,8 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
       return;
     }
 
-    if (compensationPayees?.length > 0) {
-      compensationPayees.forEach((currentPayee: ApiGen_Concepts_CompReqPayee) => {
+    if (compensationAcqPayees?.length > 0 && fileType === ApiGen_CodeTypes_FileTypes.Acquisition) {
+      compensationAcqPayees.forEach((currentPayee: ApiGen_Concepts_CompReqAcqPayee) => {
         let currentPayeeDetail = new PayeeDetail();
         if (currentPayee.acquisitionOwner) {
           currentPayeeDetail = PayeeDetail.createFromOwner(currentPayee.acquisitionOwner);
@@ -110,25 +110,32 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
         } else if (isValidString(currentPayee?.legacyPayee)) {
           currentPayeeDetail = PayeeDetail.createFromLegacyPayee(currentPayee.legacyPayee);
         }
-        currentPayeeDetail.compReqPayeeId = currentPayee.compReqPayeeId;
+        currentPayeeDetail.compReqPayeeId = currentPayee.compReqAcqPayeeId;
         currentPayeeDetail.isPaymentInTrust = compensation.isPaymentInTrust;
         tempPayeeDetails.push(currentPayeeDetail);
       });
-    } else if (compensationLeaseStakeHolders?.length > 0) {
-      const stakeHolder = compensationLeaseStakeHolders[0];
-      let payeeDetail = new PayeeDetail();
+    } else if (
+      compensationLeasePayees?.length > 0 &&
+      fileType === ApiGen_CodeTypes_FileTypes.Lease
+    ) {
+      compensationLeasePayees.forEach((leasePayee: ApiGen_Concepts_CompReqLeasePayee) => {
+        let payeeDetail = new PayeeDetail();
 
-      if (isValidId(stakeHolder?.personId)) {
-        payeeDetail = PayeeDetail.createFromPerson(stakeHolder.person);
-      } else if (isValidId(stakeHolder?.organizationId)) {
-        payeeDetail = PayeeDetail.createFromOrganization(stakeHolder.organization);
-      }
-      payeeDetail.isPaymentInTrust = compensation.isPaymentInTrust;
-      tempPayeeDetails.push(payeeDetail);
+        if (isValidId(leasePayee?.leaseStakeholder?.personId)) {
+          payeeDetail = PayeeDetail.createFromPerson(leasePayee?.leaseStakeholder?.person);
+        } else if (isValidId(leasePayee?.leaseStakeholder?.organizationId)) {
+          payeeDetail = PayeeDetail.createFromOrganization(
+            leasePayee?.leaseStakeholder?.organization,
+          );
+        }
+        payeeDetail.isPaymentInTrust = compensation.isPaymentInTrust;
+        payeeDetail.compReqPayeeId = leasePayee.compReqLeasePayeeId;
+        tempPayeeDetails.push(payeeDetail);
+      });
     }
 
     return tempPayeeDetails;
-  }, [compensation, compensationLeaseStakeHolders, compensationPayees]);
+  }, [compensation, compensationAcqPayees, compensationLeasePayees, fileType]);
 
   const compPretaxAmount = compensation?.financials
     ?.map(f => f.pretaxAmount ?? 0)
