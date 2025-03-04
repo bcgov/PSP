@@ -1,0 +1,5 @@
+window.VITE_DEPLOY_ENV = '';
+window.VITE_SERVICE_NAME = '';
+window.VITE_ANALYTICS_ENDPOINT = '';
+window.VITE_ANALYTICS_DEBUG = '';
+window.VITE_ANALYTICS_DISABLE = '';
