@@ -233,7 +233,7 @@ exports[`SideNavbar display and logic > renders 1`] = `
 }
 
 .c1 {
-  height: calc( 100vh - 7.2rem - 4.4rem );
+  height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
   padding-top: 1.5rem;

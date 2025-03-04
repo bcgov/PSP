@@ -94,7 +94,7 @@ export const defaultTenant: ITenantConfig2 = {
     'https://sp.th.gov.bc.ca/sites/PropertiesServices/Project%20Management/03.%20Execution%20and%20Control/PIMS%20Training',
   pimsHealthcheckMessages: {
     PimsApi:
-      'The PIMS server is currently unavailable, PIMS will not be useable until this is resolved',
+      'The PIMS server is currently unavailable, PIMS will not be useable until this is resolved.',
     PmbcExternalApi:
       'The BC Data Warehouse is experiencing service degradation, this will limit PIMS map functionality until resolved.',
     Geoserver:
