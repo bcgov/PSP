@@ -8,15 +8,16 @@ import { Footer, Header } from '@/components/layout';
 import HealthcheckView, {
   IHealthCheckIssue,
 } from '@/components/layout/Healthcheck/HealthcheckView';
-import SystemCheckMessages from '@/constants/healthChecksMsg';
 import ISystemCheck from '@/hooks/pims-api/interfaces/ISystemCheck';
 import { useApiHealth } from '@/hooks/pims-api/useApiHealth';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { IApiError } from '@/interfaces/IApiError';
+import { useTenant } from '@/tenants/useTenant';
 
 import FooterStyled from './Footer';
 import HeaderStyled from './Header';
 import HealthCheckStyled from './Healthcheck';
+import { HealthcheckMessagesTypesEnum } from './models/HealthcheckMessagesTypes';
 import * as Styled from './styles';
 
 const PublicLayout: React.FC<React.PropsWithChildren<React.HTMLAttributes<HTMLElement>>> = ({
@@ -25,8 +26,9 @@ const PublicLayout: React.FC<React.PropsWithChildren<React.HTMLAttributes<HTMLEl
 }) => {
   const [systemChecked, setSystemChecked] = useState<boolean>(null);
   const [systemDegraded, setSystemDegraded] = useState<boolean>(false);
-  const [healthCheckIssues, sethealthCheckIssues] = useState<IHealthCheckIssue[]>(null);
+  const [healthCheckIssues, setHealthCheckIssues] = useState<IHealthCheckIssue[]>(null);
 
+  const { pimsHealthcheckMessages } = useTenant();
   const { getLive, getSystemCheck } = useApiHealth();
   const keycloak = useKeycloakWrapper();
 
@@ -35,7 +37,10 @@ const PublicLayout: React.FC<React.PropsWithChildren<React.HTMLAttributes<HTMLEl
     try {
       const pimsApi = await getLive();
       if (pimsApi.data.status !== 'Healthy') {
-        systemIssues.push({ key: 'PimsApi', msg: SystemCheckMessages.PimsApi });
+        systemIssues.push({
+          key: HealthcheckMessagesTypesEnum.PIMS_API,
+          msg: pimsHealthcheckMessages[HealthcheckMessagesTypesEnum.PIMS_API],
+        });
         setSystemDegraded(true);
       }
 
@@ -44,54 +49,76 @@ const PublicLayout: React.FC<React.PropsWithChildren<React.HTMLAttributes<HTMLEl
         return;
       }
 
-      sethealthCheckIssues(systemIssues);
+      setHealthCheckIssues(systemIssues);
     } catch (e) {
       if (axios.isAxiosError(e)) {
         const axiosError = e as AxiosError<IApiError>;
         // 500 - API NOT Responding
         if (axiosError?.response?.status === 500) {
           setSystemDegraded(true);
-          systemIssues.push({ key: 'PimsApi', msg: SystemCheckMessages.PimsApi });
+          systemIssues.push({
+            key: HealthcheckMessagesTypesEnum.PIMS_API,
+            msg: pimsHealthcheckMessages[HealthcheckMessagesTypesEnum.PIMS_API],
+          });
         }
 
         // 503 - API responding service not available
         if (axiosError?.response?.status === 503) {
+          setSystemDegraded(true);
+
           const data = axiosError?.response?.data as unknown as ISystemCheck;
           if (data.entries?.Geoserver !== null && data.entries.Geoserver?.status !== 'Healthy') {
-            systemIssues.push({ key: 'Geoserver', msg: SystemCheckMessages.Geoserver });
+            systemIssues.push({
+              key: HealthcheckMessagesTypesEnum.GEOSERVER,
+              msg: pimsHealthcheckMessages[HealthcheckMessagesTypesEnum.GEOSERVER],
+            });
           }
 
           if (
             data.entries?.PmbcExternalApi !== null &&
             data.entries.PmbcExternalApi?.status !== 'Healthy'
           ) {
-            systemIssues.push({ key: 'PmbcExternalApi', msg: SystemCheckMessages.PmbcExternalApi });
+            systemIssues.push({
+              key: HealthcheckMessagesTypesEnum.PMBC,
+              msg: pimsHealthcheckMessages[HealthcheckMessagesTypesEnum.PMBC],
+            });
           }
 
           if (data.entries?.Mayan !== null && data.entries.Mayan?.status !== 'Healthy') {
-            systemIssues.push({ key: 'Mayan', msg: SystemCheckMessages.Mayan });
+            systemIssues.push({
+              key: HealthcheckMessagesTypesEnum.MAYAN,
+              msg: pimsHealthcheckMessages[HealthcheckMessagesTypesEnum.MAYAN],
+            });
           }
 
           if (data.entries?.Ltsa !== null && data.entries.Ltsa?.status !== 'Healthy') {
-            systemIssues.push({ key: 'Ltsa', msg: SystemCheckMessages.Ltsa });
+            systemIssues.push({
+              key: HealthcheckMessagesTypesEnum.LTSA,
+              msg: pimsHealthcheckMessages[HealthcheckMessagesTypesEnum.LTSA],
+            });
           }
 
           if (data.entries?.Geocoder !== null && data.entries.Geocoder?.status !== 'Healthy') {
-            systemIssues.push({ key: 'Geocoder', msg: SystemCheckMessages.Geocoder });
+            systemIssues.push({
+              key: HealthcheckMessagesTypesEnum.GEOCODER,
+              msg: pimsHealthcheckMessages[HealthcheckMessagesTypesEnum.GEOCODER],
+            });
           }
 
           if (data.entries?.Cdogs !== null && data.entries.Cdogs?.status !== 'Healthy') {
-            systemIssues.push({ key: 'Cdogs', msg: SystemCheckMessages.Cdogs });
+            systemIssues.push({
+              key: HealthcheckMessagesTypesEnum.CDOGS,
+              msg: pimsHealthcheckMessages[HealthcheckMessagesTypesEnum.CDOGS],
+            });
           }
 
-          setSystemDegraded(true);
-          sethealthCheckIssues(systemIssues);
+          setHealthCheckIssues(systemIssues);
         }
       }
     } finally {
       setSystemChecked(true);
     }
-  }, [getLive, getSystemCheck]);
+  }, [getLive, getSystemCheck, pimsHealthcheckMessages]);
 
   useEffect(() => {
     if (systemChecked == null && keycloak.obj.authenticated) {

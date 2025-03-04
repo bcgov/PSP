@@ -30,7 +30,7 @@ const HealthcheckView: React.FunctionComponent<IHealthCheckViewProps> = ({ syste
           </label>
           {systemChecks.length > 1 && (
             <LinkButton
-              data-testid="healtcheck-full-list"
+              data-testid="healthcheck-full-list"
               onClick={() => {
                 setModalContent({
                   variant: 'error',
