@@ -67,12 +67,12 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
   const [activeFeatureLayer, setActiveFeatureLayer] = useState<L.GeoJSON>();
   const { doubleClickInterval } = useTenant();
 
-  const timer = useRef(null);
-
   // add geojson layer to the map
   if (!!mapRef.current && !activeFeatureLayer) {
     setActiveFeatureLayer(geoJSON().addTo(mapRef.current));
   }
+
+  const timer = useRef(null);
 
   const handleMapClickEvent = (latlng: LatLng) => {
     if (timer?.current !== null) {
