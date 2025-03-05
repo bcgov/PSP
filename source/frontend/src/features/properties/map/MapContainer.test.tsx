@@ -487,6 +487,7 @@ describe('MapContainer', () => {
   });
 
   it('Markers can be filtered', async () => {
+    vi.useFakeTimers();
     mockKeycloak({ claims: [Claims.ADMIN_PROPERTIES] });
 
     const pimsFeatures = createPimsFeatures(distantMockParcels);
@@ -525,9 +526,56 @@ describe('MapContainer', () => {
     // click on single marker
     const marker = document.querySelector('img.leaflet-marker-icon');
     await act(async () => userEvent.click(marker!));
+    vi.advanceTimersByTime(500);
 
     // verify the correct feature got clicked
     expect(testMapMock.mapMarkerClick).toHaveBeenCalledWith(expectedFeature);
+  });
+
+  it('Marker double clicks results in zoom and does not open feature', async () => {
+    vi.useFakeTimers();
+    mockKeycloak({ claims: [Claims.ADMIN_PROPERTIES] });
+
+    const pimsFeatures = createPimsFeatures(distantMockParcels);
+    const feature = pimsFeatures.features[0];
+    const [longitude, latitude] = feature.geometry.coordinates;
+
+    const expectedFeature: FeatureSelected = {
+      clusterId: feature.id?.toString() || '',
+      pimsLocationFeature: feature.properties,
+      pimsBoundaryFeature: null,
+      fullyAttributedFeature: null,
+      latlng: { lng: longitude, lat: latitude },
+    };
+
+    const activeIds = [Number(pimsFeatures.features[0].properties.PROPERTY_ID)];
+    const testMapMock: IMapStateMachineContext = {
+      ...mapMachineBaseMock,
+      mapFeatureData: {
+        pimsLocationFeatures: pimsFeatures,
+        pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
+        fullyAttributedFeatures: emptyPmbcFeatureCollection,
+      },
+      activePimsPropertyIds: activeIds,
+      isFiltering: true,
+    };
+
+    await setup({ mockMapMachine: testMapMock });
+
+    const clusterIcons = document.querySelectorAll('.leaflet-marker-icon.marker-cluster');
+    const markerIcons = document.querySelectorAll('img.leaflet-marker-icon');
+
+    // verify the markers have been filtered
+    expect(clusterIcons.length).toBe(0);
+    expect(markerIcons.length).toBe(activeIds.length);
+
+    // click on single marker
+    const marker = document.querySelector('img.leaflet-marker-icon');
+    await act(async () => userEvent.dblClick(marker!));
+    vi.advanceTimersByTime(500);
+
+    // verify the correct feature did not get clicked
+    expect(testMapMock.mapMarkerClick).not.toHaveBeenCalledWith(expectedFeature);
   });
 
   it('calls matchproperties with advanced search criteria', async () => {
