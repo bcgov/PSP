@@ -26,11 +26,18 @@ import { TenantConsumer, TenantProvider } from '@/tenants';
 import getKeycloakEventHandler from '@/utils/getKeycloakEventHandler';
 
 import App from './App';
-import { VITE_ANALYTICS_ENDPOINT, VITE_DEPLOY_ENV, VITE_SERVICE_NAME } from './config';
+import {
+  VITE_ANALYTICS_DEBUG,
+  VITE_ANALYTICS_DISABLE,
+  VITE_ANALYTICS_ENDPOINT,
+  VITE_DEPLOY_ENV,
+  VITE_SERVICE_NAME,
+} from './config';
 import { DocumentViewerContextProvider } from './features/documents/context/DocumentViewerContext';
 import { ITenantConfig2 } from './hooks/pims-api/interfaces/ITenantConfig';
 import { useRefreshSiteminder } from './hooks/useRefreshSiteminder';
-import { configureTelemetry } from './telemetry/metrics';
+import { configureTelemetry } from './telemetry';
+import { stringToBoolean } from './utils/formUtils';
 
 async function prepare() {
   if (process.env.NODE_ENV === 'development') {
@@ -86,10 +93,13 @@ prepare().then(() => {
   const root = createRoot(document.getElementById('root') as Element);
   root.render(<Index />);
 
-  // configure browser telemetry
-  configureTelemetry({
-    name: VITE_SERVICE_NAME,
-    environment: VITE_DEPLOY_ENV,
-    otlpEndpoint: VITE_ANALYTICS_ENDPOINT,
-  });
+  // configure browser telemetry (if enabled via dynamic config-map)
+  if (!stringToBoolean(VITE_ANALYTICS_DISABLE)) {
+    configureTelemetry({
+      name: VITE_SERVICE_NAME,
+      environment: VITE_DEPLOY_ENV || 'local',
+      otlpEndpoint: VITE_ANALYTICS_ENDPOINT,
+      debug: stringToBoolean(VITE_ANALYTICS_DEBUG),
+    });
+  }
 });

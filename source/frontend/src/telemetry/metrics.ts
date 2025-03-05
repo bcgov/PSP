@@ -1,5 +1,3 @@
-import { exists } from '@/utils';
-
 import { MetricsConfig } from './config';
 import { isBlocked, isBrowserEnvironment, MeterKind, registerMeterProvider } from './utils';
 
@@ -15,13 +13,13 @@ export const registerNetworkMetrics = (config: MetricsConfig) => {
   const meter = registerMeterProvider(MeterKind.Network, config);
 
   // measure the time it takes to make an XHR request
-  const timeSpentMetric = meter.createGauge('network_request_time_spent', {
+  const timeSpentMetric = meter.createHistogram('network_request_time_spent', {
     description: 'Time Spent on Request',
     unit: 'milliseconds',
   });
 
   // collect metrics regarding the payload size of network requests
-  const sizeMetric = meter.createGauge('network_request_size', {
+  const sizeMetric = meter.createHistogram('network_request_size', {
     description: 'Size of Network Request',
     unit: 'bytes',
   });
@@ -41,15 +39,18 @@ export const registerNetworkMetrics = (config: MetricsConfig) => {
           ('transferSize' in entry ? (entry.transferSize as number) : 0) ||
           ('encodedBodySize' in entry ? (entry.encodedBodySize as number) : 0);
 
+        // do not collect metrics from blacklisted sites
         if (!isBlocked(uri, config)) {
-          timeSpentMetric.record(timeSpent, {
+          const attributes = {
             uri,
             route: window.location.pathname,
-          });
-        }
+            environment: config.environment,
+          };
 
-        if (size !== 0) {
-          sizeMetric.record(size, { uri, route: window.location.pathname });
+          timeSpentMetric.record(timeSpent, attributes);
+          if (size !== 0) {
+            sizeMetric.record(size, attributes);
+          }
         }
 
         if (config.debug) {
@@ -60,22 +61,4 @@ export const registerNetworkMetrics = (config: MetricsConfig) => {
   });
 
   observer.observe({ type: 'resource', buffered: true });
-};
-
-export const configureTelemetry = (config: MetricsConfig) => {
-  try {
-    if (!exists(config)) {
-      throw Error('[ERR] No metrics configuration provided, it will not be initialized.');
-    }
-
-    if (!exists(config.otlpEndpoint)) {
-      throw Error('[ERR] Invalid metrics endpoint provided, it will not be initialized.');
-    }
-
-    registerNetworkMetrics(config);
-  } catch (error) {
-    if (config.debug) {
-      console.error(error);
-    }
-  }
 };
