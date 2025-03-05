@@ -29,6 +29,7 @@ import {
   screen,
   userEvent,
   waitFor,
+  waitForEffects,
 } from '@/utils/test-utils';
 
 import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
@@ -382,6 +383,7 @@ describe('MapContainer', () => {
 
   it('Rendered markers can be clicked normally', async () => {
     const pimsFeatures = createPimsFeatures(mockParcels);
+    vi.useFakeTimers();
     const feature = pimsFeatures.features[2];
     const [longitude, latitude] = feature.geometry.coordinates;
 
@@ -406,15 +408,18 @@ describe('MapContainer', () => {
     // click on clustered markers to expand into single markers
     const cluster = document.querySelector('.leaflet-marker-icon.marker-cluster');
     await act(async () => userEvent.click(cluster!));
+    vi.advanceTimersByTime(500);
     // click on single marker
     const marker = document.querySelector('img.leaflet-marker-icon');
     await act(async () => userEvent.click(marker!));
+    vi.advanceTimersByTime(500);
     // verify the correct feature got clicked
     expect(testMapMock.mapMarkerClick).toHaveBeenCalledWith(expectedFeature);
   });
 
   it('Rendered markers can be clicked and displayed with permissions', async () => {
     mockKeycloak({ claims: [Claims.ADMIN_PROPERTIES] });
+    vi.useFakeTimers();
 
     const pimsFeatures = createPimsFeatures(mockParcels);
     const feature = pimsFeatures.features[2];
@@ -440,9 +445,12 @@ describe('MapContainer', () => {
     // click on clustered markers to expand into single markers
     const cluster = document.querySelector('.leaflet-marker-icon.marker-cluster');
     await act(async () => userEvent.click(cluster!));
+    vi.advanceTimersByTime(500);
     // click on single marker
     const marker = document.querySelector('img.leaflet-marker-icon');
     await act(async () => userEvent.click(marker!));
+    vi.advanceTimersByTime(500);
+    await waitForEffects();
     // verify the correct feature got clicked
     expect(testMapMock.mapMarkerClick).toHaveBeenCalledWith(expectedFeature);
   });
