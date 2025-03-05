@@ -29,19 +29,19 @@ const FeeDeterminationSubForm: React.FunctionComponent<IFeeDeterminationSubFormP
 
   return (
     <Section header="Fee Determination">
-      <SectionField label="Public benefit" labelWidth="2" contentWidth="8">
+      <SectionField label="Public benefit" labelWidth="3" contentWidth="auto">
         <InlineYesNoSelect field="isPublicBenefit" />
       </SectionField>
 
-      <SectionField label="Financial gain" labelWidth="2" contentWidth="8">
+      <SectionField label="Financial gain" labelWidth="3" contentWidth="auto">
         <InlineYesNoSelect field="isFinancialGain" />
       </SectionField>
 
       <SectionField
         label="Suggested fee"
         tooltip="Licence Administration Fee (LAF) *: If the financial gain far outweighs the public benefit, Fair Market Value should be considered over Licence Administration Fee"
-        labelWidth="2"
-        contentWidth="8"
+        labelWidth="3"
+        contentWidth="9"
       >
         <span data-testid="suggestedFee">
           {fee}
@@ -75,8 +75,7 @@ const FeeDeterminationSubForm: React.FunctionComponent<IFeeDeterminationSubFormP
       <SectionField
         label="Comments"
         tooltip="Deviations from standard fees should be explained here"
-        labelWidth="2"
-        contentWidth="8"
+        labelWidth="12"
       >
         <TextArea field="feeDeterminationNote" />
       </SectionField>

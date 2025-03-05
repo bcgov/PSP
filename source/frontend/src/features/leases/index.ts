@@ -6,7 +6,7 @@ export * from './detail/LeasePages/details/DetailAdministration';
 export * from './detail/LeasePages/details/DetailDescription';
 export * from './detail/LeasePages/details/DetailNotes';
 export * from './detail/LeasePages/details/DetailPeriodInformationBox';
-export * from './detail/LeasePages/details/LeaseDetailsForm';
+export * from './detail/LeasePages/details/LeaseDetailsWrapperView';
 export * from './detail/LeasePages/details/LeaseDetailView';
 export * from './detail/LeasePages/details/PropertiesInformation';
 export * from './detail/LeasePages/details/PropertyInformation';
