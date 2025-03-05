@@ -1,0 +1,353 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Schema Compare</title>
+<style type="text/css">
+body { font-family:"Verdana", monospace; font-size:11px; }
+.diff { border-width:1px; border-style:solid; border-color:gray; width:100%; padding: 0 0 0 0; font-family:"Verdana", monospace; font-size:11px; }td { padding: 0 3 0 3; }
+tr { padding: 0 0 0 0; }
+.L { width:4%; background:#e8e8e8; vertical-align:top; }
+.B { width:46%; background:#e8e8e8; }
+.U { width:46%; color:#808080; }
+.A { width:46%; background:#c8f2c8; font-weight: bold; }
+.D { width:46%; background:#ffded8; font-weight: bold; }
+.C {  width:46%; background:#cad9fa; }
+.SA {  background:#c8f2c8; }
+.SD {  background:#ffded8; }
+.SC {  background:#cad9fa; }
+.HI { font-weight: bold; background:#ffff00; }
+.Hr { font-weight: bold; font-size:125%; border-width:1px; border-style:solid; border-color:gray; padding: 2 2 2 2; }
+</style>
+</head>
+<body>
+<table class="diff" style="border-width:0px;"><tr><td style="padding-right:80px">0 Difference(s)</td><td style="background:#ffded8; padding-left:20px;">Only in source</td><td style="background:#cad9fa; padding-left:20px;">Both different</td><td style="background:#c8f2c8; padding-left:20px;">Only in target</td></tr></table>
+<br>
+<table class="diff">
+<tr><td colspan=2 class="Hr">PIMS_PROPERTY_BOUNDARY_LITE_VW</td><td colspan=2 class="Hr">PIMS_PROPERTY_BOUNDARY_LITE_VW</td></tr>
+<tr>
+<td class="L">1</td>
+<td class="U">&#x200B;CREATE&nbsp;V&#x200B;IEW&nbsp;PIMS&#x200B;_PROPERT&#x200B;Y_BOUNDA&#x200B;RY_LITE_&#x200B;VW&nbsp;AS</td>
+<td class="L">1</td>
+<td class="U">&#x200B;CREATE&nbsp;V&#x200B;IEW&nbsp;PIMS&#x200B;_PROPERT&#x200B;Y_BOUNDA&#x200B;RY_LITE_&#x200B;VW&nbsp;AS</td>
+</tr>
+<tr>
+<td class="L">2</td>
+<td class="U">&#x200B;SELECT&nbsp;P&#x200B;ROP.PROP&#x200B;ERTY_ID</td>
+<td class="L">2</td>
+<td class="U">&#x200B;SELECT&nbsp;P&#x200B;ROP.PROP&#x200B;ERTY_ID</td>
+</tr>
+<tr>
+<td class="L">3</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&nbsp;P&#x200B;ROP.BOUN&#x200B;DARY&nbsp;AS&nbsp;&#x200B;GEOMETRY</td>
+<td class="L">3</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&nbsp;P&#x200B;ROP.BOUN&#x200B;DARY&nbsp;AS&nbsp;&#x200B;GEOMETRY</td>
+</tr>
+<tr>
+<td class="L">4</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&nbsp;P&#x200B;ROP.IS_O&#x200B;WNED</td>
+<td class="L">4</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&nbsp;P&#x200B;ROP.IS_O&#x200B;WNED</td>
+</tr>
+<tr>
+<td class="L">5</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&nbsp;P&#x200B;ROP.IS_R&#x200B;ETIRED</td>
+<td class="L">5</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&nbsp;P&#x200B;ROP.IS_R&#x200B;ETIRED</td>
+</tr>
+<tr>
+<td class="L">6</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&nbsp;C&#x200B;ASE</td>
+<td class="L">6</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&nbsp;C&#x200B;ASE</td>
+</tr>
+<tr>
+<td class="L">7</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;WHEN&nbsp;EX&#x200B;ISTS&nbsp;(SE&#x200B;LECT&nbsp;1&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;</td>
+<td class="L">7</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;WHEN&nbsp;EX&#x200B;ISTS&nbsp;(SE&#x200B;LECT&nbsp;1&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td class="L">8</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR&#x200B;OM&nbsp;&nbsp;&nbsp;PIM&#x200B;S_TAKE&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;TAKE&#x200B;&nbsp;JOIN</td>
+<td class="L">8</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR&#x200B;OM&nbsp;&nbsp;&nbsp;PIM&#x200B;S_TAKE&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;TAKE&#x200B;&nbsp;JOIN</td>
+</tr>
+<tr>
+<td class="L">9</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PIM&#x200B;S_PROPER&#x200B;TY_ACQUI&#x200B;SITION_F&#x200B;ILE&nbsp;PRAF&#x200B;&nbsp;&nbsp;&nbsp;ON&nbsp;PR&#x200B;AF.PROPE&#x200B;RTY_ACQU&#x200B;ISITION_&#x200B;FILE_ID&nbsp;&#x200B;=&nbsp;TAKE.P&#x200B;ROPERTY_&#x200B;ACQUISIT&#x200B;ION_FILE&#x200B;_ID</td>
+<td class="L">9</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PIM&#x200B;S_PROPER&#x200B;TY_ACQUI&#x200B;SITION_F&#x200B;ILE&nbsp;PRAF&#x200B;&nbsp;&nbsp;&nbsp;ON&nbsp;PR&#x200B;AF.PROPE&#x200B;RTY_ACQU&#x200B;ISITION_&#x200B;FILE_ID&nbsp;&#x200B;=&nbsp;TAKE.P&#x200B;ROPERTY_&#x200B;ACQUISIT&#x200B;ION_FILE&#x200B;_ID</td>
+</tr>
+<tr>
+<td class="L">10</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;AND&nbsp;PR&#x200B;AF.PROPE&#x200B;RTY_ID&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;=&nbsp;PROP.P&#x200B;ROPERTY_&#x200B;ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td class="L">10</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;AND&nbsp;PR&#x200B;AF.PROPE&#x200B;RTY_ID&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;=&nbsp;PROP.P&#x200B;ROPERTY_&#x200B;ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td class="L">11</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WH&#x200B;ERE&nbsp;&nbsp;TAK&#x200B;E.IS_NEW&#x200B;_LAND_AC&#x200B;T&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;=&nbsp;1</td>
+<td class="L">11</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WH&#x200B;ERE&nbsp;&nbsp;TAK&#x200B;E.IS_NEW&#x200B;_LAND_AC&#x200B;T&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;=&nbsp;1</td>
+</tr>
+<tr>
+<td class="L">12</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;AND&nbsp;TAK&#x200B;E.TAKE_S&#x200B;TATUS_TY&#x200B;PE_CODE&nbsp;&#x200B;=&nbsp;'COMPL&#x200B;ETE'&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;</td>
+<td class="L">12</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;AND&nbsp;TAK&#x200B;E.TAKE_S&#x200B;TATUS_TY&#x200B;PE_CODE&nbsp;&#x200B;=&nbsp;'COMPL&#x200B;ETE'&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td class="L">13</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;AND&nbsp;TAK&#x200B;E.LAND_A&#x200B;CT_TYPE_&#x200B;CODE&nbsp;&nbsp;&nbsp;I&#x200B;N&nbsp;(N'Sec&#x200B;tion&nbsp;15'&#x200B;,&nbsp;N'Sect&#x200B;ion&nbsp;16',&#x200B;&nbsp;N'Secti&#x200B;on&nbsp;17',&nbsp;&#x200B;N'Sectio&#x200B;n&nbsp;66',&nbsp;N&#x200B;'NOI'))&nbsp;&#x200B;THEN&nbsp;CON&#x200B;VERT([bi&#x200B;t],(1))</td>
+<td class="L">13</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;AND&nbsp;TAK&#x200B;E.LAND_A&#x200B;CT_TYPE_&#x200B;CODE&nbsp;&nbsp;&nbsp;I&#x200B;N&nbsp;(N'Sec&#x200B;tion&nbsp;15'&#x200B;,&nbsp;N'Sect&#x200B;ion&nbsp;16',&#x200B;&nbsp;N'Secti&#x200B;on&nbsp;17',&nbsp;&#x200B;N'Sectio&#x200B;n&nbsp;66',&nbsp;N&#x200B;'NOI'))&nbsp;&#x200B;THEN&nbsp;CON&#x200B;VERT([bi&#x200B;t],(1))</td>
+</tr>
+<tr>
+<td class="L">14</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;WHEN&nbsp;EX&#x200B;ISTS&nbsp;(SE&#x200B;LECT&nbsp;1</td>
+<td class="L">14</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;WHEN&nbsp;EX&#x200B;ISTS&nbsp;(SE&#x200B;LECT&nbsp;1</td>
+</tr>
+<tr>
+<td class="L">15</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR&#x200B;OM&nbsp;&nbsp;&nbsp;PIM&#x200B;S_TAKE&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;TAKE&#x200B;&nbsp;JOIN</td>
+<td class="L">15</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR&#x200B;OM&nbsp;&nbsp;&nbsp;PIM&#x200B;S_TAKE&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;TAKE&#x200B;&nbsp;JOIN</td>
+</tr>
+<tr>
+<td class="L">16</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PIM&#x200B;S_PROPER&#x200B;TY_ACQUI&#x200B;SITION_F&#x200B;ILE&nbsp;PRAF&#x200B;&nbsp;&nbsp;&nbsp;ON&nbsp;PR&#x200B;AF.PROPE&#x200B;RTY_ACQU&#x200B;ISITION_&#x200B;FILE_ID&nbsp;&#x200B;=&nbsp;TAKE.P&#x200B;ROPERTY_&#x200B;ACQUISIT&#x200B;ION_FILE&#x200B;_ID</td>
+<td class="L">16</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PIM&#x200B;S_PROPER&#x200B;TY_ACQUI&#x200B;SITION_F&#x200B;ILE&nbsp;PRAF&#x200B;&nbsp;&nbsp;&nbsp;ON&nbsp;PR&#x200B;AF.PROPE&#x200B;RTY_ACQU&#x200B;ISITION_&#x200B;FILE_ID&nbsp;&#x200B;=&nbsp;TAKE.P&#x200B;ROPERTY_&#x200B;ACQUISIT&#x200B;ION_FILE&#x200B;_ID</td>
+</tr>
+<tr>
+<td class="L">17</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;AND&nbsp;PR&#x200B;AF.PROPE&#x200B;RTY_ID&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;=&nbsp;PROP.P&#x200B;ROPERTY_&#x200B;ID</td>
+<td class="L">17</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;AND&nbsp;PR&#x200B;AF.PROPE&#x200B;RTY_ID&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;=&nbsp;PROP.P&#x200B;ROPERTY_&#x200B;ID</td>
+</tr>
+<tr>
+<td class="L">18</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WH&#x200B;ERE&nbsp;&nbsp;TAK&#x200B;E.IS_NEW&#x200B;_INTERES&#x200B;T_IN_SRW&#x200B;&nbsp;=&nbsp;1</td>
+<td class="L">18</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WH&#x200B;ERE&nbsp;&nbsp;TAK&#x200B;E.IS_NEW&#x200B;_INTERES&#x200B;T_IN_SRW&#x200B;&nbsp;=&nbsp;1</td>
+</tr>
+<tr>
+<td class="L">19</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;AND&nbsp;TAK&#x200B;E.TAKE_S&#x200B;TATUS_TY&#x200B;PE_CODE&nbsp;&#x200B;&nbsp;=&nbsp;N'COM&#x200B;PLETE')&nbsp;&#x200B;THEN&nbsp;CON&#x200B;VERT([bi&#x200B;t],(1))</td>
+<td class="L">19</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;AND&nbsp;TAK&#x200B;E.TAKE_S&#x200B;TATUS_TY&#x200B;PE_CODE&nbsp;&#x200B;&nbsp;=&nbsp;N'COM&#x200B;PLETE')&nbsp;&#x200B;THEN&nbsp;CON&#x200B;VERT([bi&#x200B;t],(1))</td>
+</tr>
+<tr>
+<td class="L">20</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;WHEN&nbsp;EX&#x200B;ISTS&nbsp;(SE&#x200B;LECT&nbsp;1</td>
+<td class="L">20</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;WHEN&nbsp;EX&#x200B;ISTS&nbsp;(SE&#x200B;LECT&nbsp;1</td>
+</tr>
+<tr>
+<td class="L">21</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR&#x200B;OM&nbsp;&nbsp;&nbsp;PIM&#x200B;S_TAKE&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;TAKE&#x200B;&nbsp;JOIN</td>
+<td class="L">21</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR&#x200B;OM&nbsp;&nbsp;&nbsp;PIM&#x200B;S_TAKE&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;TAKE&#x200B;&nbsp;JOIN</td>
+</tr>
+<tr>
+<td class="L">22</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PIM&#x200B;S_PROPER&#x200B;TY_ACQUI&#x200B;SITION_F&#x200B;ILE&nbsp;PRAF&#x200B;&nbsp;&nbsp;&nbsp;ON&nbsp;PR&#x200B;AF.PROPE&#x200B;RTY_ACQU&#x200B;ISITION_&#x200B;FILE_ID&nbsp;&#x200B;=&nbsp;TAKE.P&#x200B;ROPERTY_&#x200B;ACQUISIT&#x200B;ION_FILE&#x200B;_ID&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td class="L">22</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PIM&#x200B;S_PROPER&#x200B;TY_ACQUI&#x200B;SITION_F&#x200B;ILE&nbsp;PRAF&#x200B;&nbsp;&nbsp;&nbsp;ON&nbsp;PR&#x200B;AF.PROPE&#x200B;RTY_ACQU&#x200B;ISITION_&#x200B;FILE_ID&nbsp;&#x200B;=&nbsp;TAKE.P&#x200B;ROPERTY_&#x200B;ACQUISIT&#x200B;ION_FILE&#x200B;_ID&nbsp;&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td class="L">23</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;AND&nbsp;PR&#x200B;AF.PROPE&#x200B;RTY_ID&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;=&nbsp;PROP.P&#x200B;ROPERTY_&#x200B;ID</td>
+<td class="L">23</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;AND&nbsp;PR&#x200B;AF.PROPE&#x200B;RTY_ID&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;=&nbsp;PROP.P&#x200B;ROPERTY_&#x200B;ID</td>
+</tr>
+<tr>
+<td class="L">24</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WH&#x200B;ERE&nbsp;&nbsp;TAK&#x200B;E.IS_NEW&#x200B;_LICENSE&#x200B;_TO_CONS&#x200B;TRUCT&nbsp;=&nbsp;&#x200B;1</td>
+<td class="L">24</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WH&#x200B;ERE&nbsp;&nbsp;TAK&#x200B;E.IS_NEW&#x200B;_LICENSE&#x200B;_TO_CONS&#x200B;TRUCT&nbsp;=&nbsp;&#x200B;1</td>
+</tr>
+<tr>
+<td class="L">25</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;AND&nbsp;TAK&#x200B;E.TAKE_S&#x200B;TATUS_TY&#x200B;PE_CODE&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&#x200B;N'COMPLE&#x200B;TE')&nbsp;THE&#x200B;N&nbsp;CONVER&#x200B;T([bit],&#x200B;(1))</td>
+<td class="L">25</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;AND&nbsp;TAK&#x200B;E.TAKE_S&#x200B;TATUS_TY&#x200B;PE_CODE&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&#x200B;N'COMPLE&#x200B;TE')&nbsp;THE&#x200B;N&nbsp;CONVER&#x200B;T([bit],&#x200B;(1))</td>
+</tr>
+<tr>
+<td class="L">26</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;WHEN&nbsp;EX&#x200B;ISTS&nbsp;(SE&#x200B;LECT&nbsp;1&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;</td>
+<td class="L">26</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;WHEN&nbsp;EX&#x200B;ISTS&nbsp;(SE&#x200B;LECT&nbsp;1&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td class="L">27</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR&#x200B;OM&nbsp;&nbsp;&nbsp;PIM&#x200B;S_TAKE&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;TAKE&#x200B;&nbsp;JOIN</td>
+<td class="L">27</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;FR&#x200B;OM&nbsp;&nbsp;&nbsp;PIM&#x200B;S_TAKE&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;TAKE&#x200B;&nbsp;JOIN</td>
+</tr>
+<tr>
+<td class="L">28</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PIM&#x200B;S_PROPER&#x200B;TY_ACQUI&#x200B;SITION_F&#x200B;ILE&nbsp;PRAF&#x200B;&nbsp;&nbsp;&nbsp;ON&nbsp;PR&#x200B;AF.PROPE&#x200B;RTY_ACQU&#x200B;ISITION_&#x200B;FILE_ID&nbsp;&#x200B;=&nbsp;TAKE.P&#x200B;ROPERTY_&#x200B;ACQUISIT&#x200B;ION_FILE&#x200B;_ID&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td class="L">28</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;PIM&#x200B;S_PROPER&#x200B;TY_ACQUI&#x200B;SITION_F&#x200B;ILE&nbsp;PRAF&#x200B;&nbsp;&nbsp;&nbsp;ON&nbsp;PR&#x200B;AF.PROPE&#x200B;RTY_ACQU&#x200B;ISITION_&#x200B;FILE_ID&nbsp;&#x200B;=&nbsp;TAKE.P&#x200B;ROPERTY_&#x200B;ACQUISIT&#x200B;ION_FILE&#x200B;_ID&nbsp;&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td class="L">29</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;AND&nbsp;PR&#x200B;AF.PROPE&#x200B;RTY_ID&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;=&nbsp;PROP.P&#x200B;ROPERTY_&#x200B;ID</td>
+<td class="L">29</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;AND&nbsp;PR&#x200B;AF.PROPE&#x200B;RTY_ID&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;=&nbsp;PROP.P&#x200B;ROPERTY_&#x200B;ID</td>
+</tr>
+<tr>
+<td class="L">30</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WH&#x200B;ERE&nbsp;&nbsp;IS_&#x200B;ACTIVE_L&#x200B;EASE&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;=&nbsp;1</td>
+<td class="L">30</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;WH&#x200B;ERE&nbsp;&nbsp;IS_&#x200B;ACTIVE_L&#x200B;EASE&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;=&nbsp;1</td>
+</tr>
+<tr>
+<td class="L">31</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;AND&nbsp;TAK&#x200B;E_STATUS&#x200B;_TYPE_CO&#x200B;DE&nbsp;=&nbsp;N'C&#x200B;OMPLETE'&#x200B;)&nbsp;THEN&nbsp;C&#x200B;ONVERT([&#x200B;bit],(1)&#x200B;)</td>
+<td class="L">31</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;AND&nbsp;TAK&#x200B;E_STATUS&#x200B;_TYPE_CO&#x200B;DE&nbsp;=&nbsp;N'C&#x200B;OMPLETE'&#x200B;)&nbsp;THEN&nbsp;C&#x200B;ONVERT([&#x200B;bit],(1)&#x200B;)</td>
+</tr>
+<tr>
+<td class="L">32</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;ELSE&nbsp;CO&#x200B;NVERT([b&#x200B;it],(0))&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;</td>
+<td class="L">32</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;ELSE&nbsp;CO&#x200B;NVERT([b&#x200B;it],(0))&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td class="L">33</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;END&nbsp;AS&nbsp;&#x200B;IS_OTHER&#x200B;_INTERES&#x200B;T</td>
+<td class="L">33</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;END&nbsp;AS&nbsp;&#x200B;IS_OTHER&#x200B;_INTERES&#x200B;T</td>
+</tr>
+<tr>
+<td class="L">34</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&nbsp;I&#x200B;IF(EXIST&#x200B;S&nbsp;(SELEC&#x200B;T&nbsp;1</td>
+<td class="L">34</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&nbsp;I&#x200B;IF(EXIST&#x200B;S&nbsp;(SELEC&#x200B;T&nbsp;1</td>
+</tr>
+<tr>
+<td class="L">35</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;FROM&nbsp;&#x200B;&nbsp;&nbsp;PIMS_D&#x200B;ISPOSITI&#x200B;ON_FILE_&#x200B;PROPERTY&#x200B;&nbsp;DFPR&nbsp;JO&#x200B;IN</td>
+<td class="L">35</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;FROM&nbsp;&#x200B;&nbsp;&nbsp;PIMS_D&#x200B;ISPOSITI&#x200B;ON_FILE_&#x200B;PROPERTY&#x200B;&nbsp;DFPR&nbsp;JO&#x200B;IN</td>
+</tr>
+<tr>
+<td class="L">36</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;PIMS_D&#x200B;ISPOSITI&#x200B;ON_FILE&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;DISP&nbsp;&nbsp;&nbsp;&#x200B;ON&nbsp;DISP.&#x200B;DISPOSIT&#x200B;ION_FILE&#x200B;_ID&nbsp;=&nbsp;DF&#x200B;PR.DISPO&#x200B;SITION_F&#x200B;ILE_ID</td>
+<td class="L">36</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;PIMS_D&#x200B;ISPOSITI&#x200B;ON_FILE&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;DISP&nbsp;&nbsp;&nbsp;&#x200B;ON&nbsp;DISP.&#x200B;DISPOSIT&#x200B;ION_FILE&#x200B;_ID&nbsp;=&nbsp;DF&#x200B;PR.DISPO&#x200B;SITION_F&#x200B;ILE_ID</td>
+</tr>
+<tr>
+<td class="L">37</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A&#x200B;ND&nbsp;DFPR.&#x200B;PROPERTY&#x200B;_ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;PR&#x200B;OP.PROPE&#x200B;RTY_ID</td>
+<td class="L">37</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A&#x200B;ND&nbsp;DFPR.&#x200B;PROPERTY&#x200B;_ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;PR&#x200B;OP.PROPE&#x200B;RTY_ID</td>
+</tr>
+<tr>
+<td class="L">38</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;WHERE&#x200B;&nbsp;&nbsp;DISP.D&#x200B;ISPOSITI&#x200B;ON_FILE_&#x200B;STATUS_T&#x200B;YPE_CODE&#x200B;&nbsp;=&nbsp;N'COM&#x200B;PLETE'),&#x200B;&nbsp;CONVERT&#x200B;([bit],(&#x200B;1)),&nbsp;CON&#x200B;VERT([bi&#x200B;t],(0)))&#x200B;&nbsp;AS&nbsp;IS_D&#x200B;ISPOSED</td>
+<td class="L">38</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;WHERE&#x200B;&nbsp;&nbsp;DISP.D&#x200B;ISPOSITI&#x200B;ON_FILE_&#x200B;STATUS_T&#x200B;YPE_CODE&#x200B;&nbsp;=&nbsp;N'COM&#x200B;PLETE'),&#x200B;&nbsp;CONVERT&#x200B;([bit],(&#x200B;1)),&nbsp;CON&#x200B;VERT([bi&#x200B;t],(0)))&#x200B;&nbsp;AS&nbsp;IS_D&#x200B;ISPOSED</td>
+</tr>
+<tr>
+<td class="L">39</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&nbsp;I&#x200B;IF(EXIST&#x200B;S&nbsp;(SELEC&#x200B;T&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;</td>
+<td class="L">39</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&nbsp;I&#x200B;IF(EXIST&#x200B;S&nbsp;(SELEC&#x200B;T&nbsp;1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td class="L">40</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;FROM&nbsp;&#x200B;&nbsp;&nbsp;PIMS_P&#x200B;ROPERTY_&#x200B;ACQUISIT&#x200B;ION_FILE&#x200B;&nbsp;PRAF&nbsp;JO&#x200B;IN</td>
+<td class="L">40</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;FROM&nbsp;&#x200B;&nbsp;&nbsp;PIMS_P&#x200B;ROPERTY_&#x200B;ACQUISIT&#x200B;ION_FILE&#x200B;&nbsp;PRAF&nbsp;JO&#x200B;IN</td>
+</tr>
+<tr>
+<td class="L">41</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;PIMS_A&#x200B;CQUISITI&#x200B;ON_FILE&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;ACQF&nbsp;&nbsp;&nbsp;&#x200B;ON&nbsp;ACQF.&#x200B;ACQUISIT&#x200B;ION_FILE&#x200B;_ID&nbsp;=&nbsp;PR&#x200B;AF.ACQUI&#x200B;SITION_F&#x200B;ILE_ID</td>
+<td class="L">41</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;PIMS_A&#x200B;CQUISITI&#x200B;ON_FILE&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;ACQF&nbsp;&nbsp;&nbsp;&#x200B;ON&nbsp;ACQF.&#x200B;ACQUISIT&#x200B;ION_FILE&#x200B;_ID&nbsp;=&nbsp;PR&#x200B;AF.ACQUI&#x200B;SITION_F&#x200B;ILE_ID</td>
+</tr>
+<tr>
+<td class="L">42</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A&#x200B;ND&nbsp;PRAF.&#x200B;PROPERTY&#x200B;_ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;PR&#x200B;OP.PROPE&#x200B;RTY_ID</td>
+<td class="L">42</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;A&#x200B;ND&nbsp;PRAF.&#x200B;PROPERTY&#x200B;_ID&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;PR&#x200B;OP.PROPE&#x200B;RTY_ID</td>
+</tr>
+<tr>
+<td class="L">43</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;WHERE&#x200B;&nbsp;&nbsp;ACQF.A&#x200B;CQUISITI&#x200B;ON_FILE_&#x200B;STATUS_T&#x200B;YPE_CODE&#x200B;&nbsp;IN&nbsp;(N'D&#x200B;RAFT',&nbsp;N&#x200B;'ACTIVE'&#x200B;)),&nbsp;CONV&#x200B;ERT([bit&#x200B;],(1)),&nbsp;&#x200B;CONVERT(&#x200B;[bit],(0&#x200B;)))&nbsp;AS&nbsp;H&#x200B;AS_ACTIV&#x200B;E_ACQUIS&#x200B;ITION_FI&#x200B;LE</td>
+<td class="L">43</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;WHERE&#x200B;&nbsp;&nbsp;ACQF.A&#x200B;CQUISITI&#x200B;ON_FILE_&#x200B;STATUS_T&#x200B;YPE_CODE&#x200B;&nbsp;IN&nbsp;(N'D&#x200B;RAFT',&nbsp;N&#x200B;'ACTIVE'&#x200B;)),&nbsp;CONV&#x200B;ERT([bit&#x200B;],(1)),&nbsp;&#x200B;CONVERT(&#x200B;[bit],(0&#x200B;)))&nbsp;AS&nbsp;H&#x200B;AS_ACTIV&#x200B;E_ACQUIS&#x200B;ITION_FI&#x200B;LE</td>
+</tr>
+<tr>
+<td class="L">44</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&nbsp;I&#x200B;IF(EXIST&#x200B;S&nbsp;(SELEC&#x200B;T&nbsp;1</td>
+<td class="L">44</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;,&nbsp;I&#x200B;IF(EXIST&#x200B;S&nbsp;(SELEC&#x200B;T&nbsp;1</td>
+</tr>
+<tr>
+<td class="L">45</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;FROM&nbsp;&#x200B;&nbsp;&nbsp;PIMS_P&#x200B;ROPERTY_&#x200B;RESEARCH&#x200B;_FILE&nbsp;PR&#x200B;SF&nbsp;JOIN</td>
+<td class="L">45</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;FROM&nbsp;&#x200B;&nbsp;&nbsp;PIMS_P&#x200B;ROPERTY_&#x200B;RESEARCH&#x200B;_FILE&nbsp;PR&#x200B;SF&nbsp;JOIN</td>
+</tr>
+<tr>
+<td class="L">46</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;PIMS_R&#x200B;ESEARCH_&#x200B;FILE&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RS&#x200B;HF&nbsp;&nbsp;&nbsp;ON&nbsp;&#x200B;RSHF.RES&#x200B;EARCH_FI&#x200B;LE_ID&nbsp;=&nbsp;&#x200B;PRSF.RES&#x200B;EARCH_FI&#x200B;LE_ID</td>
+<td class="L">46</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;PIMS_R&#x200B;ESEARCH_&#x200B;FILE&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;RS&#x200B;HF&nbsp;&nbsp;&nbsp;ON&nbsp;&#x200B;RSHF.RES&#x200B;EARCH_FI&#x200B;LE_ID&nbsp;=&nbsp;&#x200B;PRSF.RES&#x200B;EARCH_FI&#x200B;LE_ID</td>
+</tr>
+<tr>
+<td class="L">47</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;AND&nbsp;&#x200B;PRSF.PRO&#x200B;PERTY_ID&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&#x200B;PROP.PRO&#x200B;PERTY_ID</td>
+<td class="L">47</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;AND&nbsp;&#x200B;PRSF.PRO&#x200B;PERTY_ID&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;=&nbsp;&#x200B;PROP.PRO&#x200B;PERTY_ID</td>
+</tr>
+<tr>
+<td class="L">48</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;WHERE&#x200B;&nbsp;&nbsp;RSHF.R&#x200B;ESEARCH_&#x200B;FILE_STA&#x200B;TUS_TYPE&#x200B;_CODE&nbsp;=&nbsp;&#x200B;N'ACTIVE&#x200B;'),&nbsp;CONV&#x200B;ERT([bit&#x200B;],(1)),&nbsp;&#x200B;CONVERT(&#x200B;[bit],(0&#x200B;)))&nbsp;&nbsp;AS&nbsp;&#x200B;HAS_ACTI&#x200B;VE_RESEA&#x200B;RCH_FILE&#x200B;&nbsp;&nbsp;</td>
+<td class="L">48</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;&nbsp;&nbsp;&nbsp;WHERE&#x200B;&nbsp;&nbsp;RSHF.R&#x200B;ESEARCH_&#x200B;FILE_STA&#x200B;TUS_TYPE&#x200B;_CODE&nbsp;=&nbsp;&#x200B;N'ACTIVE&#x200B;'),&nbsp;CONV&#x200B;ERT([bit&#x200B;],(1)),&nbsp;&#x200B;CONVERT(&#x200B;[bit],(0&#x200B;)))&nbsp;&nbsp;AS&nbsp;&#x200B;HAS_ACTI&#x200B;VE_RESEA&#x200B;RCH_FILE&#x200B;&nbsp;&nbsp;</td>
+</tr>
+<tr>
+<td class="L">49</td>
+<td class="U">&#x200B;FROM&nbsp;&nbsp;&nbsp;P&#x200B;IMS_PROP&#x200B;ERTY&nbsp;PRO&#x200B;P</td>
+<td class="L">49</td>
+<td class="U">&#x200B;FROM&nbsp;&nbsp;&nbsp;P&#x200B;IMS_PROP&#x200B;ERTY&nbsp;PRO&#x200B;P</td>
+</tr>
+<tr>
+<td class="L">50</td>
+<td class="U">&#x200B;WHERE&nbsp;&nbsp;P&#x200B;ROP.BOUN&#x200B;DARY&nbsp;IS&nbsp;&#x200B;NOT&nbsp;NULL</td>
+<td class="L">50</td>
+<td class="U">&#x200B;WHERE&nbsp;&nbsp;P&#x200B;ROP.BOUN&#x200B;DARY&nbsp;IS&nbsp;&#x200B;NOT&nbsp;NULL</td>
+</tr>
+<tr>
+<td class="L">51</td>
+<td class="U">&nbsp;</td>
+<td class="L">51</td>
+<td class="U">&nbsp;</td>
+</tr>
+<tr>
+<td class="L">52</td>
+<td class="U">&#x200B;GO</td>
+<td class="L">52</td>
+<td class="U">&#x200B;GO</td>
+</tr>
+<tr>
+<td class="L">53</td>
+<td class="U">&#x200B;ALTER&nbsp;AU&#x200B;THORIZAT&#x200B;ION&nbsp;ON&nbsp;O&#x200B;BJECT::P&#x200B;IMS_PROP&#x200B;ERTY_BOU&#x200B;NDARY_LI&#x200B;TE_VW&nbsp;TO&#x200B;&nbsp;dbo</td>
+<td class="L">53</td>
+<td class="U">&#x200B;ALTER&nbsp;AU&#x200B;THORIZAT&#x200B;ION&nbsp;ON&nbsp;O&#x200B;BJECT::P&#x200B;IMS_PROP&#x200B;ERTY_BOU&#x200B;NDARY_LI&#x200B;TE_VW&nbsp;TO&#x200B;&nbsp;dbo</td>
+</tr>
+<tr>
+<td class="L">54</td>
+<td class="U">&#x200B;GO</td>
+<td class="L">54</td>
+<td class="U">&#x200B;GO</td>
+</tr>
+</table>
+</body>
+</html>

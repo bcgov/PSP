@@ -16,7 +16,7 @@ IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
 -- Drop table pmbc.PMBC_BCTFA_PID if existing
-PRINT N'Create table pmbc.PMBC_BCTFA_PID'
+PRINT N'Drop table pmbc.PMBC_BCTFA_PID'
 GO
 IF EXISTS (SELECT *
            FROM   information_schema.tables
@@ -24,6 +24,20 @@ IF EXISTS (SELECT *
 			        AND table_name   = 'PMBC_BCTFA_PID')
   BEGIN
   DROP TABLE [pmbc].[PMBC_BCTFA_PID]
+  END
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Drop view pmbc.PMBC_BCTFA_PARCEL_POLYGON_FABRIC if existing
+PRINT N'Drop view pmbc.PMBC_BCTFA_PARCEL_POLYGON_FABRIC'
+GO
+IF EXISTS (SELECT *
+           FROM   information_schema.tables
+           WHERE  table_schema = 'pmbc'
+			        AND table_name   = 'PMBC_BCTFA_PARCEL_POLYGON_FABRIC')
+  BEGIN
+  DROP VIEW [pmbc].[PMBC_BCTFA_PARCEL_POLYGON_FABRIC]
   END
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
