@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -254,8 +255,12 @@ namespace Pims.Api.Services
 
             var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
             var currentLease = _leaseRepository.GetNoTracking(lease.LeaseId);
+            if (currentLease == null)
+            {
+                throw new InvalidDataException("Invalid lease");
+            }
 
-            var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease?.LeaseStatusTypeCode);
+            var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease.LeaseStatusTypeCode);
             if (!_leaseStatusSolver.CanEditDetails(currentLeaseStatus) && !_user.HasPermission(Permissions.SystemAdmin))
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
@@ -263,8 +268,6 @@ namespace Pims.Api.Services
 
             pimsUser.ThrowInvalidAccessToLeaseFile(currentLease.RegionCode); // need to check that the user is able to access the current lease as well as has the region for the updated lease.
             pimsUser.ThrowInvalidAccessToLeaseFile(lease.RegionCode);
-
-            var currentFileProperties = _propertyLeaseRepository.GetAllByLeaseId(lease.LeaseId);
 
             if (currentLease.LeaseStatusTypeCode != lease.LeaseStatusTypeCode)
             {
@@ -278,7 +281,29 @@ namespace Pims.Api.Services
             ValidateNewTotalAllowableCompensation(lease.LeaseId, lease.TotalAllowableCompensation);
 
             _leaseRepository.Update(lease, false);
+
+            _leaseRepository.UpdateLeaseRenewals(lease.Internal_Id, lease.ConcurrencyControlNumber, lease.PimsLeaseRenewals);
+
+            _leaseRepository.CommitTransaction();
+
+            return _leaseRepository.GetNoTracking(lease.LeaseId);
+        }
+
+        public PimsLease UpdateProperties(PimsLease lease, IEnumerable<UserOverrideCode> userOverrides)
+        {
+            _logger.LogInformation("Updating lease properties with lease id {id}", lease.LeaseId);
+            _user.ThrowIfNotAuthorized(Permissions.LeaseEdit, Permissions.PropertyView, Permissions.PropertyAdd);
+
+            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
+            var currentLease = _leaseRepository.GetNoTracking(lease.LeaseId);
+            var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease?.LeaseStatusTypeCode);
+
+            pimsUser.ThrowInvalidAccessToLeaseFile(currentLease.RegionCode); // need to check that the user is able to access the current lease as well as has the region for the updated lease.
+            pimsUser.ThrowInvalidAccessToLeaseFile(lease.RegionCode);
+
             var leaseWithProperties = AssociatePropertyLeases(lease, userOverrides);
+
+            var currentFileProperties = _propertyLeaseRepository.GetAllByLeaseId(lease.LeaseId);
 
             // Update marker locations in the context of this file
             foreach (var incomingLeaseProperty in leaseWithProperties.PimsPropertyLeases)
@@ -313,9 +338,8 @@ namespace Pims.Api.Services
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
-            _propertyLeaseRepository.UpdatePropertyLeases(lease.Internal_Id, leaseWithProperties.PimsPropertyLeases);
 
-            _leaseRepository.UpdateLeaseRenewals(lease.Internal_Id, lease.ConcurrencyControlNumber, lease.PimsLeaseRenewals);
+            _propertyLeaseRepository.UpdatePropertyLeases(lease.Internal_Id, leaseWithProperties.PimsPropertyLeases);
 
             List<PimsPropertyLease> differenceSet = currentFileProperties.Where(x => !lease.PimsPropertyLeases.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
             foreach (var deletedProperty in differenceSet)
@@ -338,9 +362,9 @@ namespace Pims.Api.Services
                 }
             }
 
-            _leaseRepository.CommitTransaction();
+            _propertyLeaseRepository.CommitTransaction();
 
-            return _leaseRepository.GetNoTracking(lease.LeaseId);
+            return _leaseRepository.Get(lease.Internal_Id);
         }
 
         public IEnumerable<PimsLeaseRenewal> GetRenewalsByLeaseId(long leaseId)
@@ -505,7 +529,7 @@ namespace Pims.Api.Services
                 {
                     if (renewal.CommencementDt.HasValue && renewal.ExpiryDt.HasValue)
                     {
-                        renewalDates.Add(new Tuple<long, DateTime, DateTime>(renewal.LeaseRenewalId, renewal.CommencementDt.Value, renewal.ExpiryDt.Value)) ;
+                        renewalDates.Add(new Tuple<long, DateTime, DateTime>(renewal.LeaseRenewalId, renewal.CommencementDt.Value, renewal.ExpiryDt.Value));
                     }
                     else
                     {

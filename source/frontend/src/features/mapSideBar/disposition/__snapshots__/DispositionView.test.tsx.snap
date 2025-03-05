@@ -221,7 +221,7 @@ exports[`DispositionView component > renders as expected 1`] = `
 .c20 {
   overflow: auto;
   height: 100%;
-  width: 100%;
+  width: 22rem;
 }
 
 .c27 {
@@ -856,7 +856,7 @@ exports[`DispositionView component > renders as expected 1`] = `
           class="c19 no-gutters row"
         >
           <div
-            class="c20 d-flex flex-column col-3"
+            class="c20 d-flex flex-column col-auto"
           >
             <div
               class="c21"
@@ -919,7 +919,7 @@ exports[`DispositionView component > renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="c27 col-9"
+            class="c27 col"
           >
             <div
               class="c28"

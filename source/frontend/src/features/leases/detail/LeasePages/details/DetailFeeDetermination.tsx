@@ -1,17 +1,14 @@
-import { getIn, useFormikContext } from 'formik';
 import styled from 'styled-components';
 
-import { YesNoSelect } from '@/components/common/form/YesNoSelect';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
-import { withNameSpace } from '@/utils/formUtils';
+import { booleanToYesNoUnknownString } from '@/utils/formUtils';
 
 import { getSuggestedFee, SuggestedFeeCode } from '../../../leaseUtils';
 
 export interface IDetailFeeDeterminationProps {
-  nameSpace?: string;
-  disabled?: boolean;
+  lease: ApiGen_Concepts_Lease;
 }
 
 /**
@@ -20,24 +17,20 @@ export interface IDetailFeeDeterminationProps {
  */
 export const DetailFeeDetermination: React.FunctionComponent<
   React.PropsWithChildren<IDetailFeeDeterminationProps>
-> = ({ nameSpace, disabled }) => {
-  const formikProps = useFormikContext<ApiGen_Concepts_Lease>();
-  const isPublicBenefit = getIn(formikProps.values, withNameSpace(nameSpace, 'isPublicBenefit'));
-  const isFinancialGain = getIn(formikProps.values, withNameSpace(nameSpace, 'isFinancialGain'));
-  const feeDeterminationNote = getIn(
-    formikProps.values,
-    withNameSpace(nameSpace, 'feeDeterminationNote'),
-  );
+> = ({ lease }) => {
+  const isPublicBenefit = lease.isPublicBenefit;
+  const isFinancialGain = lease.isFinancialGain;
+  const feeDeterminationNote = lease.feeDeterminationNote;
   const fee = getSuggestedFee(isPublicBenefit, isFinancialGain);
 
   return (
     <Section initiallyExpanded={true} isCollapsable={true} header="Fee Determination">
       <SectionField label="Public benefit" labelWidth="3">
-        <YesNoSelect disabled={disabled} field={withNameSpace(nameSpace, 'isPublicBenefit')} />
+        {booleanToYesNoUnknownString(isPublicBenefit)}
       </SectionField>
 
       <SectionField label="Financial gain" labelWidth="3">
-        <YesNoSelect disabled={disabled} field={withNameSpace(nameSpace, 'isFinancialGain')} />
+        {booleanToYesNoUnknownString(isFinancialGain)}
       </SectionField>
 
       <SectionField

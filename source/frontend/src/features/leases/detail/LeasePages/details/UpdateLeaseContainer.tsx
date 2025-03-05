@@ -3,7 +3,6 @@ import { FormikProps } from 'formik/dist/types';
 import { useCallback, useContext } from 'react';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
-import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import * as API from '@/constants/API';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { useLeaseDetail } from '@/features/leases/hooks/useLeaseDetail';
@@ -40,8 +39,6 @@ export const UpdateLeaseContainer: React.FunctionComponent<UpdateLeaseContainerP
 
   const { setModalContent, setDisplayModal } = useModalContext();
 
-  const mapMachine = useMapStateMachine();
-
   const { getByType } = useLookupCodeHelpers();
   const consultationTypes = getByType(API.CONSULTATION_TYPES);
 
@@ -71,11 +68,10 @@ export const UpdateLeaseContainer: React.FunctionComponent<UpdateLeaseContainerP
       if (isValidId(updatedLease?.id)) {
         formikRef?.current?.resetForm({ values: formikRef?.current?.values });
         await refresh();
-        mapMachine.refreshMapProperties();
         onEdit(false);
       }
     },
-    [formikRef, mapMachine, onEdit, refresh],
+    [formikRef, onEdit, refresh],
   );
 
   const onSubmit = useCallback(

@@ -9,7 +9,6 @@ import { LeaseFormModel } from '@/features/leases/models';
 import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
 import { usePropertyImprovementRepository } from '@/hooks/repositories/usePropertyImprovementRepository';
 
-import { StyledDetails } from '../details/LeaseDetailsForm';
 import { AddImprovementsContainer } from './AddImprovementsContainer';
 import { Improvements } from './Improvements';
 
@@ -47,8 +46,6 @@ export const ImprovementsContainer: React.FunctionComponent<
       />
     </ProtectedComponent>
   ) : (
-    <StyledDetails>
-      <Improvements improvements={improvements ?? []} loading={loading} />
-    </StyledDetails>
+    <Improvements improvements={improvements ?? []} loading={loading} />
   );
 };
