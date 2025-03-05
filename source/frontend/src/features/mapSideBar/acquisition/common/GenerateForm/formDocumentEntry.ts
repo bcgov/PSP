@@ -1,6 +1,6 @@
 import { FormDocumentType } from '@/constants/formDocumentTypes';
 
-interface FormDocumentEntry {
+export interface FormDocumentEntry {
   formType: FormDocumentType;
   text: string;
 }

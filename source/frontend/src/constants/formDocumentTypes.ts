@@ -13,4 +13,8 @@ export enum FormDocumentType {
   H179T = 'H179T',
   // 	General Letter
   LETTER = 'LETTER',
+  // >Licence of Occupation for Public Highway (H-1005)
+  H1005 = 'H1005',
+  // >Licence of Occupation (BCTFA as licensor) (H-1005 A)
+  H1005A = 'H1005A',
 }

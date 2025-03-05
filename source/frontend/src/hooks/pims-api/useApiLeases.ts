@@ -39,6 +39,16 @@ export const useApiLeases = () => {
           `/leases/${lease.id}?${userOverrideCodes.map(o => `userOverrideCodes=${o}`).join('&')}`,
           lease,
         ),
+      putLeaseProperties: (
+        lease: ApiGen_Concepts_Lease,
+        userOverrideCodes: UserOverrideCode[] = [],
+      ) =>
+        api.put<ApiGen_Concepts_Lease>(
+          `/leases/${lease?.id}/properties?${userOverrideCodes
+            .map(o => `userOverrideCodes=${o}`)
+            .join('&')}`,
+          lease,
+        ),
       exportLeases: (filter: IPaginateLeases, outputFormat: 'csv' | 'excel' = 'excel') =>
         api.get<Blob>(
           `/reports/leases?${filter ? queryString.stringify({ ...filter, all: true }) : ''}`,

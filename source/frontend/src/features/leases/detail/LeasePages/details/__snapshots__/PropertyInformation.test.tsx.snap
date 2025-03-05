@@ -70,19 +70,7 @@ exports[`PropertyInformation component > renders a complete lease as expected 1`
       </div>
       <div
         class="c2 text-left col"
-      >
-        <div
-          class="input form-group"
-        >
-          <input
-            class="form-control"
-            id="input-fileProperties.0.propertyName"
-            name="fileProperties.0.propertyName"
-            style="word-break: break-all;"
-            value=""
-          />
-        </div>
-      </div>
+      />
     </div>
     <div
       class="py-4 row"
@@ -192,77 +180,23 @@ exports[`PropertyInformation component > renders a complete lease as expected 1`
       <div
         class="c2 text-left col"
       >
-        <div
-          class="input form-group"
-        >
-          <input
-            class="form-control"
-            id="input-fileProperties.0.property.address.streetAddress1"
-            name="fileProperties.0.property.address.streetAddress1"
-            style="word-break: break-all;"
-            title="1234 mock Street"
-            value="1234 mock Street"
-          />
+        <div>
+          1234 mock Street
         </div>
-        <div
-          class="input form-group"
-        >
-          <input
-            class="form-control"
-            id="input-fileProperties.0.property.address.streetAddress2"
-            name="fileProperties.0.property.address.streetAddress2"
-            style="word-break: break-all;"
-            title="N/A"
-            value="N/A"
-          />
+        <div>
+          N/A 
         </div>
-        <div
-          class="input form-group"
-        >
-          <input
-            class="form-control"
-            id="input-fileProperties.0.property.address.municipality"
-            name="fileProperties.0.property.address.municipality"
-            style="word-break: break-all;"
-            title="Victoria"
-            value="Victoria"
-          />
+        <div>
+          Victoria
         </div>
-        <div
-          class="input form-group"
-        >
-          <input
-            class="form-control"
-            id="input-fileProperties.0.property.address.postal"
-            name="fileProperties.0.property.address.postal"
-            style="word-break: break-all;"
-            title="V1V1V1"
-            value="V1V1V1"
-          />
+        <div>
+          V1V1V1
         </div>
-        <div
-          class="input form-group"
-        >
-          <input
-            class="form-control"
-            id="input-fileProperties.0.property.address.province.description"
-            name="fileProperties.0.property.address.province.description"
-            style="word-break: break-all;"
-            title="British Columbia"
-            value="British Columbia"
-          />
+        <div>
+           British Columbia 
         </div>
-        <div
-          class="input form-group"
-        >
-          <input
-            class="form-control"
-            id="input-fileProperties.0.property.address.country.description"
-            name="fileProperties.0.property.address.country.description"
-            style="word-break: break-all;"
-            title="Canada"
-            value="Canada"
-          />
+        <div>
+          Canada 
         </div>
       </div>
     </div>
@@ -359,19 +293,7 @@ exports[`PropertyInformation component > renders minimally as expected 1`] = `
       </div>
       <div
         class="c2 text-left col"
-      >
-        <div
-          class="input form-group"
-        >
-          <input
-            class="form-control"
-            id="input-fileProperties.0.propertyName"
-            name="fileProperties.0.propertyName"
-            style="word-break: break-all;"
-            value=""
-          />
-        </div>
-      </div>
+      />
     </div>
     <div
       class="py-4 row"
@@ -481,77 +403,23 @@ exports[`PropertyInformation component > renders minimally as expected 1`] = `
       <div
         class="c2 text-left col"
       >
-        <div
-          class="input form-group"
-        >
-          <input
-            class="form-control"
-            id="input-fileProperties.0.property.address.streetAddress1"
-            name="fileProperties.0.property.address.streetAddress1"
-            style="word-break: break-all;"
-            title="1234 mock Street"
-            value="1234 mock Street"
-          />
+        <div>
+          1234 mock Street
         </div>
-        <div
-          class="input form-group"
-        >
-          <input
-            class="form-control"
-            id="input-fileProperties.0.property.address.streetAddress2"
-            name="fileProperties.0.property.address.streetAddress2"
-            style="word-break: break-all;"
-            title="N/A"
-            value="N/A"
-          />
+        <div>
+          N/A 
         </div>
-        <div
-          class="input form-group"
-        >
-          <input
-            class="form-control"
-            id="input-fileProperties.0.property.address.municipality"
-            name="fileProperties.0.property.address.municipality"
-            style="word-break: break-all;"
-            title="Victoria"
-            value="Victoria"
-          />
+        <div>
+          Victoria
         </div>
-        <div
-          class="input form-group"
-        >
-          <input
-            class="form-control"
-            id="input-fileProperties.0.property.address.postal"
-            name="fileProperties.0.property.address.postal"
-            style="word-break: break-all;"
-            title="V1V1V1"
-            value="V1V1V1"
-          />
+        <div>
+          V1V1V1
         </div>
-        <div
-          class="input form-group"
-        >
-          <input
-            class="form-control"
-            id="input-fileProperties.0.property.address.province.description"
-            name="fileProperties.0.property.address.province.description"
-            style="word-break: break-all;"
-            title="British Columbia"
-            value="British Columbia"
-          />
+        <div>
+           British Columbia 
         </div>
-        <div
-          class="input form-group"
-        >
-          <input
-            class="form-control"
-            id="input-fileProperties.0.property.address.country.description"
-            name="fileProperties.0.property.address.country.description"
-            style="word-break: break-all;"
-            title="Canada"
-            value="Canada"
-          />
+        <div>
+          Canada 
         </div>
       </div>
     </div>
