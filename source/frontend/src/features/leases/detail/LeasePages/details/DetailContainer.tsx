@@ -1,17 +1,14 @@
 import { FormikProps } from 'formik/dist/types';
-import React, { useCallback, useContext } from 'react';
+import React, { useContext } from 'react';
 
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 import { Claims } from '@/constants/claims';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { UpdateLeaseContainer } from '@/features/leases/detail/LeasePages/details/UpdateLeaseContainer';
 import { LeaseFormModel } from '@/features/leases/models';
-import { useGenerateLicenceOfOccupation } from '@/features/mapSideBar/acquisition/common/GenerateForm/hooks/useGenerateLicenceOfOccupation';
 import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
-import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
-import { exists } from '@/utils';
 
-import LeaseDetailsForm from './LeaseDetailsForm';
+import LeaseDetailsWrapperView from './LeaseDetailsWrapperView';
 import UpdateLeaseForm from './UpdateLeaseForm';
 
 const DetailContainer: React.FunctionComponent<React.PropsWithChildren<LeasePageProps<void>>> = ({
@@ -20,16 +17,6 @@ const DetailContainer: React.FunctionComponent<React.PropsWithChildren<LeasePage
   formikRef,
 }) => {
   const { lease } = useContext(LeaseStateContext);
-  const generateLicenceOfOccupation = useGenerateLicenceOfOccupation();
-
-  const onGenerate = useCallback(
-    (lease?: ApiGen_Concepts_Lease) => {
-      if (exists(lease)) {
-        generateLicenceOfOccupation(lease);
-      }
-    },
-    [generateLicenceOfOccupation],
-  );
 
   return !!isEditing && !!onEdit ? (
     <ProtectedComponent claims={[Claims.LEASE_EDIT]}>
@@ -40,7 +27,7 @@ const DetailContainer: React.FunctionComponent<React.PropsWithChildren<LeasePage
       />
     </ProtectedComponent>
   ) : (
-    <LeaseDetailsForm lease={lease} onGenerate={onGenerate} />
+    <LeaseDetailsWrapperView lease={lease} />
   );
 };
 

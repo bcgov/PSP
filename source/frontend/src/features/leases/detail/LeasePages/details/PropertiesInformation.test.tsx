@@ -10,6 +10,8 @@ import { toTypeCode } from '@/utils/formUtils';
 import { render, RenderOptions, waitForEffects } from '@/utils/test-utils';
 
 import PropertiesInformation, { IPropertiesInformationProps } from './PropertiesInformation';
+import { ApiGen_CodeTypes_LeaseLicenceTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseLicenceTypes';
+import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
 
 const history = createMemoryHistory();
 
@@ -18,22 +20,16 @@ const customSetFilePropertyLocations = vi.fn();
 describe('LeasePropertiesInformation component', () => {
   // render component under test
   const setup = (
-    renderOptions: RenderOptions &
-      IPropertiesInformationProps & { lease?: ApiGen_Concepts_Lease } = {},
+    renderOptions: RenderOptions & IPropertiesInformationProps = { lease: getEmptyLease() },
   ) => {
-    const utils = render(
-      <Formik onSubmit={noop} initialValues={renderOptions.lease ?? getEmptyLease()}>
-        <PropertiesInformation nameSpace={renderOptions.nameSpace} />
-      </Formik>,
-      {
-        ...renderOptions,
-        history,
-        mockMapMachine: {
-          ...mapMachineBaseMock,
-          setFilePropertyLocations: customSetFilePropertyLocations,
-        },
+    const utils = render(<PropertiesInformation lease={renderOptions.lease} />, {
+      ...renderOptions,
+      history,
+      mockMapMachine: {
+        ...mapMachineBaseMock,
+        setFilePropertyLocations: customSetFilePropertyLocations,
       },
-    );
+    });
 
     return { ...utils };
   };

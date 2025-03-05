@@ -9,6 +9,7 @@ import { useModalManagement } from '@/hooks/useModalManagement';
 import { Api_GenerateOwner } from '@/models/generate/GenerateOwner';
 import { exists } from '@/utils/utils';
 
+import { FormDocumentEntry } from './formDocumentEntry';
 import { IGenerateFormViewProps } from './GenerateFormView';
 import { useGenerateH0443 } from './hooks/useGenerateH0443';
 import { useGenerateLetter } from './hooks/useGenerateLetter';
@@ -132,8 +133,14 @@ const GenerateFormContainer: React.FunctionComponent<
     closeGenerateLetterModal();
   };
 
+  const generateDocumentEntries: FormDocumentEntry[] = [
+    { formType: FormDocumentType.LETTER, text: 'Generate Letter' },
+    { formType: FormDocumentType.H0443, text: 'Conditions of Entry (H0443)' },
+  ];
+
   return (
     <View
+      formEntries={generateDocumentEntries}
       onGenerateClick={onGenerateClick}
       isLoading={loadingAcquisitionFileOwners || loadingInterestHolders}
       letterRecipientsInitialValues={fullRecipientsList}

@@ -48,22 +48,20 @@ export const Improvement: React.FunctionComponent<React.PropsWithChildren<IImpro
   };
 
   return (
-    <>
-      <Section header={HeaderDisplayNode(typeId)}>
-        <SectionField label="Unit #" labelWidth="3">
-          {improvement.address}
-        </SectionField>
-        <SectionField
-          label={typeId === PropertyImprovementTypes.Residential ? 'House size' : 'Building size'}
-          labelWidth="3"
-        >
-          {improvement.structureSize}
-        </SectionField>
-        <SectionField label="Description" labelWidth="3">
-          {improvement.description}
-        </SectionField>
-      </Section>
-    </>
+    <Section header={HeaderDisplayNode(typeId)}>
+      <SectionField label="Unit #" labelWidth="3">
+        {improvement.address}
+      </SectionField>
+      <SectionField
+        label={typeId === PropertyImprovementTypes.Residential ? 'House size' : 'Building size'}
+        labelWidth="3"
+      >
+        {improvement.structureSize}
+      </SectionField>
+      <SectionField label="Description" labelWidth="3">
+        {improvement.description}
+      </SectionField>
+    </Section>
   );
 };
 export default Improvement;
