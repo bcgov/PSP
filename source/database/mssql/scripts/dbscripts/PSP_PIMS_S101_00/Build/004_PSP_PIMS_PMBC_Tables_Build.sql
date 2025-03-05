@@ -99,8 +99,6 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
-
-
 -- Create table pmbc.PMBC_BCTFA_PID if not existing
 PRINT N'Create table pmbc.PMBC_BCTFA_PID'
 GO
@@ -144,6 +142,78 @@ IF NOT EXISTS (SELECT *
   EXECUTE sp_addextendedproperty N'MS_Description', N'The date and time the record was created or last updated.', 'SCHEMA', N'pmbc', 'TABLE', N'PMBC_BCTFA_PID', 'COLUMN', N'DB_LAST_UPDATE_TIMESTAMP'
   EXECUTE sp_addextendedproperty N'MS_Description', N'The user or proxy account that created or last updated the record.', 'SCHEMA', N'pmbc', 'TABLE', N'PMBC_BCTFA_PID', 'COLUMN', N'DB_LAST_UPDATE_USERID'
   END
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+---- Drop view pmbc.PMBC_BCTFA_PARCEL_POLYGON_FABRIC
+--PRINT N'Drop view pmbc.PMBC_BCTFA_PARCEL_POLYGON_FABRIC'
+--IF NOT EXISTS (SELECT *
+--               FROM   sys.views
+--			         WHERE  table_schema = 'pmbc'
+--			            AND table_name   = 'PMBC_BCTFA_PARCEL_POLYGON_FABRIC')
+--  BEGIN
+--  DROP VIEW IF EXISTS [pmbc].[PMBC_BCTFA_PARCEL_POLYGON_FABRIC]
+--  END
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
+
+-- Create view pmbc.PMBC_BCTFA_PARCEL_POLYGON_FABRIC
+PRINT N'Create view pmbc.PMBC_BCTFA_PARCEL_POLYGON_FABRIC'
+GO
+CREATE VIEW [pmbc].[PMBC_BCTFA_PARCEL_POLYGON_FABRIC] AS
+  SELECT
+    tfapid.PID,
+    tfapid.IS_BCTFA_OWNED,
+    tfapid.CONCURRENCY_CONTROL_NUMBER,
+    tfapid.APP_CREATE_TIMESTAMP,
+    tfapid.APP_CREATE_USERID,
+    tfapid.APP_CREATE_USER_GUID,
+    tfapid.APP_CREATE_USER_DIRECTORY,
+    tfapid.APP_LAST_UPDATE_TIMESTAMP,
+    tfapid.APP_LAST_UPDATE_USERID,
+    tfapid.APP_LAST_UPDATE_USER_GUID,
+    tfapid.APP_LAST_UPDATE_USER_DIRECTORY,
+    tfapid.DB_CREATE_TIMESTAMP,
+    tfapid.DB_CREATE_USERID,
+    tfapid.DB_LAST_UPDATE_TIMESTAMP,
+    tfapid.DB_LAST_UPDATE_USERID,
+    fabric.PARCEL_FABRIC_POLY_ID,
+    fabric.GLOBAL_UID,
+    fabric.PARCEL_NAME,
+    fabric.PLAN_ID,
+    fabric.PLAN_NUMBER,
+    fabric.PIN,
+    fabric.PID_NUMBER,
+    fabric.SOURCE_PARCEL_ID,
+    fabric.PARCEL_STATUS,
+    fabric.PARCEL_CLASS,
+    fabric.OWNER_TYPE,
+    fabric.PARCEL_START_DATE,
+    fabric.SURVEY_DESIGNATION_1,
+    fabric.SURVEY_DESIGNATION_2,
+    fabric.SURVEY_DESIGNATION_3,
+    fabric.LEGAL_DESCRIPTION,
+    fabric.MUNICIPALITY,
+    fabric.REGIONAL_DISTRICT,
+    fabric.IS_REMAINDER_IND,
+    fabric.GEOMETRY_SOURCE,
+    fabric.POSITIONAL_ERROR,
+    fabric.ERROR_REPORTED_BY,
+    fabric.CAPTURE_METHOD,
+    fabric.COMPILED_IND,
+    fabric.STATED_AREA,
+    fabric.WHEN_CREATED,
+    fabric.WHEN_UPDATED,
+    fabric.FEATURE_AREA_SQM,
+    fabric.FEATURE_LENGTH_M,
+    fabric.SHAPE,
+    fabric.OBJECTID,
+    fabric.SE_ANNO_CAD_DATA
+  FROM
+     pmbc.PMBC_BCTFA_PID             tfapid INNER JOIN 
+     pmbc.PMBC_PARCEL_POLYGON_FABRIC fabric ON tfapid.PID = fabric.PID
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO

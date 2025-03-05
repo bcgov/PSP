@@ -5,7 +5,7 @@
 /* Project name:          PIMS S101.00                                    */
 /* Author:                Doug Filteau                                    */
 /* Script type:           Database drop script                            */
-/* Created on:            2025-03-03 13:08                                */
+/* Created on:            2025-03-04 10:23                                */
 /* ---------------------------------------------------------------------- */
 
 
@@ -60,6 +60,10 @@ GO
 
 
 DROP VIEW [dbo].[PIMS_PROPERTY_LOCATION_LITE_VW]
+GO
+
+
+DROP VIEW [dbo].[PIMS_BCTFA_PID_VW]
 GO
 
 
@@ -12331,131 +12335,6 @@ GO
 
 
 /* ---------------------------------------------------------------------- */
-/* Drop table "pmbc.PMBC_BCTFA_PID"                                       */
-/* ---------------------------------------------------------------------- */
-
-GO
-
-
-/* Drop constraints */
-
-ALTER TABLE [pmbc].[PMBC_BCTFA_PID] DROP CONSTRAINT [TFAPID_IS_BCTFA_OWNED_DEF]
-GO
-
-
-ALTER TABLE [pmbc].[PMBC_BCTFA_PID] DROP CONSTRAINT [TFAPID_CONCURRENCY_CONTROL_NUMBER_DEF]
-GO
-
-
-ALTER TABLE [pmbc].[PMBC_BCTFA_PID] DROP CONSTRAINT [TFAPID_APP_CREATE_TIMESTAMP_DEF]
-GO
-
-
-ALTER TABLE [pmbc].[PMBC_BCTFA_PID] DROP CONSTRAINT [TFAPID_APP_CREATE_USERID_DEF]
-GO
-
-
-ALTER TABLE [pmbc].[PMBC_BCTFA_PID] DROP CONSTRAINT [TFAPID_APP_CREATE_USER_DIRECTORY_DEF]
-GO
-
-
-ALTER TABLE [pmbc].[PMBC_BCTFA_PID] DROP CONSTRAINT [TFAPID_APP_LAST_UPDATE_TIMESTAMP_DEF]
-GO
-
-
-ALTER TABLE [pmbc].[PMBC_BCTFA_PID] DROP CONSTRAINT [TFAPID_APP_LAST_UPDATE_USERID_DEF]
-GO
-
-
-ALTER TABLE [pmbc].[PMBC_BCTFA_PID] DROP CONSTRAINT [TFAPID_APP_LAST_UPDATE_USER_DIRECTORY_DEF]
-GO
-
-
-ALTER TABLE [pmbc].[PMBC_BCTFA_PID] DROP CONSTRAINT [TFAPID_DB_CREATE_TIMESTAMP_DEF]
-GO
-
-
-ALTER TABLE [pmbc].[PMBC_BCTFA_PID] DROP CONSTRAINT [TFAPID_DB_CREATE_USERID_DEF]
-GO
-
-
-ALTER TABLE [pmbc].[PMBC_BCTFA_PID] DROP CONSTRAINT [TFAPID_DB_LAST_UPDATE_TIMESTAMP_DEF]
-GO
-
-
-ALTER TABLE [pmbc].[PMBC_BCTFA_PID] DROP CONSTRAINT [TFAPID_DB_LAST_UPDATE_USERID_DEF]
-GO
-
-
-ALTER TABLE [pmbc].[PMBC_BCTFA_PID] DROP CONSTRAINT [TFAPID_PK]
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'pmbc', 'TABLE', N'PMBC_BCTFA_PID', 'COLUMN', N'PID'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'pmbc', 'TABLE', N'PMBC_BCTFA_PID', 'COLUMN', N'IS_BCTFA_OWNED'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'pmbc', 'TABLE', N'PMBC_BCTFA_PID', 'COLUMN', N'CONCURRENCY_CONTROL_NUMBER'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'pmbc', 'TABLE', N'PMBC_BCTFA_PID', 'COLUMN', N'APP_CREATE_TIMESTAMP'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'pmbc', 'TABLE', N'PMBC_BCTFA_PID', 'COLUMN', N'APP_CREATE_USERID'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'pmbc', 'TABLE', N'PMBC_BCTFA_PID', 'COLUMN', N'APP_CREATE_USER_GUID'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'pmbc', 'TABLE', N'PMBC_BCTFA_PID', 'COLUMN', N'APP_CREATE_USER_DIRECTORY'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'pmbc', 'TABLE', N'PMBC_BCTFA_PID', 'COLUMN', N'APP_LAST_UPDATE_TIMESTAMP'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'pmbc', 'TABLE', N'PMBC_BCTFA_PID', 'COLUMN', N'APP_LAST_UPDATE_USERID'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'pmbc', 'TABLE', N'PMBC_BCTFA_PID', 'COLUMN', N'APP_LAST_UPDATE_USER_GUID'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'pmbc', 'TABLE', N'PMBC_BCTFA_PID', 'COLUMN', N'APP_LAST_UPDATE_USER_DIRECTORY'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'pmbc', 'TABLE', N'PMBC_BCTFA_PID', 'COLUMN', N'DB_CREATE_TIMESTAMP'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'pmbc', 'TABLE', N'PMBC_BCTFA_PID', 'COLUMN', N'DB_CREATE_USERID'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'pmbc', 'TABLE', N'PMBC_BCTFA_PID', 'COLUMN', N'DB_LAST_UPDATE_TIMESTAMP'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'pmbc', 'TABLE', N'PMBC_BCTFA_PID', 'COLUMN', N'DB_LAST_UPDATE_USERID'
-GO
-
-
-DROP TABLE [pmbc].[PMBC_BCTFA_PID]
-GO
-
-
-/* ---------------------------------------------------------------------- */
 /* Drop table "dbo.PIMS_PAYMENT_ITEM_TYPE"                                */
 /* ---------------------------------------------------------------------- */
 
@@ -19585,6 +19464,131 @@ GO
 
 
 DROP TABLE [dbo].[PIMS_PROPERTY_PURPOSE_TYPE]
+GO
+
+
+/* ---------------------------------------------------------------------- */
+/* Drop table "pmbc.PMBC_BCTFA_PID"                                       */
+/* ---------------------------------------------------------------------- */
+
+GO
+
+
+/* Drop constraints */
+
+ALTER TABLE [pmbc].[PMBC_BCTFA_PID] DROP CONSTRAINT [TFAPID_IS_BCTFA_OWNED_DEF]
+GO
+
+
+ALTER TABLE [pmbc].[PMBC_BCTFA_PID] DROP CONSTRAINT [TFAPID_CONCURRENCY_CONTROL_NUMBER_DEF]
+GO
+
+
+ALTER TABLE [pmbc].[PMBC_BCTFA_PID] DROP CONSTRAINT [TFAPID_APP_CREATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [pmbc].[PMBC_BCTFA_PID] DROP CONSTRAINT [TFAPID_APP_CREATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [pmbc].[PMBC_BCTFA_PID] DROP CONSTRAINT [TFAPID_APP_CREATE_USER_DIRECTORY_DEF]
+GO
+
+
+ALTER TABLE [pmbc].[PMBC_BCTFA_PID] DROP CONSTRAINT [TFAPID_APP_LAST_UPDATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [pmbc].[PMBC_BCTFA_PID] DROP CONSTRAINT [TFAPID_APP_LAST_UPDATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [pmbc].[PMBC_BCTFA_PID] DROP CONSTRAINT [TFAPID_APP_LAST_UPDATE_USER_DIRECTORY_DEF]
+GO
+
+
+ALTER TABLE [pmbc].[PMBC_BCTFA_PID] DROP CONSTRAINT [TFAPID_DB_CREATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [pmbc].[PMBC_BCTFA_PID] DROP CONSTRAINT [TFAPID_DB_CREATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [pmbc].[PMBC_BCTFA_PID] DROP CONSTRAINT [TFAPID_DB_LAST_UPDATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [pmbc].[PMBC_BCTFA_PID] DROP CONSTRAINT [TFAPID_DB_LAST_UPDATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [pmbc].[PMBC_BCTFA_PID] DROP CONSTRAINT [TFAPID_PK]
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'pmbc', 'TABLE', N'PMBC_BCTFA_PID', 'COLUMN', N'PID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'pmbc', 'TABLE', N'PMBC_BCTFA_PID', 'COLUMN', N'IS_BCTFA_OWNED'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'pmbc', 'TABLE', N'PMBC_BCTFA_PID', 'COLUMN', N'CONCURRENCY_CONTROL_NUMBER'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'pmbc', 'TABLE', N'PMBC_BCTFA_PID', 'COLUMN', N'APP_CREATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'pmbc', 'TABLE', N'PMBC_BCTFA_PID', 'COLUMN', N'APP_CREATE_USERID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'pmbc', 'TABLE', N'PMBC_BCTFA_PID', 'COLUMN', N'APP_CREATE_USER_GUID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'pmbc', 'TABLE', N'PMBC_BCTFA_PID', 'COLUMN', N'APP_CREATE_USER_DIRECTORY'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'pmbc', 'TABLE', N'PMBC_BCTFA_PID', 'COLUMN', N'APP_LAST_UPDATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'pmbc', 'TABLE', N'PMBC_BCTFA_PID', 'COLUMN', N'APP_LAST_UPDATE_USERID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'pmbc', 'TABLE', N'PMBC_BCTFA_PID', 'COLUMN', N'APP_LAST_UPDATE_USER_GUID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'pmbc', 'TABLE', N'PMBC_BCTFA_PID', 'COLUMN', N'APP_LAST_UPDATE_USER_DIRECTORY'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'pmbc', 'TABLE', N'PMBC_BCTFA_PID', 'COLUMN', N'DB_CREATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'pmbc', 'TABLE', N'PMBC_BCTFA_PID', 'COLUMN', N'DB_CREATE_USERID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'pmbc', 'TABLE', N'PMBC_BCTFA_PID', 'COLUMN', N'DB_LAST_UPDATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'pmbc', 'TABLE', N'PMBC_BCTFA_PID', 'COLUMN', N'DB_LAST_UPDATE_USERID'
+GO
+
+
+DROP TABLE [pmbc].[PMBC_BCTFA_PID]
 GO
 
 
