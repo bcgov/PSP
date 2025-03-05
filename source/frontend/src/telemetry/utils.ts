@@ -21,7 +21,7 @@ export enum MeterKind {
 }
 
 export const isBlocked = (uri: string, config: MetricsConfig) => {
-  const blockList = [...config.urlBlocklist, config.otlpEndpoint];
+  const blockList = [...(config.urlBlocklist ?? []), config.otlpEndpoint];
   return blockList.findIndex(blocked => uri.includes(blocked)) >= 0;
 };
 
