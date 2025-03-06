@@ -549,6 +549,9 @@ exports[`AcquisitionView component > renders as expected 1`] = `
 }
 
 .c22 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
   text-align: left;
   padding: 0px;
   margin: 0px;
