@@ -1,9 +1,10 @@
 import { useCallback } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaBriefcase, FaPlus } from 'react-icons/fa';
+import { FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
+import ProjectIcon from '@/assets/images/projects-icon.svg?react';
 import * as CommonStyled from '@/components/common/styles';
 import { StyledAddButton } from '@/components/common/styles';
 import { Claims } from '@/constants/claims';
@@ -58,7 +59,7 @@ export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<un
         <CommonStyled.H1>
           <FlexDiv>
             <div>
-              <FaBriefcase title="Project icon" fill="currentColor" className={'pb-1'} />
+              <ProjectIcon title="Project icon" fill="currentColor" />
               <span className="ml-2">Projects</span>
             </div>
 
@@ -107,4 +108,8 @@ const FlexDiv = styled.div`
   justify-content: space-between;
   align-items: center;
   margin-bottom: 0.25rem;
+
+  svg {
+    vertical-align: baseline;
+  }
 `;

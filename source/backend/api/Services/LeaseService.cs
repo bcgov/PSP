@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
@@ -254,8 +255,12 @@ namespace Pims.Api.Services
 
             var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
             var currentLease = _leaseRepository.GetNoTracking(lease.LeaseId);
+            if (currentLease == null)
+            {
+                throw new InvalidDataException("Invalid lease");
+            }
 
-            var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease?.LeaseStatusTypeCode);
+            var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease.LeaseStatusTypeCode);
             if (!_leaseStatusSolver.CanEditDetails(currentLeaseStatus) && !_user.HasPermission(Permissions.SystemAdmin))
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
@@ -264,8 +269,6 @@ namespace Pims.Api.Services
             pimsUser.ThrowInvalidAccessToLeaseFile(currentLease.RegionCode); // need to check that the user is able to access the current lease as well as has the region for the updated lease.
             pimsUser.ThrowInvalidAccessToLeaseFile(lease.RegionCode);
 
-            var currentFileProperties = _propertyLeaseRepository.GetAllByLeaseId(lease.LeaseId);
-
             if (currentLease.LeaseStatusTypeCode != lease.LeaseStatusTypeCode)
             {
                 PimsLeaseNote newLeaseNote = GeneratePimsLeaseNote(currentLease, lease);
@@ -273,12 +276,34 @@ namespace Pims.Api.Services
                 _entityNoteRepository.Add(newLeaseNote);
             }
 
-            ValidateRenewalDates(lease, lease.PimsLeaseRenewals, userOverrides);
+            ValidateRenewalDates(lease, currentLease, userOverrides);
 
             ValidateNewTotalAllowableCompensation(lease.LeaseId, lease.TotalAllowableCompensation);
 
             _leaseRepository.Update(lease, false);
+
+            _leaseRepository.UpdateLeaseRenewals(lease.Internal_Id, lease.ConcurrencyControlNumber, lease.PimsLeaseRenewals);
+
+            _leaseRepository.CommitTransaction();
+
+            return _leaseRepository.GetNoTracking(lease.LeaseId);
+        }
+
+        public PimsLease UpdateProperties(PimsLease lease, IEnumerable<UserOverrideCode> userOverrides)
+        {
+            _logger.LogInformation("Updating lease properties with lease id {id}", lease.LeaseId);
+            _user.ThrowIfNotAuthorized(Permissions.LeaseEdit, Permissions.PropertyView, Permissions.PropertyAdd);
+
+            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
+            var currentLease = _leaseRepository.GetNoTracking(lease.LeaseId);
+            var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease?.LeaseStatusTypeCode);
+
+            pimsUser.ThrowInvalidAccessToLeaseFile(currentLease.RegionCode); // need to check that the user is able to access the current lease as well as has the region for the updated lease.
+            pimsUser.ThrowInvalidAccessToLeaseFile(lease.RegionCode);
+
             var leaseWithProperties = AssociatePropertyLeases(lease, userOverrides);
+
+            var currentFileProperties = _propertyLeaseRepository.GetAllByLeaseId(lease.LeaseId);
 
             // Update marker locations in the context of this file
             foreach (var incomingLeaseProperty in leaseWithProperties.PimsPropertyLeases)
@@ -313,9 +338,8 @@ namespace Pims.Api.Services
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
-            _propertyLeaseRepository.UpdatePropertyLeases(lease.Internal_Id, leaseWithProperties.PimsPropertyLeases);
 
-            _leaseRepository.UpdateLeaseRenewals(lease.Internal_Id, lease.ConcurrencyControlNumber, lease.PimsLeaseRenewals);
+            _propertyLeaseRepository.UpdatePropertyLeases(lease.Internal_Id, leaseWithProperties.PimsPropertyLeases);
 
             List<PimsPropertyLease> differenceSet = currentFileProperties.Where(x => !lease.PimsPropertyLeases.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
             foreach (var deletedProperty in differenceSet)
@@ -338,9 +362,9 @@ namespace Pims.Api.Services
                 }
             }
 
-            _leaseRepository.CommitTransaction();
+            _propertyLeaseRepository.CommitTransaction();
 
-            return _leaseRepository.GetNoTracking(lease.LeaseId);
+            return _leaseRepository.Get(lease.Internal_Id);
         }
 
         public IEnumerable<PimsLeaseRenewal> GetRenewalsByLeaseId(long leaseId)
@@ -485,22 +509,27 @@ namespace Pims.Api.Services
             return deleteResult;
         }
 
-        private static void ValidateRenewalDates(PimsLease lease, ICollection<PimsLeaseRenewal> renewals, IEnumerable<UserOverrideCode> userOverrides)
+        private static void ValidateRenewalDates(PimsLease lease, PimsLease currentLease, IEnumerable<UserOverrideCode> userOverrides)
         {
             if (lease.LeaseStatusTypeCode != PimsLeaseStatusTypes.ACTIVE)
             {
                 return;
             }
 
-            List<Tuple<DateTime, DateTime>> renewalDates = new();
+            List<Tuple<long, DateTime, DateTime>> renewalDates = new();
+            bool renewalsModified = false;
 
-            foreach (var renewal in renewals)
+            foreach (var renewal in lease.PimsLeaseRenewals)
             {
+                var currentRenewal = currentLease.PimsLeaseRenewals.FirstOrDefault(x => x.LeaseRenewalId == renewal.LeaseRenewalId);
+                renewalsModified = currentLease.PimsLeaseRenewals.Count != lease.PimsLeaseRenewals.Count
+                    || !currentRenewal.Equals(renewal);
+
                 if (renewal.IsExercised == true)
                 {
                     if (renewal.CommencementDt.HasValue && renewal.ExpiryDt.HasValue)
                     {
-                        renewalDates.Add(new Tuple<DateTime, DateTime>(renewal.CommencementDt.Value, renewal.ExpiryDt.Value));
+                        renewalDates.Add(new Tuple<long, DateTime, DateTime>(renewal.LeaseRenewalId, renewal.CommencementDt.Value, renewal.ExpiryDt.Value));
                     }
                     else
                     {
@@ -510,7 +539,7 @@ namespace Pims.Api.Services
             }
 
             // Sort agreement dates/renewals by start date.
-            renewalDates.Sort((a, b) => DateTime.Compare(a.Item1, b.Item1));
+            renewalDates.Sort((a, b) => DateTime.Compare(a.Item2, b.Item3));
 
             DateTime currentEndDate;
 
@@ -519,7 +548,7 @@ namespace Pims.Api.Services
                 var agreementStart = lease.OrigStartDate.Value;
                 var agreementEnd = lease.OrigExpiryDate.Value;
                 currentEndDate = agreementEnd;
-                if (DateTime.Compare(agreementEnd, agreementStart) <= 0)
+                if (DateTime.Compare(agreementEnd, agreementStart) <= 0 && renewalsModified)
                 {
                     throw new BusinessRuleViolationException("The lease commencement date must be before its expiry date");
                 }
@@ -531,15 +560,15 @@ namespace Pims.Api.Services
 
             for (int i = 0; i < renewalDates.Count; i++)
             {
-                var startDate = renewalDates[i].Item1;
-                var endDate = renewalDates[i].Item2;
+                var startDate = renewalDates[i].Item2;
+                var endDate = renewalDates[i].Item3;
 
                 if (DateTime.Compare(endDate, startDate) <= 0)
                 {
                     throw new BusinessRuleViolationException("The expiry date of your renewal should be later than its commencement date");
                 }
 
-                if (DateTime.Compare(currentEndDate, startDate) >= 0 && !userOverrides.Contains(UserOverrideCode.CommencementOverlapExpiryDate))
+                if (DateTime.Compare(currentEndDate, startDate) >= 0 && renewalsModified && !userOverrides.Contains(UserOverrideCode.CommencementOverlapExpiryDate))
                 {
                     throw new UserOverrideException(UserOverrideCode.CommencementOverlapExpiryDate, "The commencement date of your renewal should be later than the previous expiry date (agreement or renewal).\n\nDo you want to proceed?");
                 }
@@ -763,17 +792,17 @@ namespace Pims.Api.Services
 
             foreach (var compReq in compensationRequisitions)
             {
-                var leaseStakeholderCompensationRequisitions = compReq.PimsLeaseStakeholderCompReqs;
-                if (leaseStakeholderCompensationRequisitions is null || leaseStakeholderCompensationRequisitions.Count == 0)
+                var leasePayeesCompensationRequisitions = compReq.PimsCompReqLeasePayees;
+                if (leasePayeesCompensationRequisitions is null || leasePayeesCompensationRequisitions.Count == 0)
                 {
                     continue;
                 }
 
-                // Check for lease stakeholders
-                foreach (var leaseStakeholderCompReq in leaseStakeholderCompensationRequisitions)
+                // Check for lease payees
+                foreach (var leasePayeeCompReq in leasePayeesCompensationRequisitions)
                 {
-                    if (!stakeholders.Any(x => x.Internal_Id.Equals(leaseStakeholderCompReq.LeaseStakeholderId))
-                        && currentLease.PimsLeaseStakeholders.Any(x => x.Internal_Id.Equals(leaseStakeholderCompReq.LeaseStakeholderId)))
+                    if (!stakeholders.Any(x => x.Internal_Id.Equals(leasePayeeCompReq.LeaseStakeholderId))
+                        && currentLease.PimsLeaseStakeholders.Any(x => x.Internal_Id.Equals(leasePayeeCompReq.LeaseStakeholderId)))
                     {
                         throw new ForeignKeyDependencyException("Lease File Stakeholder can not be removed since it's assigned as a payee for a compensation requisition");
                     }

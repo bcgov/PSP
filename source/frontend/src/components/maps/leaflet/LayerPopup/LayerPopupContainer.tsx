@@ -1,9 +1,10 @@
 import { Feature, GeoJsonProperties } from 'geojson';
 import { geoJSON, LatLngBounds, LatLngLiteral, Popup as LeafletPopup } from 'leaflet';
 import React, { useEffect, useState } from 'react';
-import { Popup } from 'react-leaflet';
+import { Popup } from 'react-leaflet/Popup';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import { exists } from '@/utils';
 
 import { PopupContentConfig } from './components/LayerPopupContent';
 import {
@@ -61,7 +62,7 @@ export const LayerPopupContainer = React.forwardRef<LeafletPopup, React.PropsWit
 
         const layersData: LayerData[] = [];
 
-        if (featureSet.parcelFeature !== null) {
+        if (exists(featureSet.parcelFeature)) {
           const parcelData: LayerData = { title: 'LTSA ParcelMap data', data: null, config: {} };
 
           parcelData.bounds = featureSet.parcelFeature.geometry
@@ -72,7 +73,7 @@ export const LayerPopupContainer = React.forwardRef<LeafletPopup, React.PropsWit
           parcelData.feature = featureSet.parcelFeature;
           layersData.push(parcelData);
         }
-        if (featureSet.crownLandLeasesFeature !== null) {
+        if (exists(featureSet.crownLandLeasesFeature)) {
           const parcelData: LayerData = {
             title: 'Crown Land Leases',
             data: null,
@@ -87,7 +88,7 @@ export const LayerPopupContainer = React.forwardRef<LeafletPopup, React.PropsWit
           parcelData.feature = featureSet.crownLandLeasesFeature;
           layersData.push(parcelData);
         }
-        if (featureSet.crownLandLicensesFeature !== null) {
+        if (exists(featureSet.crownLandLicensesFeature)) {
           const parcelData: LayerData = {
             title: 'Crown Land Licenses',
             data: null,
@@ -102,7 +103,7 @@ export const LayerPopupContainer = React.forwardRef<LeafletPopup, React.PropsWit
           parcelData.feature = featureSet.crownLandLicensesFeature;
           layersData.push(parcelData);
         }
-        if (featureSet.crownLandTenuresFeature !== null) {
+        if (exists(featureSet.crownLandTenuresFeature)) {
           const parcelData: LayerData = {
             title: 'Crown Land Tenures',
             data: null,
@@ -117,7 +118,7 @@ export const LayerPopupContainer = React.forwardRef<LeafletPopup, React.PropsWit
           parcelData.feature = featureSet.crownLandTenuresFeature;
           layersData.push(parcelData);
         }
-        if (featureSet.crownLandInventoryFeature !== null) {
+        if (exists(featureSet.crownLandInventoryFeature)) {
           const parcelData: LayerData = {
             title: 'Crown Land Inventory',
             data: null,
@@ -132,7 +133,7 @@ export const LayerPopupContainer = React.forwardRef<LeafletPopup, React.PropsWit
           parcelData.feature = featureSet.crownLandInventoryFeature;
           layersData.push(parcelData);
         }
-        if (featureSet.crownLandInclusionsFeature !== null) {
+        if (exists(featureSet.crownLandInclusionsFeature)) {
           const parcelData: LayerData = {
             title: 'Crown Land Inclusions',
             data: null,
@@ -147,7 +148,7 @@ export const LayerPopupContainer = React.forwardRef<LeafletPopup, React.PropsWit
           parcelData.feature = featureSet.crownLandInclusionsFeature;
           layersData.push(parcelData);
         }
-        if (featureSet.municipalityFeature !== null) {
+        if (exists(featureSet.municipalityFeature)) {
           const parcelData: LayerData = {
             title: 'Municipality Information',
             data: null,
@@ -162,20 +163,21 @@ export const LayerPopupContainer = React.forwardRef<LeafletPopup, React.PropsWit
           parcelData.feature = featureSet.municipalityFeature;
           layersData.push(parcelData);
         }
-        if (featureSet.highwayFeature !== null) {
-          const parcelData: LayerData = {
-            title: 'Highway Research',
-            data: null,
-            config: {},
-          };
-
-          parcelData.bounds = featureSet.highwayFeature.geometry
-            ? geoJSON(featureSet.highwayFeature.geometry).getBounds()
-            : undefined;
-          parcelData.config = highwayLayerPopupConfig;
-          parcelData.data = featureSet.highwayFeature.properties;
-          parcelData.feature = featureSet.highwayFeature;
-          layersData.push(parcelData);
+        if (exists(featureSet.highwayFeatures) && featureSet.highwayFeatures.length > 0) {
+          featureSet.highwayFeatures.forEach((highwayFeature, index) => {
+            const parcelData: LayerData = {
+              title: `Highway Research (${index + 1} of ${featureSet.highwayFeatures.length})`,
+              data: null,
+              config: {},
+            };
+            parcelData.bounds = highwayFeature.geometry
+              ? geoJSON(highwayFeature.geometry).getBounds()
+              : undefined;
+            parcelData.config = highwayLayerPopupConfig;
+            parcelData.data = highwayFeature.properties;
+            parcelData.feature = highwayFeature;
+            layersData.push(parcelData);
+          });
         }
 
         setLayerPopup({

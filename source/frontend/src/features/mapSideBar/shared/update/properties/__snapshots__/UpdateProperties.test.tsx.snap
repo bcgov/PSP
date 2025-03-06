@@ -1,7 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`UpdateProperties component > renders as expected 1`] = `
-.c3.btn {
+.c4.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -30,19 +30,19 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c3.btn .Button__value {
+.c4.btn .Button__value {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
-.c3.btn:hover {
+.c4.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c3.btn:focus {
+.c4.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -50,31 +50,31 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   box-shadow: none;
 }
 
-.c3.btn.btn-primary {
+.c4.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c3.btn.btn-primary:hover,
-.c3.btn.btn-primary:active,
-.c3.btn.btn-primary:focus {
+.c4.btn.btn-primary:hover,
+.c4.btn.btn-primary:active,
+.c4.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c3.btn.btn-secondary {
+.c4.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c3.btn.btn-secondary:hover,
-.c3.btn.btn-secondary:active,
-.c3.btn.btn-secondary:focus {
+.c4.btn.btn-secondary:hover,
+.c4.btn.btn-secondary:active,
+.c4.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c3.btn.btn-info {
+.c4.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -82,66 +82,66 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   padding-right: 0.6rem;
 }
 
-.c3.btn.btn-info:hover,
-.c3.btn.btn-info:active,
-.c3.btn.btn-info:focus {
+.c4.btn.btn-info:hover,
+.c4.btn.btn-info:active,
+.c4.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c3.btn.btn-light {
+.c4.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c3.btn.btn-light:hover,
-.c3.btn.btn-light:active,
-.c3.btn.btn-light:focus {
+.c4.btn.btn-light:hover,
+.c4.btn.btn-light:active,
+.c4.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c3.btn.btn-dark {
+.c4.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c3.btn.btn-dark:hover,
-.c3.btn.btn-dark:active,
-.c3.btn.btn-dark:focus {
+.c4.btn.btn-dark:hover,
+.c4.btn.btn-dark:active,
+.c4.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c3.btn.btn-danger {
+.c4.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c3.btn.btn-danger:hover,
-.c3.btn.btn-danger:active,
-.c3.btn.btn-danger:focus {
+.c4.btn.btn-danger:hover,
+.c4.btn.btn-danger:active,
+.c4.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c3.btn.btn-warning {
+.c4.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c3.btn.btn-warning:hover,
-.c3.btn.btn-warning:active,
-.c3.btn.btn-warning:focus {
+.c4.btn.btn-warning:hover,
+.c4.btn.btn-warning:active,
+.c4.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c3.btn.btn-link {
+.c4.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -165,9 +165,9 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   text-decoration: underline;
 }
 
-.c3.btn.btn-link:hover,
-.c3.btn.btn-link:active,
-.c3.btn.btn-link:focus {
+.c4.btn.btn-link:hover,
+.c4.btn.btn-link:active,
+.c4.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -177,15 +177,15 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   outline: none;
 }
 
-.c3.btn.btn-link:disabled,
-.c3.btn.btn-link.disabled {
+.c4.btn.btn-link:disabled,
+.c4.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c3.btn:disabled,
-.c3.btn:disabled:hover {
+.c4.btn:disabled,
+.c4.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -197,66 +197,66 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   cursor: not-allowed;
 }
 
-.c3.Button .Button__icon {
+.c4.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c3.Button--icon-only:focus {
+.c4.Button--icon-only:focus {
   outline: none;
 }
 
-.c3.Button--icon-only .Button__icon {
+.c4.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c29.c29.btn {
+.c30.c30.btn {
   background-color: unset;
   border: none;
 }
 
-.c29.c29.btn:hover,
-.c29.c29.btn:focus,
-.c29.c29.btn:active {
+.c30.c30.btn:hover,
+.c30.c30.btn:focus,
+.c30.c30.btn:active {
   background-color: unset;
   outline: none;
   box-shadow: none;
 }
 
-.c29.c29.btn svg {
+.c30.c30.btn svg {
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
 
-.c29.c29.btn svg:hover {
+.c30.c30.btn svg:hover {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
 }
 
-.c29.c29.btn.btn-primary svg {
+.c30.c30.btn.btn-primary svg {
   color: #013366;
 }
 
-.c29.c29.btn.btn-primary svg:hover {
+.c30.c30.btn.btn-primary svg:hover {
   color: #013366;
 }
 
-.c29.c29.btn.btn-light svg {
+.c30.c30.btn.btn-light svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c29.c29.btn.btn-light svg:hover {
+.c30.c30.btn.btn-light svg:hover {
   color: #CE3E39;
 }
 
-.c29.c29.btn.btn-info svg {
+.c30.c30.btn.btn-info svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c29.c29.btn.btn-info svg:hover {
+.c30.c30.btn.btn-info svg:hover {
   color: var(--surface-color-primary-button-hover);
 }
 
-.c30.c30.btn {
+.c31.c31.btn {
   font-size: 1.4rem;
   color: #aaaaaa;
   -webkit-text-decoration: none;
@@ -264,13 +264,13 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   line-height: unset;
 }
 
-.c30.c30.btn .text {
+.c31.c31.btn .text {
   display: none;
 }
 
-.c30.c30.btn:hover,
-.c30.c30.btn:active,
-.c30.c30.btn:focus {
+.c31.c31.btn:hover,
+.c31.c31.btn:active,
+.c31.c31.btn:focus {
   color: #d8292f;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -284,32 +284,32 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   flex-direction: row;
 }
 
-.c30.c30.btn:hover .text,
-.c30.c30.btn:active .text,
-.c30.c30.btn:focus .text {
+.c31.c31.btn:hover .text,
+.c31.c31.btn:active .text,
+.c31.c31.btn:focus .text {
   display: inline;
   line-height: 2rem;
 }
 
-.c20 {
+.c21 {
   padding-right: 0;
 }
 
-.c20 .form-control {
+.c21 .form-control {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.c21:not(:first-child) {
+.c22:not(:first-child) {
   padding-left: 0;
 }
 
-.c21:not(:first-child) .form-control {
+.c22:not(:first-child) .form-control {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
 
-.c28 {
+.c29 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -321,13 +321,13 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   gap: 0.8rem;
 }
 
-.c28 .form-label {
+.c29 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
 }
 
-.c22 {
+.c23 {
   font-size: 1.4rem;
   color: #42814A;
 }
@@ -335,14 +335,14 @@ exports[`UpdateProperties component > renders as expected 1`] = `
 .c1 {
   color: #474543;
   font-family: 'BCSans-Bold';
-  font-size: 3.2rem;
+  font-size: 2.8rem;
   border-bottom: solid 0.5rem var(--theme-blue-90);
   width: 100%;
   text-align: left;
   margin-bottom: 2.4rem;
 }
 
-.c13 {
+.c14 {
   color: var(--theme-blue-100);
   font-family: 'BCSans-Bold';
   font-size: 2.2rem;
@@ -352,27 +352,26 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   margin-bottom: 1.6rem;
 }
 
-.c5 {
+.c6 {
   border-left: 0.1rem solid #ECEAE8;
   width: 0.1rem;
   height: 80%;
   margin: auto;
 }
 
-.c6 {
+.c7 {
   width: 100%;
   border-bottom: solid 0.5rem #3470B1;
 }
 
-.c23 {
+.c24 {
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2.4rem;
-  font-size: 2.6rem;
 }
 
-.c12 {
+.c13 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
@@ -380,24 +379,24 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c15:hover {
+.c16:hover {
   cursor: pointer;
 }
 
-.c18.required::before {
+.c19.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c17 {
+.c18 {
   font-weight: bold;
 }
 
-.c14.c14.c14 input,
-.c14.c14.c14 select,
-.c14.c14.c14 textarea {
+.c15.c15.c15 input,
+.c15.c15.c15 select,
+.c15.c15.c15 textarea {
   background: none;
   border: none;
   resize: none;
@@ -407,43 +406,43 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   padding: 0;
 }
 
-.c14.c14.c14 .form-label {
+.c15.c15.c15 .form-label {
   font-weight: bold;
   color: #474543;
 }
 
-.c16 {
+.c17 {
   color: var(--theme-blue-100);
   font-family: 'BcSans-Bold';
   margin-bottom: 1rem;
 }
 
-.c9 {
+.c10 {
   height: 100%;
 }
 
-.c9 .tab-content {
+.c10 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
   overflow-y: auto;
   background-color: #f2f2f2;
 }
 
-.c9 .tab-content .tab-pane {
+.c10 .tab-content .tab-pane {
   position: relative;
 }
 
-.c11 {
+.c12 {
   background-color: white;
   color: var(--surface-color-primary-button-default);
   font-size: 1.4rem;
   border-color: transparent;
 }
 
-.c11 .nav-tabs {
+.c12 .nav-tabs {
   height: auto;
 }
 
-.c11 .nav-item {
+.c12 .nav-item {
   color: var(--surface-color-primary-button-default);
   min-width: 5rem;
   padding: 0.1rem 1.3rem;
@@ -451,7 +450,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   margin-left: 0.1rem;
 }
 
-.c11 .nav-item:hover {
+.c12 .nav-item:hover {
   color: #f2f2f2;
   background-color: #1e5189;
   border-color: transparent;
@@ -461,7 +460,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   text-shadow: 0.1rem 0 0 currentColor;
 }
 
-.c11 .nav-item.active {
+.c12 .nav-item.active {
   border-radius: 0.4rem;
   color: #f2f2f2;
   background-color: #053662;
@@ -469,29 +468,29 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   text-shadow: 0.1rem 0 0 currentColor;
 }
 
-.c10 {
+.c11 {
   height: auto;
 }
 
-.c10.tab-content {
+.c11.tab-content {
   height: auto;
 }
 
-.c19 {
+.c20 {
   background-color: #d9eaf7;
   border-radius: 0.5rem;
 }
 
-.c19 .idir-input-group .input-group-prepend select {
+.c20 .idir-input-group .input-group-prepend select {
   width: 16rem;
 }
 
-.c19 .idir-input-group input {
+.c20 .idir-input-group input {
   width: 18rem;
   max-width: 100%;
 }
 
-.c24 {
+.c25 {
   font-size: 1.6rem;
   color: #9F9D9C;
   border-bottom: 0.2rem solid #606060;
@@ -500,37 +499,37 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   font-family: 'BcSans-Bold';
 }
 
-.c27 {
+.c28 {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.c25 {
+.c26 {
   min-width: 3rem;
   min-height: 4.5rem;
 }
 
-.c26 {
+.c27 {
   font-size: 1.2rem;
 }
 
-.c4.btn.btn-light.Button {
+.c5.btn.btn-light.Button {
   padding: 0;
   border: 0.1rem solid #9F9D9C;
   background-color: white;
   color: #474543;
 }
 
-.c4.btn.btn-light.Button:focus,
-.c4.btn.btn-light.Button:active {
+.c5.btn.btn-light.Button:focus,
+.c5.btn.btn-light.Button:active {
   background-color: white;
   color: #474543;
 }
 
-.c4.btn,
-.c4 .Button__icon,
-.c4 svg {
+.c5.btn,
+.c5 .Button__icon,
+.c5 svg {
   max-width: 2.4rem;
   min-width: 2.4rem;
   max-height: 2.4rem;
@@ -563,12 +562,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   overflow: hidden;
 }
 
-.c0.expanded h1 svg {
-  width: 2.8rem;
-  height: 2.8rem;
-}
-
-.c2 {
+.c3 {
   gap: 1.5rem;
   -webkit-align-items: center;
   -webkit-box-align: center;
@@ -576,7 +570,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   align-items: center;
 }
 
-.c8 {
+.c9 {
   width: 100%;
   position: relative;
   overflow: auto;
@@ -585,13 +579,24 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   flex: 1;
 }
 
-.c7 {
+.c8 {
   width: 100%;
   height: 100%;
   display: contents;
 }
 
-.c31 {
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: end;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: end;
+}
+
+.c32 {
   position: -webkit-sticky;
   position: sticky;
   padding-top: 2rem;
@@ -616,20 +621,20 @@ exports[`UpdateProperties component > renders as expected 1`] = `
           class="col"
         >
           <h1
-            class="c1 mr-auto"
+            class="c1 c2"
           >
-            <span
-              class="mr-2"
+            <div
+              class="mr-2 mb-1"
             />
             Property selection
           </h1>
         </div>
         <div
-          class="c2 d-flex col-auto"
+          class="c3 d-flex col-auto"
         >
           <span>
             <button
-              class="c3 Button Button--icon-only c4 btn btn-light"
+              class="c4 Button Button--icon-only c5 btn btn-light"
               title="collapse"
               type="button"
             >
@@ -660,18 +665,18 @@ exports[`UpdateProperties component > renders as expected 1`] = `
             </button>
           </span>
           <div
-            class="c5"
+            class="c6"
           />
         </div>
       </div>
       <div
-        class="c6"
+        class="c7"
       />
       <div
-        class="c7"
+        class="c8"
       >
         <div
-          class="c8"
+          class="c9"
         >
           <div
             class="py-3 no-gutters row"
@@ -680,10 +685,10 @@ exports[`UpdateProperties component > renders as expected 1`] = `
               class="col"
             >
               <div
-                class="c9 c10"
+                class="c10 c11"
               >
                 <nav
-                  class="c11 nav nav-tabs"
+                  class="c12 nav nav-tabs"
                   role="tablist"
                 >
                   <a
@@ -714,18 +719,18 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                     role="tabpanel"
                   >
                     <div
-                      class="c12 form-section"
+                      class="c13 form-section"
                     >
                       <div
                         class="collapse show"
                       >
                         <h3
-                          class="c13"
+                          class="c14"
                         >
                           Select a property
                         </h3>
                         <div
-                          class="c14 row"
+                          class="c15 row"
                         >
                           <div
                             class="col-md-4"
@@ -734,7 +739,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                               class="d-flex flex-column align-items-center"
                             >
                               <svg
-                                class="c15"
+                                class="c16"
                                 height="97"
                                 id="Layer_2"
                                 title="Click once to enter property selection mode."
@@ -775,7 +780,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                               class="row"
                             >
                               <div
-                                class="c16 col"
+                                class="c17 col"
                               >
                                 Selected property attributes
                               </div>
@@ -787,14 +792,14 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c17"
+                                  class="c18"
                                 >
                                   PID
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c18 text-left col"
+                                class="c19 text-left col"
                               >
                                 123-456-789
                               </div>
@@ -806,14 +811,14 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c17"
+                                  class="c18"
                                 >
                                   PIN
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c18 text-left col"
+                                class="c19 text-left col"
                               />
                             </div>
                             <div
@@ -823,14 +828,14 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c17"
+                                  class="c18"
                                 >
                                   Plan #
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c18 text-left col"
+                                class="c19 text-left col"
                               >
                                 EPP92028
                               </div>
@@ -842,14 +847,14 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c17"
+                                  class="c18"
                                 >
                                   Address
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c18 text-left col"
+                                class="c19 text-left col"
                               >
                                 1234 mock Street N/A Victoria, V1V1V1
                               </div>
@@ -861,14 +866,14 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c17"
+                                  class="c18"
                                 >
                                   Region
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c18 text-left col"
+                                class="c19 text-left col"
                               >
                                 1 - Cannot determine
                               </div>
@@ -880,14 +885,14 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c17"
+                                  class="c18"
                                 >
                                   District
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c18 text-left col"
+                                class="c19 text-left col"
                               >
                                 1 - Cannot determine
                               </div>
@@ -921,18 +926,18 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                     role="tabpanel"
                   >
                     <div
-                      class="c12 form-section"
+                      class="c13 form-section"
                     >
                       <div
                         class="collapse show"
                       >
                         <h3
-                          class="c13"
+                          class="c14"
                         >
                           Search for a property
                         </h3>
                         <form
-                          class="c19 p-3"
+                          class="c20 p-3"
                           novalidate=""
                         >
                           <div
@@ -945,7 +950,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                                 class="flex-nowrap input-group row"
                               >
                                 <div
-                                  class="c20 col-auto"
+                                  class="c21 col-auto"
                                 >
                                   <div
                                     class="input-group-prepend"
@@ -998,7 +1003,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                                   </div>
                                 </div>
                                 <div
-                                  class="c21 col"
+                                  class="c22 col"
                                 >
                                   <div
                                     class="input form-group"
@@ -1027,7 +1032,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                                   class="pr-0 col"
                                 >
                                   <button
-                                    class="c3 Button Button--icon-only primary btn btn-primary"
+                                    class="c4 Button Button--icon-only primary btn btn-primary"
                                     data-testid="search"
                                     id="search-button"
                                     title="search"
@@ -1056,7 +1061,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                                   class="pl-0 col"
                                 >
                                   <button
-                                    class="c3 Button Button--icon-only btn btn-info"
+                                    class="c4 Button Button--icon-only btn btn-info"
                                     data-testid="reset-button"
                                     id="reset-button"
                                     title="reset-button"
@@ -1088,7 +1093,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                       </div>
                     </div>
                     <div
-                      class="c12 form-section"
+                      class="c13 form-section"
                     >
                       <div
                         class="collapse show"
@@ -1192,7 +1197,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                             class="ml-auto align-self-center col-auto"
                           >
                             <p
-                              class="c22"
+                              class="c23"
                             >
                               0
                                selected
@@ -1210,16 +1215,16 @@ exports[`UpdateProperties component > renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="c12 form-section"
+            class="c13 form-section"
           >
             <h2
-              class="c23"
+              class="c24"
             >
               <div
                 class="no-gutters row"
               >
                 <div
-                  class="align-items-end col"
+                  class="align-content-end col"
                 >
                   Selected properties
                 </div>
@@ -1229,7 +1234,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
               class="collapse show"
             >
               <div
-                class="c24 no-gutters row"
+                class="c25 no-gutters row"
               >
                 <div
                   class="col-md-3"
@@ -1272,7 +1277,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                     class="mb-0 d-flex align-items-center"
                   >
                     <svg
-                      class="c25"
+                      class="c26"
                       height="45"
                       id="Layer_2"
                       viewBox="0 0 20 30"
@@ -1329,7 +1334,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                           </g>
                         </g>
                         <text
-                          class="c26"
+                          class="c27"
                           textLength="1.25rem"
                           x="7"
                           y="15"
@@ -1342,7 +1347,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                       </title>
                     </svg>
                     <div
-                      class="c27 pl-3"
+                      class="c28 pl-3"
                     >
                       PID: 123-456-789
                     </div>
@@ -1352,7 +1357,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                   class="col-md-5"
                 >
                   <div
-                    class="c28 mb-0 w-100 input form-group"
+                    class="c29 mb-0 w-100 input form-group"
                   >
                     <input
                       class="form-control"
@@ -1367,7 +1372,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                   class="pl-3 col-md-1"
                 >
                   <button
-                    class="c3 Button c29 btn btn-primary"
+                    class="c4 Button c30 btn btn-primary"
                     title="move-pin-location"
                     type="button"
                   >
@@ -1394,7 +1399,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                   class="col-md-2"
                 >
                   <button
-                    class="c3 Button c30 btn btn-link"
+                    class="c4 Button c31 btn btn-link"
                     type="button"
                   >
                     <div
@@ -1438,7 +1443,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
           class=""
         >
           <div
-            class="c31 justify-content-end mb-6 mt-6 p-0 no-gutters row"
+            class="c32 justify-content-end mb-6 mt-6 p-0 no-gutters row"
           >
             <div
               class="pr-3 col-auto"
@@ -1447,7 +1452,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
               class="pr-6 col-auto"
             >
               <button
-                class="c3 Button btn btn-secondary"
+                class="c4 Button btn btn-secondary"
                 type="button"
               >
                 <div
@@ -1461,7 +1466,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
               class="col-auto"
             >
               <button
-                class="c3 Button mr-9 btn btn-primary"
+                class="c4 Button mr-9 btn btn-primary"
                 type="button"
               >
                 <div

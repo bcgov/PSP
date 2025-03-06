@@ -1,7 +1,8 @@
 import { ApiGen_Concepts_AcquisitionFileProperty } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileProperty';
 import { ApiGen_Concepts_CompensationFinancial } from '@/models/api/generated/ApiGen_Concepts_CompensationFinancial';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
-import { ApiGen_Concepts_CompReqPayee } from '@/models/api/generated/ApiGen_Concepts_CompReqPayee';
+import { ApiGen_Concepts_CompReqAcqPayee } from '@/models/api/generated/ApiGen_Concepts_CompReqAcqPayee';
+import { ApiGen_Concepts_CompReqLeasePayee } from '@/models/api/generated/ApiGen_Concepts_CompReqLeasePayee';
 import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
 import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
@@ -25,8 +26,8 @@ export const emptyCompensationRequisition: ApiGen_Concepts_CompensationRequisiti
   agreementDate: null,
   generationDate: null,
   financials: [],
-  compReqPayees: [],
-  compReqLeaseStakeholders: [],
+  compReqAcqPayees: [],
+  compReqLeasePayees: [],
   compReqAcquisitionProperties: [],
   compReqLeaseProperties: [],
   isPaymentInTrust: null,
@@ -129,7 +130,7 @@ export const getMockApiCompensationWithFinancials =
         h120CategoryId: null,
       },
     ],
-    compReqLeaseStakeholders: [],
+    compReqLeasePayees: [],
     compReqAcquisitionProperties: [],
     compReqLeaseProperties: [],
     isPaymentInTrust: true,
@@ -145,7 +146,7 @@ export const getMockApiCompensationWithProperty = (): ApiGen_Concepts_Compensati
   fiscalYear: '2023/2024',
   specialInstruction: 'SPECIAL INSTRUCTION',
   detailedRemarks: 'DETAILED REMARKS',
-  compReqLeaseStakeholders: [],
+  compReqLeasePayees: [],
   compReqAcquisitionProperties: [
     {
       compensationRequisitionPropertyId: 10000,
@@ -654,9 +655,9 @@ export const getMockCompensationPropertiesReq = (): ApiGen_Concepts_AcquisitionF
   },
 ];
 
-export const getMockCompReqPayee = (compReqPayeeId = 1): ApiGen_Concepts_CompReqPayee => ({
+export const getMockCompReqAcqPayee = (compReqPayeeId = 1): ApiGen_Concepts_CompReqAcqPayee => ({
   ...emptyCompensationRequisition,
-  compReqPayeeId,
+  compReqAcqPayeeId: compReqPayeeId,
   acquisitionFileTeam: null,
   acquisitionFileTeamId: null,
   interestHolder: null,
@@ -666,4 +667,14 @@ export const getMockCompReqPayee = (compReqPayeeId = 1): ApiGen_Concepts_CompReq
   compensationRequisition: null,
   compensationRequisitionId: null,
   legacyPayee: null,
+});
+
+export const getMockCompReqLeasePayee = (
+  compReqPayeeId = 1,
+): ApiGen_Concepts_CompReqLeasePayee => ({
+  ...emptyCompensationRequisition,
+  compReqLeasePayeeId: compReqPayeeId,
+  leaseStakeholder: null,
+  leaseStakeholderId: null,
+  compensationRequisitionId: null,
 });

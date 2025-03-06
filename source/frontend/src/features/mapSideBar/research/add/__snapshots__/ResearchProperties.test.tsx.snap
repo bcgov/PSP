@@ -352,7 +352,6 @@ exports[`ResearchProperties component > renders as expected when provided no pro
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2.4rem;
-  font-size: 2.6rem;
 }
 
 .c0 {
@@ -508,7 +507,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
         class="no-gutters row"
       >
         <div
-          class="align-items-end col"
+          class="align-content-end col"
         >
           Properties to include in this file:
         </div>
@@ -1049,7 +1048,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
             class="no-gutters row"
           >
             <div
-              class="align-items-end col"
+              class="align-content-end col"
             >
               Selected properties
             </div>

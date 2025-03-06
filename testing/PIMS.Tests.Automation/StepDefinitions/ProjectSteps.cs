@@ -296,7 +296,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateProjectData(int rowNumber)
         {
-            DataTable projectsSheet = ExcelDataContext.GetInstance().Sheets["Projects"]!;
+            System.Data.DataTable projectsSheet = ExcelDataContext.GetInstance().Sheets["Projects"]!;
             ExcelDataContext.PopulateInCollection(projectsSheet);
 
             project = new Project();
@@ -323,7 +323,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
  
         private void PopulateProductCollection(int startRow, int rowsCount)
         {
-            DataTable projectProductsSheet = ExcelDataContext.GetInstance().Sheets["ProjectsProducts"]!;
+            System.Data.DataTable projectProductsSheet = ExcelDataContext.GetInstance().Sheets["ProjectsProducts"]!;
             ExcelDataContext.PopulateInCollection(projectProductsSheet);
 
             for (int i = startRow; i <= startRow + rowsCount; i++)

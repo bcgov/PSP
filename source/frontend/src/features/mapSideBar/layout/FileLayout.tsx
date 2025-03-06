@@ -12,10 +12,10 @@ const FileLayout: React.FunctionComponent<React.PropsWithChildren<IFileLayoutPro
 }) => {
   return (
     <StyledRowContent className="no-gutters">
-      <StyledColSidebar xs="3" className="d-flex flex-column">
+      <StyledColSidebar xs="auto" className="d-flex flex-column">
         {leftComponent}
       </StyledColSidebar>
-      <StyledColContent xs="9">{bodyComponent}</StyledColContent>
+      <StyledColContent>{bodyComponent}</StyledColContent>
     </StyledRowContent>
   );
 };
@@ -27,7 +27,7 @@ const StyledRowContent = styled(Row)`
 const StyledColSidebar = styled(Col)`
   overflow: auto;
   height: 100%;
-  width: 100%;
+  width: 22rem;
 `;
 
 const StyledColContent = styled(Col)`

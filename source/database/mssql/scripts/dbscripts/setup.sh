@@ -19,7 +19,7 @@ echo "======= MSSQL SERVER STARTED ========"
 
 echo "======= MSSQL CONFIG COMPLETE ======="
 
-NEWEST_PSP_DIR=$(find ./*PSP* -type d -prune | tail -n 1 | cut -c 3-)
+NEWEST_PSP_DIR=$(find ./*PSP* -type d -prune | sort -V | tail -n 1 | cut -c 3-)
 TARGET_SPRINT="${TARGET_SPRINT:-$NEWEST_PSP_DIR}"
 echo "Executing SQL scripts in $TARGET_SPRINT"
 #load db schema to local

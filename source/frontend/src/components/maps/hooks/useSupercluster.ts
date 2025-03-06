@@ -1,5 +1,6 @@
 import { dequal } from 'dequal';
 import { BBox, GeoJsonProperties } from 'geojson';
+import debounce from 'lodash/debounce';
 import { useRef, useState } from 'react';
 import Supercluster from 'supercluster';
 
@@ -32,6 +33,15 @@ const useSupercluster = <
   const pointsRef = useRef<Array<Supercluster.PointFeature<P>>>();
   const [clusters, setClusters] = useState<Array<ICluster<P, C>>>([]);
   const zoomInt = Math.round(zoom);
+  const getClustersFn = useRef(
+    debounce(
+      (bounds: BBox, zoomInt: number) => {
+        setClusters(superclusterRef.current.getClusters(bounds, zoomInt));
+      },
+      250,
+      { leading: false, trailing: true },
+    ),
+  ).current;
 
   // use deep-equals to avoid infinite re-rendering when objects have same data but are different JS instances
   useDeepCompareEffect(() => {
@@ -46,7 +56,7 @@ const useSupercluster = <
      * greater than 100 (avoid perfomrance issues when rendering all points)
      */
     if (bounds && (options?.enableClustering || points.length > 100)) {
-      setClusters(superclusterRef.current.getClusters(bounds, zoomInt));
+      getClustersFn(bounds, zoomInt);
     } else {
       setClusters(points);
     }

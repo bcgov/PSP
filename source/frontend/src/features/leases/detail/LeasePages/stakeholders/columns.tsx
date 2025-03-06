@@ -24,7 +24,7 @@ const getColumns = (
         <TooltipIcon
           toolTipId="stakeholder-status"
           toolTip="Green dot indicates contact is active"
-        ></TooltipIcon>
+        />
       ),
       accessor: 'isDisabled',
       align: 'right',
@@ -41,7 +41,7 @@ const getColumns = (
             : stakeholderStatus.isDisabled;
         return (
           <StatusIndicators className={status ? 'inactive' : 'active'}>
-            <FaCircle size={10} className="mr-2" />
+            <FaCircle size={10} className="ml-2" />
           </StatusIndicators>
         );
       },
@@ -76,8 +76,8 @@ const getColumns = (
       accessor: 'summary',
       align: 'left',
       clickable: true,
-      width: 120,
-      maxWidth: 150,
+      width: 100,
+      maxWidth: 100,
       Cell: (props: CellProps<FormStakeholder>) => (
         <Link to={`/contact/${props.row.original.id}`} target="_blank" rel="noopener noreferrer">
           {props.row.original.summary}
@@ -88,8 +88,8 @@ const getColumns = (
       Header: 'Primary contact',
       accessor: 'primaryContactId',
       align: 'left',
-      minWidth: 150,
-      width: 120,
+      minWidth: 80,
+      width: 80,
       Cell: (props: CellProps<FormStakeholder>) => {
         const stakeholder = props.row.original;
         const persons =
@@ -134,7 +134,7 @@ const getColumns = (
       Header: 'Contact info',
       accessor: 'mailingAddress',
       align: 'left',
-      minWidth: 80,
+      minWidth: 100,
       width: 100,
       Cell: (props: CellProps<FormStakeholder>) => {
         return (

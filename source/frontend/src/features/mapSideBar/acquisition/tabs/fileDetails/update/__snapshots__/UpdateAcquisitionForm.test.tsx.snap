@@ -424,7 +424,6 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2.4rem;
-  font-size: 2.6rem;
 }
 
 .c1 {
@@ -603,7 +602,7 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
           class="no-gutters row"
         >
           <div
-            class="align-items-end col"
+            class="align-content-end col"
           >
             Project
           </div>
@@ -813,7 +812,7 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
           class="no-gutters row"
         >
           <div
-            class="align-items-end col"
+            class="align-content-end col"
           >
             Progress Statuses
           </div>
@@ -1268,7 +1267,7 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
           class="no-gutters row"
         >
           <div
-            class="align-items-end col"
+            class="align-content-end col"
           >
             Schedule
           </div>
@@ -1521,7 +1520,7 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
           class="no-gutters row"
         >
           <div
-            class="align-items-end col"
+            class="align-content-end col"
           >
             Acquisition Details
           </div>
@@ -1900,7 +1899,7 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
           class="no-gutters row"
         >
           <div
-            class="align-items-end col"
+            class="align-content-end col"
           >
             Acquisition Team
           </div>
@@ -2327,7 +2326,7 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
           class="no-gutters row"
         >
           <div
-            class="align-items-end col"
+            class="align-content-end col"
           >
             Sub-Interest
           </div>
@@ -3962,8 +3961,8 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
                   >
                     <input
                       class="form-control"
-                      id="input-ownerSolicitor.contact.id"
-                      name="ownerSolicitor.contact.id"
+                      id="input-ownerSolicitors.0.contact.id"
+                      name="ownerSolicitors.0.contact.id"
                       placeholder="Select from Contacts"
                       style="word-break: break-all;"
                       title="O1"
@@ -4082,8 +4081,8 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
                   >
                     <input
                       class="form-control"
-                      id="input-ownerRepresentative.contact.id"
-                      name="ownerRepresentative.contact.id"
+                      id="input-ownerRepresentatives.0.contact.id"
+                      name="ownerRepresentatives.0.contact.id"
                       placeholder="Select from Contacts"
                       style="word-break: break-all;"
                       title="P2"
@@ -4143,8 +4142,8 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
             >
               <textarea
                 class="form-control"
-                id="input-ownerRepresentative.comment"
-                name="ownerRepresentative.comment"
+                id="input-ownerRepresentatives.0.comment"
+                name="ownerRepresentatives.0.comment"
                 placeholder="Remarks or additional representative(s)"
                 style="word-break: break-all;"
                 title="test representative comment"
@@ -4588,7 +4587,6 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2.4rem;
-  font-size: 2.6rem;
 }
 
 .c1 {
@@ -4767,7 +4765,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="align-items-end col"
+            class="align-content-end col"
           >
             Project
           </div>
@@ -4992,7 +4990,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="align-items-end col"
+            class="align-content-end col"
           >
             Progress Statuses
           </div>
@@ -5447,7 +5445,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="align-items-end col"
+            class="align-content-end col"
           >
             Schedule
           </div>
@@ -5700,7 +5698,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="align-items-end col"
+            class="align-content-end col"
           >
             Acquisition Details
           </div>
@@ -5975,7 +5973,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="align-items-end col"
+            class="align-content-end col"
           >
             Acquisition Team
           </div>
@@ -6402,7 +6400,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="align-items-end col"
+            class="align-content-end col"
           >
             Owners
           </div>
@@ -8037,8 +8035,8 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
                   >
                     <input
                       class="form-control"
-                      id="input-ownerSolicitor.contact.id"
-                      name="ownerSolicitor.contact.id"
+                      id="input-ownerSolicitors.0.contact.id"
+                      name="ownerSolicitors.0.contact.id"
                       placeholder="Select from Contacts"
                       style="word-break: break-all;"
                       title="O1"
@@ -8157,8 +8155,8 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
                   >
                     <input
                       class="form-control"
-                      id="input-ownerRepresentative.contact.id"
-                      name="ownerRepresentative.contact.id"
+                      id="input-ownerRepresentatives.0.contact.id"
+                      name="ownerRepresentatives.0.contact.id"
                       placeholder="Select from Contacts"
                       style="word-break: break-all;"
                       title="P2"
@@ -8218,8 +8216,8 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
             >
               <textarea
                 class="form-control"
-                id="input-ownerRepresentative.comment"
-                name="ownerRepresentative.comment"
+                id="input-ownerRepresentatives.0.comment"
+                name="ownerRepresentatives.0.comment"
                 placeholder="Remarks or additional representative(s)"
                 style="word-break: break-all;"
                 title="test representative comment"

@@ -1,6 +1,6 @@
 import * as yup from 'yup';
 
-import { exists, isValidId } from '@/utils';
+import { exists } from '@/utils';
 /* eslint-disable no-template-curly-in-string */
 
 export const CompensationRequisitionYupSchema = yup.object().shape({
@@ -14,17 +14,7 @@ export const CompensationRequisitionYupSchema = yup.object().shape({
   specialInstruction: yup
     .string()
     .max(2000, 'Special instructions must be at most ${max} characters'),
-  payees: yup.array().when('acquisitionFileId', {
-    is: val => isValidId(val),
-    then: yup.array().min(1, 'At least one payee must be added').required(),
-  }),
-  leaseStakeholderId: yup
-    .number()
-    .nullable()
-    .when('leaseId', {
-      is: val => isValidId(val),
-      then: yup.number().required('At least one payee must be added'),
-    }),
+  payees: yup.array().min(1, 'At least one payee must be added').required(),
   pretaxAmount: yup.number(),
   taxAmount: yup.number(),
   totalAmount: yup.number(),

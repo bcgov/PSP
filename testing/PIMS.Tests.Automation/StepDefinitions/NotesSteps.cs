@@ -91,7 +91,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateNotes(int rowNumber)
         {
-            DataTable notesSheet = ExcelDataContext.GetInstance().Sheets["Notes"]!;
+            System.Data.DataTable notesSheet = ExcelDataContext.GetInstance().Sheets["Notes"]!;
             ExcelDataContext.PopulateInCollection(notesSheet);
 
             notesData = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "Notes"));

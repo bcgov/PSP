@@ -12,8 +12,8 @@ namespace PIMS.Tests.Automation.Reports
         public static ExtentTest _scenario;
 
         private static String dir = AppDomain.CurrentDomain.BaseDirectory;
-        //private static String reportPath = dir.Replace($"bin{Path.DirectorySeparatorChar}Debug{Path.DirectorySeparatorChar}net8.0", $"Reports{Path.DirectorySeparatorChar}Extent_Reports");
-        private static String reportPath = Path.Combine(Environment.GetEnvironmentVariable("GITHUB_WORKSPACE")!, "Extent_Reports");
+        private static String reportPath = dir.Replace($"bin{Path.DirectorySeparatorChar}Debug{Path.DirectorySeparatorChar}net8.0", $"Reports{Path.DirectorySeparatorChar}Extent_Reports");
+        //private static String reportPath = Path.Combine(Environment.GetEnvironmentVariable("GITHUB_WORKSPACE")!, "Extent_Reports");
 
 
         public static void ExtentReportInit()

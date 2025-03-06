@@ -126,6 +126,7 @@ vi.mocked(useApiLeases).mockReturnValue({
   getLeaseChecklist: vi.fn(),
   getLeaseRenewals: vi.fn(),
   getLeaseStakeholderTypes: vi.fn(),
+  putLeaseProperties: vi.fn(),
 });
 
 vi.mock('./hooks/pims-api/useApiAcquisitionFile');

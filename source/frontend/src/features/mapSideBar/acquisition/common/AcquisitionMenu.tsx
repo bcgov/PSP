@@ -11,6 +11,7 @@ import { Claims } from '@/constants/index';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 
+import { StyledMenuWrapper } from '../../shared/FileMenuView';
 import AcquisitionFileStatusUpdateSolver from '../tabs/fileDetails/detail/AcquisitionFileStatusUpdateSolver';
 import { cannotEditMessage } from './constants';
 import GenerateFormContainer from './GenerateForm/GenerateFormContainer';
@@ -120,14 +121,6 @@ const AcquisitionMenu: React.FunctionComponent<
 };
 
 export default AcquisitionMenu;
-
-const StyledMenuWrapper = styled.div`
-  text-align: left;
-  padding: 0px;
-  margin: 0px;
-  width: 100%;
-  color: ${props => props.theme.css.linkColor};
-`;
 
 const StyledMenuCol = styled(Col)`
   min-height: 2.5rem;

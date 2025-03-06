@@ -12,6 +12,7 @@ import {
   act,
   fakeText,
   fireEvent,
+  getByTitle,
   render,
   RenderOptions,
   screen,
@@ -23,6 +24,12 @@ import {
 import { UpdateAcquisitionSummaryFormModel } from './models';
 import { UpdateAcquisitionFileYupSchema } from './UpdateAcquisitionFileYupSchema';
 import UpdateAcquisitionForm, { IUpdateAcquisitionFormProps } from './UpdateAcquisitionForm';
+import { toTypeCodeNullable } from '@/utils/formUtils';
+import { InterestHolderType } from '@/constants/interestHolderTypes';
+import { getEmptyOrganization } from '@/mocks/organization.mock';
+import { getEmptyPerson } from '@/mocks/contacts.mock';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
+import { InterestHolderForm } from '../../stakeholders/update/models';
 
 const mockAxios = new MockAdapter(axios);
 
@@ -351,6 +358,84 @@ describe('UpdateAcquisitionForm component', () => {
       expect(getByText('+ Add Sub-interest')).toBeVisible();
       expect(getByText(/Sub-interest solicitor/i)).toBeVisible();
       expect(getByText(/Sub-interest representative/i)).toBeVisible();
+    });
+
+    it('renders multiple solicitors if present', async () => {
+      const { getByTitle, getAllByText } = setup({
+        initialValues: {
+          ...initialValues,
+          toApi: vi.fn(),
+          ownerSolicitors: [
+            InterestHolderForm.fromApi(
+              {
+                interestHolderId: 1,
+                interestHolderType: toTypeCodeNullable(InterestHolderType.OWNER_SOLICITOR),
+
+                acquisitionFileId: 1,
+                personId: null,
+                person: null,
+                organizationId: 1,
+                organization: {
+                  ...getEmptyOrganization(),
+                  id: 1,
+                  name: 'Millennium Inc',
+                  alias: 'M Inc',
+                  incorporationNumber: '1234',
+                  comment: '',
+                  contactMethods: null,
+                  isDisabled: false,
+                  organizationAddresses: null,
+                  organizationPersons: null,
+                  rowVersion: null,
+                },
+                interestHolderProperties: [],
+                primaryContactId: 1,
+                primaryContact: null,
+                comment: null,
+                isDisabled: false,
+                ...getEmptyBaseAudit(),
+              },
+              InterestHolderType.OWNER_SOLICITOR,
+            ),
+            InterestHolderForm.fromApi(
+              {
+                interestHolderId: 2,
+                interestHolderType: toTypeCodeNullable(InterestHolderType.OWNER_SOLICITOR),
+
+                acquisitionFileId: 1,
+                personId: null,
+                person: null,
+                organizationId: 2,
+                organization: {
+                  ...getEmptyOrganization(),
+                  id: 2,
+                  name: 'Test Org',
+                  alias: 'M Inc',
+                  incorporationNumber: '12345',
+                  comment: '',
+                  contactMethods: null,
+                  isDisabled: false,
+                  organizationAddresses: null,
+                  organizationPersons: null,
+                  rowVersion: null,
+                },
+                interestHolderProperties: [],
+                primaryContactId: 1,
+                primaryContact: null,
+                comment: null,
+                isDisabled: false,
+                ...getEmptyBaseAudit(),
+              },
+              InterestHolderType.OWNER_SOLICITOR,
+            ),
+          ],
+        },
+      });
+      await waitForEffects();
+
+      expect(getByTitle(/O1/i)).toBeVisible();
+      expect(getByTitle(/O2/i)).toBeVisible();
+      expect(getAllByText('Owner solicitor:')).toHaveLength(2);
     });
   });
 });

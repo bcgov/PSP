@@ -292,8 +292,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By documentTableResults1stDocumentStatusContent = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[4]");
         private readonly By documentTableRefreshResultsButton = By.CssSelector("button[data-testid='refresh-button']");
         private readonly By documentTableResults1stViewBttn = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[5]/div/button[@data-testid='document-view-button']");
-        private readonly By documentTableResults1stDeleteBttn = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[5]/div/div/button[@data-testid='document-delete-button']");
-
+        private readonly By documentTableResults1stDeleteBttn = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[5]/div/button[@data-testid='document-delete-button']");
         //Documents Tab Pagination
         private readonly By documentPagination = By.XPath("//div[@class='row']/div[4]/ul[@class='pagination']");
         private readonly By documentMenuPagination = By.XPath("//div[@class='row']/div[3]/div[@class='Menu-root']");
@@ -610,7 +609,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 FocusAndClick(documentPaginationNextPageLink);
 
             var elementChild = (index % 10) + 1;
-            FocusAndClick(By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[" + elementChild + "]/div/div[5]/div/div/button[@data-testid='document-view-button']"));
+            FocusAndClick(By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[" + elementChild + "]/div/div[5]/div/button[@data-testid='document-view-button']"));
         }
 
         public void Delete1stDocument()
@@ -647,7 +646,7 @@ namespace PIMS.Tests.Automation.PageObjects
             ChooseSpecificSelectOption(statusSelectElement, document.DocumentStatus);
 
             Wait();
-            webDriver.FindElement(By.XPath("//select[@data-testid='documents."+ docIdx +".document-type']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/*[1]")).Click();
+            webDriver.FindElement(By.XPath("//select[@data-testid='documents."+ docIdx +".document-type']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/*[1]")).Click();
         }
 
         public void InsertDocumentTypeDetails(DigitalDocument document)
