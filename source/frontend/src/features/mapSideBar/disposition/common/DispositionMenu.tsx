@@ -12,6 +12,7 @@ import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 
 import { cannotEditMessage } from '../../acquisition/common/constants';
+import { StyledMenuWrapper } from '../../shared/FileMenuView';
 import DispositionStatusUpdateSolver from '../tabs/fileDetails/detail/DispositionStatusUpdateSolver';
 
 export interface IDispositionMenuProps {
@@ -111,14 +112,6 @@ const DispositionMenu: React.FunctionComponent<
 };
 
 export default DispositionMenu;
-
-const StyledMenuWrapper = styled.div`
-  text-align: left;
-  padding: 0px;
-  margin: 0px;
-  width: 100%;
-  color: ${props => props.theme.css.linkColor};
-`;
 
 const StyledMenuCol = styled(Col)`
   min-height: 2.5rem;
