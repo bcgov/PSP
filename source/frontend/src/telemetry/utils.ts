@@ -1,7 +1,9 @@
+import { metrics } from '@opentelemetry/api';
 import { OTLPMetricExporter } from '@opentelemetry/exporter-metrics-otlp-http';
 import { Resource, ResourceAttributes } from '@opentelemetry/resources';
 import { MeterProvider, PeriodicExportingMetricReader } from '@opentelemetry/sdk-metrics';
 import {
+  ATTR_BROWSER_LANGUAGE,
   ATTR_DEPLOYMENT_ENVIRONMENT_NAME,
   ATTR_SERVICE_NAME,
 } from '@opentelemetry/semantic-conventions/incubating';
@@ -16,28 +18,27 @@ export const isNodeEnvironment = () => {
   return typeof process !== 'undefined' && process.release && process.release.name === 'node';
 };
 
-export enum MeterKind {
-  Network = 'network',
-}
-
 export const isBlocked = (uri: string, config: MetricsConfig) => {
   const blockList = [...(config.urlBlocklist ?? []), config.otlpEndpoint];
   return blockList.findIndex(blocked => uri.includes(blocked)) >= 0;
 };
 
-export const makeMeterName = (kind: MeterKind) => {
-  return `${kind}-meter`;
-};
+// List of meters in the application: e.g. "network", "webvitals", "app", etc
+export const NETWORK_METER = 'network-meter';
 
 export const registerMeterProvider = (
-  kind: MeterKind,
   config: MetricsConfig,
-  attributes?: ResourceAttributes,
+  extraAttributes?: ResourceAttributes,
 ) => {
+  // This is common metadata sent with every metric measurement
   const resource = new Resource({
     [ATTR_SERVICE_NAME]: config?.name,
     [ATTR_DEPLOYMENT_ENVIRONMENT_NAME]: config?.environment,
-    ...attributes,
+    [ATTR_BROWSER_LANGUAGE]: window.navigator.language,
+    'browser.width': window.screen.width,
+    'browser.height': window.screen.height,
+    'user_agent.original': window.navigator.userAgent,
+    ...extraAttributes,
   });
   const metricExporter = new OTLPMetricExporter({
     url: new URL('/v1/metrics', config.otlpEndpoint).href,
@@ -48,10 +49,11 @@ export const registerMeterProvider = (
     readers: [
       new PeriodicExportingMetricReader({
         exporter: metricExporter,
-        exportIntervalMillis: 10_000,
+        exportIntervalMillis: 10_000, // export metrics every 30 seconds
       }),
     ],
   });
 
-  return meterProvider.getMeter(makeMeterName(kind));
+  // set this MeterProvider to be global to the app being instrumented.
+  metrics.setGlobalMeterProvider(meterProvider);
 };
