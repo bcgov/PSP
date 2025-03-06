@@ -246,7 +246,6 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2.4rem;
-  font-size: 2.6rem;
 }
 
 .c1 {
@@ -448,7 +447,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="align-items-end col"
+            class="align-content-end col"
           >
             <div
               class="c5"
@@ -610,7 +609,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="align-items-end col"
+            class="align-content-end col"
           >
             <div
               class="d-flex align-items-center"
@@ -684,7 +683,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="align-items-end col"
+            class="align-content-end col"
           >
             Financial Coding
           </div>
@@ -867,7 +866,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="align-items-end col"
+            class="align-content-end col"
           >
             Payment
           </div>
@@ -984,7 +983,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="align-items-end col"
+            class="align-content-end col"
           >
             Financial Activities
           </div>

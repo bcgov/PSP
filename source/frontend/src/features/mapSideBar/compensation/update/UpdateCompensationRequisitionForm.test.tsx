@@ -6,11 +6,13 @@ import { useProjectTypeahead } from '@/hooks/useProjectTypeahead';
 import {
   mockAcquisitionFileOwnersResponse,
   mockAcquisitionFileResponse,
+  mockApiAcquisitionFileTeamPerson,
 } from '@/mocks/acquisitionFiles.mock';
 import {
   emptyCompensationFinancial,
   getMockApiDefaultCompensation,
-  getMockCompReqPayee,
+  getMockCompReqAcqPayee,
+  getMockCompReqLeasePayee,
 } from '@/mocks/compensations.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
@@ -34,6 +36,9 @@ import { CompensationRequisitionFormModel } from '../models/CompensationRequisit
 import UpdateCompensationRequisitionForm, {
   CompensationRequisitionFormProps,
 } from './UpdateCompensationRequisitionForm';
+import { getMockPerson } from '@/mocks/contacts.mock';
+import { ApiGen_Concepts_CompReqLeasePayee } from '@/models/api/generated/ApiGen_Concepts_CompReqLeasePayee';
+import { getMockLeaseStakeholders, getPersonLeaseStakeholder } from '@/mocks/lease.mock';
 
 const currentGstPercent = 0.05;
 const onSave = vi.fn();
@@ -89,7 +94,6 @@ describe('Compensation Requisition UpdateForm component', () => {
         isLoading={renderOptions.props?.isLoading ?? false}
         showAltProjectError={false}
         setShowAltProjectError={setShowAltProjectError}
-        leaseStakeholders={[]}
       />,
       {
         ...renderOptions,
@@ -234,6 +238,40 @@ describe('Compensation Requisition UpdateForm component', () => {
     expect(getPayeeTotalAmount()).toHaveValue('$31,500.00');
   });
 
+  it('should display the lease payee information', async () => {
+    const apiCompensation = getMockApiDefaultCompensation();
+    const compensationWithPayeeInformation = CompensationRequisitionFormModel.fromApi({
+      ...apiCompensation,
+      fiscalYear: '2020',
+      isDraft: true,
+      gstNumber: '9999',
+      isPaymentInTrust: true,
+      financials: [
+        {
+          ...emptyCompensationFinancial,
+          pretaxAmount: 30000,
+          isGstRequired: true,
+          taxAmount: 1500,
+          totalAmount: 31500,
+        },
+      ],
+    });
+
+    const {
+      getPayeePreTaxAmount,
+      getPayeeTaxAmount,
+      getPayeeTotalAmount,
+      getPayeeGSTNumber,
+      getPayeePaymentInTrust,
+    } = await setup({ props: { initialValues: compensationWithPayeeInformation } });
+
+    expect(getPayeePaymentInTrust()).toBeChecked();
+    expect(getPayeeGSTNumber()).toHaveValue('9999');
+    expect(getPayeePreTaxAmount()).toHaveValue('$30,000.00');
+    expect(getPayeeTaxAmount()).toHaveValue('$1,500.00');
+    expect(getPayeeTotalAmount()).toHaveValue('$31,500.00');
+  });
+
   it('should update the payment information when modified', async () => {
     const apiCompensation = getMockApiDefaultCompensation();
     const compensationWithPayeeInformation = CompensationRequisitionFormModel.fromApi({
@@ -282,6 +320,7 @@ describe('Compensation Requisition UpdateForm component', () => {
     const apiCompensation = getMockApiDefaultCompensation();
     const mockCompensation = CompensationRequisitionFormModel.fromApi({
       ...apiCompensation,
+      compReqAcqPayees: [{ ...getMockCompReqAcqPayee(), acquisitionFileTeamId: 1 }],
       fiscalYear: '2020',
       isDraft: true,
     });
@@ -301,11 +340,59 @@ describe('Compensation Requisition UpdateForm component', () => {
     expect(onSave).toHaveBeenCalled();
   });
 
+  it('should display acq comp req payees', async () => {
+    const apiCompensation = getMockApiDefaultCompensation();
+    const mockCompensation = CompensationRequisitionFormModel.fromApi({
+      ...apiCompensation,
+      compReqAcqPayees: [
+        {
+          ...getMockCompReqAcqPayee(),
+          acquisitionFileTeamId: 1,
+          acquisitionFileTeam: mockApiAcquisitionFileTeamPerson(),
+        },
+      ],
+      compReqLeasePayees: [],
+      fiscalYear: '2020',
+      isDraft: true,
+    });
+
+    const { findByText } = await setup({
+      props: { initialValues: mockCompensation, payeeOptions: mockCompensation.payees },
+    });
+
+    const text = await findByText('first last (Negotiation agent)');
+    expect(text).toBeInTheDocument();
+  });
+
+  it('should display lease comp req payees', async () => {
+    const apiCompensation = getMockApiDefaultCompensation();
+    const mockCompensation = CompensationRequisitionFormModel.fromApi({
+      ...apiCompensation,
+      compReqLeasePayees: [
+        {
+          ...getMockCompReqLeasePayee(),
+          leaseStakeholder: getMockLeaseStakeholders()[0],
+          leaseStakeholderId: 1,
+        },
+      ],
+      compReqAcqPayees: [],
+      fiscalYear: '2020',
+      isDraft: true,
+    });
+
+    const { findByText } = await setup({
+      props: { initialValues: mockCompensation, payeeOptions: mockCompensation.payees },
+    });
+
+    const text = await findByText('Alejandro Sanchez (Owner)');
+    expect(text).toBeVisible();
+  });
+
   it('should display confirmation modal when saving a compensation with Status as "FINAL"', async () => {
     const apiCompensation = getMockApiDefaultCompensation();
     const mockCompensation = CompensationRequisitionFormModel.fromApi({
       ...apiCompensation,
-      compReqPayees: [{ ...getMockCompReqPayee(), acquisitionFileTeamId: 1 }],
+      compReqAcqPayees: [{ ...getMockCompReqAcqPayee(), acquisitionFileTeamId: 1 }],
       fiscalYear: '2020',
       isDraft: true,
     });
@@ -334,6 +421,7 @@ describe('Compensation Requisition UpdateForm component', () => {
     const apiCompensation = getMockApiDefaultCompensation();
     const mockCompensation = CompensationRequisitionFormModel.fromApi({
       ...apiCompensation,
+      compReqAcqPayees: [{ ...getMockCompReqAcqPayee(), acquisitionFileTeamId: 1 }],
       fiscalYear: '2020',
       isDraft: true,
     });
@@ -387,7 +475,7 @@ describe('Compensation Requisition UpdateForm component', () => {
           totalAmount: 31500,
         },
       ],
-      compReqPayees: [],
+      compReqAcqPayees: [],
     };
 
     const compensationWithPayeeInformation =
@@ -395,7 +483,7 @@ describe('Compensation Requisition UpdateForm component', () => {
 
     const payeesAndLegacyOptions = [
       ...payeeOptions,
-      PayeeOption.fromApi({ ...getMockCompReqPayee(1), legacyPayee: 'Stark, Tony' }),
+      PayeeOption.fromApiAcquisition({ ...getMockCompReqAcqPayee(1), legacyPayee: 'Stark, Tony' }),
     ];
 
     const {

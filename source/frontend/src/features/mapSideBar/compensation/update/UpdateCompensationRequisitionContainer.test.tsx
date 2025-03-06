@@ -11,7 +11,6 @@ import {
   mockAcquisitionFileResponse,
   mockApiAcquisitionFileTeamPerson,
 } from '@/mocks/acquisitionFiles.mock';
-import { getMockApiDefaultCompensation, getMockCompReqPayee } from '@/mocks/compensations.mock';
 import { getMockApiInterestHolderPerson } from '@/mocks/interestHolders.mock';
 import { getMockApiLease, getMockLeaseStakeholders } from '@/mocks/lease.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
@@ -28,6 +27,11 @@ import UpdateCompensationRequisitionContainer, {
   UpdateCompensationRequisitionContainerProps,
 } from './UpdateCompensationRequisitionContainer';
 import { CompensationRequisitionFormProps } from './UpdateCompensationRequisitionForm';
+import { PayeeType } from '../../acquisition/models/PayeeTypeModel';
+import { PayeeOption } from '../../acquisition/models/PayeeOptionModel';
+import { getLeaseStakeholders } from '@/hooks/pims-api/useApiLeaseStakeholders';
+import { getMockApiDefaultCompensation, getMockCompReqAcqPayee } from '@/mocks/compensations.mock';
+import { ApiGen_Concepts_CompReqLeasePayee } from '@/models/api/generated/ApiGen_Concepts_CompReqLeasePayee';
 
 vi.mock('@/hooks/repositories/useAcquisitionProvider');
 vi.mock('@/hooks/repositories/useFinancialCodeRepository');
@@ -63,11 +67,13 @@ vi.mocked(useInterestHolderRepository, { partial: true }).mockReturnValue({
 });
 
 const putCompensationRequisitionApi = getMockRepositoryObj();
-const getCompensationRequisitionPayeesApi = getMockRepositoryObj();
+const getCompensationRequisitionAcqPayeesApi = getMockRepositoryObj();
+const getCompensationRequisitionLeasePayeesApi = getMockRepositoryObj();
 
 vi.mocked(useCompensationRequisitionRepository, { partial: true }).mockReturnValue({
   updateCompensationRequisition: putCompensationRequisitionApi,
-  getCompensationRequisitionPayees: getCompensationRequisitionPayeesApi,
+  getCompensationRequisitionAcqPayees: getCompensationRequisitionAcqPayeesApi,
+  getCompensationRequisitionLeasePayees: getCompensationRequisitionLeasePayeesApi,
 });
 
 let viewProps: CompensationRequisitionFormProps | undefined;
@@ -125,9 +131,9 @@ describe('UpdateCompensationRequisition Container component', () => {
     ownerRep.interestHolderType.id = InterestHolderType.OWNER_REPRESENTATIVE;
     getAcquisitionInterestHoldersApi.execute.mockResolvedValue([ownerSolicitor, ownerRep]);
     // legacy payee
-    getCompensationRequisitionPayeesApi.execute.mockImplementation(async () => {
-      const existingPayees = [{ ...getMockCompReqPayee(1), legacyPayee: 'Sample LEGACY payee' }];
-      getCompensationRequisitionPayeesApi.response = [...existingPayees];
+    getCompensationRequisitionAcqPayeesApi.execute.mockImplementation(async () => {
+      const existingPayees = [{ ...getMockCompReqAcqPayee(1), legacyPayee: 'Sample LEGACY payee' }];
+      getCompensationRequisitionAcqPayeesApi.response = [...existingPayees];
       return [...existingPayees];
     });
   });
@@ -247,6 +253,13 @@ describe('UpdateCompensationRequisition Container component', () => {
         acquisitionOwnerId: null,
       };
       getLeaseFileInterestHoldersApi.execute.mockResolvedValue(getMockLeaseStakeholders());
+      getCompensationRequisitionLeasePayeesApi.execute.mockResolvedValue([
+        {
+          leaseStakeholderId: 2,
+          leaseStakeholder: getMockLeaseStakeholders()[0],
+          compensationRequisitionId: 1,
+        },
+      ] as ApiGen_Concepts_CompReqLeasePayee[]);
 
       await setup({
         props: {
@@ -261,7 +274,9 @@ describe('UpdateCompensationRequisition Container component', () => {
       const updatedCompensationModel = new CompensationRequisitionFormModel(1, null, 1, '');
       updatedCompensationModel.detailedRemarks = 'my update';
 
-      updatedCompensationModel.leaseStakeholderId = 2;
+      updatedCompensationModel.payees = [
+        PayeeOption.createLeaseStakeholder(1, getMockLeaseStakeholders()[0]),
+      ];
 
       await act(async () => {
         viewProps?.onSave(updatedCompensationModel);
@@ -270,9 +285,8 @@ describe('UpdateCompensationRequisition Container component', () => {
       expect(putCompensationRequisitionApi.execute).toHaveBeenCalledWith(
         ApiGen_CodeTypes_FileTypes.Lease,
         expect.objectContaining({
-          compReqLeaseStakeholders: [
+          compReqLeasePayees: [
             expect.objectContaining({
-              compReqLeaseStakeholderId: null,
               compensationRequisitionId: 1,
               leaseStakeholder: null,
               leaseStakeholderId: 2,

@@ -78,7 +78,13 @@ export const ManageUsersPage = () => {
   return (
     <StyledPage fluid className="users-management-page">
       <CommonStyled.H1>
-        <AdminIcon title="Admin Tools icon" width="2.6rem" height="2.6rem" fill="currentColor" />
+        <AdminIcon
+          title="Admin Tools icon"
+          width="2.6rem"
+          height="2.6rem"
+          fill="currentColor"
+          style={{ verticalAlign: 'baseline' }}
+        />
         <span className="ml-2">User Management</span>
       </CommonStyled.H1>
       <Row>

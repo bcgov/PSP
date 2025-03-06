@@ -11,6 +11,7 @@ import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 
 import { cannotEditMessage } from '../../acquisition/common/constants';
+import { StyledMenuWrapper } from '../../shared/FileMenuView';
 import ResearchStatusUpdateSolver from '../tabs/fileDetails/ResearchStatusUpdateSolver';
 
 export interface IResearchMenuProps {
@@ -98,14 +99,6 @@ const ResearchMenu: React.FunctionComponent<
 };
 
 export default ResearchMenu;
-
-const StyledMenuWrapper = styled.div`
-  text-align: left;
-  padding: 0px;
-  margin: 0px;
-  width: 100%;
-  color: ${({ theme }) => theme.css.linkColor};
-`;
 
 const StyledMenuCol = styled(Col)`
   min-height: 2.5rem;

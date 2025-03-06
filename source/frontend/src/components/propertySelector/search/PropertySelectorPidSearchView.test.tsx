@@ -2,17 +2,10 @@ import { Formik, FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
 import { createRef } from 'react';
 
-import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { act, fillInput, renderAsync, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
-import PropertySelectorPidSearchContainer, {
-  PropertySelectorPidSearchContainerProps,
-} from './PropertySelectorPidSearchContainer';
-import { IPropertySearchSelectorFormViewProps } from './PropertySearchSelectorFormView';
 import PropertySearchSelectorPidFormView, {
   IPropertySearchSelectorPidFormViewProps,
 } from './PropertySelectorPidSearchView';
-import { IAddSubdivisionViewProps } from '@/features/mapSideBar/subdivision/AddSubdivisionView';
 import { SubdivisionFormModel } from '@/features/mapSideBar/subdivision/AddSubdivisionModel';
 import noop from 'lodash/noop';
 

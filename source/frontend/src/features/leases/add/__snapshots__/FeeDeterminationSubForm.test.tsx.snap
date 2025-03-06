@@ -29,7 +29,6 @@ exports[`LeaseFeeDeterminationSubForm component > renders as expected 1`] = `
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2.4rem;
-  font-size: 2.6rem;
 }
 
 .c0 {
@@ -66,7 +65,7 @@ exports[`LeaseFeeDeterminationSubForm component > renders as expected 1`] = `
         class="no-gutters row"
       >
         <div
-          class="align-items-end col"
+          class="align-content-end col"
         >
           Fee Determination
         </div>
@@ -79,7 +78,7 @@ exports[`LeaseFeeDeterminationSubForm component > renders as expected 1`] = `
         class="pb-2 row"
       >
         <div
-          class="pr-0 text-left col-2"
+          class="pr-0 text-left col-3"
         >
           <label
             class="c2"
@@ -88,7 +87,7 @@ exports[`LeaseFeeDeterminationSubForm component > renders as expected 1`] = `
           </label>
         </div>
         <div
-          class="c3 text-left col-8"
+          class="c3 text-left col-auto"
         >
           <div
             class="c4 form-group"
@@ -121,7 +120,7 @@ exports[`LeaseFeeDeterminationSubForm component > renders as expected 1`] = `
         class="pb-2 row"
       >
         <div
-          class="pr-0 text-left col-2"
+          class="pr-0 text-left col-3"
         >
           <label
             class="c2"
@@ -130,7 +129,7 @@ exports[`LeaseFeeDeterminationSubForm component > renders as expected 1`] = `
           </label>
         </div>
         <div
-          class="c3 text-left col-8"
+          class="c3 text-left col-auto"
         >
           <div
             class="c4 form-group"
@@ -163,7 +162,7 @@ exports[`LeaseFeeDeterminationSubForm component > renders as expected 1`] = `
         class="pb-2 row"
       >
         <div
-          class="pr-0 text-left col-2"
+          class="pr-0 text-left col-3"
         >
           <label
             class="c2"
@@ -194,7 +193,7 @@ exports[`LeaseFeeDeterminationSubForm component > renders as expected 1`] = `
           </label>
         </div>
         <div
-          class="c3 text-left col-8"
+          class="c3 text-left col-9"
         >
           <span
             data-testid="suggestedFee"
@@ -210,7 +209,7 @@ exports[`LeaseFeeDeterminationSubForm component > renders as expected 1`] = `
         class="pb-2 row"
       >
         <div
-          class="pr-0 text-left col-2"
+          class="pr-0 text-left col-12"
         >
           <label
             class="c2"
@@ -241,7 +240,7 @@ exports[`LeaseFeeDeterminationSubForm component > renders as expected 1`] = `
           </label>
         </div>
         <div
-          class="c3 text-left col-8"
+          class="c3 text-left col"
         >
           <div
             class="textarea input form-group"

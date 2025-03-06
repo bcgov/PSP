@@ -22,6 +22,8 @@ namespace Pims.Api.Services
 
         IEnumerable<PimsCompReqFinancial> GetCompensationRequisitionFinancials(long compReqId);
 
-        IEnumerable<PimsCompReqPayee> GetCompensationRequisitionPayees(long compReqId);
+        IEnumerable<PimsCompReqAcqPayee> GetCompensationRequisitionAcquisitionPayees(long compReqId);
+
+        IEnumerable<PimsCompReqLeasePayee> GetCompensationRequisitionLeasePayees(long compReqId);
     }
 }

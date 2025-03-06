@@ -51,7 +51,13 @@ const ManageAccessRequestsPage = () => {
   return (
     <StyledContainer>
       <CommonStyled.H1>
-        <AdminIcon title="Admin Tools icon" width="2.6rem" height="2.6rem" fill="currentColor" />
+        <AdminIcon
+          title="Admin Tools icon"
+          width="2.6rem"
+          height="2.6rem"
+          fill="currentColor"
+          style={{ verticalAlign: 'baseline' }}
+        />
         <span className="ml-2">PIMS User Access Requests</span>
       </CommonStyled.H1>
       <AccessRequestFilter

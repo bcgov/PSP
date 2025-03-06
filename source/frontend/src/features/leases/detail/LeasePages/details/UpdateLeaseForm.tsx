@@ -8,7 +8,6 @@ import FeeDeterminationSubForm from '@/features/leases/add/FeeDeterminationSubFo
 import LeaseDetailSubForm from '@/features/leases/add/LeaseDetailSubForm';
 import RenewalSubForm from '@/features/leases/add/RenewalSubForm';
 import { getDefaultFormLease, LeaseFormModel } from '@/features/leases/models';
-import { LeasePropertySelector } from '@/features/leases/shared/propertyPicker/LeasePropertySelector';
 import { useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 
@@ -34,15 +33,14 @@ export const UpdateLeaseForm: React.FunctionComponent<IUpdateLeaseFormProps> = (
       values.statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.DUPLICATE
     ) {
       setModalContent({
+        title: 'Acknowledgement',
         variant: 'warning',
+        message: `Selecting the Duplicate file status will hide the file within the Property Information, PIMS Files tab. The file will remain searchable in the Manage Lease/Licence Files advanced search.
+        Please ensure that all related documents and notes are moved to the active file.
+
+        Do you want to proceed?`,
         okButtonText: 'Yes',
         cancelButtonText: 'No',
-        message: `You've marked this status file as a duplicate. If you save it, you'll still see it in the management table.
-
-        Please ensure that all related documents and notes are moved to the main file.
-
-        Do you want to acknowledge and proceed?`,
-        title: 'Warning',
         handleCancel: () => {
           formikHelpers.setFieldValue('statusTypeCode', initialValues.statusTypeCode);
           setDisplayModal(false);
@@ -73,11 +71,10 @@ export const UpdateLeaseForm: React.FunctionComponent<IUpdateLeaseFormProps> = (
               message="You have made changes on this form. Do you wish to leave without saving?"
             />
             <>
-              <LeaseDetailSubForm formikProps={formikProps}></LeaseDetailSubForm>
+              <LeaseDetailSubForm formikProps={formikProps} />
               <RenewalSubForm formikProps={formikProps} />
-              <LeasePropertySelector formikProps={formikProps} />
-              <AdministrationSubForm formikProps={formikProps}></AdministrationSubForm>
-              <FeeDeterminationSubForm formikProps={formikProps}></FeeDeterminationSubForm>
+              <AdministrationSubForm formikProps={formikProps} />
+              <FeeDeterminationSubForm formikProps={formikProps} />
             </>
           </>
         )}

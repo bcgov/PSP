@@ -90,7 +90,22 @@ export const layersTree: ILayerItem[] = [
     key: 'legalHighwayResearch',
     label: 'Legal Highway Research',
     on: false,
-    nodes: [],
+    nodes: [
+      {
+        id: 'plans',
+        key: 'plans',
+        label: 'Plans',
+        on: false,
+        url: 'ogs-internal/ows?',
+        layers: 'psp_dev:plans',
+        transparent: true,
+        opacity: 0.8,
+        format: 'image/png',
+        authenticated: true,
+        maxNativeZoom: 17,
+        maxZoom: 20,
+      },
+    ],
   },
   {
     key: 'firstNations',

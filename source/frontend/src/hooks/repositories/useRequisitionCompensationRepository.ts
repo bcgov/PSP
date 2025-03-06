@@ -3,9 +3,10 @@ import { useCallback, useMemo } from 'react';
 
 import {
   deleteCompensationRequisitionApi,
+  getCompensationRequisitionAcqPayeesApi,
   getCompensationRequisitionApi,
   getCompensationRequisitionFinancialsApi,
-  getCompensationRequisitionPayeesApi,
+  getCompensationRequisitionLeasePayeesApi,
   getCompensationRequisitionPropertiesApi,
   getFileCompensationsApi,
   postFileCompensationRequisitionApi,
@@ -16,7 +17,8 @@ import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTy
 import { ApiGen_Concepts_AcquisitionFileProperty } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileProperty';
 import { ApiGen_Concepts_CompensationFinancial } from '@/models/api/generated/ApiGen_Concepts_CompensationFinancial';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
-import { ApiGen_Concepts_CompReqPayee } from '@/models/api/generated/ApiGen_Concepts_CompReqPayee';
+import { ApiGen_Concepts_CompReqAcqPayee } from '@/models/api/generated/ApiGen_Concepts_CompReqAcqPayee';
+import { ApiGen_Concepts_CompReqLeasePayee } from '@/models/api/generated/ApiGen_Concepts_CompReqLeasePayee';
 import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
@@ -138,16 +140,32 @@ export const useCompensationRequisitionRepository = () => {
     onError: useAxiosErrorHandler('Failed to get compensation requisition financials'),
   });
 
-  const getCompensationRequisitionPayees = useApiRequestWrapper<
-    (compensationId: number) => Promise<AxiosResponse<ApiGen_Concepts_CompReqPayee[], any>>
+  const getCompensationRequisitionAcqPayees = useApiRequestWrapper<
+    (compensationId: number) => Promise<AxiosResponse<ApiGen_Concepts_CompReqAcqPayee[], any>>
   >({
     requestFunction: useCallback(
-      async (compensationId: number) => await getCompensationRequisitionPayeesApi(compensationId),
+      async (compensationId: number) =>
+        await getCompensationRequisitionAcqPayeesApi(compensationId),
       [],
     ),
-    requestName: 'getCompensationRequisitionPayees',
+    requestName: 'getCompensationRequisitionAcqPayees',
     onSuccess: useAxiosSuccessHandler(),
     onError: useAxiosErrorHandler('Failed to get compensation requisition payees'),
+    invoke: false,
+  });
+
+  const getCompensationRequisitionLeasePayees = useApiRequestWrapper<
+    (compensationId: number) => Promise<AxiosResponse<ApiGen_Concepts_CompReqLeasePayee[], any>>
+  >({
+    requestFunction: useCallback(
+      async (compensationId: number) =>
+        await getCompensationRequisitionLeasePayeesApi(compensationId),
+      [],
+    ),
+    requestName: 'getCompensationRequisitionLeasePayees',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler('Failed to get compensation requisition payees'),
+    invoke: false,
   });
 
   return useMemo(
@@ -159,7 +177,8 @@ export const useCompensationRequisitionRepository = () => {
       getCompensationRequisitionProperties: getCompensationRequisitionProperties,
       getFileCompensationRequisitions: getFileCompensationRequisitions,
       getCompensationRequisitionFinancials: getCompensationRequisitionFinancials,
-      getCompensationRequisitionPayees: getCompensationRequisitionPayees,
+      getCompensationRequisitionAcqPayees: getCompensationRequisitionAcqPayees,
+      getCompensationRequisitionLeasePayees: getCompensationRequisitionLeasePayees,
     }),
     [
       deleteCompensation,
@@ -169,7 +188,8 @@ export const useCompensationRequisitionRepository = () => {
       getFileCompensationRequisitions,
       postCompensationRequisition,
       updateCompensationRequisition,
-      getCompensationRequisitionPayees,
+      getCompensationRequisitionAcqPayees,
+      getCompensationRequisitionLeasePayees,
     ],
   );
 };

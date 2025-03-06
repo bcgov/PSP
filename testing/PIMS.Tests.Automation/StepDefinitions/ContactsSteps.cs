@@ -286,7 +286,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateIndividualContact(int rowNumber)
         {
-            DataTable individualContactSheet = ExcelDataContext.GetInstance().Sheets["IndividualContacts"]!;
+            System.Data.DataTable individualContactSheet = ExcelDataContext.GetInstance().Sheets["IndividualContacts"]!;
             ExcelDataContext.PopulateInCollection(individualContactSheet);
 
             individualContact = new IndividualContact();
@@ -347,7 +347,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateOrganizationContact(int rowNumber)
         {
-            DataTable organizationContactSheet = ExcelDataContext.GetInstance().Sheets["OrganizationContacts"]!;
+            System.Data.DataTable organizationContactSheet = ExcelDataContext.GetInstance().Sheets["OrganizationContacts"]!;
             ExcelDataContext.PopulateInCollection(organizationContactSheet);
 
             organizationContact = new OrganizationContact();

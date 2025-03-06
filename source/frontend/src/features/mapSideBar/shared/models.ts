@@ -235,7 +235,7 @@ export class PropertyForm {
         geometry: null,
       },
       municipalityFeature: null,
-      highwayFeature: null,
+      highwayFeatures: null,
       crownLandLeasesFeature: null,
       crownLandLicensesFeature: null,
       crownLandTenuresFeature: null,

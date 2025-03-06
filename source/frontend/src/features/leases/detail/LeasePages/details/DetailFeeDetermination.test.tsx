@@ -12,22 +12,13 @@ const history = createMemoryHistory();
 
 describe('DetailFeeDetermination component', () => {
   const setup = (
-    renderOptions: RenderOptions &
-      IDetailFeeDeterminationProps & { lease?: ApiGen_Concepts_Lease } = {},
+    renderOptions: RenderOptions & IDetailFeeDeterminationProps = { lease: getEmptyLease() },
   ) => {
     // render component under test
-    const component = render(
-      <Formik onSubmit={noop} initialValues={renderOptions.lease ?? getEmptyLease()}>
-        <DetailFeeDetermination
-          disabled={renderOptions.disabled}
-          nameSpace={renderOptions.nameSpace}
-        />
-      </Formik>,
-      {
-        ...renderOptions,
-        history,
-      },
-    );
+    const component = render(<DetailFeeDetermination lease={renderOptions.lease} />, {
+      ...renderOptions,
+      history,
+    });
 
     return {
       component,

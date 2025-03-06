@@ -235,7 +235,7 @@ export const featureToLocationFeatureDataset = (feature: Feature<Geometry, GeoJs
     regionFeature: null,
     districtFeature: null,
     municipalityFeature: null,
-    highwayFeature: null,
+    highwayFeatures: null,
   } as LocationFeatureDataset;
 };
 

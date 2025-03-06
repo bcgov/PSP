@@ -1091,7 +1091,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateAcquisitionFile(int rowNumber)
         {
-            DataTable acquisitionSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionFiles"]!;
+            System.Data.DataTable acquisitionSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionFiles"]!;
             ExcelDataContext.PopulateInCollection(acquisitionSheet);
             acquisitionFile = new AcquisitionFile();
 
@@ -1150,7 +1150,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFile.AcquisitionSearchPropertiesIndex = int.Parse(ExcelDataContext.ReadData(rowNumber, "AcqSearchPropertiesIndex"));
             if (acquisitionFile.AcquisitionSearchPropertiesIndex > 0)
             {
-                DataTable searchPropertiesSheet = ExcelDataContext.GetInstance().Sheets["SearchProperties"]!;
+                System.Data.DataTable searchPropertiesSheet = ExcelDataContext.GetInstance().Sheets["SearchProperties"]!;
                 ExcelDataContext.PopulateInCollection(searchPropertiesSheet);
 
                 acquisitionFile.AcquisitionSearchProperties.PID = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "PID");
@@ -1171,7 +1171,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFile.AcquisitionFileChecklistIndex = int.Parse(ExcelDataContext.ReadData(rowNumber, "AcquisitionFileChecklistIndex"));
             if (acquisitionFile.AcquisitionFileChecklistIndex > 0)
             {
-                DataTable acquisitionFileChecklistSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionChecklist"]!;
+                System.Data.DataTable acquisitionFileChecklistSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionChecklist"]!;
                 ExcelDataContext.PopulateInCollection(acquisitionFileChecklistSheet);
 
                 acquisitionFile.AcquisitionFileChecklist.FileInitiationSelect1 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqFileInitiationSelect1");
@@ -1259,7 +1259,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateTeamsCollection(int startRow, int rowsCount)
         {
-            DataTable teamsSheet = ExcelDataContext.GetInstance().Sheets["TeamMembers"]!;
+            System.Data.DataTable teamsSheet = ExcelDataContext.GetInstance().Sheets["TeamMembers"]!;
             ExcelDataContext.PopulateInCollection(teamsSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -1276,7 +1276,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateOwnersCollection(int startRow, int rowsCount)
         {
-            DataTable ownersSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionOwners"]!;
+            System.Data.DataTable ownersSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionOwners"]!;
             ExcelDataContext.PopulateInCollection(ownersSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -1307,7 +1307,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateTakesCollection(int startRow, int rowsCount)
         {
-            DataTable takeSheet = ExcelDataContext.GetInstance().Sheets["Takes"]!;
+            System.Data.DataTable takeSheet = ExcelDataContext.GetInstance().Sheets["Takes"]!;
             ExcelDataContext.PopulateInCollection(takeSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -1353,7 +1353,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateAgreementsCollection(int startRow, int rowsCount)
         {
-            DataTable agreementSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionAgreement"]!;
+            System.Data.DataTable agreementSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionAgreement"]!;
             ExcelDataContext.PopulateInCollection(agreementSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -1379,7 +1379,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateStakeholdersCollection(int startRow, int rowsCount)
         {
-            DataTable stakeholderSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionStakeholder"]!;
+            System.Data.DataTable stakeholderSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionStakeholder"]!;
             ExcelDataContext.PopulateInCollection(stakeholderSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -1400,7 +1400,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateCompensationsCollection(int startRow, int rowsCount)
         {
-            DataTable compensationSheet = ExcelDataContext.GetInstance().Sheets["Compensation"]!;
+            System.Data.DataTable compensationSheet = ExcelDataContext.GetInstance().Sheets["Compensation"]!;
             ExcelDataContext.PopulateInCollection(compensationSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -1438,7 +1438,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateActivitiesCollection(int startRow, int rowsCount, List<CompensationActivity> activities)
         {
-            DataTable activitiesSheet = ExcelDataContext.GetInstance().Sheets["CompensationActivities"]!;
+            System.Data.DataTable activitiesSheet = ExcelDataContext.GetInstance().Sheets["CompensationActivities"]!;
             ExcelDataContext.PopulateInCollection(activitiesSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -1457,7 +1457,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateExpropriationCollection(int startRow, int rowsCount)
         {
-            DataTable expropriationSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionExpropriationForm8"]!;
+            System.Data.DataTable expropriationSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionExpropriationForm8"]!;
             ExcelDataContext.PopulateInCollection(expropriationSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -1480,7 +1480,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateExpropPaymentsCollection(int startRow, int rowsCount, List<ExpropriationPayment> payments)
         {
-            DataTable paymentsSheet = ExcelDataContext.GetInstance().Sheets["ExpropriationPayment"]!;
+            System.Data.DataTable paymentsSheet = ExcelDataContext.GetInstance().Sheets["ExpropriationPayment"]!;
             ExcelDataContext.PopulateInCollection(paymentsSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)

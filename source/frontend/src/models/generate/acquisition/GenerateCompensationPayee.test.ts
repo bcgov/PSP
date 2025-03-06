@@ -4,7 +4,7 @@ import {
   mockApiAcquisitionFileTeamOrganization,
   mockApiAcquisitionFileTeamPerson,
 } from '@/mocks/acquisitionFiles.mock';
-import { getMockCompReqPayee, getMockApiDefaultCompensation } from '@/mocks/compensations.mock';
+import { getMockApiDefaultCompensation, getMockCompReqAcqPayee } from '@/mocks/compensations.mock';
 import { emptyApiInterestHolder } from '@/mocks/interestHolder.mock';
 import { mockCompReqH120s } from '@/mocks/mockCompReqH120s.mock';
 import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
@@ -16,11 +16,11 @@ import { formatMoney } from '@/utils';
 import { Api_GenerateCompensationPayee } from './GenerateCompensationPayee';
 import { getOrganizationLeaseStakeholder, getPersonLeaseStakeholder } from '@/mocks/lease.mock';
 import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
-import { ApiGen_Concepts_CompReqLeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_CompReqLeaseStakeholder';
+import { ApiGen_Concepts_CompReqLeasePayee } from '@/models/api/generated/ApiGen_Concepts_CompReqLeasePayee';
 
 describe('GenerateCompensationPayee tests', () => {
   it('can generate an empty payee without throwing an error', () => {
-    const payee = new Api_GenerateCompensationPayee(null, [], []);
+    const payee = new Api_GenerateCompensationPayee(null, [], [], []);
     expect(payee.name).toBe('');
     expect(payee.gst_number).toBe('');
     expect(payee.pre_tax_amount).toBe(formatMoney(0));
@@ -30,7 +30,7 @@ describe('GenerateCompensationPayee tests', () => {
   });
 
   it('adds h120 financial totals', () => {
-    const payee = new Api_GenerateCompensationPayee(null, [], mockCompReqH120s());
+    const payee = new Api_GenerateCompensationPayee(null, [], [], mockCompReqH120s());
     expect(payee.pre_tax_amount).toBe(formatMoney(1099));
     expect(payee.tax_amount).toBe(formatMoney(101));
     expect(payee.total_amount).toBe(formatMoney(1200));
@@ -47,7 +47,8 @@ describe('GenerateCompensationPayee tests', () => {
       };
       const payee = new Api_GenerateCompensationPayee(
         compensation,
-        [{ ...getMockCompReqPayee(), acquisitionOwner: owner }],
+        [{ ...getMockCompReqAcqPayee(), acquisitionOwner: owner }],
+        [],
         [],
       );
       expect(payee.name).toBe(expectedName);
@@ -83,7 +84,8 @@ describe('GenerateCompensationPayee tests', () => {
       };
       const payee = new Api_GenerateCompensationPayee(
         compensation,
-        [{ ...getMockCompReqPayee(), interestHolder: ih }],
+        [{ ...getMockCompReqAcqPayee(), interestHolder: ih }],
+        [],
         [],
       );
       expect(payee.name).toBe(expectedName);
@@ -101,7 +103,8 @@ describe('GenerateCompensationPayee tests', () => {
       };
       const payee = new Api_GenerateCompensationPayee(
         compensation,
-        [{ ...getMockCompReqPayee(), acquisitionFileTeam: teamMember }],
+        [{ ...getMockCompReqAcqPayee(), acquisitionFileTeam: teamMember }],
+        [],
         [],
       );
       expect(payee.name).toBe(expectedName);
@@ -116,17 +119,21 @@ describe('GenerateCompensationPayee tests', () => {
     (expectedName: string, teamMember: ApiGen_Concepts_LeaseStakeholder) => {
       const compensation: ApiGen_Concepts_CompensationRequisition = {
         ...getMockApiDefaultCompensation(),
-        compReqLeaseStakeholders: [
+      };
+      const payee = new Api_GenerateCompensationPayee(
+        compensation,
+        [],
+        [
           {
-            compReqLeaseStakeholderId: 1000,
+            compReqLeasePayeeId: 1000,
             compensationRequisitionId: 1,
             leaseStakeholderId: 100,
             leaseStakeholder: teamMember,
             ...getEmptyBaseAudit(),
-          } as ApiGen_Concepts_CompReqLeaseStakeholder,
+          } as ApiGen_Concepts_CompReqLeasePayee,
         ],
-      };
-      const payee = new Api_GenerateCompensationPayee(compensation, [], []);
+        [],
+      );
       expect(payee.name).toBe(expectedName);
     },
   );
@@ -137,7 +144,8 @@ describe('GenerateCompensationPayee tests', () => {
     };
     const payee = new Api_GenerateCompensationPayee(
       compensation,
-      [{ ...getMockCompReqPayee(), legacyPayee: 'Chester Tester' }],
+      [{ ...getMockCompReqAcqPayee(), legacyPayee: 'Chester Tester' }],
+      [],
       [],
     );
     expect(payee.name).toBe('Chester Tester');
