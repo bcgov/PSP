@@ -93,7 +93,7 @@ const FileMenu: React.FunctionComponent<React.PropsWithChildren<IFileMenuProps>>
               <Col xs="1">{currentPropertyIndex === index && <FaCaretRight />}</Col>
               <Col xs="auto" className="pr-2">
                 <StyledIconWrapper className={cx({ selected: currentPropertyIndex === index })}>
-                  {index}
+                  {index + 1}
                 </StyledIconWrapper>
               </Col>
               <Col>
@@ -114,7 +114,7 @@ const FileMenu: React.FunctionComponent<React.PropsWithChildren<IFileMenuProps>>
 
 export default FileMenu;
 
-const StyledMenuWrapper = styled.div`
+export const StyledMenuWrapper = styled.div`
   flex: 1;
   text-align: left;
   padding: 0px;
