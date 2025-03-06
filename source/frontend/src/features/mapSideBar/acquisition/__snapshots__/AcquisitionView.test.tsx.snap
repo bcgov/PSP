@@ -554,6 +554,13 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   margin: 0px;
   width: 100%;
   color: var(--surface-color-primary-button-default);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
 }
 
 .c24 {
