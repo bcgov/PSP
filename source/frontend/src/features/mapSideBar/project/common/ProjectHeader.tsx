@@ -7,6 +7,8 @@ import { StyledFiller, StyledRow } from '@/components/common/HeaderField/styles'
 import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
 import { exists } from '@/utils';
 
+import { StyledLeftHeaderPane } from '../../shared/header/styles';
+
 export interface IProjectHeaderProps {
   project?: ApiGen_Concepts_Project;
 }
@@ -16,14 +18,14 @@ const ProjectHeader: React.FunctionComponent<React.PropsWithChildren<IProjectHea
 }) => {
   return (
     <StyledRow className="no-gutters">
-      <Col xs="7">
+      <StyledLeftHeaderPane xs="7">
         <HeaderField label="Project:" labelWidth="3" contentWidth="9">
           {project?.code} {project?.description}
         </HeaderField>
         <HeaderField label="MoTI region:" labelWidth="3" contentWidth="9">
           {project?.regionCode?.description}
         </HeaderField>
-      </Col>
+      </StyledLeftHeaderPane>
       <Col>
         <StyledFiller>
           <AuditSection baseAudit={project} />
