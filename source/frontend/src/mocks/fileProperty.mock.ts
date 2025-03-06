@@ -1,4 +1,5 @@
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
+import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 
 export const getEmptyFileProperty = (): ApiGen_Concepts_FileProperty => {
@@ -13,4 +14,22 @@ export const getEmptyFileProperty = (): ApiGen_Concepts_FileProperty => {
     location: null,
     ...getEmptyBaseAudit(),
   };
+};
+
+export const getEmptyLeaseFileProperty = (): ApiGen_Concepts_PropertyLease => {
+  const a: ApiGen_Concepts_PropertyLease = {
+    file: undefined,
+    leaseArea: 0,
+    areaUnitType: undefined,
+    id: 0,
+    fileId: 0,
+    propertyName: '',
+    location: undefined,
+    displayOrder: 0,
+    property: undefined,
+    propertyId: 0,
+    ...getEmptyBaseAudit(),
+  };
+
+  return a;
 };

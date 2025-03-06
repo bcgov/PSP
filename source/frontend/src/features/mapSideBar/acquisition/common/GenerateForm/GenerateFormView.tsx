@@ -9,12 +9,13 @@ import { Claims } from '@/constants/index';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
 import { Api_GenerateOwner } from '@/models/generate/GenerateOwner';
 
-import { generateDocumentEntries } from './formDocumentEntry';
+import { FormDocumentEntry } from './formDocumentEntry';
 import GenerateLetterRecipientsModal from './modals/GenerateLetterRecipientsModal';
 import { LetterRecipientModel } from './modals/models/LetterRecipientModel';
 import { LetterRecipientsForm } from './modals/models/LetterRecipientsForm';
 
 export interface IGenerateFormViewProps {
+  formEntries: FormDocumentEntry[];
   onGenerateClick: (formType: FormDocumentType) => void;
   isLoading: boolean;
   letterRecipientsInitialValues: LetterRecipientModel[];
@@ -26,6 +27,7 @@ export interface IGenerateFormViewProps {
 const GenerateFormView: React.FunctionComponent<
   React.PropsWithChildren<IGenerateFormViewProps>
 > = ({
+  formEntries,
   onGenerateClick,
   openGenerateLetterModal,
   isLoading,
@@ -34,8 +36,11 @@ const GenerateFormView: React.FunctionComponent<
   onGenerateLetterOk,
 }) => {
   const { hasClaim } = useKeycloakWrapper();
-  const entries = generateDocumentEntries;
   const formikRef = useRef<FormikProps<LetterRecipientsForm>>(null);
+
+  if (formEntries.length === 0) {
+    return <></>;
+  }
 
   return (
     <>
@@ -46,7 +51,7 @@ const GenerateFormView: React.FunctionComponent<
             <StyledMenuHeaderWrapper>
               <StyledMenuHeader>Generate a form:</StyledMenuHeader>
             </StyledMenuHeaderWrapper>
-            {entries.map(entry => (
+            {formEntries.map(entry => (
               <LinkButton
                 key={`generate-form-entry-${entry.formType}`}
                 onClick={() => onGenerateClick(entry.formType)}
@@ -62,7 +67,7 @@ const GenerateFormView: React.FunctionComponent<
             onCancelClick={onGenerateLetterCancel}
             onGenerateLetterOk={onGenerateLetterOk}
             formikRef={formikRef}
-          ></GenerateLetterRecipientsModal>
+          />
         </>
       )}
     </>
@@ -71,23 +76,14 @@ const GenerateFormView: React.FunctionComponent<
 
 export default GenerateFormView;
 
-const StyledMenuWrapper = styled.div`
-  text-align: left;
-  padding: 0px;
-  margin: 0px;
+const StyledMenuGenerateWrapper = styled.div`
+  margin-bottom: 4rem;
   width: 100%;
   color: ${props => props.theme.css.linkColor};
 `;
 
-const StyledMenuGenerateWrapper = styled(StyledMenuWrapper)`
-  margin-top: auto;
-  margin-bottom: 4rem;
-`;
-
 const StyledMenuHeaderWrapper = styled.div`
-  display: flex;
   justify-content: space-between;
-  align-items: flex-end;
   width: 100%;
   border-bottom: 1px solid ${props => props.theme.css.borderOutlineColor};
 `;

@@ -43,6 +43,7 @@ describe('Lease Surplus Declaration', () => {
         loading: false,
         response: [],
       },
+      updateLeaseProperties: undefined,
     });
     const result = setup({
       lease: {
@@ -75,6 +76,7 @@ describe('Lease Surplus Declaration', () => {
           },
         ],
       },
+      updateLeaseProperties: undefined,
     });
     const result = setup();
     await waitFor(async () => {
@@ -109,6 +111,7 @@ describe('Lease Surplus Declaration', () => {
           },
         ],
       },
+      updateLeaseProperties: undefined,
     });
     const result = setup();
     await waitFor(async () => {
@@ -151,6 +154,7 @@ describe('Lease Surplus Declaration', () => {
           },
         ],
       },
+      updateLeaseProperties: undefined,
     });
 
     const result = setup();
