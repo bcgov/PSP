@@ -209,7 +209,7 @@ namespace Pims.Api.Areas.Reports.Controllers
         /// <param name="filter"></param>
         /// <param name="all"></param>
         /// <returns></returns>
-        public IEnumerable<LeaseModel> GetCrossJoinLeases(Lease.Models.Search.LeaseFilterModel filter, bool all = false)
+        private IEnumerable<LeaseModel> GetCrossJoinLeases(Lease.Models.Search.LeaseFilterModel filter, bool all = false)
         {
             var page = _leaseService.GetPage((LeaseFilter)filter, all);
 
