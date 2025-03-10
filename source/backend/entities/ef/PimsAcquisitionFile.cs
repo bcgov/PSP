@@ -95,27 +95,6 @@ public partial class PimsAcquisitionFile
     public string SubfileInterestTypeCode { get; set; }
 
     /// <summary>
-    /// Foreign key to the PIMS_ACQ_FILE_APPRAISAL_TYPE table.
-    /// </summary>
-    [Column("ACQ_FILE_APPRAISAL_TYPE_CODE")]
-    [StringLength(20)]
-    public string AcqFileAppraisalTypeCode { get; set; }
-
-    /// <summary>
-    /// Foreign key to the PIMS_ACQ_FILE_LGL_SRVY_TYPE table.
-    /// </summary>
-    [Column("ACQ_FILE_LGL_SRVY_TYPE_CODE")]
-    [StringLength(20)]
-    public string AcqFileLglSrvyTypeCode { get; set; }
-
-    /// <summary>
-    /// Foreign key to the PIMS_ACQ_FILE_EXPROP_RISK_TYPE table.
-    /// </summary>
-    [Column("ACQ_FILE_EXPROP_RISK_TYPE_CODE")]
-    [StringLength(20)]
-    public string AcqFileExpropRiskTypeCode { get; set; }
-
-    /// <summary>
     /// Descriptive name given to the acquisition file.
     /// </summary>
     [Required]
@@ -288,6 +267,27 @@ public partial class PimsAcquisitionFile
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
+
+    /// <summary>
+    /// Foreign key to the PIMS_ACQ_FILE_APPRAISAL_TYPE table.
+    /// </summary>
+    [Column("ACQ_FILE_APPRAISAL_TYPE_CODE")]
+    [StringLength(20)]
+    public string AcqFileAppraisalTypeCode { get; set; }
+
+    /// <summary>
+    /// Foreign key to the PIMS_ACQ_FILE_LGL_SRVY_TYPE table.
+    /// </summary>
+    [Column("ACQ_FILE_LGL_SRVY_TYPE_CODE")]
+    [StringLength(20)]
+    public string AcqFileLglSrvyTypeCode { get; set; }
+
+    /// <summary>
+    /// Foreign key to the PIMS_ACQ_FILE_EXPROP_RISK_TYPE table.
+    /// </summary>
+    [Column("ACQ_FILE_EXPROP_RISK_TYPE_CODE")]
+    [StringLength(20)]
+    public string AcqFileExpropRiskTypeCode { get; set; }
 
     [ForeignKey("AcqFileAppraisalTypeCode")]
     [InverseProperty("PimsAcquisitionFiles")]

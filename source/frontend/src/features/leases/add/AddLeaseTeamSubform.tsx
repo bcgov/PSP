@@ -9,19 +9,19 @@ import ContactInputView from '@/components/common/form/ContactInput/ContactInput
 import { PrimaryContactSelector } from '@/components/common/form/PrimaryContactSelector/PrimaryContactSelector';
 import { SectionField } from '@/components/common/Section/SectionField';
 import * as API from '@/constants/API';
+import { TeamMemberFormModal } from '@/features/mapSideBar/acquisition/common/modals/AcquisitionFormModal';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 
-import { TeamMemberFormModal } from '../../modals/AcquisitionFormModal';
-import { AcquisitionTeamFormModel, WithAcquisitionTeam } from '../../models';
+import { LeaseTeamFormModel, WithLeaseTeam } from '../models';
 
-export const UpdateAcquisitionTeamSubForm: React.FunctionComponent<
+export const AddLeaseTeamSubForm: React.FunctionComponent<
   React.PropsWithChildren<unknown>
 > = () => {
-  const { values, setFieldTouched } = useFormikContext<WithAcquisitionTeam>();
+  const { values, setFieldTouched } = useFormikContext<WithLeaseTeam>();
   const [showRemoveMemberModal, setShowRemoveMemberModal] = useState<boolean>(false);
   const [removeIndex, setRemoveIndex] = useState<number>(-1);
   const { getOptionsByType } = useLookupCodeHelpers();
-  const teamProfileTypes = getOptionsByType(API.ACQUISITION_FILE_TEAM_PROFILE_TYPES);
+  const teamProfileTypes = getOptionsByType(API.LEASE_TEAM_PROFILE_TYPES);
 
   return (
     <FieldArray
@@ -29,7 +29,7 @@ export const UpdateAcquisitionTeamSubForm: React.FunctionComponent<
       render={arrayHelpers => (
         <>
           {values.team.map((teamMember, index) => (
-            <React.Fragment key={`acq-team-${index}`}>
+            <React.Fragment key={`lease-team-${index}`}>
               <Row className="py-3" data-testid={`teamMemberRow[${index}]`}>
                 <Col xs="auto" xl="5">
                   <Select
@@ -73,8 +73,8 @@ export const UpdateAcquisitionTeamSubForm: React.FunctionComponent<
           <LinkButton
             data-testid="add-team-member"
             onClick={() => {
-              const person = new AcquisitionTeamFormModel('');
-              arrayHelpers.push(person);
+              const teamMember = new LeaseTeamFormModel('');
+              arrayHelpers.push(teamMember);
             }}
           >
             + Add another team member

@@ -9,7 +9,7 @@ import { RadioGroup } from '@/components/common/form/RadioGroup';
 import { SectionField } from '@/components/common/Section/SectionField';
 import Address from '@/features/contacts/contact/create/components/address/Address';
 
-import { AcquisitionFormModal } from '../../modals/AcquisitionFormModal';
+import { TeamMemberFormModal } from '../../modals/AcquisitionFormModal';
 import {
   AcquisitionOwnerFormModel,
   OwnerAddressFormModel,
@@ -201,7 +201,7 @@ const UpdateAcquisitionOwnersSubForm: React.FC<{ isSubFile?: boolean }> = ({
               {isSubFile ? '+ Add Sub-interest' : '+ Add owner'}
             </LinkButton>
 
-            <AcquisitionFormModal
+            <TeamMemberFormModal
               message={
                 isSubFile
                   ? 'Are you sure you want to remove this Sub-interest?'
@@ -219,7 +219,7 @@ const UpdateAcquisitionOwnersSubForm: React.FC<{ isSubFile?: boolean }> = ({
                 setShowRemoveModal(false);
                 setRemoveIndex(-1);
               }}
-            ></AcquisitionFormModal>
+            ></TeamMemberFormModal>
           </>
         )}
       ></FieldArray>

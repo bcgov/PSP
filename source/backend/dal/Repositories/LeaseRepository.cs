@@ -104,6 +104,14 @@ namespace Pims.Dal.Repositories
                 .Include(r => r.Project)
                     .ThenInclude(x => x.BusinessFunctionCode)
                 .Include(r => r.Product)
+                .Include(r => r.PimsLeaseLicenseTeams)
+                    .ThenInclude(r => r.LlTeamProfileTypeCodeNavigation)
+                .Include(r => r.PimsLeaseLicenseTeams)
+                    .ThenInclude(r => r.Person)
+                .Include(r => r.PimsLeaseLicenseTeams)
+                    .ThenInclude(r => r.Organization)
+                .Include(r => r.PimsLeaseLicenseTeams)
+                    .ThenInclude(r => r.PrimaryContact)
                 .FirstOrDefault(l => l.LeaseId == id) ?? throw new KeyNotFoundException();
 
             lease.PimsPropertyImprovements = lease.PimsPropertyImprovements.OrderBy(i => i.PropertyImprovementTypeCode).ToArray();
@@ -872,6 +880,7 @@ namespace Pims.Dal.Repositories
 
             Context.Entry(existingLease).CurrentValues.SetValues(lease);
             Context.UpdateChild<PimsLease, long, PimsLeaseLeasePurpose, long>(p => p.PimsLeaseLeasePurposes, lease.LeaseId, lease.PimsLeaseLeasePurposes.ToArray());
+            Context.UpdateChild<PimsLease, long, PimsLeaseLicenseTeam, long>(p => p.PimsLeaseLicenseTeams, lease.LeaseId, lease.PimsLeaseLicenseTeams.ToArray());
 
             if (commitTransaction)
             {

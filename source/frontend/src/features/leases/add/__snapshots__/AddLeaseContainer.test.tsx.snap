@@ -2636,6 +2636,39 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
               </div>
             </div>
           </div>
+          <div
+            class="c12 form-section"
+          >
+            <h2
+              class="c13"
+            >
+              <div
+                class="no-gutters row"
+              >
+                <div
+                  class="align-content-end col"
+                >
+                  Lease Team
+                </div>
+              </div>
+            </h2>
+            <div
+              class="collapse show"
+            >
+              <button
+                class="c4 Button btn btn-link"
+                data-testid="add-team-member"
+                type="button"
+              >
+                <div
+                  class="Button__value"
+                >
+                  + Add another team member
+                </div>
+              </button>
+              <div />
+            </div>
+          </div>
         </div>
       </div>
       <div
