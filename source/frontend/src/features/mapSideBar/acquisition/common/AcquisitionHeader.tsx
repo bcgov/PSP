@@ -12,6 +12,7 @@ import { formatMinistryProject } from '@/utils/formUtils';
 
 import HistoricalNumbersContainer from '../../shared/header/HistoricalNumberContainer';
 import { HistoricalNumberSectionView } from '../../shared/header/HistoricalNumberSectionView';
+import { StyledLeftHeaderPane } from '../../shared/header/styles';
 
 export interface IAcquisitionHeaderProps {
   acquisitionFile?: ApiGen_Concepts_AcquisitionFile;
@@ -27,7 +28,7 @@ export const AcquisitionHeader: React.FunctionComponent<
 
   return (
     <StyledRow className="no-gutters">
-      <Col xs="8">
+      <StyledLeftHeaderPane xs="8">
         <HeaderField label="File:" labelWidth={leftColumnLabel} contentWidth="9">
           {acquisitionFile?.fileNumber} - {acquisitionFile?.fileName}
         </HeaderField>
@@ -50,7 +51,7 @@ export const AcquisitionHeader: React.FunctionComponent<
           )}
         </HeaderField>
         <HistoricalNumbersContainer propertyIds={propertyIds} View={HistoricalNumberSectionView} />
-      </Col>
+      </StyledLeftHeaderPane>
       <Col>
         <StyledFiller>
           <AuditSection lastUpdatedBy={lastUpdatedBy} baseAudit={acquisitionFile} />
