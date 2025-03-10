@@ -41,12 +41,12 @@ describe('DetailAdministration component', () => {
             },
           },
         ],
-        type:{
+        type: {
           id: 'test',
           description: 'testLeaseType',
           isDisabled: false,
-          displayOrder: 0
-        }
+          displayOrder: 0,
+        },
       },
     });
     expect(component.asFragment()).toMatchSnapshot();
