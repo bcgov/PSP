@@ -165,14 +165,14 @@ describe('LeasePropertySelector component', () => {
         geometry: getMockPolygon(),
       },
       districtFeature: null,
-      municipalityFeature: null,
+      municipalityFeatures: null,
       highwayFeatures: null,
       selectingComponentId: null,
-      crownLandLeasesFeature: null,
-      crownLandLicensesFeature: null,
-      crownLandTenuresFeature: null,
-      crownLandInventoryFeature: null,
-      crownLandInclusionsFeature: null,
+      crownLandLeasesFeatures: null,
+      crownLandLicensesFeatures: null,
+      crownLandTenuresFeatures: null,
+      crownLandInventoryFeatures: null,
+      crownLandInclusionsFeatures: null,
     };
 
     // verify that upon map click the lease region is auto-selected based on the property region
@@ -212,14 +212,14 @@ describe('LeasePropertySelector component', () => {
         geometry: getMockPolygon(),
       },
       districtFeature: null,
-      municipalityFeature: null,
+      municipalityFeatures: null,
       highwayFeatures: null,
       selectingComponentId: null,
-      crownLandLeasesFeature: null,
-      crownLandLicensesFeature: null,
-      crownLandTenuresFeature: null,
-      crownLandInventoryFeature: null,
-      crownLandInclusionsFeature: null,
+      crownLandLeasesFeatures: null,
+      crownLandLicensesFeatures: null,
+      crownLandTenuresFeatures: null,
+      crownLandInventoryFeatures: null,
+      crownLandInclusionsFeatures: null,
     };
 
     // verify that upon map click the user gets a confirmation popup to add the property to inventory
@@ -301,14 +301,14 @@ describe('LeasePropertySelector component', () => {
         geometry: getMockPolygon(),
       },
       districtFeature: null,
-      municipalityFeature: null,
+      municipalityFeatures: null,
       highwayFeatures: null,
       selectingComponentId: null,
-      crownLandLeasesFeature: null,
-      crownLandLicensesFeature: null,
-      crownLandTenuresFeature: null,
-      crownLandInventoryFeature: null,
-      crownLandInclusionsFeature: null,
+      crownLandLeasesFeatures: null,
+      crownLandLicensesFeatures: null,
+      crownLandTenuresFeatures: null,
+      crownLandInventoryFeatures: null,
+      crownLandInclusionsFeatures: null,
     };
 
     await act(async () => rerender());

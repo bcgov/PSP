@@ -31,7 +31,7 @@ import BasemapToggle, {
 import LayersControl from './leaflet/Control/LayersControl/LayersControl';
 import { LegendControl } from './leaflet/Control/Legend/LegendControl';
 import { ZoomOutButton } from './leaflet/Control/ZoomOut/ZoomOutButton';
-import { LayerPopupContainer } from './leaflet/LayerPopup/LayerPopupContainer';
+import { LocationPopupContainer } from './leaflet/LayerPopup/LocationPopupContainer';
 import { InventoryLayer } from './leaflet/Layers/InventoryLayer';
 import { LeafletLayerListener } from './leaflet/Layers/LeafletLayerListener';
 import { useConfiguredMapLayers } from './leaflet/Layers/useConfiguredMapLayers';
@@ -159,12 +159,12 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
           type: 'Feature',
           properties: {},
         };
-        if (mapLocationFeatureDataset.parcelFeature !== null) {
-          activeFeature = mapLocationFeatureDataset.parcelFeature;
+        if (mapLocationFeatureDataset.parcelFeatures !== null) {
+          activeFeature = mapLocationFeatureDataset.parcelFeatures[0];
           activeFeatureLayer?.addData(activeFeature);
-        } else if (mapLocationFeatureDataset.municipalityFeature !== null) {
-          activeFeature = mapLocationFeatureDataset.municipalityFeature;
-          if (mapLocationFeatureDataset.municipalityFeature?.geometry?.type === 'Polygon') {
+        } else if (mapLocationFeatureDataset.municipalityFeatures !== null) {
+          activeFeature = mapLocationFeatureDataset.municipalityFeatures[0];
+          if (activeFeature?.geometry?.type === 'Polygon') {
             activeFeatureLayer?.addData(activeFeature);
           }
         }
@@ -263,7 +263,7 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
         )}
         {mapMachine.showPopup && (
           // Draws the popup on top of the map
-          <LayerPopupContainer ref={popupRef} />
+          <LocationPopupContainer ref={popupRef} />
         )}
 
         <LegendControl />

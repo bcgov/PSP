@@ -21,7 +21,7 @@ const defaultComposedProperty: ComposedProperty = {
   parcelMapFeatureCollection: undefined,
   geoserverFeatureCollection: undefined,
   bcAssessmentSummary: undefined,
-  crownTenureFeature: undefined,
+  crownTenureFeatures: undefined,
 };
 
 vi.mock('@/hooks/repositories/useHistoricalNumberRepository');

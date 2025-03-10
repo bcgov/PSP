@@ -156,11 +156,11 @@ describe('MotiInventoryContainer component', () => {
         municipalityFeature: null,
         highwayFeatures: null,
         selectingComponentId: null,
-        crownLandLeasesFeature: null,
-        crownLandLicensesFeature: null,
-        crownLandTenuresFeature: null,
-        crownLandInventoryFeature: null,
-        crownLandInclusionsFeature: null,
+        crownLandLeasesFeatures: null,
+        crownLandLicensesFeatures: null,
+        crownLandTenuresFeatures: null,
+        crownLandInventoryFeatures: null,
+        crownLandInclusionsFeatures: null,
       },
     };
 

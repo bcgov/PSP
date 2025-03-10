@@ -146,6 +146,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
 
         if (event.type === 'MAP_CLICK') {
           result = await locationLoader.loadLocationDetails({ latLng: event.latlng });
+          debugger;
         } else if (event.type === 'MAP_MARKER_CLICK') {
           result = await locationLoader.loadLocationDetails({
             latLng: event.featureSelected.latlng,

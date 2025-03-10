@@ -28,23 +28,25 @@ export interface LocationFeatureDataset {
   selectingComponentId: string | null;
   location: LatLngLiteral;
   fileLocation: LatLngLiteral | null;
+  parcelFeatures: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties>[] | null;
   pimsFeature: Feature<Geometry, PIMS_Property_Location_View> | null;
-  parcelFeature: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties> | null;
   regionFeature: Feature<Geometry, MOT_RegionalBoundary_Feature_Properties> | null;
   districtFeature: Feature<Geometry, MOT_DistrictBoundary_Feature_Properties> | null;
-  municipalityFeature: Feature<Geometry, WHSE_Municipalities_Feature_Properties> | null;
+  municipalityFeatures: Feature<Geometry, WHSE_Municipalities_Feature_Properties>[] | null;
   highwayFeatures: Feature<Geometry, ISS_ProvincialPublicHighway>[] | null;
-  crownLandLeasesFeature: Feature<Geometry, TANTALIS_CrownLandLeases_Feature_Properties> | null;
-  crownLandLicensesFeature: Feature<Geometry, TANTALIS_CrownLandLicenses_Feature_Properties> | null;
-  crownLandTenuresFeature: Feature<Geometry, TANTALIS_CrownLandTenures_Feature_Properties> | null;
-  crownLandInventoryFeature: Feature<
-    Geometry,
-    TANTALIS_CrownLandInventory_Feature_Properties
-  > | null;
-  crownLandInclusionsFeature: Feature<
-    Geometry,
-    TANTALIS_CrownLandInclusions_Feature_Properties
-  > | null;
+  crownLandLeasesFeatures: Feature<Geometry, TANTALIS_CrownLandLeases_Feature_Properties>[] | null;
+  crownLandLicensesFeatures:
+    | Feature<Geometry, TANTALIS_CrownLandLicenses_Feature_Properties>[]
+    | null;
+  crownLandTenuresFeatures:
+    | Feature<Geometry, TANTALIS_CrownLandTenures_Feature_Properties>[]
+    | null;
+  crownLandInventoryFeatures:
+    | Feature<Geometry, TANTALIS_CrownLandInventory_Feature_Properties>[]
+    | null;
+  crownLandInclusionsFeatures:
+    | Feature<Geometry, TANTALIS_CrownLandInclusions_Feature_Properties>[]
+    | null;
 }
 
 const useLocationFeatureLoader = () => {
@@ -59,18 +61,25 @@ const useLocationFeatureLoader = () => {
   } = useMapProperties();
   const { findOneByBoundary } = usePimsPropertyLayer();
 
-  const fullyAttributedServiceFindOne = fullyAttributedService.findOne;
+  const fullyAttributedServiceFindAll = fullyAttributedService.findAll;
+
+  // Single result
   const adminBoundaryLayerServiceFindRegion = adminBoundaryLayerService.findRegion;
   const adminBoundaryLayerServiceFindDistrict = adminBoundaryLayerService.findDistrict;
+
+  // Multiple results
   const adminLegalBoundaryLayerServiceFindOneMunicipality =
-    adminLegalBoundaryLayerService.findOneMunicipality;
+    adminLegalBoundaryLayerService.findMultipleMunicipality;
   const highwayLayerServiceFindMultiple = highwayLayerService.findMultiple;
 
-  const crownLandLayerServiceFindOneLicense = crownLandLayerService.findOneCrownLandLicense;
-  const crownLandLayerServiceFindOneTenure = crownLandLayerService.findOneCrownLandTenure;
-  const crownLandLayerServiceFindOneLease = crownLandLayerService.findOneCrownLandLease;
-  const crownLandLayerServiceFindOneInclusion = crownLandLayerService.findOneCrownLandInclusion;
-  const crownLandLayerServiceFindOneInventory = crownLandLayerService.findOneCrownLandInventory;
+  const crownLandLayerServiceFindMultipleLicense =
+    crownLandLayerService.findMultipleCrownLandLicense;
+  const crownLandLayerServiceFindMultipleTenure = crownLandLayerService.findMultipleCrownLandTenure;
+  const crownLandLayerServiceFindMultipleLease = crownLandLayerService.findMultipleCrownLandLease;
+  const crownLandLayerServiceFindMultipleInclusion =
+    crownLandLayerService.findMultipleCrownLandInclusion;
+  const crownLandLayerServiceFindMultipleInventory =
+    crownLandLayerService.findMultipleCrownLandInventory;
 
   const loadLocationDetails = useCallback(
     async ({
@@ -85,41 +94,44 @@ const useLocationFeatureLoader = () => {
         location: latLng,
         fileLocation: latLng,
         pimsFeature: null,
-        parcelFeature: null,
+        parcelFeatures: null,
         regionFeature: null,
         districtFeature: null,
-        municipalityFeature: null,
+        municipalityFeatures: null,
         highwayFeatures: null,
-        crownLandLeasesFeature: null,
-        crownLandLicensesFeature: null,
-        crownLandTenuresFeature: null,
-        crownLandInventoryFeature: null,
-        crownLandInclusionsFeature: null,
+        crownLandLeasesFeatures: null,
+        crownLandLicensesFeatures: null,
+        crownLandTenuresFeatures: null,
+        crownLandInventoryFeatures: null,
+        crownLandInclusionsFeatures: null,
       };
 
       // call these APIs in parallel - notice there is no "await"
-      const fullyAttributedTask = fullyAttributedServiceFindOne(latLng);
+      // Could return multiple results
+      const fullyAttributedTask = fullyAttributedServiceFindAll(latLng);
+      const highwayTask = highwayLayerServiceFindMultiple(latLng, 'GEOMETRY');
+      const crownLandLeaseTask = crownLandLayerServiceFindMultipleLease(latLng);
+      const crownLandLicensesTask = crownLandLayerServiceFindMultipleLicense(latLng);
+      const crownLandTenuresTask = crownLandLayerServiceFindMultipleTenure(latLng);
+      const crownLandInventoryTask = crownLandLayerServiceFindMultipleInventory(latLng);
+      const crownLandInclusionsTask = crownLandLayerServiceFindMultipleInclusion(latLng);
+
+      // single results expected
       const regionTask = adminBoundaryLayerServiceFindRegion(latLng, 'SHAPE');
       const districtTask = adminBoundaryLayerServiceFindDistrict(latLng, 'SHAPE');
-      const highwayTask = highwayLayerServiceFindMultiple(latLng, 'GEOMETRY');
-      const crownLandLeaseTask = crownLandLayerServiceFindOneLease(latLng);
-      const crownLandLicensesTask = crownLandLayerServiceFindOneLicense(latLng);
-      const crownLandTenuresTask = crownLandLayerServiceFindOneTenure(latLng);
-      const crownLandInventoryTask = crownLandLayerServiceFindOneInventory(latLng);
-      const crownLandInclusionsTask = crownLandLayerServiceFindOneInclusion(latLng);
       const municipalityFeatureTask = adminLegalBoundaryLayerServiceFindOneMunicipality(latLng);
 
       const [
-        parcelFeature,
+        parcelFeatures,
         regionFeature,
         districtFeature,
         highwayFeatures,
-        crownLandLeaseFeature,
-        crownLandLicensesFeature,
-        crownLandTenuresFeature,
-        crownLandInventoryFeature,
-        crownLandInclusionsFeature,
-        municipalityFeature,
+        crownLandLeaseFeatures,
+        crownLandLicensesFeatures,
+        crownLandTenuresFeatures,
+        crownLandInventoryFeatures,
+        crownLandInclusionsFeatures,
+        municipalityFeatures,
       ] = await Promise.all([
         fullyAttributedTask,
         regionTask,
@@ -148,46 +160,52 @@ const useLocationFeatureLoader = () => {
         const boundaryFeature = await findOneByBoundary(latLng, 'GEOMETRY', 4326);
         if (exists(boundaryFeature)) {
           pimsLocationProperties = { features: [boundaryFeature], type: 'FeatureCollection' };
-        } else if (
-          exists(parcelFeature) &&
+        }
+        /*
+         * TODO: Figure out how to do this with multiple results
+        else if (
+          exists(parcelFeatures) &&
           (exists(parcelFeature.properties?.PID) || exists(parcelFeature.properties?.PIN))
         ) {
           pimsLocationProperties = await loadProperties({
-            PID: parcelFeature.properties?.PID || '',
-            PIN: parcelFeature.properties?.PIN?.toString() || '',
+            PID: parcelFeatures.properties?.PID || '',
+            PIN: parcelFeatures.properties?.PIN?.toString() || '',
           });
         }
+        */
       }
 
       if (exists(pimsLocationProperties?.features) && pimsLocationProperties.features.length > 0) {
         result.pimsFeature = pimsLocationProperties.features[0] ?? null;
       }
 
-      result.parcelFeature = parcelFeature ?? null;
+      result.parcelFeatures = parcelFeatures ?? null;
       result.regionFeature = regionFeature ?? null;
       result.districtFeature = districtFeature ?? null;
-      result.municipalityFeature = municipalityFeature ?? null;
+      result.municipalityFeatures = municipalityFeatures ?? null;
       result.highwayFeatures = highwayFeatures ?? null;
-      result.crownLandLeasesFeature = crownLandLeaseFeature ?? null;
-      result.crownLandLicensesFeature = crownLandLicensesFeature ?? null;
-      result.crownLandTenuresFeature = crownLandTenuresFeature ?? null;
-      result.crownLandInventoryFeature = crownLandInventoryFeature ?? null;
-      result.crownLandInclusionsFeature = crownLandInclusionsFeature ?? null;
+      result.crownLandLeasesFeatures = crownLandLeaseFeatures ?? null;
+      result.crownLandLicensesFeatures = crownLandLicensesFeatures ?? null;
+      result.crownLandTenuresFeatures = crownLandTenuresFeatures ?? null;
+      result.crownLandInventoryFeatures = crownLandInventoryFeatures ?? null;
+      result.crownLandInclusionsFeatures = crownLandInclusionsFeatures ?? null;
+
+      debugger;
 
       return result;
     },
     [
-      fullyAttributedServiceFindOne,
-      adminBoundaryLayerServiceFindRegion,
       adminBoundaryLayerServiceFindDistrict,
-      highwayLayerServiceFindMultiple,
-      crownLandLayerServiceFindOneLease,
-      crownLandLayerServiceFindOneLicense,
-      crownLandLayerServiceFindOneTenure,
-      crownLandLayerServiceFindOneInventory,
-      crownLandLayerServiceFindOneInclusion,
+      adminBoundaryLayerServiceFindRegion,
       adminLegalBoundaryLayerServiceFindOneMunicipality,
+      crownLandLayerServiceFindMultipleInclusion,
+      crownLandLayerServiceFindMultipleInventory,
+      crownLandLayerServiceFindMultipleLease,
+      crownLandLayerServiceFindMultipleLicense,
+      crownLandLayerServiceFindMultipleTenure,
       findOneByBoundary,
+      fullyAttributedServiceFindAll,
+      highwayLayerServiceFindMultiple,
       loadProperties,
     ],
   );

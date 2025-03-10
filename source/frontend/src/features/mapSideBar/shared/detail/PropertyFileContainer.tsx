@@ -112,11 +112,11 @@ export const PropertyFileContainer: React.FunctionComponent<
     name: 'Title',
   });
 
-  if (exists(composedProperties.composedProperty?.crownTenureFeature)) {
+  if (exists(composedProperties.composedProperty?.crownTenureFeatures)) {
     tabViews.push({
       content: (
         <CrownDetailsTabView
-          crownFeature={composedProperties.composedProperty?.crownTenureFeature}
+          crownFeature={composedProperties.composedProperty?.crownTenureFeatures}
         />
       ),
       key: InventoryTabNames.crown,

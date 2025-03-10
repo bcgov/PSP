@@ -1,14 +1,14 @@
 <featureType>
-  <id>FeatureTypeInfoImpl--3f9dd415:1955df6c091:-7ffb</id>
-  <name>PIMS_PROPERTY_BOUNDARY_VW</name>
-  <nativeName>PIMS_PROPERTY_BOUNDARY_VW</nativeName>
+  <id>FeatureTypeInfoImpl--3f9dd415:1955df6c091:-7801</id>
+  <name>PIMS_PROPERTY_VW</name>
+  <nativeName>PIMS_PROPERTY_VW</nativeName>
   <namespace>
     <id>NamespaceInfoImpl-7e0faa3c:17c208de014:-7ff5</id>
   </namespace>
-  <title>PIMS_PROPERTY_BOUNDARY_VW</title>
+  <title>PIMS_PROPERTY_VW</title>
   <keywords>
     <string>features</string>
-    <string>PIMS_PROPERTY_BOUNDARY_VW</string>
+    <string>PIMS_PROPERTY_VW</string>
   </keywords>
   <nativeCRS class="projected">PROJCS[&quot;NAD83 / BC Albers&quot;, 
   GEOGCS[&quot;NAD83&quot;, 

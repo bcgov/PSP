@@ -24,7 +24,7 @@ export const usePimsPropertyLayer = () => {
   } = useContext(TenantContext);
 
   const {
-    findOneWhereContainsWrapped: {
+    findMultipleWhereContainsWrapped: {
       execute: findOneWhereContainsWrappedExecute,
       loading: findOneWhereContainsWrappedLoading,
     },

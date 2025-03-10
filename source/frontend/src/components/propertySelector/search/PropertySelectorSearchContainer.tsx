@@ -234,7 +234,7 @@ export const featureToLocationFeatureDataset = (feature: Feature<Geometry, GeoJs
     location: { lat: center[1], lng: center[0] },
     regionFeature: null,
     districtFeature: null,
-    municipalityFeature: null,
+    municipalityFeatures: null,
     highwayFeatures: null,
   } as LocationFeatureDataset;
 };
