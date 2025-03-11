@@ -17,6 +17,7 @@ using Pims.Dal.Entities.Extensions;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
+
 using static Pims.Dal.Entities.PimsLeaseStatusType;
 
 namespace Pims.Api.Services
@@ -119,6 +120,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Getting lease page {filter}", filter);
             _user.ThrowIfNotAuthorized(Permissions.LeaseView);
+            filter.Page = all.HasValue && all.Value ? 1 : filter.Page;
             filter.Quantity = all.HasValue && all.Value ? _leaseRepository.Count() : filter.Quantity;
             var user = _userRepository.GetByKeycloakUserId(this.User.GetUserKey());
 

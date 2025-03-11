@@ -111,7 +111,6 @@ namespace Pims.Api.Areas.Reports.Controllers
             }
 
             var acceptHeader = (string)this.Request.Headers["Accept"];
-
             if (acceptHeader != ContentTypes.CONTENTTYPECSV && acceptHeader != ContentTypes.CONTENTTYPEEXCEL && acceptHeader != ContentTypes.CONTENTTYPEEXCELX)
             {
                 throw new BadRequestException($"Invalid HTTP request header 'Accept:{acceptHeader}'.");
