@@ -20,7 +20,7 @@ namespace Pims.Dal.Repositories
         public SecurityDepositRepository(
             PimsContext dbContext,
             ClaimsPrincipal user,
-            ILogger<LeaseRepository> logger)
+            ILogger<SecurityDepositRepository> logger)
             : base(dbContext, user, logger)
         {
         }
