@@ -101,7 +101,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             /* TEST COVERAGE:  PSP-1966, PSP-2550, PSP-2644, PSP-4558, PSP-5334, PSP-5335, PSP-5336, PSP-5337, PSP-5338, PSP-5340, PSP-5654, PSP-5668, PSP-5923, PSP-6266 */
 
             //Add Additional information to the lease
-            leaseDetails.EditLeaseFileDetailsBttn();
+            leaseDetails.NavigateToAddPropertiesLeasesFile();
 
             //Add Several Properties
             //Verify UI/UX from Search By Component

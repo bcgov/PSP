@@ -94,14 +94,14 @@ namespace PIMS.Tests.Automation.Features
             await this.TestTearDownAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="01. Disposition File Details")]
+        [Xunit.SkippableFactAttribute(DisplayName="01._Disposition_File_Details")]
         [Xunit.TraitAttribute("FeatureTitle", "DispositionFiles")]
-        [Xunit.TraitAttribute("Description", "01. Disposition File Details")]
-        public async System.Threading.Tasks.Task _01_DispositionFileDetails()
+        [Xunit.TraitAttribute("Description", "01._Disposition_File_Details")]
+        public async System.Threading.Tasks.Task _01__Disposition_File_Details()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("01. Disposition File Details", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("01._Disposition_File_Details", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 6
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -128,14 +128,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="02. Disposition File Properties")]
+        [Xunit.SkippableFactAttribute(DisplayName="02._Disposition_File_Properties")]
         [Xunit.TraitAttribute("FeatureTitle", "DispositionFiles")]
-        [Xunit.TraitAttribute("Description", "02. Disposition File Properties")]
-        public async System.Threading.Tasks.Task _02_DispositionFileProperties()
+        [Xunit.TraitAttribute("Description", "02._Disposition_File_Properties")]
+        public async System.Threading.Tasks.Task _02__Disposition_File_Properties()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("02. Disposition File Properties", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("02._Disposition_File_Properties", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 12
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -165,14 +165,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="03. Disposition Checklist Tab")]
+        [Xunit.SkippableFactAttribute(DisplayName="03._Disposition_Checklist_Tab")]
         [Xunit.TraitAttribute("FeatureTitle", "DispositionFiles")]
-        [Xunit.TraitAttribute("Description", "03. Disposition Checklist Tab")]
-        public async System.Threading.Tasks.Task _03_DispositionChecklistTab()
+        [Xunit.TraitAttribute("Description", "03._Disposition_Checklist_Tab")]
+        public async System.Threading.Tasks.Task _03__Disposition_Checklist_Tab()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("03. Disposition Checklist Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("03._Disposition_Checklist_Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 19
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -196,14 +196,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="04. Disposition Offers and Sale Tab")]
+        [Xunit.SkippableFactAttribute(DisplayName="04._Disposition_Offers_and_Sale_Tab")]
         [Xunit.TraitAttribute("FeatureTitle", "DispositionFiles")]
-        [Xunit.TraitAttribute("Description", "04. Disposition Offers and Sale Tab")]
-        public async System.Threading.Tasks.Task _04_DispositionOffersAndSaleTab()
+        [Xunit.TraitAttribute("Description", "04._Disposition_Offers_and_Sale_Tab")]
+        public async System.Threading.Tasks.Task _04__Disposition_Offers_And_Sale_Tab()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("04. Disposition Offers and Sale Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("04._Disposition_Offers_and_Sale_Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 24
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -232,14 +232,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="05. Disposition Files Digital Documents")]
+        [Xunit.SkippableFactAttribute(DisplayName="05._Disposition_Files_Digital_Documents")]
         [Xunit.TraitAttribute("FeatureTitle", "DispositionFiles")]
-        [Xunit.TraitAttribute("Description", "05. Disposition Files Digital Documents")]
-        public async System.Threading.Tasks.Task _05_DispositionFilesDigitalDocuments()
+        [Xunit.TraitAttribute("Description", "05._Disposition_Files_Digital_Documents")]
+        public async System.Threading.Tasks.Task _05__Disposition_Files_Digital_Documents()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("05. Disposition Files Digital Documents", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("05._Disposition_Files_Digital_Documents", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 30
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -266,14 +266,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="06. Disposition File Notes")]
+        [Xunit.SkippableFactAttribute(DisplayName="06._Disposition_File_Notes")]
         [Xunit.TraitAttribute("FeatureTitle", "DispositionFiles")]
-        [Xunit.TraitAttribute("Description", "06. Disposition File Notes")]
-        public async System.Threading.Tasks.Task _06_DispositionFileNotes()
+        [Xunit.TraitAttribute("Description", "06._Disposition_File_Notes")]
+        public async System.Threading.Tasks.Task _06__Disposition_File_Notes()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("06. Disposition File Notes", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("06._Disposition_File_Notes", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 36
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -300,14 +300,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="07. Disposition File from PIN")]
+        [Xunit.SkippableFactAttribute(DisplayName="07._Disposition_File_from_PIN")]
         [Xunit.TraitAttribute("FeatureTitle", "DispositionFiles")]
-        [Xunit.TraitAttribute("Description", "07. Disposition File from PIN")]
-        public async System.Threading.Tasks.Task _07_DispositionFileFromPIN()
+        [Xunit.TraitAttribute("Description", "07._Disposition_File_from_PIN")]
+        public async System.Threading.Tasks.Task _07__Disposition_File_From_PIN()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("07. Disposition File from PIN", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("07._Disposition_File_from_PIN", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 42
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -328,14 +328,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="08. Disposition Files List View")]
+        [Xunit.SkippableFactAttribute(DisplayName="08._Disposition_Files_List_View")]
         [Xunit.TraitAttribute("FeatureTitle", "DispositionFiles")]
-        [Xunit.TraitAttribute("Description", "08. Disposition Files List View")]
-        public async System.Threading.Tasks.Task _08_DispositionFilesListView()
+        [Xunit.TraitAttribute("Description", "08._Disposition_Files_List_View")]
+        public async System.Threading.Tasks.Task _08__Disposition_Files_List_View()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("08. Disposition Files List View", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("08._Disposition_Files_List_View", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 46
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
