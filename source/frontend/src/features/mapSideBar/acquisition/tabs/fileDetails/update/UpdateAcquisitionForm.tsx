@@ -36,6 +36,7 @@ import { ProgressStatusModel } from '../../../models/ProgressStatusModel';
 import { TakingTypeStatusModel } from '../../../models/TakingTypeStatusModel';
 import { UpdateAcquisitionSummaryFormModel } from './models';
 import StatusToolTip from './StatusToolTip';
+import { UpdateSolicitorsSubForm } from './UpdateSolicitorsSubForm';
 
 export interface IUpdateAcquisitionFormProps {
   formikRef: React.Ref<FormikProps<UpdateAcquisitionSummaryFormModel>>;
@@ -85,7 +86,6 @@ const AcquisitionDetailSubForm: React.FC<{
   const acquisitionPhysFileTypes = getOptionsByType(API.ACQUISITION_PHYSICAL_FILE_STATUS_TYPES);
   const fileStatusTypeCodes = getOptionsByType(API.ACQUISITION_FILE_STATUS_TYPES);
   const acquisitionFundingTypes = getOptionsByType(API.ACQUISITION_FUNDING_TYPES);
-  const ownerSolicitorContact = values.ownerSolicitor.contact;
   const subfileInterestTypes = getOptionsByType(API.SUBFILE_INTEREST_TYPES);
 
   const acquisitionProgressStatusTypesOptions = getByType(
@@ -129,21 +129,14 @@ const AcquisitionDetailSubForm: React.FC<{
   } = useOrganizationRepository();
 
   React.useEffect(() => {
-    if (ownerSolicitorContact?.organizationId) {
-      fetchOrganization(ownerSolicitorContact?.organizationId);
-    }
-  }, [ownerSolicitorContact?.organizationId, fetchOrganization]);
+    values.ownerSolicitors
+      .filter(os => isValidId(+os?.organizationId))
+      .map(async os => {
+        os.contact.organization = await fetchOrganization(+os.organizationId);
+      });
+  }, [values.ownerSolicitors, fetchOrganization]);
 
   const orgPersons = organization?.organizationPersons;
-
-  React.useEffect(() => {
-    if (orgPersons?.length === 0) {
-      setFieldValue('ownerSolicitor.primaryContactId', null);
-    }
-    if (orgPersons?.length === 1) {
-      setFieldValue('ownerSolicitor.primaryContactId', orgPersons[0].personId);
-    }
-  }, [orgPersons, setFieldValue]);
 
   const primaryContacts: SelectOption[] =
     orgPersons?.map((orgPerson: ApiGen_Concepts_PersonOrganization) => {
@@ -397,40 +390,47 @@ const AcquisitionDetailSubForm: React.FC<{
           </StyledSectionParagraph>
         )}
         <UpdateAcquisitionOwnersSubForm isSubFile={isSubFile} />
-        <SectionField
-          label={isSubFile ? 'Sub-interest solicitor' : 'Owner solicitor'}
-          className="mt-4"
-        >
-          <ContactInputContainer
-            field="ownerSolicitor.contact"
-            View={ContactInputView}
-          ></ContactInputContainer>
-        </SectionField>
-        {ownerSolicitorContact?.organizationId && !ownerSolicitorContact?.personId && (
-          <SectionField label="Primary contact" className="mt-4">
-            {primaryContacts.length > 1 ? (
-              <Select
-                field="ownerSolicitor.primaryContactId"
-                options={primaryContacts}
-                placeholder="Select a primary contact..."
-              ></Select>
-            ) : primaryContacts.length === 1 ? (
-              primaryContacts[0].label
-            ) : (
-              'No contacts available'
+        {/** backwards-compatibility with PAIMS etl data, which may have multiple ASOLCTR values in a single acq file. */}
+        {values?.ownerSolicitors?.length > 1 ? (
+          <UpdateSolicitorsSubForm />
+        ) : (
+          <>
+            <SectionField
+              label={isSubFile ? 'Sub-interest solicitor' : 'Owner solicitor'}
+              className="mt-4"
+            >
+              <ContactInputContainer
+                field="ownerSolicitors.0.contact"
+                View={ContactInputView}
+              ></ContactInputContainer>
+            </SectionField>
+            {values.ownerSolicitors[0]?.organizationId && !values.ownerSolicitors[0]?.personId && (
+              <SectionField label="Primary contact" className="mt-4">
+                {primaryContacts.length > 1 ? (
+                  <Select
+                    field="ownerSolicitors.0.primaryContactId"
+                    options={primaryContacts}
+                    placeholder="Select a primary contact..."
+                  ></Select>
+                ) : primaryContacts.length === 1 ? (
+                  primaryContacts[0].label
+                ) : (
+                  'No contacts available'
+                )}
+              </SectionField>
             )}
-          </SectionField>
+          </>
         )}
         <SectionField label={isSubFile ? 'Sub-interest representative' : 'Owner representative'}>
           <ContactInputContainer
-            field="ownerRepresentative.contact"
+            field="ownerRepresentatives.0.contact"
             View={ContactInputView}
             restrictContactType={RestrictContactType.ONLY_INDIVIDUALS}
           ></ContactInputContainer>
         </SectionField>
         <SectionField label="Comment">
           <TextArea
-            field="ownerRepresentative.comment"
+            field="ownerRepresentatives.0.comment"
             placeholder="Remarks or additional representative(s)"
           ></TextArea>
         </SectionField>

@@ -29,54 +29,52 @@ export const ViewStakeholderForm: React.FunctionComponent<
   React.PropsWithChildren<ITenantProps>
 > = ({ nameSpace, stakeholders, loading, leaseStakeholderTypes, isPayableLease }) => {
   return (
-    <FormSectionOne>
-      <Formik
-        initialValues={{ ...new LeaseFormModel(), stakeholders }}
-        onSubmit={noop}
-        enableReinitialize
-      >
-        <>
-          <LoadingBackdrop show={loading} parentScreen />
+    <Formik
+      initialValues={{ ...new LeaseFormModel(), stakeholders }}
+      onSubmit={noop}
+      enableReinitialize
+    >
+      <>
+        <LoadingBackdrop show={loading} parentScreen />
 
-          {leaseStakeholderTypes
-            .filter(stakeholderType => stakeholderType.isPayableRelated === isPayableLease)
-            .map((stakeholderTypeCode: ApiGen_Concepts_LeaseStakeholderType) => {
-              return (
-                <Section
-                  header={stakeholderTypeCode.description}
-                  key={`stakeholder-type-${stakeholderTypeCode.code}`}
-                >
-                  {stakeholders.map((stakeholder: FormStakeholder, index) =>
-                    stakeholder.stakeholderType === stakeholderTypeCode.code ? (
-                      <div key={`stakeholders-${index}`}>
-                        <>
-                          {stakeholder.organizationId ? (
-                            <TenantOrganizationContactInfo
-                              disabled={true}
-                              nameSpace={withNameSpace(nameSpace, `stakeholders.${index}`)}
-                            />
-                          ) : (
-                            <TenantPersonContactInfo
-                              disabled={true}
-                              nameSpace={withNameSpace(nameSpace, `stakeholders.${index}`)}
-                            />
-                          )}
-                        </>
-                      </div>
-                    ) : null,
-                  )}
-                </Section>
-              );
-            })}
-          {stakeholders.length === 0 && (
-            <StyledSection>
-              <p>There are no stakeholders associated to this lease.</p>
-              <p>Click the edit icon to add stakeholders.</p>
-            </StyledSection>
-          )}
-        </>
-      </Formik>
-    </FormSectionOne>
+        {leaseStakeholderTypes
+          .filter(stakeholderType => stakeholderType.isPayableRelated === isPayableLease)
+          .map((stakeholderTypeCode: ApiGen_Concepts_LeaseStakeholderType) => {
+            return (
+              <Section
+                header={stakeholderTypeCode.description}
+                key={`stakeholder-type-${stakeholderTypeCode.code}`}
+              >
+                {stakeholders.map((stakeholder: FormStakeholder, index) =>
+                  stakeholder.stakeholderType === stakeholderTypeCode.code ? (
+                    <div key={`stakeholders-${index}`}>
+                      <>
+                        {stakeholder.organizationId ? (
+                          <TenantOrganizationContactInfo
+                            disabled={true}
+                            nameSpace={withNameSpace(nameSpace, `stakeholders.${index}`)}
+                          />
+                        ) : (
+                          <TenantPersonContactInfo
+                            disabled={true}
+                            nameSpace={withNameSpace(nameSpace, `stakeholders.${index}`)}
+                          />
+                        )}
+                      </>
+                    </div>
+                  ) : null,
+                )}
+              </Section>
+            );
+          })}
+        {stakeholders.length === 0 && (
+          <StyledSection>
+            <p>There are no stakeholders associated to this lease.</p>
+            <p>Click the edit icon to add stakeholders.</p>
+          </StyledSection>
+        )}
+      </>
+    </Formik>
   );
 };
 

@@ -63,10 +63,12 @@ export class UpdateAcquisitionSummaryFormModel
   fundingTypeCode?: string;
   fundingTypeOtherDescription = '';
 
-  ownerSolicitor: InterestHolderForm = new InterestHolderForm(InterestHolderType.OWNER_SOLICITOR);
-  ownerRepresentative: InterestHolderForm = new InterestHolderForm(
-    InterestHolderType.OWNER_REPRESENTATIVE,
-  );
+  ownerSolicitors: InterestHolderForm[] = [
+    new InterestHolderForm(InterestHolderType.OWNER_SOLICITOR),
+  ];
+  ownerRepresentatives: InterestHolderForm[] = [
+    new InterestHolderForm(InterestHolderType.OWNER_REPRESENTATIVE),
+  ];
   otherInterestHolders: ApiGen_Concepts_InterestHolder[] = [];
   legacyStakeholders: string[] = [];
 
@@ -113,8 +115,18 @@ export class UpdateAcquisitionSummaryFormModel
         .filter(exists),
       acquisitionFileInterestHolders: [
         ...this.otherInterestHolders,
-        InterestHolderForm.toApi(this.ownerSolicitor, []),
-        InterestHolderForm.toApi(this.ownerRepresentative, []),
+        ...this.ownerSolicitors.map(os =>
+          InterestHolderForm.toApi(
+            { ...os, interestTypeCode: InterestHolderType.OWNER_SOLICITOR },
+            [],
+          ),
+        ),
+        ...this.ownerRepresentatives.map(or =>
+          InterestHolderForm.toApi(
+            { ...or, interestTypeCode: InterestHolderType.OWNER_REPRESENTATIVE },
+            [],
+          ),
+        ),
       ].filter(exists),
       fileChecklistItems: this.fileChecklist.map(x => x.toApi()),
       compensationRequisitions: null,
@@ -180,12 +192,12 @@ export class UpdateAcquisitionSummaryFormModel
     const interestHolders = model.acquisitionFileInterestHolders?.map(x =>
       InterestHolderForm.fromApi(x, x.interestHolderType?.id as InterestHolderType),
     );
-    newForm.ownerSolicitor =
-      interestHolders?.find(x => x.interestTypeCode === InterestHolderType.OWNER_SOLICITOR) ??
-      new InterestHolderForm(InterestHolderType.OWNER_SOLICITOR, model.id);
-    newForm.ownerRepresentative =
-      interestHolders?.find(x => x.interestTypeCode === InterestHolderType.OWNER_REPRESENTATIVE) ??
-      new InterestHolderForm(InterestHolderType.OWNER_REPRESENTATIVE, model.id);
+    newForm.ownerSolicitors = interestHolders?.filter(
+      x => x.interestTypeCode === InterestHolderType.OWNER_SOLICITOR,
+    ) ?? [new InterestHolderForm(InterestHolderType.OWNER_SOLICITOR, model.id)];
+    newForm.ownerRepresentatives = interestHolders?.filter(
+      x => x.interestTypeCode === InterestHolderType.OWNER_REPRESENTATIVE,
+    ) ?? [new InterestHolderForm(InterestHolderType.OWNER_REPRESENTATIVE, model.id)];
 
     newForm.otherInterestHolders =
       model.acquisitionFileInterestHolders?.filter(

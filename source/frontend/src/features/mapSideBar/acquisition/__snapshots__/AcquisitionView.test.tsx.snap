@@ -272,7 +272,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
 .c20 {
   overflow: auto;
   height: 100%;
-  width: 100%;
+  width: 22rem;
 }
 
 .c27 {
@@ -545,11 +545,21 @@ exports[`AcquisitionView component > renders as expected 1`] = `
 }
 
 .c21 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
   text-align: left;
   padding: 0px;
   margin: 0px;
   width: 100%;
   color: var(--surface-color-primary-button-default);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
 }
 
 .c23 {
@@ -920,7 +930,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
           class="c19 no-gutters row"
         >
           <div
-            class="c20 d-flex flex-column col-3"
+            class="c20 d-flex flex-column col-auto"
           >
             <div
               class="c21"
@@ -1015,7 +1025,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="c27 col-9"
+            class="c27 col"
           >
             <div
               class="c28"
@@ -1799,7 +1809,9 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                                 rel="noopener noreferrer"
                                 target="_blank"
                               >
-                                <span />
+                                <span>
+                                  Luke Skywalker
+                                </span>
                                 <svg
                                   class="m1-2"
                                   fill="currentColor"

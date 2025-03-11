@@ -35,20 +35,20 @@ const Policy: React.FunctionComponent<PolicyProps> = ({ insurance }) => {
   return (
     <Section header={policy.insuranceType}>
       {exists(insurance.insuranceType?.id) && insurance.insuranceType?.id === 'OTHER' && (
-        <SectionField label="Other insurance type" labelWidth="3">
+        <SectionField label="Other insurance type" labelWidth="4">
           {policy.otherInsuranceType}
         </SectionField>
       )}
-      <SectionField label="Insurance in place" labelWidth="3">
+      <SectionField label="Insurance in place" labelWidth="4">
         {policy.insuranceInPlace}
       </SectionField>
-      <SectionField label="Limit" labelWidth="3">
+      <SectionField label="Limit" labelWidth="4">
         {policy.limit}
       </SectionField>
-      <SectionField label="Policy expiry date" labelWidth="3">
+      <SectionField label="Policy expiry date" labelWidth="4">
         {policy.expiryDate}
       </SectionField>
-      <SectionField label="Description of coverage" labelWidth="3">
+      <SectionField label="Description of coverage" labelWidth="4">
         {policy.coverageDescription}
       </SectionField>
     </Section>

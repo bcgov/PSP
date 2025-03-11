@@ -1,5 +1,5 @@
 import Multiselect from 'multiselect-react-dropdown';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { FaExternalLinkAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
@@ -15,6 +15,7 @@ import { Claims, Roles } from '@/constants';
 import { InterestHolderType } from '@/constants/interestHolderTypes';
 import { usePersonRepository } from '@/features/contacts/repositories/usePersonRepository';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { exists, prettyFormatDate } from '@/utils';
@@ -39,6 +40,10 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
   const detail: DetailAcquisitionFile = DetailAcquisitionFile.fromApi(acquisitionFile);
   const { hasRole, hasClaim } = useKeycloakWrapper();
 
+  const {
+    getPersonDetail: { execute: fetchPerson },
+  } = usePersonRepository();
+
   const projectName = exists(acquisitionFile?.project)
     ? formatMinistryProject(acquisitionFile?.project?.code, acquisitionFile?.project?.description)
     : '';
@@ -47,13 +52,20 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
     ? acquisitionFile?.product?.code + ' ' + acquisitionFile?.product?.description
     : '';
 
-  const ownerSolicitor = acquisitionFile?.acquisitionFileInterestHolders?.find(
+  const ownerSolicitors = acquisitionFile?.acquisitionFileInterestHolders?.filter(
     x => x.interestHolderType?.id === InterestHolderType.OWNER_SOLICITOR,
   );
 
-  const {
-    getPersonDetail: { execute: fetchPerson, response: ownerSolicitorPrimaryContact },
-  } = usePersonRepository();
+  useDeepCompareEffect(() => {
+    const getSolicitorPrimaryContacts = async () => {
+      ownerSolicitors
+        ?.filter(os => exists(os?.primaryContactId))
+        .map(async os => {
+          os.primaryContact = await fetchPerson(os.primaryContactId);
+        });
+    };
+    getSolicitorPrimaryContacts();
+  }, [ownerSolicitors, fetchPerson]);
 
   const selectedProgressStatuses: ApiGen_Base_CodeType<string>[] =
     acquisitionFile?.acquisitionFileProgressStatuses
@@ -65,13 +77,7 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
       .map(x => x.takingStatusTypeCode)
       .filter(exists) ?? [];
 
-  useEffect(() => {
-    if (ownerSolicitor?.primaryContactId) {
-      fetchPerson(ownerSolicitor?.primaryContactId);
-    }
-  }, [ownerSolicitor?.primaryContactId, fetchPerson]);
-
-  const ownerRepresentative = acquisitionFile?.acquisitionFileInterestHolders?.find(
+  const ownerRepresentatives = acquisitionFile?.acquisitionFileInterestHolders?.filter(
     x => x.interestHolderType?.id === InterestHolderType.OWNER_REPRESENTATIVE,
   );
 
@@ -244,59 +250,64 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
             View={AcquisitionOwnersSummaryView}
           ></AcquisitionOwnersSummaryContainer>
         )}
-        {!!ownerSolicitor && (
-          <SectionField label={detail.isSubFile ? 'Sub-interest solicitor' : 'Owner solicitor'}>
-            <StyledLink
-              target="_blank"
-              rel="noopener noreferrer"
-              to={
-                ownerSolicitor?.personId
-                  ? `/contact/P${ownerSolicitor?.personId}`
-                  : `/contact/O${ownerSolicitor?.organizationId}`
-              }
-            >
-              <span>
-                {ownerSolicitor?.personId
-                  ? formatApiPersonNames(ownerSolicitor?.person)
-                  : ownerSolicitor?.organization?.name ?? ''}
-              </span>
-              <FaExternalLinkAlt className="ml-2" size="1rem" />
-            </StyledLink>
-          </SectionField>
-        )}
-        {ownerSolicitor?.organization && (
-          <SectionField label="Primary contact">
-            {ownerSolicitor?.primaryContactId ? (
-              <StyledLink
-                target="_blank"
-                rel="noopener noreferrer"
-                to={`/contact/P${ownerSolicitor?.primaryContactId}`}
+        {!!ownerSolicitors?.length &&
+          ownerSolicitors.map(ownerSolicitor => (
+            <React.Fragment key={`owner-solicitor-${ownerSolicitor.interestHolderId}`}>
+              <SectionField label={detail.isSubFile ? 'Sub-interest solicitor' : 'Owner solicitor'}>
+                <StyledLink
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  to={
+                    ownerSolicitor?.personId
+                      ? `/contact/P${ownerSolicitor?.personId}`
+                      : `/contact/O${ownerSolicitor?.organizationId}`
+                  }
+                >
+                  <span>
+                    {ownerSolicitor?.personId
+                      ? formatApiPersonNames(ownerSolicitor?.person)
+                      : ownerSolicitor?.organization?.name ?? ''}
+                  </span>
+                  <FaExternalLinkAlt className="ml-2" size="1rem" />
+                </StyledLink>
+              </SectionField>
+
+              {ownerSolicitor?.organization && (
+                <SectionField label="Primary contact">
+                  {ownerSolicitor?.primaryContactId ? (
+                    <StyledLink
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      to={`/contact/P${ownerSolicitor?.primaryContactId}`}
+                    >
+                      <span>{formatApiPersonNames(ownerSolicitor.primaryContact)}</span>
+                      <FaExternalLinkAlt className="m1-2" size="1rem" />
+                    </StyledLink>
+                  ) : (
+                    'No contacts available'
+                  )}
+                </SectionField>
+              )}
+            </React.Fragment>
+          ))}
+        {!!ownerRepresentatives?.length &&
+          ownerRepresentatives.map(ownerRepresentative => (
+            <React.Fragment key={`owner-representative-${ownerRepresentative.interestHolderId}`}>
+              <SectionField
+                label={detail.isSubFile ? 'Sub-interest representative' : 'Owner representative'}
               >
-                <span>{formatApiPersonNames(ownerSolicitorPrimaryContact)}</span>
-                <FaExternalLinkAlt className="m1-2" size="1rem" />
-              </StyledLink>
-            ) : (
-              'No contacts available'
-            )}
-          </SectionField>
-        )}
-        {!!ownerRepresentative && (
-          <>
-            <SectionField
-              label={detail.isSubFile ? 'Sub-interest representative' : 'Owner representative'}
-            >
-              <StyledLink
-                target="_blank"
-                rel="noopener noreferrer"
-                to={`/contact/P${ownerRepresentative?.personId}`}
-              >
-                <span>{formatApiPersonNames(ownerRepresentative?.person ?? undefined)}</span>
-                <FaExternalLinkAlt className="ml-2" size="1rem" />
-              </StyledLink>
-            </SectionField>
-            <SectionField label="Comment">{ownerRepresentative?.comment}</SectionField>
-          </>
-        )}
+                <StyledLink
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  to={`/contact/P${ownerRepresentative?.personId}`}
+                >
+                  <span>{formatApiPersonNames(ownerRepresentative?.person ?? undefined)}</span>
+                  <FaExternalLinkAlt className="ml-2" size="1rem" />
+                </StyledLink>
+              </SectionField>
+              <SectionField label="Comment">{ownerRepresentative?.comment}</SectionField>
+            </React.Fragment>
+          ))}
       </Section>
     </StyledSummarySection>
   );

@@ -38,6 +38,7 @@ const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = () =>
     advancedSearchCriteria,
     isMapVisible,
     isLoading,
+    mapSideBarViewState,
   } = useMapStateMachine();
 
   const { getMatchingProperties } = usePimsPropertyRepository();
@@ -74,7 +75,7 @@ const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = () =>
         <CompensationRequisitionRouter setShowActionBar={setShowActionBar} />
         <PropertyActivityRouter setShowActionBar={setShowActionBar} />
       </SideBarContextProvider>
-      {!showActionBar && (
+      {!(showActionBar || mapSideBarViewState.isFullWidth) && (
         <FilterProvider>
           <MapView />
         </FilterProvider>

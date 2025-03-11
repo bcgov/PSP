@@ -5,7 +5,6 @@ import { ApiGen_Concepts_PropertyImprovement } from '@/models/api/generated/ApiG
 
 import Improvement from './components/Improvement/Improvement';
 import { ILeaseImprovementForm } from './models';
-import * as Styled from './styles';
 
 export interface IImprovementsProps {
   improvements: ApiGen_Concepts_PropertyImprovement[];
@@ -37,12 +36,12 @@ export const Improvements: React.FunctionComponent<IImprovementsProps> = ({
   );
 
   return (
-    <Styled.ImprovementsContainer className="improvements">
+    <div>
       <LoadingBackdrop show={loading} parentScreen />
       {formImprovements.map((improvement: ILeaseImprovementForm) => (
         <Improvement improvement={improvement} key={`improvement-${improvement?.id}`} />
       ))}
-    </Styled.ImprovementsContainer>
+    </div>
   );
 };
 
