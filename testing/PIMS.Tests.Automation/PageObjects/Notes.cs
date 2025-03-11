@@ -24,7 +24,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Notes 1st result Elements
         private By note1stViewNoteBttn = By.CssSelector("div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[role='cell']:nth-child(4) div button[title='View Note']");
-        private By note1stNoteContent = By.CssSelector("div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='tr'] div[class='td']:nth-child(1)");
+        private By note1stNoteContent = By.CssSelector("div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper'] div:nth-child(1) div:nth-child(1)");
         private By note2ndDeleteNoteBttn = By.CssSelector("div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(2) div[role='cell']:nth-child(4) div button[title='Delete Note']");
         private By note2ndNoteContent = By.CssSelector("div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='tr'] div[class='td']:nth-child(2)");
 
@@ -191,7 +191,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyAutomaticNotesCompensation(string CompensationNbr, string fromStatus, string toStatus)
         {
-            WaitUntilVisibleText(note1stNoteContent, webDriver.FindElement(note1stNoteContent).Text);
+            Wait();
             AssertTrueContentEquals(note1stNoteContent, "Compensation Requisition with # " + CompensationNbr + ", changed status from '"+ fromStatus +"' to '" + toStatus + "'");
         }
     }

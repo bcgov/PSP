@@ -604,19 +604,19 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueContentEquals(managementActServiceProviderContent, activity.PropertyActivityServiceProvider);
 
             //Invoices section
-            //AssertTrueIsDisplayed(managementActInvoiceTotalsSubtitle);
+            AssertTrueIsDisplayed(managementActInvoiceTotalsSubtitle);
 
-            //AssertTrueIsDisplayed(managementActInvoiceTotalPretaxLabel);
-            //AssertTrueContentEquals(managementActInvoiceTotalPretaxContent, TransformCurrencyFormat(activity.ManagementPropertyActivityTotalPreTax));
+            AssertTrueIsDisplayed(managementActInvoiceTotalPretaxLabel);
+            AssertTrueContentEquals(managementActInvoiceTotalPretaxContent, TransformCurrencyFormat(activity.ManagementPropertyActivityTotalPreTax));
 
-            //AssertTrueIsDisplayed(managementActInvoiceTotalGSTLabel);
-            //AssertTrueContentEquals(managementActInvoiceTotalGSTContent, TransformCurrencyFormat(activity.ManagementPropertyActivityTotalGST));
+            AssertTrueIsDisplayed(managementActInvoiceTotalGSTLabel);
+            AssertTrueContentEquals(managementActInvoiceTotalGSTContent, TransformCurrencyFormat(activity.ManagementPropertyActivityTotalGST));
 
-            //AssertTrueIsDisplayed(managementActInvoiceTotalPSTLabel);
-            //AssertTrueContentEquals(managementActInvoiceTotalPSTContent, TransformCurrencyFormat(activity.ManagementPropertyActivityTotalPST));
+            AssertTrueIsDisplayed(managementActInvoiceTotalPSTLabel);
+            AssertTrueContentEquals(managementActInvoiceTotalPSTContent, TransformCurrencyFormat(activity.ManagementPropertyActivityTotalPST));
 
-            //AssertTrueIsDisplayed(managementActInvoiceGrandTotalLabel);
-            //AssertTrueContentEquals(managementActInvoiceGrandTotalContent, TransformCurrencyFormat(activity.ManagementPropertyActivityGrandTotal)); 
+            AssertTrueIsDisplayed(managementActInvoiceGrandTotalLabel);
+            AssertTrueContentEquals(managementActInvoiceGrandTotalContent, TransformCurrencyFormat(activity.ManagementPropertyActivityGrandTotal));
         }
 
         public void VerifyLastInsertedActivityTable(PropertyActivity activity)
