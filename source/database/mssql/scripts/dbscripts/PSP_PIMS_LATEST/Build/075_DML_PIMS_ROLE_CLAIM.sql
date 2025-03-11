@@ -165,6 +165,15 @@ SELECT @dispositionAdd = CLAIM_ID FROM PIMS_CLAIM WHERE NAME = 'disposition-add'
 SELECT @dispositionEdit = CLAIM_ID FROM PIMS_CLAIM WHERE NAME = 'disposition-edit';
 SELECT @dispositionDelete = CLAIM_ID FROM PIMS_CLAIM WHERE NAME = 'disposition-delete';
 
+DECLARE @ltsaOwnershipView BIGINT;
+DECLARE @ltsaOwnershipAdd BIGINT;
+DECLARE @ltsaOwnershipEdit BIGINT;
+DECLARE @ltsaOwnershipDelete BIGINT;
+SELECT @ltsaOwnershipView = CLAIM_ID FROM PIMS_CLAIM WHERE NAME = 'ltsa-ownership-view';
+SELECT @ltsaOwnershipAdd = CLAIM_ID FROM PIMS_CLAIM WHERE NAME = 'ltsa-ownership-add';
+SELECT @ltsaOwnershipEdit = CLAIM_ID FROM PIMS_CLAIM WHERE NAME = 'ltsa-ownership-edit';
+SELECT @ltsaOwnershipDelete = CLAIM_ID FROM PIMS_CLAIM WHERE NAME = 'ltsa-ownership-delete';
+
 INSERT INTO [dbo].[PIMS_ROLE_CLAIM] ([ROLE_ID], [CLAIM_ID], [APP_CREATE_USERID], [APP_CREATE_USER_GUID], [APP_LAST_UPDATE_USERID], [APP_LAST_UPDATE_USER_GUID], [APP_CREATE_USER_DIRECTORY], [APP_LAST_UPDATE_USER_DIRECTORY])
 VALUES
     -- Administrator
@@ -223,6 +232,10 @@ VALUES
     (@sysadmn,    @dispositionEdit,         N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@sysadmn,    @dispositionAdd,          N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@sysadmn,    @dispositionDelete,       N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@sysadmn,    @ltsaOwnershipView,         N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@sysadmn,    @ltsaOwnershipEdit,         N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@sysadmn,    @ltsaOwnershipAdd,          N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
+    (@sysadmn,    @ltsaOwnershipDelete,       N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     -- Acquisition Functional
     (@acqfunc, @propertyView,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
     (@acqfunc, @propertyAdd,                    N'SEED', @appUserGuid, N'SEED', @appUserGuid, '', ''),
