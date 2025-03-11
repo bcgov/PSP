@@ -1,21 +1,18 @@
-import { FieldArrayRenderProps, getIn, useFormikContext } from 'formik';
+import { FieldArrayRenderProps } from 'formik';
 import styled from 'styled-components';
 
-import { Input } from '@/components/common/form';
 import { SectionField } from '@/components/common/Section/SectionField';
 import AreaContainer from '@/components/measurements/AreaContainer';
 import { AreaUnitTypes } from '@/constants';
 import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
-import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
 import { isValidId, pidFormatter } from '@/utils';
-import { withNameSpace } from '@/utils/formUtils';
 
-import AddressSubForm from '../AddressSubForm';
+import AddressView from '../AddressView';
 
 export interface IPropertyInformationProps {
-  nameSpace: string;
   hideAddress?: boolean;
-  disabled?: boolean;
+  property: ApiGen_Concepts_PropertyLease;
 }
 
 /**
@@ -24,21 +21,13 @@ export interface IPropertyInformationProps {
  */
 export const PropertyInformation: React.FunctionComponent<
   React.PropsWithChildren<IPropertyInformationProps & Partial<FieldArrayRenderProps>>
-> = ({ nameSpace, disabled, hideAddress }) => {
-  const formikProps = useFormikContext<ApiGen_Concepts_Lease>();
+> = ({ property, hideAddress }) => {
+  const landArea: number | null = property.leaseArea;
 
-  const landArea: number | null = getIn(formikProps.values, withNameSpace(nameSpace, 'leaseArea'));
+  const areaUnitType: ApiGen_Base_CodeType<string> | null = property?.areaUnitType;
 
-  const areaUnitType: ApiGen_Base_CodeType<string> | null = getIn(
-    formikProps.values,
-    withNameSpace(nameSpace, 'areaUnitType'),
-  );
-
-  const legalDescription: string = getIn(
-    formikProps.values,
-    withNameSpace(nameSpace, 'property.landLegalDescription'),
-  );
-  const pid: number | null = getIn(formikProps.values, withNameSpace(nameSpace, 'property.pid'));
+  const legalDescription: string = property.property.landLegalDescription;
+  const pid: number | null = property.property.pid;
 
   const pidText = isValidId(pid) ? `PID: ${pidFormatter(pid.toString())}` : '';
   return (
@@ -47,7 +36,7 @@ export const PropertyInformation: React.FunctionComponent<
         {pidText}
       </SectionField>
       <SectionField label="Descriptive name" labelWidth="3">
-        <Input disabled={disabled} field={withNameSpace(nameSpace, 'propertyName')} />
+        {property.propertyName}
       </SectionField>
       <SectionField label="Area included" labelWidth="3" className="py-4">
         <AreaContainer
@@ -57,10 +46,7 @@ export const PropertyInformation: React.FunctionComponent<
       </SectionField>
       {!hideAddress ? (
         <SectionField label="Address" labelWidth="3" className="py-2">
-          <AddressSubForm
-            nameSpace={withNameSpace(nameSpace, 'property.address')}
-            disabled={disabled}
-          />
+          <AddressView address={property.property.address} />
         </SectionField>
       ) : null}
       <SectionField label="Legal description" labelWidth="3">

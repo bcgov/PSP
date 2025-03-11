@@ -10,23 +10,22 @@ import { toTypeCodeNullable } from '@/utils/formUtils';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import PropertyInformation, { IPropertyInformationProps } from './PropertyInformation';
+import { getEmptyLease } from '@/models/defaultInitializers';
 
 const history = createMemoryHistory();
 
 describe('PropertyInformation component', () => {
   const setup = (
-    renderOptions: RenderOptions & IPropertyInformationProps & { lease?: ApiGen_Concepts_Lease } = {
-      nameSpace: 'fileProperties',
+    renderOptions: RenderOptions & IPropertyInformationProps = {
+      property: getEmptyPropertyLease(),
     },
   ) => {
     // render component under test
     const component = render(
-      <Formik onSubmit={noop} initialValues={renderOptions.lease ?? getMockApiLease()}>
-        <PropertyInformation
-          disabled={renderOptions.disabled}
-          nameSpace={renderOptions.nameSpace}
-        />
-      </Formik>,
+      <PropertyInformation
+        hideAddress={renderOptions.hideAddress}
+        property={renderOptions.property}
+      />,
       {
         ...renderOptions,
         history,
@@ -39,19 +38,13 @@ describe('PropertyInformation component', () => {
   };
   it('renders minimally as expected', () => {
     const { component } = setup({
-      nameSpace: 'fileProperties.0',
-      lease: {
-        ...getMockApiLease(),
-        fileProperties: [
-          {
-            ...getEmptyPropertyLease(),
-            property: { ...mockApiProperty },
-            areaUnitType: toTypeCodeNullable('test'),
-            leaseArea: 123,
-            fileId: 0,
-            file: null,
-          },
-        ],
+      property: {
+        ...getEmptyPropertyLease(),
+        property: { ...mockApiProperty },
+        areaUnitType: toTypeCodeNullable('test'),
+        leaseArea: 123,
+        fileId: 0,
+        file: null,
       },
     });
     expect(component.asFragment()).toMatchSnapshot();
@@ -59,28 +52,13 @@ describe('PropertyInformation component', () => {
 
   it('renders a complete lease as expected', () => {
     const { component } = setup({
-      nameSpace: 'fileProperties.0',
-      lease: {
-        ...getMockApiLease(),
-        fileProperties: [
-          {
-            ...getEmptyPropertyLease(),
-            property: { ...mockApiProperty },
-            areaUnitType: toTypeCodeNullable('test'),
-            leaseArea: 123,
-            fileId: 0,
-            file: null,
-          },
-        ],
-        amount: 1,
-        description: 'a test description',
-        lFileNo: '222',
-        tfaFileNumber: '333',
-        psFileNo: '444',
-        motiName: 'test moti name',
-        note: 'a test note',
-        expiryDate: '2022-01-01',
-        startDate: '2020-01-01',
+      property: {
+        ...getEmptyPropertyLease(),
+        property: { ...mockApiProperty },
+        areaUnitType: toTypeCodeNullable('test'),
+        leaseArea: 123,
+        fileId: 0,
+        file: null,
       },
     });
     expect(component.asFragment()).toMatchSnapshot();
@@ -88,28 +66,13 @@ describe('PropertyInformation component', () => {
 
   it('does not render the area if the value is not set', () => {
     const { component } = setup({
-      nameSpace: 'fileProperties.0',
-      lease: {
-        ...getMockApiLease(),
-        fileProperties: [
-          {
-            ...getEmptyPropertyLease(),
-            property: { ...mockApiProperty },
-            leaseArea: 1,
-            areaUnitType: toTypeCodeNullable('test'),
-            fileId: 0,
-            file: null,
-          },
-        ],
-        amount: 1,
-        description: 'a test description',
-        lFileNo: '222',
-        tfaFileNumber: '333',
-        psFileNo: '444',
-        motiName: 'test moti name',
-        note: 'a test note',
-        expiryDate: '2022-01-01',
-        startDate: '2020-01-01',
+      property: {
+        ...getEmptyPropertyLease(),
+        property: { ...mockApiProperty },
+        leaseArea: 1,
+        areaUnitType: toTypeCodeNullable('test'),
+        fileId: 0,
+        file: null,
       },
     });
     expect(component.queryByText('Area')).toBeNull();
@@ -117,28 +80,13 @@ describe('PropertyInformation component', () => {
 
   it('will render the land area if no area unit is set', () => {
     const { component } = setup({
-      nameSpace: 'fileProperties.0',
-      lease: {
-        ...getMockApiLease(),
-        fileProperties: [
-          {
-            ...getEmptyPropertyLease(),
-            property: { ...mockApiProperty },
-            leaseArea: 1230.09,
-            areaUnitType: null,
-            fileId: 0,
-            file: null,
-          },
-        ],
-        amount: 1,
-        description: 'a test description',
-        lFileNo: '222',
-        tfaFileNumber: '333',
-        psFileNo: '444',
-        motiName: 'test moti name',
-        note: 'a test note',
-        expiryDate: '2022-01-01',
-        startDate: '2020-01-01',
+      property: {
+        ...getEmptyPropertyLease(),
+        property: { ...mockApiProperty },
+        leaseArea: 1230.09,
+        areaUnitType: null,
+        fileId: 0,
+        file: null,
       },
     });
     expect(component.getByText(/1230/i)).toBeVisible();

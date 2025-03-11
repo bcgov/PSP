@@ -1,5 +1,6 @@
-import { LatLngLiteral } from 'leaflet';
-import { Marker } from 'react-leaflet';
+import { LatLngLiteral, LeafletMouseEvent } from 'leaflet';
+import { useRef } from 'react';
+import { Marker, useMap } from 'react-leaflet';
 import { PointFeature } from 'supercluster';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
@@ -8,6 +9,7 @@ import {
   PIMS_Property_Boundary_View,
   PIMS_Property_Location_View,
 } from '@/models/layers/pimsPropertyLocationView';
+import { useTenant } from '@/tenants';
 
 import {
   getMarkerIcon,
@@ -34,6 +36,7 @@ const SinglePropertyMarker: React.FC<React.PropsWithChildren<SinglePropertyMarke
   isSelected,
 }) => {
   const mapMachine = useMapStateMachine();
+  const map = useMap();
 
   const getIcon = (
     feature: PointFeature<
@@ -51,6 +54,24 @@ const SinglePropertyMarker: React.FC<React.PropsWithChildren<SinglePropertyMarke
     } else {
       return getNotOwnerMarkerIcon(isSelected);
     }
+  };
+
+  const timer = useRef(null);
+  const { doubleClickInterval } = useTenant();
+
+  const handleMarkerClickEvent = () => {
+    if (timer?.current !== null) {
+      return;
+    }
+    timer.current = setTimeout(() => {
+      onMarkerClicked();
+      timer.current = null;
+    }, doubleClickInterval ?? 250);
+  };
+
+  const handleDoubleClickEvent = () => {
+    clearTimeout(timer?.current);
+    timer.current = null;
   };
 
   const onMarkerClicked = () => {
@@ -95,8 +116,12 @@ const SinglePropertyMarker: React.FC<React.PropsWithChildren<SinglePropertyMarke
       position={markerPosition}
       icon={icon}
       eventHandlers={{
+        dblclick: (event: LeafletMouseEvent) => {
+          map.fireEvent('dblclick', event); // bubble up double click events to the map.
+          handleDoubleClickEvent();
+        },
         click: () => {
-          onMarkerClicked();
+          handleMarkerClickEvent();
         },
       }}
     />
