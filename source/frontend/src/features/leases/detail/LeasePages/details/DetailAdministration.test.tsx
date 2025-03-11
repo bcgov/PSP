@@ -14,22 +14,13 @@ const history = createMemoryHistory();
 
 describe('DetailAdministration component', () => {
   const setup = (
-    renderOptions: RenderOptions &
-      IDetailAdministrationProps & { lease?: ApiGen_Concepts_Lease } = {},
+    renderOptions: RenderOptions & IDetailAdministrationProps = { lease: getEmptyLease() },
   ) => {
     // render component under test
-    const component = render(
-      <Formik onSubmit={noop} initialValues={renderOptions.lease ?? getEmptyLease()}>
-        <DetailAdministration
-          disabled={renderOptions.disabled}
-          nameSpace={renderOptions.nameSpace}
-        />
-      </Formik>,
-      {
-        ...renderOptions,
-        history,
-      },
-    );
+    const component = render(<DetailAdministration lease={renderOptions.lease} />, {
+      ...renderOptions,
+      history,
+    });
 
     return {
       component,
@@ -50,6 +41,12 @@ describe('DetailAdministration component', () => {
             },
           },
         ],
+        type: {
+          id: 'test',
+          description: 'testLeaseType',
+          isDisabled: false,
+          displayOrder: 0,
+        },
       },
     });
     expect(component.asFragment()).toMatchSnapshot();
@@ -89,7 +86,7 @@ describe('DetailAdministration component', () => {
 
   it('renders all other fields', () => {
     const {
-      component: { getByDisplayValue },
+      component: { getByText },
     } = setup({
       lease: {
         programType: { id: 'OTHER' },
@@ -119,9 +116,9 @@ describe('DetailAdministration component', () => {
       } as any,
     });
 
-    expect(getByDisplayValue('PLAY POKER')).toBeVisible();
-    expect(getByDisplayValue('other program type')).toBeVisible();
-    expect(getByDisplayValue('other type')).toBeVisible();
+    expect(getByText('PLAY POKER')).toBeVisible();
+    expect(getByText('other program type')).toBeVisible();
+    expect(getByText('other type')).toBeVisible();
   });
 
   it('does not render other fields if values not set to other', () => {
@@ -142,19 +139,19 @@ describe('DetailAdministration component', () => {
 
   it('renders the program name', () => {
     const {
-      component: { getByDisplayValue },
+      component: { getByText },
     } = setup({
       lease: {
         ...getEmptyLease(),
         programName: 'A program',
       },
     });
-    expect(getByDisplayValue('A program')).toBeVisible();
+    expect(getByText('A program')).toBeVisible();
   });
 
   it('renders the primary arbitration city', async () => {
     const {
-      component: { getByDisplayValue },
+      component: { getByText },
     } = setup({
       lease: {
         ...getEmptyLease(),
@@ -162,6 +159,6 @@ describe('DetailAdministration component', () => {
       },
     });
 
-    expect(getByDisplayValue('Vancouver')).toBeVisible();
+    expect(getByText('Vancouver')).toBeVisible();
   });
 });

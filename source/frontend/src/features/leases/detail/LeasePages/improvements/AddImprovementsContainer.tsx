@@ -9,7 +9,7 @@ import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { ApiGen_Concepts_PropertyImprovement } from '@/models/api/generated/ApiGen_Concepts_PropertyImprovement';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 
-import AddImprovementsForm from './AddImprovementsForm';
+import { AddImprovementsForm } from './AddImprovementsForm';
 import { ILeaseImprovementForm, ILeaseImprovementsForm } from './models';
 
 interface IAddImprovementsContainerProps {

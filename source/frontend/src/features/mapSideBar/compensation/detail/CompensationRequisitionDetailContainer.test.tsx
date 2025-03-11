@@ -33,11 +33,13 @@ const setEditMode = vi.fn();
 const onGenerate = vi.fn();
 
 const mockGetCompReqPropertiesApi = getMockRepositoryObj();
-const mockGetCompReqPayeesApi = getMockRepositoryObj([]);
+const mockGetCompReqAcqPayeesApi = getMockRepositoryObj([]);
+const mockGetCompReqLeasePayeesApi = getMockRepositoryObj([]);
 
 vi.mocked(useCompensationRequisitionRepository, { partial: true }).mockReturnValue({
   getCompensationRequisitionProperties: mockGetCompReqPropertiesApi,
-  getCompensationRequisitionPayees: mockGetCompReqPayeesApi,
+  getCompensationRequisitionAcqPayees: mockGetCompReqAcqPayeesApi,
+  getCompensationRequisitionLeasePayees: mockGetCompReqLeasePayeesApi,
 });
 
 vi.mocked(useApiContacts, { partial: true }).mockReturnValue({
@@ -112,7 +114,7 @@ describe('Compensation Detail View container', () => {
     expect(getByText(/Content Rendered/)).toBeVisible();
     expect(viewProps.fileType).toBe(ApiGen_CodeTypes_FileTypes.Acquisition);
     expect(viewProps.clientConstant).toBe('034');
-    expect(viewProps.compensationPayees).toEqual([]);
+    expect(viewProps.compensationAcqPayees).toEqual([]);
   });
 
   it('makes request to get the properties selected for the compensation requisition', async () => {
@@ -127,7 +129,18 @@ describe('Compensation Detail View container', () => {
   it('makes request to get the payees for the compensation requisition', async () => {
     await setup({ props: { compensation: getMockApiDefaultCompensation() } });
 
-    expect(mockGetCompReqPayeesApi.execute).toHaveBeenCalledWith(1);
+    expect(mockGetCompReqAcqPayeesApi.execute).toHaveBeenCalledWith(1);
+  });
+
+  it('makes request to get the payees for the compensation requisition', async () => {
+    await setup({
+      props: {
+        compensation: getMockApiDefaultCompensation(),
+        fileType: ApiGen_CodeTypes_FileTypes.Lease,
+      },
+    });
+
+    expect(mockGetCompReqLeasePayeesApi.execute).toHaveBeenCalledWith(1);
   });
 
   it('calls onGenerate when generation button is clicked', async () => {

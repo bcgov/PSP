@@ -19,6 +19,8 @@ namespace Pims.Api.Services
 
         PimsLease Update(PimsLease lease, IEnumerable<UserOverrideCode> userOverrides);
 
+        PimsLease UpdateProperties(PimsLease lease, IEnumerable<UserOverrideCode> userOverrides);
+
         IEnumerable<PimsPropertyLease> GetPropertiesByLeaseId(long leaseId);
 
         IEnumerable<PimsInsurance> GetInsuranceByLeaseId(long leaseId);

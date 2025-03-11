@@ -32,53 +32,43 @@ export const RenewalSubForm: React.FunctionComponent<IRenewalSubFormProps> = ({ 
               <Row key={index}>
                 <Col>
                   <Section header={`Renewal ${index + 1}`} noPadding>
-                    <Row>
-                      <Col xs="7">
-                        <SectionField label="Exercised?" labelWidth="6" required>
-                          <YesNoSelect field={`${fieldName}.${index}.isExercised`} notNullable />
-                        </SectionField>
-                      </Col>
-                    </Row>
-                    <Row>
-                      <Col xs="7">
-                        <SectionField
-                          label="Commencement"
-                          labelWidth="6"
-                          required={renewal.isExercised === true}
-                          tooltip={
-                            <TooltipIcon
-                              toolTipId="lease-renewal-commencement-tooltip"
-                              toolTip="The start date defined in the original agreement or renewal, as applicable"
-                              placement="right"
-                            />
-                          }
-                        >
-                          <FastDatePicker
-                            field={`${fieldName}.${index}.commencementDt`}
-                            formikProps={formikProps}
-                          />
-                        </SectionField>
-                      </Col>
-                      <Col>
-                        <SectionField
-                          label="Expiry"
-                          labelWidth="4"
-                          required={renewal.isExercised === true}
-                          tooltip={
-                            <TooltipIcon
-                              toolTipId="lease-renewal-expiry-tooltip"
-                              toolTip="The end date specified in the original agreement or renewal, as applicable"
-                              placement="right"
-                            />
-                          }
-                        >
-                          <FastDatePicker
-                            field={`${fieldName}.${index}.expiryDt`}
-                            formikProps={formikProps}
-                          />
-                        </SectionField>
-                      </Col>
-                    </Row>
+                    <SectionField label="Exercised?" labelWidth="4" contentWidth="3" required>
+                      <YesNoSelect field={`${fieldName}.${index}.isExercised`} notNullable />
+                    </SectionField>
+                    <SectionField
+                      label="Commencement"
+                      labelWidth="4"
+                      required={renewal.isExercised === true}
+                      tooltip={
+                        <TooltipIcon
+                          toolTipId="lease-renewal-commencement-tooltip"
+                          toolTip="The start date defined in the original agreement or renewal, as applicable"
+                          placement="right"
+                        />
+                      }
+                    >
+                      <FastDatePicker
+                        field={`${fieldName}.${index}.commencementDt`}
+                        formikProps={formikProps}
+                      />
+                    </SectionField>
+                    <SectionField
+                      label="Expiry"
+                      labelWidth="4"
+                      required={renewal.isExercised === true}
+                      tooltip={
+                        <TooltipIcon
+                          toolTipId="lease-renewal-expiry-tooltip"
+                          toolTip="The end date specified in the original agreement or renewal, as applicable"
+                          placement="right"
+                        />
+                      }
+                    >
+                      <FastDatePicker
+                        field={`${fieldName}.${index}.expiryDt`}
+                        formikProps={formikProps}
+                      />
+                    </SectionField>
                     <SectionField label="Comments" contentWidth="12">
                       <TextArea field={`${fieldName}.${index}.renewalNote`} />
                     </SectionField>

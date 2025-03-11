@@ -31,13 +31,13 @@ exports[`Lease Surplus Declaration > renders as expected 1`] = `
         <div
           class="tr"
           role="row"
-          style="display: flex; flex: 1 0 auto; min-width: 240px;"
+          style="display: flex; flex: 1 0 auto; min-width: 190px;"
         >
           <div
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -49,7 +49,7 @@ exports[`Lease Surplus Declaration > renders as expected 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 45 0 auto; min-width: 30px; width: 45px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
@@ -73,7 +73,7 @@ exports[`Lease Surplus Declaration > renders as expected 1`] = `
             class="th"
             colspan="1"
             role="columnheader"
-            style="box-sizing: border-box; flex: 150 0 auto; min-width: 150px; width: 150px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 100 0 auto; min-width: 100px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
           >
             <div
               class="sortable-column"
