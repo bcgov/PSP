@@ -1,9 +1,9 @@
 export enum HealthcheckMessagesTypesEnum {
-  PIMS_API = 'PimsApi',
-  PMBC = 'PmbcExternalApi',
-  GEOSERVER = 'Geoserver',
-  MAYAN = 'Mayan',
-  LTSA = 'Ltsa',
-  GEOCODER = 'Geocoder',
-  CDOGS = 'Cdogs',
+  PIMS_API = 'PIMS API',
+  PMBC = 'PMBC',
+  GEOSERVER = 'GEOSERVER',
+  MAYAN = 'MAYAN',
+  LTSA = 'LTSA',
+  GEOCODER = 'GEOCODER',
+  CDOGS = 'CDOGs',
 }

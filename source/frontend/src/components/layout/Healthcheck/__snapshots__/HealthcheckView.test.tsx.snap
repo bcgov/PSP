@@ -68,7 +68,6 @@ exports[`Healthcheck View component > renders as expected 1`] = `
 }
 
 .c2 label span {
-  text-transform: uppercase;
   font-weight: bolder;
 }
 

@@ -11,14 +11,14 @@ export interface IHealthCheckIssue {
 }
 
 export interface IHealthCheckViewProps {
-  systemChecks: IHealthCheckIssue[];
+  systemChecks: IHealthCheckIssue[] | null;
 }
 
 const HealthcheckView: React.FunctionComponent<IHealthCheckViewProps> = ({ systemChecks }) => {
   const { setModalContent, setDisplayModal } = useModalContext();
 
   return (
-    systemChecks.length && (
+    systemChecks?.length && (
       <StyledWrapperDiv>
         <StyledIconDiv>
           <FaBan size={24} />
@@ -99,7 +99,6 @@ const StyledContainer = styled.div`
     margin-bottom: 0;
 
     span {
-      text-transform: uppercase;
       font-weight: bolder;
     }
   }
@@ -117,7 +116,6 @@ const StyledList = styled.div`
     margin-bottom: 0;
 
     span {
-      text-transform: uppercase;
       font-weight: bolder;
     }
   }
