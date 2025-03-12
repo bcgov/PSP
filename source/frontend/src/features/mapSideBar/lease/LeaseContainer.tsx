@@ -337,10 +337,11 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
 
     if (staleFile) {
       // force the underlying components to use the new data
+      setLease(undefined);
       setFile(undefined);
       refreshLease();
     }
-  }, [staleFile, refresh, setStaleFile, setFile]);
+  }, [staleFile, refresh, setStaleFile, setFile, setLease]);
 
   useEffect(() => {
     if (lastUpdatedBy === undefined || leaseId !== lastUpdatedBy?.parentId || staleLastUpdatedBy) {

@@ -44,8 +44,6 @@ export function useLeaseDetail(leaseId?: number) {
   const getApiLeaseByIdFunc = getApiLeaseById.execute;
 
   const getCompleteLease = useCallback(async () => {
-    // Forces the refresh of underlying components
-    setLease(undefined);
     if (leaseId) {
       const leasePromise = getApiLeaseByIdFunc(leaseId);
       const leaseTenantsPromise = getLeaseStakeholders(leaseId);
