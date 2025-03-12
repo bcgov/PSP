@@ -45,7 +45,6 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
   LeaseUpdatePropertySelectorProp
 > = ({ lease }) => {
   const [showSaveConfirmModal, setShowSaveConfirmModal] = useState<boolean>(false);
-  const [showAssociatedEntityWarning, setShowAssociatedEntityWarning] = useState<boolean>(false);
 
   const formikRef = useRef<FormikProps<LeaseFormModel>>(null);
 
@@ -409,23 +408,6 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
         handleCancel={() => setShowSaveConfirmModal(false)}
         okButtonText="Save"
         cancelButtonText="Cancel"
-        show
-      />
-      <GenericModal
-        variant="info"
-        display={showAssociatedEntityWarning}
-        title={'Property with associations'}
-        message={
-          <>
-            <div>
-              This property can not be removed from the file. This property is related to one or
-              more entities in the file, only properties that are not linked to any entities in the
-              file can be removed.
-            </div>
-          </>
-        }
-        handleOk={() => setShowAssociatedEntityWarning(false)}
-        okButtonText="Close"
         show
       />
     </>
