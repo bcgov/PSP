@@ -219,6 +219,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
   const match = useRouteMatch();
   const { lease, setLease, refresh, loading } = useLeaseDetail(leaseId);
   const {
+    setFile,
     setStaleFile,
     staleFile,
     setStaleLastUpdatedBy,
@@ -243,6 +244,8 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
     getLastUpdatedBy: { execute: getLastUpdatedBy, loading: getLastUpdatedByLoading },
   } = useLeaseRepository();
 
+  const mapMachine = useMapStateMachine();
+
   const { setFilePropertyLocations } = useMapStateMachine();
 
   const locations: LatLngLiteral[] = useMemo(() => {
@@ -258,7 +261,9 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
 
   const onChildSuccess = useCallback(() => {
     setStaleLastUpdatedBy(true);
-  }, [setStaleLastUpdatedBy]);
+    refresh();
+    mapMachine.refreshMapProperties();
+  }, [setStaleLastUpdatedBy, refresh, mapMachine]);
 
   const handleCancelConfirm = () => {
     if (formikRef !== undefined) {
@@ -331,10 +336,11 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
     };
 
     if (staleFile) {
+      // force the underlying components to use the new data
+      setFile(undefined);
       refreshLease();
-      setStaleFile(false);
     }
-  }, [staleFile, refresh, setStaleFile]);
+  }, [staleFile, refresh, setStaleFile, setFile]);
 
   useEffect(() => {
     if (lastUpdatedBy === undefined || leaseId !== lastUpdatedBy?.parentId || staleLastUpdatedBy) {
@@ -382,10 +388,10 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
   useEffect(() => {
     setIsPropertyEditing(query.get('edit') === 'true');
   }, [query, setIsPropertyEditing]);
-
-  const onPropertyUpdate = () => {
+  const onPropertyUpdate = async () => {
+    setStaleFile(true);
+    setStaleLastUpdatedBy(true);
     setIsPropertyEditing(false);
-    refresh();
   };
 
   return (

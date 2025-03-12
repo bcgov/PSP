@@ -16,7 +16,7 @@ import { LeaseStateContext } from './../context/LeaseContext';
 
 export function useLeaseDetail(leaseId?: number) {
   const { lease, setLease } = useContext(LeaseStateContext);
-  const { setFile } = useContext(SideBarContext);
+  const { setFile, setStaleFile } = useContext(SideBarContext);
 
   leaseId = leaseId ?? lease?.id ?? undefined;
   const { getApiLease } = useApiLeases();
@@ -44,6 +44,8 @@ export function useLeaseDetail(leaseId?: number) {
   const getApiLeaseByIdFunc = getApiLeaseById.execute;
 
   const getCompleteLease = useCallback(async () => {
+    // Forces the refresh of underlying components
+    setLease(undefined);
     if (leaseId) {
       const leasePromise = getApiLeaseByIdFunc(leaseId);
       const leaseTenantsPromise = getLeaseStakeholders(leaseId);
@@ -69,7 +71,7 @@ export function useLeaseDetail(leaseId?: number) {
       ]);
 
       if (exists(leaseResponse)) {
-        const mergedLeases: ApiGen_Concepts_Lease = {
+        const composedLease: ApiGen_Concepts_Lease = {
           ...leaseResponse,
           stakeholders: leaseTenants ?? [],
           fileProperties: propertyLeases ?? [],
@@ -78,10 +80,11 @@ export function useLeaseDetail(leaseId?: number) {
           renewals: leaseRenewals,
         };
 
-        setLease(mergedLeases);
-        setFile({ ...mergedLeases, fileType: ApiGen_CodeTypes_FileTypes.Lease });
+        setLease(composedLease);
+        setFile({ ...composedLease, fileType: ApiGen_CodeTypes_FileTypes.Lease });
+        setStaleFile(false);
 
-        return mergedLeases;
+        return composedLease;
       } else {
         setFile(undefined);
       }
@@ -98,6 +101,7 @@ export function useLeaseDetail(leaseId?: number) {
     getLeaseRenewals,
     setLease,
     setFile,
+    setStaleFile,
   ]);
 
   const loading =
