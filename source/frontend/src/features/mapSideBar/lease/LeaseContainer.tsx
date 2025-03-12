@@ -449,7 +449,10 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
                   )}
                 />
                 <Route
-                  path={`${stripTrailingSlash(match.path)}`}
+                  path={[
+                    `${stripTrailingSlash(match.path)}`,
+                    `${stripTrailingSlash(match.path)}/compensation-requisition/*`,
+                  ]}
                   exact={true}
                   render={() => (
                     <ViewSelector
