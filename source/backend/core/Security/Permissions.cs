@@ -202,15 +202,15 @@ namespace Pims.Core.Security
         DispositionDelete = 65,
 
         [Display(GroupName = "ltsaOwnership", Name = "ltsa-ownership-view", Description = "Ability to view LTSA ownership information.")]
-        LtsaOwnershipView = 62,
+        LtsaOwnershipView = 66,
 
         [Display(GroupName = "ltsaOwnership", Name = "ltsa-ownership-add", Description = "Ability to add new LTSA ownership information.")]
-        LtsaOwnershipAdd = 63,
+        LtsaOwnershipAdd = 67,
 
         [Display(GroupName = "ltsaOwnership", Name = "ltsa-ownership-edit", Description = "Ability to edit existing LTSA ownership information.")]
-        LtsaOwnershipEdit = 64,
+        LtsaOwnershipEdit = 68,
 
         [Display(GroupName = "ltsaOwnership", Name = "ltsa-ownership-delete", Description = "Ability to delete LTSA ownership information.")]
-        LtsaOwnershipDelete = 65,
+        LtsaOwnershipDelete = 69,
     }
 }
