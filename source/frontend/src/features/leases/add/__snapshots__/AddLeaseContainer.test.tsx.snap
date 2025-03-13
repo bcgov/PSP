@@ -2002,7 +2002,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                   </label>
                 </div>
                 <div
-                  class="c15 required text-left col-auto"
+                  class="c15 required text-left col-9"
                 >
                   <div
                     class="required form-group"

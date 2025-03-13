@@ -1093,7 +1093,7 @@ exports[`UpdateLeaseForm component > renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c4 required text-left col-auto"
+            class="c4 required text-left col-9"
           >
             <div
               class="required form-group"
