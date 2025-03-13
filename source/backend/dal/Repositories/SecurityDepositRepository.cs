@@ -20,7 +20,7 @@ namespace Pims.Dal.Repositories
         public SecurityDepositRepository(
             PimsContext dbContext,
             ClaimsPrincipal user,
-            ILogger<LeaseRepository> logger)
+            ILogger<SecurityDepositRepository> logger)
             : base(dbContext, user, logger)
         {
         }
@@ -70,13 +70,16 @@ namespace Pims.Dal.Repositories
         public bool Delete(long id)
         {
             PimsSecurityDeposit deposit = this.Context.PimsSecurityDeposits
-                .Where(x => x.SecurityDepositId == id)
-                .Include(s => s.PimsSecurityDepositHolder).FirstOrDefault() ?? throw new KeyNotFoundException();
+                .Include(s => s.PimsSecurityDepositHolder)
+                .AsNoTracking()
+                .FirstOrDefault(x => x.SecurityDepositId == id) ?? throw new KeyNotFoundException();
+
             if (deposit.PimsSecurityDepositHolder != null)
             {
-                this.Context.Remove(deposit.PimsSecurityDepositHolder);
+                Context.PimsSecurityDepositHolders.Remove(new() { SecurityDepositHolderId = deposit.PimsSecurityDepositHolder.SecurityDepositHolderId });
+                Context.CommitTransaction(); // TODO: required to enforce delete order. Can be removed when cascade deletes are implemented.
             }
-            this.Context.Remove(deposit);
+            Context.PimsSecurityDeposits.Remove(new() { SecurityDepositId = deposit.SecurityDepositId });
 
             return true;
         }

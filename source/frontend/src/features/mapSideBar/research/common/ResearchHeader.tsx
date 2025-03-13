@@ -1,4 +1,5 @@
 import { Col } from 'react-bootstrap';
+import styled from 'styled-components';
 
 import AuditSection from '@/components/common/HeaderField/AuditSection';
 import { HeaderField } from '@/components/common/HeaderField/HeaderField';
@@ -20,7 +21,7 @@ export interface IResearchHeaderProps {
 const ResearchHeader: React.FunctionComponent<
   React.PropsWithChildren<IResearchHeaderProps>
 > = props => {
-  const leftColumnWidth = '7';
+  const leftColumnWidth = '8';
   const leftColumnLabel = '3';
   const researchFile = props.researchFile;
 
@@ -51,7 +52,7 @@ const ResearchHeader: React.FunctionComponent<
 
   return (
     <StyledRow className="no-gutters">
-      <Col xs={leftColumnWidth}>
+      <StyledLeftHeaderPane xs={leftColumnWidth}>
         <HeaderField label="File #:" labelWidth={leftColumnLabel} contentWidth="9">
           {researchFile?.fileNumber}
         </HeaderField>
@@ -65,7 +66,7 @@ const ResearchHeader: React.FunctionComponent<
           {districts}
         </HeaderField>
         <HistoricalNumbersContainer propertyIds={propertyIds} View={HistoricalNumberSectionView} />
-      </Col>
+      </StyledLeftHeaderPane>
       <Col>
         <StyledFiller>
           <AuditSection lastUpdatedBy={props.lastUpdatedBy} baseAudit={researchFile} />
@@ -79,3 +80,8 @@ const ResearchHeader: React.FunctionComponent<
 };
 
 export default ResearchHeader;
+
+const StyledLeftHeaderPane = styled(Col)`
+  max-width: 60rem;
+  //border: 1px solid red;
+`;
