@@ -25,9 +25,3 @@ export const UserUpdateSchema = Yup.object().shape({
   regions: Yup.array().min(1, 'A user must have at least one region'),
   roles: Yup.array().min(1, 'A user must have at least one role'),
 });
-
-export const FilterBarSchema = Yup.object().shape({
-  pinOrPid: Yup.string()
-    .nullable()
-    .matches(/^\d{0,3}-\d{3}-\d{3}$|^\d{0,9}$/, 'Invalid PIN or PID'),
-});

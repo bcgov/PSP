@@ -10,14 +10,14 @@ import { Form, Input, Select } from '@/components/common/form';
 import { TableSort } from '@/components/Table/TableSort';
 import { useGeocoderRepository } from '@/hooks/useGeocoderRepository';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
-import { exists, pidFormatter } from '@/utils';
-import { FilterBarSchema } from '@/utils/YupSchema';
+import { pidFormatter } from '@/utils';
 
 import { GeocoderAutoComplete } from '../components/GeocoderAutoComplete';
 import { CoordinateSearchForm } from './CoordinateSearch/CoordinateSearchForm';
 import { DmsCoordinates } from './CoordinateSearch/models';
 import { defaultPropertyFilter, IPropertyFilter } from './IPropertyFilter';
 import PropertySearchToggle, { SearchToggleOption } from './PropertySearchToggle';
+import { PropertyFilterValidationSchema } from './validation';
 
 /**
  * PropertyFilter component properties.
@@ -78,14 +78,14 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
     <Formik<IPropertyFilter>
       initialValues={{ ...initialValues }}
       enableReinitialize
-      validationSchema={FilterBarSchema}
+      validationSchema={PropertyFilterValidationSchema}
       onSubmit={(values, { setSubmitting }) => {
         setSubmitting(true);
         changeFilter(values);
         setSubmitting(false);
       }}
     >
-      {({ isSubmitting, setFieldValue, values, resetForm }) => (
+      {({ isSubmitting, setFieldValue, values, resetForm, isValid }) => (
         <Form>
           <Form.Row className="map-filter-bar pb-4">
             <Col xs="auto">
@@ -196,7 +196,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                     values.planNumber ||
                     values.address ||
                     values.historical ||
-                    exists(values.coordinates)
+                    (values.searchBy === 'coordinates' && isValid)
                   )
                 }
               />

@@ -17,16 +17,25 @@ export const CoordinateSearchForm: React.FunctionComponent<ICoordinateSearchProp
     <Container fluid>
       <Form.Row className="d-flex align-items-center">
         <Col xs="auto">Lat:</Col>
-        <StyledCol8Rem>
-          <StyledInput field={withNameSpace(field, 'latitude.degrees')}></StyledInput>
-        </StyledCol8Rem>
+        <StyledCol9Rem>
+          <StyledInput
+            field={withNameSpace(field, 'latitude.degrees')}
+            displayErrorTooltips
+          ></StyledInput>
+        </StyledCol9Rem>
         &thinsp;°&thinsp;
-        <StyledCol8Rem>
-          <StyledInput field={withNameSpace(field, 'latitude.minutes')}></StyledInput>
-        </StyledCol8Rem>
+        <StyledCol9Rem>
+          <StyledInput
+            field={withNameSpace(field, 'latitude.minutes')}
+            displayErrorTooltips
+          ></StyledInput>
+        </StyledCol9Rem>
         &thinsp;’&thinsp;
         <StyledCol10Rem>
-          <StyledInput field={withNameSpace(field, 'latitude.seconds')}></StyledInput>
+          <StyledInput
+            field={withNameSpace(field, 'latitude.seconds')}
+            displayErrorTooltips
+          ></StyledInput>
         </StyledCol10Rem>
         &thinsp;”&thinsp;
         <Col xs="auto">
@@ -39,16 +48,25 @@ export const CoordinateSearchForm: React.FunctionComponent<ICoordinateSearchProp
           ></StyledSelect>
         </Col>
         <Col xs="auto">Long:</Col>
-        <StyledCol8Rem>
-          <StyledInput field={withNameSpace(field, 'longitude.degrees')}></StyledInput>
-        </StyledCol8Rem>
+        <StyledCol9Rem>
+          <StyledInput
+            field={withNameSpace(field, 'longitude.degrees')}
+            displayErrorTooltips
+          ></StyledInput>
+        </StyledCol9Rem>
         &thinsp;°&thinsp;
-        <StyledCol8Rem>
-          <StyledInput field={withNameSpace(field, 'longitude.minutes')}></StyledInput>
-        </StyledCol8Rem>
+        <StyledCol9Rem>
+          <StyledInput
+            field={withNameSpace(field, 'longitude.minutes')}
+            displayErrorTooltips
+          ></StyledInput>
+        </StyledCol9Rem>
         &thinsp;’&thinsp;
         <StyledCol10Rem>
-          <StyledInput field={withNameSpace(field, 'longitude.seconds')}></StyledInput>
+          <StyledInput
+            field={withNameSpace(field, 'longitude.seconds')}
+            displayErrorTooltips
+          ></StyledInput>
         </StyledCol10Rem>
         &thinsp;”&thinsp;
         <Col xs="auto">
@@ -78,8 +96,8 @@ const StyledInput = styled(Input)`
   }
 `;
 
-const StyledCol8Rem = styled(Col)`
-  max-width: 8rem;
+const StyledCol9Rem = styled(Col)`
+  max-width: 9rem;
 `;
 
 const StyledCol10Rem = styled(Col)`
