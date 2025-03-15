@@ -124,7 +124,12 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                 }}
               />
             </NoRightPaddingColumn>
-            <StyledCol xs="3" md="2" lg="4" xl={values.searchBy === 'coordinates' ? 5 : 3}>
+            <StyledCol
+              xs="3"
+              md="2"
+              lg={values.searchBy === 'coordinates' ? 'auto' : 4}
+              xl={values.searchBy === 'coordinates' ? 'auto' : 3}
+            >
               {values.searchBy === 'pid' && (
                 <Input field="pid" placeholder="Enter a PID" displayErrorTooltips></Input>
               )}
