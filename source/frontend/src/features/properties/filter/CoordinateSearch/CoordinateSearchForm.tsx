@@ -1,7 +1,7 @@
 import { Col, Container, Form } from 'react-bootstrap';
 import styled from 'styled-components';
 
-import { Input, Select } from '@/components/common/form';
+import { NumberInput, Select } from '@/components/common/form';
 import { withNameSpace } from '@/utils/formUtils';
 
 import { DmsDirection } from './models';
@@ -18,24 +18,27 @@ export const CoordinateSearchForm: React.FunctionComponent<ICoordinateSearchProp
       <Form.Row className="d-flex align-items-center">
         <Col xs="auto">Lat:</Col>
         <StyledCol9Rem>
-          <StyledInput
+          <StyledNumberInput
             field={withNameSpace(field, 'latitude.degrees')}
+            onFocus={e => e.target.select()}
             displayErrorTooltips
-          ></StyledInput>
+          ></StyledNumberInput>
         </StyledCol9Rem>
         &thinsp;°&thinsp;
         <StyledCol9Rem>
-          <StyledInput
+          <StyledNumberInput
             field={withNameSpace(field, 'latitude.minutes')}
+            onFocus={e => e.target.select()}
             displayErrorTooltips
-          ></StyledInput>
+          ></StyledNumberInput>
         </StyledCol9Rem>
         &thinsp;’&thinsp;
         <StyledCol10Rem>
-          <StyledInput
+          <StyledNumberInput
             field={withNameSpace(field, 'latitude.seconds')}
+            onFocus={e => e.target.select()}
             displayErrorTooltips
-          ></StyledInput>
+          ></StyledNumberInput>
         </StyledCol10Rem>
         &thinsp;”&thinsp;
         <Col xs="auto">
@@ -49,24 +52,27 @@ export const CoordinateSearchForm: React.FunctionComponent<ICoordinateSearchProp
         </Col>
         <Col xs="auto">Long:</Col>
         <StyledCol9Rem>
-          <StyledInput
+          <StyledNumberInput
             field={withNameSpace(field, 'longitude.degrees')}
+            onFocus={e => e.target.select()}
             displayErrorTooltips
-          ></StyledInput>
+          ></StyledNumberInput>
         </StyledCol9Rem>
         &thinsp;°&thinsp;
         <StyledCol9Rem>
-          <StyledInput
+          <StyledNumberInput
             field={withNameSpace(field, 'longitude.minutes')}
+            onFocus={e => e.target.select()}
             displayErrorTooltips
-          ></StyledInput>
+          ></StyledNumberInput>
         </StyledCol9Rem>
         &thinsp;’&thinsp;
         <StyledCol10Rem>
-          <StyledInput
+          <StyledNumberInput
             field={withNameSpace(field, 'longitude.seconds')}
+            onFocus={e => e.target.select()}
             displayErrorTooltips
-          ></StyledInput>
+          ></StyledNumberInput>
         </StyledCol10Rem>
         &thinsp;”&thinsp;
         <Col xs="auto">
@@ -90,7 +96,7 @@ const StyledSelect = styled(Select)`
   }
 `;
 
-const StyledInput = styled(Input)`
+const StyledNumberInput = styled(NumberInput)`
   && .form-control {
     border-radius: 0.4rem;
   }

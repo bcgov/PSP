@@ -30,6 +30,8 @@ export interface INumberInputProps extends FormControlProps {
   errorKeys?: string[];
   /** Specifies that the HTML element should be disabled */
   disabled?: boolean;
+  /** Optional event handler for focus events */
+  onFocus?: React.FocusEventHandler<any>;
 }
 
 export const NumberInput: React.FunctionComponent<INumberInputProps> = ({
@@ -45,6 +47,7 @@ export const NumberInput: React.FunctionComponent<INumberInputProps> = ({
   errorKeys,
   disabled,
   onChange,
+  onFocus,
   ...rest
 }) => {
   const { handleBlur, errors, touched, values, setFieldValue } = useFormikContext<any>();
@@ -77,11 +80,17 @@ export const NumberInput: React.FunctionComponent<INumberInputProps> = ({
           isValid={false}
           isInvalid={!!touch && (!!error || extraErrors.length > 0)}
           {...rest}
+          as="input"
           type="number"
           value={value}
           title={value}
           placeholder={placeholder}
           aria-describedby={helpText ? `${field}-help-text` : undefined}
+          onFocus={(e: React.FocusEvent<HTMLInputElement>) => {
+            if (onFocus) {
+              onFocus(e);
+            }
+          }}
           onBlur={(e: React.FocusEvent<HTMLInputElement>) => {
             handleBlur(e);
           }}
