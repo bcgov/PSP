@@ -15,10 +15,10 @@ export class DmsCoordinates {
 
   constructor() {
     // Lat: Use 1 for North (N), -1 for South (S)
-    this.latitude = new Dms('', '', '', DmsDirection.N);
+    this.latitude = new Dms(0, 0, 0, DmsDirection.N);
 
     // Lng: Use 1 for East (E), -1 for West (W)
-    this.longitude = new Dms('', '', '', DmsDirection.W);
+    this.longitude = new Dms(0, 0, 0, DmsDirection.W);
   }
 
   toLatLng(): LatLngLiteral {
@@ -32,20 +32,20 @@ export class DmsCoordinates {
 export class Dms {
   constructor(
     // Degrees (0 to 89, 0 to 179)
-    public degrees: string = '',
+    public degrees: number = 0,
     // Minutes (0 to 59) as integers
-    public minutes: string = '',
+    public minutes: number = 0,
     // Seconds (0 to 59.9999) up to 4 decimal places.
-    public seconds: string = '',
+    public seconds: number = 0,
     // The coordinate direction (N, S, E, W)
     public direction: '1' | '-1' = DmsDirection.N,
   ) {}
 
   toDecimalDegrees(): number {
     try {
-      const deg = parseFloat(this.degrees);
-      const min = parseFloat(this.minutes);
-      const sec = parseFloat(this.seconds);
+      const deg = parseFloat(this.degrees.toFixed(0));
+      const min = parseFloat(this.minutes.toFixed(0));
+      const sec = parseFloat(this.seconds.toFixed(4));
 
       // Latitude (-90 to 90) and longitude (-180 to 180).
       // Include up to 6 decimal places.

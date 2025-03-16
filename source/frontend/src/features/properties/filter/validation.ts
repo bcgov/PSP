@@ -1,50 +1,45 @@
 /* eslint-disable no-template-curly-in-string */
 import * as Yup from 'yup';
 
+// allow numbers & empty string
+const createNumberSchema = (
+  label: string,
+  min: number,
+  max: number,
+  isRequired = false,
+  isInteger = false,
+) => {
+  let schema = Yup.number()
+    .label(label)
+    .transform((value, original) => (original === '' || isNaN(original) ? undefined : value))
+    .min(min, '${label} must be greater than ${min}')
+    .max(max, '${label} must be less than ${max}');
+
+  if (isRequired) {
+    schema = schema.required('Numeric value is required for ${label}');
+  }
+  if (isInteger) {
+    schema = schema.integer(`\${label} (${min} to ${max}) must be an integer number`);
+  }
+
+  return schema;
+};
+
 export const PropertyFilterValidationSchema = Yup.object().shape({
   pid: Yup.string().nullable(),
   pin: Yup.string().nullable(),
-  // allow numbers & empty string
   coordinates: Yup.object().when('searchBy', {
     is: 'coordinates',
     then: Yup.object().shape({
       latitude: Yup.object().shape({
-        degrees: Yup.number()
-          .transform((value, original) => (original === '' || isNaN(original) ? undefined : value))
-          .integer('Degrees (0 to 89) must be an integer number')
-          .min(0, 'Degrees must be greater than ${min}')
-          .max(89, 'Degrees must be less than ${max}')
-          .required('Numeric value is required'),
-        minutes: Yup.number()
-          .transform((value, original) => (original === '' || isNaN(original) ? undefined : value))
-          .integer('Minutes (0 to 59) must be an integer number')
-          .min(0, 'Minutes must be greater than ${min}')
-          .max(59, 'Minutes must be less than ${max}')
-          .required('Numeric value is required'),
-        seconds: Yup.number()
-          .transform((value, original) => (original === '' || isNaN(original) ? undefined : value))
-          .min(0, 'Seconds must be greater than ${min}')
-          .max(59, 'Seconds must be less than ${max}')
-          .required('Numeric value is required'),
+        degrees: createNumberSchema('Degrees', 0, 89, true, true),
+        minutes: createNumberSchema('Minutes', 0, 59, true, true),
+        seconds: createNumberSchema('Seconds', 0, 59, true, false),
       }),
       longitude: Yup.object().shape({
-        degrees: Yup.number()
-          .transform((value, original) => (original === '' || isNaN(original) ? undefined : value))
-          .integer('Degrees (0 to 179) must be an integer number')
-          .min(0, 'Degrees must be greater than ${min}')
-          .max(179, 'Degrees must be less than ${max}')
-          .required('Numeric value is required'),
-        minutes: Yup.number()
-          .transform((value, original) => (original === '' || isNaN(original) ? undefined : value))
-          .integer('Minutes (0 to 59) must be an integer number')
-          .min(0, 'Minutes must be greater than ${min}')
-          .max(59, 'Minutes must be less than ${max}')
-          .required('Numeric value is required'),
-        seconds: Yup.number()
-          .transform((value, original) => (original === '' || isNaN(original) ? undefined : value))
-          .min(0, 'Seconds must be greater than ${min}')
-          .max(59, 'Seconds must be less than ${max}')
-          .required('Numeric value is required'),
+        degrees: createNumberSchema('Degrees', 0, 179, true, true),
+        minutes: createNumberSchema('Minutes', 0, 59, true, true),
+        seconds: createNumberSchema('Seconds', 0, 59, true, false),
       }),
     }),
     otherwise: Yup.object().nullable(),
