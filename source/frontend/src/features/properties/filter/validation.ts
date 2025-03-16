@@ -1,29 +1,7 @@
 /* eslint-disable no-template-curly-in-string */
 import * as Yup from 'yup';
 
-// allow numbers & empty string
-const createNumberSchema = (
-  label: string,
-  min: number,
-  max: number,
-  isRequired = false,
-  isInteger = false,
-) => {
-  let schema = Yup.number()
-    .label(label)
-    .transform((value, original) => (original === '' || isNaN(original) ? undefined : value))
-    .min(min, '${label} must be greater than ${min}')
-    .max(max, '${label} must be less than ${max}');
-
-  if (isRequired) {
-    schema = schema.required('Numeric value is required for ${label}');
-  }
-  if (isInteger) {
-    schema = schema.integer(`\${label} (${min} to ${max}) must be an integer number`);
-  }
-
-  return schema;
-};
+import { createNumberSchema } from '@/utils/YupSchema';
 
 export const PropertyFilterValidationSchema = Yup.object().shape({
   pid: Yup.string().nullable(),
