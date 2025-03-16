@@ -74,6 +74,24 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
     }
   };
 
+  const searchOptions = [
+    { label: 'PID', value: 'pid' },
+    { label: 'PIN', value: 'pin' },
+    { label: 'Address', value: 'address' },
+    { label: 'Plan #', value: 'planNumber' },
+    {
+      label: 'Historical File #',
+      value: 'historical',
+    },
+  ];
+
+  if (toggle === SearchToggleOption.Map) {
+    searchOptions.push({
+      label: 'Lat/Long',
+      value: 'coordinates',
+    });
+  }
+
   return (
     <Formik<IPropertyFilter>
       initialValues={{ ...initialValues }}
@@ -94,20 +112,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
             <NoRightPaddingColumn xs="1" md="1" lg="1" xl="1">
               <StyledSelect
                 field="searchBy"
-                options={[
-                  { label: 'PID', value: 'pid' },
-                  { label: 'PIN', value: 'pin' },
-                  { label: 'Address', value: 'address' },
-                  { label: 'Plan #', value: 'planNumber' },
-                  {
-                    label: 'Historical File #',
-                    value: 'historical',
-                  },
-                  {
-                    label: 'Lat/Long',
-                    value: 'coordinates',
-                  },
-                ]}
+                options={searchOptions}
                 className="idir-input-group"
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
                   setFieldValue('latitude', null);
