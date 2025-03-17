@@ -1,4 +1,6 @@
 export interface IResearchFilter {
+  pid: string;
+  pin: string;
   regionCode: string;
   researchFileStatusTypeCode: string;
   name: string;
