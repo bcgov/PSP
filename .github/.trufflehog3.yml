@@ -10,6 +10,8 @@ exclude: # exclude matching issues
       - coverage/**
       - tests/**
       - test/**
+      - *.test.tsx
+      - *.test.ts
       - .scannerwork/**
       - .sonarqube/**
       - zap-report.html
@@ -36,6 +38,7 @@ exclude: # exclude matching issues
       - "*.css"
       - "*.scss"
       - "*.config.ts"
+      - basemaps.json
   - message: Ignore integrity hashes on Openshift config files
     pattern: sha256:.*
     paths:
