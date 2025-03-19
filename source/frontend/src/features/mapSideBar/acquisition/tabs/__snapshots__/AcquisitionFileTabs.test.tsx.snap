@@ -125,7 +125,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
         href="#"
         role="tab"
       >
-        File details
+        File Details
       </a>
       <a
         aria-selected="false"
