@@ -10,21 +10,21 @@ exclude: # exclude matching issues
       - coverage/**
       - tests/**
       - test/**
-      - *.test.tsx
-      - *.test.ts
+      - "*.test.tsx"
+      - "*.test.ts"
       - .scannerwork/**
       - .sonarqube/**
       - zap-report.html
       - zap-report.xml
   - message: Ignore mocks
     paths:
-      - mockServiceWorker.js
+      - "mockServiceWorker.js"
   - message: Ignore auto-generated scan reports
     paths:
       - trufflehog_report.*
   - message: Ignore lockfiles
     paths:
-      - package-lock.json
+      - "package-lock.json"
   - message: Ignore local .env files
     paths:
       - "*.env"
@@ -38,7 +38,6 @@ exclude: # exclude matching issues
       - "*.css"
       - "*.scss"
       - "*.config.ts"
-      - basemaps.json
   - message: Ignore integrity hashes on Openshift config files
     pattern: sha256:.*
     paths:
@@ -48,8 +47,8 @@ exclude: # exclude matching issues
     # NOTE pattern is re.Pattern, thus escaping of special characters might be required
     pattern: sha256-.*
     paths:
-      - index.html
-      - nginx.conf.template
+      - "index.html"
+      - "nginx.conf.template"
   - message: Ignore hashes on badge urls
     pattern: https://img\.shields\.io/.*
   - message: Ignore hashes on github gists
@@ -59,7 +58,7 @@ exclude: # exclude matching issues
   - message: Ignore local keycloak configuration (for local development only)
     id: high-entropy
     paths:
-      - realm-export.json
+      - "realm-export.json"
   - message: Ignore SSIS .dtsx files (binary content and verifiers)
     paths:
       - "*.dtsx"
@@ -70,6 +69,9 @@ exclude: # exclude matching issues
   - message: Ignore integrity hashes on Openshift config files
     paths:
       - "Test Data/**"
+  - message: Skip ESRI itemIds everywhere (used mainly in basemaps.json)
+    pattern: ("?)itemId("?):.*
+
 # NOTE you can also specify IDs or patterns together or without paths, e.g.
 #
 #   - message: Skip ID everywhere
