@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Pims.Dal.Entities;
 
@@ -26,5 +27,7 @@ namespace Pims.Dal.Repositories
         IEnumerable<PimsCompReqAcqPayee> GetCompensationRequisitionAcquisitionPayees(long compReqId);
 
         IEnumerable<PimsCompReqLeasePayee> GetCompensationRequisitionLeasePayees(long compReqId);
+
+        PimsCompensationRequisitionHist GetCompensationRequisitionAtTime(long compReqId, DateTime time);
     }
 }

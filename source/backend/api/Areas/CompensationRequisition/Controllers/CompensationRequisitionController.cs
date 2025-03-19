@@ -267,5 +267,19 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
 
             return new JsonResult(_mapper.Map<IEnumerable<CompReqLeasePayeeModel>>(compReqPayees));
         }
+
+        [HttpGet("{id:long}/test-time")]
+        [HasPermission(Permissions.CompensationRequisitionView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(List<CompReqLeasePayeeModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "compensation-requisition" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetCompensationRequisionAtTime([FromRoute] long id, [FromQuery] DateTime time)
+        {
+
+            var histCompReq = _compensationRequisitionService.GetCompensationRequisitionAtTime(id, time);
+
+            return new JsonResult(_mapper.Map<CompensationRequisitionModel>(histCompReq));
+        }
     }
 }

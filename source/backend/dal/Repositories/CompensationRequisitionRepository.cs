@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -229,6 +230,20 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(y => y.LessorTypeCodeNavigation)
                 .Where(x => x.CompensationRequisitionId == compReqId)
                 .ToList();
+        }
+
+        public PimsCompensationRequisitionHist GetCompensationRequisitionAtTime(long compReqId, DateTime time)
+        {
+            //TODO:
+            Console.WriteLine("Here we are");
+            Console.WriteLine($"compReqId: {compReqId} time:{time}");
+
+            var result = Context.PimsCompensationRequisitionHists.AsNoTracking()
+               .Where(crh => crh.CompensationRequisitionId == compReqId)
+               .Where(crh => crh.EffectiveDateHist<time)
+               .OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault();
+
+            return result;
         }
     }
 }

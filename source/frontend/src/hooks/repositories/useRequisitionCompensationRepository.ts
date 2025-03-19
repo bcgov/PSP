@@ -5,6 +5,7 @@ import {
   deleteCompensationRequisitionApi,
   getCompensationRequisitionAcqPayeesApi,
   getCompensationRequisitionApi,
+  getCompensationRequisitionAtTimeApi,
   getCompensationRequisitionFinancialsApi,
   getCompensationRequisitionLeasePayeesApi,
   getCompensationRequisitionPropertiesApi,
@@ -168,6 +169,23 @@ export const useCompensationRequisitionRepository = () => {
     invoke: false,
   });
 
+  const getCompensationRequisitionAtTime = useApiRequestWrapper<
+    (
+      compensationId: number,
+      time: string,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_CompensationRequisition, any>>
+  >({
+    requestFunction: useCallback(
+      async (compensationId: number, time: string) =>
+        await getCompensationRequisitionAtTimeApi(compensationId, time),
+      [],
+    ),
+    requestName: 'getCompensationRequiistionAtTime',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler('Faied to get compensation requisition finalized'),
+    invoke: false,
+  });
+
   return useMemo(
     () => ({
       postCompensationRequisition: postCompensationRequisition,
@@ -179,17 +197,19 @@ export const useCompensationRequisitionRepository = () => {
       getCompensationRequisitionFinancials: getCompensationRequisitionFinancials,
       getCompensationRequisitionAcqPayees: getCompensationRequisitionAcqPayees,
       getCompensationRequisitionLeasePayees: getCompensationRequisitionLeasePayees,
+      getCompensationRequisitionAtTime: getCompensationRequisitionAtTime,
     }),
     [
+      postCompensationRequisition,
       deleteCompensation,
+      updateCompensationRequisition,
       getCompensationRequisition,
-      getCompensationRequisitionFinancials,
       getCompensationRequisitionProperties,
       getFileCompensationRequisitions,
-      postCompensationRequisition,
-      updateCompensationRequisition,
+      getCompensationRequisitionFinancials,
       getCompensationRequisitionAcqPayees,
       getCompensationRequisitionLeasePayees,
+      getCompensationRequisitionAtTime,
     ],
   );
 };

@@ -187,6 +187,13 @@ namespace Pims.Api.Services
             return _compensationRequisitionRepository.GetCompensationRequisitionLeasePayees(compReqId);
         }
 
+
+        public PimsCompensationRequisitionHist GetCompensationRequisitionAtTime(long compReqId, DateTime time)
+        {
+
+            return _compensationRequisitionRepository.GetCompensationRequisitionAtTime(compReqId, time);
+        }
+
         private static string GetCompensationRequisitionStatusText(bool? isDraft)
         {
             if (isDraft.HasValue)
