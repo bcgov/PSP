@@ -65,7 +65,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
       ? AcquisitionForm.fromParentFileApi(parentAcquisitionFile)
       : new AcquisitionForm();
 
-    if (selectedFeatureDataset !== null) {
+    if (selectedFeatureDataset !== null && !isSubFile) {
       const property = PropertyForm.fromMapProperty(
         featuresetToMapProperty(selectedFeatureDataset),
       );
@@ -74,7 +74,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
         property.regionName !== 'Cannot determine' ? property.region?.toString() : undefined;
     }
     return acquisitionForm;
-  }, [parentAcquisitionFile, selectedFeatureDataset]);
+  }, [parentAcquisitionFile, selectedFeatureDataset, isSubFile]);
 
   const handleSave = async () => {
     // Sets the formik field `isValid` to false at start

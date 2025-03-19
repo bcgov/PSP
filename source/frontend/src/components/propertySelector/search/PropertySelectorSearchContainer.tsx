@@ -106,14 +106,17 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
           const foundProperty = featureToLocationFeatureDataset(p);
           foundProperty.regionFeature = regionDistrictResults[i]?.regionFeature;
           foundProperty.districtFeature = regionDistrictResults[i]?.districtFeature;
-          if (exists(foundProperty?.pimsFeature)) {
-            foundProperty.pimsFeature = pimsResults[i]?.features?.length
-              ? pimsResults[i]?.features[0]
-              : ({
-                  properties: {
-                    STREET_ADDRESS_1: addressResults[i]?.fullAddress,
-                  },
-                } as Feature<Geometry, PIMS_Property_Location_View>);
+          if (exists(foundProperty?.pimsFeatures)) {
+            // TODO: This needs to be changed to work with multiple properties
+            foundProperty.pimsFeatures = pimsResults[i]?.features?.length
+              ? [pimsResults[i]?.features[0]]
+              : [
+                  {
+                    properties: {
+                      STREET_ADDRESS_1: addressResults[i]?.fullAddress,
+                    },
+                  } as Feature<Geometry, PIMS_Property_Location_View>,
+                ];
           }
           return foundProperty;
         }) as LocationFeatureDataset[];
@@ -227,16 +230,25 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
 
 export const featureToLocationFeatureDataset = (feature: Feature<Geometry, GeoJsonProperties>) => {
   const center = getFeatureBoundedCenter(feature);
-  return {
-    parcelFeature: feature,
+
+  // TODO: This looks funky. Why is this reconstructing a location dataset from a feature?
+  const locationDataSet: LocationFeatureDataset = {
+    parcelFeatures: [feature as Feature<Geometry, PMBC_FullyAttributed_Feature_Properties>],
     selectingComponentId: null,
-    pimsFeature: null,
+    pimsFeatures: null,
     location: { lat: center[1], lng: center[0] },
     regionFeature: null,
     districtFeature: null,
     municipalityFeatures: null,
     highwayFeatures: null,
-  } as LocationFeatureDataset;
+    crownLandLeasesFeatures: null,
+    crownLandLicensesFeatures: null,
+    crownLandTenuresFeatures: null,
+    crownLandInventoryFeatures: null,
+    crownLandInclusionsFeatures: null,
+    fileLocation: null,
+  };
+  return locationDataSet;
 };
 
 // Not thread safe. Modifies the passed property.

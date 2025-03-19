@@ -61,7 +61,7 @@ export interface IUserLayerQuery {
     spatialReferenceId?: number,
   ) => Promise<Record<string, any>>;
 
-  findMultipleWhereContainsWrapped: IResponseWrapper<
+  findOneWhereContainsWrapped: IResponseWrapper<
     (
       latlng: LatLngLiteral,
       geometryName?: string,
@@ -287,7 +287,7 @@ export const useLayerQuery = (
     findByPlanNumber,
     findByPlanNumberLoading,
     findOneMetadataByLocation,
-    findMultipleWhereContainsWrapped: findOneWhereContainsWrapped,
+    findOneWhereContainsWrapped,
     findMultipleWhereContainsWrapped,
     findOneWhereExactWrapped,
   };

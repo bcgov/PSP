@@ -20,7 +20,7 @@ import {
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { MAP_MAX_NATIVE_ZOOM, MAP_MAX_ZOOM, MAX_ZOOM } from '@/constants/strings';
 import { useTenant } from '@/tenants';
-import { exists } from '@/utils';
+import { exists, firstOrNull } from '@/utils';
 
 import { DEFAULT_MAP_ZOOM, defaultBounds, defaultLatLng } from './constants';
 import AdvancedFilterButton from './leaflet/Control/AdvancedFilter/AdvancedFilterButton';
@@ -142,12 +142,10 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
     activeFeatureLayer?.clearLayers();
 
     if (isRepositioning) {
-      if (
-        repositioningFeatureDataset !== null &&
-        repositioningFeatureDataset.pimsFeature !== null
-      ) {
+      const firstPimsFeature = firstOrNull(repositioningFeatureDataset.pimsFeatures);
+      if (firstPimsFeature !== null) {
         // File marker repositioning is active - highlight the property and the corresponding boundary when user triggers the relocate action.
-        activeFeatureLayer?.addData(repositioningFeatureDataset.pimsFeature);
+        activeFeatureLayer?.addData(firstPimsFeature);
       }
     } else {
       // Not repositioning - highlight parcels on map click as usual workflow

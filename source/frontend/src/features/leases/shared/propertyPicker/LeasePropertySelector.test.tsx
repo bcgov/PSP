@@ -149,16 +149,20 @@ describe('LeasePropertySelector component', () => {
     testMockMachine.mapLocationFeatureDataset = {
       location: { lng: -120.69195885, lat: 50.25163372 },
       fileLocation: null,
-      pimsFeature: {
-        type: 'Feature',
-        properties: { ...EmptyPropertyLocation, PROPERTY_ID: 1 },
-        geometry: getMockPolygon(),
-      },
-      parcelFeature: {
-        type: 'Feature',
-        properties: { ...emptyPmbcParcel },
-        geometry: getMockPolygon(),
-      },
+      pimsFeatures: [
+        {
+          type: 'Feature',
+          properties: { ...EmptyPropertyLocation, PROPERTY_ID: 1 },
+          geometry: getMockPolygon(),
+        },
+      ],
+      parcelFeatures: [
+        {
+          type: 'Feature',
+          properties: { ...emptyPmbcParcel },
+          geometry: getMockPolygon(),
+        },
+      ],
       regionFeature: {
         type: 'Feature',
         properties: { ...emptyRegion, REGION_NUMBER: 1, REGION_NAME: 'South Coast Region' },
@@ -200,12 +204,14 @@ describe('LeasePropertySelector component', () => {
     testMockMachine.mapLocationFeatureDataset = {
       location: { lng: -120.69195885, lat: 50.25163372 },
       fileLocation: null,
-      pimsFeature: null, // no PIMS property was found - meaning this property will be added to the inventory.
-      parcelFeature: {
-        type: 'Feature',
-        properties: { ...emptyPmbcParcel },
-        geometry: getMockPolygon(),
-      },
+      pimsFeatures: null, // no PIMS property was found - meaning this property will be added to the inventory.
+      parcelFeatures: [
+        {
+          type: 'Feature',
+          properties: { ...emptyPmbcParcel },
+          geometry: getMockPolygon(),
+        },
+      ],
       regionFeature: {
         type: 'Feature',
         properties: { ...emptyRegion, REGION_NUMBER: 1, REGION_NAME: 'South Coast Region' },
@@ -285,16 +291,20 @@ describe('LeasePropertySelector component', () => {
     testMockMachine.mapLocationFeatureDataset = {
       location: { lng: -120, lat: 50 }, // new lat/lng for the marker
       fileLocation: null,
-      pimsFeature: {
-        type: 'Feature',
-        properties: { ...EmptyPropertyLocation, PROPERTY_ID: 1 },
-        geometry: getMockPolygon(),
-      },
-      parcelFeature: {
-        type: 'Feature',
-        properties: { ...emptyPmbcParcel },
-        geometry: getMockPolygon(),
-      },
+      pimsFeatures: [
+        {
+          type: 'Feature',
+          properties: { ...EmptyPropertyLocation, PROPERTY_ID: 1 },
+          geometry: getMockPolygon(),
+        },
+      ],
+      parcelFeatures: [
+        {
+          type: 'Feature',
+          properties: { ...emptyPmbcParcel },
+          geometry: getMockPolygon(),
+        },
+      ],
       regionFeature: {
         type: 'Feature',
         properties: { ...emptyRegion, REGION_NUMBER: 1, REGION_NAME: 'South Coast Region' },

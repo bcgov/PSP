@@ -1,4 +1,4 @@
-import { Feature, FeatureCollection, Geometry } from 'geojson';
+import { Feature, Geometry } from 'geojson';
 import { LatLngLiteral } from 'leaflet';
 import { useCallback } from 'react';
 
@@ -22,14 +22,14 @@ import { WHSE_Municipalities_Feature_Properties } from '@/models/layers/municipa
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { ISS_ProvincialPublicHighway } from '@/models/layers/pimsHighwayLayer';
 import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
-import { exists, isValidId } from '@/utils';
+import { isValidId } from '@/utils';
 
 export interface LocationFeatureDataset {
   selectingComponentId: string | null;
   location: LatLngLiteral;
   fileLocation: LatLngLiteral | null;
   parcelFeatures: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties>[] | null;
-  pimsFeature: Feature<Geometry, PIMS_Property_Location_View> | null;
+  pimsFeatures: Feature<Geometry, PIMS_Property_Location_View>[] | null;
   regionFeature: Feature<Geometry, MOT_RegionalBoundary_Feature_Properties> | null;
   districtFeature: Feature<Geometry, MOT_DistrictBoundary_Feature_Properties> | null;
   municipalityFeatures: Feature<Geometry, WHSE_Municipalities_Feature_Properties>[] | null;
@@ -59,7 +59,7 @@ const useLocationFeatureLoader = () => {
   const {
     loadProperties: { execute: loadProperties },
   } = useMapProperties();
-  const { findOneByBoundary } = usePimsPropertyLayer();
+  const { findAllByBoundary } = usePimsPropertyLayer();
 
   const fullyAttributedServiceFindAll = fullyAttributedService.findAll;
 
@@ -93,7 +93,7 @@ const useLocationFeatureLoader = () => {
         selectingComponentId: null,
         location: latLng,
         fileLocation: latLng,
-        pimsFeature: null,
+        pimsFeatures: null,
         parcelFeatures: null,
         regionFeature: null,
         districtFeature: null,
@@ -145,9 +145,8 @@ const useLocationFeatureLoader = () => {
         municipalityFeatureTask,
       ]);
 
-      let pimsLocationProperties:
-        | FeatureCollection<Geometry, PIMS_Property_Location_View>
-        | undefined = undefined;
+      let pimsLocationProperties: Feature<Geometry, PIMS_Property_Location_View>[] | undefined =
+        undefined;
 
       // Load PimsProperties
       // - first attempt to find it by our internal PIMS id
@@ -155,12 +154,11 @@ const useLocationFeatureLoader = () => {
       // - if not found by boundary attempt to match it by PID / PIN coming from parcel-map
       const isInPims = isValidId(Number(pimsPropertyId));
       if (isInPims) {
-        pimsLocationProperties = await loadProperties({ PROPERTY_ID: Number(pimsPropertyId) });
+        pimsLocationProperties = (await loadProperties({ PROPERTY_ID: Number(pimsPropertyId) }))
+          .features;
       } else {
-        const boundaryFeature = await findOneByBoundary(latLng, 'GEOMETRY', 4326);
-        if (exists(boundaryFeature)) {
-          pimsLocationProperties = { features: [boundaryFeature], type: 'FeatureCollection' };
-        }
+        pimsLocationProperties = await findAllByBoundary(latLng, 'GEOMETRY', 4326);
+
         /*
          * TODO: Figure out how to do this with multiple results
         else if (
@@ -175,10 +173,7 @@ const useLocationFeatureLoader = () => {
         */
       }
 
-      if (exists(pimsLocationProperties?.features) && pimsLocationProperties.features.length > 0) {
-        result.pimsFeature = pimsLocationProperties.features[0] ?? null;
-      }
-
+      result.pimsFeatures = pimsLocationProperties ?? null;
       result.parcelFeatures = parcelFeatures ?? null;
       result.regionFeature = regionFeature ?? null;
       result.districtFeature = districtFeature ?? null;
@@ -189,8 +184,6 @@ const useLocationFeatureLoader = () => {
       result.crownLandTenuresFeatures = crownLandTenuresFeatures ?? null;
       result.crownLandInventoryFeatures = crownLandInventoryFeatures ?? null;
       result.crownLandInclusionsFeatures = crownLandInclusionsFeatures ?? null;
-
-      debugger;
 
       return result;
     },
@@ -203,7 +196,7 @@ const useLocationFeatureLoader = () => {
       crownLandLayerServiceFindMultipleLease,
       crownLandLayerServiceFindMultipleLicense,
       crownLandLayerServiceFindMultipleTenure,
-      findOneByBoundary,
+      findAllByBoundary,
       fullyAttributedServiceFindAll,
       highwayLayerServiceFindMultiple,
       loadProperties,

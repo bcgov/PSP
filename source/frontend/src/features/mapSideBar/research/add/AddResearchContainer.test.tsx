@@ -102,8 +102,8 @@ describe('AddResearchContainer component', () => {
         selectedFeatureDataset: {
           location: { lat: 0, lng: 0 },
           fileLocation: null,
-          pimsFeature: null,
-          parcelFeature: selectedFeature,
+          pimsFeatures: null,
+          parcelFeatures: [selectedFeature],
           regionFeature: null,
           districtFeature: null,
           municipalityFeatures: null,

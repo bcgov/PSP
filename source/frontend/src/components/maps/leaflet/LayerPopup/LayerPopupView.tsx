@@ -6,7 +6,6 @@ import styled from 'styled-components';
 
 import { StyledIconButton } from '@/components/common/buttons';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { Scrollable } from '@/components/common/Scrollable/Scrollable';
 import SimplePagination from '@/components/common/SimplePagination';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
@@ -16,11 +15,12 @@ import { LayerPopupContent } from './components/LayerPopupContent';
 import { LayerPopupFlyout } from './components/LayerPopupFlyout';
 import { LayerPopupLinks } from './components/LayerPopupLinks';
 import { LayerData, LayerPopupInformation } from './LayerPopupContainer';
+import { SinglePropertyFeatureDataSet } from './LocationPopupContainer';
 import { LayerPopupTitle } from './styles';
 
 export interface ILayerPopupViewProps {
   layerPopup: LayerPopupInformation;
-  featureDataset: LocationFeatureDataset | null;
+  featureDataset: SinglePropertyFeatureDataSet | null;
 }
 
 export const LayerPopupView: React.FC<React.PropsWithChildren<ILayerPopupViewProps>> = ({

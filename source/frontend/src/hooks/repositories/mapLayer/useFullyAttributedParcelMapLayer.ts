@@ -142,7 +142,6 @@ export const useFullyAttributedParcelMapLayer = () => {
         const forceCasted = featureCollection as
           | FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties>
           | undefined;
-        debugger;
         return forceCasted !== undefined && forceCasted.features.length > 0
           ? forceCasted.features
           : undefined;

@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 
 import { Button } from '@/components/common/buttons';
 import { useMapProperties } from '@/hooks/repositories/useMapProperties';
-import { isValidId } from '@/utils';
+import { firstOrNull, isValidId } from '@/utils';
 import {
   featuresetToMapProperty,
   getPropertyName,
@@ -46,7 +46,7 @@ export const MapSelectorContainer: FunctionComponent<IMapSelectorContainerProps>
     LocationFeatureDataset | undefined
   >(
     modifiedProperties?.length === 1 &&
-      (modifiedProperties[0]?.pimsFeature || modifiedProperties[0]?.parcelFeature) // why? Because create from map needs to show the info differently
+      (modifiedProperties[0]?.pimsFeatures || modifiedProperties[0]?.parcelFeatures) // why? Because create from map needs to show the info differently
       ? modifiedMapProperties[0]
       : undefined,
   );
@@ -57,7 +57,7 @@ export const MapSelectorContainer: FunctionComponent<IMapSelectorContainerProps>
   const addWithPimsFeature = useCallback(
     async (properties: LocationFeatureDataset[]) => {
       const updatedPropertiesPromises = properties.map(async property => {
-        if (property.pimsFeature?.properties?.PROPERTY_ID) {
+        if (firstOrNull(property.pimsFeatures)?.properties?.PROPERTY_ID) {
           return property;
         }
         const pid = pidFromFeatureSet(property);
@@ -74,7 +74,8 @@ export const MapSelectorContainer: FunctionComponent<IMapSelectorContainerProps>
         }
         const pimsProperty = await loadProperties(queryObject);
         if (pimsProperty.features.length > 0) {
-          property.pimsFeature = pimsProperty.features[0];
+          // TODO: Might need updates to work with multiple properties
+          property.pimsFeatures = [pimsProperty.features[0]];
         }
         return property;
       });

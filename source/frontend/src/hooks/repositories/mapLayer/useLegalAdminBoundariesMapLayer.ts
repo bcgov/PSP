@@ -99,6 +99,8 @@ export const useLegalAdminBoundariesMapLayer = () => {
     [
       findOneAgriculturalReserve,
       findOneAlrWrappedLoading,
+      findMultipleMunicipality,
+      findMultipleMunicipalWrappedLoading,
       findOneMunicipality,
       findOneMunicipalWrappedLoading,
     ],

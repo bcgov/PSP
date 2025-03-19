@@ -276,8 +276,8 @@ describe('AddLeaseContainer component', () => {
       selectedFeatureDataset: {
         location: { lng: -120.69195885, lat: 50.25163372 },
         fileLocation: null,
-        pimsFeature: null,
-        parcelFeature: null,
+        pimsFeatures: null,
+        parcelFeatures: null,
         regionFeature: {
           type: 'Feature',
           properties: { ...emptyRegion, REGION_NUMBER: 1, REGION_NAME: 'South Coast Region' },

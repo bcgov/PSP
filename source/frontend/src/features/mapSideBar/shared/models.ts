@@ -20,6 +20,7 @@ import {
 import {
   enumFromValue,
   exists,
+  firstOrNull,
   formatApiAddress,
   formatBcaAddress,
   getLatLng,
@@ -120,22 +121,26 @@ export class PropertyForm {
   }
 
   public static fromFeatureDataset(model: LocationFeatureDataset): PropertyForm {
+    // TODO: Make it work with multiple properties
+    const firstPimsFeature = firstOrNull(model?.pimsFeatures);
+    const firstParcelFeature = firstOrNull(model?.parcelFeatures);
+
     return new PropertyForm({
-      apiId: +(model?.pimsFeature?.properties?.PROPERTY_ID ?? 0),
+      apiId: +(firstPimsFeature?.properties?.PROPERTY_ID ?? 0),
       pid: pidFromFeatureSet(model),
       pin: pinFromFeatureSet(model),
       latitude: model?.location?.lat,
       longitude: model?.location?.lng,
       fileLocation: model?.fileLocation ?? model?.location ?? undefined,
       planNumber:
-        model?.pimsFeature?.properties?.SURVEY_PLAN_NUMBER ??
-        model?.parcelFeature?.properties?.PLAN_NUMBER ??
+        firstPimsFeature?.properties?.SURVEY_PLAN_NUMBER ??
+        firstParcelFeature?.properties?.PLAN_NUMBER ??
         '',
       polygon:
-        model?.parcelFeature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.Polygon
-          ? (model?.parcelFeature?.geometry as Polygon)
-          : model?.parcelFeature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.MultiPolygon
-          ? (model?.parcelFeature?.geometry as MultiPolygon)
+        firstParcelFeature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.Polygon
+          ? (firstParcelFeature?.geometry as Polygon)
+          : firstParcelFeature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.MultiPolygon
+          ? (firstParcelFeature?.geometry as MultiPolygon)
           : undefined,
       region: isNumber(model?.regionFeature?.properties?.REGION_NUMBER)
         ? model?.regionFeature?.properties?.REGION_NUMBER
@@ -146,17 +151,17 @@ export class PropertyForm {
         : DistrictCodes.Unknown,
       districtName: model?.districtFeature?.properties?.DISTRICT_NAME ?? 'Cannot determine',
       formattedAddress: 'unknown',
-      landArea: model?.pimsFeature?.properties?.LAND_AREA
-        ? +model?.pimsFeature?.properties?.LAND_AREA
-        : model?.parcelFeature?.properties?.FEATURE_AREA_SQM ?? 0,
-      areaUnit: model?.pimsFeature?.properties?.PROPERTY_AREA_UNIT_TYPE_CODE
-        ? enumFromValue(model?.pimsFeature?.properties?.PROPERTY_AREA_UNIT_TYPE_CODE, AreaUnitTypes)
+      landArea: firstPimsFeature?.properties?.LAND_AREA
+        ? +firstPimsFeature?.properties?.LAND_AREA
+        : firstParcelFeature?.properties?.FEATURE_AREA_SQM ?? 0,
+      areaUnit: firstPimsFeature?.properties?.PROPERTY_AREA_UNIT_TYPE_CODE
+        ? enumFromValue(firstPimsFeature?.properties?.PROPERTY_AREA_UNIT_TYPE_CODE, AreaUnitTypes)
         : AreaUnitTypes.SquareMeters,
-      isRetired: model?.pimsFeature?.properties?.IS_RETIRED ?? false,
-      isDisposed: model?.pimsFeature?.properties?.IS_DISPOSED ?? false,
+      isRetired: firstPimsFeature?.properties?.IS_RETIRED ?? false,
+      isDisposed: firstPimsFeature?.properties?.IS_DISPOSED ?? false,
       legalDescription:
-        model?.pimsFeature?.properties?.LAND_LEGAL_DESCRIPTION ??
-        model?.parcelFeature?.properties?.LEGAL_DESCRIPTION ??
+        firstPimsFeature?.properties?.LAND_LEGAL_DESCRIPTION ??
+        firstParcelFeature?.properties?.LEGAL_DESCRIPTION ??
         '',
     });
   }
@@ -181,31 +186,33 @@ export class PropertyForm {
 
   public toFeatureDataset(): LocationFeatureDataset {
     return {
-      parcelFeature: null,
+      parcelFeatures: null,
       selectingComponentId: null,
-      pimsFeature: {
-        properties: {
-          ...EmptyPropertyLocation,
-          PROPERTY_ID: this.apiId,
-          PID: this.pid ? +this.pid.replaceAll(/-/g, '') : null,
-          PID_PADDED: this?.pid?.padStart(9, '0'),
-          PIN: this.pin ? +this.pin : null,
-          SURVEY_PLAN_NUMBER: this.planNumber,
-          REGION_CODE: this.region,
-          DISTRICT_CODE: this.district,
-          LAND_AREA: this.landArea,
-          PROPERTY_AREA_UNIT_TYPE_CODE: this.areaUnit,
-          STREET_ADDRESS_1: this.address?.streetAddress1 ?? this.formattedAddress,
-          STREET_ADDRESS_2: this.address?.streetAddress2,
-          STREET_ADDRESS_3: this.address?.streetAddress3,
-          MUNICIPALITY_NAME: this.address?.municipality,
-          POSTAL_CODE: this.address?.postalCode,
-          IS_RETIRED: this.isRetired,
-          LAND_LEGAL_DESCRIPTION: this.legalDescription,
+      pimsFeatures: [
+        {
+          properties: {
+            ...EmptyPropertyLocation,
+            PROPERTY_ID: this.apiId,
+            PID: this.pid ? +this.pid.replaceAll(/-/g, '') : null,
+            PID_PADDED: this?.pid?.padStart(9, '0'),
+            PIN: this.pin ? +this.pin : null,
+            SURVEY_PLAN_NUMBER: this.planNumber,
+            REGION_CODE: this.region,
+            DISTRICT_CODE: this.district,
+            LAND_AREA: this.landArea,
+            PROPERTY_AREA_UNIT_TYPE_CODE: this.areaUnit,
+            STREET_ADDRESS_1: this.address?.streetAddress1 ?? this.formattedAddress,
+            STREET_ADDRESS_2: this.address?.streetAddress2,
+            STREET_ADDRESS_3: this.address?.streetAddress3,
+            MUNICIPALITY_NAME: this.address?.municipality,
+            POSTAL_CODE: this.address?.postalCode,
+            IS_RETIRED: this.isRetired,
+            LAND_LEGAL_DESCRIPTION: this.legalDescription,
+          },
+          type: 'Feature',
+          geometry: this.polygon ? this.polygon : null,
         },
-        type: 'Feature',
-        geometry: this.polygon ? this.polygon : null,
-      },
+      ],
       location: { lat: this.latitude, lng: this.longitude },
       fileLocation: this.fileLocation ?? { lat: this.latitude, lng: this.longitude },
       regionFeature: {
@@ -234,7 +241,7 @@ export class PropertyForm {
         type: 'Feature',
         geometry: null,
       },
-      municipalityFeature: null,
+      municipalityFeatures: null,
       highwayFeatures: null,
       crownLandLeasesFeatures: null,
       crownLandLicensesFeatures: null,

@@ -42,8 +42,10 @@ export const PropertySearchSelectorFormView: React.FunctionComponent<
     return { ...x, id: generatePropertyId(featuresetToMapProperty(x)) };
   });
 
+  const maxCount = 150;
+
   const identifiedSearchResults =
-    searchResults?.length <= 15
+    searchResults?.length <= maxCount
       ? searchResults.map<IIdentifiedLocationFeatureDataset>(x => {
           return { ...x, id: generatePropertyId(featuresetToMapProperty(x)) };
         })
@@ -73,11 +75,11 @@ export const PropertySearchSelectorFormView: React.FunctionComponent<
           name="map-properties"
           columns={mapPropertyColumns}
           data={identifiedSearchResults}
-          setSelectedRows={searchResults?.length <= 15 ? onSelectedProperties : undefined}
+          setSelectedRows={searchResults?.length <= maxCount ? onSelectedProperties : undefined}
           selectedRows={selectedData}
           loading={loading}
           lockPageSize={true}
-          showSelectedRowCount={searchResults?.length <= 15}
+          showSelectedRowCount={searchResults?.length <= maxCount}
           noRowsMessage={
             searchResults?.length <= 15
               ? 'No results found for your search criteria.'

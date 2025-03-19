@@ -2,8 +2,6 @@ import { Feature, GeoJsonProperties } from 'geojson';
 import { geoJSON, LatLngBounds, LatLngLiteral } from 'leaflet';
 import React, { useEffect, useState } from 'react';
 
-import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { exists } from '@/utils';
 
 import { PopupContentConfig } from './components/LayerPopupContent';
@@ -14,6 +12,7 @@ import {
   parcelLayerPopupConfig,
 } from './constants';
 import { LayerPopupView } from './LayerPopupView';
+import { SinglePropertyFeatureDataSet } from './LocationPopupContainer';
 
 export interface LayerData {
   title: string;
@@ -51,21 +50,18 @@ const emptyLayerPopupInformation: LayerPopupInformation = {
 };
 
 interface ILayerPopupContainer {
-  featureDataset: LocationFeatureDataset | null;
+  featureDataset: SinglePropertyFeatureDataSet | null;
 }
 
 export const LayerPopupContainer: React.FC<
   React.PropsWithChildren<ILayerPopupContainer>
 > = props => {
-  //const mapMachine = useMapStateMachine();
-  const composedProperty = props.composedProperty;
+  const featureSet = props.featureDataset;
 
   const [layerPopup, setLayerPopup] = useState<LayerPopupInformation>(emptyLayerPopupInformation);
 
   useEffect(() => {
-    if (mapMachine.mapLocationFeatureDataset) {
-      const featureSet = mapMachine.mapLocationFeatureDataset;
-
+    if (featureSet) {
       const layersData: LayerData[] = [];
 
       if (exists(featureSet.parcelFeature)) {
@@ -79,96 +75,140 @@ export const LayerPopupContainer: React.FC<
         parcelData.feature = featureSet.parcelFeature;
         layersData.push(parcelData);
       }
-      if (exists(featureSet.crownLandLeasesFeatures)) {
-        const parcelData: LayerData = {
-          title: 'Crown Land Leases',
-          data: null,
-          config: {},
-        };
 
-        parcelData.bounds = featureSet.crownLandLeasesFeatures.geometry
-          ? geoJSON(featureSet.crownLandLeasesFeatures.geometry).getBounds()
-          : undefined;
-        parcelData.config = getDynamicFeatureConfig(featureSet.crownLandLeasesFeatures);
-        parcelData.data = featureSet.crownLandLeasesFeatures.properties;
-        parcelData.feature = featureSet.crownLandLeasesFeatures;
-        layersData.push(parcelData);
-      }
-      if (exists(featureSet.crownLandLicensesFeatures)) {
-        const parcelData: LayerData = {
-          title: 'Crown Land Licenses',
-          data: null,
-          config: {},
-        };
+      if (
+        exists(featureSet.crownLandLeasesFeatures) &&
+        featureSet.crownLandLeasesFeatures.length > 0
+      ) {
+        featureSet.crownLandLeasesFeatures.forEach((crownLandLeasesFeature, index) => {
+          const parcelData: LayerData = {
+            title: `Crown Land Leases (${index + 1} of ${featureSet.municipalityFeatures.length})`,
+            data: null,
+            config: {},
+          };
 
-        parcelData.bounds = featureSet.crownLandLicensesFeatures.geometry
-          ? geoJSON(featureSet.crownLandLicensesFeatures.geometry).getBounds()
-          : undefined;
-        parcelData.config = getDynamicFeatureConfig(featureSet.crownLandLicensesFeatures);
-        parcelData.data = featureSet.crownLandLicensesFeatures.properties;
-        parcelData.feature = featureSet.crownLandLicensesFeatures;
-        layersData.push(parcelData);
+          parcelData.bounds = crownLandLeasesFeature.geometry
+            ? geoJSON(crownLandLeasesFeature.geometry).getBounds()
+            : undefined;
+          parcelData.config = getDynamicFeatureConfig(crownLandLeasesFeature);
+          parcelData.data = crownLandLeasesFeature.properties;
+          parcelData.feature = crownLandLeasesFeature;
+          layersData.push(parcelData);
+        });
       }
-      if (exists(featureSet.crownLandTenuresFeatures)) {
-        const parcelData: LayerData = {
-          title: 'Crown Land Tenures',
-          data: null,
-          config: {},
-        };
 
-        parcelData.bounds = featureSet.crownLandTenuresFeatures.geometry
-          ? geoJSON(featureSet.crownLandTenuresFeatures.geometry).getBounds()
-          : undefined;
-        parcelData.config = getDynamicFeatureConfig(featureSet.crownLandTenuresFeatures);
-        parcelData.data = featureSet.crownLandTenuresFeatures.properties;
-        parcelData.feature = featureSet.crownLandTenuresFeatures;
-        layersData.push(parcelData);
-      }
-      if (exists(featureSet.crownLandInventoryFeatures)) {
-        const parcelData: LayerData = {
-          title: 'Crown Land Inventory',
-          data: null,
-          config: {},
-        };
+      if (
+        exists(featureSet.crownLandLicensesFeatures) &&
+        featureSet.crownLandLicensesFeatures.length > 0
+      ) {
+        featureSet.crownLandLicensesFeatures.forEach((crownLandLicensesFeature, index) => {
+          const parcelData: LayerData = {
+            title: `Crown Land Licenses (${index + 1} of ${
+              featureSet.crownLandLicensesFeatures.length
+            })`,
+            data: null,
+            config: {},
+          };
 
-        parcelData.bounds = featureSet.crownLandInventoryFeatures.geometry
-          ? geoJSON(featureSet.crownLandInventoryFeatures.geometry).getBounds()
-          : undefined;
-        parcelData.config = getDynamicFeatureConfig(featureSet.crownLandInventoryFeatures);
-        parcelData.data = featureSet.crownLandInventoryFeatures.properties;
-        parcelData.feature = featureSet.crownLandInventoryFeatures;
-        layersData.push(parcelData);
+          parcelData.bounds = crownLandLicensesFeature.geometry
+            ? geoJSON(crownLandLicensesFeature.geometry).getBounds()
+            : undefined;
+          parcelData.config = getDynamicFeatureConfig(crownLandLicensesFeature);
+          parcelData.data = crownLandLicensesFeature.properties;
+          parcelData.feature = crownLandLicensesFeature;
+          layersData.push(parcelData);
+        });
       }
-      if (exists(featureSet.crownLandInclusionsFeatures)) {
-        const parcelData: LayerData = {
-          title: 'Crown Land Inclusions',
-          data: null,
-          config: {},
-        };
 
-        parcelData.bounds = featureSet.crownLandInclusionsFeatures.geometry
-          ? geoJSON(featureSet.crownLandInclusionsFeatures.geometry).getBounds()
-          : undefined;
-        parcelData.config = getDynamicFeatureConfig(featureSet.crownLandInclusionsFeatures);
-        parcelData.data = featureSet.crownLandInclusionsFeatures.properties;
-        parcelData.feature = featureSet.crownLandInclusionsFeatures;
-        layersData.push(parcelData);
-      }
-      if (exists(featureSet.municipalityFeatures)) {
-        const parcelData: LayerData = {
-          title: 'Municipality Information',
-          data: null,
-          config: {},
-        };
+      if (
+        exists(featureSet.crownLandTenuresFeatures) &&
+        featureSet.crownLandTenuresFeatures.length > 0
+      ) {
+        featureSet.crownLandTenuresFeatures.forEach((crownLandTenuresFeature, index) => {
+          const parcelData: LayerData = {
+            title: `Crown Land Tenures (${index + 1} of ${
+              featureSet.crownLandTenuresFeatures.length
+            })`,
+            data: null,
+            config: {},
+          };
 
-        parcelData.bounds = featureSet.municipalityFeatures.geometry
-          ? geoJSON(featureSet.municipalityFeatures.geometry).getBounds()
-          : undefined;
-        parcelData.config = municipalityLayerPopupConfig;
-        parcelData.data = featureSet.municipalityFeatures.properties;
-        parcelData.feature = featureSet.municipalityFeatures;
-        layersData.push(parcelData);
+          parcelData.bounds = crownLandTenuresFeature.geometry
+            ? geoJSON(crownLandTenuresFeature.geometry).getBounds()
+            : undefined;
+          parcelData.config = getDynamicFeatureConfig(crownLandTenuresFeature);
+          parcelData.data = crownLandTenuresFeature.properties;
+          parcelData.feature = crownLandTenuresFeature;
+          layersData.push(parcelData);
+        });
       }
+
+      if (
+        exists(featureSet.crownLandInventoryFeatures) &&
+        featureSet.crownLandInventoryFeatures.length > 0
+      ) {
+        featureSet.crownLandInclusionsFeatures.forEach((crownLandInventoryFeature, index) => {
+          const parcelData: LayerData = {
+            title: `Crown Land Inventory (${index + 1} of ${
+              featureSet.crownLandInventoryFeatures.length
+            })`,
+            data: null,
+            config: {},
+          };
+
+          parcelData.bounds = crownLandInventoryFeature.geometry
+            ? geoJSON(crownLandInventoryFeature.geometry).getBounds()
+            : undefined;
+          parcelData.config = getDynamicFeatureConfig(crownLandInventoryFeature);
+          parcelData.data = crownLandInventoryFeature.properties;
+          parcelData.feature = crownLandInventoryFeature;
+          layersData.push(parcelData);
+        });
+      }
+
+      if (
+        exists(featureSet.crownLandInclusionsFeatures) &&
+        featureSet.crownLandInclusionsFeatures.length > 0
+      ) {
+        featureSet.crownLandInclusionsFeatures.forEach((crownLandInclusionsFeature, index) => {
+          const parcelData: LayerData = {
+            title: `Crown Land Inclusions (${index + 1} of ${
+              featureSet.crownLandInclusionsFeatures.length
+            })`,
+            data: null,
+            config: {},
+          };
+
+          parcelData.bounds = crownLandInclusionsFeature.geometry
+            ? geoJSON(crownLandInclusionsFeature.geometry).getBounds()
+            : undefined;
+          parcelData.config = getDynamicFeatureConfig(crownLandInclusionsFeature);
+          parcelData.data = crownLandInclusionsFeature.properties;
+          parcelData.feature = crownLandInclusionsFeature;
+          layersData.push(parcelData);
+        });
+      }
+
+      if (exists(featureSet.municipalityFeatures) && featureSet.municipalityFeatures.length > 0) {
+        featureSet.municipalityFeatures.forEach((municipalityFeature, index) => {
+          const parcelData: LayerData = {
+            title: `Municipality Information (${index + 1} of ${
+              featureSet.municipalityFeatures.length
+            })`,
+            data: null,
+            config: {},
+          };
+
+          parcelData.bounds = municipalityFeature.geometry
+            ? geoJSON(municipalityFeature.geometry).getBounds()
+            : undefined;
+          parcelData.config = municipalityLayerPopupConfig;
+          parcelData.data = municipalityFeature.properties;
+          parcelData.feature = municipalityFeature;
+          layersData.push(parcelData);
+        });
+      }
+
       if (exists(featureSet.highwayFeatures) && featureSet.highwayFeatures.length > 0) {
         featureSet.highwayFeatures.forEach((highwayFeature, index) => {
           const parcelData: LayerData = {
@@ -187,13 +227,11 @@ export const LayerPopupContainer: React.FC<
       }
 
       setLayerPopup({
-        latlng: mapMachine.mapLocationFeatureDataset.location,
+        latlng: featureSet.location,
         layers: layersData,
       });
     }
-  }, [mapMachine]);
+  }, [featureSet]);
 
-  return (
-    <LayerPopupView layerPopup={layerPopup} featureDataset={mapMachine.mapLocationFeatureDataset} />
-  );
+  return <LayerPopupView layerPopup={layerPopup} featureDataset={featureSet} />;
 };

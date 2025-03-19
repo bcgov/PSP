@@ -13,7 +13,7 @@ import {
   defaultPropertyFilter,
   IPropertyFilter,
 } from '@/features/properties/filter/IPropertyFilter';
-import { exists } from '@/utils';
+import { exists, firstOrNull } from '@/utils';
 import { pidParser, pinParser } from '@/utils/propertyUtils';
 
 import { mapMachine } from './machineDefinition/mapMachine';
@@ -121,15 +121,15 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     actions: {
       navigateToProperty: context => {
         const selectedFeatureData = context.mapLocationFeatureDataset;
-        if (exists(selectedFeatureData?.pimsFeature?.properties?.PROPERTY_ID)) {
-          const pimsFeature = selectedFeatureData.pimsFeature;
+        const pimsFeature = firstOrNull(selectedFeatureData?.pimsFeatures);
+        const parcelFeature = firstOrNull(selectedFeatureData?.parcelFeatures);
+
+        if (exists(pimsFeature?.properties?.PROPERTY_ID)) {
           history.push(`/mapview/sidebar/property/${pimsFeature.properties.PROPERTY_ID}`);
-        } else if (exists(selectedFeatureData?.parcelFeature?.properties?.PID)) {
-          const parcelFeature = selectedFeatureData?.parcelFeature;
+        } else if (exists(parcelFeature?.properties?.PID)) {
           const parsedPid = pidParser(parcelFeature.properties.PID);
           history.push(`/mapview/sidebar/non-inventory-property/pid/${parsedPid}`);
-        } else if (exists(selectedFeatureData?.parcelFeature?.properties?.PIN)) {
-          const parcelFeature = selectedFeatureData?.parcelFeature;
+        } else if (exists(parcelFeature?.properties?.PIN)) {
           const parsedPin = pinParser(parcelFeature.properties.PIN);
           history.push(`/mapview/sidebar/non-inventory-property/pin/${parsedPin}`);
         }
@@ -146,23 +146,23 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
 
         if (event.type === 'MAP_CLICK') {
           result = await locationLoader.loadLocationDetails({ latLng: event.latlng });
-          debugger;
         } else if (event.type === 'MAP_MARKER_CLICK') {
           result = await locationLoader.loadLocationDetails({
             latLng: event.featureSelected.latlng,
             pimsPropertyId: event.featureSelected?.pimsLocationFeature?.PROPERTY_ID ?? null,
           });
+          // TODO: verify that this is still needed
           // In the case of the map marker being clicked, we must use the search result properties, as the minimal layer does not have the necessary feature data.
           // However, use the coordinates of the clicked marker.
-          if (exists(result.pimsFeature)) {
-            result.pimsFeature = {
-              properties: { ...result.pimsFeature?.properties },
+          if (exists(result.pimsFeatures)) {
+            result.pimsFeatures.forEach(pf => ({
+              properties: { ...pf?.properties },
               type: 'Feature',
               geometry: {
                 type: 'Point',
                 coordinates: [event.featureSelected.latlng.lng, event.featureSelected.latlng.lat],
               },
-            };
+            }));
           }
         }
 

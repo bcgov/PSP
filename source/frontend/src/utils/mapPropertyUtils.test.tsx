@@ -245,7 +245,7 @@ describe('mapPropertyUtils', () => {
 
   it.each([
     [getMockLocationFeatureDataset(), '', expectedMapProperty],
-    [{ ...getMockLocationFeatureDataset(), pimsFeature: {} as any }, '', expectedMapProperty],
+    [{ ...getMockLocationFeatureDataset(), pimsFeatures: {} as any }, '', expectedMapProperty],
     [
       { ...getMockLocationFeatureDataset(), parcelFeature: {} as any },
       '',
@@ -258,7 +258,7 @@ describe('mapPropertyUtils', () => {
       },
     ],
     [
-      { ...getMockLocationFeatureDataset(), pimsFeature: {} as any },
+      { ...getMockLocationFeatureDataset(), pimsFeatures: {} as any },
       'address',
       { ...expectedMapProperty, address: 'address' },
     ],
@@ -305,14 +305,14 @@ describe('mapPropertyUtils', () => {
 
   it.each([
     [
-      { ...getMockLocationFeatureDataset(), pimsFeature: { properties: { PIN: 1234 } } as any },
+      { ...getMockLocationFeatureDataset(), pimsFeatures: [{ properties: { PIN: 1234 } }] as any },
       '1234',
     ],
     [
       {
         ...getMockLocationFeatureDataset(),
-        pimsFeature: {} as any,
-        parcelFeature: { properties: { PIN: 9999 } } as any,
+        pimsFeatures: {} as any,
+        parcelFeatures: { properties: { PIN: 9999 } } as any,
       },
       '9999',
     ],

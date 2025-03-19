@@ -12,6 +12,7 @@ import {
   PropertySearchSelectorFormView,
 } from './PropertySearchSelectorFormView';
 import { featureToLocationFeatureDataset } from './PropertySelectorSearchContainer';
+import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 
 const mockStore = configureMockStore([thunk]);
 
@@ -213,59 +214,84 @@ describe('PropertySearchSelectorFormView component', () => {
       );
       await act(async () => userEvent.click(checkbox));
       expect(checkbox).toBeChecked();
-      expect(onSelectedProperties).toHaveBeenCalledWith([
+      const expectedResult: LocationFeatureDataset[] = [
         {
           districtFeature: null,
-          id: 'PID-006-772-331-55.706230240625004--121.60834946062499',
+          //id: 'PID-006-772-331-55.706230240625004--121.60834946062499',
           location: {
             lat: 55.706230240625004,
             lng: -121.60834946062499,
           },
-          municipalityFeature: null,
+          municipalityFeatures: null,
           highwayFeatures: null,
-          parcelFeature: {
-            geometry: {
-              coordinates: [
-                [
-                  [-121.60861991, 55.70650025],
-                  [-121.60861925, 55.70588252],
-                  [-121.60728684, 55.7061924],
-                  [-121.60718833, 55.70627546],
-                  [+-121.60718846, 55.70643785],
-                  [-121.60729988, 55.70650069],
-                  [-121.60861991, 55.70650025],
+          parcelFeatures: [
+            {
+              geometry: {
+                coordinates: [
+                  [
+                    [-121.60861991, 55.70650025],
+                    [-121.60861925, 55.70588252],
+                    [-121.60728684, 55.7061924],
+                    [-121.60718833, 55.70627546],
+                    [+-121.60718846, 55.70643785],
+                    [-121.60729988, 55.70650069],
+                    [-121.60861991, 55.70650025],
+                  ],
                 ],
-              ],
-              type: 'Polygon',
+                type: 'Polygon',
+              },
+              //geometry_name: 'SHAPE',
+              id: 'WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW.fid-674bf6f8_180d8c9b18e_7c12',
+              properties: {
+                FEATURE_AREA_SQM: 4478.6462,
+                FEATURE_LENGTH_M: 281.3187,
+                MUNICIPALITY: 'Chetwynd, District of',
+                OBJECTID: 601612446,
+                OWNER_TYPE: 'Private',
+                PARCEL_CLASS: 'Subdivision',
+                PARCEL_FABRIC_POLY_ID: 1994518,
+                PARCEL_NAME: '006772331',
+                PARCEL_START_DATE: null,
+                PARCEL_STATUS: 'Active',
+                PID: '006772331',
+                PID_NUMBER: 6772331,
+                PIN: 10514131,
+                PLAN_NUMBER: 'PGP27005',
+                REGIONAL_DISTRICT: 'Peace River Regional District',
+                SE_ANNO_CAD_DATA: null,
+                WHEN_UPDATED: '2019-01-09Z',
+                GLOBAL_UID: '',
+                PLAN_ID: 0,
+                PID_FORMATTED: null,
+                SOURCE_PARCEL_ID: null,
+                SURVEY_DESIGNATION_1: null,
+                SURVEY_DESIGNATION_2: null,
+                SURVEY_DESIGNATION_3: null,
+                LEGAL_DESCRIPTION: null,
+                IS_REMAINDER_IND: null,
+                GEOMETRY_SOURCE: null,
+                POSITIONAL_ERROR: null,
+                ERROR_REPORTED_BY: null,
+                CAPTURE_METHOD: null,
+                COMPILED_IND: null,
+                STATED_AREA: null,
+                WHEN_CREATED: null,
+              },
+              type: 'Feature',
             },
-            geometry_name: 'SHAPE',
-            id: 'WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW.fid-674bf6f8_180d8c9b18e_7c12',
-            properties: {
-              FEATURE_AREA_SQM: 4478.6462,
-              FEATURE_LENGTH_M: 281.3187,
-              MUNICIPALITY: 'Chetwynd, District of',
-              OBJECTID: 601612446,
-              OWNER_TYPE: 'Private',
-              PARCEL_CLASS: 'Subdivision',
-              PARCEL_FABRIC_POLY_ID: 1994518,
-              PARCEL_NAME: '006772331',
-              PARCEL_START_DATE: null,
-              PARCEL_STATUS: 'Active',
-              PID: '006772331',
-              PID_NUMBER: 6772331,
-              PIN: 10514131,
-              PLAN_NUMBER: 'PGP27005',
-              REGIONAL_DISTRICT: 'Peace River Regional District',
-              SE_ANNO_CAD_DATA: null,
-              WHEN_UPDATED: '2019-01-09Z',
-            },
-            type: 'Feature',
-          },
-          pimsFeature: null,
+          ],
+          pimsFeatures: null,
           regionFeature: null,
           selectingComponentId: null,
+          crownLandInclusionsFeatures: null,
+          crownLandInventoryFeatures: null,
+          crownLandLeasesFeatures: null,
+          crownLandLicensesFeatures: null,
+          crownLandTenuresFeatures: null,
+          fileLocation: null,
         },
-      ]);
+      ];
+      expect(onSelectedProperties).toHaveBeenCalledWith(expectedResult);
     });
   });
 });

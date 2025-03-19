@@ -132,7 +132,7 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
     tabViews.push({
       content: (
         <CrownDetailsTabView
-          crownFeature={composedPropertyState.composedProperty?.crownTenureFeatures}
+          crownFeatures={composedPropertyState.composedProperty?.crownTenureFeatures}
         />
       ),
       key: InventoryTabNames.crown,

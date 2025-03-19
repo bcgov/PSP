@@ -42,7 +42,7 @@ vi.mocked(useMapProperties).mockReturnValue({
     error: null,
     response: { features: [] } as any,
     execute: vi.fn().mockResolvedValue({
-      features: [PropertyForm.fromMapProperty(testProperty).toFeatureDataset().pimsFeature],
+      features: [PropertyForm.fromMapProperty(testProperty).toFeatureDataset().pimsFeatures],
     }),
     loading: false,
     status: 200,
