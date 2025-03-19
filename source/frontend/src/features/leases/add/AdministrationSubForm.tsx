@@ -137,7 +137,7 @@ const AdministrationSubForm: React.FunctionComponent<
           <Input field="otherProgramTypeDescription" required />
         </SectionField>
       )}
-      <SectionField label="Type" labelWidth="3" contentWidth="auto" required>
+      <SectionField label="Type" labelWidth="3" contentWidth="9" required>
         <Select field="leaseTypeCode" options={types} placeholder="Select type" required />
       </SectionField>
       {values?.leaseTypeCode === 'OTHER' && (

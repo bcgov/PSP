@@ -39,7 +39,7 @@ namespace Pims.Api.Models.Concepts.Deposit
         /// <summary>
         /// get/set - the interest paid.
         /// </summary>
-        public decimal InterestPaid { get; set; }
+        public decimal? InterestPaid { get; set; }
 
         /// <summary>
         /// get/set - The date when the deposit was returned.

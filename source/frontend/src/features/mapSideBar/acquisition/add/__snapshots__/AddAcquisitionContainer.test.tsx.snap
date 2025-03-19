@@ -394,6 +394,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   position: sticky;
   padding-top: 2rem;
   bottom: 0;
+  border-top: 2px solid #e5e5e5;
   background: white;
   z-index: 10;
 }
@@ -2833,7 +2834,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
         class=""
       >
         <div
-          class="c34 justify-content-end mb-6 mt-6 p-0 no-gutters row"
+          class="c34 justify-content-end pt-4 p-0 no-gutters row"
         >
           <div
             class="pr-3 col-auto"
@@ -3271,6 +3272,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
   position: sticky;
   padding-top: 2rem;
   bottom: 0;
+  border-top: 2px solid #e5e5e5;
   background: white;
   z-index: 10;
 }
@@ -5602,7 +5604,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
         class=""
       >
         <div
-          class="c35 justify-content-end mb-6 mt-6 p-0 no-gutters row"
+          class="c35 justify-content-end pt-4 p-0 no-gutters row"
         >
           <div
             class="pr-3 col-auto"

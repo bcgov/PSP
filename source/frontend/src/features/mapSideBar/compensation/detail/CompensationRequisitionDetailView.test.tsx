@@ -21,18 +21,19 @@ import {
   getMockApiInterestHolderOrganization,
   getMockApiInterestHolderPerson,
 } from '@/mocks/interestHolders.mock';
+import { getMockLeaseStakeholders } from '@/mocks/lease.mock';
 import { ApiGen_CodeTypes_AcquisitionStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionStatusTypes';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
+import { ApiGen_Concepts_CompReqAcqPayee } from '@/models/api/generated/ApiGen_Concepts_CompReqAcqPayee';
+import { ApiGen_Concepts_CompReqLeasePayee } from '@/models/api/generated/ApiGen_Concepts_CompReqLeasePayee';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 import { act, render, RenderOptions, userEvent, waitForEffects } from '@/utils/test-utils';
 
 import CompensationRequisitionDetailView, {
   CompensationRequisitionDetailViewProps,
 } from './CompensationRequisitionDetailView';
-import { getMockLeaseStakeholders } from '@/mocks/lease.mock';
-import { ApiGen_Concepts_CompReqLeasePayee } from '@/models/api/generated/ApiGen_Concepts_CompReqLeasePayee';
-import { ApiGen_Concepts_CompReqAcqPayee } from '@/models/api/generated/ApiGen_Concepts_CompReqAcqPayee';
 
 const setEditMode = vi.fn();
 const onGenerate = vi.fn();
@@ -259,6 +260,44 @@ describe('Compensation Detail View Component', () => {
     const compensationFinalizedDate = getByTestId('compensation-finalized-date');
     expect(compensationFinalizedDate).toHaveTextContent('Jun 12, 2024');
   });
+
+  it.each([
+    ['with project number', '001', 'FTProjectTest', '001 - FTProjectTest'],
+    ['without project number', null, 'FTProjectTest', 'FTProjectTest'],
+  ])(
+    'renders the compensation alternate project number and name concatenated - %s',
+    async (
+      _: string,
+      projectNumber: string | null,
+      projectDescription: string,
+      expectedValue: string,
+    ) => {
+      const { getByText } = await setup({
+        props: {
+          compensation: {
+            ...getMockApiDefaultCompensation(),
+            alternateProject: {
+              id: 1,
+              projectStatusTypeCode: null,
+              code: projectNumber,
+              description: projectDescription,
+              costTypeCode: null,
+              businessFunctionCode: null,
+              workActivityCode: null,
+              regionCode: null,
+              note: null,
+              projectPersons: [],
+              projectProducts: [],
+              ...getEmptyBaseAudit(1),
+            },
+          },
+        },
+      });
+
+      expect(getByText('Alternate project:')).toBeVisible();
+      expect(getByText(expectedValue)).toBeVisible();
+    },
+  );
 
   it('displays the Product information', async () => {
     const mockCompensation = getMockApiDefaultCompensation();

@@ -594,6 +594,59 @@ exports[`MapContainer > Renders the map 1`] = `
           >
             <div
               class="leaflet-pane leaflet-tile-pane"
+            />
+            <div
+              class="leaflet-pane leaflet-overlay-pane"
+            />
+            <div
+              class="leaflet-pane leaflet-shadow-pane"
+            />
+            <div
+              class="leaflet-pane leaflet-marker-pane"
+            >
+              <div
+                class="leaflet-marker-icon marker-cluster marker-cluster-small leaflet-zoom-hide leaflet-interactive"
+                role="button"
+                style="margin-left: -20px; margin-top: -20px; width: 40px; height: 40px; left: 88px; top: -242px; z-index: -242;"
+                tabindex="0"
+              >
+                <div>
+                  <span>
+                    3
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div
+              class="leaflet-pane leaflet-tooltip-pane"
+            />
+            <div
+              class="leaflet-pane leaflet-popup-pane"
+            />
+            <div
+              class="leaflet-pane leaflet-basemap-pane"
+              style="z-index: 200;"
+            >
+              <div
+                class="leaflet-layer "
+                style="z-index: 0;"
+              >
+                <div
+                  class="leaflet-tile-container leaflet-zoom-animated"
+                  style="z-index: 20; left: 0px; top: 0px;"
+                >
+                  <img
+                    alt=""
+                    class="leaflet-tile"
+                    src="https://maps.gov.bc.ca/arcgis/rest/services/province/roads_wm/MapServer/tile/6/20/9"
+                    style="width: 256px; height: 256px; left: -214px; top: -231px;"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="leaflet-pane leaflet-dataLayers-pane"
+              style="z-index: 350;"
             >
               <div
                 class="leaflet-layer "
@@ -625,51 +678,7 @@ exports[`MapContainer > Renders the map 1`] = `
                   />
                 </div>
               </div>
-              <div
-                class="leaflet-layer "
-                style="z-index: 0;"
-              >
-                <div
-                  class="leaflet-tile-container leaflet-zoom-animated"
-                  style="z-index: 20; left: 0px; top: 0px;"
-                >
-                  <img
-                    alt=""
-                    class="leaflet-tile"
-                    src="https://maps.gov.bc.ca/arcgis/rest/services/province/roads_wm/MapServer/tile/6/20/9"
-                    style="width: 256px; height: 256px; left: -214px; top: -231px;"
-                  />
-                </div>
-              </div>
             </div>
-            <div
-              class="leaflet-pane leaflet-overlay-pane"
-            />
-            <div
-              class="leaflet-pane leaflet-shadow-pane"
-            />
-            <div
-              class="leaflet-pane leaflet-marker-pane"
-            >
-              <div
-                class="leaflet-marker-icon marker-cluster marker-cluster-small leaflet-zoom-hide leaflet-interactive"
-                role="button"
-                style="margin-left: -20px; margin-top: -20px; width: 40px; height: 40px; left: 88px; top: -242px; z-index: -242;"
-                tabindex="0"
-              >
-                <div>
-                  <span>
-                    3
-                  </span>
-                </div>
-              </div>
-            </div>
-            <div
-              class="leaflet-pane leaflet-tooltip-pane"
-            />
-            <div
-              class="leaflet-pane leaflet-popup-pane"
-            />
           </div>
           <div
             class="leaflet-control-container"

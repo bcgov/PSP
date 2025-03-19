@@ -4457,13 +4457,24 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.FormTypeCode).HasComment("Code value of the form type.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the form type.");
             entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.DocumentId).HasComment("Foreign key to the PIMS_DOCUMENT table.");
             entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is inactive.");
 
             entity.HasOne(d => d.Document).WithMany(p => p.PimsFormTypes).HasConstraintName("PIM_DOCMNT_PIM_FRMTYP_FK");
