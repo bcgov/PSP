@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Pims.Api.Areas.Reports.Controllers;
 using Pims.Core.Api.Policies;
 using Pims.Core.Extensions;
 using Pims.Core.Security;
@@ -37,7 +36,7 @@ namespace Pims.Api.Areas.Tools.Controllers
         /// </summary>
         /// <param name="logger"></param>
         /// <param name="user"></param>
-        public BctfaOwnershipController(ILogger<DispositionController> logger, ClaimsPrincipal user)
+        public BctfaOwnershipController(ILogger<BctfaOwnershipController> logger, ClaimsPrincipal user)
         {
             _logger = logger;
             _user = user;
@@ -61,8 +60,8 @@ namespace Pims.Api.Areas.Tools.Controllers
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
-                nameof(DispositionController),
-                nameof(LtsaController),
+                nameof(BctfaOwnershipController),
+                nameof(PutBctfaOwnership),
                 _user.GetUsername(),
                 DateTime.Now);
 
@@ -88,8 +87,8 @@ namespace Pims.Api.Areas.Tools.Controllers
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
-                nameof(DispositionController),
-                nameof(LtsaController),
+                nameof(BctfaOwnershipController),
+                nameof(PutBctfaOwnershipJson),
                 _user.GetUsername(),
                 DateTime.Now);
 

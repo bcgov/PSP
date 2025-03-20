@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -6,9 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Pims.Api.Areas.Reports.Controllers;
 using Pims.Core.Api.Policies;
-using Pims.Core.Extensions;
 using Pims.Core.Helpers;
 using Pims.Core.Security;
 using Pims.Ltsa;
@@ -42,7 +39,7 @@ namespace Pims.Api.Areas.Tools.Controllers
         /// <param name="ltsaService"></param>
         /// <param name="logger"></param>
         /// <param name="user"></param>
-        public LtsaController(ILtsaService ltsaService, ILogger<DispositionController> logger, ClaimsPrincipal user)
+        public LtsaController(ILtsaService ltsaService, ILogger<LtsaController> logger, ClaimsPrincipal user)
         {
             _ltsaService = ltsaService;
             _logger = logger;
