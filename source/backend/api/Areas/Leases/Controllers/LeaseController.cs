@@ -15,6 +15,7 @@ using Pims.Core.Json;
 using Pims.Dal.Exceptions;
 using Pims.Core.Security;
 using Swashbuckle.AspNetCore.Annotations;
+using Pims.Api.Models.Concepts.AcquisitionFile;
 
 namespace Pims.Api.Areas.Lease.Controllers
 {
@@ -213,6 +214,24 @@ namespace Pims.Api.Areas.Lease.Controllers
             var updatedLease = _leaseService.UpdateChecklistItems(id, checklistItemEntities);
 
             return new JsonResult(_mapper.Map<LeaseModel>(updatedLease));
+        }
+
+        /// <summary>
+        /// Get all unique persons that belong to at least one lease file as a team member.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("team-members")]
+        [HasPermission(Permissions.LeaseView)]
+        [HasPermission(Permissions.ContactView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<LeaseFileTeamModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "lease" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetAcquisitionTeamMembers()
+        {
+            var team = _leaseService.GetTeamMembers();
+
+            return new JsonResult(_mapper.Map<IEnumerable<LeaseFileTeamModel>>(team));
         }
 
         #endregion

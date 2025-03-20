@@ -1,6 +1,7 @@
 import './TooltipIcon.scss';
 
 import classNames from 'classnames';
+import clsx from 'classnames';
 import React from 'react';
 import Overlay, { OverlayChildren } from 'react-bootstrap/Overlay';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
@@ -39,7 +40,7 @@ const TooltipIcon: React.FunctionComponent<React.PropsWithChildren<TooltipIconPr
       <OverlayTrigger placement={props.placement} overlay={overlay}>
         <span
           data-testid={`tooltip-icon-${props.toolTipId}`}
-          className="tooltip-icon"
+          className={clsx('tooltip-icon', props.className)}
           id={props.toolTipId}
         >
           {icon}
