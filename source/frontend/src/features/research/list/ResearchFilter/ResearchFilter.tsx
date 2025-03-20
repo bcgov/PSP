@@ -21,6 +21,8 @@ export interface IResearchFilterProps {
 }
 
 export const defaultResearchFilter: IResearchFilter = {
+  pid: '',
+  pin: '',
   regionCode: '',
   researchFileStatusTypeCode: 'ACTIVE',
   name: '',
@@ -32,7 +34,7 @@ export const defaultResearchFilter: IResearchFilter = {
   updatedOnEndDate: '',
   updatedOnStartDate: '',
   rfileNumber: '',
-  researchSearchBy: 'name',
+  researchSearchBy: 'pid',
   createOrUpdateRange: 'updatedOnStartDate',
   createOrUpdateBy: 'appLastUpdateUserid',
 };

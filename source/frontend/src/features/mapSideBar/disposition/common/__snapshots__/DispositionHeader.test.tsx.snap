@@ -6,12 +6,12 @@ exports[`DispositionHeader component > renders as expected when no data is provi
     class="Toastify"
   />
   <div />
-  .c3 {
+  .c4 {
   font-size: 0.87em;
   line-height: 1.9;
 }
 
-.c1 {
+.c2 {
   font-weight: bold;
   white-space: nowrap;
 }
@@ -24,7 +24,7 @@ exports[`DispositionHeader component > renders as expected when no data is provi
   border-bottom-width: 0.1rem;
 }
 
-.c2 {
+.c3 {
   height: 100%;
   display: -webkit-box;
   display: -webkit-flex;
@@ -35,11 +35,15 @@ exports[`DispositionHeader component > renders as expected when no data is provi
   flex-direction: column;
 }
 
+.c1 {
+  max-width: 60rem;
+}
+
 <div
     class="c0 no-gutters row"
   >
     <div
-      class="col-7"
+      class="c1 col-7"
     >
       <div
         class="row"
@@ -48,7 +52,7 @@ exports[`DispositionHeader component > renders as expected when no data is provi
           class="pr-0 text-left col-3"
         >
           <label
-            class="c1"
+            class="c2"
           >
             File:
           </label>
@@ -66,7 +70,7 @@ exports[`DispositionHeader component > renders as expected when no data is provi
           class="pr-0 text-left col-3"
         >
           <label
-            class="c1"
+            class="c2"
           >
             Historical file #:
           </label>
@@ -80,7 +84,7 @@ exports[`DispositionHeader component > renders as expected when no data is provi
       class="col-5"
     >
       <div
-        class="c2"
+        class="c3"
       >
         <div
           class="no-gutters row"
@@ -89,7 +93,7 @@ exports[`DispositionHeader component > renders as expected when no data is provi
             class="text-right col"
           >
             <span
-              class="c3"
+              class="c4"
             >
               <strong>
                 Created: 
@@ -114,7 +118,7 @@ exports[`DispositionHeader component > renders as expected when no data is provi
             class="text-right col"
           >
             <span
-              class="c3"
+              class="c4"
             >
               <strong>
                 Updated: 

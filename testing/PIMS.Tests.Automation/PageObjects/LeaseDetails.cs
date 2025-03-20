@@ -40,7 +40,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Create/View Lease Details Elements
         private readonly By licenseCreateTitle = By.XPath("//h1[contains(text(),'Create Lease/Licence')]");
 
-        private readonly By licenseDetailsViewSubtitle = By.XPath("//div[contains(text(), 'Details')]/parent::div/parent::div/parent::div/parent::h2");
+        //private readonly By licenseDetailsViewSubtitle = By.XPath("//div[contains(text(), 'Details')]/parent::div/parent::div/parent::div/parent::h2");
         private readonly By licenseDetailsCreateSubtitle = By.XPath("//h2/div/div[contains(text(),'Original Agreement')]");
 
         private readonly By licenseDetailsProjectLabel = By.XPath("//label[contains(text(),'Ministry project')]");
@@ -59,17 +59,17 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private readonly By licenseDetailsAccountTypeLabel = By.XPath("//label[contains(text(),'Account type')]");
         private readonly By licenseDetailsAccountTypeSelector = By.Id("input-paymentReceivableTypeCode");
-        private readonly By licenseDetailsAccountTypeContent = By.XPath("//div[contains(text(),'Details')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Account type')]/parent::div/following-sibling::div");
+        private readonly By licenseDetailsAccountTypeContent = By.XPath("//div[contains(text(),'Original Agreement')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Account type')]/parent::div/following-sibling::div");
 
-        private readonly By licenseDetailsCommencementDateLabel = By.XPath("//h2/following-sibling::div/div/div/div/div/label[contains(text(),'Commencement')]");
+        private readonly By licenseDetailsCommencementDateLabel = By.XPath("//label[contains(text(),'Commencement')]");
         private readonly By licenseDetailsCommencementDateTooltip = By.CssSelector("span[data-testid='tooltip-icon-lease-commencement-tooltip']");
         private readonly By licenseDetailsCommencementDateInput = By.Id("datepicker-startDate");
-        private readonly By licenseDetailsCommencementDateContent = By.XPath("//h2/following-sibling::div/div/div/div/div/label[contains(text(),'Commencement')]/parent::div/following-sibling::div");
+        private readonly By licenseDetailsCommencementDateContent = By.XPath("//label[contains(text(),'Commencement')]/parent::div/following-sibling::div");
 
-        private readonly By licenseDetailsExpiryDateLabel = By.XPath("//h2/following-sibling::div/div/div/div/div/label[contains(text(),'Expiry')]");
+        private readonly By licenseDetailsExpiryDateLabel = By.XPath("//label[contains(text(),'Expiry')]");
         private readonly By licenseDetailsExpiryDateTooltip = By.CssSelector("span[data-testid='tooltip-icon-lease-expiry-tooltip']");
         private readonly By licenseDetailsExpiryDateInput = By.Id("datepicker-expiryDate");
-        private readonly By licenseDetailsExpiryDateContent = By.XPath("//h2/following-sibling::div/div/div/div/div/label[contains(text(),'Expiry')]/parent::div/following-sibling::div");
+        private readonly By licenseDetailsExpiryDateContent = By.XPath("//label[contains(text(),'Expiry')]/parent::div/following-sibling::div");
 
         private readonly By licenseDetailsCancelReasonLabel = By.XPath("//label[contains(text(),'Cancellation reason')]");
         private readonly By licenseDetailsCancelReasonInput = By.Id("input-cancellationReason");
@@ -98,7 +98,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By licenseDetailsMotiRegionLabel = By.XPath("//label[contains(text(),'MOTI region')]");
         private readonly By licenseDetailsMotiRegionSelector = By.Id("input-regionId");
         private readonly By licenseDetailsProgramViewLabel = By.XPath("//label[contains(text(),'Program')]");
-        private readonly By licenseDetailsProgramContent = By.Id("input-programName");
+        private readonly By licenseDetailsProgramContent = By.XPath("//label[contains(text(),'Program')]/parent::div/following-sibling::div");
         private readonly By licenseDetailsProgramLabel = By.XPath("//select[@id='input-programTypeCode']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'Program')]");
         private readonly By licenseDetailsProgramSelector = By.Id("input-programTypeCode");
         private readonly By licenseDetailsOtherProgramLabel = By.XPath("//label[contains(text(),'Other Program')]");
@@ -107,12 +107,12 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By licenseDetailsTypeLabel = By.XPath("//label[contains(text(),'Type')]");
         private readonly By licenseDetailsTypeSelector = By.Id("input-leaseTypeCode");
         private readonly By licenseDetailsViewTypeLabel = By.XPath("//label[contains(text(),'Account type')]");
-        private readonly By licenseDetailsTypeContent = By.Id("input-type.description");
+        private readonly By licenseDetailsTypeContent = By.XPath("//div[contains(text(),'Administration')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Account type')]/parent::div/following-sibling::div");
         private readonly By licenseDetailsOtherTypeLabel = By.XPath("//input[@id='input-otherLeaseTypeDescription']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'Describe other')]");
         private readonly By licenseDetailsOtherTypeInput = By.Id("input-otherLeaseTypeDescription");
         private readonly By licenseDetailsOtherTypeContent = By.Id("input-otherType");
         private readonly By licenseDetailsReceivableToLabel = By.XPath("//label[contains(text(),'Receivable to')]");
-        private readonly By licenseDetailsReceivableToContent = By.Id("input-paymentReceivableType.description");
+        private readonly By licenseDetailsReceivableToContent = By.XPath("//label[contains(text(),'Receivable to')]/parent::div/following-sibling::div");
         private readonly By licenseDetailsPurposeLabel = By.XPath("//label[contains(text(),'Purpose')]");
         private readonly By licenseDetailsPurposeMultiselector = By.Id("multiselect-purposes_input");
         private readonly By licenseDetailsPurposeDeleteBttns = By.CssSelector("div[id='multiselect-purposes'] i[class='custom-close']");
@@ -142,8 +142,10 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By licenseDetailsFeeDeterminationSubtitle = By.XPath("//div[contains(text(),'Fee Determination')]/parent::div/parent::h2");
         private readonly By licenseDetailsFeeDeterminationPublicBenefitLabel = By.XPath("//label[contains(text(),'Public benefit')]");
         private readonly By licenseDetailsFeeDeterminationPublicBenefitInput = By.Id("input-isPublicBenefit");
+        private readonly By licenseDetailsFeeDeterminationPublicBenefitContent = By.XPath("//label[contains(text(),'Public benefit')]/parent::div/following-sibling::div");
         private readonly By licenseDetailsFeeDeterminationFinancialGainLabel = By.XPath("//label[contains(text(),'Financial gain')]");
         private readonly By licenseDetailsFeeDeterminationFinancialGainInput = By.Id("input-isFinancialGain");
+        private readonly By licenseDetailsFeeDeterminationFinancialGainContent = By.XPath("//label[contains(text(),'Financial gain')]/parent::div/following-sibling::div");
         private readonly By licenseDetailsFeeDeterminationSuggestedFeeLabel = By.XPath("//label[contains(text(),'Suggested fee')]");
         private readonly By licenseDetaulsFeeDeterminationSuggestedFeeTooltip = By.CssSelector("span[data-testid='tooltip-icon-section-field-tooltip']");
         private readonly By licenseDetailsFeeDeterminationSuggestedFeeContent = By.CssSelector("span[data-testid='suggestedFee']");
@@ -160,6 +162,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Lease Property Section Elements
         private readonly By leasePropertiesSubtitle = By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2");
         private readonly By leasePropertiesUpdateSubtitle = By.XPath("//div[contains(text(),'Selected properties')]/parent::div/parent::h2");
+        private readonly By leaseEditPropertiesBttn = By.CssSelector("button[title='Change properties']");
 
         //Leases Modal Element
         private readonly By licenseDetailsConfirmationModal = By.CssSelector("div[class='modal-content']");
@@ -182,6 +185,12 @@ namespace PIMS.Tests.Automation.PageObjects
 
             WaitUntilClickable(createLicenseButton);
             FocusAndClick(createLicenseButton);
+        }
+
+        public void NavigateToAddPropertiesLeasesFile()
+        {
+            Wait();
+            webDriver.FindElement(leaseEditPropertiesBttn).Click();
         }
 
         public void CreateMinimumLicenseDetails(Lease lease)
@@ -577,15 +586,22 @@ namespace PIMS.Tests.Automation.PageObjects
                 Wait(5000);
                 if (webDriver.FindElements(licenseDetailsConfirmationModal).Count > 0)
                 {
-                    Assert.Equal("User Override Required", sharedModals.ModalHeader());
+
 
                     if (sharedModals.ModalContent().Contains("he selected property already exists in the system's inventory"))
                     {
+                        Assert.Equal("User Override Required", sharedModals.ModalHeader());
                         Assert.Contains("The selected property already exists in the system's inventory. However, the record is missing spatial details.", sharedModals.ModalContent());
                         Assert.Contains("To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.", sharedModals.ModalContent());
                     }
-                    else
+                    else if (sharedModals.ModalContent().Contains("is attached to L-File #"))
                         Assert.Contains("is attached to L-File #", sharedModals.ModalContent());
+                    else if (sharedModals.ModalContent().Contains("You have made changes to the properties in this file."))
+                    {
+                        Assert.Equal("Confirm changes", sharedModals.ModalHeader());
+                        Assert.Contains("You have made changes to the properties in this file.", sharedModals.ModalContent());
+                        Assert.Contains("Do you want to save these changes?", sharedModals.ModalContent());
+                    }
                     
                     sharedModals.ModalClickOKBttn();
                 }
@@ -777,7 +793,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(licenseDetailsEditIcon);
 
             //DETAILS
-            AssertTrueIsDisplayed(licenseDetailsViewSubtitle);
+            AssertTrueIsDisplayed(licenseDetailsCreateSubtitle);
 
             AssertTrueIsDisplayed(licenseDetailsProjectLabel);
             if (lease.MinistryProject != "")
@@ -846,7 +862,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(licenseDetailsProgramViewLabel);
 
             if(lease.Program != "")
-                AssertTrueElementValueEquals(licenseDetailsProgramContent, lease.Program);
+                AssertTrueContentEquals(licenseDetailsProgramContent, lease.Program);
 
             if (lease.ProgramOther != "")
                 AssertTrueElementValueEquals(licenseDetailsOtherProgramContent, lease.ProgramOther);
@@ -854,7 +870,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(licenseDetailsViewTypeLabel);
 
             if(lease.AdminType != "")
-                AssertTrueElementValueEquals(licenseDetailsTypeContent, lease.AdminType);
+                AssertTrueContentEquals(licenseDetailsTypeContent, lease.AdminType);
 
             if (lease.TypeOther != "")
                 AssertTrueElementValueEquals(licenseDetailsOtherTypeContent, lease.TypeOther);
@@ -862,7 +878,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(licenseDetailsReceivableToLabel);
 
             if(lease.AccountType != "")
-                AssertTrueElementValueEquals(licenseDetailsReceivableToContent, lease.AccountType);
+                AssertTrueContentEquals(licenseDetailsReceivableToContent, lease.AccountType);
 
             AssertTrueIsDisplayed(licenseDetailsPurposeLabel);
             if (lease.LeasePurpose.Count > 0)
@@ -914,19 +930,21 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(licenseDetailsFeeDeterminationPublicBenefitLabel);
             if (lease.FeeDeterminationPublicBenefit != "")
             {
-                IWebElement publicBenefit = webDriver.FindElement(licenseDetailsFeeDeterminationPublicBenefitInput);
-                SelectElement selectedValue = new(publicBenefit);
-                string selectedText = selectedValue.SelectedOption.Text;
-                Assert.Equal(lease.FeeDeterminationPublicBenefit, selectedText);
+                AssertTrueContentEquals(licenseDetailsFeeDeterminationPublicBenefitContent, lease.FeeDeterminationPublicBenefit);
+                //IWebElement publicBenefit = webDriver.FindElement(licenseDetailsFeeDeterminationPublicBenefitInput);
+                //SelectElement selectedValue = new(publicBenefit);
+                //string selectedText = selectedValue.SelectedOption.Text;
+                //Assert.Equal(lease.FeeDeterminationPublicBenefit, selectedText);
             }
 
             AssertTrueIsDisplayed(licenseDetailsFeeDeterminationFinancialGainLabel);
             if (lease.FeeDeterminationFinancialGain != "")
             {
-                IWebElement financialGain = webDriver.FindElement(licenseDetailsFeeDeterminationFinancialGainInput);
-                SelectElement selectedValue = new(element: financialGain);
-                string selectedText = selectedValue.SelectedOption.Text;
-                Assert.Equal(lease.FeeDeterminationFinancialGain, selectedText);
+                AssertTrueContentEquals(licenseDetailsFeeDeterminationFinancialGainContent, lease.FeeDeterminationFinancialGain);
+                //IWebElement financialGain = webDriver.FindElement(licenseDetailsFeeDeterminationFinancialGainInput);
+                //SelectElement selectedValue = new(element: financialGain);
+                //string selectedText = selectedValue.SelectedOption.Text;
+                //Assert.Equal(lease.FeeDeterminationFinancialGain, selectedText);
             }
 
             AssertTrueIsDisplayed(licenseDetailsFeeDeterminationSuggestedFeeLabel);

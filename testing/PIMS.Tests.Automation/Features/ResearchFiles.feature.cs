@@ -94,14 +94,14 @@ namespace PIMS.Tests.Automation.Features
             await this.TestTearDownAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="01. Research File Details")]
+        [Xunit.SkippableFactAttribute(DisplayName="01._Research_File_Details")]
         [Xunit.TraitAttribute("FeatureTitle", "ResearchFiles")]
-        [Xunit.TraitAttribute("Description", "01. Research File Details")]
-        public async System.Threading.Tasks.Task _01_ResearchFileDetails()
+        [Xunit.TraitAttribute("Description", "01._Research_File_Details")]
+        public async System.Threading.Tasks.Task _01__Research_File_Details()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("01. Research File Details", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("01._Research_File_Details", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 6
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -128,14 +128,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="02. Research File Properties")]
+        [Xunit.SkippableFactAttribute(DisplayName="02._Research_File_Properties")]
         [Xunit.TraitAttribute("FeatureTitle", "ResearchFiles")]
-        [Xunit.TraitAttribute("Description", "02. Research File Properties")]
-        public async System.Threading.Tasks.Task _02_ResearchFileProperties()
+        [Xunit.TraitAttribute("Description", "02._Research_File_Properties")]
+        public async System.Threading.Tasks.Task _02__Research_File_Properties()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("02. Research File Properties", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("02._Research_File_Properties", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 12
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -162,14 +162,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="03. Research File Documents")]
+        [Xunit.SkippableFactAttribute(DisplayName="03._Research_File_Documents")]
         [Xunit.TraitAttribute("FeatureTitle", "ResearchFiles")]
-        [Xunit.TraitAttribute("Description", "03. Research File Documents")]
-        public async System.Threading.Tasks.Task _03_ResearchFileDocuments()
+        [Xunit.TraitAttribute("Description", "03._Research_File_Documents")]
+        public async System.Threading.Tasks.Task _03__Research_File_Documents()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("03. Research File Documents", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("03._Research_File_Documents", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 18
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -196,14 +196,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="04. Research File Notes")]
+        [Xunit.SkippableFactAttribute(DisplayName="04._Research_File_Notes")]
         [Xunit.TraitAttribute("FeatureTitle", "ResearchFiles")]
-        [Xunit.TraitAttribute("Description", "04. Research File Notes")]
-        public async System.Threading.Tasks.Task _04_ResearchFileNotes()
+        [Xunit.TraitAttribute("Description", "04._Research_File_Notes")]
+        public async System.Threading.Tasks.Task _04__Research_File_Notes()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("04. Research File Notes", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("04._Research_File_Notes", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 24
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -230,14 +230,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="05. Research File from Pin")]
+        [Xunit.SkippableFactAttribute(DisplayName="05._Research_File_from_Pin")]
         [Xunit.TraitAttribute("FeatureTitle", "ResearchFiles")]
-        [Xunit.TraitAttribute("Description", "05. Research File from Pin")]
-        public async System.Threading.Tasks.Task _05_ResearchFileFromPin()
+        [Xunit.TraitAttribute("Description", "05._Research_File_from_Pin")]
+        public async System.Threading.Tasks.Task _05__Research_File_From_Pin()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("05. Research File from Pin", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("05._Research_File_from_Pin", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 30
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -258,14 +258,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="06. Research File List View")]
+        [Xunit.SkippableFactAttribute(DisplayName="06._Research_File_List_View")]
         [Xunit.TraitAttribute("FeatureTitle", "ResearchFiles")]
-        [Xunit.TraitAttribute("Description", "06. Research File List View")]
-        public async System.Threading.Tasks.Task _06_ResearchFileListView()
+        [Xunit.TraitAttribute("Description", "06._Research_File_List_View")]
+        public async System.Threading.Tasks.Task _06__Research_File_List_View()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("06. Research File List View", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("06._Research_File_List_View", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 34
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
