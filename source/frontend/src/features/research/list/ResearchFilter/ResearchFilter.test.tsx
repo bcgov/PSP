@@ -50,6 +50,8 @@ describe('Research Filter', () => {
     await act(async () => userEvent.click(searchButton));
 
     expect(setFilter).toHaveBeenCalledWith({
+      pid: '',
+      pin: '',
       appCreateUserid: '',
       appLastUpdateUserid: '',
       createOrUpdateBy: 'appLastUpdateUserid',
@@ -59,7 +61,7 @@ describe('Research Filter', () => {
       name: '',
       regionCode: '1',
       researchFileStatusTypeCode: 'ACTIVE',
-      researchSearchBy: 'name',
+      researchSearchBy: 'pid',
       rfileNumber: '',
       roadOrAlias: '',
       updatedOnEndDate: '',
@@ -127,6 +129,8 @@ describe('Research Filter', () => {
 
     expect(setFilter).toHaveBeenCalledWith(
       expect.objectContaining({
+        pid: '',
+        pin: '',
         appCreateUserid: '',
         appLastUpdateUserid: '',
         createOrUpdateBy: 'appLastUpdateUserid',
@@ -136,7 +140,7 @@ describe('Research Filter', () => {
         name: '',
         regionCode: '',
         researchFileStatusTypeCode: 'INACTIVE',
-        researchSearchBy: 'name',
+        researchSearchBy: 'pid',
         rfileNumber: '',
         roadOrAlias: '',
         updatedOnEndDate: '',
@@ -153,6 +157,8 @@ describe('Research Filter', () => {
 
     expect(setFilter).toHaveBeenCalledWith(
       expect.objectContaining({
+        pid: '',
+        pin: '',
         appCreateUserid: '',
         appLastUpdateUserid: '',
         createOrUpdateBy: 'appLastUpdateUserid',
@@ -162,7 +168,7 @@ describe('Research Filter', () => {
         name: '',
         regionCode: '',
         researchFileStatusTypeCode: 'ACTIVE',
-        researchSearchBy: 'name',
+        researchSearchBy: 'pid',
         rfileNumber: '',
         roadOrAlias: 'a road name',
         updatedOnEndDate: '',
@@ -181,6 +187,8 @@ describe('Research Filter', () => {
 
     expect(setFilter).toHaveBeenCalledWith(
       expect.objectContaining({
+        pid: '',
+        pin: '',
         appCreateUserid: '',
         appLastUpdateUserid: '',
         createOrUpdateBy: 'appLastUpdateUserid',
@@ -190,7 +198,7 @@ describe('Research Filter', () => {
         name: '',
         regionCode: '',
         researchFileStatusTypeCode: 'ACTIVE',
-        researchSearchBy: 'name',
+        researchSearchBy: 'pid',
         rfileNumber: '',
         roadOrAlias: '',
         updatedOnEndDate: '',
@@ -209,6 +217,8 @@ describe('Research Filter', () => {
 
     expect(setFilter).toHaveBeenCalledWith(
       expect.objectContaining({
+        pid: '',
+        pin: '',
         appCreateUserid: '',
         appLastUpdateUserid: '',
         createOrUpdateBy: 'appLastUpdateUserid',
@@ -218,7 +228,7 @@ describe('Research Filter', () => {
         name: '',
         regionCode: '',
         researchFileStatusTypeCode: 'ACTIVE',
-        researchSearchBy: 'name',
+        researchSearchBy: 'pid',
         rfileNumber: '',
         roadOrAlias: '',
         updatedOnEndDate: '2021-02-02',
@@ -236,6 +246,8 @@ describe('Research Filter', () => {
 
     expect(setFilter).toHaveBeenCalledWith(
       expect.objectContaining({
+        pid: '',
+        pin: '',
         appCreateUserid: 'createUser',
         appLastUpdateUserid: '',
         createOrUpdateBy: 'appCreateUserid',
@@ -245,7 +257,7 @@ describe('Research Filter', () => {
         name: '',
         regionCode: '',
         researchFileStatusTypeCode: 'ACTIVE',
-        researchSearchBy: 'name',
+        researchSearchBy: 'pid',
         rfileNumber: '',
         roadOrAlias: '',
         updatedOnEndDate: '',
@@ -263,6 +275,8 @@ describe('Research Filter', () => {
 
     expect(setFilter).toHaveBeenCalledWith(
       expect.objectContaining({
+        pid: '',
+        pin: '',
         appCreateUserid: '',
         appLastUpdateUserid: 'updateUser',
         createOrUpdateBy: 'appLastUpdateUserid',
@@ -272,7 +286,7 @@ describe('Research Filter', () => {
         name: '',
         regionCode: '',
         researchFileStatusTypeCode: 'ACTIVE',
-        researchSearchBy: 'name',
+        researchSearchBy: 'pid',
         rfileNumber: '',
         roadOrAlias: '',
         updatedOnEndDate: '',
