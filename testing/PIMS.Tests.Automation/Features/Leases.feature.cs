@@ -94,14 +94,14 @@ namespace PIMS.Tests.Automation.Features
             await this.TestTearDownAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="01. Lease and License File Details")]
+        [Xunit.SkippableFactAttribute(DisplayName="01._Lease_and_License_File_Details")]
         [Xunit.TraitAttribute("FeatureTitle", "Leases and Licenses")]
-        [Xunit.TraitAttribute("Description", "01. Lease and License File Details")]
-        public async System.Threading.Tasks.Task _01_LeaseAndLicenseFileDetails()
+        [Xunit.TraitAttribute("Description", "01._Lease_and_License_File_Details")]
+        public async System.Threading.Tasks.Task _01__Lease_And_License_File_Details()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("01. Lease and License File Details", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("01._Lease_and_License_File_Details", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 6
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -128,14 +128,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="02. Leases Properties and Surplus Declaration")]
+        [Xunit.SkippableFactAttribute(DisplayName="02._Leases_Properties_and_Surplus_Declaration")]
         [Xunit.TraitAttribute("FeatureTitle", "Leases and Licenses")]
-        [Xunit.TraitAttribute("Description", "02. Leases Properties and Surplus Declaration")]
-        public async System.Threading.Tasks.Task _02_LeasesPropertiesAndSurplusDeclaration()
+        [Xunit.TraitAttribute("Description", "02._Leases_Properties_and_Surplus_Declaration")]
+        public async System.Threading.Tasks.Task _02__Leases_Properties_And_Surplus_Declaration()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("02. Leases Properties and Surplus Declaration", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("02._Leases_Properties_and_Surplus_Declaration", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 12
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -165,14 +165,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="03. Leases Approval/Consultations")]
+        [Xunit.SkippableFactAttribute(DisplayName="03._Leases_Approval_Consultations")]
         [Xunit.TraitAttribute("FeatureTitle", "Leases and Licenses")]
-        [Xunit.TraitAttribute("Description", "03. Leases Approval/Consultations")]
-        public async System.Threading.Tasks.Task _03_LeasesApprovalConsultations()
+        [Xunit.TraitAttribute("Description", "03._Leases_Approval_Consultations")]
+        public async System.Threading.Tasks.Task _03__Leases_Approval_Consultations()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("03. Leases Approval/Consultations", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("03._Leases_Approval_Consultations", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 19
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -199,14 +199,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="04. Lease Checklist Tab")]
+        [Xunit.SkippableFactAttribute(DisplayName="04._Lease_Checklist_Tab")]
         [Xunit.TraitAttribute("FeatureTitle", "Leases and Licenses")]
-        [Xunit.TraitAttribute("Description", "04. Lease Checklist Tab")]
-        public async System.Threading.Tasks.Task _04_LeaseChecklistTab()
+        [Xunit.TraitAttribute("Description", "04._Lease_Checklist_Tab")]
+        public async System.Threading.Tasks.Task _04__Lease_Checklist_Tab()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("04. Lease Checklist Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("04._Lease_Checklist_Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 25
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -230,14 +230,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="05-1. Lease and License Payees Tab")]
+        [Xunit.SkippableFactAttribute(DisplayName="05-1._Lease_and_License_Payees_Tab")]
         [Xunit.TraitAttribute("FeatureTitle", "Leases and Licenses")]
-        [Xunit.TraitAttribute("Description", "05-1. Lease and License Payees Tab")]
-        public async System.Threading.Tasks.Task _05_1_LeaseAndLicensePayeesTab()
+        [Xunit.TraitAttribute("Description", "05-1._Lease_and_License_Payees_Tab")]
+        public async System.Threading.Tasks.Task _05_1__Lease_And_License_Payees_Tab()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("05-1. Lease and License Payees Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("05-1._Lease_and_License_Payees_Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 30
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -264,14 +264,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="05-2. Lease and License Tenants Tab")]
+        [Xunit.SkippableFactAttribute(DisplayName="05-2._Lease_and_License_Tenants_Tab")]
         [Xunit.TraitAttribute("FeatureTitle", "Leases and Licenses")]
-        [Xunit.TraitAttribute("Description", "05-2. Lease and License Tenants Tab")]
-        public async System.Threading.Tasks.Task _05_2_LeaseAndLicenseTenantsTab()
+        [Xunit.TraitAttribute("Description", "05-2._Lease_and_License_Tenants_Tab")]
+        public async System.Threading.Tasks.Task _05_2__Lease_And_License_Tenants_Tab()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("05-2. Lease and License Tenants Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("05-2._Lease_and_License_Tenants_Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 36
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -298,14 +298,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="06. Lease and License Improvements Tab")]
+        [Xunit.SkippableFactAttribute(DisplayName="06._Lease_and_License_Improvements_Tab")]
         [Xunit.TraitAttribute("FeatureTitle", "Leases and Licenses")]
-        [Xunit.TraitAttribute("Description", "06. Lease and License Improvements Tab")]
-        public async System.Threading.Tasks.Task _06_LeaseAndLicenseImprovementsTab()
+        [Xunit.TraitAttribute("Description", "06._Lease_and_License_Improvements_Tab")]
+        public async System.Threading.Tasks.Task _06__Lease_And_License_Improvements_Tab()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("06. Lease and License Improvements Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("06._Lease_and_License_Improvements_Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 42
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -332,14 +332,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="07. Lease and License Insurance Tab")]
+        [Xunit.SkippableFactAttribute(DisplayName="07._Lease_and_License_Insurance_Tab")]
         [Xunit.TraitAttribute("FeatureTitle", "Leases and Licenses")]
-        [Xunit.TraitAttribute("Description", "07. Lease and License Insurance Tab")]
-        public async System.Threading.Tasks.Task _07_LeaseAndLicenseInsuranceTab()
+        [Xunit.TraitAttribute("Description", "07._Lease_and_License_Insurance_Tab")]
+        public async System.Threading.Tasks.Task _07__Lease_And_License_Insurance_Tab()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("07. Lease and License Insurance Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("07._Lease_and_License_Insurance_Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 48
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -366,14 +366,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="08. Lease and License Deposits Tab")]
+        [Xunit.SkippableFactAttribute(DisplayName="08._Lease_and_License_Deposits_Tab")]
         [Xunit.TraitAttribute("FeatureTitle", "Leases and Licenses")]
-        [Xunit.TraitAttribute("Description", "08. Lease and License Deposits Tab")]
-        public async System.Threading.Tasks.Task _08_LeaseAndLicenseDepositsTab()
+        [Xunit.TraitAttribute("Description", "08._Lease_and_License_Deposits_Tab")]
+        public async System.Threading.Tasks.Task _08__Lease_And_License_Deposits_Tab()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("08. Lease and License Deposits Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("08._Lease_and_License_Deposits_Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 54
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -400,14 +400,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="09. Lease and License Periods and Payments Tab")]
+        [Xunit.SkippableFactAttribute(DisplayName="09._Lease_and_License_Periods_and_Payments_Tab")]
         [Xunit.TraitAttribute("FeatureTitle", "Leases and Licenses")]
-        [Xunit.TraitAttribute("Description", "09. Lease and License Periods and Payments Tab")]
-        public async System.Threading.Tasks.Task _09_LeaseAndLicensePeriodsAndPaymentsTab()
+        [Xunit.TraitAttribute("Description", "09._Lease_and_License_Periods_and_Payments_Tab")]
+        public async System.Threading.Tasks.Task _09__Lease_And_License_Periods_And_Payments_Tab()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("09. Lease and License Periods and Payments Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("09._Lease_and_License_Periods_and_Payments_Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 60
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -434,14 +434,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="10. Lease and License Documents Tab")]
+        [Xunit.SkippableFactAttribute(DisplayName="10._Lease_and_License_Documents_Tab")]
         [Xunit.TraitAttribute("FeatureTitle", "Leases and Licenses")]
-        [Xunit.TraitAttribute("Description", "10. Lease and License Documents Tab")]
-        public async System.Threading.Tasks.Task _10_LeaseAndLicenseDocumentsTab()
+        [Xunit.TraitAttribute("Description", "10._Lease_and_License_Documents_Tab")]
+        public async System.Threading.Tasks.Task _10__Lease_And_License_Documents_Tab()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("10. Lease and License Documents Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("10._Lease_and_License_Documents_Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 66
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -468,14 +468,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="11. Lease and License Notes Tab")]
+        [Xunit.SkippableFactAttribute(DisplayName="11._Lease_and_License_Notes_Tab")]
         [Xunit.TraitAttribute("FeatureTitle", "Leases and Licenses")]
-        [Xunit.TraitAttribute("Description", "11. Lease and License Notes Tab")]
-        public async System.Threading.Tasks.Task _11_LeaseAndLicenseNotesTab()
+        [Xunit.TraitAttribute("Description", "11._Lease_and_License_Notes_Tab")]
+        public async System.Threading.Tasks.Task _11__Lease_And_License_Notes_Tab()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("11. Lease and License Notes Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("11._Lease_and_License_Notes_Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 72
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -502,14 +502,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="12. Lease Compensation Tab")]
+        [Xunit.SkippableFactAttribute(DisplayName="12._Lease_Compensation_Tab")]
         [Xunit.TraitAttribute("FeatureTitle", "Leases and Licenses")]
-        [Xunit.TraitAttribute("Description", "12. Lease Compensation Tab")]
-        public async System.Threading.Tasks.Task _12_LeaseCompensationTab()
+        [Xunit.TraitAttribute("Description", "12._Lease_Compensation_Tab")]
+        public async System.Threading.Tasks.Task _12__Lease_Compensation_Tab()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("12. Lease Compensation Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("12._Lease_Compensation_Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 78
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -545,14 +545,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="13. Lease and License from Inventory Property Pin")]
+        [Xunit.SkippableFactAttribute(DisplayName="13._Lease_and_License_from_Inventory_Property_Pin")]
         [Xunit.TraitAttribute("FeatureTitle", "Leases and Licenses")]
-        [Xunit.TraitAttribute("Description", "13. Lease and License from Inventory Property Pin")]
-        public async System.Threading.Tasks.Task _13_LeaseAndLicenseFromInventoryPropertyPin()
+        [Xunit.TraitAttribute("Description", "13._Lease_and_License_from_Inventory_Property_Pin")]
+        public async System.Threading.Tasks.Task _13__Lease_And_License_From_Inventory_Property_Pin()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("13. Lease and License from Inventory Property Pin", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("13._Lease_and_License_from_Inventory_Property_Pin", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 87
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -573,14 +573,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="14. Lease and License List View")]
+        [Xunit.SkippableFactAttribute(DisplayName="14._Lease_and_License_List_View")]
         [Xunit.TraitAttribute("FeatureTitle", "Leases and Licenses")]
-        [Xunit.TraitAttribute("Description", "14. Lease and License List View")]
-        public async System.Threading.Tasks.Task _14_LeaseAndLicenseListView()
+        [Xunit.TraitAttribute("Description", "14._Lease_and_License_List_View")]
+        public async System.Threading.Tasks.Task _14__Lease_And_License_List_View()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("14. Lease and License List View", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("14._Lease_and_License_List_View", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 91
 this.ScenarioInitialize(scenarioInfo);
 #line hidden

@@ -1,18 +1,21 @@
 import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
-import BasemapToggle, { BaseLayer, BasemapToggleEvent, BasemapToggleProps } from './BasemapToggle';
+import BasemapToggle, { BasemapToggleEvent, BasemapToggleProps } from './BasemapToggle';
+import { BaseLayer } from './types';
 
 const onToggle = vi.fn();
 
 const basemaps: BaseLayer[] = [
   {
-    name: 'Map',
-    urls: ['https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'],
-    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+    name: 'BC Roads',
+    kind: 'esri-vector',
+    itemId: 'b1624fea73bd46c681fab55be53d96ae',
+    attribution: '',
     thumbnail: 'streets.jpg',
   },
   {
     name: 'Satellite',
+    kind: 'raster',
     urls: [
       'https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',
     ],
@@ -50,8 +53,8 @@ describe('Basemap Toggle', () => {
   it('calls toggle event handler when toggled', async () => {
     const { getByAltText } = setup();
     await act(async () => userEvent.click(getByAltText(/Map Thumbnail/i)));
-    expect(onToggle).toBeCalledTimes(1);
-    expect(onToggle).toBeCalledWith<[BasemapToggleEvent]>({
+    expect(onToggle).toHaveBeenCalledTimes(1);
+    expect(onToggle).toHaveBeenCalledWith<[BasemapToggleEvent]>({
       current: basemaps[1],
       previous: basemaps[0],
     });

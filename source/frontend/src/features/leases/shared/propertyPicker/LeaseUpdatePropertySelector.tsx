@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios';
+import { AxiosError } from 'axios';
 import { FieldArray, FieldArrayRenderProps, Formik, FormikProps } from 'formik';
 import { LatLngLiteral } from 'leaflet';
 import isNumber from 'lodash/isNumber';
@@ -24,9 +24,12 @@ import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
 import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
 import { useProperties } from '@/hooks/repositories/useProperties';
 import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeaseRepository';
+import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { getCancelModalProps } from '@/hooks/useModalContext';
+import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_PropertyView } from '@/models/api/generated/ApiGen_Concepts_PropertyView';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { exists, isLatLngInFeatureSetBoundary, isValidId, isValidString } from '@/utils';
 
 import { useLeaseDetail } from '../../hooks/useLeaseDetail';
@@ -42,7 +45,6 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
   LeaseUpdatePropertySelectorProp
 > = ({ lease }) => {
   const [showSaveConfirmModal, setShowSaveConfirmModal] = useState<boolean>(false);
-  const [showAssociatedEntityWarning, setShowAssociatedEntityWarning] = useState<boolean>(false);
 
   const formikRef = useRef<FormikProps<LeaseFormModel>>(null);
 
@@ -62,6 +64,10 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
   const { getCompleteLease } = useLeaseDetail(lease?.id ?? undefined);
 
   const mapMachine = useMapStateMachine();
+
+  const withUserOverride = useApiUserOverride<
+    (userOverrideCodes: UserOverrideCode[]) => Promise<any | void>
+  >('Failed to update Lease File Properties');
 
   const addProperties = useCallback((properties: FormLeaseProperty[]) => {
     const formikProps = formikRef.current;
@@ -258,42 +264,40 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
   };
 
   const saveFile = async (file: ApiGen_Concepts_Lease) => {
-    try {
-      const response = await updateLeaseProperties.execute(file, []);
-
-      formikRef.current?.setSubmitting(false);
-      if (isValidId(response?.id)) {
-        if (file.fileProperties?.find(fp => !fp.property?.address && !fp.property?.id)) {
-          toast.warn(
-            'Address could not be retrieved for this property, it will have to be provided manually in property details tab',
-            { autoClose: 15000 },
-          );
-        }
-        formikRef.current?.resetForm();
-        await getCompleteLease();
-        mapMachine.refreshMapProperties();
-        pathSolver.showFile('lease', lease.id);
-      }
-    } catch (e) {
-      if (axios.isAxiosError(e) && (e as AxiosError).code === '409') {
-        setShowAssociatedEntityWarning(true);
-      } else if (e?.response?.data?.type === 'BusinessRuleViolationException') {
-        setShowSaveConfirmModal(false);
+    return withUserOverride(
+      (userOverrideCodes: UserOverrideCode[]) => {
+        return updateLeaseProperties.execute(file, userOverrideCodes).then(async response => {
+          formikRef.current?.setSubmitting(false);
+          if (isValidId(response?.id)) {
+            if (file.fileProperties?.find(fp => !fp.property?.address && !fp.property?.id)) {
+              toast.warn(
+                'Address could not be retrieved for this property, it will have to be provided manually in property details tab',
+                { autoClose: 15000 },
+              );
+            }
+            formikRef.current?.resetForm();
+            await getCompleteLease();
+            mapMachine.refreshMapProperties();
+            pathSolver.showFile('lease', lease.id);
+          }
+        });
+      },
+      [],
+      (axiosError: AxiosError<IApiError>) => {
         setModalContent({
-          title: 'Warning',
-          message: e.response.data.error,
-          okButtonText: 'Close',
           variant: 'error',
+          title: 'Error',
+          message: axiosError?.response?.data.error,
+          okButtonText: 'Close',
           handleOk: async () => {
+            formikRef.current?.resetForm();
             await getCompleteLease();
             setDisplayModal(false);
           },
         });
         setDisplayModal(true);
-      } else {
-        throw e;
-      }
-    }
+      },
+    );
   };
 
   const initialValues = LeaseFormModel.fromApi(lease);
@@ -404,23 +408,6 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
         handleCancel={() => setShowSaveConfirmModal(false)}
         okButtonText="Save"
         cancelButtonText="Cancel"
-        show
-      />
-      <GenericModal
-        variant="info"
-        display={showAssociatedEntityWarning}
-        title={'Property with associations'}
-        message={
-          <>
-            <div>
-              This property can not be removed from the file. This property is related to one or
-              more entities in the file, only properties that are not linked to any entities in the
-              file can be removed.
-            </div>
-          </>
-        }
-        handleOk={() => setShowAssociatedEntityWarning(false)}
-        okButtonText="Close"
         show
       />
     </>

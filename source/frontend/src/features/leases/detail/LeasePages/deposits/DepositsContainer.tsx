@@ -59,7 +59,7 @@ export const DepositsContainer: React.FunctionComponent<
       .filter(exists) ?? [];
   const [editNotes, setEditNotes] = useState<boolean>(false);
 
-  const [showDepositEditModal, setShowEditModal] = useState<boolean>(false);
+  const [showDepositEditModal, setShowDepositEditModal] = useState<boolean>(false);
   const [deleteModalWarning, setDeleteModalWarning] = useState<boolean>(false);
   const [deleteReturnModalWarning, setDeleteReturnModalWarning] = useState<boolean>(false);
 
@@ -79,14 +79,14 @@ export const DepositsContainer: React.FunctionComponent<
 
   const onAddDeposit = () => {
     lease?.id && setEditDepositValue(FormLeaseDeposit.createEmpty(lease?.id));
-    setShowEditModal(true);
+    setShowDepositEditModal(true);
   };
 
   const onEditDeposit = (id: number) => {
     const deposit = securityDeposits.find((x: ApiGen_Concepts_SecurityDeposit) => x.id === id);
     if (deposit) {
       setEditDepositValue(FormLeaseDeposit.fromApi(deposit));
-      setShowEditModal(true);
+      setShowDepositEditModal(true);
     }
   };
 
@@ -137,7 +137,7 @@ export const DepositsContainer: React.FunctionComponent<
         : await addSecurityDeposit(lease.id, depositForm.toApi());
       if (isValidId(updatedSecurityDeposit?.id)) {
         setEditDepositValue(FormLeaseDeposit.createEmpty(lease.id));
-        setShowEditModal(false);
+        setShowDepositEditModal(false);
         getSecurityDeposits(lease.id);
         props.onSuccess();
       }
@@ -260,7 +260,7 @@ export const DepositsContainer: React.FunctionComponent<
               initialValues={editDepositValue}
               onCancel={() => {
                 lease?.id && setEditDepositValue(FormLeaseDeposit.createEmpty(lease.id));
-                setShowEditModal(false);
+                setShowDepositEditModal(false);
               }}
               onSave={onSaveDeposit}
             />

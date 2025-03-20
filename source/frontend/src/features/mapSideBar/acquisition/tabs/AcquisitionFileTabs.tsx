@@ -68,7 +68,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
       <AcquisitionSummaryView acquisitionFile={acquisitionFile} onEdit={() => setIsEditing(true)} />
     ),
     key: FileTabType.FILE_DETAILS,
-    name: 'File details',
+    name: 'File Details',
   });
 
   tabViews.push({
