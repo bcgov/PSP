@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Api.Policies;
+using Pims.Core.Extensions;
 using Pims.Core.Helpers;
 using Pims.Core.Security;
 using Pims.Ltsa;
@@ -62,6 +64,13 @@ namespace Pims.Api.Areas.Tools.Controllers
         [HasPermission(Permissions.PropertyEdit)]
         public async Task<IActionResult> FindTitleSummariesAsync(string pid)
         {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(LtsaController),
+                nameof(FindTitleSummariesAsync),
+                _user.GetUsername(),
+                DateTime.Now);
+
             var result = await _ltsaService.GetTitleSummariesAsync(PidTranslator.ConvertPID(pid));
             return new JsonResult(result.TitleSummaries);
         }
@@ -80,6 +89,13 @@ namespace Pims.Api.Areas.Tools.Controllers
         [HasPermission(Permissions.PropertyView)]
         public async Task<IActionResult> PostTitleOrderAsync(string titleNumber, string landTitleDistrictCode)
         {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(LtsaController),
+                nameof(PostTitleOrderAsync),
+                _user.GetUsername(),
+                DateTime.Now);
+
             var result = await _ltsaService.PostTitleOrder(titleNumber, landTitleDistrictCode);
             return new JsonResult(result?.Order);
         }
@@ -97,6 +113,13 @@ namespace Pims.Api.Areas.Tools.Controllers
         [HasPermission(Permissions.PropertyView)]
         public async Task<IActionResult> PostParcelInfoOrderAsync(string pid)
         {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(LtsaController),
+                nameof(PostParcelInfoOrderAsync),
+                _user.GetUsername(),
+                DateTime.Now);
+
             if (!string.IsNullOrEmpty(pid))
             {
                 var result = await _ltsaService.PostParcelInfoOrder(PidTranslator.ConvertPIDToDash(pid));
@@ -118,6 +141,13 @@ namespace Pims.Api.Areas.Tools.Controllers
         [HasPermission(Permissions.PropertyView)]
         public async Task<IActionResult> PostSpcpOrderAsync(string strataPlanNumber)
         {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(LtsaController),
+                nameof(PostSpcpOrderAsync),
+                _user.GetUsername(),
+                DateTime.Now);
+
             var result = await _ltsaService.PostSpcpOrder(strataPlanNumber);
             return new JsonResult(result?.Order);
         }
@@ -135,6 +165,13 @@ namespace Pims.Api.Areas.Tools.Controllers
         [HasPermission(Permissions.PropertyView)]
         public async Task<IActionResult> PostLtsaFields(string pid)
         {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(LtsaController),
+                nameof(PostLtsaFields),
+                _user.GetUsername(),
+                DateTime.Now);
+
             var result = await _ltsaService.PostLtsaFields(pid);
             return new JsonResult(result);
         }
