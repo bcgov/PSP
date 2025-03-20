@@ -9,13 +9,6 @@ namespace Pims.Ltsa.Models
 {
     public class BctfaOwnershipList
     {
-        private readonly IEnumerable<int> pids;
-        public BctfaOwnershipList()
-        {
-            this.pids = new HashSet<int>();
-        }
-        [DataMember(Name = "order", EmitDefaultValue = false)]
-        public IEnumerable<int> Pids { get; }
-        
+        public IEnumerable<int> Pids { get; set; }
     }
 }
