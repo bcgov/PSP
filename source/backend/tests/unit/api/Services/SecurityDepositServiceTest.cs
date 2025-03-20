@@ -8,12 +8,12 @@ using NetTopologySuite.Geometries;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;
+using Pims.Core.Security;
 using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
-using Pims.Core.Security;
 using Xunit;
 
 namespace Pims.Api.Test.Services
@@ -54,7 +54,7 @@ namespace Pims.Api.Test.Services
             leaseService.Setup(x => x.GetById(It.IsAny<long>())).Returns(lease);
 
             var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
-            solver.Setup(x => x.CanEditPayments(It.IsAny<LeaseStatusTypes?>())).Returns(false);
+            solver.Setup(x => x.CanEditDeposits(It.IsAny<LeaseStatusTypes?>())).Returns(false);
 
             // Act
             Action act = () => service.AddLeaseDeposit(1, new PimsSecurityDeposit());
@@ -78,7 +78,7 @@ namespace Pims.Api.Test.Services
             leaseService.Setup(x => x.GetById(It.IsAny<long>())).Returns(lease);
 
             var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
-            solver.Setup(x => x.CanEditPayments(It.IsAny<LeaseStatusTypes?>())).Returns(false);
+            solver.Setup(x => x.CanEditDeposits(It.IsAny<LeaseStatusTypes?>())).Returns(false);
 
             // Act
             Action act = () => service.UpdateLeaseDeposit(1, new PimsSecurityDeposit());
@@ -100,7 +100,7 @@ namespace Pims.Api.Test.Services
             leaseService.Setup(x => x.GetById(It.IsAny<long>())).Returns(lease);
 
             var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
-            solver.Setup(x => x.CanEditPayments(It.IsAny<LeaseStatusTypes?>())).Returns(false);
+            solver.Setup(x => x.CanEditDeposits(It.IsAny<LeaseStatusTypes?>())).Returns(false);
 
             // Act
             Action act = () => service.UpdateLeaseDepositNote(1, "new note");

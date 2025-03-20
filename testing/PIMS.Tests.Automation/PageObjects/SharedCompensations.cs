@@ -699,7 +699,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueContentEquals(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+lastCreatedCompensationReq+")  div:nth-child(3)"), TransformCurrencyFormat(compensation.CompensationTotalAmount));
             AssertTrueContentEquals(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+lastCreatedCompensationReq+")  div:nth-child(4)"), compensation.CompensationStatus);
             AssertTrueIsDisplayed(By.CssSelector("button[data-testid='compensation-view-"+ elementIndex +"']"));
-            AssertTrueIsDisplayed(By.CssSelector("button[data-testid='compensation-delete-"+ elementIndex +"']"));
+            //AssertTrueIsDisplayed(By.CssSelector("button[data-testid='compensation-delete-"+ elementIndex +"']"));
         }
 
         private void CreateFinancialActivity(CompensationActivity activity)

@@ -12,6 +12,7 @@ using Pims.Core.Security;
 using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Entities;
+using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
 using Xunit;
@@ -39,6 +40,61 @@ namespace Pims.Api.Test.Services
         }
 
         #region Tests
+
+        #region GetPage
+        [Fact]
+        public void GetPage_Success()
+        {
+            // Arrange
+            var service = this.CreateLeaseService(Permissions.LeaseView);
+
+            var lease = EntityHelper.CreateLease(1);
+            lease.RegionCode = 1;
+            var user = EntityHelper.CreateUser("Test");
+            user.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = lease.RegionCode.Value });
+
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+
+            // Act
+            var filter = new LeaseFilter() { LFileNo = "L-1234" };
+            var properties = service.GetPage(filter, false);
+
+            // Assert
+            leaseRepository.Verify(x => x.GetPage(filter, It.Is<HashSet<short>>(r => r.Count == 1 && r.Contains(lease.RegionCode.Value))), Times.Once);
+        }
+
+        [Fact]
+        public void GetPage_All_ShouldIgnorePagination_Success()
+        {
+            // Arrange
+            var service = this.CreateLeaseService(Permissions.LeaseView);
+
+            var lease = EntityHelper.CreateLease(1);
+            lease.RegionCode = 1;
+            var user = EntityHelper.CreateUser("Test");
+            user.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = lease.RegionCode.Value });
+
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
+            leaseRepository.Setup(x => x.Count()).Returns(55); // mock the total amount of leases in the database
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+
+            // Act
+            var filter = new LeaseFilter() { LFileNo = "L-1234" };
+            var all = true;
+            var properties = service.GetPage(filter, all);
+
+            // Assert
+            // Pagination should be ignored and all results should be returned when "all" parameter is true
+            leaseRepository.Verify(x => x.GetPage(It.Is<LeaseFilter>(f => f.Page == 1 && f.Quantity == 55), It.IsAny<HashSet<short>>()), Times.Once);
+        }
+        #endregion
 
         #region Add
         [Fact]

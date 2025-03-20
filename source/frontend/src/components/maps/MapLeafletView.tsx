@@ -12,7 +12,8 @@ import { isEqual } from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   LayerGroup,
-  MapContainer as ReactLeafletMap,
+  MapContainer as LeafletMapContainer,
+  Pane,
   ScaleControl,
   TileLayer,
 } from 'react-leaflet';
@@ -24,10 +25,8 @@ import { exists, firstOrNull } from '@/utils';
 
 import { DEFAULT_MAP_ZOOM, defaultBounds, defaultLatLng } from './constants';
 import AdvancedFilterButton from './leaflet/Control/AdvancedFilter/AdvancedFilterButton';
-import BasemapToggle, {
-  BaseLayer,
-  BasemapToggleEvent,
-} from './leaflet/Control/BaseMapToggle/BasemapToggle';
+import BasemapToggle, { BasemapToggleEvent } from './leaflet/Control/BaseMapToggle/BasemapToggle';
+import { BaseLayer, isVectorBasemap } from './leaflet/Control/BaseMapToggle/types';
 import LayersControl from './leaflet/Control/LayersControl/LayersControl';
 import { LegendControl } from './leaflet/Control/Legend/LegendControl';
 import { ZoomOutButton } from './leaflet/Control/ZoomOut/ZoomOutButton';
@@ -37,6 +36,7 @@ import { LeafletLayerListener } from './leaflet/Layers/LeafletLayerListener';
 import { useConfiguredMapLayers } from './leaflet/Layers/useConfiguredMapLayers';
 import { MapEvents } from './leaflet/MapEvents/MapEvents';
 import * as Styled from './leaflet/styles';
+import { EsriVectorTileLayer } from './leaflet/VectorTileLayer/EsriVectorTileLayer';
 
 export type MapLeafletViewProps = {
   parentWidth: number | undefined;
@@ -231,7 +231,7 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
         <BasemapToggle baseLayers={baseLayers} onToggle={handleBasemapToggle} />
       )}
 
-      <ReactLeafletMap
+      <LeafletMapContainer
         center={[defaultLatLng.lat, defaultLatLng.lng]}
         zoom={DEFAULT_MAP_ZOOM}
         maxZoom={MAP_MAX_ZOOM}
@@ -245,20 +245,32 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
           zoomend={e => handleZoomUpdate(e.sourceTarget.getZoom())}
           moveend={handleBounds}
         />
-        {activeBasemap && (
-          // Draws the map itself
-          <LayerGroup attribution={activeBasemap.attribution}>
-            {activeBasemap.urls?.map((tileUrl, index) => (
-              <TileLayer
-                key={`${activeBasemap.name}-${index}`}
-                zIndex={index}
-                url={tileUrl}
-                maxZoom={MAP_MAX_ZOOM}
-                maxNativeZoom={MAP_MAX_NATIVE_ZOOM}
-              />
-            ))}
-          </LayerGroup>
-        )}
+        {/* The basemap is the first layer to draw, followed by data layers and then graphics */}
+        <Pane name="basemap" style={{ zIndex: 200 }}>
+          {activeBasemap && (
+            <LayerGroup attribution={activeBasemap.attribution}>
+              {isVectorBasemap(activeBasemap) ? (
+                <EsriVectorTileLayer zIndex={0} itemId={activeBasemap.itemId} />
+              ) : (
+                activeBasemap.urls?.map((tileUrl, index) => (
+                  <TileLayer
+                    key={`${activeBasemap.name}-${index}`}
+                    zIndex={index}
+                    url={tileUrl}
+                    maxZoom={MAP_MAX_ZOOM}
+                    maxNativeZoom={MAP_MAX_NATIVE_ZOOM}
+                  />
+                ))
+              )}
+            </LayerGroup>
+          )}
+        </Pane>
+
+        {/* Data layers (i.e. parcelmap, tantalis, etc) are drawn on top of basemaps */}
+        <Pane name="dataLayers" style={{ zIndex: 350 }}>
+          <LeafletLayerListener pane="dataLayers" />
+        </Pane>
+
         {mapMachine.showPopup && (
           // Draws the popup on top of the map
           <LocationPopupContainer ref={popupRef} />
@@ -277,8 +289,7 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
           maxZoom={MAP_MAX_ZOOM}
           bounds={mapMachine.currentMapBounds ?? defaultBounds}
         ></InventoryLayer>
-        <LeafletLayerListener />
-      </ReactLeafletMap>
+      </LeafletMapContainer>
     </Styled.MapContainer>
   );
 };

@@ -11,6 +11,7 @@ import { exists } from '@/utils';
 
 import HistoricalNumbersContainer from '../../shared/header/HistoricalNumberContainer';
 import { HistoricalNumberSectionView } from '../../shared/header/HistoricalNumberSectionView';
+import { StyledLeftHeaderPane } from '../../shared/header/styles';
 
 export interface IDispositionHeaderProps {
   dispositionFile?: ApiGen_Concepts_DispositionFile;
@@ -28,12 +29,12 @@ export const DispositionHeader: React.FunctionComponent<
 
   return (
     <StyledRow className="no-gutters">
-      <Col xs={leftColumnWidth}>
+      <StyledLeftHeaderPane xs={leftColumnWidth}>
         <HeaderField label="File:" labelWidth={leftColumnLabel} contentWidth="9">
           D-{dispositionFile?.fileNumber}
         </HeaderField>
         <HistoricalNumbersContainer propertyIds={propertyIds} View={HistoricalNumberSectionView} />
-      </Col>
+      </StyledLeftHeaderPane>
       <Col xs="5">
         <StyledFiller>
           <AuditSection lastUpdatedBy={lastUpdatedBy} baseAudit={dispositionFile} />

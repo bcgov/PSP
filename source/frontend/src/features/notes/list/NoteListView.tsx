@@ -6,7 +6,6 @@ import { toast } from 'react-toastify';
 import GenericModal from '@/components/common/GenericModal';
 import { Section } from '@/components/common/Section/Section';
 import { SectionListHeader } from '@/components/common/SectionListHeader';
-import { ListPage, PaddedScrollable } from '@/components/common/styles';
 import { TableSort } from '@/components/Table/TableSort';
 import { Claims } from '@/constants/claims';
 import { NoteTypes } from '@/constants/noteTypes';
@@ -93,70 +92,66 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
   };
 
   return (
-    <ListPage>
-      <PaddedScrollable vertical={true}>
-        <Section
-          header={
-            <SectionListHeader
-              claims={[Claims.NOTE_ADD]}
-              title="Notes"
-              addButtonText="Add a Note"
-              addButtonIcon={<FaPlus size={'2rem'} />}
-              onAdd={openAddNotes}
-            />
-          }
-          title="notes"
-          isCollapsable
-          initiallyExpanded
-        >
-          <NoteResults
-            results={sortedNoteList}
-            loading={isLoading}
-            sort={sort}
-            setSort={setSort}
-            onShowDetails={(note: ApiGen_Concepts_Note) => {
-              setCurrentNote(note);
-              openViewNotes();
-            }}
-            onDelete={(note: ApiGen_Concepts_Note) => {
-              setCurrentNote(note);
-              setShowDeleteConfirm(true);
-            }}
-          />
+    <Section
+      header={
+        <SectionListHeader
+          claims={[Claims.NOTE_ADD]}
+          title="Notes"
+          addButtonText="Add a Note"
+          addButtonIcon={<FaPlus size={'2rem'} />}
+          onAdd={openAddNotes}
+        />
+      }
+      title="notes"
+      isCollapsable
+      initiallyExpanded
+    >
+      <NoteResults
+        results={sortedNoteList}
+        loading={isLoading}
+        sort={sort}
+        setSort={setSort}
+        onShowDetails={(note: ApiGen_Concepts_Note) => {
+          setCurrentNote(note);
+          openViewNotes();
+        }}
+        onDelete={(note: ApiGen_Concepts_Note) => {
+          setCurrentNote(note);
+          setShowDeleteConfirm(true);
+        }}
+      />
 
-          <AddNotesContainer
-            type={type}
-            parentId={entityId}
-            isOpened={isAddNotesOpened}
-            openModal={openAddNotes}
-            closeModal={closeAddNotes}
-            onSuccess={onChildSuccess}
-          />
+      <AddNotesContainer
+        type={type}
+        parentId={entityId}
+        isOpened={isAddNotesOpened}
+        openModal={openAddNotes}
+        closeModal={closeAddNotes}
+        onSuccess={onChildSuccess}
+      />
 
-          {currentNote && (
-            <NoteContainer
-              type={type}
-              noteId={currentNote.id as number}
-              isOpened={isViewNotesOpened}
-              openModal={openViewNotes}
-              closeModal={closeViewNotes}
-              onSuccess={onChildSuccess}
-            ></NoteContainer>
-          )}
+      {currentNote && (
+        <NoteContainer
+          type={type}
+          noteId={currentNote.id as number}
+          isOpened={isViewNotesOpened}
+          openModal={openViewNotes}
+          closeModal={closeViewNotes}
+          onSuccess={onChildSuccess}
+        ></NoteContainer>
+      )}
 
-          <GenericModal
-            variant="info"
-            display={showDeleteConfirm}
-            title="Delete Note"
-            message={`Are you sure you want to delete this note?`}
-            handleOk={onDeleteNoteConfirm}
-            okButtonText="OK"
-            cancelButtonText="Cancel"
-            setDisplay={setShowDeleteConfirm}
-          />
-        </Section>
-      </PaddedScrollable>
-    </ListPage>
+      <GenericModal
+        variant="info"
+        display={showDeleteConfirm}
+        title="Delete Note"
+        message={`Are you sure you want to delete this note?`}
+        handleOk={onDeleteNoteConfirm}
+        okButtonText="OK"
+        cancelButtonText="Cancel"
+        setDisplay={setShowDeleteConfirm}
+      />
+    </Section>
   );
 };
 
