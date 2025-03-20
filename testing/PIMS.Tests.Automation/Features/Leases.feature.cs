@@ -533,10 +533,10 @@ this.ScenarioInitialize(scenarioInfo);
  await testRunner.AndAsync("I add Tenants to the Lease", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 83
- await testRunner.AndAsync("I create Compensation Requisition within an Lease/Licence", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync("I create Compensation Requisition within a Lease or Licence", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 84
- await testRunner.AndAsync("I update Compensation Requisition within an Lease from row number 9", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync("I update Compensation Requisition within a Lease from row number 9", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 85
  await testRunner.ThenAsync("A new lease is created successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
