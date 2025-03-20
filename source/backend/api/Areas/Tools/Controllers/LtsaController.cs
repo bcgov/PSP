@@ -141,59 +141,6 @@ namespace Pims.Api.Areas.Tools.Controllers
             var result = await _ltsaService.PostLtsaFields(pid);
             return new JsonResult(result);
         }
-
-        /// <summary>
-        /// Upload a newline delimited list of pid numbers reflecting BCTFA ownership as per LTSA.
-        /// </summary>
-        /// <param name="ownershipFile">the file containing the list of pids.</param>
-        /// <returns>The orders created within LTSA.</returns>
-        [HttpPut("ownership")]
-        [Produces("application/json")]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(typeof(Pims.Api.Models.ErrorResponseModel), 400)]
-        [SwaggerOperation(Tags = new[] { "tools-ltsa" })]
-        [HasPermission(Permissions.LtsaOwnershipEdit)]
-        public async Task<IActionResult> PutBctfaOwnership(IFormFile ownershipFile)
-        {
-            _logger.LogInformation(
-                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
-                nameof(DispositionController),
-                nameof(LtsaController),
-                _user.GetUsername(),
-                DateTime.Now);
-
-            _logger.LogDebug(ownershipFile.Serialize());
-
-            // TODO: placeholder endpoint to facilitate LTSA integration.
-            return new OkResult();
-        }
-
-        /// <summary>
-        /// Upload a json structure of pids representing BCTFA ownership.
-        /// </summary>
-        /// <param name="ownershipData">the json structure containing the list of pids.</param>
-        /// <returns>The orders created within LTSA.</returns>
-        [HttpPut("ownership/list")]
-        [Consumes("application/json")]
-        [Produces("application/json")]
-        [ProducesResponseType(200)]
-        [ProducesResponseType(typeof(Pims.Api.Models.ErrorResponseModel), 400)]
-        [SwaggerOperation(Tags = new[] { "tools-ltsa" })]
-        [HasPermission(Permissions.LtsaOwnershipEdit)]
-        public async Task<IActionResult> PutBctfaOwnershipJson([FromBody] Model.BctfaOwnershipList ownershipData)
-        {
-            _logger.LogInformation(
-                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
-                nameof(DispositionController),
-                nameof(LtsaController),
-                _user.GetUsername(),
-                DateTime.Now);
-
-            _logger.LogDebug(ownershipData.Serialize());
-
-            // TODO: placeholder endpoint to facilitate LTSA integration.
-            return new OkResult();
-        }
         #endregion
     }
 }

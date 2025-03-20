@@ -201,16 +201,16 @@ namespace Pims.Core.Security
         [Display(GroupName = "disposition", Name = "disposition-delete", Description = "Ability to delete Disposition Files.")]
         DispositionDelete = 65,
 
-        [Display(GroupName = "ltsaOwnership", Name = "ltsa-ownership-view", Description = "Ability to view LTSA ownership information.")]
-        LtsaOwnershipView = 66,
+        [Display(GroupName = "bctfaOwnership", Name = "bctfa-ownership-view", Description = "Ability to view BCTFA ownership information.")]
+        BctfaOwnershipView = 66,
 
-        [Display(GroupName = "ltsaOwnership", Name = "ltsa-ownership-add", Description = "Ability to add new LTSA ownership information.")]
-        LtsaOwnershipAdd = 67,
+        [Display(GroupName = "bctfaOwnership", Name = "bctfa-ownership-add", Description = "Ability to add new BCTFA ownership information.")]
+        BctfaOwnershipAdd = 67,
 
-        [Display(GroupName = "ltsaOwnership", Name = "ltsa-ownership-edit", Description = "Ability to edit existing LTSA ownership information.")]
-        LtsaOwnershipEdit = 68,
+        [Display(GroupName = "bctfaOwnership", Name = "bctfa-ownership-edit", Description = "Ability to edit existing BCTFA ownership information.")]
+        BctfaOwnershipEdit = 68,
 
-        [Display(GroupName = "ltsaOwnership", Name = "ltsa-ownership-delete", Description = "Ability to delete LTSA ownership information.")]
-        LtsaOwnershipDelete = 69,
+        [Display(GroupName = "bctfaOwnership", Name = "bctfa-ownership-delete", Description = "Ability to delete BCTFA ownership information.")]
+        BctfaOwnershipDelete = 69,
     }
 }
