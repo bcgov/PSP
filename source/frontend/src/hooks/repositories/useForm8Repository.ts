@@ -36,7 +36,7 @@ export const useForm8Repository = () => {
     requestFunction: useCallback(async (form8Id: number) => await deleteForm8Api(form8Id), []),
     throwError: true,
     requestName: 'DeleteForm8',
-    onSuccess: useAxiosSuccessHandler('Expropriation Payment deleted'),
+    onSuccess: useAxiosSuccessHandler(),
     onError: useAxiosErrorHandler(
       'Failed to delete Expropriation Payment. Refresh the page to try again.',
     ),
