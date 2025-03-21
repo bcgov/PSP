@@ -49,7 +49,7 @@ export const registerMeterProvider = (
     readers: [
       new PeriodicExportingMetricReader({
         exporter: metricExporter,
-        exportIntervalMillis: 10_000, // export metrics every 30 seconds
+        exportIntervalMillis: 30_000, // export metrics every 30 seconds
       }),
     ],
   });
