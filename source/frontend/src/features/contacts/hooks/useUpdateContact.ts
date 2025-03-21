@@ -7,6 +7,7 @@ import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
 import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
+import { useAxiosSuccessHandler } from '@/utils/axiosUtils';
 
 /**
  * hook that updates a contact.
@@ -14,7 +15,6 @@ import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_P
 export const useUpdateContact = () => {
   const { putPerson, putOrganization } = useApiContacts();
 
-  const onSuccess = useCallback(() => toast.success('Contact saved'), []);
   const onError = useCallback((axiosError: AxiosError<IApiError>) => {
     if (axiosError?.response?.status === 400) {
       toast.error(axiosError?.response.data.error);
@@ -33,7 +33,7 @@ export const useUpdateContact = () => {
       [putPerson],
     ),
     requestName: 'UpdatePerson',
-    onSuccess: onSuccess,
+    onSuccess: useAxiosSuccessHandler(),
     onError: onError,
   });
 
@@ -47,7 +47,7 @@ export const useUpdateContact = () => {
       [putOrganization],
     ),
     requestName: 'UpdateOrganization',
-    onSuccess: onSuccess,
+    onSuccess: useAxiosSuccessHandler(),
     onError: onError,
   });
 

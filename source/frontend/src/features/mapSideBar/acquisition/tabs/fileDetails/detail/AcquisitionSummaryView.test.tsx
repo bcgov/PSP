@@ -1,4 +1,5 @@
 import Claims from '@/constants/claims';
+import { InterestHolderType } from '@/constants/interestHolderTypes';
 import { useApiAcquisitionFile } from '@/hooks/pims-api/useApiAcquisitionFile';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import {
@@ -7,13 +8,13 @@ import {
 } from '@/mocks/acquisitionFiles.mock';
 import { getEmptyPerson } from '@/mocks/contacts.mock';
 import { getEmptyOrganization } from '@/mocks/organization.mock';
+import { mockProjects } from '@/mocks/projects.mock';
 import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
-import { formatMinistryProject, toTypeCodeNullable } from '@/utils/formUtils';
+import { toTypeCodeNullable } from '@/utils/formUtils';
 import { act, cleanup, render, RenderOptions, userEvent, waitForEffects } from '@/utils/test-utils';
 
 import AcquisitionSummaryView, { IAcquisitionSummaryViewProps } from './AcquisitionSummaryView';
-import { mockProjects } from '@/mocks/projects.mock';
 
 // mock auth library
 
@@ -119,11 +120,16 @@ describe('AcquisitionSummaryView component', () => {
   });
 
   it.each([
-    ['with project number', '001', `FTProjectTest`],
-    ['without project number', null, `FTProjectTest`],
+    ['with project number', '001', 'FTProjectTest', '001 - FTProjectTest'],
+    ['without project number', null, 'FTProjectTest', 'FTProjectTest'],
   ])(
     'renders the file Project Number and name concatenated - %s',
-    async (_: string, projectNumber: string | null, projectDescription: string) => {
+    async (
+      _: string,
+      projectNumber: string | null,
+      projectDescription: string,
+      expectedValue: string,
+    ) => {
       const { getByText } = setup(
         {
           acquisitionFile: {
@@ -149,7 +155,7 @@ describe('AcquisitionSummaryView component', () => {
       await waitForEffects();
 
       expect(getByText('Ministry project:')).toBeVisible();
-      expect(getByText(formatMinistryProject(projectNumber, projectDescription))).toBeVisible();
+      expect(getByText(expectedValue)).toBeVisible();
     },
   );
 
@@ -270,11 +276,85 @@ describe('AcquisitionSummaryView component', () => {
     expect(getByTestId('assigned-date')).toHaveTextContent('Dec 18, 2024');
   });
 
+  it('renders multiple owner solicitor information with primary contact', async () => {
+    const { findByText, findAllByText } = setup(
+      {
+        acquisitionFile: {
+          ...mockAcquisitionFileResponse(),
+          acquisitionFileInterestHolders: [
+            {
+              interestHolderId: 1,
+              interestHolderType: toTypeCodeNullable(InterestHolderType.OWNER_SOLICITOR),
+
+              acquisitionFileId: 1,
+              personId: null,
+              person: null,
+              organizationId: 1,
+              organization: {
+                ...getEmptyOrganization(),
+                id: 1,
+                name: 'Millennium Inc',
+                alias: 'M Inc',
+                incorporationNumber: '1234',
+                comment: '',
+                contactMethods: null,
+                isDisabled: false,
+                organizationAddresses: null,
+                organizationPersons: null,
+                rowVersion: null,
+              },
+              interestHolderProperties: [],
+              primaryContactId: 1,
+              primaryContact: null,
+              comment: null,
+              isDisabled: false,
+              ...getEmptyBaseAudit(),
+            },
+            {
+              interestHolderId: 2,
+              interestHolderType: toTypeCodeNullable(InterestHolderType.OWNER_SOLICITOR),
+
+              acquisitionFileId: 1,
+              personId: null,
+              person: null,
+              organizationId: 2,
+              organization: {
+                ...getEmptyOrganization(),
+                id: 2,
+                name: 'Test Org',
+                alias: 'M Inc',
+                incorporationNumber: '12345',
+                comment: '',
+                contactMethods: null,
+                isDisabled: false,
+                organizationAddresses: null,
+                organizationPersons: null,
+                rowVersion: null,
+              },
+              interestHolderProperties: [],
+              primaryContactId: 2,
+              primaryContact: null,
+              comment: null,
+              isDisabled: false,
+              ...getEmptyBaseAudit(),
+            },
+          ],
+        },
+      },
+      { claims: [] },
+    );
+    await waitForEffects();
+    expect(await findByText('Millennium Inc')).toBeVisible();
+    expect(await findByText('Test Org')).toBeVisible();
+    expect(await findAllByText(/Primary contact/)).toHaveLength(2);
+  });
+
   it('renders owner solicitor information with primary contact', async () => {
     const { findByText } = setup(
       { acquisitionFile: mockAcquisitionFileResponse() },
       { claims: [] },
     );
+    await waitForEffects();
     expect(await findByText('Millennium Inc')).toBeVisible();
     expect(await findByText(/Primary contact/)).toBeVisible();
     expect(await findByText('Foo Bar Baz')).toBeVisible();

@@ -15,6 +15,11 @@ interface IResearchFileSelect {
 }
 
 const primaryResearchFilterOptions = [
+  { label: 'PID', value: 'pid' },
+  {
+    label: 'PIN',
+    value: 'pin',
+  },
   {
     label: 'Research file name',
     value: 'name',
@@ -37,6 +42,8 @@ export const ResearchFileSelect: React.FC<
   } = {
     options: options ?? primaryResearchFilterOptions,
     placeholders: placeholders ?? {
+      pid: 'Enter a PID',
+      pin: 'Enter a PIN',
       rfileNumber: '',
       name: '',
     },
@@ -51,7 +58,7 @@ export const ResearchFileSelect: React.FC<
   const desc = state.placeholders[researchSearchBy] || '';
 
   const reset = () => {
-    setFieldValue(researchSearchBy ? researchSearchBy : 'name', '');
+    setFieldValue(researchSearchBy ? researchSearchBy : 'pid', '');
   };
 
   return (

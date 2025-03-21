@@ -1,7 +1,7 @@
 import { Formik } from 'formik';
 import noop from 'lodash/noop';
 
-import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
+import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { Input, InputProps } from './';
 
@@ -82,6 +82,6 @@ describe('Input component', () => {
     await act(async () => userEvent.type(getByRole('textbox'), 'Lorem ipsum'));
 
     // assert
-    await waitFor(() => expect(onChangeSpy).toHaveBeenCalled());
+    expect(onChangeSpy).toHaveBeenCalled();
   });
 });

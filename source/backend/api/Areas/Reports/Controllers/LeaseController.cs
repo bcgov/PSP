@@ -111,7 +111,6 @@ namespace Pims.Api.Areas.Reports.Controllers
             }
 
             var acceptHeader = (string)this.Request.Headers["Accept"];
-
             if (acceptHeader != ContentTypes.CONTENTTYPECSV && acceptHeader != ContentTypes.CONTENTTYPEEXCEL && acceptHeader != ContentTypes.CONTENTTYPEEXCELX)
             {
                 throw new BadRequestException($"Invalid HTTP request header 'Accept:{acceptHeader}'.");
@@ -209,6 +208,7 @@ namespace Pims.Api.Areas.Reports.Controllers
         /// <param name="filter"></param>
         /// <param name="all"></param>
         /// <returns></returns>
+        [NonAction]
         public IEnumerable<LeaseModel> GetCrossJoinLeases(Lease.Models.Search.LeaseFilterModel filter, bool all = false)
         {
             var page = _leaseService.GetPage((LeaseFilter)filter, all);

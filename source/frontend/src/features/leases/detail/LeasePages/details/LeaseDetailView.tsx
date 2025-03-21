@@ -6,6 +6,7 @@ import TooltipIcon from '@/components/common/TooltipIcon';
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { exists, prettyFormatDate } from '@/utils';
+import { formatMinistryProject } from '@/utils/formUtils';
 
 export interface ILeaseDetailViewProps {
   lease: ApiGen_Concepts_Lease;
@@ -19,7 +20,7 @@ export const LeaseDetailView: React.FunctionComponent<
   React.PropsWithChildren<ILeaseDetailViewProps>
 > = ({ lease }) => {
   const projectName = exists(lease?.project)
-    ? `${lease?.project?.code} - ${lease?.project?.description}`
+    ? formatMinistryProject(lease?.project?.code, lease?.project?.description)
     : '';
 
   const productName = exists(lease?.product)

@@ -31,7 +31,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         public List<string> PopulateLists(string stringToList)
         {
-            List<string> result = stringToList.Split(',').ToList();
+            List<string> result = stringToList.Split(';').ToList();
             result.Sort();
             return result;
         }

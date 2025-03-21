@@ -1,22 +1,23 @@
+using System;
+using System.Collections.Generic;
+using MapsterMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Mvc;
+using Pims.Api.Areas.Research.Models.Search;
+using Pims.Api.Helpers.Extensions;
+using Pims.Api.Models.Base;
+using Pims.Api.Models.Concepts.ResearchFile;
+using Pims.Api.Services;
+using Pims.Core.Api.Exceptions;
+using Pims.Core.Api.Policies;
+using Pims.Core.Json;
+using Pims.Core.Security;
+using Pims.Dal.Entities.Models;
+using Swashbuckle.AspNetCore.Annotations;
+
 namespace Pims.Api.Areas.Research.Controllers
 {
-    using System;
-    using System.Collections.Generic;
-    using MapsterMapper;
-    using Microsoft.AspNetCore.Authorization;
-    using Microsoft.AspNetCore.Http.Extensions;
-    using Microsoft.AspNetCore.Mvc;
-    using Pims.Api.Areas.Research.Models.Search;
-    using Pims.Api.Helpers.Extensions;
-    using Pims.Api.Models.Base;
-    using Pims.Api.Models.Concepts.ResearchFile;
-    using Pims.Api.Services;
-    using Pims.Core.Api.Exceptions;
-    using Pims.Core.Api.Policies;
-    using Pims.Core.Json;
-    using Pims.Core.Security;
-    using Pims.Dal.Entities.Models;
-    using Swashbuckle.AspNetCore.Annotations;
 
     /// <summary>
     /// SearchController class, provides endpoints for searching research files.

@@ -142,7 +142,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateoffersAndSaleTab()
         {
-            WaitUntilClickable(offersAndSaleTab);
+            Wait();
             webDriver.FindElement(offersAndSaleTab).Click();
         }
 

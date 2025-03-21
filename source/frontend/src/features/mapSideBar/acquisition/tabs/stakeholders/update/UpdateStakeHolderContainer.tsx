@@ -79,7 +79,10 @@ export const UpdateStakeHolderContainer: React.FunctionComponent<
               headerIcon: <FaExclamationCircle size={22} />,
               message: axiosError?.response?.data.error,
               okButtonText: 'Close',
-              handleOk: () => formikHelpers.resetForm(),
+              handleOk: () => {
+                formikHelpers.resetForm();
+                setDisplayModal(false);
+              },
             });
             setDisplayModal(true);
           } else {

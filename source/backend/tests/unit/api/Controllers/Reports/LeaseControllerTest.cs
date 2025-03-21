@@ -13,14 +13,14 @@ using Moq;
 using Pims.Api.Areas.Lease.Models.Search;
 using Pims.Api.Areas.Reports.Controllers;
 using Pims.Api.Helpers.Constants;
-using Pims.Core.Api.Exceptions;
 using Pims.Api.Services;
+using Pims.Core.Api.Exceptions;
 using Pims.Core.Extensions;
+using Pims.Core.Security;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Repositories;
-using Pims.Core.Security;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 
@@ -155,11 +155,11 @@ namespace Pims.Api.Test.Controllers.Reports
             {
                 PropertyId = 2,
                 PimsHistoricalFileNumbers = new Collection<PimsHistoricalFileNumber> {
-                    new PimsHistoricalFileNumber() { 
+                    new PimsHistoricalFileNumber() {
                          HistoricalFileNumber = "123",
                         HistoricalFileNumberTypeCodeNavigation = new PimsHistoricalFileNumberType(){ HistoricalFileNumberTypeCode = "LIS", Description = "LIS"} },
-                    new PimsHistoricalFileNumber() { 
-                        HistoricalFileNumber = "456", 
+                    new PimsHistoricalFileNumber() {
+                        HistoricalFileNumber = "456",
                         HistoricalFileNumberTypeCodeNavigation = new PimsHistoricalFileNumberType(){ HistoricalFileNumberTypeCode = "PS", Description = "PS"} } }
             };
 

@@ -1,4 +1,5 @@
 import { dequal } from 'dequal';
+import { LatLngLiteral } from 'leaflet';
 import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import styled from 'styled-components';
@@ -9,6 +10,7 @@ import {
   defaultPropertyFilter,
   IPropertyFilter,
 } from '@/features/properties/filter/IPropertyFilter';
+import { exists } from '@/utils';
 
 export type MapSearchProps = object;
 
@@ -17,7 +19,8 @@ export type MapSearchProps = object;
  * @param param0
  */
 const MapSearch: React.FC<React.PropsWithChildren<MapSearchProps>> = () => {
-  const { mapSearchCriteria, setMapSearchCriteria } = useMapStateMachine();
+  const { mapSearchCriteria, setMapSearchCriteria, mapClick, requestCenterToLocation } =
+    useMapStateMachine();
 
   const [propertySearchFilter, setPropertySearchFilter] = useState<IPropertyFilter | null>(null);
 
@@ -28,7 +31,13 @@ const MapSearch: React.FC<React.PropsWithChildren<MapSearchProps>> = () => {
   }, [propertySearchFilter, mapSearchCriteria, setMapSearchCriteria]);
 
   const handleMapFilterChange = (filter: IPropertyFilter) => {
-    setPropertySearchFilter(filter);
+    if (filter.searchBy === 'coordinates' && exists(filter.coordinates)) {
+      const latLng: LatLngLiteral = filter.coordinates.toLatLng();
+      mapClick(latLng);
+      requestCenterToLocation(latLng);
+    } else {
+      setPropertySearchFilter(filter);
+    }
   };
 
   return (
