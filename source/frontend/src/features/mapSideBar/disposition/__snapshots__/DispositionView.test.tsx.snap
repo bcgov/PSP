@@ -952,7 +952,7 @@ exports[`DispositionView component > renders as expected 1`] = `
                     href="#"
                     role="tab"
                   >
-                    File details
+                    File Details
                   </a>
                   <a
                     aria-selected="false"

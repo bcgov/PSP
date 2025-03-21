@@ -70,7 +70,6 @@ describe('useNoteRepository hook', () => {
 
       expect(find(currentStore.getActions(), { type: 'loading-bar/SHOW' })).toBeDefined();
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeUndefined();
-      expect(toastSuccessSpy).toHaveBeenCalledWith('Note saved');
     });
 
     it('Dispatches error with correct response when request fails with 500', async () => {
@@ -144,7 +143,6 @@ describe('useNoteRepository hook', () => {
 
       expect(find(currentStore.getActions(), { type: 'loading-bar/SHOW' })).toBeDefined();
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeUndefined();
-      expect(toastSuccessSpy).toHaveBeenCalledWith('Note saved');
     });
 
     it('Dispatches error with correct response when request fails with a 500', async () => {

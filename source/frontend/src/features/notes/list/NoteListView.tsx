@@ -1,7 +1,6 @@
 import orderBy from 'lodash/orderBy';
 import React, { useCallback } from 'react';
 import { FaPlus } from 'react-icons/fa';
-import { toast } from 'react-toastify';
 
 import GenericModal from '@/components/common/GenericModal';
 import { Section } from '@/components/common/Section/Section';
@@ -78,7 +77,6 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
     try {
       await deleteNote(type, currentNote?.id ?? 0);
       setShowDeleteConfirm(false);
-      toast.success('Deleted successfully.');
       fetchNotes();
       onSuccess?.();
     } finally {

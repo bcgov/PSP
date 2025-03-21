@@ -4,7 +4,7 @@ import { createMemoryHistory } from 'history';
 
 import { mockLookups } from '@/mocks/index.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
+import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import ExportLeasePaymentsContainer, {
   IExportLeasePaymentsContainer,
@@ -15,6 +15,13 @@ const mockAxios = new MockAdapter(axios);
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
+
+vi.mock('js-file-download', () => {
+  return {
+    __esModule: true,
+    default: vi.fn(),
+  };
+});
 
 describe('ExportLeasePaymentsContainer component', () => {
   const setup = (

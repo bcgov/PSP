@@ -7,6 +7,16 @@ namespace Pims.Dal.Entities.Models
         #region Properties
 
         /// <summary>
+        /// get/set - The pid identifier to search by.
+        /// </summary>
+        public string Pid { get; set; }
+
+        /// <summary>
+        /// get/set - The pin identifier to search by.
+        /// </summary>
+        public string Pin { get; set; }
+
+        /// <summary>
         /// get/set - The moti region that any of the properties on the research file belong to.
         /// </summary>
         public short? RegionCode { get; set; }

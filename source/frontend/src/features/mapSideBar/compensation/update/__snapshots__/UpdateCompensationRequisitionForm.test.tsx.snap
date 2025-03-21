@@ -862,7 +862,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               </label>
             </div>
             <div
-              class="c5 required text-left col-4"
+              class="c5 text-left col-4"
             >
               <div
                 class="form-group"
@@ -915,7 +915,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               </label>
             </div>
             <div
-              class="c5 required text-left col"
+              class="c5 text-left col"
             >
               <div
                 class="c11 form-group"
@@ -968,7 +968,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               </label>
             </div>
             <div
-              class="c5 required text-left col"
+              class="c5 text-left col"
             >
               <div
                 class="c11 form-group"
@@ -1021,7 +1021,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               </label>
             </div>
             <div
-              class="c5 required text-left col"
+              class="c5 text-left col"
             >
               <div
                 class="c11 form-group"

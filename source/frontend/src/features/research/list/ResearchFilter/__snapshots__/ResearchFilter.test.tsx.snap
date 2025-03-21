@@ -380,6 +380,20 @@ exports[`Research Filter > matches snapshot 1`] = `
                         >
                           <option
                             class="option"
+                            data-testid="select-option-pid"
+                            value="pid"
+                          >
+                            PID
+                          </option>
+                          <option
+                            class="option"
+                            data-testid="select-option-pin"
+                            value="pin"
+                          >
+                            PIN
+                          </option>
+                          <option
+                            class="option"
                             data-testid="select-option-name"
                             value="name"
                           >
@@ -404,9 +418,9 @@ exports[`Research Filter > matches snapshot 1`] = `
                     >
                       <input
                         class="form-control"
-                        id="input-name"
-                        name="name"
-                        placeholder=""
+                        id="input-pid"
+                        name="pid"
+                        placeholder="Enter a PID"
                         style="word-break: break-all;"
                         title=""
                         value=""
