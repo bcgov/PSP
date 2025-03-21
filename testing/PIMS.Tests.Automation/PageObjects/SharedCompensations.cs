@@ -610,7 +610,9 @@ namespace PIMS.Tests.Automation.PageObjects
                 for (int i = 0; i < compensation.CompensationPayee.Count; i++)
                 {
                     var elementIndex = i + 1;
-                    AssertTrueElementContains(By.XPath("//label[contains(text(),'Payee')]/parent::div/following-sibling::div/div["+ elementIndex +"]"), compensation.CompensationPayeeDisplay[i]);
+                    var payeeName = webDriver.FindElement(By.XPath("//label[contains(text(),'Payee')]/parent::div/following-sibling::div/div["+ elementIndex +"]")).Text;
+                    var payeeNameFormatted = payeeName.Replace("\r\n", string.Empty);
+                    Assert.Contains(compensation.CompensationPayeeDisplay[i], payeeNameFormatted);
                     if (compensation.CompensationPaymentInTrust)
                         AssertTrueElementContains(By.XPath("//label[contains(text(),'Payee')]/parent::div/following-sibling::div/div["+ elementIndex +"]"), "in trust");
                 }
