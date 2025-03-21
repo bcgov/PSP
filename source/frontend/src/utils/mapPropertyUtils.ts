@@ -12,7 +12,10 @@ import { compact, isNumber } from 'lodash';
 import polylabel from 'polylabel';
 import { toast } from 'react-toastify';
 
-import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
+import {
+  LocationFeatureDataset,
+  SelectedFeatureDataset,
+} from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { ONE_HUNDRED_METER_PRECISION } from '@/components/maps/constants';
 import { IMapProperty } from '@/components/propertySelector/models';
 import { AreaUnitTypes } from '@/constants';
@@ -197,26 +200,23 @@ function toMapProperty(
 }
 
 export function featuresetToMapProperty(
-  featureSet: LocationFeatureDataset,
+  featureSet: SelectedFeatureDataset,
   address?: string,
 ): IMapProperty {
   if (!exists(featureSet)) {
     return undefined;
   }
-  const pimsFeatures = featureSet?.pimsFeatures;
-  const parcelFeatures = featureSet?.parcelFeatures;
+  const pimsFeature = featureSet?.pimsFeature;
+  const parcelFeature = featureSet?.parcelFeature;
   const regionFeature = featureSet?.regionFeature;
   const districtFeature = featureSet?.districtFeature;
 
-  const firstPimsFeature = firstOrNull(pimsFeatures);
-  const firstParcelFeature = firstOrNull(parcelFeatures);
-
-  const propertyId = firstPimsFeature?.properties?.PROPERTY_ID;
+  const propertyId = pimsFeature?.properties?.PROPERTY_ID;
   const pid = pidFromFeatureSet(featureSet);
   const pin = pinFromFeatureSet(featureSet);
 
-  const formattedAddress = firstPimsFeature?.properties?.STREET_ADDRESS_1
-    ? formatApiAddress(AddressForm.fromPimsView(firstPimsFeature.properties).toApi())
+  const formattedAddress = pimsFeature?.properties?.STREET_ADDRESS_1
+    ? formatApiAddress(AddressForm.fromPimsView(pimsFeature.properties).toApi())
     : undefined;
 
   const commonFeature = {
@@ -235,70 +235,66 @@ export function featuresetToMapProperty(
       : DistrictCodes.Unknown,
     districtName: districtFeature?.properties?.DISTRICT_NAME ?? 'Cannot determine',
   };
-  if (exists(firstPimsFeature?.properties)) {
+  if (exists(pimsFeature?.properties)) {
     return {
       ...commonFeature,
       polygon:
-        firstPimsFeature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.Polygon
-          ? (firstPimsFeature.geometry as Polygon)
-          : firstPimsFeature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.MultiPolygon
-          ? (firstPimsFeature.geometry as MultiPolygon)
-          : firstParcelFeature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.Polygon
-          ? (firstParcelFeature.geometry as Polygon)
-          : firstParcelFeature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.MultiPolygon
-          ? (firstParcelFeature.geometry as MultiPolygon)
+        pimsFeature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.Polygon
+          ? (pimsFeature.geometry as Polygon)
+          : pimsFeature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.MultiPolygon
+          ? (pimsFeature.geometry as MultiPolygon)
+          : parcelFeature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.Polygon
+          ? (parcelFeature.geometry as Polygon)
+          : parcelFeature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.MultiPolygon
+          ? (parcelFeature.geometry as MultiPolygon)
           : undefined,
-      planNumber: firstPimsFeature?.properties?.SURVEY_PLAN_NUMBER ?? undefined,
+      planNumber: pimsFeature?.properties?.SURVEY_PLAN_NUMBER ?? undefined,
       address: address ?? formattedAddress ?? undefined,
-      legalDescription: firstPimsFeature?.properties?.LAND_LEGAL_DESCRIPTION ?? undefined,
-      areaUnit: firstPimsFeature?.properties?.PROPERTY_AREA_UNIT_TYPE_CODE
-        ? enumFromValue(firstPimsFeature?.properties?.PROPERTY_AREA_UNIT_TYPE_CODE, AreaUnitTypes)
+      legalDescription: pimsFeature?.properties?.LAND_LEGAL_DESCRIPTION ?? undefined,
+      areaUnit: pimsFeature?.properties?.PROPERTY_AREA_UNIT_TYPE_CODE
+        ? enumFromValue(pimsFeature?.properties?.PROPERTY_AREA_UNIT_TYPE_CODE, AreaUnitTypes)
         : AreaUnitTypes.SquareMeters,
-      landArea: firstPimsFeature?.properties?.LAND_AREA
-        ? +firstPimsFeature?.properties?.LAND_AREA
-        : 0,
+      landArea: pimsFeature?.properties?.LAND_AREA ? +pimsFeature?.properties?.LAND_AREA : 0,
     };
   } else {
     return {
       ...commonFeature,
       polygon:
-        firstParcelFeature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.Polygon
-          ? (firstParcelFeature.geometry as Polygon)
-          : firstParcelFeature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.MultiPolygon
-          ? (firstParcelFeature.geometry as MultiPolygon)
+        parcelFeature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.Polygon
+          ? (parcelFeature.geometry as Polygon)
+          : parcelFeature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.MultiPolygon
+          ? (parcelFeature.geometry as MultiPolygon)
           : undefined,
-      planNumber: firstParcelFeature?.properties?.PLAN_NUMBER ?? undefined,
+      planNumber: parcelFeature?.properties?.PLAN_NUMBER ?? undefined,
       address: address ?? formattedAddress ?? undefined,
-      legalDescription: firstParcelFeature?.properties?.LEGAL_DESCRIPTION ?? undefined,
+      legalDescription: parcelFeature?.properties?.LEGAL_DESCRIPTION ?? undefined,
       areaUnit: AreaUnitTypes.SquareMeters,
-      landArea: firstParcelFeature?.properties?.FEATURE_AREA_SQM ?? 0,
+      landArea: parcelFeature?.properties?.FEATURE_AREA_SQM ?? 0,
     };
   }
 }
 
-export function pidFromFeatureSet(featureset: LocationFeatureDataset): string | null {
-  const firstPimsFeature = firstOrNull(featureset.pimsFeatures);
-  if (exists(firstPimsFeature?.properties)) {
-    return exists(firstPimsFeature?.properties?.PID)
-      ? firstPimsFeature?.properties?.PID?.toString()
+export function pidFromFeatureSet(featureset: SelectedFeatureDataset): string | null {
+  if (exists(featureset.pimsFeature?.properties)) {
+    return exists(featureset.pimsFeature?.properties?.PID)
+      ? featureset.pimsFeature?.properties?.PID?.toString()
       : null;
   }
 
-  const firstParcelFeature = firstOrNull(featureset.parcelFeatures);
-  return exists(firstParcelFeature?.properties) ? firstParcelFeature?.properties?.PID : null;
+  return exists(featureset.parcelFeature?.properties)
+    ? featureset.parcelFeature?.properties?.PID
+    : null;
 }
 
-export function pinFromFeatureSet(featureset: LocationFeatureDataset): string | null {
-  const firstPimsFeature = firstOrNull(featureset.pimsFeatures);
-  if (exists(firstPimsFeature?.properties)) {
-    return exists(firstPimsFeature?.properties?.PIN)
-      ? firstPimsFeature?.properties?.PIN?.toString()
+export function pinFromFeatureSet(featureset: SelectedFeatureDataset): string | null {
+  if (exists(featureset.pimsFeature?.properties)) {
+    return exists(featureset.pimsFeature?.properties?.PIN)
+      ? featureset.pimsFeature?.properties?.PIN?.toString()
       : null;
   }
 
-  const firstParcelFeature = firstOrNull(featureset.parcelFeatures);
-  return exists(firstParcelFeature?.properties)
-    ? firstParcelFeature?.properties?.PIN?.toString()
+  return exists(featureset.parcelFeature?.properties)
+    ? featureset.parcelFeature?.properties?.PIN?.toString()
     : null;
 }
 

@@ -49,6 +49,16 @@ export interface LocationFeatureDataset {
     | null;
 }
 
+export interface SelectedFeatureDataset {
+  location: LatLngLiteral;
+  fileLocation: LatLngLiteral | null;
+  parcelFeature: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties> | null;
+  pimsFeature: Feature<Geometry, PIMS_Property_Location_View> | null;
+  regionFeature: Feature<Geometry, MOT_RegionalBoundary_Feature_Properties> | null;
+  districtFeature: Feature<Geometry, MOT_DistrictBoundary_Feature_Properties> | null;
+  municipalityFeature: Feature<Geometry, WHSE_Municipalities_Feature_Properties> | null;
+}
+
 const useLocationFeatureLoader = () => {
   const fullyAttributedService = useFullyAttributedParcelMapLayer();
   const adminBoundaryLayerService = useAdminBoundaryMapLayer();
