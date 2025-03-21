@@ -2,14 +2,14 @@
   "basemaps": [
     {
       "name": "BC Roads",
-      "urls": [
-        "https://maps.gov.bc.ca/arcgis/rest/services/province/roads_wm/MapServer/tile/{z}/{y}/{x}"
-      ],
-      "attribution": "&copy; Government of British Columbia, DataBC, GeoBC, Powered by <a href=\"https://ltsa.ca/products-services/parcelmap-bc\">ParcelMap</a> BC",
+      "kind": "esri-vector",
+      "itemId": "b1624fea73bd46c681fab55be53d96ae",
+      "attribution": "",
       "thumbnail": "/streets.jpg"
     },
     {
       "name": "Satellite",
+      "kind": "raster",
       "urls": [
         "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
         "https://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Transportation/MapServer/tile/{z}/{y}/{x}"
