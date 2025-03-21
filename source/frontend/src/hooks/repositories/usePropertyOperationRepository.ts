@@ -28,7 +28,7 @@ export const usePropertyOperationRepository = () => {
       [postPropertyOperationApi],
     ),
     requestName: 'AddPropertyOperation',
-    onSuccess: useAxiosSuccessHandler('Property operation saved'),
+    onSuccess: useAxiosSuccessHandler(),
     throwError: true,
   });
 

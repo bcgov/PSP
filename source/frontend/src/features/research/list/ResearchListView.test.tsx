@@ -81,6 +81,8 @@ describe('Research List View', () => {
     await act(async () => userEvent.click(searchButton));
 
     expect(getResearchFiles).toHaveBeenCalledWith({
+      pid: '',
+      pin: '',
       appCreateUserid: '',
       appLastUpdateUserid: '',
       createOrUpdateBy: 'appLastUpdateUserid',
@@ -92,7 +94,7 @@ describe('Research List View', () => {
       quantity: 10,
       regionCode: '',
       researchFileStatusTypeCode: 'ACTIVE',
-      researchSearchBy: 'name',
+      researchSearchBy: 'pid',
       rfileNumber: '',
       roadOrAlias: '',
       sort: undefined,
@@ -245,6 +247,8 @@ describe('Research List View', () => {
     await act(async () => userEvent.click(searchButton));
 
     expect(getResearchFiles).toHaveBeenCalledWith({
+      pid: '',
+      pin: '',
       appCreateUserid: '',
       appLastUpdateUserid: '',
       createOrUpdateBy: 'appLastUpdateUserid',
@@ -273,6 +277,8 @@ describe('Research List View', () => {
     await act(async () => userEvent.click(searchButton));
 
     expect(getResearchFiles).toHaveBeenCalledWith({
+      pid: '',
+      pin: '',
       appCreateUserid: '',
       appLastUpdateUserid: '',
       createOrUpdateBy: 'appLastUpdateUserid',
@@ -301,6 +307,8 @@ describe('Research List View', () => {
     await act(async () => userEvent.click(searchButton));
 
     expect(getResearchFiles).toHaveBeenCalledWith({
+      pid: '',
+      pin: '',
       appCreateUserid: '',
       appLastUpdateUserid: '',
       createOrUpdateBy: 'appLastUpdateUserid',
@@ -312,7 +320,7 @@ describe('Research List View', () => {
       quantity: 10,
       regionCode: '',
       researchFileStatusTypeCode: 'INACTIVE',
-      researchSearchBy: 'name',
+      researchSearchBy: 'pid',
       rfileNumber: '',
       roadOrAlias: '',
       sort: undefined,
@@ -329,6 +337,8 @@ describe('Research List View', () => {
     await act(async () => userEvent.click(searchButton));
 
     expect(getResearchFiles).toHaveBeenCalledWith({
+      pid: '',
+      pin: '',
       appCreateUserid: '',
       appLastUpdateUserid: '',
       createOrUpdateBy: 'appLastUpdateUserid',
@@ -340,7 +350,7 @@ describe('Research List View', () => {
       quantity: 10,
       regionCode: '',
       researchFileStatusTypeCode: 'ACTIVE',
-      researchSearchBy: 'name',
+      researchSearchBy: 'pid',
       rfileNumber: '',
       roadOrAlias: 'a road name',
       sort: undefined,
@@ -360,6 +370,8 @@ describe('Research List View', () => {
 
     expect(getResearchFiles).toHaveBeenCalledWith(
       expect.objectContaining({
+        pid: '',
+        pin: '',
         appCreateUserid: '',
         appLastUpdateUserid: '',
         createOrUpdateBy: 'appLastUpdateUserid',
@@ -371,7 +383,7 @@ describe('Research List View', () => {
         quantity: 10,
         regionCode: '',
         researchFileStatusTypeCode: 'ACTIVE',
-        researchSearchBy: 'name',
+        researchSearchBy: 'pid',
         rfileNumber: '',
         roadOrAlias: '',
         sort: undefined,
@@ -392,6 +404,8 @@ describe('Research List View', () => {
 
     expect(getResearchFiles).toHaveBeenCalledWith(
       expect.objectContaining({
+        pid: '',
+        pin: '',
         appCreateUserid: '',
         appLastUpdateUserid: '',
         createOrUpdateBy: 'appLastUpdateUserid',
@@ -403,7 +417,7 @@ describe('Research List View', () => {
         quantity: 10,
         regionCode: '',
         researchFileStatusTypeCode: 'ACTIVE',
-        researchSearchBy: 'name',
+        researchSearchBy: 'pid',
         rfileNumber: '',
         roadOrAlias: '',
         sort: undefined,
@@ -423,6 +437,8 @@ describe('Research List View', () => {
 
     expect(getResearchFiles).toHaveBeenCalledWith(
       expect.objectContaining({
+        pid: '',
+        pin: '',
         appCreateUserid: 'createUser',
         appLastUpdateUserid: '',
         createOrUpdateBy: 'appCreateUserid',
@@ -434,7 +450,7 @@ describe('Research List View', () => {
         quantity: 10,
         regionCode: '',
         researchFileStatusTypeCode: 'ACTIVE',
-        researchSearchBy: 'name',
+        researchSearchBy: 'pid',
         rfileNumber: '',
         roadOrAlias: '',
         sort: undefined,
@@ -454,6 +470,8 @@ describe('Research List View', () => {
 
     expect(getResearchFiles).toHaveBeenCalledWith(
       expect.objectContaining({
+        pid: '',
+        pin: '',
         appCreateUserid: '',
         appLastUpdateUserid: 'updateUser',
         createOrUpdateBy: 'appLastUpdateUserid',
@@ -465,7 +483,73 @@ describe('Research List View', () => {
         quantity: 10,
         regionCode: '',
         researchFileStatusTypeCode: 'ACTIVE',
-        researchSearchBy: 'name',
+        researchSearchBy: 'pid',
+        rfileNumber: '',
+        roadOrAlias: '',
+        sort: undefined,
+        updatedOnEndDate: '',
+        updatedOnStartDate: '',
+      }),
+    );
+  });
+
+  it('searches by property pid', async () => {
+    setupMockSearch([]);
+    const { container, searchButton } = setup();
+
+    fillInput(container, 'researchSearchBy', 'pid', 'select');
+    fillInput(container, 'pid', '100-100-999');
+    await act(async () => userEvent.click(searchButton));
+
+    expect(getResearchFiles).toHaveBeenCalledWith(
+      expect.objectContaining({
+        pid: '100-100-999',
+        pin: '',
+        appCreateUserid: '',
+        appLastUpdateUserid: '',
+        createOrUpdateBy: 'appLastUpdateUserid',
+        createOrUpdateRange: 'updatedOnStartDate',
+        createdOnEndDate: '',
+        createdOnStartDate: '',
+        name: '',
+        page: 1,
+        quantity: 10,
+        regionCode: '',
+        researchFileStatusTypeCode: 'ACTIVE',
+        researchSearchBy: 'pid',
+        rfileNumber: '',
+        roadOrAlias: '',
+        sort: undefined,
+        updatedOnEndDate: '',
+        updatedOnStartDate: '',
+      }),
+    );
+  });
+
+  it('searches by property pin', async () => {
+    setupMockSearch([]);
+    const { container, searchButton } = setup();
+
+    fillInput(container, 'researchSearchBy', 'pin', 'select');
+    fillInput(container, 'pin', '888-100-999');
+    await act(async () => userEvent.click(searchButton));
+
+    expect(getResearchFiles).toHaveBeenCalledWith(
+      expect.objectContaining({
+        pid: '',
+        pin: '888-100-999',
+        appCreateUserid: '',
+        appLastUpdateUserid: '',
+        createOrUpdateBy: 'appLastUpdateUserid',
+        createOrUpdateRange: 'updatedOnStartDate',
+        createdOnEndDate: '',
+        createdOnStartDate: '',
+        name: '',
+        page: 1,
+        quantity: 10,
+        regionCode: '',
+        researchFileStatusTypeCode: 'ACTIVE',
+        researchSearchBy: 'pin',
         rfileNumber: '',
         roadOrAlias: '',
         sort: undefined,
@@ -497,6 +581,8 @@ describe('Research List View', () => {
     await act(async () => userEvent.click(searchButton));
 
     expect(getResearchFiles).toHaveBeenCalledWith({
+      pid: '',
+      pin: '',
       appCreateUserid: '',
       appLastUpdateUserid: '',
       createOrUpdateBy: 'appLastUpdateUserid',
@@ -508,7 +594,7 @@ describe('Research List View', () => {
       quantity: 10,
       regionCode: '',
       researchFileStatusTypeCode: 'ACTIVE',
-      researchSearchBy: 'name',
+      researchSearchBy: 'pid',
       rfileNumber: '',
       roadOrAlias: '',
       sort: undefined,
