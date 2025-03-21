@@ -13,14 +13,18 @@ export const configureTelemetry = (config: MetricsConfig) => {
     if (!exists(config.otlpEndpoint)) {
       throw Error('[ERR] Invalid metrics endpoint provided, it will not be initialized.');
     }
-    // First need to register global telemetry configuration
-    registerMeterProvider(config);
 
-    // Then can register various meters to collect metrics/measurements
-    registerNetworkMetrics(config);
+    registerBrowserMetrics(config);
   } catch (error) {
     if (config.debug) {
       console.error(error);
     }
   }
+};
+
+const registerBrowserMetrics = (config: MetricsConfig) => {
+  // First we need to register global telemetry configuration
+  registerMeterProvider(config);
+  // Then we can register various meters to collect metrics/measurements
+  registerNetworkMetrics(config);
 };
