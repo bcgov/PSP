@@ -1,11 +1,11 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import '@bcgov/design-tokens/css/variables.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import 'leaflet/dist/leaflet.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-toastify/dist/ReactToastify.css';
-import 'yet-another-react-lightbox/styles.css';
 import 'yet-another-react-lightbox/plugins/captions.css';
 import 'yet-another-react-lightbox/plugins/counter.css';
+import 'yet-another-react-lightbox/styles.css';
 import './assets/scss/index.scss'; // should be loaded last to allow for overrides without having to resort to "!important"
 
 import * as bcTokens from '@bcgov/design-tokens/js/variables.js';
