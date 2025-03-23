@@ -67,6 +67,15 @@ export interface ITenantConfig2 {
   doubleClickInterval: number;
   pimsTrainingResourceUrl: string;
   pimsHealthcheckMessages: { [key: string]: string };
+  telemetry: ITenantConfigTelemetry;
+}
+
+export interface ITenantConfigTelemetry {
+  enabled: boolean;
+  debug: boolean;
+  environment: string;
+  serviceName: string;
+  endpoint: string;
 }
 
 export interface ITenantLoginConfig {
