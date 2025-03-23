@@ -91,6 +91,13 @@ export const defaultTenant: ITenantConfig2 = {
   idlePromptTimeout: 15,
   idleTimeout: 45,
   doubleClickInterval: 250,
+  telemetry: {
+    enabled: true,
+    debug: true,
+    environment: 'local',
+    serviceName: 'psp-frontend',
+    endpoint: 'https://collector-3cd915-dev.apps.silver.devops.gov.bc.ca',
+  },
   pimsTrainingResourceUrl:
     'https://sp.th.gov.bc.ca/sites/PropertiesServices/Project%20Management/03.%20Execution%20and%20Control/PIMS%20Training',
   geographicNamesUrl: 'https://apps.gov.bc.ca/pub/bcgnws',
