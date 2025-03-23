@@ -6,9 +6,10 @@ import {
   ATTR_BROWSER_LANGUAGE,
   ATTR_DEPLOYMENT_ENVIRONMENT_NAME,
   ATTR_SERVICE_NAME,
+  ATTR_SERVICE_VERSION,
 } from '@opentelemetry/semantic-conventions/incubating';
 
-import { MetricsConfig } from './config';
+import { TelemetryConfig } from './config';
 
 export const isBrowserEnvironment = () => {
   return typeof window !== 'undefined';
@@ -18,8 +19,8 @@ export const isNodeEnvironment = () => {
   return typeof process !== 'undefined' && process.release && process.release.name === 'node';
 };
 
-export const isBlocked = (uri: string, config: MetricsConfig) => {
-  const blockList = [...(config.urlBlocklist ?? []), config.otlpEndpoint];
+export const isBlocked = (uri: string, config: TelemetryConfig) => {
+  const blockList = [...(config.denyUrls ?? []), config.otlpEndpoint];
   return blockList.findIndex(blocked => uri.includes(blocked)) >= 0;
 };
 
@@ -27,12 +28,13 @@ export const isBlocked = (uri: string, config: MetricsConfig) => {
 export const NETWORK_METER = 'network-meter';
 
 export const registerMeterProvider = (
-  config: MetricsConfig,
+  config: TelemetryConfig,
   extraAttributes?: ResourceAttributes,
 ) => {
   // This is common metadata sent with every metric measurement
   const resource = new Resource({
     [ATTR_SERVICE_NAME]: config?.name,
+    [ATTR_SERVICE_VERSION]: config?.appVersion,
     [ATTR_DEPLOYMENT_ENVIRONMENT_NAME]: config?.environment,
     [ATTR_BROWSER_LANGUAGE]: window.navigator.language,
     'browser.width': window.screen.width,

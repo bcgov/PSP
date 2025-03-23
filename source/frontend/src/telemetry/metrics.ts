@@ -5,10 +5,10 @@ import {
   METRIC_HTTP_CLIENT_RESPONSE_BODY_SIZE,
 } from '@opentelemetry/semantic-conventions/incubating';
 
-import { MetricsConfig } from './config';
+import { TelemetryConfig } from './config';
 import { isBlocked, isBrowserEnvironment, NETWORK_METER } from './utils';
 
-export const registerNetworkMetrics = (config: MetricsConfig) => {
+export const registerNetworkMetrics = (config: TelemetryConfig) => {
   if (!isBrowserEnvironment() || !window.performance) {
     return;
   }
@@ -57,7 +57,7 @@ export const registerNetworkMetrics = (config: MetricsConfig) => {
         // convert from ms to seconds
         const timeSpent = entry.duration / 1000;
         const size: number = entry.transferSize || entry.encodedBodySize || 0;
-        const statusCode = entry.responseStatus;
+        const statusCode: number = (entry as any).responseStatus;
 
         const attributes = {
           uri: sanitizedUri,

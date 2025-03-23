@@ -26,18 +26,11 @@ import { TenantConsumer, TenantProvider } from '@/tenants';
 import getKeycloakEventHandler from '@/utils/getKeycloakEventHandler';
 
 import App from './App';
-import {
-  VITE_ANALYTICS_DEBUG,
-  VITE_ANALYTICS_DISABLE,
-  VITE_ANALYTICS_ENDPOINT,
-  VITE_DEPLOY_ENV,
-  VITE_SERVICE_NAME,
-} from './config';
 import { DocumentViewerContextProvider } from './features/documents/context/DocumentViewerContext';
 import { ITenantConfig2 } from './hooks/pims-api/interfaces/ITenantConfig';
 import { useRefreshSiteminder } from './hooks/useRefreshSiteminder';
-import { configureTelemetry } from './telemetry';
-import { stringToBoolean } from './utils/formUtils';
+import Telemetry from './telemetry';
+import { TelemetryConfig } from './telemetry/config';
 
 async function prepare() {
   if (process.env.NODE_ENV === 'development') {
@@ -63,6 +56,28 @@ const Index = () => {
 
 const InnerComponent = ({ tenant }: { tenant: ITenantConfig2 }) => {
   const refresh = useRefreshSiteminder();
+
+  if (tenant?.telemetry?.enabled) {
+    // get telemetry configuration from tenant json
+    const config: TelemetryConfig = {
+      name: tenant?.telemetry?.serviceName ?? 'frontend',
+      appVersion: import.meta.env.VITE_PACKAGE_VERSION ?? '',
+      environment: tenant?.telemetry?.environment || 'local',
+      otlpEndpoint: tenant?.telemetry?.endpoint || '',
+      debug: tenant?.telemetry?.debug ?? false,
+    };
+
+    // configure browser telemetry (if enabled via dynamic config-map)
+    Telemetry.init(config);
+
+    console.log('[INFO] Telemetry enabled');
+    if (tenant?.telemetry?.debug) {
+      console.log(config);
+    }
+  } else {
+    console.log('[INFO] Telemetry disabled');
+  }
+
   return (
     <ThemeProvider theme={{ tenant, css, bcTokens }}>
       <ReactKeycloakProvider
@@ -92,14 +107,4 @@ const InnerComponent = ({ tenant }: { tenant: ITenantConfig2 }) => {
 prepare().then(() => {
   const root = createRoot(document.getElementById('root') as Element);
   root.render(<Index />);
-
-  // configure browser telemetry (if enabled via dynamic config-map)
-  if (!stringToBoolean(VITE_ANALYTICS_DISABLE)) {
-    configureTelemetry({
-      name: VITE_SERVICE_NAME,
-      environment: VITE_DEPLOY_ENV || 'local',
-      otlpEndpoint: VITE_ANALYTICS_ENDPOINT,
-      debug: stringToBoolean(VITE_ANALYTICS_DEBUG),
-    });
-  }
 });
