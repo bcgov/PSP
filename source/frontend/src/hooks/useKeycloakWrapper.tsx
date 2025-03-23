@@ -28,7 +28,7 @@ export interface IUserInfo {
  * IKeycloak interface, represents the keycloak object for the authenticated user.
  */
 export interface IKeycloak {
-  obj: any;
+  obj: ReturnType<typeof useKeycloak>['keycloak'];
   displayName?: string;
   businessIdentifierValue: string;
   name?: string;
