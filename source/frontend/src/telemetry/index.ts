@@ -4,7 +4,7 @@ import { TelemetryConfig } from './config';
 import { registerNetworkMetrics } from './metrics';
 import { registerMeterProvider } from './utils';
 
-const configureTelemetry = (config: TelemetryConfig) => {
+export const initializeTelemetry = (config: TelemetryConfig) => {
   try {
     if (!exists(config)) {
       throw Error('[ERR] No metrics configuration provided, it will not be initialized.');
@@ -28,6 +28,3 @@ const registerBrowserMetrics = (config: TelemetryConfig) => {
   // Then we can register various meters to collect metrics/measurements
   registerNetworkMetrics(config);
 };
-
-const Telemetry = { init: configureTelemetry };
-export default Telemetry;
