@@ -8,8 +8,8 @@ namespace PIMS.Tests.Automation.PageObjects
     {
         //Notes Tab Elements
         private By notesTabLink = By.XPath("//nav[@role='tablist']/a[contains(text(),'Notes')]");
-        private By notesTabTitle = By.XPath("//div[@class='tab-content']/div[@role='tabpanel']/div/div/div/h2/div/div/div/div[contains(text(),'Notes')]");
-        private By notesTabAddBttn = By.XPath("//div[@class='tab-content']/div[@role='tabpanel']/div/div/div/h2/div/div/div/div/button");
+        private By notesTabTitle = By.XPath("//h2/div/div/div/div[contains(text(),'Notes')]");
+        private By notesTabAddBttn = By.XPath("//div[@class='tab-content']/div[@role='tabpanel']/div/h2/div/div/div/div/button");
 
         //Notes Tab Table Header
         private By notesTabTableHeaderNoteColumn = By.XPath("//div[@data-testid='notesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Note')]");

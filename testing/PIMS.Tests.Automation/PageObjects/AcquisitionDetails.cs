@@ -462,7 +462,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (acquisition.OwnerSolicitor != "" && acquisitionType == "Subfile")
             {
-                WaitUntilVisible(acquisitionSubfileOwnerSolicitorButton);
+                Wait();
                 webDriver.FindElement(acquisitionSubfileOwnerSolicitorButton).Click();
                 sharedSelectContact.SelectContact(acquisition.OwnerSolicitor, "");
             }
@@ -783,6 +783,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyAcquisitionFileCreate(string acquisitionType)
         {
+            Wait();
+
             if (acquisitionType == "Main")
                 AssertTrueIsDisplayed(acquisitionFileCreateTitle);
             else

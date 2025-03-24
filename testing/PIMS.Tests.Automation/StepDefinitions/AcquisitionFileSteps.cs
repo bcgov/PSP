@@ -1,7 +1,6 @@
 ﻿using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
-using System.Data;
 
 namespace PIMS.Tests.Automation.StepDefinitions
 {
@@ -1421,7 +1420,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 compensation.CompensationSTOB = ExcelDataContext.ReadData(i, "CompensationSTOB");
                 compensation.CompensationServiceLine = ExcelDataContext.ReadData(i, "CompensationServiceLine");
                 compensation.CompensationResponsibilityCentre = ExcelDataContext.ReadData(i, "CompensationResponsibilityCentre");
-                compensation.AcquisitionCompensationPayee = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "CompensationPayee"));
+                compensation.CompensationPayee = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "CompensationPayee"));
                 compensation.CompensationPayeeDisplay = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "CompensationPayeeDisplay")); 
                 compensation.CompensationPaymentInTrust = Boolean.Parse(ExcelDataContext.ReadData(i, "CompensationPaymentInTrust"));
                 compensation.CompensationGSTNumber = ExcelDataContext.ReadData(i, "CompensationGSTNumber");
