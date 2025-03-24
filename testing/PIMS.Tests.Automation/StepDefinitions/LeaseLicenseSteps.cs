@@ -2,7 +2,6 @@
 using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
-using System.Data;
 
 namespace PIMS.Tests.Automation.StepDefinitions
 {
@@ -101,7 +100,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             /* TEST COVERAGE:  PSP-1966, PSP-2550, PSP-2644, PSP-4558, PSP-5334, PSP-5335, PSP-5336, PSP-5337, PSP-5338, PSP-5340, PSP-5654, PSP-5668, PSP-5923, PSP-6266 */
 
             //Add Additional information to the lease
-            leaseDetails.EditLeaseFileDetailsBttn();
+            leaseDetails.NavigateToAddPropertiesLeasesFile();
 
             //Add Several Properties
             //Verify UI/UX from Search By Component
@@ -200,11 +199,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchLeases.SearchLicenseByLFile(leaseCode);
             searchLeases.SelectFirstOption();
 
-            //Edit File Details Section
-            leaseDetails.EditLeaseFileDetailsBttn();
-
-            //Verify Properties section
-            sharedSearchProperties.VerifyLocateOnMapFeature("Lease");
+            //Edit File Property Details
+            leaseDetails.NavigateToAddPropertiesLeasesFile();
 
             //Update Properties
             leaseDetails.UpdateLicensePropertiesForm(lease.LeasePropertiesDetails[0], 0);
@@ -212,8 +208,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Save the new license details
             leaseDetails.CancelLicense();
 
-            //Edit File Details Section
-            leaseDetails.EditLeaseFileDetailsBttn();
+            //Edit Properties Section
+            leaseDetails.NavigateToAddPropertiesLeasesFile();
 
             //Update Properties
             leaseDetails.UpdateLicensePropertiesForm(lease.LeasePropertiesDetails[0], 0);
@@ -221,11 +217,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Save the new license details
             leaseDetails.SaveLicense();
 
-            //Verify File Details Form
-            leaseDetails.VerifyLicensePropertyViewForm(lease.LeasePropertiesDetails, lease.AccountType);
-
-            //Edit File Details Section
-            leaseDetails.EditLeaseFileDetailsBttn();
+            //Edit Properties Section
+            leaseDetails.NavigateToAddPropertiesLeasesFile();
 
             //Delete last property
             sharedSearchProperties.DeleteLastPropertyFromLease();
@@ -863,10 +856,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchLeases.FilterLeasesFiles("003-549-551", "", "", "", "", "", "Duplicate", "Jonathan Doe", "05/12/1987", "", "", "");
             Assert.False(searchLeases.SearchFoundResults());
 
-            //searchLeases.FilterLeasesFiles("", "", "", "", "TestPN654", "", "", "", "", "", "", "");
-            //Assert.True(searchLeases.SearchFoundResults());
+            searchLeases.FilterLeasesFiles("", "", "", "", "TestPN654", "", "", "", "", "", "", "");
+            Assert.True(searchLeases.SearchFoundResults());
 
-            searchLeases.FilterLeasesFiles("", "", "", "", "", "", "Terminated", "", "03/22/2024", "", "", "");
+            searchLeases.FilterLeasesFiles("", "", "", "", "", "", "Cancelled", "", "03/22/2024", "", "", "");
             searchLeases.OrderByLastLease();
         }
 
@@ -891,7 +884,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchLeases.VerifyLeaseTableContent(lease);
         }
 
-        [StepDefinition(@"I create Compensation Requisition within an Lease/Licence")]
+        [StepDefinition(@"I create Compensation Requisition within a Lease or Licence")]
         public void CreateCompensationRequisition()
         {
             /* TEST COVERAGE: PSP-6066, PSP-6067, PSP-6274, PSP-6277, PSP-6355 */
@@ -934,7 +927,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             }
         }
 
-        [StepDefinition(@"I update Compensation Requisition within an Lease from row number (.*)")]
+        [StepDefinition(@"I update Compensation Requisition within a Lease from row number (.*)")]
         public void UpdateCompensationRequisition(int rowNumber)
         {
             /* TEST COVERAGE:  PSP-6275, PSP-6282, PSP-6356, PSP-6360, PSP-6483, PSP-6484 */
@@ -1444,7 +1437,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 compensation.CompensationSTOB = ExcelDataContext.ReadData(i, "CompensationSTOB");
                 compensation.CompensationServiceLine = ExcelDataContext.ReadData(i, "CompensationServiceLine");
                 compensation.CompensationResponsibilityCentre = ExcelDataContext.ReadData(i, "CompensationResponsibilityCentre");
-                compensation.LeaseCompensationPayee = ExcelDataContext.ReadData(i, "CompensationPayee");
+                compensation.CompensationPayee = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "CompensationPayee"));
                 compensation.CompensationPayeeDisplay = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "CompensationPayeeDisplay"));
                 compensation.CompensationPaymentInTrust = Boolean.Parse(ExcelDataContext.ReadData(i, "CompensationPaymentInTrust"));
                 compensation.CompensationGSTNumber = ExcelDataContext.ReadData(i, "CompensationGSTNumber");

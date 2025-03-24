@@ -28,7 +28,7 @@ export const useProjectProvider = () => {
         [getProjectProducts],
       ),
       requestName: 'retrieveProjectProducts',
-      onSuccess: useCallback(() => toast.success('Products for project retrieved'), []),
+      onSuccess: useAxiosSuccessHandler(),
       onError: useCallback((axiosError: AxiosError<IApiError>) => {
         if (axiosError?.response?.status === 400) {
           toast.error(axiosError?.response.data.error);
@@ -52,7 +52,7 @@ export const useProjectProvider = () => {
       [postProject],
     ),
     requestName: 'AddProject',
-    onSuccess: useAxiosSuccessHandler('Project saved'),
+    onSuccess: useAxiosSuccessHandler(),
     onError: useCallback((axiosError: AxiosError<IApiError>) => {
       if (axiosError?.response?.status === 409) {
         toast.error(axiosError?.response.data as any);

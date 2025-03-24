@@ -44,22 +44,22 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licenseDepositAddTypeSelect = By.Id("input-depositTypeCode");
         private By licenseDepositAddOtherTypeLabel = By.XPath("//label[contains(text(),'Describe other')]"); 
         private By licenseDepositAddOtherTypeInput = By.Id("input-otherTypeDescription");
-        private By licenceDepositAddDescriptionLabel = By.XPath("//div[@class='modal-body']/form/div/div/div/label[contains(text(),'Description')]");
+        private By licenceDepositAddDescriptionLabel = By.XPath("//div[@class='modal-body']/form/div/div/label[contains(text(),'Description')]");
         private By licenseDepositAddDescriptionTextarea = By.CssSelector("textarea[id='input-description']");
         private By licenseDepositAddAmountLabel = By.XPath("//label[contains(text(),'Deposit amount')]");
         private By licenseDepositAddAmountInput = By.Id("input-amountPaid");
-        private By licenseDepositAddPaidDateLabel = By.XPath("//span[contains(text(),'Paid date')]");
+        private By licenseDepositAddPaidDateLabel = By.XPath("//label[contains(text(),'Paid date')]");
         private By licenseDepositAddPaidDateInput = By.Id("datepicker-depositDate");
         private By licenseDepositAddDepositHolderLabel = By.XPath("//label[contains(text(),'Deposit holder')]");
-        private By licenseDepositAddDepositHolderInput = By.CssSelector("label[for='input-contactHolder']");
+        private By licenseDepositAddDepositHolderInput = By.XPath("//input[@id='input-contactHolder.id']/parent::div/parent::div");
         private By licenseDepositAddContactButton = By.CssSelector("div[class='pl-0 col-auto'] button");
 
         //Deposit Add Return Elements
-        private By licenseDepositReturnDepositTypeLabel = By.XPath("//strong[contains(text(),'Deposit type')]");
-        private By licenseDepositReturnDepositTypeContent = By.XPath("//strong[contains(text(),'Deposit type')]/parent::div/following-sibling::div");
-        private By licenseDepositReturnDepositAmountLabel = By.XPath("//strong[contains(text(),'Deposit amount')]");
-        private By licenseDepositReturnDepositAmountContent = By.XPath("//strong[contains(text(),'Deposit amount')]/parent::div/following-sibling::div");
-        private By licenseDepositReturnTerminationDateLabel = By.XPath("//span[contains(text(),'Termination or surrender date')]");
+        private By licenseDepositReturnDepositTypeLabel = By.XPath("//label[contains(text(),'Deposit type')]");
+        private By licenseDepositReturnDepositTypeContent = By.XPath("//label[contains(text(),'Deposit type')]/parent::div/following-sibling::div");
+        private By licenseDepositReturnDepositAmountLabel = By.XPath("//label[contains(text(),'Deposit amount')]");
+        private By licenseDepositReturnDepositAmountContent = By.XPath("//label[contains(text(),'Deposit amount')]/parent::div/following-sibling::div");
+        private By licenseDepositReturnTerminationDateLabel = By.XPath("//label[contains(text(),'Termination or surrender date')]");
         private By licenseDepositReturnTerminationDateInput = By.Id("datepicker-terminationDate");
         private By licenseDepositReturnClaimLabel = By.XPath("//label[contains(text(),'Claims against deposit ($)')]");
         private By licenseDepositReturnClaimInput = By.Id("input-claimsAgainst");
@@ -67,7 +67,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licenseDepositReturnAmountInput = By.Id("input-returnAmount");
         private By licenseDepositReturnInterestPaidLabel = By.XPath("//label[contains(text(),'Interest paid ($)')]");
         private By licenseDepositReturnInterestPaidInput = By.Id("input-interestPaid");
-        private By licenseDepositReturnDateLabel = By.XPath("//span[contains(text(),'Returned date')]");
+        private By licenseDepositReturnDateLabel = By.XPath("//label[contains(text(),'Returned date')]");
         private By licenseDepositReturnDateInput = By.Id("datepicker-returnDate");
         private By licenseDepositReturnPayeeNameLabel = By.XPath("//label[contains(text(),'Payee name')]");
         private By licenseDepositRerturnPayeeNameInput = By.Id("input-contactHolder.id");
@@ -263,15 +263,15 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 Assert.True(webDriver.FindElement(licenseDepositAddOtherTypeInput).Displayed);
             }
-            Assert.True(webDriver.FindElement(licenceDepositAddDescriptionLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDepositAddDescriptionTextarea).Displayed);
-            Assert.True(webDriver.FindElement(licenseDepositAddAmountLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDepositAddAmountInput).Displayed);
-            Assert.True(webDriver.FindElement(licenseDepositAddPaidDateLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDepositAddPaidDateInput).Displayed);
-            Assert.True(webDriver.FindElement(licenseDepositAddDepositHolderLabel).Displayed);
-            Assert.True(webDriver.FindElement(licenseDepositAddDepositHolderInput).Displayed);
-            Assert.True(webDriver.FindElement(licenseDepositAddContactButton).Displayed);
+            AssertTrueIsDisplayed(licenceDepositAddDescriptionLabel);
+            AssertTrueIsDisplayed(licenseDepositAddDescriptionTextarea);
+            AssertTrueIsDisplayed(licenseDepositAddAmountLabel);
+            AssertTrueIsDisplayed(licenseDepositAddAmountInput);
+            AssertTrueIsDisplayed(licenseDepositAddPaidDateLabel);
+            AssertTrueIsDisplayed(licenseDepositAddPaidDateInput);
+            AssertTrueIsDisplayed(licenseDepositAddDepositHolderLabel);
+            AssertTrueIsDisplayed(licenseDepositAddDepositHolderInput);
+            AssertTrueIsDisplayed(licenseDepositAddContactButton);
             
             sharedModals.VerifyButtonsPresence();
         }

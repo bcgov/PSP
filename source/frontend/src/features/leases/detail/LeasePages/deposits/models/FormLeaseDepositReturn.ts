@@ -5,7 +5,7 @@ import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
 import { isValidIsoDateTime } from '@/utils';
-import { numberFieldToRequiredNumber } from '@/utils/formUtils';
+import { numberFieldToRequiredNumber, stringToNumberOrNull } from '@/utils/formUtils';
 
 export class FormLeaseDepositReturn {
   public id?: number;
@@ -80,9 +80,9 @@ export class FormLeaseDepositReturn {
       terminationDate: isValidIsoDateTime(this.terminationDate)
         ? this.terminationDate
         : EpochIsoDateTime,
-      claimsAgainst: numberFieldToRequiredNumber(this.claimsAgainst),
+      claimsAgainst: stringToNumberOrNull(this.claimsAgainst),
       returnAmount: numberFieldToRequiredNumber(this.returnAmount),
-      interestPaid: numberFieldToRequiredNumber(this.interestPaid),
+      interestPaid: stringToNumberOrNull(this.interestPaid),
       returnDate: isValidIsoDateTime(this.returnDate) ? this.returnDate : EpochIsoDateTime,
       contactHolder: this.contactHolder !== undefined ? toContact(this.contactHolder) : null,
       depositType: null,

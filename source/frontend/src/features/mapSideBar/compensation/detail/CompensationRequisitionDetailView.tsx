@@ -29,6 +29,7 @@ import {
   isValidString,
   prettyFormatDate,
 } from '@/utils';
+import { formatMinistryProject } from '@/utils/formUtils';
 
 import { cannotEditMessage } from '../../acquisition/common/constants';
 import { PayeeDetail } from './PayeeDetail';
@@ -68,7 +69,10 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
   const { hasClaim, hasRole } = useKeycloakWrapper();
 
   const alternateProjectName = exists(compensation?.alternateProject)
-    ? compensation?.alternateProject?.code + ' - ' + compensation?.alternateProject?.description
+    ? formatMinistryProject(
+        compensation?.alternateProject?.code,
+        compensation?.alternateProject?.description,
+      )
     : '';
 
   const results =
