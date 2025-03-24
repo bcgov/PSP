@@ -29,7 +29,7 @@ import App from './App';
 import { DocumentViewerContextProvider } from './features/documents/context/DocumentViewerContext';
 import { ITenantConfig2 } from './hooks/pims-api/interfaces/ITenantConfig';
 import { useRefreshSiteminder } from './hooks/useRefreshSiteminder';
-import Telemetry from './telemetry';
+import { initializeTelemetry } from './telemetry';
 import { TelemetryConfig } from './telemetry/config';
 
 async function prepare() {
@@ -69,7 +69,7 @@ const InnerComponent = ({ tenant }: { tenant: ITenantConfig2 }) => {
     };
 
     // configure browser telemetry (if enabled via dynamic config-map)
-    Telemetry.init(config);
+    initializeTelemetry(config);
 
     console.log('[INFO] Telemetry enabled');
     if (tenant?.telemetry?.debug) {
