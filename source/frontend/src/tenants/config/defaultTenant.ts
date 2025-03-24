@@ -95,8 +95,9 @@ export const defaultTenant: ITenantConfig2 = {
     enabled: true,
     debug: true,
     environment: 'local',
-    serviceName: 'psp-frontend',
+    serviceName: 'frontend',
     endpoint: 'https://collector-3cd915-dev.apps.silver.devops.gov.bc.ca',
+    exportInterval: 10000,
   },
   pimsTrainingResourceUrl:
     'https://sp.th.gov.bc.ca/sites/PropertiesServices/Project%20Management/03.%20Execution%20and%20Control/PIMS%20Training',

@@ -71,6 +71,7 @@ export interface ITenantConfig2 {
   geographicNamesUrl: string;
   // the number of results to display when searching for geographic names
   geographicNamesResultLimit: number;
+  // the configuration for browser telemetry (metrics and logs)
   telemetry: ITenantConfigTelemetry;
 }
 
@@ -80,6 +81,7 @@ export interface ITenantConfigTelemetry {
   environment: string;
   serviceName: string;
   endpoint: string;
+  exportInterval: number;
 }
 
 export interface ITenantLoginConfig {

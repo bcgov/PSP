@@ -5,4 +5,5 @@ export interface TelemetryConfig {
   otlpEndpoint?: string;
   denyUrls?: string[];
   debug?: boolean;
+  exportInterval?: number;
 }

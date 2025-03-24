@@ -57,14 +57,15 @@ const Index = () => {
 const InnerComponent = ({ tenant }: { tenant: ITenantConfig2 }) => {
   const refresh = useRefreshSiteminder();
 
+  // get telemetry configuration from tenant json
   if (tenant?.telemetry?.enabled) {
-    // get telemetry configuration from tenant json
     const config: TelemetryConfig = {
       name: tenant?.telemetry?.serviceName ?? 'frontend',
       appVersion: import.meta.env.VITE_PACKAGE_VERSION ?? '',
       environment: tenant?.telemetry?.environment || 'local',
       otlpEndpoint: tenant?.telemetry?.endpoint || '',
       debug: tenant?.telemetry?.debug ?? false,
+      exportInterval: tenant?.telemetry?.exportInterval ?? 30_000,
     };
 
     // configure browser telemetry (if enabled via dynamic config-map)
