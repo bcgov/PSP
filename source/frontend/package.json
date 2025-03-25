@@ -66,6 +66,7 @@
     "supercluster": "8.0.1",
     "tiles-in-bbox": "1.0.2",
     "tiny-invariant": "1.1.0",
+    "uuid": "11.1.0",
     "wait-for-expect": "3.0.2",
     "xstate": "4.38.0",
     "yet-another-react-lightbox": "3.17.5",
