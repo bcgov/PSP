@@ -5,6 +5,7 @@ import { hideLoading, showLoading } from 'react-redux-loading-bar';
 
 import { SelectOption } from '@/components/common/form';
 import { TableSort } from '@/components/Table/TableSort';
+import { IKeycloak } from '@/hooks/useKeycloakWrapper';
 import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { logRequest, logSuccess } from '@/store/slices/network/networkSlice';
 
@@ -200,6 +201,19 @@ export function truncateName(name: string, length: number): string {
   } else {
     return name;
   }
+}
+
+export function getKeycloakUser(userInfo: IKeycloak) {
+  const displayName =
+    userInfo.displayName ??
+    (exists(userInfo.firstName) && exists(userInfo.surname)
+      ? `${userInfo.firstName} ${userInfo.surname}`
+      : 'default');
+
+  return {
+    displayName,
+    idir: userInfo.businessIdentifierValue,
+  };
 }
 
 /**
