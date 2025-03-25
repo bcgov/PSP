@@ -1,6 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import { useCallback, useEffect, useState } from 'react';
 
+import IHealthcheckResponse from '@/hooks/pims-api/interfaces/IHealthcheckResponse';
 import ISystemCheck from '@/hooks/pims-api/interfaces/ISystemCheck';
 import { useApiHealth } from '@/hooks/pims-api/useApiHealth';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
@@ -29,6 +30,22 @@ export const HealthcheckContainer: React.FunctionComponent<IHealthcheckContainer
   const { getLive, getSystemCheck } = useApiHealth();
   const keycloak = useKeycloakWrapper();
 
+  const checkExternalSystemStatus = useCallback(
+    (
+      response: IHealthcheckResponse,
+      service: HealthcheckMessagesTypesEnum,
+      systemIssues: IHealthCheckIssue[],
+    ) => {
+      if (response && response.status !== 'Healthy') {
+        systemIssues.push({
+          key: service,
+          msg: pimsHealthcheckMessages[HealthcheckMessagesTypesEnum[service]],
+        });
+      }
+    },
+    [pimsHealthcheckMessages],
+  );
+
   const handleError = useCallback(
     async (axiosError: AxiosError<IApiError>): Promise<void> => {
       const systemIssues: IHealthCheckIssue[] = [];
@@ -47,65 +64,48 @@ export const HealthcheckContainer: React.FunctionComponent<IHealthcheckContainer
       // 503 - API responding service not available
       if (axiosError?.response?.status === 503) {
         const data = axiosError?.response?.data as unknown as ISystemCheck;
-        if (data.entries?.Geoserver && data.entries.Geoserver?.status !== 'Healthy') {
-          systemIssues.push({
-            key: HealthcheckMessagesTypesEnum.GEOSERVER,
-            msg: pimsHealthcheckMessages[
-              HealthcheckMessagesTypesEnum[HealthcheckMessagesTypesEnum.GEOSERVER]
-            ],
-          });
-        }
 
-        if (data.entries?.PmbcExternalApi && data.entries.PmbcExternalApi?.status !== 'Healthy') {
-          systemIssues.push({
-            key: HealthcheckMessagesTypesEnum.PMBC,
-            msg: pimsHealthcheckMessages[
-              HealthcheckMessagesTypesEnum[HealthcheckMessagesTypesEnum.PMBC]
-            ],
-          });
-        }
+        checkExternalSystemStatus(
+          data.entries?.Geoserver,
+          HealthcheckMessagesTypesEnum.GEOSERVER,
+          systemIssues,
+        );
 
-        if (data.entries?.Mayan && data.entries.Mayan?.status !== 'Healthy') {
-          systemIssues.push({
-            key: HealthcheckMessagesTypesEnum.MAYAN,
-            msg: pimsHealthcheckMessages[
-              HealthcheckMessagesTypesEnum[HealthcheckMessagesTypesEnum.MAYAN]
-            ],
-          });
-        }
+        checkExternalSystemStatus(
+          data.entries?.PmbcExternalApi,
+          HealthcheckMessagesTypesEnum.PMBC,
+          systemIssues,
+        );
 
-        if (data.entries?.Ltsa && data.entries.Ltsa?.status !== 'Healthy') {
-          systemIssues.push({
-            key: HealthcheckMessagesTypesEnum.LTSA,
-            msg: pimsHealthcheckMessages[
-              HealthcheckMessagesTypesEnum[HealthcheckMessagesTypesEnum.LTSA]
-            ],
-          });
-        }
+        checkExternalSystemStatus(
+          data.entries?.Mayan,
+          HealthcheckMessagesTypesEnum.MAYAN,
+          systemIssues,
+        );
 
-        if (data.entries?.Geocoder && data.entries.Geocoder?.status !== 'Healthy') {
-          systemIssues.push({
-            key: HealthcheckMessagesTypesEnum.GEOCODER,
-            msg: pimsHealthcheckMessages[
-              HealthcheckMessagesTypesEnum[HealthcheckMessagesTypesEnum.GEOCODER]
-            ],
-          });
-        }
+        checkExternalSystemStatus(
+          data.entries?.Ltsa,
+          HealthcheckMessagesTypesEnum.LTSA,
+          systemIssues,
+        );
 
-        if (data.entries?.Cdogs && data.entries.Cdogs?.status !== 'Healthy') {
-          systemIssues.push({
-            key: HealthcheckMessagesTypesEnum.CDOGS,
-            msg: pimsHealthcheckMessages[
-              HealthcheckMessagesTypesEnum[HealthcheckMessagesTypesEnum.CDOGS]
-            ],
-          });
-        }
+        checkExternalSystemStatus(
+          data.entries?.Geocoder,
+          HealthcheckMessagesTypesEnum.GEOCODER,
+          systemIssues,
+        );
+
+        checkExternalSystemStatus(
+          data.entries?.Cdogs,
+          HealthcheckMessagesTypesEnum.CDOGS,
+          systemIssues,
+        );
 
         setHealthCheckIssues(systemIssues);
         updateHealthcheckResult(true);
       }
     },
-    [pimsHealthcheckMessages, updateHealthcheckResult],
+    [checkExternalSystemStatus, pimsHealthcheckMessages, updateHealthcheckResult],
   );
 
   const fetchSystemCheckInformation = useCallback(async () => {
