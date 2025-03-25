@@ -8,6 +8,7 @@ import { TableSort } from '@/components/Table/TableSort';
 import { IKeycloak } from '@/hooks/useKeycloakWrapper';
 import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { logRequest, logSuccess } from '@/store/slices/network/networkSlice';
+import { TraceUser } from '@/telemetry/SpanEnrichment';
 
 /**
  * Removes a trailing slash from a string.
@@ -203,16 +204,16 @@ export function truncateName(name: string, length: number): string {
   }
 }
 
-export function getKeycloakUser(userInfo: IKeycloak) {
+export function getUserFromSession(session: IKeycloak): TraceUser {
   const displayName =
-    userInfo.displayName ??
-    (exists(userInfo.firstName) && exists(userInfo.surname)
-      ? `${userInfo.firstName} ${userInfo.surname}`
+    session.displayName ??
+    (exists(session.firstName) && exists(session.surname)
+      ? `${session.firstName} ${session.surname}`
       : 'default');
 
   return {
     displayName,
-    idir: userInfo.businessIdentifierValue,
+    idir: session.businessIdentifierValue,
   };
 }
 
