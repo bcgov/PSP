@@ -369,6 +369,7 @@ describe('AcquisitionSummaryView component', () => {
           ...mockAcquisitionFileResponse(),
           acquisitionTeam: [
             {
+              parentFileId: 1,
               id: 1,
               acquisitionFileId: 1,
               person: {
@@ -413,6 +414,7 @@ describe('AcquisitionSummaryView component', () => {
           ...mockAcquisitionFileResponse(),
           acquisitionTeam: [
             {
+              parentFileId: 1,
               id: 1,
               acquisitionFileId: 1,
               organizationId: 1,
@@ -457,6 +459,7 @@ describe('AcquisitionSummaryView component', () => {
           acquisitionFileInterestHolders: [],
           acquisitionTeam: [
             {
+              parentFileId: 1,
               id: 1,
               acquisitionFileId: 1,
               organizationId: 1,

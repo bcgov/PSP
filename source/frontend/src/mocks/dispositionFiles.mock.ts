@@ -96,6 +96,7 @@ export const mockDispositionFileResponse = (
   fileProperties: [],
   dispositionTeam: [
     {
+      parentFileId: 1,
       id: 9,
       dispositionFileId: 120,
       personId: 6,
@@ -127,6 +128,7 @@ export const mockDispositionFileResponse = (
       rowVersion: 1,
     },
     {
+      parentFileId: 1,
       id: 10,
       dispositionFileId: 120,
       personId: 9,

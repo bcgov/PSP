@@ -4,19 +4,26 @@ import { FaExternalLinkAlt } from 'react-icons/fa';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledLink } from '@/components/maps/leaflet/LayerPopup/styles';
-import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
+import { ApiGen_Concepts_DispositionFileTeam } from '@/models/api/generated/ApiGen_Concepts_DispositionFileTeam';
+import { ApiGen_Concepts_LeaseFileTeam } from '@/models/api/generated/ApiGen_Concepts_LeaseFileTeam';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
-export interface ILeaseTeamProps {
-  lease: ApiGen_Concepts_Lease;
+export interface IFileTeamProps {
+  title: string;
+  team:
+    | ApiGen_Concepts_LeaseFileTeam[]
+    | ApiGen_Concepts_AcquisitionFileTeam[]
+    | ApiGen_Concepts_DispositionFileTeam[];
 }
-export const LeaseTeamView: React.FunctionComponent<React.PropsWithChildren<ILeaseTeamProps>> = ({
-  lease,
-}: ILeaseTeamProps) => {
+export const FileTeamView: React.FunctionComponent<React.PropsWithChildren<IFileTeamProps>> = ({
+  title,
+  team,
+}: IFileTeamProps) => {
   return (
-    <Section header="Lease Team">
-      {lease.leaseTeam.map((teamMember, index) => (
-        <React.Fragment key={`lease-team-${index}`}>
+    <Section header={title}>
+      {team?.map((teamMember, index) => (
+        <React.Fragment key={`file-team-${index}`}>
           <SectionField label={teamMember?.teamProfileType.description || ''}>
             <StyledLink
               target="_blank"
@@ -56,7 +63,7 @@ export const LeaseTeamView: React.FunctionComponent<React.PropsWithChildren<ILea
             </SectionField>
           )}
         </React.Fragment>
-      ))}
+      )) ?? null}
     </Section>
   );
 };

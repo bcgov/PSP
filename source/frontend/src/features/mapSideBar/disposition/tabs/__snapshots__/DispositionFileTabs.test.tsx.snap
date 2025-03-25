@@ -584,7 +584,7 @@ exports[`DispositionFileTabs component > matches snapshot 1`] = `
                 class="pb-2 row"
               >
                 <div
-                  class="pr-0 text-left col-5"
+                  class="pr-0 text-left col-4"
                 >
                   <label
                     class="c5"
@@ -625,7 +625,7 @@ exports[`DispositionFileTabs component > matches snapshot 1`] = `
                 class="pb-2 row"
               >
                 <div
-                  class="pr-0 text-left col-5"
+                  class="pr-0 text-left col-4"
                 >
                   <label
                     class="c5"

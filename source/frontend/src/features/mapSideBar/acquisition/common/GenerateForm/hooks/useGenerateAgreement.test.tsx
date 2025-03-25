@@ -87,6 +87,7 @@ describe('useGenerateAgreement functions', () => {
       ...mockAcquisitionFileResponse(),
       acquisitionTeam: [
         {
+          parentFileId: 1,
           id: 1,
           acquisitionFileId: 1,
           personId: 1,
@@ -116,6 +117,7 @@ describe('useGenerateAgreement functions', () => {
       ...mockAcquisitionFileResponse(),
       acquisitionTeam: [
         {
+          parentFileId: 1,
           id: 1,
           acquisitionFileId: 1,
           personId: 1,
@@ -145,6 +147,7 @@ describe('useGenerateAgreement functions', () => {
       ...mockAcquisitionFileResponse(),
       acquisitionTeam: [
         {
+          parentFileId: 1,
           id: 1,
           acquisitionFileId: 1,
           organizationId: 1,
@@ -174,6 +177,7 @@ describe('useGenerateAgreement functions', () => {
       ...mockAcquisitionFileResponse(),
       acquisitionTeam: [
         {
+          parentFileId: 1,
           id: 1,
           acquisitionFileId: 1,
           organizationId: 1,

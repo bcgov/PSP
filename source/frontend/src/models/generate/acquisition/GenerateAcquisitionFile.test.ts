@@ -297,6 +297,7 @@ describe('GenerateFile tests', () => {
     const file = new Api_GenerateAcquisitionFile({
       file: acqFile,
       negotiatingAgent: {
+        parentFileId: 1,
         id: 0,
         organizationId: null,
         person: null,
@@ -371,6 +372,7 @@ describe('GenerateFile tests', () => {
     const file = new Api_GenerateAcquisitionFile({
       file: acqFile,
       negotiatingAgent: {
+        parentFileId: 1,
         id: 1,
         organizationId: null,
         person: null,
@@ -407,6 +409,7 @@ describe('GenerateFile tests', () => {
     const file = new Api_GenerateAcquisitionFile({
       file: acqFile,
       coordinatorContact: {
+        parentFileId: 1,
         id: 0,
         organizationId: null,
         person: null,
@@ -463,6 +466,7 @@ describe('GenerateFile tests', () => {
     const file = new Api_GenerateAcquisitionFile({
       file: acqFile,
       coordinatorContact: {
+        parentFileId: 1,
         id: 0,
         organizationId: null,
         person: null,
@@ -499,6 +503,7 @@ describe('GenerateFile tests', () => {
     const file = new Api_GenerateAcquisitionFile({
       file: acqFile,
       provincialSolicitor: {
+        parentFileId: 1,
         id: 0,
         organizationId: 1,
         person: null,
@@ -557,6 +562,7 @@ describe('GenerateFile tests', () => {
     const file = new Api_GenerateAcquisitionFile({
       file: acqFile,
       provincialSolicitor: {
+        parentFileId: 1,
         id: 1,
         organizationId: null,
         person: null,

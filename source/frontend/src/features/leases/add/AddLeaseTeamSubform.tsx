@@ -10,9 +10,10 @@ import { PrimaryContactSelector } from '@/components/common/form/PrimaryContactS
 import { SectionField } from '@/components/common/Section/SectionField';
 import * as API from '@/constants/API';
 import { TeamMemberFormModal } from '@/features/mapSideBar/acquisition/common/modals/AcquisitionFormModal';
+import { FileTeamFormModel } from '@/features/mapSideBar/shared/models';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 
-import { LeaseTeamFormModel, WithLeaseTeam } from '../models';
+import { WithLeaseTeam } from '../models';
 
 export const AddLeaseTeamSubForm: React.FunctionComponent<
   React.PropsWithChildren<unknown>
@@ -73,7 +74,7 @@ export const AddLeaseTeamSubForm: React.FunctionComponent<
           <LinkButton
             data-testid="add-team-member"
             onClick={() => {
-              const teamMember = new LeaseTeamFormModel('');
+              const teamMember = new FileTeamFormModel();
               arrayHelpers.push(teamMember);
             }}
           >

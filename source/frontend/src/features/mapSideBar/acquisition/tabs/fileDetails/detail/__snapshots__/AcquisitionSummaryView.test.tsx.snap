@@ -6,14 +6,7 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
     class="Toastify"
   />
   <div />
-  .c7 {
-  color: #474543;
-  font-size: 1.6rem;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-}
-
-.c0 {
+  .c0 {
   background-color: #f2f2f2;
   padding-top: 1rem;
 }
@@ -49,11 +42,23 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
   font-weight: bold;
 }
 
+.c6 {
+  padding: 0 0.4rem;
+  display: block;
+}
+
+.c7 {
+  color: #474543;
+  font-size: 1.6rem;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
 .c8 {
   white-space: pre-line;
 }
 
-.c6 {
+.c9 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1045,7 +1050,7 @@ Canada
             class="c5 text-left col"
           >
             <a
-              class="c6"
+              class="c9"
               href="/contact/O1"
               rel="noopener noreferrer"
               target="_blank"
@@ -1086,7 +1091,7 @@ Canada
             class="c5 text-left col"
           >
             <a
-              class="c6"
+              class="c9"
               href="/contact/P1"
               rel="noopener noreferrer"
               target="_blank"
@@ -1127,7 +1132,7 @@ Canada
             class="c5 text-left col"
           >
             <a
-              class="c6"
+              class="c9"
               href="/contact/P2"
               rel="noopener noreferrer"
               target="_blank"

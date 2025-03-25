@@ -1,18 +1,14 @@
-import { Fragment } from 'react';
-import { FaExternalLinkAlt } from 'react-icons/fa';
-
 import EditButton from '@/components/common/buttons/EditButton';
+import { FileTeamView } from '@/components/common/FileTeamView';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import TooltipIcon from '@/components/common/TooltipIcon';
-import { StyledLink } from '@/components/maps/leaflet/LayerPopup/styles';
 import { Claims, Roles } from '@/constants';
 import { cannotEditMessage } from '@/features/mapSideBar/acquisition/common/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { prettyFormatDate } from '@/utils';
-import { formatApiPersonNames } from '@/utils/personUtils';
 
 import DispositionStatusUpdateSolver from './DispositionStatusUpdateSolver';
 
@@ -134,46 +130,7 @@ export const DispositionSummaryView: React.FunctionComponent<IDispositionSummary
           {dispositionFile?.regionCode?.description}
         </SectionField>
       </Section>
-      <Section header="Disposition Team">
-        {dispositionFile?.dispositionTeam?.map((teamMember, index) => (
-          <Fragment key={`disp-team-${index}`}>
-            <SectionField label={teamMember?.teamProfileType?.description || ''} labelWidth="5">
-              <StyledLink
-                target="_blank"
-                rel="noopener noreferrer"
-                to={
-                  teamMember?.personId
-                    ? `/contact/P${teamMember?.personId}`
-                    : `/contact/O${teamMember?.organizationId}`
-                }
-              >
-                <span>
-                  {teamMember?.personId
-                    ? formatApiPersonNames(teamMember?.person)
-                    : teamMember?.organization?.name ?? ''}
-                </span>
-                <FaExternalLinkAlt className="ml-2" size="1rem" />
-              </StyledLink>
-            </SectionField>
-            {teamMember?.organizationId && (
-              <SectionField label="Primary contact" labelWidth="5">
-                {teamMember?.primaryContactId ? (
-                  <StyledLink
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    to={`/contact/P${teamMember?.primaryContactId}`}
-                  >
-                    <span>{formatApiPersonNames(teamMember?.primaryContact)}</span>
-                    <FaExternalLinkAlt className="m1-2" size="1rem" />
-                  </StyledLink>
-                ) : (
-                  'No contacts available'
-                )}
-              </SectionField>
-            )}
-          </Fragment>
-        ))}
-      </Section>
+      <FileTeamView title="Disposition Team" team={dispositionFile.dispositionTeam} />
     </StyledSummarySection>
   );
 };

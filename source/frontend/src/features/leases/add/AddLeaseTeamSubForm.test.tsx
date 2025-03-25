@@ -17,10 +17,7 @@ import { AddLeaseTeamSubForm } from './AddLeaseTeamSubform';
 
 describe('AddLeaseTeamSubForm component', () => {
   // render component under test
-  const setup = (
-    props: { initialForm: WithLeaseTeam },
-    renderOptions: RenderOptions = {},
-  ) => {
+  const setup = (props: { initialForm: WithLeaseTeam }, renderOptions: RenderOptions = {}) => {
     const ref = createRef<FormikProps<WithLeaseTeam>>();
     const utils = render(
       <Formik innerRef={ref} initialValues={props.initialForm} onSubmit={vi.fn()}>

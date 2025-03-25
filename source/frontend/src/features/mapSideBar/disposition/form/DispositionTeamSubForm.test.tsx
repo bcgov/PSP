@@ -37,7 +37,7 @@ describe('DispositionTeamSubForm component', () => {
       getFormikRef: () => ref,
       getTeamMemberProfileDropDownList: (index = 0) =>
         utils.container.querySelector(
-          `select[name="team.${index}.teamProfileTypeCode"]`,
+          `select[name="team.${index}.contactTypeCode"]`,
         ) as HTMLSelectElement,
     };
   };
@@ -110,7 +110,7 @@ describe('DispositionTeamSubForm component', () => {
     expect(getByText(/Do you wish to remove this team member/i)).toBeVisible();
 
     await act(async () => userEvent.click(getByTitle('cancel-modal')));
-    expect(getByName('team.0.teamProfileTypeCode')).toBeVisible();
+    expect(getByName('team.0.contactTypeCode')).toBeVisible();
   });
 
   it(`sets the contact manager field as 'touched' when team profile type is changed`, async () => {
@@ -119,7 +119,7 @@ describe('DispositionTeamSubForm component', () => {
     });
     const addRow = getByTestId('add-team-member');
     await act(async () => userEvent.click(addRow));
-    await act(async () => selectOptions('team.0.teamProfileTypeCode', 'NEGOTAGENT'));
+    await act(async () => selectOptions('team.0.contactTypeCode', 'NEGOTAGENT'));
     expect(getIn(getFormikRef().current?.touched, 'team.0.contact')).toBe(true);
   });
 });

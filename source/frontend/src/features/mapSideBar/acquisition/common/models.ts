@@ -1,88 +1,18 @@
-import { isEmpty, isNumber } from 'lodash';
+import { isEmpty } from 'lodash';
 
-import { fromApiOrganization, fromApiPerson, IContactSearchResult } from '@/interfaces';
+import { FileTeamFormModel } from '@/features/mapSideBar/shared/models';
 import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
-import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
 import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
-import {
-  fromTypeCode,
-  stringToBoolean,
-  stringToNull,
-  toTypeCodeConcept,
-  toTypeCodeNullable,
-} from '@/utils/formUtils';
-import { exists, isValidId } from '@/utils/utils';
+import { stringToBoolean, stringToNull, toTypeCodeConcept } from '@/utils/formUtils';
 
 export interface WithAcquisitionTeam {
-  team: AcquisitionTeamFormModel[];
+  team: FileTeamFormModel[];
 }
 
 export interface WithAcquisitionOwners {
   owners: AcquisitionOwnerFormModel[];
-}
-
-export class AcquisitionTeamFormModel {
-  id?: number;
-  rowVersion?: number;
-  contact?: IContactSearchResult;
-  contactTypeCode: string;
-  primaryContactId = '';
-
-  constructor(contactTypeCode: string, id?: number, contact?: IContactSearchResult) {
-    this.id = id;
-    this.contactTypeCode = contactTypeCode;
-    this.contact = contact;
-  }
-
-  toApi(acquisitionFileId: number): ApiGen_Concepts_AcquisitionFileTeam | null {
-    const personId = this.contact?.personId ?? null;
-    const organizationId = !personId ? this.contact?.organizationId ?? null : null;
-    if (!isValidId(personId) && !isValidId(organizationId)) {
-      return null;
-    }
-
-    return {
-      id: this.id ?? 0,
-      acquisitionFileId: acquisitionFileId,
-      personId: personId ?? null,
-      person: null,
-      organizationId: organizationId ?? null,
-      organization: null,
-      primaryContactId:
-        !!this.primaryContactId && isNumber(+this.primaryContactId)
-          ? Number(this.primaryContactId)
-          : null,
-      teamProfileType: toTypeCodeNullable(this.contactTypeCode),
-      teamProfileTypeCode: this.contactTypeCode,
-      primaryContact: null,
-      ...getEmptyBaseAudit(this.rowVersion),
-    };
-  }
-
-  static fromApi(model: ApiGen_Concepts_AcquisitionFileTeam | null): AcquisitionTeamFormModel {
-    // The method 'exists' below allows the compiler to validate the child property. This works correctly in typescript 5.3+
-    const contact: IContactSearchResult | undefined = exists(model?.person)
-      ? fromApiPerson(model.person)
-      : exists(model?.organization)
-      ? fromApiOrganization(model.organization)
-      : undefined;
-
-    const newForm = new AcquisitionTeamFormModel(
-      fromTypeCode(model?.teamProfileType) || '',
-      model?.id ?? 0,
-      contact,
-    );
-
-    if (model?.primaryContactId) {
-      newForm.primaryContactId = model.primaryContactId.toString();
-    }
-
-    newForm.rowVersion = model?.rowVersion ?? 0;
-
-    return newForm;
-  }
 }
 
 export class AcquisitionOwnerFormModel {

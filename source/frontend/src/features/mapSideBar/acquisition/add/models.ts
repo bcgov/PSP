@@ -12,11 +12,10 @@ import {
 } from '@/utils/formUtils';
 import { exists, isValidId, isValidIsoDateTime } from '@/utils/utils';
 
-import { PropertyForm } from '../../shared/models';
+import { FileTeamFormModel, PropertyForm } from '../../shared/models';
 import { ChecklistItemFormModel } from '../../shared/tabs/checklist/update/models';
 import {
   AcquisitionOwnerFormModel,
-  AcquisitionTeamFormModel,
   WithAcquisitionOwners,
   WithAcquisitionTeam,
 } from '../common/models';
@@ -49,7 +48,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
   // MOTI region
   region?: string = '';
   properties: PropertyForm[] = [];
-  team: AcquisitionTeamFormModel[] = [];
+  team: FileTeamFormModel[] = [];
   owners: AcquisitionOwnerFormModel[] = [];
   fileCheckList: ChecklistItemFormModel[] = [];
 
@@ -109,7 +108,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
         .map<ApiGen_Concepts_AcquisitionFileOwner>(x => x.toApi()),
       acquisitionTeam: this.team
         .filter(x => !!x.contact && !!x.contactTypeCode)
-        .map(x => x.toApi(this.id || 0))
+        .map(x => x.toApiAcquisitionFile(this.id || 0))
         .filter(exists),
       acquisitionFileInterestHolders: [
         InterestHolderForm.toApi(this.ownerSolicitor, []),
@@ -176,7 +175,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
     // acquisition team
     newForm.team =
       parentFile.acquisitionTeam?.map(x => {
-        const teamForm = AcquisitionTeamFormModel.fromApi(x);
+        const teamForm = FileTeamFormModel.fromApi(x);
         teamForm.id = null;
         return teamForm;
       }) || [];

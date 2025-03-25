@@ -12,10 +12,8 @@ import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 
-import {
-  DispositionTeamSubFormModel,
-  WithDispositionTeam,
-} from '../models/DispositionTeamSubFormModel';
+import { FileTeamFormModel } from '../../shared/models';
+import { WithDispositionTeam } from '../models/DispositionTeamSubFormModel';
 
 const DispositionTeamSubForm: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
   const { values, setFieldTouched, errors } = useFormikContext<WithDispositionTeam>();
@@ -36,9 +34,9 @@ const DispositionTeamSubForm: React.FunctionComponent<React.PropsWithChildren<un
                   <Select
                     data-testid="select-profile"
                     placeholder="Select profile..."
-                    field={`team.${index}.teamProfileTypeCode`}
+                    field={`team.${index}.contactTypeCode`}
                     options={teamProfileTypes}
-                    value={teamMember.teamProfileTypeCode}
+                    value={teamMember.contactTypeCode}
                     onChange={() => {
                       setFieldTouched(`team.${index}.contact`);
                     }}
@@ -94,7 +92,7 @@ const DispositionTeamSubForm: React.FunctionComponent<React.PropsWithChildren<un
           <LinkButton
             data-testid="add-team-member"
             onClick={() => {
-              const member = new DispositionTeamSubFormModel();
+              const member = new FileTeamFormModel();
               arrayHelpers.push(member);
             }}
           >

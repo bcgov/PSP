@@ -490,6 +490,11 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   font-weight: bold;
 }
 
+.c37 {
+  padding: 0 0.4rem;
+  display: block;
+}
+
 .c14 {
   font-size: 0.87em;
   line-height: 1.9;
@@ -633,7 +638,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   line-height: 2.2rem;
 }
 
-.c37 {
+.c40 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1763,7 +1768,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                               class="c36 text-left col"
                             >
                               <a
-                                class="c37"
+                                class="c40"
                                 href="/contact/O1"
                                 rel="noopener noreferrer"
                                 target="_blank"
@@ -1804,7 +1809,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                               class="c36 text-left col"
                             >
                               <a
-                                class="c37"
+                                class="c40"
                                 href="/contact/P1"
                                 rel="noopener noreferrer"
                                 target="_blank"
@@ -1845,7 +1850,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                               class="c36 text-left col"
                             >
                               <a
-                                class="c37"
+                                class="c40"
                                 href="/contact/P2"
                                 rel="noopener noreferrer"
                                 target="_blank"

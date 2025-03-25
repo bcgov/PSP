@@ -6,12 +6,7 @@ import { http, HttpResponse } from 'msw';
 import UpdateLeaseForm, { IUpdateLeaseFormProps } from './UpdateLeaseForm';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import {
-  render,
-  RenderOptions,
-  waitFor,
-  waitForEffects,
-} from '@/utils/test-utils';
+import { render, RenderOptions, waitFor, waitForEffects } from '@/utils/test-utils';
 import { LeaseFormModel } from '@/features/leases/models';
 import { getMockApiLease } from '@/mocks/lease.mock';
 import Roles from '@/constants/roles';

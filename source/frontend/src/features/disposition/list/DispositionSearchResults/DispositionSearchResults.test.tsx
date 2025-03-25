@@ -131,6 +131,7 @@ describe('Disposition search results table', () => {
           ...mockDispositionFileResponse(),
           dispositionTeam: [
             {
+              parentFileId: 1,
               id: 1,
               dispositionFileId: 1,
               organizationId: 6,
@@ -175,6 +176,7 @@ describe('Disposition search results table', () => {
           ...mockDispositionFileResponse(),
           dispositionTeam: [
             {
+              parentFileId: 1,
               id: 1,
               dispositionFileId: 1,
               personId: 6,
@@ -220,6 +222,7 @@ describe('Disposition search results table', () => {
           ...mockDispositionFileResponse(),
           dispositionTeam: [
             {
+              parentFileId: 1,
               id: 1,
               dispositionFileId: 1,
               organizationId: 6,
@@ -250,6 +253,7 @@ describe('Disposition search results table', () => {
               teamProfileTypeCode: null,
             },
             {
+              parentFileId: 1,
               id: 2,
               dispositionFileId: 1,
               personId: 6,
@@ -281,6 +285,7 @@ describe('Disposition search results table', () => {
               organizationId: null,
             },
             {
+              parentFileId: 1,
               id: 3,
               dispositionFileId: 1,
               personId: 7,

@@ -1274,8 +1274,8 @@ exports[`UpdateDispositionForm component > renders as expected 1`] = `
               <select
                 class="form-select form-control"
                 data-testid="select-profile"
-                id="input-team.0.teamProfileTypeCode"
-                name="team.0.teamProfileTypeCode"
+                id="input-team.0.contactTypeCode"
+                name="team.0.contactTypeCode"
               >
                 <option
                   value=""
@@ -1478,8 +1478,8 @@ exports[`UpdateDispositionForm component > renders as expected 1`] = `
               <select
                 class="form-select form-control"
                 data-testid="select-profile"
-                id="input-team.1.teamProfileTypeCode"
-                name="team.1.teamProfileTypeCode"
+                id="input-team.1.contactTypeCode"
+                name="team.1.contactTypeCode"
               >
                 <option
                   value=""

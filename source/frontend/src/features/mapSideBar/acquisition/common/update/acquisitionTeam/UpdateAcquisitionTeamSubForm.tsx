@@ -9,10 +9,11 @@ import ContactInputView from '@/components/common/form/ContactInput/ContactInput
 import { PrimaryContactSelector } from '@/components/common/form/PrimaryContactSelector/PrimaryContactSelector';
 import { SectionField } from '@/components/common/Section/SectionField';
 import * as API from '@/constants/API';
+import { FileTeamFormModel } from '@/features/mapSideBar/shared/models';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 
 import { TeamMemberFormModal } from '../../modals/AcquisitionFormModal';
-import { AcquisitionTeamFormModel, WithAcquisitionTeam } from '../../models';
+import { WithAcquisitionTeam } from '../../models';
 
 export const UpdateAcquisitionTeamSubForm: React.FunctionComponent<
   React.PropsWithChildren<unknown>
@@ -73,7 +74,7 @@ export const UpdateAcquisitionTeamSubForm: React.FunctionComponent<
           <LinkButton
             data-testid="add-team-member"
             onClick={() => {
-              const person = new AcquisitionTeamFormModel('');
+              const person = new FileTeamFormModel();
               arrayHelpers.push(person);
             }}
           >

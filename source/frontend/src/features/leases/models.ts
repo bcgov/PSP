@@ -3,17 +3,11 @@ import isNumber from 'lodash/isNumber';
 import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { IMapProperty } from '@/components/propertySelector/models';
 import { AreaUnitTypes } from '@/constants/index';
-import {
-  fromApiOrganization,
-  fromApiPerson,
-  IAutocompletePrediction,
-  IContactSearchResult,
-} from '@/interfaces';
+import { IAutocompletePrediction } from '@/interfaces';
 import { ApiGen_CodeTypes_LeaseAccountTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseAccountTypes';
 import { ApiGen_CodeTypes_LeasePurposeTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePurposeTypes';
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
-import { ApiGen_Concepts_LeaseFileTeam } from '@/models/api/generated/ApiGen_Concepts_LeaseFileTeam';
 import { ApiGen_Concepts_LeaseRenewal } from '@/models/api/generated/ApiGen_Concepts_LeaseRenewal';
 import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
 import { EpochIsoDateTime, UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
@@ -28,7 +22,7 @@ import {
   toTypeCodeNullable,
 } from '@/utils/formUtils';
 
-import { PropertyForm } from '../mapSideBar/shared/models';
+import { FileTeamFormModel, PropertyForm } from '../mapSideBar/shared/models';
 import { ChecklistItemFormModel } from '../mapSideBar/shared/tabs/checklist/update/models';
 import { FormLeaseDeposit } from './detail/LeasePages/deposits/models/FormLeaseDeposit';
 import { FormLeaseDepositReturn } from './detail/LeasePages/deposits/models/FormLeaseDepositReturn';
@@ -118,7 +112,7 @@ export class LeaseFormModel implements WithLeaseTeam {
   periods: FormLeasePeriod[] = [];
   stakeholders: FormStakeholder[] = [];
   fileChecklist: ChecklistItemFormModel[] = [];
-  team: LeaseTeamFormModel[] = [];
+  team: FileTeamFormModel[] = [];
   primaryArbitrationCity: string | null;
   isPublicBenefit: boolean;
   isFinancialGain: boolean;
@@ -174,7 +168,7 @@ export class LeaseFormModel implements WithLeaseTeam {
     leaseDetail.periods = apiModel?.periods?.map(t => FormLeasePeriod.fromApi(t)) || [];
     leaseDetail.stakeholders = apiModel?.stakeholders?.map(t => new FormStakeholder(t)) || [];
     leaseDetail.renewals = apiModel?.renewals?.map(r => FormLeaseRenewal.fromApi(r)) || [];
-    leaseDetail.team = apiModel?.leaseTeam?.map(t => LeaseTeamFormModel.fromApi(t));
+    leaseDetail.team = apiModel?.leaseTeam?.map(t => FileTeamFormModel.fromApi(t));
     leaseDetail.cancellationReason = apiModel?.cancellationReason || '';
     leaseDetail.terminationReason = apiModel?.terminationReason || '';
     leaseDetail.primaryArbitrationCity = apiModel?.primaryArbitrationCity;
@@ -229,7 +223,7 @@ export class LeaseFormModel implements WithLeaseTeam {
       stakeholders: formLease.stakeholders?.map(t => FormStakeholder.toApi(t)) ?? [],
       periods: formLease.periods?.map(t => FormLeasePeriod.toApi(t)) ?? [],
       renewals: formLease.renewals?.map(r => r.toApi()) ?? [],
-      leaseTeam: formLease.team?.map(t => t?.toApi(formLease?.id)) ?? [],
+      leaseTeam: formLease.team?.map(t => t?.toApiLeaseFile(formLease?.id)) ?? [],
       fileName: null,
       fileNumber: null,
       hasDigitalFile: formLease.hasDigitalLicense ?? false,
@@ -325,69 +319,7 @@ export class FormLeaseProperty {
 }
 
 export interface WithLeaseTeam {
-  team: LeaseTeamFormModel[];
-}
-
-export class LeaseTeamFormModel {
-  id?: number;
-  rowVersion?: number;
-  contact?: IContactSearchResult;
-  contactTypeCode: string;
-  primaryContactId = '';
-
-  constructor(contactTypeCode: string, id?: number, contact?: IContactSearchResult) {
-    this.id = id;
-    this.contactTypeCode = contactTypeCode;
-    this.contact = contact;
-  }
-
-  toApi(leaseId: number): ApiGen_Concepts_LeaseFileTeam | null {
-    const personId = this.contact?.personId ?? null;
-    const organizationId = !personId ? this.contact?.organizationId ?? null : null;
-    if (!isValidId(personId) && !isValidId(organizationId)) {
-      return null;
-    }
-
-    return {
-      id: this.id ?? 0,
-      leaseId: leaseId,
-      personId: personId ?? null,
-      person: null,
-      organizationId: organizationId ?? null,
-      organization: null,
-      primaryContactId:
-        !!this.primaryContactId && isNumber(+this.primaryContactId)
-          ? Number(this.primaryContactId)
-          : null,
-      teamProfileType: toTypeCodeNullable(this.contactTypeCode),
-      teamProfileTypeCode: this.contactTypeCode,
-      primaryContact: null,
-      ...getEmptyBaseAudit(this.rowVersion),
-    };
-  }
-
-  static fromApi(model: ApiGen_Concepts_LeaseFileTeam | null): LeaseTeamFormModel {
-    // The method 'exists' below allows the compiler to validate the child property. This works correctly in typescript 5.3+
-    const contact: IContactSearchResult | undefined = exists(model?.person)
-      ? fromApiPerson(model.person)
-      : exists(model?.organization)
-      ? fromApiOrganization(model.organization)
-      : undefined;
-
-    const newForm = new LeaseTeamFormModel(
-      fromTypeCode(model?.teamProfileType) || '',
-      model?.id ?? 0,
-      contact,
-    );
-
-    if (model?.primaryContactId) {
-      newForm.primaryContactId = model.primaryContactId.toString();
-    }
-
-    newForm.rowVersion = model?.rowVersion ?? 0;
-
-    return newForm;
-  }
+  team: FileTeamFormModel[];
 }
 
 export const getDefaultFormLease: () => LeaseFormModel = () =>
