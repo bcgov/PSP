@@ -1,7 +1,6 @@
 ﻿using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
-using System.Data;
 
 namespace PIMS.Tests.Automation.StepDefinitions
 {
@@ -187,10 +186,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.Equal("No results found for your search criteria.", sharedFileProperties.noRowsResultsMessageFromSearch());
 
             //Search for a property by Legal Description
-            //sharedSearchProperties.SelectPropertyByLegalDescription(researchFile.SearchProperties.LegalDescription);
+            sharedFileProperties.SelectPropertyByLegalDescription(researchFile.SearchProperties.LegalDescription);
 
             //Verify more than 15 properties found result
-            //Assert.True(sharedSearchProperties.noRowsResultsMessage().Equals("Too many results (more than 15) match this criteria. Please refine your search."));
+            //Assert.True(sharedFileProperties.noRowsResultsMessage().Equals("Too many results (more than 15) match this criteria. Please refine your search."));
 
             //Cancel changes on a Property Detail on Research File
             researchFiles.CancelResearchFile();

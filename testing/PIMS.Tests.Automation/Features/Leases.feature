@@ -80,8 +80,8 @@ Scenario: 12._Lease_Compensation_Tab
 	When  I add additional Information to the Lease Details
 	And I add Properties to the Lease Details
 	And I add Tenants to the Lease
-	And I create Compensation Requisition within an Lease/Licence
-	And I update Compensation Requisition within an Lease from row number 9
+	And I create Compensation Requisition within a Lease or Licence
+	And I update Compensation Requisition within a Lease from row number 9
 	Then A new lease is created successfully
 
 Scenario: 13._Lease_and_License_from_Inventory_Property_Pin

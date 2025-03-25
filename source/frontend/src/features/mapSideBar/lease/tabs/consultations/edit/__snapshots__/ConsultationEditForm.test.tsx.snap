@@ -324,6 +324,7 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
   position: sticky;
   padding-top: 2rem;
   bottom: 0;
+  border-top: 2px solid #e5e5e5;
   background: white;
   z-index: 10;
 }
@@ -908,7 +909,7 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
             class="c12"
           >
             <div
-              class="c13 justify-content-end mb-6 mt-6 p-0 no-gutters row"
+              class="c13 justify-content-end pt-4 p-0 no-gutters row"
             >
               <div
                 class="pr-3 col-auto"

@@ -22,6 +22,7 @@ namespace Pims.Api.Models.Concepts.Deposit
 
             config.NewConfig<SecurityDepositModel, Entity.PimsSecurityDeposit>()
                 .Map(dest => dest.SecurityDepositId, src => src.Id)
+                .Map(dest => dest.LeaseId, src => src.LeaseId)
                 .Map(dest => dest.Description, src => src.Description)
                 .Map(dest => dest.AmountPaid, src => src.AmountPaid)
                 .Map(dest => dest.DepositDate, src => src.DepositDateOnly)

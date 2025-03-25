@@ -8,6 +8,7 @@ import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
 import { ApiGen_Requests_DocumentUploadRequest } from '@/models/api/generated/ApiGen_Requests_DocumentUploadRequest';
+import { useAxiosSuccessHandler } from '@/utils/axiosUtils';
 
 /**
  * hook that retrieves document relationship information.
@@ -60,13 +61,7 @@ export const useDocumentRelationshipProvider = () => {
         [deleteDocumentRelationshipApiCall],
       ),
       requestName: 'deleteDocumentRelationship',
-      onSuccess: useCallback((response?: boolean) => {
-        if (response !== undefined && response) {
-          toast.success('Deleted document relationship');
-        } else {
-          toast.error('Delete document relationship error. Check responses and try again.');
-        }
-      }, []),
+      onSuccess: useAxiosSuccessHandler(),
       onError: useCallback((axiosError: AxiosError<IApiError>) => {
         if (axiosError?.response?.status === 400) {
           toast.error(axiosError?.response.data.error);
@@ -95,9 +90,7 @@ export const useDocumentRelationshipProvider = () => {
       [uploadDocumentRelationshipApiCall],
     ),
     requestName: 'uploadDocumentRelationshipApiCall',
-    onSuccess: useCallback(() => {
-      toast.success('Uploaded document relationship');
-    }, []),
+    onSuccess: useAxiosSuccessHandler(),
     onError: useCallback((axiosError: AxiosError<IApiError>) => {
       if (axiosError?.response?.status === 400) {
         toast.error(axiosError?.response?.data.error);

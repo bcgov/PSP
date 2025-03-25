@@ -94,19 +94,19 @@ namespace PIMS.Tests.Automation.Features
             await this.TestTearDownAsync();
         }
         
-        [Xunit.SkippableTheoryAttribute(DisplayName="01. Organization Contacts")]
+        [Xunit.SkippableTheoryAttribute(DisplayName="01._Organization_Contacts")]
         [Xunit.TraitAttribute("FeatureTitle", "Contacts")]
-        [Xunit.TraitAttribute("Description", "01. Organization Contacts")]
+        [Xunit.TraitAttribute("Description", "01._Organization_Contacts")]
         [Xunit.InlineDataAttribute("Organization", "1", "2", new string[0])]
         [Xunit.InlineDataAttribute("Organization", "3", "4", new string[0])]
-        public async System.Threading.Tasks.Task _01_OrganizationContacts(string contactType, string rowNumber, string editNumber, string[] exampleTags)
+        public async System.Threading.Tasks.Task _01__Organization_Contacts(string contactType, string rowNumber, string editNumber, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("ContactType", contactType);
             argumentsOfScenario.Add("RowNumber", rowNumber);
             argumentsOfScenario.Add("EditNumber", editNumber);
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("01. Organization Contacts", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("01._Organization_Contacts", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 6
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -133,20 +133,20 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableTheoryAttribute(DisplayName="02. Individual Contacts")]
+        [Xunit.SkippableTheoryAttribute(DisplayName="02._Individual_Contacts")]
         [Xunit.TraitAttribute("FeatureTitle", "Contacts")]
-        [Xunit.TraitAttribute("Description", "02. Individual Contacts")]
+        [Xunit.TraitAttribute("Description", "02._Individual_Contacts")]
         [Xunit.InlineDataAttribute("Individual", "1", "2", new string[0])]
         [Xunit.InlineDataAttribute("Individual", "3", "4", new string[0])]
         [Xunit.InlineDataAttribute("Individual", "5", "6", new string[0])]
-        public async System.Threading.Tasks.Task _02_IndividualContacts(string contactType, string rowNumber, string editNumber, string[] exampleTags)
+        public async System.Threading.Tasks.Task _02__Individual_Contacts(string contactType, string rowNumber, string editNumber, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("ContactType", contactType);
             argumentsOfScenario.Add("RowNumber", rowNumber);
             argumentsOfScenario.Add("EditNumber", editNumber);
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("02. Individual Contacts", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("02._Individual_Contacts", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 16
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -173,18 +173,18 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableTheoryAttribute(DisplayName="03. Search for a non-existing Contact")]
+        [Xunit.SkippableTheoryAttribute(DisplayName="03._Search_for_a_non-existing_Contact")]
         [Xunit.TraitAttribute("FeatureTitle", "Contacts")]
-        [Xunit.TraitAttribute("Description", "03. Search for a non-existing Contact")]
+        [Xunit.TraitAttribute("Description", "03._Search_for_a_non-existing_Contact")]
         [Xunit.InlineDataAttribute("Individual", "8", new string[0])]
         [Xunit.InlineDataAttribute("Organization", "6", new string[0])]
-        public async System.Threading.Tasks.Task _03_SearchForANon_ExistingContact(string contactType, string rowNumber, string[] exampleTags)
+        public async System.Threading.Tasks.Task _03__Search_For_A_Non_Existing_Contact(string contactType, string rowNumber, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("ContactType", contactType);
             argumentsOfScenario.Add("RowNumber", rowNumber);
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("03. Search for a non-existing Contact", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("03._Search_for_a_non-existing_Contact", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 27
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -205,14 +205,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="04. Contacts List View")]
+        [Xunit.SkippableFactAttribute(DisplayName="04._Contacts_List_View")]
         [Xunit.TraitAttribute("FeatureTitle", "Contacts")]
-        [Xunit.TraitAttribute("Description", "04. Contacts List View")]
-        public async System.Threading.Tasks.Task _04_ContactsListView()
+        [Xunit.TraitAttribute("Description", "04._Contacts_List_View")]
+        public async System.Threading.Tasks.Task _04__Contacts_List_View()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("04. Contacts List View", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("04._Contacts_List_View", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 35
 this.ScenarioInitialize(scenarioInfo);
 #line hidden

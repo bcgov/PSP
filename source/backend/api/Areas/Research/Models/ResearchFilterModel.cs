@@ -10,6 +10,16 @@ namespace Pims.Api.Areas.Research.Models.Search
         #region Properties
 
         /// <summary>
+        /// get/set - The pid identifier to search by.
+        /// </summary>
+        public string Pid { get; set; }
+
+        /// <summary>
+        /// get/set - The pin identifier to search by.
+        /// </summary>
+        public string Pin { get; set; }
+
+        /// <summary>
         /// get/set - The moti region that any of the properties on the research file belong to.
         /// </summary>
         public short? RegionCode { get; set; }
@@ -84,18 +94,20 @@ namespace Pims.Api.Areas.Research.Models.Search
             // We want case-insensitive query parameter properties.
             var filter = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(query, StringComparer.OrdinalIgnoreCase);
 
-            this.RegionCode = filter.GetShortNullValue(nameof(this.RegionCode));
-            this.ResearchFileStatusTypeCode = filter.GetStringValue(nameof(this.ResearchFileStatusTypeCode));
-            this.Name = filter.GetStringValue(nameof(this.Name));
-            this.RoadOrAlias = filter.GetStringValue(nameof(this.RoadOrAlias));
-            this.RFileNumber = filter.GetStringValue(nameof(this.RFileNumber));
-            this.AppCreateUserid = filter.GetStringValue(nameof(this.AppCreateUserid));
-            this.CreatedOnStartDate = filter.GetDateTimeNullValue(nameof(this.CreatedOnStartDate));
-            this.CreatedOnEndDate = filter.GetDateTimeNullValue(nameof(this.CreatedOnEndDate));
-            this.AppLastUpdateUserid = filter.GetStringValue(nameof(this.AppLastUpdateUserid));
-            this.UpdatedOnStartDate = filter.GetDateTimeNullValue(nameof(this.UpdatedOnStartDate));
-            this.UpdatedOnEndDate = filter.GetDateTimeNullValue(nameof(this.UpdatedOnEndDate));
-            this.Sort = filter.GetStringArrayValue(nameof(this.Sort));
+            Pid = filter.GetStringValue(nameof(Pid));
+            Pin = filter.GetStringValue(nameof(Pin));
+            RegionCode = filter.GetShortNullValue(nameof(RegionCode));
+            ResearchFileStatusTypeCode = filter.GetStringValue(nameof(ResearchFileStatusTypeCode));
+            Name = filter.GetStringValue(nameof(Name));
+            RoadOrAlias = filter.GetStringValue(nameof(RoadOrAlias));
+            RFileNumber = filter.GetStringValue(nameof(RFileNumber));
+            AppCreateUserid = filter.GetStringValue(nameof( AppCreateUserid));
+            CreatedOnStartDate = filter.GetDateTimeNullValue(nameof(CreatedOnStartDate));
+            CreatedOnEndDate = filter.GetDateTimeNullValue(nameof(CreatedOnEndDate));
+            AppLastUpdateUserid = filter.GetStringValue(nameof(AppLastUpdateUserid));
+            UpdatedOnStartDate = filter.GetDateTimeNullValue(nameof(UpdatedOnStartDate));
+            UpdatedOnEndDate = filter.GetDateTimeNullValue(nameof(UpdatedOnEndDate));
+            Sort = filter.GetStringArrayValue(nameof(Sort));
         }
         #endregion
 
@@ -109,9 +121,10 @@ namespace Pims.Api.Areas.Research.Models.Search
         {
             var filter = new ResearchFilter
             {
+                Pid = model.Pid,
+                Pin = model.Pin,
                 Page = model.Page,
                 Quantity = model.Quantity,
-
                 RegionCode = model.RegionCode,
                 RFileNumber = model.RFileNumber,
                 ResearchFileStatusTypeCode = model.ResearchFileStatusTypeCode,

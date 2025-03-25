@@ -94,14 +94,14 @@ namespace PIMS.Tests.Automation.Features
             await this.TestTearDownAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="01. Property Information Tab")]
+        [Xunit.SkippableFactAttribute(DisplayName="01._Property_Information_Tab")]
         [Xunit.TraitAttribute("FeatureTitle", "Properties")]
-        [Xunit.TraitAttribute("Description", "01. Property Information Tab")]
-        public async System.Threading.Tasks.Task _01_PropertyInformationTab()
+        [Xunit.TraitAttribute("Description", "01._Property_Information_Tab")]
+        public async System.Threading.Tasks.Task _01__Property_Information_Tab()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("01. Property Information Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("01._Property_Information_Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 6
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -125,14 +125,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="02. Property PIMS Files Tab")]
+        [Xunit.SkippableFactAttribute(DisplayName="02._Property_PIMS_Files_Tab")]
         [Xunit.TraitAttribute("FeatureTitle", "Properties")]
-        [Xunit.TraitAttribute("Description", "02. Property PIMS Files Tab")]
-        public async System.Threading.Tasks.Task _02_PropertyPIMSFilesTab()
+        [Xunit.TraitAttribute("Description", "02._Property_PIMS_Files_Tab")]
+        public async System.Threading.Tasks.Task _02__Property_PIMS_Files_Tab()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("02. Property PIMS Files Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("02._Property_PIMS_Files_Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 11
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -156,14 +156,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="03. Property Management Tab")]
+        [Xunit.SkippableFactAttribute(DisplayName="03._Property_Management_Tab")]
         [Xunit.TraitAttribute("FeatureTitle", "Properties")]
-        [Xunit.TraitAttribute("Description", "03. Property Management Tab")]
-        public async System.Threading.Tasks.Task _03_PropertyManagementTab()
+        [Xunit.TraitAttribute("Description", "03._Property_Management_Tab")]
+        public async System.Threading.Tasks.Task _03__Property_Management_Tab()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("03. Property Management Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("03._Property_Management_Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 16
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -193,14 +193,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="04. Property Management Activity Digital Documents")]
+        [Xunit.SkippableFactAttribute(DisplayName="04._Property_Management_Activity_Digital_Documents")]
         [Xunit.TraitAttribute("FeatureTitle", "Properties")]
-        [Xunit.TraitAttribute("Description", "04. Property Management Activity Digital Documents")]
-        public async System.Threading.Tasks.Task _04_PropertyManagementActivityDigitalDocuments()
+        [Xunit.TraitAttribute("Description", "04._Property_Management_Activity_Digital_Documents")]
+        public async System.Threading.Tasks.Task _04__Property_Management_Activity_Digital_Documents()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("04. Property Management Activity Digital Documents", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("04._Property_Management_Activity_Digital_Documents", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 23
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -230,14 +230,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="05. Properties Map and List Filters")]
+        [Xunit.SkippableFactAttribute(DisplayName="05._Properties_Map_and_List_Filters")]
         [Xunit.TraitAttribute("FeatureTitle", "Properties")]
-        [Xunit.TraitAttribute("Description", "05. Properties Map and List Filters")]
-        public async System.Threading.Tasks.Task _05_PropertiesMapAndListFilters()
+        [Xunit.TraitAttribute("Description", "05._Properties_Map_and_List_Filters")]
+        public async System.Threading.Tasks.Task _05__Properties_Map_And_List_Filters()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("05. Properties Map and List Filters", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("05._Properties_Map_and_List_Filters", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 30
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -262,14 +262,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="06. Non-Inventory Property Information")]
+        [Xunit.SkippableFactAttribute(DisplayName="06._Non-Inventory_Property_Information")]
         [Xunit.TraitAttribute("FeatureTitle", "Properties")]
-        [Xunit.TraitAttribute("Description", "06. Non-Inventory Property Information")]
-        public async System.Threading.Tasks.Task _06_Non_InventoryPropertyInformation()
+        [Xunit.TraitAttribute("Description", "06._Non-Inventory_Property_Information")]
+        public async System.Threading.Tasks.Task _06__Non_Inventory_Property_Information()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("06. Non-Inventory Property Information", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("06._Non-Inventory_Property_Information", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 35
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -290,14 +290,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="07. Invalid Property Not Found")]
+        [Xunit.SkippableFactAttribute(DisplayName="07._Invalid_Property_Not_Found")]
         [Xunit.TraitAttribute("FeatureTitle", "Properties")]
-        [Xunit.TraitAttribute("Description", "07. Invalid Property Not Found")]
-        public async System.Threading.Tasks.Task _07_InvalidPropertyNotFound()
+        [Xunit.TraitAttribute("Description", "07._Invalid_Property_Not_Found")]
+        public async System.Threading.Tasks.Task _07__Invalid_Property_Not_Found()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("07. Invalid Property Not Found", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("07._Invalid_Property_Not_Found", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 39
 this.ScenarioInitialize(scenarioInfo);
 #line hidden

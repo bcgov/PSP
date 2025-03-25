@@ -24,7 +24,6 @@ const useAddContact = () => {
     try {
       dispatch(showLoading());
       const response = await postPerson(person, userOverride);
-      toast.success('Contact saved');
       return response?.data;
     } catch (e) {
       if (axios.isAxiosError(e)) {
@@ -59,7 +58,6 @@ const useAddContact = () => {
     try {
       dispatch(showLoading());
       const response = await postOrganization(organization, userOverride);
-      toast.success('Contact/Organization saved');
       return response?.data;
     } catch (e) {
       if (axios.isAxiosError(e)) {

@@ -16,7 +16,7 @@ export interface ApiGen_Concepts_SecurityDepositReturn extends ApiGen_Base_BaseC
   terminationDate: UtcIsoDate;
   claimsAgainst: number | null;
   returnAmount: number;
-  interestPaid: number;
+  interestPaid: number | null;
   returnDate: UtcIsoDate;
   contactHolder: ApiGen_Concepts_Contact | null;
 }

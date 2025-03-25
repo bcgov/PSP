@@ -64,7 +64,6 @@ export const UpdateFinancialCodeContainer: React.FC<IUpdateFinancialCodeContaine
   };
 
   const onUpdateSuccess = async () => {
-    toast.success(`Financial code saved`);
     history.replace(`/admin/financial-code/list`);
   };
 

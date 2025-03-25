@@ -1,13 +1,13 @@
 import { Claims } from '@/constants';
-import { getEmptyLease } from '@/models/defaultInitializers';
-import { render, RenderOptions, screen } from '@/utils/test-utils';
-
+import { getMockApiLease } from '@/mocks/lease.mock';
 import { ApiGen_CodeTypes_LeaseLicenceTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseLicenceTypes';
 import { ApiGen_CodeTypes_LeasePaymentReceivableTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePaymentReceivableTypes';
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_Product';
 import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
+import { getEmptyBaseAudit, getEmptyLease } from '@/models/defaultInitializers';
 import { toTypeCode } from '@/utils/formUtils';
+import { render, RenderOptions, screen, waitForEffects } from '@/utils/test-utils';
 
 import LeaseDetailView, { ILeaseDetailViewProps } from './LeaseDetailView';
 
@@ -80,6 +80,49 @@ describe('LeaseDetailView component', () => {
     expect(await screen.findByText('PROJ - Test Project')).toBeVisible();
     expect(await screen.findByText('PROD Test Product')).toBeVisible();
   });
+
+  it.each([
+    ['with project number', '001', 'FTProjectTest', '001 - FTProjectTest'],
+    ['without project number', null, 'FTProjectTest', 'FTProjectTest'],
+  ])(
+    'renders the file Project Number and name concatenated - %s',
+    async (
+      _: string,
+      projectNumber: string | null,
+      projectDescription: string,
+      expectedValue: string,
+    ) => {
+      const { getByText } = setup({
+        props: {
+          lease: {
+            ...getMockApiLease(),
+            fileStatusTypeCode: {
+              ...toTypeCode(ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE),
+              description: 'Active',
+            },
+            project: {
+              id: 1,
+              projectStatusTypeCode: null,
+              code: projectNumber,
+              description: projectDescription,
+              costTypeCode: null,
+              businessFunctionCode: null,
+              workActivityCode: null,
+              regionCode: null,
+              note: null,
+              projectPersons: [],
+              projectProducts: [],
+              ...getEmptyBaseAudit(1),
+            },
+          },
+        },
+      });
+      await waitForEffects();
+
+      expect(getByText('Ministry project:')).toBeVisible();
+      expect(getByText(expectedValue)).toBeVisible();
+    },
+  );
 
   it('shows cancellation reason for discarded leases', async () => {
     setup({

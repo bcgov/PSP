@@ -2,12 +2,7 @@ import './BasemapToggle.scss';
 
 import React, { useState } from 'react';
 
-export type BaseLayer = {
-  name: string;
-  urls: string[];
-  attribution: string;
-  thumbnail: string;
-};
+import { BaseLayer } from './types';
 
 export type BasemapToggleEvent = {
   current: BaseLayer;

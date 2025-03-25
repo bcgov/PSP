@@ -110,8 +110,6 @@ namespace Pims.Api.Services
                 throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
 
-            _securityDepositRepository.Update(deposit);
-
             bool deleted = _securityDepositRepository.Delete(deposit.SecurityDepositId);
             _securityDepositRepository.CommitTransaction();
             return deleted;

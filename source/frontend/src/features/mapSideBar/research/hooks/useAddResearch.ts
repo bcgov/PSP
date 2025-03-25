@@ -1,11 +1,11 @@
 import { AxiosResponse } from 'axios';
 import { useCallback } from 'react';
-import { toast } from 'react-toastify';
 
 import { useApiResearchFile } from '@/hooks/pims-api/useApiResearchFile';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+import { useAxiosSuccessHandler } from '@/utils/axiosUtils';
 
 /**
  * hook that adds a research file.
@@ -22,7 +22,7 @@ export const useAddResearch = () => {
       [postResearchFile],
     ),
     requestName: 'AddResearchFile',
-    onSuccess: useCallback(() => toast.success('Research File saved'), []),
+    onSuccess: useAxiosSuccessHandler(),
     throwError: true,
   });
 

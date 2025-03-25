@@ -94,18 +94,18 @@ namespace PIMS.Tests.Automation.Features
             await this.TestTearDownAsync();
         }
         
-        [Xunit.SkippableTheoryAttribute(DisplayName="Type of Projects")]
+        [Xunit.SkippableTheoryAttribute(DisplayName="Type_of_Projects")]
         [Xunit.TraitAttribute("FeatureTitle", "Projects")]
-        [Xunit.TraitAttribute("Description", "Type of Projects")]
+        [Xunit.TraitAttribute("Description", "Type_of_Projects")]
         [Xunit.InlineDataAttribute("1", new string[0])]
         [Xunit.InlineDataAttribute("2", new string[0])]
         [Xunit.InlineDataAttribute("3", new string[0])]
-        public async System.Threading.Tasks.Task TypeOfProjects(string rowNumber, string[] exampleTags)
+        public async System.Threading.Tasks.Task Type_Of_Projects(string rowNumber, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("RowNumber", rowNumber);
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Type of Projects", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Type_of_Projects", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 4
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -126,14 +126,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="01. Project Details")]
+        [Xunit.SkippableFactAttribute(DisplayName="01._Project_Details")]
         [Xunit.TraitAttribute("FeatureTitle", "Projects")]
-        [Xunit.TraitAttribute("Description", "01. Project Details")]
-        public async System.Threading.Tasks.Task _01_ProjectDetails()
+        [Xunit.TraitAttribute("Description", "01._Project_Details")]
+        public async System.Threading.Tasks.Task _01__Project_Details()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("01. Project Details", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("01._Project_Details", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 13
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -157,14 +157,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="02. Project Documents")]
+        [Xunit.SkippableFactAttribute(DisplayName="02._Project_Documents")]
         [Xunit.TraitAttribute("FeatureTitle", "Projects")]
-        [Xunit.TraitAttribute("Description", "02. Project Documents")]
-        public async System.Threading.Tasks.Task _02_ProjectDocuments()
+        [Xunit.TraitAttribute("Description", "02._Project_Documents")]
+        public async System.Threading.Tasks.Task _02__Project_Documents()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("02. Project Documents", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("02._Project_Documents", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 18
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -191,14 +191,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="03. Project Notes")]
+        [Xunit.SkippableFactAttribute(DisplayName="03._Project_Notes")]
         [Xunit.TraitAttribute("FeatureTitle", "Projects")]
-        [Xunit.TraitAttribute("Description", "03. Project Notes")]
-        public async System.Threading.Tasks.Task _03_ProjectNotes()
+        [Xunit.TraitAttribute("Description", "03._Project_Notes")]
+        public async System.Threading.Tasks.Task _03__Project_Notes()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("03. Project Notes", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("03._Project_Notes", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 24
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -225,14 +225,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="04. Project List View")]
+        [Xunit.SkippableFactAttribute(DisplayName="04._Project_List_View")]
         [Xunit.TraitAttribute("FeatureTitle", "Projects")]
-        [Xunit.TraitAttribute("Description", "04. Project List View")]
-        public async System.Threading.Tasks.Task _04_ProjectListView()
+        [Xunit.TraitAttribute("Description", "04._Project_List_View")]
+        public async System.Threading.Tasks.Task _04__Project_List_View()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("04. Project List View", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("04._Project_List_View", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 30
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -253,14 +253,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="05. Duplicate Project")]
+        [Xunit.SkippableFactAttribute(DisplayName="05._Duplicate_Project")]
         [Xunit.TraitAttribute("FeatureTitle", "Projects")]
-        [Xunit.TraitAttribute("Description", "05. Duplicate Project")]
-        public async System.Threading.Tasks.Task _05_DuplicateProject()
+        [Xunit.TraitAttribute("Description", "05._Duplicate_Project")]
+        public async System.Threading.Tasks.Task _05__Duplicate_Project()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("05. Duplicate Project", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("05._Duplicate_Project", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 34
 this.ScenarioInitialize(scenarioInfo);
 #line hidden

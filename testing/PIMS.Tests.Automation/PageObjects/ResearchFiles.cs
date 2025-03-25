@@ -178,7 +178,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateToAddPropertiesReseachFile()
         {
-            Wait(2000);
+            Wait();
             totalAssociatedProps = webDriver.FindElements(researchFilePropertyCountProps).Count() - 1;
 
             WaitUntilClickable(researchEditPropertiesBttn);
@@ -199,7 +199,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void AddAdditionalResearchFileInfo(ResearchFile researchFile)
         {
-            Wait(2000);
+            Wait();
             webDriver.FindElement(researchFileEditButton).Click();
 
             //Status

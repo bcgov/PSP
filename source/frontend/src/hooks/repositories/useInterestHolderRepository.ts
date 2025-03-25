@@ -26,7 +26,7 @@ export const useInterestHolderRepository = () => {
   const updateAcquisitionInterestHolders = useApiRequestWrapper<
     (
       acqFileId: number,
-      agreements: ApiGen_Concepts_InterestHolder[],
+      stakeholders: ApiGen_Concepts_InterestHolder[],
     ) => Promise<AxiosResponse<ApiGen_Concepts_InterestHolder[], any>>
   >({
     requestFunction: useCallback(

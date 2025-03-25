@@ -80,6 +80,7 @@ const StyledMenuGenerateWrapper = styled.div`
   margin-bottom: 4rem;
   width: 100%;
   color: ${props => props.theme.css.linkColor};
+  text-align: left;
 `;
 
 const StyledMenuHeaderWrapper = styled.div`

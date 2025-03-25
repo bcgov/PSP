@@ -25,7 +25,7 @@ export const useNoteRepository = () => {
       [postNote],
     ),
     requestName: 'AddNote',
-    onSuccess: useAxiosSuccessHandler('Note saved'),
+    onSuccess: useAxiosSuccessHandler(),
     onError: useAxiosErrorHandler(),
   });
 
@@ -46,7 +46,7 @@ export const useNoteRepository = () => {
       [putNote],
     ),
     requestName: 'UpdateNote',
-    onSuccess: useAxiosSuccessHandler('Note saved'),
+    onSuccess: useAxiosSuccessHandler(),
     onError: useAxiosErrorHandler(),
   });
 

@@ -66,7 +66,7 @@ namespace Pims.Api.Controllers
         [ProducesResponseType(typeof(ExternalResponse<string>), 200)]
         [SwaggerOperation(Tags = new[] { "document-generation" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public async Task<IActionResult> UploadTemplate([FromForm] IFormFile file)
+        public async Task<IActionResult> UploadTemplate(IFormFile file)
         {
             var result = await _documentGenerationService.UploadFileTemplate(file);
             return new JsonResult(result);

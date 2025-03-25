@@ -291,6 +291,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
   position: sticky;
   padding-top: 2rem;
   bottom: 0;
+  border-top: 2px solid #e5e5e5;
   background: white;
   z-index: 10;
 }
@@ -861,7 +862,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               </label>
             </div>
             <div
-              class="c5 required text-left col-4"
+              class="c5 text-left col-4"
             >
               <div
                 class="form-group"
@@ -914,7 +915,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               </label>
             </div>
             <div
-              class="c5 required text-left col"
+              class="c5 text-left col"
             >
               <div
                 class="c11 form-group"
@@ -967,7 +968,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               </label>
             </div>
             <div
-              class="c5 required text-left col"
+              class="c5 text-left col"
             >
               <div
                 class="c11 form-group"
@@ -1020,7 +1021,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               </label>
             </div>
             <div
-              class="c5 required text-left col"
+              class="c5 text-left col"
             >
               <div
                 class="c11 form-group"
@@ -1482,7 +1483,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
       class="c14"
     >
       <div
-        class="c15 justify-content-end mb-6 mt-6 p-0 no-gutters row"
+        class="c15 justify-content-end pt-4 p-0 no-gutters row"
       >
         <div
           class="pr-3 col-auto"

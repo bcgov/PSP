@@ -71,7 +71,6 @@ describe('useAcquisitionProvider hook', () => {
 
       expect(find(currentStore.getActions(), { type: 'loading-bar/SHOW' })).toBeDefined();
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeUndefined();
-      expect(toastSuccessSpy).toHaveBeenCalledWith('Acquisition File saved');
     });
 
     it('Dispatches error with correct response when request fails', async () => {

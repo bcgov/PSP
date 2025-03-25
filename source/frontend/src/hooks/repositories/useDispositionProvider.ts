@@ -60,7 +60,7 @@ export const useDispositionProvider = () => {
       [postDispositionFileApi],
     ),
     requestName: 'AddDispositionFile',
-    onSuccess: useAxiosSuccessHandler('Disposition File saved'),
+    onSuccess: useAxiosSuccessHandler(),
     throwError: true,
   });
 
@@ -91,7 +91,7 @@ export const useDispositionProvider = () => {
       [putDispositionFileApi],
     ),
     requestName: 'UpdateDispositionFile',
-    onSuccess: useAxiosSuccessHandler('Disposition File saved'),
+    onSuccess: useAxiosSuccessHandler(),
     throwError: true,
   });
 
@@ -107,7 +107,7 @@ export const useDispositionProvider = () => {
       [putDispositionFileProperties],
     ),
     requestName: 'UpdateDispositionFileProperties',
-    onSuccess: useAxiosSuccessHandler('Disposition File Properties updated'),
+    onSuccess: useAxiosSuccessHandler(),
     throwError: true,
   });
 

@@ -11,11 +11,13 @@ import { TableSort } from '@/components/Table/TableSort';
 import { useGeocoderRepository } from '@/hooks/useGeocoderRepository';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { pidFormatter } from '@/utils';
-import { FilterBarSchema } from '@/utils/YupSchema';
 
 import { GeocoderAutoComplete } from '../components/GeocoderAutoComplete';
+import { CoordinateSearchForm } from './CoordinateSearch/CoordinateSearchForm';
+import { DmsCoordinates } from './CoordinateSearch/models';
 import { defaultPropertyFilter, IPropertyFilter } from './IPropertyFilter';
 import PropertySearchToggle, { SearchToggleOption } from './PropertySearchToggle';
+import { PropertyFilterValidationSchema } from './validation';
 
 /**
  * PropertyFilter component properties.
@@ -72,18 +74,36 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
     }
   };
 
+  const searchOptions = [
+    { label: 'PID', value: 'pid' },
+    { label: 'PIN', value: 'pin' },
+    { label: 'Address', value: 'address' },
+    { label: 'Plan #', value: 'planNumber' },
+    {
+      label: 'Historical File #',
+      value: 'historical',
+    },
+  ];
+
+  if (toggle === SearchToggleOption.Map) {
+    searchOptions.push({
+      label: 'Lat/Long',
+      value: 'coordinates',
+    });
+  }
+
   return (
     <Formik<IPropertyFilter>
       initialValues={{ ...initialValues }}
       enableReinitialize
-      validationSchema={FilterBarSchema}
+      validationSchema={PropertyFilterValidationSchema}
       onSubmit={(values, { setSubmitting }) => {
         setSubmitting(true);
         changeFilter(values);
         setSubmitting(false);
       }}
     >
-      {({ isSubmitting, setFieldValue, values, resetForm }) => (
+      {({ isSubmitting, setFieldValue, values, resetForm, isValid }) => (
         <Form>
           <Form.Row className="map-filter-bar pb-4">
             <Col xs="auto">
@@ -92,28 +112,29 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
             <NoRightPaddingColumn xs="1" md="1" lg="1" xl="1">
               <StyledSelect
                 field="searchBy"
-                options={[
-                  { label: 'PID', value: 'pid' },
-                  { label: 'PIN', value: 'pin' },
-                  { label: 'Address', value: 'address' },
-                  { label: 'Plan #', value: 'planNumber' },
-                  {
-                    label: 'Historical File #',
-                    value: 'historical',
-                  },
-                ]}
+                options={searchOptions}
                 className="idir-input-group"
-                onChange={() => {
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
                   setFieldValue('latitude', null);
                   setFieldValue('longitude', null);
                   setFieldValue('pid', null);
                   setFieldValue('pin', null);
                   setFieldValue('planNumber', null);
                   setFieldValue('historical', null);
+                  if (e.target.value === 'coordinates') {
+                    setFieldValue('coordinates', new DmsCoordinates());
+                  } else {
+                    setFieldValue('coordinates', null);
+                  }
                 }}
               />
             </NoRightPaddingColumn>
-            <StyledCol xs="3" md="2" lg="4" xl="3">
+            <StyledCol
+              xs="3"
+              md="2"
+              lg={values.searchBy === 'coordinates' ? 'auto' : 4}
+              xl={values.searchBy === 'coordinates' ? 'auto' : 3}
+            >
               {values.searchBy === 'pid' && (
                 <Input field="pid" placeholder="Enter a PID" displayErrorTooltips></Input>
               )}
@@ -164,6 +185,9 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                   placeholder="Enter a historical file# (LIS, PS, etc.)"
                 ></Input>
               )}
+              {values.searchBy === 'coordinates' && (
+                <CoordinateSearchForm field="coordinates"></CoordinateSearchForm>
+              )}
             </StyledCol>
             <Col xs="auto">
               <SearchButton
@@ -176,7 +200,8 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                     values.longitude ||
                     values.planNumber ||
                     values.address ||
-                    values.historical
+                    values.historical ||
+                    (values.searchBy === 'coordinates' && isValid)
                   )
                 }
               />

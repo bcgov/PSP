@@ -6,39 +6,54 @@ exports[`ReturnDepositForm component > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c0 {
+  .c2.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c1 {
+  font-weight: bold;
+}
+
+.c0 {
   background-color: #f2f2f2;
 }
 
 <div
-    class="c0 py-3 mb-4 pl-3"
+    class="c0 pt-3 mb-4 pl-3"
   >
     <div
-      class="pb-3 row"
+      class="pb-2 row"
     >
       <div
-        class="col-md-4"
+        class="pr-0 text-left col-4"
       >
-        <strong>
+        <label
+          class="c1"
+        >
           Deposit type:
-        </strong>
+        </label>
       </div>
       <div
-        class="col"
+        class="c2 text-left col"
       />
     </div>
     <div
-      class="row"
+      class="pb-2 row"
     >
       <div
-        class="col-md-4"
+        class="pr-0 text-left col-4"
       >
-        <strong>
+        <label
+          class="c1"
+        >
           Deposit amount:
-        </strong>
+        </label>
       </div>
       <div
-        class="col"
+        class="c2 text-left col"
       >
         $500.00
       </div>
@@ -252,7 +267,7 @@ exports[`ReturnDepositForm component > renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c1 .react-datepicker__calendar-icon {
+.c2 .react-datepicker__calendar-icon {
   width: 2.4rem;
   height: 3rem;
   margin-top: 0.5rem;
@@ -262,11 +277,11 @@ exports[`ReturnDepositForm component > renders as expected 1`] = `
   pointer-events: none;
 }
 
-.c1 .react-datepicker__view-calendar-icon input {
+.c2 .react-datepicker__view-calendar-icon input {
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c1 .react-datepicker-wrapper {
+.c2 .react-datepicker-wrapper {
   max-width: 17rem;
 }
 
@@ -276,23 +291,6 @@ exports[`ReturnDepositForm component > renders as expected 1`] = `
 
 .c3.c3.form-control.is-invalid {
   border-color: #d8292f !important;
-}
-
-.c2 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: baseline;
-  -webkit-box-align: baseline;
-  -ms-flex-align: baseline;
-  align-items: baseline;
-}
-
-.c2 .form-label {
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
 }
 
 .c7 {
@@ -312,13 +310,14 @@ exports[`ReturnDepositForm component > renders as expected 1`] = `
   border: #CE3E39 solid 0.1rem;
 }
 
-.c0 .form-group {
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
+.c1.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
 }
 
-.c0 .form-group .form-label {
+.c0 {
   font-weight: bold;
 }
 
@@ -336,28 +335,26 @@ exports[`ReturnDepositForm component > renders as expected 1`] = `
 }
 
 <form
-    class="c0 mx-3"
+    class="mx-3"
   >
     <div
-      class="row"
+      class="pb-2 row"
     >
       <div
-        class="col"
+        class="pr-0 text-left col-12"
+      >
+        <label
+          class="c0"
+        >
+          Termination or surrender date:
+        </label>
+      </div>
+      <div
+        class="c1 required text-left col"
       >
         <div
-          class="c1 required c2 form-group"
+          class="c2 required form-group"
         >
-          <label
-            class="form-label"
-            for="datepicker-terminationDate"
-          >
-            <span
-              class="datepicker-label"
-            >
-              Termination or surrender date:
-            </span>
-             
-          </label>
           <div
             class="react-datepicker-wrapper d-block"
           >
@@ -392,29 +389,40 @@ exports[`ReturnDepositForm component > renders as expected 1`] = `
       class="row"
     >
       <div
-        class="align-items-end d-flex col"
+        class="col"
       >
         <div
-          class="form-group"
+          class="pb-2 row"
         >
-          <label
-            class="form-label"
-            for="input-claimsAgainst"
-          >
-            Claims against deposit ($): 
-          </label>
           <div
-            class="input-tooltip-wrapper"
+            class="pr-0 text-left col-12"
           >
-            <input
-              class="form-control input-number"
-              id="input-claimsAgainst"
-              inputmode="numeric"
-              name="claimsAgainst"
-              placeholder=""
-              type="text"
-              value=""
-            />
+            <label
+              class="c0"
+            >
+              Claims against deposit ($):
+            </label>
+          </div>
+          <div
+            class="c1 text-left col-10"
+          >
+            <div
+              class="mt-6 form-group"
+            >
+              <div
+                class="input-tooltip-wrapper"
+              >
+                <input
+                  class="form-control input-number"
+                  id="input-claimsAgainst"
+                  inputmode="numeric"
+                  name="claimsAgainst"
+                  placeholder=""
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -422,27 +430,38 @@ exports[`ReturnDepositForm component > renders as expected 1`] = `
         class="col"
       >
         <div
-          class="required form-group"
+          class="pb-2 row"
         >
-          <label
-            class="form-label"
-            for="input-returnAmount"
-          >
-            Returned amount ($) without interest: 
-          </label>
           <div
-            class="input-tooltip-wrapper"
+            class="pr-0 text-left col-12"
           >
-            <input
-              class="form-control input-number"
-              id="input-returnAmount"
-              inputmode="numeric"
-              name="returnAmount"
-              placeholder=""
-              required=""
-              type="text"
-              value=""
-            />
+            <label
+              class="c0"
+            >
+              Returned amount ($) without interest:
+            </label>
+          </div>
+          <div
+            class="c1 required text-left col"
+          >
+            <div
+              class="required form-group"
+            >
+              <div
+                class="input-tooltip-wrapper"
+              >
+                <input
+                  class="form-control input-number"
+                  id="input-returnAmount"
+                  inputmode="numeric"
+                  name="returnAmount"
+                  placeholder=""
+                  required=""
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -454,46 +473,59 @@ exports[`ReturnDepositForm component > renders as expected 1`] = `
         class="col"
       >
         <div
-          class="form-group"
+          class="pb-2 row"
         >
-          <label
-            class="form-label"
-            for="input-interestPaid"
-          >
-            Interest paid ($): 
-            <span
-              class="tooltip-icon"
-              data-testid="tooltip-icon-interestPaid-tooltip"
-              id="interestPaid-tooltip"
-            >
-              <svg
-                class="tooltip-icon"
-                fill="currentColor"
-                height="1em"
-                stroke="currentColor"
-                stroke-width="0"
-                viewBox="0 0 512 512"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                />
-              </svg>
-            </span>
-          </label>
           <div
-            class="input-tooltip-wrapper"
+            class="pr-0 text-left col-12"
           >
-            <input
-              class="form-control input-number"
-              id="input-interestPaid"
-              inputmode="numeric"
-              name="interestPaid"
-              placeholder=""
-              type="text"
-              value=""
-            />
+            <label
+              class="c0"
+            >
+              Interest paid ($):
+              <span>
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c1 text-left col"
+          >
+            <div
+              class="form-group"
+            >
+              <div
+                class="input-tooltip-wrapper"
+              >
+                <input
+                  class="form-control input-number"
+                  id="input-interestPaid"
+                  inputmode="numeric"
+                  name="interestPaid"
+                  placeholder=""
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -529,25 +561,23 @@ exports[`ReturnDepositForm component > renders as expected 1`] = `
       </div>
     </div>
     <div
-      class="row"
+      class="pb-2 row"
     >
       <div
-        class="col"
+        class="pr-0 text-left col-12"
+      >
+        <label
+          class="c0"
+        >
+          Returned date:
+        </label>
+      </div>
+      <div
+        class="c1 required text-left col"
       >
         <div
-          class="c1 required c2 form-group"
+          class="c2 required form-group"
         >
-          <label
-            class="form-label"
-            for="datepicker-returnDate"
-          >
-            <span
-              class="datepicker-label"
-            >
-              Returned date:
-            </span>
-             
-          </label>
           <div
             class="react-datepicker-wrapper d-block"
           >
@@ -579,20 +609,23 @@ exports[`ReturnDepositForm component > renders as expected 1`] = `
       </div>
     </div>
     <div
-      class="row"
+      class="pb-2 row"
     >
       <div
-        class="col"
+        class="pr-0 text-left col-12"
+      >
+        <label
+          class="c0"
+        >
+          Payee name:
+        </label>
+      </div>
+      <div
+        class="c1 required text-left col"
       >
         <div
           class="input form-group"
         >
-          <label
-            class="form-label"
-            for="input-contactHolder"
-          >
-            Payee name:
-          </label>
           <div
             class="row"
           >
@@ -658,39 +691,54 @@ exports[`ReturnDepositForm component > renders with data as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c0 {
+  .c2.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c1 {
+  font-weight: bold;
+}
+
+.c0 {
   background-color: #f2f2f2;
 }
 
 <div
-    class="c0 py-3 mb-4 pl-3"
+    class="c0 pt-3 mb-4 pl-3"
   >
     <div
-      class="pb-3 row"
+      class="pb-2 row"
     >
       <div
-        class="col-md-4"
+        class="pr-0 text-left col-4"
       >
-        <strong>
+        <label
+          class="c1"
+        >
           Deposit type:
-        </strong>
+        </label>
       </div>
       <div
-        class="col"
+        class="c2 text-left col"
       />
     </div>
     <div
-      class="row"
+      class="pb-2 row"
     >
       <div
-        class="col-md-4"
+        class="pr-0 text-left col-4"
       >
-        <strong>
+        <label
+          class="c1"
+        >
           Deposit amount:
-        </strong>
+        </label>
       </div>
       <div
-        class="col"
+        class="c2 text-left col"
       >
         $500.00
       </div>
@@ -904,7 +952,7 @@ exports[`ReturnDepositForm component > renders with data as expected 1`] = `
   margin-right: 0;
 }
 
-.c1 .react-datepicker__calendar-icon {
+.c2 .react-datepicker__calendar-icon {
   width: 2.4rem;
   height: 3rem;
   margin-top: 0.5rem;
@@ -914,11 +962,11 @@ exports[`ReturnDepositForm component > renders with data as expected 1`] = `
   pointer-events: none;
 }
 
-.c1 .react-datepicker__view-calendar-icon input {
+.c2 .react-datepicker__view-calendar-icon input {
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c1 .react-datepicker-wrapper {
+.c2 .react-datepicker-wrapper {
   max-width: 17rem;
 }
 
@@ -928,23 +976,6 @@ exports[`ReturnDepositForm component > renders with data as expected 1`] = `
 
 .c3.c3.form-control.is-invalid {
   border-color: #d8292f !important;
-}
-
-.c2 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: baseline;
-  -webkit-box-align: baseline;
-  -ms-flex-align: baseline;
-  align-items: baseline;
-}
-
-.c2 .form-label {
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
 }
 
 .c7 {
@@ -964,13 +995,14 @@ exports[`ReturnDepositForm component > renders with data as expected 1`] = `
   border: #CE3E39 solid 0.1rem;
 }
 
-.c0 .form-group {
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
+.c1.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
 }
 
-.c0 .form-group .form-label {
+.c0 {
   font-weight: bold;
 }
 
@@ -988,28 +1020,26 @@ exports[`ReturnDepositForm component > renders with data as expected 1`] = `
 }
 
 <form
-    class="c0 mx-3"
+    class="mx-3"
   >
     <div
-      class="row"
+      class="pb-2 row"
     >
       <div
-        class="col"
+        class="pr-0 text-left col-12"
+      >
+        <label
+          class="c0"
+        >
+          Termination or surrender date:
+        </label>
+      </div>
+      <div
+        class="c1 required text-left col"
       >
         <div
-          class="c1 required c2 form-group"
+          class="c2 required form-group"
         >
-          <label
-            class="form-label"
-            for="datepicker-terminationDate"
-          >
-            <span
-              class="datepicker-label"
-            >
-              Termination or surrender date:
-            </span>
-             
-          </label>
           <div
             class="react-datepicker-wrapper d-block"
           >
@@ -1044,29 +1074,40 @@ exports[`ReturnDepositForm component > renders with data as expected 1`] = `
       class="row"
     >
       <div
-        class="align-items-end d-flex col"
+        class="col"
       >
         <div
-          class="form-group"
+          class="pb-2 row"
         >
-          <label
-            class="form-label"
-            for="input-claimsAgainst"
-          >
-            Claims against deposit ($): 
-          </label>
           <div
-            class="input-tooltip-wrapper"
+            class="pr-0 text-left col-12"
           >
-            <input
-              class="form-control input-number"
-              id="input-claimsAgainst"
-              inputmode="numeric"
-              name="claimsAgainst"
-              placeholder=""
-              type="text"
-              value=""
-            />
+            <label
+              class="c0"
+            >
+              Claims against deposit ($):
+            </label>
+          </div>
+          <div
+            class="c1 text-left col-10"
+          >
+            <div
+              class="mt-6 form-group"
+            >
+              <div
+                class="input-tooltip-wrapper"
+              >
+                <input
+                  class="form-control input-number"
+                  id="input-claimsAgainst"
+                  inputmode="numeric"
+                  name="claimsAgainst"
+                  placeholder=""
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1074,27 +1115,38 @@ exports[`ReturnDepositForm component > renders with data as expected 1`] = `
         class="col"
       >
         <div
-          class="required form-group"
+          class="pb-2 row"
         >
-          <label
-            class="form-label"
-            for="input-returnAmount"
-          >
-            Returned amount ($) without interest: 
-          </label>
           <div
-            class="input-tooltip-wrapper"
+            class="pr-0 text-left col-12"
           >
-            <input
-              class="form-control input-number"
-              id="input-returnAmount"
-              inputmode="numeric"
-              name="returnAmount"
-              placeholder=""
-              required=""
-              type="text"
-              value=""
-            />
+            <label
+              class="c0"
+            >
+              Returned amount ($) without interest:
+            </label>
+          </div>
+          <div
+            class="c1 required text-left col"
+          >
+            <div
+              class="required form-group"
+            >
+              <div
+                class="input-tooltip-wrapper"
+              >
+                <input
+                  class="form-control input-number"
+                  id="input-returnAmount"
+                  inputmode="numeric"
+                  name="returnAmount"
+                  placeholder=""
+                  required=""
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1106,46 +1158,59 @@ exports[`ReturnDepositForm component > renders with data as expected 1`] = `
         class="col"
       >
         <div
-          class="form-group"
+          class="pb-2 row"
         >
-          <label
-            class="form-label"
-            for="input-interestPaid"
-          >
-            Interest paid ($): 
-            <span
-              class="tooltip-icon"
-              data-testid="tooltip-icon-interestPaid-tooltip"
-              id="interestPaid-tooltip"
-            >
-              <svg
-                class="tooltip-icon"
-                fill="currentColor"
-                height="1em"
-                stroke="currentColor"
-                stroke-width="0"
-                viewBox="0 0 512 512"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                />
-              </svg>
-            </span>
-          </label>
           <div
-            class="input-tooltip-wrapper"
+            class="pr-0 text-left col-12"
           >
-            <input
-              class="form-control input-number"
-              id="input-interestPaid"
-              inputmode="numeric"
-              name="interestPaid"
-              placeholder=""
-              type="text"
-              value=""
-            />
+            <label
+              class="c0"
+            >
+              Interest paid ($):
+              <span>
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c1 text-left col"
+          >
+            <div
+              class="form-group"
+            >
+              <div
+                class="input-tooltip-wrapper"
+              >
+                <input
+                  class="form-control input-number"
+                  id="input-interestPaid"
+                  inputmode="numeric"
+                  name="interestPaid"
+                  placeholder=""
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1181,25 +1246,23 @@ exports[`ReturnDepositForm component > renders with data as expected 1`] = `
       </div>
     </div>
     <div
-      class="row"
+      class="pb-2 row"
     >
       <div
-        class="col"
+        class="pr-0 text-left col-12"
+      >
+        <label
+          class="c0"
+        >
+          Returned date:
+        </label>
+      </div>
+      <div
+        class="c1 required text-left col"
       >
         <div
-          class="c1 required c2 form-group"
+          class="c2 required form-group"
         >
-          <label
-            class="form-label"
-            for="datepicker-returnDate"
-          >
-            <span
-              class="datepicker-label"
-            >
-              Returned date:
-            </span>
-             
-          </label>
           <div
             class="react-datepicker-wrapper d-block"
           >
@@ -1231,20 +1294,23 @@ exports[`ReturnDepositForm component > renders with data as expected 1`] = `
       </div>
     </div>
     <div
-      class="row"
+      class="pb-2 row"
     >
       <div
-        class="col"
+        class="pr-0 text-left col-12"
+      >
+        <label
+          class="c0"
+        >
+          Payee name:
+        </label>
+      </div>
+      <div
+        class="c1 required text-left col"
       >
         <div
           class="input form-group"
         >
-          <label
-            class="form-label"
-            for="input-contactHolder"
-          >
-            Payee name:
-          </label>
           <div
             class="row"
           >

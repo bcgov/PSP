@@ -26,7 +26,7 @@ export const useSecurityDepositReturnRepository = () => {
       [putLeaseDepositReturn],
     ),
     requestName: 'putLeaseDepositReturn',
-    onSuccess: useAxiosSuccessHandler('Security Deposit Return updated successfully.'),
+    onSuccess: useAxiosSuccessHandler(),
     onError: useAxiosErrorHandler(),
   });
 
@@ -42,7 +42,7 @@ export const useSecurityDepositReturnRepository = () => {
       [postLeaseDepositReturn],
     ),
     requestName: 'postLeaseDepositReturn',
-    onSuccess: useAxiosSuccessHandler('Security Deposit Return added successfully.'),
+    onSuccess: useAxiosSuccessHandler(),
     onError: useAxiosErrorHandler(),
   });
 

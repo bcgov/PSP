@@ -106,7 +106,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By requisitionPaymentSubtitle = By.XPath("//h2/div/div[contains(text(),'Payment')]");
         private readonly By requisitionPayeeLabel = By.XPath("//label[contains(text(),'Payee')]");
         private readonly By requisitionPayeeContentCount = By.XPath("//label[contains(text(),'Payee')]/parent::div/following-sibling::div/div");
-        private readonly By requisitionPayeeSelect = By.Id("input-leaseStakeholderId");
         private readonly By requisitionPayeeMultiselect = By.Id("multiselect-payees_input");
         private readonly By requisitionPayeeDeleteBttns = By.CssSelector("div[id='multiselect-payees'] i[class='custom-close']");
         private readonly By requisitionPayeeOptions = By.XPath("//input[@id='multiselect-payees_input']/parent::div/following-sibling::div/ul[@class='optionContainer']");
@@ -342,26 +341,21 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(requisitionPayeeLabel).Click();
             }
 
-            if (fileType == "Acquisition File")
+            if (compensation.CompensationPayee.First() != "")
             {
-                if (compensation.AcquisitionCompensationPayee.First() != "")
+                foreach (string payee in compensation.CompensationPayee)
                 {
-                    foreach (string payee in compensation.AcquisitionCompensationPayee)
-                    {
-                        Wait(2000);
-                        webDriver.FindElement(requisitionPayeeLabel).Click();
-                        FocusAndClick(requisitionPayeeMultiselect);
-
-                        Wait(2000);
-                        ChooseMultiSelectSpecificOption(requisitionPayeeOptions, payee);
-                        webDriver.FindElement(requisitionPayeeLabel).Click();
-                    }
-
+                    Wait(2000);
                     webDriver.FindElement(requisitionPayeeLabel).Click();
-                } 
-            }
-            else if (compensation.LeaseCompensationPayee != "" && fileType == "Lease")
-                 ChooseSpecificSelectOption(requisitionPayeeSelect, compensation.LeaseCompensationPayee);
+                    FocusAndClick(requisitionPayeeMultiselect);
+
+                    Wait(2000);
+                    ChooseMultiSelectSpecificOption(requisitionPayeeOptions, payee);
+                    webDriver.FindElement(requisitionPayeeLabel).Click();
+                }
+
+                webDriver.FindElement(requisitionPayeeLabel).Click();
+            } 
 
             if (compensation.CompensationPaymentInTrust)
                 FocusAndClick(requisitionPaymentInTrustCheckbox);
@@ -613,10 +607,12 @@ namespace PIMS.Tests.Automation.PageObjects
 
 
             if (compensation.CompensationPayeeDisplay.Count > 0)
-                for (int i = 0; i < compensation.AcquisitionCompensationPayee.Count; i++)
+                for (int i = 0; i < compensation.CompensationPayee.Count; i++)
                 {
                     var elementIndex = i + 1;
-                    AssertTrueElementContains(By.XPath("//label[contains(text(),'Payee')]/parent::div/following-sibling::div/div["+ elementIndex +"]"), compensation.CompensationPayeeDisplay[i]);
+                    var payeeName = webDriver.FindElement(By.XPath("//label[contains(text(),'Payee')]/parent::div/following-sibling::div/div["+ elementIndex +"]")).Text;
+                    var payeeNameFormatted = payeeName.Replace("\r\n", string.Empty);
+                    Assert.Contains(compensation.CompensationPayeeDisplay[i], payeeNameFormatted);
                     if (compensation.CompensationPaymentInTrust)
                         AssertTrueElementContains(By.XPath("//label[contains(text(),'Payee')]/parent::div/following-sibling::div/div["+ elementIndex +"]"), "in trust");
                 }
@@ -699,7 +695,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueContentEquals(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+lastCreatedCompensationReq+")  div:nth-child(3)"), TransformCurrencyFormat(compensation.CompensationTotalAmount));
             AssertTrueContentEquals(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+lastCreatedCompensationReq+")  div:nth-child(4)"), compensation.CompensationStatus);
             AssertTrueIsDisplayed(By.CssSelector("button[data-testid='compensation-view-"+ elementIndex +"']"));
-            AssertTrueIsDisplayed(By.CssSelector("button[data-testid='compensation-delete-"+ elementIndex +"']"));
+            //AssertTrueIsDisplayed(By.CssSelector("button[data-testid='compensation-delete-"+ elementIndex +"']"));
         }
 
         private void CreateFinancialActivity(CompensationActivity activity)

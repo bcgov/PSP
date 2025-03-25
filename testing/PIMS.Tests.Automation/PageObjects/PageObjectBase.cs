@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.DevTools.V85.IndexedDB;
 using OpenQA.Selenium.Support.UI;
 using PIMS.Tests.Automation.Classes;
 using SeleniumExtras.WaitHelpers;
@@ -177,6 +178,15 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 element.SendKeys(Keys.Backspace);
             }
+        }
+
+        protected void SendKeysToCurencyInput(By elementBy, string sendKeysValue)
+        {
+            WaitUntilVisible(elementBy);
+
+            var js = (IJavaScriptExecutor)webDriver;
+            webDriver.FindElement(elementBy).SendKeys(Keys.NumberPad1);
+
         }
 
         protected void ClearMultiSelectInput(By elementBy)

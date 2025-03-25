@@ -23,6 +23,7 @@ import { exists, prettyFormatDate } from '@/utils';
 
 import HistoricalNumbersContainer from '../../shared/header/HistoricalNumberContainer';
 import { HistoricalNumberSectionView } from '../../shared/header/HistoricalNumberSectionView';
+import { StyledLeftHeaderPane } from '../../shared/header/styles';
 import { LeaseHeaderStakeholders } from './LeaseHeaderTenants';
 
 export interface ILeaseHeaderProps {
@@ -42,7 +43,7 @@ export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease, lastUpdatedBy 
   return (
     <Container>
       <Row className="no-gutters">
-        <Col xs="8">
+        <StyledLeftHeaderPane xs="8">
           <HeaderField label="Lease/Licence #" labelWidth="4" contentWidth="8">
             <span className="pr-4">{lease?.lFileNo ?? ''}</span>
             <StyledGreenText>{lease?.paymentReceivableType?.description ?? ''}</StyledGreenText>
@@ -93,7 +94,7 @@ export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease, lastUpdatedBy 
               />
             </Col>
           </HistoricalRow>
-        </Col>
+        </StyledLeftHeaderPane>
 
         <Col>
           <StyledFiller>

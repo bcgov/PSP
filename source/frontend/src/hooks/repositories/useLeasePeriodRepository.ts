@@ -36,7 +36,7 @@ export const useLeasePeriodRepository = () => {
       [],
     ),
     requestName: 'putLeasePeriod',
-    onSuccess: useAxiosSuccessHandler('Period saved successfully.'),
+    onSuccess: useAxiosSuccessHandler(),
     onError: useAxiosErrorHandler(),
   });
 
@@ -50,7 +50,7 @@ export const useLeasePeriodRepository = () => {
       [],
     ),
     requestName: 'postLeasePeriod',
-    onSuccess: useAxiosSuccessHandler('Period saved successfully.'),
+    onSuccess: useAxiosSuccessHandler(),
     onError: useAxiosErrorHandler(),
   });
 
@@ -62,7 +62,7 @@ export const useLeasePeriodRepository = () => {
       [],
     ),
     requestName: 'deleteLeasePeriod',
-    onSuccess: useAxiosSuccessHandler('Period deleted successfully.'),
+    onSuccess: useAxiosSuccessHandler(),
     onError: useAxiosErrorHandler(),
   });
 

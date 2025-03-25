@@ -148,6 +148,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By acquisitionFileOwnerCommentTextArea = By.Id("input-ownerRepresentative.comment");
         private readonly By acquisitionFileOwnerCommentContent = By.XPath("//label[contains(text(),'Comment')]/parent::div/following-sibling::div");
 
+        private readonly By acquisitionFileOwnerCommentEditTextArea = By.Id("input-ownerRepresentatives.0.comment");
+
         private readonly By acquisitionFileMainFormDiv = By.XPath("//h1[contains(text(),'Create Acquisition File')]/parent::div/parent::div/parent::div/parent::div");
 
         //Acquisition Sub-files View Elements
@@ -460,7 +462,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (acquisition.OwnerSolicitor != "" && acquisitionType == "Subfile")
             {
-                WaitUntilVisible(acquisitionSubfileOwnerSolicitorButton);
+                Wait();
                 webDriver.FindElement(acquisitionSubfileOwnerSolicitorButton).Click();
                 sharedSelectContact.SelectContact(acquisition.OwnerSolicitor, "");
             }
@@ -475,9 +477,17 @@ namespace PIMS.Tests.Automation.PageObjects
             if (acquisition.OwnerComment != "")
             {
                 Wait();
-                
-                ClearInput(acquisitionFileOwnerCommentTextArea);
-                webDriver.FindElement(acquisitionFileOwnerCommentTextArea).SendKeys(acquisition.OwnerComment);
+
+                if (webDriver.FindElements(acquisitionFileOwnerCommentEditTextArea).Count > 0)
+                {
+                    ClearInput(acquisitionFileOwnerCommentEditTextArea);
+                    webDriver.FindElement(acquisitionFileOwnerCommentEditTextArea).SendKeys(acquisition.OwnerComment);
+                }
+                else
+                {
+                    ClearInput(acquisitionFileOwnerCommentTextArea);
+                    webDriver.FindElement(acquisitionFileOwnerCommentTextArea).SendKeys(acquisition.OwnerComment);
+                }
             }
         }
 
@@ -773,6 +783,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyAcquisitionFileCreate(string acquisitionType)
         {
+            Wait();
+
             if (acquisitionType == "Main")
                 AssertTrueIsDisplayed(acquisitionFileCreateTitle);
             else
@@ -905,7 +917,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private void AddTeamMembers(TeamMember teamMember)
         {
-            WaitUntilClickable(acquisitionFileAddAnotherMemberLink);
+            Wait();
             FocusAndClick(acquisitionFileAddAnotherMemberLink);
 
             Wait();
@@ -914,6 +926,8 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilVisible(By.CssSelector("select[id='input-team."+ teamMemberIndex +".contactTypeCode']"));
             ChooseSpecificSelectOption(By.CssSelector("select[id='input-team."+ teamMemberIndex +".contactTypeCode']"), teamMember.TeamMemberRole);
             FocusAndClick(By.CssSelector("div[data-testid='teamMemberRow["+ teamMemberIndex +"]'] div[data-testid='contact-input'] button[title='Select Contact']"));
+
+            Wait();
             sharedSelectContact.SelectContact(teamMember.TeamMemberContactName, teamMember.TeamMemberContactType);
 
             Wait();

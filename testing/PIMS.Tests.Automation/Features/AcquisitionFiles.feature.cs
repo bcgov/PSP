@@ -94,14 +94,14 @@ namespace PIMS.Tests.Automation.Features
             await this.TestTearDownAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="01. Acquisition File Details")]
+        [Xunit.SkippableFactAttribute(DisplayName="01._Acquisition_File_Details")]
         [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
-        [Xunit.TraitAttribute("Description", "01. Acquisition File Details")]
-        public async System.Threading.Tasks.Task _01_AcquisitionFileDetails()
+        [Xunit.TraitAttribute("Description", "01._Acquisition_File_Details")]
+        public async System.Threading.Tasks.Task _01__Acquisition_File_Details()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("01. Acquisition File Details", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("01._Acquisition_File_Details", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 6
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -128,14 +128,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="02. Acquisition File Properties")]
+        [Xunit.SkippableFactAttribute(DisplayName="02._Acquisition_File_Details")]
         [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
-        [Xunit.TraitAttribute("Description", "02. Acquisition File Properties")]
-        public async System.Threading.Tasks.Task _02_AcquisitionFileProperties()
+        [Xunit.TraitAttribute("Description", "02._Acquisition_File_Details")]
+        public async System.Threading.Tasks.Task _02__Acquisition_File_Details()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("02. Acquisition File Properties", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("02._Acquisition_File_Details", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 12
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -165,14 +165,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="03. Acquisition File Property Takes")]
+        [Xunit.SkippableFactAttribute(DisplayName="03._Acquisition_File_Property_Takes")]
         [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
-        [Xunit.TraitAttribute("Description", "03. Acquisition File Property Takes")]
-        public async System.Threading.Tasks.Task _03_AcquisitionFilePropertyTakes()
+        [Xunit.TraitAttribute("Description", "03._Acquisition_File_Property_Takes")]
+        public async System.Threading.Tasks.Task _03__Acquisition_File_Property_Takes()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("03. Acquisition File Property Takes", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("03._Acquisition_File_Property_Takes", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 19
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -202,14 +202,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="04. Acquisition Checklist Tab")]
+        [Xunit.SkippableFactAttribute(DisplayName="04._Acquisition_Checklist_Tab")]
         [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
-        [Xunit.TraitAttribute("Description", "04. Acquisition Checklist Tab")]
-        public async System.Threading.Tasks.Task _04_AcquisitionChecklistTab()
+        [Xunit.TraitAttribute("Description", "04._Acquisition_Checklist_Tab")]
+        public async System.Threading.Tasks.Task _04__Acquisition_Checklist_Tab()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("04. Acquisition Checklist Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("04._Acquisition_Checklist_Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 26
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -233,14 +233,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="05. Acquisition Files Digital Documents")]
+        [Xunit.SkippableFactAttribute(DisplayName="05._Acquisition_Files_Digital_Documents")]
         [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
-        [Xunit.TraitAttribute("Description", "05. Acquisition Files Digital Documents")]
-        public async System.Threading.Tasks.Task _05_AcquisitionFilesDigitalDocuments()
+        [Xunit.TraitAttribute("Description", "05._Acquisition_Files_Digital_Documents")]
+        public async System.Threading.Tasks.Task _05__Acquisition_Files_Digital_Documents()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("05. Acquisition Files Digital Documents", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("05._Acquisition_Files_Digital_Documents", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 31
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -267,14 +267,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="06. Acquisition File Notes")]
+        [Xunit.SkippableFactAttribute(DisplayName="06._Acquisition_File_Notes")]
         [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
-        [Xunit.TraitAttribute("Description", "06. Acquisition File Notes")]
-        public async System.Threading.Tasks.Task _06_AcquisitionFileNotes()
+        [Xunit.TraitAttribute("Description", "06._Acquisition_File_Notes")]
+        public async System.Threading.Tasks.Task _06__Acquisition_File_Notes()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("06. Acquisition File Notes", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("06._Acquisition_File_Notes", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 37
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -301,14 +301,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="07. Acquisition File Agreements Tab")]
+        [Xunit.SkippableFactAttribute(DisplayName="07._Acquisition_File_Agreements_Tab")]
         [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
-        [Xunit.TraitAttribute("Description", "07. Acquisition File Agreements Tab")]
-        public async System.Threading.Tasks.Task _07_AcquisitionFileAgreementsTab()
+        [Xunit.TraitAttribute("Description", "07._Acquisition_File_Agreements_Tab")]
+        public async System.Threading.Tasks.Task _07__Acquisition_File_Agreements_Tab()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("07. Acquisition File Agreements Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("07._Acquisition_File_Agreements_Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 43
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -335,14 +335,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="08. Acquisition File Stakeholders Tab")]
+        [Xunit.SkippableFactAttribute(DisplayName="08._Acquisition_File_Stakeholders_Tab")]
         [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
-        [Xunit.TraitAttribute("Description", "08. Acquisition File Stakeholders Tab")]
-        public async System.Threading.Tasks.Task _08_AcquisitionFileStakeholdersTab()
+        [Xunit.TraitAttribute("Description", "08._Acquisition_File_Stakeholders_Tab")]
+        public async System.Threading.Tasks.Task _08__Acquisition_File_Stakeholders_Tab()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("08. Acquisition File Stakeholders Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("08._Acquisition_File_Stakeholders_Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 49
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -369,14 +369,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="09. Acquisition File Compensation Tab")]
+        [Xunit.SkippableFactAttribute(DisplayName="09._Acquisition_File_Compensation_Tab")]
         [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
-        [Xunit.TraitAttribute("Description", "09. Acquisition File Compensation Tab")]
-        public async System.Threading.Tasks.Task _09_AcquisitionFileCompensationTab()
+        [Xunit.TraitAttribute("Description", "09._Acquisition_File_Compensation_Tab")]
+        public async System.Threading.Tasks.Task _09__Acquisition_File_Compensation_Tab()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("09. Acquisition File Compensation Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("09._Acquisition_File_Compensation_Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 55
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -412,14 +412,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="10. Acquisition File Expropriation Tab")]
+        [Xunit.SkippableFactAttribute(DisplayName="10._Acquisition_File_Expropriation_Tab")]
         [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
-        [Xunit.TraitAttribute("Description", "10. Acquisition File Expropriation Tab")]
-        public async System.Threading.Tasks.Task _10_AcquisitionFileExpropriationTab()
+        [Xunit.TraitAttribute("Description", "10._Acquisition_File_Expropriation_Tab")]
+        public async System.Threading.Tasks.Task _10__Acquisition_File_Expropriation_Tab()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("10. Acquisition File Expropriation Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("10._Acquisition_File_Expropriation_Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 64
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -455,14 +455,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="11. Acquisition File from Pin")]
+        [Xunit.SkippableFactAttribute(DisplayName="11._Acquisition_File_from_Pin")]
         [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
-        [Xunit.TraitAttribute("Description", "11. Acquisition File from Pin")]
-        public async System.Threading.Tasks.Task _11_AcquisitionFileFromPin()
+        [Xunit.TraitAttribute("Description", "11._Acquisition_File_from_Pin")]
+        public async System.Threading.Tasks.Task _11__Acquisition_File_From_Pin()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("11. Acquisition File from Pin", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("11._Acquisition_File_from_Pin", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 73
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -483,14 +483,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="12. Acquisition Files List View")]
+        [Xunit.SkippableFactAttribute(DisplayName="12._Acquisition_Files_List_View")]
         [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
-        [Xunit.TraitAttribute("Description", "12. Acquisition Files List View")]
-        public async System.Threading.Tasks.Task _12_AcquisitionFilesListView()
+        [Xunit.TraitAttribute("Description", "12._Acquisition_Files_List_View")]
+        public async System.Threading.Tasks.Task _12__Acquisition_Files_List_View()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("12. Acquisition Files List View", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("12._Acquisition_Files_List_View", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 77
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -511,14 +511,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="13. Acquisition File Property Takes Logic")]
+        [Xunit.SkippableFactAttribute(DisplayName="13._Acquisition_File_Property_Takes_Logic")]
         [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
-        [Xunit.TraitAttribute("Description", "13. Acquisition File Property Takes Logic")]
-        public async System.Threading.Tasks.Task _13_AcquisitionFilePropertyTakesLogic()
+        [Xunit.TraitAttribute("Description", "13._Acquisition_File_Property_Takes_Logic")]
+        public async System.Threading.Tasks.Task _13__Acquisition_File_Property_Takes_Logic()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("13. Acquisition File Property Takes Logic", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("13._Acquisition_File_Property_Takes_Logic", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 81
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -545,14 +545,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="14. Acquisition File Error Message - Draft Items")]
+        [Xunit.SkippableFactAttribute(DisplayName="14._Acquisition_File_Error_Message-Draft_Items")]
         [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
-        [Xunit.TraitAttribute("Description", "14. Acquisition File Error Message - Draft Items")]
-        public async System.Threading.Tasks.Task _14_AcquisitionFileErrorMessage_DraftItems()
+        [Xunit.TraitAttribute("Description", "14._Acquisition_File_Error_Message-Draft_Items")]
+        public async System.Threading.Tasks.Task _14__Acquisition_File_Error_Message_Draft_Items()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("14. Acquisition File Error Message - Draft Items", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("14._Acquisition_File_Error_Message-Draft_Items", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 87
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -579,14 +579,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="15. Acquisition File Error Message - No Takes")]
+        [Xunit.SkippableFactAttribute(DisplayName="15._Acquisition_File_Error_Message-No_Takes")]
         [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
-        [Xunit.TraitAttribute("Description", "15. Acquisition File Error Message - No Takes")]
-        public async System.Threading.Tasks.Task _15_AcquisitionFileErrorMessage_NoTakes()
+        [Xunit.TraitAttribute("Description", "15._Acquisition_File_Error_Message-No_Takes")]
+        public async System.Threading.Tasks.Task _15__Acquisition_File_Error_Message_No_Takes()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("15. Acquisition File Error Message - No Takes", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("15._Acquisition_File_Error_Message-No_Takes", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 93
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -610,14 +610,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="16. Acquisition File Error Message - Takes In-Progress")]
+        [Xunit.SkippableFactAttribute(DisplayName="16._Acquisition_File_Error_Message-Takes_In-Progress")]
         [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
-        [Xunit.TraitAttribute("Description", "16. Acquisition File Error Message - Takes In-Progress")]
-        public async System.Threading.Tasks.Task _16_AcquisitionFileErrorMessage_TakesIn_Progress()
+        [Xunit.TraitAttribute("Description", "16._Acquisition_File_Error_Message-Takes_In-Progress")]
+        public async System.Threading.Tasks.Task _16__Acquisition_File_Error_Message_Takes_In_Progress()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("16. Acquisition File Error Message - Takes In-Progress", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("16._Acquisition_File_Error_Message-Takes_In-Progress", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 98
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -647,14 +647,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="17. Acquisition File Subfiles - Subfile Details")]
+        [Xunit.SkippableFactAttribute(DisplayName="17._Acquisition_File_Subfiles-Subfile_Details")]
         [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
-        [Xunit.TraitAttribute("Description", "17. Acquisition File Subfiles - Subfile Details")]
-        public async System.Threading.Tasks.Task _17_AcquisitionFileSubfiles_SubfileDetails()
+        [Xunit.TraitAttribute("Description", "17._Acquisition_File_Subfiles-Subfile_Details")]
+        public async System.Threading.Tasks.Task _17__Acquisition_File_Subfiles_Subfile_Details()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("17. Acquisition File Subfiles - Subfile Details", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("17._Acquisition_File_Subfiles-Subfile_Details", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 105
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -681,17 +681,17 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="18. Acquisition File Compensation Requsition - Sum of Subfiles Compensation Requi" +
-            "sitions")]
+        [Xunit.SkippableFactAttribute(DisplayName="18._Acquisition_File_Compensation_Requsition-Sum_of_Subfiles_Compensation_Requisi" +
+            "tions")]
         [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
-        [Xunit.TraitAttribute("Description", "18. Acquisition File Compensation Requsition - Sum of Subfiles Compensation Requi" +
-            "sitions")]
-        public async System.Threading.Tasks.Task _18_AcquisitionFileCompensationRequsition_SumOfSubfilesCompensationRequisitions()
+        [Xunit.TraitAttribute("Description", "18._Acquisition_File_Compensation_Requsition-Sum_of_Subfiles_Compensation_Requisi" +
+            "tions")]
+        public async System.Threading.Tasks.Task _18__Acquisition_File_Compensation_Requsition_Sum_Of_Subfiles_Compensation_Requisitions()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("18. Acquisition File Compensation Requsition - Sum of Subfiles Compensation Requi" +
-                    "sitions", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("18._Acquisition_File_Compensation_Requsition-Sum_of_Subfiles_Compensation_Requisi" +
+                    "tions", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 111
 this.ScenarioInitialize(scenarioInfo);
 #line hidden

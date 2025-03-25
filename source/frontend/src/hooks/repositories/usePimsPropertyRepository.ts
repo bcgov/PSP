@@ -7,7 +7,7 @@ import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { Api_PropertyFilterCriteria } from '@/models/api/ProjectFilterCriteria';
-import { useAxiosErrorHandler } from '@/utils';
+import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 /**
  * hook that retrieves a property from the inventory.
@@ -70,7 +70,7 @@ export const usePimsPropertyRepository = () => {
       [putPropertyConceptApi],
     ),
     requestName: 'updatePropertyConcept',
-    onSuccess: useCallback(() => toast.success('Property information updated'), []),
+    onSuccess: useAxiosSuccessHandler(),
     onError: useCallback((axiosError: AxiosError<IApiError>) => {
       if (axiosError?.response?.status === 400) {
         toast.error(axiosError?.response.data.error);

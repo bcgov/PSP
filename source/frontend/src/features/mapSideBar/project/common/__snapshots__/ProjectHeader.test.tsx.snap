@@ -6,17 +6,17 @@ exports[`ProjectHeader component > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c3 {
+  .c4 {
   font-size: 0.87em;
   line-height: 1.9;
 }
 
-.c1 {
+.c2 {
   font-weight: bold;
   white-space: nowrap;
 }
 
-.c5 {
+.c6 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -26,7 +26,7 @@ exports[`ProjectHeader component > renders as expected 1`] = `
   flex-wrap: nowrap;
 }
 
-.c6 {
+.c7 {
   font-family: 'BCSans-Bold';
   font-size: 1.4rem;
   border-radius: 0.4rem;
@@ -45,7 +45,7 @@ exports[`ProjectHeader component > renders as expected 1`] = `
   background-color: #dff0d8;
 }
 
-.c4 {
+.c5 {
   margin-top: auto;
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -59,7 +59,7 @@ exports[`ProjectHeader component > renders as expected 1`] = `
   border-bottom-width: 0.1rem;
 }
 
-.c2 {
+.c3 {
   height: 100%;
   display: -webkit-box;
   display: -webkit-flex;
@@ -70,11 +70,15 @@ exports[`ProjectHeader component > renders as expected 1`] = `
   flex-direction: column;
 }
 
+.c1 {
+  max-width: 60rem;
+}
+
 <div
     class="c0 no-gutters row"
   >
     <div
-      class="col-7"
+      class="c1 col-7"
     >
       <div
         class="row"
@@ -83,7 +87,7 @@ exports[`ProjectHeader component > renders as expected 1`] = `
           class="pr-0 text-left col-3"
         >
           <label
-            class="c1"
+            class="c2"
           >
             Project:
           </label>
@@ -101,7 +105,7 @@ exports[`ProjectHeader component > renders as expected 1`] = `
           class="pr-0 text-left col-3"
         >
           <label
-            class="c1"
+            class="c2"
           >
             MoTI region:
           </label>
@@ -117,7 +121,7 @@ exports[`ProjectHeader component > renders as expected 1`] = `
       class="col"
     >
       <div
-        class="c2"
+        class="c3"
       >
         <div
           class="no-gutters row"
@@ -126,7 +130,7 @@ exports[`ProjectHeader component > renders as expected 1`] = `
             class="text-right col"
           >
             <span
-              class="c3"
+              class="c4"
             >
               <strong>
                 Created: 
@@ -151,7 +155,7 @@ exports[`ProjectHeader component > renders as expected 1`] = `
             class="text-right col"
           >
             <span
-              class="c3"
+              class="c4"
             >
               <strong>
                 Updated: 
@@ -170,7 +174,7 @@ exports[`ProjectHeader component > renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="c4"
+          class="c5"
         >
           <div
             class="no-gutters justify-content-end align-items-end row"
@@ -182,12 +186,12 @@ exports[`ProjectHeader component > renders as expected 1`] = `
               class="align-self-end d-flex col-auto"
             >
               <span
-                class="c3"
+                class="c4"
               >
                 <b />
               </span>
               <div
-                class="c5 c6"
+                class="c6 c7"
               >
                 <svg
                   fill="currentColor"

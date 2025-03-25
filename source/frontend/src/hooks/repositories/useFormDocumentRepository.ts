@@ -42,7 +42,7 @@ export const useFormDocumentRepository = () => {
       [],
     ),
     requestName: 'addFormDocumentFile',
-    onSuccess: useAxiosSuccessHandler('Form Document added to file'),
+    onSuccess: useAxiosSuccessHandler(),
     onError: useAxiosErrorHandler(),
   });
 

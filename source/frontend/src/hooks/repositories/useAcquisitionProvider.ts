@@ -57,7 +57,7 @@ export const useAcquisitionProvider = () => {
       [postAcquisitionFile],
     ),
     requestName: 'AddAcquisitionFile',
-    onSuccess: useAxiosSuccessHandler('Acquisition File saved'),
+    onSuccess: useAxiosSuccessHandler(),
     throwError: true,
   });
 
@@ -119,7 +119,7 @@ export const useAcquisitionProvider = () => {
       [putAcquisitionFile],
     ),
     requestName: 'UpdateAcquisitionFile',
-    onSuccess: useAxiosSuccessHandler('Acquisition File updated'),
+    onSuccess: useAxiosSuccessHandler(),
     throwError: true,
   });
 
@@ -135,7 +135,7 @@ export const useAcquisitionProvider = () => {
       [putAcquisitionFileProperties],
     ),
     requestName: 'UpdateAcquisitionFileProperties',
-    onSuccess: useAxiosSuccessHandler('Acquisition File Properties updated'),
+    onSuccess: useAxiosSuccessHandler(),
     throwError: true,
   });
 
@@ -232,7 +232,7 @@ export const useAcquisitionProvider = () => {
       [postFileForm8],
     ),
     requestName: 'postFileForm8',
-    onSuccess: useAxiosSuccessHandler('Form 8 saved'),
+    onSuccess: useAxiosSuccessHandler(),
     onError: useAxiosErrorHandler('Failed to save Form 8'),
   });
 

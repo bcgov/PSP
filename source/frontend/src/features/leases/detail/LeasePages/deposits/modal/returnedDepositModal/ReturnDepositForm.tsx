@@ -4,9 +4,9 @@ import { Col, Row } from 'react-bootstrap';
 import { FaExternalLinkAlt } from 'react-icons/fa';
 import styled from 'styled-components';
 
-import { FastCurrencyInput } from '@/components/common/form';
+import { FastCurrencyInput, FastDatePicker } from '@/components/common/form';
 import { ContactInput } from '@/components/common/form/ContactInput';
-import { InlineFastDatePicker } from '@/components/common/form/styles';
+import { SectionField } from '@/components/common/Section/SectionField';
 import { ContactManagerModal } from '@/components/contact/ContactManagerModal';
 import { IContactSearchResult } from '@/interfaces';
 import { formatMoney } from '@/utils';
@@ -50,56 +50,41 @@ export const ReturnDepositForm: React.FunctionComponent<
     >
       {formikProps => (
         <>
-          <SubHeaderSection className="py-3 mb-4 pl-3">
-            <Row className="pb-3">
-              <Col md="4">
-                <strong>Deposit type:</strong>
-              </Col>
-              <Col>{typeDescription}</Col>
-            </Row>
-            <Row>
-              <Col md="4">
-                <strong>Deposit amount:</strong>
-              </Col>
-              <Col>{formatMoney(initialValues.parentDepositAmount)}</Col>
-            </Row>
+          <SubHeaderSection className="pt-3 mb-4 pl-3">
+            <SectionField label="Deposit type">{typeDescription}</SectionField>
+            <SectionField label="Deposit amount">
+              {formatMoney(initialValues.parentDepositAmount)}
+            </SectionField>
           </SubHeaderSection>
-          <StyledFormBody className="mx-3">
+          <form className="mx-3">
+            <SectionField label="Termination or surrender date" labelWidth="12" required>
+              <FastDatePicker formikProps={formikProps} field="terminationDate" required />
+            </SectionField>
             <Row>
               <Col>
-                <InlineFastDatePicker
-                  formikProps={formikProps}
-                  label="Termination or surrender date:"
-                  field="terminationDate"
-                  required
-                />
-              </Col>
-            </Row>
-            <Row>
-              <Col className="align-items-end d-flex">
-                <FastCurrencyInput
-                  formikProps={formikProps}
-                  label="Claims against deposit ($):"
-                  field="claimsAgainst"
-                />
+                <SectionField label="Claims against deposit ($)" labelWidth="12" contentWidth="10">
+                  <FastCurrencyInput
+                    formikProps={formikProps}
+                    field="claimsAgainst"
+                    className="mt-6"
+                  />
+                </SectionField>
               </Col>
               <Col>
-                <FastCurrencyInput
-                  formikProps={formikProps}
-                  label="Returned amount ($) without interest:"
-                  field="returnAmount"
-                  required
-                />
+                <SectionField label="Returned amount ($) without interest" labelWidth="12" required>
+                  <FastCurrencyInput formikProps={formikProps} field="returnAmount" required />
+                </SectionField>
               </Col>
             </Row>
             <Row>
               <Col>
-                <FastCurrencyInput
-                  formikProps={formikProps}
-                  label="Interest paid ($):"
-                  field="interestPaid"
+                <SectionField
+                  label="Interest paid ($)"
+                  labelWidth="12"
                   tooltip="This is the interest paid on the deposit, if any, for the entire period the deposit is held.​​​​​​​"
-                />
+                >
+                  <FastCurrencyInput formikProps={formikProps} field="interestPaid" />
+                </SectionField>
               </Col>
               <Col>
                 <StyledReturnInfoContainer>
@@ -114,29 +99,19 @@ export const ReturnDepositForm: React.FunctionComponent<
                 </StyledReturnInfoContainer>
               </Col>
             </Row>
-            <Row>
-              <Col>
-                <InlineFastDatePicker
-                  formikProps={formikProps}
-                  label="Returned date:"
-                  field="returnDate"
-                  required
-                />
-              </Col>
-            </Row>
-            <Row>
-              <Col>
-                <ContactInput
-                  label="Payee name:"
-                  field="contactHolder"
-                  setShowContactManager={setShowContactManager}
-                  onClear={() => {
-                    formikProps.setFieldValue('contactHolder', undefined);
-                    setSelectedContacts([]);
-                  }}
-                />
-              </Col>
-            </Row>
+            <SectionField label="Returned date" labelWidth="12" required>
+              <FastDatePicker formikProps={formikProps} field="returnDate" required />
+            </SectionField>
+            <SectionField label="Payee name" labelWidth="12" required>
+              <ContactInput
+                field="contactHolder"
+                setShowContactManager={setShowContactManager}
+                onClear={() => {
+                  formikProps.setFieldValue('contactHolder', undefined);
+                  setSelectedContacts([]);
+                }}
+              />
+            </SectionField>
             <ContactManagerModal
               display={showContactManager}
               setDisplay={setShowContactManager}
@@ -148,7 +123,7 @@ export const ReturnDepositForm: React.FunctionComponent<
               }}
               isSingleSelect
             ></ContactManagerModal>
-          </StyledFormBody>
+          </form>
         </>
       )}
     </Formik>
@@ -156,15 +131,6 @@ export const ReturnDepositForm: React.FunctionComponent<
 };
 
 export default ReturnDepositForm;
-
-const StyledFormBody = styled.form`
-  .form-group {
-    flex-direction: column;
-    .form-label {
-      font-weight: bold;
-    }
-  }
-`;
 
 export const SubHeaderSection = styled.div`
   background-color: ${props => props.theme.css.highlightBackgroundColor};

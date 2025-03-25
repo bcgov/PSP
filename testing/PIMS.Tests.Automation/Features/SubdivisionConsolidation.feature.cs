@@ -130,14 +130,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="02. Subdivision Error Messages - Children in Inventory")]
+        [Xunit.SkippableFactAttribute(DisplayName="02._Subdivision_Error_Messages-Children_in_Inventory")]
         [Xunit.TraitAttribute("FeatureTitle", "SubdivisionConsolidation")]
-        [Xunit.TraitAttribute("Description", "02. Subdivision Error Messages - Children in Inventory")]
-        public async System.Threading.Tasks.Task _02_SubdivisionErrorMessages_ChildrenInInventory()
+        [Xunit.TraitAttribute("Description", "02._Subdivision_Error_Messages-Children_in_Inventory")]
+        public async System.Threading.Tasks.Task _02__Subdivision_Error_Messages_Children_In_Inventory()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("02. Subdivision Error Messages - Children in Inventory", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("02._Subdivision_Error_Messages-Children_in_Inventory", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 15
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -158,14 +158,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="03. Subdivision Error Messages - Repeated Child")]
+        [Xunit.SkippableFactAttribute(DisplayName="03._Subdivision_Error_Messages-Repeated_Child")]
         [Xunit.TraitAttribute("FeatureTitle", "SubdivisionConsolidation")]
-        [Xunit.TraitAttribute("Description", "03. Subdivision Error Messages - Repeated Child")]
-        public async System.Threading.Tasks.Task _03_SubdivisionErrorMessages_RepeatedChild()
+        [Xunit.TraitAttribute("Description", "03._Subdivision_Error_Messages-Repeated_Child")]
+        public async System.Threading.Tasks.Task _03__Subdivision_Error_Messages_Repeated_Child()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("03. Subdivision Error Messages - Repeated Child", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("03._Subdivision_Error_Messages-Repeated_Child", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 19
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -186,14 +186,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="04. Subdivision Error Messages - Missing Child")]
+        [Xunit.SkippableFactAttribute(DisplayName="04._Subdivision_Error_Messages-Missing_Child")]
         [Xunit.TraitAttribute("FeatureTitle", "SubdivisionConsolidation")]
-        [Xunit.TraitAttribute("Description", "04. Subdivision Error Messages - Missing Child")]
-        public async System.Threading.Tasks.Task _04_SubdivisionErrorMessages_MissingChild()
+        [Xunit.TraitAttribute("Description", "04._Subdivision_Error_Messages-Missing_Child")]
+        public async System.Threading.Tasks.Task _04__Subdivision_Error_Messages_Missing_Child()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("04. Subdivision Error Messages - Missing Child", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("04._Subdivision_Error_Messages-Missing_Child", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 23
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -214,17 +214,17 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableTheoryAttribute(DisplayName="05. Create Consolidations")]
+        [Xunit.SkippableTheoryAttribute(DisplayName="05._Create_Consolidations")]
         [Xunit.TraitAttribute("FeatureTitle", "SubdivisionConsolidation")]
-        [Xunit.TraitAttribute("Description", "05. Create Consolidations")]
+        [Xunit.TraitAttribute("Description", "05._Create_Consolidations")]
         [Xunit.InlineDataAttribute("10", new string[0])]
         [Xunit.InlineDataAttribute("13", new string[0])]
-        public async System.Threading.Tasks.Task _05_CreateConsolidations(string rowNumber, string[] exampleTags)
+        public async System.Threading.Tasks.Task _05__Create_Consolidations(string rowNumber, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("RowNumber", rowNumber);
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("05. Create Consolidations", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("05._Create_Consolidations", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 28
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -245,14 +245,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="06. Consolidation Error Message - Child in Inventory")]
+        [Xunit.SkippableFactAttribute(DisplayName="06._Consolidation_Error_Message-Child_in_Inventory")]
         [Xunit.TraitAttribute("FeatureTitle", "SubdivisionConsolidation")]
-        [Xunit.TraitAttribute("Description", "06. Consolidation Error Message - Child in Inventory")]
-        public async System.Threading.Tasks.Task _06_ConsolidationErrorMessage_ChildInInventory()
+        [Xunit.TraitAttribute("Description", "06._Consolidation_Error_Message-Child_in_Inventory")]
+        public async System.Threading.Tasks.Task _06__Consolidation_Error_Message_Child_In_Inventory()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("06. Consolidation Error Message - Child in Inventory", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("06._Consolidation_Error_Message-Child_in_Inventory", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 37
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -273,14 +273,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="07. Consolidation Error Message - Repeated Parent")]
+        [Xunit.SkippableFactAttribute(DisplayName="07._Consolidation_Error_Message-Repeated_Parent")]
         [Xunit.TraitAttribute("FeatureTitle", "SubdivisionConsolidation")]
-        [Xunit.TraitAttribute("Description", "07. Consolidation Error Message - Repeated Parent")]
-        public async System.Threading.Tasks.Task _07_ConsolidationErrorMessage_RepeatedParent()
+        [Xunit.TraitAttribute("Description", "07._Consolidation_Error_Message-Repeated_Parent")]
+        public async System.Threading.Tasks.Task _07__Consolidation_Error_Message_Repeated_Parent()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("07. Consolidation Error Message - Repeated Parent", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("07._Consolidation_Error_Message-Repeated_Parent", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 41
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -301,14 +301,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="08. Consolidation Error Message - Missing Parent")]
+        [Xunit.SkippableFactAttribute(DisplayName="08._Consolidation_Error_Message-Missing_Parent")]
         [Xunit.TraitAttribute("FeatureTitle", "SubdivisionConsolidation")]
-        [Xunit.TraitAttribute("Description", "08. Consolidation Error Message - Missing Parent")]
-        public async System.Threading.Tasks.Task _08_ConsolidationErrorMessage_MissingParent()
+        [Xunit.TraitAttribute("Description", "08._Consolidation_Error_Message-Missing_Parent")]
+        public async System.Threading.Tasks.Task _08__Consolidation_Error_Message_Missing_Parent()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("08. Consolidation Error Message - Missing Parent", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("08._Consolidation_Error_Message-Missing_Parent", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 45
 this.ScenarioInitialize(scenarioInfo);
 #line hidden

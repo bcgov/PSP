@@ -1,0 +1,28 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`NumberInput component > renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  <div
+    class="input form-group"
+  >
+    <label
+      class="form-label"
+      for="number-input-test"
+    >
+      Test Label 
+    </label>
+    <input
+      class="form-control"
+      id="number-input-test"
+      name="test"
+      title="0"
+      type="number"
+      value="0"
+    />
+  </div>
+</DocumentFragment>
+`;
