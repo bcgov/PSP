@@ -12,11 +12,9 @@ import {
   SpanProcessor,
   WebTracerProvider,
 } from '@opentelemetry/sdk-trace-web';
-import {
-  ATTR_DEPLOYMENT_ENVIRONMENT_NAME,
-  ATTR_SERVICE_NAME,
-  ATTR_SERVICE_VERSION,
-} from '@opentelemetry/semantic-conventions/incubating';
+import { ATTR_SERVICE_NAME, ATTR_SERVICE_VERSION } from '@opentelemetry/semantic-conventions';
+import { ATTR_DEPLOYMENT_ENVIRONMENT_NAME } from '@opentelemetry/semantic-conventions/incubating';
+import { v4 as uuidv4 } from 'uuid';
 
 import { TelemetryConfig } from './config';
 
@@ -41,6 +39,7 @@ const makeResource = (config: TelemetryConfig, extraAttributes?: ResourceAttribu
     [ATTR_SERVICE_NAME]: config?.name,
     [ATTR_SERVICE_VERSION]: config?.appVersion,
     [ATTR_DEPLOYMENT_ENVIRONMENT_NAME]: config?.environment,
+    'session.instance.id': uuidv4(),
     'browser.width': window.screen.width,
     'browser.height': window.screen.height,
     ...extraAttributes,
