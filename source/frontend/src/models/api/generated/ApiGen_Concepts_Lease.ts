@@ -7,6 +7,7 @@ import { UtcIsoDate } from '@/models/api/UtcIsoDateTime';
 import { ApiGen_Base_CodeType } from './ApiGen_Base_CodeType';
 import { ApiGen_Concepts_ConsultationLease } from './ApiGen_Concepts_ConsultationLease';
 import { ApiGen_Concepts_FileWithChecklist } from './ApiGen_Concepts_FileWithChecklist';
+import { ApiGen_Concepts_LeaseFileTeam } from './ApiGen_Concepts_LeaseFileTeam';
 import { ApiGen_Concepts_LeasePeriod } from './ApiGen_Concepts_LeasePeriod';
 import { ApiGen_Concepts_LeasePurpose } from './ApiGen_Concepts_LeasePurpose';
 import { ApiGen_Concepts_LeaseRenewal } from './ApiGen_Concepts_LeaseRenewal';
@@ -41,11 +42,6 @@ export interface ApiGen_Concepts_Lease extends ApiGen_Concepts_FileWithChecklist
   programType: ApiGen_Base_CodeType<string> | null;
   returnNotes: string | null;
   responsibilityEffectiveDate: UtcIsoDate | null;
-  fileProperties: ApiGen_Concepts_PropertyLease[] | null;
-  consultations: ApiGen_Concepts_ConsultationLease[] | null;
-  stakeholders: ApiGen_Concepts_LeaseStakeholder[] | null;
-  periods: ApiGen_Concepts_LeasePeriod[] | null;
-  renewals: ApiGen_Concepts_LeaseRenewal[] | null;
   isResidential: boolean;
   isCommercialBuilding: boolean;
   isOtherImprovement: boolean;
@@ -63,4 +59,10 @@ export interface ApiGen_Concepts_Lease extends ApiGen_Concepts_FileWithChecklist
   isPublicBenefit: boolean | null;
   isFinancialGain: boolean | null;
   feeDeterminationNote: string | null;
+  fileProperties: ApiGen_Concepts_PropertyLease[] | null;
+  consultations: ApiGen_Concepts_ConsultationLease[] | null;
+  stakeholders: ApiGen_Concepts_LeaseStakeholder[] | null;
+  periods: ApiGen_Concepts_LeasePeriod[] | null;
+  renewals: ApiGen_Concepts_LeaseRenewal[] | null;
+  leaseTeam: ApiGen_Concepts_LeaseFileTeam[] | null;
 }

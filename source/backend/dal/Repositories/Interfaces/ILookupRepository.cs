@@ -169,5 +169,7 @@ namespace Pims.Dal.Repositories
         IEnumerable<PimsAcqFileTakeType> GetAllAcquisitionFileTakeStatusTypes();
 
         IEnumerable<PimsAcqFileExpropRiskType> GetAllAcquisitionFileExpropiationRiskStatusTypes();
+
+        IEnumerable<PimsLlTeamProfileType> GetAllLlTeamProfileTypes();
     }
 }

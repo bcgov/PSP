@@ -470,6 +470,10 @@ namespace Pims.Dal.Repositories
             return Context.PimsAcqFileExpropRiskTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToList();
         }
 
+        public IEnumerable<PimsLlTeamProfileType> GetAllLlTeamProfileTypes()
+        {
+            return Context.PimsLlTeamProfileTypes.AsNoTracking().ToArray();
+        }
         #endregion
     }
 }

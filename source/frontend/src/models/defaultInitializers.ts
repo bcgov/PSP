@@ -78,6 +78,7 @@ export const getEmptyLease = (): ApiGen_Concepts_Lease => ({
   isFinancialGain: null,
   feeDeterminationNote: null,
   leasePurposes: [],
+  leaseTeam: [],
 });
 
 /**

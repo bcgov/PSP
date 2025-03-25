@@ -7,6 +7,7 @@ import DetailAdministration from './DetailAdministration';
 import { DetailFeeDetermination } from './DetailFeeDetermination';
 import LeaseDetailView from './LeaseDetailView';
 import { LeaseRenewalsView } from './LeaseRenewalsView';
+import { LeaseTeamView } from './LeaseTeamView';
 import { PropertiesInformation } from './PropertiesInformation';
 
 export interface ILeaseDetailsWrapperViewProps {
@@ -26,6 +27,7 @@ export const LeaseDetailsWrapperView: React.FunctionComponent<ILeaseDetailsWrapp
       <LeaseRenewalsView renewals={lease.renewals} />
       <PropertiesInformation lease={lease} />
       <DetailAdministration lease={lease} />
+      <LeaseTeamView lease={lease} />
       <DetailFeeDetermination lease={lease} />
     </>
   );
