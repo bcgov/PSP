@@ -6,6 +6,7 @@ import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledLink } from '@/components/maps/leaflet/LayerPopup/styles';
 import { ApiGen_Concepts_FileTeam } from '@/models/api/generated/ApiGen_Concepts_FileTeam';
 import { formatApiPersonNames } from '@/utils/personUtils';
+import { exists } from '@/utils/utils';
 
 export interface IFileTeamProps {
   title: string;
@@ -37,7 +38,7 @@ export const FileTeamView: React.FunctionComponent<React.PropsWithChildren<IFile
               <FaExternalLinkAlt className="ml-2" size="1rem" />
             </StyledLink>
           </SectionField>
-          {teamMember?.organizationId && (
+          {exists(teamMember?.organizationId) === true && (
             <SectionField label="Primary contact">
               {teamMember?.primaryContactId ? (
                 <StyledLink
