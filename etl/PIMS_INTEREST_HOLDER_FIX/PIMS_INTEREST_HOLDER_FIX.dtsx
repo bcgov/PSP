@@ -1,0 +1,500 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="3/6/2025 10:38:01 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="ARIMA-DELL"
+  DTS:CreatorName="ARIMA-DELL\smart"
+  DTS:DTSID="{F05FB5F9-0240-45A8-8ED6-00030DB1B5C1}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5270.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="51"
+  DTS:VersionGUID="{3AD6A4CC-84C3-4133-9DB9-A5DF3D1D3982}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[PIMS]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{B6F84DFB-CA8A-4D93-AB37-CB0BC29EC509}"
+      DTS:ObjectName="PIMS">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=sqldevtst.th.gov.bc.ca;Initial Catalog=PIMS_DEV;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-Package-{B6F84DFB-CA8A-4D93-AB37-CB0BC29EC509}sqldevtst.th.gov.bc.ca.PIMS_DEV;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\#1 - DROP TEMP TABLE"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{5597FA08-0AA0-4384-9FCD-BE254D07E7FF}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="#1 - DROP TEMP TABLE"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B6F84DFB-CA8A-4D93-AB37-CB0BC29EC509}"
+          SQLTask:SqlStatementSource="DROP TABLE IF EXISTS etl.PIMS_INTEREST_HOLDER_DUPLICATES;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\#2 - Create Temp Table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{40D23029-433E-496F-B2F6-0C2B768B38F9}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="#2 - Create Temp Table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B6F84DFB-CA8A-4D93-AB37-CB0BC29EC509}"
+          SQLTask:SqlStatementSource="WITH &#xA;&#xA;MORE_THAN_1_ORGANIZATION AS (&#xA;    SELECT ACQUISITION_FILE_ID&#xA;    FROM [dbo].[PIMS_INTEREST_HOLDER]&#xA;&#x9;WHERE  INTEREST_HOLDER_TYPE_CODE IN ('AOSLCTR', 'AOREP') AND  APP_CREATE_USERID in ( 'SQL_INTEREST_HOLDER_FIX','ETL_INTEREST_HOLDER_FIX')&#xA;    GROUP BY ACQUISITION_FILE_ID&#xA;    HAVING COUNT(DISTINCT ORGANIZATION_ID) &gt; 1&#xA;)&#xA;&#xA;,MORE_THAN_1_PERSON AS (&#xA;    SELECT ACQUISITION_FILE_ID&#xA;    FROM [dbo].[PIMS_INTEREST_HOLDER]&#xA;&#x9;WHERE  INTEREST_HOLDER_TYPE_CODE IN ('AOSLCTR', 'AOREP') AND  APP_CREATE_USERID in ( 'SQL_INTEREST_HOLDER_FIX','ETL_INTEREST_HOLDER_FIX')&#xA;    GROUP BY ACQUISITION_FILE_ID&#xA;    HAVING COUNT(DISTINCT PERSON_ID) &gt; 1&#xA;)&#xA;&#xA;,STEP1 AS (&#xA;    SELECT &#xA;        A.ACQUISITION_FILE_ID,    &#xA;        A.INTEREST_HOLDER_TYPE_CODE, &#xA;        A.PERSON_ID, &#xA;        A.ORGANIZATION_ID, &#xA;        O.ORGANIZATION_NAME, &#xA;        P.FIRST_NAME, &#xA;        P.MIDDLE_NAMES, &#xA;        P.SURNAME, &#xA;        A.APP_CREATE_USERID&#xA;    FROM [dbo].[PIMS_INTEREST_HOLDER] A&#xA;    LEFT JOIN [dbo].[PIMS_ORGANIZATION] O ON A.ORGANIZATION_ID = O.ORGANIZATION_ID&#xA;    LEFT JOIN [dbo].[PIMS_PERSON] P ON A.PERSON_ID = P.PERSON_ID&#xA;    WHERE &#xA;        A.INTEREST_HOLDER_TYPE_CODE IN ('AOSLCTR', 'AOREP')&#xA;        AND A.APP_CREATE_USERID in ( 'SQL_INTEREST_HOLDER_FIX', 'ETL_INTEREST_HOLDER_FIX')&#xA;        AND NOT EXISTS (SELECT 1 FROM MORE_THAN_1_ORGANIZATION M1 WHERE A.ACQUISITION_FILE_ID = M1.ACQUISITION_FILE_ID)&#xA;        AND NOT EXISTS (SELECT 1 FROM MORE_THAN_1_PERSON M2 WHERE A.ACQUISITION_FILE_ID = M2.ACQUISITION_FILE_ID)&#xA;    GROUP BY &#xA;        A.ACQUISITION_FILE_ID,    &#xA;        A.INTEREST_HOLDER_TYPE_CODE, &#xA;        A.PERSON_ID, &#xA;        A.ORGANIZATION_ID, &#xA;        O.ORGANIZATION_NAME, &#xA;        P.FIRST_NAME, &#xA;        P.MIDDLE_NAMES, &#xA;        P.SURNAME, &#xA;        A.APP_CREATE_USERID&#xA;)&#xA;&#xA;&#x9;&#x9;--select * from STEP1 order by ACQUISITION_FILE_ID&#xA;&#xA;,STEP2 AS (&#xA;    SELECT DISTINCT &#xA;        I.INTEREST_HOLDER_ID, &#xA;        U.*,  &#xA;        I.IS_DISABLED, &#xA;        I.PRIMARY_CONTACT_ID, &#xA;        I.COMMENT&#xA;    FROM [dbo].[PIMS_INTEREST_HOLDER] I  &#xA;    INNER JOIN STEP1 U ON I.ACQUISITION_FILE_ID = U.ACQUISITION_FILE_ID&#xA;&#x9;WHERE I.INTEREST_HOLDER_TYPE_CODE IN ('AOSLCTR', 'AOREP') AND I.APP_CREATE_USERID IN ( 'SQL_INTEREST_HOLDER_FIX','ETL_INTEREST_HOLDER_FIX')&#xA;&#x9;&#x9;&#xA;)&#xA;,STEP3 AS (&#xA;&#x9; &#xA;&#x9;SELECT ACQUISITION_FILE_ID, COUNT(1) AS C FROM STEP2&#xA;&#x9;GROUP BY ACQUISITION_FILE_ID&#xA;&#x9;HAVING COUNT(1) &gt; 1&#xA;)&#xA;&#xA;select * into etl.PIMS_INTEREST_HOLDER_DUPLICATES FROM STEP2 WHERE ACQUISITION_FILE_ID IN ( Select ACQUISITION_FILE_ID FROM STEP3);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\#3 - INSERT INTO PIMS_INTEREST_HOLDER"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{57935E16-CB60-4AFD-914B-907D94BFDA21}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="#3 - INSERT INTO PIMS_INTEREST_HOLDER"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B6F84DFB-CA8A-4D93-AB37-CB0BC29EC509}"
+          SQLTask:SqlStatementSource="INSERT INTO dbo.PIMS_INTEREST_HOLDER &#xA;&#x9;(&#x9;ACQUISITION_FILE_ID, PERSON_ID, ORGANIZATION_ID,IS_DISABLED, &#xA;&#x9;&#x9;APP_CREATE_TIMESTAMP, APP_CREATE_USERID, APP_LAST_UPDATE_TIMESTAMP, APP_LAST_UPDATE_USERID, &#xA;&#x9;&#x9;PRIMARY_CONTACT_ID, INTEREST_HOLDER_TYPE_CODE, COMMENT &#xA;&#x9;)&#xA;&#xA;&#x9;SELECT &#xA;&#x9;&#x9;ACQUISITION_FILE_ID, PERSON_ID, ORGANIZATION_ID, MAX(CASE WHEN IS_DISABLED = 1 THEN 1 ELSE 0 END) AS IS_DISABLED,&#xA;&#x9;&#x9;GETDATE() AS APP_CREATE_TIMESTAMP, 'ETL_INTEREST_HOLDER_FIX' AS APP_CREATE_USERID, GETDATE() AS APP_LAST_UPDATE_TIMESTAMP, 'ETL_INTEREST_HOLDER_FIX' AS APP_LAST_UPDATE_USERID,&#xA;&#x9;&#x9;MAX(PRIMARY_CONTACT_ID) AS PRIMARY_CONTACT_ID, INTEREST_HOLDER_TYPE_CODE, MAX(COMMENT) AS COMMENT&#xA;&#x9;&#x9;FROM etl.PIMS_INTEREST_HOLDER_DUPLICATES&#xA;&#x9;GROUP BY&#xA;&#x9;&#x9;ACQUISITION_FILE_ID, INTEREST_HOLDER_TYPE_CODE,PERSON_ID, ORGANIZATION_ID &#xA;&#x9;ORDER BY &#xA;&#x9;&#x9;ACQUISITION_FILE_ID" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\#5 - REMOVE DUPLICATES"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{70C52F0B-1CA7-478C-9E25-BA386829DA68}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="#5 - REMOVE DUPLICATES"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B6F84DFB-CA8A-4D93-AB37-CB0BC29EC509}"
+          SQLTask:SqlStatementSource="delete from dbo.PIMS_INTEREST_HOLDER WHERE INTEREST_HOLDER_ID IN (SELECT interest_holder_id FROM   etl.PIMS_INTEREST_HOLDER_DUPLICATES);&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Sequence Container"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{2FE0D2BB-CFB9-4619-9AAB-D0CBFC98F092}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Sequence Container">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container\#4 - UPDATE PIMS_COMP_REQ_ACQ_PAYEE"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{DE1194FE-C6DC-4199-800C-B086E3E3B19F}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="#4 - UPDATE PIMS_COMP_REQ_ACQ_PAYEE"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{B6F84DFB-CA8A-4D93-AB37-CB0BC29EC509}"
+              SQLTask:SqlStatementSource="UPDATE R&#xA;SET &#xA;&#x9;R.INTEREST_HOLDER_ID = M.MAX_INTEREST_HOLDER_ID, &#xA;&#x9;R.CONCURRENCY_CONTROL_NUMBER = R.CONCURRENCY_CONTROL_NUMBER+1,&#xA;&#x9;R.APP_LAST_UPDATE_USERID = 'ETL_INTEREST_HOLDER_FIX',&#xA;&#x9;R.APP_LAST_UPDATE_TIMESTAMP = GETDATE()&#xA;FROM dbo.PIMS_COMP_REQ_ACQ_PAYEE R&#xA;JOIN dbo.PIMS_COMPENSATION_REQUISITION RR ON R.COMPENSATION_REQUISITION_ID = RR.COMPENSATION_REQUISITION_ID&#xA;JOIN (SELECT  PIH.ACQUISITION_FILE_ID, MAX(PIH.INTEREST_HOLDER_ID) AS MAX_INTEREST_HOLDER_ID &#xA;&#x9;&#x9;&#x9;FROM dbo.PIMS_INTEREST_HOLDER PIH &#xA;&#x9;&#x9;&#x9;&#x9;JOIN etl.PIMS_INTEREST_HOLDER_DUPLICATES PIHD&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;on PIH.ACQUISITION_FILE_ID = PIHD.ACQUISITION_FILE_ID&#xA;&#x9;  GROUP BY PIH.ACQUISITION_FILE_ID) M &#xA;    ON RR.ACQUISITION_FILE_ID = M.ACQUISITION_FILE_ID&#xA;WHERE R.INTEREST_HOLDER_ID IS NOT NULL&#xA;AND R.INTEREST_HOLDER_ID IN (Select INTEREST_HOLDER_ID FROM etl.PIMS_INTEREST_HOLDER_DUPLICATES);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container\#4 - UPDATE PIMS_EXPROPRIATION_NOTICE"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{e898851b-81cd-4a17-8f69-bf886fae5c49}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="#4 - UPDATE PIMS_EXPROPRIATION_NOTICE"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{B6F84DFB-CA8A-4D93-AB37-CB0BC29EC509}"
+              SQLTask:SqlStatementSource="UPDATE R&#xA;SET &#xA;&#x9;R.INTEREST_HOLDER_ID = M.MAX_INTEREST_HOLDER_ID, &#xA;&#x9;R.CONCURRENCY_CONTROL_NUMBER = R.CONCURRENCY_CONTROL_NUMBER+1,&#xA;&#x9;R.APP_LAST_UPDATE_USERID = 'ETL_INTEREST_HOLDER_FIX',&#xA;&#x9;R.APP_LAST_UPDATE_TIMESTAMP = GETDATE()&#xA;FROM dbo.PIMS_EXPROPRIATION_NOTICE R&#xA;JOIN (SELECT  PIH.ACQUISITION_FILE_ID, MAX(PIH.INTEREST_HOLDER_ID) AS MAX_INTEREST_HOLDER_ID &#xA;&#x9;&#x9;&#x9;FROM dbo.PIMS_INTEREST_HOLDER PIH &#xA;&#x9;&#x9;&#x9;&#x9;JOIN etl.PIMS_INTEREST_HOLDER_DUPLICATES PIHD&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;on PIH.ACQUISITION_FILE_ID = PIHD.ACQUISITION_FILE_ID&#xA;&#x9;  GROUP BY PIH.ACQUISITION_FILE_ID) M &#xA;    ON R.ACQUISITION_FILE_ID = M.ACQUISITION_FILE_ID&#xA;WHERE R.INTEREST_HOLDER_ID IS NOT NULL&#xA;AND R.INTEREST_HOLDER_ID IN (Select INTEREST_HOLDER_ID FROM etl.PIMS_INTEREST_HOLDER_DUPLICATES);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container\#4 - UPDATE PIMS_EXPROPRIATION_PAYMENT"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{38E4C178-A75C-471D-8655-302C80635416}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="#4 - UPDATE PIMS_EXPROPRIATION_PAYMENT"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{B6F84DFB-CA8A-4D93-AB37-CB0BC29EC509}"
+              SQLTask:SqlStatementSource="UPDATE R&#xA;SET &#xA;&#x9;R.INTEREST_HOLDER_ID = M.MAX_INTEREST_HOLDER_ID, &#xA;&#x9;R.CONCURRENCY_CONTROL_NUMBER = R.CONCURRENCY_CONTROL_NUMBER+1,&#xA;&#x9;R.APP_LAST_UPDATE_USERID = 'ETL_INTEREST_HOLDER_FIX',&#xA;&#x9;R.APP_LAST_UPDATE_TIMESTAMP = GETDATE()&#xA;FROM dbo.PIMS_EXPROPRIATION_PAYMENT R&#xA;JOIN (SELECT  PIH.ACQUISITION_FILE_ID, MAX(PIH.INTEREST_HOLDER_ID) AS MAX_INTEREST_HOLDER_ID &#xA;&#x9;&#x9;&#x9;FROM dbo.PIMS_INTEREST_HOLDER PIH &#xA;&#x9;&#x9;&#x9;&#x9;JOIN etl.PIMS_INTEREST_HOLDER_DUPLICATES PIHD&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;on PIH.ACQUISITION_FILE_ID = PIHD.ACQUISITION_FILE_ID&#xA;&#x9;  GROUP BY PIH.ACQUISITION_FILE_ID) M &#xA;    ON R.ACQUISITION_FILE_ID = M.ACQUISITION_FILE_ID&#xA;WHERE R.INTEREST_HOLDER_ID IS NOT NULL&#xA;AND R.INTEREST_HOLDER_ID IN (Select INTEREST_HOLDER_ID FROM etl.PIMS_INTEREST_HOLDER_DUPLICATES);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container\#4 - UPDATE PIMS_INTHLDR_PROP_INTEREST"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{842EEAB7-FE9D-40BC-98C4-CD9128501850}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="#4 - UPDATE PIMS_INTHLDR_PROP_INTEREST"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{B6F84DFB-CA8A-4D93-AB37-CB0BC29EC509}"
+              SQLTask:SqlStatementSource="UPDATE R&#xA;SET &#xA;&#x9;R.INTEREST_HOLDER_ID = M.MAX_INTEREST_HOLDER_ID, &#xA;&#x9;R.CONCURRENCY_CONTROL_NUMBER = R.CONCURRENCY_CONTROL_NUMBER+1,&#xA;&#x9;R.APP_LAST_UPDATE_USERID = 'ETL_INTEREST_HOLDER_FIX',&#xA;&#x9;R.APP_LAST_UPDATE_TIMESTAMP = GETDATE()&#xA;FROM dbo.PIMS_INTHLDR_PROP_INTEREST R&#xA;JOIN dbo.PIMS_PROPERTY_ACQUISITION_FILE RR ON R.PROPERTY_ACQUISITION_FILE_ID = RR.PROPERTY_ACQUISITION_FILE_ID&#xA;JOIN (SELECT  PIH.ACQUISITION_FILE_ID, MAX(PIH.INTEREST_HOLDER_ID) AS MAX_INTEREST_HOLDER_ID &#xA;&#x9;&#x9;&#x9;FROM dbo.PIMS_INTEREST_HOLDER PIH &#xA;&#x9;&#x9;&#x9;&#x9;JOIN etl.PIMS_INTEREST_HOLDER_DUPLICATES PIHD&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;on PIH.ACQUISITION_FILE_ID = PIHD.ACQUISITION_FILE_ID&#xA;&#x9;  GROUP BY PIH.ACQUISITION_FILE_ID) M &#xA;    ON RR.ACQUISITION_FILE_ID = M.ACQUISITION_FILE_ID&#xA;WHERE R.INTEREST_HOLDER_ID IS NOT NULL&#xA;AND R.INTEREST_HOLDER_ID IN (Select INTEREST_HOLDER_ID FROM etl.PIMS_INTEREST_HOLDER_DUPLICATES);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence Container.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{A977AA76-F339-4897-B483-2778E9BFAF94}"
+          DTS:From="Package\Sequence Container\#4 - UPDATE PIMS_EXPROPRIATION_PAYMENT"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Sequence Container\#4 - UPDATE PIMS_INTHLDR_PROP_INTEREST" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence Container.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{E215E376-8E76-488E-A64E-5F50E3270C33}"
+          DTS:From="Package\Sequence Container\#4 - UPDATE PIMS_INTHLDR_PROP_INTEREST"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\Sequence Container\#4 - UPDATE PIMS_COMP_REQ_ACQ_PAYEE" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence Container.PrecedenceConstraints[Constraint 2]"
+          DTS:CreationName=""
+          DTS:DTSID="{BC8EB1A1-84BB-4DCF-9563-375EB6DB7173}"
+          DTS:From="Package\Sequence Container\#4 - UPDATE PIMS_COMP_REQ_ACQ_PAYEE"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 2"
+          DTS:To="Package\Sequence Container\#4 - UPDATE PIMS_EXPROPRIATION_NOTICE" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{D0543C3C-A056-4079-9E81-EF8292477B65}"
+      DTS:From="Package\#1 - DROP TEMP TABLE"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\#2 - Create Temp Table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{8E1FE276-BA09-406A-9B0F-670036E09DDB}"
+      DTS:From="Package\#2 - Create Temp Table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\#3 - INSERT INTO PIMS_INTEREST_HOLDER" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{6CEF502C-9B92-4920-96B0-8D3E25A39616}"
+      DTS:From="Package\#3 - INSERT INTO PIMS_INTEREST_HOLDER"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Sequence Container" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{218C7846-8366-4BC0-AF8B-D8DAB8368253}"
+      DTS:From="Package\Sequence Container"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\#5 - REMOVE DUPLICATES" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="200.666666666667,42.6666666666667"
+          Id="Package\#1 - DROP TEMP TABLE"
+          TopLeft="147.569442245488,221.152050946264" />
+        <NodeLayout
+          Size="192,42.6666666666667"
+          Id="Package\#2 - Create Temp Table"
+          TopLeft="413.749993834644,219.631583081388" />
+        <NodeLayout
+          Size="306.666666666667,42.6666666666667"
+          Id="Package\#3 - INSERT INTO PIMS_INTEREST_HOLDER"
+          TopLeft="679.374989876524,222.368425238165" />
+        <NodeLayout
+          Size="217.333333333334,42.6666666666667"
+          Id="Package\#5 - REMOVE DUPLICATES"
+          TopLeft="1626.87497575767,276.421057834519" />
+        <NodeLayout
+          Size="310.666666666667,42.6666666666667"
+          Id="Package\Sequence Container\#4 - UPDATE PIMS_COMP_REQ_ACQ_PAYEE"
+          TopLeft="67.2083102085946,251.421060036754" />
+        <NodeLayout
+          Size="313.333333333334,42.6666666666667"
+          Id="Package\Sequence Container\#4 - UPDATE PIMS_EXPROPRIATION_NOTICE"
+          TopLeft="69.083310180655,359.675446106841" />
+        <NodeLayout
+          Size="324,42.6666666666667"
+          Id="Package\Sequence Container\#4 - UPDATE PIMS_EXPROPRIATION_PAYMENT"
+          TopLeft="65.9583102272206,29.0526347985888" />
+        <NodeLayout
+          Size="320,42.6666666666667"
+          Id="Package\Sequence Container\#4 - UPDATE PIMS_INTHLDR_PROP_INTEREST"
+          TopLeft="62.5208102784432,142.061408855523" />
+        <EdgeLayout
+          Id="Package\Sequence Container.PrecedenceConstraints[Constraint]"
+          TopLeft="225.239560252832,71.7193014652555">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,70.3421073902676"
+              Start="0,0"
+              End="0,62.8421073902676">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,62.8421073902676" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container.PrecedenceConstraints[Constraint 1]"
+          TopLeft="222.531226910186,184.72807552219">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,66.6929845145646"
+              Start="0,0"
+              End="0,59.1929845145646">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,59.1929845145646" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Sequence Container.PrecedenceConstraints[Constraint 2]"
+          TopLeft="224.145810194625,294.087726703421">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,65.5877194034205"
+              Start="0,0"
+              End="0,58.0877194034205">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,58.0877194034205" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="436.666666666667,458"
+          Size="436.666666666667,500.666666666667"
+          Id="Package\Sequence Container"
+          TopLeft="1146.77081624511,48.5789482827991" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="348.236108912155,241.72515034716">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="65.5138849224894,0"
+              Start="0,0"
+              End="58.0138849224894,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="58.0138849224894,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="605.749993834644,242.33333749311">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="73.6249960418793,0"
+              Start="0,0"
+              End="66.1249960418793,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="66.1249960418793,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="986.04165654319,243.701758571498">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="160.729159701923,55.210523044634"
+              Start="0,0"
+              End="153.229159701923,55.210523044634">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="76.3645798509615,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="76.3645798509615,0"
+                    Point2="80.3645798509615,0"
+                    Point3="80.3645798509615,4" />
+                  <mssgle:LineSegment
+                    End="80.3645798509615,51.210523044634" />
+                  <mssgle:CubicBezierSegment
+                    Point1="80.3645798509615,51.210523044634"
+                    Point2="80.3645798509615,55.210523044634"
+                    Point3="84.3645798509615,55.210523044634" />
+                  <mssgle:LineSegment
+                    End="153.229159701923,55.210523044634" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="1583.43748291178,298.333336391993">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="43.4374928458899,0"
+              Start="0,0"
+              End="35.9374928458899,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="35.9374928458899,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="etl.PIMS_INTEREST_HOLDER_DUPLICATES"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="248,40"
+          Id="c28ecae1-714c-4d9d-aff3-c2e69953874f"
+          TopLeft="365.781244549435,279.157899991297" />
+        <AnnotationLayout
+          Text="PIMS_INTEREST_HOLDER"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="161.333333333334,40"
+          Id="d98b70ce-a647-43c5-81d8-0faea2605cdb"
+          TopLeft="731.874989094213,281.894742148074" />
+        <AnnotationLayout
+          Text="PIMS_INTEREST_HOLDER"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="161.333333333334,40"
+          Id="860eb4a3-01d8-4184-9ed6-d92cad085d89"
+          TopLeft="1675.62497503124,330.473690430873" />
+        <AnnotationLayout
+          Text="UPDATE REFERENCING TABLES"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="190.666666666667,40"
+          Id="9dc0e297-d046-4ea5-be1a-59596fe38f2f"
+          TopLeft="1249.99998137354,0.684210539194201" />
+        <AnnotationLayout
+          Text="etl.PIMS_INTEREST_HOLDER_DUPLICATES"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="248,40"
+          Id="d38be752-2a30-4720-aecb-62a01ad86391"
+          TopLeft="102.499998472631,280.789476710673" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
