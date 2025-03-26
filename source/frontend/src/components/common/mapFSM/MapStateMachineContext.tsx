@@ -18,8 +18,11 @@ import { pidParser, pinParser } from '@/utils/propertyUtils';
 
 import { mapMachine } from './machineDefinition/mapMachine';
 import { MachineContext, SideBarType } from './machineDefinition/types';
-import { FeatureSelected, MapFeatureData, RequestedCenterTo, RequestedFlyTo } from './models';
-import useLocationFeatureLoader, { LocationFeatureDataset } from './useLocationFeatureLoader';
+import { MapFeatureData, MarkerSelected, RequestedCenterTo, RequestedFlyTo } from './models';
+import useLocationFeatureLoader, {
+  LocationFeatureDataset,
+  SelectedFeatureDataset,
+} from './useLocationFeatureLoader';
 import { useMapSearch } from './useMapSearch';
 
 export interface IMapStateMachineContext {
@@ -29,10 +32,10 @@ export interface IMapStateMachineContext {
   pendingCenterTo: boolean;
   requestedFlyTo: RequestedFlyTo;
   requestedCenterTo: RequestedCenterTo;
-  mapFeatureSelected: FeatureSelected | null;
+  mapMarkerSelected: MarkerSelected | null;
   mapLocationSelected: LatLngLiteral | null;
   mapLocationFeatureDataset: LocationFeatureDataset | null;
-  selectedFeatureDataset: LocationFeatureDataset | null;
+  selectedFeatureDataset: SelectedFeatureDataset | null;
   repositioningFeatureDataset: LocationFeatureDataset | null;
   repositioningPropertyIndex: number | null;
   showPopup: boolean;
@@ -69,11 +72,11 @@ export interface IMapStateMachineContext {
   closePopup: () => void;
 
   mapClick: (latlng: LatLngLiteral) => void;
-  mapMarkerClick: (featureSelected: FeatureSelected) => void;
+  mapMarkerClick: (featureSelected: MarkerSelected) => void;
 
   setMapSearchCriteria: (searchCriteria: IPropertyFilter) => void;
   refreshMapProperties: () => void;
-  prepareForCreation: () => void;
+  prepareForCreation: (selectedFeature: SelectedFeatureDataset) => void;
   startSelection: (selectingComponentId?: string) => void;
   finishSelection: () => void;
   startReposition: (
@@ -140,7 +143,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         context: MachineContext,
         event:
           | (AnyEventObject & { type: 'MAP_CLICK'; latlng: LatLngLiteral })
-          | (AnyEventObject & { type: 'MAP_MARKER_CLICK'; featureSelected: FeatureSelected }),
+          | (AnyEventObject & { type: 'MAP_MARKER_CLICK'; featureSelected: MarkerSelected }),
       ) => {
         let result: LocationFeatureDataset | undefined = undefined;
 
@@ -225,7 +228,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
   );
 
   const mapMarkerClick = useCallback(
-    (featureSelected: FeatureSelected) => {
+    (featureSelected: MarkerSelected) => {
       serviceSend({
         type: 'MAP_MARKER_CLICK',
         featureSelected,
@@ -304,9 +307,12 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     [serviceSend],
   );
 
-  const prepareForCreation = useCallback(() => {
-    serviceSend({ type: 'PREPARE_FOR_CREATION' });
-  }, [serviceSend]);
+  const prepareForCreation = useCallback(
+    (selectedFeature: SelectedFeatureDataset) => {
+      serviceSend({ type: 'PREPARE_FOR_CREATION', selectedFeature });
+    },
+    [serviceSend],
+  );
 
   const startSelection = useCallback(
     (selectingComponentId?: string) => {
@@ -449,7 +455,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         pendingCenterTo: state.matches({ mapVisible: { mapRequest: 'pendingCenterTo' } }),
         requestedFlyTo: state.context.requestedFlyTo,
         requestedCenterTo: state.context.requestedCenterTo,
-        mapFeatureSelected: state.context.mapFeatureSelected,
+        mapMarkerSelected: state.context.mapFeatureSelected,
         mapLocationSelected: state.context.mapLocationSelected,
         mapLocationFeatureDataset: state.context.mapLocationFeatureDataset,
         selectedFeatureDataset: state.context.selectedFeatureDataset,
