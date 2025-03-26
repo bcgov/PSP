@@ -43,6 +43,12 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(generalModalOkBttn).Click();
         }
 
+        public void ForcedModalClickOKBttn()
+        {
+            Wait();
+            FocusAndClick(generalModalOkBttn);
+        }
+
         public void ModalClickCancelBttn()
         {
             Wait();
