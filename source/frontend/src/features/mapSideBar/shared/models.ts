@@ -496,11 +496,12 @@ export class FileTeamFormModel {
 
   static fromApi(model: ApiGen_Concepts_FileTeam | null): FileTeamFormModel {
     // The method 'exists' below allows the compiler to validate the child property. This works correctly in typescript 5.3+
-    const contact: IContactSearchResult | undefined = exists(model?.person)
-      ? fromApiPerson(model.person)
-      : exists(model?.organization)
-      ? fromApiOrganization(model.organization)
-      : undefined;
+    let contact: IContactSearchResult | undefined = undefined;
+    if (exists(model?.person)) {
+      contact = fromApiPerson(model.person);
+    } else if (exists(model?.organization)) {
+      contact = fromApiOrganization(model.organization);
+    }
 
     const newForm = new FileTeamFormModel(
       fromTypeCode(model?.teamProfileType) || '',

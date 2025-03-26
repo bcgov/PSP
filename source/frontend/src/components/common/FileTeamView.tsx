@@ -4,17 +4,12 @@ import { FaExternalLinkAlt } from 'react-icons/fa';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledLink } from '@/components/maps/leaflet/LayerPopup/styles';
-import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
-import { ApiGen_Concepts_DispositionFileTeam } from '@/models/api/generated/ApiGen_Concepts_DispositionFileTeam';
-import { ApiGen_Concepts_LeaseFileTeam } from '@/models/api/generated/ApiGen_Concepts_LeaseFileTeam';
+import { ApiGen_Concepts_FileTeam } from '@/models/api/generated/ApiGen_Concepts_FileTeam';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 export interface IFileTeamProps {
   title: string;
-  team:
-    | ApiGen_Concepts_LeaseFileTeam[]
-    | ApiGen_Concepts_AcquisitionFileTeam[]
-    | ApiGen_Concepts_DispositionFileTeam[];
+  team: ApiGen_Concepts_FileTeam[];
 }
 export const FileTeamView: React.FunctionComponent<React.PropsWithChildren<IFileTeamProps>> = ({
   title,
@@ -23,7 +18,7 @@ export const FileTeamView: React.FunctionComponent<React.PropsWithChildren<IFile
   return (
     <Section header={title}>
       {team?.map((teamMember, index) => (
-        <React.Fragment key={`file-team-${index}`}>
+        <React.Fragment key={`file-team-${teamMember?.id ?? index}`}>
           <SectionField label={teamMember?.teamProfileType.description || ''}>
             <StyledLink
               target="_blank"
