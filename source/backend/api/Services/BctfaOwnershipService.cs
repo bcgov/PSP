@@ -49,18 +49,14 @@ namespace Pims.Api.Services
                 throw new InvalidDataException("File does not contain any data.");
             }
 
-            var firstLine = lines[0];
-            var values = firstLine.Split(',');
+            List<int> result = new List<int>();
+            lines.ForEach(l =>
+            {
+                var values = l.Split(',');
 
-            try
-            {
-                var intArray = values.Select(int.Parse).ToArray();
-                return intArray;
-            }
-            catch (FormatException)
-            {
-                throw new InvalidDataException("File contains non-integer values.");
-            }
+                result.AddRange(values.Where(value => int.TryParse(value, out var pid)).Select(int.Parse));
+            });
+            return result.Distinct().ToArray();
         }
 
         public void UpdateBctfaOwnership(IEnumerable<int> allPids)
