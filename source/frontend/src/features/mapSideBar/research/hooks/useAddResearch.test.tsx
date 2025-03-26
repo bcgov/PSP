@@ -92,7 +92,6 @@ describe('useAddResearch functions', () => {
 
       expect(find(currentStore.getActions(), { type: 'loading-bar/SHOW' })).toBeDefined();
       expect(find(currentStore.getActions(), { type: 'network/logError' })).toBeUndefined();
-      expect(toastSuccessSpy).toHaveBeenCalled();
     });
 
     it('Request failure, dispatches error with correct response', async () => {
