@@ -54,6 +54,10 @@ export const registerMeterProvider = (
   config: TelemetryConfig,
   extraAttributes?: ResourceAttributes,
 ) => {
+  if (config.debug) {
+    console.info('[INFO] registering metrics provider');
+  }
+
   // This is common metadata sent with every metric measurement
   const resource = makeResource(config, extraAttributes);
   const metricExporter = new OTLPMetricExporter({
@@ -78,6 +82,10 @@ export const registerTracerProvider = (
   config: TelemetryConfig,
   extraAttributes?: ResourceAttributes,
 ) => {
+  if (config.debug) {
+    console.info('[INFO] registering trace provider');
+  }
+
   // This is common metadata sent with every trace
   const resource = makeResource(config, extraAttributes);
   const exporter = new OTLPTraceExporter({
