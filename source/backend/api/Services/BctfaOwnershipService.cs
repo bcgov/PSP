@@ -20,7 +20,7 @@ namespace Pims.Api.Services
 
         public BctfaOwnershipService(
             ClaimsPrincipal user,
-            ILogger<AcquisitionFileService> logger,
+            ILogger<BctfaOwnershipService> logger,
             IPmbcBctfaPidRepository bctfaOwnershipRepository)
         {
             _user = user;
@@ -54,7 +54,7 @@ namespace Pims.Api.Services
             {
                 var values = l.Split(',');
 
-                result.AddRange(values.Where(value => int.TryParse(value, out var pid)).Select(int.Parse));
+                result.AddRange(values.Where(value => int.TryParse(value, out _)).Select(int.Parse));
             });
             return result.Distinct().ToArray();
         }
