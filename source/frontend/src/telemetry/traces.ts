@@ -1,13 +1,29 @@
-import { SpanKind, SpanStatusCode, trace, Tracer } from '@opentelemetry/api';
+import { Attributes, Span, SpanKind, SpanStatusCode, trace, Tracer } from '@opentelemetry/api';
 
 export const BROWSER_TRACER = 'react-client';
+
+export type AsyncFn = () => Promise<unknown>;
 
 export const getTracer = (): Tracer => {
   return trace.getTracer(BROWSER_TRACER);
 };
 
-export const runWithSpan = async (name: string, fn: () => Promise<unknown>) => {
-  return getTracer().startActiveSpan(name, { kind: SpanKind.CLIENT }, async span => {
+export const startTrace = (spanName: string, additionalAttributes?: Attributes) => {
+  const span = getTracer().startActiveSpan(spanName, { kind: SpanKind.CLIENT }, span => span);
+
+  if (additionalAttributes) {
+    span.setAttributes(additionalAttributes);
+  }
+  return span;
+};
+
+export const runWithSpan = async (spanName: string, fn: AsyncFn) => {
+  const asyncCallback = createCallback(fn);
+  return getTracer().startActiveSpan(spanName, { kind: SpanKind.CLIENT }, asyncCallback);
+};
+
+const createCallback = (fn: AsyncFn): ((span: Span) => ReturnType<AsyncFn>) => {
+  return async span => {
     try {
       const result = await fn();
       span.setStatus({ code: SpanStatusCode.OK });
@@ -24,5 +40,5 @@ export const runWithSpan = async (name: string, fn: () => Promise<unknown>) => {
       // Be sure to end the span!
       span.end();
     }
-  });
+  };
 };
