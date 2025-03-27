@@ -13,6 +13,7 @@ import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Conc
 import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 import { getMockApiLease } from '@/mocks/lease.mock';
+import Claims from '@/constants/claims';
 
 const history = createMemoryHistory();
 
@@ -70,6 +71,8 @@ describe('PropertyAssociationTabView component', () => {
         associatedLeases={renderOptions.associatedLeases}
       />,
       {
+        claims: renderOptions?.claims,
+        useMockAuthentication: true,
         history,
       },
     );
@@ -90,17 +93,56 @@ describe('PropertyAssociationTabView component', () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('does not render a link when disabled', () => {
+  it('does not render a lease link when disabled', () => {
     const { getByText, queryByText } = setup({
       isLoading: false,
       associations: fakeAssociations,
-      associatedLeases: [{ ...getMockApiLease(), fileNumber: '02-13756-01' }],
+      associatedLeases: [{ ...getMockApiLease() }],
       associatedLeaseStakeholders: [],
       associatedLeaseRenewals: [],
       claims: [],
+      useMockAuthentication: true,
     });
-    const test = getByText('02-13756-01');
-    expect(test).toBe('a');
+    expect(getByText('951547254').nodeName).toBe('DIV');
+  });
+
+  it('renders a lease link when not disabled', () => {
+    const { getByText, queryByText } = setup({
+      isLoading: false,
+      associations: fakeAssociations,
+      associatedLeases: [{ ...getMockApiLease() }],
+      associatedLeaseStakeholders: [],
+      associatedLeaseRenewals: [],
+      claims: [Claims.LEASE_VIEW],
+      useMockAuthentication: true,
+    });
+    expect(getByText('951547254').nodeName).toBe('A');
+  });
+
+  it('does not render an acquisition file link when disabled', () => {
+    const { getByText, queryByText } = setup({
+      isLoading: false,
+      associations: fakeAssociations,
+      associatedLeases: [],
+      associatedLeaseStakeholders: [],
+      associatedLeaseRenewals: [],
+      claims: [],
+      useMockAuthentication: true,
+    });
+    expect(getByText('95154').nodeName).toBe('DIV');
+  });
+
+  it('renders an acquisition file link when not disabled', () => {
+    const { getByText, queryByText } = setup({
+      isLoading: false,
+      associations: fakeAssociations,
+      associatedLeases: [],
+      associatedLeaseStakeholders: [],
+      associatedLeaseRenewals: [],
+      claims: [Claims.ACQUISITION_VIEW],
+      useMockAuthentication: true,
+    });
+    expect(getByText('95154').nodeName).toBe('A');
   });
 
   it('renders only the highest priority lease tenants', () => {
