@@ -12,6 +12,7 @@ import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Le
 import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
 import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
+import { getMockApiLease } from '@/mocks/lease.mock';
 
 const history = createMemoryHistory();
 
@@ -87,6 +88,19 @@ describe('PropertyAssociationTabView component', () => {
       associatedLeaseStakeholders: [],
     });
     expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('does not render a link when disabled', () => {
+    const { getByText, queryByText } = setup({
+      isLoading: false,
+      associations: fakeAssociations,
+      associatedLeases: [{ ...getMockApiLease(), fileNumber: '02-13756-01' }],
+      associatedLeaseStakeholders: [],
+      associatedLeaseRenewals: [],
+      claims: [],
+    });
+    const test = getByText('02-13756-01');
+    expect(test).toBe('a');
   });
 
   it('renders only the highest priority lease tenants', () => {

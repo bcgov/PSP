@@ -134,6 +134,12 @@ describe('SideNavbar display and logic', () => {
     });
     await waitFor(async () => {
       expect(queryByText('Contacts')).toBeNull();
+      expect(queryByText('Project')).toBeNull();
+      expect(queryByText('Research')).toBeNull();
+      expect(queryByText('Acquisition')).toBeNull();
+      expect(queryByText('Leases & Licences')).toBeNull();
+      expect(queryByText('Disposition')).toBeNull();
+      expect(queryByText('Subdivision & Consolidation')).toBeNull();
     });
   });
 
