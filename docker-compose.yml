@@ -224,8 +224,6 @@ services:
     restart: on-failure
     ports:
       - 4000:3000
-    depends_on:
-      - prometheus
     networks:
       - psp
 
@@ -257,8 +255,6 @@ services:
       interval: 1m30s
       timeout: 10s
       retries: 3
-    depends_on:
-      - jaeger
     networks:
       - psp
   ####################### Jaeger (browser traces + monitoring dashboards) #######################
@@ -285,8 +281,6 @@ services:
       interval: 1m30s
       timeout: 10s
       retries: 3
-    depends_on:
-      - prometheus
     networks:
       - psp
 
