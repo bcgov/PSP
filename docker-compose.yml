@@ -187,18 +187,19 @@ services:
     restart: on-failure
     container_name: psp-clamav
     healthcheck:
-      test: [ "CMD", "./check.sh" ]
+      test: ["CMD", "./check.sh"]
       interval: 60s
       retries: 3
       start_period: 120s
     networks:
       - psp
 
+  ####################### Prometheus #######################
   prometheus:
     profiles:
       - all
       - monitoring
-    image: ubuntu/prometheus
+    image: quay.io/prometheus/prometheus:v3.2.0
     container_name: psp-prometheus
     ports:
       - 9000:9090
@@ -210,7 +211,10 @@ services:
     command:
       - "--config.file=/etc/prometheus/prometheus.yml"
       - "--web.enable-lifecycle"
+    networks:
+      - psp
 
+  ####################### Grafana #######################
   grafana:
     profiles:
       - all
@@ -222,6 +226,69 @@ services:
       - 4000:3000
     depends_on:
       - prometheus
+    networks:
+      - psp
+
+  ####################### OpenTelemetry Collector #######################
+  otel-collector:
+    profiles:
+      - all
+      - monitoring
+    image: otel/opentelemetry-collector-contrib:0.120.0
+    container_name: otel-collector
+    restart: on-failure
+    deploy:
+      resources:
+        limits:
+          memory: 500M
+    command: ["--config=/etc/otel-config.yaml"]
+    volumes:
+      - ./tools/otel-collector/otel-config.yaml:/etc/otel-config.yaml
+    ports:
+      - 4318:4318 # http receiver
+      - 55679:55679 # zPages UI
+      - 9464:9464 # prometheus metrics endpoint
+      - 13133:13133 # health check
+    environment:
+      - OTEL_COLLECTOR_HOST=0.0.0.0
+      - JAEGER_HOST=jaeger
+    healthcheck:
+      test: curl --fail -s http://localhost:13133/ || exit 1
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+    depends_on:
+      - jaeger
+    networks:
+      - psp
+  ####################### Jaeger (browser traces + monitoring dashboards) #######################
+  jaeger:
+    image: jaegertracing/jaeger:2.4.0
+    container_name: jaeger
+    command: ["--config=/jaeger/jaeger-config.yaml"]
+    volumes:
+      - ./tools/jaeger/jaeger-config.yaml:/jaeger/jaeger-config.yaml
+    ports:
+      - 16686:16686 # Web UI
+      - 4317:4317 # otlp grpc receiver
+      - 5318:4318 # otlp http receiver
+      - 13123:13133 # health check
+      - 8889:8889 # prometheus metrics endpoint
+      - 8888:8888 # internal container metrics
+    environment:
+      - LOG_LEVEL=debug
+      - JAEGER_LISTEN_HOST=0.0.0.0
+      - PROMETHEUS_HOST=prometheus
+      - PROMETHEUS_PORT=9090
+    healthcheck:
+      test: curl --fail -s http://localhost:13123/status || exit 1
+      interval: 1m30s
+      timeout: 10s
+      retries: 3
+    depends_on:
+      - prometheus
+    networks:
+      - psp
 
 ####################### Networks Definition #######################
 networks:
