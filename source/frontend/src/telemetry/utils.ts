@@ -14,6 +14,7 @@ import {
 } from '@opentelemetry/sdk-trace-web';
 import { ATTR_SERVICE_NAME, ATTR_SERVICE_VERSION } from '@opentelemetry/semantic-conventions';
 import { ATTR_DEPLOYMENT_ENVIRONMENT_NAME } from '@opentelemetry/semantic-conventions/incubating';
+import isAbsoluteUrl from 'is-absolute-url';
 import { v4 as uuidv4 } from 'uuid';
 
 import { TelemetryConfig } from './config';
@@ -24,6 +25,18 @@ export const isBrowserEnvironment = () => {
 
 export const isNodeEnvironment = () => {
   return typeof process !== 'undefined' && process.release && process.release.name === 'node';
+};
+
+// creates URL and appends query parameters
+export const buildUrl = (inputUrl: string, queryParams: Record<string, any> = {}): URL => {
+  const baseUrl = window.location.origin;
+  const urlInstance = isAbsoluteUrl(inputUrl) ? new URL(inputUrl) : new URL(inputUrl, baseUrl);
+  Object.keys(queryParams).forEach(k => {
+    if (queryParams[k] !== undefined) {
+      urlInstance.searchParams.set(k, queryParams[k]);
+    }
+  });
+  return urlInstance;
 };
 
 export const isBlocked = (uri: string, config: TelemetryConfig) => {
@@ -89,7 +102,7 @@ export const registerTracerProvider = (
   // This is common metadata sent with every trace
   const resource = makeResource(config, extraAttributes);
   const exporter = new OTLPTraceExporter({
-    url: new URL('/v1/traces', config.otlpEndpoint).href,
+    url: new URL('v1/traces', config.otlpEndpoint).href,
   });
 
   const processors: SpanProcessor[] = [];
