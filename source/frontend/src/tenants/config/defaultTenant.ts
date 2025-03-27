@@ -96,7 +96,7 @@ export const defaultTenant: ITenantConfig2 = {
     debug: true,
     environment: 'local',
     serviceName: 'frontend',
-    endpoint: 'https://collector-3cd915-dev.apps.silver.devops.gov.bc.ca',
+    endpoint: 'http://localhost:4318',
     exportInterval: 10000,
   },
   pimsTrainingResourceUrl:
