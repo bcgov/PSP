@@ -1,7 +1,7 @@
 import { exists } from '@/utils';
 
 import { TelemetryConfig } from './config';
-import { registerTracerProvider } from './utils';
+import { registerMeterProvider, registerTracerProvider } from './utils';
 
 export const initializeTelemetry = (config: TelemetryConfig) => {
   try {
@@ -13,23 +13,11 @@ export const initializeTelemetry = (config: TelemetryConfig) => {
       throw Error('[ERR] Invalid metrics endpoint provided, it will not be initialized.');
     }
 
-    // registerMetrics(config);
-    registerTraces(config);
+    registerTracerProvider(config);
+    registerMeterProvider(config);
   } catch (error) {
     if (config.debug) {
       console.error(error);
     }
   }
-};
-
-// const registerMetrics = (config: TelemetryConfig) => {
-//   // First we need to register global telemetry configuration
-//   registerMeterProvider(config);
-
-//   // Then we can register various meters to collect metrics/measurements
-//   registerNetworkMetrics(config);
-// };
-
-const registerTraces = (config: TelemetryConfig) => {
-  registerTracerProvider(config);
 };

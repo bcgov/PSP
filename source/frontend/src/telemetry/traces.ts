@@ -18,11 +18,11 @@ export const startTrace = (spanName: string, additionalAttributes?: Attributes) 
 };
 
 export const runWithSpan = async (spanName: string, fn: AsyncFn) => {
-  const asyncCallback = createCallback(fn);
+  const asyncCallback = wrapExternalCallInSpan(fn);
   return getTracer().startActiveSpan(spanName, { kind: SpanKind.CLIENT }, asyncCallback);
 };
 
-const createCallback = (fn: AsyncFn): ((span: Span) => ReturnType<AsyncFn>) => {
+const wrapExternalCallInSpan = (fn: AsyncFn): ((span: Span) => ReturnType<AsyncFn>) => {
   return async span => {
     try {
       const result = await fn();

@@ -14,7 +14,7 @@ export const registerNetworkMetrics = (config: TelemetryConfig) => {
   }
 
   if (config.debug) {
-    console.info('Registering Network Request metrics');
+    console.info('[INFO] Registering network request metrics');
   }
 
   const meter = metrics.getMeter(NETWORK_METER);

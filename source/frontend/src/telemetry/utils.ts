@@ -13,7 +13,10 @@ import {
   WebTracerProvider,
 } from '@opentelemetry/sdk-trace-web';
 import { ATTR_SERVICE_NAME, ATTR_SERVICE_VERSION } from '@opentelemetry/semantic-conventions';
-import { ATTR_DEPLOYMENT_ENVIRONMENT_NAME } from '@opentelemetry/semantic-conventions/incubating';
+import {
+  ATTR_DEPLOYMENT_ENVIRONMENT_NAME,
+  ATTR_SERVICE_INSTANCE_ID,
+} from '@opentelemetry/semantic-conventions/incubating';
 import isAbsoluteUrl from 'is-absolute-url';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -48,11 +51,13 @@ export const isBlocked = (uri: string, config: TelemetryConfig) => {
 export const NETWORK_METER = 'network-meter';
 
 const makeResource = (config: TelemetryConfig, extraAttributes?: ResourceAttributes) => {
+  const uuid = uuidv4();
   let resource = new Resource({
+    [ATTR_DEPLOYMENT_ENVIRONMENT_NAME]: config?.environment,
     [ATTR_SERVICE_NAME]: config?.name,
     [ATTR_SERVICE_VERSION]: config?.appVersion,
-    [ATTR_DEPLOYMENT_ENVIRONMENT_NAME]: config?.environment,
-    'session.instance.id': uuidv4(),
+    [ATTR_SERVICE_INSTANCE_ID]: uuid,
+    'session.instance.id': uuid,
     'browser.width': window.screen.width,
     'browser.height': window.screen.height,
     ...extraAttributes,
@@ -68,7 +73,7 @@ export const registerMeterProvider = (
   extraAttributes?: ResourceAttributes,
 ) => {
   if (config.debug) {
-    console.info('[INFO] registering metrics provider');
+    console.info('[INFO] Registering metrics provider');
   }
 
   // This is common metadata sent with every metric measurement
@@ -82,7 +87,7 @@ export const registerMeterProvider = (
     readers: [
       new PeriodicExportingMetricReader({
         exporter: metricExporter,
-        exportIntervalMillis: config?.exportInterval || 30_000, // export metrics every 30 seconds by default
+        exportIntervalMillis: config?.exportInterval || 30_000, // export metrics every 30s by default
       }),
     ],
   });
@@ -96,7 +101,7 @@ export const registerTracerProvider = (
   extraAttributes?: ResourceAttributes,
 ) => {
   if (config.debug) {
-    console.info('[INFO] registering trace provider');
+    console.info('[INFO] Registering trace provider');
   }
 
   // This is common metadata sent with every trace
@@ -110,7 +115,7 @@ export const registerTracerProvider = (
     processors.push(new SimpleSpanProcessor(new ConsoleSpanExporter()));
   }
   processors.push(
-    new BatchSpanProcessor(exporter, { scheduledDelayMillis: config?.exportInterval || 5000 }),
+    new BatchSpanProcessor(exporter, { scheduledDelayMillis: config?.exportInterval || 5000 }), // export traces every 5s by default
   );
 
   const provider = new WebTracerProvider({
@@ -118,8 +123,8 @@ export const registerTracerProvider = (
     spanProcessors: [...processors],
   });
 
+  // Changing default contextManager to use ZoneContextManager - to support asynchronous operations
   provider.register({
-    // Changing default contextManager to use ZoneContextManager - to support asynchronous operations
     contextManager: new ZoneContextManager(),
   });
 
