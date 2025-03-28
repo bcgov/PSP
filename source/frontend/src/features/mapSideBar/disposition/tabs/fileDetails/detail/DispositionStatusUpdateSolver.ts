@@ -176,14 +176,11 @@ class DispositionStatusUpdateSolver implements IUpdateChecklistStrategy {
       case ApiGen_CodeTypes_DispositionFileStatusTypes.DRAFT:
       case ApiGen_CodeTypes_DispositionFileStatusTypes.HOLD:
       case ApiGen_CodeTypes_DispositionFileStatusTypes.COMPLETE:
-        isProtected = true;
+        isProtected = false;
         break;
       case ApiGen_CodeTypes_DispositionFileStatusTypes.ARCHIVED:
       case ApiGen_CodeTypes_DispositionFileStatusTypes.CANCELLED:
-        isProtected = false;
-        break;
-      default:
-        isProtected = false;
+        isProtected = true;
         break;
     }
 

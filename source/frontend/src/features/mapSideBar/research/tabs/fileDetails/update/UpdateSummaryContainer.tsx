@@ -66,7 +66,10 @@ export const UpdateResearchContainer = forwardRef<FormikProps<any>, IUpdateResea
               ),
               okButtonText: 'Yes',
               cancelButtonText: 'No',
-              handleOk: async () => await saveResearchFile(updatedResearchFile),
+              handleOk: async () => {
+                await saveResearchFile(updatedResearchFile);
+                setDisplayModal(false);
+              },
               handleCancel: () => setDisplayModal(false),
             });
             setDisplayModal(true);
