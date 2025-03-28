@@ -180,7 +180,11 @@ refresh: | down build up ## Recreates local docker environment
 .PHONY: infra
 infra: ## Starts infrastructure containers (e.g. database, geoserver). Useful for local debugging
 	@echo "$(P) Starting up infrastructure containers..."
-	@"$(MAKE)" start n="database geoserver grafana prometheus proxy"
+	@"$(MAKE)" start n="database geoserver proxy"
+
+monitoring-up: ## Calls the docker compose up for the monitoring/telemetry images
+	@echo "$(P) Create or start mayan-edms system"
+	@docker-compose --profile monitoring up -d
 
 start: ## Starts the local containers (n=service name)
 	@echo "$(P) Starting client and server containers..."
