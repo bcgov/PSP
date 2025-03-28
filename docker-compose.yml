@@ -259,6 +259,9 @@ services:
       - psp
   ####################### Jaeger (browser traces + monitoring dashboards) #######################
   jaeger:
+    profiles:
+      - all
+      - monitoring
     image: jaegertracing/jaeger:2.4.0
     container_name: jaeger
     command: ["--config=/jaeger/jaeger-config.yaml"]
