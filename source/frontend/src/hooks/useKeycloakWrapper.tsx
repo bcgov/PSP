@@ -22,6 +22,10 @@ export interface IUserInfo {
   given_name?: string;
   family_name?: string;
   organizations: number[];
+  id?: number;
+  idir_user_guid?: string;
+  idir_username?: string;
+  subject?: string;
 }
 
 /**
