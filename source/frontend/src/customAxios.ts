@@ -104,6 +104,7 @@ export const CustomAxios = ({
     error => {
       span.recordException(error);
       span.setStatus({ code: SpanStatusCode.ERROR });
+      span.end();
 
       if (axios.isCancel(error)) {
         return Promise.resolve(error.message);
