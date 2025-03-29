@@ -32,8 +32,6 @@ const createElementNSOrig = (global as any).document.createElementNS;
 
 tz.setDefault('America/Vancouver');
 
-tz.setDefault('America/Vancouver');
-
 // This allows to run unit tests on GitHub Actions which are in GMT timezone by default
 ['Date', 'Day', 'FullYear', 'Hours', 'Minutes', 'Month', 'Seconds'].forEach(prop => {
   (Date.prototype as any)[`get${prop}`] = function () {
