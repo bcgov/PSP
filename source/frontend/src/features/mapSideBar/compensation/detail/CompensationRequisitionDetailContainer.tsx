@@ -83,7 +83,8 @@ export const CompensationRequisitionDetailContainer: React.FunctionComponent<
       loading={
         loading || loadingCompReqProperties || loadingCompReqAcqPayees || loadingCompReqLeasePayees
       }
-      file={file}
+      product={file.product}
+      project={file.project}
       compensation={compensation}
       compensationProperties={compensationRequisitionProperties}
       compensationAcqPayees={compReqAcqPayees}

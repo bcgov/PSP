@@ -67,3 +67,19 @@ export const getCompensationRequisitionAtTimeApi = (compensationId: number, time
   CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<ApiGen_Concepts_CompensationRequisition>(
     `/compensation-requisitions/${compensationId}/test-time?time=${time}`,
   );
+
+export const getCompensationRequisitionPropertiesAtTimeApi = (
+  compensationId: number,
+  time: string,
+) =>
+  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<ApiGen_Concepts_AcquisitionFileProperty[]>(
+    `/compensation-requisitions/acquisition/${compensationId}/properties/test-time?time=${time}`,
+  );
+
+export const getCompensationRequisitionAcqPayeesAtTimeApi = (
+  compensationId: number,
+  time: string,
+) =>
+  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<ApiGen_Concepts_CompReqAcqPayee[]>(
+    `/compensation-requisitions/${compensationId}/acquisition-payees/test-time?time=${time}`,
+  );

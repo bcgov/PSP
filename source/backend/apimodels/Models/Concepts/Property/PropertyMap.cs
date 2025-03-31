@@ -1,6 +1,7 @@
 using Mapster;
 using Pims.Api.Models.Base;
 using Pims.Core.Extensions;
+using Pims.Dal.Entities;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts.Property
@@ -64,17 +65,57 @@ namespace Pims.Api.Models.Concepts.Property
                 .Inherits<Entity.IBaseEntity, BaseConcurrentModel>();
 
             config.NewConfig<PropertyModel, Entity.PimsProperty>()
-                .Map(dest => dest.Internal_Id, src => src.Id)
+            .Map(dest => dest.Internal_Id, src => src.Id)
+            .Map(dest => dest.Pid, src => src.Pid)
+            .Map(dest => dest.Pin, src => src.Pin)
+            .Map(dest => dest.SurveyPlanNumber, src => src.PlanNumber)
+            .Map(dest => dest.PropertyStatusTypeCode, src => src.Status.Id)
+            .Map(dest => dest.PropertyTypeCode, src => src.PropertyType.Id)
+            .Map(dest => dest.Address, src => src.Address)
+            .Map(dest => dest.DistrictCode, src => src.District.Id)
+            .Map(dest => dest.RegionCode, src => src.Region.Id)
+            .Map(dest => dest.Location, src => src.Location)
+            .Map(dest => dest.Boundary, src => src.Boundary)
+            .Map(dest => dest.GeneralLocation, src => src.GeneralLocation)
+
+            .Map(dest => dest.IsRetired, src => src.IsRetired)
+            .Map(dest => dest.IsRwyBeltDomPatent, src => src.IsRwyBeltDomPatent)
+            .Map(dest => dest.PphStatusTypeCode, src => src.PphStatusTypeCode)
+
+            .Map(dest => dest.Notes, src => src.Notes)
+            .Map(dest => dest.IsOwned, src => src.IsOwned)
+
+            // multi-selects
+            .Map(dest => dest.PimsPropPropAnomalyTypes, src => src.Anomalies)
+            .Map(dest => dest.PimsPropPropTenureTypes, src => src.Tenures)
+            .Map(dest => dest.PimsPropPropRoadTypes, src => src.RoadTypes)
+
+            .Map(dest => dest.LandArea, src => src.LandArea)
+            .Map(dest => dest.PropertyAreaUnitTypeCode, src => src.AreaUnit.Id)
+
+            .Map(dest => dest.IsVolumetricParcel, src => src.IsVolumetricParcel)
+            .Map(dest => dest.VolumetricMeasurement, src => src.VolumetricMeasurement)
+            .Map(dest => dest.VolumeUnitTypeCode, src => src.VolumetricUnit.Id)
+            .Map(dest => dest.VolumetricTypeCode, src => src.VolumetricType.Id)
+
+            .Map(dest => dest.MunicipalZoning, src => src.MunicipalZoning)
+
+            .Map(dest => dest.LandLegalDescription, src => src.LandLegalDescription)
+
+            .Inherits<BaseConcurrentModel, Entity.IBaseEntity>();
+
+            config.NewConfig<Entity.PimsPropertyHist, Entity.PimsProperty>()
+                .Map(dest => dest.PropertyId, src => src.PropertyId)
                 .Map(dest => dest.Pid, src => src.Pid)
                 .Map(dest => dest.Pin, src => src.Pin)
-                .Map(dest => dest.SurveyPlanNumber, src => src.PlanNumber)
-                .Map(dest => dest.PropertyStatusTypeCode, src => src.Status.Id)
-                .Map(dest => dest.PropertyTypeCode, src => src.PropertyType.Id)
-                .Map(dest => dest.Address, src => src.Address)
-                .Map(dest => dest.DistrictCode, src => src.District.Id)
-                .Map(dest => dest.RegionCode, src => src.Region.Id)
-                .Map(dest => dest.Location, src => src.Location)
-                .Map(dest => dest.Boundary, src => src.Boundary)
+                .Map(dest => dest.SurveyPlanNumber, src => src.SurveyPlanNumber)
+                .Map(dest => dest.PropertyStatusTypeCode, src => src.PropertyStatusTypeCode)
+                .Map(dest => dest.PropertyTypeCode, src => src.PropertyTypeCode)
+                .Map(dest => dest.AddressId, src => src.AddressId)
+                .Map(dest => dest.DistrictCode, src => src.DistrictCode)
+                .Map(dest => dest.RegionCode, src => src.RegionCode)
+                //.Map(dest => dest.Location, src => src.Location)
+                //.Map(dest => dest.Boundary, src => src.Boundary)
                 .Map(dest => dest.GeneralLocation, src => src.GeneralLocation)
 
                 .Map(dest => dest.IsRetired, src => src.IsRetired)
@@ -85,23 +126,21 @@ namespace Pims.Api.Models.Concepts.Property
                 .Map(dest => dest.IsOwned, src => src.IsOwned)
 
                 // multi-selects
-                .Map(dest => dest.PimsPropPropAnomalyTypes, src => src.Anomalies)
-                .Map(dest => dest.PimsPropPropTenureTypes, src => src.Tenures)
-                .Map(dest => dest.PimsPropPropRoadTypes, src => src.RoadTypes)
+                //.Map(dest => dest.PimsPropPropAnomalyTypes, src => src.PimsPropPropAnomalies)
+                //.Map(dest => dest.PimsPropPropTenureTypes, src => src.Tenures)
+                //.Map(dest => dest.PimsPropPropRoadTypes, src => src.RoadTypes)
 
                 .Map(dest => dest.LandArea, src => src.LandArea)
-                .Map(dest => dest.PropertyAreaUnitTypeCode, src => src.AreaUnit.Id)
+                .Map(dest => dest.PropertyAreaUnitTypeCode, src => src.PropertyAreaUnitTypeCode)
 
                 .Map(dest => dest.IsVolumetricParcel, src => src.IsVolumetricParcel)
                 .Map(dest => dest.VolumetricMeasurement, src => src.VolumetricMeasurement)
-                .Map(dest => dest.VolumeUnitTypeCode, src => src.VolumetricUnit.Id)
-                .Map(dest => dest.VolumetricTypeCode, src => src.VolumetricType.Id)
+                .Map(dest => dest.VolumeUnitTypeCode, src => src.VolumeUnitTypeCode)
+                .Map(dest => dest.VolumetricTypeCode, src => src.VolumetricTypeCode)
 
                 .Map(dest => dest.MunicipalZoning, src => src.MunicipalZoning)
 
-                .Map(dest => dest.LandLegalDescription, src => src.LandLegalDescription)
-
-                .Inherits<BaseConcurrentModel, Entity.IBaseEntity>();
+                .Map(dest => dest.LandLegalDescription, src => src.LandLegalDescription);
         }
     }
 }

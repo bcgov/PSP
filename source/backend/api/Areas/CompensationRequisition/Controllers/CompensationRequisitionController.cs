@@ -271,7 +271,7 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
         [HttpGet("{id:long}/test-time")]
         [HasPermission(Permissions.CompensationRequisitionView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(List<CompReqLeasePayeeModel>), 200)]
+        [ProducesResponseType(typeof(List<CompensationRequisitionModel>), 200)]
         [SwaggerOperation(Tags = new[] { "compensation-requisition" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetCompensationRequisionAtTime([FromRoute] long id, [FromQuery] DateTime time)
@@ -280,6 +280,32 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
             var histCompReq = _compensationRequisitionService.GetCompensationRequisitionAtTime(id, time);
 
             return new JsonResult(_mapper.Map<CompensationRequisitionModel>(histCompReq));
+        }
+
+        [HttpGet("acquisition/{id:long}/properties/test-time")]
+        [HasPermission(Permissions.CompensationRequisitionView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<AcquisitionFilePropertyModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "compensation-requisition" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetAcquisitionCompensationRequisitionPropertiesAtTime([FromRoute] long id, [FromQuery] DateTime time)
+        {
+            var histCompReqProperties = _compensationRequisitionService.GetCompensationRequisitionPropertiesAtTime(id, time);
+
+            return new JsonResult(_mapper.Map<IEnumerable<AcquisitionFilePropertyModel>>(histCompReqProperties));
+        }
+
+        [HttpGet("{id:long}/acquisition-payees/test-time")]
+        [HasPermission(Permissions.CompensationRequisitionView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(List<CompReqAcqPayeeModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "compensation-requisition" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetCompensationRequisitionAcquisitionPayees([FromRoute] long id, [FromQuery] DateTime time)
+        {
+            var histCompReqPayees = _compensationRequisitionService.GetCompensationRequisitionAcquisitionPayeesAtTime(id, time);
+
+            return new JsonResult(_mapper.Map<IEnumerable<CompReqAcqPayeeModel>>(histCompReqPayees));
         }
     }
 }

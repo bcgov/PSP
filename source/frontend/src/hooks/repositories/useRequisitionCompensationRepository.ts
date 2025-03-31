@@ -4,11 +4,13 @@ import { useCallback, useMemo } from 'react';
 import {
   deleteCompensationRequisitionApi,
   getCompensationRequisitionAcqPayeesApi,
+  getCompensationRequisitionAcqPayeesAtTimeApi,
   getCompensationRequisitionApi,
   getCompensationRequisitionAtTimeApi,
   getCompensationRequisitionFinancialsApi,
   getCompensationRequisitionLeasePayeesApi,
   getCompensationRequisitionPropertiesApi,
+  getCompensationRequisitionPropertiesAtTimeApi,
   getFileCompensationsApi,
   postFileCompensationRequisitionApi,
   putCompensationRequisitionApi,
@@ -186,6 +188,41 @@ export const useCompensationRequisitionRepository = () => {
     invoke: false,
   });
 
+  const getCompensationRequisitionPropertiesAtTime = useApiRequestWrapper<
+    (
+      compensationId: number,
+      time: string,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_AcquisitionFileProperty[], any>>
+  >({
+    requestFunction: useCallback(
+      async (compensationId: number, time: string) =>
+        await getCompensationRequisitionPropertiesAtTimeApi(compensationId, time),
+      [],
+    ),
+    requestName: 'getCompensationRequisitionPropertiesAtTime',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler(
+      'Failed to get compensation requisition properties. Refresh the page to try again.',
+    ),
+  });
+
+  const getCompensationRequisitionAcqPayeesAtTime = useApiRequestWrapper<
+    (
+      compensationId: number,
+      time: string,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_CompReqAcqPayee[], any>>
+  >({
+    requestFunction: useCallback(
+      async (compensationId: number, time: string) =>
+        await getCompensationRequisitionAcqPayeesAtTimeApi(compensationId, time),
+      [],
+    ),
+    requestName: 'getCompensationRequisitionAcqPayeesAtTime',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler('Failed to get compensation requisition payees'),
+    invoke: false,
+  });
+
   return useMemo(
     () => ({
       postCompensationRequisition: postCompensationRequisition,
@@ -198,6 +235,8 @@ export const useCompensationRequisitionRepository = () => {
       getCompensationRequisitionAcqPayees: getCompensationRequisitionAcqPayees,
       getCompensationRequisitionLeasePayees: getCompensationRequisitionLeasePayees,
       getCompensationRequisitionAtTime: getCompensationRequisitionAtTime,
+      getCompensationRequisitionPropertiesAtTime: getCompensationRequisitionPropertiesAtTime,
+      getCompensationRequisitionAcqPayeesAtTime: getCompensationRequisitionAcqPayeesAtTime,
     }),
     [
       postCompensationRequisition,
@@ -210,6 +249,8 @@ export const useCompensationRequisitionRepository = () => {
       getCompensationRequisitionAcqPayees,
       getCompensationRequisitionLeasePayees,
       getCompensationRequisitionAtTime,
+      getCompensationRequisitionPropertiesAtTime,
+      getCompensationRequisitionAcqPayeesAtTime,
     ],
   );
 };

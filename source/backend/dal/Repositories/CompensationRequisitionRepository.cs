@@ -1,7 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.IO.Packaging;
 using System.Linq;
 using System.Security.Claims;
+using LinqKit;
+using Mapster;
+using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
@@ -14,6 +18,9 @@ namespace Pims.Dal.Repositories
     /// </summary>
     public class CompensationRequisitionRepository : BaseRepository<PimsCompensationRequisition>, ICompensationRequisitionRepository
     {
+
+        private readonly IMapper _mapper;
+
         #region Constructors
 
         /// <summary>
@@ -22,9 +29,10 @@ namespace Pims.Dal.Repositories
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public CompensationRequisitionRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<BaseRepository> logger)
+        public CompensationRequisitionRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<BaseRepository> logger, IMapper mapper)
             : base(dbContext, user, logger)
         {
+            _mapper = mapper;
         }
         #endregion
 
@@ -232,18 +240,79 @@ namespace Pims.Dal.Repositories
                 .ToList();
         }
 
-        public PimsCompensationRequisitionHist GetCompensationRequisitionAtTime(long compReqId, DateTime time)
+        public PimsCompensationRequisition GetCompensationRequisitionAtTime(long compReqId, DateTime time)
         {
             //TODO:
             Console.WriteLine("Here we are");
             Console.WriteLine($"compReqId: {compReqId} time:{time}");
 
-            var result = Context.PimsCompensationRequisitionHists.AsNoTracking()
+            var compreqHist = Context.PimsCompensationRequisitionHists.AsNoTracking()
                .Where(crh => crh.CompensationRequisitionId == compReqId)
-               .Where(crh => crh.EffectiveDateHist<time)
+               .Where(crh => crh.EffectiveDateHist <= time)
                .OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault();
 
-            return result;
+            var compreq = _mapper.Map<PimsCompensationRequisition>(compreqHist);
+
+            var financialsHist = Context.PimsCompReqFinancialHists.AsNoTracking()
+               .Where(crh => crh.CompensationRequisitionId == compReqId)
+               .Where(crh => crh.EffectiveDateHist <= time)
+               .OrderByDescending(a => a.EffectiveDateHist).ToList();
+
+            compreq.PimsCompReqFinancials = _mapper.Map<ICollection<PimsCompReqFinancial>>(financialsHist);
+
+            var financialCode = Context.PimsFinancialActivityCodeHists.AsNoTracking()
+               .Where(crh => financialsHist.Select(x => x.FinancialActivityCodeId).Contains(crh.Id))
+               .Where(crh => crh.EffectiveDateHist <= time)
+               .OrderByDescending(a => a.EffectiveDateHist).ToList();
+
+            foreach (var financial in compreq.PimsCompReqFinancials)
+            {
+                var foundCode = financialCode.Find(x => x.Id == financial.FinancialActivityCodeId);
+                if (foundCode != null)
+                {
+                    financial.FinancialActivityCode = _mapper.Map<PimsFinancialActivityCode>(foundCode);
+                }
+            }
+
+            return compreq;
+        }
+
+        public IEnumerable<PimsPropertyAcquisitionFile> GetCompensationRequisitionPropertiesAtTime(long compReqId, DateTime time)
+        {
+            var acqCompReqPropHist = Context.PimsPropAcqFlCompReqHists.AsNoTracking()
+               .Where(pacr => pacr.CompensationRequisitionId == compReqId)
+               .Where(pacr => pacr.EffectiveDateHist <= time)
+               .GroupBy(pacr => pacr.PropertyAcquisitionFileId)
+               .Select(gpacr => gpacr.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault()).ToList();
+
+            List<PimsPropertyAcquisitionFile> acqfileProperties = new List<PimsPropertyAcquisitionFile>();
+
+            foreach (var prop in acqCompReqPropHist)
+            {
+                var acqPropHist = Context.PimsPropertyAcquisitionFileHists.AsNoTracking()
+                   .Where(afp => afp.PropertyAcquisitionFileId == prop.PropertyAcquisitionFileId)
+                   .Where(afp => afp.EffectiveDateHist <= time)
+                   .OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault();
+
+                var propAcFile = _mapper.Map<PimsPropertyAcquisitionFile>(acqPropHist);
+
+                var propHist = Context.PimsPropertyHists.AsNoTracking()
+                   .Where(ph => ph.PropertyId == acqPropHist.PropertyId)
+                   .Where(ph => ph.EffectiveDateHist <= time)
+                   .GroupBy(ph => ph.PropertyId)
+                   .Select(gph => gph.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault()).ToList();
+
+                propAcFile.Property = _mapper.Map<PimsProperty>(propHist);
+
+                acqfileProperties.Add(propAcFile);
+            }
+
+            return acqfileProperties;
+        }
+
+        public IEnumerable<PimsCompReqAcqPayee> GetCompensationRequisitionAcquisitionPayeesAtTime(long compReqId, DateTime time)
+        {
+            return null;
         }
     }
 }

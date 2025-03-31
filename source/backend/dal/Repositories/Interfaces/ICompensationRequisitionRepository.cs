@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Pims.Api.Models.Concepts.CompensationRequisition;
 using Pims.Dal.Entities;
 
 namespace Pims.Dal.Repositories
@@ -28,6 +29,10 @@ namespace Pims.Dal.Repositories
 
         IEnumerable<PimsCompReqLeasePayee> GetCompensationRequisitionLeasePayees(long compReqId);
 
-        PimsCompensationRequisitionHist GetCompensationRequisitionAtTime(long compReqId, DateTime time);
+        PimsCompensationRequisition GetCompensationRequisitionAtTime(long compReqId, DateTime time);
+
+        IEnumerable<PimsPropertyAcquisitionFile> GetCompensationRequisitionPropertiesAtTime(long compReqId, DateTime time);
+
+        IEnumerable<PimsCompReqAcqPayee> GetCompensationRequisitionAcquisitionPayeesAtTime(long compReqId, DateTime time);
     }
 }

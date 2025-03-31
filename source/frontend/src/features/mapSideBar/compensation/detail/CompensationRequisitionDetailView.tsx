@@ -15,12 +15,12 @@ import TooltipIcon from '@/components/common/TooltipIcon';
 import { Claims, Roles } from '@/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
-import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { ApiGen_Concepts_CompReqAcqPayee } from '@/models/api/generated/ApiGen_Concepts_CompReqAcqPayee';
 import { ApiGen_Concepts_CompReqLeasePayee } from '@/models/api/generated/ApiGen_Concepts_CompReqLeasePayee';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
-import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_Product';
+import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
 import {
   exists,
   formatMoney,
@@ -36,7 +36,9 @@ import { PayeeDetail } from './PayeeDetail';
 
 export interface CompensationRequisitionDetailViewProps {
   fileType: ApiGen_CodeTypes_FileTypes;
-  file: ApiGen_Concepts_AcquisitionFile | ApiGen_Concepts_Lease;
+  //file: ApiGen_Concepts_AcquisitionFile | ApiGen_Concepts_Lease;
+  product: ApiGen_Concepts_Product | undefined;
+  project: ApiGen_Concepts_Project | undefined;
   compensation: ApiGen_Concepts_CompensationRequisition;
   compensationProperties: ApiGen_Concepts_FileProperty[];
   compensationAcqPayees: ApiGen_Concepts_CompReqAcqPayee[];
@@ -55,7 +57,9 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
   CompensationRequisitionDetailViewProps
 > = ({
   fileType,
-  file,
+  //file,
+  product,
+  project,
   compensation,
   compensationProperties,
   compensationAcqPayees,
@@ -152,9 +156,6 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
   const compTotalAmount = compensation?.financials
     ?.map(f => f.totalAmount ?? 0)
     .reduce((prev, next) => prev + next, 0);
-
-  const fileProject = file?.project;
-  const fileProduct = file?.product;
 
   const userCanEditCompensationReq = (): boolean => {
     if (isFileFinalStatus) {
@@ -293,16 +294,16 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
 
       <Section header="Financial Coding" isCollapsable initiallyExpanded>
         <SectionField label="Product" labelWidth="4" valueTestId="file-product">
-          {fileProduct?.code ?? ''}
+          {product?.code ?? ''}
         </SectionField>
         <SectionField label="Business function" labelWidth="4">
-          {fileProject?.businessFunctionCode?.code ?? ''}
+          {project?.businessFunctionCode?.code ?? ''}
         </SectionField>
         <SectionField label="Work activity" labelWidth="4">
-          {fileProject?.workActivityCode?.code ?? ''}
+          {project?.workActivityCode?.code ?? ''}
         </SectionField>
         <SectionField label="Cost type" labelWidth="4">
-          {fileProject?.costTypeCode?.code ?? ''}
+          {project?.costTypeCode?.code ?? ''}
         </SectionField>
         <SectionField label="Fiscal year" labelWidth="4">
           {compensation.fiscalYear ?? ''}

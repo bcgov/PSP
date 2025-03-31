@@ -91,7 +91,7 @@ namespace Pims.Api.Models.Concepts.CompensationRequisition
                 //.Map(dest => dest.CompReqLeasePayees, src => src.PimsCompReqLeasePayees)
                 //.Map(dest => dest.CompReqAcquisitionProperties, src => src.PimsPropAcqFlCompReqs)
                 //.Map(dest => dest.CompReqLeaseProperties, src => src.PimsPropLeaseCompReqs)
-                .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
+                ;
         }
     }
 }
