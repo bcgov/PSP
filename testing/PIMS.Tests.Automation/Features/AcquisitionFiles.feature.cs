@@ -511,14 +511,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="13._Acquisition_File_Property_Takes_Logic")]
+        [Xunit.SkippableFactAttribute(DisplayName="13._Acquisition_File_Subfiles-Subfile_Details")]
         [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
-        [Xunit.TraitAttribute("Description", "13._Acquisition_File_Property_Takes_Logic")]
-        public async System.Threading.Tasks.Task _13__Acquisition_File_Property_Takes_Logic()
+        [Xunit.TraitAttribute("Description", "13._Acquisition_File_Subfiles-Subfile_Details")]
+        public async System.Threading.Tasks.Task _13__Acquisition_File_Subfiles_Subfile_Details()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("13._Acquisition_File_Property_Takes_Logic", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("13._Acquisition_File_Subfiles-Subfile_Details", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 81
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -530,13 +530,13 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 await this.ScenarioStartAsync();
 #line 82
- await testRunner.GivenAsync("I create a new Acquisition File from row number 19", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+ await testRunner.GivenAsync("I create a new Acquisition File from row number 22", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 83
- await testRunner.WhenAsync("I add Properties to the Acquisition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+ await testRunner.WhenAsync("I add additional information to the Acquisition File Details", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 84
- await testRunner.AndAsync("I create Takes within Acquisition File\'s Properties", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync("I create a new Sub-file from row number 23", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 85
  await testRunner.ThenAsync("A new Acquisition file is created successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
@@ -545,14 +545,17 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="14._Acquisition_File_Error_Message-Draft_Items")]
+        [Xunit.SkippableFactAttribute(DisplayName="14._Acquisition_File_Compensation_Requsition-Sum_of_Subfiles_Compensation_Requisi" +
+            "tions")]
         [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
-        [Xunit.TraitAttribute("Description", "14._Acquisition_File_Error_Message-Draft_Items")]
-        public async System.Threading.Tasks.Task _14__Acquisition_File_Error_Message_Draft_Items()
+        [Xunit.TraitAttribute("Description", "14._Acquisition_File_Compensation_Requsition-Sum_of_Subfiles_Compensation_Requisi" +
+            "tions")]
+        public async System.Threading.Tasks.Task _14__Acquisition_File_Compensation_Requsition_Sum_Of_Subfiles_Compensation_Requisitions()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("14._Acquisition_File_Error_Message-Draft_Items", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("14._Acquisition_File_Compensation_Requsition-Sum_of_Subfiles_Compensation_Requisi" +
+                    "tions", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 87
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -564,61 +567,48 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 await this.ScenarioStartAsync();
 #line 88
- await testRunner.GivenAsync("I create a new Acquisition File from row number 20", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+ await testRunner.GivenAsync("I create a new Acquisition File from row number 22", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 89
- await testRunner.WhenAsync("I create Agreements within an Acquisition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+ await testRunner.WhenAsync("I add additional information to the Acquisition File Details", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 90
- await testRunner.AndAsync("I add additional information to complete the Acquisition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync("I add Properties to the Acquisition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 91
- await testRunner.ThenAsync("Acquisition File cannot be completed due to Draft items", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+ await testRunner.AndAsync("I create Stakeholders within an Acquisition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-            }
-            await this.ScenarioCleanupAsync();
-        }
-        
-        [Xunit.SkippableFactAttribute(DisplayName="15._Acquisition_File_Error_Message-No_Takes")]
-        [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
-        [Xunit.TraitAttribute("Description", "15._Acquisition_File_Error_Message-No_Takes")]
-        public async System.Threading.Tasks.Task _15__Acquisition_File_Error_Message_No_Takes()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("15._Acquisition_File_Error_Message-No_Takes", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 92
+ await testRunner.AndAsync("I create Compensation Requisition within an Acquisition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
 #line 93
-this.ScenarioInitialize(scenarioInfo);
+ await testRunner.AndAsync("I create a new Sub-file from row number 23", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                await this.ScenarioStartAsync();
 #line 94
- await testRunner.GivenAsync("I create a new Acquisition File from row number 20", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+ await testRunner.AndAsync("I add Properties to the Acquisition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 95
- await testRunner.WhenAsync("I add additional information to complete the Acquisition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+ await testRunner.AndAsync("I create Stakeholders within an Acquisition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 96
- await testRunner.ThenAsync("Acquisition File cannot be completed without Takes", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+ await testRunner.AndAsync("I create Compensation Requisition within an Acquisition Subfile", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 97
+ await testRunner.ThenAsync("Main Acquisition File totals are verified successfully from row number 22", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="16._Acquisition_File_Error_Message-Takes_In-Progress")]
+        [Xunit.SkippableFactAttribute(DisplayName="15._Acquisition_File_Property_Takes_Logic")]
         [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
-        [Xunit.TraitAttribute("Description", "16._Acquisition_File_Error_Message-Takes_In-Progress")]
-        public async System.Threading.Tasks.Task _16__Acquisition_File_Error_Message_Takes_In_Progress()
+        [Xunit.TraitAttribute("Description", "15._Acquisition_File_Property_Takes_Logic")]
+        public async System.Threading.Tasks.Task _15__Acquisition_File_Property_Takes_Logic()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("16._Acquisition_File_Error_Message-Takes_In-Progress", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 98
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("15._Acquisition_File_Property_Takes_Logic", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 99
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -628,33 +618,30 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 99
- await testRunner.GivenAsync("I create a new Acquisition File from row number 21", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
-#line hidden
 #line 100
- await testRunner.WhenAsync("I add Properties to the Acquisition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+ await testRunner.GivenAsync("I create a new Acquisition File from row number 19", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 101
- await testRunner.AndAsync("I create Takes within Acquisition File\'s Properties", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.WhenAsync("I add Properties to the Acquisition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 102
- await testRunner.AndAsync("I add additional information to complete the Acquisition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync("I create Takes within Acquisition File\'s Properties", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 103
- await testRunner.ThenAsync("Acquisition File cannot be completed due to In-Progress Takes", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+ await testRunner.ThenAsync("A new Acquisition file is created successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="17._Acquisition_File_Subfiles-Subfile_Details")]
+        [Xunit.SkippableFactAttribute(DisplayName="16._Acquisition_File_Error_Message-Draft_Items")]
         [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
-        [Xunit.TraitAttribute("Description", "17._Acquisition_File_Subfiles-Subfile_Details")]
-        public async System.Threading.Tasks.Task _17__Acquisition_File_Subfiles_Subfile_Details()
+        [Xunit.TraitAttribute("Description", "16._Acquisition_File_Error_Message-Draft_Items")]
+        public async System.Threading.Tasks.Task _16__Acquisition_File_Error_Message_Draft_Items()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("17._Acquisition_File_Subfiles-Subfile_Details", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("16._Acquisition_File_Error_Message-Draft_Items", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 105
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -666,32 +653,29 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 await this.ScenarioStartAsync();
 #line 106
- await testRunner.GivenAsync("I create a new Acquisition File from row number 22", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+ await testRunner.GivenAsync("I create a new Acquisition File from row number 20", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 107
- await testRunner.WhenAsync("I add additional information to the Acquisition File Details", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+ await testRunner.WhenAsync("I create Agreements within an Acquisition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 108
- await testRunner.AndAsync("I create a new Sub-file from row number 23", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync("I add additional information to complete the Acquisition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 109
- await testRunner.ThenAsync("A new Acquisition file is created successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+ await testRunner.ThenAsync("Acquisition File cannot be completed due to Draft items", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="18._Acquisition_File_Compensation_Requsition-Sum_of_Subfiles_Compensation_Requisi" +
-            "tions")]
+        [Xunit.SkippableFactAttribute(DisplayName="17._Acquisition_File_Error_Message-No_Takes")]
         [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
-        [Xunit.TraitAttribute("Description", "18._Acquisition_File_Compensation_Requsition-Sum_of_Subfiles_Compensation_Requisi" +
-            "tions")]
-        public async System.Threading.Tasks.Task _18__Acquisition_File_Compensation_Requsition_Sum_Of_Subfiles_Compensation_Requisitions()
+        [Xunit.TraitAttribute("Description", "17._Acquisition_File_Error_Message-No_Takes")]
+        public async System.Threading.Tasks.Task _17__Acquisition_File_Error_Message_No_Takes()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("18._Acquisition_File_Compensation_Requsition-Sum_of_Subfiles_Compensation_Requisi" +
-                    "tions", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("17._Acquisition_File_Error_Message-No_Takes", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 111
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -703,34 +687,84 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 await this.ScenarioStartAsync();
 #line 112
- await testRunner.GivenAsync("I create a new Acquisition File from row number 22", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+ await testRunner.GivenAsync("I create a new Acquisition File from row number 20", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 113
- await testRunner.WhenAsync("I add additional information to the Acquisition File Details", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+ await testRunner.WhenAsync("I add additional information to complete the Acquisition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 114
- await testRunner.AndAsync("I add Properties to the Acquisition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.ThenAsync("Acquisition File cannot be completed without Takes", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
-#line 115
- await testRunner.AndAsync("I create Stakeholders within an Acquisition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="18._Acquisition_File_Error_Message-Takes_In-Progress")]
+        [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
+        [Xunit.TraitAttribute("Description", "18._Acquisition_File_Error_Message-Takes_In-Progress")]
+        public async System.Threading.Tasks.Task _18__Acquisition_File_Error_Message_Takes_In_Progress()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("18._Acquisition_File_Error_Message-Takes_In-Progress", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 116
- await testRunner.AndAsync("I create Compensation Requisition within an Acquisition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+this.ScenarioInitialize(scenarioInfo);
 #line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
 #line 117
- await testRunner.AndAsync("I create a new Sub-file from row number 23", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.GivenAsync("I create a new Acquisition File from row number 21", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 118
- await testRunner.AndAsync("I add Properties to the Acquisition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.WhenAsync("I add Properties to the Acquisition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 119
- await testRunner.AndAsync("I create Stakeholders within an Acquisition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync("I create Takes within Acquisition File\'s Properties", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 120
- await testRunner.AndAsync("I create Compensation Requisition within an Acquisition Subfile", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync("I add additional information to complete the Acquisition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 121
- await testRunner.ThenAsync("Main Acquisition File totals are verified successfully from row number 22", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+ await testRunner.ThenAsync("Acquisition File cannot be completed due to In-Progress Takes", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="19._Acquisition_File_Error_Message_H120_In-Progress")]
+        [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
+        [Xunit.TraitAttribute("Description", "19._Acquisition_File_Error_Message_H120_In-Progress")]
+        public async System.Threading.Tasks.Task _19__Acquisition_File_Error_Message_H120_In_Progress()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("19._Acquisition_File_Error_Message_H120_In-Progress", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 123
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 124
+ await testRunner.GivenAsync("I create a new Acquisition File from row number 20", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 125
+ await testRunner.WhenAsync("I generate Compensation Requisition within an Acquisition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 126
+ await testRunner.AndAsync("I add additional information to complete the Acquisition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 127
+ await testRunner.ThenAsync("Acquisition File cannot be completed due to Draft items", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();

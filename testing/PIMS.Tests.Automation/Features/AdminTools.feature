@@ -15,6 +15,12 @@ Scenario: 03._CDOGS_Templates
 	Given I create a CDOGS template
 	Then CDOGS rendered successfully
 
+Scenario: 04._CDOGS_Error_Message
+	Given I verify existance of CDOGS Template
+	And I navigate and create a new Acquisition File from row number 1
+	And I generate Compensation Requisition within an Acquisition File
+	Then Error message of CDOG Template missing appears successfully
+
 Scenario: 04._Financial_Codes
 	Given I create a Financial Code from row number 1
 	And I update a Financial Code from row number 2
