@@ -19,9 +19,6 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilTableSpinnerDisappear();
 
-            System.Diagnostics.Debug.WriteLine("Hello");
-            System.Diagnostics.Debug.WriteLine("Adding Team Member: " + contactSearchName);
-
             switch (contactType)
             {
                 case "Individual":
@@ -38,7 +35,7 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(selectContactSearchInput).SendKeys(contactSearchName);
             webDriver.FindElement(selectContactSearchButton).Click();
 
-            WaitUntilVisible(selectContactSearch1stResultRadioBttn);
+            Wait();
             webDriver.FindElement(selectContactSearch1stResultRadioBttn).Click();
 
             WaitUntilClickable(selectContactOkButton);

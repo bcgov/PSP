@@ -32,7 +32,7 @@ export const useInsurancesRepository = () => {
       [],
     ),
     requestName: 'updateLeaseInsurances',
-    onSuccess: useAxiosSuccessHandler('Insurance saved successfully.'),
+    onSuccess: useAxiosSuccessHandler(),
     onError: useAxiosErrorHandler(),
   });
 
