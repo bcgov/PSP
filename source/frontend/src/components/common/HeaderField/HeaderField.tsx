@@ -35,7 +35,10 @@ export const HeaderField: React.FC<React.PropsWithChildren<IHeaderFieldProps>> =
 };
 
 export const HeaderLabelCol: React.FC<IHeaderLabelColProps> = props => (
-  <Col {...props.labelWidth} className={clsx('pr-0', 'text-left', props.className)}>
+  <Col
+    {...(props.labelWidth ?? { xs: 'auto' })}
+    className={clsx('pr-0', 'text-left', props.className)}
+  >
     {props.label && (
       <StyledHeaderLabel>
         {props.label}
