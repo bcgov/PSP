@@ -8,5 +8,8 @@ namespace Pims.Api.Constants
     {
         [EnumMember(Value = "lookup")]
         Lookup,
+
+        [EnumMember(Value = "mayan-document-types")]
+        MayanDocumentTypes,
     }
 }

@@ -28,6 +28,7 @@ using Pims.Api.Models.Requests.Document.UpdateMetadata;
 using Microsoft.Extensions.Configuration;
 using Pims.Core.Exceptions;
 using Pims.Api.Models;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Pims.Api.Test.Services
 {
@@ -611,8 +612,13 @@ namespace Pims.Api.Test.Services
         public async void GetStorageDocumentTypes_Success()
         {
             // Arrange
-            var service = this.CreateDocumentServiceWithPermissions(Permissions.DocumentView);
+            var service = CreateDocumentServiceWithPermissions(Permissions.DocumentView);
             var documentStorageRepository = this._helper.GetService<Mock<IEdmsDocumentRepository>>();
+
+            var memoryCache = _helper.GetService<Mock<IMemoryCache>>();
+            var cacheEntry = new Mock<ICacheEntry>();
+
+            memoryCache.Setup(m => m.CreateEntry(It.IsAny<object>())).Returns(cacheEntry.Object);
 
             documentStorageRepository.Setup(x => x.TryGetDocumentTypesAsync(null, It.IsAny<int>(), It.IsAny<int>()))
                 .ReturnsAsync(new ExternalResponse<QueryResponse<Models.Mayan.Document.DocumentTypeModel>>()
