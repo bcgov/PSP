@@ -1,5 +1,4 @@
 import { metrics, trace } from '@opentelemetry/api';
-import { ZoneContextManager } from '@opentelemetry/context-zone';
 import { OTLPMetricExporter } from '@opentelemetry/exporter-metrics-otlp-http';
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
 import { browserDetector } from '@opentelemetry/opentelemetry-browser-detector';
@@ -123,10 +122,7 @@ export const registerTracerProvider = (
     spanProcessors: [...processors],
   });
 
-  // Changing default contextManager to use ZoneContextManager - to support asynchronous operations
-  provider.register({
-    contextManager: new ZoneContextManager(),
-  });
+  provider.register();
 
   // set this TracerProvider to be global to the app
   trace.setGlobalTracerProvider(provider);
