@@ -100,6 +100,7 @@ namespace PIMS.Tests.Automation.Features
         [Xunit.InlineDataAttribute("1", new string[0])]
         [Xunit.InlineDataAttribute("2", new string[0])]
         [Xunit.InlineDataAttribute("3", new string[0])]
+        [Xunit.InlineDataAttribute("8", new string[0])]
         public async System.Threading.Tasks.Task Type_Of_Projects(string rowNumber, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
@@ -134,7 +135,7 @@ this.ScenarioInitialize(scenarioInfo);
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("01._Project_Details", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 13
+#line 14
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -144,13 +145,13 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 14
+#line 15
  await testRunner.GivenAsync("I create a new Project from row number 4", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 15
+#line 16
  await testRunner.WhenAsync("I update an existing project from row number 5", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 16
+#line 17
  await testRunner.ThenAsync("A new Project is created successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -165,7 +166,7 @@ this.ScenarioInitialize(scenarioInfo);
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("02._Project_Documents", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 18
+#line 19
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -175,16 +176,16 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 19
+#line 20
  await testRunner.GivenAsync("I create a new Project from row number 6", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 20
+#line 21
  await testRunner.WhenAsync("I create Digital Documents for a \"Project\" row number 8", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 21
+#line 22
  await testRunner.AndAsync("I edit a Digital Document for a \"Project\" from row number 9", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 22
+#line 23
  await testRunner.ThenAsync("A new Project is created successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -199,7 +200,7 @@ this.ScenarioInitialize(scenarioInfo);
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("03._Project_Notes", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 24
+#line 25
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -209,16 +210,16 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 25
+#line 26
  await testRunner.GivenAsync("I create a new Project from row number 7", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 26
+#line 27
  await testRunner.WhenAsync("I create a new Note on the Notes Tab from row number 6", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 27
+#line 28
  await testRunner.AndAsync("I edit a Note on the Notes Tab from row number 7", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 28
+#line 29
  await testRunner.ThenAsync("A new Project is created successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -233,7 +234,7 @@ this.ScenarioInitialize(scenarioInfo);
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("04._Project_List_View", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 30
+#line 31
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -243,10 +244,10 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 31
+#line 32
  await testRunner.GivenAsync("I search for existing Projects from row number 2", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 32
+#line 33
  await testRunner.ThenAsync("Expected Project Content is displayed on Projects Table", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -261,7 +262,7 @@ this.ScenarioInitialize(scenarioInfo);
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("05._Duplicate_Project", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 34
+#line 35
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -271,10 +272,10 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 35
+#line 36
  await testRunner.GivenAsync("I create a duplicate Project from row number 2", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 36
+#line 37
  await testRunner.ThenAsync("Duplicate Project Alert is displayed", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
