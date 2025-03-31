@@ -46,3 +46,28 @@ Scenario: 07._Disposition_File_from_PIN
 Scenario: 08._Disposition_Files_List_View
 	Given I search for an existing Disposition File from row number 3
 	Then Expected Disposition File Content is displayed on Disposition File List View
+
+Scenario: 09._Disposition_File_Main_Path
+	Given I create a new Disposition File from row number 13
+	When I add Properties to the Disposition File
+	And I create Appraisal, Assessment, Offers and Sales Details within a Disposition File
+	And I add additional information to the Disposition File Details
+	Then Disposition File Main Path completed successfully 
+
+Scenario: 10._Disposition_File_Sales_Price_Error
+	Given I create a new Disposition File from row number 14
+	When I change status of the Disposition File
+	Then Disposition File without Sales Price error appears
+
+Scenario: 11._Disposition_File_Not_Sold_Status_Error
+	Given I create a new Disposition File from row number 14
+	When I create Appraisal, Assessment, Offers and Sales Details within a Disposition File
+	And I change status of the Disposition File
+	Then Disposition File without SOLD Status error appears
+
+Scenario: 12._Disposition_File_Non-Core_Inventory_Error
+	Given I create a new Disposition File from row number 14
+	When I add Properties to the Disposition File
+	And I create Appraisal, Assessment, Offers and Sales Details within a Disposition File
+	And I change status of the Disposition File
+	Then Disposition File with non-Core property error appears

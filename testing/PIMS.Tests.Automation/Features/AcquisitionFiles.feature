@@ -78,37 +78,13 @@ Scenario: 12._Acquisition_Files_List_View
 	Given I search for an existing Acquisition File from row number 2
 	Then Expected Acquisition File Content is displayed on Acquisition File Table
 
-Scenario: 13._Acquisition_File_Property_Takes_Logic
-	Given I create a new Acquisition File from row number 19
-	When I add Properties to the Acquisition File
-	And I create Takes within Acquisition File's Properties
-	Then A new Acquisition file is created successfully
-
-Scenario: 14._Acquisition_File_Error_Message-Draft_Items
-	Given I create a new Acquisition File from row number 20
-	When I create Agreements within an Acquisition File
-	And I add additional information to complete the Acquisition File
-	Then Acquisition File cannot be completed due to Draft items
-
-Scenario: 15._Acquisition_File_Error_Message-No_Takes
-	Given I create a new Acquisition File from row number 20
-	When I add additional information to complete the Acquisition File
-	Then Acquisition File cannot be completed without Takes
-
-Scenario: 16._Acquisition_File_Error_Message-Takes_In-Progress
-	Given I create a new Acquisition File from row number 21
-	When I add Properties to the Acquisition File
-	And I create Takes within Acquisition File's Properties
-	And I add additional information to complete the Acquisition File
-	Then Acquisition File cannot be completed due to In-Progress Takes
-
-Scenario: 17._Acquisition_File_Subfiles-Subfile_Details
+Scenario: 13._Acquisition_File_Subfiles-Subfile_Details
 	Given I create a new Acquisition File from row number 22
 	When I add additional information to the Acquisition File Details
 	And I create a new Sub-file from row number 23
 	Then A new Acquisition file is created successfully
 
-Scenario: 18._Acquisition_File_Compensation_Requsition-Sum_of_Subfiles_Compensation_Requisitions
+Scenario: 14._Acquisition_File_Compensation_Requsition-Sum_of_Subfiles_Compensation_Requisitions
 	Given I create a new Acquisition File from row number 22
 	When I add additional information to the Acquisition File Details
 	And I add Properties to the Acquisition File
@@ -119,3 +95,33 @@ Scenario: 18._Acquisition_File_Compensation_Requsition-Sum_of_Subfiles_Compensat
 	And I create Stakeholders within an Acquisition File
 	And I create Compensation Requisition within an Acquisition Subfile
 	Then Main Acquisition File totals are verified successfully from row number 22
+
+Scenario: 15._Acquisition_File_Property_Takes_Logic
+	Given I create a new Acquisition File from row number 19
+	When I add Properties to the Acquisition File
+	And I create Takes within Acquisition File's Properties
+	Then A new Acquisition file is created successfully
+
+Scenario: 16._Acquisition_File_Error_Message-Draft_Items
+	Given I create a new Acquisition File from row number 20
+	When I create Agreements within an Acquisition File
+	And I add additional information to complete the Acquisition File
+	Then Acquisition File cannot be completed due to Draft items
+
+Scenario: 17._Acquisition_File_Error_Message-No_Takes
+	Given I create a new Acquisition File from row number 20
+	When I add additional information to complete the Acquisition File
+	Then Acquisition File cannot be completed without Takes
+
+Scenario: 18._Acquisition_File_Error_Message-Takes_In-Progress
+	Given I create a new Acquisition File from row number 21
+	When I add Properties to the Acquisition File
+	And I create Takes within Acquisition File's Properties
+	And I add additional information to complete the Acquisition File
+	Then Acquisition File cannot be completed due to In-Progress Takes
+
+Scenario: 19._Acquisition_File_Error_Message_H120_In-Progress
+	Given I create a new Acquisition File from row number 20
+	When I generate Compensation Requisition within an Acquisition File
+	And I add additional information to complete the Acquisition File
+	Then Acquisition File cannot be completed due to Draft items

@@ -1,7 +1,6 @@
 ﻿using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
-using System.Data;
 
 namespace PIMS.Tests.Automation.StepDefinitions
 {
@@ -192,6 +191,25 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Delete template
             cdogsTemplates.Delete1stTemplate();
+        }
+
+        [StepDefinition(@"I verify existance of CDOGS Template")]
+        public void VerifyTemplateExists()
+        {
+            //Login to PIMS
+            loginSteps.Idir(userName);
+
+            //Navigate to Admin Tools
+            manageUsers.NavigateAdminTools();
+
+            //Navigate to User Management
+            cdogsTemplates.NavigateAdminTemplates();
+
+            //Select Templates type
+            cdogsTemplates.SelectTemplateType("Payment requisition (H120)");
+
+            //Verify the Document List, if a document exists, it's deleted.
+            cdogsTemplates.VerifyTemplateExistence();
         }
 
         [StepDefinition(@"I create a Financial Code from row number (.*)")]
