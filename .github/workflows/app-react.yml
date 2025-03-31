@@ -68,75 +68,16 @@ jobs:
           name: pr-codecov
           path: pr/
 
-      - name: SonarQube Scan
-        id: scan
-        uses: sonarsource/sonarqube-scan-action@master
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: https://sonarqube-3cd915-tools.apps.silver.devops.gov.bc.ca/
-          PROJECT_KEY: 21faa627-fe70-4a67-89e3-1262a32d2e2c
-          PROJECT_NAME: PIMS-APP
-        with:
-          projectBaseDir: ${{env.working-directory}}
-          args: >
-            -Dsonar.projectKey=21faa627-fe70-4a67-89e3-1262a32d2e2c
-            -Dsonar.projectName=PIMS-APP
-            -Dsonar.qualitygate.wait=true
-
       # Send notifications only if MS_TEAMS_NOTIFY_URL secret has been set
       - name: Failure notification to Teams Channel
         env:
           MS_TEAMS_NOTIFY_URL: ${{ secrets.MS_TEAMS_NOTIFY_URL }}
-        if: env.MS_TEAMS_NOTIFY_URL != '' && failure() && steps.scan.outcome == 'failure'
+        if: env.MS_TEAMS_NOTIFY_URL != '' && failure()
         uses: dragos-cojocari/ms-teams-notification@v1.0.2
         with:
           github-token: ${{ github.token }}
           ms-teams-webhook-uri: ${{ env.MS_TEAMS_NOTIFY_URL }}
-          notification-summary: PIMS APP Sonar Scan FAILED in ${{env.GIT_BRANCH}} environment
+          notification-summary: PIMS APP FAILED in ${{env.GIT_BRANCH}} environment
           notification-color: ff0000
           timezone: America/Los_Angeles
 
-      - name: Find Comment
-        if: failure() && steps.scan.outcome == 'failure' && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
-        uses: peter-evans/find-comment@v1
-        id: fc
-        with:
-          token: ${{secrets.GITHUB_TOKEN}}
-          issue-number: ${{ github.event.pull_request.number }}
-          comment-author: "github-actions[bot]"
-          body-includes: QUALITY GATE STATUS FOR APP-REACT
-
-      - name: Check Quality Gate and Create Comment
-        uses: peter-evans/create-or-update-comment@v1
-        if: failure() && steps.scan.outcome == 'failure' && github.event_name == 'pull_request' && steps.fc.outputs.comment-id == '' && github.event.pull_request.head.repo.full_name == github.repository
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_URL }}
-          PROJECT_KEY: ${{secrets.PROJECT_KEY_APP}}
-        with:
-          issue-number: ${{ github.event.pull_request.number }}
-          body: |
-            QUALITY GATE STATUS FOR APP-REACT: FAILED.
-
-            [View and resolve details on][1]
-
-            [1]: ${{env.SONAR_HOST_URL}}/dashboard?id=${{env.PROJECT_KEY}}
-          reactions: confused
-      - name: Check Quality Gate and Update Comment
-        if: failure() && steps.scan.outcome == 'failure' && github.event_name == 'pull_request' && steps.fc.outputs.comment-id != '' && github.event.pull_request.head.repo.full_name == github.repository
-        uses: peter-evans/create-or-update-comment@v1
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_URL }}
-          PROJECT_KEY: ${{secrets.PROJECT_KEY_APP}}
-        with:
-          comment-id: ${{ steps.fc.outputs.comment-id }}
-          issue-number: ${{ github.event.pull_request.number }}
-          body: |
-            QUALITY GATE STATUS FOR APP-REACT: FAILED.
-
-            [View and resolve details on][1]
-
-            [1]: ${{env.SONAR_HOST_URL}}/dashboard?id=${{env.PROJECT_KEY}}
-          edit-mode: replace
-          reactions: eyes
