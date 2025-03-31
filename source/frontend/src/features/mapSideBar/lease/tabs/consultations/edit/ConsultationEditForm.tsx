@@ -83,8 +83,8 @@ export const ConsultationEditForm: React.FunctionComponent<IConsultationEditForm
                   <Section header={headerTitle}>
                     <SectionField
                       required
-                      labelWidth="4"
-                      contentWidth="6"
+                      labelWidth={{ xs: 4 }}
+                      contentWidth={{ xs: 6 }}
                       label="Approval / Consultation type"
                       tooltip={
                         <TooltipIcon
@@ -102,8 +102,8 @@ export const ConsultationEditForm: React.FunctionComponent<IConsultationEditForm
                     {formikProps.values.consultationTypeCode === 'OTHER' && (
                       <SectionField
                         required
-                        labelWidth="4"
-                        contentWidth="6"
+                        labelWidth={{ xs: 4 }}
+                        contentWidth={{ xs: 6 }}
                         label="Description"
                         tooltip={
                           <TooltipIcon
@@ -116,8 +116,8 @@ export const ConsultationEditForm: React.FunctionComponent<IConsultationEditForm
                       </SectionField>
                     )}
                     <SectionField
-                      labelWidth="4"
-                      contentWidth="6"
+                      labelWidth={{ xs: 4 }}
+                      contentWidth={{ xs: 6 }}
                       label="Requested on"
                       tooltip={
                         <TooltipIcon
@@ -129,8 +129,8 @@ export const ConsultationEditForm: React.FunctionComponent<IConsultationEditForm
                       <FastDatePicker field="requestedOn" formikProps={formikProps} />
                     </SectionField>
                     <SectionField
-                      labelWidth="4"
-                      contentWidth="6"
+                      labelWidth={{ xs: 4 }}
+                      contentWidth={{ xs: 6 }}
                       label="Contact"
                       tooltip={
                         <TooltipIcon
@@ -147,25 +147,37 @@ export const ConsultationEditForm: React.FunctionComponent<IConsultationEditForm
                     </SectionField>
                     {exists(formikProps.values.contact) &&
                       isOrganizationSummary(formikProps.values.contact) && (
-                        <SectionField label="Primary contact" labelWidth="4" contentWidth="6">
+                        <SectionField
+                          label="Primary contact"
+                          labelWidth={{ xs: 4 }}
+                          contentWidth={{ xs: 6 }}
+                        >
                           <PrimaryContactSelector
                             field={`primaryContactId`}
                             contactInfo={formikProps.values.contact}
                           />
                         </SectionField>
                       )}
-                    <SectionField labelWidth="4" contentWidth="2" label="Response received">
+                    <SectionField
+                      labelWidth={{ xs: 4 }}
+                      contentWidth={{ xs: 2 }}
+                      label="Response received"
+                    >
                       <YesNoSelect field="isResponseReceived" notNullable />
                     </SectionField>
                     {formikProps.values.isResponseReceived === true && (
-                      <SectionField labelWidth="4" contentWidth="auto" label="Response received on">
+                      <SectionField
+                        labelWidth={{ xs: 4 }}
+                        contentWidth={{ xs: 'auto' }}
+                        label="Response received on"
+                      >
                         <FastDatePicker field="responseReceivedDate" formikProps={formikProps} />
                       </SectionField>
                     )}
                     <SectionField
                       required
-                      labelWidth="4"
-                      contentWidth="6"
+                      labelWidth={{ xs: 4 }}
+                      contentWidth={{ xs: 6 }}
                       label="Outcome"
                       tooltip={
                         <TooltipIcon
@@ -181,8 +193,8 @@ export const ConsultationEditForm: React.FunctionComponent<IConsultationEditForm
                       />
                     </SectionField>
                     <SectionField
-                      labelWidth="4"
-                      contentWidth="12"
+                      labelWidth={{ xs: 4 }}
+                      contentWidth={{ xs: 12 }}
                       label="Comments"
                       required={
                         formikProps.values.consultationOutcomeTypeCode ===

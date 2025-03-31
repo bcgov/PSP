@@ -82,17 +82,17 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
       <Row className="no-gutters">
         <Col xs="7">
           <Row className="justify-content-start">
-            <HeaderLabelCol label="PID #:" labelWidth="3" />
+            <HeaderLabelCol label="PID #:" labelWidth={{ xs: 3 }} />
             <HeaderContentCol>{pid}</HeaderContentCol>
             <HeaderLabelCol label="PIN #:" />
             <HeaderContentCol>
               <span className="pl-2">{pin}</span>
             </HeaderContentCol>
           </Row>
-          <HeaderField label="Civic Address:" labelWidth="3" contentWidth="9">
+          <HeaderField label="Civic Address:" labelWidth={{ xs: 3 }} contentWidth={{ xs: 9 }}>
             {exists(apiProperty?.address) ? formatApiAddress(apiProperty!.address) : '-'}
           </HeaderField>
-          <HeaderField label="Plan #:" labelWidth="3" contentWidth="9">
+          <HeaderField label="Plan #:" labelWidth={{ xs: 3 }} contentWidth={{ xs: 9 }}>
             {property?.planNumber}
           </HeaderField>
           {exists(apiProperty) && (

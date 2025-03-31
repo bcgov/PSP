@@ -91,38 +91,38 @@ export const PropertyActivityDetailView: React.FunctionComponent<
                 </StyledEditWrapper>
 
                 <Section header="Activity Details">
-                  <SectionField label="Activity type" contentWidth="7">
+                  <SectionField label="Activity type" contentWidth={{ xs: 7 }}>
                     {props.activity.activityTypeCode?.description}
                   </SectionField>
-                  <SectionField label="Sub-type" contentWidth="7">
+                  <SectionField label="Sub-type" contentWidth={{ xs: 7 }}>
                     {props.activity.activitySubtypeCode?.description}
                   </SectionField>
-                  <SectionField label="Activity status" contentWidth="7">
+                  <SectionField label="Activity status" contentWidth={{ xs: 7 }}>
                     {props.activity.activityStatusTypeCode?.description}
                   </SectionField>
-                  <SectionField label="Requested added date" contentWidth="7">
+                  <SectionField label="Requested added date" contentWidth={{ xs: 7 }}>
                     {prettyFormatDate(props.activity.requestAddedDateOnly)}
                   </SectionField>
-                  <SectionField label="Completion date" contentWidth="7">
+                  <SectionField label="Completion date" contentWidth={{ xs: 7 }}>
                     {prettyFormatDate(props.activity.completionDateOnly)}
                   </SectionField>
-                  <SectionField label="Description" contentWidth="7">
+                  <SectionField label="Description" contentWidth={{ xs: 7 }}>
                     {props.activity.description}
                   </SectionField>
 
-                  <SectionField label="Ministry contacts" contentWidth="7">
+                  <SectionField label="Ministry contacts" contentWidth={{ xs: 7 }}>
                     {props.activity.ministryContacts?.map(contact => (
                       <>{contact.person !== null && <ContactLink person={contact.person} />}</>
                     ))}
                   </SectionField>
                   <SectionField
                     label="Requestor"
-                    contentWidth="7"
+                    contentWidth={{ xs: 7 }}
                     tooltip="Document the source of the request by entering the name of the person, organization or other entity from which the request has been received"
                   >
                     {props.activity.requestSource}
                   </SectionField>
-                  <SectionField label="Involved parties" contentWidth="8">
+                  <SectionField label="Involved parties" contentWidth={{ xs: 8 }}>
                     {props.activity.involvedParties?.map(contact => (
                       <>
                         {contact.person !== null && <ContactLink person={contact.person} />}
@@ -132,7 +132,7 @@ export const PropertyActivityDetailView: React.FunctionComponent<
                       </>
                     ))}
                   </SectionField>
-                  <SectionField label="Service provider" contentWidth="7">
+                  <SectionField label="Service provider" contentWidth={{ xs: 7 }}>
                     <>
                       {props.activity.serviceProviderPerson !== null && (
                         <ContactLink person={props.activity.serviceProviderPerson} />
@@ -151,16 +151,16 @@ export const PropertyActivityDetailView: React.FunctionComponent<
                   />
                 ))}
                 <Section header="Invoices Total">
-                  <SectionField label="Total (before tax)" contentWidth="7">
+                  <SectionField label="Total (before tax)" contentWidth={{ xs: 7 }}>
                     {formatMoney(pretaxAmount)}
                   </SectionField>
-                  <SectionField label="GST amount" contentWidth="7">
+                  <SectionField label="GST amount" contentWidth={{ xs: 7 }}>
                     {formatMoney(gstAmount)}
                   </SectionField>
-                  <SectionField label="PST amount" contentWidth="7">
+                  <SectionField label="PST amount" contentWidth={{ xs: 7 }}>
                     {formatMoney(pstAmount)}
                   </SectionField>
-                  <SectionField label="Total amount" contentWidth="7">
+                  <SectionField label="Total amount" contentWidth={{ xs: 7 }}>
                     {formatMoney(totalAmount)}
                   </SectionField>
                 </Section>

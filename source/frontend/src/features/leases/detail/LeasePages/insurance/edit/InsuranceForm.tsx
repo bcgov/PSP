@@ -33,7 +33,7 @@ const InsuranceForm: React.FunctionComponent<IInsuranceRowProps> = ({ nameSpace 
       <SectionField label="Insurance in place">
         <YesNoSelect field={withNameSpace(nameSpace, 'isInsuranceInPlaceSelect')} />
       </SectionField>
-      <SectionField label="Limit ($)" contentWidth="3">
+      <SectionField label="Limit ($)" contentWidth={{ xs: 3 }}>
         <FastCurrencyInput
           formikProps={formikProps}
           field={withNameSpace(nameSpace, 'coverageLimit')}
@@ -42,7 +42,7 @@ const InsuranceForm: React.FunctionComponent<IInsuranceRowProps> = ({ nameSpace 
       <SectionField label="Policy expiry">
         <FastDatePicker field={withNameSpace(nameSpace, 'expiryDate')} formikProps={formikProps} />
       </SectionField>
-      <SectionField label="Description of coverage" contentWidth="12">
+      <SectionField label="Description of coverage" contentWidth={{ xs: 12 }}>
         <TextArea
           rows={4}
           field={withNameSpace(nameSpace, 'coverageDescription')}

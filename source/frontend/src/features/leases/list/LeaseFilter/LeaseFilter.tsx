@@ -3,13 +3,14 @@ import Multiselect from 'multiselect-react-dropdown';
 import React, { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaTimes } from 'react-icons/fa';
+import styled from 'styled-components';
 
 import { ResetButton, SearchButton } from '@/components/common/buttons';
-import { FastDatePicker, Input } from '@/components/common/form';
+import { FastDatePicker, Form, Input } from '@/components/common/form';
 import { UserRegionSelectContainer } from '@/components/common/form/UserRegionSelect/UserRegionSelectContainer';
 import { SelectInput } from '@/components/common/List/SelectInput';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { ColButtons, FilterBoxForm } from '@/components/common/styles';
+import { ColButtons } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { LEASE_PROGRAM_TYPES, LEASE_STATUS_TYPES } from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
@@ -108,7 +109,7 @@ export const LeaseFilter: React.FunctionComponent<React.PropsWithChildren<ILease
       {formikProps => (
         <FilterBoxForm className="p-3">
           <Row>
-            <Col xs="6">
+            <Col xl="6">
               <Row>
                 <Col xs="auto">
                   <strong>Search by:</strong>
@@ -208,8 +209,8 @@ export const LeaseFilter: React.FunctionComponent<React.PropsWithChildren<ILease
                 </Col>
               </Row>
             </Col>
-            <Col xs="5">
-              <SectionField label="Expiry date" labelWidth="2">
+            <Col xl="5" xs="12">
+              <SectionField className="pb-0" label="Expiry date" labelWidth={{ xl: '2' }}>
                 <Row>
                   <Col>
                     <FastDatePicker
@@ -227,7 +228,7 @@ export const LeaseFilter: React.FunctionComponent<React.PropsWithChildren<ILease
                   </Col>
                 </Row>
               </SectionField>
-              <SectionField label="" labelWidth="2">
+              <SectionField label="" labelWidth={{ xl: '2' }}>
                 <Row>
                   <Col>
                     <UserRegionSelectContainer field="regionType" placeholder="All Regions" />
@@ -270,5 +271,17 @@ export const LeaseFilter: React.FunctionComponent<React.PropsWithChildren<ILease
     </Formik>
   );
 };
+
+const FilterBoxForm = styled(Form)`
+  background-color: ${({ theme }) => theme.css.filterBoxColor};
+  border-radius: 0.5rem;
+  .idir-input-group {
+    .form-select {
+      @media only screen and (max-width: 1199px) {
+        width: 8rem;
+      }
+    }
+  }
+`;
 
 export default LeaseFilter;

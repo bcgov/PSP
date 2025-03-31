@@ -54,16 +54,16 @@ export const InvoiceTotalsForm: React.FunctionComponent<IInvoiceTotalsForm> = ({
         </SimpleSectionHeader>
       }
     >
-      <SectionField label="Total (before tax)" contentWidth="7">
+      <SectionField label="Total (before tax)" contentWidth={{ xs: 7 }}>
         <FastCurrencyInput field="pretaxAmount" formikProps={formikProps} disabled />
       </SectionField>
-      <SectionField label="GST amount" contentWidth="7">
+      <SectionField label="GST amount" contentWidth={{ xs: 7 }}>
         <FastCurrencyInput field="gstAmount" formikProps={formikProps} disabled />
       </SectionField>
-      <SectionField label="PST amount" contentWidth="7">
+      <SectionField label="PST amount" contentWidth={{ xs: 7 }}>
         <FastCurrencyInput field="pstAmount" formikProps={formikProps} disabled />
       </SectionField>
-      <SectionField label="Total amount" contentWidth="7">
+      <SectionField label="Total amount" contentWidth={{ xs: 7 }}>
         <FastCurrencyInput field="totalAmount" formikProps={formikProps} disabled />
       </SectionField>
     </Section>

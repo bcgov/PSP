@@ -1,5 +1,6 @@
+import clsx from 'classnames';
 import React from 'react';
-import { Col, Row } from 'react-bootstrap';
+import { Col, ColProps, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
 import { renderTooltip } from '@/utils/formUtils';
@@ -8,11 +9,12 @@ export interface IHeaderLabelColProps {
   label: string | null;
   /** It accepts either a string or a custom React tooltip component  */
   tooltip?: React.ReactNode;
-  labelWidth?: '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12' | 'auto';
+  labelWidth?: ColProps;
+  className?: string;
 }
 
 export interface IHeaderContentColProps {
-  contentWidth?: '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12' | 'auto';
+  contentWidth?: ColProps;
   valueTestId?: string | null;
 }
 
@@ -33,7 +35,7 @@ export const HeaderField: React.FC<React.PropsWithChildren<IHeaderFieldProps>> =
 };
 
 export const HeaderLabelCol: React.FC<IHeaderLabelColProps> = props => (
-  <Col xs={props.labelWidth ?? 'auto'} className="pr-0 text-left">
+  <Col {...props.labelWidth} className={clsx('pr-0', 'text-left', props.className)}>
     {props.label && (
       <StyledHeaderLabel>
         {props.label}
@@ -47,11 +49,7 @@ export const HeaderContentCol: React.FC<
   React.PropsWithChildren<IHeaderContentColProps>
 > = props => {
   return (
-    <Col
-      xs={props.contentWidth ?? 'auto'}
-      className="pl-1 text-left"
-      data-testid={props.valueTestId}
-    >
+    <Col {...props.contentWidth} className="pl-1 text-left" data-testid={props.valueTestId}>
       {props.children}
     </Col>
   );

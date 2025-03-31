@@ -31,18 +31,18 @@ const ProjectSummaryView: React.FunctionComponent<
         ) : null}
       </StyledEditWrapper>
       <Section header="Project Details" isCollapsable initiallyExpanded>
-        <SectionField label="Project summary" labelWidth={'12'}>
+        <SectionField label="Project summary" labelWidth={{ xs: 12 }}>
           {project.note}
         </SectionField>
       </Section>
       <Section header="Associated Codes" isCollapsable initiallyExpanded>
-        <SectionField label="Cost type" labelWidth="3">
+        <SectionField label="Cost type" labelWidth={{ xs: 3 }}>
           {project.costTypeCode?.description ?? ''}
         </SectionField>
-        <SectionField label="Work activity" labelWidth="3">
+        <SectionField label="Work activity" labelWidth={{ xs: 3 }}>
           {project.workActivityCode?.description ?? ''}
         </SectionField>
-        <SectionField label="Business function" labelWidth="3">
+        <SectionField label="Business function" labelWidth={{ xs: 3 }}>
           {project.businessFunctionCode?.description ?? ''}
         </SectionField>
       </Section>

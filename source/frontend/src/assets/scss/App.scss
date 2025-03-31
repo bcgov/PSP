@@ -95,6 +95,16 @@ a {
     font-size: 1.4rem;
   }
 
+  .searchWrapper {
+    min-height: fit-content;
+    height: 3.8rem;
+    padding-top: .6rem !important;
+    padding-bottom: .6rem !important;
+    input {
+      margin: 0;
+    }
+  }
+
   .page-link {
     padding: 0.8rem 1.2rem;
     color: $link-color;

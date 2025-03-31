@@ -30,8 +30,8 @@ export const columns: ColumnWithProps<AcquisitionSearchResultModel>[] = [
     align: 'right',
     clickable: true,
     sortable: true,
-    width: 10,
-    maxWidth: 20,
+    width: 30,
+    maxWidth: 30,
     Cell: (props: CellProps<AcquisitionSearchResultModel>) => {
       const { hasClaim } = useKeycloakWrapper();
       if (hasClaim(Claims.ACQUISITION_VIEW)) {
@@ -50,8 +50,8 @@ export const columns: ColumnWithProps<AcquisitionSearchResultModel>[] = [
     align: 'right',
     clickable: true,
     sortable: true,
-    width: 10,
-    maxWidth: 20,
+    width: 25,
+    maxWidth: 25,
   },
   {
     Header: 'Acquisition file name',

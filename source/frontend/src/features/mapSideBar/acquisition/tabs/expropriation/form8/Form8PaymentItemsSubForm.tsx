@@ -98,7 +98,7 @@ export const Form8PaymentItemsSubForm: React.FunctionComponent<IForm8PaymentItem
                   />
                 </StyledSubHeader>
 
-                <SectionField label="Item" labelWidth="4" required>
+                <SectionField label="Item" labelWidth={{ xs: 4 }} required>
                   <Select
                     field={`paymentItems[${index}].paymentItemTypeCode`}
                     options={paymentItemTypesOptions}
@@ -116,7 +116,7 @@ export const Form8PaymentItemsSubForm: React.FunctionComponent<IForm8PaymentItem
                     }}
                   />
                 </SectionField>
-                <SectionField label="GST applicable?" labelWidth="4">
+                <SectionField label="GST applicable?" labelWidth={{ xs: 4 }}>
                   <YesNoSelect
                     notNullable={true}
                     field={`paymentItems[${index}].isGstRequired`}

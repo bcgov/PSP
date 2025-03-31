@@ -18,11 +18,11 @@ const ProjectHeader: React.FunctionComponent<React.PropsWithChildren<IProjectHea
 }) => {
   return (
     <StyledRow className="no-gutters">
-      <StyledLeftHeaderPane xs="7">
-        <HeaderField label="Project:" labelWidth="3" contentWidth="9">
+      <StyledLeftHeaderPane xl="7" xs="12">
+        <HeaderField label="Project:" labelWidth={{ xs: 3 }} contentWidth={{ xs: 9 }}>
           {project?.code} {project?.description}
         </HeaderField>
-        <HeaderField label="MoTI region:" labelWidth="3" contentWidth="9">
+        <HeaderField label="MoTI region:" labelWidth={{ xs: 3 }} contentWidth={{ xs: 9 }}>
           {project?.regionCode?.description}
         </HeaderField>
       </StyledLeftHeaderPane>

@@ -34,20 +34,20 @@ export const DetailAdministration: React.FunctionComponent<
   return (
     <>
       <Section initiallyExpanded={true} isCollapsable={true} header="Administration">
-        <SectionField label="Program" labelWidth="3">
+        <SectionField label="Program" labelWidth={{ xs: 3 }}>
           {lease.programName}
           {lease.otherProgramType && lease?.programType?.id === 'OTHER' && (
             <>{lease.otherProgramType}</>
           )}
         </SectionField>
-        <SectionField label="Account type" labelWidth="3">
+        <SectionField label="Account type" labelWidth={{ xs: 3 }}>
           {lease.type?.description}
           {lease.otherType && lease?.type?.id === 'OTHER' && <>{lease.otherType}</>}
         </SectionField>
-        <SectionField label="Receivable to" labelWidth="3">
+        <SectionField label="Receivable to" labelWidth={{ xs: 3 }}>
           {lease.paymentReceivableType?.description}
         </SectionField>
-        <SectionField label="Purpose(s)" labelWidth="3">
+        <SectionField label="Purpose(s)" labelWidth={{ xs: 3 }}>
           <Multiselect
             disable
             disablePreSelectedValues
@@ -61,31 +61,31 @@ export const DetailAdministration: React.FunctionComponent<
             x => x.leasePurposeTypeCode.id === ApiGen_CodeTypes_LeasePurposeTypes.OTHER,
           ) && <>{lease.leasePurposes[otherPurposeIndex].purposeOtherDescription}</>}
         </SectionField>
-        <SectionField label="Initiator" labelWidth="3">
+        <SectionField label="Initiator" labelWidth={{ xs: 3 }}>
           {lease.initiatorType?.description}
         </SectionField>
-        <SectionField label="Responsibility" labelWidth="3">
+        <SectionField label="Responsibility" labelWidth={{ xs: 3 }}>
           {lease.responsibilityType?.description}
         </SectionField>
-        <SectionField label="Effective date" labelWidth="3">
+        <SectionField label="Effective date" labelWidth={{ xs: 3 }}>
           {prettyFormatDate(responsibilityDate)}
         </SectionField>
-        <SectionField label="MOTI contact" labelWidth="3">
+        <SectionField label="MOTI contact" labelWidth={{ xs: 3 }}>
           {lease.motiName}
         </SectionField>
-        <SectionField label="MOTI region" labelWidth="3">
+        <SectionField label="MOTI region" labelWidth={{ xs: 3 }}>
           {lease.region?.description}
         </SectionField>
         <SectionField
           label="Intended use"
-          labelWidth="3"
+          labelWidth={{ xs: 3 }}
           tooltip="The purpose for which the license is issued, as per the agreement"
         >
           {intendedUse}
         </SectionField>
         <SectionField
           label="Primary arbitration city"
-          labelWidth="3"
+          labelWidth={{ xs: 3 }}
           valueTestId="primaryArbitrationCity"
         >
           {lease.primaryArbitrationCity}

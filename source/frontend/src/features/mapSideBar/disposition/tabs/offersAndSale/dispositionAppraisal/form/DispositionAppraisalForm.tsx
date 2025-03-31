@@ -89,19 +89,19 @@ const DispositionAppraisalForm: React.FC<IDispositionAppraisalFormProps> = ({
               ></LoadingBackdrop>
               <StyledContent>
                 <Section header="Appraisal and Assessment">
-                  <SectionField label="Appraisal value ($)" contentWidth="5">
+                  <SectionField label="Appraisal value ($)" contentWidth={{ xs: 5 }}>
                     <FastCurrencyInput formikProps={formikProps} field="appraisedValueAmount" />
                   </SectionField>
                   <SectionField label="Appraisal date">
                     <FastDatePicker field="appraisalDate" formikProps={formikProps} />
                   </SectionField>
-                  <SectionField label="BC assessment value ($)" contentWidth="5">
+                  <SectionField label="BC assessment value ($)" contentWidth={{ xs: 5 }}>
                     <FastCurrencyInput formikProps={formikProps} field="bcaValueAmount" />
                   </SectionField>
                   <SectionField label="BC assessment roll year">
                     <FastDateYearPicker field="bcaRollYear" formikProps={formikProps} />
                   </SectionField>
-                  <SectionField label="List price ($)" contentWidth="5">
+                  <SectionField label="List price ($)" contentWidth={{ xs: 5 }}>
                     <FastCurrencyInput formikProps={formikProps} field="listPriceAmount" />
                   </SectionField>
                 </Section>
