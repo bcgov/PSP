@@ -356,6 +356,148 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
+        [Xunit.SkippableFactAttribute(DisplayName="09._Disposition_File_Main_Path")]
+        [Xunit.TraitAttribute("FeatureTitle", "DispositionFiles")]
+        [Xunit.TraitAttribute("Description", "09._Disposition_File_Main_Path")]
+        public async System.Threading.Tasks.Task _09__Disposition_File_Main_Path()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("09._Disposition_File_Main_Path", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 50
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 51
+ await testRunner.GivenAsync("I create a new Disposition File from row number 13", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 52
+ await testRunner.WhenAsync("I add Properties to the Disposition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 53
+ await testRunner.AndAsync("I create Appraisal, Assessment, Offers and Sales Details within a Disposition Fil" +
+                        "e", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 54
+ await testRunner.AndAsync("I add additional information to the Disposition File Details", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 55
+ await testRunner.ThenAsync("Disposition File Main Path completed successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="10._Disposition_File_Sales_Price_Error")]
+        [Xunit.TraitAttribute("FeatureTitle", "DispositionFiles")]
+        [Xunit.TraitAttribute("Description", "10._Disposition_File_Sales_Price_Error")]
+        public async System.Threading.Tasks.Task _10__Disposition_File_Sales_Price_Error()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("10._Disposition_File_Sales_Price_Error", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 57
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 58
+ await testRunner.GivenAsync("I create a new Disposition File from row number 14", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 59
+ await testRunner.WhenAsync("I change status of the Disposition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 60
+ await testRunner.ThenAsync("Disposition File without Sales Price error appears", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="11._Disposition_File_Not_Sold_Status_Error")]
+        [Xunit.TraitAttribute("FeatureTitle", "DispositionFiles")]
+        [Xunit.TraitAttribute("Description", "11._Disposition_File_Not_Sold_Status_Error")]
+        public async System.Threading.Tasks.Task _11__Disposition_File_Not_Sold_Status_Error()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("11._Disposition_File_Not_Sold_Status_Error", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 62
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 63
+ await testRunner.GivenAsync("I create a new Disposition File from row number 14", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 64
+ await testRunner.WhenAsync("I create Appraisal, Assessment, Offers and Sales Details within a Disposition Fil" +
+                        "e", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 65
+ await testRunner.AndAsync("I change status of the Disposition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 66
+ await testRunner.ThenAsync("Disposition File without SOLD Status error appears", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="12._Disposition_File_Non-Core_Inventory_Error")]
+        [Xunit.TraitAttribute("FeatureTitle", "DispositionFiles")]
+        [Xunit.TraitAttribute("Description", "12._Disposition_File_Non-Core_Inventory_Error")]
+        public async System.Threading.Tasks.Task _12__Disposition_File_Non_Core_Inventory_Error()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("12._Disposition_File_Non-Core_Inventory_Error", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 68
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 69
+ await testRunner.GivenAsync("I create a new Disposition File from row number 14", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 70
+ await testRunner.WhenAsync("I add Properties to the Disposition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 71
+ await testRunner.AndAsync("I create Appraisal, Assessment, Offers and Sales Details within a Disposition Fil" +
+                        "e", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 72
+ await testRunner.AndAsync("I change status of the Disposition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 73
+ await testRunner.ThenAsync("Disposition File with non-Core property error appears", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
         [System.CodeDom.Compiler.GeneratedCodeAttribute("Reqnroll", "2.0.0.0")]
         [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
         public class FixtureData : object, Xunit.IAsyncLifetime

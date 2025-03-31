@@ -147,6 +147,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Compensation Details Elements
         private readonly By requisitionCancelBttn = By.XPath("//button[@id='close-tray']/parent::h1/following-sibling::div/div/div/div[2]/div/div[2]/button");
+
         //Acquisition File Confirmation Modal Elements
         private readonly By acquisitionFileConfirmationModal = By.CssSelector("div[class='modal-content']");
 
@@ -189,6 +190,14 @@ namespace PIMS.Tests.Automation.PageObjects
 
             WaitUntilClickable(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper'] div div button[data-testid='compensation-view-"+ index +"']"));
             webDriver.FindElement(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper'] div div button[data-testid='compensation-view-"+ index +"']")).Click();
+        }
+
+        public void GenerateH120Document()
+        {
+            Wait();
+
+            WaitUntilClickable(requisitionGenerateH120Bttn);
+            webDriver.FindElement(requisitionGenerateH120Bttn).Click();
         }
 
         public void DeleteCompensationRequisition(int index)
@@ -696,6 +705,19 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueContentEquals(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+lastCreatedCompensationReq+")  div:nth-child(4)"), compensation.CompensationStatus);
             AssertTrueIsDisplayed(By.CssSelector("button[data-testid='compensation-view-"+ elementIndex +"']"));
             //AssertTrueIsDisplayed(By.CssSelector("button[data-testid='compensation-delete-"+ elementIndex +"']"));
+        }
+
+        public void VerifyMissingTemplateErrorMessage()
+        {
+            Wait(3000);
+            Assert.Equal("The requested document template was not found. This indicates that the PIMS administrator needs to add a template to the system for this document type. Please contact your system administrator, and ask them to add a template for this document type.", sharedModals.ToastifyText());
+        }
+
+        public void VerifyIncompleteAgreementH120ErrorMessage()
+        {
+            Wait(3000);
+            Assert.Contains("You cannot complete a file when there are one or more draft agreements, or one or more draft compensations requisitions.", sharedModals.ModalContent());
+            Assert.Contains("Remove any draft compensations requisitions. Agreements should be set to final, cancelled, or removed.", sharedModals.ModalContent());
         }
 
         private void CreateFinancialActivity(CompensationActivity activity)
