@@ -2,10 +2,18 @@
 
 exports[`Lease and License List View > matches snapshot 1`] = `
 <DocumentFragment>
-  <div
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div
     class="Toastify"
   />
-  <div />
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div />
   .c14.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -284,10 +292,6 @@ exports[`Lease and License List View > matches snapshot 1`] = `
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c11 .react-datepicker-wrapper {
-  max-width: 17rem;
-}
-
 .c12.c12.form-control.is-valid {
   background-image: none;
 }
@@ -307,6 +311,7 @@ exports[`Lease and License List View > matches snapshot 1`] = `
 
 .c8:not(:first-child) {
   padding-left: 0;
+  padding-right: 0;
 }
 
 .c8:not(:first-child) .form-control {
@@ -353,11 +358,6 @@ exports[`Lease and License List View > matches snapshot 1`] = `
   margin-bottom: 2.4rem;
 }
 
-.c6 {
-  background-color: #d9eaf7;
-  border-radius: 0.5rem;
-}
-
 .c5 {
   -webkit-align-items: center;
   -webkit-box-align: center;
@@ -369,6 +369,7 @@ exports[`Lease and License List View > matches snapshot 1`] = `
 
 .c13 {
   border-left: 0.2rem solid white;
+  min-width: 2.5rem;
 }
 
 .c2 {
@@ -404,6 +405,11 @@ exports[`Lease and License List View > matches snapshot 1`] = `
   font-weight: bold;
 }
 
+.c6 {
+  background-color: #d9eaf7;
+  border-radius: 0.5rem;
+}
+
 .c4 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -425,6 +431,12 @@ exports[`Lease and License List View > matches snapshot 1`] = `
 
 .c4 svg {
   vertical-align: baseline;
+}
+
+@media only screen and (max-width:1199px) {
+  .c6 .idir-input-group .form-select {
+    width: 8rem;
+  }
 }
 
 <div
@@ -477,7 +489,7 @@ exports[`Lease and License List View > matches snapshot 1`] = `
                 class="row"
               >
                 <div
-                  class="col-6"
+                  class="col-xl-6"
                 >
                   <div
                     class="row"
@@ -499,7 +511,7 @@ exports[`Lease and License List View > matches snapshot 1`] = `
                           class="col-xl-7"
                         >
                           <div
-                            class="idir-input-group flex-nowrap input-group row"
+                            class="idir-input-group flex-nowrap input-group row no-gutters"
                           >
                             <div
                               class="c7 col-auto"
@@ -701,13 +713,13 @@ exports[`Lease and License List View > matches snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="col-5"
+                  class="col-xl-5 col-12"
                 >
                   <div
-                    class="pb-2 row"
+                    class="pb-0 row"
                   >
                     <div
-                      class="pr-0 text-left col-2"
+                      class="pr-0 text-left col-xl-2"
                     >
                       <label
                         class="c9"
@@ -796,7 +808,7 @@ exports[`Lease and License List View > matches snapshot 1`] = `
                     class="pb-2 row"
                   >
                     <div
-                      class="pr-0 text-left col-2"
+                      class="pr-0 text-left col-xl-2"
                     />
                     <div
                       class="c10 text-left col"

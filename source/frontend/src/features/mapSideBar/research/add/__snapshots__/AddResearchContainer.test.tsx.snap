@@ -2,10 +2,18 @@
 
 exports[`AddResearchContainer component > renders as expected 1`] = `
 <DocumentFragment>
-  <div
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div
     class="Toastify"
   />
-  <div />
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div />
   .c4.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -225,6 +233,7 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
 
 .c32:not(:first-child) {
   padding-left: 0;
+  padding-right: 0;
 }
 
 .c32:not(:first-child) .form-control {
@@ -539,15 +548,6 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c30 .idir-input-group .input-group-prepend select {
-  width: 16rem;
-}
-
-.c30 .idir-input-group input {
-  width: 18rem;
-  max-width: 100%;
-}
-
 .c34 {
   font-size: 1.6rem;
   color: #9F9D9C;
@@ -566,6 +566,12 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
   background-color: #f2f2f2;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+}
+
+@media only screen and (max-width:1199px) {
+  .c0.expanded {
+    min-width: 70rem;
+  }
 }
 
 <div
@@ -1101,7 +1107,7 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
                                     class="col-xl-6"
                                   >
                                     <div
-                                      class="flex-nowrap input-group row"
+                                      class="flex-nowrap input-group row no-gutters"
                                     >
                                       <div
                                         class="c31 col-auto"

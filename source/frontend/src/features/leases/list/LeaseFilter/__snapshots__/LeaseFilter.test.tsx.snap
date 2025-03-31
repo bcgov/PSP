@@ -2,10 +2,18 @@
 
 exports[`Lease Filter > matches snapshot 1`] = `
 <DocumentFragment>
-  <div
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div
     class="Toastify"
   />
-  <div />
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div />
   .c8.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -228,10 +236,6 @@ exports[`Lease Filter > matches snapshot 1`] = `
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c5 .react-datepicker-wrapper {
-  max-width: 17rem;
-}
-
 .c6.c6.form-control.is-valid {
   background-image: none;
 }
@@ -251,6 +255,7 @@ exports[`Lease Filter > matches snapshot 1`] = `
 
 .c2:not(:first-child) {
   padding-left: 0;
+  padding-right: 0;
 }
 
 .c2:not(:first-child) .form-control {
@@ -258,13 +263,9 @@ exports[`Lease Filter > matches snapshot 1`] = `
   border-bottom-left-radius: 0;
 }
 
-.c0 {
-  background-color: #d9eaf7;
-  border-radius: 0.5rem;
-}
-
 .c7 {
   border-left: 0.2rem solid white;
+  min-width: 2.5rem;
 }
 
 .c4.required::before {
@@ -278,6 +279,17 @@ exports[`Lease Filter > matches snapshot 1`] = `
   font-weight: bold;
 }
 
+.c0 {
+  background-color: #d9eaf7;
+  border-radius: 0.5rem;
+}
+
+@media only screen and (max-width:1199px) {
+  .c0 .idir-input-group .form-select {
+    width: 8rem;
+  }
+}
+
 <form
     class="c0 p-3"
     novalidate=""
@@ -286,7 +298,7 @@ exports[`Lease Filter > matches snapshot 1`] = `
       class="row"
     >
       <div
-        class="col-6"
+        class="col-xl-6"
       >
         <div
           class="row"
@@ -308,7 +320,7 @@ exports[`Lease Filter > matches snapshot 1`] = `
                 class="col-xl-7"
               >
                 <div
-                  class="idir-input-group flex-nowrap input-group row"
+                  class="idir-input-group flex-nowrap input-group row no-gutters"
                 >
                   <div
                     class="c1 col-auto"
@@ -510,13 +522,13 @@ exports[`Lease Filter > matches snapshot 1`] = `
         </div>
       </div>
       <div
-        class="col-5"
+        class="col-xl-5 col-12"
       >
         <div
-          class="pb-2 row"
+          class="pb-0 row"
         >
           <div
-            class="pr-0 text-left col-2"
+            class="pr-0 text-left col-xl-2"
           >
             <label
               class="c3"
@@ -605,7 +617,7 @@ exports[`Lease Filter > matches snapshot 1`] = `
           class="pb-2 row"
         >
           <div
-            class="pr-0 text-left col-2"
+            class="pr-0 text-left col-xl-2"
           />
           <div
             class="c4 text-left col"

@@ -20,10 +20,6 @@ exports[`PeriodForm component > renders as expected 1`] = `
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c6 .react-datepicker-wrapper {
-  max-width: 17rem;
-}
-
 .c7.c7.form-control.is-valid {
   background-image: none;
 }
@@ -814,10 +810,6 @@ exports[`PeriodForm component > renders with data as expected 1`] = `
 
 .c6 .react-datepicker__view-calendar-icon input {
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
-}
-
-.c6 .react-datepicker-wrapper {
-  max-width: 17rem;
 }
 
 .c7.c7.form-control.is-valid {

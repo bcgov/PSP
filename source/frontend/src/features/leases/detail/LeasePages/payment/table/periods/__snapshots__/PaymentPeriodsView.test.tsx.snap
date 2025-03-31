@@ -6,7 +6,7 @@ exports[`PeriodsForm component > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c3.btn {
+  .c4.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,19 +35,19 @@ exports[`PeriodsForm component > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c3.btn .Button__value {
+.c4.btn .Button__value {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
-.c3.btn:hover {
+.c4.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c3.btn:focus {
+.c4.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -55,31 +55,31 @@ exports[`PeriodsForm component > renders as expected 1`] = `
   box-shadow: none;
 }
 
-.c3.btn.btn-primary {
+.c4.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c3.btn.btn-primary:hover,
-.c3.btn.btn-primary:active,
-.c3.btn.btn-primary:focus {
+.c4.btn.btn-primary:hover,
+.c4.btn.btn-primary:active,
+.c4.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c3.btn.btn-secondary {
+.c4.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c3.btn.btn-secondary:hover,
-.c3.btn.btn-secondary:active,
-.c3.btn.btn-secondary:focus {
+.c4.btn.btn-secondary:hover,
+.c4.btn.btn-secondary:active,
+.c4.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c3.btn.btn-info {
+.c4.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -87,66 +87,66 @@ exports[`PeriodsForm component > renders as expected 1`] = `
   padding-right: 0.6rem;
 }
 
-.c3.btn.btn-info:hover,
-.c3.btn.btn-info:active,
-.c3.btn.btn-info:focus {
+.c4.btn.btn-info:hover,
+.c4.btn.btn-info:active,
+.c4.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c3.btn.btn-light {
+.c4.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c3.btn.btn-light:hover,
-.c3.btn.btn-light:active,
-.c3.btn.btn-light:focus {
+.c4.btn.btn-light:hover,
+.c4.btn.btn-light:active,
+.c4.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c3.btn.btn-dark {
+.c4.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c3.btn.btn-dark:hover,
-.c3.btn.btn-dark:active,
-.c3.btn.btn-dark:focus {
+.c4.btn.btn-dark:hover,
+.c4.btn.btn-dark:active,
+.c4.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c3.btn.btn-danger {
+.c4.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c3.btn.btn-danger:hover,
-.c3.btn.btn-danger:active,
-.c3.btn.btn-danger:focus {
+.c4.btn.btn-danger:hover,
+.c4.btn.btn-danger:active,
+.c4.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c3.btn.btn-warning {
+.c4.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c3.btn.btn-warning:hover,
-.c3.btn.btn-warning:active,
-.c3.btn.btn-warning:focus {
+.c4.btn.btn-warning:hover,
+.c4.btn.btn-warning:active,
+.c4.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c3.btn.btn-link {
+.c4.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -170,9 +170,9 @@ exports[`PeriodsForm component > renders as expected 1`] = `
   text-decoration: underline;
 }
 
-.c3.btn.btn-link:hover,
-.c3.btn.btn-link:active,
-.c3.btn.btn-link:focus {
+.c4.btn.btn-link:hover,
+.c4.btn.btn-link:active,
+.c4.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -182,15 +182,15 @@ exports[`PeriodsForm component > renders as expected 1`] = `
   outline: none;
 }
 
-.c3.btn.btn-link:disabled,
-.c3.btn.btn-link.disabled {
+.c4.btn.btn-link:disabled,
+.c4.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c3.btn:disabled,
-.c3.btn:disabled:hover {
+.c4.btn:disabled,
+.c4.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -202,19 +202,19 @@ exports[`PeriodsForm component > renders as expected 1`] = `
   cursor: not-allowed;
 }
 
-.c3.Button .Button__icon {
+.c4.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c3.Button--icon-only:focus {
+.c4.Button--icon-only:focus {
   outline: none;
 }
 
-.c3.Button--icon-only .Button__icon {
+.c4.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c1 {
+.c2 {
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
@@ -229,24 +229,24 @@ exports[`PeriodsForm component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c4.btn.btn-primary,
-.c4.btn.btn-primary:active {
+.c5.btn.btn-primary,
+.c5.btn.btn-primary:active {
   background-color: #42814A;
 }
 
-.c4.btn.btn-primary:hover,
-.c4.btn.btn-primary:focus {
+.c5.btn.btn-primary:hover,
+.c5.btn.btn-primary:focus {
   background-color: #2e8540;
   outline-color: #2e8540;
 }
 
-.c5.c5 {
+.c6.c6 {
   display: inline-block;
   margin-left: 1.5rem;
   margin-bottom: 0.5rem;
 }
 
-.c2 {
+.c3 {
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
@@ -258,15 +258,19 @@ exports[`PeriodsForm component > renders as expected 1`] = `
   min-height: 4.5rem;
 }
 
-.c2 .btn {
+.c3 .btn {
   margin: 0;
 }
 
+.c1 {
+  min-width: 130rem;
+}
+
 <div
-    class="c0 form-section"
+    class="c0 form-section c1"
   >
     <h2
-      class="c1"
+      class="c2"
     >
       <div
         class="no-gutters row"
@@ -275,7 +279,7 @@ exports[`PeriodsForm component > renders as expected 1`] = `
           class="align-content-end col"
         >
           <div
-            class="c2 no-gutters row"
+            class="c3 no-gutters row"
           >
             <div
               class="align-items-end col-auto"
@@ -286,7 +290,7 @@ exports[`PeriodsForm component > renders as expected 1`] = `
               class="my-1 col-auto"
             >
               <button
-                class="c3 Button c4 c5 btn btn-primary"
+                class="c4 Button c5 c6 btn btn-primary"
                 type="button"
               >
                 <div
@@ -327,7 +331,7 @@ exports[`PeriodsForm component > renders as expected 1`] = `
           <div
             class="tr"
             role="row"
-            style="display: flex; flex: 1 0 auto; min-width: 385px;"
+            style="display: flex; flex: 1 0 auto; min-width: 395px;"
           >
             <div
               class="th"
@@ -587,7 +591,7 @@ exports[`PeriodsForm component > renders as expected 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 40 0 auto; min-width: 40px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
@@ -614,7 +618,7 @@ exports[`PeriodsForm component > renders with data as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c3.btn {
+  .c4.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -643,19 +647,19 @@ exports[`PeriodsForm component > renders with data as expected 1`] = `
   cursor: pointer;
 }
 
-.c3.btn .Button__value {
+.c4.btn .Button__value {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
-.c3.btn:hover {
+.c4.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c3.btn:focus {
+.c4.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -663,31 +667,31 @@ exports[`PeriodsForm component > renders with data as expected 1`] = `
   box-shadow: none;
 }
 
-.c3.btn.btn-primary {
+.c4.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c3.btn.btn-primary:hover,
-.c3.btn.btn-primary:active,
-.c3.btn.btn-primary:focus {
+.c4.btn.btn-primary:hover,
+.c4.btn.btn-primary:active,
+.c4.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c3.btn.btn-secondary {
+.c4.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c3.btn.btn-secondary:hover,
-.c3.btn.btn-secondary:active,
-.c3.btn.btn-secondary:focus {
+.c4.btn.btn-secondary:hover,
+.c4.btn.btn-secondary:active,
+.c4.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c3.btn.btn-info {
+.c4.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -695,66 +699,66 @@ exports[`PeriodsForm component > renders with data as expected 1`] = `
   padding-right: 0.6rem;
 }
 
-.c3.btn.btn-info:hover,
-.c3.btn.btn-info:active,
-.c3.btn.btn-info:focus {
+.c4.btn.btn-info:hover,
+.c4.btn.btn-info:active,
+.c4.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c3.btn.btn-light {
+.c4.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c3.btn.btn-light:hover,
-.c3.btn.btn-light:active,
-.c3.btn.btn-light:focus {
+.c4.btn.btn-light:hover,
+.c4.btn.btn-light:active,
+.c4.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c3.btn.btn-dark {
+.c4.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c3.btn.btn-dark:hover,
-.c3.btn.btn-dark:active,
-.c3.btn.btn-dark:focus {
+.c4.btn.btn-dark:hover,
+.c4.btn.btn-dark:active,
+.c4.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c3.btn.btn-danger {
+.c4.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c3.btn.btn-danger:hover,
-.c3.btn.btn-danger:active,
-.c3.btn.btn-danger:focus {
+.c4.btn.btn-danger:hover,
+.c4.btn.btn-danger:active,
+.c4.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c3.btn.btn-warning {
+.c4.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c3.btn.btn-warning:hover,
-.c3.btn.btn-warning:active,
-.c3.btn.btn-warning:focus {
+.c4.btn.btn-warning:hover,
+.c4.btn.btn-warning:active,
+.c4.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c3.btn.btn-link {
+.c4.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -778,9 +782,9 @@ exports[`PeriodsForm component > renders with data as expected 1`] = `
   text-decoration: underline;
 }
 
-.c3.btn.btn-link:hover,
-.c3.btn.btn-link:active,
-.c3.btn.btn-link:focus {
+.c4.btn.btn-link:hover,
+.c4.btn.btn-link:active,
+.c4.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -790,15 +794,15 @@ exports[`PeriodsForm component > renders with data as expected 1`] = `
   outline: none;
 }
 
-.c3.btn.btn-link:disabled,
-.c3.btn.btn-link.disabled {
+.c4.btn.btn-link:disabled,
+.c4.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c3.btn:disabled,
-.c3.btn:disabled:hover {
+.c4.btn:disabled,
+.c4.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -810,82 +814,82 @@ exports[`PeriodsForm component > renders with data as expected 1`] = `
   cursor: not-allowed;
 }
 
-.c3.Button .Button__icon {
+.c4.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c3.Button--icon-only:focus {
+.c4.Button--icon-only:focus {
   outline: none;
 }
 
-.c3.Button--icon-only .Button__icon {
+.c4.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c8.c8.btn {
+.c9.c9.btn {
   background-color: unset;
   border: none;
 }
 
-.c8.c8.btn:hover,
-.c8.c8.btn:focus,
-.c8.c8.btn:active {
+.c9.c9.btn:hover,
+.c9.c9.btn:focus,
+.c9.c9.btn:active {
   background-color: unset;
   outline: none;
   box-shadow: none;
 }
 
-.c8.c8.btn svg {
+.c9.c9.btn svg {
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
 
-.c8.c8.btn svg:hover {
+.c9.c9.btn svg:hover {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
 }
 
-.c8.c8.btn.btn-primary svg {
+.c9.c9.btn.btn-primary svg {
   color: #013366;
 }
 
-.c8.c8.btn.btn-primary svg:hover {
+.c9.c9.btn.btn-primary svg:hover {
   color: #013366;
 }
 
-.c8.c8.btn.btn-light svg {
+.c9.c9.btn.btn-light svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c8.c8.btn.btn-light svg:hover {
+.c9.c9.btn.btn-light svg:hover {
   color: #CE3E39;
 }
 
-.c8.c8.btn.btn-info svg {
+.c9.c9.btn.btn-info svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c8.c8.btn.btn-info svg:hover {
+.c9.c9.btn.btn-info svg:hover {
   color: var(--surface-color-primary-button-hover);
 }
 
-.c9.c9.btn.btn-primary {
+.c10.c10.btn.btn-primary {
   -webkit-text-decoration: none;
   text-decoration: none;
   line-height: unset;
 }
 
-.c9.c9.btn.btn-primary svg {
+.c10.c10.btn.btn-primary svg {
   color: #aaaaaa !important;
 }
 
-.c9.c9.btn.btn-primary .text {
+.c10.c10.btn.btn-primary .text {
   display: none;
 }
 
-.c9.c9.btn.btn-primary svg:hover,
-.c9.c9.btn.btn-primary svg:active,
-.c9.c9.btn.btn-primary svg:focus {
+.c10.c10.btn.btn-primary svg:hover,
+.c10.c10.btn.btn-primary svg:active,
+.c10.c10.btn.btn-primary svg:focus {
   color: #d8292f !important;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -895,14 +899,14 @@ exports[`PeriodsForm component > renders with data as expected 1`] = `
   flex-direction: row;
 }
 
-.c9.c9.btn.btn-primary svg:hover .text,
-.c9.c9.btn.btn-primary svg:active .text,
-.c9.c9.btn.btn-primary svg:focus .text {
+.c10.c10.btn.btn-primary svg:hover .text,
+.c10.c10.btn.btn-primary svg:active .text,
+.c10.c10.btn.btn-primary svg:focus .text {
   display: inline;
   line-height: 2rem;
 }
 
-.c1 {
+.c2 {
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
@@ -917,7 +921,7 @@ exports[`PeriodsForm component > renders with data as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c6 {
+.c7 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -927,24 +931,24 @@ exports[`PeriodsForm component > renders with data as expected 1`] = `
   flex-wrap: nowrap;
 }
 
-.c4.btn.btn-primary,
-.c4.btn.btn-primary:active {
+.c5.btn.btn-primary,
+.c5.btn.btn-primary:active {
   background-color: #42814A;
 }
 
-.c4.btn.btn-primary:hover,
-.c4.btn.btn-primary:focus {
+.c5.btn.btn-primary:hover,
+.c5.btn.btn-primary:focus {
   background-color: #2e8540;
   outline-color: #2e8540;
 }
 
-.c5.c5 {
+.c6.c6 {
   display: inline-block;
   margin-left: 1.5rem;
   margin-bottom: 0.5rem;
 }
 
-.c2 {
+.c3 {
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
@@ -956,39 +960,43 @@ exports[`PeriodsForm component > renders with data as expected 1`] = `
   min-height: 4.5rem;
 }
 
-.c2 .btn {
+.c3 .btn {
   margin: 0;
 }
 
-.c7 {
+.c8 {
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
 }
 
-.c7 [id^='edit-period'] {
+.c8 [id^='edit-period'] {
   color: #428bca;
 }
 
-.c7 [id^='delete-period'] {
+.c8 [id^='delete-period'] {
   color: #428bca;
 }
 
-.c7 [id^='delete-period']:hover {
+.c8 [id^='delete-period']:hover {
   color: #CE3E39;
 }
 
-.c7 .btn.btn-primary {
+.c8 .btn.btn-primary {
   background-color: transparent;
   padding: 0;
 }
 
+.c1 {
+  min-width: 130rem;
+}
+
 <div
-    class="c0 form-section"
+    class="c0 form-section c1"
   >
     <h2
-      class="c1"
+      class="c2"
     >
       <div
         class="no-gutters row"
@@ -997,7 +1005,7 @@ exports[`PeriodsForm component > renders with data as expected 1`] = `
           class="align-content-end col"
         >
           <div
-            class="c2 no-gutters row"
+            class="c3 no-gutters row"
           >
             <div
               class="align-items-end col-auto"
@@ -1008,7 +1016,7 @@ exports[`PeriodsForm component > renders with data as expected 1`] = `
               class="my-1 col-auto"
             >
               <button
-                class="c3 Button c4 c5 btn btn-primary"
+                class="c4 Button c5 c6 btn btn-primary"
                 type="button"
               >
                 <div
@@ -1049,7 +1057,7 @@ exports[`PeriodsForm component > renders with data as expected 1`] = `
           <div
             class="tr"
             role="row"
-            style="display: flex; flex: 1 0 auto; min-width: 385px;"
+            style="display: flex; flex: 1 0 auto; min-width: 395px;"
           >
             <div
               class="th"
@@ -1309,7 +1317,7 @@ exports[`PeriodsForm component > renders with data as expected 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 40 0 auto; min-width: 40px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
@@ -1329,7 +1337,7 @@ exports[`PeriodsForm component > renders with data as expected 1`] = `
             <div
               class="tr"
               role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 385px;"
+              style="display: flex; flex: 1 0 auto; min-width: 395px;"
             >
               <div
                 class="td expander svg-btn"
@@ -1360,7 +1368,7 @@ exports[`PeriodsForm component > renders with data as expected 1`] = `
                 title=""
               >
                 <div
-                  class="c6 align-items-center"
+                  class="c7 align-items-center"
                 >
                   <b>
                     Period 1
@@ -1443,14 +1451,14 @@ exports[`PeriodsForm component > renders with data as expected 1`] = `
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 40 0 auto; min-width: 40px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
                 <div
-                  class="c6 c7"
+                  class="c7 c8"
                 >
                   <button
-                    class="c3 Button c8 btn btn-primary"
+                    class="c4 Button c9 btn btn-primary"
                     data-testid="edit-button"
                     title="edit period"
                     type="button"
@@ -1474,7 +1482,7 @@ exports[`PeriodsForm component > renders with data as expected 1`] = `
                     </div>
                   </button>
                   <button
-                    class="c3 Button c8 c9 btn btn-primary"
+                    class="c4 Button c9 c10 btn btn-primary"
                     data-testid="remove-button"
                     title="delete period"
                     type="button"

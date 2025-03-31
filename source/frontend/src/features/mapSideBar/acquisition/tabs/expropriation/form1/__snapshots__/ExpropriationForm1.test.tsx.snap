@@ -608,10 +608,6 @@ exports[`Expropriation Form 1 > matches snapshot 1`] = `
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c2 .react-datepicker-wrapper {
-  max-width: 17rem;
-}
-
 .c3.c3.form-control.is-valid {
   background-image: none;
 }
