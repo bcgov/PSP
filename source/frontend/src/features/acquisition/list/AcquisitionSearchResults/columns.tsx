@@ -30,7 +30,7 @@ export const columns: ColumnWithProps<AcquisitionSearchResultModel>[] = [
     align: 'right',
     clickable: true,
     sortable: true,
-    width: 30,
+    minWidth: 30,
     maxWidth: 30,
     Cell: (props: CellProps<AcquisitionSearchResultModel>) => {
       const { hasClaim } = useKeycloakWrapper();
@@ -50,7 +50,7 @@ export const columns: ColumnWithProps<AcquisitionSearchResultModel>[] = [
     align: 'right',
     clickable: true,
     sortable: true,
-    width: 25,
+    minWidth: 25,
     maxWidth: 25,
   },
   {
