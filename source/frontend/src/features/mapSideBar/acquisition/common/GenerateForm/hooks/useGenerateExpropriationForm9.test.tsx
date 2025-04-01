@@ -123,8 +123,7 @@ describe('useGenerateExpropriationForm9 functions', () => {
     const generateRequest: DocumentGenerationRequest = {
       templateType: ApiGen_CodeTypes_FormTypes.FORM9.toString(),
       convertToType: null,
-      templateData: expect.objectContaining<Partial<Api_GenerateExpropriationForm9>>({
-      }),
+      templateData: expect.objectContaining<Partial<Api_GenerateExpropriationForm9>>({}),
     };
 
     expect(generateFn).toHaveBeenCalledWith(generateRequest);
