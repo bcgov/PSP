@@ -54,19 +54,19 @@ const OrganizationView: React.FunctionComponent<OrganizationViewProps> = ({ orga
         <SectionField
           valueTestId="contact-organization-organizationName"
           label="Organization name"
-          labelWidth="3"
+          labelWidth={{ xs: 3 }}
         >
           <FaRegBuilding size={20} className="mr-2" />
           <b>{organization.name}</b>
         </SectionField>
 
-        <SectionField valueTestId="contact-organization-alias" label="Alias" labelWidth="3">
+        <SectionField valueTestId="contact-organization-alias" label="Alias" labelWidth={{ xs: 3 }}>
           {organization.alias}
         </SectionField>
         <SectionField
           valueTestId="contact-organization-incorporationNumber"
           label="Incorporation number"
-          labelWidth="3"
+          labelWidth={{ xs: 3 }}
         >
           {organization.incorporationNumber}
         </SectionField>
@@ -79,7 +79,7 @@ const OrganizationView: React.FunctionComponent<OrganizationViewProps> = ({ orga
           <Col>
             <SectionField
               label="Connected to this organization"
-              labelWidth="auto"
+              labelWidth={{ xs: 'auto' }}
               valueTestId="contact-organization-person-list"
               tooltip="To unlink a contact from this organization, or edit a contact's information, click on the name and unlink from the individual contact page"
             >

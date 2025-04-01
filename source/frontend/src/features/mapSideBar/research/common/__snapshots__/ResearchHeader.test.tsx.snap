@@ -2,13 +2,25 @@
 
 exports[`ResearchHeader component > renders as expected when provided no research file 1`] = `
 <DocumentFragment>
-  <div
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div
     class="Toastify"
   />
-  <div />
-  .c4 {
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div />
+  .c5 {
   font-size: 0.87em;
   line-height: 1.9;
+}
+
+.c4 {
+  text-align: right;
 }
 
 .c2 {
@@ -39,11 +51,17 @@ exports[`ResearchHeader component > renders as expected when provided no researc
   max-width: 60rem;
 }
 
+@media only screen and (max-width:1199px) {
+  .c4 {
+    text-align: left;
+  }
+}
+
 <div
     class="c0 no-gutters row"
   >
     <div
-      class="c1 col-8"
+      class="c1 col-xl-8 col-12"
     >
       <div
         class="row"
@@ -136,10 +154,10 @@ exports[`ResearchHeader component > renders as expected when provided no researc
           class="no-gutters row"
         >
           <div
-            class="text-right col"
+            class="c4 col"
           >
             <span
-              class="c4"
+              class="c5"
             >
               <strong>
                 Created: 
@@ -161,10 +179,10 @@ exports[`ResearchHeader component > renders as expected when provided no researc
           class="no-gutters row"
         >
           <div
-            class="text-right col"
+            class="c4 col"
           >
             <span
-              class="c4"
+              class="c5"
             >
               <strong>
                 Updated: 

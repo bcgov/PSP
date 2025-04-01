@@ -74,7 +74,7 @@ export const UpdateForm8Form: React.FC<IForm8FormProps> = ({
               <>
                 <StyledContent>
                   <Section header="Form 8 Notice of Advance Payment">
-                    <SectionField label="Payee" labelWidth="4" required>
+                    <SectionField label="Payee" labelWidth={{ xs: 4 }} required>
                       <Select
                         field="payeeKey"
                         title={
@@ -95,7 +95,7 @@ export const UpdateForm8Form: React.FC<IForm8FormProps> = ({
                       ></ContactInputContainer>
                     </SectionField>
 
-                    <SectionField label="Advanced payment served date" labelWidth="4">
+                    <SectionField label="Advanced payment served date" labelWidth={{ xs: 4 }}>
                       <FastDatePicker field="advancedPaymentServedDate" formikProps={formikProps} />
                     </SectionField>
 

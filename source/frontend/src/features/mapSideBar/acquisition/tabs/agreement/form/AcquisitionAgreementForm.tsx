@@ -79,18 +79,18 @@ const AcquisitionAgreementForm: React.FunctionComponent<
 
   return (
     <Section header="Agreement Details">
-      <SectionField labelWidth="5" label="Agreement status">
+      <SectionField labelWidth={{ xs: 5 }} label="Agreement status">
         <Select options={agreementStatusOptions} field="agreementStatusTypeCode" />
       </SectionField>
       {agreementStatusTypeCodeValue === ApiGen_CodeTypes_AgreementStatusTypes.CANCELLED && (
-        <SectionField labelWidth="5" label="Cancellation reason">
+        <SectionField labelWidth={{ xs: 5 }} label="Cancellation reason">
           <Input field="cancellationNote" />
         </SectionField>
       )}
-      <SectionField labelWidth="5" label="Legal survey plan">
+      <SectionField labelWidth={{ xs: 5 }} label="Legal survey plan">
         <Input field="legalSurveyPlanNum" />
       </SectionField>
-      <SectionField labelWidth="5" label="Agreement type" required>
+      <SectionField labelWidth={{ xs: 5 }} label="Agreement type" required>
         <Select
           field="agreementTypeCode"
           options={agreementTypeOptions.map(mapLookupCode)}
@@ -105,30 +105,30 @@ const AcquisitionAgreementForm: React.FunctionComponent<
           }}
         />
       </SectionField>
-      <SectionField labelWidth="5" label="Agreement date">
+      <SectionField labelWidth={{ xs: 5 }} label="Agreement date">
         <FastDatePicker field="agreementDate" formikProps={formikProps} />
       </SectionField>
       {agreementTypeCodeValue === ApiGen_CodeTypes_AgreementTypes.H0074 && (
-        <SectionField labelWidth="5" label="Commencement date">
+        <SectionField labelWidth={{ xs: 5 }} label="Commencement date">
           <FastDatePicker field="commencementDate" formikProps={formikProps} />
         </SectionField>
       )}
-      <SectionField labelWidth="5" label="Completion date">
+      <SectionField labelWidth={{ xs: 5 }} label="Completion date">
         <FastDatePicker field="completionDate" formikProps={formikProps} />
       </SectionField>
-      <SectionField labelWidth="5" label="Termination date">
+      <SectionField labelWidth={{ xs: 5 }} label="Termination date">
         <FastDatePicker field="terminationDate" formikProps={formikProps} />
       </SectionField>
-      <SectionField labelWidth="5" label="Possession date">
+      <SectionField labelWidth={{ xs: 5 }} label="Possession date">
         <FastDatePicker field="possessionDate" formikProps={formikProps} />
       </SectionField>
 
       <StyledSectionSubheader>Financial</StyledSectionSubheader>
-      <SectionField labelWidth="5" label="Purchase price">
+      <SectionField labelWidth={{ xs: 5 }} label="Purchase price">
         <FastCurrencyInput field="purchasePrice" formikProps={formikProps} />
       </SectionField>
       <SectionField
-        labelWidth="5"
+        labelWidth={{ xs: 5 }}
         label="Deposit due no later than"
         tooltip="Generally, if applicable, this is number of days from the execution of the agreement"
       >
@@ -137,7 +137,7 @@ const AcquisitionAgreementForm: React.FunctionComponent<
           <StyledFieldLabel>days.</StyledFieldLabel>
         </StyledDiv>
       </SectionField>
-      <SectionField labelWidth="5" label="Deposit amount">
+      <SectionField labelWidth={{ xs: 5 }} label="Deposit amount">
         <FastCurrencyInput field="depositAmount" formikProps={formikProps} />
       </SectionField>
     </Section>

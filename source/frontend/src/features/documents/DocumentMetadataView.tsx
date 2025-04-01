@@ -31,7 +31,7 @@ export const DocumentMetadataView: React.FunctionComponent<IDocumentMetadataView
           <>
             {mayanMetadata.map(meta => (
               <SectionField
-                labelWidth="4"
+                labelWidth={{ xs: 4 }}
                 key={withNameSpace(namespace, `document-metadata-${meta.metadata_type?.name}`)}
                 label={meta.metadata_type?.label || ''}
                 required={meta.required === true}

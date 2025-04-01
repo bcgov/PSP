@@ -32,12 +32,17 @@ export const RenewalSubForm: React.FunctionComponent<IRenewalSubFormProps> = ({ 
               <Row key={index}>
                 <Col>
                   <Section header={`Renewal ${index + 1}`} noPadding>
-                    <SectionField label="Exercised?" labelWidth="4" contentWidth="3" required>
+                    <SectionField
+                      label="Exercised?"
+                      labelWidth={{ xs: 4 }}
+                      contentWidth={{ xs: 3 }}
+                      required
+                    >
                       <YesNoSelect field={`${fieldName}.${index}.isExercised`} notNullable />
                     </SectionField>
                     <SectionField
                       label="Commencement"
-                      labelWidth="4"
+                      labelWidth={{ xs: 4 }}
                       required={renewal.isExercised === true}
                       tooltip={
                         <TooltipIcon
@@ -54,7 +59,7 @@ export const RenewalSubForm: React.FunctionComponent<IRenewalSubFormProps> = ({ 
                     </SectionField>
                     <SectionField
                       label="Expiry"
-                      labelWidth="4"
+                      labelWidth={{ xs: 4 }}
                       required={renewal.isExercised === true}
                       tooltip={
                         <TooltipIcon
@@ -69,7 +74,7 @@ export const RenewalSubForm: React.FunctionComponent<IRenewalSubFormProps> = ({ 
                         formikProps={formikProps}
                       />
                     </SectionField>
-                    <SectionField label="Comments" contentWidth="12">
+                    <SectionField label="Comments" contentWidth={{ xs: 12 }}>
                       <TextArea field={`${fieldName}.${index}.renewalNote`} />
                     </SectionField>
                   </Section>

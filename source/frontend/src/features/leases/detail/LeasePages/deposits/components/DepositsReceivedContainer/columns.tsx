@@ -154,7 +154,8 @@ export const getColumns = ({
     {
       Header: 'Actions',
       align: 'right',
-      maxWidth: 30,
+      maxWidth: 80,
+      minWidth: 80,
       Cell: depositActions(isFileFinalStatus, onEdit, onDelete, onReturn),
     },
   ];

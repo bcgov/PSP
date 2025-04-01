@@ -157,9 +157,6 @@ const StyledGroup = styled(Form.Group)`
   .react-datepicker__view-calendar-icon input {
     padding: 0.8rem 1.2rem 0.8rem 1.2rem;
   }
-  .react-datepicker-wrapper {
-    max-width: 17rem;
-  }
 `;
 
 const StyledDatePicker = styled(DatePicker)`

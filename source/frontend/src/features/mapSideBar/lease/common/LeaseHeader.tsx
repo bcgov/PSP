@@ -43,19 +43,19 @@ export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease, lastUpdatedBy 
   return (
     <Container>
       <Row className="no-gutters">
-        <StyledLeftHeaderPane xs="8">
-          <HeaderField label="Lease/Licence #" labelWidth="4" contentWidth="8">
+        <StyledLeftHeaderPane xl="8" xs="12">
+          <HeaderField label="Lease/Licence #" labelWidth={{ xs: 4 }} contentWidth={{ xs: 8 }}>
             <span className="pr-4">{lease?.lFileNo ?? ''}</span>
             <StyledGreenText>{lease?.paymentReceivableType?.description ?? ''}</StyledGreenText>
           </HeaderField>
-          <HeaderField label="Property:" labelWidth="4" contentWidth="8">
+          <HeaderField label="Property:" labelWidth={{ xs: 4 }} contentWidth={{ xs: 8 }}>
             <LeaseHeaderAddresses
               propertyLeases={lease?.fileProperties ?? []}
               maxCollapsedLength={1}
               delimiter={<br />}
             />
           </HeaderField>
-          <HeaderField label={stakeholdersLabel} labelWidth="4" contentWidth="8">
+          <HeaderField label={stakeholdersLabel} labelWidth={{ xs: 4 }} contentWidth={{ xs: 8 }}>
             <LeaseHeaderStakeholders
               stakeholders={lease?.stakeholders ?? []}
               maxCollapsedLength={1}
@@ -65,17 +65,22 @@ export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease, lastUpdatedBy 
           <Row className="flex-nowrap">
             <HeaderLabelCol
               label="Commencement:"
-              labelWidth="4"
+              labelWidth={{ xl: 4, xs: 4 }}
               tooltip="The start date defined in the agreement"
             />
-            <HeaderContentCol contentWidth="3">
+            <HeaderContentCol contentWidth={{ xl: 3, xs: 2 }}>
               {prettyFormatDate(lease?.startDate)}
             </HeaderContentCol>
-            <HeaderLabelCol label="Expiry:" tooltip="The end date specified in the agreement" />
-            <HeaderContentCol>
+            <HeaderLabelCol
+              labelWidth={{ xl: 2, xs: 2 }}
+              label="Expiry:"
+              tooltip="The end date specified in the agreement"
+              className="p-0"
+            />
+            <HeaderContentCol contentWidth={{ xl: 3, xs: 2 }}>
               <span className="pl-2">{prettyFormatDate(calculatedExpiry)}</span>
             </HeaderContentCol>
-            <HeaderContentCol>
+            <HeaderContentCol contentWidth={{ xl: 3, xs: 3 }}>
               {isExpired && (
                 <ExpiredWarning className="ml-auto">
                   <AiOutlineExclamationCircle size={16} />
@@ -88,8 +93,8 @@ export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease, lastUpdatedBy 
             <Col>
               <HistoricalNumbersContainer
                 propertyIds={propertyIds}
-                labelWidth="4"
-                contentWidth="8"
+                labelWidth={{ xs: 7 }}
+                contentWidth={{ xs: 5 }}
                 View={HistoricalNumberSectionView}
               />
             </Col>
@@ -129,6 +134,9 @@ const Container = styled.div`
   border-bottom-style: solid;
   border-bottom-color: grey;
   border-bottom-width: 0.1rem;
+  max-height: 25rem;
+  overflow-y: auto;
+  overflow-x: hidden;
 `;
 
 const StyledGreenText = styled.span`

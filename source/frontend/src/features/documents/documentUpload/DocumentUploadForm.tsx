@@ -79,7 +79,7 @@ export const DocumentUploadForm: React.FunctionComponent<IDocumentUploadFormProp
                 <>
                   <SectionField
                     label={`Choose a max of ${maxDocumentCount} files to attach at the time`}
-                    labelWidth="12"
+                    labelWidth={{ xs: 12 }}
                     className="mb-4"
                   >
                     <div className="pt-2"></div>
@@ -94,7 +94,7 @@ export const DocumentUploadForm: React.FunctionComponent<IDocumentUploadFormProp
                       <SectionField
                         key={`document-${formDocument.documentTypeId || 'DOC_ID'}-${index}`}
                         label={null}
-                        contentWidth="12"
+                        contentWidth={{ xs: 12 }}
                       >
                         <SelectedDocumentRow
                           formikProps={formikProps}

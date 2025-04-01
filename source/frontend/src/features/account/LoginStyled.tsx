@@ -31,7 +31,6 @@ export const LoginStyled = styled(Container)`
 
   .unauth {
     font-size: 2.4rem;
-    margin: 15rem auto;
     background-color: rgba(255, 255, 255);
     padding-top: 1.5rem;
     padding-bottom: 2rem;
@@ -156,6 +155,13 @@ export const LoginStyled = styled(Container)`
       margin-bottom: 1rem;
     }
   }
+`;
+
+export const VertialAlign = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 `;
 
 export default LoginStyled;

@@ -17,6 +17,7 @@ exports[`SelectInput tests > renders correctly... 1`] = `
 
 .c1:not(:first-child) {
   padding-left: 0;
+  padding-right: 0;
 }
 
 .c1:not(:first-child) .form-control {
@@ -25,7 +26,7 @@ exports[`SelectInput tests > renders correctly... 1`] = `
 }
 
 <div
-    class="idir-input-group flex-nowrap input-group row"
+    class="idir-input-group flex-nowrap input-group row no-gutters"
   >
     <div
       class="c0 col-auto"

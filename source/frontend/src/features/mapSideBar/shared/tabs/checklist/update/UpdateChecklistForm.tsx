@@ -91,7 +91,7 @@ export const UpdateChecklistForm: React.FC<IUpdateChecklistFormProps> = ({
                   key={checklistItem.itemType?.code ?? `${prefix}-checklist-item-${j}`}
                   label={checklistItem.itemType?.description ?? ''}
                   tooltip={checklistItem.itemType?.hint}
-                  labelWidth="7"
+                  labelWidth={{ xs: 7 }}
                 >
                   <Select
                     field={`checklistSections[${i}].items[${j}].statusType`}

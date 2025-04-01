@@ -102,7 +102,7 @@ export const DispositionFilter: React.FC<IDispositionFilterProps> = ({
                     placeholder="Team Member"
                   />
                 </Col>
-                <Col xl="4">
+                <Col xl="5">
                   <Select
                     options={fileStatusOptions}
                     field="dispositionFileStatusCode"

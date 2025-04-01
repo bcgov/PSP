@@ -62,10 +62,10 @@ export const ProjectFilter: React.FunctionComponent<
                 </Col>
                 <Col>
                   <Row>
-                    <Col xl="3">
+                    <Col xl="4">
                       <Input field="projectNumber" placeholder="Project number" />
                     </Col>
-                    <Col xl="9">
+                    <Col xl="8">
                       <Input field="projectName" placeholder="Project name" />
                     </Col>
                   </Row>
@@ -75,10 +75,10 @@ export const ProjectFilter: React.FunctionComponent<
 
             <Col xl="4">
               <Row>
-                <Col xl="4">
+                <Col xl="6">
                   <UserRegionSelectContainer field="projectRegionCode" includeAll />
                 </Col>
-                <Col xl="4">
+                <Col xl="6">
                   <Select
                     field="projectStatusCode"
                     options={projectStatusOptions}

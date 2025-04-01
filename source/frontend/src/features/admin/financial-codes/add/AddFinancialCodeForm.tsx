@@ -72,10 +72,10 @@ export const AddFinancialCodeForm: React.FC<IAddFinancialCodeFormProps> = ({
     >
       {formikProps => (
         <Container>
-          <SectionField label="Code type" required labelWidth="2">
+          <SectionField label="Code type" required labelWidth={{ xs: 2 }}>
             <Select field="type" options={codeTypes} placeholder="Select code type" />
           </SectionField>
-          <SectionField label="Code value" required labelWidth="2">
+          <SectionField label="Code value" required labelWidth={{ xs: 2 }}>
             <Input
               field="code"
               value={formikProps.values.code}
@@ -83,7 +83,7 @@ export const AddFinancialCodeForm: React.FC<IAddFinancialCodeFormProps> = ({
               placeholder="Code value"
             />
           </SectionField>
-          <SectionField label="Code description" required labelWidth="2">
+          <SectionField label="Code description" required labelWidth={{ xs: 2 }}>
             <Input
               field="description"
               value={formikProps.values.description}
@@ -94,19 +94,19 @@ export const AddFinancialCodeForm: React.FC<IAddFinancialCodeFormProps> = ({
           <SectionField
             label="Effective date"
             required
-            labelWidth="2"
+            labelWidth={{ xs: 2 }}
             tooltip="Starting this date the code will be available in the system"
           >
             <FastDatePicker field="effectiveDate" formikProps={formikProps} />
           </SectionField>
           <SectionField
             label="Expiry date"
-            labelWidth="2"
+            labelWidth={{ xs: 2 }}
             tooltip="Starting this date the code will NOT be available in the system"
           >
             <FastDatePicker field="expiryDate" formikProps={formikProps} />
           </SectionField>
-          <SectionField label="Display order" labelWidth="2">
+          <SectionField label="Display order" labelWidth={{ xs: 2 }}>
             <Input field="displayOrder" value={formikProps.values.displayOrder} type="number" />
           </SectionField>
 

@@ -114,7 +114,7 @@ export const Address: React.FunctionComponent<React.PropsWithChildren<IAddressPr
           </Row>
         </SectionField>
       )}
-      <SectionField label="Country" contentWidth="4">
+      <SectionField label="Country" contentWidth={{ xs: 4 }}>
         <Select
           disabled={disabled}
           field={withNameSpace(namespace, 'countryId')}
@@ -123,11 +123,11 @@ export const Address: React.FunctionComponent<React.PropsWithChildren<IAddressPr
           placeholder="Select..."
         />
       </SectionField>
-      <SectionField label="City" contentWidth="4">
+      <SectionField label="City" contentWidth={{ xs: 4 }}>
         <Input disabled={disabled} field={withNameSpace(namespace, 'municipality')} />
       </SectionField>
       {selectedCountryCode !== CountryCodes.Other && (
-        <SectionField label={formLabels.province ?? 'Province'} contentWidth="4">
+        <SectionField label={formLabels.province ?? 'Province'} contentWidth={{ xs: 4 }}>
           <Select
             disabled={disabled}
             field={withNameSpace(namespace, 'provinceId')}
@@ -137,11 +137,11 @@ export const Address: React.FunctionComponent<React.PropsWithChildren<IAddressPr
         </SectionField>
       )}
       {selectedCountryCode === CountryCodes.Other && (
-        <SectionField label="Country name" contentWidth="4">
+        <SectionField label="Country name" contentWidth={{ xs: 4 }}>
           <Input disabled={disabled} field={withNameSpace(namespace, 'countryOther')} />
         </SectionField>
       )}
-      <SectionField label={formLabels.postal ?? 'Postal Code'} contentWidth="4">
+      <SectionField label={formLabels.postal ?? 'Postal Code'} contentWidth={{ xs: 4 }}>
         <Input disabled={disabled} field={withNameSpace(namespace, 'postal')} />
       </SectionField>
     </>

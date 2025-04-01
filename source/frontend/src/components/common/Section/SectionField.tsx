@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import { Col, Row } from 'react-bootstrap';
+import { Col, ColProps, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
 import { renderTooltip } from '@/utils/formUtils';
@@ -12,8 +12,8 @@ export interface ISectionFieldProps {
   valueClassName?: string;
   required?: boolean;
   noGutters?: boolean;
-  labelWidth?: '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12' | 'auto';
-  contentWidth?: '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12' | 'auto';
+  labelWidth?: ColProps;
+  contentWidth?: ColProps;
   valueTestId?: string | null;
 }
 
@@ -22,7 +22,7 @@ export const SectionField: React.FunctionComponent<
 > = props => {
   return (
     <Row className={props.className ?? cx('pb-2', { 'no-gutters': props.noGutters })}>
-      <Col xs={props.labelWidth ?? '4'} className="pr-0 text-left">
+      <Col {...(props.labelWidth ?? { xs: 4 })} className="pr-0 text-left">
         {props.label && (
           <StyledFieldLabel>
             {props.label}:{props.tooltip && <span>{renderTooltip(props.tooltip)}</span>}
@@ -30,7 +30,7 @@ export const SectionField: React.FunctionComponent<
         )}
       </Col>
       <ContentCol
-        xs={props.contentWidth ?? true}
+        {...props.contentWidth}
         className={cx(props.valueClassName, {
           required: props.required,
           'text-left': !props.valueClassName,

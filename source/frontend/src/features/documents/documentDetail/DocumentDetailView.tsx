@@ -70,7 +70,7 @@ export const DocumentDetailView: React.FunctionComponent<
             <SectionField
               data-testid="document-type"
               label="Document type"
-              labelWidth="4"
+              labelWidth={{ xs: 4 }}
               className="pb-2"
             >
               {documentTypeLabel}
@@ -80,7 +80,7 @@ export const DocumentDetailView: React.FunctionComponent<
                 <StyledPurposeText>{documentTypePurpose}</StyledPurposeText>
               </SectionField>
             )}
-            <SectionField label="Status" labelWidth="4">
+            <SectionField label="Status" labelWidth={{ xs: 4 }}>
               {props.document.pimsDocumentRelationship?.document?.statusTypeCode?.description}
             </SectionField>
             <StyledH3>Details</StyledH3>
@@ -90,7 +90,7 @@ export const DocumentDetailView: React.FunctionComponent<
               )}
               {props.document.mayanMetadata?.map(value => (
                 <SectionField
-                  labelWidth="4"
+                  labelWidth={{ xs: 4 }}
                   key={`document-${value.document?.id || 'DOC_ID'}-metadata-${value.id}`}
                   label={value.metadata_type?.label || ''}
                 >

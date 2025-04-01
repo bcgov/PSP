@@ -91,11 +91,11 @@ export const ChecklistView: React.FC<IChecklistViewProps> = ({
                 key={checklistItem.itemType?.code ?? `${prefix}-checklist-item-${j}`}
                 label={checklistItem.itemType?.description ?? ''}
                 tooltip={checklistItem.itemType?.hint}
-                labelWidth="6"
+                labelWidth={{ xl: 6, xs: 5 }}
                 noGutters
               >
                 <Row className="no-gutters">
-                  <Col xs="6">
+                  <Col xl="6" xs="5">
                     <StyledChecklistItemAudit>
                       {!isDefaultState(checklistItem) && (
                         <>
@@ -108,14 +108,14 @@ export const ChecklistView: React.FC<IChecklistViewProps> = ({
                       )}
                     </StyledChecklistItemAudit>
                   </Col>
-                  <Col xs="5">
+                  <Col xl="5" xs="6">
                     <StyledChecklistItemStatus
                       color={mapStatusToColor(checklistItem.statusTypeCode?.id)}
                     >
                       {checklistItem.statusTypeCode?.description}
                     </StyledChecklistItemStatus>
                   </Col>
-                  <Col xs="1">
+                  <Col xl="1" xs="1">
                     <StyledChecklistItemIcon>
                       <StatusIcon status={checklistItem.statusTypeCode?.id} />
                     </StyledChecklistItemIcon>

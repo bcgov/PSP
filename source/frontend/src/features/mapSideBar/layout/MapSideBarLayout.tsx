@@ -115,6 +115,9 @@ const StyledSidebarWrapper = styled.div`
 
   &.expanded {
     min-width: 90rem;
+    @media only screen and (max-width: 1199px) {
+      min-width: 70rem;
+    }
     height: 100%;
     position: relative;
 

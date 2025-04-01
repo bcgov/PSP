@@ -228,10 +228,6 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c9 .react-datepicker-wrapper {
-  max-width: 17rem;
-}
-
 .c10.c10.form-control.is-valid {
   background-image: none;
 }
@@ -283,6 +279,7 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
   -webkit-transition: transform 0.5s ease-in-out;
   transition: transform 0.5s ease-in-out;
   position: relative;
+  min-width: 50rem;
 }
 
 .c11 {

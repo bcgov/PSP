@@ -30,7 +30,7 @@ export const DispositionHeader: React.FunctionComponent<
   return (
     <StyledRow className="no-gutters">
       <StyledLeftHeaderPane xs={leftColumnWidth}>
-        <HeaderField label="File:" labelWidth={leftColumnLabel} contentWidth="9">
+        <HeaderField label="File:" labelWidth={{ xs: leftColumnLabel }} contentWidth={{ xs: 9 }}>
           D-{dispositionFile?.fileNumber}
         </HeaderField>
         <HistoricalNumbersContainer propertyIds={propertyIds} View={HistoricalNumberSectionView} />

@@ -77,6 +77,7 @@ export const InputGroup: React.FC<React.PropsWithChildren<InputGroupProps>> = ({
         'flex-nowrap',
         'input-group',
       )}
+      noGutters
     >
       {!!label && required && <Label required={required}>{label}</Label>}
 
@@ -128,6 +129,7 @@ const ColPrepend = styled(Col)`
 const ColContent = styled(Col)`
   &:not(:first-child) {
     padding-left: 0;
+    padding-right: 0;
     .form-control {
       border-top-left-radius: 0;
       border-bottom-left-radius: 0;

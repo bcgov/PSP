@@ -78,7 +78,7 @@ export const InterestHolderSubForm: React.FunctionComponent<IInterestHolderProps
       }
     >
       {''}
-      <SectionField label="Interest holder">
+      <SectionField label="Interest holder" labelWidth={{ xl: 4 }}>
         <Row className="pb-0">
           <Col>
             <ContactInputContainer
@@ -86,7 +86,7 @@ export const InterestHolderSubForm: React.FunctionComponent<IInterestHolderProps
               View={ContactInputView}
             ></ContactInputContainer>
           </Col>
-          <Col xs="auto">
+          <Col xs="3" className="p-0">
             <RemoveIconButton
               title="Remove Interest"
               onRemove={() => {
@@ -124,8 +124,8 @@ export const InterestHolderSubForm: React.FunctionComponent<IInterestHolderProps
       <SectionField
         label="Impacted properties"
         tooltip="The interest holder will show on the Compensation Request form relevant to these properties"
-        labelWidth="4"
-        contentWidth="8"
+        labelWidth={{ xl: 4 }}
+        contentWidth={{ xl: 8 }}
       >
         <FilePropertiesTable
           fileProperties={file.fileProperties ?? []}

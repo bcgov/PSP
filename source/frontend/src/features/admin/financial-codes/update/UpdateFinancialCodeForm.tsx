@@ -74,35 +74,35 @@ export const UpdateFinancialCodeForm: React.FC<IUpdateFinancialCodeFormProps> = 
     >
       {formikProps => (
         <Container>
-          <SectionField label="Code type" labelWidth="2">
+          <SectionField label="Code type" labelWidth={{ xs: 2 }}>
             <span>
               {formatFinancialCodeType(
                 formikProps.values.type as ApiGen_Concepts_FinancialCodeTypes,
               )}
             </span>
           </SectionField>
-          <SectionField label="Code value" required labelWidth="2">
+          <SectionField label="Code value" required labelWidth={{ xs: 2 }}>
             <Input field="code" type="text" placeholder="Code value" />
           </SectionField>
-          <SectionField label="Code description" required labelWidth="2">
+          <SectionField label="Code description" required labelWidth={{ xs: 2 }}>
             <Input field="description" type="text" placeholder="Code description" />
           </SectionField>
           <SectionField
             label="Effective date"
             required
-            labelWidth="2"
+            labelWidth={{ xs: 2 }}
             tooltip="Starting this date the code will be available in the system"
           >
             <FastDatePicker field="effectiveDate" formikProps={formikProps} />
           </SectionField>
           <SectionField
             label="Expiry date"
-            labelWidth="2"
+            labelWidth={{ xs: 2 }}
             tooltip="Starting this date the code will NOT be available in the system"
           >
             <FastDatePicker field="expiryDate" formikProps={formikProps} />
           </SectionField>
-          <SectionField label="Display order" labelWidth="2">
+          <SectionField label="Display order" labelWidth={{ xs: 2 }}>
             <Input field="displayOrder" type="number" />
           </SectionField>
 

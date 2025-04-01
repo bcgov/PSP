@@ -49,16 +49,16 @@ export const Improvement: React.FunctionComponent<React.PropsWithChildren<IImpro
 
   return (
     <Section header={HeaderDisplayNode(typeId)}>
-      <SectionField label="Unit #" labelWidth="3">
+      <SectionField label="Unit #" labelWidth={{ xs: 3 }}>
         {improvement.address}
       </SectionField>
       <SectionField
         label={typeId === PropertyImprovementTypes.Residential ? 'House size' : 'Building size'}
-        labelWidth="3"
+        labelWidth={{ xs: 3 }}
       >
         {improvement.structureSize}
       </SectionField>
-      <SectionField label="Description" labelWidth="3">
+      <SectionField label="Description" labelWidth={{ xs: 3 }}>
         {improvement.description}
       </SectionField>
     </Section>

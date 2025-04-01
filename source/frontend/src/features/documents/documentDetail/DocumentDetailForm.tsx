@@ -127,7 +127,7 @@ export const DocumentDetailForm: React.FunctionComponent<
               >
                 {formikProps => (
                   <>
-                    <SectionField label="Document type" labelWidth="4" required>
+                    <SectionField label="Document type" labelWidth={{ xs: 4 }} required>
                       <Select
                         className="mb-0"
                         placeholder={
@@ -147,7 +147,7 @@ export const DocumentDetailForm: React.FunctionComponent<
                         <StyledPurposeText>{documentTypePurpose}</StyledPurposeText>
                       </SectionField>
                     )}
-                    <SectionField label="Status" labelWidth="4">
+                    <SectionField label="Status" labelWidth={{ xs: 4 }}>
                       <Select field="documentStatusCode" options={documentStatusTypes} />
                     </SectionField>
                     {props.documentTypeUpdated && (

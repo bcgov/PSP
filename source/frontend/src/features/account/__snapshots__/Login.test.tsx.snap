@@ -1,7 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`login > login renders correctly 1`] = `
-.c1.btn {
+.c2.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -30,49 +30,49 @@ exports[`login > login renders correctly 1`] = `
   cursor: pointer;
 }
 
-.c1.btn .Button__value {
+.c2.btn .Button__value {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
-.c1.btn:hover {
+.c2.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c1.btn:focus {
+.c2.btn:focus {
   outline-style: solid;
   box-shadow: none;
 }
 
-.c1.btn.btn-secondary {
+.c2.btn.btn-secondary {
   background: none;
 }
 
-.c1.btn.btn-info {
+.c2.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c1.btn.btn-info:hover,
-.c1.btn.btn-info:active,
-.c1.btn.btn-info:focus {
+.c2.btn.btn-info:hover,
+.c2.btn.btn-info:active,
+.c2.btn.btn-info:focus {
   background: none;
 }
 
-.c1.btn.btn-light {
+.c2.btn.btn-light {
   border: none;
 }
 
-.c1.btn.btn-dark {
+.c2.btn.btn-dark {
   border: none;
 }
 
-.c1.btn.btn-link {
+.c2.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -95,9 +95,9 @@ exports[`login > login renders correctly 1`] = `
   text-decoration: underline;
 }
 
-.c1.btn.btn-link:hover,
-.c1.btn.btn-link:active,
-.c1.btn.btn-link:focus {
+.c2.btn.btn-link:hover,
+.c2.btn.btn-link:active,
+.c2.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -106,14 +106,14 @@ exports[`login > login renders correctly 1`] = `
   outline: none;
 }
 
-.c1.btn.btn-link:disabled,
-.c1.btn.btn-link.disabled {
+.c2.btn.btn-link:disabled,
+.c2.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c1.btn:disabled,
-.c1.btn:disabled:hover {
+.c2.btn:disabled,
+.c2.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -123,15 +123,15 @@ exports[`login > login renders correctly 1`] = `
   cursor: not-allowed;
 }
 
-.c1.Button .Button__icon {
+.c2.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c1.Button--icon-only:focus {
+.c2.Button--icon-only:focus {
   outline: none;
 }
 
-.c1.Button--icon-only .Button__icon {
+.c2.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
@@ -158,7 +158,6 @@ exports[`login > login renders correctly 1`] = `
 
 .c0 .unauth {
   font-size: 2.4rem;
-  margin: 15rem auto;
   background-color: rgba(255,255,255);
   padding-top: 1.5rem;
   padding-bottom: 2rem;
@@ -305,130 +304,150 @@ exports[`login > login renders correctly 1`] = `
   margin-bottom: 1rem;
 }
 
+.c1 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  height: 100%;
+}
+
 <div
   className="c0 login container-fluid"
 >
   <div
-    className="unauth container-fluid"
+    className="c1"
   >
     <div
-      className="row"
+      className="unauth container-fluid"
     >
       <div
-        className="col-1"
-      />
-      <div
-        className="col-md-3 col-1"
+        className="row"
       >
-        <img
-          alt="PIMS logo"
-          className="pims-logo"
-          src="/tenants/MOTI/PIMS-logo.png"
+        <div
+          className="col-1"
+        />
+        <div
+          className="col-md-3 col-1"
+        >
+          <img
+            alt="PIMS logo"
+            className="pims-logo"
+            src="/tenants/MOTI/PIMS-logo.png"
+          />
+        </div>
+        <div
+          className="logo-title col-md-6 col-16"
+        >
+          <h1>
+            MOTI Property Information Management System (PIMS)
+          </h1>
+        </div>
+      </div>
+      <div
+        className="sign-in row"
+      >
+        <div
+          className="message-container"
+        >
+          <div
+            className="message-header"
+          >
+            <div
+              className="header-icon"
+            >
+              <svg
+                fill="currentColor"
+                height={27}
+                stroke="currentColor"
+                strokeWidth="0"
+                style={
+                  {
+                    "color": undefined,
+                  }
+                }
+                viewBox="0 0 24 24"
+                width={27}
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M12 2C8.13 2 5 5.13 5 9c0 1.74.5 3.37 1.41 4.84.95 1.54 2.2 2.86 3.16 4.4.47.75.81 1.45 1.17 2.26.26.55.47 1.5 1.26 1.5s1-.95 1.25-1.5c.37-.81.7-1.51 1.17-2.26.96-1.53 2.21-2.85 3.16-4.4C18.5 12.37 19 10.74 19 9c0-3.87-3.13-7-7-7zm0 9.75a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"
+                />
+              </svg>
+            </div>
+            <p
+              className="message-title"
+            >
+              Welcome!
+            </p>
+          </div>
+          <div
+            className="message-body"
+          >
+            <p>
+              PIMS enables users to track and manage information relating to the property interests of the MOTI and BCTFA.
+            </p>
+            <hr
+              className="spacer"
+            />
+            <p>
+              By signing in you acknowledge that not all data included within has been vetted for completeness and accuracy. Please exercise caution by verifying information prior to relying on it.
+            </p>
+          </div>
+          <div
+            className="message-footer row"
+          >
+            <div
+              className="col-md-6 col-16"
+            />
+            <div
+              className="col-md-6 col-16"
+            >
+              <button
+                className="c2 Button btn btn-primary"
+                disabled={false}
+                onClick={[Function]}
+                type="button"
+              >
+                <div
+                  className="Button__value"
+                >
+                  Sign In
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className="row"
+      >
+        <div
+          className="col-md-3 col-1"
+        />
+        <div
+          className="foot-note col-md-6 col-16"
+        >
+          <p>
+            Sign into PIMS with your government issued IDIR
+          </p>
+        </div>
+        <div
+          className="col-md-3 col-1"
         />
       </div>
-      <div
-        className="logo-title col-md-6 col-16"
-      >
-        <h1>
-          MOTI Property Information Management System (PIMS)
-        </h1>
-      </div>
-    </div>
-    <div
-      className="sign-in row"
-    >
-      <div
-        className="message-container"
-      >
-        <div
-          className="message-header"
-        >
-          <div
-            className="header-icon"
-          >
-            <svg
-              fill="currentColor"
-              height={27}
-              stroke="currentColor"
-              strokeWidth="0"
-              style={
-                {
-                  "color": undefined,
-                }
-              }
-              viewBox="0 0 24 24"
-              width={27}
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M0 0h24v24H0z"
-                fill="none"
-              />
-              <path
-                d="M12 2C8.13 2 5 5.13 5 9c0 1.74.5 3.37 1.41 4.84.95 1.54 2.2 2.86 3.16 4.4.47.75.81 1.45 1.17 2.26.26.55.47 1.5 1.26 1.5s1-.95 1.25-1.5c.37-.81.7-1.51 1.17-2.26.96-1.53 2.21-2.85 3.16-4.4C18.5 12.37 19 10.74 19 9c0-3.87-3.13-7-7-7zm0 9.75a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"
-              />
-            </svg>
-          </div>
-          <p
-            className="message-title"
-          >
-            Welcome!
-          </p>
-        </div>
-        <div
-          className="message-body"
-        >
-          <p>
-            PIMS enables users to track and manage information relating to the property interests of the MOTI and BCTFA.
-          </p>
-          <hr
-            className="spacer"
-          />
-          <p>
-            By signing in you acknowledge that not all data included within has been vetted for completeness and accuracy. Please exercise caution by verifying information prior to relying on it.
-          </p>
-        </div>
-        <div
-          className="message-footer row"
-        >
-          <div
-            className="col-md-6 col-16"
-          />
-          <div
-            className="col-md-6 col-16"
-          >
-            <button
-              className="c1 Button btn btn-primary"
-              disabled={false}
-              onClick={[Function]}
-              type="button"
-            >
-              <div
-                className="Button__value"
-              >
-                Sign In
-              </div>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      className="row"
-    >
-      <div
-        className="col-md-3 col-1"
-      />
-      <div
-        className="foot-note col-md-6 col-16"
-      >
-        <p>
-          Sign into PIMS with your government issued IDIR
-        </p>
-      </div>
-      <div
-        className="col-md-3 col-1"
-      />
     </div>
   </div>
 </div>

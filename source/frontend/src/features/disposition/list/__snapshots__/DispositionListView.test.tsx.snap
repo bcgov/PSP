@@ -281,6 +281,7 @@ exports[`Disposition List View > matches snapshot 1`] = `
 
 .c8:not(:first-child) {
   padding-left: 0;
+  padding-right: 0;
 }
 
 .c8:not(:first-child) .form-control {
@@ -357,6 +358,10 @@ exports[`Disposition List View > matches snapshot 1`] = `
   border-radius: 0.5rem;
 }
 
+.c6 .form-select {
+  min-width: 15rem;
+}
+
 .c5 {
   -webkit-align-items: center;
   -webkit-box-align: center;
@@ -368,6 +373,7 @@ exports[`Disposition List View > matches snapshot 1`] = `
 
 .c10 {
   border-left: 0.2rem solid white;
+  min-width: 2.5rem;
 }
 
 .c2 {
@@ -481,7 +487,7 @@ exports[`Disposition List View > matches snapshot 1`] = `
                       class="col"
                     >
                       <div
-                        class="flex-nowrap input-group row"
+                        class="flex-nowrap input-group row no-gutters"
                       >
                         <div
                           class="c7 col-auto"
@@ -586,7 +592,7 @@ exports[`Disposition List View > matches snapshot 1`] = `
                       </div>
                     </div>
                     <div
-                      class="col-xl-4"
+                      class="col-xl-5"
                     >
                       <div
                         class="form-group"

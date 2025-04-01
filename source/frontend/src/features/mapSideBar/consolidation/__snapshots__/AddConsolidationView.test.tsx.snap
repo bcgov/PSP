@@ -2,10 +2,18 @@
 
 exports[`Add Consolidation View > matches snapshot 1`] = `
 <DocumentFragment>
-  <div
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div
     class="Toastify"
   />
-  <div />
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div />
   .c5.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -457,6 +465,12 @@ exports[`Add Consolidation View > matches snapshot 1`] = `
   height: 2.8rem;
   margin-right: 1rem;
   fill: #474543;
+}
+
+@media only screen and (max-width:1199px) {
+  .c0.expanded {
+    min-width: 70rem;
+  }
 }
 
 <div

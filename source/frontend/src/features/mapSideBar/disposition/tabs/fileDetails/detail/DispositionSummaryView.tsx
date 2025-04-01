@@ -60,84 +60,87 @@ export const DispositionSummaryView: React.FunctionComponent<IDispositionSummary
         ) : null}
       </StyledEditWrapper>
       <Section>
-        <SectionField label="Status" labelWidth="5">
+        <SectionField label="Status" labelWidth={{ xs: '5' }}>
           {dispositionFile?.fileStatusTypeCode?.description}
         </SectionField>
       </Section>
       <Section header="Project">
-        <SectionField label="Ministry project" labelWidth="5" valueTestId="dsp-project">
+        <SectionField label="Ministry project" labelWidth={{ xs: '5' }} valueTestId="dsp-project">
           {projectName}
         </SectionField>
-        <SectionField label="Product" labelWidth="5" valueTestId="dsp-product">
+        <SectionField label="Product" labelWidth={{ xs: '5' }} valueTestId="dsp-product">
           {productName}
         </SectionField>
-        <SectionField label="Funding" labelWidth="5">
+        <SectionField label="Funding" labelWidth={{ xs: '5' }}>
           {dispositionFile?.fundingTypeCode?.description}
         </SectionField>
       </Section>
       <Section header="Schedule">
-        <SectionField label="Assigned date" labelWidth="5">
+        <SectionField label="Assigned date" labelWidth={{ xs: '5' }}>
           {prettyFormatDate(dispositionFile?.assignedDate)}
         </SectionField>
-        <SectionField label="Disposition completed date" labelWidth="5">
+        <SectionField label="Disposition completed date" labelWidth={{ xs: '5' }}>
           {prettyFormatDate(dispositionFile?.completionDate)}
         </SectionField>
       </Section>
       <Section header="Disposition Details">
-        <SectionField label="Disposition file name" labelWidth="5">
+        <SectionField label="Disposition file name" labelWidth={{ xs: '5' }}>
           {dispositionFile?.fileName}
         </SectionField>
         <SectionField
           label="Reference number"
           tooltip="Provide available reference number for historic program or file number (e.g.  RAEG, Acquisition File, etc.)"
-          labelWidth="5"
+          labelWidth={{ xs: '5' }}
         >
           {dispositionFile?.fileReference}
         </SectionField>
-        <SectionField label="Disposition status" labelWidth="5">
+        <SectionField label="Disposition status" labelWidth={{ xs: '5' }}>
           {dispositionFile?.dispositionStatusTypeCode?.description}
         </SectionField>
-        <SectionField label="Disposition type" labelWidth="5">
+        <SectionField label="Disposition type" labelWidth={{ xs: '5' }}>
           {dispositionFile?.dispositionTypeCode?.description}
         </SectionField>
         {dispositionFile?.dispositionTypeCode?.id === 'OTHER' && (
-          <SectionField label="Other (disposition type)" labelWidth="5">
+          <SectionField label="Other (disposition type)" labelWidth={{ xs: '5' }}>
             {dispositionFile?.dispositionTypeOther}
           </SectionField>
         )}
         <SectionField
           label="Initiating document"
           tooltip="Provide the type of document that has initiated the disposition process"
-          labelWidth="5"
+          labelWidth={{ xs: '5' }}
         >
           {dispositionFile?.initiatingDocumentTypeCode?.description}
         </SectionField>
         {dispositionFile?.initiatingDocumentTypeCode?.id === 'OTHER' && (
-          <SectionField label="Other (initiating document)" labelWidth="5">
+          <SectionField label="Other (initiating document)" labelWidth={{ xs: '5' }}>
             {dispositionFile?.initiatingDocumentTypeOther}
           </SectionField>
         )}
         <SectionField
           label="Initiating document date"
           tooltip="Provide the date initiating document was signed off"
-          labelWidth="5"
+          labelWidth={{ xs: '5' }}
         >
           {prettyFormatDate(dispositionFile?.initiatingDocumentDate)}
         </SectionField>
-        <SectionField label="Physical file status" labelWidth="5">
+        <SectionField label="Physical file status" labelWidth={{ xs: '5' }}>
           {dispositionFile?.physicalFileStatusTypeCode?.description}
         </SectionField>
-        <SectionField label="Initiating branch" labelWidth="5">
+        <SectionField label="Initiating branch" labelWidth={{ xs: '5' }}>
           {dispositionFile?.initiatingBranchTypeCode?.description}
         </SectionField>
-        <SectionField label="Ministry region" labelWidth="5">
+        <SectionField label="Ministry region" labelWidth={{ xs: '5' }}>
           {dispositionFile?.regionCode?.description}
         </SectionField>
       </Section>
       <Section header="Disposition Team">
         {dispositionFile?.dispositionTeam?.map((teamMember, index) => (
           <Fragment key={`disp-team-${index}`}>
-            <SectionField label={teamMember?.teamProfileType?.description || ''} labelWidth="5">
+            <SectionField
+              label={teamMember?.teamProfileType?.description || ''}
+              labelWidth={{ xs: '5' }}
+            >
               <StyledLink
                 target="_blank"
                 rel="noopener noreferrer"
@@ -156,7 +159,7 @@ export const DispositionSummaryView: React.FunctionComponent<IDispositionSummary
               </StyledLink>
             </SectionField>
             {teamMember?.organizationId && (
-              <SectionField label="Primary contact" labelWidth="5">
+              <SectionField label="Primary contact" labelWidth={{ xs: '5' }}>
                 {teamMember?.primaryContactId ? (
                   <StyledLink
                     target="_blank"

@@ -75,7 +75,7 @@ export const OperationView: React.FunctionComponent<IOperationViewProps> = ({
   return (
     <Section
       header={
-        <SectionField label="Created on" labelWidth="auto" className="">
+        <SectionField label="Created on" labelWidth={{ xs: 'auto' }} className="">
           {prettyFormatUTCDate(operationTimeStamp)} at {prettyFormatUTCTime(operationTimeStamp)}
         </SectionField>
       }

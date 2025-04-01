@@ -117,14 +117,19 @@ const AdministrationSubForm: React.FunctionComponent<
         tittle="Help with choosing the agreement Program, Type and Purpose"
         guideBody={guideBodyContent()}
       ></FormGuideContainer>
-      <SectionField label="MOTI contact" labelWidth="3" contentWidth="6">
+      <SectionField label="MOTI contact" labelWidth={{ xs: 3 }} contentWidth={{ xs: 6 }}>
         <InlineInput field="motiName" />
       </SectionField>
 
-      <SectionField label="MOTI region" labelWidth="3" contentWidth="auto" required>
+      <SectionField
+        label="MOTI region"
+        labelWidth={{ xs: 3 }}
+        contentWidth={{ xs: 'auto' }}
+        required
+      >
         <UserRegionSelectContainer field="regionId" placeholder="Select region" required />
       </SectionField>
-      <SectionField label="Program" labelWidth="3" contentWidth="auto" required>
+      <SectionField label="Program" labelWidth={{ xs: 3 }} contentWidth={{ xs: 'auto' }} required>
         <Select
           field="programTypeCode"
           options={programTypes}
@@ -133,20 +138,30 @@ const AdministrationSubForm: React.FunctionComponent<
         />
       </SectionField>
       {values?.programTypeCode === 'OTHER' && (
-        <SectionField label="Other Program" labelWidth="3" contentWidth="8" required>
+        <SectionField
+          label="Other Program"
+          labelWidth={{ xs: 3 }}
+          contentWidth={{ xs: 8 }}
+          required
+        >
           <Input field="otherProgramTypeDescription" required />
         </SectionField>
       )}
-      <SectionField label="Type" labelWidth="3" contentWidth="9" required>
+      <SectionField label="Type" labelWidth={{ xs: 3 }} contentWidth={{ xs: 9 }} required>
         <Select field="leaseTypeCode" options={types} placeholder="Select type" required />
       </SectionField>
       {values?.leaseTypeCode === 'OTHER' && (
-        <SectionField label="Describe other" labelWidth="3" contentWidth="8" required>
+        <SectionField
+          label="Describe other"
+          labelWidth={{ xs: 3 }}
+          contentWidth={{ xs: 8 }}
+          required
+        >
           <Input field="otherLeaseTypeDescription" required />
         </SectionField>
       )}
 
-      <SectionField label="Purpose" labelWidth="3" contentWidth="9" required>
+      <SectionField label="Purpose" labelWidth={{ xs: 3 }} contentWidth={{ xs: 9 }} required>
         <Multiselect
           field="purposes"
           displayValue="purposeTypeCodeDescription"
@@ -156,7 +171,7 @@ const AdministrationSubForm: React.FunctionComponent<
         />
       </SectionField>
       {purposes?.some(x => x.purposeTypeCode === ApiGen_CodeTypes_LeasePurposeTypes.OTHER) && (
-        <SectionField label="Describe other" labelWidth="3" required>
+        <SectionField label="Describe other" labelWidth={{ xs: 3 }} required>
           <Input field="purposeOtherDescription" required />
         </SectionField>
       )}
@@ -164,16 +179,16 @@ const AdministrationSubForm: React.FunctionComponent<
       <SectionField
         label="Initiator"
         tooltip="Where did this lease/licence initiate?"
-        labelWidth="3"
-        contentWidth="4"
+        labelWidth={{ xs: 3 }}
+        contentWidth={{ xs: 4 }}
       >
         <Select field="initiatorTypeCode" placeholder="Select initiator" options={initiatorTypes} />
       </SectionField>
 
       <SectionField
         label="Responsibility"
-        labelWidth="3"
-        contentWidth="auto"
+        labelWidth={{ xs: 3 }}
+        contentWidth={{ xs: 'auto' }}
         tooltip="Who is currently responsible?"
       >
         <Select
@@ -182,18 +197,18 @@ const AdministrationSubForm: React.FunctionComponent<
           options={responsibilityTypes}
         />
       </SectionField>
-      <SectionField label="Effective date" labelWidth="3">
+      <SectionField label="Effective date" labelWidth={{ xs: 3 }}>
         <FastDatePicker formikProps={formikProps} field="responsibilityEffectiveDate" />
       </SectionField>
 
       <SectionField
         label="Intended use"
-        labelWidth="12"
+        labelWidth={{ xs: 12 }}
         tooltip="The purpose for which the license is issued, as per the agreement"
       >
         <TextArea field="description" />
       </SectionField>
-      <SectionField label="Primary arbitration city" labelWidth="12">
+      <SectionField label="Primary arbitration city" labelWidth={{ xs: 12 }}>
         <Input field="primaryArbitrationCity" />
       </SectionField>
     </Section>

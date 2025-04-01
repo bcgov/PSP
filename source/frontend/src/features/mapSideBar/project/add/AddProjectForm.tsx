@@ -68,34 +68,34 @@ const AddProjectForm = React.forwardRef<FormikProps<ProjectForm>, IAddProjectFor
                     </Col>
                   </StyledRow>
                 )}
-                <SectionField label="Project name" required labelWidth="2">
+                <SectionField label="Project name" required labelWidth={{ xs: 2 }}>
                   <Input field="projectName" />
                 </SectionField>
-                <SectionField label="Project number" labelWidth="2">
+                <SectionField label="Project number" labelWidth={{ xs: 2 }}>
                   <Input field="projectNumber" placeholder="if known" />
                 </SectionField>
-                <SectionField label="Status" labelWidth="2" required>
+                <SectionField label="Status" labelWidth={{ xs: 2 }} required>
                   <Select
                     field="projectStatusType"
                     options={projectStatusOptions}
                     placeholder="Select..."
                   />
                 </SectionField>
-                <SectionField label="MoTI region" required labelWidth="2">
+                <SectionField label="MoTI region" required labelWidth={{ xs: 2 }}>
                   <UserRegionSelectContainer field="region" placeholder="Select region..." />
                 </SectionField>
-                <SectionField label="Project summary" labelWidth="12">
+                <SectionField label="Project summary" labelWidth={{ xs: 12 }}>
                   <MediumTextArea field="summary" />
                 </SectionField>
               </Section>
               <Section header="Associated Codes">
-                <SectionField label="Cost type" labelWidth="2">
+                <SectionField label="Cost type" labelWidth={{ xs: 2 }}>
                   <TypeaheadSelect field="costTypeCode" options={costTypeOptions} />
                 </SectionField>
-                <SectionField label="Work activity" labelWidth="2">
+                <SectionField label="Work activity" labelWidth={{ xs: 2 }}>
                   <TypeaheadSelect field="workActivityCode" options={workActivityOptions} />
                 </SectionField>
-                <SectionField label="Business function" labelWidth="2">
+                <SectionField label="Business function" labelWidth={{ xs: 2 }}>
                   <TypeaheadSelect field="businessFunctionCode" options={businessFunctionOptions} />
                 </SectionField>
               </Section>

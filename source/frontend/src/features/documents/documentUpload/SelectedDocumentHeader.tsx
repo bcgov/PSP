@@ -102,7 +102,7 @@ export const SelectedDocumentHeader: React.FunctionComponent<ISelectedDocumentHe
       </Row>
       <StyledRow className={clsx('ml-0', className)}>
         <Col md="5">
-          <SectionField label={null} contentWidth="12" required>
+          <SectionField label={null} contentWidth={{ xs: 12 }} required>
             <Select
               className="mb-0"
               data-testid={withNameSpace(namespace, 'document-type')}
@@ -115,7 +115,7 @@ export const SelectedDocumentHeader: React.FunctionComponent<ISelectedDocumentHe
           </SectionField>
         </Col>
         <Col md="auto">
-          <SectionField label={null} contentWidth="12">
+          <SectionField label={null} contentWidth={{ xs: 12 }}>
             <Select
               className="mb-0"
               field={withNameSpace(namespace, 'documentStatusCode')}

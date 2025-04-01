@@ -70,7 +70,7 @@ export const AddImprovementsForm: React.FunctionComponent<
                       header={HeaderDisplayNode(improvement.propertyImprovementTypeId)}
                       key={nameSpace}
                     >
-                      <SectionField label="Unit #" labelWidth="3">
+                      <SectionField label="Unit #" labelWidth={{ xs: 3 }}>
                         <Input field={withNameSpace(nameSpace, 'address')} />{' '}
                       </SectionField>
                       <SectionField
@@ -80,11 +80,11 @@ export const AddImprovementsForm: React.FunctionComponent<
                             ? 'House size'
                             : 'Building size'
                         }
-                        labelWidth="3"
+                        labelWidth={{ xs: 3 }}
                       >
                         <Input field={withNameSpace(nameSpace, 'structureSize')} />
                       </SectionField>
-                      <SectionField label="Description" labelWidth="12">
+                      <SectionField label="Description" labelWidth={{ xs: 12 }}>
                         <TextArea
                           innerClassName="description"
                           rows={5}

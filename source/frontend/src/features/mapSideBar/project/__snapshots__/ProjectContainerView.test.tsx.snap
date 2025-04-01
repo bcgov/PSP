@@ -2,10 +2,26 @@
 
 exports[`ProjectSummaryView component > matches snapshot 1`] = `
 <DocumentFragment>
-  <div
+  @media only screen and (max-width:1199px) {
+
+}
+
+@media only screen and (max-width:1199px) {
+
+}
+
+<div
     class="Toastify"
   />
-  <div />
+  @media only screen and (max-width:1199px) {
+
+}
+
+@media only screen and (max-width:1199px) {
+
+}
+
+<div />
   .c4.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -214,7 +230,7 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
   margin-right: 0;
 }
 
-.c17 {
+.c18 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -307,7 +323,7 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
   align-items: center;
 }
 
-.c19 {
+.c20 {
   width: 100%;
   position: relative;
   overflow: auto;
@@ -337,7 +353,7 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
   align-items: end;
 }
 
-.c20 {
+.c21 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -354,9 +370,13 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
   overflow-y: auto;
 }
 
-.c15 {
+.c16 {
   font-size: 0.87em;
   line-height: 1.9;
+}
+
+.c15 {
+  text-align: right;
 }
 
 .c13 {
@@ -364,7 +384,7 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
   white-space: nowrap;
 }
 
-.c18 {
+.c19 {
   font-family: 'BCSans-Bold';
   font-size: 1.4rem;
   border-radius: 0.4rem;
@@ -383,7 +403,7 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
   background-color: #dff0d8;
 }
 
-.c16 {
+.c17 {
   margin-top: auto;
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -412,32 +432,32 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
   max-width: 60rem;
 }
 
-.c21 {
+.c22 {
   height: 100%;
 }
 
-.c21 .tab-content {
+.c22 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
   overflow-y: auto;
   background-color: #f2f2f2;
 }
 
-.c21 .tab-content .tab-pane {
+.c22 .tab-content .tab-pane {
   position: relative;
 }
 
-.c22 {
+.c23 {
   background-color: white;
   color: var(--surface-color-primary-button-default);
   font-size: 1.4rem;
   border-color: transparent;
 }
 
-.c22 .nav-tabs {
+.c23 .nav-tabs {
   height: auto;
 }
 
-.c22 .nav-item {
+.c23 .nav-item {
   color: var(--surface-color-primary-button-default);
   min-width: 5rem;
   padding: 0.1rem 1.3rem;
@@ -445,7 +465,7 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
   margin-left: 0.1rem;
 }
 
-.c22 .nav-item:hover {
+.c23 .nav-item:hover {
   color: #f2f2f2;
   background-color: #1e5189;
   border-color: transparent;
@@ -455,12 +475,24 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
   text-shadow: 0.1rem 0 0 currentColor;
 }
 
-.c22 .nav-item.active {
+.c23 .nav-item.active {
   border-radius: 0.4rem;
   color: #f2f2f2;
   background-color: #053662;
   border-color: transparent;
   text-shadow: 0.1rem 0 0 currentColor;
+}
+
+@media only screen and (max-width:1199px) {
+  .c0.expanded {
+    min-width: 70rem;
+  }
+}
+
+@media only screen and (max-width:1199px) {
+  .c15 {
+    text-align: left;
+  }
 }
 
 <div
@@ -568,7 +600,7 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
           class="c11 no-gutters row"
         >
           <div
-            class="c12 col-7"
+            class="c12 col-xl-7 col-12"
           >
             <div
               class="row"
@@ -617,10 +649,10 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
                 class="no-gutters row"
               >
                 <div
-                  class="text-right col"
+                  class="c15 col"
                 >
                   <span
-                    class="c15"
+                    class="c16"
                   >
                     <strong>
                       Created: 
@@ -642,10 +674,10 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
                 class="no-gutters row"
               >
                 <div
-                  class="text-right col"
+                  class="c15 col"
                 >
                   <span
-                    class="c15"
+                    class="c16"
                   >
                     <strong>
                       Updated: 
@@ -664,7 +696,7 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="c16"
+                class="c17"
               >
                 <div
                   class="no-gutters justify-content-end align-items-end row"
@@ -676,12 +708,12 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
                     class="align-self-end d-flex col-auto"
                   >
                     <span
-                      class="c15"
+                      class="c16"
                     >
                       <b />
                     </span>
                     <div
-                      class="c17 c18"
+                      class="c18 c19"
                     >
                       <svg
                         fill="currentColor"
@@ -710,16 +742,16 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
         </div>
       </div>
       <div
-        class="c19"
+        class="c20"
       >
         <div
-          class="c20"
+          class="c21"
         >
           <div
-            class="c21"
+            class="c22"
           >
             <nav
-              class="c22 nav nav-tabs"
+              class="c23 nav nav-tabs"
               role="tablist"
             />
             <div

@@ -89,8 +89,8 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
                         <SectionField
                           label="Legacy interest holders"
                           tooltip="This is read-only field to display legacy information"
-                          labelWidth="4"
-                          contentWidth="8"
+                          labelWidth={{ xl: 4 }}
+                          contentWidth={{ xl: 8 }}
                           valueTestId="acq-file-legacy-stakeholders"
                         >
                           {legacyStakeHolders.map((stakeholder, index) => (
@@ -143,7 +143,7 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
                             : `non-interest-holder-${index}`
                         }
                       >
-                        <SectionField label="Payee name">
+                        <SectionField label="Payee name" labelWidth={{ xl: 4 }}>
                           <Row>
                             <Col>
                               <ContactInputContainer
@@ -151,7 +151,7 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
                                 View={ContactInputView}
                               ></ContactInputContainer>
                             </Col>
-                            <Col xs="auto">
+                            <Col xs="3" className="p-0">
                               <RemoveIconButton
                                 title="Remove Interest"
                                 onRemove={() => {

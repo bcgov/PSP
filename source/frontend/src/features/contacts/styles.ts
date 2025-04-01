@@ -25,6 +25,10 @@ export const HalfWidthLayout = styled.div`
   height: 100%;
   width: 50%;
   min-width: 93rem;
+  @media only screen and (max-width: 1199px) {
+    min-width: 65rem;
+    width: 100%;
+  }
   overflow: hidden;
   padding: 1.4rem 1.6rem;
   padding-bottom: 0;

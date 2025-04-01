@@ -111,7 +111,7 @@ const VariablePeriodSubForm: React.FunctionComponent<IVariablePeriodSubFormProps
           </Col>
         </Row>
       )}
-      <SectionField label="Total Payment" labelWidth="auto">
+      <SectionField label="Total Payment" labelWidth={{ xs: 'auto' }}>
         {formatMoney(
           calculateTotal(
             getIn(formikProps.values, paymentAmountField),

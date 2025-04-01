@@ -160,8 +160,8 @@ export const ConsultationListView: React.FunctionComponent<IConsultationListView
                 >
                   {consultation?.consultationTypeCode?.id === 'OTHER' && (
                     <SectionField
-                      labelWidth="4"
-                      contentWidth="6"
+                      labelWidth={{ xs: 4 }}
+                      contentWidth={{ xs: 6 }}
                       label="Description"
                       tooltip={
                         <TooltipIcon
@@ -174,7 +174,7 @@ export const ConsultationListView: React.FunctionComponent<IConsultationListView
                     </SectionField>
                   )}
                   <SectionField
-                    labelWidth="4"
+                    labelWidth={{ xs: 4 }}
                     label="Requested on"
                     tooltip={
                       <TooltipIcon
@@ -186,7 +186,7 @@ export const ConsultationListView: React.FunctionComponent<IConsultationListView
                     {prettyFormatDate(consultation.requestedOn)}
                   </SectionField>
                   <ContactFieldContainer
-                    labelWidth="4"
+                    labelWidth={{ xs: 4 }}
                     label="Contact"
                     personId={consultation.personId}
                     organizationId={consultation.organizationId}
@@ -198,14 +198,14 @@ export const ConsultationListView: React.FunctionComponent<IConsultationListView
                       />
                     }
                   />
-                  <SectionField labelWidth="4" label="Response received">
+                  <SectionField labelWidth={{ xs: 4 }} label="Response received">
                     {booleanToYesNoString(consultation.isResponseReceived)}
                   </SectionField>
-                  <SectionField labelWidth="4" label="Response received on">
+                  <SectionField labelWidth={{ xs: 4 }} label="Response received on">
                     {prettyFormatDate(consultation.responseReceivedDate)}
                   </SectionField>
                   <SectionField
-                    labelWidth="4"
+                    labelWidth={{ xs: 4 }}
                     label="Comments"
                     tooltip={
                       <TooltipIcon

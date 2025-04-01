@@ -103,7 +103,7 @@ export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentF
           <StyledResetButton onClick={onReset}>Reset to Default</StyledResetButton>
         </StyledResetContainer>
         <Section header="Show Ownership" isCollapsable initiallyExpanded>
-          <SectionField label={null} contentWidth="12">
+          <SectionField label={null} contentWidth={{ xs: 12 }}>
             <Row>
               <Col xs={1}>
                 <Check field="isCoreInventory" />
@@ -162,12 +162,12 @@ export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentF
           </SectionField>
         </Section>
         <Section header="Project" isCollapsable initiallyExpanded>
-          <SectionField label={null} contentWidth="12">
+          <SectionField label={null} contentWidth={{ xs: 12 }}>
             <ProjectSelector field="projectPrediction" />
           </SectionField>
         </Section>
         <Section header="Tenure" isCollapsable initiallyExpanded>
-          <SectionField label="Status" contentWidth="12">
+          <SectionField label="Status" contentWidth={{ xs: 12 }}>
             <Multiselect
               field="tenureStatuses"
               displayValue="codeTypeDescription"
@@ -176,7 +176,11 @@ export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentF
               options={tenureStatusOptions}
             />
           </SectionField>
-          <SectionField label="Province Public Highway" labelWidth="12" contentWidth="12">
+          <SectionField
+            label="Province Public Highway"
+            labelWidth={{ xs: 12 }}
+            contentWidth={{ xs: 12 }}
+          >
             <Select
               field="tenurePPH"
               options={tenureProvincePublicHigwayTypeOptions}
@@ -184,7 +188,11 @@ export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentF
             />
           </SectionField>
 
-          <SectionField label="Highway / Road Details" labelWidth="12" contentWidth="12">
+          <SectionField
+            label="Highway / Road Details"
+            labelWidth={{ xs: 12 }}
+            contentWidth={{ xs: 12 }}
+          >
             <Multiselect
               field="tenureRoadTypes"
               displayValue="codeTypeDescription"
@@ -197,8 +205,8 @@ export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentF
         <Section header="Lease / Licence" isCollapsable initiallyExpanded>
           <SectionField
             label="Lease Transaction"
-            labelWidth="12"
-            contentWidth="12"
+            labelWidth={{ xs: 12 }}
+            contentWidth={{ xs: 12 }}
             tooltip="Selecting the Payable and Receivable lease transaction option will display properties that have both a payable and a receivable lease on them"
           >
             <Select
@@ -208,14 +216,14 @@ export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentF
               data-testid="leasePayRcvblType"
             />
           </SectionField>
-          <SectionField label="Status" contentWidth="12">
+          <SectionField label="Status" contentWidth={{ xs: 12 }}>
             <Select
               field="leaseStatus"
               options={leaseStatusOptions}
               placeholder="Select a Lease Status"
             />
           </SectionField>
-          <SectionField label="Type(s)" contentWidth="12">
+          <SectionField label="Type(s)" contentWidth={{ xs: 12 }}>
             <Multiselect
               field="leaseTypes"
               displayValue="codeTypeDescription"
@@ -224,7 +232,7 @@ export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentF
               options={leaseTypeOptions}
             />
           </SectionField>
-          <SectionField label="Purpose(s)" contentWidth="12">
+          <SectionField label="Purpose(s)" contentWidth={{ xs: 12 }}>
             <Multiselect
               field="leasePurposes"
               displayValue="codeTypeDescription"
@@ -235,7 +243,7 @@ export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentF
           </SectionField>
         </Section>
         <Section header="Anomaly" isCollapsable initiallyExpanded>
-          <SectionField label={null} contentWidth="12">
+          <SectionField label={null} contentWidth={{ xs: 12 }}>
             <Multiselect
               field="anomalies"
               displayValue="codeTypeDescription"

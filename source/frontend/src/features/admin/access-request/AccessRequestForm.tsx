@@ -50,7 +50,7 @@ export const AccessRequestForm: React.FunctionComponent<
       }}
     >
       <Form className="userInfo">
-        <SectionField label="IDIR/BCeID" labelWidth="2">
+        <SectionField label="IDIR/BCeID" labelWidth={{ xs: 2 }}>
           <Input
             field="businessIdentifierValue"
             placeholder={initialValues?.businessIdentifierValue}
@@ -59,7 +59,7 @@ export const AccessRequestForm: React.FunctionComponent<
           />
         </SectionField>
 
-        <SectionField label="First name" labelWidth="2">
+        <SectionField label="First name" labelWidth={{ xs: 2 }}>
           <Input
             field="firstName"
             placeholder={initialValues?.firstName}
@@ -67,27 +67,32 @@ export const AccessRequestForm: React.FunctionComponent<
             type="text"
           />
         </SectionField>
-        <SectionField label="Last name" labelWidth="2">
+        <SectionField label="Last name" labelWidth={{ xs: 2 }}>
           <Input field="surname" placeholder={initialValues?.surname} readOnly={true} type="text" />
         </SectionField>
-        <SectionField label="Email" labelWidth="2">
+        <SectionField label="Email" labelWidth={{ xs: 2 }}>
           <Input field="email" placeholder={initialValues?.email} readOnly={true} type="email" />
         </SectionField>
-        <SectionField label="Position" labelWidth="2">
+        <SectionField label="Position" labelWidth={{ xs: 2 }}>
           <Input
             field="position"
             placeholder="e.g. Property Analyst, Integrated Transportation & Infrastructure Services"
             type="text"
           />
         </SectionField>
-        <SectionField label="Internal staff / Contractor" labelWidth="2" className="mb-4" required>
+        <SectionField
+          label="Internal staff / Contractor"
+          labelWidth={{ xs: 2 }}
+          className="mb-4"
+          required
+        >
           <RadioGroup
             field="userTypeCode"
             radioValues={userTypeCodeValues}
             flexDirection="row"
           ></RadioGroup>
         </SectionField>
-        <SectionField label="Role" labelWidth="2" required>
+        <SectionField label="Role" labelWidth={{ xs: 2 }} required>
           <Select field="roleId" options={selectRoles} placeholder="Select..." />
           <TooltipWrapper
             tooltipId="role description tooltip icon"
@@ -98,10 +103,10 @@ export const AccessRequestForm: React.FunctionComponent<
             <StyledTooltipIcon className="tooltip-icon" />
           </TooltipWrapper>
         </SectionField>
-        <SectionField label="MoTI Region" labelWidth="2" required>
+        <SectionField label="MoTI Region" labelWidth={{ xs: 2 }} required>
           <Select field="regionCodeId" options={selectRegions} placeholder="Select MoTI Region" />
         </SectionField>
-        <SectionField label="Comments" labelWidth="2">
+        <SectionField label="Comments" labelWidth={{ xs: 2 }}>
           <TextArea
             field="note"
             placeholder="Please specify why you need access to PIMS and include your manager's name."

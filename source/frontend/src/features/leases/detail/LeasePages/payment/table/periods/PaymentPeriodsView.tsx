@@ -3,6 +3,7 @@ import { find, noop, orderBy } from 'lodash';
 import { useMemo } from 'react';
 import { FaPlus } from 'react-icons/fa';
 import { MdArrowDropDown, MdArrowRight } from 'react-icons/md';
+import styled from 'styled-components';
 
 import { Section } from '@/components/common/Section/Section';
 import { SectionListHeader } from '@/components/common/SectionListHeader';
@@ -84,7 +85,7 @@ export const PeriodPaymentsView: React.FunctionComponent<
   );
 
   return (
-    <Section
+    <StyledPayments
       header={
         <SectionListHeader
           title="Payment Periods"
@@ -121,8 +122,12 @@ export const PeriodPaymentsView: React.FunctionComponent<
           icons: { open: <MdArrowDropDown size={24} />, closed: <MdArrowRight size={24} /> },
         }}
       />
-    </Section>
+    </StyledPayments>
   );
 };
+
+const StyledPayments = styled(Section)`
+  min-width: 130rem;
+`;
 
 export default PeriodPaymentsView;

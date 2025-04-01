@@ -93,7 +93,11 @@ export const ExpropriationForm8Details: React.FunctionComponent<
           )}
         </StyledSubHeader>
 
-        <SectionField label="Payee" labelWidth="4" valueTestId={`form8[${form8Index}].payee-name`}>
+        <SectionField
+          label="Payee"
+          labelWidth={{ xs: 4 }}
+          valueTestId={`form8[${form8Index}].payee-name`}
+        >
           <StyledPayeeDisplayName>
             {form8?.acquisitionOwnerId && expropriationPayeeOwner && (
               <label>{expropriationPayeeOwner.ownerName ?? ''}</label>
@@ -114,7 +118,7 @@ export const ExpropriationForm8Details: React.FunctionComponent<
 
         <SectionField
           label="Expropriation Authority"
-          labelWidth="4"
+          labelWidth={{ xs: 4 }}
           valueTestId={`form8[${form8Index}].exp-authority`}
         >
           <StyledLink
@@ -129,7 +133,7 @@ export const ExpropriationForm8Details: React.FunctionComponent<
 
         <SectionField
           label="Advanced payment served date"
-          labelWidth="4"
+          labelWidth={{ xs: 4 }}
           valueTestId={`form8[${form8Index}].advanced-payment-srv-date`}
         >
           {prettyFormatDate(form8?.advancedPaymentServedDate)}
@@ -137,7 +141,7 @@ export const ExpropriationForm8Details: React.FunctionComponent<
 
         <SectionField
           label="Description"
-          labelWidth="4"
+          labelWidth={{ xs: 4 }}
           valueTestId={`form8[${form8Index}].description`}
         >
           {form8.description}

@@ -33,12 +33,12 @@ export const ProductSubForm: React.FunctionComponent<IProductSubFormProps> = ({
           </SectionField>
         </Col>
         <Col>
-          <SectionField label="Name" labelWidth="2" required>
+          <SectionField label="Name" labelWidth={{ xs: 2 }} required>
             <Input field={withNameSpace(nameSpace, 'description')} disabled={isExistingProduct} />
           </SectionField>
         </Col>
       </Row>
-      <SectionField label="Start date" labelWidth="2" contentWidth="4">
+      <SectionField label="Start date" labelWidth={{ xs: 2 }} contentWidth={{ xs: 4 }}>
         <FastDatePicker field={withNameSpace(nameSpace, 'startDate')} formikProps={formikProps} />
       </SectionField>
       <Row>
@@ -61,10 +61,10 @@ export const ProductSubForm: React.FunctionComponent<IProductSubFormProps> = ({
           )}
         </Col>
       </Row>
-      <SectionField label="Objectives" labelWidth="12">
+      <SectionField label="Objectives" labelWidth={{ xs: 12 }}>
         <MediumTextArea field={withNameSpace(nameSpace, 'objective')} />
       </SectionField>
-      <SectionField label="Scope" labelWidth="12">
+      <SectionField label="Scope" labelWidth={{ xs: 12 }}>
         <MediumTextArea field={withNameSpace(nameSpace, 'scope')} />
       </SectionField>
     </>

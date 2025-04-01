@@ -85,7 +85,7 @@ export const PropertyContactEditForm = React.forwardRef<
           >
             {formikProps => (
               <Section header="Contact Details">
-                <SectionField label="Contact" contentWidth="7" required>
+                <SectionField label="Contact" contentWidth={{ xs: 7 }} required>
                   {!isValidId(formikProps.values.id) && (
                     <ContactInputContainer
                       field="contact"
@@ -122,7 +122,7 @@ export const PropertyContactEditForm = React.forwardRef<
                     )}
                   </SectionField>
                 )}
-                <SectionField label="Purpose description" contentWidth="12" required>
+                <SectionField label="Purpose description" contentWidth={{ xs: 12 }} required>
                   <TextArea field="purposeDescription" />
                 </SectionField>
               </Section>

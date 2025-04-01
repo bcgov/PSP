@@ -33,7 +33,8 @@ export const columns = ({
   {
     Header: 'PID',
     align: 'right',
-    width: 30,
+    minWidth: 40,
+    maxWidth: 40,
     Cell: (props: CellProps<ApiGen_Concepts_PropertyView>) => {
       return (
         <>
@@ -56,15 +57,16 @@ export const columns = ({
     Header: 'PIN',
     accessor: p => p.pin,
     align: 'right',
-    width: 25,
+    minWidth: 35,
+    maxWidth: 40,
   },
   {
     Header: 'Historical File #',
     align: 'left',
     clickable: false,
     sortable: false,
-    width: 40,
-    maxWidth: 50,
+    minWidth: 40,
+    maxWidth: 60,
     Cell: (props: CellProps<ApiGen_Concepts_PropertyView>) => {
       const propertyArrayId = [props.row.original.id];
       return (
@@ -87,14 +89,15 @@ export const columns = ({
         p.postalCode,
       ),
     align: 'left',
-    minWidth: 100,
-    width: 125,
+    minWidth: 200,
+    maxWidth: 500,
   },
   {
     Header: 'Location',
     accessor: p => p.municipalityName,
     align: 'left',
-    width: 50,
+    minWidth: 50,
+    maxWidth: 200,
     sortable: true,
     filter: {
       component: TypeaheadField,
@@ -121,7 +124,8 @@ export const columns = ({
       return <> {formatNumber(hectars, 0, 3)} </>;
     },
     align: 'right',
-    width: 20,
+    minWidth: 20,
+    maxWidth: 50,
     sortable: true,
     filter: {
       component: Input,
@@ -138,7 +142,8 @@ export const columns = ({
     Header: 'Ownership',
     align: 'left',
     sortable: true,
-    width: 20,
+    minWidth: 100,
+    maxWidth: 100,
     Cell: (cellProps: CellProps<ApiGen_Concepts_PropertyView>) => {
       const { hasClaim } = useKeycloakWrapper();
 
@@ -168,7 +173,8 @@ export const columns = ({
     accessor: 'controls' as any, // this column is not part of the data model
     align: 'right',
     sortable: false,
-    width: 20,
+    minWidth: 40,
+    maxWidth: 40,
     Cell: (cellProps: CellProps<ApiGen_Concepts_PropertyView, number>) => {
       const { hasClaim } = useKeycloakWrapper();
       const property = cellProps.row.original;

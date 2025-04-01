@@ -23,8 +23,8 @@ export const UpdateSolicitorsSubForm: React.FunctionComponent<React.PropsWithChi
               <SectionField
                 label="Owner solicitor"
                 className="mt-4"
-                labelWidth="4"
-                contentWidth="8"
+                labelWidth={{ xs: 4 }}
+                contentWidth={{ xs: 8 }}
               >
                 <ContactInputContainer
                   field={`ownerSolicitors.${index}.contact`}
@@ -34,7 +34,11 @@ export const UpdateSolicitorsSubForm: React.FunctionComponent<React.PropsWithChi
               </SectionField>
 
               {ownerSolicitor.contact?.organizationId && !ownerSolicitor.contact?.personId && (
-                <SectionField label="Primary contact" labelWidth="5" contentWidth="7">
+                <SectionField
+                  label="Primary contact"
+                  labelWidth={{ xs: 5 }}
+                  contentWidth={{ xs: 7 }}
+                >
                   <PrimaryContactSelector
                     field={`ownerSolicitors.${index}.primaryContactId`}
                     contactInfo={ownerSolicitor?.contact}

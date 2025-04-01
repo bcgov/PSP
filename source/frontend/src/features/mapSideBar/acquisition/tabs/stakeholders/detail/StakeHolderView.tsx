@@ -65,8 +65,8 @@ export const StakeHolderView: React.FunctionComponent<IStakeHolderViewProps> = (
               <SectionField
                 label="Legacy interest holders"
                 tooltip="This is read-only field to display legacy information"
-                labelWidth="4"
-                contentWidth="8"
+                labelWidth={{ xs: 4 }}
+                contentWidth={{ xs: 8 }}
                 valueTestId="acq-file-legacy-stakeholders"
               >
                 {legacyStakeHolders.map((stakeholder, index) => (

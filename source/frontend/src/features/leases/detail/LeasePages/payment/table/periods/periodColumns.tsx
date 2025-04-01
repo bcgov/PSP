@@ -161,7 +161,8 @@ export const getLeasePeriodColumns = ({
     {
       Header: 'Actions',
       align: 'right',
-      maxWidth: 30,
+      maxWidth: 40,
+      minWidth: 40,
       Cell: paymentActions(isFileFinalStatus, onEdit, onDelete),
     },
   ];

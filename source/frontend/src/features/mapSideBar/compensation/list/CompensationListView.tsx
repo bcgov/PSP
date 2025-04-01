@@ -121,7 +121,7 @@ export const CompensationListView: React.FunctionComponent<ICompensationListView
             </>
           }
           tooltip={`This is the maximum allowable for this file. Edit to set or change this value.`}
-          labelWidth="8"
+          labelWidth={{ xs: 8 }}
           className="summary-row"
           valueClassName="text-right d-flex justify-content-end"
         >
@@ -143,7 +143,7 @@ export const CompensationListView: React.FunctionComponent<ICompensationListView
           <SectionField
             label={<>{getFileCalculatedCompensationTotalLabel()}</>}
             tooltip={`This is the total of all requisitions in the "Final" status. Draft entries are not included here.`}
-            labelWidth="8"
+            labelWidth={{ xs: 8 }}
             className="summary-row no-icon"
             valueClassName="text-right"
             valueTestId="payment-total-main-file"
@@ -158,7 +158,7 @@ export const CompensationListView: React.FunctionComponent<ICompensationListView
             <SectionField
               label="Total payments made on main file and all sub-files"
               tooltip={`This is the total of all requisitions in the "Final" status. Draft entries are not included here.`}
-              labelWidth="8"
+              labelWidth={{ xs: 8 }}
               className="summary-row no-icon"
               valueClassName="text-right"
               valueTestId="payment-total-subfiles"
@@ -174,7 +174,7 @@ export const CompensationListView: React.FunctionComponent<ICompensationListView
           <SectionField
             label="Drafts"
             tooltip={`This is the total of all requisitions in the "Draft" state.`}
-            labelWidth="9"
+            labelWidth={{ xs: 9 }}
             className="summary-row no-icon"
             valueClassName="text-right"
             valueTestId="payment-total-drafts"

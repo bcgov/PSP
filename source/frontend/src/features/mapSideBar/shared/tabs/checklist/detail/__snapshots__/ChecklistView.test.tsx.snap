@@ -159,7 +159,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
           class="pb-2 no-gutters row"
         >
           <div
-            class="pr-0 text-left col-6"
+            class="pr-0 text-left col-xl-6 col-5"
           >
             <label
               class="c6"
@@ -174,7 +174,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col-6"
+                class="col-xl-6 col-5"
               >
                 <span
                   class="c8"
@@ -194,7 +194,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
                 </span>
               </div>
               <div
-                class="col-5"
+                class="col-xl-5 col-6"
               >
                 <span
                   class="c9"
@@ -204,7 +204,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
                 </span>
               </div>
               <div
-                class="col-1"
+                class="col-xl-1 col-1"
               >
                 <span
                   class="c10"
@@ -235,7 +235,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
           class="pb-2 no-gutters row"
         >
           <div
-            class="pr-0 text-left col-6"
+            class="pr-0 text-left col-xl-6 col-5"
           >
             <label
               class="c6"
@@ -250,14 +250,14 @@ exports[`ChecklistView component > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col-6"
+                class="col-xl-6 col-5"
               >
                 <span
                   class="c8"
                 />
               </div>
               <div
-                class="col-5"
+                class="col-xl-5 col-6"
               >
                 <span
                   class="c11"
@@ -266,7 +266,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
                 </span>
               </div>
               <div
-                class="col-1"
+                class="col-xl-1 col-1"
               >
                 <span
                   class="c10"
@@ -304,7 +304,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
           class="pb-2 no-gutters row"
         >
           <div
-            class="pr-0 text-left col-6"
+            class="pr-0 text-left col-xl-6 col-5"
           >
             <label
               class="c6"
@@ -319,7 +319,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col-6"
+                class="col-xl-6 col-5"
               >
                 <span
                   class="c8"
@@ -339,7 +339,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
                 </span>
               </div>
               <div
-                class="col-5"
+                class="col-xl-5 col-6"
               >
                 <span
                   class="c12"
@@ -349,7 +349,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
                 </span>
               </div>
               <div
-                class="col-1"
+                class="col-xl-1 col-1"
               >
                 <span
                   class="c10"
@@ -383,7 +383,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
           class="pb-2 no-gutters row"
         >
           <div
-            class="pr-0 text-left col-6"
+            class="pr-0 text-left col-xl-6 col-5"
           >
             <label
               class="c6"
@@ -398,7 +398,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col-6"
+                class="col-xl-6 col-5"
               >
                 <span
                   class="c8"
@@ -418,7 +418,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
                 </span>
               </div>
               <div
-                class="col-5"
+                class="col-xl-5 col-6"
               >
                 <span
                   class="c9"
@@ -428,7 +428,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
                 </span>
               </div>
               <div
-                class="col-1"
+                class="col-xl-1 col-1"
               >
                 <span
                   class="c10"
@@ -459,7 +459,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
           class="pb-2 no-gutters row"
         >
           <div
-            class="pr-0 text-left col-6"
+            class="pr-0 text-left col-xl-6 col-5"
           >
             <label
               class="c6"
@@ -496,14 +496,14 @@ exports[`ChecklistView component > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col-6"
+                class="col-xl-6 col-5"
               >
                 <span
                   class="c8"
                 />
               </div>
               <div
-                class="col-5"
+                class="col-xl-5 col-6"
               >
                 <span
                   class="c11"
@@ -512,7 +512,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
                 </span>
               </div>
               <div
-                class="col-1"
+                class="col-xl-1 col-1"
               >
                 <span
                   class="c10"
@@ -596,7 +596,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
           class="pb-2 no-gutters row"
         >
           <div
-            class="pr-0 text-left col-6"
+            class="pr-0 text-left col-xl-6 col-5"
           >
             <label
               class="c6"
@@ -611,14 +611,14 @@ exports[`ChecklistView component > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col-6"
+                class="col-xl-6 col-5"
               >
                 <span
                   class="c8"
                 />
               </div>
               <div
-                class="col-5"
+                class="col-xl-5 col-6"
               >
                 <span
                   class="c11"
@@ -627,7 +627,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
                 </span>
               </div>
               <div
-                class="col-1"
+                class="col-xl-1 col-1"
               >
                 <span
                   class="c10"
@@ -665,7 +665,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
           class="pb-2 no-gutters row"
         >
           <div
-            class="pr-0 text-left col-6"
+            class="pr-0 text-left col-xl-6 col-5"
           >
             <label
               class="c6"
@@ -680,14 +680,14 @@ exports[`ChecklistView component > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col-6"
+                class="col-xl-6 col-5"
               >
                 <span
                   class="c8"
                 />
               </div>
               <div
-                class="col-5"
+                class="col-xl-5 col-6"
               >
                 <span
                   class="c11"
@@ -696,7 +696,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
                 </span>
               </div>
               <div
-                class="col-1"
+                class="col-xl-1 col-1"
               >
                 <span
                   class="c10"
@@ -734,7 +734,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
           class="pb-2 no-gutters row"
         >
           <div
-            class="pr-0 text-left col-6"
+            class="pr-0 text-left col-xl-6 col-5"
           >
             <label
               class="c6"
@@ -771,14 +771,14 @@ exports[`ChecklistView component > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col-6"
+                class="col-xl-6 col-5"
               >
                 <span
                   class="c8"
                 />
               </div>
               <div
-                class="col-5"
+                class="col-xl-5 col-6"
               >
                 <span
                   class="c11"
@@ -787,7 +787,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
                 </span>
               </div>
               <div
-                class="col-1"
+                class="col-xl-1 col-1"
               >
                 <span
                   class="c10"
@@ -825,7 +825,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
           class="pb-2 no-gutters row"
         >
           <div
-            class="pr-0 text-left col-6"
+            class="pr-0 text-left col-xl-6 col-5"
           >
             <label
               class="c6"
@@ -840,14 +840,14 @@ exports[`ChecklistView component > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col-6"
+                class="col-xl-6 col-5"
               >
                 <span
                   class="c8"
                 />
               </div>
               <div
-                class="col-5"
+                class="col-xl-5 col-6"
               >
                 <span
                   class="c11"
@@ -856,7 +856,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
                 </span>
               </div>
               <div
-                class="col-1"
+                class="col-xl-1 col-1"
               >
                 <span
                   class="c10"
@@ -894,7 +894,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
           class="pb-2 no-gutters row"
         >
           <div
-            class="pr-0 text-left col-6"
+            class="pr-0 text-left col-xl-6 col-5"
           >
             <label
               class="c6"
@@ -909,14 +909,14 @@ exports[`ChecklistView component > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col-6"
+                class="col-xl-6 col-5"
               >
                 <span
                   class="c8"
                 />
               </div>
               <div
-                class="col-5"
+                class="col-xl-5 col-6"
               >
                 <span
                   class="c11"
@@ -925,7 +925,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
                 </span>
               </div>
               <div
-                class="col-1"
+                class="col-xl-1 col-1"
               >
                 <span
                   class="c10"
@@ -963,7 +963,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
           class="pb-2 no-gutters row"
         >
           <div
-            class="pr-0 text-left col-6"
+            class="pr-0 text-left col-xl-6 col-5"
           >
             <label
               class="c6"
@@ -1000,7 +1000,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col-6"
+                class="col-xl-6 col-5"
               >
                 <span
                   class="c8"
@@ -1020,7 +1020,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
                 </span>
               </div>
               <div
-                class="col-5"
+                class="col-xl-5 col-6"
               >
                 <span
                   class="c11"
@@ -1029,7 +1029,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
                 </span>
               </div>
               <div
-                class="col-1"
+                class="col-xl-1 col-1"
               >
                 <span
                   class="c10"
@@ -1067,7 +1067,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
           class="pb-2 no-gutters row"
         >
           <div
-            class="pr-0 text-left col-6"
+            class="pr-0 text-left col-xl-6 col-5"
           >
             <label
               class="c6"
@@ -1104,14 +1104,14 @@ exports[`ChecklistView component > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col-6"
+                class="col-xl-6 col-5"
               >
                 <span
                   class="c8"
                 />
               </div>
               <div
-                class="col-5"
+                class="col-xl-5 col-6"
               >
                 <span
                   class="c11"
@@ -1120,7 +1120,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
                 </span>
               </div>
               <div
-                class="col-1"
+                class="col-xl-1 col-1"
               >
                 <span
                   class="c10"
@@ -1158,7 +1158,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
           class="pb-2 no-gutters row"
         >
           <div
-            class="pr-0 text-left col-6"
+            class="pr-0 text-left col-xl-6 col-5"
           >
             <label
               class="c6"
@@ -1173,14 +1173,14 @@ exports[`ChecklistView component > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col-6"
+                class="col-xl-6 col-5"
               >
                 <span
                   class="c8"
                 />
               </div>
               <div
-                class="col-5"
+                class="col-xl-5 col-6"
               >
                 <span
                   class="c11"
@@ -1189,7 +1189,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
                 </span>
               </div>
               <div
-                class="col-1"
+                class="col-xl-1 col-1"
               >
                 <span
                   class="c10"
@@ -1227,7 +1227,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
           class="pb-2 no-gutters row"
         >
           <div
-            class="pr-0 text-left col-6"
+            class="pr-0 text-left col-xl-6 col-5"
           >
             <label
               class="c6"
@@ -1242,14 +1242,14 @@ exports[`ChecklistView component > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col-6"
+                class="col-xl-6 col-5"
               >
                 <span
                   class="c8"
                 />
               </div>
               <div
-                class="col-5"
+                class="col-xl-5 col-6"
               >
                 <span
                   class="c11"
@@ -1258,7 +1258,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
                 </span>
               </div>
               <div
-                class="col-1"
+                class="col-xl-1 col-1"
               >
                 <span
                   class="c10"
@@ -1296,7 +1296,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
           class="pb-2 no-gutters row"
         >
           <div
-            class="pr-0 text-left col-6"
+            class="pr-0 text-left col-xl-6 col-5"
           >
             <label
               class="c6"
@@ -1311,14 +1311,14 @@ exports[`ChecklistView component > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col-6"
+                class="col-xl-6 col-5"
               >
                 <span
                   class="c8"
                 />
               </div>
               <div
-                class="col-5"
+                class="col-xl-5 col-6"
               >
                 <span
                   class="c11"
@@ -1327,7 +1327,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
                 </span>
               </div>
               <div
-                class="col-1"
+                class="col-xl-1 col-1"
               >
                 <span
                   class="c10"
@@ -1365,7 +1365,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
           class="pb-2 no-gutters row"
         >
           <div
-            class="pr-0 text-left col-6"
+            class="pr-0 text-left col-xl-6 col-5"
           >
             <label
               class="c6"
@@ -1380,14 +1380,14 @@ exports[`ChecklistView component > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col-6"
+                class="col-xl-6 col-5"
               >
                 <span
                   class="c8"
                 />
               </div>
               <div
-                class="col-5"
+                class="col-xl-5 col-6"
               >
                 <span
                   class="c11"
@@ -1396,7 +1396,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
                 </span>
               </div>
               <div
-                class="col-1"
+                class="col-xl-1 col-1"
               >
                 <span
                   class="c10"
@@ -1434,7 +1434,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
           class="pb-2 no-gutters row"
         >
           <div
-            class="pr-0 text-left col-6"
+            class="pr-0 text-left col-xl-6 col-5"
           >
             <label
               class="c6"
@@ -1449,14 +1449,14 @@ exports[`ChecklistView component > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col-6"
+                class="col-xl-6 col-5"
               >
                 <span
                   class="c8"
                 />
               </div>
               <div
-                class="col-5"
+                class="col-xl-5 col-6"
               >
                 <span
                   class="c11"
@@ -1465,7 +1465,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
                 </span>
               </div>
               <div
-                class="col-1"
+                class="col-xl-1 col-1"
               >
                 <span
                   class="c10"
@@ -1503,7 +1503,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
           class="pb-2 no-gutters row"
         >
           <div
-            class="pr-0 text-left col-6"
+            class="pr-0 text-left col-xl-6 col-5"
           >
             <label
               class="c6"
@@ -1540,14 +1540,14 @@ exports[`ChecklistView component > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col-6"
+                class="col-xl-6 col-5"
               >
                 <span
                   class="c8"
                 />
               </div>
               <div
-                class="col-5"
+                class="col-xl-5 col-6"
               >
                 <span
                   class="c11"
@@ -1556,7 +1556,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
                 </span>
               </div>
               <div
-                class="col-1"
+                class="col-xl-1 col-1"
               >
                 <span
                   class="c10"
@@ -1594,7 +1594,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
           class="pb-2 no-gutters row"
         >
           <div
-            class="pr-0 text-left col-6"
+            class="pr-0 text-left col-xl-6 col-5"
           >
             <label
               class="c6"
@@ -1631,14 +1631,14 @@ exports[`ChecklistView component > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col-6"
+                class="col-xl-6 col-5"
               >
                 <span
                   class="c8"
                 />
               </div>
               <div
-                class="col-5"
+                class="col-xl-5 col-6"
               >
                 <span
                   class="c11"
@@ -1647,7 +1647,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
                 </span>
               </div>
               <div
-                class="col-1"
+                class="col-xl-1 col-1"
               >
                 <span
                   class="c10"
@@ -1685,7 +1685,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
           class="pb-2 no-gutters row"
         >
           <div
-            class="pr-0 text-left col-6"
+            class="pr-0 text-left col-xl-6 col-5"
           >
             <label
               class="c6"
@@ -1700,14 +1700,14 @@ exports[`ChecklistView component > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col-6"
+                class="col-xl-6 col-5"
               >
                 <span
                   class="c8"
                 />
               </div>
               <div
-                class="col-5"
+                class="col-xl-5 col-6"
               >
                 <span
                   class="c11"
@@ -1716,7 +1716,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
                 </span>
               </div>
               <div
-                class="col-1"
+                class="col-xl-1 col-1"
               >
                 <span
                   class="c10"
@@ -1845,7 +1845,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
           class="pb-2 no-gutters row"
         >
           <div
-            class="pr-0 text-left col-6"
+            class="pr-0 text-left col-xl-6 col-5"
           >
             <label
               class="c6"
@@ -1882,14 +1882,14 @@ exports[`ChecklistView component > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col-6"
+                class="col-xl-6 col-5"
               >
                 <span
                   class="c8"
                 />
               </div>
               <div
-                class="col-5"
+                class="col-xl-5 col-6"
               >
                 <span
                   class="c11"
@@ -1898,7 +1898,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
                 </span>
               </div>
               <div
-                class="col-1"
+                class="col-xl-1 col-1"
               >
                 <span
                   class="c10"
@@ -1936,7 +1936,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
           class="pb-2 no-gutters row"
         >
           <div
-            class="pr-0 text-left col-6"
+            class="pr-0 text-left col-xl-6 col-5"
           >
             <label
               class="c6"
@@ -1951,14 +1951,14 @@ exports[`ChecklistView component > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col-6"
+                class="col-xl-6 col-5"
               >
                 <span
                   class="c8"
                 />
               </div>
               <div
-                class="col-5"
+                class="col-xl-5 col-6"
               >
                 <span
                   class="c11"
@@ -1967,7 +1967,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
                 </span>
               </div>
               <div
-                class="col-1"
+                class="col-xl-1 col-1"
               >
                 <span
                   class="c10"
@@ -2005,7 +2005,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
           class="pb-2 no-gutters row"
         >
           <div
-            class="pr-0 text-left col-6"
+            class="pr-0 text-left col-xl-6 col-5"
           >
             <label
               class="c6"
@@ -2020,14 +2020,14 @@ exports[`ChecklistView component > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col-6"
+                class="col-xl-6 col-5"
               >
                 <span
                   class="c8"
                 />
               </div>
               <div
-                class="col-5"
+                class="col-xl-5 col-6"
               >
                 <span
                   class="c11"
@@ -2036,7 +2036,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
                 </span>
               </div>
               <div
-                class="col-1"
+                class="col-xl-1 col-1"
               >
                 <span
                   class="c10"
@@ -2074,7 +2074,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
           class="pb-2 no-gutters row"
         >
           <div
-            class="pr-0 text-left col-6"
+            class="pr-0 text-left col-xl-6 col-5"
           >
             <label
               class="c6"
@@ -2089,14 +2089,14 @@ exports[`ChecklistView component > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col-6"
+                class="col-xl-6 col-5"
               >
                 <span
                   class="c8"
                 />
               </div>
               <div
-                class="col-5"
+                class="col-xl-5 col-6"
               >
                 <span
                   class="c11"
@@ -2105,7 +2105,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
                 </span>
               </div>
               <div
-                class="col-1"
+                class="col-xl-1 col-1"
               >
                 <span
                   class="c10"
@@ -2143,7 +2143,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
           class="pb-2 no-gutters row"
         >
           <div
-            class="pr-0 text-left col-6"
+            class="pr-0 text-left col-xl-6 col-5"
           >
             <label
               class="c6"
@@ -2158,14 +2158,14 @@ exports[`ChecklistView component > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col-6"
+                class="col-xl-6 col-5"
               >
                 <span
                   class="c8"
                 />
               </div>
               <div
-                class="col-5"
+                class="col-xl-5 col-6"
               >
                 <span
                   class="c11"
@@ -2174,7 +2174,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
                 </span>
               </div>
               <div
-                class="col-1"
+                class="col-xl-1 col-1"
               >
                 <span
                   class="c10"
@@ -2212,7 +2212,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
           class="pb-2 no-gutters row"
         >
           <div
-            class="pr-0 text-left col-6"
+            class="pr-0 text-left col-xl-6 col-5"
           >
             <label
               class="c6"
@@ -2227,14 +2227,14 @@ exports[`ChecklistView component > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col-6"
+                class="col-xl-6 col-5"
               >
                 <span
                   class="c8"
                 />
               </div>
               <div
-                class="col-5"
+                class="col-xl-5 col-6"
               >
                 <span
                   class="c11"
@@ -2243,7 +2243,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
                 </span>
               </div>
               <div
-                class="col-1"
+                class="col-xl-1 col-1"
               >
                 <span
                   class="c10"
@@ -2281,7 +2281,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
           class="pb-2 no-gutters row"
         >
           <div
-            class="pr-0 text-left col-6"
+            class="pr-0 text-left col-xl-6 col-5"
           >
             <label
               class="c6"
@@ -2318,14 +2318,14 @@ exports[`ChecklistView component > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col-6"
+                class="col-xl-6 col-5"
               >
                 <span
                   class="c8"
                 />
               </div>
               <div
-                class="col-5"
+                class="col-xl-5 col-6"
               >
                 <span
                   class="c11"
@@ -2334,7 +2334,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
                 </span>
               </div>
               <div
-                class="col-1"
+                class="col-xl-1 col-1"
               >
                 <span
                   class="c10"
@@ -2418,7 +2418,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
           class="pb-2 no-gutters row"
         >
           <div
-            class="pr-0 text-left col-6"
+            class="pr-0 text-left col-xl-6 col-5"
           >
             <label
               class="c6"
@@ -2455,14 +2455,14 @@ exports[`ChecklistView component > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col-6"
+                class="col-xl-6 col-5"
               >
                 <span
                   class="c8"
                 />
               </div>
               <div
-                class="col-5"
+                class="col-xl-5 col-6"
               >
                 <span
                   class="c11"
@@ -2471,7 +2471,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
                 </span>
               </div>
               <div
-                class="col-1"
+                class="col-xl-1 col-1"
               >
                 <span
                   class="c10"
@@ -2509,7 +2509,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
           class="pb-2 no-gutters row"
         >
           <div
-            class="pr-0 text-left col-6"
+            class="pr-0 text-left col-xl-6 col-5"
           >
             <label
               class="c6"
@@ -2546,14 +2546,14 @@ exports[`ChecklistView component > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col-6"
+                class="col-xl-6 col-5"
               >
                 <span
                   class="c8"
                 />
               </div>
               <div
-                class="col-5"
+                class="col-xl-5 col-6"
               >
                 <span
                   class="c11"
@@ -2562,7 +2562,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
                 </span>
               </div>
               <div
-                class="col-1"
+                class="col-xl-1 col-1"
               >
                 <span
                   class="c10"
@@ -2600,7 +2600,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
           class="pb-2 no-gutters row"
         >
           <div
-            class="pr-0 text-left col-6"
+            class="pr-0 text-left col-xl-6 col-5"
           >
             <label
               class="c6"
@@ -2637,14 +2637,14 @@ exports[`ChecklistView component > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col-6"
+                class="col-xl-6 col-5"
               >
                 <span
                   class="c8"
                 />
               </div>
               <div
-                class="col-5"
+                class="col-xl-5 col-6"
               >
                 <span
                   class="c11"
@@ -2653,7 +2653,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
                 </span>
               </div>
               <div
-                class="col-1"
+                class="col-xl-1 col-1"
               >
                 <span
                   class="c10"
@@ -2691,7 +2691,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
           class="pb-2 no-gutters row"
         >
           <div
-            class="pr-0 text-left col-6"
+            class="pr-0 text-left col-xl-6 col-5"
           >
             <label
               class="c6"
@@ -2728,14 +2728,14 @@ exports[`ChecklistView component > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col-6"
+                class="col-xl-6 col-5"
               >
                 <span
                   class="c8"
                 />
               </div>
               <div
-                class="col-5"
+                class="col-xl-5 col-6"
               >
                 <span
                   class="c11"
@@ -2744,7 +2744,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
                 </span>
               </div>
               <div
-                class="col-1"
+                class="col-xl-1 col-1"
               >
                 <span
                   class="c10"
@@ -2782,7 +2782,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
           class="pb-2 no-gutters row"
         >
           <div
-            class="pr-0 text-left col-6"
+            class="pr-0 text-left col-xl-6 col-5"
           >
             <label
               class="c6"
@@ -2797,14 +2797,14 @@ exports[`ChecklistView component > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col-6"
+                class="col-xl-6 col-5"
               >
                 <span
                   class="c8"
                 />
               </div>
               <div
-                class="col-5"
+                class="col-xl-5 col-6"
               >
                 <span
                   class="c11"
@@ -2813,7 +2813,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
                 </span>
               </div>
               <div
-                class="col-1"
+                class="col-xl-1 col-1"
               >
                 <span
                   class="c10"
@@ -2851,7 +2851,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
           class="pb-2 no-gutters row"
         >
           <div
-            class="pr-0 text-left col-6"
+            class="pr-0 text-left col-xl-6 col-5"
           >
             <label
               class="c6"
@@ -2866,14 +2866,14 @@ exports[`ChecklistView component > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col-6"
+                class="col-xl-6 col-5"
               >
                 <span
                   class="c8"
                 />
               </div>
               <div
-                class="col-5"
+                class="col-xl-5 col-6"
               >
                 <span
                   class="c11"
@@ -2882,7 +2882,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
                 </span>
               </div>
               <div
-                class="col-1"
+                class="col-xl-1 col-1"
               >
                 <span
                   class="c10"
@@ -2966,7 +2966,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
           class="pb-2 no-gutters row"
         >
           <div
-            class="pr-0 text-left col-6"
+            class="pr-0 text-left col-xl-6 col-5"
           >
             <label
               class="c6"
@@ -3003,14 +3003,14 @@ exports[`ChecklistView component > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col-6"
+                class="col-xl-6 col-5"
               >
                 <span
                   class="c8"
                 />
               </div>
               <div
-                class="col-5"
+                class="col-xl-5 col-6"
               >
                 <span
                   class="c11"
@@ -3019,7 +3019,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
                 </span>
               </div>
               <div
-                class="col-1"
+                class="col-xl-1 col-1"
               >
                 <span
                   class="c10"

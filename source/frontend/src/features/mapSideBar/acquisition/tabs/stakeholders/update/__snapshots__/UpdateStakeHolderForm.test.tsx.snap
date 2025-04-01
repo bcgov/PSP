@@ -420,7 +420,7 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="pr-0 text-left col-4"
+            class="pr-0 text-left col-xl-4"
           >
             <label
               class="c4"
@@ -524,7 +524,7 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
                 <div />
               </div>
               <div
-                class="col-auto"
+                class="p-0 col-3"
               >
                 <button
                   class="c7 Button c9 c10 btn btn-primary"
@@ -884,7 +884,7 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="pr-0 text-left col-4"
+            class="pr-0 text-left col-xl-4"
           >
             <label
               class="c4"
@@ -915,7 +915,7 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c5 text-left col-8"
+            class="c5 text-left col-xl-8"
           >
             <div
               class="table"
@@ -1052,7 +1052,7 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="pr-0 text-left col-4"
+            class="pr-0 text-left col-xl-4"
           >
             <label
               class="c4"
@@ -1156,7 +1156,7 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
                 <div />
               </div>
               <div
-                class="col-auto"
+                class="p-0 col-3"
               >
                 <button
                   class="c7 Button c9 c10 btn btn-primary"
@@ -1516,7 +1516,7 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="pr-0 text-left col-4"
+            class="pr-0 text-left col-xl-4"
           >
             <label
               class="c4"
@@ -1547,7 +1547,7 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c5 text-left col-8"
+            class="c5 text-left col-xl-8"
           >
             <div
               class="table"

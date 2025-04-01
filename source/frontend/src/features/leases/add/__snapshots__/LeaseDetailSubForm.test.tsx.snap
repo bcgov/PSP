@@ -24,10 +24,6 @@ exports[`LeaseDetailSubForm component > renders as expected 1`] = `
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c5 .react-datepicker-wrapper {
-  max-width: 17rem;
-}
-
 .c6.c6.form-control.is-valid {
   background-image: none;
 }

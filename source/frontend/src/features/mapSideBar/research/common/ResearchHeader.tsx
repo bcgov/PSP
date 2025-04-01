@@ -52,17 +52,29 @@ const ResearchHeader: React.FunctionComponent<
 
   return (
     <StyledRow className="no-gutters">
-      <StyledLeftHeaderPane xs={leftColumnWidth}>
-        <HeaderField label="File #:" labelWidth={leftColumnLabel} contentWidth="9">
+      <StyledLeftHeaderPane xl={leftColumnWidth} xs="12">
+        <HeaderField label="File #:" labelWidth={{ xs: leftColumnLabel }} contentWidth={{ xs: 9 }}>
           {researchFile?.fileNumber}
         </HeaderField>
-        <HeaderField label="File name:" labelWidth={leftColumnLabel} contentWidth="9">
+        <HeaderField
+          label="File name:"
+          labelWidth={{ xs: leftColumnLabel }}
+          contentWidth={{ xs: 9 }}
+        >
           {researchFile?.fileName}
         </HeaderField>
-        <HeaderField label="MOTI region:" labelWidth={leftColumnLabel} contentWidth="9">
+        <HeaderField
+          label="MOTI region:"
+          labelWidth={{ xs: leftColumnLabel }}
+          contentWidth={{ xs: 9 }}
+        >
           {regions}
         </HeaderField>
-        <HeaderField label="Ministry district:" labelWidth={leftColumnLabel} contentWidth="9">
+        <HeaderField
+          label="Ministry district:"
+          labelWidth={{ xs: leftColumnLabel }}
+          contentWidth={{ xs: 9 }}
+        >
           {districts}
         </HeaderField>
         <HistoricalNumbersContainer propertyIds={propertyIds} View={HistoricalNumberSectionView} />

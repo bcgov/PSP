@@ -107,6 +107,9 @@ export const H3 = styled.h3`
 export const FilterBoxForm = styled(Form)`
   background-color: ${({ theme }) => theme.css.filterBoxColor};
   border-radius: 0.5rem;
+  .form-select {
+    min-width: 15rem;
+  }
 `;
 
 export const StyledAddButton = styled(Button)`
@@ -171,6 +174,7 @@ export const PopupTray = styled.div`
   text-align: left;
   transition: transform 0.5s ease-in-out;
   position: relative;
+  min-width: 50rem;
 `;
 
 export const VerticalLine = styled.div`
@@ -214,6 +218,7 @@ export const PageToolbar = styled.div`
 
 export const ColButtons = styled(Col)`
   border-left: 0.2rem solid white;
+  min-width: 2.5rem;
 `;
 
 export const PaddedScrollable = styled(ScrollableBase)`

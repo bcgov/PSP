@@ -157,7 +157,7 @@ const UpdatePersonComponent: React.FC<
             <Section className="py-2">
               <SectionField
                 label="Individual"
-                contentWidth="auto"
+                contentWidth={{ xs: 'auto' }}
                 className="py-3"
                 valueClassName="ml-auto"
               >

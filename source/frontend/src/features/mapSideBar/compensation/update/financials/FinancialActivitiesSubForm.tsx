@@ -97,7 +97,7 @@ export const FinancialActivitiesSubForm: React.FunctionComponent<
                     />
                   </StyledSubHeader>
 
-                  <SectionField label="Code & Description" labelWidth="4" required>
+                  <SectionField label="Code & Description" labelWidth={{ xs: 4 }} required>
                     <TypeaheadSelect
                       field={`financials.${index}.financialActivityCodeId`}
                       options={financialActivityOptions}

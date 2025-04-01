@@ -57,12 +57,16 @@ export const ReturnDepositForm: React.FunctionComponent<
             </SectionField>
           </SubHeaderSection>
           <form className="mx-3">
-            <SectionField label="Termination or surrender date" labelWidth="12" required>
+            <SectionField label="Termination or surrender date" labelWidth={{ xs: 12 }} required>
               <FastDatePicker formikProps={formikProps} field="terminationDate" required />
             </SectionField>
             <Row>
               <Col>
-                <SectionField label="Claims against deposit ($)" labelWidth="12" contentWidth="10">
+                <SectionField
+                  label="Claims against deposit ($)"
+                  labelWidth={{ xs: 12 }}
+                  contentWidth={{ xs: 10 }}
+                >
                   <FastCurrencyInput
                     formikProps={formikProps}
                     field="claimsAgainst"
@@ -71,7 +75,11 @@ export const ReturnDepositForm: React.FunctionComponent<
                 </SectionField>
               </Col>
               <Col>
-                <SectionField label="Returned amount ($) without interest" labelWidth="12" required>
+                <SectionField
+                  label="Returned amount ($) without interest"
+                  labelWidth={{ xs: 12 }}
+                  required
+                >
                   <FastCurrencyInput formikProps={formikProps} field="returnAmount" required />
                 </SectionField>
               </Col>
@@ -80,7 +88,7 @@ export const ReturnDepositForm: React.FunctionComponent<
               <Col>
                 <SectionField
                   label="Interest paid ($)"
-                  labelWidth="12"
+                  labelWidth={{ xs: 12 }}
                   tooltip="This is the interest paid on the deposit, if any, for the entire period the deposit is held.​​​​​​​"
                 >
                   <FastCurrencyInput formikProps={formikProps} field="interestPaid" />
@@ -99,10 +107,10 @@ export const ReturnDepositForm: React.FunctionComponent<
                 </StyledReturnInfoContainer>
               </Col>
             </Row>
-            <SectionField label="Returned date" labelWidth="12" required>
+            <SectionField label="Returned date" labelWidth={{ xs: 12 }} required>
               <FastDatePicker formikProps={formikProps} field="returnDate" required />
             </SectionField>
-            <SectionField label="Payee name" labelWidth="12" required>
+            <SectionField label="Payee name" labelWidth={{ xs: 12 }} required>
               <ContactInput
                 field="contactHolder"
                 setShowContactManager={setShowContactManager}

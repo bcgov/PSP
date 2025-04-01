@@ -2,13 +2,25 @@
 
 exports[`DispositionHeader component > renders as expected when no data is provided 1`] = `
 <DocumentFragment>
-  <div
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div
     class="Toastify"
   />
-  <div />
-  .c4 {
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div />
+  .c5 {
   font-size: 0.87em;
   line-height: 1.9;
+}
+
+.c4 {
+  text-align: right;
 }
 
 .c2 {
@@ -37,6 +49,12 @@ exports[`DispositionHeader component > renders as expected when no data is provi
 
 .c1 {
   max-width: 60rem;
+}
+
+@media only screen and (max-width:1199px) {
+  .c4 {
+    text-align: left;
+  }
 }
 
 <div
@@ -90,10 +108,10 @@ exports[`DispositionHeader component > renders as expected when no data is provi
           class="no-gutters row"
         >
           <div
-            class="text-right col"
+            class="c4 col"
           >
             <span
-              class="c4"
+              class="c5"
             >
               <strong>
                 Created: 
@@ -115,10 +133,10 @@ exports[`DispositionHeader component > renders as expected when no data is provi
           class="no-gutters row"
         >
           <div
-            class="text-right col"
+            class="c4 col"
           >
             <span
-              class="c4"
+              class="c5"
             >
               <strong>
                 Updated: 

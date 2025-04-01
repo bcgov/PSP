@@ -25,18 +25,18 @@ export const DetailFeeDetermination: React.FunctionComponent<
 
   return (
     <Section initiallyExpanded={true} isCollapsable={true} header="Fee Determination">
-      <SectionField label="Public benefit" labelWidth="3">
+      <SectionField label="Public benefit" labelWidth={{ xs: 3 }}>
         {booleanToYesNoUnknownString(isPublicBenefit)}
       </SectionField>
 
-      <SectionField label="Financial gain" labelWidth="3">
+      <SectionField label="Financial gain" labelWidth={{ xs: 3 }}>
         {booleanToYesNoUnknownString(isFinancialGain)}
       </SectionField>
 
       <SectionField
         label="Suggested fee"
         tooltip="Licence Administration Fee (LAF) *: If the financial gain far outweighs the public benefit, Fair Market Value should be considered over Licence Administration Fee"
-        labelWidth="3"
+        labelWidth={{ xs: 3 }}
       >
         <span data-testid="suggestedFee">{fee}</span>
         <StyledHelpText>
@@ -68,7 +68,7 @@ export const DetailFeeDetermination: React.FunctionComponent<
       <SectionField
         label="Comments"
         tooltip="Deviations from standard fees should be explained here"
-        labelWidth="3"
+        labelWidth={{ xs: 3 }}
       >
         {feeDeterminationNote}
       </SectionField>

@@ -100,7 +100,7 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                 <Col md={6}>
                   <SectionField
                     label="Select payment type"
-                    labelWidth="12"
+                    labelWidth={{ xs: 12 }}
                     tooltip="Predetermined Payment Period only accept fixed payment amounts. Select Variable payment type to track variable payments"
                   >
                     <StyledRadioGroup
@@ -215,7 +215,7 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                       </Col>
                     </Row>
                   )}
-                  <SectionField label="Total Payment" labelWidth="auto">
+                  <SectionField label="Total Payment" labelWidth={{ xs: 'auto' }}>
                     {formatMoney(
                       calculateTotal(
                         formikProps.values.paymentAmount,
