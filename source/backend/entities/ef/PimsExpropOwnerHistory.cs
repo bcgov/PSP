@@ -7,55 +7,60 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Entity continaing the details regarding a Form 8 (Notice of Advance Payment).
+/// Entity continaing the details regarding actions involving a property owner associated with an expropriation.
 /// </summary>
-[Table("PIMS_EXPROPRIATION_PAYMENT")]
-[Index("AcquisitionFileId", Name = "EXPPMT_ACQUISITION_FILE_ID_IDX")]
-[Index("AcquisitionOwnerId", Name = "EXPPMT_ACQUISITION_OWNER_ID_IDX")]
-[Index("ExpropriatingAuthority", Name = "EXPPMT_EXPROPRIATING_AUTHORITY_IDX")]
-[Index("InterestHolderId", Name = "EXPPMT_INTEREST_HOLDER_ID_IDX")]
-public partial class PimsExpropriationPayment
+[Table("PIMS_EXPROP_OWNER_HISTORY")]
+[Index("AcquisitionFileId", Name = "XPOWNH_ACQUISITION_FILE_ID_IDX")]
+[Index("ExpropOwnerHistoryTypeCode", Name = "XPOWNH_EXPROP_OWNER_HISTORY_TYPE_CODE_IDX")]
+public partial class PimsExpropOwnerHistory
 {
     /// <summary>
-    /// Unique auto-generated surrogate primary key
+    /// Unique auto-generated surrogate primary key.
     /// </summary>
     [Key]
-    [Column("EXPROPRIATION_PAYMENT_ID")]
-    public long ExpropriationPaymentId { get; set; }
+    [Column("EXPROP_OWNER_HISTORY_ID")]
+    public long ExpropOwnerHistoryId { get; set; }
 
     /// <summary>
-    /// Foreign key of the acquisition file.
+    /// Foreign key to the PIMS_ACQUISITION_FILE file.
     /// </summary>
     [Column("ACQUISITION_FILE_ID")]
     public long AcquisitionFileId { get; set; }
 
     /// <summary>
-    /// Foreign key of the acquisition owner.
+    /// Foreign key to the PIMS_PERSON table.
     /// </summary>
-    [Column("ACQUISITION_OWNER_ID")]
-    public long? AcquisitionOwnerId { get; set; }
+    [Column("PERSON_ID")]
+    public long? PersonId { get; set; }
 
     /// <summary>
-    /// Foreign key of the acquisition interest holder.
+    /// Foreign key to the PIMS_ORGANIZATION table.
     /// </summary>
-    [Column("INTEREST_HOLDER_ID")]
-    public long? InterestHolderId { get; set; }
+    [Column("ORGANIZATION_ID")]
+    public long? OrganizationId { get; set; }
 
     /// <summary>
-    /// Foreign key of the expropriating authoritry.
+    /// Foreign key to the PIMS_PERSON table.
     /// </summary>
-    [Column("EXPROPRIATING_AUTHORITY")]
-    public long? ExpropriatingAuthority { get; set; }
+    [Column("PRIMARY_CONTACT_ID")]
+    public long? PrimaryContactId { get; set; }
 
     /// <summary>
-    /// Form 8 description field.  There are lawyer remarks pending.  This field could be used for: - providing remarks particular to an expropriation form, and /or - for any ETL descriptive fields as well as - a place-holder forfields that do not have a mapping
+    /// Foreign key to the PIMS_EXPROP_OWNER_HISTORY_TYPE file.
     /// </summary>
-    [Column("DESCRIPTION")]
-    [StringLength(2000)]
-    public string Description { get; set; }
+    [Required]
+    [Column("EXPROP_OWNER_HISTORY_TYPE_CODE")]
+    [StringLength(20)]
+    public string ExpropOwnerHistoryTypeCode { get; set; }
 
     /// <summary>
-    /// Indicates if the Form 8 payment is inactive.
+    /// Date of the expropriation owner event.
+    /// </summary>
+    [Column("EVENT_DT", TypeName = "datetime")]
+    public DateTime? EventDt { get; set; }
+
+    /// <summary>
+    /// Indicates if the row is inactive.
     /// </summary>
     [Column("IS_DISABLED")]
     public bool? IsDisabled { get; set; }
@@ -151,21 +156,22 @@ public partial class PimsExpropriationPayment
     public string DbLastUpdateUserid { get; set; }
 
     [ForeignKey("AcquisitionFileId")]
-    [InverseProperty("PimsExpropriationPayments")]
+    [InverseProperty("PimsExpropOwnerHistories")]
     public virtual PimsAcquisitionFile AcquisitionFile { get; set; }
 
-    [ForeignKey("AcquisitionOwnerId")]
-    [InverseProperty("PimsExpropriationPayments")]
-    public virtual PimsAcquisitionOwner AcquisitionOwner { get; set; }
+    [ForeignKey("ExpropOwnerHistoryTypeCode")]
+    [InverseProperty("PimsExpropOwnerHistories")]
+    public virtual PimsExpropOwnerHistoryType ExpropOwnerHistoryTypeCodeNavigation { get; set; }
 
-    [ForeignKey("ExpropriatingAuthority")]
-    [InverseProperty("PimsExpropriationPayments")]
-    public virtual PimsOrganization ExpropriatingAuthorityNavigation { get; set; }
+    [ForeignKey("OrganizationId")]
+    [InverseProperty("PimsExpropOwnerHistories")]
+    public virtual PimsOrganization Organization { get; set; }
 
-    [ForeignKey("InterestHolderId")]
-    [InverseProperty("PimsExpropriationPayments")]
-    public virtual PimsInterestHolder InterestHolder { get; set; }
+    [ForeignKey("PersonId")]
+    [InverseProperty("PimsExpropOwnerHistoryPeople")]
+    public virtual PimsPerson Person { get; set; }
 
-    [InverseProperty("ExpropriationPayment")]
-    public virtual ICollection<PimsExpropPmtPmtItem> PimsExpropPmtPmtItems { get; set; } = new List<PimsExpropPmtPmtItem>();
+    [ForeignKey("PrimaryContactId")]
+    [InverseProperty("PimsExpropOwnerHistoryPrimaryContacts")]
+    public virtual PimsPerson PrimaryContact { get; set; }
 }

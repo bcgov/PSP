@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-[Table("PIMS_PRF_PROP_RESEARCH_PURPOSE_TYPE")]
+[Table("PIMS_PRF_PROP_RESEARCH_PURPOSE_TYP")]
 [Index("PropertyResearchFileId", Name = "PRSPRP_PROPERTY_RESEARCH_FILE_ID_IDX")]
 [Index("PropResearchPurposeTypeCode", "PropertyResearchFileId", Name = "PRSPRP_PROP_PURPOSE_TUC", IsUnique = true)]
 [Index("PropResearchPurposeTypeCode", Name = "PRSPRP_PROP_RESEARCH_PURPOSE_TYPE_CODE_IDX")]
-public partial class PimsPrfPropResearchPurposeType
+public partial class PimsPrfPropResearchPurposeTyp
 {
     [Key]
     [Column("PRF_PROP_RESEARCH_PURPOSE_ID")]
@@ -76,10 +76,10 @@ public partial class PimsPrfPropResearchPurposeType
     public string DbLastUpdateUserid { get; set; }
 
     [ForeignKey("PropResearchPurposeTypeCode")]
-    [InverseProperty("PimsPrfPropResearchPurposeTypes")]
+    [InverseProperty("PimsPrfPropResearchPurposeTyps")]
     public virtual PimsPropResearchPurposeType PropResearchPurposeTypeCodeNavigation { get; set; }
 
     [ForeignKey("PropertyResearchFileId")]
-    [InverseProperty("PimsPrfPropResearchPurposeTypes")]
+    [InverseProperty("PimsPrfPropResearchPurposeTyps")]
     public virtual PimsPropertyResearchFile PropertyResearchFile { get; set; }
 }

@@ -7,21 +7,21 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Tables that contains the codes and associated descriptions of the interest holder interest types.
+/// Table that contains the codes and descriptions of the history types associated with a property owner associated with an expropriation.
 /// </summary>
-[Table("PIMS_INTEREST_HOLDER_INTEREST_TYPE")]
-public partial class PimsInterestHolderInterestType
+[Table("PIMS_EXPROP_OWNER_HISTORY_TYPE")]
+public partial class PimsExpropOwnerHistoryType
 {
     /// <summary>
-    /// Codified version of the interest holder interest type.
+    /// Codified version of the owner history type status.
     /// </summary>
     [Key]
-    [Column("INTEREST_HOLDER_INTEREST_TYPE_CODE")]
+    [Column("EXPROP_OWNER_HISTORY_TYPE_CODE")]
     [StringLength(20)]
-    public string InterestHolderInterestTypeCode { get; set; }
+    public string ExpropOwnerHistoryTypeCode { get; set; }
 
     /// <summary>
-    /// Description of the interest holder interest type.
+    /// Description of the owner history type status.
     /// </summary>
     [Required]
     [Column("DESCRIPTION")]
@@ -40,25 +40,40 @@ public partial class PimsInterestHolderInterestType
     [Column("IS_DISABLED")]
     public bool? IsDisabled { get; set; }
 
+    /// <summary>
+    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
+    /// </summary>
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
 
+    /// <summary>
+    /// The date and time the record was created.
+    /// </summary>
     [Column("DB_CREATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime DbCreateTimestamp { get; set; }
 
+    /// <summary>
+    /// The user or proxy account that created the record.
+    /// </summary>
     [Required]
     [Column("DB_CREATE_USERID")]
     [StringLength(30)]
     public string DbCreateUserid { get; set; }
 
+    /// <summary>
+    /// The date and time the record was created or last updated.
+    /// </summary>
     [Column("DB_LAST_UPDATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime DbLastUpdateTimestamp { get; set; }
 
+    /// <summary>
+    /// The user or proxy account that created or last updated the record.
+    /// </summary>
     [Required]
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    [InverseProperty("InterestHolderInterestTypeCodeNavigation")]
-    public virtual ICollection<PimsPropInthldrInterestTyp> PimsPropInthldrInterestTyps { get; set; } = new List<PimsPropInthldrInterestTyp>();
+    [InverseProperty("ExpropOwnerHistoryTypeCodeNavigation")]
+    public virtual ICollection<PimsExpropOwnerHistory> PimsExpropOwnerHistories { get; set; } = new List<PimsExpropOwnerHistory>();
 }

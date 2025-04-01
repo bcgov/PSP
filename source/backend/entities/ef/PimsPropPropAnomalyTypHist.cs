@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-[Table("PIMS_EXPROPRIATION_PAYMENT_HIST")]
-[Index("ExpropriationPaymentHistId", "EndDateHist", Name = "PIMS_EXPPMT_H_UK", IsUnique = true)]
-public partial class PimsExpropriationPaymentHist
+[Table("PIMS_PROP_PROP_ANOMALY_TYP_HIST")]
+[Index("PropPropAnomalyTypHistId", "EndDateHist", Name = "PIMS_PRPRAT_H_UK", IsUnique = true)]
+public partial class PimsPropPropAnomalyTypHist
 {
     [Key]
-    [Column("_EXPROPRIATION_PAYMENT_HIST_ID")]
-    public long ExpropriationPaymentHistId { get; set; }
+    [Column("_PROP_PROP_ANOMALY_TYP_HIST_ID")]
+    public long PropPropAnomalyTypHistId { get; set; }
 
     [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
     public DateTime EffectiveDateHist { get; set; }
@@ -20,27 +20,16 @@ public partial class PimsExpropriationPaymentHist
     [Column("END_DATE_HIST", TypeName = "datetime")]
     public DateTime? EndDateHist { get; set; }
 
-    [Column("EXPROPRIATION_PAYMENT_ID")]
-    public long ExpropriationPaymentId { get; set; }
+    [Column("PROP_PROP_ANOMALY_TYPE_ID")]
+    public long PropPropAnomalyTypeId { get; set; }
 
-    [Column("ACQUISITION_FILE_ID")]
-    public long AcquisitionFileId { get; set; }
+    [Column("PROPERTY_ID")]
+    public long PropertyId { get; set; }
 
-    [Column("ACQUISITION_OWNER_ID")]
-    public long? AcquisitionOwnerId { get; set; }
-
-    [Column("INTEREST_HOLDER_ID")]
-    public long? InterestHolderId { get; set; }
-
-    [Column("EXPROPRIATING_AUTHORITY")]
-    public long? ExpropriatingAuthority { get; set; }
-
-    [Column("DESCRIPTION")]
-    [StringLength(2000)]
-    public string Description { get; set; }
-
-    [Column("IS_DISABLED")]
-    public bool? IsDisabled { get; set; }
+    [Required]
+    [Column("PROPERTY_ANOMALY_TYPE_CODE")]
+    [StringLength(20)]
+    public string PropertyAnomalyTypeCode { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
@@ -49,33 +38,33 @@ public partial class PimsExpropriationPaymentHist
     public DateTime AppCreateTimestamp { get; set; }
 
     [Required]
-    [Column("APP_CREATE_USERID")]
+    [Column("APP_CREATE_USER_DIRECTORY")]
     [StringLength(30)]
-    public string AppCreateUserid { get; set; }
+    public string AppCreateUserDirectory { get; set; }
 
     [Column("APP_CREATE_USER_GUID")]
     public Guid? AppCreateUserGuid { get; set; }
 
     [Required]
-    [Column("APP_CREATE_USER_DIRECTORY")]
+    [Column("APP_CREATE_USERID")]
     [StringLength(30)]
-    public string AppCreateUserDirectory { get; set; }
+    public string AppCreateUserid { get; set; }
 
     [Column("APP_LAST_UPDATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime AppLastUpdateTimestamp { get; set; }
 
     [Required]
-    [Column("APP_LAST_UPDATE_USERID")]
+    [Column("APP_LAST_UPDATE_USER_DIRECTORY")]
     [StringLength(30)]
-    public string AppLastUpdateUserid { get; set; }
+    public string AppLastUpdateUserDirectory { get; set; }
 
     [Column("APP_LAST_UPDATE_USER_GUID")]
     public Guid? AppLastUpdateUserGuid { get; set; }
 
     [Required]
-    [Column("APP_LAST_UPDATE_USER_DIRECTORY")]
+    [Column("APP_LAST_UPDATE_USERID")]
     [StringLength(30)]
-    public string AppLastUpdateUserDirectory { get; set; }
+    public string AppLastUpdateUserid { get; set; }
 
     [Column("DB_CREATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime DbCreateTimestamp { get; set; }
@@ -92,7 +81,4 @@ public partial class PimsExpropriationPaymentHist
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
-
-    [Column("ADV_PMT_SERVED_DT")]
-    public DateOnly? AdvPmtServedDt { get; set; }
 }

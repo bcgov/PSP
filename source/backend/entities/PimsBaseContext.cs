@@ -246,19 +246,21 @@ public partial class PimsBaseContext : DbContext
 
     public virtual DbSet<PimsDspPurchSolicitorHist> PimsDspPurchSolicitorHists { get; set; }
 
+    public virtual DbSet<PimsExpropOwnerHistory> PimsExpropOwnerHistories { get; set; }
+
+    public virtual DbSet<PimsExpropOwnerHistoryHist> PimsExpropOwnerHistoryHists { get; set; }
+
+    public virtual DbSet<PimsExpropOwnerHistoryType> PimsExpropOwnerHistoryTypes { get; set; }
+
     public virtual DbSet<PimsExpropPmtPmtItem> PimsExpropPmtPmtItems { get; set; }
 
     public virtual DbSet<PimsExpropPmtPmtItemHist> PimsExpropPmtPmtItemHists { get; set; }
-
-    public virtual DbSet<PimsExpropriationNotice> PimsExpropriationNotices { get; set; }
 
     public virtual DbSet<PimsExpropriationNoticeHist> PimsExpropriationNoticeHists { get; set; }
 
     public virtual DbSet<PimsExpropriationPayment> PimsExpropriationPayments { get; set; }
 
     public virtual DbSet<PimsExpropriationPaymentHist> PimsExpropriationPaymentHists { get; set; }
-
-    public virtual DbSet<PimsExpropriationVesting> PimsExpropriationVestings { get; set; }
 
     public virtual DbSet<PimsExpropriationVestingHist> PimsExpropriationVestingHists { get; set; }
 
@@ -418,7 +420,9 @@ public partial class PimsBaseContext : DbContext
 
     public virtual DbSet<PimsPphStatusType> PimsPphStatusTypes { get; set; }
 
-    public virtual DbSet<PimsPrfPropResearchPurposeType> PimsPrfPropResearchPurposeTypes { get; set; }
+    public virtual DbSet<PimsPrfPropResearchPurposeTyp> PimsPrfPropResearchPurposeTyps { get; set; }
+
+    public virtual DbSet<PimsPrfPropResearchPurposeTypHist> PimsPrfPropResearchPurposeTypHists { get; set; }
 
     public virtual DbSet<PimsProduct> PimsProducts { get; set; }
 
@@ -460,7 +464,9 @@ public partial class PimsBaseContext : DbContext
 
     public virtual DbSet<PimsPropActMinContactHist> PimsPropActMinContactHists { get; set; }
 
-    public virtual DbSet<PimsPropInthldrInterestType> PimsPropInthldrInterestTypes { get; set; }
+    public virtual DbSet<PimsPropInthldrInterestTyp> PimsPropInthldrInterestTyps { get; set; }
+
+    public virtual DbSet<PimsPropInthldrInterestTypHist> PimsPropInthldrInterestTypHists { get; set; }
 
     public virtual DbSet<PimsPropLeaseCompReq> PimsPropLeaseCompReqs { get; set; }
 
@@ -476,15 +482,21 @@ public partial class PimsBaseContext : DbContext
 
     public virtual DbSet<PimsPropPropActivityHist> PimsPropPropActivityHists { get; set; }
 
-    public virtual DbSet<PimsPropPropAnomalyType> PimsPropPropAnomalyTypes { get; set; }
+    public virtual DbSet<PimsPropPropAnomalyTyp> PimsPropPropAnomalyTyps { get; set; }
+
+    public virtual DbSet<PimsPropPropAnomalyTypHist> PimsPropPropAnomalyTypHists { get; set; }
 
     public virtual DbSet<PimsPropPropPurpose> PimsPropPropPurposes { get; set; }
 
     public virtual DbSet<PimsPropPropPurposeHist> PimsPropPropPurposeHists { get; set; }
 
-    public virtual DbSet<PimsPropPropRoadType> PimsPropPropRoadTypes { get; set; }
+    public virtual DbSet<PimsPropPropRoadTyp> PimsPropPropRoadTyps { get; set; }
 
-    public virtual DbSet<PimsPropPropTenureType> PimsPropPropTenureTypes { get; set; }
+    public virtual DbSet<PimsPropPropRoadTypHist> PimsPropPropRoadTypHists { get; set; }
+
+    public virtual DbSet<PimsPropPropTenureTyp> PimsPropPropTenureTyps { get; set; }
+
+    public virtual DbSet<PimsPropPropTenureTypHist> PimsPropPropTenureTypHists { get; set; }
 
     public virtual DbSet<PimsPropResearchPurposeType> PimsPropResearchPurposeTypes { get; set; }
 
@@ -1301,6 +1313,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.LegacyStakeholder).HasComment("Legacy stakeholders imported from PAIMS.");
             entity.Property(e => e.OtherSubfileInterestType).HasComment("If the user selects ?Other? then they will need to provide a subfile type description, which will be displayed as 'Other - <description>");
             entity.Property(e => e.PaimsAcquisitionFileId).HasComment("Legacy Acquisition File ID from the PAIMS system.");
+            entity.Property(e => e.PhysicalFileDetails).HasComment("Comments to provide details about the physical acquisition file.");
             entity.Property(e => e.PossessionDt).HasComment("Date of possession following acquisition completion.");
             entity.Property(e => e.PrntAcquisitionFileId).HasComment("Link to the parent acquisition file.");
             entity.Property(e => e.ProductId).HasComment("Foreign key to the PIMS_PRODUCT table.");
@@ -4110,6 +4123,123 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
         });
 
+        modelBuilder.Entity<PimsExpropOwnerHistory>(entity =>
+        {
+            entity.HasKey(e => e.ExpropOwnerHistoryId).HasName("XPOWNH_PK");
+
+            entity.ToTable("PIMS_EXPROP_OWNER_HISTORY", tb =>
+                {
+                    tb.HasComment("Entity continaing the details regarding actions involving a property owner associated with an expropriation.");
+                    tb.HasTrigger("PIMS_XPOWNH_A_S_IUD_TR");
+                    tb.HasTrigger("PIMS_XPOWNH_I_S_I_TR");
+                    tb.HasTrigger("PIMS_XPOWNH_I_S_U_TR");
+                });
+
+            entity.Property(e => e.ExpropOwnerHistoryId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_EXPROP_OWNER_HISTORY_ID_SEQ])")
+                .HasComment("Unique auto-generated surrogate primary key.");
+            entity.Property(e => e.AcquisitionFileId).HasComment("Foreign key to the PIMS_ACQUISITION_FILE file.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The directory of the user account that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user account that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user updated the record.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The directory of the user account that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user account that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.EventDt).HasComment("Date of the expropriation owner event.");
+            entity.Property(e => e.ExpropOwnerHistoryTypeCode).HasComment("Foreign key to the PIMS_EXPROP_OWNER_HISTORY_TYPE file.");
+            entity.Property(e => e.IsDisabled)
+                .HasDefaultValue(false)
+                .HasComment("Indicates if the row is inactive.");
+            entity.Property(e => e.OrganizationId).HasComment("Foreign key to the PIMS_ORGANIZATION table.");
+            entity.Property(e => e.PersonId).HasComment("Foreign key to the PIMS_PERSON table.");
+            entity.Property(e => e.PrimaryContactId).HasComment("Foreign key to the PIMS_PERSON table.");
+
+            entity.HasOne(d => d.AcquisitionFile).WithMany(p => p.PimsExpropOwnerHistories)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("PIM_ACQNFL_PIM_XPOWNH_FK");
+
+            entity.HasOne(d => d.ExpropOwnerHistoryTypeCodeNavigation).WithMany(p => p.PimsExpropOwnerHistories)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("PIM_XPOHTY_PIM_XPOWNH_FK");
+
+            entity.HasOne(d => d.Organization).WithMany(p => p.PimsExpropOwnerHistories).HasConstraintName("PIM_ORG_PIM_XPOWNH_FK");
+
+            entity.HasOne(d => d.Person).WithMany(p => p.PimsExpropOwnerHistoryPeople).HasConstraintName("PIM_PERSON_PIM_XPOWNH_PER_FK");
+
+            entity.HasOne(d => d.PrimaryContact).WithMany(p => p.PimsExpropOwnerHistoryPrimaryContacts).HasConstraintName("PIM_PERSON_PIM_XPOWNH_PRM_FK");
+        });
+
+        modelBuilder.Entity<PimsExpropOwnerHistoryHist>(entity =>
+        {
+            entity.HasKey(e => e.ExpropOwnerHistoryHistId).HasName("PIMS_XPOWNH_H_PK");
+
+            entity.Property(e => e.ExpropOwnerHistoryHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_EXPROP_OWNER_HISTORY_H_ID_SEQ])");
+            entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+        });
+
+        modelBuilder.Entity<PimsExpropOwnerHistoryType>(entity =>
+        {
+            entity.HasKey(e => e.ExpropOwnerHistoryTypeCode).HasName("XPOHTY_PK");
+
+            entity.ToTable("PIMS_EXPROP_OWNER_HISTORY_TYPE", tb =>
+                {
+                    tb.HasComment("Table that contains the codes and descriptions of the history types associated with a property owner associated with an expropriation.");
+                    tb.HasTrigger("PIMS_XPOHTY_I_S_I_TR");
+                    tb.HasTrigger("PIMS_XPOHTY_I_S_U_TR");
+                });
+
+            entity.Property(e => e.ExpropOwnerHistoryTypeCode).HasComment("Codified version of the owner history type status.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.Description).HasComment("Description of the owner history type status.");
+            entity.Property(e => e.DisplayOrder).HasComment("Display order of the codes.");
+            entity.Property(e => e.IsDisabled)
+                .HasDefaultValue(false)
+                .HasComment("Indicates if the code value is inactive.");
+        });
+
         modelBuilder.Entity<PimsExpropPmtPmtItem>(entity =>
         {
             entity.HasKey(e => e.ExpropPmtPmtItemId).HasName("XPMTITY_PK");
@@ -4161,73 +4291,6 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
         });
 
-        modelBuilder.Entity<PimsExpropriationNotice>(entity =>
-        {
-            entity.HasKey(e => e.ExpropriationNoticeId).HasName("EXPNOT_PK");
-
-            entity.ToTable("PIMS_EXPROPRIATION_NOTICE", tb =>
-                {
-                    tb.HasComment("Entity continaing the date and recipient of the expropriation notice.");
-                    tb.HasTrigger("PIMS_EXPNOT_A_S_IUD_TR");
-                    tb.HasTrigger("PIMS_EXPNOT_I_S_I_TR");
-                    tb.HasTrigger("PIMS_EXPNOT_I_S_U_TR");
-                });
-
-            entity.Property(e => e.ExpropriationNoticeId)
-                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_EXPROPRIATION_NOTICE_ID_SEQ])")
-                .HasComment("Unique auto-generated surrogate primary key");
-            entity.Property(e => e.AcquisitionFileId).HasComment("Foreign key to the PIMS_ACQUISITION table.");
-            entity.Property(e => e.AcquisitionOwnerId).HasComment("Foreign key to the PIMS_ACQUISITION_OWNER table.");
-            entity.Property(e => e.AppCreateTimestamp)
-                .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user created the record.");
-            entity.Property(e => e.AppCreateUserDirectory)
-                .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserid)
-                .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
-            entity.Property(e => e.AppLastUpdateTimestamp)
-                .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
-            entity.Property(e => e.AppLastUpdateUserDirectory)
-                .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserid)
-                .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
-            entity.Property(e => e.CompensationRequisitionId)
-                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_COMPENSATION_REQUISITION_ID_SEQ])")
-                .HasComment("Foreign key to the PIMS_COMPENSATION_REQUISITION table.");
-            entity.Property(e => e.ConcurrencyControlNumber)
-                .HasDefaultValue(1L)
-                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
-            entity.Property(e => e.DbCreateTimestamp)
-                .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the record was created.");
-            entity.Property(e => e.DbCreateUserid)
-                .HasDefaultValueSql("(user_name())")
-                .HasComment("The user or proxy account that created the record.");
-            entity.Property(e => e.DbLastUpdateTimestamp)
-                .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the record was created or last updated.");
-            entity.Property(e => e.DbLastUpdateUserid)
-                .HasDefaultValueSql("(user_name())")
-                .HasComment("The user or proxy account that created or last updated the record.");
-            entity.Property(e => e.ExpropNoticeServedDt).HasComment("Expropriation notice served date.");
-            entity.Property(e => e.InterestHolderId).HasComment("Foreign key to the PIMS_INTEREST_HOLDER table.");
-
-            entity.HasOne(d => d.AcquisitionFile).WithMany(p => p.PimsExpropriationNotices)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("PIM_ACQNFL_PIM_EXPNOT_FK");
-
-            entity.HasOne(d => d.AcquisitionOwner).WithMany(p => p.PimsExpropriationNotices).HasConstraintName("PIM_ACQOWN_PIM_EXPNOT_FK");
-
-            entity.HasOne(d => d.InterestHolder).WithMany(p => p.PimsExpropriationNotices).HasConstraintName("PIM_INTHLD_PIM_EXPNOT_FK");
-        });
-
         modelBuilder.Entity<PimsExpropriationNoticeHist>(entity =>
         {
             entity.HasKey(e => e.ExpropriationNoticeHistId).HasName("PIMS_EXPNOT_H_PK");
@@ -4253,7 +4316,6 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("Unique auto-generated surrogate primary key");
             entity.Property(e => e.AcquisitionFileId).HasComment("Foreign key of the acquisition file.");
             entity.Property(e => e.AcquisitionOwnerId).HasComment("Foreign key of the acquisition owner.");
-            entity.Property(e => e.AdvPmtServedDt).HasComment("Date that the advanced payment was made.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the user created the record.");
@@ -4313,67 +4375,6 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.ExpropriationPaymentHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_EXPROPRIATION_PAYMENT_H_ID_SEQ])");
             entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
-        });
-
-        modelBuilder.Entity<PimsExpropriationVesting>(entity =>
-        {
-            entity.HasKey(e => e.ExpropriationVestingId).HasName("EXPVST_PK");
-
-            entity.ToTable("PIMS_EXPROPRIATION_VESTING", tb =>
-                {
-                    tb.HasComment("Entity continaing the vesting date of the expropriation.");
-                    tb.HasTrigger("PIMS_EXPVST_A_S_IUD_TR");
-                    tb.HasTrigger("PIMS_EXPVST_I_S_I_TR");
-                    tb.HasTrigger("PIMS_EXPVST_I_S_U_TR");
-                });
-
-            entity.Property(e => e.ExpropriationVestingId)
-                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_EXPROPRIATION_VESTING_ID_SEQ])")
-                .HasComment("Unique auto-generated surrogate primary key");
-            entity.Property(e => e.AcquisitionFileId).HasComment("Foreign key of the acquisition file.");
-            entity.Property(e => e.AppCreateTimestamp)
-                .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user created the record.");
-            entity.Property(e => e.AppCreateUserDirectory)
-                .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserid)
-                .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
-            entity.Property(e => e.AppLastUpdateTimestamp)
-                .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
-            entity.Property(e => e.AppLastUpdateUserDirectory)
-                .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserid)
-                .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
-            entity.Property(e => e.CompensationRequisitionId)
-                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_COMPENSATION_REQUISITION_ID_SEQ])")
-                .HasComment("Foreign key to the PIMS_COMPENSATION_REQUISITION table.");
-            entity.Property(e => e.ConcurrencyControlNumber)
-                .HasDefaultValue(1L)
-                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
-            entity.Property(e => e.DbCreateTimestamp)
-                .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the record was created.");
-            entity.Property(e => e.DbCreateUserid)
-                .HasDefaultValueSql("(user_name())")
-                .HasComment("The user or proxy account that created the record.");
-            entity.Property(e => e.DbLastUpdateTimestamp)
-                .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the record was created or last updated.");
-            entity.Property(e => e.DbLastUpdateUserid)
-                .HasDefaultValueSql("(user_name())")
-                .HasComment("The user or proxy account that created or last updated the record.");
-            entity.Property(e => e.ExpropVestingDt).HasComment("Expropriation vesting date.");
-
-            entity.HasOne(d => d.AcquisitionFile).WithMany(p => p.PimsExpropriationVestings)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("PIM_ACQNFL_PIM_EXPVST_FK");
         });
 
         modelBuilder.Entity<PimsExpropriationVestingHist>(entity =>
@@ -6550,12 +6551,13 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("Indicates if the code is disabled.");
         });
 
-        modelBuilder.Entity<PimsPrfPropResearchPurposeType>(entity =>
+        modelBuilder.Entity<PimsPrfPropResearchPurposeTyp>(entity =>
         {
             entity.HasKey(e => e.PrfPropResearchPurposeId).HasName("PRSPRP_PK");
 
-            entity.ToTable("PIMS_PRF_PROP_RESEARCH_PURPOSE_TYPE", tb =>
+            entity.ToTable("PIMS_PRF_PROP_RESEARCH_PURPOSE_TYP", tb =>
                 {
+                    tb.HasTrigger("PIMS_PRSPRP_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_PRSPRP_I_S_I_TR");
                     tb.HasTrigger("PIMS_PRSPRP_I_S_U_TR");
                 });
@@ -6573,11 +6575,19 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
             entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-            entity.HasOne(d => d.PropResearchPurposeTypeCodeNavigation).WithMany(p => p.PimsPrfPropResearchPurposeTypes)
+            entity.HasOne(d => d.PropResearchPurposeTypeCodeNavigation).WithMany(p => p.PimsPrfPropResearchPurposeTyps)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("PIM_RRESPT_PIM_PRSPRP_FK");
 
-            entity.HasOne(d => d.PropertyResearchFile).WithMany(p => p.PimsPrfPropResearchPurposeTypes).HasConstraintName("PIM_PRSCRC_PIM_PRSPRP_FK");
+            entity.HasOne(d => d.PropertyResearchFile).WithMany(p => p.PimsPrfPropResearchPurposeTyps).HasConstraintName("PIM_PRSCRC_PIM_PRSPRP_FK");
+        });
+
+        modelBuilder.Entity<PimsPrfPropResearchPurposeTypHist>(entity =>
+        {
+            entity.HasKey(e => e.PrfPropResearchPurposeTypHistId).HasName("PIMS_PRSPRP_H_PK");
+
+            entity.Property(e => e.PrfPropResearchPurposeTypHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PRF_PROP_RESEARCH_PURPOSE_TYP_H_ID_SEQ])");
+            entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
         });
 
         modelBuilder.Entity<PimsProduct>(entity =>
@@ -7043,12 +7053,13 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
         });
 
-        modelBuilder.Entity<PimsPropInthldrInterestType>(entity =>
+        modelBuilder.Entity<PimsPropInthldrInterestTyp>(entity =>
         {
             entity.HasKey(e => e.PropInthldrInterestTypeId).HasName("PIHITY_PK");
 
-            entity.ToTable("PIMS_PROP_INTHLDR_INTEREST_TYPE", tb =>
+            entity.ToTable("PIMS_PROP_INTHLDR_INTEREST_TYP", tb =>
                 {
+                    tb.HasTrigger("PIMS_PIHITY_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_PIHITY_I_S_I_TR");
                     tb.HasTrigger("PIMS_PIHITY_I_S_U_TR");
                 });
@@ -7066,11 +7077,19 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
             entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-            entity.HasOne(d => d.InterestHolderInterestTypeCodeNavigation).WithMany(p => p.PimsPropInthldrInterestTypes)
+            entity.HasOne(d => d.InterestHolderInterestTypeCodeNavigation).WithMany(p => p.PimsPropInthldrInterestTyps)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("PIM_IHINTT_PIM_PIHITY_FK");
 
-            entity.HasOne(d => d.PimsInthldrPropInterest).WithMany(p => p.PimsPropInthldrInterestTypes).HasConstraintName("PIM_IHPRIN_PIM_PIHITY_FK");
+            entity.HasOne(d => d.PimsInthldrPropInterest).WithMany(p => p.PimsPropInthldrInterestTyps).HasConstraintName("PIM_IHPRIN_PIM_PIHITY_FK");
+        });
+
+        modelBuilder.Entity<PimsPropInthldrInterestTypHist>(entity =>
+        {
+            entity.HasKey(e => e.PropInthldrInterestTypHistId).HasName("PIMS_PIHITY_H_PK");
+
+            entity.Property(e => e.PropInthldrInterestTypHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROP_INTHLDR_INTEREST_TYP_H_ID_SEQ])");
+            entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
         });
 
         modelBuilder.Entity<PimsPropLeaseCompReq>(entity =>
@@ -7256,13 +7275,14 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
         });
 
-        modelBuilder.Entity<PimsPropPropAnomalyType>(entity =>
+        modelBuilder.Entity<PimsPropPropAnomalyTyp>(entity =>
         {
             entity.HasKey(e => e.PropPropAnomalyTypeId).HasName("PRPRAT_PK");
 
-            entity.ToTable("PIMS_PROP_PROP_ANOMALY_TYPE", tb =>
+            entity.ToTable("PIMS_PROP_PROP_ANOMALY_TYP", tb =>
                 {
                     tb.HasComment("Resolves many-to-many relationship between PIMS_PROPERTY and PIMS_PROPERTY_ANOMALY_TYPE");
+                    tb.HasTrigger("PIMS_PRPRAT_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_PRPRAT_I_S_I_TR");
                     tb.HasTrigger("PIMS_PRPRAT_I_S_U_TR");
                 });
@@ -7280,11 +7300,19 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
             entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-            entity.HasOne(d => d.PropertyAnomalyTypeCodeNavigation).WithMany(p => p.PimsPropPropAnomalyTypes)
+            entity.HasOne(d => d.PropertyAnomalyTypeCodeNavigation).WithMany(p => p.PimsPropPropAnomalyTyps)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("PIM_PRANOM_PIM_PRPRAT_FK");
 
-            entity.HasOne(d => d.Property).WithMany(p => p.PimsPropPropAnomalyTypes).HasConstraintName("PIM_PRPRTY_PIM_PRPRAT_FK");
+            entity.HasOne(d => d.Property).WithMany(p => p.PimsPropPropAnomalyTyps).HasConstraintName("PIM_PRPRTY_PIM_PRPRAT_FK");
+        });
+
+        modelBuilder.Entity<PimsPropPropAnomalyTypHist>(entity =>
+        {
+            entity.HasKey(e => e.PropPropAnomalyTypHistId).HasName("PIMS_PRPRAT_H_PK");
+
+            entity.Property(e => e.PropPropAnomalyTypHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROP_PROP_ANOMALY_TYP_H_ID_SEQ])");
+            entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
         });
 
         modelBuilder.Entity<PimsPropPropPurpose>(entity =>
@@ -7329,13 +7357,14 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
         });
 
-        modelBuilder.Entity<PimsPropPropRoadType>(entity =>
+        modelBuilder.Entity<PimsPropPropRoadTyp>(entity =>
         {
             entity.HasKey(e => e.PropPropRoadTypeId).HasName("PRPRRT_PK");
 
-            entity.ToTable("PIMS_PROP_PROP_ROAD_TYPE", tb =>
+            entity.ToTable("PIMS_PROP_PROP_ROAD_TYP", tb =>
                 {
                     tb.HasComment("Resolves many-to-many relationship between PIMS_PROPERTY and PIMS_PROPERTY_ROAD_TYPE");
+                    tb.HasTrigger("PIMS_PRPRRT_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_PRPRRT_I_S_I_TR");
                     tb.HasTrigger("PIMS_PRPRRT_I_S_U_TR");
                 });
@@ -7353,20 +7382,29 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
             entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
 
-            entity.HasOne(d => d.Property).WithMany(p => p.PimsPropPropRoadTypes).HasConstraintName("PIM_PRPRTY_PIM_PRPRRT_FK");
+            entity.HasOne(d => d.Property).WithMany(p => p.PimsPropPropRoadTyps).HasConstraintName("PIM_PRPRTY_PIM_PRPRRT_FK");
 
-            entity.HasOne(d => d.PropertyRoadTypeCodeNavigation).WithMany(p => p.PimsPropPropRoadTypes)
+            entity.HasOne(d => d.PropertyRoadTypeCodeNavigation).WithMany(p => p.PimsPropPropRoadTyps)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("PIM_PRROAD_PIM_PRPRRT_FK");
         });
 
-        modelBuilder.Entity<PimsPropPropTenureType>(entity =>
+        modelBuilder.Entity<PimsPropPropRoadTypHist>(entity =>
+        {
+            entity.HasKey(e => e.PropPropRoadTypHistId).HasName("PIMS_PRPRRT_H_PK");
+
+            entity.Property(e => e.PropPropRoadTypHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROP_PROP_ROAD_TYP_H_ID_SEQ])");
+            entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+        });
+
+        modelBuilder.Entity<PimsPropPropTenureTyp>(entity =>
         {
             entity.HasKey(e => e.PropPropTenureTypeId).HasName("PRPRTT_PK");
 
-            entity.ToTable("PIMS_PROP_PROP_TENURE_TYPE", tb =>
+            entity.ToTable("PIMS_PROP_PROP_TENURE_TYP", tb =>
                 {
                     tb.HasComment("Resolves many-to-many relationship between PIMS_PROPERTY and PIMS_PROPERTY_TENURE_TYPE");
+                    tb.HasTrigger("PIMS_PRPRTT_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_PRPRTT_I_S_I_TR");
                     tb.HasTrigger("PIMS_PRPRTT_I_S_U_TR");
                 });
@@ -7385,11 +7423,19 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
             entity.Property(e => e.PropertyTenureTypeCode).HasDefaultValue("UNKNOWN");
 
-            entity.HasOne(d => d.Property).WithMany(p => p.PimsPropPropTenureTypes).HasConstraintName("PIM_PRPRTY_PIM_PRPRTT_FK");
+            entity.HasOne(d => d.Property).WithMany(p => p.PimsPropPropTenureTyps).HasConstraintName("PIM_PRPRTY_PIM_PRPRTT_FK");
 
-            entity.HasOne(d => d.PropertyTenureTypeCodeNavigation).WithMany(p => p.PimsPropPropTenureTypes)
+            entity.HasOne(d => d.PropertyTenureTypeCodeNavigation).WithMany(p => p.PimsPropPropTenureTyps)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("PIM_PRPTNR_PIM_PRPRTT_FK");
+        });
+
+        modelBuilder.Entity<PimsPropPropTenureTypHist>(entity =>
+        {
+            entity.HasKey(e => e.PropPropTenureTypHistId).HasName("PIMS_PRPRTT_H_PK");
+
+            entity.Property(e => e.PropPropTenureTypHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROP_PROP_TENURE_TYP_H_ID_SEQ])");
+            entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
         });
 
         modelBuilder.Entity<PimsPropResearchPurposeType>(entity =>
@@ -9526,6 +9572,17 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
         });
 
+        modelBuilder.Entity<PimsxTableDefinition>(entity =>
+        {
+            entity.HasKey(e => new { e.TableSchema, e.TableName }).HasName("TBLDFN_PK");
+
+            entity.Property(e => e.TableSchema).HasComment("Table schema.");
+            entity.Property(e => e.TableName).HasComment("Table name.");
+            entity.Property(e => e.Description).HasComment("Description of the table.");
+            entity.Property(e => e.HistRequired).HasComment("Is history required for this table?");
+            entity.Property(e => e.TableAlias).HasComment("Table alias.");
+        });
+
         modelBuilder.Entity<PmbcBctfaParcelPolygonFabric>(entity =>
         {
             entity.ToView("PMBC_BCTFA_PARCEL_POLYGON_FABRIC", "pmbc");
@@ -9918,6 +9975,12 @@ public partial class PimsBaseContext : DbContext
         modelBuilder.HasSequence("PIMS_DSP_PURCH_SOLICITOR_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
+        modelBuilder.HasSequence("PIMS_EXPROP_OWNER_HISTORY_H_ID_SEQ")
+            .HasMin(1L)
+            .HasMax(2147483647L);
+        modelBuilder.HasSequence("PIMS_EXPROP_OWNER_HISTORY_ID_SEQ")
+            .HasMin(1L)
+            .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_EXPROP_PMT_PMT_ITEM_H_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
@@ -9927,9 +9990,6 @@ public partial class PimsBaseContext : DbContext
         modelBuilder.HasSequence("PIMS_EXPROPRIATION_NOTICE_H_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_EXPROPRIATION_NOTICE_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_EXPROPRIATION_PAYMENT_H_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
@@ -9937,9 +9997,6 @@ public partial class PimsBaseContext : DbContext
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_EXPROPRIATION_VESTING_H_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_EXPROPRIATION_VESTING_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_FILE_ENTITY_ID_SEQ")
@@ -10131,6 +10188,9 @@ public partial class PimsBaseContext : DbContext
         modelBuilder.HasSequence("PIMS_PRF_PROP_RESEARCH_PURPOSE_ID_SEQ")
             .HasMin(1L)
             .HasMax(21474483647L);
+        modelBuilder.HasSequence("PIMS_PRF_PROP_RESEARCH_PURPOSE_TYP_H_ID_SEQ")
+            .HasMin(1L)
+            .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_PRODUCT_BUSINESS_FUNCTION_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
@@ -10209,6 +10269,9 @@ public partial class PimsBaseContext : DbContext
         modelBuilder.HasSequence("PIMS_PROP_ACT_MIN_CONTACT_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
+        modelBuilder.HasSequence("PIMS_PROP_INTHLDR_INTEREST_TYP_H_ID_SEQ")
+            .HasMin(1L)
+            .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_PROP_INTHLDR_INTEREST_TYPE_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
@@ -10227,6 +10290,9 @@ public partial class PimsBaseContext : DbContext
         modelBuilder.HasSequence("PIMS_PROP_PROP_ADJACENT_LAND_TYPE_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
+        modelBuilder.HasSequence("PIMS_PROP_PROP_ANOMALY_TYP_H_ID_SEQ")
+            .HasMin(1L)
+            .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_PROP_PROP_ANOMALY_TYPE_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
@@ -10236,7 +10302,13 @@ public partial class PimsBaseContext : DbContext
         modelBuilder.HasSequence("PIMS_PROP_PROP_PURPOSE_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
+        modelBuilder.HasSequence("PIMS_PROP_PROP_ROAD_TYP_H_ID_SEQ")
+            .HasMin(1L)
+            .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_PROP_PROP_ROAD_TYPE_ID_SEQ")
+            .HasMin(1L)
+            .HasMax(2147483647L);
+        modelBuilder.HasSequence("PIMS_PROP_PROP_TENURE_TYP_H_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_PROP_PROP_TENURE_TYPE_ID_SEQ")
