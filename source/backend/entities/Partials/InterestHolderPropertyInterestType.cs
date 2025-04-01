@@ -5,7 +5,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// PimsPropInthldrInterestType class, provides an entity for the datamodel to manage the relationships between property of interests and their corresponding types.
     /// </summary>
-    public partial class PimsPropInthldrInterestType : StandardIdentityBaseAppEntity<long>, IBaseAppEntity
+    public partial class PimsPropInthldrInterestTyp : StandardIdentityBaseAppEntity<long>, IBaseAppEntity
     {
         #region Properties
         [NotMapped]

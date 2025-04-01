@@ -77,7 +77,7 @@ public partial class PimsInthldrPropInterest
     public virtual PimsInterestHolder InterestHolder { get; set; }
 
     [InverseProperty("PimsInthldrPropInterest")]
-    public virtual ICollection<PimsPropInthldrInterestType> PimsPropInthldrInterestTypes { get; set; } = new List<PimsPropInthldrInterestType>();
+    public virtual ICollection<PimsPropInthldrInterestTyp> PimsPropInthldrInterestTyps { get; set; } = new List<PimsPropInthldrInterestTyp>();
 
     [ForeignKey("PropertyAcquisitionFileId")]
     [InverseProperty("PimsInthldrPropInterests")]

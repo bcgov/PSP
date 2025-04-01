@@ -204,17 +204,18 @@ const mapRequestStates = {
           }),
           target: 'pendingFitBounds',
         },
-      },
-      REQUEST_FIT_FILE_BOUNDS: {
-        actions: assign({
-          requestedFitBounds: (context: MachineContext) => {
-            // business logic, if there are file properties, use those, otherwise, zoom to a single feature if there is only one, or all features if there are more than one.
-            if (context.filePropertyLocations.length > 0) {
-              return latLngBounds(context.filePropertyLocations);
-            }
-          },
-        }),
-        target: 'pendingFitBounds',
+        REQUEST_FIT_FILE_BOUNDS: {
+          actions: assign({
+            requestedFitBounds: (context: MachineContext) => {
+              // business logic, if there are file properties, use those, otherwise, zoom to a single feature if there is only one, or all features if there are more than one.
+
+              if (context.filePropertyLocations.length > 0) {
+                return latLngBounds(context.filePropertyLocations);
+              }
+            },
+          }),
+          target: 'pendingFitBounds',
+        },
       },
     },
     pendingFlyTo: {
