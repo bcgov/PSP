@@ -454,28 +454,6 @@ exports[`SideNavbar display and logic > renders 1`] = `
       </div>
       <div
         class="c2 nav-item"
-        data-testid="nav-tooltip-acquisition"
-      >
-        <a
-          class="c3 nav-link"
-          href="#"
-          role="button"
-        >
-          <svg
-            fill="none"
-            height="24"
-            viewBox="0 0 24 24"
-            width="24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M16.5896 7.61509H15.446V6.44474H16.5896V7.61509ZM16.5896 9.95579H15.446V8.78544H16.5896V9.95579ZM14.3024 7.61509H13.1588V6.44474H14.3024V7.61509ZM14.3024 9.95579H13.1588V8.78544H14.3024V9.95579ZM14.8666 0L6.8615 5.85175V8.78544H9.14867L18.4498 12.6086C19.7306 13.1391 20.5845 14.4031 20.5845 15.8075H22.8717V5.85175L14.8666 0ZM21.7281 18.1482H13.723L11.3291 17.29L11.7103 16.1821L13.723 16.9623H16.9403C17.6874 16.9623 18.2973 16.3381 18.2973 15.5735C18.2973 14.9961 17.9466 14.4812 17.413 14.2783L9.10292 11.1105H6.84625V21.6593L14.8513 23.9844L24 20.4734C24 19.1782 22.9784 18.1327 21.7128 18.1327L21.7281 18.1482ZM0 24H5.32433V11.1261H0V24Z"
-            />
-          </svg>
-        </a>
-      </div>
-      <div
-        class="c2 nav-item"
         data-testid="nav-tooltip-leases&licences"
       >
         <a
@@ -496,9 +474,439 @@ exports[`SideNavbar display and logic > renders 1`] = `
           </svg>
         </a>
       </div>
+      <span
+        class="to-bottom"
+      >
+        <button
+          class="c4 Button Button--icon-only c5 btn btn-light"
+          title="expand"
+          type="button"
+        >
+          <div
+            class="Button__icon"
+          >
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M6.41 6 5 7.41 9.58 12 5 16.59 6.41 18l6-6z"
+              />
+              <path
+                d="m13 6-1.41 1.41L16.17 12l-4.58 4.59L13 18l6-6z"
+              />
+            </svg>
+          </div>
+        </button>
+      </span>
+    </div>
+    <div
+      class="c6"
+      data-testid="side-tray"
+    >
+      <div
+        class="c7"
+      />
+    </div>
+  </div>
+</div>
+`;
+
+exports[`SideNavbar display and logic > renders 2`] = `
+.c4.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c4.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
+.c4.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c4.btn:focus {
+  outline-width: 2px;
+  outline-style: solid;
+  outline-color: #2E5DD7;
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+.c4.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c4.btn.btn-primary:hover,
+.c4.btn.btn-primary:active,
+.c4.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
+.c4.btn.btn-secondary {
+  color: #013366;
+  background: none;
+  border-color: #013366;
+}
+
+.c4.btn.btn-secondary:hover,
+.c4.btn.btn-secondary:active,
+.c4.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c4.btn.btn-info {
+  color: #9F9D9C;
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c4.btn.btn-info:hover,
+.c4.btn.btn-info:active,
+.c4.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
+  background: none;
+}
+
+.c4.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
+  border: none;
+}
+
+.c4.btn.btn-light:hover,
+.c4.btn.btn-light:active,
+.c4.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
+.c4.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
+  border: none;
+}
+
+.c4.btn.btn-dark:hover,
+.c4.btn.btn-dark:active,
+.c4.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c4.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c4.btn.btn-danger:hover,
+.c4.btn.btn-danger:active,
+.c4.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c4.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c4.btn.btn-warning:hover,
+.c4.btn.btn-warning:active,
+.c4.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
+}
+
+.c4.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--surface-color-primary-button-default);
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c4.btn.btn-link:hover,
+.c4.btn.btn-link:active,
+.c4.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c4.btn.btn-link:disabled,
+.c4.btn.btn-link.disabled {
+  color: #9F9D9C;
+  background: none;
+  pointer-events: none;
+}
+
+.c4.btn:disabled,
+.c4.btn:disabled:hover {
+  color: #9F9D9C;
+  background-color: #EDEBE9;
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.c4.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c4.Button--icon-only:focus {
+  outline: none;
+}
+
+.c4.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c5.btn.btn-light.Button {
+  padding: 0;
+  border: 0.1rem solid #9F9D9C;
+  background-color: white;
+  color: #474543;
+}
+
+.c5.btn.btn-light.Button:focus,
+.c5.btn.btn-light.Button:active {
+  background-color: white;
+  color: #474543;
+}
+
+.c5.btn,
+.c5 .Button__icon,
+.c5 svg {
+  max-width: 2.4rem;
+  min-width: 2.4rem;
+  max-height: 2.4rem;
+  min-height: 2.4rem;
+  font-size: 1.4rem;
+}
+
+.c1 {
+  height: calc( 100vh - 7.2rem - 4.4rem );
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-top: 1.5rem;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  position: relative;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  grid-area: iconbar;
+  background-color: #003366;
+  -webkit-transition: 0.5s width;
+  transition: 0.5s width;
+  width: 6rem;
+}
+
+.c1 label {
+  color: white;
+  min-width: 8rem;
+}
+
+.c1.expanded {
+  width: 16rem;
+}
+
+.c1 .nav-item svg {
+  min-width: 2.4rem;
+}
+
+.c1 .to-bottom {
+  margin-top: auto;
+  margin-bottom: 1.6rem;
+}
+
+.c1 .nav-link {
+  padding: 0.8rem 1.6rem;
+}
+
+.c0 {
+  z-index: 1000;
+  position: relative;
+}
+
+.c7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  height: 100%;
+}
+
+.c7 a {
+  font-size: 1.7rem;
+}
+
+.c6 {
+  height: 100%;
+  overflow-y: auto;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: white;
+  z-index: -1;
+  width: 64rem;
+  padding: 0.8rem 1.6rem;
+  text-align: left;
+  -webkit-transition: -webkit-transform 0.3s ease-in-out;
+  -webkit-transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
+  box-shadow: 0.3rem 0 0.4rem rgba(0,0,0,0.2);
+}
+
+.c6.show {
+  -webkit-transform: translateX(64rem);
+  -ms-transform: translateX(64rem);
+  transform: translateX(64rem);
+}
+
+.c2 {
+  width: 100%;
+  margin-bottom: 2rem;
+  fill: #f2f2f2;
+}
+
+.c2:hover label {
+  color: #8ec6ff;
+}
+
+.c2:hover svg {
+  fill: #8ec6ff;
+}
+
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c3 svg {
+  fill: white;
+  min-width: -webkit-max-content;
+  min-width: -moz-max-content;
+  min-width: max-content;
+}
+
+.c3.active svg {
+  fill: #fdb913;
+}
+
+@media (max-width:1225px) {
+  .c6 {
+    width: 32rem;
+  }
+
+  .c6.show {
+    -webkit-transform: translateX(32rem);
+    -ms-transform: translateX(32rem);
+    transform: translateX(32rem);
+  }
+}
+
+<div>
+  <div
+    class="Toastify"
+  />
+  <div />
+  <div
+    class="c0"
+  >
+    <div
+      class="c1"
+    >
       <div
         class="c2 nav-item"
-        data-testid="nav-tooltip-disposition"
+        data-testid="nav-tooltip-mapview"
       >
         <a
           class="c3 nav-link"
@@ -513,32 +921,10 @@ exports[`SideNavbar display and logic > renders 1`] = `
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              d="M21.3987 5.625C18.1918 7.77086 14.3226 15.3433 14.3226 21.1389H16.9566V24H7.59054V21.1389H10.4516C10.4516 15 6 6.75 0 6.75V3.61114C6.75 3.61114 10.4516 9 12.2598 14.25C13.875 9 15.871 5.625 19.7419 2.84712H14.8748V0H24V9.98597H21.3987V6V5.625Z"
-            />
-          </svg>
-        </a>
-      </div>
-      <div
-        class="c2 nav-item"
-        data-testid="nav-tooltip-subdivision&consolidation"
-      >
-        <a
-          class="c3 nav-link"
-          href="#"
-          role="button"
-        >
-          <svg
-            fill="none"
-            height="24"
-            viewBox="0 0 24 24"
-            width="24"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M14.5455 11.4112V0H2.56725C1.15289 0 0 1.60885 0 3.58259V20.4174C0 22.3912 1.15289 24 2.56725 24H4.99186L14.5455 11.4112Z"
+              d="M12 12.6826C10.7569 12.6826 9.75 13.6907 9.75 14.9326C9.75 16.1746 10.7569 17.1826 12 17.1826C13.2431 17.1826 14.25 16.1746 14.25 14.9326C14.25 13.6907 13.2431 12.6826 12 12.6826Z"
             />
             <path
-              d="M21.6022 0H18.0722V12C18.0722 12.0994 18.0611 12.1989 18.05 12.2983L9.45459 24L21.6022 24C22.9232 24 24 22.3923 24 20.4199V3.58011C24 1.62431 22.9232 0 21.6022 0Z"
+              d="M12.1725 0L0 12.825L3.075 12.7725V24H20.925V12.54L24 12.4875L12.1725 0ZM12.375 24C12 24 11.625 24 11.625 24C7.65 18.18 6.75 17.1375 6.75 15C6.75 12.0675 9.0975 9.6975 12 9.6975C14.9025 9.6975 17.25 12.075 17.25 15C17.25 17.1375 16.35 18.18 12.375 24Z"
             />
           </svg>
         </a>
