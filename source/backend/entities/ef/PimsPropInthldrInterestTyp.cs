@@ -6,26 +6,22 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-/// <summary>
-/// Resolves many-to-many relationship between PIMS_PROPERTY and PIMS_PROPERTY_TENURE_TYPE
-/// </summary>
-[Table("PIMS_PROP_PROP_TENURE_TYPE")]
-[Index("PropertyId", Name = "PRPRTT_PROPERTY_ID_IDX")]
-[Index("PropertyTenureTypeCode", Name = "PRPRTT_PROPERTY_TENURE_TYPE_CODE_IDX")]
-[Index("PropertyTenureTypeCode", "PropertyId", Name = "PRPRTT_PROP_PROP_TENURE_TUC", IsUnique = true)]
-public partial class PimsPropPropTenureType
+[Table("PIMS_PROP_INTHLDR_INTEREST_TYP")]
+[Index("InterestHolderInterestTypeCode", Name = "PIHITY_INTEREST_HOLDER_INTEREST_TYPE_CODE_IDX")]
+[Index("PimsInthldrPropInterestId", Name = "PIHITY_PIMS_INTHLDR_PROP_INTEREST_ID_IDX")]
+public partial class PimsPropInthldrInterestTyp
 {
     [Key]
-    [Column("PROP_PROP_TENURE_TYPE_ID")]
-    public long PropPropTenureTypeId { get; set; }
+    [Column("PROP_INTHLDR_INTEREST_TYPE_ID")]
+    public long PropInthldrInterestTypeId { get; set; }
 
-    [Column("PROPERTY_ID")]
-    public long PropertyId { get; set; }
+    [Column("PIMS_INTHLDR_PROP_INTEREST_ID")]
+    public long PimsInthldrPropInterestId { get; set; }
 
     [Required]
-    [Column("PROPERTY_TENURE_TYPE_CODE")]
+    [Column("INTEREST_HOLDER_INTEREST_TYPE_CODE")]
     [StringLength(20)]
-    public string PropertyTenureTypeCode { get; set; }
+    public string InterestHolderInterestTypeCode { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
@@ -78,11 +74,11 @@ public partial class PimsPropPropTenureType
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    [ForeignKey("PropertyId")]
-    [InverseProperty("PimsPropPropTenureTypes")]
-    public virtual PimsProperty Property { get; set; }
+    [ForeignKey("InterestHolderInterestTypeCode")]
+    [InverseProperty("PimsPropInthldrInterestTyps")]
+    public virtual PimsInterestHolderInterestType InterestHolderInterestTypeCodeNavigation { get; set; }
 
-    [ForeignKey("PropertyTenureTypeCode")]
-    [InverseProperty("PimsPropPropTenureTypes")]
-    public virtual PimsPropertyTenureType PropertyTenureTypeCodeNavigation { get; set; }
+    [ForeignKey("PimsInthldrPropInterestId")]
+    [InverseProperty("PimsPropInthldrInterestTyps")]
+    public virtual PimsInthldrPropInterest PimsInthldrPropInterest { get; set; }
 }

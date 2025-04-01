@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-[Table("PIMS_EXPROPRIATION_PAYMENT_HIST")]
-[Index("ExpropriationPaymentHistId", "EndDateHist", Name = "PIMS_EXPPMT_H_UK", IsUnique = true)]
-public partial class PimsExpropriationPaymentHist
+[Table("PIMS_PROP_INTHLDR_INTEREST_TYP_HIST")]
+[Index("PropInthldrInterestTypHistId", "EndDateHist", Name = "PIMS_PIHITY_H_UK", IsUnique = true)]
+public partial class PimsPropInthldrInterestTypHist
 {
     [Key]
-    [Column("_EXPROPRIATION_PAYMENT_HIST_ID")]
-    public long ExpropriationPaymentHistId { get; set; }
+    [Column("_PROP_INTHLDR_INTEREST_TYP_HIST_ID")]
+    public long PropInthldrInterestTypHistId { get; set; }
 
     [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
     public DateTime EffectiveDateHist { get; set; }
@@ -20,27 +20,16 @@ public partial class PimsExpropriationPaymentHist
     [Column("END_DATE_HIST", TypeName = "datetime")]
     public DateTime? EndDateHist { get; set; }
 
-    [Column("EXPROPRIATION_PAYMENT_ID")]
-    public long ExpropriationPaymentId { get; set; }
+    [Column("PROP_INTHLDR_INTEREST_TYPE_ID")]
+    public long PropInthldrInterestTypeId { get; set; }
 
-    [Column("ACQUISITION_FILE_ID")]
-    public long AcquisitionFileId { get; set; }
+    [Column("PIMS_INTHLDR_PROP_INTEREST_ID")]
+    public long PimsInthldrPropInterestId { get; set; }
 
-    [Column("ACQUISITION_OWNER_ID")]
-    public long? AcquisitionOwnerId { get; set; }
-
-    [Column("INTEREST_HOLDER_ID")]
-    public long? InterestHolderId { get; set; }
-
-    [Column("EXPROPRIATING_AUTHORITY")]
-    public long? ExpropriatingAuthority { get; set; }
-
-    [Column("DESCRIPTION")]
-    [StringLength(2000)]
-    public string Description { get; set; }
-
-    [Column("IS_DISABLED")]
-    public bool? IsDisabled { get; set; }
+    [Required]
+    [Column("INTEREST_HOLDER_INTEREST_TYPE_CODE")]
+    [StringLength(20)]
+    public string InterestHolderInterestTypeCode { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
@@ -92,7 +81,4 @@ public partial class PimsExpropriationPaymentHist
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
-
-    [Column("ADV_PMT_SERVED_DT")]
-    public DateOnly? AdvPmtServedDt { get; set; }
 }

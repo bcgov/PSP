@@ -6,41 +6,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-[Table("PIMS_EXPROPRIATION_PAYMENT_HIST")]
-[Index("ExpropriationPaymentHistId", "EndDateHist", Name = "PIMS_EXPPMT_H_UK", IsUnique = true)]
-public partial class PimsExpropriationPaymentHist
+/// <summary>
+/// Resolves many-to-many relationship between PIMS_PROPERTY and PIMS_PROPERTY_TENURE_TYPE
+/// </summary>
+[Table("PIMS_PROP_PROP_TENURE_TYP")]
+[Index("PropertyId", Name = "PRPRTT_PROPERTY_ID_IDX")]
+[Index("PropertyTenureTypeCode", Name = "PRPRTT_PROPERTY_TENURE_TYPE_CODE_IDX")]
+[Index("PropertyTenureTypeCode", "PropertyId", Name = "PRPRTT_PROP_PROP_TENURE_TUC", IsUnique = true)]
+public partial class PimsPropPropTenureTyp
 {
     [Key]
-    [Column("_EXPROPRIATION_PAYMENT_HIST_ID")]
-    public long ExpropriationPaymentHistId { get; set; }
+    [Column("PROP_PROP_TENURE_TYPE_ID")]
+    public long PropPropTenureTypeId { get; set; }
 
-    [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
-    public DateTime EffectiveDateHist { get; set; }
+    [Column("PROPERTY_ID")]
+    public long PropertyId { get; set; }
 
-    [Column("END_DATE_HIST", TypeName = "datetime")]
-    public DateTime? EndDateHist { get; set; }
-
-    [Column("EXPROPRIATION_PAYMENT_ID")]
-    public long ExpropriationPaymentId { get; set; }
-
-    [Column("ACQUISITION_FILE_ID")]
-    public long AcquisitionFileId { get; set; }
-
-    [Column("ACQUISITION_OWNER_ID")]
-    public long? AcquisitionOwnerId { get; set; }
-
-    [Column("INTEREST_HOLDER_ID")]
-    public long? InterestHolderId { get; set; }
-
-    [Column("EXPROPRIATING_AUTHORITY")]
-    public long? ExpropriatingAuthority { get; set; }
-
-    [Column("DESCRIPTION")]
-    [StringLength(2000)]
-    public string Description { get; set; }
-
-    [Column("IS_DISABLED")]
-    public bool? IsDisabled { get; set; }
+    [Required]
+    [Column("PROPERTY_TENURE_TYPE_CODE")]
+    [StringLength(20)]
+    public string PropertyTenureTypeCode { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
@@ -93,6 +78,11 @@ public partial class PimsExpropriationPaymentHist
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    [Column("ADV_PMT_SERVED_DT")]
-    public DateOnly? AdvPmtServedDt { get; set; }
+    [ForeignKey("PropertyId")]
+    [InverseProperty("PimsPropPropTenureTyps")]
+    public virtual PimsProperty Property { get; set; }
+
+    [ForeignKey("PropertyTenureTypeCode")]
+    [InverseProperty("PimsPropPropTenureTyps")]
+    public virtual PimsPropertyTenureType PropertyTenureTypeCodeNavigation { get; set; }
 }

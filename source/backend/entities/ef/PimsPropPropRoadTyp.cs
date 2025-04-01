@@ -6,41 +6,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-[Table("PIMS_EXPROPRIATION_PAYMENT_HIST")]
-[Index("ExpropriationPaymentHistId", "EndDateHist", Name = "PIMS_EXPPMT_H_UK", IsUnique = true)]
-public partial class PimsExpropriationPaymentHist
+/// <summary>
+/// Resolves many-to-many relationship between PIMS_PROPERTY and PIMS_PROPERTY_ROAD_TYPE
+/// </summary>
+[Table("PIMS_PROP_PROP_ROAD_TYP")]
+[Index("PropertyId", Name = "PRPRRT_PROPERTY_ID_IDX")]
+[Index("PropertyRoadTypeCode", Name = "PRPRRT_PROPERTY_ROAD_TYPE_CODE_IDX")]
+[Index("PropertyRoadTypeCode", "PropertyId", Name = "PRPRRT_PROP_ROAD_TYPE_TUC", IsUnique = true)]
+public partial class PimsPropPropRoadTyp
 {
     [Key]
-    [Column("_EXPROPRIATION_PAYMENT_HIST_ID")]
-    public long ExpropriationPaymentHistId { get; set; }
+    [Column("PROP_PROP_ROAD_TYPE_ID")]
+    public long PropPropRoadTypeId { get; set; }
 
-    [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
-    public DateTime EffectiveDateHist { get; set; }
+    [Column("PROPERTY_ID")]
+    public long PropertyId { get; set; }
 
-    [Column("END_DATE_HIST", TypeName = "datetime")]
-    public DateTime? EndDateHist { get; set; }
-
-    [Column("EXPROPRIATION_PAYMENT_ID")]
-    public long ExpropriationPaymentId { get; set; }
-
-    [Column("ACQUISITION_FILE_ID")]
-    public long AcquisitionFileId { get; set; }
-
-    [Column("ACQUISITION_OWNER_ID")]
-    public long? AcquisitionOwnerId { get; set; }
-
-    [Column("INTEREST_HOLDER_ID")]
-    public long? InterestHolderId { get; set; }
-
-    [Column("EXPROPRIATING_AUTHORITY")]
-    public long? ExpropriatingAuthority { get; set; }
-
-    [Column("DESCRIPTION")]
-    [StringLength(2000)]
-    public string Description { get; set; }
-
-    [Column("IS_DISABLED")]
-    public bool? IsDisabled { get; set; }
+    [Required]
+    [Column("PROPERTY_ROAD_TYPE_CODE")]
+    [StringLength(20)]
+    public string PropertyRoadTypeCode { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
@@ -93,6 +78,11 @@ public partial class PimsExpropriationPaymentHist
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    [Column("ADV_PMT_SERVED_DT")]
-    public DateOnly? AdvPmtServedDt { get; set; }
+    [ForeignKey("PropertyId")]
+    [InverseProperty("PimsPropPropRoadTyps")]
+    public virtual PimsProperty Property { get; set; }
+
+    [ForeignKey("PropertyRoadTypeCode")]
+    [InverseProperty("PimsPropPropRoadTyps")]
+    public virtual PimsPropertyRoadType PropertyRoadTypeCodeNavigation { get; set; }
 }
