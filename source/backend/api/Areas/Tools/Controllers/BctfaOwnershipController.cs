@@ -58,7 +58,7 @@ namespace Pims.Api.Areas.Tools.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(typeof(Pims.Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "tools-ltsa" })]
-        [HasPermission(Permissions.BctfaOwnershipEdit)]
+        [HasPermission(Permissions.PropertyAdd)]
         public IActionResult PutBctfaOwnership(IFormFile ownershipFile)
         {
             _logger.LogInformation(
