@@ -22,7 +22,6 @@ export class Api_GenerateExpropriationForm1 extends Api_GenerateExpropriationFor
     impactedProperties = [],
     landInterest,
     purpose,
-    expropriationNoticeServedDate,
   }: IApiGenerateExpropriationForm1Input) {
     super({
       file,
@@ -32,6 +31,5 @@ export class Api_GenerateExpropriationForm1 extends Api_GenerateExpropriationFor
     });
     this.land_interest = landInterest ?? '';
     this.purpose = purpose ?? '';
-    this.notice_served_date = expropriationNoticeServedDate ?? '';
   }
 }

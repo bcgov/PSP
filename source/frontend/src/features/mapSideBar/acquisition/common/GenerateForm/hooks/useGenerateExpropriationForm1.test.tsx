@@ -131,7 +131,6 @@ describe('useGenerateExpropriationForm1 functions', () => {
   it(`sends "Expropriation notice served date" in the json payload to generation api`, async () => {
     const generate = setup();
     const expropriationModel = new ExpropriationForm1Model();
-    expropriationModel.expropriationNoticeServedDate = '2024-10-05';
 
     await act(async () => generate(1, expropriationModel));
 
@@ -139,7 +138,6 @@ describe('useGenerateExpropriationForm1 functions', () => {
       templateType: ApiGen_CodeTypes_FormTypes.FORM1.toString(),
       convertToType: null,
       templateData: expect.objectContaining<Partial<Api_GenerateExpropriationForm1>>({
-        notice_served_date: '2024-10-05',
       }),
     };
 

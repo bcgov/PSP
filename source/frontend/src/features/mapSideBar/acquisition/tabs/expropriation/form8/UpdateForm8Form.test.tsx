@@ -83,7 +83,6 @@ describe('Form 8 UpdateForm component', () => {
     expect(getPayeeOptionSelect()).toHaveValue('');
     expect(getExpropriationAuthoritySelect()).toHaveValue('');
     expect(getDescriptionTextbox()).toHaveValue('');
-    expect(getAdvancedPaymentServedDate()).toHaveValue('');
 
     expect(queryByTestId(`paymentItems[0]`)).not.toBeInTheDocument();
   });
@@ -101,7 +100,6 @@ describe('Form 8 UpdateForm component', () => {
       });
 
     await waitForEffects();
-    expect(getAdvancedPaymentServedDate()).toHaveValue('Jan 02, 2025');
     expect(getDescriptionTextbox()).toHaveValue('MY DESCRIPTION');
     expect(getPayeeOptionSelect()).toHaveDisplayValue('John Doe Jr. (Owner)');
   });
