@@ -672,6 +672,12 @@ public partial class PimsBaseContext : DbContext
 
     public virtual DbSet<PimsxTableDefinition> PimsxTableDefinitions { get; set; }
 
+    public virtual DbSet<PmbcBctfaParcelPolygonFabric> PmbcBctfaParcelPolygonFabrics { get; set; }
+
+    public virtual DbSet<PmbcBctfaPid> PmbcBctfaPids { get; set; }
+
+    public virtual DbSet<PmbcParcelPolygonFabric> PmbcParcelPolygonFabrics { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<PimsAccessRequest>(entity =>
@@ -9518,6 +9524,101 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.YearlyFinancialCodeHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_YEARLY_FINANCIAL_CODE_H_ID_SEQ])");
             entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+        });
+
+        modelBuilder.Entity<PmbcBctfaParcelPolygonFabric>(entity =>
+        {
+            entity.ToView("PMBC_BCTFA_PARCEL_POLYGON_FABRIC", "pmbc");
+        });
+
+        modelBuilder.Entity<PmbcBctfaPid>(entity =>
+        {
+            entity.HasKey(e => e.Pid).HasName("TFAPID_PK");
+
+            entity.Property(e => e.Pid)
+                .ValueGeneratedNever()
+                .HasComment("Property identifier and primary key");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The directory of the user account that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user account that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user updated the record.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The directory of the user account that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user account that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any other application or user.");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.IsBctfaOwned)
+                .HasDefaultValue(false)
+                .HasComment("Indicates if the property is owned by BCTFA");
+        });
+
+        modelBuilder.Entity<PmbcParcelPolygonFabric>(entity =>
+        {
+            entity.HasKey(e => e.ParcelFabricPolyId).HasName("PRCPLY_PK");
+
+            entity.ToTable("PMBC_PARCEL_POLYGON_FABRIC", "pmbc", tb => tb.HasComment("The ParcelMap BC (PMBC) parcel fabric contains all active titled parcels and surveyed provincial Crown land parcels in BC. For building strata parcels, there is a record, with PID value, for each parcel within the strata parcel; the geometry for those records is the geometry for the overall strata. This dataset is polygonal and contains all parcel attributes."));
+
+            entity.Property(e => e.ParcelFabricPolyId)
+                .ValueGeneratedNever()
+                .HasComment("PARCEL_FABRIC_POLY_ID is a system generated unique identification number.");
+            entity.Property(e => e.CaptureMethod).HasComment("CAPTURE_METHOD is an indicator of relative accuracy, i.e., UNKNOWN, COGO, SURVEY PLAN DATASET.");
+            entity.Property(e => e.CompiledInd).HasComment("COMPILED_IND indicates if the parcel polygon was generated from inverted dimensions, i.e., True, False. \"True\" means that the parcel geometry was from a previous source cadastre and not precision input based on plan dimensions.");
+            entity.Property(e => e.ErrorReportedBy).HasComment("ERROR_REPORTED_BY is the organization or process reporting the error, i.e., LSA, DATA COMPILATION.");
+            entity.Property(e => e.FeatureAreaSqm).HasComment("FEATURE_AREA_SQM is the system calculated area of a two-dimensional polygon in square meters.");
+            entity.Property(e => e.FeatureLengthM).HasComment("FEATURE_LENGTH_M is the system calculated length or perimeter of a geometry in meters.");
+            entity.Property(e => e.GeometrySource).HasComment("GEOMETRY_SOURCE is the source of the parcel geometry data, e.g., ICIS CADASTRE, ICF, PMBC OPERATIONS.");
+            entity.Property(e => e.GlobalUid).HasComment("GLOBAL_UID is a unique global identifier (GUID) for the parcel.");
+            entity.Property(e => e.IsRemainderInd).HasComment("IS_REMAINDER_IND indicates if the parcel is a remainder of the original, i.e., YES, NO.");
+            entity.Property(e => e.LegalDescription).HasComment("LEGAL_DESCRIPTION is the full legal description of the parcel and is primarily recorded from the Land Title Register. Where recorded only in the Crown Land Registry, this attribute is to be populated from Tantalis for the fabric compilation, but maintained by PMBC during on-going operations.");
+            entity.Property(e => e.Municipality).HasComment("MUNICIPALITY is the municipal area within which the parcel is located. The value is either RURAL (for parcels in unincorporated regions) or the name of a BC municipality.");
+            entity.Property(e => e.Objectid).HasComment("OBJECTID is a column required by spatial layers that interact with ESRI ArcSDE. It is populated with unique values automatically by SDE.");
+            entity.Property(e => e.OwnerType).HasComment("OWNER_TYPE is the general ownership category, e.g., PRIVATE, CROWN PROVINCIAL, MUNICIPAL.");
+            entity.Property(e => e.ParcelClass).HasComment("PARCEL_CLASS is the Parcel classification for maintenance, mapping, publishing and analysis, i.e., PRIMARY, SUBDIVISION, PART OF PRIMARY, BUILDING STRATA, BARE LAND STRATA, AIR SPACE, ROAD, HIGHWAY, PARK, INTEREST, COMMON OWNERSHIP, ABSOLUTE FEE BOOK, CROWN SUBDIVISION, RETURN TO CROWN.");
+            entity.Property(e => e.ParcelName).HasComment("PARCEL_NAME is the same as the PID, if there is one. If there is a PIN but no PID, then PARCEL_NAME is the PIN. If there is no PID nor PIN, then PARCEL_NAME is the parcel class value, e.g., COMMON OWNERSHIP, BUILDING STRATA, AIR SPACE, ROAD, PARK.");
+            entity.Property(e => e.ParcelStartDate).HasComment("PARCEL_START_DATE is the date of the legal event that created the parcel, i.e., the date the plan was filed.");
+            entity.Property(e => e.ParcelStatus).HasComment("PARCEL_STATUS is the status of the parcel, according to the Land Title Register or Crown Land Registry, as appropriate, i.e., ACTIVE, CANCELLED, INACTIVE, PENDING.");
+            entity.Property(e => e.Pid).HasComment("PID is the Land Title Register parcel identifier, a left-zero-padded nine-digit number that uniquely identifies a parcel in the land title register of in British Columbia. The registrar assigns PID numbers to parcels for which a title is being entered as a registered title. The Land Title Act refers to the PID as the permanent parcel identifier.");
+            entity.Property(e => e.PidNumber).HasComment("PID_NUMBER is the PID, without leading zeroes. PID is the Land Title Register parcel identifier, a nine-digit number that uniquely identifies a parcel in the land title register of in British Columbia. The registrar assigns PID numbers to parcels for which a title is being entered as a registered title. The Land Title Act refers to the PID as the permanent parcel identifier.");
+            entity.Property(e => e.Pin).HasComment("PIN is the Crown Land Registry Parcel Identifier, if applicable.");
+            entity.Property(e => e.PlanId).HasComment("PLAN_ID is the unique identifier of the land survey plan that corresponds to this parcel.");
+            entity.Property(e => e.PlanNumber).HasComment("PLAN_NUMBER is the Land Act, Land Title Act, or Strata Property Act Plan Number for the land survey plan that corresponds to this parcel, e.g., VIP1632, NO_PLAN.");
+            entity.Property(e => e.PositionalError).HasComment("POSITIONAL_ERROR is the semi-major axis at the 95% confidence level of the least accurate point of the parcel.");
+            entity.Property(e => e.RegionalDistrict).HasComment("REGIONAL_DISTRICT is the name of the regional district in which the parcel is located, e.g., CAPITAL REGIONAL DISTRICT.");
+            entity.Property(e => e.SeAnnoCadData).HasComment("SE_ANNO_CAD_DATA is a binary column used by spatial tools to store annotation, curve features and CAD data when using the SDO_GEOMETRY storage data type.");
+            entity.Property(e => e.Shape).HasComment("SHAPE is the column used to reference the spatial coordinates defining the feature.");
+            entity.Property(e => e.SourceParcelId).HasComment("SOURCE_PARCEL_ID is the unique parcel identifier supplied by the source data provider. The value is intended to assist local governments by providing traceability back to the source data provider's parcel ID. It will not be populated during on-going operations, e.g., DATA_NEW, CPG000050, 999, 01762.146.");
+            entity.Property(e => e.StatedArea).HasComment("STATED_AREA is the area of the parcel, in square metres. It is automatically calculated if misclose is small; it can be edited to reflect the recorded plan value.");
+            entity.Property(e => e.SurveyDesignation1).HasComment("SURVEY_DESIGNATION_1 is, typically, the smallest division of lands in a survey. If available, this is generally the Parcel from a Subdivided short legal description or the Quadrant or Block from an Unsubdivided short legal description, e.g., PARCEL A, SW4.");
+            entity.Property(e => e.SurveyDesignation2).HasComment("SURVEY_DESIGNATION_2 is, typically, the second smallest division of lands in a survey. If available, this is generally the Lot from a Subdivided short legal description or the District Lot, Lot or Section from an Unsubdivided short legal description, e.g., LOT 2.");
+            entity.Property(e => e.SurveyDesignation3).HasComment("SURVEY_DESIGNATION_3 is, typically, the third smallest division of lands in a survey. If available, this is generally the Block from a Subdivided short legal description or the Range from an Unsubdivided short legal description, e.g., BLOCK H.");
+            entity.Property(e => e.WhenCreated).HasComment("WHEN_CREATED is the date and time the source record was created (not the time when it was loaded into the BC Geographic Warehouse).");
+            entity.Property(e => e.WhenUpdated).HasComment("WHEN_UPDATED is the date and time the source record was last modified (not the time when it was loaded into, or modified in, the BC Geographic Warehouse).");
         });
         modelBuilder.HasSequence("PIMS_ACCESS_REQUEST_H_ID_SEQ")
             .HasMin(1L)
