@@ -17,6 +17,7 @@ export const UpdateBctfaOwnershipContainer: React.FunctionComponent<
       onSubmit={async (file: File) => {
         await updateBctfaOwnershipApi.execute(file);
       }}
+      isLoading={updateBctfaOwnershipApi.loading}
     />
   );
 };

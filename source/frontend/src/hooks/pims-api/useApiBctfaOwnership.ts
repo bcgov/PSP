@@ -15,7 +15,7 @@ export const useApiBctfaOwnership = () => {
       updateBctfaOwnership: (file: File) => {
         const formData = new FormData();
         formData.append('ownershipFile', file);
-        return api.put<void>(`/tools/bctfa/ownership`, formData);
+        return api.put<number[]>(`/tools/bctfa/ownership`, formData);
       },
     }),
     [api],

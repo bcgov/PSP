@@ -1,17 +1,21 @@
-import clsx from 'classnames';
 import { Formik } from 'formik';
 import truncate from 'lodash/truncate';
 import * as React from 'react';
-import { Button, Col, Row } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import { FaCheck } from 'react-icons/fa';
 import styled, { useTheme } from 'styled-components';
 
+import { Button } from '@/components/common/buttons';
 import { DisplayError } from '@/components/common/form';
 import FileDragAndDrop from '@/components/common/form/FileDragAndDrop';
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
+import { SectionField } from '@/components/common/Section/SectionField';
+import { exists } from '@/utils';
 
 export interface IUpdateBcftaOwnershipViewProps {
   onSubmit: (file: File) => Promise<void>;
+  isLoading?: boolean;
 }
 
 export interface IBctfaOwnershipUploadForm {
@@ -20,6 +24,7 @@ export interface IBctfaOwnershipUploadForm {
 
 export const UpdateBcftaOwnershipView: React.FunctionComponent<IUpdateBcftaOwnershipViewProps> = ({
   onSubmit,
+  isLoading,
 }) => {
   const theme = useTheme();
   return (
@@ -29,10 +34,11 @@ export const UpdateBcftaOwnershipView: React.FunctionComponent<IUpdateBcftaOwner
     >
       {formikProps => (
         <Section header="Update BCTFA Ownership">
+          <LoadingBackdrop show={isLoading} />
           <StyledBlueSection>
-            Upload a file (csv, xlsx), that contains the list of all PIDs currently owned by BCTFA,
-            as provided by LTSA. Uploading this file here will update the BCTFA ownership layer
-            within PIMS to reflect the PIDS listed in the uploaded file.
+            Upload a csv file, that contains the list of all PIDs currently owned by BCTFA, as
+            provided by LTSA. Uploading this file here will update the BCTFA ownership layer within
+            PIMS to reflect the PIDS listed in the uploaded file.
           </StyledBlueSection>
           <FileDragAndDrop
             onSelectFiles={files => {
@@ -40,37 +46,45 @@ export const UpdateBcftaOwnershipView: React.FunctionComponent<IUpdateBcftaOwner
                 formikProps.setFieldValue('selectedFile', files[0]);
               }
             }}
-            validExtensions={['xlsx', 'csv']}
+            validExtensions={['csv']}
             multiple={false}
+            keyName={formikProps.values?.selectedFile?.name}
           />
-          <Row className={clsx('no-gutters', 'pb-3')}>
-            <Col>
-              <span className="ml-4">
-                {truncate(formikProps.values?.selectedFile?.name, { length: 50 })}
-              </span>
-              <FaCheck className="ml-2" size="1.6rem" color={theme.css.uploadFileCheckColor} />
-            </Col>
-          </Row>
-          <DisplayError field="selectedFile" />
-          <>
-            <Col xs="auto" className="pr-6">
-              <Button
-                variant="secondary"
-                onClick={() => formikProps.setFieldValue('selectedFile', null)}
-              >
-                Cancel
-              </Button>
-            </Col>
-            <Col xs="auto">
-              <Button
-                disabled={formikProps.isSubmitting}
-                onClick={() => formikProps.submitForm()}
-                className="mr-9"
-              >
-                Save
-              </Button>
-            </Col>
-          </>
+          {exists(formikProps.values?.selectedFile) ? (
+            <StyledSectionHeader>
+              <Row className="justify-content-center">
+                <Col xs={6} className="m-4">
+                  <SectionField label="File" labelWidth="12">
+                    {truncate(formikProps.values?.selectedFile?.name, { length: 100 })}
+                    <FaCheck
+                      data-testid="file-check-icon"
+                      className="ml-2"
+                      size="1.6rem"
+                      color={theme.css.uploadFileCheckColor}
+                    />
+                  </SectionField>
+                </Col>
+              </Row>
+
+              <DisplayError field="selectedFile" />
+              <Row className="justify-content-center">
+                <Col xs="auto" className="pr-6">
+                  <Button variant="secondary" onClick={() => formikProps.resetForm()}>
+                    Cancel
+                  </Button>
+                </Col>
+                <Col xs="auto">
+                  <Button
+                    disabled={formikProps.isSubmitting}
+                    onClick={() => formikProps.submitForm()}
+                    className="mr-9"
+                  >
+                    Save
+                  </Button>
+                </Col>
+              </Row>
+            </StyledSectionHeader>
+          ) : null}
         </Section>
       )}
     </Formik>
@@ -81,6 +95,12 @@ const StyledBlueSection = styled.div`
   background-color: ${({ theme }) => theme.css.filterBoxColor};
   border-radius: 0.5rem;
   padding: 1rem;
+`;
+
+export const StyledSectionHeader = styled.h2<{ isStyledHeader?: boolean }>`
+  font-size: 1.6rem;
+  color: ${props => props.theme.css.headerTextColor};
+  margin-bottom: 2.4rem;
 `;
 
 export default UpdateBcftaOwnershipView;
