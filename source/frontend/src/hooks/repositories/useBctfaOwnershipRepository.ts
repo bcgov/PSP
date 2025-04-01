@@ -1,9 +1,9 @@
-import { AxiosError, AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
 
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
-import { IApiError } from '@/interfaces/IApiError';
+import { useAxiosErrorHandler } from '@/utils/axiosUtils';
 
 import { useApiBctfaOwnership } from '../pims-api/useApiBctfaOwnership';
 
@@ -15,7 +15,7 @@ export const useBctfaOwnershipRepository = () => {
 
   // Provides functionality to download a template of a specific type using uploaded json
   const updateBctfaOwnershipApi = useApiRequestWrapper<
-    (file: File) => Promise<AxiosResponse<void, any>>
+    (file: File) => Promise<AxiosResponse<number[], any>>
   >({
     requestFunction: useCallback(
       async (file: File) => await updateBctfaOwnership(file),
@@ -23,14 +23,11 @@ export const useBctfaOwnershipRepository = () => {
     ),
     requestName: 'UpdateBctfaOwnershipApi',
     throwError: true,
-    onError: useCallback((axiosError: AxiosError<IApiError>) => {
-      if (axiosError?.response?.status === 400) {
-        toast.error(axiosError?.response.data.error);
-        return Promise.resolve();
-      } else {
-        return Promise.reject(axiosError);
-      }
-    }, []),
+    onSuccess: (pids: number[]) =>
+      toast.success(`Successfully updated the ownership of ${pids.length} BCTFA properties.`),
+    onError: useAxiosErrorHandler(
+      'Failed to update BCTFA Ownership. Check that the file is valid and try uploading again',
+    ),
   });
 
   return {

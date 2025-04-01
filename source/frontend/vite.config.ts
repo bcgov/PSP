@@ -17,6 +17,7 @@ export default defineConfig({
     environment: 'jsdom',
     env: {
       DEBUG_PRINT_LIMIT: '999999',
+      NODE_ENV: 'test',
     },
     css: {
       include: /_variables.module.scss/,
