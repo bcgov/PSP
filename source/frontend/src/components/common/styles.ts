@@ -144,9 +144,19 @@ export const StyledSectionParagraph = styled.p`
 `;
 
 export const TrayHeader = styled(H1)`
-  padding: 1rem;
-  background-color: ${props => props.theme.bcTokens.surfaceColorPrimaryButtonDefault};
-  color: white;
+  font-size: 2.5rem;
+  color: #313132;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  padding: 1.2rem;
+  padding-left: 3rem;
+  border-bottom: none;
+`;
+
+export const TrayHeaderContent = styled.div`
+  background-color: ${props => props.theme.css.filterBoxColor};
+  display: flex;
+  align-items: anchor-center;
 `;
 
 export const TrayContent = styled.div``;
