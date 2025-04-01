@@ -5,7 +5,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// PimsPrfPropResearchPurposeType class, provides an entity for the datamodel to manage the relationship of research files' property types.
     /// </summary>
-    public partial class PimsPrfPropResearchPurposeType : StandardIdentityBaseAppEntity<long>, IBaseAppEntity
+    public partial class PimsPrfPropResearchPurposeTyp : StandardIdentityBaseAppEntity<long>, IBaseAppEntity
     {
         #region Properties
 

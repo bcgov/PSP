@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Services;
 using Pims.Core.Api.Policies;
 using Pims.Core.Extensions;
 using Pims.Core.Security;
@@ -27,6 +28,7 @@ namespace Pims.Api.Areas.Tools.Controllers
         #region Variables
         private readonly ILogger _logger;
         private readonly ClaimsPrincipal _user;
+        private readonly IBctfaOwnershipService _bctfaOwnershipService;
         #endregion
 
         #region Constructors
@@ -36,10 +38,11 @@ namespace Pims.Api.Areas.Tools.Controllers
         /// </summary>
         /// <param name="logger"></param>
         /// <param name="user"></param>
-        public BctfaOwnershipController(ILogger<BctfaOwnershipController> logger, ClaimsPrincipal user)
+        public BctfaOwnershipController(ILogger<BctfaOwnershipController> logger, ClaimsPrincipal user, IBctfaOwnershipService bctfaOwnershipService)
         {
             _logger = logger;
             _user = user;
+            _bctfaOwnershipService = bctfaOwnershipService;
         }
         #endregion
 
@@ -56,7 +59,7 @@ namespace Pims.Api.Areas.Tools.Controllers
         [ProducesResponseType(typeof(Pims.Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "tools-ltsa" })]
         [HasPermission(Permissions.BctfaOwnershipEdit)]
-        public async Task<IActionResult> PutBctfaOwnership(IFormFile ownershipFile)
+        public IActionResult PutBctfaOwnership(IFormFile ownershipFile)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -67,8 +70,14 @@ namespace Pims.Api.Areas.Tools.Controllers
 
             _logger.LogDebug(ownershipFile.Serialize());
 
-            // TODO: placeholder endpoint to facilitate LTSA integration.
-            return new OkResult();
+            if (ownershipFile == null)
+            {
+                return new BadRequestResult();
+            }
+
+            int[] pids = _bctfaOwnershipService.ParseCsvFileToIntArray(ownershipFile.OpenReadStream());
+            _bctfaOwnershipService.UpdateBctfaOwnership(pids);
+            return new JsonResult(pids);
         }
 
         /// <summary>
@@ -78,12 +87,11 @@ namespace Pims.Api.Areas.Tools.Controllers
         /// <returns>The orders created within LTSA.</returns>
         [HttpPut("ownership/list")]
         [Consumes("application/json")]
-        [Produces("application/json")]
         [ProducesResponseType(200)]
         [ProducesResponseType(typeof(Pims.Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "tools-ltsa" })]
         [HasPermission(Permissions.BctfaOwnershipEdit)]
-        public async Task<IActionResult> PutBctfaOwnershipJson([FromBody] Model.BctfaOwnershipList ownershipData)
+        public IActionResult PutBctfaOwnershipJson([FromBody] Model.BctfaOwnershipList ownershipData)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -94,8 +102,8 @@ namespace Pims.Api.Areas.Tools.Controllers
 
             _logger.LogDebug(ownershipData.Serialize());
 
-            // TODO: placeholder endpoint to facilitate LTSA integration.
-            return new OkResult();
+            _bctfaOwnershipService.UpdateBctfaOwnership(ownershipData.Pids);
+            return new JsonResult(ownershipData.Pids);
         }
         #endregion
     }
