@@ -131,7 +131,7 @@ const AcquisitionDetailSubForm: React.FC<{
   React.useEffect(() => {
     values.ownerSolicitors
       .filter(os => isValidId(+os?.organizationId))
-      .map(async os => {
+      .forEach(async os => {
         os.contact.organization = await fetchOrganization(+os.organizationId);
       });
   }, [values.ownerSolicitors, fetchOrganization]);
