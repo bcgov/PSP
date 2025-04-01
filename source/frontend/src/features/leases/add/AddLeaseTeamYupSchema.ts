@@ -14,7 +14,7 @@ yup.addMethod(yup.array, 'unique', function (message, mapper = (val: unknown) =>
   );
 });
 
-export const DispositionTeamYupSchema = yup.object().shape({
+export const AddLeaseTeamYupSchema = yup.object().shape({
   team: yup
     .array()
     .of(

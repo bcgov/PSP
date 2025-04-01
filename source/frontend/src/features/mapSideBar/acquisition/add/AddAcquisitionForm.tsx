@@ -31,7 +31,7 @@ import { exists, isValidId, isValidString } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { PropertyForm } from '../../shared/models';
-import { AcquisitionFormModal } from '../common/modals/AcquisitionFormModal';
+import { TeamMemberFormModal } from '../common/modals/AcquisitionFormModal';
 import UpdateAcquisitionOwnersSubForm from '../common/update/acquisitionOwners/UpdateAcquisitionOwnersSubForm';
 import { UpdateAcquisitionTeamSubForm } from '../common/update/acquisitionTeam/UpdateAcquisitionTeamSubForm';
 import { ProgressStatusModel } from '../models/ProgressStatusModel';
@@ -467,7 +467,7 @@ const AddAcquisitionDetailSubForm: React.FC<{
         </Section>
       </Container>
 
-      <AcquisitionFormModal
+      <TeamMemberFormModal
         message={
           <>
             <p>
@@ -486,7 +486,7 @@ const AddAcquisitionDetailSubForm: React.FC<{
         handleCancel={() => {
           setShowDiffMinistryRegionModal(false);
         }}
-      ></AcquisitionFormModal>
+      ></TeamMemberFormModal>
     </>
   );
 };

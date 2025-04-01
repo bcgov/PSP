@@ -84,7 +84,7 @@ describe('UpdateDispositionForm component', () => {
       getFormikRef: () => ref,
       getTeamMemberProfileDropDownList: (index: number = 0) =>
         utils.container.querySelector(
-          `select[name="team.${index}.teamProfileTypeCode"]`,
+          `select[name="team.${index}.contactTypeCode"]`,
         ) as HTMLSelectElement,
       getDispositionFileStatusDropDownList: (index: number = 0) =>
         utils.container.querySelector(`select[name="fileStatusTypeCode"]`) as HTMLSelectElement,

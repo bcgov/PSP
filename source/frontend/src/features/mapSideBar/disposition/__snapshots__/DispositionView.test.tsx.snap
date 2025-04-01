@@ -1415,7 +1415,7 @@ exports[`DispositionView component > renders as expected 1`] = `
                             class="pb-2 row"
                           >
                             <div
-                              class="pr-0 text-left col-5"
+                              class="pr-0 text-left col-4"
                             >
                               <label
                                 class="c35"
@@ -1456,7 +1456,7 @@ exports[`DispositionView component > renders as expected 1`] = `
                             class="pb-2 row"
                           >
                             <div
-                              class="pr-0 text-left col-5"
+                              class="pr-0 text-left col-4"
                             >
                               <label
                                 class="c35"

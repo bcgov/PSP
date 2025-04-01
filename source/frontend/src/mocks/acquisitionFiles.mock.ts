@@ -214,6 +214,7 @@ export const mockAcquisitionFileResponse = (
   ],
   acquisitionTeam: [
     {
+      parentFileId: 1,
       id: 1,
       acquisitionFileId: 1,
       personId: 1,
@@ -245,6 +246,7 @@ export const mockAcquisitionFileResponse = (
       teamProfileTypeCode: null,
     },
     {
+      parentFileId: 1,
       id: 2,
       acquisitionFileId: 1,
       personId: 3,
@@ -531,6 +533,7 @@ export const getMockApiAcquisitionFileOwnerOrganization = (
 });
 
 export const mockApiAcquisitionFileTeamPerson = (id = 1): ApiGen_Concepts_AcquisitionFileTeam => ({
+  parentFileId: 1,
   id,
   acquisitionFileId: 1,
   personId: 1,
@@ -565,6 +568,7 @@ export const mockApiAcquisitionFileTeamPerson = (id = 1): ApiGen_Concepts_Acquis
 export const mockApiAcquisitionFileTeamOrganization = (
   id = 1,
 ): ApiGen_Concepts_AcquisitionFileTeam => ({
+  parentFileId: 1,
   id,
   acquisitionFileId: 1,
   organizationId: 2,

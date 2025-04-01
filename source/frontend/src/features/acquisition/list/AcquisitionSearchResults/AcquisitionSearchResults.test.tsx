@@ -161,6 +161,7 @@ describe('Acquisition Search Results Table', () => {
         {
           acquisitionTeam: [
             {
+              parentFileId: 1,
               id: 4,
               acquisitionFileId: 5,
               organizationId: 6,

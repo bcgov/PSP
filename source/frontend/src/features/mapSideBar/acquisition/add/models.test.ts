@@ -2,8 +2,8 @@ import { EnumAcquisitionFileType } from '@/constants/acquisitionFileType';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
 
-import { AcquisitionTeamFormModel } from '../common/models';
 import { AcquisitionForm } from './models';
+import { FileTeamFormModel } from '../../shared/models';
 
 describe('Create acquisition model tests', () => {
   describe('fromParentFileApi', () => {
@@ -120,7 +120,7 @@ describe('Create acquisition model tests', () => {
 
   describe('toApi', () => {
     it('converts form values to the api format', () => {
-      const teamPerson = new AcquisitionTeamFormModel('testType', 0, {
+      const teamPerson = new FileTeamFormModel('testType', 0, {
         id: 'P1',
         personId: 1,
         person: null,
@@ -135,7 +135,7 @@ describe('Create acquisition model tests', () => {
         provinceState: null,
         isDisabled: false,
       });
-      const teamOrg = new AcquisitionTeamFormModel('testType', 0, {
+      const teamOrg = new FileTeamFormModel('testType', 0, {
         id: 'O99',
         organizationId: 99,
         organization: null,

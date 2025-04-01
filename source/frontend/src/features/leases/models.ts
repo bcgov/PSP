@@ -22,7 +22,7 @@ import {
   toTypeCodeNullable,
 } from '@/utils/formUtils';
 
-import { PropertyForm } from '../mapSideBar/shared/models';
+import { FileTeamFormModel, PropertyForm } from '../mapSideBar/shared/models';
 import { ChecklistItemFormModel } from '../mapSideBar/shared/tabs/checklist/update/models';
 import { FormLeaseDeposit } from './detail/LeasePages/deposits/models/FormLeaseDeposit';
 import { FormLeaseDepositReturn } from './detail/LeasePages/deposits/models/FormLeaseDepositReturn';
@@ -67,7 +67,7 @@ export class FormLeaseRenewal {
   }
 }
 
-export class LeaseFormModel {
+export class LeaseFormModel implements WithLeaseTeam {
   id?: number;
   lFileNo = '';
   psFileNo = '';
@@ -112,6 +112,7 @@ export class LeaseFormModel {
   periods: FormLeasePeriod[] = [];
   stakeholders: FormStakeholder[] = [];
   fileChecklist: ChecklistItemFormModel[] = [];
+  team: FileTeamFormModel[] = [];
   primaryArbitrationCity: string | null;
   isPublicBenefit: boolean;
   isFinancialGain: boolean;
@@ -167,6 +168,7 @@ export class LeaseFormModel {
     leaseDetail.periods = apiModel?.periods?.map(t => FormLeasePeriod.fromApi(t)) || [];
     leaseDetail.stakeholders = apiModel?.stakeholders?.map(t => new FormStakeholder(t)) || [];
     leaseDetail.renewals = apiModel?.renewals?.map(r => FormLeaseRenewal.fromApi(r)) || [];
+    leaseDetail.team = apiModel?.leaseTeam?.map(t => FileTeamFormModel.fromApi(t));
     leaseDetail.cancellationReason = apiModel?.cancellationReason || '';
     leaseDetail.terminationReason = apiModel?.terminationReason || '';
     leaseDetail.primaryArbitrationCity = apiModel?.primaryArbitrationCity;
@@ -193,7 +195,7 @@ export class LeaseFormModel {
         : null,
       amount: parseFloat(formLease.amount?.toString() ?? '') || 0.0,
       paymentReceivableType: toTypeCodeNullable(formLease.paymentReceivableTypeCode) ?? null,
-      leasePurposes: formLease.purposes.map(x => x.toApi(formLease.id ?? 0)),
+      leasePurposes: formLease.purposes?.map(x => x.toApi(formLease.id ?? 0)) ?? [],
       responsibilityType: toTypeCodeNullable(formLease.responsibilityTypeCode) ?? null,
       initiatorType: toTypeCodeNullable(formLease.initiatorTypeCode) ?? null,
       fileStatusTypeCode: toTypeCodeNullable(formLease.statusTypeCode) ?? null,
@@ -206,9 +208,8 @@ export class LeaseFormModel {
       motiName: formLease.motiName,
       hasDigitalLicense: formLease.hasDigitalLicense ?? null,
       hasPhysicalLicense: formLease.hasPhysicalLicense ?? null,
-      fileProperties: formLease.properties
-        ?.map(p => FormLeaseProperty.toApi(p))
-        .filter(x => exists(x)),
+      fileProperties:
+        formLease.properties?.map(p => FormLeaseProperty.toApi(p)).filter(x => exists(x)) ?? [],
       isResidential: formLease.isResidential,
       isCommercialBuilding: formLease.isCommercialBuilding,
       isOtherImprovement: formLease.isOtherImprovement,
@@ -219,9 +220,10 @@ export class LeaseFormModel {
       productId: stringToNumberOrNull(formLease.productId),
       product: null,
       consultations: null,
-      stakeholders: formLease.stakeholders.map(t => FormStakeholder.toApi(t)),
-      periods: formLease.periods.map(t => FormLeasePeriod.toApi(t)),
-      renewals: formLease.renewals.map(r => r.toApi()),
+      stakeholders: formLease.stakeholders?.map(t => FormStakeholder.toApi(t)) ?? [],
+      periods: formLease.periods?.map(t => FormLeasePeriod.toApi(t)) ?? [],
+      renewals: formLease.renewals?.map(r => r.toApi()) ?? [],
+      leaseTeam: formLease.team?.map(t => t?.toApiLeaseFile(formLease?.id)) ?? [],
       fileName: null,
       fileNumber: null,
       hasDigitalFile: formLease.hasDigitalLicense ?? false,
@@ -232,7 +234,7 @@ export class LeaseFormModel {
       isPublicBenefit: formLease.isPublicBenefit ?? null,
       isFinancialGain: formLease.isFinancialGain ?? null,
       feeDeterminationNote: stringToNull(formLease.feeDeterminationNote),
-      fileChecklistItems: formLease.fileChecklist.map(ck => ck.toApi()),
+      fileChecklistItems: formLease.fileChecklist?.map(ck => ck.toApi()) ?? [],
       isExpired: false,
       programName: null,
       renewalCount: formLease.renewals.length,
@@ -316,6 +318,10 @@ export class FormLeaseProperty {
   }
 }
 
+export interface WithLeaseTeam {
+  team: FileTeamFormModel[];
+}
+
 export const getDefaultFormLease: () => LeaseFormModel = () =>
   LeaseFormModel.fromApi({
     fileProperties: [],
@@ -371,4 +377,5 @@ export const getDefaultFormLease: () => LeaseFormModel = () =>
     primaryArbitrationCity: null,
     ...getEmptyBaseAudit(),
     totalAllowableCompensation: null,
+    leaseTeam: [],
   });

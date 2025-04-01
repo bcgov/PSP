@@ -4,8 +4,8 @@
  */
 import { ApiGen_Concepts_FileTeam } from './ApiGen_Concepts_FileTeam';
 
-// LINK: @backend/apimodels/Models/Concepts/DispositionFile/DispositionFileTeamModel.cs
-export interface ApiGen_Concepts_DispositionFileTeam extends ApiGen_Concepts_FileTeam {
-  dispositionFileId: number;
+// LINK: @backend/apimodels/Models/Concepts/Lease/LeaseFileTeamModel.cs
+export interface ApiGen_Concepts_LeaseFileTeam extends ApiGen_Concepts_FileTeam {
+  leaseId: number;
   parentFileId: number;
 }

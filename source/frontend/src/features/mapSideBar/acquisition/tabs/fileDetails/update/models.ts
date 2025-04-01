@@ -1,4 +1,5 @@
 import { InterestHolderType } from '@/constants/interestHolderTypes';
+import { FileTeamFormModel } from '@/features/mapSideBar/shared/models';
 import { ChecklistItemFormModel } from '@/features/mapSideBar/shared/tabs/checklist/update/models';
 import { IAutocompletePrediction } from '@/interfaces';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
@@ -10,7 +11,6 @@ import { exists, isValidId, isValidIsoDateTime } from '@/utils/utils';
 
 import {
   AcquisitionOwnerFormModel,
-  AcquisitionTeamFormModel,
   WithAcquisitionOwners,
   WithAcquisitionTeam,
 } from '../../../common/models';
@@ -47,7 +47,7 @@ export class UpdateAcquisitionSummaryFormModel
   acquisitionType?: string;
   // MOTI region
   region?: string;
-  team: AcquisitionTeamFormModel[] = [];
+  team: FileTeamFormModel[] = [];
   owners: AcquisitionOwnerFormModel[] = [];
   fileChecklist: ChecklistItemFormModel[] = [];
 
@@ -111,7 +111,7 @@ export class UpdateAcquisitionSummaryFormModel
         .map<ApiGen_Concepts_AcquisitionFileOwner>(x => x.toApi()),
       acquisitionTeam: this.team
         .filter(x => !!x.contact && !!x.contactTypeCode)
-        .map(x => x.toApi(this.id || 0))
+        .map(x => x.toApiAcquisitionFile(this.id || 0))
         .filter(exists),
       acquisitionFileInterestHolders: [
         ...this.otherInterestHolders,
@@ -171,7 +171,7 @@ export class UpdateAcquisitionSummaryFormModel
       fromTypeCode(model.acquisitionPhysFileStatusTypeCode) ?? undefined;
     newForm.acquisitionType = fromTypeCode(model.acquisitionTypeCode) ?? undefined;
     newForm.region = fromTypeCode(model.regionCode)?.toString();
-    newForm.team = model.acquisitionTeam?.map(x => AcquisitionTeamFormModel.fromApi(x)) || [];
+    newForm.team = model.acquisitionTeam?.map(x => FileTeamFormModel.fromApi(x)) || [];
     newForm.owners =
       model.acquisitionFileOwners?.map(x => AcquisitionOwnerFormModel.fromApi(x)) || [];
     newForm.fundingTypeCode = model.fundingTypeCode?.id ?? undefined;

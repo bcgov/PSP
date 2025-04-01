@@ -9,10 +9,11 @@ import ContactInputView from '@/components/common/form/ContactInput/ContactInput
 import { PrimaryContactSelector } from '@/components/common/form/PrimaryContactSelector/PrimaryContactSelector';
 import { SectionField } from '@/components/common/Section/SectionField';
 import * as API from '@/constants/API';
+import { FileTeamFormModel } from '@/features/mapSideBar/shared/models';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 
-import { AcquisitionFormModal } from '../../modals/AcquisitionFormModal';
-import { AcquisitionTeamFormModel, WithAcquisitionTeam } from '../../models';
+import { TeamMemberFormModal } from '../../modals/AcquisitionFormModal';
+import { WithAcquisitionTeam } from '../../models';
 
 export const UpdateAcquisitionTeamSubForm: React.FunctionComponent<
   React.PropsWithChildren<unknown>
@@ -73,14 +74,14 @@ export const UpdateAcquisitionTeamSubForm: React.FunctionComponent<
           <LinkButton
             data-testid="add-team-member"
             onClick={() => {
-              const person = new AcquisitionTeamFormModel('');
+              const person = new FileTeamFormModel();
               arrayHelpers.push(person);
             }}
           >
             + Add another team member
           </LinkButton>
 
-          <AcquisitionFormModal
+          <TeamMemberFormModal
             message="Are you sure you want to remove this row?"
             title="Remove Team Member"
             display={showRemoveMemberModal}
@@ -93,7 +94,7 @@ export const UpdateAcquisitionTeamSubForm: React.FunctionComponent<
               setShowRemoveMemberModal(false);
               setRemoveIndex(-1);
             }}
-          ></AcquisitionFormModal>
+          ></TeamMemberFormModal>
         </>
       )}
     />

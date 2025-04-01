@@ -11,20 +11,17 @@ import {
   userEvent,
 } from '@/utils/test-utils';
 
-import { WithDispositionTeam } from '../models/DispositionTeamSubFormModel';
-import DispositionTeamSubForm from './DispositionTeamSubForm';
 import { createRef } from 'react';
+import { WithLeaseTeam } from '../models';
+import { AddLeaseTeamSubForm } from './AddLeaseTeamSubform';
 
-describe('DispositionTeamSubForm component', () => {
+describe('AddLeaseTeamSubForm component', () => {
   // render component under test
-  const setup = (
-    props: { initialForm: WithDispositionTeam },
-    renderOptions: RenderOptions = {},
-  ) => {
-    const ref = createRef<FormikProps<WithDispositionTeam>>();
+  const setup = (props: { initialForm: WithLeaseTeam }, renderOptions: RenderOptions = {}) => {
+    const ref = createRef<FormikProps<WithLeaseTeam>>();
     const utils = render(
       <Formik innerRef={ref} initialValues={props.initialForm} onSubmit={vi.fn()}>
-        {formikProps => <DispositionTeamSubForm />}
+        {formikProps => <AddLeaseTeamSubForm />}
       </Formik>,
       {
         ...renderOptions,
@@ -35,14 +32,10 @@ describe('DispositionTeamSubForm component', () => {
     return {
       ...utils,
       getFormikRef: () => ref,
-      getTeamMemberProfileDropDownList: (index = 0) =>
-        utils.container.querySelector(
-          `select[name="team.${index}.contactTypeCode"]`,
-        ) as HTMLSelectElement,
     };
   };
 
-  let testForm: WithDispositionTeam;
+  let testForm: WithLeaseTeam;
 
   beforeEach(() => {
     testForm = { team: [] };
@@ -82,7 +75,7 @@ describe('DispositionTeamSubForm component', () => {
     await act(async () => userEvent.click(addRow));
     await act(async () => userEvent.click(getByTestId('team.0.remove-button')));
 
-    expect(getByText(/Do you wish to remove this team member/i)).toBeVisible();
+    expect(getByText(/Are you sure you want to remove this row/i)).toBeVisible();
   });
 
   it(`removes the team member upon user confirmation`, async () => {
@@ -93,13 +86,13 @@ describe('DispositionTeamSubForm component', () => {
     await act(async () => userEvent.click(addRow));
     await act(async () => userEvent.click(getByTestId('team.0.remove-button')));
 
-    expect(getByText(/Do you wish to remove this team member/i)).toBeVisible();
+    expect(getByText(/Are you sure you want to remove this row/i)).toBeVisible();
 
     await act(async () => userEvent.click(getByTitle('ok-modal')));
-    expect(getByName('team.0.teamProfileTypeCode')).toBeNull();
+    expect(getByName('team.0.contactTypeCode')).toBeNull();
   });
 
-  it(`does not remove the member when confirmation popup is cancelled`, async () => {
+  it(`does not remove the owner when confirmation popup is cancelled`, async () => {
     const { getByTestId, getByText, getByTitle } = setup({
       initialForm: testForm,
     });
@@ -107,7 +100,7 @@ describe('DispositionTeamSubForm component', () => {
     await act(async () => userEvent.click(addRow));
     await act(async () => userEvent.click(getByTestId('team.0.remove-button')));
 
-    expect(getByText(/Do you wish to remove this team member/i)).toBeVisible();
+    expect(getByText(/Are you sure you want to remove this row/i)).toBeVisible();
 
     await act(async () => userEvent.click(getByTitle('cancel-modal')));
     expect(getByName('team.0.contactTypeCode')).toBeVisible();
@@ -119,7 +112,7 @@ describe('DispositionTeamSubForm component', () => {
     });
     const addRow = getByTestId('add-team-member');
     await act(async () => userEvent.click(addRow));
-    await act(async () => selectOptions('team.0.contactTypeCode', 'NEGOTAGENT'));
+    await act(async () => selectOptions('team.0.contactTypeCode', 'MOTILAWYER'));
     expect(getIn(getFormikRef().current?.touched, 'team.0.contact')).toBe(true);
   });
 });

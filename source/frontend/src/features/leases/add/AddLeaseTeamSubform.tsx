@@ -1,5 +1,5 @@
 import { FieldArray, useFormikContext } from 'formik';
-import React from 'react';
+import React, { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 
 import { LinkButton, RemoveButton } from '@/components/common/buttons';
@@ -9,18 +9,20 @@ import ContactInputView from '@/components/common/form/ContactInput/ContactInput
 import { PrimaryContactSelector } from '@/components/common/form/PrimaryContactSelector/PrimaryContactSelector';
 import { SectionField } from '@/components/common/Section/SectionField';
 import * as API from '@/constants/API';
+import { TeamMemberFormModal } from '@/features/mapSideBar/acquisition/common/modals/AcquisitionFormModal';
+import { FileTeamFormModel } from '@/features/mapSideBar/shared/models';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
-import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 
-import { FileTeamFormModel } from '../../shared/models';
-import { WithDispositionTeam } from '../models/DispositionTeamSubFormModel';
+import { WithLeaseTeam } from '../models';
 
-const DispositionTeamSubForm: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
-  const { values, setFieldTouched, errors } = useFormikContext<WithDispositionTeam>();
+export const AddLeaseTeamSubForm: React.FunctionComponent<
+  React.PropsWithChildren<unknown>
+> = () => {
+  const { values, setFieldTouched } = useFormikContext<WithLeaseTeam>();
+  const [showRemoveMemberModal, setShowRemoveMemberModal] = useState<boolean>(false);
+  const [removeIndex, setRemoveIndex] = useState<number>(-1);
   const { getOptionsByType } = useLookupCodeHelpers();
-  const { setModalContent, setDisplayModal } = useModalContext();
-
-  const teamProfileTypes = getOptionsByType(API.DISPOSITION_TEAM_PROFILE_TYPES);
+  const teamProfileTypes = getOptionsByType(API.LEASE_TEAM_PROFILE_TYPES);
 
   return (
     <FieldArray
@@ -28,7 +30,7 @@ const DispositionTeamSubForm: React.FunctionComponent<React.PropsWithChildren<un
       render={arrayHelpers => (
         <>
           {values.team.map((teamMember, index) => (
-            <React.Fragment key={`disp-team-${index}`}>
+            <React.Fragment key={`lease-team-${teamMember.id ?? index}`}>
               <Row className="py-3" data-testid={`teamMemberRow[${index}]`}>
                 <Col xs="auto" xl="5">
                   <Select
@@ -53,27 +55,14 @@ const DispositionTeamSubForm: React.FunctionComponent<React.PropsWithChildren<un
                   <RemoveButton
                     data-testId={`team.${index}.remove-button`}
                     onRemove={() => {
-                      setModalContent({
-                        ...getDeleteModalProps(),
-                        title: 'Remove Team Member',
-                        message: 'Do you wish to remove this team member?',
-                        okButtonText: 'Yes',
-                        cancelButtonText: 'No',
-                        handleOk: async () => {
-                          arrayHelpers.remove(index);
-                          setDisplayModal(false);
-                        },
-                        handleCancel: () => {
-                          setDisplayModal(false);
-                        },
-                      });
-                      setDisplayModal(true);
+                      setRemoveIndex(index);
+                      setShowRemoveMemberModal(true);
                     }}
                   />
                 </Col>
               </Row>
               {teamMember.contact?.organizationId && !teamMember.contact?.personId && (
-                <SectionField label="Primary contact" labelWidth="6" noGutters>
+                <SectionField label="Primary contact" labelWidth="5" noGutters>
                   <PrimaryContactSelector
                     field={`team.${index}.primaryContactId`}
                     contactInfo={teamMember?.contact}
@@ -82,26 +71,32 @@ const DispositionTeamSubForm: React.FunctionComponent<React.PropsWithChildren<un
               )}
             </React.Fragment>
           ))}
-
-          {errors?.team && typeof errors?.team === 'string' && (
-            <div className="invalid-feedback" data-testid="team-profile-dup-error">
-              {errors.team.toString()}
-            </div>
-          )}
-
           <LinkButton
             data-testid="add-team-member"
             onClick={() => {
-              const member = new FileTeamFormModel();
-              arrayHelpers.push(member);
+              const teamMember = new FileTeamFormModel();
+              arrayHelpers.push(teamMember);
             }}
           >
             + Add another team member
           </LinkButton>
+
+          <TeamMemberFormModal
+            message="Are you sure you want to remove this row?"
+            title="Remove Team Member"
+            display={showRemoveMemberModal}
+            handleOk={() => {
+              setShowRemoveMemberModal(false);
+              arrayHelpers.remove(removeIndex);
+              setRemoveIndex(-1);
+            }}
+            handleCancel={() => {
+              setShowRemoveMemberModal(false);
+              setRemoveIndex(-1);
+            }}
+          ></TeamMemberFormModal>
         </>
       )}
     />
   );
 };
-
-export default DispositionTeamSubForm;

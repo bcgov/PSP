@@ -101,6 +101,11 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
 }
 
 .c8 {
+  padding: 0 0.4rem;
+  display: block;
+}
+
+.c10 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -845,7 +850,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
                   class="c7 text-left col"
                 >
                   <a
-                    class="c8"
+                    class="c10"
                     href="/contact/O1"
                     rel="noopener noreferrer"
                     target="_blank"
@@ -886,7 +891,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
                   class="c7 text-left col"
                 >
                   <a
-                    class="c8"
+                    class="c10"
                     href="/contact/P1"
                     rel="noopener noreferrer"
                     target="_blank"
@@ -925,7 +930,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
                   class="c7 text-left col"
                 >
                   <a
-                    class="c8"
+                    class="c10"
                     href="/contact/P2"
                     rel="noopener noreferrer"
                     target="_blank"

@@ -1,10 +1,13 @@
 import { Formik, FormikHelpers, FormikProps } from 'formik';
 import styled from 'styled-components';
 
+import { Section } from '@/components/common/Section/Section';
 import { IMapProperty } from '@/components/propertySelector/models';
 
 import { FormLeaseProperty, getDefaultFormLease, LeaseFormModel } from '../models';
 import LeasePropertySelector from '../shared/propertyPicker/LeasePropertySelector';
+import { AddLeaseTeamSubForm } from './AddLeaseTeamSubform';
+import { AddLeaseTeamYupSchema } from './AddLeaseTeamYupSchema';
 import { AddLeaseYupSchema } from './AddLeaseYupSchema';
 import AdministrationSubForm from './AdministrationSubForm';
 import LeaseDetailSubForm from './LeaseDetailSubForm';
@@ -48,7 +51,7 @@ const AddLeaseForm: React.FunctionComponent<React.PropsWithChildren<IAddLeaseFor
         enableReinitialize
         innerRef={formikRef}
         initialValues={LeaseFormModel.fromApi(apiFormLease)}
-        validationSchema={AddLeaseYupSchema}
+        validationSchema={AddLeaseYupSchema.concat(AddLeaseTeamYupSchema)}
         onSubmit={(values: LeaseFormModel, formikHelpers: FormikHelpers<LeaseFormModel>) => {
           handleSubmit(values, formikHelpers);
         }}
@@ -58,6 +61,14 @@ const AddLeaseForm: React.FunctionComponent<React.PropsWithChildren<IAddLeaseFor
             <LeaseDetailSubForm formikProps={formikProps}></LeaseDetailSubForm>
             <LeasePropertySelector formikProps={formikProps} />
             <AdministrationSubForm formikProps={formikProps}></AdministrationSubForm>
+            <Section header="Lease Team">
+              <AddLeaseTeamSubForm />
+              {formikProps.errors?.team && typeof formikProps.errors?.team === 'string' && (
+                <div className="invalid-feedback" data-testid="team-profile-dup-error">
+                  {formikProps.errors.team.toString()}
+                </div>
+              )}
+            </Section>
           </>
         )}
       </Formik>

@@ -5,12 +5,12 @@ import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { emptyStringtoNullable, fromTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
 import { exists, isValidIsoDateTime } from '@/utils/utils';
 
-import { PropertyForm } from '../../shared/models';
+import { FileTeamFormModel, PropertyForm } from '../../shared/models';
 import { ChecklistItemFormModel } from '../../shared/tabs/checklist/update/models';
 import { DispositionOfferFormModel } from '../tabs/offersAndSale/dispositionOffer/models/DispositionOfferFormModel';
 import { DispositionAppraisalFormModel } from './DispositionAppraisalFormModel';
 import { DispositionSaleFormModel } from './DispositionSaleFormModel';
-import { DispositionTeamSubFormModel, WithDispositionTeam } from './DispositionTeamSubFormModel';
+import { WithDispositionTeam } from './DispositionTeamSubFormModel';
 
 export class DispositionFormModel implements WithDispositionTeam {
   fileName: string | null = '';
@@ -31,7 +31,7 @@ export class DispositionFormModel implements WithDispositionTeam {
   initiatingDocumentDate: string | null = null;
   regionCode: string | null = null;
   fileProperties: PropertyForm[] = [];
-  team: DispositionTeamSubFormModel[] = [];
+  team: FileTeamFormModel[] = [];
   offers: DispositionOfferFormModel[] = [];
   fileChecklist: ChecklistItemFormModel[] = [];
   sale: DispositionSaleFormModel | null = null;
@@ -81,8 +81,8 @@ export class DispositionFormModel implements WithDispositionTeam {
         : null,
       regionCode: exists(this.regionCode) ? toTypeCodeNullable(Number(this.regionCode)) : null,
       dispositionTeam: this.team
-        .filter(x => !!x.contact && !!x.teamProfileTypeCode)
-        .map(x => x.toApi(this.id || 0))
+        .filter(x => !!x.contact && !!x.contactTypeCode)
+        .map(x => x.toApiDispositionFile(this.id || 0))
         .filter(exists),
       fileProperties: this.fileProperties.map(x => this.toPropertyApi(x)),
       dispositionOffers: this.offers.map(x => x.toApi()),
@@ -130,8 +130,7 @@ export class DispositionFormModel implements WithDispositionTeam {
     dispositionForm.initiatingDocumentDate = model.initiatingDocumentDate;
     dispositionForm.regionCode = fromTypeCode(model.regionCode)?.toString() ?? '';
 
-    dispositionForm.team =
-      model.dispositionTeam?.map(x => DispositionTeamSubFormModel.fromApi(x)) || [];
+    dispositionForm.team = model.dispositionTeam?.map(x => FileTeamFormModel.fromApi(x)) || [];
     dispositionForm.fileProperties = model.fileProperties?.map(x => PropertyForm.fromApi(x)) || [];
 
     return dispositionForm;

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import EditButton from '@/components/common/buttons/EditButton';
+import { FileTeamView } from '@/components/common/FileTeamView';
 import { readOnlyMultiSelectStyle } from '@/components/common/form';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
@@ -198,42 +199,7 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
         )}
         <SectionField label="Ministry region">{detail.regionDescription}</SectionField>
       </Section>
-      <Section header="Acquisition Team">
-        {detail.acquisitionTeam.map((teamMember, index) => (
-          <React.Fragment key={`acq-team-${index}`}>
-            <SectionField label={teamMember?.teamProfileTypeCodeDescription || ''}>
-              <StyledLink
-                target="_blank"
-                rel="noopener noreferrer"
-                to={
-                  teamMember?.personId
-                    ? `/contact/P${teamMember?.personId}`
-                    : `/contact/O${teamMember?.organizationId}`
-                }
-              >
-                <span>{teamMember?.teamName}</span>
-                <FaExternalLinkAlt className="ml-2" size="1rem" />
-              </StyledLink>
-            </SectionField>
-            {teamMember?.organizationId && (
-              <SectionField label="Primary contact">
-                {teamMember?.primaryContactId ? (
-                  <StyledLink
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    to={`/contact/P${teamMember?.primaryContactId}`}
-                  >
-                    <span>{teamMember?.primaryContactName}</span>
-                    <FaExternalLinkAlt className="m1-2" size="1rem" />
-                  </StyledLink>
-                ) : (
-                  'No contacts available'
-                )}
-              </SectionField>
-            )}
-          </React.Fragment>
-        ))}
-      </Section>
+      <FileTeamView title="Acquisition Team" team={acquisitionFile.acquisitionTeam} />
       <Section header={detail.isSubFile ? 'Sub-Interest Information' : 'Owner Information'}>
         {detail.isSubFile ? (
           <StyledSectionParagraph>

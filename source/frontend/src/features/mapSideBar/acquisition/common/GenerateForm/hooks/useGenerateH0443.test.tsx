@@ -102,6 +102,7 @@ describe('useGenerateH0443 functions', () => {
       ...mockAcquisitionFileResponse(),
       acquisitionTeam: [
         {
+          parentFileId: 1,
           id: 1,
           acquisitionFileId: 1,
           personId: 1,
@@ -115,6 +116,7 @@ describe('useGenerateH0443 functions', () => {
           teamProfileType: null,
         },
         {
+          parentFileId: 1,
           id: 2,
           acquisitionFileId: 1,
           personId: 2,
@@ -148,6 +150,7 @@ describe('useGenerateH0443 functions', () => {
       ...mockAcquisitionFileResponse(),
       acquisitionTeam: [
         {
+          parentFileId: 1,
           id: 1,
           acquisitionFileId: 1,
           teamProfileTypeCode: 'PROPCOORD',
@@ -182,6 +185,7 @@ describe('useGenerateH0443 functions', () => {
       ...mockAcquisitionFileResponse(),
       acquisitionTeam: [
         {
+          parentFileId: 1,
           id: 1,
           acquisitionFileId: 1,
           teamProfileTypeCode: 'PROPCOORD',
@@ -215,6 +219,7 @@ describe('useGenerateH0443 functions', () => {
       ...mockAcquisitionFileResponse(),
       acquisitionTeam: [
         {
+          parentFileId: 1,
           id: 2,
           acquisitionFileId: 1,
           teamProfileTypeCode: 'PROPAGENT',
@@ -248,6 +253,7 @@ describe('useGenerateH0443 functions', () => {
       ...mockAcquisitionFileResponse(),
       acquisitionTeam: [
         {
+          parentFileId: 1,
           id: 2,
           acquisitionFileId: 1,
           teamProfileTypeCode: 'PROPAGENT',

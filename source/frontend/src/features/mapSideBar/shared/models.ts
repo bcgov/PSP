@@ -5,10 +5,19 @@ import { isNumber } from 'lodash';
 import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { IMapProperty } from '@/components/propertySelector/models';
 import { AreaUnitTypes, DistrictCodes, RegionCodes } from '@/constants';
+import {
+  fromApiOrganization,
+  fromApiPerson,
+  IContactSearchResult,
+} from '@/interfaces/IContactSearchResult';
 import { ApiGen_CodeTypes_GeoJsonTypes } from '@/models/api/generated/ApiGen_CodeTypes_GeoJsonTypes';
+import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
 import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
+import { ApiGen_Concepts_DispositionFileTeam } from '@/models/api/generated/ApiGen_Concepts_DispositionFileTeam';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
+import { ApiGen_Concepts_FileTeam } from '@/models/api/generated/ApiGen_Concepts_FileTeam';
+import { ApiGen_Concepts_LeaseFileTeam } from '@/models/api/generated/ApiGen_Concepts_LeaseFileTeam';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
@@ -29,7 +38,7 @@ import {
   pidParser,
   pinFromFeatureSet,
 } from '@/utils';
-import { toTypeCodeNullable } from '@/utils/formUtils';
+import { fromTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
 
 export class FileForm {
   public id?: number;
@@ -434,5 +443,78 @@ export class AddressForm {
       regionCode: null,
       districtCode: null,
     };
+  }
+}
+
+export class FileTeamFormModel {
+  id?: number;
+  rowVersion?: number;
+  contact?: IContactSearchResult;
+  contactTypeCode: string;
+  primaryContactId = '';
+
+  constructor(contactTypeCode?: string, id?: number, contact?: IContactSearchResult) {
+    this.id = id;
+    this.contactTypeCode = contactTypeCode ?? '';
+    this.contact = contact;
+  }
+
+  toApiAcquisitionFile(parentFileId: number): ApiGen_Concepts_AcquisitionFileTeam | null {
+    return { ...this.toApi(parentFileId), acquisitionFileId: parentFileId };
+  }
+  toApiDispositionFile(parentFileId: number): ApiGen_Concepts_DispositionFileTeam | null {
+    return { ...this.toApi(parentFileId), dispositionFileId: parentFileId };
+  }
+  toApiLeaseFile(parentFileId: number): ApiGen_Concepts_LeaseFileTeam | null {
+    return { ...this.toApi(parentFileId), leaseId: parentFileId };
+  }
+
+  toApi(parentFileId: number): ApiGen_Concepts_FileTeam | null {
+    const personId = this.contact?.personId ?? null;
+    const organizationId = !personId ? this.contact?.organizationId ?? null : null;
+    if (!isValidId(personId) && !isValidId(organizationId)) {
+      return null;
+    }
+
+    return {
+      id: this.id ?? 0,
+      parentFileId: parentFileId,
+      personId: personId ?? null,
+      person: null,
+      organizationId: organizationId ?? null,
+      organization: null,
+      primaryContactId:
+        !!this.primaryContactId && isNumber(+this.primaryContactId)
+          ? Number(this.primaryContactId)
+          : null,
+      teamProfileType: toTypeCodeNullable(this.contactTypeCode),
+      teamProfileTypeCode: this.contactTypeCode,
+      primaryContact: null,
+      ...getEmptyBaseAudit(this.rowVersion),
+    };
+  }
+
+  static fromApi(model: ApiGen_Concepts_FileTeam | null): FileTeamFormModel {
+    // The method 'exists' below allows the compiler to validate the child property. This works correctly in typescript 5.3+
+    let contact: IContactSearchResult | undefined = undefined;
+    if (exists(model?.person)) {
+      contact = fromApiPerson(model.person);
+    } else if (exists(model?.organization)) {
+      contact = fromApiOrganization(model.organization);
+    }
+
+    const newForm = new FileTeamFormModel(
+      fromTypeCode(model?.teamProfileType) || '',
+      model?.id ?? 0,
+      contact,
+    );
+
+    if (model?.primaryContactId) {
+      newForm.primaryContactId = model.primaryContactId.toString();
+    }
+
+    newForm.rowVersion = model?.rowVersion ?? 0;
+
+    return newForm;
   }
 }
