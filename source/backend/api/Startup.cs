@@ -557,6 +557,7 @@ namespace Pims.Api
             services.AddScoped<IEnvironmentService, EnvironmentService>();
             services.AddScoped<IDocumentQueueService, DocumentQueueService>();
             services.AddScoped<IResearchStatusSolver, ResearchStatusSolver>();
+            services.AddScoped<IBctfaOwnershipService, BctfaOwnershipService>();
         }
 
         /// <summary>

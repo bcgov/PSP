@@ -8,12 +8,12 @@ namespace Pims.Api.Models.Concepts.ResearchFile
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.PimsPrfPropResearchPurposeType, PropertyResearchFilePurposeModel>()
+            config.NewConfig<Entity.PimsPrfPropResearchPurposeTyp, PropertyResearchFilePurposeModel>()
                 .Map(dest => dest.Id, src => src.PrfPropResearchPurposeId)
                 .Map(dest => dest.PropertyResearchPurposeTypeCode, src => src.PropResearchPurposeTypeCodeNavigation)
                 .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
 
-            config.NewConfig<PropertyResearchFilePurposeModel, Entity.PimsPrfPropResearchPurposeType>()
+            config.NewConfig<PropertyResearchFilePurposeModel, Entity.PimsPrfPropResearchPurposeTyp>()
                 .Map(dest => dest.PrfPropResearchPurposeId, src => src.Id)
                 .Map(dest => dest.PropResearchPurposeTypeCode, src => src.PropertyResearchPurposeTypeCode.Id)
                 .Inherits<BaseAuditModel, Entity.IBaseAppEntity>();

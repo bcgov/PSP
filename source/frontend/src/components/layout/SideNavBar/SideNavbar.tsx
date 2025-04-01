@@ -144,6 +144,7 @@ export const SideNavBar = () => {
           icon={<ResearchIcon />}
           text="Research"
           showText={expanded}
+          claims={[Claims.RESEARCH_VIEW]}
           isNavActive={isResearch != null}
         />
         <NavIcon
@@ -151,6 +152,7 @@ export const SideNavBar = () => {
           icon={<AcquisitionFileIcon />}
           text="Acquisition"
           showText={expanded}
+          claims={[Claims.ACQUISITION_VIEW]}
           isNavActive={isAcquisition != null}
         />
         <NavIcon
@@ -158,6 +160,7 @@ export const SideNavBar = () => {
           icon={<LeaseIcon />}
           text="Leases & Licences"
           showText={expanded}
+          claims={[Claims.LEASE_VIEW]}
           isNavActive={isLease != null}
         />
         <NavIcon
@@ -165,6 +168,7 @@ export const SideNavBar = () => {
           icon={<DispositionIcon />}
           text="Disposition"
           showText={expanded}
+          claims={[Claims.DISPOSITION_VIEW]}
           isNavActive={isDisposition != null}
         />
         <NavIcon
@@ -172,6 +176,7 @@ export const SideNavBar = () => {
           icon={<SubdivisionIcon />}
           text="Subdivision & Consolidation"
           showText={expanded}
+          claims={[Claims.PROPERTY_EDIT]}
           isNavActive={isConsSub != null}
         />
         <NavIcon
