@@ -85,13 +85,12 @@ describe('Form 8 UpdateForm component', () => {
     const mockExpropiationPaymentApi = mockGetExpropriationPaymentApi(1, 1);
     const ownerMockOption = PayeeOption.createOwner(mockExpropiationPaymentApi.acquisitionOwner);
 
-    const { getDescriptionTextbox, getPayeeOptionSelect } =
-      await setup({
-        props: {
-          initialValues: Form8FormModel.fromApi(mockExpropiationPaymentApi),
-          payeeOptions: [ownerMockOption],
-        },
-      });
+    const { getDescriptionTextbox, getPayeeOptionSelect } = await setup({
+      props: {
+        initialValues: Form8FormModel.fromApi(mockExpropiationPaymentApi),
+        payeeOptions: [ownerMockOption],
+      },
+    });
 
     await waitForEffects();
     expect(getDescriptionTextbox()).toHaveValue('MY DESCRIPTION');
