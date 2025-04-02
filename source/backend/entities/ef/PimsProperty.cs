@@ -400,16 +400,16 @@ public partial class PimsProperty
     public virtual ICollection<PimsPropPropActivity> PimsPropPropActivities { get; set; } = new List<PimsPropPropActivity>();
 
     [InverseProperty("Property")]
-    public virtual ICollection<PimsPropPropAnomalyType> PimsPropPropAnomalyTypes { get; set; } = new List<PimsPropPropAnomalyType>();
+    public virtual ICollection<PimsPropPropAnomalyTyp> PimsPropPropAnomalyTyps { get; set; } = new List<PimsPropPropAnomalyTyp>();
 
     [InverseProperty("Property")]
     public virtual ICollection<PimsPropPropPurpose> PimsPropPropPurposes { get; set; } = new List<PimsPropPropPurpose>();
 
     [InverseProperty("Property")]
-    public virtual ICollection<PimsPropPropRoadType> PimsPropPropRoadTypes { get; set; } = new List<PimsPropPropRoadType>();
+    public virtual ICollection<PimsPropPropRoadTyp> PimsPropPropRoadTyps { get; set; } = new List<PimsPropPropRoadTyp>();
 
     [InverseProperty("Property")]
-    public virtual ICollection<PimsPropPropTenureType> PimsPropPropTenureTypes { get; set; } = new List<PimsPropPropTenureType>();
+    public virtual ICollection<PimsPropPropTenureTyp> PimsPropPropTenureTyps { get; set; } = new List<PimsPropPropTenureTyp>();
 
     [InverseProperty("Property")]
     public virtual ICollection<PimsPropertyAcquisitionFile> PimsPropertyAcquisitionFiles { get; set; } = new List<PimsPropertyAcquisitionFile>();

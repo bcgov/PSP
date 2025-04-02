@@ -48,5 +48,5 @@ public partial class PimsPropertyTenureType
     public string DbLastUpdateUserid { get; set; }
 
     [InverseProperty("PropertyTenureTypeCodeNavigation")]
-    public virtual ICollection<PimsPropPropTenureType> PimsPropPropTenureTypes { get; set; } = new List<PimsPropPropTenureType>();
+    public virtual ICollection<PimsPropPropTenureTyp> PimsPropPropTenureTyps { get; set; } = new List<PimsPropPropTenureTyp>();
 }
