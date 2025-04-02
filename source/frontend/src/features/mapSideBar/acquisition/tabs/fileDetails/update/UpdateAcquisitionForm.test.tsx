@@ -3,16 +3,19 @@ import MockAdapter from 'axios-mock-adapter';
 import { FormikProps } from 'formik';
 import { createRef } from 'react';
 
+import { InterestHolderType } from '@/constants/interestHolderTypes';
 import { IAutocompletePrediction } from '@/interfaces';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mockNotesResponse } from '@/mocks/noteResponses.mock';
+import { getEmptyOrganization } from '@/mocks/organization.mock';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { toTypeCodeNullable } from '@/utils/formUtils';
 import {
   act,
   fakeText,
   fireEvent,
-  getByTitle,
   render,
   RenderOptions,
   screen,
@@ -21,15 +24,10 @@ import {
   waitForEffects,
 } from '@/utils/test-utils';
 
+import { InterestHolderForm } from '../../stakeholders/update/models';
 import { UpdateAcquisitionSummaryFormModel } from './models';
 import { UpdateAcquisitionFileYupSchema } from './UpdateAcquisitionFileYupSchema';
 import UpdateAcquisitionForm, { IUpdateAcquisitionFormProps } from './UpdateAcquisitionForm';
-import { toTypeCodeNullable } from '@/utils/formUtils';
-import { InterestHolderType } from '@/constants/interestHolderTypes';
-import { getEmptyOrganization } from '@/mocks/organization.mock';
-import { getEmptyPerson } from '@/mocks/contacts.mock';
-import { getEmptyBaseAudit } from '@/models/defaultInitializers';
-import { InterestHolderForm } from '../../stakeholders/update/models';
 
 const mockAxios = new MockAdapter(axios);
 
