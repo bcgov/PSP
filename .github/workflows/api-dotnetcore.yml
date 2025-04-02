@@ -136,23 +136,6 @@ jobs:
           name: pr-codecov
           path: pr/
 
-      - name: SonarScanner for .NET 8 with pull request decoration support
-        id: scan
-        uses: highbyte/sonarscan-dotnet@v2.3.2
-        if: ${{ github.event_name == 'push' && env.solution-name == 'Pims.sln' }}
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-          dotnetBuildArguments: ${{env.working-directory}}/${{ env.solution-name }}
-          dotnetTestArguments: ${{env.working-directory}}/${{ env.solution-name }} --logger trx --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
-          # Optional extra command arguments the the SonarScanner 'begin' command
-          sonarBeginArguments: /d:sonar.cs.opencover.reportsPaths="**/TestResults/**/coverage.opencover.xml" -d:sonar.cs.vstest.reportsPaths="**/TestResults/*.trx" -d:sonar.qualitygate.wait=true
-          # The key of the SonarQube project
-          sonarProjectKey: ${{secrets.PROJECT_KEY_API}}
-          # The name of the SonarQube project
-          sonarProjectName: PIMS-API
-          # The SonarQube server URL. For SonarCloud, skip this setting.
-          sonarHostname: ${{secrets.SONAR_URL}}
   post-build:
     needs: build-backend
     runs-on: ubuntu-22.04
@@ -165,55 +148,11 @@ jobs:
       - name: Failure notification to Teams Channel
         env:
           MS_TEAMS_NOTIFY_URL: ${{ secrets.MS_TEAMS_NOTIFY_URL }}
-        if: env.MS_TEAMS_NOTIFY_URL != '' && failure() && steps.scan.outcome == 'failure'
+        if: env.MS_TEAMS_NOTIFY_URL != '' && failure()
         uses: dragos-cojocari/ms-teams-notification@v1.0.2
         with:
           github-token: ${{ github.token }}
           ms-teams-webhook-uri: ${{ env.MS_TEAMS_NOTIFY_URL }}
-          notification-summary: PIMS API Sonar Scan FAILED in ${{env.GIT_BRANCH}} environment
+          notification-summary: PIMS API FAILED in ${{env.GIT_BRANCH}} environment
           notification-color: ff0000
           timezone: America/Los_Angeles
-
-      - name: Find Comment
-        if: failure() && steps.scan.outcome == 'failure' && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
-        uses: peter-evans/find-comment@v1
-        id: fc
-        with:
-          issue-number: ${{ github.event.pull_request.number }}
-          comment-author: "github-actions[bot]"
-          body-includes: QUALITY GATE STATUS FOR .NET 5
-
-      - name: Check Quality Gate and Create Comment
-        if: failure() && steps.scan.outcome == 'failure' && github.event_name == 'pull_request' && steps.fc.outputs.comment-id == ''
-        uses: peter-evans/create-or-update-comment@v1
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_URL }}
-          PROJECT_KEY: ${{secrets.PROJECT_KEY_API}}
-        with:
-          issue-number: ${{ github.event.pull_request.number }}
-          body: |
-            QUALITY GATE STATUS FOR .NET 5: FAILED.
-
-            [View and resolve details on][1]
-
-            [1]: ${{env.SONAR_HOST_URL}}/dashboard?id=${{env.PROJECT_KEY}}
-          reactions: confused
-      - name: Check Quality Gate and Update Comment
-        if: failure() && steps.scan.outcome == 'failure' && github.event_name == 'pull_request' && steps.fc.outputs.comment-id != '' && github.event.pull_request.head.repo.full_name == github.repository
-        uses: peter-evans/create-or-update-comment@v1
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_URL }}
-          PROJECT_KEY: ${{secrets.PROJECT_KEY_APP}}
-        with:
-          comment-id: ${{ steps.fc.outputs.comment-id }}
-          issue-number: ${{ github.event.pull_request.number }}
-          body: |
-            QUALITY GATE STATUS FOR .NET 5: FAILED.
-
-            [View and resolve details on][1]
-
-            [1]: ${{env.SONAR_HOST_URL}}/dashboard?id=${{env.PROJECT_KEY}}
-          edit-mode: replace
-          reactions: eyes

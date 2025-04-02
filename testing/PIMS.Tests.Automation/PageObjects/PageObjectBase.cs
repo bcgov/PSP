@@ -179,6 +179,15 @@ namespace PIMS.Tests.Automation.PageObjects
             }
         }
 
+        protected void SendKeysToCurencyInput(By elementBy, string sendKeysValue)
+        {
+            WaitUntilVisible(elementBy);
+
+            var js = (IJavaScriptExecutor)webDriver;
+            webDriver.FindElement(elementBy).SendKeys(Keys.NumberPad1);
+
+        }
+
         protected void ClearMultiSelectInput(By elementBy)
         {
             WaitUntilVisible(elementBy);

@@ -156,6 +156,9 @@ public partial class PimsOrganization
     [InverseProperty("Organization")]
     public virtual ICollection<PimsDspPurchSolicitor> PimsDspPurchSolicitors { get; set; } = new List<PimsDspPurchSolicitor>();
 
+    [InverseProperty("Organization")]
+    public virtual ICollection<PimsExpropOwnerHistory> PimsExpropOwnerHistories { get; set; } = new List<PimsExpropOwnerHistory>();
+
     [InverseProperty("ExpropriatingAuthorityNavigation")]
     public virtual ICollection<PimsExpropriationPayment> PimsExpropriationPayments { get; set; } = new List<PimsExpropriationPayment>();
 

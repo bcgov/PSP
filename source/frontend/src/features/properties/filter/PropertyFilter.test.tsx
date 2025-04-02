@@ -18,6 +18,7 @@ import {
 } from '@/utils/test-utils';
 
 import { PropertyFilter } from '.';
+import { Dms, DmsCoordinates } from './CoordinateSearch/models';
 import { defaultPropertyFilter, IPropertyFilter } from './IPropertyFilter';
 import { IPropertyFilterProps } from './PropertyFilter';
 import { SearchToggleOption } from './PropertySearchToggle';
@@ -100,11 +101,38 @@ describe('MapFilterBar', () => {
     expect(searchButton).toBeDisabled();
   });
 
+  it('disables the search button if there is an invalid pid', async () => {
+    const { searchButton } = setup({
+      props: {
+        propertyFilter: { ...defaultPropertyFilter, searchBy: 'pid' },
+      },
+    });
+
+    expect(searchButton).toBeDisabled();
+  });
+
+  it('disables the search button if there is an invalid pin', async () => {
+    const { searchButton } = setup({
+      props: {
+        propertyFilter: { ...defaultPropertyFilter, searchBy: 'pin' },
+      },
+    });
+
+    expect(searchButton).toBeDisabled();
+  });
+
   it('shows search by PID option', async () => {
     setup({
       props: {
         propertyFilter: { ...defaultPropertyFilter, searchBy: 'pid' },
       },
+    });
+
+    let pid = screen.getByPlaceholderText(/Enter a PID/i);
+    expect(pid).toBeVisible();
+
+    await act(async () => {
+      userEvent.paste(pid, 'aaa');
     });
 
     expect(screen.getByPlaceholderText(/Enter a PID/i)).toBeVisible();
@@ -115,6 +143,13 @@ describe('MapFilterBar', () => {
       props: {
         propertyFilter: { ...defaultPropertyFilter, searchBy: 'pin' },
       },
+    });
+
+    let pin = screen.getByPlaceholderText(/Enter a PIN/i);
+    expect(pin).toBeVisible();
+
+    await act(async () => {
+      userEvent.paste(pin, 'aaa');
     });
 
     expect(screen.getByPlaceholderText(/Enter a PIN/i)).toBeVisible();
@@ -312,6 +347,7 @@ describe('MapFilterBar', () => {
       latitude: '',
       longitude: '',
       historical: '',
+      coordinates: null,
       ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
     });
   });
@@ -342,6 +378,7 @@ describe('MapFilterBar', () => {
       latitude: '',
       longitude: '',
       historical: '',
+      coordinates: null,
       ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
     });
   });
@@ -372,6 +409,57 @@ describe('MapFilterBar', () => {
       latitude: '',
       longitude: '',
       historical: '',
+      coordinates: null,
+      ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
+    });
+  });
+
+  it('searches by Lat/Long coordinates', async () => {
+    const { searchButton } = setup({
+      props: {
+        propertyFilter: {
+          ...defaultPropertyFilter,
+          searchBy: 'coordinates',
+          coordinates: new DmsCoordinates(),
+        },
+      },
+    });
+
+    // Enter values on the form fields, then click the Search button
+    await act(async () => {
+      const input = getByName('coordinates.latitude.degrees');
+      userEvent.paste(input, '55');
+    });
+    await act(async () => {
+      const input = getByName('coordinates.latitude.minutes');
+      userEvent.paste(input, '46');
+    });
+    await act(async () => {
+      const input = getByName('coordinates.latitude.seconds');
+      userEvent.paste(input, '48.155');
+    });
+    await act(async () => {
+      userEvent.click(searchButton);
+    });
+
+    expect(onFilterChange).toHaveBeenCalledWith<[IPropertyFilter]>({
+      pid: '',
+      pin: '',
+      planNumber: '',
+      address: '',
+      searchBy: 'coordinates',
+      page: undefined,
+      quantity: undefined,
+      latitude: '',
+      longitude: '',
+      historical: '',
+      coordinates: expect.objectContaining<Partial<DmsCoordinates>>({
+        latitude: expect.objectContaining<Partial<Dms>>({
+          degrees: 55,
+          minutes: 46,
+          seconds: 48.155,
+        }),
+      }),
       ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
     });
   });

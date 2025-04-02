@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
+using System.Diagnostics;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -354,6 +355,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 sharedSelectContact.SelectContact(activity.PropertyActivityServiceProvider, "");
             }
 
+            System.Diagnostics.Debug.WriteLine(activity.ManagementPropertyActivityInvoices.Count);
             if (activity.ManagementPropertyActivityInvoices.Count > 0)
                 for (int i = 0; i < activity.ManagementPropertyActivityInvoices.Count; i++)
                     AddInvoice(activity.ManagementPropertyActivityInvoices[i], i);
@@ -523,9 +525,7 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 var selectedPurposes = webDriver.FindElements(managementPropertyPurposeContent);
                 for (int i = 0; i < selectedPurposes.Count; i++)
-                {
-                    Assert.Equal(managementProperty.ManagementPropertyPurpose[i], selectedPurposes[i].Text);
-                }
+                    Assert.Equal(managementProperty.ManagementPropertyPurpose[i], selectedPurposes[i].Text);    
             }
 
             AssertTrueIsDisplayed(managementLeaseLabel);
@@ -645,8 +645,12 @@ namespace PIMS.Tests.Automation.PageObjects
 
             webDriver.FindElement(By.Id("input-invoices."+ index +".description")).SendKeys(invoice.PropertyActivityInvoiceDescription);
 
-            ClearInput(By.Id("input-invoices."+ index +".pretaxAmount"));
+            //ClearInput(By.Id("input-invoices."+ index +".pretaxAmount"));
+            //webDriver.FindElement(By.Id("input-invoices."+ index +".pretaxAmount")).Click();
+            //webDriver.FindElement(By.Id("input-invoices."+ index +".pretaxAmount")).Clear();
+            Wait(10000);
             webDriver.FindElement(By.Id("input-invoices."+ index +".pretaxAmount")).SendKeys(invoice.PropertyActivityInvoicePretaxAmount);
+            SendKeysToCurencyInput(By.Id("input-invoices."+ index +".pretaxAmount"), invoice.PropertyActivityInvoicePretaxAmount);
 
             ChooseSpecificSelectOption(By.Id("input-invoices."+ index +".isPstRequired"), invoice.PropertyActivityInvoicePSTApplicable);
 

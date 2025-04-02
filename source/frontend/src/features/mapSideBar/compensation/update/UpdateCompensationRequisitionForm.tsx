@@ -236,16 +236,21 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                 <SectionField label="Cost type" labelWidth="4">
                   {file.project?.costTypeCode?.code ?? ''}
                 </SectionField>
-                <SectionField label="Fiscal year" labelWidth="4" contentWidth="4" required>
+                <SectionField
+                  label="Fiscal year"
+                  labelWidth="4"
+                  contentWidth="4"
+                  required={formikProps.values.status === 'final'}
+                >
                   <Select field="fiscalYear" options={fiscalYearOptions} placeholder="Select..." />
                 </SectionField>
-                <SectionField label="STOB" labelWidth="4" required>
+                <SectionField label="STOB" labelWidth="4">
                   <TypeaheadSelect field="stob" options={yearlyFinancialOptions} />
                 </SectionField>
-                <SectionField label="Service line" labelWidth="4" required>
+                <SectionField label="Service line" labelWidth="4">
                   <TypeaheadSelect field="serviceLine" options={chartOfAccountsOptions} />
                 </SectionField>
-                <SectionField label="Responsibility centre" labelWidth="4" required>
+                <SectionField label="Responsibility centre" labelWidth="4">
                   <TypeaheadSelect
                     field="responsibilityCentre"
                     options={responsiblityCentreOptions}

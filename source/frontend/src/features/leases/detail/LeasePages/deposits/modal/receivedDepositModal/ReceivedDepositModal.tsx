@@ -38,13 +38,7 @@ export const ReceivedDepositModal: React.FunctionComponent<
         formikRef?.current?.submitForm();
       }}
       message={
-        <>
-          <ReceivedDepositForm
-            formikRef={formikRef}
-            initialValues={initialValues}
-            onSave={onSave}
-          />
-        </>
+        <ReceivedDepositForm formikRef={formikRef} initialValues={initialValues} onSave={onSave} />
       }
     />
   );

@@ -7,6 +7,7 @@ import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
+import { useAxiosSuccessHandler } from '@/utils/axiosUtils';
 
 /**
  * hook that updates a property research file.
@@ -25,7 +26,7 @@ export const useUpdatePropertyResearch = () => {
       [putPropertyResearchFile],
     ),
     requestName: 'UpdatePropertyResearchFile',
-    onSuccess: useCallback(() => toast.success('Property Research File updated'), []),
+    onSuccess: useAxiosSuccessHandler(),
     onError: useCallback((axiosError: AxiosError<IApiError>) => {
       if (axiosError?.response?.status === 400) {
         toast.error(axiosError?.response.data.error);

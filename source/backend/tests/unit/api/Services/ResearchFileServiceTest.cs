@@ -152,7 +152,7 @@ namespace Pims.Api.Test.Services
             var researchFile = EntityHelper.CreateResearchFile(1);
             researchFile.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>()
             {
-                new () { Internal_Id = 1, Property = property, PimsPrfPropResearchPurposeTypes = new List<PimsPrfPropResearchPurposeType>() { new PimsPrfPropResearchPurposeType() { } } }
+                new () { Internal_Id = 1, Property = property, PimsPrfPropResearchPurposeTyps = new List<PimsPrfPropResearchPurposeTyp>() { new PimsPrfPropResearchPurposeTyp() { } } }
             };
 
             var updatedResearchFile = EntityHelper.CreateResearchFile(1);
@@ -181,7 +181,7 @@ namespace Pims.Api.Test.Services
             var researchFile = EntityHelper.CreateResearchFile(1);
             researchFile.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>()
             {
-                new () { Internal_Id = 1, Property = property, PimsPrfPropResearchPurposeTypes = new List<PimsPrfPropResearchPurposeType>() { new PimsPrfPropResearchPurposeType() { } } }
+                new () { Internal_Id = 1, Property = property, PimsPrfPropResearchPurposeTyps = new List<PimsPrfPropResearchPurposeTyp>() { new PimsPrfPropResearchPurposeTyp() { } } }
             };
 
             var updatedResearchFile = EntityHelper.CreateResearchFile(1);
@@ -223,7 +223,7 @@ namespace Pims.Api.Test.Services
             var researchFile = EntityHelper.CreateResearchFile(1);
             researchFile.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>()
             {
-                new PimsPropertyResearchFile() { Internal_Id = 1, Property = deletedProperty, PimsPrfPropResearchPurposeTypes = new List<PimsPrfPropResearchPurposeType>() { new PimsPrfPropResearchPurposeType() { } } }
+                new PimsPropertyResearchFile() { Internal_Id = 1, Property = deletedProperty, PimsPrfPropResearchPurposeTyps = new List<PimsPrfPropResearchPurposeTyp>() { new PimsPrfPropResearchPurposeTyp() { } } }
             };
 
             var updatedResearchFile = EntityHelper.CreateResearchFile(1);
@@ -263,7 +263,7 @@ namespace Pims.Api.Test.Services
             var researchFile = EntityHelper.CreateResearchFile(1);
             researchFile.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>()
             {
-                new () { Internal_Id = 1, Property = deletedProperty, PimsPrfPropResearchPurposeTypes = new List<PimsPrfPropResearchPurposeType>() { new PimsPrfPropResearchPurposeType() { } } }
+                new () { Internal_Id = 1, Property = deletedProperty, PimsPrfPropResearchPurposeTyps = new List<PimsPrfPropResearchPurposeTyp>() { new PimsPrfPropResearchPurposeTyp() { } } }
             };
 
             var updatedResearchFile = EntityHelper.CreateResearchFile(1);

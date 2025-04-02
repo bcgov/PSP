@@ -434,7 +434,7 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
           </label>
         </div>
         <div
-          class="c8 required text-left col-auto"
+          class="c8 required text-left col-9"
         >
           <div
             class="required form-group"

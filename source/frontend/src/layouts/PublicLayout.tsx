@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import LoadingBar from 'react-redux-loading-bar';
 
 import ErrorModal from '@/components/common/ErrorModal';
 import { Footer, Header } from '@/components/layout';
+import { HealthcheckContainer } from '@/components/layout/Healthcheck/HealthcheckContainer';
+import HealthcheckView from '@/components/layout/Healthcheck/HealthcheckView';
 
 import FooterStyled from './Footer';
 import HeaderStyled from './Header';
@@ -13,10 +15,21 @@ const PublicLayout: React.FC<React.PropsWithChildren<React.HTMLAttributes<HTMLEl
   children,
   ...rest
 }) => {
+  const [systemDegraded, setSystemDegraded] = useState<boolean>(false);
+
+  const handleHealthcheckResult = async (degraded: boolean): Promise<void> => {
+    setSystemDegraded(degraded);
+  };
+
   return (
     <>
       <LoadingBar style={{ zIndex: 9999, backgroundColor: '#fcba19', height: '.3rem' }} />
-      <Styled.AppGridContainer className="App" {...rest}>
+      <Styled.AppGridContainer {...rest} className={`App ${systemDegraded ? 'healthcheck' : ''}`}>
+        <HealthcheckContainer
+          systemDegraded={systemDegraded}
+          updateHealthcheckResult={handleHealthcheckResult}
+          View={HealthcheckView}
+        ></HealthcheckContainer>
         <HeaderStyled>
           <Header />
         </HeaderStyled>

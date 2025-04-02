@@ -106,7 +106,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By requisitionPaymentSubtitle = By.XPath("//h2/div/div[contains(text(),'Payment')]");
         private readonly By requisitionPayeeLabel = By.XPath("//label[contains(text(),'Payee')]");
         private readonly By requisitionPayeeContentCount = By.XPath("//label[contains(text(),'Payee')]/parent::div/following-sibling::div/div");
-        private readonly By requisitionPayeeSelect = By.Id("input-leaseStakeholderId");
         private readonly By requisitionPayeeMultiselect = By.Id("multiselect-payees_input");
         private readonly By requisitionPayeeDeleteBttns = By.CssSelector("div[id='multiselect-payees'] i[class='custom-close']");
         private readonly By requisitionPayeeOptions = By.XPath("//input[@id='multiselect-payees_input']/parent::div/following-sibling::div/ul[@class='optionContainer']");
@@ -148,6 +147,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Compensation Details Elements
         private readonly By requisitionCancelBttn = By.XPath("//button[@id='close-tray']/parent::h1/following-sibling::div/div/div/div[2]/div/div[2]/button");
+
         //Acquisition File Confirmation Modal Elements
         private readonly By acquisitionFileConfirmationModal = By.CssSelector("div[class='modal-content']");
 
@@ -190,6 +190,14 @@ namespace PIMS.Tests.Automation.PageObjects
 
             WaitUntilClickable(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper'] div div button[data-testid='compensation-view-"+ index +"']"));
             webDriver.FindElement(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper'] div div button[data-testid='compensation-view-"+ index +"']")).Click();
+        }
+
+        public void GenerateH120Document()
+        {
+            Wait();
+
+            WaitUntilClickable(requisitionGenerateH120Bttn);
+            webDriver.FindElement(requisitionGenerateH120Bttn).Click();
         }
 
         public void DeleteCompensationRequisition(int index)
@@ -342,26 +350,21 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(requisitionPayeeLabel).Click();
             }
 
-            if (fileType == "Acquisition File")
+            if (compensation.CompensationPayee.First() != "")
             {
-                if (compensation.AcquisitionCompensationPayee.First() != "")
+                foreach (string payee in compensation.CompensationPayee)
                 {
-                    foreach (string payee in compensation.AcquisitionCompensationPayee)
-                    {
-                        Wait(2000);
-                        webDriver.FindElement(requisitionPayeeLabel).Click();
-                        FocusAndClick(requisitionPayeeMultiselect);
-
-                        Wait(2000);
-                        ChooseMultiSelectSpecificOption(requisitionPayeeOptions, payee);
-                        webDriver.FindElement(requisitionPayeeLabel).Click();
-                    }
-
+                    Wait(2000);
                     webDriver.FindElement(requisitionPayeeLabel).Click();
-                } 
-            }
-            else if (compensation.LeaseCompensationPayee != "" && fileType == "Lease")
-                 ChooseSpecificSelectOption(requisitionPayeeSelect, compensation.LeaseCompensationPayee);
+                    FocusAndClick(requisitionPayeeMultiselect);
+
+                    Wait(2000);
+                    ChooseMultiSelectSpecificOption(requisitionPayeeOptions, payee);
+                    webDriver.FindElement(requisitionPayeeLabel).Click();
+                }
+
+                webDriver.FindElement(requisitionPayeeLabel).Click();
+            } 
 
             if (compensation.CompensationPaymentInTrust)
                 FocusAndClick(requisitionPaymentInTrustCheckbox);
@@ -613,10 +616,12 @@ namespace PIMS.Tests.Automation.PageObjects
 
 
             if (compensation.CompensationPayeeDisplay.Count > 0)
-                for (int i = 0; i < compensation.AcquisitionCompensationPayee.Count; i++)
+                for (int i = 0; i < compensation.CompensationPayee.Count; i++)
                 {
                     var elementIndex = i + 1;
-                    AssertTrueElementContains(By.XPath("//label[contains(text(),'Payee')]/parent::div/following-sibling::div/div["+ elementIndex +"]"), compensation.CompensationPayeeDisplay[i]);
+                    var payeeName = webDriver.FindElement(By.XPath("//label[contains(text(),'Payee')]/parent::div/following-sibling::div/div["+ elementIndex +"]")).Text;
+                    var payeeNameFormatted = payeeName.Replace("\r\n", string.Empty);
+                    Assert.Contains(compensation.CompensationPayeeDisplay[i], payeeNameFormatted);
                     if (compensation.CompensationPaymentInTrust)
                         AssertTrueElementContains(By.XPath("//label[contains(text(),'Payee')]/parent::div/following-sibling::div/div["+ elementIndex +"]"), "in trust");
                 }
@@ -700,6 +705,19 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueContentEquals(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+lastCreatedCompensationReq+")  div:nth-child(4)"), compensation.CompensationStatus);
             AssertTrueIsDisplayed(By.CssSelector("button[data-testid='compensation-view-"+ elementIndex +"']"));
             //AssertTrueIsDisplayed(By.CssSelector("button[data-testid='compensation-delete-"+ elementIndex +"']"));
+        }
+
+        public void VerifyMissingTemplateErrorMessage()
+        {
+            Wait(3000);
+            Assert.Equal("The requested document template was not found. This indicates that the PIMS administrator needs to add a template to the system for this document type. Please contact your system administrator, and ask them to add a template for this document type.", sharedModals.ToastifyText());
+        }
+
+        public void VerifyIncompleteAgreementH120ErrorMessage()
+        {
+            Wait(3000);
+            Assert.Contains("You cannot complete a file when there are one or more draft agreements, or one or more draft compensations requisitions.", sharedModals.ModalContent());
+            Assert.Contains("Remove any draft compensations requisitions. Agreements should be set to final, cancelled, or removed.", sharedModals.ModalContent());
         }
 
         private void CreateFinancialActivity(CompensationActivity activity)
