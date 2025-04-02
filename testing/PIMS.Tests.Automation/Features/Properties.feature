@@ -39,3 +39,12 @@ Scenario: 06._Non-Inventory_Property_Information
 Scenario: 07._Invalid_Property_Not_Found
 	Given I search for an Invalid Property from row number 10
 	Then No Properties were found
+
+Scenario Outline: 08._Property_Management_Lease_Active_Indicator
+	Given I create a new minimum Lease from row number <RowNumber>
+	When  I add additional Information to the Lease Details
+	And I add Properties to the Lease Details
+	Examples:
+	| ExpectedResult  | RowNumber |
+	| Organization	  | 1         |
+	| Organization	  | 3         |
