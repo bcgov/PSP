@@ -41,6 +41,7 @@ export const defaultTenant: ITenantConfig2 = {
   title: 'Default Tenant Name',
   shortName: 'PIMS',
   colour: '#003366',
+  provinceStateId: 1,
   logo: {
     favicon: '',
     image: '',
