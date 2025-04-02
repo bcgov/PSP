@@ -190,6 +190,12 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
         <SectionField label="Physical file status">
           {detail.acquisitionPhysFileStatusTypeDescription}
         </SectionField>
+        <SectionField
+          label="Physical file details"
+          tooltip="Location, the lawyer involved, which office it's with, and who currently has it."
+        >
+          {detail.acquisitionPhysFileStatusTypeDescription}
+        </SectionField>
         <SectionField label="Acquisition type">{detail.acquisitionTypeDescription}</SectionField>
         {detail.isSubFile && (
           <SectionField label="Sub-file interest" valueTestId="subFile-interest-type">

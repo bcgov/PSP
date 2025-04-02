@@ -320,6 +320,12 @@ const AcquisitionDetailSubForm: React.FC<{
             placeholder="Select..."
           />
         </SectionField>
+        <SectionField
+          label="Physical file details"
+          tooltip="Location, the lawyer involved, which office it's with, and who currently has it."
+        >
+          <TextArea field="physicalFileDetails"></TextArea>
+        </SectionField>
         <SectionField label="Acquisition type" required>
           <Select
             field="acquisitionType"
