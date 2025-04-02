@@ -3,6 +3,7 @@ import { AxiosResponse } from 'axios';
 import IApiVersion from './IApiVersion';
 import IHealthLive from './IHealthLive';
 import IHealthReady from './IHealthReady';
+import ISystemCheck from './ISystemCheck';
 
 export interface IApiHealth {
   // Get the api version information.
@@ -11,4 +12,6 @@ export interface IApiHealth {
   getLive: () => Promise<AxiosResponse<IHealthLive>>;
   // Get the status of the api to determine if it is ready.
   getReady: () => Promise<AxiosResponse<IHealthReady>>;
+  // Get the status of the api to determine if it is ready.
+  getSystemCheck: () => Promise<AxiosResponse<ISystemCheck>>;
 }

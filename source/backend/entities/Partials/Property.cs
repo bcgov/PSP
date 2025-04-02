@@ -44,7 +44,7 @@ namespace Pims.Dal.Entities
         /// <param name="areaUnit"></param>
         /// <param name="dataSource"></param>
         /// <param name="dataSourceEffectiveDate"></param>
-        public PimsProperty(int pid, PimsPropertyType type, PimsAddress address, PimsPropPropTenureType tenure, PimsAreaUnitType areaUnit, PimsDataSourceType dataSource, DateTime dataSourceEffectiveDate, PimsPropertyStatusType status)
+        public PimsProperty(int pid, PimsPropertyType type, PimsAddress address, PimsPropPropTenureTyp tenure, PimsAreaUnitType areaUnit, PimsDataSourceType dataSource, DateTime dataSourceEffectiveDate, PimsPropertyStatusType status)
         {
             this.Pid = pid;
             this.PropertyTypeCodeNavigation = type ?? throw new ArgumentNullException(nameof(type));
@@ -55,7 +55,7 @@ namespace Pims.Dal.Entities
             this.RegionCode = address.RegionCode.Value;
             this.DistrictCodeNavigation = address.DistrictCodeNavigation ?? throw new ArgumentException($"Argument '{nameof(address)}.{nameof(address.DistrictCode)}' is required.", nameof(address));
             this.DistrictCode = address.DistrictCode.Value;
-            this.PimsPropPropTenureTypes = new List<PimsPropPropTenureType>() { tenure };
+            this.PimsPropPropTenureTyps = new List<PimsPropPropTenureTyp>() { tenure };
             this.PropertyAreaUnitTypeCodeNavigation = areaUnit ?? throw new ArgumentNullException(nameof(areaUnit));
             this.PropertyAreaUnitTypeCode = areaUnit.Id;
             if (address.Longitude.HasValue && address.Latitude.HasValue)

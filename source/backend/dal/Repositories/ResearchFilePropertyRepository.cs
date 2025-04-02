@@ -34,7 +34,7 @@ namespace Pims.Dal.Repositories
         {
             return Context.PimsPropertyResearchFiles.AsNoTracking()
                 .Where(x => x.ResearchFileId == researchFileId)
-                .Include(rp => rp.PimsPrfPropResearchPurposeTypes)
+                .Include(rp => rp.PimsPrfPropResearchPurposeTyps)
                     .ThenInclude(rp => rp.PropResearchPurposeTypeCodeNavigation)
                 .Include(rp => rp.Property)
                     .ThenInclude(rp => rp.RegionCodeNavigation)
@@ -62,11 +62,11 @@ namespace Pims.Dal.Repositories
             var existingPropertyResearchFile = Context.PimsPropertyResearchFiles.AsNoTracking()
                 .Where(x => x.PropertyResearchFileId == propertyResearchFile.Internal_Id)
                 .Include(rp => rp.Property)
-                .Include(rp => rp.PimsPrfPropResearchPurposeTypes)
+                .Include(rp => rp.PimsPrfPropResearchPurposeTyps)
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
 
             // Delete any Property research purpose type associations
-            existingPropertyResearchFile.PimsPrfPropResearchPurposeTypes.ForEach(purposeType => Context.PimsPrfPropResearchPurposeTypes.Remove(new PimsPrfPropResearchPurposeType() { Internal_Id = purposeType.Internal_Id }));
+            existingPropertyResearchFile.PimsPrfPropResearchPurposeTyps.ForEach(purposeType => Context.PimsPrfPropResearchPurposeTyps.Remove(new PimsPrfPropResearchPurposeTyp() { Internal_Id = purposeType.Internal_Id }));
 
             Context.Remove(new PimsPropertyResearchFile() { Internal_Id = propertyResearchFile.Internal_Id });
         }
@@ -79,13 +79,13 @@ namespace Pims.Dal.Repositories
             // Retrieve the existing property research purpose types for the property
             // Note: This is needed given the research file properties purpose types may not have the corresponging id, but corresponding code.
             var currentTypes = Context.PimsPropertyResearchFiles
-                .SelectMany(x => x.PimsPrfPropResearchPurposeTypes)
+                .SelectMany(x => x.PimsPrfPropResearchPurposeTyps)
                 .Where(x => x.PropertyResearchFileId == propertyResearchFile.Internal_Id)
                 .AsNoTracking()
                 .ToList();
 
-            List<PimsPrfPropResearchPurposeType> propertyPurposeTypes = new List<PimsPrfPropResearchPurposeType>();
-            foreach (var selectedType in propertyResearchFile.PimsPrfPropResearchPurposeTypes)
+            List<PimsPrfPropResearchPurposeTyp> propertyPurposeTypes = new List<PimsPrfPropResearchPurposeTyp>();
+            foreach (var selectedType in propertyResearchFile.PimsPrfPropResearchPurposeTyps)
             {
                 var currentType = currentTypes.FirstOrDefault(x => x.PropResearchPurposeTypeCode == selectedType.PropResearchPurposeTypeCode);
 
@@ -103,14 +103,14 @@ namespace Pims.Dal.Repositories
             }
 
             // The ones not on the new set should be deleted
-            List<PimsPrfPropResearchPurposeType> differenceSet = currentTypes.Where(x => !propertyPurposeTypes.Any(y => y.PropResearchPurposeTypeCode == x.PropResearchPurposeTypeCode)).ToList();
+            List<PimsPrfPropResearchPurposeTyp> differenceSet = currentTypes.Where(x => !propertyPurposeTypes.Any(y => y.PropResearchPurposeTypeCode == x.PropResearchPurposeTypeCode)).ToList();
             foreach (var deletedType in differenceSet)
             {
                 propertyPurposeTypes.Add(deletedType);
                 Context.Entry(deletedType).State = EntityState.Deleted;
             }
 
-            propertyResearchFile.PimsPrfPropResearchPurposeTypes = propertyPurposeTypes;
+            propertyResearchFile.PimsPrfPropResearchPurposeTyps = propertyPurposeTypes;
 
             this.Context.PimsPropertyResearchFiles.Update(propertyResearchFile);
             return propertyResearchFile;

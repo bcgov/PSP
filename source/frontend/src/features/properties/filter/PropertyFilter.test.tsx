@@ -101,11 +101,38 @@ describe('MapFilterBar', () => {
     expect(searchButton).toBeDisabled();
   });
 
+  it('disables the search button if there is an invalid pid', async () => {
+    const { searchButton } = setup({
+      props: {
+        propertyFilter: { ...defaultPropertyFilter, searchBy: 'pid' },
+      },
+    });
+
+    expect(searchButton).toBeDisabled();
+  });
+
+  it('disables the search button if there is an invalid pin', async () => {
+    const { searchButton } = setup({
+      props: {
+        propertyFilter: { ...defaultPropertyFilter, searchBy: 'pin' },
+      },
+    });
+
+    expect(searchButton).toBeDisabled();
+  });
+
   it('shows search by PID option', async () => {
     setup({
       props: {
         propertyFilter: { ...defaultPropertyFilter, searchBy: 'pid' },
       },
+    });
+
+    let pid = screen.getByPlaceholderText(/Enter a PID/i);
+    expect(pid).toBeVisible();
+
+    await act(async () => {
+      userEvent.paste(pid, 'aaa');
     });
 
     expect(screen.getByPlaceholderText(/Enter a PID/i)).toBeVisible();
@@ -116,6 +143,13 @@ describe('MapFilterBar', () => {
       props: {
         propertyFilter: { ...defaultPropertyFilter, searchBy: 'pin' },
       },
+    });
+
+    let pin = screen.getByPlaceholderText(/Enter a PIN/i);
+    expect(pin).toBeVisible();
+
+    await act(async () => {
+      userEvent.paste(pin, 'aaa');
     });
 
     expect(screen.getByPlaceholderText(/Enter a PIN/i)).toBeVisible();

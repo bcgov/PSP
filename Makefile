@@ -279,7 +279,7 @@ db-upgrade: ## Upgrade an existing database to the TARGET_VERSION (if passed) or
 
 db-scaffold: ## Requires local install of sqlcmd
 	@echo "$(P) regenerate ef core entities from database"
-	@cd source/backend/entities; eval $(grep -v '^#' .env | xargs) dotnet ef dbcontext scaffold Name=PIMS Microsoft.EntityFrameworkCore.SqlServer -o ../entities/ef --schema dbo --context PimsBaseContext --context-namespace Pims.Dal --context-dir . --no-onconfiguring --namespace Pims.Dal.Entities --data-annotations -v -f --startup-project ../api
+	@cd source/backend/entities; eval $(grep -v '^#' .env | xargs) dotnet ef dbcontext scaffold Name=PIMS Microsoft.EntityFrameworkCore.SqlServer -o ../entities/ef --schema "dbo" --schema "pmbc" --context PimsBaseContext --context-namespace Pims.Dal --context-dir . --no-onconfiguring --namespace Pims.Dal.Entities --data-annotations -v -f --startup-project ../api
 
 db-generate-master:
 	@echo "$(P) Generates a master script that for the given sprint."
