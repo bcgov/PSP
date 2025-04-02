@@ -128,21 +128,6 @@ describe('useGenerateExpropriationForm1 functions', () => {
     expect(getOrganizationConceptFn).toHaveBeenCalled();
   });
 
-  it(`sends "Expropriation notice served date" in the json payload to generation api`, async () => {
-    const generate = setup();
-    const expropriationModel = new ExpropriationForm1Model();
-
-    await act(async () => generate(1, expropriationModel));
-
-    const generateRequest: DocumentGenerationRequest = {
-      templateType: ApiGen_CodeTypes_FormTypes.FORM1.toString(),
-      convertToType: null,
-      templateData: expect.objectContaining<Partial<Api_GenerateExpropriationForm1>>({}),
-    };
-
-    expect(generateFn).toHaveBeenCalledWith(generateRequest);
-  });
-
   it('throws an error if no acquisition file is found', async () => {
     const generate = setup();
     getAcquisitionFileFn.mockResolvedValue(undefined);

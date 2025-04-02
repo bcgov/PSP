@@ -58,11 +58,6 @@ describe('Form 8 UpdateForm component', () => {
         ) as HTMLInputElement,
       getDescriptionTextbox: () =>
         utils.container.querySelector('textarea[name="description"]') as HTMLInputElement,
-      getAdvancedPaymentServedDate: () => {
-        return utils.container.querySelector(
-          `input[name="advancedPaymentServedDate"]`,
-        ) as HTMLInputElement;
-      },
       getSaveButton: () => utils.getByText(/Save/i),
     };
   };
@@ -77,7 +72,6 @@ describe('Form 8 UpdateForm component', () => {
       getPayeeOptionSelect,
       getExpropriationAuthoritySelect,
       getDescriptionTextbox,
-      getAdvancedPaymentServedDate,
     } = await setup({});
 
     expect(getPayeeOptionSelect()).toHaveValue('');
@@ -91,7 +85,7 @@ describe('Form 8 UpdateForm component', () => {
     const mockExpropiationPaymentApi = mockGetExpropriationPaymentApi(1, 1);
     const ownerMockOption = PayeeOption.createOwner(mockExpropiationPaymentApi.acquisitionOwner);
 
-    const { getAdvancedPaymentServedDate, getDescriptionTextbox, getPayeeOptionSelect } =
+    const { getDescriptionTextbox, getPayeeOptionSelect } =
       await setup({
         props: {
           initialValues: Form8FormModel.fromApi(mockExpropiationPaymentApi),

@@ -6,7 +6,6 @@ import {
 export interface IApiGenerateExpropriationForm9Input
   extends IApiGenerateExpropriationFormBaseInput {
   registeredPlanNumbers?: string;
-  expropriationVestingDate?: string;
 }
 
 export class Api_GenerateExpropriationForm9 extends Api_GenerateExpropriationFormBase {
