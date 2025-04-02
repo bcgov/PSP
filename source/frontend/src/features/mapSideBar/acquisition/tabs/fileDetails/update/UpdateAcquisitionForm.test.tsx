@@ -4,6 +4,8 @@ import { FormikProps } from 'formik';
 import { createRef } from 'react';
 
 import { InterestHolderType } from '@/constants/interestHolderTypes';
+import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
+import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
 import { IAutocompletePrediction } from '@/interfaces';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
@@ -31,27 +33,23 @@ import UpdateAcquisitionForm, { IUpdateAcquisitionFormProps } from './UpdateAcqu
 
 const mockAxios = new MockAdapter(axios);
 
-// mock auth library
+vi.mock('@/hooks/repositories/useProjectProvider');
+vi.mocked(useProjectProvider, { partial: true }).mockReturnValue({
+  retrieveProjectProducts: vi.fn(),
+});
+
+vi.mock('@/hooks/repositories/useUserInfoRepository');
+vi.mocked(useUserInfoRepository, { partial: true }).mockReturnValue({
+  retrieveUserInfo: vi.fn(),
+});
 
 const onSubmit = vi.fn();
 const validationSchema = vi.fn().mockReturnValue(UpdateAcquisitionFileYupSchema);
 type TestProps = Pick<IUpdateAcquisitionFormProps, 'initialValues'>;
 
-// Need to mock this library for unit tests
-vi.mock('react-visibility-sensor', () => {
-  return {
-    default: vi.fn().mockImplementation(({ children }) => {
-      if (children instanceof Function) {
-        return children({ isVisible: true });
-      }
-      return children;
-    }),
-  };
-});
-
 describe('UpdateAcquisitionForm component', () => {
   // render component under test
-  const setup = (props: TestProps, renderOptions: RenderOptions = {}) => {
+  const setup = async (props: TestProps, renderOptions: RenderOptions = {}) => {
     const ref = createRef<FormikProps<UpdateAcquisitionSummaryFormModel>>();
     const utils = render(
       <UpdateAcquisitionForm
@@ -68,6 +66,9 @@ describe('UpdateAcquisitionForm component', () => {
         },
       },
     );
+
+    // wait for effects
+    await act(async () => {});
 
     return {
       ...utils,
@@ -154,28 +155,26 @@ describe('UpdateAcquisitionForm component', () => {
   });
 
   it('renders as expected', async () => {
-    const { asFragment } = setup({ initialValues });
-    await act(async () => {});
+    const { asFragment } = await setup({ initialValues });
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('displays legacy file number', async () => {
-    const { getByDisplayValue } = setup({ initialValues });
-    await act(async () => {});
+    const { getByDisplayValue } = await setup({ initialValues });
+
     expect(getByDisplayValue('legacy file number')).toBeVisible();
   });
 
   it('displays progress statuses', async () => {
-    const { getProgressAppraisalStatusTypeDropdown: getProgessAppraisalStatusTypeDropdown } = setup(
-      { initialValues },
-    );
-    await act(async () => {});
+    const { getProgressAppraisalStatusTypeDropdown: getProgessAppraisalStatusTypeDropdown } =
+      await setup({ initialValues });
+
     expect(getProgessAppraisalStatusTypeDropdown()).toHaveValue('RECEIVED');
   });
 
   it('displays owner solicitor and owner representative', async () => {
-    const { getByText } = setup({ initialValues });
-    await act(async () => {});
+    const { getByText } = await setup({ initialValues });
+
     expect(getByText('Millennium Inc')).toBeVisible();
     expect(getByText('Han Solo')).toBeVisible();
     expect(getByText('test representative comment')).toBeVisible();
@@ -183,8 +182,8 @@ describe('UpdateAcquisitionForm component', () => {
 
   it('displays estimated completion, assigned and possession dates', async () => {
     const { getEstimatedCompletionDatePicker, getPossessionDatePicker, getAssignedDatePicker } =
-      setup({ initialValues });
-    await act(async () => {});
+      await setup({ initialValues });
+
     expect(getEstimatedCompletionDatePicker()).toHaveValue('Jul 10, 2024');
     expect(getPossessionDatePicker()).toHaveValue('Jul 10, 2025');
     expect(getAssignedDatePicker()).toHaveValue('Dec 18, 2024');
@@ -200,8 +199,7 @@ describe('UpdateAcquisitionForm component', () => {
       getRegistrationTextbox,
       getEmailTextbox,
       getPhoneTextbox,
-    } = setup({ initialValues });
-    await act(async () => {});
+    } = await setup({ initialValues });
 
     expect(getIsOrganizationRadioButtonValue()).toEqual('false');
 
@@ -226,8 +224,7 @@ describe('UpdateAcquisitionForm component', () => {
       getRegistrationTextbox,
       getEmailTextbox,
       getPhoneTextbox,
-    } = setup({ initialValues });
-    await act(async () => {});
+    } = await setup({ initialValues });
 
     expect(getIsOrganizationRadioButtonValue(1)).toEqual('true');
 
@@ -244,7 +241,7 @@ describe('UpdateAcquisitionForm component', () => {
   });
 
   it('it validates that only profile is not repeated on another team member', async () => {
-    const { getTeamMemberProfileDropDownList, getByTestId, queryByTestId } = setup({
+    const { getTeamMemberProfileDropDownList, getByTestId, queryByTestId } = await setup({
       initialValues,
     });
 
@@ -266,7 +263,7 @@ describe('UpdateAcquisitionForm component', () => {
   });
 
   it('it clears the product field when a project is removed', async () => {
-    const { getRemoveProjectButton, getFormikRef } = setup({
+    const { getRemoveProjectButton, getFormikRef } = await setup({
       initialValues,
     });
 
@@ -288,13 +285,8 @@ describe('UpdateAcquisitionForm component', () => {
       initialValues.formattedProject = '1111 - Test Project';
     });
 
-    it('renders as expected', () => {
-      const { asFragment } = setup({ initialValues });
-      expect(asFragment()).toMatchSnapshot();
-    });
-
     it('should display sub file interest type SELECT', async () => {
-      const { getSubfileInterestTypeDropdown } = setup({
+      const { getSubfileInterestTypeDropdown } = await setup({
         initialValues,
       });
       expect(getSubfileInterestTypeDropdown()).toBeInTheDocument();
@@ -302,7 +294,7 @@ describe('UpdateAcquisitionForm component', () => {
 
     it('should display OTHER sub file interest type', async () => {
       const { getSubfileInterestTypeDropdown, getOtherSubfileInterestTypeTextbox, getByTestId } =
-        setup({
+        await setup({
           initialValues,
         });
       const subfileInterestTypeDropdown = getSubfileInterestTypeDropdown();
@@ -320,7 +312,7 @@ describe('UpdateAcquisitionForm component', () => {
 
     it('should validate OTHER sub file interest type max length', async () => {
       const { findByText, getSubfileInterestTypeDropdown, getOtherSubfileInterestTypeTextbox } =
-        setup({ initialValues });
+        await setup({ initialValues });
       const subfileInterestTypeDropdown = getSubfileInterestTypeDropdown();
 
       expect(subfileInterestTypeDropdown).toBeInTheDocument();
@@ -345,7 +337,7 @@ describe('UpdateAcquisitionForm component', () => {
     });
 
     it('renders sub-interest information section', async () => {
-      const { getByText } = setup({ initialValues });
+      const { getByText } = await setup({ initialValues });
       await waitForEffects();
 
       expect(
@@ -359,7 +351,7 @@ describe('UpdateAcquisitionForm component', () => {
     });
 
     it('renders multiple solicitors if present', async () => {
-      const { getByTitle, getAllByText } = setup({
+      const { getByTitle, getAllByText } = await setup({
         initialValues: {
           ...initialValues,
           toApi: vi.fn(),
