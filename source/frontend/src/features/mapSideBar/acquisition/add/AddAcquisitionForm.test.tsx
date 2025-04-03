@@ -49,7 +49,7 @@ describe('AddAcquisitionForm component', () => {
     const formikRef = createRef<FormikProps<AcquisitionForm>>();
     const utils = render(
       <AddAcquisitionForm
-        ref={formikRef}
+        formikRef={formikRef}
         initialValues={props.initialValues ?? new AcquisitionForm()}
         confirmBeforeAdd={props.confirmBeforeAdd ?? vi.fn()}
         parentId={props.parentId ?? undefined}
