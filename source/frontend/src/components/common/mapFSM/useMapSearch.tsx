@@ -138,6 +138,21 @@ export const useMapSearch = () => {
             feature => !!feature?.geometry,
           );
 
+          const attributedFeatures: FeatureCollection<
+            Geometry,
+            PMBC_FullyAttributed_Feature_Properties
+          > =
+            planNumberPmbcData?.features?.length > 0
+              ? {
+                  type: 'FeatureCollection',
+                  features: [...(planNumberPmbcData?.features || [])],
+                  bbox: planNumberPmbcData?.bbox,
+                }
+              : null;
+          const validPmbcFeatures = attributedFeatures.features.filter(
+            feature => !!feature?.geometry,
+          );
+
           result = {
             pimsLocationFeatures: {
               type: planNumberInventoryData.type,
@@ -145,32 +160,13 @@ export const useMapSearch = () => {
               features: validFeatures,
             },
             pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-            fullyAttributedFeatures: emptyPmbcFeatureCollection,
-          };
-
-          if (validFeatures.length === 0) {
-            toast.info('No search results found');
-          } else {
-            toast.info(`${validFeatures.length} properties found`);
-          }
-        } else {
-          const attributedFeatures: FeatureCollection<
-            Geometry,
-            PMBC_FullyAttributed_Feature_Properties
-          > = {
-            type: 'FeatureCollection',
-            features: [...(planNumberPmbcData?.features || [])],
-            bbox: planNumberPmbcData?.bbox,
-          };
-          const validFeatures = attributedFeatures.features.filter(feature => !!feature?.geometry);
-          result = {
-            pimsLocationFeatures: emptyPimsLocationFeatureCollection,
-            pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-            fullyAttributedFeatures: {
-              type: attributedFeatures.type,
-              bbox: attributedFeatures.bbox,
-              features: validFeatures,
-            },
+            fullyAttributedFeatures: exists(attributedFeatures)
+              ? {
+                  type: attributedFeatures.type,
+                  bbox: attributedFeatures.bbox,
+                  features: validPmbcFeatures,
+                }
+              : emptyPmbcFeatureCollection,
           };
 
           if (validFeatures.length === 0) {

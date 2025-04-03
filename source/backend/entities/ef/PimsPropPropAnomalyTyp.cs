@@ -6,22 +6,26 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-[Table("PIMS_PROP_INTHLDR_INTEREST_TYPE")]
-[Index("InterestHolderInterestTypeCode", Name = "PIHITY_INTEREST_HOLDER_INTEREST_TYPE_CODE_IDX")]
-[Index("PimsInthldrPropInterestId", Name = "PIHITY_PIMS_INTHLDR_PROP_INTEREST_ID_IDX")]
-public partial class PimsPropInthldrInterestType
+/// <summary>
+/// Resolves many-to-many relationship between PIMS_PROPERTY and PIMS_PROPERTY_ANOMALY_TYPE
+/// </summary>
+[Table("PIMS_PROP_PROP_ANOMALY_TYP")]
+[Index("PropertyAnomalyTypeCode", Name = "PRPRAT_PROPERTY_ANOMALY_TYPE_CODE_IDX")]
+[Index("PropertyId", Name = "PRPRAT_PROPERTY_ID_IDX")]
+[Index("PropertyAnomalyTypeCode", "PropertyId", Name = "PRPRAT_PROP_ANOMALY_TYPE_TUC", IsUnique = true)]
+public partial class PimsPropPropAnomalyTyp
 {
     [Key]
-    [Column("PROP_INTHLDR_INTEREST_TYPE_ID")]
-    public long PropInthldrInterestTypeId { get; set; }
+    [Column("PROP_PROP_ANOMALY_TYPE_ID")]
+    public long PropPropAnomalyTypeId { get; set; }
 
-    [Column("PIMS_INTHLDR_PROP_INTEREST_ID")]
-    public long PimsInthldrPropInterestId { get; set; }
+    [Column("PROPERTY_ID")]
+    public long PropertyId { get; set; }
 
     [Required]
-    [Column("INTEREST_HOLDER_INTEREST_TYPE_CODE")]
+    [Column("PROPERTY_ANOMALY_TYPE_CODE")]
     [StringLength(20)]
-    public string InterestHolderInterestTypeCode { get; set; }
+    public string PropertyAnomalyTypeCode { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
@@ -30,33 +34,33 @@ public partial class PimsPropInthldrInterestType
     public DateTime AppCreateTimestamp { get; set; }
 
     [Required]
-    [Column("APP_CREATE_USERID")]
+    [Column("APP_CREATE_USER_DIRECTORY")]
     [StringLength(30)]
-    public string AppCreateUserid { get; set; }
+    public string AppCreateUserDirectory { get; set; }
 
     [Column("APP_CREATE_USER_GUID")]
     public Guid? AppCreateUserGuid { get; set; }
 
     [Required]
-    [Column("APP_CREATE_USER_DIRECTORY")]
+    [Column("APP_CREATE_USERID")]
     [StringLength(30)]
-    public string AppCreateUserDirectory { get; set; }
+    public string AppCreateUserid { get; set; }
 
     [Column("APP_LAST_UPDATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime AppLastUpdateTimestamp { get; set; }
 
     [Required]
-    [Column("APP_LAST_UPDATE_USERID")]
+    [Column("APP_LAST_UPDATE_USER_DIRECTORY")]
     [StringLength(30)]
-    public string AppLastUpdateUserid { get; set; }
+    public string AppLastUpdateUserDirectory { get; set; }
 
     [Column("APP_LAST_UPDATE_USER_GUID")]
     public Guid? AppLastUpdateUserGuid { get; set; }
 
     [Required]
-    [Column("APP_LAST_UPDATE_USER_DIRECTORY")]
+    [Column("APP_LAST_UPDATE_USERID")]
     [StringLength(30)]
-    public string AppLastUpdateUserDirectory { get; set; }
+    public string AppLastUpdateUserid { get; set; }
 
     [Column("DB_CREATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime DbCreateTimestamp { get; set; }
@@ -74,11 +78,11 @@ public partial class PimsPropInthldrInterestType
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    [ForeignKey("InterestHolderInterestTypeCode")]
-    [InverseProperty("PimsPropInthldrInterestTypes")]
-    public virtual PimsInterestHolderInterestType InterestHolderInterestTypeCodeNavigation { get; set; }
+    [ForeignKey("PropertyId")]
+    [InverseProperty("PimsPropPropAnomalyTyps")]
+    public virtual PimsProperty Property { get; set; }
 
-    [ForeignKey("PimsInthldrPropInterestId")]
-    [InverseProperty("PimsPropInthldrInterestTypes")]
-    public virtual PimsInthldrPropInterest PimsInthldrPropInterest { get; set; }
+    [ForeignKey("PropertyAnomalyTypeCode")]
+    [InverseProperty("PimsPropPropAnomalyTyps")]
+    public virtual PimsPropertyAnomalyType PropertyAnomalyTypeCodeNavigation { get; set; }
 }

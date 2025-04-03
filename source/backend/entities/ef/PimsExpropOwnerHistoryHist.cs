@@ -6,26 +6,45 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-/// <summary>
-/// Resolves many-to-many relationship between PIMS_PROPERTY and PIMS_PROPERTY_ROAD_TYPE
-/// </summary>
-[Table("PIMS_PROP_PROP_ROAD_TYPE")]
-[Index("PropertyId", Name = "PRPRRT_PROPERTY_ID_IDX")]
-[Index("PropertyRoadTypeCode", Name = "PRPRRT_PROPERTY_ROAD_TYPE_CODE_IDX")]
-[Index("PropertyRoadTypeCode", "PropertyId", Name = "PRPRRT_PROP_ROAD_TYPE_TUC", IsUnique = true)]
-public partial class PimsPropPropRoadType
+[Table("PIMS_EXPROP_OWNER_HISTORY_HIST")]
+[Index("ExpropOwnerHistoryHistId", "EndDateHist", Name = "PIMS_XPOWNH_H_UK", IsUnique = true)]
+public partial class PimsExpropOwnerHistoryHist
 {
     [Key]
-    [Column("PROP_PROP_ROAD_TYPE_ID")]
-    public long PropPropRoadTypeId { get; set; }
+    [Column("_EXPROP_OWNER_HISTORY_HIST_ID")]
+    public long ExpropOwnerHistoryHistId { get; set; }
 
-    [Column("PROPERTY_ID")]
-    public long PropertyId { get; set; }
+    [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
+    public DateTime EffectiveDateHist { get; set; }
+
+    [Column("END_DATE_HIST", TypeName = "datetime")]
+    public DateTime? EndDateHist { get; set; }
+
+    [Column("EXPROP_OWNER_HISTORY_ID")]
+    public long ExpropOwnerHistoryId { get; set; }
+
+    [Column("ACQUISITION_FILE_ID")]
+    public long AcquisitionFileId { get; set; }
+
+    [Column("PERSON_ID")]
+    public long? PersonId { get; set; }
+
+    [Column("ORGANIZATION_ID")]
+    public long? OrganizationId { get; set; }
+
+    [Column("PRIMARY_CONTACT_ID")]
+    public long? PrimaryContactId { get; set; }
 
     [Required]
-    [Column("PROPERTY_ROAD_TYPE_CODE")]
+    [Column("EXPROP_OWNER_HISTORY_TYPE_CODE")]
     [StringLength(20)]
-    public string PropertyRoadTypeCode { get; set; }
+    public string ExpropOwnerHistoryTypeCode { get; set; }
+
+    [Column("EVENT_DT", TypeName = "datetime")]
+    public DateTime? EventDt { get; set; }
+
+    [Column("IS_DISABLED")]
+    public bool? IsDisabled { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
@@ -77,12 +96,4 @@ public partial class PimsPropPropRoadType
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
-
-    [ForeignKey("PropertyId")]
-    [InverseProperty("PimsPropPropRoadTypes")]
-    public virtual PimsProperty Property { get; set; }
-
-    [ForeignKey("PropertyRoadTypeCode")]
-    [InverseProperty("PimsPropPropRoadTypes")]
-    public virtual PimsPropertyRoadType PropertyRoadTypeCodeNavigation { get; set; }
 }

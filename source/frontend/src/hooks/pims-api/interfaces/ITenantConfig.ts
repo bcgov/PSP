@@ -64,6 +64,7 @@ export interface ITenantConfig2 {
   // the amount of time where the system will treat two clicks as a double click instead of two single clicks.
   doubleClickInterval: number;
   pimsTrainingResourceUrl: string;
+  pimsHealthcheckMessages: { [key: string]: string };
 }
 
 export interface ITenantLoginConfig {

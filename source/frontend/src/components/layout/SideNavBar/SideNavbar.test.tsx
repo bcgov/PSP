@@ -39,13 +39,7 @@ const renderComponent = (props?: IRenderProps) => {
   const defaultUserInfo = {
     organizations: [1],
     client_roles:
-      [
-        ...(props?.claims ?? []),
-        Claims.LEASE_VIEW,
-        Claims.RESEARCH_VIEW,
-        Claims.PROJECT_VIEW,
-        ...(props?.roles ?? [Roles.ACQUISITION_FUNCTIONAL]),
-      ] ?? [],
+      [...(props?.claims ?? []), ...(props?.roles ?? [Roles.ACQUISITION_FUNCTIONAL])] ?? [],
     email: 'test@test.com',
     name: 'Chester Tester',
     idir_user_guid: '00000000000000000000000000000000',
@@ -84,7 +78,9 @@ describe('SideNavbar display and logic', () => {
   });
 
   it('The collapsed sidebar only displays icons', async () => {
-    const { getByTitle, queryByText, getByTestId } = renderComponent();
+    const { getByTitle, queryByText, getByTestId } = renderComponent({
+      claims: [Claims.LEASE_VIEW],
+    });
     await waitFor(async () => {
       expect(getByTitle('expand')).toBeInTheDocument();
       expect(queryByText('Leases & Licences')).not.toBeInTheDocument();
@@ -104,7 +100,7 @@ describe('SideNavbar display and logic', () => {
   });
 
   it('The expanded sidebars displays an icon and text.', async () => {
-    const { getByTitle, getByText, getByTestId } = renderComponent();
+    const { getByTitle, getByText, getByTestId } = renderComponent({ claims: [Claims.LEASE_VIEW] });
     const expandButton = getByTitle('expand');
     await act(async () => {
       userEvent.click(expandButton);
@@ -127,13 +123,19 @@ describe('SideNavbar display and logic', () => {
   });
 
   it('The sidebar restricts nav items by claim.', async () => {
-    const { getByTitle, queryByText } = renderComponent();
+    const { getByTitle, queryByText } = renderComponent({ claims: [] });
     const expandButton = getByTitle('expand');
     await act(async () => {
       userEvent.click(expandButton);
     });
     await waitFor(async () => {
       expect(queryByText('Contacts')).toBeNull();
+      expect(queryByText('Project')).toBeNull();
+      expect(queryByText('Research')).toBeNull();
+      expect(queryByText('Acquisition')).toBeNull();
+      expect(queryByText('Leases & Licences')).toBeNull();
+      expect(queryByText('Disposition')).toBeNull();
+      expect(queryByText('Subdivision & Consolidation')).toBeNull();
     });
   });
 
@@ -154,6 +156,7 @@ describe('SideNavbar display and logic', () => {
     it('Opens the side tray when an icon is clicked.', async () => {
       const { getByText, getByTestId } = renderComponent({
         roles: [Roles.SYSTEM_ADMINISTRATOR],
+        claims: [Claims.LEASE_VIEW],
       });
       const managementButton = getByTestId('nav-tooltip-leases&licences');
       await act(async () => {
@@ -167,6 +170,7 @@ describe('SideNavbar display and logic', () => {
     it('closes the side tray when the close button is clicked.', async () => {
       const { getByTestId, getByTitle } = renderComponent({
         roles: [Roles.SYSTEM_ADMINISTRATOR],
+        claims: [Claims.LEASE_VIEW],
       });
       const managementButton = getByTestId('nav-tooltip-leases&licences');
       await act(async () => {
@@ -184,6 +188,7 @@ describe('SideNavbar display and logic', () => {
     it('closes the side tray when the close button is clicked.', async () => {
       const { getByTestId, getByTitle } = renderComponent({
         roles: [Roles.SYSTEM_ADMINISTRATOR],
+        claims: [Claims.LEASE_VIEW],
       });
       const managementButton = getByTestId('nav-tooltip-leases&licences');
       await act(async () => {
@@ -218,6 +223,7 @@ describe('SideNavbar display and logic', () => {
     it('Opens project side tray when an icon is clicked.', async () => {
       const { getByText, getByTestId } = renderComponent({
         roles: [Roles.SYSTEM_ADMINISTRATOR],
+        claims: [Claims.PROJECT_VIEW],
       });
       const projectButton = getByTestId('nav-tooltip-project');
       await act(async () => {
@@ -235,6 +241,7 @@ describe('SideNavbar display and logic', () => {
     it('Opens research side tray when an icon is clicked.', async () => {
       const { getByText, getByTestId } = renderComponent({
         roles: [Roles.SYSTEM_ADMINISTRATOR],
+        claims: [Claims.RESEARCH_VIEW],
       });
       const researchButton = getByTestId('nav-tooltip-research');
       await act(async () => {
