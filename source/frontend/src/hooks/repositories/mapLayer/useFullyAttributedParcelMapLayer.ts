@@ -22,7 +22,11 @@ export const useFullyAttributedParcelMapLayer = () => {
     withCredentials: true,
   });
 
-  const { findOneWhereContains } = useLayerQuery(fullyAttributedParcelsLayerUrl, false, true);
+  const { findOneWhereContains, findMultipleWhereContainsWrapped } = useLayerQuery(
+    fullyAttributedParcelsLayerUrl,
+    false,
+    true,
+  );
 
   const { execute: getAllFeatures, loading: getAllFeaturesLoading } = getAllFeaturesWrapper;
 
@@ -125,6 +129,22 @@ export const useFullyAttributedParcelMapLayer = () => {
     [findOneWhereContains, handleError],
   );
 
+  const findMany = useCallback(
+    async (latlng: LatLngLiteral, geometryName?: string, spatialReferenceId?: number) => {
+      try {
+        return (await findMultipleWhereContainsWrapped.execute(
+          latlng,
+          geometryName,
+          spatialReferenceId,
+        )) as FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties>;
+      } catch (e: unknown) {
+        handleError();
+        return undefined;
+      }
+    },
+    [findMultipleWhereContainsWrapped, handleError],
+  );
+
   return {
     findByLegalDescription,
     findByPid,
@@ -133,5 +153,7 @@ export const useFullyAttributedParcelMapLayer = () => {
     findByLoading: getAllFeaturesLoading,
     findByWrapper: getAllFeaturesWrapper,
     findOne,
+    findMany,
+    findManyLoading: findMultipleWhereContainsWrapped.loading,
   };
 };
