@@ -251,4 +251,23 @@ describe('PropertySelectorSearchContainer component', () => {
       );
     });
   });
+
+  it('searches by lat/lng', async () => {
+    const { container, getByTitle } = setup({});
+
+    await act(async () => {
+      await fillInput(container, 'searchBy', 'coordinates', 'select');
+    });
+    
+    const searchButton = getByTitle('search');
+    await act(async () => {
+      userEvent.click(searchButton);
+    });
+
+    await waitFor(() => {
+      expect(mockAxios.history.get[0].url).toBe(
+        'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/wfs?service=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&srsName=EPSG:4326&cql_filter=CONTAINS(SHAPE,SRID=4326;POINT ( 0 0))',
+      );
+    });
+  });
 });

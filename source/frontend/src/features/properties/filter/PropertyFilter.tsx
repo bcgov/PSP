@@ -1,5 +1,6 @@
 import { Formik } from 'formik';
 import React, { useMemo } from 'react';
+import { Row } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
 import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
@@ -105,7 +106,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
     >
       {({ isSubmitting, setFieldValue, values, resetForm, isValid }) => (
         <Form>
-          <Form.Row className="map-filter-bar pb-4">
+          <Row className="map-filter-bar pb-4">
             <Col xs="auto">
               <span>Search:</span>
             </Col>
@@ -130,9 +131,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
               />
             </NoRightPaddingColumn>
             <StyledCol
-              xs="3"
-              md="2"
-              lg={values.searchBy === 'coordinates' ? 'auto' : 4}
+              xs={values.searchBy === 'coordinates' ? 'auto' : 4}
               xl={values.searchBy === 'coordinates' ? 'auto' : 3}
             >
               {values.searchBy === 'pid' && (
@@ -186,7 +185,10 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                 ></Input>
               )}
               {values.searchBy === 'coordinates' && (
-                <CoordinateSearchForm field="coordinates"></CoordinateSearchForm>
+                <CoordinateSearchForm
+                  field="coordinates"
+                  innerClassName="flex-nowrap"
+                ></CoordinateSearchForm>
               )}
             </StyledCol>
             <Col xs="auto">
@@ -224,7 +226,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                 toggle={toggle}
               />
             </Col>
-          </Form.Row>
+          </Row>
         </Form>
       )}
     </Formik>
