@@ -214,6 +214,24 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.True(searchProperties.PropertiesListFoundCount() > 1);
         }
 
+        [StepDefinition(@"I search for a Property in the Properties List by PID from row number (.*)")]
+        public void SearchPropertyInformationListByPID(int rowNumber)
+        {
+            //Navigate to Home Page
+            PopulateSearchProperty(rowNumber);
+            searchProperties.NavigateToHomePage();
+
+            //Navigate to the Inventory List View
+            searchProperties.NavigatePropertyListView();
+
+            //Search for a valid PID in Inventory
+            searchProperties.SearchPropertyReset();
+            searchProperties.SearchPropertyByPID(searchProperty.PID);
+
+            //Select found property
+            searchProperties.SelectFirstFoundPropertyList();
+        }
+
         [StepDefinition(@"I search for a non MOTI property from row number (.*)")]
         public void NonInventoryProperty(int rowNumber)
         {
@@ -511,6 +529,13 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public void PropertySearchBarSuccess()
         {
             searchProperties.SearchPropertyReset();
+        }
+
+        [StepDefinition(@"Expected Active Lease status is displayed as ""(.*)"" successfully")]
+        public void ExpectedActiveLease(string expectedActiveLeaseStatus)
+        {
+            propertyManagementTab.NavigateManagementTab();
+            Assert.Equal(expectedActiveLeaseStatus, propertyManagementTab.VerifyLeaseActiveStatus());
         }
 
         private void PopulateProperty(int rowNumber)

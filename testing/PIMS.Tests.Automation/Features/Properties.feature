@@ -44,7 +44,16 @@ Scenario Outline: 08._Property_Management_Lease_Active_Indicator
 	Given I create a new minimum Lease from row number <RowNumber>
 	When  I add additional Information to the Lease Details
 	And I add Properties to the Lease Details
+	And I search for a Property in the Properties List by PID from row number 33
+	Then Expected Active Lease status is displayed as "<ActiveLeaseStatus>" successfully
 	Examples:
-	| ExpectedResult  | RowNumber |
-	| Organization	  | 1         |
-	| Organization	  | 3         |
+	| ActiveLeaseStatus | RowNumber |
+	| No                | 10        |
+	| No                | 11        |
+	| No                | 12        |
+	| No                | 13        |
+	| No                | 14        |
+	| No                | 15        |
+	| No				| 16        |
+	| Yes               | 17        |
+
