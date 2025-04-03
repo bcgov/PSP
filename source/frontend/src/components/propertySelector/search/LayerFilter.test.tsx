@@ -122,26 +122,26 @@ describe('LayerFilter component', () => {
     });
 
     expect(setFilter).toHaveBeenCalledWith({
-           "address": "",
-           "coordinates": {
-             "latitude": {
-               "degrees": 0,
-               "direction": "1",
-               "minutes": 0,
-               "seconds": 0,
-             },
-             "longitude": {
-               "degrees": 0,
-               "direction": "-1",
-               "minutes": 0,
-               "seconds": 0,
-             },
-           },
-           "legalDescription": "",
-           "pid": "",
-           "pin": "",
-           "planNumber": "",
-           "searchBy": "coordinates",
-         });
+      address: '',
+      coordinates: {
+        latitude: {
+          degrees: 0,
+          direction: '1',
+          minutes: 0,
+          seconds: 0,
+        },
+        longitude: {
+          degrees: 0,
+          direction: '-1',
+          minutes: 0,
+          seconds: 0,
+        },
+      },
+      legalDescription: '',
+      pid: '',
+      pin: '',
+      planNumber: '',
+      searchBy: 'coordinates',
+    });
   });
 });

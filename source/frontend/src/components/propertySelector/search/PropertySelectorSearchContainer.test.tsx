@@ -258,7 +258,7 @@ describe('PropertySelectorSearchContainer component', () => {
     await act(async () => {
       await fillInput(container, 'searchBy', 'coordinates', 'select');
     });
-    
+
     const searchButton = getByTitle('search');
     await act(async () => {
       userEvent.click(searchButton);
