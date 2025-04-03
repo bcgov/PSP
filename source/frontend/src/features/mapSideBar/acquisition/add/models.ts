@@ -69,6 +69,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
     InterestHolderType.OWNER_REPRESENTATIVE,
   );
   totalAllowableCompensation: number | '' = '';
+  physicalFileDetails?: string = '';
 
   toApi(): ApiGen_Concepts_AcquisitionFile {
     return {
@@ -94,9 +95,10 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
       legacyFileNumber: this.legacyFileNumber ?? null,
       fileStatusTypeCode: toTypeCodeNullable(this.acquisitionFileStatusType),
       acquisitionPhysFileStatusTypeCode: toTypeCodeNullable(this.acquisitionPhysFileStatusType),
+      physicalFileDetails: this.physicalFileDetails ?? null,
       acquisitionTypeCode: toTypeCodeNullable(this.acquisitionType),
       regionCode: toTypeCodeNullable(Number(this.region)),
-      projectId: isValidId(this.project?.id) ? this.project!.id : null,
+      projectId: isValidId(this.project?.id) ? this.project.id : null,
       productId: isValidId(Number(this.product)) ? Number(this.product) : null,
       fundingTypeCode: toTypeCodeNullable(this.fundingTypeCode),
       fundingOther: this.fundingTypeOtherDescription,
@@ -212,6 +214,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
     newForm.acquisitionFileStatusType = fromTypeCode(model.fileStatusTypeCode) ?? undefined;
     newForm.acquisitionPhysFileStatusType =
       fromTypeCode(model.acquisitionPhysFileStatusTypeCode) ?? undefined;
+    newForm.physicalFileDetails = model.physicalFileDetails ?? undefined;
     newForm.acquisitionType = fromTypeCode(model.acquisitionTypeCode) ?? undefined;
     newForm.region = fromTypeCode(model.regionCode)?.toString();
     // ACQ file properties
@@ -239,5 +242,5 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
   }
 }
 
-export const isAcquisitionFile = (file: unknown): file is ApiGen_Concepts_AcquisitionFile =>
-  !!file && Object.prototype.hasOwnProperty.call(file, 'acquisitionTypeCode');
+export const isAcquisitionFile = (file: object): file is ApiGen_Concepts_AcquisitionFile =>
+  exists(file) && Object.hasOwn(file, 'acquisitionTypeCode');
