@@ -18,11 +18,11 @@ import {
   act,
   fakeText,
   fireEvent,
+  getByName,
   render,
   RenderOptions,
   screen,
   userEvent,
-  waitFor,
   waitForEffects,
 } from '@/utils/test-utils';
 
@@ -240,7 +240,34 @@ describe('UpdateAcquisitionForm component', () => {
     expect(getPhoneTextbox(1).value).toEqual('775-111-1111');
   });
 
-  it('it validates that only profile is not repeated on another team member', async () => {
+  it('displays the physical file details field', async () => {
+    const { getByText } = await setup({
+      initialValues: UpdateAcquisitionSummaryFormModel.fromApi({
+        ...mockAcquisitionFileResponse(),
+        physicalFileDetails: 'mocked physical file details',
+      }),
+    });
+
+    expect(getByText('mocked physical file details')).toBeVisible();
+  });
+
+  it('should validate character limits', async () => {
+    const { getFormikRef, findByText } = await setup({ initialValues });
+
+    // physical file details cannot exceed 2000 characters
+    const detailsTextarea = getByName('physicalFileDetails') as HTMLTextAreaElement;
+    await act(async () => userEvent.paste(detailsTextarea, fakeText(3000)));
+
+    // submit form to trigger validation check
+    await act(async () => getFormikRef().current?.submitForm());
+
+    expect(validationSchema).toHaveBeenCalled();
+    expect(
+      await findByText(/Physical file details must be at most 2000 characters/i),
+    ).toBeVisible();
+  });
+
+  it('validates that only profile is not repeated on another team member', async () => {
     const { getTeamMemberProfileDropDownList, getByTestId, queryByTestId } = await setup({
       initialValues,
     });
@@ -250,7 +277,7 @@ describe('UpdateAcquisitionForm component', () => {
       userEvent.selectOptions(getTeamMemberProfileDropDownList(1), 'NEGOTAGENT');
     });
 
-    expect(validationSchema).toBeCalled();
+    expect(validationSchema).toHaveBeenCalled();
     expect(getByTestId('team-profile-dup-error')).toBeVisible();
 
     // Set unique should pass
@@ -258,7 +285,7 @@ describe('UpdateAcquisitionForm component', () => {
       userEvent.selectOptions(getTeamMemberProfileDropDownList(1), 'EXPRAGENT');
     });
 
-    expect(validationSchema).toBeCalled();
+    expect(validationSchema).toHaveBeenCalled();
     expect(queryByTestId(/team-profile-dup-error/i)).toBeNull();
   });
 
@@ -268,12 +295,12 @@ describe('UpdateAcquisitionForm component', () => {
     });
 
     await act(async () => userEvent.click(getRemoveProjectButton()));
-    await waitFor(() => getFormikRef().current?.submitForm());
+    await act(async () => getFormikRef().current?.submitForm());
 
     initialValues.product = '';
     initialValues.project = '' as unknown as IAutocompletePrediction;
 
-    expect(validationSchema).toBeCalled();
+    expect(validationSchema).toHaveBeenCalled();
     expect(onSubmit).toHaveBeenLastCalledWith(initialValues, expect.anything());
   });
 

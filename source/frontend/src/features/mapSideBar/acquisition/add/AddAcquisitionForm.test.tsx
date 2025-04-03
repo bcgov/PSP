@@ -13,11 +13,11 @@ import {
   cleanup,
   fakeText,
   fireEvent,
+  getByName,
   render,
   RenderOptions,
   screen,
   userEvent,
-  waitFor,
   waitForEffects,
   within,
 } from '@/utils/test-utils';
@@ -45,7 +45,7 @@ vi.mocked(useApiUsers).mockReturnValue({
 
 describe('AddAcquisitionForm component', () => {
   // render component under test
-  const setup = (props: TestProps, renderOptions: RenderOptions = {}) => {
+  const setup = async (props: TestProps, renderOptions: RenderOptions = {}) => {
     const formikRef = createRef<FormikProps<AcquisitionForm>>();
     const utils = render(
       <AddAcquisitionForm
@@ -65,6 +65,9 @@ describe('AddAcquisitionForm component', () => {
         history,
       },
     );
+
+    // wait for effects
+    await act(async () => {});
 
     return {
       ...utils,
@@ -96,16 +99,17 @@ describe('AddAcquisitionForm component', () => {
     cleanup();
   });
 
-  it('renders as expected', () => {
-    const { asFragment } = setup({ initialValues, confirmBeforeAdd: vi.fn() });
+  it('renders as expected', async () => {
+    const { asFragment } = await setup({ initialValues, confirmBeforeAdd: vi.fn() });
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('renders form fields as expected', () => {
-    const { getByText, getNameTextbox, getRegionDropdown, getSubfileInterestTypeDropdown } = setup({
-      initialValues,
-      confirmBeforeAdd: vi.fn(),
-    });
+  it('renders form fields as expected', async () => {
+    const { getByText, getNameTextbox, getRegionDropdown, getSubfileInterestTypeDropdown } =
+      await setup({
+        initialValues,
+        confirmBeforeAdd: vi.fn(),
+      });
 
     const formSection = getByText(/Acquisition Details/i);
     const input = getNameTextbox();
@@ -123,42 +127,51 @@ describe('AddAcquisitionForm component', () => {
     initialValues.fileName = 'foo bar baz';
     const apiProject = mockProjects()[0];
     initialValues.project = { id: apiProject.id || 0, text: apiProject.description || '' };
-    const { getNameTextbox } = setup({ initialValues, confirmBeforeAdd: vi.fn() });
+    initialValues.physicalFileDetails = 'mocked physical file details';
+    const { getNameTextbox, getByText } = await setup({ initialValues, confirmBeforeAdd: vi.fn() });
     const input = getNameTextbox();
 
     expect(input).toBeVisible();
     expect(input).toHaveValue('foo bar baz');
+    expect(getByText('mocked physical file details')).toBeVisible();
   });
 
   it('should validate character limits', async () => {
-    const { getFormikRef, findByText, getNameTextbox } = setup({
+    const { getFormikRef, findByText, getNameTextbox } = await setup({
       initialValues,
       confirmBeforeAdd: vi.fn(),
     });
 
     // name cannot exceed 500 characters
     const nameInput = getNameTextbox();
-    await waitFor(() => userEvent.paste(nameInput, fakeText(550)));
+    await act(async () => userEvent.paste(nameInput, fakeText(550)));
+
+    // physical file details cannot exceed 2000 characters
+    const detailsTextarea = getByName('physicalFileDetails') as HTMLTextAreaElement;
+    await act(async () => userEvent.paste(detailsTextarea, fakeText(3000)));
 
     // submit form to trigger validation check
-    await waitFor(() => getFormikRef().current?.submitForm());
+    await act(async () => getFormikRef().current?.submitForm());
 
-    expect(validationSchema).toBeCalled();
+    expect(validationSchema).toHaveBeenCalled();
     expect(await findByText(/Acquisition file name must be at most 500 characters/i)).toBeVisible();
+    expect(
+      await findByText(/Physical file details must be at most 2000 characters/i),
+    ).toBeVisible();
   });
 
   it('should display historical field input', async () => {
-    const { getByText } = setup({ initialValues, confirmBeforeAdd: vi.fn() });
+    const { getByText } = await setup({ initialValues, confirmBeforeAdd: vi.fn() });
     expect(getByText(/Historical file number/i)).toBeVisible();
   });
 
   it('should display owner solicitor input', async () => {
-    const { getByText } = setup({ initialValues, confirmBeforeAdd: vi.fn() });
+    const { getByText } = await setup({ initialValues, confirmBeforeAdd: vi.fn() });
     expect(getByText(/Owner solicitor/i)).toBeVisible();
   });
 
   it('should display owner representative input', async () => {
-    const { getByText } = setup({ initialValues, confirmBeforeAdd: vi.fn() });
+    const { getByText } = await setup({ initialValues, confirmBeforeAdd: vi.fn() });
     expect(getByText(/Owner representative/i)).toBeVisible();
   });
 
@@ -171,18 +184,18 @@ describe('AddAcquisitionForm component', () => {
       initialValues.formattedProduct = '9999 Test Product';
     });
 
-    it('renders as expected', () => {
-      const { asFragment } = setup({ initialValues, parentId, confirmBeforeAdd: vi.fn() });
+    it('renders as expected', async () => {
+      const { asFragment } = await setup({ initialValues, parentId, confirmBeforeAdd: vi.fn() });
       expect(asFragment()).toMatchSnapshot();
     });
 
     it('should display interest solicitor input', async () => {
-      const { getByText } = setup({ initialValues, parentId, confirmBeforeAdd: vi.fn() });
+      const { getByText } = await setup({ initialValues, parentId, confirmBeforeAdd: vi.fn() });
       expect(getByText(/Sub-interest solicitor/i)).toBeVisible();
     });
 
     it('should display Subfile interest type SELECT', async () => {
-      const { getSubfileInterestTypeDropdown } = setup({
+      const { getSubfileInterestTypeDropdown } = await setup({
         initialValues,
         parentId,
         confirmBeforeAdd: vi.fn(),
@@ -191,7 +204,7 @@ describe('AddAcquisitionForm component', () => {
     });
 
     it('should display OTHER Subfile interest type', async () => {
-      const { getSubfileInterestTypeDropdown, getOtherSubfileInterestTypeTextbox } = setup({
+      const { getSubfileInterestTypeDropdown, getOtherSubfileInterestTypeTextbox } = await setup({
         initialValues,
         parentId,
         confirmBeforeAdd: vi.fn(),
@@ -211,7 +224,7 @@ describe('AddAcquisitionForm component', () => {
 
     it('should validate OTHER Subfile interest type max length', async () => {
       const { findByText, getSubfileInterestTypeDropdown, getOtherSubfileInterestTypeTextbox } =
-        setup({ initialValues, parentId, confirmBeforeAdd: vi.fn() });
+        await setup({ initialValues, parentId, confirmBeforeAdd: vi.fn() });
       const subfileInterestTypeDropdown = getSubfileInterestTypeDropdown();
 
       expect(subfileInterestTypeDropdown).toBeInTheDocument();
@@ -236,12 +249,12 @@ describe('AddAcquisitionForm component', () => {
     });
 
     it('should display interest representative input', async () => {
-      const { getByText } = setup({ initialValues, parentId, confirmBeforeAdd: vi.fn() });
+      const { getByText } = await setup({ initialValues, parentId, confirmBeforeAdd: vi.fn() });
       expect(getByText(/Sub-interest representative/i)).toBeVisible();
     });
 
     it('should display project and product as read-only (with tooltip explaining why)', async () => {
-      setup({ initialValues, parentId, confirmBeforeAdd: vi.fn() });
+      await setup({ initialValues, parentId, confirmBeforeAdd: vi.fn() });
 
       expect(screen.getByText('1111 - Test Project')).toBeVisible();
       expect(screen.getByText('9999 Test Product')).toBeVisible();
