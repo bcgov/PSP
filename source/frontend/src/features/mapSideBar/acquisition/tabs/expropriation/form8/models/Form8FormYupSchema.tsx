@@ -22,7 +22,6 @@ export const Form8FormModelYupSchema = yup.object().shape({
   expropriationAuthority: yup.object().shape({
     contact: yup.object().required('Expropriation authority is required').nullable(),
   }),
-  advancedPaymentServedDate: yup.string().nullable(),
   description: yup.string().max(2000, 'Description must be at most ${max} characters'),
   paymentItems: yup
     .array()

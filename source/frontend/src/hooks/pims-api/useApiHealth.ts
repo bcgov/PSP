@@ -4,6 +4,7 @@ import { IApiHealth } from './interfaces/IApiHealth';
 import IApiVersion from './interfaces/IApiVersion';
 import IHealthLive from './interfaces/IHealthLive';
 import IHealthReady from './interfaces/IHealthReady';
+import ISystemCheck from './interfaces/ISystemCheck';
 import useAxiosApi from './useApi';
 
 /**
@@ -19,6 +20,7 @@ export const useApiHealth = () => {
         getVersion: () => api.get<IApiVersion>('health/env'),
         getLive: () => api.get<IHealthLive>('health/live'),
         getReady: () => api.get<IHealthReady>('health/ready'),
+        getSystemCheck: () => api.get<ISystemCheck>('health/system'),
       } as IApiHealth),
     [api],
   );
