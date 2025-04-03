@@ -1,10 +1,16 @@
 import { useContext } from 'react';
 import styled from 'styled-components';
 
+import TooltipIcon from '@/components/common/TooltipIcon';
+import { Roles } from '@/constants';
+import { cannotEditMessage } from '@/features/mapSideBar/acquisition/common/constants';
 import { LeasePageNames } from '@/features/mapSideBar/lease/LeaseContainer';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
+import { exists } from '@/utils';
 
 import { LeaseStateContext } from '../../context/LeaseContext';
+import { LeaseStatusUpdateSolver } from '../../models/LeaseStatusUpdateSolver';
 import LeaseEditButton from '../LeaseEditButton';
 
 export interface ILeasePageFormProps {
@@ -21,18 +27,20 @@ export const LeaseViewPageForm: React.FunctionComponent<
   React.PropsWithChildren<ILeasePageFormProps>
 > = ({ children, leasePageName, isEditing, onEdit }) => {
   const { lease } = useContext(LeaseStateContext);
+  const { hasRole } = useKeycloakWrapper();
+  const updateSolver = new LeaseStatusUpdateSolver(lease?.fileStatusTypeCode);
 
   const displayLeaseTerminationMessage = () => {
     return (
       lease &&
       leasePageName === LeasePageNames.DETAILS &&
-      (lease.fileStatusTypeCode.id === ApiGen_CodeTypes_LeaseStatusTypes.DISCARD ||
-        lease.fileStatusTypeCode.id === ApiGen_CodeTypes_LeaseStatusTypes.TERMINATED)
+      (lease.fileStatusTypeCode?.id === ApiGen_CodeTypes_LeaseStatusTypes.DISCARD ||
+        lease.fileStatusTypeCode?.id === ApiGen_CodeTypes_LeaseStatusTypes.TERMINATED)
     );
   };
 
   const getTerminationMessage = (): string => {
-    if (lease.fileStatusTypeCode.id === ApiGen_CodeTypes_LeaseStatusTypes.DISCARD) {
+    if (lease.fileStatusTypeCode?.id === ApiGen_CodeTypes_LeaseStatusTypes.DISCARD) {
       return lease.cancellationReason;
     } else {
       return lease.terminationReason;
@@ -46,7 +54,17 @@ export const LeaseViewPageForm: React.FunctionComponent<
           {displayLeaseTerminationMessage() && (
             <StyledTerminationMessage>{getTerminationMessage()}</StyledTerminationMessage>
           )}
-          <LeaseEditButton onEdit={onEdit} isEditing={isEditing} />
+          {updateSolver.canEditLeasePage(leasePageName) ||
+          (hasRole(Roles.SYSTEM_ADMINISTRATOR) && leasePageName === LeasePageNames.DETAILS) ? (
+            <LeaseEditButton onEdit={onEdit} isEditing={isEditing} pageName={leasePageName} />
+          ) : (
+            exists(onEdit) && (
+              <TooltipIcon
+                toolTipId={`lease-actions-cannot-edit-tooltip`}
+                toolTip={cannotEditMessage}
+              />
+            )
+          )}
         </StyledTerminationWrapper>
       </StyledEditWrapper>
       <>{children}</>

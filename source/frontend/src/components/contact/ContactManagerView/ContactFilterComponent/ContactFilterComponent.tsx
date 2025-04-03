@@ -2,13 +2,14 @@ import { Form, Formik } from 'formik';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaRegBuilding, FaRegUser } from 'react-icons/fa';
-import { FaCircle } from 'react-icons/fa';
 import styled from 'styled-components';
 
+import ActiveIndicator from '@/components/common/ActiveIndicator';
 import { ResetButton, SearchButton } from '@/components/common/buttons';
 import ActiveFilterCheck from '@/components/common/form/ActiveFilterCheck';
 import { RadioGroup } from '@/components/common/form/RadioGroup';
 import { InlineInput } from '@/components/common/form/styles';
+import { FlexRowNoGap } from '@/components/common/styles';
 import { VerticalBar } from '@/components/common/VerticalBar';
 import { IContactFilter } from '@/components/contact/ContactManagerView/IContactFilter';
 
@@ -82,7 +83,7 @@ export const ContactFilterComponent: React.FunctionComponent<
                 />
               </Col>
               <Col lg="auto" className="pl-0">
-                <StyledNameInput field="summary" placeholder="Name of person or organization" />
+                <StyledNameInput field="summary" placeholder="Name" />
               </Col>
             </Row>
             <Col xl="auto">
@@ -94,20 +95,18 @@ export const ContactFilterComponent: React.FunctionComponent<
                     placeholder="City of contact's address"
                   />
                 </Col>
-                <Col className="pl-0">
+                <Col className="pl-4">
                   {showActiveSelector && (
-                    <>
+                    <FlexRowNoGap>
                       <ActiveFilterCheck<IContactFilter>
                         fieldName="activeContactsOnly"
                         setFilter={setFilter}
                       />
-                      <ActiveIndicator>
-                        <FaCircle size={16} />
-                      </ActiveIndicator>
-                      <span>
+                      <ActiveIndicator active size={16} />
+                      <span className="ml-1">
                         <b>Active</b> contacts only
                       </span>
-                    </>
+                    </FlexRowNoGap>
                   )}
                 </Col>
               </Row>
@@ -213,7 +212,8 @@ const StyledFilterBoxForm = styled(Form)`
   padding: 1rem;
   max-width: 85%;
   @media only screen and (max-width: 1199px) {
-  max-width: 50%;
+    max-width: 50%;
+  }
 `;
 
 const StyledColButton = styled(Col)`
@@ -227,11 +227,4 @@ export const StyledNameInput = styled(InlineInput)`
 
 export const StyledCityInput = styled(InlineInput)`
   max-width: 25rem;
-`;
-
-export const ActiveIndicator = styled.div`
-  display: inline-block;
-  margin: 0rem 0.5rem;
-  padding: 0.2rem;
-  color: ${props => props.theme.bcTokens.iconsColorSuccess};
 `;

@@ -12,10 +12,12 @@ import { exists, isValidId } from '@/utils';
 
 import { SideBarContext } from '../context/sidebarContext';
 import { UpdatePropertyDetailsContainer } from '../property/tabs/propertyDetails/update/UpdatePropertyDetailsContainer';
+import UpdatePropertyForm from '../property/tabs/propertyResearch/update/UpdatePropertyForm';
 import UpdatePropertyResearchContainer from '../property/tabs/propertyResearch/update/UpdatePropertyResearchContainer';
 import TakesAddContainer from '../property/tabs/takes/add/TakesAddContainer';
 import { TakeForm } from '../property/tabs/takes/update/TakeForm';
 import { TakesUpdateContainer } from '../property/tabs/takes/update/TakeUpdateContainer';
+import ResearchStatusUpdateSolver from '../research/tabs/fileDetails/ResearchStatusUpdateSolver';
 import { PropertyFileContainer } from '../shared/detail/PropertyFileContainer';
 
 export interface IFilePropertyRouterProps {
@@ -34,6 +36,7 @@ export const FilePropertyRouter: React.FC<IFilePropertyRouterProps> = props => {
   const { path, url } = useRouteMatch();
 
   const { setStaleLastUpdatedBy } = useContext(SideBarContext);
+  const statusSolver = new ResearchStatusUpdateSolver(props?.file);
 
   const onChildSuccess = () => {
     props.setIsEditing(false);
@@ -92,9 +95,9 @@ export const FilePropertyRouter: React.FC<IFilePropertyRouterProps> = props => {
             researchFileProperty={fileProperty as ApiGen_Concepts_ResearchFileProperty}
             onSuccess={props.onSuccess}
             ref={props.formikRef}
+            View={UpdatePropertyForm}
           />
         </Route>
-
         <Redirect from={`${path}`} to={`${url}/${InventoryTabNames.property}?edit=true`} />
       </Switch>
     );
@@ -110,6 +113,7 @@ export const FilePropertyRouter: React.FC<IFilePropertyRouterProps> = props => {
             customTabs={[]}
             View={InventoryTabs}
             fileContext={props.fileType}
+            statusSolver={statusSolver}
           />
         </Route>
         <Redirect

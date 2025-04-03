@@ -14,10 +14,10 @@ import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/
 import { formatMoney, prettyFormatDate, stringToFragment } from '@/utils';
 
 import { cannotEditMessage } from '../../acquisition/common/constants';
-import { UpdateCompensationContext } from '../models/UpdateCompensationContext';
+import { IUpdateCompensationStrategy } from '../models/IUpdateCompensationStrategy';
 
 export function createCompensationTableColumns(
-  statusSolver: UpdateCompensationContext,
+  statusSolver: IUpdateCompensationStrategy,
   onShow: (compensationId: number) => void,
   onDelete: (compensationId: number) => void,
 ) {
@@ -89,7 +89,9 @@ export function createCompensationTableColumns(
       Cell: (cellProps: CellProps<ApiGen_Concepts_CompensationRequisition>) => {
         const { hasClaim, hasRole } = useKeycloakWrapper();
         const canEditDetails = (isDraft: boolean | null) => {
-          if (hasRole(Roles.SYSTEM_ADMINISTRATOR) || statusSolver.canEditCompensations(isDraft)) {
+          if (
+            statusSolver.canEditOrDeleteCompensation(isDraft, hasRole(Roles.SYSTEM_ADMINISTRATOR))
+          ) {
             return true;
           }
           return false;

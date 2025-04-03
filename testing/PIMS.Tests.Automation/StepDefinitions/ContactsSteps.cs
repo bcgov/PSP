@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using PIMS.Tests.Automation.Data;
 using PIMS.Tests.Automation.Classes;
-using PIMS.Tests.Automation.PageObjects;
+using OpenQA.Selenium;
 
 namespace PIMS.Tests.Automation.StepDefinitions
 {
@@ -18,12 +18,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private IndividualContact individualContact;
         private OrganizationContact organizationContact;
 
-        public ContactsSteps(BrowserDriver driver)
+        public ContactsSteps(IWebDriver driver)
         {
             loginSteps = new LoginSteps(driver);
-            contacts = new Contacts(driver.Current);
-            searchContacts = new SearchContacts(driver.Current);
-            sharedPagination = new SharedPagination(driver.Current);
+            contacts = new Contacts(driver);
+            searchContacts = new SearchContacts(driver);
+            sharedPagination = new SharedPagination(driver);
 
             individualContact = new IndividualContact();
             organizationContact = new OrganizationContact();
@@ -271,7 +271,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             /* TEST COVERAGE: PSP-4200 */
             Assert.Equal("No Contacts match the search criteria", searchContacts.GetNoSearchMessage());
-            searchContacts.Dispose();
         }
 
         [StepDefinition(@"Expected Content is displayed on Contacts Table from contact type ""(.*)""")]
@@ -283,13 +282,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 searchContacts.VerifyContactTableContent(individualContact.FullName, individualContact.FirstName, individualContact.LastName, individualContact.Organization, individualContact.IndEmail1, individualContact.IndMailAddress.AddressLine1, individualContact.IndMailAddress.City, individualContact.IndMailAddress.ProvinceView, individualContact.IndMailAddress.Country);
             else
                 searchContacts.VerifyContactTableContent(organizationContact.OrganizationName, "", "", organizationContact.OrganizationName, organizationContact.OrgEmail1, organizationContact.OrgMailAddress.AddressLine1, organizationContact.OrgMailAddress.City, organizationContact.OrgMailAddress.ProvinceView, organizationContact.OrgMailAddress.Country);
-
-            searchContacts.Dispose();
         }
 
         private void PopulateIndividualContact(int rowNumber)
         {
-            DataTable individualContactSheet = ExcelDataContext.GetInstance().Sheets["IndividualContacts"]!;
+            System.Data.DataTable individualContactSheet = ExcelDataContext.GetInstance().Sheets["IndividualContacts"]!;
             ExcelDataContext.PopulateInCollection(individualContactSheet);
 
             individualContact = new IndividualContact();
@@ -298,7 +295,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             individualContact.LastName = ExcelDataContext.ReadData(rowNumber, "LastName");
             individualContact.FullName = ExcelDataContext.ReadData(rowNumber, "FullName");
             individualContact.PreferableName = ExcelDataContext.ReadData(rowNumber, "PreferableName");
-            individualContact.ContactStatus = ExcelDataContext.ReadData(rowNumber, "ContactStatus");
+            individualContact.ContactStatus = ExcelDataContext.ReadData(rowNumber, "IndContactStatus");
             individualContact.Organization = ExcelDataContext.ReadData(rowNumber, "Organization");
 
             individualContact.IndEmail1 = ExcelDataContext.ReadData(rowNumber, "IndEmail1");
@@ -350,14 +347,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateOrganizationContact(int rowNumber)
         {
-            DataTable organizationContactSheet = ExcelDataContext.GetInstance().Sheets["OrganizationContacts"]!;
+            System.Data.DataTable organizationContactSheet = ExcelDataContext.GetInstance().Sheets["OrganizationContacts"]!;
             ExcelDataContext.PopulateInCollection(organizationContactSheet);
 
             organizationContact = new OrganizationContact();
             organizationContact.OrganizationName = ExcelDataContext.ReadData(rowNumber, "OrganizationName");
             organizationContact.Alias = ExcelDataContext.ReadData(rowNumber, "Alias");
             organizationContact.IncorporationNumber = ExcelDataContext.ReadData(rowNumber, "IncorporationNumber");
-            organizationContact.ContactStatus = ExcelDataContext.ReadData(rowNumber, "ContactStatus");
+            organizationContact.ContactStatus = ExcelDataContext.ReadData(rowNumber, "OrgContactStatus");
 
             organizationContact.OrgEmail1 = ExcelDataContext.ReadData(rowNumber, "OrgEmail1");
             organizationContact.OrgEmailType1 = ExcelDataContext.ReadData(rowNumber, "OrgEmailType1");

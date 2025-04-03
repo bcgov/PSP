@@ -4,7 +4,8 @@ import styled from 'styled-components';
 
 import { RemoveIconButton } from '@/components/common/buttons';
 import ViewButton from '@/components/common/buttons/ViewButton';
-import { ColumnWithProps, DateCell } from '@/components/Table';
+import { ColumnWithProps } from '@/components/Table';
+import { UtcDateCell } from '@/components/Table/DateCell';
 import { Claims } from '@/constants/index';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_Note } from '@/models/api/generated/ApiGen_Concepts_Note';
@@ -28,7 +29,7 @@ export function createTableColumns(
       sortable: true,
       minWidth: 24,
       maxWidth: 24,
-      Cell: DateCell,
+      Cell: UtcDateCell,
     },
     {
       Header: 'Last updated by',

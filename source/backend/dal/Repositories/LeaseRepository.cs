@@ -8,10 +8,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
+using Pims.Core.Security;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
-using Pims.Core.Security;
 
 namespace Pims.Dal.Repositories
 {
@@ -717,6 +717,8 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(s => s.PimsSecurityDepositReturns)
                     .ThenInclude(r => r.PimsSecurityDepositReturnHolder)
                     .ThenInclude(s => s.Organization)
+
+                .Include(r => r.PimsLeaseRenewals)
 
                 .Include(l => l.PimsLeasePeriods)
                      .ThenInclude(t => t.LeasePmtFreqTypeCodeNavigation)

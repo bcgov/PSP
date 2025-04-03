@@ -227,14 +227,18 @@ exports[`Manage access requests > Snapshot matches 1`] = `
   padding: 0;
 }
 
-.c6:disabled {
+.c6:-moz-read-only {
+  background: white;
+}
+
+.c6:read-only {
   background: white;
 }
 
 .c2 {
   color: #474543;
   font-family: 'BCSans-Bold';
-  font-size: 3.2rem;
+  font-size: 2.8rem;
   border-bottom: solid 0.5rem var(--theme-blue-90);
   width: 100%;
   text-align: left;
@@ -270,6 +274,7 @@ exports[`Manage access requests > Snapshot matches 1`] = `
       <svg
         fill="currentColor"
         height="2.6rem"
+        style="vertical-align: baseline;"
         title="Admin Tools icon"
         viewBox="0 0 24 24"
         width="2.6rem"
@@ -849,6 +854,8 @@ exports[`Manage access requests > Snapshot matches 1`] = `
               </span>
               <input
                 class="c6 form-control"
+                data-testid="input-page-size"
+                readonly=""
                 type="number"
                 value="10"
               />

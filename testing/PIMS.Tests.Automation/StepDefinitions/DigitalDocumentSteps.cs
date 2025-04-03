@@ -1,8 +1,8 @@
-﻿using PIMS.Tests.Automation.Classes;
+﻿using OpenQA.Selenium;
+using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
 using System.Data;
-using System.Linq.Expressions;
-using Xunit;
+
 
 namespace PIMS.Tests.Automation.StepDefinitions
 {
@@ -17,10 +17,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private List<DigitalDocument> digitalDocumentList;
 
 
-        public DigitalDocumentSteps(BrowserDriver driver)
+        public DigitalDocumentSteps(IWebDriver driver)
         {
-            digitalDocumentsTab = new DigitalDocuments(driver.Current);
-            sharedPagination = new SharedPagination(driver.Current);
+            digitalDocumentsTab = new DigitalDocuments(driver);
+            sharedPagination = new SharedPagination(driver);
             documentFiles = UploadFileDocuments();
             documentsRowStart = 0;
             documentsRowsQuantity = 0;
@@ -38,7 +38,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             digitalDocumentsTab.NavigateDocumentsTab();
 
             //Verify Initial List View
-            digitalDocumentsTab.VerifyDocumentsListView(fileType);
+            digitalDocumentsTab.VerifyDocumentsListView();
 
             //Getting Digital Document Details
             PopulateDigitalDocumentIndex(rowNumber);
@@ -53,7 +53,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             for (var i = 0; i < uploadTurns; i++)
             {
                 //Add a New Document Button
-                digitalDocumentsTab.AddNewDocumentButton(fileType);
+                digitalDocumentsTab.AddNewDocumentButton();
 
                 //Verify and create a new Document
                 digitalDocumentsTab.VerifyInitUploadDocumentForm();
@@ -71,11 +71,13 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 //Upload several documents per time
                 digitalDocumentsTab.UploadDocument(documentURLs);
 
-                //Fill document type and status of uploaded documents
+                //Fill document type, status and details of uploaded documents
                 int documentRoundIdx = 0;
                 for (var k = documentStartIdx; k <= documentEndIdx; k++)
                 {
                     digitalDocumentsTab.InsertDocumentTypeStatus(digitalDocumentList[k], documentRoundIdx);
+                    //digitalDocumentsTab.VerifyDocumentFields(digitalDocumentList[k].DocumentType);
+                    //digitalDocumentsTab.InsertDocumentTypeDetails(digitalDocumentList[k]);
                     documentRoundIdx++;
                 }
                     
@@ -88,6 +90,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Order Documents by Document Type
             digitalDocumentsTab.OrderByDocumentFileType();
+            digitalDocumentsTab.WaitUploadDocument();
+
 
             //Insert Document Details to previously uploaded documents
             for (var l = 0; l < digitalDocumentList.Count; l++)
@@ -97,7 +101,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 digitalDocumentsTab.VerifyDocumentFields(digitalDocumentList[l].DocumentType);
                 digitalDocumentsTab.InsertDocumentTypeDetails(digitalDocumentList[l]);
                 digitalDocumentsTab.SaveDigitalDocumentUpdate();
-
             }
 
             //Go back to 1st page
@@ -116,7 +119,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public void DocumentActivityCreate(int rowNumber)
         {
             //Verify Initial List View
-            digitalDocumentsTab.VerifyDocumentsListView("Property Management");
+            digitalDocumentsTab.VerifyDocumentsListView();
 
             //Getting Digital Document Details
             PopulateDigitalDocumentIndex(rowNumber);
@@ -131,7 +134,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             for (var i = 0; i < uploadTurns; i++)
             {
                 //Add a New Document Button
-                digitalDocumentsTab.AddNewDocumentButton("Property Management");
+                digitalDocumentsTab.AddNewDocumentButton();
 
                 //Verify and create a new Document
                 digitalDocumentsTab.VerifyInitUploadDocumentForm();
@@ -166,6 +169,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Order Documents by Document Type
             digitalDocumentsTab.OrderByDocumentFileType();
+            digitalDocumentsTab.WaitUploadDocument();
 
             //Insert Document Details to previously uploaded documents
             for (var l = 0; l < digitalDocumentList.Count; l++)
@@ -202,7 +206,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             PopulateDigitalDocumentIndex(rowNumber);
 
             //Add new digital document
-            digitalDocumentsTab.AddNewDocumentButton(fileType);
+            digitalDocumentsTab.AddNewDocumentButton();
             //digitalDocumentsTab.InsertDocumentTypeStatus(digitalDocumentList[0]);
 
             Random random = new Random();
@@ -355,7 +359,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateDigitalDocumentIndex(int rowNumber)
         {
-            DataTable documentsIndexSheet = ExcelDataContext.GetInstance().Sheets["DocumentsIndex"]!;
+            System.Data.DataTable documentsIndexSheet = ExcelDataContext.GetInstance().Sheets["DocumentsIndex"]!;
             ExcelDataContext.PopulateInCollection(documentsIndexSheet);
 
             digitalDocumentList = new List<DigitalDocument>();
@@ -371,7 +375,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateDigitalDocumentsDetails(int rowNumber)
         {
-            DataTable documentDetailsSheet = ExcelDataContext.GetInstance().Sheets["DocumentsDetails"]!;
+            System.Data.DataTable documentDetailsSheet = ExcelDataContext.GetInstance().Sheets["DocumentsDetails"]!;
             ExcelDataContext.PopulateInCollection(documentDetailsSheet);
 
             DigitalDocument digitalDocument = new DigitalDocument();

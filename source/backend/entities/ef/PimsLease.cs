@@ -127,7 +127,7 @@ public partial class PimsLease
     /// Manually etered lease description, not the legal description
     /// </summary>
     [Column("LEASE_DESCRIPTION")]
-    [StringLength(2000)]
+    [StringLength(4000)]
     public string LeaseDescription { get; set; }
 
     /// <summary>
@@ -440,6 +440,9 @@ public partial class PimsLease
 
     [InverseProperty("Lease")]
     public virtual ICollection<PimsLeaseLeasePurpose> PimsLeaseLeasePurposes { get; set; } = new List<PimsLeaseLeasePurpose>();
+
+    [InverseProperty("Lease")]
+    public virtual ICollection<PimsLeaseLicenseTeam> PimsLeaseLicenseTeams { get; set; } = new List<PimsLeaseLicenseTeam>();
 
     [InverseProperty("Lease")]
     public virtual ICollection<PimsLeaseNote> PimsLeaseNotes { get; set; } = new List<PimsLeaseNote>();

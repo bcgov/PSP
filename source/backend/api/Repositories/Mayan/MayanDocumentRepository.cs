@@ -4,6 +4,7 @@ using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Mime;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -18,6 +19,7 @@ using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
 using Pims.Api.Models.Mayan.Metadata;
 using Pims.Api.Models.Requests.Http;
+using Polly.Registry;
 
 namespace Pims.Api.Repositories.Mayan
 {
@@ -37,13 +39,15 @@ namespace Pims.Api.Repositories.Mayan
         /// <param name="authRepository">Injected repository that handles authentication.</param>
         /// <param name="configuration">The injected configuration provider.</param>
         /// <param name="jsonOptions">The jsonOptions.</param>
+        /// <param name="pollyPipelineProvider">The polly retry policy.</param>
         public MayanDocumentRepository(
             ILogger<MayanDocumentRepository> logger,
             IHttpClientFactory httpClientFactory,
             IEdmsAuthRepository authRepository,
             IConfiguration configuration,
-            IOptions<JsonSerializerOptions> jsonOptions)
-            : base(logger, httpClientFactory, configuration, jsonOptions)
+            IOptions<JsonSerializerOptions> jsonOptions,
+            ResiliencePipelineProvider<string> pollyPipelineProvider)
+            : base(logger, httpClientFactory, configuration, jsonOptions, pollyPipelineProvider)
         {
             _authRepository = authRepository;
         }
@@ -160,11 +164,9 @@ namespace Pims.Api.Repositories.Mayan
             string authenticationToken = await _authRepository.GetTokenAsync();
 
             Uri endpoint = new($"{this._config.BaseUri}/documents/{documentId}/type/change/");
-            using MultipartFormDataContent multiContent = new MultipartFormDataContent();
-            using HttpContent content = new StringContent(documentTypeId.ToString(CultureInfo.InvariantCulture));
-            multiContent.Add(content, "document_type_id");
 
-            var response = await PostAsync<string>(endpoint, multiContent, authenticationToken).ConfigureAwait(true);
+            using var content = new StringContent($"{{ \"document_type_id\":  \"{documentTypeId}\" }}", Encoding.UTF8, "application/json");
+            var response = await PostAsync<string>(endpoint, content, authenticationToken).ConfigureAwait(true);
             _logger.LogDebug("Finished updating document type for document {documentId}", documentId);
 
             return response;

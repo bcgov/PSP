@@ -95,7 +95,7 @@ export const PropertyActivityEditForm: React.FunctionComponent<
     setActivityType(typeCode ?? null);
   };
 
-  const isEditMode = props.activity !== undefined;
+  const isEditMode = exists(props.activity);
 
   return (
     <ReactVisibilitySensor
@@ -109,7 +109,7 @@ export const PropertyActivityEditForm: React.FunctionComponent<
           <StyledFormWrapper>
             <StyledSummarySection>
               <LoadingBackdrop show={props.loading} />
-              {initialForm !== undefined && (
+              {exists(initialForm) && (
                 <Formik<PropertyActivityFormModel>
                   enableReinitialize
                   innerRef={formikRef}
@@ -163,7 +163,11 @@ export const PropertyActivityEditForm: React.FunctionComponent<
                             contactType={RestrictContactType.ONLY_INDIVIDUALS}
                           />
                         </SectionField>
-                        <SectionField label="Requested source" contentWidth="7">
+                        <SectionField
+                          label="Requestor"
+                          contentWidth="7"
+                          tooltip="Document the source of the request by entering the name of the person, organization or other entity from which the request has been received"
+                        >
                           <Input field="requestedSource" />
                         </SectionField>
                         <SectionField label="Involved parties" contentWidth="8">

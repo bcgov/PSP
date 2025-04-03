@@ -2,13 +2,14 @@ import isEmpty from 'lodash/isEmpty';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaFileExcel, FaPlus } from 'react-icons/fa';
-import { MdAirlineStops } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import styled from 'styled-components';
 
+import DispositionFileIcon from '@/assets/images/disposition-icon.svg?react';
 import { StyledIconButton } from '@/components/common/buttons';
 import * as CommonStyled from '@/components/common/styles';
-import { StyledAddButton } from '@/components/common/styles';
+import { PaddedScrollable, StyledAddButton } from '@/components/common/styles';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import { Claims } from '@/constants';
 import {
@@ -30,7 +31,6 @@ import { useDispositionFileExport } from '../hooks/useDispositionFileExport';
 import DispositionFilter from './DispositionFilter/DispositionFilter';
 import { DispositionSearchResults } from './DispositionSearchResults/DispositionSearchResults';
 import { DispositionFilterModel, DispositionSearchResultModel } from './models';
-import * as S from './styles';
 
 /**
  * Page that displays Disposition files information.
@@ -115,13 +115,23 @@ export const DispositionListView: React.FC<unknown> = () => {
   );
 
   return (
-    <S.ListPage>
-      <S.Scrollable>
+    <CommonStyled.ListPage>
+      <PaddedScrollable>
         <CommonStyled.H1>
-          <MdAirlineStops title="Disposition file Icon" fill="currentColor" />
-          <span className="ml-2">Disposition Files</span>
+          <FlexDiv>
+            <div>
+              <DispositionFileIcon title="Disposition file Icon" fill="currentColor" />
+              <span className="ml-2">Disposition Files</span>
+            </div>
+            {hasClaim(Claims.DISPOSITION_ADD) && (
+              <StyledAddButton onClick={() => history.push('/mapview/sidebar/disposition/new')}>
+                <FaPlus />
+                &nbsp;Add a Disposition File
+              </StyledAddButton>
+            )}
+          </FlexDiv>
         </CommonStyled.H1>
-        <S.PageToolbar>
+        <CommonStyled.PageToolbar>
           <Row>
             <Col>
               <DispositionFilter
@@ -141,13 +151,8 @@ export const DispositionListView: React.FC<unknown> = () => {
               </TooltipWrapper>
             </Col>
           </Row>
-        </S.PageToolbar>
-        {hasClaim(Claims.DISPOSITION_ADD) && (
-          <StyledAddButton onClick={() => history.push('/mapview/sidebar/disposition/new')}>
-            <FaPlus />
-            &nbsp;Add a Disposition File
-          </StyledAddButton>
-        )}
+        </CommonStyled.PageToolbar>
+
         <DispositionSearchResults
           results={results.map(a => DispositionSearchResultModel.fromApi(a))}
           totalItems={totalItems}
@@ -160,9 +165,21 @@ export const DispositionListView: React.FC<unknown> = () => {
           setPageIndex={setCurrentPage}
           loading={loading}
         ></DispositionSearchResults>
-      </S.Scrollable>
-    </S.ListPage>
+      </PaddedScrollable>
+    </CommonStyled.ListPage>
   );
 };
 
 export default DispositionListView;
+
+const FlexDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
+
+  svg {
+    vertical-align: baseline;
+  }
+`;

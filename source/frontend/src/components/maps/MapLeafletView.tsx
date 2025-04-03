@@ -10,10 +10,16 @@ import {
 } from 'leaflet';
 import { isEqual } from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
-import { LayerGroup, MapContainer as ReactLeafletMap, TileLayer } from 'react-leaflet';
+import {
+  LayerGroup,
+  MapContainer as ReactLeafletMap,
+  ScaleControl,
+  TileLayer,
+} from 'react-leaflet';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { MAP_MAX_NATIVE_ZOOM, MAP_MAX_ZOOM, MAX_ZOOM } from '@/constants/strings';
+import { useTenant } from '@/tenants';
 import { exists } from '@/utils';
 
 import { DEFAULT_MAP_ZOOM, defaultBounds, defaultLatLng } from './constants';
@@ -48,8 +54,9 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
   parentWidth,
 }) => {
   const [baseLayers, setBaseLayers] = useState<BaseLayer[]>([]);
-
   const [activeBasemap, setActiveBasemap] = useState<BaseLayer | null>(null);
+  const [zoom, setZoom] = useState(DEFAULT_MAP_ZOOM);
+  const [isMapReady, setIsMapReady] = useState(false);
 
   // a reference to the layer popup
   const popupRef = useRef<LeafletPopup>(null);
@@ -58,18 +65,29 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
   const layers = useConfiguredMapLayers();
 
   const [activeFeatureLayer, setActiveFeatureLayer] = useState<L.GeoJSON>();
+  const { doubleClickInterval } = useTenant();
 
   // add geojson layer to the map
   if (!!mapRef.current && !activeFeatureLayer) {
     setActiveFeatureLayer(geoJSON().addTo(mapRef.current));
   }
 
+  const timer = useRef(null);
+
   const handleMapClickEvent = (latlng: LatLng) => {
-    mapMachine.mapClick(latlng);
+    if (timer?.current !== null) {
+      return;
+    }
+    timer.current = setTimeout(() => {
+      mapMachine.mapClick(latlng);
+      timer.current = null;
+    }, doubleClickInterval ?? 250);
   };
 
-  const [zoom, setZoom] = useState(DEFAULT_MAP_ZOOM);
-  const [isMapReady, setIsMapReady] = useState(false);
+  const handleDoubleClickEvent = () => {
+    clearTimeout(timer?.current);
+    timer.current = null;
+  };
 
   const handleZoomUpdate = (zoomLevel: number) => {
     setZoom(zoomLevel);
@@ -107,7 +125,18 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
     zoom,
   ]);
 
-  const { mapLocationFeatureDataset, repositioningFeatureDataset, isRepositioning } = mapMachine;
+  const {
+    mapLocationFeatureDataset,
+    repositioningFeatureDataset,
+    isRepositioning,
+    setDefaultMapLayers,
+  } = mapMachine;
+
+  useEffect(() => {
+    if (isMapReady) {
+      setDefaultMapLayers(layers);
+    }
+  }, [isMapReady, layers, setDefaultMapLayers]);
 
   useEffect(() => {
     activeFeatureLayer?.clearLayers();
@@ -184,10 +213,6 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
     });
   }, []);
 
-  const handleMapReady = () => {
-    mapMachine.setDefaultMapLayers(layers);
-  };
-
   const handleMapCreated = (mapInstance: L.Map) => {
     setIsMapReady(true);
     if (mapInstance !== null) {
@@ -214,10 +239,11 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
         maxZoom={MAP_MAX_ZOOM}
         closePopupOnClick={false}
         ref={handleMapCreated}
-        whenReady={handleMapReady}
+        doubleClickZoom
       >
         <MapEvents
           click={e => handleMapClickEvent(e.latlng)}
+          dblclick={() => handleDoubleClickEvent()}
           zoomend={e => handleZoomUpdate(e.sourceTarget.getZoom())}
           moveend={handleBounds}
         />
@@ -242,6 +268,7 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
 
         <LegendControl />
         <ZoomOutButton />
+        <ScaleControl position="bottomleft" metric={true} imperial={false} />
         <AdvancedFilterButton
           onToggle={mapMachine.toggleMapFilterDisplay}
           active={mapMachine.isFiltering}

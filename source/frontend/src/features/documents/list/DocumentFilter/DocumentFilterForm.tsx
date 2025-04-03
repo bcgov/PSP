@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { ResetButton, SearchButton } from '@/components/common/buttons';
 import { Form, Input, Select, SelectOption } from '@/components/common/form';
+import { ColButtons } from '@/components/common/styles';
 import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { defaultDocumentFilter, IDocumentFilter } from '@/interfaces/IDocumentResults';
@@ -94,8 +95,4 @@ export const DocumentFilterForm = (props: IDocumentFilterFormProps) => {
 const FilterBoxForm = styled(Form)`
   background-color: ${({ theme }) => theme.css.filterBoxColor};
   border-radius: 0.5rem 0.5rem 0rem 0rem;
-`;
-
-const ColButtons = styled(Row)`
-  border-left: 0.2rem solid white;
 `;

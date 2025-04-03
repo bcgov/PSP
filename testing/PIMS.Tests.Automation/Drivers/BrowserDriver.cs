@@ -19,7 +19,7 @@ namespace PIMS.Tests.Automation.Drivers
             currentWebDriverLazy = new Lazy<IWebDriver>(CreateChromeWebDriver);
             configurationLazy = new Lazy<IConfiguration>(ReadConfiguration);
             closeBrowserOnDispose = Configuration.GetValue("CloseBrowserAfterEachTest", true);
-            runAutomationHeadless = Configuration.GetValue("RunHeadless", true);
+            runAutomationHeadless = Configuration.GetValue("RunHeadless", true); 
         }
 
         public IWebDriver Current => currentWebDriverLazy.Value;
@@ -37,7 +37,7 @@ namespace PIMS.Tests.Automation.Drivers
             if (runAutomationHeadless)
                 options.AddArgument("--headless=new");
 
-            var chromeDriver = new ChromeDriver(ChromeDriverService.CreateDefaultService(), options, TimeSpan.FromMinutes(3));
+            var chromeDriver = new ChromeDriver(ChromeDriverService.CreateDefaultService(), options, TimeSpan.FromMinutes(2));
             chromeDriver.Url = Configuration.GetValue<string>("Base_url");
 
             return chromeDriver;
@@ -65,12 +65,12 @@ namespace PIMS.Tests.Automation.Drivers
                 .Build();
 
         public void Dispose()
-        {
+        {   
             if (currentWebDriverLazy.IsValueCreated && closeBrowserOnDispose)
             {
-                Current.Quit();
-                Current.Dispose();
                 Current.Close();
+                Current.Dispose();
+                Current.Quit();
             }    
         }
     }

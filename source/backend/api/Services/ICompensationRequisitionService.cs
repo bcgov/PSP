@@ -20,6 +20,10 @@ namespace Pims.Api.Services
 
         PimsCompensationRequisition AddCompensationRequisition(FileTypes fileType, PimsCompensationRequisition compensationRequisition);
 
-        IEnumerable<PimsCompReqFinancial> GetCompensationRequisitionFinancials(long id);
+        IEnumerable<PimsCompReqFinancial> GetCompensationRequisitionFinancials(long compReqId);
+
+        IEnumerable<PimsCompReqAcqPayee> GetCompensationRequisitionAcquisitionPayees(long compReqId);
+
+        IEnumerable<PimsCompReqLeasePayee> GetCompensationRequisitionLeasePayees(long compReqId);
     }
 }

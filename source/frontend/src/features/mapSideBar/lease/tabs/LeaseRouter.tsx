@@ -5,6 +5,7 @@ import { Switch, useRouteMatch } from 'react-router-dom';
 import Claims from '@/constants/claims';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { LeaseFormModel } from '@/features/leases/models';
+import { LeaseStatusUpdateSolver } from '@/features/leases/models/LeaseStatusUpdateSolver';
 import { exists, stripTrailingSlash } from '@/utils';
 import AppRoute from '@/utils/AppRoute';
 
@@ -28,6 +29,7 @@ export const LeaseRouter: React.FunctionComponent<React.PropsWithChildren<ILease
 }) => {
   const { lease } = useContext(LeaseStateContext);
   const { path } = useRouteMatch();
+  const statusSolver = new LeaseStatusUpdateSolver(lease?.fileStatusTypeCode);
 
   if (!exists(lease)) {
     return null;
@@ -40,7 +42,11 @@ export const LeaseRouter: React.FunctionComponent<React.PropsWithChildren<ILease
         exact
         path={`${stripTrailingSlash(path)}`}
         customRender={() => (
-          <ConsultationListContainer leaseId={lease.id} View={ConsultationListView} />
+          <ConsultationListContainer
+            leaseId={lease.id}
+            View={ConsultationListView}
+            statusSolver={statusSolver}
+          />
         )}
         claim={Claims.LEASE_VIEW}
         key={'consultation'}

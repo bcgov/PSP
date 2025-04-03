@@ -3,7 +3,6 @@ import { FormikProps } from 'formik/dist/types';
 import { useCallback, useContext } from 'react';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
-import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import * as API from '@/constants/API';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { useLeaseDetail } from '@/features/leases/hooks/useLeaseDetail';
@@ -40,34 +39,39 @@ export const UpdateLeaseContainer: React.FunctionComponent<UpdateLeaseContainerP
 
   const { setModalContent, setDisplayModal } = useModalContext();
 
-  const mapMachine = useMapStateMachine();
-
   const { getByType } = useLookupCodeHelpers();
   const consultationTypes = getByType(API.CONSULTATION_TYPES);
 
   // Not all consultations might be coming from the backend. Add the ones missing.
 
   const leaseId = lease?.id;
-  useDeepCompareEffect(() => {
-    const exec = async () => {
-      if (leaseId) {
+
+  const refreshCompleteLease = useCallback(
+    async (leaseId?: number) => {
+      if (isValidId(leaseId)) {
         const lease = await getCompleteLease();
         formikRef?.current?.resetForm({ values: LeaseFormModel.fromApi(lease) });
       }
+    },
+    [formikRef, getCompleteLease],
+  );
+
+  useDeepCompareEffect(() => {
+    const exec = async () => {
+      await refreshCompleteLease(leaseId);
     };
     exec();
-  }, [getCompleteLease, leaseId, formikRef, consultationTypes]);
+  }, [leaseId, consultationTypes, refreshCompleteLease]);
 
   const afterSubmit = useCallback(
     async (updatedLease?: ApiGen_Concepts_Lease) => {
       if (isValidId(updatedLease?.id)) {
         formikRef?.current?.resetForm({ values: formikRef?.current?.values });
         await refresh();
-        mapMachine.refreshMapProperties();
         onEdit(false);
       }
     },
-    [formikRef, mapMachine, onEdit, refresh],
+    [formikRef, onEdit, refresh],
   );
 
   const onSubmit = useCallback(
@@ -91,6 +95,10 @@ export const UpdateLeaseContainer: React.FunctionComponent<UpdateLeaseContainerP
         message: e.response.data.error,
         okButtonText: 'Close',
         variant: 'error',
+        handleOk: async () => {
+          await refreshCompleteLease(leaseId);
+          setDisplayModal(false);
+        },
       });
       setDisplayModal(true);
     } else {
@@ -105,12 +113,12 @@ export const UpdateLeaseContainer: React.FunctionComponent<UpdateLeaseContainerP
         onSubmit={(lease: LeaseFormModel) =>
           withUserOverride(
             (userOverrideCodes: UserOverrideCode[]) => onSubmit(lease, userOverrideCodes),
-
             [],
             customErrorHandler,
           )
         }
         formikRef={formikRef}
+        initialValues={LeaseFormModel.fromApi(lease)}
       />
     </>
   );

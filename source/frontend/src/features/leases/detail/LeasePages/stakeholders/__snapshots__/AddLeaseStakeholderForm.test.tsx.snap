@@ -259,7 +259,7 @@ exports[`AddLeaseTenantForm component > renders as expected 1`] = `
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
 }
 
 .c1 {
@@ -304,13 +304,13 @@ exports[`AddLeaseTenantForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-content-end col"
           >
             <div
               class="c3 no-gutters row"
             >
               <div
-                class="px-2 my-1 col-auto"
+                class="align-items-end col-auto"
               >
                 Tenants
               </div>
@@ -382,7 +382,7 @@ exports[`AddLeaseTenantForm component > renders as expected 1`] = `
                   <div
                     class="tr"
                     role="row"
-                    style="display: flex; flex: 1 0 auto; min-width: 416px;"
+                    style="display: flex; flex: 1 0 auto; min-width: 366px;"
                   >
                     <div
                       class="th"
@@ -429,7 +429,7 @@ exports[`AddLeaseTenantForm component > renders as expected 1`] = `
                       class="th"
                       colspan="1"
                       role="columnheader"
-                      style="box-sizing: border-box; flex: 120 0 auto; min-width: 30px; width: 120px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                      style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                     >
                       <div
                         class="sortable-column"
@@ -441,7 +441,7 @@ exports[`AddLeaseTenantForm component > renders as expected 1`] = `
                       class="th"
                       colspan="1"
                       role="columnheader"
-                      style="box-sizing: border-box; flex: 150 0 auto; min-width: 150px; width: 150px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                      style="box-sizing: border-box; flex: 80 0 auto; min-width: 80px; width: 80px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                     >
                       <div
                         class="sortable-column"
@@ -453,7 +453,7 @@ exports[`AddLeaseTenantForm component > renders as expected 1`] = `
                       class="th"
                       colspan="1"
                       role="columnheader"
-                      style="box-sizing: border-box; flex: 100 0 auto; min-width: 80px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                      style="box-sizing: border-box; flex: 100 0 auto; min-width: 100px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                     >
                       <div
                         class="sortable-column"

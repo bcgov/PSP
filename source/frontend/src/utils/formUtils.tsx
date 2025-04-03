@@ -1,6 +1,5 @@
 import { Placement } from 'react-bootstrap/esm/Overlay';
 
-import { SelectOption } from '@/components/common/form';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
 import { ApiGen_Concepts_CodeType } from '@/models/api/generated/ApiGen_Concepts_CodeType';
@@ -188,12 +187,6 @@ export function nullableBooleanToString(value?: boolean | null): string {
   return value.toString();
 }
 
-export function yesNoUnknownToBoolean(value?: string): boolean | null {
-  if (value?.toLowerCase() === 'yes') return true;
-  else if (value?.toLowerCase() === 'no') return false;
-  return null;
-}
-
 export function booleanToYesNoUnknownString(value?: boolean | null): string {
   if (value === true) return 'Yes';
   else if (value === false) return 'No';
@@ -206,24 +199,11 @@ export function booleanToYesNoString(value?: boolean | null): string {
   return '';
 }
 
-export const yesNoUnknownOptions: SelectOption[] = [
-  { label: 'Unknown', value: '' },
-  { label: 'Yes', value: 'Yes' },
-  { label: 'No', value: 'No' },
-];
-
 export function numberFieldToRequiredNumber(value: NumberFieldValue) {
   if (value === '') {
     throw new Error('Number field is required, cannot be empty');
   }
   return Number(value);
-}
-
-export function toRequiredTypeCode<T>(value?: ApiGen_Base_CodeType<T>): ApiGen_Base_CodeType<T> {
-  if (!value) {
-    throw new Error('TypeCode is required, cannot be empty');
-  }
-  return value;
 }
 
 /**

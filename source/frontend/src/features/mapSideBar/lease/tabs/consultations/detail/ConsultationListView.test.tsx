@@ -162,6 +162,17 @@ describe('ConsultationListView component', () => {
     ).toBeVisible();
   });
 
+  it('Does not display action buttons when file in final status', async () => {
+    const consultations = [{ ...getMockApiConsultation(), id: 1 }];
+    const { queryByTitle, getByTestId } = setup({
+      props: { consultations, isFileFinalStatus: true },
+    });
+
+    expect(queryByTitle('Delete Consultation')).toBeNull();
+    expect(queryByTitle('Edit Consultation')).toBeNull();
+    expect(getByTestId('tooltip-icon-consultation-edit-actions-cannot-edit-tooltip')).toBeVisible();
+  });
+
   it('displays error consultation icon when there is at lease one consultation in error status', async () => {
     const consultations = [
       {

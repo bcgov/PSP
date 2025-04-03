@@ -21,7 +21,7 @@ namespace PIMS.Tests.Automation.PageObjects
             wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(120));
         }
 
-        protected virtual void Wait(int milliseconds = 2000) => Thread.Sleep(milliseconds);
+        protected virtual void Wait(int milliseconds = 3000) => Thread.Sleep(milliseconds);
 
         protected void WaitUntilSpinnerDisappear()
         {
@@ -105,7 +105,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
 
             var js = (IJavaScriptExecutor)webDriver;
-            
+
             var selectElement = webDriver.FindElement(parentElement);
             wait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(selectElement.FindElements(By.TagName("option"))));
 
@@ -139,7 +139,7 @@ namespace PIMS.Tests.Automation.PageObjects
             var js = (IJavaScriptExecutor)webDriver;
 
             var childrenElements = webDriver.FindElements(parentName);
-            var selectedOption = childrenElements.Should().ContainSingle(o => o.GetAttribute("value").Equals(option)).Subject;
+            var selectedOption = childrenElements.Should().ContainSingle(o => o.GetDomProperty("value").Equals(option)).Subject;
 
             System.Diagnostics.Debug.WriteLine(selectedOption);
 
@@ -164,7 +164,7 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilClickable(elementBy);
 
             var element = webDriver.FindElement(elementBy);
-            while (!element.GetAttribute("value").Equals(""))
+            while (!element.GetDomProperty("value").Equals(""))
             {
                 element.SendKeys(Keys.Backspace);
             }
@@ -173,7 +173,7 @@ namespace PIMS.Tests.Automation.PageObjects
         protected void ClearDigitsInput(By elementBy)
         {
             var element = webDriver.FindElement(elementBy);
-            while (!element.GetAttribute("value").Equals("0"))
+            while (!element.GetDomProperty("value").Equals("0"))
             {
                 element.SendKeys(Keys.Backspace);
             }
@@ -207,7 +207,7 @@ namespace PIMS.Tests.Automation.PageObjects
         protected void AssertTrueElementValueEquals(By elementBy, string text = "")
         {
             WaitUntilVisible(elementBy);
-            Assert.Equal(text, webDriver.FindElement(elementBy).GetAttribute("Value"));
+            Assert.Equal(text, webDriver.FindElement(elementBy).GetDomProperty("value"));
         }
 
         protected void AssertTrueContentNotEquals(By elementBy, string text)
@@ -218,9 +218,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
         protected void AssertTrueDoublesEquals(By elementBy, double number2)
         {
-            
+
             WaitUntilVisible(elementBy);
-            var numberFromElement = webDriver.FindElement(elementBy).GetAttribute("Value");
+            var numberFromElement = webDriver.FindElement(elementBy).GetDomProperty("value");
             var number1 = Math.Round(double.Parse(numberFromElement), 4, MidpointRounding.ToEven).ToString();
             var roundedNumber2 = Math.Round(number2, 4, MidpointRounding.ToEven).ToString();
 
@@ -266,7 +266,7 @@ namespace PIMS.Tests.Automation.PageObjects
             else
             {
                 decimal value = decimal.Parse(amount);
-                return value.ToString("#,##0.0000");        
+                return value.ToString("#,##0.0000");
             }
         }
 
@@ -326,7 +326,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             for (int i = 0; i < list.Count; i++)
             {
-                if(i == list.Count -1)
+                if (i == list.Count -1)
                     result = result + list[i];
                 else
                     result = result + list[i] + ", ";
@@ -410,12 +410,5 @@ namespace PIMS.Tests.Automation.PageObjects
             System.Diagnostics.Debug.WriteLine(expiryDates);
             return expiryDates[0].ToString("MMM d, yyyy");
         }
-
-        public void Dispose()
-        {
-            webDriver.Close();
-            webDriver.Quit();
-            webDriver.Dispose();
-        }
     }
-}
+}   

@@ -14,6 +14,7 @@ import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_C
 
 import { SideBarContext } from '../../context/sidebarContext';
 import { ChecklistView } from '../../shared/tabs/checklist/detail/ChecklistView';
+import DispositionStatusUpdateSolver from './fileDetails/detail/DispositionStatusUpdateSolver';
 import DispositionSummaryView from './fileDetails/detail/DispositionSummaryView';
 import OffersAndSaleContainer from './offersAndSale/OffersAndSaleContainer';
 import OffersAndSaleView from './offersAndSale/OffersAndSaleView';
@@ -37,6 +38,7 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
   const history = useHistory();
   const { tab } = useParams<{ tab?: string }>();
   const activeTab = Object.values(FileTabType).find(value => value === tab) ?? defaultTab;
+  const statusSolver = new DispositionStatusUpdateSolver(dispositionFile);
 
   const setActiveTab = (tab: FileTabType) => {
     if (activeTab !== tab) {
@@ -62,6 +64,7 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
         <OffersAndSaleContainer
           dispositionFile={dispositionFile}
           View={OffersAndSaleView}
+          statusSolver={statusSolver}
           onSuccess={onChildSuccess}
         ></OffersAndSaleContainer>
       ),
@@ -79,6 +82,7 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
         editClaim={Claims.DISPOSITION_EDIT}
         prefix="dsp"
         apiFile={dispositionFile}
+        isFileFinalStatus={!statusSolver.canEditChecklists()}
       />
     ),
     key: FileTabType.CHECKLIST,

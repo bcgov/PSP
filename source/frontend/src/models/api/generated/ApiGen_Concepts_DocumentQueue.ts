@@ -6,6 +6,7 @@ import { UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
 
 import { ApiGen_Base_BaseAudit } from './ApiGen_Base_BaseAudit';
 import { ApiGen_Base_CodeType } from './ApiGen_Base_CodeType';
+import { ApiGen_Concepts_Document } from './ApiGen_Concepts_Document';
 
 // LINK: @backend/apimodels/Models/Concepts/Document/DocumentQueueModel.cs
 export interface ApiGen_Concepts_DocumentQueue extends ApiGen_Base_BaseAudit {
@@ -18,6 +19,7 @@ export interface ApiGen_Concepts_DocumentQueue extends ApiGen_Base_BaseAudit {
   documentProcessEndTimestamp: UtcIsoDateTime | null;
   documentProcessRetries: number | null;
   mayanError: string | null;
+  pimsDocument: ApiGen_Concepts_Document | null;
   document: number[] | null;
   documentQueueStatusTypeCode: ApiGen_Base_CodeType<string> | null;
 }

@@ -307,7 +307,11 @@ exports[`PropertyContactListView component > renders as expected when provided v
   padding: 0;
 }
 
-.c11:disabled {
+.c11:-moz-read-only {
+  background: white;
+}
+
+.c11:read-only {
   background: white;
 }
 
@@ -338,7 +342,7 @@ exports[`PropertyContactListView component > renders as expected when provided v
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
 }
 
 .c0 {
@@ -380,13 +384,13 @@ exports[`PropertyContactListView component > renders as expected when provided v
         class="no-gutters row"
       >
         <div
-          class="col"
+          class="align-content-end col"
         >
           <div
             class="c2 no-gutters row"
           >
             <div
-              class="px-2 my-1 col-auto"
+              class="align-items-end col-auto"
             >
               Property Contact
             </div>
@@ -652,6 +656,8 @@ exports[`PropertyContactListView component > renders as expected when provided v
                 </span>
                 <input
                   class="c11 form-control"
+                  data-testid="input-page-size"
+                  readonly=""
                   type="number"
                   value="10"
                 />

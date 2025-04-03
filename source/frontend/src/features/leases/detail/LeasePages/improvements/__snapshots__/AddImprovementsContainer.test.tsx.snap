@@ -6,14 +6,19 @@ exports[`Add Improvements container component > displays the improvement types i
     class="Toastify"
   />
   <div />
-  .c3 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  .c0 {
+  background-color: #f2f2f2;
+  padding-top: 1rem;
 }
 
 .c2 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
+}
+
+.c1 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
@@ -21,427 +26,372 @@ exports[`Add Improvements container component > displays the improvement types i
   border-radius: 0.5rem;
 }
 
-.c5.required::before {
+.c4.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c4 {
+.c3 {
   font-weight: bold;
 }
 
-.c6 {
-  font-family: 'BCSans';
-}
-
-.c1 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  width: 100%;
-  gap: 2.5rem;
-}
-
-.c1 .formgrid .textarea:not(.notes) {
-  grid-column: span 2;
-  border-left: 0;
-}
-
-.c0 {
-  margin-left: 1rem;
-}
-
-.c0 .form-group {
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-}
-
-.c0 .form-group input {
-  border-left: 1;
-  width: 70%;
-}
-
-.c0 .form-group textarea {
-  width: 85%;
-  resize: none;
-}
-
-.c0 .improvements .formgrid {
-  row-gap: 0.5rem;
-  grid-template-columns: [controls] 1fr;
-}
-
-.c0 .improvements .formgrid > .form-label {
-  grid-column: controls;
-  font-family: 'BcSans-Bold';
-}
-
-.c0 .improvements .formgrid > .input {
-  border-left: 0;
-}
-
-.c0 .improvements .formgrid .form-control {
-  font-family: 'BcSans';
-}
-
-.c0 .improvements .formgrid h5 {
-  padding-top: 0;
-}
-
-<form
+<div
     class="c0"
   >
     <div
-      class="c1 improvements"
+      class="c1 form-section"
     >
-      <div
-        class="c2 form-section"
+      <h2
+        class="c2"
       >
-        <h2
-          class="c3"
-        >
-          <div
-            class="no-gutters row"
-          >
-            <div
-              class="col"
-            >
-              Commercial Improvements
-            </div>
-          </div>
-        </h2>
         <div
-          class="collapse show"
+          class="no-gutters row"
         >
           <div
-            class="pb-2 row"
+            class="align-content-end col"
           >
-            <div
-              class="pr-0 text-left col-3"
+            Commercial Improvements
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-3"
+          >
+            <label
+              class="c3"
             >
-              <label
-                class="c4"
-              >
-                Unit #:
-              </label>
-            </div>
-            <div
-              class="c5 text-left col"
-            >
-              <div
-                class="input form-group"
-              >
-                <input
-                  class="form-control"
-                  id="input-improvements.0.address"
-                  name="improvements.0.address"
-                  title="test address 1"
-                  value="test address 1"
-                />
-              </div>
-               
-            </div>
+              Unit #:
+            </label>
           </div>
           <div
-            class="pb-2 row"
+            class="c4 text-left col"
           >
             <div
-              class="pr-0 text-left col-3"
+              class="input form-group"
             >
-              <label
-                class="c4"
-              >
-                Building size:
-              </label>
+              <input
+                class="form-control"
+                id="input-improvements.0.address"
+                name="improvements.0.address"
+                style="word-break: break-all;"
+                title="test address 1"
+                value="test address 1"
+              />
             </div>
-            <div
-              class="c5 text-left col"
+             
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-3"
+          >
+            <label
+              class="c3"
             >
-              <div
-                class="input form-group"
-              >
-                <input
-                  class="form-control"
-                  id="input-improvements.0.structureSize"
-                  name="improvements.0.structureSize"
-                  title=""
-                  value=""
-                />
-              </div>
-            </div>
+              Building size:
+            </label>
           </div>
           <div
-            class="pb-2 row"
+            class="c4 text-left col"
           >
             <div
-              class="pr-0 text-left col-3"
+              class="input form-group"
             >
-              <label
-                class="c4"
-              >
-                Description:
-              </label>
+              <input
+                class="form-control"
+                id="input-improvements.0.structureSize"
+                name="improvements.0.structureSize"
+                style="word-break: break-all;"
+                title=""
+                value=""
+              />
             </div>
-            <div
-              class="c5 text-left col"
-            />
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-12"
+          >
+            <label
+              class="c3"
+            >
+              Description:
+            </label>
           </div>
           <div
-            class="c6 textarea input form-group"
+            class="c4 text-left col"
           >
-            <textarea
-              class="description form-control"
-              id="input-improvements.0.description"
-              name="improvements.0.description"
-              placeholder="Reason for improvement and improvement details"
-              rows="5"
-              title=""
-            />
+            <div
+              class="textarea input form-group"
+            >
+              <textarea
+                class="description form-control"
+                id="input-improvements.0.description"
+                name="improvements.0.description"
+                placeholder="Reason for improvement and improvement details"
+                rows="5"
+                style="word-break: break-all;"
+                title=""
+              />
+            </div>
           </div>
         </div>
       </div>
-      <div
-        class="c2 form-section"
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c2"
       >
-        <h2
-          class="c3"
-        >
-          <div
-            class="no-gutters row"
-          >
-            <div
-              class="col"
-            >
-              Residential Improvements
-            </div>
-          </div>
-        </h2>
         <div
-          class="collapse show"
+          class="no-gutters row"
         >
           <div
-            class="pb-2 row"
+            class="align-content-end col"
           >
-            <div
-              class="pr-0 text-left col-3"
+            Residential Improvements
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-3"
+          >
+            <label
+              class="c3"
             >
-              <label
-                class="c4"
-              >
-                Unit #:
-              </label>
-            </div>
-            <div
-              class="c5 text-left col"
-            >
-              <div
-                class="input form-group"
-              >
-                <input
-                  class="form-control"
-                  id="input-improvements.1.address"
-                  name="improvements.1.address"
-                  title="test address 3"
-                  value="test address 3"
-                />
-              </div>
-               
-            </div>
+              Unit #:
+            </label>
           </div>
           <div
-            class="pb-2 row"
+            class="c4 text-left col"
           >
             <div
-              class="pr-0 text-left col-3"
+              class="input form-group"
             >
-              <label
-                class="c4"
-              >
-                House size:
-              </label>
+              <input
+                class="form-control"
+                id="input-improvements.1.address"
+                name="improvements.1.address"
+                style="word-break: break-all;"
+                title="test address 3"
+                value="test address 3"
+              />
             </div>
-            <div
-              class="c5 text-left col"
+             
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-3"
+          >
+            <label
+              class="c3"
             >
-              <div
-                class="input form-group"
-              >
-                <input
-                  class="form-control"
-                  id="input-improvements.1.structureSize"
-                  name="improvements.1.structureSize"
-                  title=""
-                  value=""
-                />
-              </div>
-            </div>
+              House size:
+            </label>
           </div>
           <div
-            class="pb-2 row"
+            class="c4 text-left col"
           >
             <div
-              class="pr-0 text-left col-3"
+              class="input form-group"
             >
-              <label
-                class="c4"
-              >
-                Description:
-              </label>
+              <input
+                class="form-control"
+                id="input-improvements.1.structureSize"
+                name="improvements.1.structureSize"
+                style="word-break: break-all;"
+                title=""
+                value=""
+              />
             </div>
-            <div
-              class="c5 text-left col"
-            />
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-12"
+          >
+            <label
+              class="c3"
+            >
+              Description:
+            </label>
           </div>
           <div
-            class="c6 textarea input form-group"
+            class="c4 text-left col"
           >
-            <textarea
-              class="description form-control"
-              id="input-improvements.1.description"
-              name="improvements.1.description"
-              placeholder="Reason for improvement and improvement details"
-              rows="5"
-              title=""
-            />
+            <div
+              class="textarea input form-group"
+            >
+              <textarea
+                class="description form-control"
+                id="input-improvements.1.description"
+                name="improvements.1.description"
+                placeholder="Reason for improvement and improvement details"
+                rows="5"
+                style="word-break: break-all;"
+                title=""
+              />
+            </div>
           </div>
         </div>
       </div>
-      <div
-        class="c2 form-section"
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c2"
       >
-        <h2
-          class="c3"
+        <div
+          class="no-gutters row"
         >
           <div
-            class="no-gutters row"
+            class="align-content-end col"
           >
             <div
-              class="col"
+              class="d-flex align-items-center"
             >
-              <div
-                class="d-flex align-items-center"
+              <span>
+                Other Improvements
+              </span>
+              <span
+                class="tooltip-icon"
+                data-testid="tooltip-icon-contactInfoToolTip"
+                id="contactInfoToolTip"
               >
-                <span>
-                  Other Improvements
-                </span>
-                <span
-                  class="tooltip-icon"
-                  data-testid="tooltip-icon-contactInfoToolTip"
-                  id="contactInfoToolTip"
+                <svg
+                  class="tooltip-icon ml-4 mb-1"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 512 512"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  <svg
-                    class="tooltip-icon ml-4 mb-1"
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 512 512"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                    />
-                  </svg>
-                </span>
-              </div>
+                  <path
+                    d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                  />
+                </svg>
+              </span>
             </div>
           </div>
-        </h2>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
         <div
-          class="collapse show"
+          class="pb-2 row"
         >
           <div
-            class="pb-2 row"
+            class="pr-0 text-left col-3"
           >
-            <div
-              class="pr-0 text-left col-3"
+            <label
+              class="c3"
             >
-              <label
-                class="c4"
-              >
-                Unit #:
-              </label>
-            </div>
-            <div
-              class="c5 text-left col"
-            >
-              <div
-                class="input form-group"
-              >
-                <input
-                  class="form-control"
-                  id="input-improvements.2.address"
-                  name="improvements.2.address"
-                  title="test address 2"
-                  value="test address 2"
-                />
-              </div>
-               
-            </div>
+              Unit #:
+            </label>
           </div>
           <div
-            class="pb-2 row"
+            class="c4 text-left col"
           >
             <div
-              class="pr-0 text-left col-3"
+              class="input form-group"
             >
-              <label
-                class="c4"
-              >
-                Building size:
-              </label>
+              <input
+                class="form-control"
+                id="input-improvements.2.address"
+                name="improvements.2.address"
+                style="word-break: break-all;"
+                title="test address 2"
+                value="test address 2"
+              />
             </div>
-            <div
-              class="c5 text-left col"
+             
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-3"
+          >
+            <label
+              class="c3"
             >
-              <div
-                class="input form-group"
-              >
-                <input
-                  class="form-control"
-                  id="input-improvements.2.structureSize"
-                  name="improvements.2.structureSize"
-                  title=""
-                  value=""
-                />
-              </div>
-            </div>
+              Building size:
+            </label>
           </div>
           <div
-            class="pb-2 row"
+            class="c4 text-left col"
           >
             <div
-              class="pr-0 text-left col-3"
+              class="input form-group"
             >
-              <label
-                class="c4"
-              >
-                Description:
-              </label>
+              <input
+                class="form-control"
+                id="input-improvements.2.structureSize"
+                name="improvements.2.structureSize"
+                style="word-break: break-all;"
+                title=""
+                value=""
+              />
             </div>
-            <div
-              class="c5 text-left col"
-            />
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-12"
+          >
+            <label
+              class="c3"
+            >
+              Description:
+            </label>
           </div>
           <div
-            class="c6 textarea input form-group"
+            class="c4 text-left col"
           >
-            <textarea
-              class="description form-control"
-              id="input-improvements.2.description"
-              name="improvements.2.description"
-              placeholder="Reason for improvement and improvement details"
-              rows="5"
-              title=""
-            />
+            <div
+              class="textarea input form-group"
+            >
+              <textarea
+                class="description form-control"
+                id="input-improvements.2.description"
+                name="improvements.2.description"
+                placeholder="Reason for improvement and improvement details"
+                rows="5"
+                style="word-break: break-all;"
+                title=""
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -449,7 +399,7 @@ exports[`Add Improvements container component > displays the improvement types i
     <button>
       Save
     </button>
-  </form>
+  </div>
 </DocumentFragment>
 `;
 
@@ -459,14 +409,19 @@ exports[`Add Improvements container component > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c3 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  .c0 {
+  background-color: #f2f2f2;
+  padding-top: 1rem;
 }
 
 .c2 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
+}
+
+.c1 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
@@ -474,427 +429,372 @@ exports[`Add Improvements container component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c5.required::before {
+.c4.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c4 {
+.c3 {
   font-weight: bold;
 }
 
-.c6 {
-  font-family: 'BCSans';
-}
-
-.c1 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  width: 100%;
-  gap: 2.5rem;
-}
-
-.c1 .formgrid .textarea:not(.notes) {
-  grid-column: span 2;
-  border-left: 0;
-}
-
-.c0 {
-  margin-left: 1rem;
-}
-
-.c0 .form-group {
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-}
-
-.c0 .form-group input {
-  border-left: 1;
-  width: 70%;
-}
-
-.c0 .form-group textarea {
-  width: 85%;
-  resize: none;
-}
-
-.c0 .improvements .formgrid {
-  row-gap: 0.5rem;
-  grid-template-columns: [controls] 1fr;
-}
-
-.c0 .improvements .formgrid > .form-label {
-  grid-column: controls;
-  font-family: 'BcSans-Bold';
-}
-
-.c0 .improvements .formgrid > .input {
-  border-left: 0;
-}
-
-.c0 .improvements .formgrid .form-control {
-  font-family: 'BcSans';
-}
-
-.c0 .improvements .formgrid h5 {
-  padding-top: 0;
-}
-
-<form
+<div
     class="c0"
   >
     <div
-      class="c1 improvements"
+      class="c1 form-section"
     >
-      <div
-        class="c2 form-section"
+      <h2
+        class="c2"
       >
-        <h2
-          class="c3"
-        >
-          <div
-            class="no-gutters row"
-          >
-            <div
-              class="col"
-            >
-              Commercial Improvements
-            </div>
-          </div>
-        </h2>
         <div
-          class="collapse show"
+          class="no-gutters row"
         >
           <div
-            class="pb-2 row"
+            class="align-content-end col"
           >
-            <div
-              class="pr-0 text-left col-3"
+            Commercial Improvements
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-3"
+          >
+            <label
+              class="c3"
             >
-              <label
-                class="c4"
-              >
-                Unit #:
-              </label>
-            </div>
-            <div
-              class="c5 text-left col"
-            >
-              <div
-                class="input form-group"
-              >
-                <input
-                  class="form-control"
-                  id="input-improvements.0.address"
-                  name="improvements.0.address"
-                  title=""
-                  value=""
-                />
-              </div>
-               
-            </div>
+              Unit #:
+            </label>
           </div>
           <div
-            class="pb-2 row"
+            class="c4 text-left col"
           >
             <div
-              class="pr-0 text-left col-3"
+              class="input form-group"
             >
-              <label
-                class="c4"
-              >
-                Building size:
-              </label>
+              <input
+                class="form-control"
+                id="input-improvements.0.address"
+                name="improvements.0.address"
+                style="word-break: break-all;"
+                title=""
+                value=""
+              />
             </div>
-            <div
-              class="c5 text-left col"
+             
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-3"
+          >
+            <label
+              class="c3"
             >
-              <div
-                class="input form-group"
-              >
-                <input
-                  class="form-control"
-                  id="input-improvements.0.structureSize"
-                  name="improvements.0.structureSize"
-                  title=""
-                  value=""
-                />
-              </div>
-            </div>
+              Building size:
+            </label>
           </div>
           <div
-            class="pb-2 row"
+            class="c4 text-left col"
           >
             <div
-              class="pr-0 text-left col-3"
+              class="input form-group"
             >
-              <label
-                class="c4"
-              >
-                Description:
-              </label>
+              <input
+                class="form-control"
+                id="input-improvements.0.structureSize"
+                name="improvements.0.structureSize"
+                style="word-break: break-all;"
+                title=""
+                value=""
+              />
             </div>
-            <div
-              class="c5 text-left col"
-            />
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-12"
+          >
+            <label
+              class="c3"
+            >
+              Description:
+            </label>
           </div>
           <div
-            class="c6 textarea input form-group"
+            class="c4 text-left col"
           >
-            <textarea
-              class="description form-control"
-              id="input-improvements.0.description"
-              name="improvements.0.description"
-              placeholder="Reason for improvement and improvement details"
-              rows="5"
-              title=""
-            />
+            <div
+              class="textarea input form-group"
+            >
+              <textarea
+                class="description form-control"
+                id="input-improvements.0.description"
+                name="improvements.0.description"
+                placeholder="Reason for improvement and improvement details"
+                rows="5"
+                style="word-break: break-all;"
+                title=""
+              />
+            </div>
           </div>
         </div>
       </div>
-      <div
-        class="c2 form-section"
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c2"
       >
-        <h2
-          class="c3"
-        >
-          <div
-            class="no-gutters row"
-          >
-            <div
-              class="col"
-            >
-              Residential Improvements
-            </div>
-          </div>
-        </h2>
         <div
-          class="collapse show"
+          class="no-gutters row"
         >
           <div
-            class="pb-2 row"
+            class="align-content-end col"
           >
-            <div
-              class="pr-0 text-left col-3"
+            Residential Improvements
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-3"
+          >
+            <label
+              class="c3"
             >
-              <label
-                class="c4"
-              >
-                Unit #:
-              </label>
-            </div>
-            <div
-              class="c5 text-left col"
-            >
-              <div
-                class="input form-group"
-              >
-                <input
-                  class="form-control"
-                  id="input-improvements.1.address"
-                  name="improvements.1.address"
-                  title=""
-                  value=""
-                />
-              </div>
-               
-            </div>
+              Unit #:
+            </label>
           </div>
           <div
-            class="pb-2 row"
+            class="c4 text-left col"
           >
             <div
-              class="pr-0 text-left col-3"
+              class="input form-group"
             >
-              <label
-                class="c4"
-              >
-                House size:
-              </label>
+              <input
+                class="form-control"
+                id="input-improvements.1.address"
+                name="improvements.1.address"
+                style="word-break: break-all;"
+                title=""
+                value=""
+              />
             </div>
-            <div
-              class="c5 text-left col"
+             
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-3"
+          >
+            <label
+              class="c3"
             >
-              <div
-                class="input form-group"
-              >
-                <input
-                  class="form-control"
-                  id="input-improvements.1.structureSize"
-                  name="improvements.1.structureSize"
-                  title=""
-                  value=""
-                />
-              </div>
-            </div>
+              House size:
+            </label>
           </div>
           <div
-            class="pb-2 row"
+            class="c4 text-left col"
           >
             <div
-              class="pr-0 text-left col-3"
+              class="input form-group"
             >
-              <label
-                class="c4"
-              >
-                Description:
-              </label>
+              <input
+                class="form-control"
+                id="input-improvements.1.structureSize"
+                name="improvements.1.structureSize"
+                style="word-break: break-all;"
+                title=""
+                value=""
+              />
             </div>
-            <div
-              class="c5 text-left col"
-            />
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-12"
+          >
+            <label
+              class="c3"
+            >
+              Description:
+            </label>
           </div>
           <div
-            class="c6 textarea input form-group"
+            class="c4 text-left col"
           >
-            <textarea
-              class="description form-control"
-              id="input-improvements.1.description"
-              name="improvements.1.description"
-              placeholder="Reason for improvement and improvement details"
-              rows="5"
-              title=""
-            />
+            <div
+              class="textarea input form-group"
+            >
+              <textarea
+                class="description form-control"
+                id="input-improvements.1.description"
+                name="improvements.1.description"
+                placeholder="Reason for improvement and improvement details"
+                rows="5"
+                style="word-break: break-all;"
+                title=""
+              />
+            </div>
           </div>
         </div>
       </div>
-      <div
-        class="c2 form-section"
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c2"
       >
-        <h2
-          class="c3"
+        <div
+          class="no-gutters row"
         >
           <div
-            class="no-gutters row"
+            class="align-content-end col"
           >
             <div
-              class="col"
+              class="d-flex align-items-center"
             >
-              <div
-                class="d-flex align-items-center"
+              <span>
+                Other Improvements
+              </span>
+              <span
+                class="tooltip-icon"
+                data-testid="tooltip-icon-contactInfoToolTip"
+                id="contactInfoToolTip"
               >
-                <span>
-                  Other Improvements
-                </span>
-                <span
-                  class="tooltip-icon"
-                  data-testid="tooltip-icon-contactInfoToolTip"
-                  id="contactInfoToolTip"
+                <svg
+                  class="tooltip-icon ml-4 mb-1"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 512 512"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  <svg
-                    class="tooltip-icon ml-4 mb-1"
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 512 512"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                    />
-                  </svg>
-                </span>
-              </div>
+                  <path
+                    d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                  />
+                </svg>
+              </span>
             </div>
           </div>
-        </h2>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
         <div
-          class="collapse show"
+          class="pb-2 row"
         >
           <div
-            class="pb-2 row"
+            class="pr-0 text-left col-3"
           >
-            <div
-              class="pr-0 text-left col-3"
+            <label
+              class="c3"
             >
-              <label
-                class="c4"
-              >
-                Unit #:
-              </label>
-            </div>
-            <div
-              class="c5 text-left col"
-            >
-              <div
-                class="input form-group"
-              >
-                <input
-                  class="form-control"
-                  id="input-improvements.2.address"
-                  name="improvements.2.address"
-                  title=""
-                  value=""
-                />
-              </div>
-               
-            </div>
+              Unit #:
+            </label>
           </div>
           <div
-            class="pb-2 row"
+            class="c4 text-left col"
           >
             <div
-              class="pr-0 text-left col-3"
+              class="input form-group"
             >
-              <label
-                class="c4"
-              >
-                Building size:
-              </label>
+              <input
+                class="form-control"
+                id="input-improvements.2.address"
+                name="improvements.2.address"
+                style="word-break: break-all;"
+                title=""
+                value=""
+              />
             </div>
-            <div
-              class="c5 text-left col"
+             
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-3"
+          >
+            <label
+              class="c3"
             >
-              <div
-                class="input form-group"
-              >
-                <input
-                  class="form-control"
-                  id="input-improvements.2.structureSize"
-                  name="improvements.2.structureSize"
-                  title=""
-                  value=""
-                />
-              </div>
-            </div>
+              Building size:
+            </label>
           </div>
           <div
-            class="pb-2 row"
+            class="c4 text-left col"
           >
             <div
-              class="pr-0 text-left col-3"
+              class="input form-group"
             >
-              <label
-                class="c4"
-              >
-                Description:
-              </label>
+              <input
+                class="form-control"
+                id="input-improvements.2.structureSize"
+                name="improvements.2.structureSize"
+                style="word-break: break-all;"
+                title=""
+                value=""
+              />
             </div>
-            <div
-              class="c5 text-left col"
-            />
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-12"
+          >
+            <label
+              class="c3"
+            >
+              Description:
+            </label>
           </div>
           <div
-            class="c6 textarea input form-group"
+            class="c4 text-left col"
           >
-            <textarea
-              class="description form-control"
-              id="input-improvements.2.description"
-              name="improvements.2.description"
-              placeholder="Reason for improvement and improvement details"
-              rows="5"
-              title=""
-            />
+            <div
+              class="textarea input form-group"
+            >
+              <textarea
+                class="description form-control"
+                id="input-improvements.2.description"
+                name="improvements.2.description"
+                placeholder="Reason for improvement and improvement details"
+                rows="5"
+                style="word-break: break-all;"
+                title=""
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -902,6 +802,6 @@ exports[`Add Improvements container component > renders as expected 1`] = `
     <button>
       Save
     </button>
-  </form>
+  </div>
 </DocumentFragment>
 `;

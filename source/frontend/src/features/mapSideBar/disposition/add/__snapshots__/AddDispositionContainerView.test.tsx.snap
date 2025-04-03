@@ -6,7 +6,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
     class="Toastify"
   />
   <div />
-  .c3.btn {
+  .c4.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,19 +35,19 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
   cursor: pointer;
 }
 
-.c3.btn .Button__value {
+.c4.btn .Button__value {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
-.c3.btn:hover {
+.c4.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c3.btn:focus {
+.c4.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -55,31 +55,31 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
   box-shadow: none;
 }
 
-.c3.btn.btn-primary {
+.c4.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c3.btn.btn-primary:hover,
-.c3.btn.btn-primary:active,
-.c3.btn.btn-primary:focus {
+.c4.btn.btn-primary:hover,
+.c4.btn.btn-primary:active,
+.c4.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c3.btn.btn-secondary {
+.c4.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c3.btn.btn-secondary:hover,
-.c3.btn.btn-secondary:active,
-.c3.btn.btn-secondary:focus {
+.c4.btn.btn-secondary:hover,
+.c4.btn.btn-secondary:active,
+.c4.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c3.btn.btn-info {
+.c4.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -87,66 +87,66 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
   padding-right: 0.6rem;
 }
 
-.c3.btn.btn-info:hover,
-.c3.btn.btn-info:active,
-.c3.btn.btn-info:focus {
+.c4.btn.btn-info:hover,
+.c4.btn.btn-info:active,
+.c4.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c3.btn.btn-light {
+.c4.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c3.btn.btn-light:hover,
-.c3.btn.btn-light:active,
-.c3.btn.btn-light:focus {
+.c4.btn.btn-light:hover,
+.c4.btn.btn-light:active,
+.c4.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c3.btn.btn-dark {
+.c4.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c3.btn.btn-dark:hover,
-.c3.btn.btn-dark:active,
-.c3.btn.btn-dark:focus {
+.c4.btn.btn-dark:hover,
+.c4.btn.btn-dark:active,
+.c4.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c3.btn.btn-danger {
+.c4.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c3.btn.btn-danger:hover,
-.c3.btn.btn-danger:active,
-.c3.btn.btn-danger:focus {
+.c4.btn.btn-danger:hover,
+.c4.btn.btn-danger:active,
+.c4.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c3.btn.btn-warning {
+.c4.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c3.btn.btn-warning:hover,
-.c3.btn.btn-warning:active,
-.c3.btn.btn-warning:focus {
+.c4.btn.btn-warning:hover,
+.c4.btn.btn-warning:active,
+.c4.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c3.btn.btn-link {
+.c4.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -170,9 +170,9 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
   text-decoration: underline;
 }
 
-.c3.btn.btn-link:hover,
-.c3.btn.btn-link:active,
-.c3.btn.btn-link:focus {
+.c4.btn.btn-link:hover,
+.c4.btn.btn-link:active,
+.c4.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -182,15 +182,15 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
   outline: none;
 }
 
-.c3.btn.btn-link:disabled,
-.c3.btn.btn-link.disabled {
+.c4.btn.btn-link:disabled,
+.c4.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c3.btn:disabled,
-.c3.btn:disabled:hover {
+.c4.btn:disabled,
+.c4.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -202,23 +202,23 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
   cursor: not-allowed;
 }
 
-.c3.Button .Button__icon {
+.c4.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c3.Button--icon-only:focus {
+.c4.Button--icon-only:focus {
   outline: none;
 }
 
-.c3.Button--icon-only .Button__icon {
+.c4.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c16 button.close {
+.c17 button.close {
   font-size: 2.4rem;
 }
 
-.c17 .react-datepicker__calendar-icon {
+.c18 .react-datepicker__calendar-icon {
   width: 2.4rem;
   height: 3rem;
   margin-top: 0.5rem;
@@ -228,41 +228,41 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
   pointer-events: none;
 }
 
-.c17 .react-datepicker__view-calendar-icon input {
+.c18 .react-datepicker__view-calendar-icon input {
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c17 .react-datepicker-wrapper {
+.c18 .react-datepicker-wrapper {
   max-width: 17rem;
 }
 
-.c18.c18.form-control.is-valid {
+.c19.c19.form-control.is-valid {
   background-image: none;
 }
 
-.c18.c18.form-control.is-invalid {
+.c19.c19.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
-.c27 {
+.c28 {
   padding-right: 0;
 }
 
-.c27 .form-control {
+.c28 .form-control {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.c28:not(:first-child) {
+.c29:not(:first-child) {
   padding-left: 0;
 }
 
-.c28:not(:first-child) .form-control {
+.c29:not(:first-child) .form-control {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
 
-.c29 {
+.c30 {
   font-size: 1.4rem;
   color: #42814A;
 }
@@ -270,56 +270,56 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
 .c1 {
   color: #474543;
   font-family: 'BCSans-Bold';
-  font-size: 3.2rem;
+  font-size: 2.8rem;
   border-bottom: solid 0.5rem var(--theme-blue-90);
   width: 100%;
   text-align: left;
   margin-bottom: 2.4rem;
 }
 
-.c22 {
+.c23 {
   color: var(--theme-blue-100);
   font-family: 'BCSans-Bold';
   font-size: 2.2rem;
   border-bottom: solid 0.2rem;
   width: 100%;
   text-align: left;
-  margin-bottom: 2.4rem;
+  margin-bottom: 1.6rem;
 }
 
-.c5 {
+.c6 {
   border-left: 0.1rem solid #ECEAE8;
   width: 0.1rem;
   height: 80%;
   margin: auto;
 }
 
-.c7 {
+.c8 {
   width: 100%;
   border-bottom: solid 0.5rem #3470B1;
 }
 
-.c6 {
+.c7 {
   font-size: 2.4rem;
   cursor: pointer;
 }
 
-.c4.btn.btn-light.Button {
+.c5.btn.btn-light.Button {
   padding: 0;
   border: 0.1rem solid #9F9D9C;
   background-color: white;
   color: #474543;
 }
 
-.c4.btn.btn-light.Button:focus,
-.c4.btn.btn-light.Button:active {
+.c5.btn.btn-light.Button:focus,
+.c5.btn.btn-light.Button:active {
   background-color: white;
   color: #474543;
 }
 
-.c4.btn,
-.c4 .Button__icon,
-.c4 svg {
+.c5.btn,
+.c5 .Button__icon,
+.c5 svg {
   max-width: 2.4rem;
   min-width: 2.4rem;
   max-height: 2.4rem;
@@ -330,6 +330,12 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
 .c0 {
   padding: 1.6rem;
   color: #474543;
+}
+
+.c0.collapsed .row:first svg {
+  width: 2.6rem;
+  height: 2.6rem;
+  margin-right: 0;
 }
 
 .c0.expanded {
@@ -346,7 +352,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
   overflow: hidden;
 }
 
-.c2 {
+.c3 {
   gap: 1.5rem;
   -webkit-align-items: center;
   -webkit-box-align: center;
@@ -354,7 +360,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
   align-items: center;
 }
 
-.c9 {
+.c10 {
   width: 100%;
   position: relative;
   overflow: auto;
@@ -363,13 +369,24 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
   flex: 1;
 }
 
-.c8 {
+.c9 {
   width: 100%;
   height: 100%;
   display: contents;
 }
 
-.c31 {
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: end;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: end;
+}
+
+.c32 {
   position: -webkit-sticky;
   position: sticky;
   padding-top: 2rem;
@@ -378,7 +395,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
   z-index: 10;
 }
 
-.c10 {
+.c11 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -395,14 +412,14 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
   overflow-y: auto;
 }
 
-.c13 {
+.c14 {
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
 }
 
-.c12 {
+.c13 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
@@ -410,24 +427,24 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
   border-radius: 0.5rem;
 }
 
-.c15.required::before {
+.c16.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c14 {
+.c15 {
   font-weight: bold;
 }
 
-.c24:hover {
+.c25:hover {
   cursor: pointer;
 }
 
-.c23.c23.c23 input,
-.c23.c23.c23 select,
-.c23.c23.c23 textarea {
+.c24.c24.c24 input,
+.c24.c24.c24 select,
+.c24.c24.c24 textarea {
   background: none;
   border: none;
   resize: none;
@@ -437,43 +454,43 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
   padding: 0;
 }
 
-.c23.c23.c23 .form-label {
+.c24.c24.c24 .form-label {
   font-weight: bold;
   color: #474543;
 }
 
-.c25 {
+.c26 {
   color: var(--theme-blue-100);
   font-family: 'BcSans-Bold';
   margin-bottom: 1rem;
 }
 
-.c19 {
+.c20 {
   height: 100%;
 }
 
-.c19 .tab-content {
+.c20 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
   overflow-y: auto;
   background-color: #f2f2f2;
 }
 
-.c19 .tab-content .tab-pane {
+.c20 .tab-content .tab-pane {
   position: relative;
 }
 
-.c21 {
+.c22 {
   background-color: white;
   color: var(--surface-color-primary-button-default);
   font-size: 1.4rem;
   border-color: transparent;
 }
 
-.c21 .nav-tabs {
+.c22 .nav-tabs {
   height: auto;
 }
 
-.c21 .nav-item {
+.c22 .nav-item {
   color: var(--surface-color-primary-button-default);
   min-width: 5rem;
   padding: 0.1rem 1.3rem;
@@ -481,7 +498,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
   margin-left: 0.1rem;
 }
 
-.c21 .nav-item:hover {
+.c22 .nav-item:hover {
   color: #f2f2f2;
   background-color: #1e5189;
   border-color: transparent;
@@ -491,7 +508,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
   text-shadow: 0.1rem 0 0 currentColor;
 }
 
-.c21 .nav-item.active {
+.c22 .nav-item.active {
   border-radius: 0.4rem;
   color: #f2f2f2;
   background-color: #053662;
@@ -499,29 +516,29 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
   text-shadow: 0.1rem 0 0 currentColor;
 }
 
-.c20 {
+.c21 {
   height: auto;
 }
 
-.c20.tab-content {
+.c21.tab-content {
   height: auto;
 }
 
-.c26 {
+.c27 {
   background-color: #d9eaf7;
   border-radius: 0.5rem;
 }
 
-.c26 .idir-input-group .input-group-prepend select {
+.c27 .idir-input-group .input-group-prepend select {
   width: 16rem;
 }
 
-.c26 .idir-input-group input {
+.c27 .idir-input-group input {
   width: 18rem;
   max-width: 100%;
 }
 
-.c30 {
+.c31 {
   font-size: 1.6rem;
   color: #9F9D9C;
   border-bottom: 0.2rem solid #606060;
@@ -530,17 +547,17 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
   font-family: 'BcSans-Bold';
 }
 
-.c11 .form-section {
+.c12 .form-section {
   margin: 0;
   padding-left: 0;
 }
 
-.c11 .tab-pane .form-section {
+.c12 .tab-pane .form-section {
   margin: 1.5rem;
   padding-left: 1.5rem;
 }
 
-.c11 [name='region'] {
+.c12 [name='region'] {
   max-width: 25rem;
 }
 
@@ -554,41 +571,33 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
         class="col"
       >
         <h1
-          class="c1 mr-auto"
+          class="c1 c2"
         >
-          <span
-            class="mr-2"
+          <div
+            class="mr-2 mb-1"
           >
             <svg
               fill="currentColor"
-              height="28"
-              stroke="currentColor"
-              stroke-width="0"
+              height="24"
+              title="Disposition file Icon"
               viewBox="0 0 24 24"
-              width="28"
+              width="24"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <title>
-                Disposition file Icon
-              </title>
               <path
-                d="M0 0h24v24H0z"
-                fill="none"
-              />
-              <path
-                d="M18.21 9.21C15.93 10.78 13.45 13.3 13 17h2v2H9v-2h2c-.5-4.5-4.37-8-9-8V7c4.39 0 8.22 2.55 10 6.3 1.13-2.43 2.99-4.25 4.78-5.52L14 5h7v7l-2.79-2.79z"
+                d="M21.3987 5.625C18.1918 7.77086 14.3226 15.3433 14.3226 21.1389H16.9566V24H7.59054V21.1389H10.4516C10.4516 15 6 6.75 0 6.75V3.61114C6.75 3.61114 10.4516 9 12.2598 14.25C13.875 9 15.871 5.625 19.7419 2.84712H14.8748V0H24V9.98597H21.3987V6V5.625Z"
               />
             </svg>
-          </span>
+          </div>
           Create Disposition File
         </h1>
       </div>
       <div
-        class="c2 d-flex col-auto"
+        class="c3 d-flex col-auto"
       >
         <span>
           <button
-            class="c3 Button Button--icon-only c4 btn btn-light"
+            class="c4 Button Button--icon-only c5 btn btn-light"
             title="collapse"
             type="button"
           >
@@ -619,10 +628,10 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
           </button>
         </span>
         <div
-          class="c5"
+          class="c6"
         />
         <svg
-          class="c6"
+          class="c7"
           fill="currentColor"
           height="1em"
           stroke="currentColor"
@@ -641,31 +650,31 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
       </div>
     </div>
     <div
-      class="c7"
+      class="c8"
     />
     <div
-      class="c8"
+      class="c9"
     >
       <div
-        class="c9"
+        class="c10"
       >
         <div
-          class="c10"
+          class="c11"
         >
           <div
-            class="c11"
+            class="c12"
           >
             <div
-              class="c12 form-section"
+              class="c13 form-section"
             >
               <h2
-                class="c13"
+                class="c14"
               >
                 <div
                   class="no-gutters row"
                 >
                   <div
-                    class="col"
+                    class="align-content-end col"
                   >
                     Project
                   </div>
@@ -681,16 +690,16 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                     class="pr-0 text-left col-4"
                   >
                     <label
-                      class="c14"
+                      class="c15"
                     >
                       Ministry project:
                     </label>
                   </div>
                   <div
-                    class="c15 text-left col"
+                    class="c16 text-left col"
                   >
                     <div
-                      class="c16 form-group"
+                      class="c17 form-group"
                       data-testid="typeahead-project"
                     >
                       <div
@@ -753,13 +762,13 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                     class="pr-0 text-left col-4"
                   >
                     <label
-                      class="c14"
+                      class="c15"
                     >
                       Funding:
                     </label>
                   </div>
                   <div
-                    class="c15 text-left col"
+                    class="c16 text-left col"
                   >
                     <div
                       class="form-group"
@@ -781,16 +790,16 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
               </div>
             </div>
             <div
-              class="c12 form-section"
+              class="c13 form-section"
             >
               <h2
-                class="c13"
+                class="c14"
               >
                 <div
                   class="no-gutters row"
                 >
                   <div
-                    class="col"
+                    class="align-content-end col"
                   >
                     Schedule
                   </div>
@@ -806,16 +815,16 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                     class="pr-0 text-left col-4"
                   >
                     <label
-                      class="c14"
+                      class="c15"
                     >
                       Assigned date:
                     </label>
                   </div>
                   <div
-                    class="c15 text-left col"
+                    class="c16 text-left col"
                   >
                     <div
-                      class="c17 form-group"
+                      class="c18 form-group"
                     >
                       <div
                         class="react-datepicker-wrapper d-block"
@@ -834,7 +843,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                           </svg>
                           <input
                             autocomplete="off"
-                            class="c18 form-control date-picker"
+                            class="c19 form-control date-picker"
                             id="datepicker-assignedDate"
                             name="assignedDate"
                             placeholder="MMM DD, YYYY"
@@ -849,16 +858,16 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
               </div>
             </div>
             <div
-              class="c12 form-section"
+              class="c13 form-section"
             >
               <h2
-                class="c13"
+                class="c14"
               >
                 <div
                   class="no-gutters row"
                 >
                   <div
-                    class="col"
+                    class="align-content-end col"
                   >
                     Properties to include in this file:
                   </div>
@@ -879,10 +888,10 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                     class="col"
                   >
                     <div
-                      class="c19 c20"
+                      class="c20 c21"
                     >
                       <nav
-                        class="c21 nav nav-tabs"
+                        class="c22 nav nav-tabs"
                         role="tablist"
                       >
                         <a
@@ -913,18 +922,18 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                           role="tabpanel"
                         >
                           <div
-                            class="c12 form-section"
+                            class="c13 form-section"
                           >
                             <div
                               class="collapse show"
                             >
                               <h3
-                                class="c22"
+                                class="c23"
                               >
                                 Select a property
                               </h3>
                               <div
-                                class="c23 row"
+                                class="c24 row"
                               >
                                 <div
                                   class="col-md-4"
@@ -933,7 +942,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                                     class="d-flex flex-column align-items-center"
                                   >
                                     <svg
-                                      class="c24"
+                                      class="c25"
                                       height="97"
                                       id="Layer_2"
                                       title="Click once to enter property selection mode."
@@ -974,7 +983,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                                     class="row"
                                   >
                                     <div
-                                      class="c25 col"
+                                      class="c26 col"
                                     >
                                       Selected property attributes
                                     </div>
@@ -986,13 +995,13 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                                       class="pr-0 text-left col-4"
                                     >
                                       <label
-                                        class="c14"
+                                        class="c15"
                                       >
                                         PID:
                                       </label>
                                     </div>
                                     <div
-                                      class="c15 text-left col"
+                                      class="c16 text-left col"
                                     />
                                   </div>
                                   <div
@@ -1002,13 +1011,13 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                                       class="pr-0 text-left col-4"
                                     >
                                       <label
-                                        class="c14"
+                                        class="c15"
                                       >
                                         PIN:
                                       </label>
                                     </div>
                                     <div
-                                      class="c15 text-left col"
+                                      class="c16 text-left col"
                                     />
                                   </div>
                                   <div
@@ -1018,13 +1027,13 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                                       class="pr-0 text-left col-4"
                                     >
                                       <label
-                                        class="c14"
+                                        class="c15"
                                       >
                                         Plan #:
                                       </label>
                                     </div>
                                     <div
-                                      class="c15 text-left col"
+                                      class="c16 text-left col"
                                     />
                                   </div>
                                   <div
@@ -1034,13 +1043,13 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                                       class="pr-0 text-left col-4"
                                     >
                                       <label
-                                        class="c14"
+                                        class="c15"
                                       >
                                         Address:
                                       </label>
                                     </div>
                                     <div
-                                      class="c15 text-left col"
+                                      class="c16 text-left col"
                                     />
                                   </div>
                                   <div
@@ -1050,13 +1059,13 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                                       class="pr-0 text-left col-4"
                                     >
                                       <label
-                                        class="c14"
+                                        class="c15"
                                       >
                                         Region:
                                       </label>
                                     </div>
                                     <div
-                                      class="c15 text-left col"
+                                      class="c16 text-left col"
                                     />
                                   </div>
                                   <div
@@ -1066,13 +1075,13 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                                       class="pr-0 text-left col-4"
                                     >
                                       <label
-                                        class="c14"
+                                        class="c15"
                                       >
                                         District:
                                       </label>
                                     </div>
                                     <div
-                                      class="c15 text-left col"
+                                      class="c16 text-left col"
                                     />
                                   </div>
                                   <div
@@ -1102,18 +1111,18 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                           role="tabpanel"
                         >
                           <div
-                            class="c12 form-section"
+                            class="c13 form-section"
                           >
                             <div
                               class="collapse show"
                             >
                               <h3
-                                class="c22"
+                                class="c23"
                               >
                                 Search for a property
                               </h3>
                               <form
-                                class="c26 p-3"
+                                class="c27 p-3"
                                 novalidate=""
                               >
                                 <div
@@ -1126,7 +1135,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                                       class="flex-nowrap input-group row"
                                     >
                                       <div
-                                        class="c27 col-auto"
+                                        class="c28 col-auto"
                                       >
                                         <div
                                           class="input-group-prepend"
@@ -1179,7 +1188,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                                         </div>
                                       </div>
                                       <div
-                                        class="c28 col"
+                                        class="c29 col"
                                       >
                                         <div
                                           class="input form-group"
@@ -1190,6 +1199,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                                             id="input-pid"
                                             name="pid"
                                             placeholder="Enter a PID"
+                                            style="word-break: break-all;"
                                             title=""
                                             value=""
                                           />
@@ -1207,7 +1217,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                                         class="pr-0 col"
                                       >
                                         <button
-                                          class="c3 Button Button--icon-only primary btn btn-primary"
+                                          class="c4 Button Button--icon-only primary btn btn-primary"
                                           data-testid="search"
                                           id="search-button"
                                           title="search"
@@ -1236,7 +1246,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                                         class="pl-0 col"
                                       >
                                         <button
-                                          class="c3 Button Button--icon-only btn btn-info"
+                                          class="c4 Button Button--icon-only btn btn-info"
                                           data-testid="reset-button"
                                           id="reset-button"
                                           title="reset-button"
@@ -1268,7 +1278,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                             </div>
                           </div>
                           <div
-                            class="c12 form-section"
+                            class="c13 form-section"
                           >
                             <div
                               class="collapse show"
@@ -1372,7 +1382,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                                   class="ml-auto align-self-center col-auto"
                                 >
                                   <p
-                                    class="c29"
+                                    class="c30"
                                   >
                                     0 selected
                                   </p>
@@ -1389,16 +1399,16 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="c12 form-section"
+                  class="c13 form-section"
                 >
                   <h2
-                    class="c13"
+                    class="c14"
                   >
                     <div
                       class="no-gutters row"
                     >
                       <div
-                        class="col"
+                        class="align-content-end col"
                       >
                         Selected properties
                       </div>
@@ -1408,7 +1418,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                     class="collapse show"
                   >
                     <div
-                      class="c30 no-gutters row"
+                      class="c31 no-gutters row"
                     >
                       <div
                         class="col-md-3"
@@ -1449,16 +1459,16 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
               </div>
             </div>
             <div
-              class="c12 form-section"
+              class="c13 form-section"
             >
               <h2
-                class="c13"
+                class="c14"
               >
                 <div
                   class="no-gutters row"
                 >
                   <div
-                    class="col"
+                    class="align-content-end col"
                   >
                     Disposition Details
                   </div>
@@ -1474,13 +1484,13 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                     class="pr-0 text-left col-4"
                   >
                     <label
-                      class="c14"
+                      class="c15"
                     >
                       Disposition file name:
                     </label>
                   </div>
                   <div
-                    class="c15 text-left col"
+                    class="c16 text-left col"
                   >
                     <div
                       class="input form-group"
@@ -1489,6 +1499,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                         class="form-control"
                         id="input-fileName"
                         name="fileName"
+                        style="word-break: break-all;"
                         title=""
                         value=""
                       />
@@ -1502,7 +1513,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                     class="pr-0 text-left col-4"
                   >
                     <label
-                      class="c14"
+                      class="c15"
                     >
                       Reference number:
                       <span>
@@ -1530,7 +1541,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                     </label>
                   </div>
                   <div
-                    class="c15 text-left col"
+                    class="c16 text-left col"
                   >
                     <div
                       class="input form-group"
@@ -1539,6 +1550,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                         class="form-control"
                         id="input-referenceNumber"
                         name="referenceNumber"
+                        style="word-break: break-all;"
                         title=""
                         value=""
                       />
@@ -1552,13 +1564,13 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                     class="pr-0 text-left col-4"
                   >
                     <label
-                      class="c14"
+                      class="c15"
                     >
                       Disposition status:
                     </label>
                   </div>
                   <div
-                    class="c15 required text-left col"
+                    class="c16 required text-left col"
                   >
                     <div
                       class="required form-group"
@@ -1622,13 +1634,13 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                     class="pr-0 text-left col-4"
                   >
                     <label
-                      class="c14"
+                      class="c15"
                     >
                       Disposition type:
                     </label>
                   </div>
                   <div
-                    class="c15 required text-left col"
+                    class="c16 required text-left col"
                   >
                     <div
                       class="required form-group"
@@ -1683,7 +1695,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                     class="pr-0 text-left col-4"
                   >
                     <label
-                      class="c14"
+                      class="c15"
                     >
                       Initiating document:
                       <span>
@@ -1711,7 +1723,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                     </label>
                   </div>
                   <div
-                    class="c15 text-left col"
+                    class="c16 text-left col"
                   >
                     <div
                       class="required form-group"
@@ -1766,7 +1778,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                     class="pr-0 text-left col-4"
                   >
                     <label
-                      class="c14"
+                      class="c15"
                     >
                       Initiating document date:
                       <span>
@@ -1794,10 +1806,10 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                     </label>
                   </div>
                   <div
-                    class="c15 text-left col"
+                    class="c16 text-left col"
                   >
                     <div
-                      class="c17 form-group"
+                      class="c18 form-group"
                     >
                       <div
                         class="react-datepicker-wrapper d-block"
@@ -1816,7 +1828,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                           </svg>
                           <input
                             autocomplete="off"
-                            class="c18 form-control date-picker"
+                            class="c19 form-control date-picker"
                             id="datepicker-initiatingDocumentDate"
                             name="initiatingDocumentDate"
                             placeholder="MMM DD, YYYY"
@@ -1835,13 +1847,13 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                     class="pr-0 text-left col-4"
                   >
                     <label
-                      class="c14"
+                      class="c15"
                     >
                       Physical file status:
                     </label>
                   </div>
                   <div
-                    class="c15 text-left col"
+                    class="c16 text-left col"
                   >
                     <div
                       class="form-group"
@@ -1888,13 +1900,13 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                     class="pr-0 text-left col-4"
                   >
                     <label
-                      class="c14"
+                      class="c15"
                     >
                       Initiating branch:
                     </label>
                   </div>
                   <div
-                    class="c15 text-left col"
+                    class="c16 text-left col"
                   >
                     <div
                       class="form-group"
@@ -1955,13 +1967,13 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                     class="pr-0 text-left col-4"
                   >
                     <label
-                      class="c14"
+                      class="c15"
                     >
                       Ministry region:
                     </label>
                   </div>
                   <div
-                    class="c15 required text-left col"
+                    class="c16 required text-left col"
                   >
                     <div
                       class="required d-flex form-group"
@@ -2004,16 +2016,16 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
               </div>
             </div>
             <div
-              class="c12 form-section"
+              class="c13 form-section"
             >
               <h2
-                class="c13"
+                class="c14"
               >
                 <div
                   class="no-gutters row"
                 >
                   <div
-                    class="col"
+                    class="align-content-end col"
                   >
                     Disposition Team
                   </div>
@@ -2023,7 +2035,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                 class="collapse show"
               >
                 <button
-                  class="c3 Button btn btn-link"
+                  class="c4 Button btn btn-link"
                   data-testid="add-team-member"
                   type="button"
                 >
@@ -2042,7 +2054,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
         class=""
       >
         <div
-          class="c31 justify-content-end mb-6 mt-6 p-0 no-gutters row"
+          class="c32 justify-content-end mb-6 mt-6 p-0 no-gutters row"
         >
           <div
             class="pr-3 col-auto"
@@ -2051,7 +2063,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
             class="pr-6 col-auto"
           >
             <button
-              class="c3 Button btn btn-secondary"
+              class="c4 Button btn btn-secondary"
               type="button"
             >
               <div
@@ -2065,7 +2077,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
             class="col-auto"
           >
             <button
-              class="c3 Button mr-9 btn btn-primary"
+              class="c4 Button mr-9 btn btn-primary"
               type="button"
             >
               <div

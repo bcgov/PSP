@@ -21,6 +21,10 @@ namespace Pims.Dal.Repositories
 
         List<PimsPropertyLease> GetLeaseCompReqPropertiesById(long compensationRequisitionId);
 
-        IEnumerable<PimsCompReqFinancial> GetCompensationRequisitionFinancials(long id);
+        IEnumerable<PimsCompReqFinancial> GetCompensationRequisitionFinancials(long compReqId);
+
+        IEnumerable<PimsCompReqAcqPayee> GetCompensationRequisitionAcquisitionPayees(long compReqId);
+
+        IEnumerable<PimsCompReqLeasePayee> GetCompensationRequisitionLeasePayees(long compReqId);
     }
 }

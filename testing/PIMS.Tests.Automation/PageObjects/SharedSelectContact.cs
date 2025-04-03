@@ -7,7 +7,7 @@ namespace PIMS.Tests.Automation.PageObjects
     {
         private By selectContactOkButton = By.XPath("//button[@title='ok-modal']/div[contains(text(),'Select')]/ancestor::button");
 
-        private By selectContactSearchInput = By.Id("input-summary");
+        private By selectContactSearchInput = By.CssSelector("input[id='input-summary']");
         private By selectContactRadioBttnGroup = By.XPath("//input[@name='searchBy']");
         private By selectContactSearchButton = By.XPath("//div[contains(text(),'Select a contact')]/parent::div/following-sibling::div/div/div/div/form/div/div/div/div//button[@id='search-button']");
         private By selectContactSearch1stResultRadioBttn = By.CssSelector("div[data-testid='contactsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div:nth-child(1) input");
@@ -18,6 +18,9 @@ namespace PIMS.Tests.Automation.PageObjects
         public void SelectContact(string contactSearchName, string contactType)
         {
             WaitUntilTableSpinnerDisappear();
+
+            System.Diagnostics.Debug.WriteLine("Hello");
+            System.Diagnostics.Debug.WriteLine("Adding Team Member: " + contactSearchName);
 
             switch (contactType)
             {

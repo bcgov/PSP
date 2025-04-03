@@ -21,7 +21,7 @@ exports[`PropertyManagementDetailView component > renders as expected when provi
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
 }
 
 .c0 {
@@ -53,7 +53,7 @@ exports[`PropertyManagementDetailView component > renders as expected when provi
         class="no-gutters row"
       >
         <div
-          class="col"
+          class="align-content-end col"
         >
           <div
             class="row"

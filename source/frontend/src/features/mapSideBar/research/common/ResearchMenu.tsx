@@ -5,10 +5,17 @@ import styled from 'styled-components';
 import { LinkButton } from '@/components/common/buttons';
 import { EditButton } from '@/components/common/buttons/EditButton';
 import { EditPropertiesIcon } from '@/components/common/buttons/EditPropertiesButton';
+import TooltipIcon from '@/components/common/TooltipIcon';
 import { Claims } from '@/constants/index';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
+import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
+
+import { cannotEditMessage } from '../../acquisition/common/constants';
+import { StyledMenuWrapper } from '../../shared/FileMenuView';
+import ResearchStatusUpdateSolver from '../tabs/fileDetails/ResearchStatusUpdateSolver';
 
 export interface IResearchMenuProps {
+  researchFile: ApiGen_Concepts_ResearchFile;
   items: string[];
   selectedIndex: number;
   onChange: (index: number) => void;
@@ -22,6 +29,7 @@ const ResearchMenu: React.FunctionComponent<
   const handleClick = (index: number) => {
     props.onChange(index);
   };
+  const statusSolver = new ResearchStatusUpdateSolver(props.researchFile);
   return (
     <StyledMenuWrapper>
       {props.items.map((label: string, index: number) => (
@@ -68,13 +76,17 @@ const ResearchMenu: React.FunctionComponent<
               )}
               <StyledMenuHeaderWrapper>
                 <StyledMenuHeader>Properties</StyledMenuHeader>
-                {hasClaim(Claims.RESEARCH_EDIT) && (
+                {hasClaim(Claims.RESEARCH_EDIT) && statusSolver.canEditProperties() && (
                   <EditButton
                     title="Change properties"
                     icon={<EditPropertiesIcon />}
-                    onClick={() => {
-                      props.onEdit();
-                    }}
+                    onClick={props.onEdit}
+                  />
+                )}
+                {hasClaim(Claims.RESEARCH_EDIT) && !statusSolver.canEditProperties() && (
+                  <TooltipIcon
+                    toolTipId={`${props?.researchFile?.id || 0}-summary-cannot-edit-tooltip`}
+                    toolTip={cannotEditMessage}
                   />
                 )}
               </StyledMenuHeaderWrapper>
@@ -87,14 +99,6 @@ const ResearchMenu: React.FunctionComponent<
 };
 
 export default ResearchMenu;
-
-const StyledMenuWrapper = styled.div`
-  text-align: left;
-  padding: 0px;
-  margin: 0px;
-  width: 100%;
-  color: ${({ theme }) => theme.css.linkColor};
-`;
 
 const StyledMenuCol = styled(Col)`
   min-height: 2.5rem;

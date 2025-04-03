@@ -174,6 +174,27 @@ namespace Pims.Dal.Test.Repositories
             // Assert
             result.Should().HaveCount(1);
         }
+
+        [Fact]
+        public void GetPage_Project()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileAdd);
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.Project = new PimsProject() { Description = "", ProjectStatusTypeCode = "", PimsProjectPeople = new List<PimsProjectPerson>() { new PimsProjectPerson() { PersonId = 1 } } };
+            var filter = new AcquisitionFilter() { };
+
+            helper.CreatePimsContext(user, true).AddAndSaveChanges(acqFile);
+
+            var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
+
+            // Act
+            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 }, contractorPersonId: 1);
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
         #endregion
 
         #region Add

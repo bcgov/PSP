@@ -6,10 +6,12 @@ import {
 export interface IApiGenerateExpropriationForm9Input
   extends IApiGenerateExpropriationFormBaseInput {
   registeredPlanNumbers?: string;
+  expropriationVestingDate?: string;
 }
 
 export class Api_GenerateExpropriationForm9 extends Api_GenerateExpropriationFormBase {
   registered_plan_numbers: string;
+  vesting_date: string;
 
   constructor({
     file,
@@ -17,6 +19,7 @@ export class Api_GenerateExpropriationForm9 extends Api_GenerateExpropriationFor
     expropriationAuthority,
     impactedProperties = [],
     registeredPlanNumbers,
+    expropriationVestingDate,
   }: IApiGenerateExpropriationForm9Input) {
     super({
       file,
@@ -25,5 +28,6 @@ export class Api_GenerateExpropriationForm9 extends Api_GenerateExpropriationFor
       impactedProperties,
     });
     this.registered_plan_numbers = registeredPlanNumbers ?? '';
+    this.vesting_date = expropriationVestingDate ?? '';
   }
 }

@@ -1,19 +1,6 @@
 import { Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
-export const H1 = styled.h1`
-  text-align: left;
-`;
-
-export const H2 = styled.h2`
-  text-align: left;
-`;
-
-export const H2Primary = styled.h2`
-  text-align: left;
-  color: ${props => props.theme.css.headerTextColor};
-`;
-
 export const RowAligned = styled(Row)`
   text-align: left;
 `;

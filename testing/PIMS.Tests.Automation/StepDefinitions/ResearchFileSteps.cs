@@ -1,4 +1,5 @@
-﻿using PIMS.Tests.Automation.Classes;
+﻿using OpenQA.Selenium;
+using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
 using System.Data;
 
@@ -22,16 +23,16 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private ResearchFile researchFile;
         protected string researchFileCode = "";
 
-        public ResearchFileSteps(BrowserDriver driver)
+        public ResearchFileSteps(IWebDriver driver)
         {
             loginSteps = new LoginSteps(driver);
-            researchFiles = new ResearchFiles(driver.Current);
-            sharedFileProperties = new SharedFileProperties(driver.Current);
-            sharedPagination = new SharedPagination(driver.Current);
-            searchResearchFiles = new SearchResearchFiles(driver.Current);
-            propertyInformation = new PropertyInformation(driver.Current);
-            searchProperties = new SearchProperties(driver.Current);
-            notes = new Notes(driver.Current);
+            researchFiles = new ResearchFiles(driver);
+            sharedFileProperties = new SharedFileProperties(driver);
+            sharedPagination = new SharedPagination(driver);
+            searchResearchFiles = new SearchResearchFiles(driver);
+            propertyInformation = new PropertyInformation(driver);
+            searchProperties = new SearchProperties(driver);
+            notes = new Notes(driver);
             genericSteps = new GenericSteps(driver);
             
             researchFile = new ResearchFile();
@@ -381,20 +382,17 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             searchResearchFiles.VerifyResearchFileListView();
             searchResearchFiles.VerifyResearchFileTableContent(researchFile, userName);
-
-            searchResearchFiles.Dispose();
         }
 
         [StepDefinition(@"Research File Properties remain unchanged")]
         public void SearchResearchFileResult()
         {
             Assert.False(searchResearchFiles.SearchFoundResults());
-            searchResearchFiles.Dispose();
         }
 
         private void PopulateResearchFile(int rowNumber)
         {
-            DataTable researchFileSheet = ExcelDataContext.GetInstance().Sheets["ResearchFiles"]!;
+            System.Data.DataTable researchFileSheet = ExcelDataContext.GetInstance().Sheets["ResearchFiles"]!;
             ExcelDataContext.PopulateInCollection(researchFileSheet);
             researchFile = new ResearchFile();
 
@@ -424,7 +422,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             if (researchFile.SearchPropertiesIndex > 0)
             {
-                DataTable searchPropertiesSheet = ExcelDataContext.GetInstance().Sheets["SearchProperties"]!;
+                System.Data.DataTable searchPropertiesSheet = ExcelDataContext.GetInstance().Sheets["SearchProperties"]!;
                 ExcelDataContext.PopulateInCollection(searchPropertiesSheet);
 
                 researchFile.SearchProperties.PID = ExcelDataContext.ReadData(researchFile.SearchPropertiesIndex, "PID");
@@ -443,7 +441,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             researchFile.PropertyResearch = new List<PropertyResearch>();
 
-            DataTable propertyResearchSheet = ExcelDataContext.GetInstance().Sheets["PropertyResearch"]!;
+            System.Data.DataTable propertyResearchSheet = ExcelDataContext.GetInstance().Sheets["PropertyResearch"]!;
             ExcelDataContext.PopulateInCollection(propertyResearchSheet);
 
             for (int i = startRow; i <= startRow + rowsCount; i++)

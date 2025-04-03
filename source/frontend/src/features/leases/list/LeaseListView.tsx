@@ -4,11 +4,12 @@ import { Col, Row } from 'react-bootstrap';
 import { FaFileAlt, FaFileExcel, FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
+import styled from 'styled-components';
 
 import LeaseIcon from '@/assets/images/lease-icon.svg?react';
 import { StyledIconButton } from '@/components/common/buttons';
 import * as CommonStyled from '@/components/common/styles';
-import { StyledAddButton } from '@/components/common/styles';
+import { PaddedScrollable, StyledAddButton } from '@/components/common/styles';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import Claims from '@/constants/claims';
 import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
@@ -22,7 +23,6 @@ import { useLeaseExport } from '../hooks/useLeaseExport';
 import { ILeaseFilter } from '../interfaces';
 import { defaultFilter, LeaseFilter } from './LeaseFilter/LeaseFilter';
 import { LeaseSearchResults } from './LeaseSearchResults/LeaseSearchResults';
-import * as Styled from './styles';
 
 /**
  * Page that displays leases information.
@@ -80,13 +80,23 @@ export const LeaseListView: React.FunctionComponent<React.PropsWithChildren<unkn
   }, [error]);
 
   return (
-    <Styled.ListPage>
-      <Styled.Scrollable>
+    <CommonStyled.ListPage>
+      <PaddedScrollable>
         <CommonStyled.H1>
-          <LeaseIcon title="Lease and Licence icon" fill="currentColor" />
-          <span className="ml-2">Leases &amp; Licences</span>
+          <FlexDiv>
+            <div>
+              <LeaseIcon title="Lease and Licence icon" fill="currentColor" />
+              <span className="ml-2">Leases &amp; Licences</span>
+            </div>
+            {hasClaim(Claims.LEASE_ADD) && (
+              <StyledAddButton onClick={() => history.push('/mapview/sidebar/lease/new')}>
+                <FaPlus />
+                &nbsp;Create a Lease/Licence
+              </StyledAddButton>
+            )}
+          </FlexDiv>
         </CommonStyled.H1>
-        <Styled.PageToolbar>
+        <CommonStyled.PageToolbar>
           <Row>
             <Col>
               <LeaseFilter filter={filter} setFilter={changeFilter} />
@@ -106,13 +116,8 @@ export const LeaseListView: React.FunctionComponent<React.PropsWithChildren<unkn
               </TooltipWrapper>
             </Col>
           </Row>
-        </Styled.PageToolbar>
-        {hasClaim(Claims.LEASE_ADD) && (
-          <StyledAddButton onClick={() => history.push('/mapview/sidebar/lease/new')}>
-            <FaPlus />
-            &nbsp;Create a Lease/Licence
-          </StyledAddButton>
-        )}
+        </CommonStyled.PageToolbar>
+
         <LeaseSearchResults
           results={results}
           totalItems={totalItems}
@@ -125,9 +130,21 @@ export const LeaseListView: React.FunctionComponent<React.PropsWithChildren<unkn
           setPageIndex={setCurrentPage}
           loading={loading}
         />
-      </Styled.Scrollable>
-    </Styled.ListPage>
+      </PaddedScrollable>
+    </CommonStyled.ListPage>
   );
 };
 
 export default LeaseListView;
+
+const FlexDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
+
+  svg {
+    vertical-align: baseline;
+  }
+`;

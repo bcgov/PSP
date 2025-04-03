@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { ExpandCollapseButton } from '@/components/common/buttons/ExpandCollapseButton';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import * as Styled from '@/components/common/styles';
+import { H1 } from '@/components/common/styles';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 
 export interface IMapSideBarLayoutProps {
@@ -32,13 +33,13 @@ const MapSideBarLayout: React.FunctionComponent<
   }, [onClose]);
 
   return (
-    <StyledSidebarWrapper className={mapSideBarViewState.isCollapsed ? '' : 'expanded'}>
+    <StyledSidebarWrapper className={mapSideBarViewState.isCollapsed ? 'collapsed' : 'expanded'}>
       {mapSideBarViewState.isCollapsed ? (
         <>
           <Row>
-            <Col xs={12} className="justify-content-center d-flex">
+            <StyledCollapsedIconWrapper xs={12} className="justify-content-center d-flex">
               {icon}
-            </Col>
+            </StyledCollapsedIconWrapper>
           </Row>
           <Styled.Underline className="mb-4" />
           <Row>
@@ -63,12 +64,12 @@ const MapSideBarLayout: React.FunctionComponent<
         <>
           <Row>
             <Col>
-              <Styled.H1 className="mr-auto">
+              <StyledExpandedHeader>
                 <>
-                  <span className="mr-2">{icon}</span>
+                  <div className="mr-2 mb-1">{icon}</div>
                   {title}
                 </>
-              </Styled.H1>
+              </StyledExpandedHeader>
             </Col>
 
             <StyledButtonBar xs="auto" className="d-flex">
@@ -104,6 +105,14 @@ const MapSideBarLayout: React.FunctionComponent<
 };
 
 const StyledSidebarWrapper = styled.div`
+  &.collapsed .row:first {
+    svg {
+      width: 2.6rem;
+      height: 2.6rem;
+      margin-right: 0;
+    }
+  }
+
   &.expanded {
     min-width: 90rem;
     height: 100%;
@@ -115,6 +124,10 @@ const StyledSidebarWrapper = styled.div`
   }
   padding: 1.6rem;
   color: ${props => props.theme.bcTokens.typographyColorSecondary};
+`;
+
+const StyledCollapsedIconWrapper = styled(Col)`
+  margin-bottom: 0.3rem;
 `;
 
 const StyledButtonBar = styled(Col)`
@@ -140,5 +153,10 @@ const Header = styled.div`
 `;
 
 const Footer = styled.div``;
+
+const StyledExpandedHeader = styled(H1)`
+  display: flex;
+  align-items: end;
+`;
 
 export default MapSideBarLayout;

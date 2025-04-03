@@ -7,11 +7,6 @@ export const StyledGreySection = styled.div`
   background-color: ${({ theme }) => theme.css.highlightBackgroundColor};
 `;
 
-export const StyledH2 = styled.h2`
-  font-weight: 700;
-  color: ${props => props.theme.css.headerTextColor};
-`;
-
 export const StyledH3 = styled.h3`
   font-weight: 700;
   font-size: 1.7rem;
@@ -22,10 +17,6 @@ export const StyledH3 = styled.h3`
   border-bottom: solid 0.1rem ${props => props.theme.css.headerBorderColor};
 `;
 
-export const StyledHeader = styled.div`
-  text-align: left !important;
-  display: flex;
-`;
 export const StyledScrollable = styled(Scrollable)`
   overflow-x: hidden;
   max-height: 50rem;

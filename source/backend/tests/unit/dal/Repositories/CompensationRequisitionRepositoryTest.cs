@@ -132,12 +132,21 @@ namespace Pims.Dal.Test.Repositories
         }
 
         [Fact]
-        public void UpdateCompensationRequisition_Success()
+        public void UpdateCompensationRequisitionAcq_Success()
         {
             // Arrange
             var compReq = EntityHelper.CreateCompensationRequisition(id: 1);
             compReq.AcquisitionFileId = 100;
-            compReq.LegacyPayee = "Legacy Payee (read-only)";
+            compReq.PimsCompReqAcqPayees = new List<PimsCompReqAcqPayee>
+            {
+                new()
+                {
+                    AcquisitionOwnerId = 1,
+                    CompensationRequisitionId = 1,
+                    Internal_Id = 1,
+
+                }
+            };
 
             var repository = CreateWithPermissions(Permissions.CompensationRequisitionEdit);
             _helper.AddAndSaveChanges(compReq);
@@ -145,7 +154,15 @@ namespace Pims.Dal.Test.Repositories
             var updatedCompReq = EntityHelper.CreateCompensationRequisition(id: 1);
             updatedCompReq.AcquisitionFileId = compReq.AcquisitionFileId;
             updatedCompReq.FiscalYear = "2030/2031";
-            updatedCompReq.LegacyPayee = "Attempting to modify legacy payee";
+            updatedCompReq.PimsCompReqAcqPayees = new List<PimsCompReqAcqPayee>
+            {
+                new()
+                {
+                    AcquisitionOwnerId = 1,
+                    CompensationRequisitionId = 1,
+                    Internal_Id = 1,
+                }
+            };
 
             // Act
             var result = repository.Update(updatedCompReq);
@@ -154,7 +171,51 @@ namespace Pims.Dal.Test.Repositories
             result.Should().NotBeNull();
             result.Should().BeAssignableTo<PimsCompensationRequisition>();
             result.FiscalYear.Should().Be("2030/2031");
-            result.LegacyPayee.Should().Be("Legacy Payee (read-only)"); // don't let frontend override legacy payee
+            result.PimsCompReqAcqPayees.First().AcquisitionOwnerId.Should().Be(1);
+        }
+
+        [Fact]
+        public void UpdateCompensationRequisitionLease_Success()
+        {
+            // Arrange
+            var compReq = EntityHelper.CreateCompensationRequisition(id: 1);
+            compReq.AcquisitionFileId = 100;
+            compReq.PimsCompReqLeasePayees = new List<PimsCompReqLeasePayee>
+            {
+                new()
+                {
+                    LeaseStakeholderId = 1,
+                    CompensationRequisitionId = 1,
+                    Internal_Id = 1,
+
+                }
+            };
+
+            var repository = CreateWithPermissions(Permissions.CompensationRequisitionEdit);
+            _helper.AddAndSaveChanges(compReq);
+
+            var updatedCompReq = EntityHelper.CreateCompensationRequisition(id: 1);
+            updatedCompReq.AcquisitionFileId = compReq.AcquisitionFileId;
+            updatedCompReq.FiscalYear = "2030/2031";
+            updatedCompReq.PimsCompReqLeasePayees = new List<PimsCompReqLeasePayee>
+            {
+                new()
+                {
+                    LeaseStakeholderId = 1,
+                    CompensationRequisitionId = 1,
+                    Internal_Id = 1,
+
+                }
+            };
+
+            // Act
+            var result = repository.Update(updatedCompReq);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<PimsCompensationRequisition>();
+            result.FiscalYear.Should().Be("2030/2031");
+            result.PimsCompReqLeasePayees.First().LeaseStakeholderId.Should().Be(1);
         }
 
         [Fact]
@@ -205,6 +266,120 @@ namespace Pims.Dal.Test.Repositories
 
             // Assert
             result.Should().BeFalse();
+        }
+
+        [Fact]
+        public void DeleteCompensationRequisition_CascadeDelete_SubEntities_ACQUISITION()
+        {
+            // Arrange
+            var compReq = EntityHelper.CreateCompensationRequisition(id: 1);
+            compReq.AcquisitionFileId = 1;
+            compReq.PimsCompReqFinancials.Add(
+                new()
+                {
+                    Internal_Id = 1,
+                    CompensationRequisitionId = 1,
+                    FinancialActivityCodeId = 100,
+                    FinancialActivityCode = new()
+                    {
+                        Id = 100,
+                        Code = "TEST",
+                        Description = "Lorem Ipsum"
+                    }
+                });
+            compReq.PimsPropAcqFlCompReqs.Add(
+                new()
+                {
+                    Internal_Id = 1,
+                    CompensationRequisitionId = 1,
+                    PropertyAcquisitionFileId = 1,
+                    PropertyAcquisitionFile = new()
+                    {
+                        AcquisitionFileId = 1,
+                        PropertyId = 12345,
+                        Property = EntityHelper.CreateProperty(12345),
+                    }
+                });
+
+            compReq.PimsCompReqAcqPayees.Add(
+                new()
+                {
+                    Internal_Id = 1,
+                    CompensationRequisitionId = 1,
+                    AcquisitionOwnerId = 1
+                });
+
+            var repository = CreateWithPermissions(Permissions.CompensationRequisitionDelete);
+            var context = _helper.AddAndSaveChanges(compReq);
+
+            // Act
+            context.ChangeTracker.Clear();
+            var result = repository.TryDelete(compReq.Internal_Id);
+            context.CommitTransaction();
+
+            // Assert
+            result.Should().BeTrue();
+            context.PimsCompensationRequisitions.Should().BeEmpty();
+            context.PimsCompReqFinancials.Should().BeEmpty();
+            context.PimsPropAcqFlCompReqs.Should().BeEmpty();
+            context.PimsCompReqAcqPayees.Should().BeEmpty();
+        }
+
+        [Fact]
+        public void DeleteCompensationRequisition_CascadeDelete_SubEntities_LEASE()
+        {
+            // Arrange
+            var compReq = EntityHelper.CreateCompensationRequisition(id: 1);
+            compReq.LeaseId = 1;
+            compReq.PimsCompReqFinancials.Add(
+                new()
+                {
+                    Internal_Id = 1,
+                    CompensationRequisitionId = 1,
+                    FinancialActivityCodeId = 100,
+                    FinancialActivityCode = new()
+                    {
+                        Id = 100,
+                        Code = "TEST",
+                        Description = "Lorem Ipsum"
+                    }
+                });
+            compReq.PimsPropLeaseCompReqs.Add(
+                new()
+                {
+                    Internal_Id = 1,
+                    CompensationRequisitionId = 1,
+                    PropertyLeaseId = 1,
+                    PropertyLease = new()
+                    {
+                        LeaseId = 1,
+                        PropertyId = 12345,
+                        Property = EntityHelper.CreateProperty(12345),
+                    }
+                });
+
+            compReq.PimsCompReqLeasePayees.Add(
+                new()
+                {
+                    Internal_Id = 1,
+                    CompensationRequisitionId = 1,
+                    LeaseStakeholderId = 1
+                });
+
+            var repository = CreateWithPermissions(Permissions.CompensationRequisitionDelete);
+            var context = _helper.AddAndSaveChanges(compReq);
+
+            // Act
+            context.ChangeTracker.Clear();
+            var result = repository.TryDelete(compReq.Internal_Id);
+            context.CommitTransaction();
+
+            // Assert
+            result.Should().BeTrue();
+            context.PimsCompensationRequisitions.Should().BeEmpty();
+            context.PimsCompReqFinancials.Should().BeEmpty();
+            context.PimsPropLeaseCompReqs.Should().BeEmpty();
+            context.PimsCompReqLeasePayees.Should().BeEmpty();
         }
 
         [Fact]
@@ -267,6 +442,108 @@ namespace Pims.Dal.Test.Repositories
             result.Should().HaveCount(1);
             result.First().Property.Pid.Should().Be(12345);
             result.First().Property.Location.SRID.Should().Be(SpatialReference.BCALBERS); // repository should return property location in BCALBERS projection
+        }
+
+        [Fact]
+        public void GetCompensationRequisitionFinancials_Success()
+        {
+            // Arrange
+            PimsCompReqFinancial[] financials =
+            {
+                new ()
+                {
+                    Internal_Id = 1,
+                    CompensationRequisitionId = 1,
+                    FinancialActivityCodeId = 100,
+                },
+                new ()
+                {
+                    Internal_Id = 2,
+                    CompensationRequisitionId = 1,
+                    FinancialActivityCodeId = 100,
+                },
+            };
+
+            var repository = CreateWithPermissions(Permissions.CompensationRequisitionView);
+            _helper.AddAndSaveChanges<PimsCompReqFinancial>(financials);
+            _helper.AddAndSaveChanges<PimsFinancialActivityCode>(
+                new PimsFinancialActivityCode()
+                {
+                    Id = 100,
+                    Code = "TEST",
+                    Description = "lorem ipsum"
+                });
+
+            // Act
+            var result = repository.GetCompensationRequisitionFinancials(1);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<IEnumerable<PimsCompReqFinancial>>();
+            result.Should().HaveCount(2);
+            result.First().CompensationRequisitionId.Should().Be(1);
+        }
+
+        [Fact]
+        public void GetCompensationRequisitionPayees_Success()
+        {
+            // Arrange
+            PimsCompReqAcqPayee[] payees =
+            {
+                new ()
+                {
+                    Internal_Id = 1,
+                    CompensationRequisitionId = 1,
+                },
+                new ()
+                {
+                    Internal_Id = 2,
+                    CompensationRequisitionId = 1,
+                },
+            };
+
+            var repository = CreateWithPermissions(Permissions.CompensationRequisitionView);
+            _helper.AddAndSaveChanges<PimsCompReqAcqPayee>(payees);
+
+            // Act
+            var result = repository.GetCompensationRequisitionAcquisitionPayees(1);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<IEnumerable<PimsCompReqAcqPayee>>();
+            result.Should().HaveCount(2);
+            result.First().CompensationRequisitionId.Should().Be(1);
+        }
+
+        [Fact]
+        public void GetCompensationRequisitionLeasePayees_Success()
+        {
+            // Arrange
+            PimsCompReqLeasePayee[] payees =
+            {
+                new ()
+                {
+                    Internal_Id = 1,
+                    CompensationRequisitionId = 1,
+                },
+                new ()
+                {
+                    Internal_Id = 2,
+                    CompensationRequisitionId = 1,
+                },
+            };
+
+            var repository = CreateWithPermissions(Permissions.CompensationRequisitionView);
+            _helper.AddAndSaveChanges<PimsCompReqLeasePayee>(payees);
+
+            // Act
+            var result = repository.GetCompensationRequisitionLeasePayees(1);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<IEnumerable<PimsCompReqLeasePayee>>();
+            result.Should().HaveCount(2);
+            result.First().CompensationRequisitionId.Should().Be(1);
         }
     }
 }

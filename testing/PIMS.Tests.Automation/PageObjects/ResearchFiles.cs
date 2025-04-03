@@ -110,12 +110,12 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Research File - Properties Elements
         private readonly By researchProperty1stPropLink = By.CssSelector("div[data-testid='menu-item-row-1'] div:nth-child(3)");
-        private readonly By researchPropertyResearchEditBttn = By.XPath("(//button[@class='btn btn-link'])[2]");
+        private readonly By researchPropertyResearchEditBttn = By.CssSelector("button[title='Edit Property Research']");
         private readonly By researchPropertyNameInput = By.Id("input-propertyName");
-        private readonly By researchPropertyPurposeSelect = By.Id("purpose-selector_input");
-        private readonly By researchPropertyPurposeInput = By.XPath("//input[@id='purpose-selector_input']/parent::div");
-        private readonly By researchPropertyPurposeDiv = By.XPath("//input[@id='purpose-selector_input']/parent::div");
-        private readonly By researchPropertyPurposeOptions = By.CssSelector("ul[class='optionContainer']");
+        private readonly By researchPropertyPurposeSelect = By.Id("multiselect-propertyResearchPurposeTypes_input");
+        private readonly By researchPropertyPurposeInput = By.XPath("//input[@id='multiselect-propertyResearchPurposeTypes_input']/parent::div");
+        private readonly By researchPropertyPurposeDiv = By.XPath("//input[@id='multiselect-propertyResearchPurposeTypes_input']/parent::div");
+        private readonly By researchPropertyPurposeOptions = By.CssSelector("div[id='multiselect-propertyResearchPurposeTypes'] div ul[class='optionContainer']");
         private readonly By researchPropertyLegalOpinionReqSelect = By.Id("input-isLegalOpinionRequired");
         private readonly By researchPropertyLegalOpinionObtSelect = By.Id("input-isLegalOpinionObtained");
         private readonly By researchPropertyDocReferenceInput = By.Id("input-documentReference");
@@ -131,7 +131,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By researchPropertyPurposeLabel = By.XPath("//label[contains(text(),'Purpose')]");
         private readonly By researchPropertyPurposeViewInput = By.XPath("//label[contains(text(),'Purpose')]/parent::div/following-sibling::div");
         private readonly By researchProperty1stPurposeDeleteLink = By.CssSelector("div[id='purpose-selector'] div span:nth-child(1) i");
-        private readonly By researchPropertyPurposeDeleteLinks = By.CssSelector("div[id='purpose-selector'] div span i");
+        private readonly By researchPropertyPurposeDeleteLinks = By.CssSelector("div[id='multiselect-propertyResearchPurposeTypes'] div span i");
         private readonly By researchPropertyLegalReqLabel = By.XPath("//label[contains(text(),'Legal opinion req')]");
         private readonly By researchPropertyLegalReqViewInput = By.XPath("//label[contains(text(),'Legal opinion req')]/parent::div/following-sibling::div");
         private readonly By researchPropertyLegalObtLabel = By.XPath("//label[contains(text(),'Legal opinion obtained')]");
@@ -567,7 +567,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(researchFileDetailsProjectAddBttn);
 
             //Properties to include
-            sharedSearchProperties.VerifyLocateOnMapFeature();
+            sharedSearchProperties.VerifyLocateOnMapFeature("Research");
         }
 
         //Verify Edit Research File Init Form

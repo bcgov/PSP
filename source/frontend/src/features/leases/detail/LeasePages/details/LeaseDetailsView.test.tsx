@@ -1,17 +1,15 @@
 import { Claims } from '@/constants';
-import { getEmptyLease } from '@/models/defaultInitializers';
-import { act, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
-
+import { getMockApiLease } from '@/mocks/lease.mock';
 import { ApiGen_CodeTypes_LeaseLicenceTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseLicenceTypes';
 import { ApiGen_CodeTypes_LeasePaymentReceivableTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePaymentReceivableTypes';
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_Product';
 import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
+import { getEmptyBaseAudit, getEmptyLease } from '@/models/defaultInitializers';
 import { toTypeCode } from '@/utils/formUtils';
+import { render, RenderOptions, screen, waitForEffects } from '@/utils/test-utils';
 
 import LeaseDetailView, { ILeaseDetailViewProps } from './LeaseDetailView';
-
-const onGenerate = vi.fn();
 
 describe('LeaseDetailView component', () => {
   // render component under test
@@ -19,10 +17,7 @@ describe('LeaseDetailView component', () => {
     renderOptions: RenderOptions & { props?: Partial<ILeaseDetailViewProps> } = {},
   ) => {
     const utils = render(
-      <LeaseDetailView
-        lease={renderOptions?.props?.lease ?? getEmptyLease()}
-        onGenerate={renderOptions?.props?.onGenerate ?? onGenerate}
-      />,
+      <LeaseDetailView lease={renderOptions?.props?.lease ?? getEmptyLease()} />,
       {
         ...renderOptions,
         claims: renderOptions?.claims ?? [Claims.LEASE_VIEW],
@@ -86,6 +81,49 @@ describe('LeaseDetailView component', () => {
     expect(await screen.findByText('PROD Test Product')).toBeVisible();
   });
 
+  it.each([
+    ['with project number', '001', 'FTProjectTest', '001 - FTProjectTest'],
+    ['without project number', null, 'FTProjectTest', 'FTProjectTest'],
+  ])(
+    'renders the file Project Number and name concatenated - %s',
+    async (
+      _: string,
+      projectNumber: string | null,
+      projectDescription: string,
+      expectedValue: string,
+    ) => {
+      const { getByText } = setup({
+        props: {
+          lease: {
+            ...getMockApiLease(),
+            fileStatusTypeCode: {
+              ...toTypeCode(ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE),
+              description: 'Active',
+            },
+            project: {
+              id: 1,
+              projectStatusTypeCode: null,
+              code: projectNumber,
+              description: projectDescription,
+              costTypeCode: null,
+              businessFunctionCode: null,
+              workActivityCode: null,
+              regionCode: null,
+              note: null,
+              projectPersons: [],
+              projectProducts: [],
+              ...getEmptyBaseAudit(1),
+            },
+          },
+        },
+      });
+      await waitForEffects();
+
+      expect(getByText('Ministry project:')).toBeVisible();
+      expect(getByText(expectedValue)).toBeVisible();
+    },
+  );
+
   it('shows cancellation reason for discarded leases', async () => {
     setup({
       props: {
@@ -131,111 +169,4 @@ describe('LeaseDetailView component', () => {
     expect(await screen.findByText('Mar 15, 2024')).toBeVisible();
     expect(await screen.findByText('test termination')).toBeVisible();
   });
-
-  it.each([
-    [ApiGen_CodeTypes_LeaseLicenceTypes.LOOBCTFA, 'Generate H-1005(a)'],
-    [ApiGen_CodeTypes_LeaseLicenceTypes.LIPPUBHWY, 'Generate H-1005'],
-  ])(
-    'does not render generation button if missing permissions - %s',
-    async (leaseTypeCode: string, buttonText: string) => {
-      setup({
-        props: {
-          lease: {
-            ...getEmptyLease(),
-            type: toTypeCode(leaseTypeCode),
-            fileStatusTypeCode: {
-              ...toTypeCode(ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE),
-              description: 'Active',
-            },
-            paymentReceivableType: {
-              ...toTypeCode(ApiGen_CodeTypes_LeasePaymentReceivableTypes.RCVBL),
-              description: 'Receivable',
-            },
-          },
-        },
-        claims: [],
-      });
-
-      expect(screen.queryByText(buttonText)).toBeNull();
-    },
-  );
-
-  it('does not render generation button if lease is not of expected type', async () => {
-    setup({
-      props: {
-        lease: {
-          ...getEmptyLease(),
-          type: toTypeCode(ApiGen_CodeTypes_LeaseLicenceTypes.OTHER),
-          fileStatusTypeCode: {
-            ...toTypeCode(ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE),
-            description: 'Active',
-          },
-          paymentReceivableType: {
-            ...toTypeCode(ApiGen_CodeTypes_LeasePaymentReceivableTypes.RCVBL),
-            description: 'Receivable',
-          },
-        },
-      },
-    });
-
-    expect(screen.queryByText(/Generate H-1005/i)).toBeNull();
-  });
-
-  it.each([
-    [ApiGen_CodeTypes_LeaseLicenceTypes.LOOBCTFA, 'Generate H-1005(a)'],
-    [ApiGen_CodeTypes_LeaseLicenceTypes.LIPPUBHWY, 'Generate H-1005'],
-  ])(
-    'only renders generation button for specific lease types - %s',
-    async (leaseTypeCode: string, buttonText: string) => {
-      setup({
-        props: {
-          lease: {
-            ...getEmptyLease(),
-            type: toTypeCode(leaseTypeCode),
-            fileStatusTypeCode: {
-              ...toTypeCode(ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE),
-              description: 'Active',
-            },
-            paymentReceivableType: {
-              ...toTypeCode(ApiGen_CodeTypes_LeasePaymentReceivableTypes.RCVBL),
-              description: 'Receivable',
-            },
-          },
-        },
-      });
-
-      expect(await screen.findByText(buttonText)).toBeInTheDocument();
-    },
-  );
-
-  it.each([
-    [ApiGen_CodeTypes_LeaseLicenceTypes.LOOBCTFA, 'Generate H-1005(a)'],
-    [ApiGen_CodeTypes_LeaseLicenceTypes.LIPPUBHWY, 'Generate H-1005'],
-  ])(
-    'calls onGenerate when generation button is clicked - %s',
-    async (leaseTypeCode: string, buttonTitle: string) => {
-      setup({
-        props: {
-          lease: {
-            ...getEmptyLease(),
-            type: toTypeCode(leaseTypeCode),
-            fileStatusTypeCode: {
-              ...toTypeCode(ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE),
-              description: 'Active',
-            },
-            paymentReceivableType: {
-              ...toTypeCode(ApiGen_CodeTypes_LeasePaymentReceivableTypes.RCVBL),
-              description: 'Receivable',
-            },
-          },
-        },
-      });
-
-      const generateButton = await screen.findByText(buttonTitle);
-      expect(generateButton).toBeInTheDocument();
-
-      await act(async () => userEvent.click(generateButton));
-      expect(onGenerate).toHaveBeenCalled();
-    },
-  );
 });

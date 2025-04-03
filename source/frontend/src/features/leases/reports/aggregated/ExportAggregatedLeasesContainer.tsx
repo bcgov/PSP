@@ -1,9 +1,8 @@
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
 
+import DownloadButton from '@/components/common/buttons/DownloadButton';
 import { InlineSelect } from '@/components/common/form/styles';
-import TooltipWrapper from '@/components/common/TooltipWrapper';
-import { ClickableDownload } from '@/components/layout/SideNavBar/styles';
 import {
   FlexRowDiv,
   UnOrderedListNoStyle,
@@ -38,15 +37,19 @@ export const ExportAggregatedLeasesContainer: React.FunctionComponent<unknown> =
       {({ submitForm }) => (
         <UnOrderedListNoStyle>
           <li>
-            <FlexRowDiv>
+            <FlexRowDiv className="align-items-center">
               <InlineSelect
                 label="Select fiscal year"
                 field="fiscalYear"
                 options={fiscalYearOptions}
+                className="mb-0"
               ></InlineSelect>
-              <TooltipWrapper tooltipId="download-aggregated-lease-report" tooltip="Download">
-                <ClickableDownload title="Export Aggregated Report" onClick={() => submitForm()} />
-              </TooltipWrapper>
+              <DownloadButton
+                title="Export Aggregated Report"
+                toolId="download-aggregated-lease-report"
+                toolText="Download"
+                onClick={() => submitForm()}
+              />
             </FlexRowDiv>
           </li>
         </UnOrderedListNoStyle>

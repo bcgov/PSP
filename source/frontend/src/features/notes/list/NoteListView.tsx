@@ -17,7 +17,6 @@ import { ApiGen_Concepts_Note } from '@/models/api/generated/ApiGen_Concepts_Not
 import { AddNotesContainer } from '../add/AddNotesContainer';
 import { NoteContainer } from '../NoteContainer';
 import { NoteResults } from './NoteResults/NoteResults';
-import * as Styled from './styles';
 
 export interface INoteListViewProps {
   type: NoteTypes;
@@ -93,70 +92,66 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
   };
 
   return (
-    <Styled.ListPage>
-      <Styled.Scrollable vertical={true}>
-        <Section
-          header={
-            <SectionListHeader
-              claims={[Claims.NOTE_ADD]}
-              title="Notes"
-              addButtonText="Add a Note"
-              addButtonIcon={<FaPlus size={'2rem'} />}
-              onAdd={openAddNotes}
-            />
-          }
-          title="notes"
-          isCollapsable
-          initiallyExpanded
-        >
-          <NoteResults
-            results={sortedNoteList}
-            loading={isLoading}
-            sort={sort}
-            setSort={setSort}
-            onShowDetails={(note: ApiGen_Concepts_Note) => {
-              setCurrentNote(note);
-              openViewNotes();
-            }}
-            onDelete={(note: ApiGen_Concepts_Note) => {
-              setCurrentNote(note);
-              setShowDeleteConfirm(true);
-            }}
-          />
+    <Section
+      header={
+        <SectionListHeader
+          claims={[Claims.NOTE_ADD]}
+          title="Notes"
+          addButtonText="Add a Note"
+          addButtonIcon={<FaPlus size={'2rem'} />}
+          onAdd={openAddNotes}
+        />
+      }
+      title="notes"
+      isCollapsable
+      initiallyExpanded
+    >
+      <NoteResults
+        results={sortedNoteList}
+        loading={isLoading}
+        sort={sort}
+        setSort={setSort}
+        onShowDetails={(note: ApiGen_Concepts_Note) => {
+          setCurrentNote(note);
+          openViewNotes();
+        }}
+        onDelete={(note: ApiGen_Concepts_Note) => {
+          setCurrentNote(note);
+          setShowDeleteConfirm(true);
+        }}
+      />
 
-          <AddNotesContainer
-            type={type}
-            parentId={entityId}
-            isOpened={isAddNotesOpened}
-            openModal={openAddNotes}
-            closeModal={closeAddNotes}
-            onSuccess={onChildSuccess}
-          />
+      <AddNotesContainer
+        type={type}
+        parentId={entityId}
+        isOpened={isAddNotesOpened}
+        openModal={openAddNotes}
+        closeModal={closeAddNotes}
+        onSuccess={onChildSuccess}
+      />
 
-          {currentNote && (
-            <NoteContainer
-              type={type}
-              noteId={currentNote.id as number}
-              isOpened={isViewNotesOpened}
-              openModal={openViewNotes}
-              closeModal={closeViewNotes}
-              onSuccess={onChildSuccess}
-            ></NoteContainer>
-          )}
+      {currentNote && (
+        <NoteContainer
+          type={type}
+          noteId={currentNote.id as number}
+          isOpened={isViewNotesOpened}
+          openModal={openViewNotes}
+          closeModal={closeViewNotes}
+          onSuccess={onChildSuccess}
+        ></NoteContainer>
+      )}
 
-          <GenericModal
-            variant="info"
-            display={showDeleteConfirm}
-            title="Delete Note"
-            message={`Are you sure you want to delete this note?`}
-            handleOk={onDeleteNoteConfirm}
-            okButtonText="OK"
-            cancelButtonText="Cancel"
-            setDisplay={setShowDeleteConfirm}
-          />
-        </Section>
-      </Styled.Scrollable>
-    </Styled.ListPage>
+      <GenericModal
+        variant="info"
+        display={showDeleteConfirm}
+        title="Delete Note"
+        message={`Are you sure you want to delete this note?`}
+        handleOk={onDeleteNoteConfirm}
+        okButtonText="OK"
+        cancelButtonText="Cancel"
+        setDisplay={setShowDeleteConfirm}
+      />
+    </Section>
   );
 };
 

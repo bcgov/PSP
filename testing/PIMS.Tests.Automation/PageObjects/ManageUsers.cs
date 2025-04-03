@@ -17,7 +17,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By userManagementSearchButton = By.Id("search-button");
         private By userManagementResetButton = By.Id("reset-button");
         private By userManagerActiveUserInput = By.Id("input-activeOnly");
-        private By userManagerShowActiveUserLabel = By.XPath("//span[contains(text(),'Show active users only')]");
+        private By userManagerShowActiveUserLabel = By.XPath("//span[contains(text(),' users only')]");
         private By userManagerExportExcelBttn = By.CssSelector("div[class='align-items-center d-flex col-md-4'] button");
 
         //Table Header Elements

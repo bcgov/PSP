@@ -156,6 +156,11 @@ namespace Pims.Api.Services
                 this.Logger.LogError("Document Queue {documentQueueId} is not in valid state, aborting poll.", documentQueue.DocumentQueueId);
                 return databaseDocumentQueue;
             }
+            else if (databaseDocumentQueue.DocumentQueueStatusTypeCode == DocumentQueueStatusTypes.PENDING.ToString() || databaseDocumentQueue.DocumentQueueStatusTypeCode == DocumentQueueStatusTypes.SUCCESS.ToString())
+            {
+                this.Logger.LogError("Document Queue {documentQueueId} is not in valid state, aborting poll.", documentQueue.DocumentQueueId);
+                return databaseDocumentQueue;
+            }
 
             var relatedDocument = _documentRepository.TryGet(documentQueue.DocumentId.Value);
 

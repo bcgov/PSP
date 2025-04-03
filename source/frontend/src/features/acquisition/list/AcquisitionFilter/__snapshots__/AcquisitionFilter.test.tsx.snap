@@ -232,6 +232,10 @@ exports[`Acquisition Filter > matches snapshot 1`] = `
   border-bottom-left-radius: 0;
 }
 
+.c3 {
+  border-left: 0.2rem solid white;
+}
+
 .c0 {
   background-color: #d9eaf7;
   border-radius: 0.5rem;
@@ -243,10 +247,6 @@ exports[`Acquisition Filter > matches snapshot 1`] = `
 
 .c0 .idir-input-group input {
   max-width: 100%;
-}
-
-.c3 {
-  border-left: 0.2rem solid white;
 }
 
 <form
@@ -325,6 +325,7 @@ exports[`Acquisition Filter > matches snapshot 1`] = `
                     id="input-address"
                     name="address"
                     placeholder="Enter an address"
+                    style="word-break: break-all;"
                     title=""
                     value=""
                   />
@@ -459,6 +460,7 @@ exports[`Acquisition Filter > matches snapshot 1`] = `
                 id="input-acquisitionFileNameOrNumber"
                 name="acquisitionFileNameOrNumber"
                 placeholder="Acquisition file number or name or historical file number"
+                style="word-break: break-all;"
                 title=""
                 value=""
               />
@@ -479,6 +481,7 @@ exports[`Acquisition Filter > matches snapshot 1`] = `
                 id="input-projectNameOrNumber"
                 name="projectNameOrNumber"
                 placeholder="Ministry or alternate project name or number"
+                style="word-break: break-all;"
                 title=""
                 value=""
               />

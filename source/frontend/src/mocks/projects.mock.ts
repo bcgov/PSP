@@ -1,8 +1,11 @@
 import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Concepts_FinancialCode';
 import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
 import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
+import { ApiGen_Concepts_ProjectPerson } from '@/models/api/generated/ApiGen_Concepts_ProjectPerson';
 import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
+
+import { getEmptyPerson } from './contacts.mock';
 
 const emptyFunctionCode: ApiGen_Concepts_FinancialCode = {
   id: 0,
@@ -165,4 +168,22 @@ export const mockProjectGetResponse = (): ApiGen_Concepts_Project => ({
   appLastUpdateUserGuid: '77777777-7777-7777-7777-777777777777',
   appCreateUserGuid: '77777777-7777-7777-7777-777777777777',
   rowVersion: 1,
+});
+
+export const getMockProjectPerson = (
+  id = 1,
+  name = 'john',
+  lastname = 'doe',
+): ApiGen_Concepts_ProjectPerson => ({
+  id,
+  projectId: 1,
+  project: null,
+  personId: 1,
+  person: {
+    ...getEmptyPerson(),
+    id: 1,
+    firstName: name,
+    surname: lastname,
+  },
+  ...getEmptyBaseAudit(1),
 });

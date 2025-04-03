@@ -6,6 +6,7 @@ import GenericModal from '@/components/common/GenericModal';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { LeaseFormModel } from '@/features/leases/models';
+import { LeaseStatusUpdateSolver } from '@/features/leases/models/LeaseStatusUpdateSolver';
 import { useSecurityDepositRepository } from '@/hooks/repositories/useSecurityDepositRepository';
 import { useSecurityDepositReturnRepository } from '@/hooks/repositories/useSecurityDepositReturnRepository';
 import { ApiGen_Concepts_SecurityDeposit } from '@/models/api/generated/ApiGen_Concepts_SecurityDeposit';
@@ -20,7 +21,6 @@ import ReturnedDepositModal from './modal/returnedDepositModal/ReturnedDepositMo
 import { FormLeaseDeposit } from './models/FormLeaseDeposit';
 import { FormLeaseDepositReturn } from './models/FormLeaseDepositReturn';
 import { LeaseDepositForm } from './models/LeaseDepositForm';
-import * as Styled from './styles';
 
 export interface IDepositsContainerProps {
   onSuccess: () => void;
@@ -30,6 +30,7 @@ export const DepositsContainer: React.FunctionComponent<
   React.PropsWithChildren<IDepositsContainerProps>
 > = props => {
   const { lease } = useContext(LeaseStateContext);
+  const statusSolver = new LeaseStatusUpdateSolver(lease?.fileStatusTypeCode);
   const {
     getSecurityDeposits: {
       execute: getSecurityDeposits,
@@ -58,7 +59,7 @@ export const DepositsContainer: React.FunctionComponent<
       .filter(exists) ?? [];
   const [editNotes, setEditNotes] = useState<boolean>(false);
 
-  const [showDepositEditModal, setShowEditModal] = useState<boolean>(false);
+  const [showDepositEditModal, setShowDepositEditModal] = useState<boolean>(false);
   const [deleteModalWarning, setDeleteModalWarning] = useState<boolean>(false);
   const [deleteReturnModalWarning, setDeleteReturnModalWarning] = useState<boolean>(false);
 
@@ -78,14 +79,14 @@ export const DepositsContainer: React.FunctionComponent<
 
   const onAddDeposit = () => {
     lease?.id && setEditDepositValue(FormLeaseDeposit.createEmpty(lease?.id));
-    setShowEditModal(true);
+    setShowDepositEditModal(true);
   };
 
   const onEditDeposit = (id: number) => {
     const deposit = securityDeposits.find((x: ApiGen_Concepts_SecurityDeposit) => x.id === id);
     if (deposit) {
       setEditDepositValue(FormLeaseDeposit.fromApi(deposit));
-      setShowEditModal(true);
+      setShowDepositEditModal(true);
     }
   };
 
@@ -136,7 +137,7 @@ export const DepositsContainer: React.FunctionComponent<
         : await addSecurityDeposit(lease.id, depositForm.toApi());
       if (isValidId(updatedSecurityDeposit?.id)) {
         setEditDepositValue(FormLeaseDeposit.createEmpty(lease.id));
-        setShowEditModal(false);
+        setShowDepositEditModal(false);
         getSecurityDeposits(lease.id);
         props.onSuccess();
       }
@@ -202,8 +203,9 @@ export const DepositsContainer: React.FunctionComponent<
       <LoadingBackdrop show={loading} parentScreen />
       <Formik initialValues={{ ...new LeaseDepositForm(), ...initialValues }} onSubmit={noop}>
         {formikProps => (
-          <Styled.DepositsContainer>
+          <>
             <DepositsReceivedContainer
+              statusSolver={statusSolver}
               securityDeposits={securityDeposits}
               onAdd={onAddDeposit}
               onEdit={onEditDeposit}
@@ -216,11 +218,13 @@ export const DepositsContainer: React.FunctionComponent<
               depositReturns={depositReturns}
               onEdit={onEditReturnDeposit}
               onDelete={onDeleteDepositReturn}
+              statusSolver={statusSolver}
             />
 
             <DepositNotes
               disabled={!editNotes}
               onEdit={() => setEditNotes(true)}
+              isFileFinalStatus={!statusSolver?.canEditDeposits()}
               onSave={async (notes: string) => {
                 lease?.id && (await updateSecurityDepositNote(lease.id, notes));
                 setEditNotes(false);
@@ -256,7 +260,7 @@ export const DepositsContainer: React.FunctionComponent<
               initialValues={editDepositValue}
               onCancel={() => {
                 lease?.id && setEditDepositValue(FormLeaseDeposit.createEmpty(lease.id));
-                setShowEditModal(false);
+                setShowDepositEditModal(false);
               }}
               onSave={onSaveDeposit}
             />
@@ -270,7 +274,7 @@ export const DepositsContainer: React.FunctionComponent<
               }}
               onSave={onSaveReturnDeposit}
             />
-          </Styled.DepositsContainer>
+          </>
         )}
       </Formik>
     </>

@@ -217,7 +217,7 @@ exports[`Add Subdivision View > matches snapshot 1`] = `
 .c1 {
   color: #474543;
   font-family: 'BCSans-Bold';
-  font-size: 3.2rem;
+  font-size: 2.8rem;
   border-bottom: solid 0.5rem var(--theme-blue-90);
   width: 100%;
   text-align: left;
@@ -227,7 +227,7 @@ exports[`Add Subdivision View > matches snapshot 1`] = `
 .c13 {
   color: var(--theme-blue-100);
   font-family: 'BCSans-Bold';
-  font-size: 2.6rem;
+  font-size: 2.2rem;
   border-bottom: solid 0.2rem var(--theme-blue-90);
   width: 100%;
   text-align: left;
@@ -255,7 +255,7 @@ exports[`Add Subdivision View > matches snapshot 1`] = `
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
 }
 
 .c12 {
@@ -359,6 +359,12 @@ exports[`Add Subdivision View > matches snapshot 1`] = `
   color: #474543;
 }
 
+.c0.collapsed .row:first svg {
+  width: 2.6rem;
+  height: 2.6rem;
+  margin-right: 0;
+}
+
 .c0.expanded {
   min-width: 90rem;
   height: 100%;
@@ -394,6 +400,17 @@ exports[`Add Subdivision View > matches snapshot 1`] = `
   width: 100%;
   height: 100%;
   display: contents;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: end;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: end;
 }
 
 .c19 {
@@ -434,13 +451,6 @@ exports[`Add Subdivision View > matches snapshot 1`] = `
   background-color: #f2f2f2;
 }
 
-.c2 {
-  width: 2.8rem;
-  height: 2.8rem;
-  margin-right: 1rem;
-  fill: #474543;
-}
-
 <div
     class="c0 expanded"
   >
@@ -451,14 +461,13 @@ exports[`Add Subdivision View > matches snapshot 1`] = `
         class="col"
       >
         <h1
-          class="c1 mr-auto"
+          class="c1 c2"
         >
-          <span
-            class="mr-2"
+          <div
+            class="mr-2 mb-1"
           >
             <svg
-              class="c2"
-              fill="none"
+              fill="currentColor"
               height="24"
               title="Subdivision Icon"
               viewBox="0 0 24 24"
@@ -472,7 +481,7 @@ exports[`Add Subdivision View > matches snapshot 1`] = `
                 d="M21.6022 0H18.0722V12C18.0722 12.0994 18.0611 12.1989 18.05 12.2983L9.45459 24L21.6022 24C22.9232 24 24 22.3923 24 20.4199V3.58011C24 1.62431 22.9232 0 21.6022 0Z"
               />
             </svg>
-          </span>
+          </div>
           Create a Subdivision
         </h1>
       </div>
@@ -618,7 +627,7 @@ exports[`Add Subdivision View > matches snapshot 1`] = `
                       class="no-gutters row"
                     >
                       <div
-                        class="col"
+                        class="align-content-end col"
                       >
                         Selected Parent
                       </div>
@@ -683,7 +692,7 @@ exports[`Add Subdivision View > matches snapshot 1`] = `
                       class="no-gutters row"
                     >
                       <div
-                        class="col"
+                        class="align-content-end col"
                       >
                         Selected Children
                       </div>

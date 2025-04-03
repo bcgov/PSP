@@ -1,12 +1,11 @@
 import { Formik } from 'formik';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
-import styled from 'styled-components';
 
 import { ResetButton, SearchButton } from '@/components/common/buttons';
 import { Input, Select } from '@/components/common/form';
 import { UserRegionSelectContainer } from '@/components/common/form/UserRegionSelect/UserRegionSelectContainer';
-import { FilterBoxForm } from '@/components/common/styles';
+import { ColButtons, FilterBoxForm } from '@/components/common/styles';
 import { PROJECT_STATUS_TYPES } from '@/constants/API';
 import { ProjectStatusTypes } from '@/constants/projectStatusTypes';
 import { IProjectFilter } from '@/features/projects/interfaces';
@@ -114,7 +113,3 @@ export const ProjectFilter: React.FunctionComponent<
 };
 
 export default ProjectFilter;
-
-const ColButtons = styled(Col)`
-  border-left: 2px solid white;
-`;

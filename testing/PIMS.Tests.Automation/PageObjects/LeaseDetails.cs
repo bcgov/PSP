@@ -24,7 +24,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By licenseHeaderStartDateLabel = By.XPath("//h1/parent::div/parent::div/following-sibling::div[2]/div/div/div/div/div[4]/div/label[contains(text(),'Commencement')]");
         private readonly By licenseHeaderStartDateContent = By.XPath("//label[contains(text(),'Commencement')]/parent::div/following-sibling::div[1]");
         private readonly By licenseHeaderExpiryDateLabel = By.XPath("//label[contains(text(),'Commencement')]/parent::div/following-sibling::div[2]/label[contains(text(),'Expiry')]");
-        private readonly By licenseHeaderExpiryDateContent = By.XPath("//label[contains(text(),'Commencement')]/parent::div/following-sibling::div[2]/label[contains(text(),'Expiry')]/parent::div/following-sibling::div[1]");
+        private readonly By licenseHeaderExpiryDateContent = By.XPath("//label[contains(text(),'Commencement')]/parent::div/following-sibling::div[2]/label[contains(text(),'Expiry')]/parent::div/following-sibling::div[1]/span");
         private readonly By licenseHeaderHistoricalFileLabel = By.XPath("//label[contains(text(),'Historical file')]");
         private readonly By licenseHeaderHistoricalFileContent = By.XPath("//label[contains(text(),'Historical file #:')]/parent::div/following-sibling::div/span");
 
@@ -133,7 +133,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By licenseDetailsEffectiveDateInput = By.Id("datepicker-responsibilityEffectiveDate");
         private readonly By licenseDetailsEffectiveDateContent = By.XPath("//label[contains(text(),'Effective date')]/parent::div/following-sibling::div");
         private readonly By licenseDetailsIntendedUseLabel = By.XPath("//label[contains(text(),'Intended use')]");
-        private readonly By licenseDetailsIntendedUseTextarea = By.Id("input-description");
+        private readonly By licenseDetailsIntendedUseTextarea = By.CssSelector("textarea[id='input-description']");
+        private readonly By licenseDetailsIntendedUseContent = By.XPath("//label[contains(text(),'Intended use')]/parent::div/following-sibling::div");
         private readonly By licenseDetailsCityArbitrationLabel = By.XPath("//label[contains(text(),'Primary arbitration city')]");
         private readonly By licenseDetailsCityArbitrationInput = By.Id("input-primaryArbitrationCity");
         private readonly By licenseDetailsCityArbitrationContent = By.XPath("//label[contains(text(),'Primary arbitration city')]/parent::div/following-sibling::div/div/input");
@@ -273,10 +274,10 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 foreach (string purpose in lease.LeasePurpose)
                 {
-                    webDriver.FindElement(licenseDetailsPurposeLabel).Click();
-                    FocusAndClick(licenseDetailsPurposeMultiselector);
+                    webDriver.FindElement(licenseDetailsPurposeLabel).Click();                 
 
-                    Wait(5000);
+                    Wait();
+                    FocusAndClick(licenseDetailsPurposeMultiselector);
                     ChooseMultiSelectSpecificOption(licenseDetailsPurposeOptions, purpose);
                 }
 
@@ -639,7 +640,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(licenseDetailsExpiryDateInput);
 
             //Properties to include in this file
-            sharedSearchProperties.VerifyLocateOnMapFeature();
+            sharedSearchProperties.VerifyLocateOnMapFeature("Lease");
 
             //Administration
             AssertTrueIsDisplayed(licenseDetailsAdmSubtitle);
@@ -900,7 +901,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(licenseDetailsIntendedUseLabel);
 
             if(lease.IntendedUse != "")
-                AssertTrueElementValueEquals(licenseDetailsIntendedUseTextarea, lease.IntendedUse);
+                AssertTrueContentEquals(licenseDetailsIntendedUseContent, lease.IntendedUse);
 
             AssertTrueIsDisplayed(licenseDetailsCityArbitrationLabel);
 

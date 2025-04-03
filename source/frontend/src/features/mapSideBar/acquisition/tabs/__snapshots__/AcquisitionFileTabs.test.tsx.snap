@@ -71,7 +71,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
 }
 
 .c4 {
@@ -188,7 +188,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
                 class="no-gutters row"
               >
                 <div
-                  class="col"
+                  class="align-content-end col"
                 >
                   Project
                 </div>
@@ -261,7 +261,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
                 class="no-gutters row"
               >
                 <div
-                  class="col"
+                  class="align-content-end col"
                 >
                   Progress Statuses
                 </div>
@@ -443,7 +443,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
                 class="no-gutters row"
               >
                 <div
-                  class="col"
+                  class="align-content-end col"
                 >
                   Schedule
                 </div>
@@ -581,7 +581,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
                 class="no-gutters row"
               >
                 <div
-                  class="col"
+                  class="align-content-end col"
                 >
                   Acquisition Details
                 </div>
@@ -712,7 +712,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
                 class="no-gutters row"
               >
                 <div
-                  class="col"
+                  class="align-content-end col"
                 >
                   Acquisition Team
                 </div>
@@ -815,7 +815,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
                 class="no-gutters row"
               >
                 <div
-                  class="col"
+                  class="align-content-end col"
                 >
                   Owner Information
                 </div>

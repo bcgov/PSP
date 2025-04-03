@@ -1,8 +1,7 @@
 import { FormikProps } from 'formik/dist/types';
 import { ReactNode, useEffect } from 'react';
-import { Col, Row } from 'react-bootstrap';
 
-import { FastDatePicker, Input, Multiselect, Select } from '@/components/common/form';
+import { FastDatePicker, Input, Multiselect, Select, TextArea } from '@/components/common/form';
 import FormGuideContainer from '@/components/common/form/FormGuide/FormGuideContainer';
 import { InlineInput } from '@/components/common/form/styles';
 import { UserRegionSelectContainer } from '@/components/common/form/UserRegionSelect/UserRegionSelectContainer';
@@ -15,7 +14,6 @@ import { isValidString } from '@/utils';
 
 import { LeaseFormModel } from '../models';
 import { LeasePurposeModel } from '../models/LeasePurposeModel';
-import * as Styled from './styles';
 
 export interface IAdministrationSubFormProps {
   formikProps: FormikProps<LeaseFormModel>;
@@ -119,106 +117,84 @@ const AdministrationSubForm: React.FunctionComponent<
         tittle="Help with choosing the agreement Program, Type and Purpose"
         guideBody={guideBodyContent()}
       ></FormGuideContainer>
-      <SectionField label="MOTI contact" labelWidth="2" contentWidth="8">
+      <SectionField label="MOTI contact" labelWidth="3" contentWidth="6">
         <InlineInput field="motiName" />
       </SectionField>
 
-      <SectionField label="MOTI region" labelWidth="2" contentWidth="auto" required>
+      <SectionField label="MOTI region" labelWidth="3" contentWidth="auto" required>
         <UserRegionSelectContainer field="regionId" placeholder="Select region" required />
       </SectionField>
-      <Row>
-        <Col>
-          <SectionField label="Program" required>
-            <Select
-              field="programTypeCode"
-              options={programTypes}
-              placeholder="Select program"
-              required
-            />
-          </SectionField>
-        </Col>
-        <Col>
-          {values?.programTypeCode === 'OTHER' && (
-            <SectionField label="Other Program" required>
-              <Input field="otherProgramTypeDescription" required />
-            </SectionField>
-          )}
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <SectionField label="Type" required>
-            <Select field="leaseTypeCode" options={types} placeholder="Select type" required />
-          </SectionField>
-        </Col>
-        <Col>
-          {values?.leaseTypeCode === 'OTHER' && (
-            <SectionField label="Describe other" required>
-              <Input field="otherLeaseTypeDescription" required />
-            </SectionField>
-          )}
-        </Col>
-      </Row>
+      <SectionField label="Program" labelWidth="3" contentWidth="auto" required>
+        <Select
+          field="programTypeCode"
+          options={programTypes}
+          placeholder="Select program"
+          required
+        />
+      </SectionField>
+      {values?.programTypeCode === 'OTHER' && (
+        <SectionField label="Other Program" labelWidth="3" contentWidth="8" required>
+          <Input field="otherProgramTypeDescription" required />
+        </SectionField>
+      )}
+      <SectionField label="Type" labelWidth="3" contentWidth="9" required>
+        <Select field="leaseTypeCode" options={types} placeholder="Select type" required />
+      </SectionField>
+      {values?.leaseTypeCode === 'OTHER' && (
+        <SectionField label="Describe other" labelWidth="3" contentWidth="8" required>
+          <Input field="otherLeaseTypeDescription" required />
+        </SectionField>
+      )}
 
-      <Row>
-        <Col>
-          <SectionField label="Purpose" required>
-            <Multiselect
-              field="purposes"
-              displayValue="purposeTypeCodeDescription"
-              placeholder=""
-              options={leasePurposeOptions}
-              hidePlaceholder
-            />
-          </SectionField>
-        </Col>
-        <Col>
-          {purposes?.some(x => x.purposeTypeCode === ApiGen_CodeTypes_LeasePurposeTypes.OTHER) && (
-            <SectionField label="Describe other" required>
-              <Input field="purposeOtherDescription" required />
-            </SectionField>
-          )}
-        </Col>
-      </Row>
+      <SectionField label="Purpose" labelWidth="3" contentWidth="9" required>
+        <Multiselect
+          field="purposes"
+          displayValue="purposeTypeCodeDescription"
+          placeholder=""
+          options={leasePurposeOptions}
+          hidePlaceholder
+        />
+      </SectionField>
+      {purposes?.some(x => x.purposeTypeCode === ApiGen_CodeTypes_LeasePurposeTypes.OTHER) && (
+        <SectionField label="Describe other" labelWidth="3" required>
+          <Input field="purposeOtherDescription" required />
+        </SectionField>
+      )}
 
       <SectionField
         label="Initiator"
         tooltip="Where did this lease/licence initiate?"
-        labelWidth="2"
+        labelWidth="3"
         contentWidth="4"
       >
         <Select field="initiatorTypeCode" placeholder="Select initiator" options={initiatorTypes} />
       </SectionField>
 
-      <Row>
-        <Col>
-          <SectionField label="Responsibility" tooltip="Who is currently responsible?">
-            <Select
-              field="responsibilityTypeCode"
-              placeholder="Select group responsible"
-              options={responsibilityTypes}
-            />
-          </SectionField>
-        </Col>
-
-        <Col>
-          <SectionField label="Effective date">
-            <FastDatePicker formikProps={formikProps} field="responsibilityEffectiveDate" />
-          </SectionField>
-        </Col>
-      </Row>
+      <SectionField
+        label="Responsibility"
+        labelWidth="3"
+        contentWidth="auto"
+        tooltip="Who is currently responsible?"
+      >
+        <Select
+          field="responsibilityTypeCode"
+          placeholder="Select group responsible"
+          options={responsibilityTypes}
+        />
+      </SectionField>
+      <SectionField label="Effective date" labelWidth="3">
+        <FastDatePicker formikProps={formikProps} field="responsibilityEffectiveDate" />
+      </SectionField>
 
       <SectionField
         label="Intended use"
+        labelWidth="12"
         tooltip="The purpose for which the license is issued, as per the agreement"
       >
-        <Styled.MediumTextArea field="description" />
+        <TextArea field="description" />
       </SectionField>
-      <SectionField label="Primary arbitration city">
+      <SectionField label="Primary arbitration city" labelWidth="12">
         <Input field="primaryArbitrationCity" />
-      </SectionField>
-      <SectionField label="Lease comments" labelWidth="3">
-        <Styled.MediumTextArea field="note" readOnly={true} />
       </SectionField>
     </Section>
   );

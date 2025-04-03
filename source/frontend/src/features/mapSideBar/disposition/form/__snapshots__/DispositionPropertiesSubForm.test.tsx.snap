@@ -249,7 +249,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
   border-bottom: solid 0.2rem;
   width: 100%;
   text-align: left;
-  margin-bottom: 2.4rem;
+  margin-bottom: 1.6rem;
 }
 
 .c3 {
@@ -689,6 +689,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
                               id="input-pid"
                               name="pid"
                               placeholder="Enter a PID"
+                              style="word-break: break-all;"
                               title=""
                               value=""
                             />
@@ -1199,7 +1200,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
 }
 
 .c0 {
@@ -1244,7 +1245,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
         class="no-gutters row"
       >
         <div
-          class="col"
+          class="align-content-end col"
         >
           Selected properties
         </div>
@@ -1383,6 +1384,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
               class="form-control"
               id="input-fileProperties.0.name"
               name="fileProperties.0.name"
+              style="word-break: break-all;"
               value=""
             />
           </div>
@@ -1551,6 +1553,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
               class="form-control"
               id="input-fileProperties.1.name"
               name="fileProperties.1.name"
+              style="word-break: break-all;"
               value=""
             />
           </div>

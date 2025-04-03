@@ -16,7 +16,7 @@ exports[`DetailFeeDetermination component > renders a complete lease as expected
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
 }
 
 .c0 {
@@ -53,7 +53,7 @@ exports[`DetailFeeDetermination component > renders a complete lease as expected
         class="no-gutters row"
       >
         <div
-          class="col"
+          class="align-content-end col"
         >
           Fee Determination
         </div>
@@ -102,31 +102,7 @@ exports[`DetailFeeDetermination component > renders a complete lease as expected
         <div
           class="c4 text-left col"
         >
-          <div
-            class="form-group"
-          >
-            <select
-              class="form-select form-control"
-              id="input-isPublicBenefit"
-              name="isPublicBenefit"
-            >
-              <option
-                value="null"
-              >
-                Unknown
-              </option>
-              <option
-                value="true"
-              >
-                Yes
-              </option>
-              <option
-                value="false"
-              >
-                No
-              </option>
-            </select>
-          </div>
+          Yes
         </div>
       </div>
       <div
@@ -144,31 +120,7 @@ exports[`DetailFeeDetermination component > renders a complete lease as expected
         <div
           class="c4 text-left col"
         >
-          <div
-            class="form-group"
-          >
-            <select
-              class="form-select form-control"
-              id="input-isFinancialGain"
-              name="isFinancialGain"
-            >
-              <option
-                value="null"
-              >
-                Unknown
-              </option>
-              <option
-                value="true"
-              >
-                Yes
-              </option>
-              <option
-                value="false"
-              >
-                No
-              </option>
-            </select>
-          </div>
+          No
         </div>
       </div>
       <div
@@ -288,7 +240,7 @@ exports[`DetailFeeDetermination component > renders minimally as expected 1`] = 
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
 }
 
 .c0 {
@@ -325,7 +277,7 @@ exports[`DetailFeeDetermination component > renders minimally as expected 1`] = 
         class="no-gutters row"
       >
         <div
-          class="col"
+          class="align-content-end col"
         >
           Fee Determination
         </div>
@@ -374,31 +326,7 @@ exports[`DetailFeeDetermination component > renders minimally as expected 1`] = 
         <div
           class="c4 text-left col"
         >
-          <div
-            class="form-group"
-          >
-            <select
-              class="form-select form-control"
-              id="input-isPublicBenefit"
-              name="isPublicBenefit"
-            >
-              <option
-                value="null"
-              >
-                Unknown
-              </option>
-              <option
-                value="true"
-              >
-                Yes
-              </option>
-              <option
-                value="false"
-              >
-                No
-              </option>
-            </select>
-          </div>
+          Unknown
         </div>
       </div>
       <div
@@ -416,31 +344,7 @@ exports[`DetailFeeDetermination component > renders minimally as expected 1`] = 
         <div
           class="c4 text-left col"
         >
-          <div
-            class="form-group"
-          >
-            <select
-              class="form-select form-control"
-              id="input-isFinancialGain"
-              name="isFinancialGain"
-            >
-              <option
-                value="null"
-              >
-                Unknown
-              </option>
-              <option
-                value="true"
-              >
-                Yes
-              </option>
-              <option
-                value="false"
-              >
-                No
-              </option>
-            </select>
-          </div>
+          Unknown
         </div>
       </div>
       <div

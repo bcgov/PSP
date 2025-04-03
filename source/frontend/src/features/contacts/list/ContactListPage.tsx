@@ -1,38 +1,52 @@
+import { FaPlus } from 'react-icons/fa';
+import { useHistory } from 'react-router';
 import styled from 'styled-components';
 
 import ContactIcon from '@/assets/images/contact-icon.svg?react';
-import { Scrollable as ScrollableBase } from '@/components/common/Scrollable/Scrollable';
 import * as CommonStyled from '@/components/common/styles';
+import { PaddedScrollable, StyledAddButton } from '@/components/common/styles';
 import ContactManagerView from '@/components/contact/ContactManagerView/ContactManagerView';
+import Claims from '@/constants/claims';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 
 /**
  * Page that displays a list of contacts.
  */
 export const ContactListPage = () => {
+  const history = useHistory();
+  const { hasClaim } = useKeycloakWrapper();
+
   return (
-    <StyledListPage>
-      <StyledScrollable>
+    <CommonStyled.ListPage>
+      <PaddedScrollable>
         <CommonStyled.H1>
-          <ContactIcon title="Contact manager icon" fill="currentColor" />
-          <span className="ml-2">Contacts</span>
+          <FlexDiv>
+            <div>
+              <ContactIcon title="Contact manager icon" fill="currentColor" />
+              <span className="ml-2">Contacts</span>
+            </div>
+            {hasClaim(Claims.CONTACT_ADD) && (
+              <StyledAddButton onClick={() => history.push('/contact/new')}>
+                <FaPlus />
+                &nbsp;Add a New Contact
+              </StyledAddButton>
+            )}
+          </FlexDiv>
         </CommonStyled.H1>
-        <ContactManagerView showActiveSelector showAddButton />
-      </StyledScrollable>
-    </StyledListPage>
+        <ContactManagerView showActiveSelector />
+      </PaddedScrollable>
+    </CommonStyled.ListPage>
   );
 };
 
-const StyledListPage = styled.div`
+const FlexDiv = styled.div`
   display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  width: 100%;
-  font-size: 14px;
-  gap: 2.5rem;
-  padding: 0;
-`;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
 
-const StyledScrollable = styled(ScrollableBase)`
-  padding: 1.6rem 3.2rem;
-  width: 100%;
+  svg {
+    vertical-align: baseline;
+  }
 `;

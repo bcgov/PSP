@@ -30,12 +30,15 @@ import {
   getMockLeaseProperties,
   getMockLeaseStakeholders,
 } from '@/mocks/lease.mock';
+import { getCompensationRequisitionAcqPayeesApi } from '@/hooks/pims-api/useApiRequisitionCompensations';
 
 const generateFn = vi
   .fn()
   .mockResolvedValue({ status: ApiGen_CodeTypes_ExternalResponseStatus.Success, payload: {} });
 const getAcquisitionFileFn = vi.fn();
 const getCompensationRequisitionPropertiesFn = vi.fn();
+const getCompensationRequisitionAcqPayeesFn = vi.fn();
+const getCompensationRequisitionLeasePayeesFn = vi.fn();
 const getAcquisitionPropertiesFn = vi.fn();
 const getH120sCategoryFn = vi.fn();
 const getInterestHoldersFn = vi.fn();
@@ -87,6 +90,8 @@ vi.mocked(useCompensationRequisitionRepository).mockImplementation(
     ({
       getCompensationRequisitionProperties: { execute: getCompensationRequisitionPropertiesFn },
       getCompensationRequisitionFinancials: { execute: getCompReqFinancialsFn },
+      getCompensationRequisitionAcqPayees: { execute: getCompensationRequisitionAcqPayeesFn },
+      getCompensationRequisitionLeasePayees: { execute: getCompensationRequisitionLeasePayeesFn },
     } as unknown as ReturnType<typeof useCompensationRequisitionRepository>),
 );
 
@@ -199,7 +204,6 @@ describe('useGenerateH120 functions', () => {
     const generate = setup();
     const apiCompensationWithInterestHolder: ApiGen_Concepts_CompensationRequisition = {
       ...getMockApiDefaultCompensation(),
-      interestHolderId: 14,
     };
 
     await act(async () =>
@@ -208,7 +212,8 @@ describe('useGenerateH120 functions', () => {
     expect(generateFn).toHaveBeenCalled();
     expect(getAcquisitionPropertiesFn).toHaveBeenCalled();
     expect(getCompensationRequisitionPropertiesFn).toHaveBeenCalled();
-    expect(getInterestHoldersFn).toHaveBeenCalled();
+    expect(getCompensationRequisitionAcqPayeesFn).toHaveBeenCalled();
+    expect(getCompensationRequisitionLeasePayeesFn).toHaveBeenCalled();
     expect(findElectoralDistrictFn).toHaveBeenCalled();
   });
 
@@ -230,87 +235,6 @@ describe('useGenerateH120 functions', () => {
 
     expect(getCompensationRequisitionPropertiesFn).toHaveBeenCalled();
     expect(findElectoralDistrictFn).toHaveBeenCalled();
-  });
-
-  it('makes request to get person concept for compensation payee', async () => {
-    const apiCompensation: ApiGen_Concepts_CompensationRequisition = {
-      ...getMockApiDefaultCompensation(),
-      acquisitionFileTeam: {
-        id: 101,
-        acquisitionFileId: 2,
-        personId: 8,
-        teamProfileTypeCode: 'MOTILAWYER',
-        rowVersion: 1,
-        organization: null,
-        person: null,
-        primaryContact: null,
-        primaryContactId: null,
-        teamProfileType: null,
-        organizationId: null,
-      },
-    };
-    const generate = setup();
-    await act(async () => generate(ApiGen_CodeTypes_FileTypes.Acquisition, apiCompensation));
-    expect(getPersonConceptFn).toHaveBeenCalled();
-  });
-
-  it('makes request to get organization concept for compensation payee', async () => {
-    const apiCompensation: ApiGen_Concepts_CompensationRequisition = {
-      ...getMockApiDefaultCompensation(),
-      acquisitionFileTeam: {
-        id: 101,
-        acquisitionFileId: 2,
-        organizationId: 8,
-        teamProfileTypeCode: 'MOTILAWYER',
-        rowVersion: 1,
-        organization: null,
-        person: null,
-        personId: null,
-        primaryContact: null,
-        primaryContactId: null,
-        teamProfileType: null,
-      },
-    };
-    const generate = setup();
-    await act(async () => generate(ApiGen_CodeTypes_FileTypes.Acquisition, apiCompensation));
-    expect(getOrganizationConceptFn).toHaveBeenCalled();
-  });
-
-  it('searches interest holder array for compensation payee ', async () => {
-    const apiCompensationWithInterestHolder: ApiGen_Concepts_CompensationRequisition = {
-      ...getMockApiDefaultCompensation(),
-      interestHolderId: 14,
-    };
-    const apiInterestHolder: ApiGen_Concepts_InterestHolder = {
-      ...emptyApiInterestHolder,
-      interestHolderId: 14,
-      acquisitionFileId: 2,
-      personId: 8,
-      person: {
-        ...getEmptyPerson(),
-        id: 8,
-        isDisabled: false,
-        surname: 'Smith',
-        firstName: 'Devin',
-        personOrganizations: [],
-        personAddresses: [],
-        contactMethods: [],
-        rowVersion: 1,
-        comment: null,
-        middleNames: null,
-        preferredName: null,
-      },
-      rowVersion: 1,
-    };
-    getInterestHoldersFn.mockResolvedValue([apiInterestHolder]);
-
-    const generate = setup();
-    await act(async () =>
-      generate(ApiGen_CodeTypes_FileTypes.Acquisition, apiCompensationWithInterestHolder),
-    );
-    expect(apiCompensationWithInterestHolder.interestHolder?.person).toStrictEqual(
-      expect.objectContaining(apiInterestHolder.person),
-    );
   });
 
   it('throws an error if no compensation is passed', async () => {

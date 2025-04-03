@@ -1,8 +1,10 @@
 import { useCallback } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaBriefcase, FaPlus } from 'react-icons/fa';
+import { FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
+import styled from 'styled-components';
 
+import ProjectIcon from '@/assets/images/projects-icon.svg?react';
 import * as CommonStyled from '@/components/common/styles';
 import { StyledAddButton } from '@/components/common/styles';
 import { Claims } from '@/constants/claims';
@@ -15,7 +17,6 @@ import { IProjectFilter } from '../interfaces';
 import { defaultFilter, ProjectFilter } from './ProjectFilter/ProjectFilter';
 import { ProjectSearchResultModel } from './ProjectSearchResults/models';
 import { ProjectSearchResults } from './ProjectSearchResults/ProjectSearchResults';
-import * as Styled from './styles';
 
 /**
  * Page that displays Project files information.
@@ -53,13 +54,24 @@ export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<un
   );
 
   return (
-    <Styled.ListPage>
-      <Styled.Scrollable>
+    <CommonStyled.ListPage>
+      <CommonStyled.PaddedScrollable>
         <CommonStyled.H1>
-          <FaBriefcase title="Project icon" fill="currentColor" className={'pb-1'} />
-          <span className="ml-2">Projects</span>
+          <FlexDiv>
+            <div>
+              <ProjectIcon title="Project icon" fill="currentColor" />
+              <span className="ml-2">Projects</span>
+            </div>
+
+            {hasClaim(Claims.PROJECT_ADD) && (
+              <StyledAddButton onClick={() => history.push('/mapview/sidebar/project/new')}>
+                <FaPlus />
+                &nbsp;Create Project
+              </StyledAddButton>
+            )}
+          </FlexDiv>
         </CommonStyled.H1>
-        <Styled.PageToolbar>
+        <CommonStyled.PageToolbar>
           <Row>
             <Col>
               <ProjectFilter
@@ -69,13 +81,8 @@ export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<un
               />
             </Col>
           </Row>
-        </Styled.PageToolbar>
-        {hasClaim(Claims.PROJECT_ADD) && (
-          <StyledAddButton onClick={() => history.push('/mapview/sidebar/project/new')}>
-            <FaPlus />
-            &nbsp;Create Project
-          </StyledAddButton>
-        )}
+        </CommonStyled.PageToolbar>
+
         <ProjectSearchResults
           results={results.map(x => ProjectSearchResultModel.fromApi(x))}
           totalItems={totalItems}
@@ -88,9 +95,21 @@ export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<un
           setPageIndex={setCurrentPage}
           loading={loading}
         ></ProjectSearchResults>
-      </Styled.Scrollable>
-    </Styled.ListPage>
+      </CommonStyled.PaddedScrollable>
+    </CommonStyled.ListPage>
   );
 };
 
 export default ProjectListView;
+
+const FlexDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
+
+  svg {
+    vertical-align: baseline;
+  }
+`;

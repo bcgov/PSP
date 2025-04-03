@@ -4,7 +4,7 @@
       "categories": ["ACQUIRE", "MANAGEMENT"],
       "display_order": 0,
       "label": "Affidavit of service",
-      "purpose": "The Affidavit of Services and correspondence with the Process Server ",
+      "purpose": "The Affidavit of Services and correspondence with the Process Server",
       "metadata_types": [
         {
           "name": "SHORT_DESCRIPTOR",
@@ -17,7 +17,7 @@
       "categories": ["ACQUIRE"],
       "display_order": 1,
       "label": "Agricultural Land Commission (ALC)",
-      "purpose": "For ALC Applications, Orders, and Resolutions ",
+      "purpose": "For ALC Applications, Orders, and Resolutions",
       "metadata_types": [
         {
           "name": "APPLICATION_NUMBER",
@@ -105,7 +105,7 @@
       "categories": ["ACQUIRE", "LEASLIC", "MANAGEMENT", "RESEARCH"],
       "display_order": 7,
       "label": "Canada lands survey",
-      "purpose": "Surveys registered in the Canada Land System.",
+      "purpose": "Surveys registered in the Canada Land System",
       "metadata_types": [
         {
           "name": "CANADA_LAND_SURVEY_NUMBER",
@@ -156,7 +156,7 @@
       "categories": ["ACQUIRE", "DISPOSE", "MANAGEMENT"],
       "display_order": 11,
       "label": "Compensation cheque",
-      "purpose": "The compensation cheque ",
+      "purpose": "The compensation cheque",
       "metadata_types": [
         {
           "name": "SHORT_DESCRIPTOR",
@@ -169,7 +169,7 @@
       "categories": ["ACQUIRE", "DISPOSE", "MANAGEMENT"],
       "display_order": 12,
       "label": "Compensation requisition (H-120)",
-      "purpose": "The H.120 Compensation Requisitions ",
+      "purpose": "The H.120 Compensation Requisitions",
       "metadata_types": [
         {
           "name": "SHORT_DESCRIPTOR",
@@ -195,7 +195,7 @@
       "categories": ["ACQUIRE", "MANAGEMENT", "RESEARCH"],
       "display_order": 13,
       "label": "Condition of entry (H0443)",
-      "purpose": "H.0443 Conditions of Entry ",
+      "purpose": "H.0443 Conditions of Entry",
       "metadata_types": [
         {
           "name": "SHORT_DESCRIPTOR",
@@ -205,10 +205,10 @@
       "name": "CONDENTR"
     },
     {
-      "categories": ["DISPOSE", "LEASLIC", "MANAGEMENT"],
+      "categories": ["ACQUIRE", "DISPOSE", "LEASLIC", "MANAGEMENT"],
       "display_order": 14,
       "label": "Conveyance closing documents (ex: PTT forms, Form A transfer etc.)",
-      "purpose": "The conveyance closing documents which might include PTT, Form A Transfer, or Statement of Adjustments. ",
+      "purpose": "The conveyance closing documents which might include PTT, Form A Transfer, or Statement of Adjustments",
       "metadata_types": [
         {
           "name": "SHORT_DESCRIPTOR",
@@ -270,7 +270,7 @@
       "categories": ["ACQUIRE", "DISPOSE", "MANAGEMENT", "RESEARCH"],
       "display_order": 17,
       "label": "District road register",
-      "purpose": "The District road register ",
+      "purpose": "The District road register",
       "metadata_types": [
         {
           "name": "ELECTORAL_DISTRICT",
@@ -291,7 +291,7 @@
       "categories": ["DISPOSE", "MANAGEMENT"],
       "display_order": 18,
       "label": "Enhanced Referral Records",
-      "purpose": "The Referral Record for both incoming and outgoing referrals.",
+      "purpose": "The Referral Record for both incoming and outgoing referrals",
       "metadata_types": [
         {
           "name": "SHORT_DESCRIPTOR",
@@ -304,7 +304,7 @@
       "categories": ["ACQUIRE", "DISPOSE", "MANAGEMENT", "RESEARCH"],
       "display_order": 19,
       "label": "Field notes",
-      "purpose": "The survey field notes ",
+      "purpose": "The survey field notes",
       "metadata_types": [
         {
           "name": "DISTRICT_LOT_NUMBER",
@@ -332,7 +332,7 @@
       ],
       "display_order": 20,
       "label": "Financial records (invoices, journal vouchers, received cheques etc.)",
-      "purpose": "Financial records which could include invoices, JV\u2019s, contracts ect. ",
+      "purpose": "Financial records which could include invoices, JV\u2019s, contracts etc.",
       "metadata_types": [
         {
           "name": "SHORT_DESCRIPTOR",
@@ -396,7 +396,7 @@
       "categories": ["ACQUIRE", "DISPOSE", "LEASLIC", "MANAGEMENT", "RESEARCH"],
       "display_order": 29,
       "label": "Gazette",
-      "purpose": "Gazette notices \u2013 all types of gazettes (establishing, closing, widening, erratum\u2019s) ",
+      "purpose": "Gazette notices \u2013 all types of gazettes (establishing, closing, widening, erratum\u2019s)",
       "metadata_types": [
         {
           "name": "GAZETTE_DATE",
@@ -514,7 +514,7 @@
       ],
       "display_order": 34,
       "label": "Legal correspondence (ex: to AG/external lawyers)",
-      "purpose": "Emails or letters with internal and external lawyers ",
+      "purpose": "Emails or letters with internal and external lawyers",
       "metadata_types": [
         {
           "name": "SHORT_DESCRIPTOR",
@@ -685,7 +685,7 @@
       "categories": ["ACQUIRE", "DISPOSE", "MANAGEMENT", "RESEARCH"],
       "display_order": 39,
       "label": "Notice of claims/Litigation documents",
-      "purpose": "The Notice of Claims/Litigation documents ",
+      "purpose": "The Notice of Claims/Litigation documents",
       "metadata_types": [
         {
           "name": "SHORT_DESCRIPTOR",
@@ -711,7 +711,7 @@
       "categories": ["ACQUIRE", "MANAGEMENT", "RESEARCH"],
       "display_order": 40,
       "label": "Notice of possible entry (H0224)",
-      "purpose": "The Notice of Possible Entry (H.0224) ",
+      "purpose": "The Notice of Possible Entry (H.0224)",
       "metadata_types": [
         {
           "name": "SHORT_DESCRIPTOR",
@@ -785,7 +785,7 @@
       "categories": ["ACQUIRE", "DISPOSE", "LEASLIC", "MANAGEMENT"],
       "display_order": 43,
       "label": "Other Land Agreement (Indemnity Letter, Letter of Intended Use, Assumption Agreement, etc)",
-      "purpose": "Other forms of Land Agreements such as Indemnity Letters, Letter of Intended Use, Assumption Agreements etc. ",
+      "purpose": "Other forms of Land Agreements such as Indemnity Letters, Letter of Intended Use, Assumption Agreements etc.",
       "metadata_types": [
         {
           "name": "SHORT_DESCRIPTOR",
@@ -811,7 +811,7 @@
       "categories": ["ACQUIRE", "MANAGEMENT", "PROJECT", "RESEARCH"],
       "display_order": 45,
       "label": "PA plans / Design drawings",
-      "purpose": "Property acquisition drawings, design drawings, engineered drawings in draft and final versions ",
+      "purpose": "Property acquisition drawings, design drawings, engineered drawings in draft and final versions",
       "metadata_types": [
         {
           "name": "PLAN_NUMBER",
@@ -872,7 +872,7 @@
       "categories": ["ACQUIRE", "MANAGEMENT", "RESEARCH"],
       "display_order": 47,
       "label": "Privy council",
-      "purpose": "The Privy Council ",
+      "purpose": "The Privy Council",
       "metadata_types": [
         {
           "name": "YEAR_PRIVY_COUNCIL_NUMBER",
@@ -885,7 +885,7 @@
       "categories": ["ACQUIRE", "DISPOSE", "LEASLIC", "MANAGEMENT", "RESEARCH"],
       "display_order": 48,
       "label": "Professional reports (ex: engineering/environmental etc.)",
-      "purpose": "Professional/Expert Report in draft or final (Ie: Geotechnical, Environmental, Archeology, Engineering Reports)  ",
+      "purpose": "Professional/Expert Report in draft or final (Ie: Geotechnical, Environmental, Archeology, Engineering Reports)",
       "metadata_types": [
         {
           "name": "SHORT_DESCRIPTOR",
@@ -911,7 +911,7 @@
       "categories": ["ACQUIRE", "DISPOSE", "MANAGEMENT"],
       "display_order": 50,
       "label": "Record of negotiation",
-      "purpose": "The Record of Negotiations ",
+      "purpose": "The Record of Negotiations",
       "metadata_types": [
         {
           "name": "SHORT_DESCRIPTOR",
@@ -937,7 +937,7 @@
       "categories": ["ACQUIRE", "DISPOSE", "LEASLIC", "MANAGEMENT", "PROJECT"],
       "display_order": 52,
       "label": "Spending authority approval (SAA)",
-      "purpose": "The Spending Authority Approval (SAA) document, Draft and Final versions ",
+      "purpose": "The Spending Authority Approval (SAA) document, Draft and Final versions",
       "metadata_types": [
         {
           "name": "SHORT_DESCRIPTOR",
@@ -989,7 +989,7 @@
       "categories": ["ACQUIRE", "DISPOSE", "LEASLIC", "MANAGEMENT", "RESEARCH"],
       "display_order": 56,
       "label": "Title search / Historical title",
-      "purpose": "The Title Search from LTSA which could be a current or historical search ",
+      "purpose": "The Title Search from LTSA which could be a current or historical search",
       "metadata_types": [
         {
           "name": "OWNER",
@@ -1010,7 +1010,7 @@
       "categories": ["ACQUIRE", "DISPOSE", "MANAGEMENT", "RESEARCH"],
       "display_order": 57,
       "label": "Transfer of administration",
-      "purpose": "The Transfer of Administration (TAC) document \u2013 Draft or Final version ",
+      "purpose": "The Transfer of Administration (TAC) document \u2013 Draft or Final version",
       "metadata_types": [
         {
           "name": "DATE_SIGNED",
@@ -1039,7 +1039,7 @@
       "categories": ["ACQUIRE", "MANAGEMENT"],
       "display_order": 28,
       "label": "Form 9 - Vesting notice (Form 9)",
-      "purpose": "The Vesting Notice (Form 9) for Expropriations ",
+      "purpose": "The Vesting Notice (Form 9) for Expropriations",
       "metadata_types": [
         {
           "name": "SHORT_DESCRIPTOR",

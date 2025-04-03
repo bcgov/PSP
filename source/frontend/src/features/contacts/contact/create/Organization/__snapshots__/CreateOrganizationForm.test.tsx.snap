@@ -269,7 +269,7 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
 }
 
 .c3 {
@@ -342,7 +342,7 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col"
+                class="align-content-end col"
               >
                 Contact Details
               </div>
@@ -373,6 +373,7 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
                     class="form-control"
                     id="input-name"
                     name="name"
+                    style="word-break: break-all;"
                     title=""
                     value=""
                   />
@@ -401,6 +402,7 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
                     class="form-control"
                     id="input-alias"
                     name="alias"
+                    style="word-break: break-all;"
                     title=""
                     value=""
                   />
@@ -429,6 +431,7 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
                     class="form-control"
                     id="input-incorporationNumber"
                     name="incorporationNumber"
+                    style="word-break: break-all;"
                     title=""
                     value=""
                   />
@@ -447,7 +450,7 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col"
+                class="align-content-end col"
               >
                 <div
                   class="d-flex align-items-center"
@@ -510,6 +513,7 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
                         class="form-control"
                         id="input-emailContactMethods.0.value"
                         name="emailContactMethods.0.value"
+                        style="word-break: break-all;"
                         title=""
                         value=""
                       />
@@ -633,6 +637,7 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
                         class="form-control"
                         id="input-phoneContactMethods.0.value"
                         name="phoneContactMethods.0.value"
+                        style="word-break: break-all;"
                         title=""
                         value=""
                       />
@@ -757,7 +762,7 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col"
+                class="align-content-end col"
               >
                 Mailing Address
               </div>
@@ -819,6 +824,7 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
                         class="form-control"
                         id="input-mailingAddress.streetAddress1"
                         name="mailingAddress.streetAddress1"
+                        style="word-break: break-all;"
                         title=""
                         value=""
                       />
@@ -939,6 +945,7 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
                     class="form-control"
                     id="input-mailingAddress.municipality"
                     name="mailingAddress.municipality"
+                    style="word-break: break-all;"
                     title=""
                     value=""
                   />
@@ -993,6 +1000,7 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
                     class="form-control"
                     id="input-mailingAddress.postal"
                     name="mailingAddress.postal"
+                    style="word-break: break-all;"
                     title=""
                     value=""
                   />
@@ -1011,7 +1019,7 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col"
+                class="align-content-end col"
               >
                 Property Address
               </div>
@@ -1073,6 +1081,7 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
                         class="form-control"
                         id="input-propertyAddress.streetAddress1"
                         name="propertyAddress.streetAddress1"
+                        style="word-break: break-all;"
                         title=""
                         value=""
                       />
@@ -1193,6 +1202,7 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
                     class="form-control"
                     id="input-propertyAddress.municipality"
                     name="propertyAddress.municipality"
+                    style="word-break: break-all;"
                     title=""
                     value=""
                   />
@@ -1247,6 +1257,7 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
                     class="form-control"
                     id="input-propertyAddress.postal"
                     name="propertyAddress.postal"
+                    style="word-break: break-all;"
                     title=""
                     value=""
                   />
@@ -1265,7 +1276,7 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col"
+                class="align-content-end col"
               >
                 Billing Address
               </div>
@@ -1327,6 +1338,7 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
                         class="form-control"
                         id="input-billingAddress.streetAddress1"
                         name="billingAddress.streetAddress1"
+                        style="word-break: break-all;"
                         title=""
                         value=""
                       />
@@ -1447,6 +1459,7 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
                     class="form-control"
                     id="input-billingAddress.municipality"
                     name="billingAddress.municipality"
+                    style="word-break: break-all;"
                     title=""
                     value=""
                   />
@@ -1501,6 +1514,7 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
                     class="form-control"
                     id="input-billingAddress.postal"
                     name="billingAddress.postal"
+                    style="word-break: break-all;"
                     title=""
                     value=""
                   />
@@ -1519,7 +1533,7 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col"
+                class="align-content-end col"
               >
                 Comments
               </div>
@@ -1536,6 +1550,7 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
                 id="input-comment"
                 name="comment"
                 rows="5"
+                style="word-break: break-all;"
                 title=""
               />
             </div>

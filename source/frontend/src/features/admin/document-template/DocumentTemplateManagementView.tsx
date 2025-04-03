@@ -1,12 +1,11 @@
 import { Col, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
-import styled from 'styled-components';
 
 import AdminIcon from '@/assets/images/admin-icon.svg?react';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
-import { Scrollable as ScrollableBase } from '@/components/common/Scrollable/Scrollable';
 import { Section } from '@/components/common/Section/Section';
 import * as CommonStyled from '@/components/common/styles';
+import { ListPage, PaddedScrollable } from '@/components/common/styles';
 import DocumentListContainer from '@/features/documents/list/DocumentListContainer';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_Concepts_FormDocumentType } from '@/models/api/generated/ApiGen_Concepts_FormDocumentType';
@@ -28,10 +27,16 @@ export const DocumentTemplateManagementView: React.FunctionComponent<
 
   return (
     <ListPage>
-      <Scrollable>
+      <PaddedScrollable>
         <LoadingBackdrop show={props.isLoading} />
         <CommonStyled.H1>
-          <AdminIcon title="Admin Tools icon" width="2.6rem" height="2.6rem" fill="currentColor" />
+          <AdminIcon
+            title="Admin Tools icon"
+            width="2.6rem"
+            height="2.6rem"
+            fill="currentColor"
+            style={{ verticalAlign: 'baseline' }}
+          />
           <span className="ml-2">PIMS Document Template Management</span>
         </CommonStyled.H1>
         <Section>
@@ -63,23 +68,9 @@ export const DocumentTemplateManagementView: React.FunctionComponent<
             relationshipType={ApiGen_CodeTypes_DocumentRelationType.Templates}
           />
         )}
-      </Scrollable>
+      </PaddedScrollable>
     </ListPage>
   );
 };
 
 export default DocumentTemplateManagementView;
-
-export const ListPage = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  width: 100%;
-  gap: 2.5rem;
-  padding: 0;
-`;
-
-export const Scrollable = styled(ScrollableBase)`
-  padding: 1.6rem 3.2rem;
-  width: 100%;
-`;

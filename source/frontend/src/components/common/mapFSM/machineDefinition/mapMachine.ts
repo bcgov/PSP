@@ -42,7 +42,7 @@ const featureViewStates = {
         SET_FILE_PROPERTY_LOCATIONS: {
           actions: [
             assign({ filePropertyLocations: (_, event: any) => event.locations }),
-            raise('REQUEST_FIT_BOUNDS'),
+            raise('REQUEST_FIT_FILE_BOUNDS'),
           ],
         },
       },
@@ -62,7 +62,7 @@ const featureViewStates = {
         SET_FILE_PROPERTY_LOCATIONS: {
           actions: [
             assign({ filePropertyLocations: (_, event: any) => event.locations }),
-            raise('REQUEST_FIT_BOUNDS'),
+            raise('REQUEST_FIT_FILE_BOUNDS'),
           ],
         },
       },
@@ -168,9 +168,7 @@ const mapRequestStates = {
                 context?.mapFeatureData?.pimsLocationFeatures?.features ?? [];
 
               // business logic, if there are file properties, use those, otherwise, zoom to a single feature if there is only one, or all features if there are more than one.
-              if (context.filePropertyLocations.length > 0) {
-                return latLngBounds(context.filePropertyLocations);
-              } else if (pimsLocationFeatures.length + fullyAttributedFeatures.length === 1) {
+              if (pimsLocationFeatures.length + fullyAttributedFeatures.length === 1) {
                 // if there is exactly one pims or pmbc feature, use that feature
                 const features = [...pimsLocationFeatures, ...fullyAttributedFeatures];
                 return geoJSON(features[0]).getBounds();
@@ -194,12 +192,25 @@ const mapRequestStates = {
                 if (
                   context.currentMapBounds &&
                   context.currentMapBounds.isValid() &&
+                  defaultBounds.contains(context.currentMapBounds) &&
                   context.currentMapBounds.contains(validBounds)
                 ) {
                   return context.currentMapBounds;
                 }
 
                 return validBounds;
+              }
+            },
+          }),
+          target: 'pendingFitBounds',
+        },
+        REQUEST_FIT_FILE_BOUNDS: {
+          actions: assign({
+            requestedFitBounds: (context: MachineContext) => {
+              // business logic, if there are file properties, use those, otherwise, zoom to a single feature if there is only one, or all features if there are more than one.
+
+              if (context.filePropertyLocations.length > 0) {
+                return latLngBounds(context.filePropertyLocations);
               }
             },
           }),
@@ -376,7 +387,7 @@ const sideBarStates = {
             assign({
               filePropertyLocations: (_: MachineContext, event: any) => event.locations || [],
             }),
-            raise('REQUEST_FIT_BOUNDS'),
+            raise('REQUEST_FIT_FILE_BOUNDS'),
           ],
         },
 

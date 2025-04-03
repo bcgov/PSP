@@ -1,14 +1,8 @@
 import { useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaPlus } from 'react-icons/fa';
-import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
-import styled from 'styled-components';
 
-import { Button } from '@/components/common/buttons/Button';
-import { Claims } from '@/constants/claims';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
-import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
 import { useSearch } from '@/hooks/useSearch';
 import { fromContactSummary, IContactSearchResult } from '@/interfaces';
 import { ApiGen_Concepts_ContactSummary } from '@/models/api/generated/ApiGen_Concepts_ContactSummary';
@@ -28,7 +22,6 @@ interface IContactManagerViewProps {
   isSummary?: boolean;
   noInitialSearch?: boolean;
   className?: string;
-  showAddButton?: boolean;
   showActiveSelector?: boolean;
   isSingleSelect?: boolean;
   restrictContactType?: RestrictContactType;
@@ -44,13 +37,10 @@ const ContactManagerView = ({
   isSummary,
   noInitialSearch,
   showSelectedRowCount,
-  showAddButton,
   showActiveSelector,
   isSingleSelect,
   restrictContactType,
 }: IContactManagerViewProps) => {
-  const history = useHistory();
-  const { hasClaim } = useKeycloakWrapper();
   const { getContacts } = useApiContacts();
 
   const initialFilter: IContactFilter = (
@@ -98,16 +88,6 @@ const ContactManagerView = ({
           />
         </Col>
       </Row>
-      <Row>
-        {showAddButton && hasClaim(Claims.CONTACT_ADD) && (
-          <Col xs="auto" xl="3" className="pl-0">
-            <StyledPrimaryButton onClick={() => history.push('/contact/new')}>
-              <FaPlus className="mr-3" />
-              &nbsp;Add new contact
-            </StyledPrimaryButton>
-          </Col>
-        )}
-      </Row>
       <div>
         <ContactResultComponent
           loading={loading}
@@ -132,10 +112,3 @@ const ContactManagerView = ({
 };
 
 export default ContactManagerView;
-
-const StyledPrimaryButton = styled(Button)`
-  margin: 2rem 1.5rem;
-  &.btn.btn-primary {
-    background-color: ${props => props.theme.bcTokens.iconsColorSuccess};
-  }
-`;

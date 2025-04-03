@@ -11,6 +11,7 @@ using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Requests.Http;
 using Pims.Core.Api.Exceptions;
+using Polly.Registry;
 
 namespace Pims.Api.Repositories.Mayan
 {
@@ -28,12 +29,14 @@ namespace Pims.Api.Repositories.Mayan
         /// <param name="httpClientFactory">Injected Httpclient factory.</param>
         /// <param name="configuration">The injected configuration provider.</param>
         /// <param name="jsonOptions">The jsonOptions.</param>
+        /// <param name="pollyPipelineProvider">The polly retry policy.</param>
         public MayanAuthRepository(
-            ILogger<MayanDocumentRepository> logger,
+            ILogger<MayanAuthRepository> logger,
             IHttpClientFactory httpClientFactory,
             IConfiguration configuration,
-            IOptions<JsonSerializerOptions> jsonOptions)
-            : base(logger, httpClientFactory, configuration, jsonOptions)
+            IOptions<JsonSerializerOptions> jsonOptions,
+            ResiliencePipelineProvider<string> pollyPipelineProvider)
+            : base(logger, httpClientFactory, configuration, jsonOptions, pollyPipelineProvider)
         {
             _currentToken = string.Empty;
         }

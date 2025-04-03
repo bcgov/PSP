@@ -15,7 +15,7 @@ exports[`PropertyContactEditForm component > renders as expected when provided v
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
 }
 
 .c2 {
@@ -70,7 +70,7 @@ exports[`PropertyContactEditForm component > renders as expected when provided v
             class="no-gutters row"
           >
             <div
-              class="col"
+              class="align-content-end col"
             >
               Contact Details
             </div>
@@ -102,6 +102,7 @@ exports[`PropertyContactEditForm component > renders as expected when provided v
                   disabled=""
                   id="input-contact"
                   name="contact"
+                  style="word-break: break-all;"
                   title="John Doe"
                   value="John Doe"
                 />
@@ -130,6 +131,7 @@ exports[`PropertyContactEditForm component > renders as expected when provided v
                   class="form-control"
                   id="input-purposeDescription"
                   name="purposeDescription"
+                  style="word-break: break-all;"
                   title="Test Purpouse"
                 >
                   Test Purpouse

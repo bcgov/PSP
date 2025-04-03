@@ -6,7 +6,7 @@ exports[`ReceivedDepositForm component > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c7.btn {
+  .c5.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,19 +35,19 @@ exports[`ReceivedDepositForm component > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c7.btn .Button__value {
+.c5.btn .Button__value {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
-.c7.btn:hover {
+.c5.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c7.btn:focus {
+.c5.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -55,31 +55,31 @@ exports[`ReceivedDepositForm component > renders as expected 1`] = `
   box-shadow: none;
 }
 
-.c7.btn.btn-primary {
+.c5.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c7.btn.btn-primary:hover,
-.c7.btn.btn-primary:active,
-.c7.btn.btn-primary:focus {
+.c5.btn.btn-primary:hover,
+.c5.btn.btn-primary:active,
+.c5.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c7.btn.btn-secondary {
+.c5.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c7.btn.btn-secondary:hover,
-.c7.btn.btn-secondary:active,
-.c7.btn.btn-secondary:focus {
+.c5.btn.btn-secondary:hover,
+.c5.btn.btn-secondary:active,
+.c5.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c7.btn.btn-info {
+.c5.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -87,66 +87,66 @@ exports[`ReceivedDepositForm component > renders as expected 1`] = `
   padding-right: 0.6rem;
 }
 
-.c7.btn.btn-info:hover,
-.c7.btn.btn-info:active,
-.c7.btn.btn-info:focus {
+.c5.btn.btn-info:hover,
+.c5.btn.btn-info:active,
+.c5.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c7.btn.btn-light {
+.c5.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c7.btn.btn-light:hover,
-.c7.btn.btn-light:active,
-.c7.btn.btn-light:focus {
+.c5.btn.btn-light:hover,
+.c5.btn.btn-light:active,
+.c5.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c7.btn.btn-dark {
+.c5.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c7.btn.btn-dark:hover,
-.c7.btn.btn-dark:active,
-.c7.btn.btn-dark:focus {
+.c5.btn.btn-dark:hover,
+.c5.btn.btn-dark:active,
+.c5.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c7.btn.btn-danger {
+.c5.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c7.btn.btn-danger:hover,
-.c7.btn.btn-danger:active,
-.c7.btn.btn-danger:focus {
+.c5.btn.btn-danger:hover,
+.c5.btn.btn-danger:active,
+.c5.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c7.btn.btn-warning {
+.c5.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c7.btn.btn-warning:hover,
-.c7.btn.btn-warning:active,
-.c7.btn.btn-warning:focus {
+.c5.btn.btn-warning:hover,
+.c5.btn.btn-warning:active,
+.c5.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c7.btn.btn-link {
+.c5.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -170,9 +170,9 @@ exports[`ReceivedDepositForm component > renders as expected 1`] = `
   text-decoration: underline;
 }
 
-.c7.btn.btn-link:hover,
-.c7.btn.btn-link:active,
-.c7.btn.btn-link:focus {
+.c5.btn.btn-link:hover,
+.c5.btn.btn-link:active,
+.c5.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -182,15 +182,15 @@ exports[`ReceivedDepositForm component > renders as expected 1`] = `
   outline: none;
 }
 
-.c7.btn.btn-link:disabled,
-.c7.btn.btn-link.disabled {
+.c5.btn.btn-link:disabled,
+.c5.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c7.btn:disabled,
-.c7.btn:disabled:hover {
+.c5.btn:disabled,
+.c5.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -202,19 +202,19 @@ exports[`ReceivedDepositForm component > renders as expected 1`] = `
   cursor: not-allowed;
 }
 
-.c7.Button .Button__icon {
+.c5.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c7.Button--icon-only:focus {
+.c5.Button--icon-only:focus {
   outline: none;
 }
 
-.c7.Button--icon-only .Button__icon {
+.c5.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c3 .react-datepicker__calendar-icon {
+.c2 .react-datepicker__calendar-icon {
   width: 2.4rem;
   height: 3rem;
   margin-top: 0.5rem;
@@ -224,40 +224,23 @@ exports[`ReceivedDepositForm component > renders as expected 1`] = `
   pointer-events: none;
 }
 
-.c3 .react-datepicker__view-calendar-icon input {
+.c2 .react-datepicker__view-calendar-icon input {
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c3 .react-datepicker-wrapper {
+.c2 .react-datepicker-wrapper {
   max-width: 17rem;
 }
 
-.c5.c5.form-control.is-valid {
+.c3.c3.form-control.is-valid {
   background-image: none;
 }
 
-.c5.c5.form-control.is-invalid {
+.c3.c3.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
 .c4 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: baseline;
-  -webkit-box-align: baseline;
-  -ms-flex-align: baseline;
-  align-items: baseline;
-}
-
-.c4 .form-label {
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-}
-
-.c6 {
   position: relative;
   border-radius: 0.4rem;
   padding-top: 0.8rem;
@@ -270,119 +253,102 @@ exports[`ReceivedDepositForm component > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c6.is-invalid {
+.c4.is-invalid {
   border: #CE3E39 solid 0.1rem;
 }
 
-.c2.required::before {
+.c1.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c1 {
+.c0 {
   font-weight: bold;
-}
-
-.c0 .form-group {
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-}
-
-.c0 .form-group .form-label {
-  font-weight: bold;
-}
-
-.c0 .form-group textarea {
-  resize: none;
 }
 
 <form
-    class="c0"
+    class="mx-3"
   >
     <div
-      class="row"
+      class="pb-2 row"
     >
       <div
-        class="col"
+        class="pr-0 text-left col-3"
+      >
+        <label
+          class="c0"
+        >
+          Deposit type:
+        </label>
+      </div>
+      <div
+        class="c1 required text-left col-5"
       >
         <div
-          class="pb-2 row"
+          class="required form-group"
         >
-          <div
-            class="pr-0 text-left col-4"
+          <select
+            class="form-select form-control"
+            id="input-depositTypeCode"
+            name="depositTypeCode"
+            required=""
           >
-            <label
-              class="c1"
+            <option
+              value=""
             >
-              Deposit type:
-            </label>
-          </div>
-          <div
-            class="c2 required text-left col-5"
-          >
-            <div
-              class="form-group"
+              Select...
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-OTHER"
+              value="OTHER"
             >
-              <select
-                class="form-select form-control"
-                id="input-depositTypeCode"
-                name="depositTypeCode"
-              >
-                <option
-                  value=""
-                >
-                  Select...
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-OTHER"
-                  value="OTHER"
-                >
-                  Other deposit
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-PET"
-                  value="PET"
-                >
-                  Pet deposit
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-SECURITY"
-                  value="SECURITY"
-                >
-                  Security deposit
-                </option>
-              </select>
-            </div>
-          </div>
+              Other deposit
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-PET"
+              value="PET"
+            >
+              Pet deposit
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-SECURITY"
+              value="SECURITY"
+            >
+              Security deposit
+            </option>
+          </select>
         </div>
       </div>
     </div>
     <div
-      class="row"
+      class="pb-2 row"
     >
       <div
-        class="col"
+        class="pr-0 text-left col-12"
+      >
+        <label
+          class="c0"
+        >
+          Description:
+        </label>
+      </div>
+      <div
+        class="c1 required text-left col"
       >
         <div
-          class="textarea input form-group"
+          class="required textarea input form-group"
         >
-          <label
-            class="form-label"
-            for="input-description"
-          >
-            Description: 
-          </label>
           <textarea
             class="form-control"
             id="input-description"
             name="description"
             rows="4"
+            style="word-break: break-all;"
             title=""
           />
         </div>
@@ -392,95 +358,115 @@ exports[`ReceivedDepositForm component > renders as expected 1`] = `
       class="row"
     >
       <div
-        class="col-md-6"
+        class="col-6"
       >
         <div
-          class="required form-group"
+          class="pb-2 row"
         >
-          <label
-            class="form-label"
-            for="input-amountPaid"
-          >
-            Deposit amount: 
-          </label>
           <div
-            class="input-tooltip-wrapper"
+            class="pr-0 text-left col-12"
           >
-            <input
-              class="form-control input-number"
-              id="input-amountPaid"
-              inputmode="numeric"
-              name="amountPaid"
-              placeholder=""
-              required=""
-              type="text"
-              value=""
-            />
+            <label
+              class="c0"
+            >
+              Deposit amount:
+            </label>
+          </div>
+          <div
+            class="c1 required text-left col"
+          >
+            <div
+              class="required form-group"
+            >
+              <div
+                class="input-tooltip-wrapper"
+              >
+                <input
+                  class="form-control input-number"
+                  id="input-amountPaid"
+                  inputmode="numeric"
+                  name="amountPaid"
+                  placeholder=""
+                  required=""
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
       <div
-        class="col-md-6"
+        class="col-6"
       >
         <div
-          class="c3 required c4 form-group"
+          class="pb-2 row"
         >
-          <label
-            class="form-label"
-            for="datepicker-depositDate"
+          <div
+            class="pr-0 text-left col-12"
           >
-            <span
-              class="datepicker-label"
+            <label
+              class="c0"
             >
               Paid date:
-            </span>
-             
-          </label>
+            </label>
+          </div>
           <div
-            class="react-datepicker-wrapper d-block"
+            class="c1 required text-left col"
           >
             <div
-              class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+              class="c2 required form-group"
             >
-              <svg
-                class="react-datepicker__calendar-icon"
-                viewBox="0 0 448 512"
-                xmlns="http://www.w3.org/2000/svg"
+              <div
+                class="react-datepicker-wrapper d-block"
               >
-                <path
-                  d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
-                />
-              </svg>
-              <input
-                autocomplete="off"
-                class="c5 form-control date-picker"
-                id="datepicker-depositDate"
-                name="depositDate"
-                placeholder="MMM DD, YYYY"
-                required=""
-                type="text"
-                value=""
-              />
+                <div
+                  class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+                >
+                  <svg
+                    class="react-datepicker__calendar-icon"
+                    viewBox="0 0 448 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                    />
+                  </svg>
+                  <input
+                    autocomplete="off"
+                    class="c3 form-control date-picker"
+                    id="datepicker-depositDate"
+                    name="depositDate"
+                    placeholder="MMM DD, YYYY"
+                    required=""
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
     <div
-      class="row"
+      class="pb-2 row"
     >
       <div
-        class="col-md-9"
+        class="pr-0 text-left col-12"
+      >
+        <label
+          class="c0"
+        >
+          Deposit holder:
+        </label>
+      </div>
+      <div
+        class="c1 required text-left col-9"
       >
         <div
           class="required input form-group"
         >
-          <label
-            class="form-label"
-            for="input-contactHolder"
-          >
-            Deposit holder:
-          </label>
           <div
             class="row"
           >
@@ -488,7 +474,7 @@ exports[`ReceivedDepositForm component > renders as expected 1`] = `
               class="col"
             >
               <div
-                class="c6"
+                class="c4"
               >
                 Select from contacts
               </div>
@@ -500,6 +486,7 @@ exports[`ReceivedDepositForm component > renders as expected 1`] = `
                   id="input-contactHolder.id"
                   name="contactHolder.id"
                   placeholder="Select from Contacts"
+                  style="word-break: break-all;"
                   value=""
                 />
               </div>
@@ -508,7 +495,7 @@ exports[`ReceivedDepositForm component > renders as expected 1`] = `
               class="pl-0 col-auto"
             >
               <button
-                class="c7 Button Button--icon-only px-2 btn btn-primary"
+                class="c5 Button Button--icon-only px-2 btn btn-primary"
                 type="button"
               >
                 <div
@@ -535,19 +522,11 @@ exports[`ReceivedDepositForm component > renders as expected 1`] = `
       </div>
     </div>
     <div
-      class="row"
+      style="margin-top: 24px;"
     >
-      <div
-        class="col-md-12"
-      >
-        <div
-          style="margin-top: 24px;"
-        >
-          <p>
-            Do you want to save it?
-          </p>
-        </div>
-      </div>
+      <p>
+        Do you want to save it?
+      </p>
     </div>
     <div />
   </form>
@@ -560,7 +539,7 @@ exports[`ReceivedDepositForm component > renders with data as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c7.btn {
+  .c5.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -589,19 +568,19 @@ exports[`ReceivedDepositForm component > renders with data as expected 1`] = `
   cursor: pointer;
 }
 
-.c7.btn .Button__value {
+.c5.btn .Button__value {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
-.c7.btn:hover {
+.c5.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c7.btn:focus {
+.c5.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -609,31 +588,31 @@ exports[`ReceivedDepositForm component > renders with data as expected 1`] = `
   box-shadow: none;
 }
 
-.c7.btn.btn-primary {
+.c5.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c7.btn.btn-primary:hover,
-.c7.btn.btn-primary:active,
-.c7.btn.btn-primary:focus {
+.c5.btn.btn-primary:hover,
+.c5.btn.btn-primary:active,
+.c5.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c7.btn.btn-secondary {
+.c5.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c7.btn.btn-secondary:hover,
-.c7.btn.btn-secondary:active,
-.c7.btn.btn-secondary:focus {
+.c5.btn.btn-secondary:hover,
+.c5.btn.btn-secondary:active,
+.c5.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c7.btn.btn-info {
+.c5.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -641,66 +620,66 @@ exports[`ReceivedDepositForm component > renders with data as expected 1`] = `
   padding-right: 0.6rem;
 }
 
-.c7.btn.btn-info:hover,
-.c7.btn.btn-info:active,
-.c7.btn.btn-info:focus {
+.c5.btn.btn-info:hover,
+.c5.btn.btn-info:active,
+.c5.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c7.btn.btn-light {
+.c5.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c7.btn.btn-light:hover,
-.c7.btn.btn-light:active,
-.c7.btn.btn-light:focus {
+.c5.btn.btn-light:hover,
+.c5.btn.btn-light:active,
+.c5.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c7.btn.btn-dark {
+.c5.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c7.btn.btn-dark:hover,
-.c7.btn.btn-dark:active,
-.c7.btn.btn-dark:focus {
+.c5.btn.btn-dark:hover,
+.c5.btn.btn-dark:active,
+.c5.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c7.btn.btn-danger {
+.c5.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c7.btn.btn-danger:hover,
-.c7.btn.btn-danger:active,
-.c7.btn.btn-danger:focus {
+.c5.btn.btn-danger:hover,
+.c5.btn.btn-danger:active,
+.c5.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c7.btn.btn-warning {
+.c5.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c7.btn.btn-warning:hover,
-.c7.btn.btn-warning:active,
-.c7.btn.btn-warning:focus {
+.c5.btn.btn-warning:hover,
+.c5.btn.btn-warning:active,
+.c5.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c7.btn.btn-link {
+.c5.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -724,9 +703,9 @@ exports[`ReceivedDepositForm component > renders with data as expected 1`] = `
   text-decoration: underline;
 }
 
-.c7.btn.btn-link:hover,
-.c7.btn.btn-link:active,
-.c7.btn.btn-link:focus {
+.c5.btn.btn-link:hover,
+.c5.btn.btn-link:active,
+.c5.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -736,15 +715,15 @@ exports[`ReceivedDepositForm component > renders with data as expected 1`] = `
   outline: none;
 }
 
-.c7.btn.btn-link:disabled,
-.c7.btn.btn-link.disabled {
+.c5.btn.btn-link:disabled,
+.c5.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c7.btn:disabled,
-.c7.btn:disabled:hover {
+.c5.btn:disabled,
+.c5.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -756,19 +735,19 @@ exports[`ReceivedDepositForm component > renders with data as expected 1`] = `
   cursor: not-allowed;
 }
 
-.c7.Button .Button__icon {
+.c5.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c7.Button--icon-only:focus {
+.c5.Button--icon-only:focus {
   outline: none;
 }
 
-.c7.Button--icon-only .Button__icon {
+.c5.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c3 .react-datepicker__calendar-icon {
+.c2 .react-datepicker__calendar-icon {
   width: 2.4rem;
   height: 3rem;
   margin-top: 0.5rem;
@@ -778,40 +757,23 @@ exports[`ReceivedDepositForm component > renders with data as expected 1`] = `
   pointer-events: none;
 }
 
-.c3 .react-datepicker__view-calendar-icon input {
+.c2 .react-datepicker__view-calendar-icon input {
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c3 .react-datepicker-wrapper {
+.c2 .react-datepicker-wrapper {
   max-width: 17rem;
 }
 
-.c5.c5.form-control.is-valid {
+.c3.c3.form-control.is-valid {
   background-image: none;
 }
 
-.c5.c5.form-control.is-invalid {
+.c3.c3.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
 .c4 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: baseline;
-  -webkit-box-align: baseline;
-  -ms-flex-align: baseline;
-  align-items: baseline;
-}
-
-.c4 .form-label {
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-}
-
-.c6 {
   position: relative;
   border-radius: 0.4rem;
   padding-top: 0.8rem;
@@ -824,119 +786,102 @@ exports[`ReceivedDepositForm component > renders with data as expected 1`] = `
   cursor: pointer;
 }
 
-.c6.is-invalid {
+.c4.is-invalid {
   border: #CE3E39 solid 0.1rem;
 }
 
-.c2.required::before {
+.c1.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c1 {
+.c0 {
   font-weight: bold;
-}
-
-.c0 .form-group {
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-}
-
-.c0 .form-group .form-label {
-  font-weight: bold;
-}
-
-.c0 .form-group textarea {
-  resize: none;
 }
 
 <form
-    class="c0"
+    class="mx-3"
   >
     <div
-      class="row"
+      class="pb-2 row"
     >
       <div
-        class="col"
+        class="pr-0 text-left col-3"
+      >
+        <label
+          class="c0"
+        >
+          Deposit type:
+        </label>
+      </div>
+      <div
+        class="c1 required text-left col-5"
       >
         <div
-          class="pb-2 row"
+          class="required form-group"
         >
-          <div
-            class="pr-0 text-left col-4"
+          <select
+            class="form-select form-control"
+            id="input-depositTypeCode"
+            name="depositTypeCode"
+            required=""
           >
-            <label
-              class="c1"
+            <option
+              value=""
             >
-              Deposit type:
-            </label>
-          </div>
-          <div
-            class="c2 required text-left col-5"
-          >
-            <div
-              class="form-group"
+              Select...
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-OTHER"
+              value="OTHER"
             >
-              <select
-                class="form-select form-control"
-                id="input-depositTypeCode"
-                name="depositTypeCode"
-              >
-                <option
-                  value=""
-                >
-                  Select...
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-OTHER"
-                  value="OTHER"
-                >
-                  Other deposit
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-PET"
-                  value="PET"
-                >
-                  Pet deposit
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-SECURITY"
-                  value="SECURITY"
-                >
-                  Security deposit
-                </option>
-              </select>
-            </div>
-          </div>
+              Other deposit
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-PET"
+              value="PET"
+            >
+              Pet deposit
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-SECURITY"
+              value="SECURITY"
+            >
+              Security deposit
+            </option>
+          </select>
         </div>
       </div>
     </div>
     <div
-      class="row"
+      class="pb-2 row"
     >
       <div
-        class="col"
+        class="pr-0 text-left col-12"
+      >
+        <label
+          class="c0"
+        >
+          Description:
+        </label>
+      </div>
+      <div
+        class="c1 required text-left col"
       >
         <div
-          class="textarea input form-group"
+          class="required textarea input form-group"
         >
-          <label
-            class="form-label"
-            for="input-description"
-          >
-            Description: 
-          </label>
           <textarea
             class="form-control"
             id="input-description"
             name="description"
             rows="4"
+            style="word-break: break-all;"
             title=""
           />
         </div>
@@ -946,95 +891,115 @@ exports[`ReceivedDepositForm component > renders with data as expected 1`] = `
       class="row"
     >
       <div
-        class="col-md-6"
+        class="col-6"
       >
         <div
-          class="required form-group"
+          class="pb-2 row"
         >
-          <label
-            class="form-label"
-            for="input-amountPaid"
-          >
-            Deposit amount: 
-          </label>
           <div
-            class="input-tooltip-wrapper"
+            class="pr-0 text-left col-12"
           >
-            <input
-              class="form-control input-number"
-              id="input-amountPaid"
-              inputmode="numeric"
-              name="amountPaid"
-              placeholder=""
-              required=""
-              type="text"
-              value=""
-            />
+            <label
+              class="c0"
+            >
+              Deposit amount:
+            </label>
+          </div>
+          <div
+            class="c1 required text-left col"
+          >
+            <div
+              class="required form-group"
+            >
+              <div
+                class="input-tooltip-wrapper"
+              >
+                <input
+                  class="form-control input-number"
+                  id="input-amountPaid"
+                  inputmode="numeric"
+                  name="amountPaid"
+                  placeholder=""
+                  required=""
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
       <div
-        class="col-md-6"
+        class="col-6"
       >
         <div
-          class="c3 required c4 form-group"
+          class="pb-2 row"
         >
-          <label
-            class="form-label"
-            for="datepicker-depositDate"
+          <div
+            class="pr-0 text-left col-12"
           >
-            <span
-              class="datepicker-label"
+            <label
+              class="c0"
             >
               Paid date:
-            </span>
-             
-          </label>
+            </label>
+          </div>
           <div
-            class="react-datepicker-wrapper d-block"
+            class="c1 required text-left col"
           >
             <div
-              class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+              class="c2 required form-group"
             >
-              <svg
-                class="react-datepicker__calendar-icon"
-                viewBox="0 0 448 512"
-                xmlns="http://www.w3.org/2000/svg"
+              <div
+                class="react-datepicker-wrapper d-block"
               >
-                <path
-                  d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
-                />
-              </svg>
-              <input
-                autocomplete="off"
-                class="c5 form-control date-picker"
-                id="datepicker-depositDate"
-                name="depositDate"
-                placeholder="MMM DD, YYYY"
-                required=""
-                type="text"
-                value=""
-              />
+                <div
+                  class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+                >
+                  <svg
+                    class="react-datepicker__calendar-icon"
+                    viewBox="0 0 448 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                    />
+                  </svg>
+                  <input
+                    autocomplete="off"
+                    class="c3 form-control date-picker"
+                    id="datepicker-depositDate"
+                    name="depositDate"
+                    placeholder="MMM DD, YYYY"
+                    required=""
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
     <div
-      class="row"
+      class="pb-2 row"
     >
       <div
-        class="col-md-9"
+        class="pr-0 text-left col-12"
+      >
+        <label
+          class="c0"
+        >
+          Deposit holder:
+        </label>
+      </div>
+      <div
+        class="c1 required text-left col-9"
       >
         <div
           class="required input form-group"
         >
-          <label
-            class="form-label"
-            for="input-contactHolder"
-          >
-            Deposit holder:
-          </label>
           <div
             class="row"
           >
@@ -1042,7 +1007,7 @@ exports[`ReceivedDepositForm component > renders with data as expected 1`] = `
               class="col"
             >
               <div
-                class="c6"
+                class="c4"
               >
                 Select from contacts
               </div>
@@ -1054,6 +1019,7 @@ exports[`ReceivedDepositForm component > renders with data as expected 1`] = `
                   id="input-contactHolder.id"
                   name="contactHolder.id"
                   placeholder="Select from Contacts"
+                  style="word-break: break-all;"
                   value=""
                 />
               </div>
@@ -1062,7 +1028,7 @@ exports[`ReceivedDepositForm component > renders with data as expected 1`] = `
               class="pl-0 col-auto"
             >
               <button
-                class="c7 Button Button--icon-only px-2 btn btn-primary"
+                class="c5 Button Button--icon-only px-2 btn btn-primary"
                 type="button"
               >
                 <div
@@ -1089,19 +1055,11 @@ exports[`ReceivedDepositForm component > renders with data as expected 1`] = `
       </div>
     </div>
     <div
-      class="row"
+      style="margin-top: 24px;"
     >
-      <div
-        class="col-md-12"
-      >
-        <div
-          style="margin-top: 24px;"
-        >
-          <p>
-            Do you want to save it?
-          </p>
-        </div>
-      </div>
+      <p>
+        Do you want to save it?
+      </p>
     </div>
     <div />
   </form>

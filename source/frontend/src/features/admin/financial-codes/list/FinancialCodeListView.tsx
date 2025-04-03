@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useMemo } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router';
+import styled from 'styled-components';
 
 import AdminIcon from '@/assets/images/admin-icon.svg?react';
 import * as CommonStyled from '@/components/common/styles';
@@ -20,7 +21,6 @@ import {
   IFinancialCodeFilter,
 } from './FinancialCodeFilter/FinancialCodeFilter';
 import { FinancialCodeResults } from './FinancialCodeResults/FinancialCodeResults';
-import * as Styled from './styles';
 
 /**
  * Page that displays acquisition files information.
@@ -97,34 +97,56 @@ export const FinancialCodeListView: React.FC = () => {
   }, [filter, financialCodeResults, sort]);
 
   return (
-    <Styled.ListPage>
-      <Styled.Scrollable>
+    <CommonStyled.ListPage>
+      <CommonStyled.PaddedScrollable>
         <CommonStyled.H1>
-          <AdminIcon title="Admin Tools icon" width="2.6rem" height="2.6rem" fill="currentColor" />
-          <span className="ml-2">Financial Codes</span>
+          <FlexDiv>
+            <div>
+              <AdminIcon
+                title="Admin Tools icon"
+                width="2.6rem"
+                height="2.6rem"
+                fill="currentColor"
+              />
+              <span className="ml-2">Financial Codes</span>
+            </div>
+            {hasRole(Roles.SYSTEM_ADMINISTRATOR) && (
+              <StyledAddButton onClick={() => history.push('/admin/financial-code/new')}>
+                <FaPlus />
+                &nbsp;Add a Financial Code
+              </StyledAddButton>
+            )}
+          </FlexDiv>
         </CommonStyled.H1>
-        <Styled.PageToolbar>
+        <CommonStyled.PageToolbar>
           <Row>
             <Col>
               <FinancialCodeFilter filter={filter} setFilter={setFilter} />
             </Col>
           </Row>
-        </Styled.PageToolbar>
-        {hasRole(Roles.SYSTEM_ADMINISTRATOR) && (
-          <StyledAddButton onClick={() => history.push('/admin/financial-code/new')}>
-            <FaPlus />
-            &nbsp;Create financial code
-          </StyledAddButton>
-        )}
+        </CommonStyled.PageToolbar>
+
         <FinancialCodeResults
           results={sortedFilteredFinancialCodes}
           loading={financialCodesLoading}
           sort={sort}
           setSort={setSort}
         />
-      </Styled.Scrollable>
-    </Styled.ListPage>
+      </CommonStyled.PaddedScrollable>
+    </CommonStyled.ListPage>
   );
 };
 
 export default FinancialCodeListView;
+
+const FlexDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
+
+  svg {
+    vertical-align: baseline;
+  }
+`;

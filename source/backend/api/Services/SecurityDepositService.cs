@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
+using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Core.Security;
 using Pims.Dal.Entities;
+using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
 
 namespace Pims.Api.Services
@@ -14,17 +16,19 @@ namespace Pims.Api.Services
     {
         private readonly ISecurityDepositRepository _securityDepositRepository;
         private readonly ISecurityDepositReturnRepository _securityDepositReturnRepository;
-        private readonly ILeaseRepository _leaseRepository;
+        private readonly ILeaseService _leaseService;
         private readonly ClaimsPrincipal _user;
         private readonly ILogger _logger;
+        private readonly ILeaseStatusSolver _leaseStatusSolver;
 
-        public SecurityDepositService(ISecurityDepositRepository securityDepositRepository, ISecurityDepositReturnRepository securityDepositReturnRepository, ILeaseRepository leaseRepository, ClaimsPrincipal user, ILogger<SecurityDepositService> logger)
+        public SecurityDepositService(ISecurityDepositRepository securityDepositRepository, ISecurityDepositReturnRepository securityDepositReturnRepository, ILeaseService leaseService, ClaimsPrincipal user, ILogger<SecurityDepositService> logger, ILeaseStatusSolver leaseStatusSolver)
         {
             _securityDepositRepository = securityDepositRepository;
             _securityDepositReturnRepository = securityDepositReturnRepository;
-            _leaseRepository = leaseRepository;
+            _leaseService = leaseService;
             _user = user;
             _logger = logger;
+            _leaseStatusSolver = leaseStatusSolver;
         }
 
         public IEnumerable<PimsSecurityDeposit> GetLeaseDeposits(long leaseId)
@@ -39,6 +43,14 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Adding lease deposit for lease id {id}", leaseId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseAdd);
+
+            var currentLease = _leaseService.GetById(leaseId);
+            var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease?.LeaseStatusTypeCode);
+            if (!_leaseStatusSolver.CanEditDeposits(currentLeaseStatus))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+            }
+
             var securityDeposit = _securityDepositRepository.Add(deposit);
             _securityDepositRepository.CommitTransaction();
 
@@ -49,6 +61,14 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Updating lease deposit for lease id {leaseid} deposit id {depositId}", leaseId, deposit.SecurityDepositId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
+
+            var currentLease = _leaseService.GetById(leaseId);
+            var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease?.LeaseStatusTypeCode);
+            if (!_leaseStatusSolver.CanEditDeposits(currentLeaseStatus))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+            }
+
             var currentHolder = _securityDepositRepository.GetById(deposit.SecurityDepositId).PimsSecurityDepositHolder;
             if (currentHolder != null)
             {
@@ -64,10 +84,17 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Updating lease deposit note for lease id {leaseId}", leaseId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
-            var lease = _leaseRepository.Get(leaseId);
+            var lease = _leaseService.GetById(leaseId);
+
+            var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(lease?.LeaseStatusTypeCode);
+            if (!_leaseStatusSolver.CanEditDeposits(currentLeaseStatus))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+            }
+
             lease.ReturnNotes = note;
-            _leaseRepository.Update(lease);
-            _leaseRepository.CommitTransaction();
+            _leaseService.Update(lease, new List<UserOverrideCode>());
+            _securityDepositRepository.CommitTransaction();
         }
 
         public bool DeleteLeaseDeposit(PimsSecurityDeposit deposit)
@@ -75,6 +102,13 @@ namespace Pims.Api.Services
             _logger.LogInformation("Deleting lease deposit for lease id {leaseId}, deposit id {depositId}", deposit.LeaseId, deposit.SecurityDepositId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
             ValidateDeletionRules(deposit);
+
+            var currentLease = _leaseService.GetById(deposit.LeaseId);
+            var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease?.LeaseStatusTypeCode);
+            if (!_leaseStatusSolver.CanEditDeposits(currentLeaseStatus))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+            }
 
             bool deleted = _securityDepositRepository.Delete(deposit.SecurityDepositId);
             _securityDepositRepository.CommitTransaction();

@@ -39,6 +39,7 @@ exports[`LtsaTransferSubForm component > renders transfer sub form 1`] = `
           class="form-control"
           id="input-titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.disposition"
           name="titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.disposition"
+          style="word-break: break-all;"
           title="disposition text"
           value="disposition text"
         />
@@ -78,6 +79,7 @@ exports[`LtsaTransferSubForm component > renders transfer sub form 1`] = `
           class="form-control"
           id="input-titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.dispositionDate"
           name="titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.dispositionDate"
+          style="word-break: break-all;"
           value=""
         />
       </div>
@@ -116,6 +118,7 @@ exports[`LtsaTransferSubForm component > renders transfer sub form 1`] = `
           class="form-control"
           id="input-titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.titleNumber"
           name="titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.titleNumber"
+          style="word-break: break-all;"
           title="54321"
           value="54321"
         />
@@ -155,6 +158,7 @@ exports[`LtsaTransferSubForm component > renders transfer sub form 1`] = `
           class="form-control"
           id="input-titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.landLandDistrict"
           name="titleOrders.0.orderedProduct.fieldedData.titleTransfersOrDispositions.0.landLandDistrict"
+          style="word-break: break-all;"
           title="district"
           value="district"
         />
@@ -195,6 +199,7 @@ exports[`LtsaTransferSubForm component > renders transfer sub form 1`] = `
           disabled=""
           id="input-parcelInfo.orderedProduct.fieldedData.pendingApplicationCount"
           name="parcelInfo.orderedProduct.fieldedData.pendingApplicationCount"
+          style="word-break: break-all;"
           title="0"
           value="0"
         />

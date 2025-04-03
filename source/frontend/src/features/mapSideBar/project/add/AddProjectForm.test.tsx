@@ -6,14 +6,14 @@ import { SelectOption } from '@/components/common/form';
 import * as API from '@/constants/API';
 import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
 import { getMockLookUpsByType, mockLookups } from '@/mocks/lookups.mock';
-import { mockProjectGetResponse } from '@/mocks/projects.mock';
+import { getMockProjectPerson, mockProjectGetResponse } from '@/mocks/projects.mock';
 import { getUserMock } from '@/mocks/user.mock';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 import { act, fakeText, fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
-import { ProjectForm } from '../models';
+import { ProjectForm, ProjectTeamForm } from '../models';
 import { AddProjectYupSchema } from './AddProjectFileYupSchema';
 import AddProjectForm, { IAddProjectFormProps } from './AddProjectForm';
 
@@ -21,7 +21,7 @@ const history = createMemoryHistory();
 const validationSchema = vi.fn().mockReturnValue(AddProjectYupSchema);
 const onSubmit = vi.fn();
 
-type TestProps = Pick<IAddProjectFormProps, 'initialValues'>;
+type TestProps = Pick<IAddProjectFormProps, 'initialValues' | 'isCreating'>;
 
 vi.mock('@/hooks/repositories/useUserInfoRepository');
 vi.mocked(useUserInfoRepository).mockReturnValue({
@@ -66,6 +66,7 @@ describe('AddProjectForm component', () => {
         businessFunctionOptions={[]}
         costTypeOptions={[]}
         workActivityOptions={[]}
+        isCreating={props.isCreating}
       />,
       {
         ...renderOptions,
@@ -162,6 +163,15 @@ describe('AddProjectForm component', () => {
     expect(businessFunction.tagName).toBe('INPUT');
   });
 
+  it('displays relevant instructions when creating a project', async () => {
+    const { getByText } = setup({
+      initialValues,
+      isCreating: true,
+    });
+
+    expect(getByText('Before creating a project,', { exact: false })).toBeVisible();
+  });
+
   it('should validate character limits', async () => {
     const { container, getFormikRef, findByText } = setup({
       initialValues,
@@ -176,10 +186,32 @@ describe('AddProjectForm component', () => {
     // submit form to trigger validation check
     await act(async () => getFormikRef().current?.submitForm());
 
-    expect(validationSchema).toBeCalled();
+    expect(validationSchema).toHaveBeenCalled();
     expect(await findByText(/Project name must be at most 200 characters/i)).toBeVisible();
     expect(await findByText(/Project number must be at most 20 characters/i)).toBeVisible();
     expect(await findByText(/Project summary must be at most 2000 characters/i)).toBeVisible();
+  });
+
+  it('should validate duplicate team members', async () => {
+    const { getFormikRef, findByText } = setup({
+      initialValues,
+    });
+
+    // Choose duplicate team members
+    await act(async () => {
+      getFormikRef().current?.setFieldValue('projectTeam', [
+        ProjectTeamForm.fromApi(getMockProjectPerson(1)),
+        ProjectTeamForm.fromApi(getMockProjectPerson(1)),
+      ]);
+    });
+
+    // submit form to trigger validation check
+    await act(async () => getFormikRef().current?.submitForm());
+
+    expect(validationSchema).toHaveBeenCalled();
+    expect(
+      await findByText(/Each team member can only be added once. Select a new team member/i),
+    ).toBeVisible();
   });
 
   it('should call onSubmit and save form data as expected', async () => {
@@ -208,5 +240,39 @@ describe('AddProjectForm component', () => {
 
     const productCodeTextBox = getProductCodeTextBox(0);
     expect(productCodeTextBox).toBeVisible();
+  });
+
+  it('should add a project management team member', async () => {
+    const { getByText, container } = setup({
+      initialValues,
+    });
+
+    const addTeamMemberButton = getByText('+ Add another management team member');
+    await act(async () => {
+      userEvent.click(addTeamMemberButton);
+    });
+
+    const teamMemberNameInput = container.querySelector(
+      `input[name="projectTeam.0.contact.id"]`,
+    ) as HTMLInputElement;
+    expect(teamMemberNameInput).toBeVisible();
+  });
+
+  it('displays a warning when removing a row', async () => {
+    const { getByText, getByTestId } = setup({
+      initialValues,
+    });
+
+    const addTeamMemberButton = getByText('+ Add another management team member');
+    await act(async () => {
+      userEvent.click(addTeamMemberButton);
+    });
+
+    const removeButton = getByTestId('team.0.remove-button');
+    await act(async () => {
+      userEvent.click(removeButton);
+    });
+
+    expect(getByText('Remove Team Member')).toBeVisible();
   });
 });

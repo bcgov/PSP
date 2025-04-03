@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Core.Security;
 using Pims.Dal.Entities;
@@ -23,6 +24,8 @@ namespace Pims.Api.Services
         private readonly ILookupRepository _lookupRepository;
         private readonly IEntityNoteRepository _entityNoteRepository;
         private readonly IPropertyService _propertyService;
+        private readonly IPropertyOperationService _propertyOperationService;
+        private readonly IResearchStatusSolver _researchStatusSolver;
 
         public ResearchFileService(
             ClaimsPrincipal user,
@@ -30,10 +33,11 @@ namespace Pims.Api.Services
             IResearchFileRepository researchFileRepository,
             IResearchFilePropertyRepository researchFilePropertyRepository,
             IPropertyRepository propertyRepository,
-            ICoordinateTransformService coordinateService,
             ILookupRepository lookupRepository,
             IEntityNoteRepository entityNoteRepository,
-            IPropertyService propertyService)
+            IPropertyService propertyService,
+            IPropertyOperationService propertyOperationService,
+            IResearchStatusSolver researchStatusSolver)
         {
             _user = user;
             _logger = logger;
@@ -43,6 +47,8 @@ namespace Pims.Api.Services
             _lookupRepository = lookupRepository;
             _entityNoteRepository = entityNoteRepository;
             _propertyService = propertyService;
+            _propertyOperationService = propertyOperationService;
+            _researchStatusSolver = researchStatusSolver;
         }
 
         public PimsResearchFile GetById(long id)
@@ -92,6 +98,13 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.ResearchFileEdit);
             ValidateVersion(researchFile.Internal_Id, researchFile.ConcurrencyControlNumber);
 
+            var currentResearchFile = _researchFileRepository.GetById(researchFile.ResearchFileId);
+            var currentResearchStatus = _researchStatusSolver.GetCurrentResearchStatus(currentResearchFile?.ResearchFileStatusTypeCode);
+            if (!_researchStatusSolver.CanEditDetails(currentResearchStatus) && !_user.HasPermission(Permissions.SystemAdmin))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+            }
+
             var newResearchFile = _researchFileRepository.Update(researchFile);
             AddNoteIfStatusChanged(newResearchFile);
 
@@ -105,6 +118,13 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAllAuthorized(Permissions.ResearchFileEdit, Permissions.PropertyView, Permissions.PropertyAdd);
 
             ValidateVersion(researchFile.Internal_Id, researchFile.ConcurrencyControlNumber);
+
+            var currentResearchFile = _researchFileRepository.GetById(researchFile.ResearchFileId);
+            var currentResearchStatus = _researchStatusSolver.GetCurrentResearchStatus(currentResearchFile?.ResearchFileStatusTypeCode);
+            if (!_researchStatusSolver.CanEditProperties(currentResearchStatus))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+            }
 
             MatchProperties(researchFile, userOverrideCodes);
 
@@ -156,6 +176,11 @@ namespace Pims.Api.Services
             List<PimsPropertyResearchFile> differenceSet = currentFileProperties.Where(x => !researchFile.PimsPropertyResearchFiles.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
             foreach (var deletedProperty in differenceSet)
             {
+                if (_propertyOperationService.GetOperationsForProperty(deletedProperty.PropertyId).Count > 0)
+                {
+                    throw new BusinessRuleViolationException("This property cannot be deleted because it is part of a subdivision or consolidation");
+                }
+
                 _researchFilePropertyRepository.Delete(deletedProperty);
                 var totalAssociationCount = _propertyRepository.GetAllAssociationsCountById(deletedProperty.PropertyId);
                 if (totalAssociationCount <= 1)
@@ -184,6 +209,13 @@ namespace Pims.Api.Services
             _logger.LogInformation("Updating property research file...");
             _user.ThrowIfNotAuthorized(Permissions.ResearchFileEdit);
             ValidateVersion(researchFileId, researchFileVersion);
+
+            var currentResearchFile = _researchFileRepository.GetById(researchFileId);
+            var currentResearchStatus = _researchStatusSolver.GetCurrentResearchStatus(currentResearchFile?.ResearchFileStatusTypeCode);
+            if (!_researchStatusSolver.CanEditProperties(currentResearchStatus))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+            }
 
             _researchFilePropertyRepository.Update(propertyResearchFile);
             _researchFilePropertyRepository.CommitTransaction();

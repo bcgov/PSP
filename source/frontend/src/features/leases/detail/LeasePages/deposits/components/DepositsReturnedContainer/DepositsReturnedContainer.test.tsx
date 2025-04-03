@@ -9,6 +9,10 @@ import { getAllByRole as getAllByRoleBase, render, RenderOptions } from '@/utils
 import DepositsReturnedContainer, {
   IDepositsReturnedContainerProps,
 } from './DepositsReturnedContainer';
+import { LeaseStatusUpdateSolver } from '@/features/leases/models/LeaseStatusUpdateSolver';
+import { Claims } from '@/constants';
+import { toTypeCode } from '@/utils/formUtils';
+import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 
 const mockCallback = (id: number): void => {};
 
@@ -20,6 +24,7 @@ const setup = (renderOptions: RenderOptions & IDepositsReturnedContainerProps) =
       depositReturns={renderOptions.depositReturns}
       onEdit={mockCallback}
       onDelete={mockCallback}
+      statusSolver={new LeaseStatusUpdateSolver()}
     />,
     {
       ...renderOptions,
@@ -115,5 +120,38 @@ describe('DepositsReturnedContainer component', () => {
 
     expect(getByText('test organization')).toHaveAttribute('href', '/contact/O1');
     expect(getByText('test person')).toHaveAttribute('href', '/contact/P1');
+  });
+
+  it('renders a tooltip instead of a delete icon if file in final status', () => {
+    const deposit = getMockDeposits()[0];
+    const depositReturn = getMockDepositReturns()[0];
+    deposit.id = 1;
+    depositReturn.parentDepositId = 1;
+    deposit.depositReturns = [
+      {
+        ...depositReturn,
+        contactHolder: {
+          id: 'O1',
+          organization: { ...getEmptyOrganization(), name: 'test organization' },
+          person: null,
+        },
+      },
+    ];
+    const { findFirstRow, queryByTitle, getByTestId } = setup({
+      securityDeposits: [deposit],
+      onEdit: mockCallback,
+      onDelete: mockCallback,
+      depositReturns: deposit.depositReturns,
+      statusSolver: new LeaseStatusUpdateSolver(
+        toTypeCode(ApiGen_CodeTypes_LeaseStatusTypes.TERMINATED),
+      ),
+      claims: [Claims.LEASE_EDIT, Claims.LEASE_VIEW],
+    });
+    const dataRow = findFirstRow() as HTMLElement;
+
+    const tooltip = getByTestId(`tooltip-icon-deposit-returned-actions-cannot-edit-tooltip`);
+    expect(dataRow).not.toBeNull();
+    expect(queryByTitle('delete deposit return')).toBeNull();
+    expect(tooltip).toBeVisible();
   });
 });

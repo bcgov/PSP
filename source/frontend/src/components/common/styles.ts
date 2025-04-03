@@ -1,9 +1,10 @@
 import { CSSProperties } from 'react';
-import { Breadcrumb as BsBreadcrumb } from 'react-bootstrap';
+import { Breadcrumb as BsBreadcrumb, Col } from 'react-bootstrap';
 import { FaWindowClose } from 'react-icons/fa';
 import styled, { css } from 'styled-components';
 
 import { LoadingBackdropProps } from '@/components/common/LoadingBackdrop';
+import { Scrollable as ScrollableBase } from '@/components/common/Scrollable/Scrollable';
 
 import { Button } from './buttons';
 import { Form } from './form';
@@ -15,6 +16,12 @@ export const LeftAlignDiv = styled.div`
 export const InlineFlexDiv = styled.div`
   display: flex;
   flex-wrap: nowrap;
+`;
+
+export const FlexRowNoGap = styled(InlineFlexDiv)`
+  flex-direction: row;
+  align-items: center;
+  gap: 0;
 `;
 
 export const Breadcrumb = styled(BsBreadcrumb)`
@@ -70,7 +77,7 @@ export const FlexBox = styled.div<IFlexBoxProps>`
 export const H1 = styled.h1`
   color: ${props => props.theme.bcTokens.typographyColorSecondary};
   font-family: 'BCSans-Bold';
-  font-size: 3.2rem;
+  font-size: 2.8rem;
   border-bottom: solid 0.5rem ${props => props.theme.css.headerBorderColor};
   width: 100%;
   text-align: left;
@@ -80,7 +87,7 @@ export const H1 = styled.h1`
 export const H2 = styled.h2`
   color: ${props => props.theme.css.headerTextColor};
   font-family: 'BCSans-Bold';
-  font-size: 2.6rem;
+  font-size: 2.2rem;
   border-bottom: solid 0.2rem ${props => props.theme.css.headerBorderColor};
   width: 100%;
   text-align: left;
@@ -94,7 +101,7 @@ export const H3 = styled.h3`
   border-bottom: solid 0.2rem ${props => props.theme.css.actionColor};
   width: 100%;
   text-align: left;
-  margin-bottom: 2.4rem;
+  margin-bottom: 1.6rem;
 `;
 
 export const FilterBoxForm = styled(Form)`
@@ -136,9 +143,7 @@ export const StyledSectionParagraph = styled.p`
   text-decoration: none;
 `;
 
-export const TrayHeader = styled.div`
-  font-size: 2rem;
-  font-weight: bold;
+export const TrayHeader = styled(H1)`
   padding: 1rem;
   background-color: ${props => props.theme.bcTokens.surfaceColorPrimaryButtonDefault};
   color: white;
@@ -199,4 +204,28 @@ export const CloseIcon = styled(FaWindowClose)`
   color: ${props => props.theme.css.textColor};
   font-size: 2.4rem;
   cursor: pointer;
+`;
+
+export const PageToolbar = styled.div`
+  align-items: center;
+  padding: 0;
+  padding-bottom: 2rem;
+`;
+
+export const ColButtons = styled(Col)`
+  border-left: 0.2rem solid white;
+`;
+
+export const PaddedScrollable = styled(ScrollableBase)`
+  padding: 1.6rem 3.2rem;
+  width: 100%;
+`;
+
+export const ListPage = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  width: 100%;
+  gap: 2.5rem;
+  padding: 0;
 `;

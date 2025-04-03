@@ -221,7 +221,7 @@ exports[`Form 8 Detail View component > renders as expected 1`] = `
   border-bottom: solid 0.2rem;
   width: 100%;
   text-align: left;
-  margin-bottom: 2.4rem;
+  margin-bottom: 1.6rem;
 }
 
 .c4.btn.btn-primary,
@@ -429,6 +429,25 @@ exports[`Form 8 Detail View component > renders as expected 1`] = `
                 />
               </svg>
             </a>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c6"
+            >
+              Advanced payment served date:
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+            data-testid="form8[0].advanced-payment-srv-date"
+          >
+            Jan 2, 2025
           </div>
         </div>
         <div

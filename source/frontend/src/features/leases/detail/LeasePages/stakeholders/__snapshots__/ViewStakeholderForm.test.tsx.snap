@@ -259,7 +259,7 @@ exports[`AddLeaseTenantForm component > renders as expected 1`] = `
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
 }
 
 .c1 {
@@ -304,13 +304,13 @@ exports[`AddLeaseTenantForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-content-end col"
           >
             <div
               class="c3 no-gutters row"
             >
               <div
-                class="px-2 my-1 col-auto"
+                class="align-items-end col-auto"
               >
                 Tenants
               </div>
@@ -382,7 +382,7 @@ exports[`AddLeaseTenantForm component > renders as expected 1`] = `
                   <div
                     class="tr"
                     role="row"
-                    style="display: flex; flex: 1 0 auto; min-width: 416px;"
+                    style="display: flex; flex: 1 0 auto; min-width: 366px;"
                   >
                     <div
                       class="th"
@@ -429,7 +429,7 @@ exports[`AddLeaseTenantForm component > renders as expected 1`] = `
                       class="th"
                       colspan="1"
                       role="columnheader"
-                      style="box-sizing: border-box; flex: 120 0 auto; min-width: 30px; width: 120px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                      style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                     >
                       <div
                         class="sortable-column"
@@ -441,7 +441,7 @@ exports[`AddLeaseTenantForm component > renders as expected 1`] = `
                       class="th"
                       colspan="1"
                       role="columnheader"
-                      style="box-sizing: border-box; flex: 150 0 auto; min-width: 150px; width: 150px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                      style="box-sizing: border-box; flex: 80 0 auto; min-width: 80px; width: 80px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                     >
                       <div
                         class="sortable-column"
@@ -453,7 +453,7 @@ exports[`AddLeaseTenantForm component > renders as expected 1`] = `
                       class="th"
                       colspan="1"
                       role="columnheader"
-                      style="box-sizing: border-box; flex: 100 0 auto; min-width: 80px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                      style="box-sizing: border-box; flex: 100 0 auto; min-width: 100px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                     >
                       <div
                         class="sortable-column"
@@ -519,33 +519,186 @@ exports[`AddLeaseTenantForm component > renders as expected 1`] = `
 
 exports[`Tenant component > renders as expected 1`] = `
 <DocumentFragment>
-  @media only screen and (max-width:1500px) {
-
-}
-
-<div
+  <div
     class="Toastify"
   />
-  @media only screen and (max-width:1500px) {
-
-}
-
-<div />
-  .c0 {
-  border-radius: 1rem;
-  width: 100%;
-  padding: 2.5rem;
-  background-color: #f2f2f2;
-}
-
-.c3 {
+  <div />
+  .c1 {
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
 }
 
-.c2 {
+.c0 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+<div
+    class="c0 form-section"
+  >
+    <h2
+      class="c1"
+    >
+      <div
+        class="no-gutters row"
+      >
+        <div
+          class="align-content-end col"
+        >
+          Assignee
+        </div>
+      </div>
+    </h2>
+    <div
+      class="collapse show"
+    />
+  </div>
+  .c1 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
+}
+
+.c0 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+<div
+    class="c0 form-section"
+  >
+    <h2
+      class="c1"
+    >
+      <div
+        class="no-gutters row"
+      >
+        <div
+          class="align-content-end col"
+        >
+          Property manager
+        </div>
+      </div>
+    </h2>
+    <div
+      class="collapse show"
+    />
+  </div>
+  .c1 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
+}
+
+.c0 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+<div
+    class="c0 form-section"
+  >
+    <h2
+      class="c1"
+    >
+      <div
+        class="no-gutters row"
+      >
+        <div
+          class="align-content-end col"
+        >
+          Representative
+        </div>
+      </div>
+    </h2>
+    <div
+      class="collapse show"
+    />
+  </div>
+  .c1 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
+}
+
+.c0 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+<div
+    class="c0 form-section"
+  >
+    <h2
+      class="c1"
+    >
+      <div
+        class="no-gutters row"
+      >
+        <div
+          class="align-content-end col"
+        >
+          Tenant
+        </div>
+      </div>
+    </h2>
+    <div
+      class="collapse show"
+    />
+  </div>
+  .c1 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
+}
+
+.c0 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+<div
+    class="c0 form-section"
+  >
+    <h2
+      class="c1"
+    >
+      <div
+        class="no-gutters row"
+      >
+        <div
+          class="align-content-end col"
+        >
+          Unknown
+        </div>
+      </div>
+    </h2>
+    <div
+      class="collapse show"
+    />
+  </div>
+  .c0 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
@@ -554,159 +707,23 @@ exports[`Tenant component > renders as expected 1`] = `
 }
 
 .c1 {
-  padding: 0;
-  -webkit-column-count: 1;
-  column-count: 1;
-  -webkit-column-gap: 10rem;
-  column-gap: 10rem;
-  background-color: light-gray;
-  min-width: 75rem;
-}
-
-.c1 > * {
-  -webkit-break-inside: avoid-column;
-  break-inside: avoid-column;
-}
-
-.c1 li {
-  list-style-type: none;
-  padding: 2rem 0;
-  margin: 0;
-}
-
-.c1 .form-control {
-  color: #2D2D2D;
-}
-
-.c4 {
   background-color: transparent;
   padding-left: 0.5rem;
   margin-bottom: 0;
 }
 
-@media only screen and (max-width:1500px) {
-  .c1 {
-    -webkit-column-count: 1;
-    column-count: 1;
-  }
-}
-
 <div
-    class="c0 c1"
+    class="c0 form-section c1"
   >
     <div
-      class="c2 form-section"
+      class="collapse show"
     >
-      <h2
-        class="c3"
-      >
-        <div
-          class="no-gutters row"
-        >
-          <div
-            class="col"
-          >
-            Assignee
-          </div>
-        </div>
-      </h2>
-      <div
-        class="collapse show"
-      />
-    </div>
-    <div
-      class="c2 form-section"
-    >
-      <h2
-        class="c3"
-      >
-        <div
-          class="no-gutters row"
-        >
-          <div
-            class="col"
-          >
-            Property manager
-          </div>
-        </div>
-      </h2>
-      <div
-        class="collapse show"
-      />
-    </div>
-    <div
-      class="c2 form-section"
-    >
-      <h2
-        class="c3"
-      >
-        <div
-          class="no-gutters row"
-        >
-          <div
-            class="col"
-          >
-            Representative
-          </div>
-        </div>
-      </h2>
-      <div
-        class="collapse show"
-      />
-    </div>
-    <div
-      class="c2 form-section"
-    >
-      <h2
-        class="c3"
-      >
-        <div
-          class="no-gutters row"
-        >
-          <div
-            class="col"
-          >
-            Tenant
-          </div>
-        </div>
-      </h2>
-      <div
-        class="collapse show"
-      />
-    </div>
-    <div
-      class="c2 form-section"
-    >
-      <h2
-        class="c3"
-      >
-        <div
-          class="no-gutters row"
-        >
-          <div
-            class="col"
-          >
-            Unknown
-          </div>
-        </div>
-      </h2>
-      <div
-        class="collapse show"
-      />
-    </div>
-    <div
-      class="c2 form-section c4"
-    >
-      <div
-        class="collapse show"
-      >
-        <p>
-          There are no stakeholders associated to this lease.
-        </p>
-        <p>
-          Click the edit icon to add stakeholders.
-        </p>
-      </div>
+      <p>
+        There are no stakeholders associated to this lease.
+      </p>
+      <p>
+        Click the edit icon to add stakeholders.
+      </p>
     </div>
   </div>
 </DocumentFragment>

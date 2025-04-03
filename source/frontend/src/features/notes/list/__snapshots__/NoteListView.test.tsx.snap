@@ -6,20 +6,20 @@ exports[`Note List View > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c6 {
+  .c3 {
   float: right;
   cursor: pointer;
   font-size: 3.2rem;
 }
 
-.c4 {
+.c1 {
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
 }
 
-.c3 {
+.c0 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
@@ -27,7 +27,7 @@ exports[`Note List View > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c7 {
+.c4 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -46,23 +46,23 @@ exports[`Note List View > renders as expected 1`] = `
   margin-left: 0.5rem;
 }
 
-.c8 {
+.c5 {
   color: var(--surface-color-primary-button-default);
   width: 1.6rem;
   height: 1.6rem;
 }
 
-.c10 {
+.c7 {
   width: 1.6rem;
   height: 1.6rem;
 }
 
-.c9 {
+.c6 {
   width: 1.6rem;
   height: 1.6rem;
 }
 
-.c5 {
+.c2 {
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
@@ -74,241 +74,203 @@ exports[`Note List View > renders as expected 1`] = `
   min-height: 4.5rem;
 }
 
-.c5 .btn {
+.c2 .btn {
   margin: 0;
 }
 
-.c1 {
-  width: 100%;
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-  overflow-y: auto;
-}
-
-.c0 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-  width: 100%;
-  gap: 2.5rem;
-  padding: 0;
-}
-
-.c2 {
-  width: 100%;
-}
-
 <div
-    class="c0"
+    class="c0 form-section"
   >
-    <div
-      class="c1 c2"
+    <h2
+      class="c1"
     >
       <div
-        class="c3 form-section"
+        class="no-gutters row"
       >
-        <h2
-          class="c4"
-        >
-          <div
-            class="no-gutters row"
-          >
-            <div
-              class="col"
-            >
-              <div
-                class="c5 no-gutters row"
-              >
-                <div
-                  class="px-2 my-1 col-auto"
-                >
-                  Notes
-                </div>
-                <div
-                  class="my-1 col-auto"
-                />
-              </div>
-            </div>
-            <div
-              class="pl-2 d-flex align-items-end col-auto"
-            >
-              <svg
-                class="c6"
-                fill="currentColor"
-                height="1em"
-                stroke="currentColor"
-                stroke-width="0"
-                viewBox="0 0 24 24"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <title>
-                  collapse-notes
-                </title>
-                <path
-                  d="M0 0h24v24H0z"
-                  fill="none"
-                />
-                <path
-                  d="m7 14 5-5 5 5z"
-                />
-              </svg>
-            </div>
-          </div>
-        </h2>
         <div
-          class="collapse show"
+          class="align-content-end col"
         >
           <div
-            class="table"
-            data-testid="notesTable"
-            role="table"
+            class="c2 no-gutters row"
           >
             <div
-              class="thead thead-light"
+              class="align-items-end col-auto"
             >
-              <div
-                class="tr"
-                role="row"
-                style="display: flex; flex: 1 0 auto; min-width: 118px;"
-              >
-                <div
-                  class="th"
-                  colspan="1"
-                  role="columnheader"
-                  style="box-sizing: border-box; flex: 80 0 auto; min-width: 30px; width: 80px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                >
-                  <div
-                    class="sortable-column"
-                  >
-                    Note
-                  </div>
-                </div>
-                <div
-                  class="th sort-desc"
-                  colspan="1"
-                  role="columnheader"
-                  style="box-sizing: border-box; flex: 24 0 auto; min-width: 24px; width: 24px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
-                >
-                  <div
-                    class="sortable-column"
-                  >
-                    Created date
-                    <div
-                      class="c7"
-                      data-testid="sort-column-appCreateTimestamp"
-                    >
-                      <svg
-                        class="c8"
-                        fill="currentColor"
-                        height="1em"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 512 512"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M128 192l128 128 128-128z"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="th"
-                  colspan="1"
-                  role="columnheader"
-                  style="box-sizing: border-box; flex: 34 0 auto; min-width: 34px; width: 34px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
-                >
-                  <div
-                    class="sortable-column"
-                  >
-                    Last updated by
-                    <div
-                      class="c7"
-                      data-testid="sort-column-appLastUpdateUserid"
-                    >
-                      <svg
-                        class="c9"
-                        fill="currentColor"
-                        height="1em"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        style="margin-bottom: -8px;"
-                        viewBox="0 0 512 512"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M128 320l128-128 128 128z"
-                        />
-                      </svg>
-                      <svg
-                        class="c10"
-                        fill="currentColor"
-                        height="1em"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 512 512"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M128 192l128 128 128-128z"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="th"
-                  colspan="1"
-                  role="columnheader"
-                  style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
-                >
-                  <div
-                    class="sortable-column"
-                  >
-                    Actions
-                  </div>
-                </div>
-              </div>
+              Notes
             </div>
             <div
-              class="no-rows-message"
-            >
-              No matching Notes found
-            </div>
+              class="my-1 col-auto"
+            />
           </div>
-          <div
-            class="row"
+        </div>
+        <div
+          class="pl-2 d-flex align-items-end col-auto"
+        >
+          <svg
+            class="c3"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            <div
-              class="align-self-center col-auto"
+            <title>
+              collapse-notes
+            </title>
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
             />
-            <div
-              class="ml-auto align-self-center col-auto"
+            <path
+              d="m7 14 5-5 5 5z"
             />
-            <div
-              class="align-self-center col-auto"
-            />
-          </div>
-          <div />
-          <div />
-          <div />
+          </svg>
         </div>
       </div>
+    </h2>
+    <div
+      class="collapse show"
+    >
+      <div
+        class="table"
+        data-testid="notesTable"
+        role="table"
+      >
+        <div
+          class="thead thead-light"
+        >
+          <div
+            class="tr"
+            role="row"
+            style="display: flex; flex: 1 0 auto; min-width: 118px;"
+          >
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 80 0 auto; min-width: 30px; width: 80px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Note
+              </div>
+            </div>
+            <div
+              class="th sort-desc"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 24 0 auto; min-width: 24px; width: 24px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Created date
+                <div
+                  class="c4"
+                  data-testid="sort-column-appCreateTimestamp"
+                >
+                  <svg
+                    class="c5"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M128 192l128 128 128-128z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 34 0 auto; min-width: 34px; width: 34px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Last updated by
+                <div
+                  class="c4"
+                  data-testid="sort-column-appLastUpdateUserid"
+                >
+                  <svg
+                    class="c6"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="margin-bottom: -8px;"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M128 320l128-128 128 128z"
+                    />
+                  </svg>
+                  <svg
+                    class="c7"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M128 192l128 128 128-128z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Actions
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="no-rows-message"
+        >
+          No matching Notes found
+        </div>
+      </div>
+      <div
+        class="row"
+      >
+        <div
+          class="align-self-center col-auto"
+        />
+        <div
+          class="ml-auto align-self-center col-auto"
+        />
+        <div
+          class="align-self-center col-auto"
+        />
+      </div>
+      <div />
+      <div />
+      <div />
     </div>
   </div>
 </DocumentFragment>

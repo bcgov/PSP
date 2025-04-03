@@ -9,6 +9,7 @@ import {
   FastCurrencyInput,
   FastDatePicker,
   Input,
+  Multiselect,
   ProjectSelector,
   Select,
   SelectOption,
@@ -33,7 +34,6 @@ import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Conc
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { isValidId } from '@/utils';
 import { prettyFormatDate } from '@/utils/dateUtils';
-import { withNameSpace } from '@/utils/formUtils';
 
 import { CompensationRequisitionFormModel } from '../models/CompensationRequisitionFormModel';
 import { CompensationRequisitionYupSchema } from './CompensationRequisitionYupSchema';
@@ -111,9 +111,9 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
       .map(f => f.totalAmount)
       .reduce((prev, next) => prev + next, 0);
 
-    formikRef.current?.setFieldValue(`payee.pretaxAmount`, pretaxAmount);
-    formikRef.current?.setFieldValue(`payee.taxAmount`, taxAmount);
-    formikRef.current?.setFieldValue(`payee.totalAmount`, totalAmount);
+    formikRef.current?.setFieldValue(`pretaxAmount`, pretaxAmount);
+    formikRef.current?.setFieldValue(`taxAmount`, taxAmount);
+    formikRef.current?.setFieldValue(`totalAmount`, totalAmount);
   };
 
   useEffect(() => {
@@ -194,38 +194,6 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                   <FastDatePicker field="agreementDateTime" formikProps={formikProps} />
                 </SectionField>
 
-                {fileType === ApiGen_CodeTypes_FileTypes.Acquisition && (
-                  <>
-                    <SectionField
-                      label="Expropriation notice served date"
-                      labelWidth="5"
-                      contentWidth="4"
-                    >
-                      <FastDatePicker
-                        field="expropriationNoticeServedDateTime"
-                        formikProps={formikProps}
-                      />
-                    </SectionField>
-                    <SectionField
-                      label="Expropriation vesting date"
-                      labelWidth="5"
-                      contentWidth="4"
-                    >
-                      <FastDatePicker
-                        field="expropriationVestingDateTime"
-                        formikProps={formikProps}
-                      />
-                    </SectionField>
-                    <SectionField
-                      label="Advanced payment served date"
-                      labelWidth="5"
-                      contentWidth="4"
-                    >
-                      <FastDatePicker field="advancedPaymentServedDate" formikProps={formikProps} />
-                    </SectionField>
-                  </>
-                )}
-
                 <SectionField label="Special instructions" labelWidth="12">
                   <MediumTextArea field="specialInstruction" />
                 </SectionField>
@@ -287,35 +255,39 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
 
               <Section header="Payment" isCollapsable initiallyExpanded>
                 <SectionField label="Payee" labelWidth="4" required>
-                  <Select
-                    field={withNameSpace('payee', 'payeeKey')}
-                    title={
-                      payeeOptions.find(p => p.value === formikProps.values.payee.payeeKey)
-                        ?.fullText
+                  <Multiselect<PayeeOption, PayeeOption>
+                    field="payees"
+                    selectFunction={(optionPayees, selectedPayees) =>
+                      optionPayees.filter(payee =>
+                        selectedPayees?.find(
+                          selectedPayee =>
+                            selectedPayee.api_id === payee.api_id &&
+                            selectedPayee.payeeType === payee.payeeType,
+                        ),
+                      )
                     }
-                    options={payeeOptions.map<SelectOption>(x => {
-                      return { label: x.text, value: x.value, title: x.fullText };
-                    })}
+                    options={payeeOptions}
+                    displayValue="fullText"
                     placeholder="Select..."
                   />
                 </SectionField>
                 <SectionField label="Payment in Trust?">
-                  <Check field={withNameSpace('payee', 'isPaymentInTrust')} />
+                  <Check field="isPaymentInTrust" />
                 </SectionField>
                 <SectionField label="GST number" tooltip="Include GST # if applicable">
-                  <Input field={withNameSpace('payee', 'gstNumber')}></Input>
+                  <Input field="gstNumber"></Input>
                 </SectionField>
                 <SectionField label="Amount (before tax)">
                   <FastCurrencyInput
                     allowNegative
-                    field={withNameSpace('payee', 'pretaxAmount')}
+                    field="pretaxAmount"
                     formikProps={formikProps}
                     disabled
                   />
                 </SectionField>
                 <SectionField label="GST amount">
                   <FastCurrencyInput
-                    field={withNameSpace('payee', 'taxAmount')}
+                    field="taxAmount"
                     allowNegative
                     formikProps={formikProps}
                     disabled
@@ -326,7 +298,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                   tooltip="Calculated total of all activities in this compensation requisition"
                 >
                   <FastCurrencyInput
-                    field={withNameSpace('payee', 'totalAmount')}
+                    field="totalAmount"
                     allowNegative
                     formikProps={formikProps}
                     disabled

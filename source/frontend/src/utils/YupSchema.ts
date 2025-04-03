@@ -27,7 +27,8 @@ export const UserUpdateSchema = Yup.object().shape({
 });
 
 export const FilterBarSchema = Yup.object().shape({
-  pinOrPid: Yup.string()
+  pid: Yup.string()
     .nullable()
-    .matches(/^\d{0,3}-\d{3}-\d{3}$|^\d{0,9}$/, 'Invalid PIN or PID'),
+    .matches(/^\d{0,3}-\d{3}-\d{3}$|^\d{0,9}$/, 'Invalid PID'),
+  pin: Yup.string().nullable().matches(/^\d+$/, 'Invalid PIN'),
 });

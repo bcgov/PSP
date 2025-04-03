@@ -1,14 +1,17 @@
+import { AxiosError } from 'axios';
 import { FormikProps } from 'formik';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { FaBriefcase } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
 
+import ProjectIcon from '@/assets/images/projects-icon.svg?react';
 import ConfirmNavigation from '@/components/common/ConfirmNavigation';
 import * as API from '@/constants/API';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { useFinancialCodeRepository } from '@/hooks/repositories/useFinancialCodeRepository';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { useModalContext } from '@/hooks/useModalContext';
+import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Concepts_FinancialCode';
 import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
 import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
@@ -18,16 +21,20 @@ import { toDropDownOptions } from '@/utils/financialCodeUtils';
 import SidebarFooter from '../../shared/SidebarFooter';
 import { useAddProjectForm } from '../hooks/useAddProjectFormManagement';
 import { ProjectForm } from '../models';
-import AddProjectForm from './AddProjectForm';
+import { IAddProjectFormProps } from './AddProjectForm';
 
 export interface IAddProjectContainerProps {
   onClose: () => void;
   onSuccess: (newProjectId: number) => void;
+  View: React.ForwardRefExoticComponent<
+    IAddProjectFormProps & React.RefAttributes<FormikProps<ProjectForm>>
+  >;
 }
 
 const AddProjectContainer: React.FC<React.PropsWithChildren<IAddProjectContainerProps>> = props => {
-  const { onClose } = props;
+  const { onClose, onSuccess, View } = props;
   const history = useHistory();
+  const { setModalContent, setDisplayModal } = useModalContext();
 
   const {
     getFinancialCodesByType: { execute: getFinancialCodes },
@@ -92,12 +99,12 @@ const AddProjectContainer: React.FC<React.PropsWithChildren<IAddProjectContainer
     return result;
   };
 
-  const onSuccess = async (proj: ApiGen_Concepts_Project) => {
+  const handleSuccess = async (proj: ApiGen_Concepts_Project) => {
     formikRef.current?.resetForm();
-    props.onSuccess(proj.id);
+    onSuccess(proj.id);
   };
 
-  const helper = useAddProjectForm({ onSuccess });
+  const helper = useAddProjectForm({ onSuccess: handleSuccess });
 
   const checkState = useCallback(() => {
     return formikRef?.current?.dirty && !formikRef?.current?.isSubmitting;
@@ -107,13 +114,13 @@ const AddProjectContainer: React.FC<React.PropsWithChildren<IAddProjectContainer
     <MapSideBarLayout
       showCloseButton
       title="Create Project"
-      icon={<FaBriefcase title="Project Icon" size={28} />}
+      icon={<ProjectIcon title="Project Icon" fill="currentColor" />}
       onClose={close}
       footer={
         <SidebarFooter onSave={handleSave} onCancel={close} displayRequiredFieldError={!isValid} />
       }
     >
-      <AddProjectForm
+      <View
         ref={formikRef}
         initialValues={helper.initialValues}
         projectStatusOptions={projectStatusTypeCodes}
@@ -121,8 +128,22 @@ const AddProjectContainer: React.FC<React.PropsWithChildren<IAddProjectContainer
         costTypeOptions={costTypeOptions ?? []}
         workActivityOptions={workActivityOptions ?? []}
         onSubmit={(projectForm, formikHelpers) =>
-          withUserOverride((userOverrideCodes: UserOverrideCode[]) =>
-            helper.handleSubmit(projectForm, formikHelpers, userOverrideCodes),
+          withUserOverride(
+            (userOverrideCodes: UserOverrideCode[]) =>
+              helper.handleSubmit(projectForm, formikHelpers, userOverrideCodes),
+            [],
+            (axiosError: AxiosError<IApiError>) => {
+              setModalContent({
+                variant: 'error',
+                title: 'Error',
+                message: axiosError?.response?.data.error,
+                okButtonText: 'Close',
+                handleOk: async () => {
+                  setDisplayModal(false);
+                },
+              });
+              setDisplayModal(true);
+            },
           )
         }
         validationSchema={helper.validationSchema}

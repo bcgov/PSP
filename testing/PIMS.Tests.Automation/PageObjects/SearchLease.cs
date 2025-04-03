@@ -10,7 +10,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Main Menu Elements
         private By menuManagementButton = By.CssSelector("div[data-testid='nav-tooltip-leases&licences'] a");
         private By searchLicenseButton = By.XPath("//a[contains(text(),'Manage Lease/Licence Files')]");
-        private By searchLicenseTitle = By.XPath("//h3[contains(text(),'Leases & Licences')]");
+        private By searchLicenseTitle = By.XPath("//h1/div/div/span[contains(text(),'Leases & Licences')]");
 
         //Search Filter Elements
         private By searchBySelect = By.Id("input-searchBy");
@@ -35,7 +35,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchLicenseExportCsvIcon = By.CssSelector("button:has(svg[data-testid='csv-icon'])");
         private By searchLicenseSearchButton = By.Id("search-button");
         private By searchLicenseResetButton = By.Id("reset-button");
-        private By searchLicenceCreateNewBttn = By.XPath("//div[@data-testid='leasesTable']/preceding-sibling::button");
+        private By searchLicenceCreateNewBttn = By.XPath("//div[contains(text(),'Create a Lease/Licence')]/parent::button");
 
         //Search Results Table Elements
         private By searchLicenceLFileColumnHeader = By.XPath("//div[@data-testid='leasesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'L-File Number')]");

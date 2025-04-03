@@ -24,7 +24,7 @@ export const SideTrayLayout: React.FC<React.PropsWithChildren<ISideTrayLayoutPro
         <Col>
           <Styled.TrayHeader className="mr-auto">
             <>
-              <span className="mr-2">{icon}</span>
+              <div className="mr-2 mb-1">{icon}</div>
               {title}
             </>
           </Styled.TrayHeader>

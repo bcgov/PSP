@@ -15,7 +15,7 @@ exports[`Edit Lease Insurance > renders as expected 1`] = `
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
 }
 
 .c1 {
@@ -76,7 +76,7 @@ exports[`Edit Lease Insurance > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-content-end col"
           >
             Required Coverage
           </div>
@@ -156,7 +156,7 @@ exports[`Edit Lease Insurance > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-content-end col"
           >
             Home Insurance
           </div>
@@ -312,6 +312,7 @@ exports[`Edit Lease Insurance > renders as expected 1`] = `
                 id="input-insurances.0.coverageDescription"
                 name="insurances.0.coverageDescription"
                 rows="4"
+                style="word-break: break-all;"
                 title=""
               />
             </div>

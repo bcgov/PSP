@@ -9,7 +9,7 @@ exports[`TakesDetailView component > renders as expected 1`] = `
   .c2 {
   color: var(--theme-blue-100);
   font-family: 'BCSans-Bold';
-  font-size: 2.6rem;
+  font-size: 2.2rem;
   border-bottom: solid 0.2rem var(--theme-blue-90);
   width: 100%;
   text-align: left;
@@ -31,7 +31,7 @@ exports[`TakesDetailView component > renders as expected 1`] = `
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
 }
 
 .c1 {
@@ -223,7 +223,7 @@ exports[`TakesDetailView component > renders as expected 1`] = `
             class="c6 no-gutters row"
           >
             <div
-              class="px-2 my-1 col-auto"
+              class="align-items-end col-auto"
             >
               Takes
             </div>
@@ -243,7 +243,7 @@ exports[`TakesDetailView component > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col"
+                class="align-content-end col"
               >
                 <div
                   class="row"
@@ -407,7 +407,7 @@ exports[`TakesDetailView component > renders as expected 1`] = `
                   class="no-gutters row"
                 >
                   <div
-                    class="col"
+                    class="align-content-end col"
                   >
                     Area
                   </div>
@@ -1175,7 +1175,7 @@ exports[`TakesDetailView component > renders as expected 1`] = `
                   class="no-gutters row"
                 >
                   <div
-                    class="col"
+                    class="align-content-end col"
                   >
                     Surplus
                   </div>

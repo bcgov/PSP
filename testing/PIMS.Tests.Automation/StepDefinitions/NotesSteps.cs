@@ -1,4 +1,5 @@
 ﻿
+using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
 using PIMS.Tests.Automation.PageObjects;
@@ -16,10 +17,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private List<string> notesData;
         private int notesCount;
 
-        public NotesSteps(BrowserDriver driver)
+        public NotesSteps(IWebDriver driver)
         {
-            notes = new Notes(driver.Current);
-            sharedPagination = new SharedPagination(driver.Current);
+            notes = new Notes(driver);
+            sharedPagination = new SharedPagination(driver);
             genericSteps = new GenericSteps(driver);
             notesData = new List<string>();
             notesCount = 0;
@@ -90,7 +91,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateNotes(int rowNumber)
         {
-            DataTable notesSheet = ExcelDataContext.GetInstance().Sheets["Notes"]!;
+            System.Data.DataTable notesSheet = ExcelDataContext.GetInstance().Sheets["Notes"]!;
             ExcelDataContext.PopulateInCollection(notesSheet);
 
             notesData = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "Notes"));

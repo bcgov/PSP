@@ -6,17 +6,7 @@ exports[`DocumentTemplateManagementContainer component > matches snapshot 1`] = 
     class="Toastify"
   />
   <div />
-  .c3 {
-  color: #474543;
-  font-family: 'BCSans-Bold';
-  font-size: 3.2rem;
-  border-bottom: solid 0.5rem var(--theme-blue-90);
-  width: 100%;
-  text-align: left;
-  margin-bottom: 2.4rem;
-}
-
-.c1 {
+  .c1 {
   width: 100%;
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
@@ -25,12 +15,19 @@ exports[`DocumentTemplateManagementContainer component > matches snapshot 1`] = 
   overflow-y: auto;
 }
 
-.c4 {
-  margin: 1.6rem;
-  padding: 1.6rem;
-  background-color: white;
+.c3 {
+  color: #474543;
+  font-family: 'BCSans-Bold';
+  font-size: 2.8rem;
+  border-bottom: solid 0.5rem var(--theme-blue-90);
+  width: 100%;
   text-align: left;
-  border-radius: 0.5rem;
+  margin-bottom: 2.4rem;
+}
+
+.c2 {
+  padding: 1.6rem 3.2rem;
+  width: 100%;
 }
 
 .c0 {
@@ -50,9 +47,12 @@ exports[`DocumentTemplateManagementContainer component > matches snapshot 1`] = 
   padding: 0;
 }
 
-.c2 {
-  padding: 1.6rem 3.2rem;
-  width: 100%;
+.c4 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
 }
 
 <div
@@ -67,6 +67,7 @@ exports[`DocumentTemplateManagementContainer component > matches snapshot 1`] = 
         <svg
           fill="currentColor"
           height="2.6rem"
+          style="vertical-align: baseline;"
           title="Admin Tools icon"
           viewBox="0 0 24 24"
           width="2.6rem"

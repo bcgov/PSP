@@ -1,4 +1,5 @@
-﻿using PIMS.Tests.Automation.Classes;
+﻿using OpenQA.Selenium;
+using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
 using System.Data;
 
@@ -29,24 +30,24 @@ namespace PIMS.Tests.Automation.StepDefinitions
         protected string acquisitionFileCode = "";
         protected string compensationNumber = "";
 
-        public AcquisitionFileSteps(BrowserDriver driver)
+        public AcquisitionFileSteps(IWebDriver driver)
         {
             loginSteps = new LoginSteps(driver);
             genericSteps = new GenericSteps(driver);
 
-            acquisitionFilesDetails = new AcquisitionDetails(driver.Current);
-            searchAcquisitionFiles = new SearchAcquisitionFiles(driver.Current);
-            sharedFileProperties = new SharedFileProperties(driver.Current);
-            sharedPagination = new SharedPagination(driver.Current);
-            searchProperties = new SearchProperties(driver.Current);
-            acquisitionTakes = new AcquisitionTakes(driver.Current);
-            propertyInformation = new PropertyInformation(driver.Current);
-            checklist = new AcquisitionChecklist(driver.Current);
-            agreements = new AcquisitionAgreements(driver.Current);
-            stakeholders = new AcquisitionStakeholders(driver.Current);
-            h120 = new SharedCompensations(driver.Current);
-            expropriation = new AcquisitionExpropriation(driver.Current);
-            notes = new Notes(driver.Current);
+            acquisitionFilesDetails = new AcquisitionDetails(driver);
+            searchAcquisitionFiles = new SearchAcquisitionFiles(driver);
+            sharedFileProperties = new SharedFileProperties(driver);
+            sharedPagination = new SharedPagination(driver);
+            searchProperties = new SearchProperties(driver);
+            acquisitionTakes = new AcquisitionTakes(driver);
+            propertyInformation = new PropertyInformation(driver);
+            checklist = new AcquisitionChecklist(driver);
+            agreements = new AcquisitionAgreements(driver);
+            stakeholders = new AcquisitionStakeholders(driver);
+            h120 = new SharedCompensations(driver);
+            expropriation = new AcquisitionExpropriation(driver);
+            notes = new Notes(driver);
 
             acquisitionFile = new AcquisitionFile();
         }
@@ -64,7 +65,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFilesDetails.NavigateToCreateNewAcquisitionFile();
 
             //Validate Acquisition File Details Create Form
-            acquisitionFilesDetails.VerifyAcquisitionFileCreate();
+            acquisitionFilesDetails.VerifyAcquisitionFileCreate("Main");
 
             //Create basic Acquisition File
             acquisitionFilesDetails.CreateMinimumAcquisitionFile(acquisitionFile);
@@ -88,13 +89,13 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFilesDetails.VerifyMaximumFields();
 
             //Add Additional Optional information to the acquisition file
-            acquisitionFilesDetails.UpdateAcquisitionFile(acquisitionFile);
+            acquisitionFilesDetails.UpdateAcquisitionFile(acquisitionFile, "Main");
 
             //Save Acquisition File
             acquisitionFilesDetails.SaveAcquisitionFileDetails();
 
             //Validate View File Details View Mode
-            acquisitionFilesDetails.VerifyAcquisitionFileView(acquisitionFile);
+            acquisitionFilesDetails.VerifyAcquisitionFileView(acquisitionFile, "Main");
 
             //Verify automatic note created when
             if (acquisitionFile.AcquisitionStatus != "Active")
@@ -117,7 +118,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFilesDetails.EditAcquisitionFileBttn();
 
             //Add Additional Optional information to the acquisition file
-            acquisitionFilesDetails.UpdateAcquisitionFile(acquisitionFile);
+            acquisitionFilesDetails.UpdateAcquisitionFile(acquisitionFile, "Main");
 
             //Save Acquisition File
             acquisitionFilesDetails.SaveAcquisitionFileDetails();
@@ -137,23 +138,23 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Update existing Acquisition file
             acquisitionFilesDetails.EditAcquisitionFileBttn();
-            acquisitionFilesDetails.UpdateAcquisitionFile(acquisitionFile);
+            acquisitionFilesDetails.UpdateAcquisitionFile(acquisitionFile, "Main");
 
             //Cancel changes
             acquisitionFilesDetails.CancelAcquisitionFile();
 
             //Edit Acquisition File
             acquisitionFilesDetails.EditAcquisitionFileBttn();
-            acquisitionFilesDetails.UpdateAcquisitionFile(acquisitionFile);
+            acquisitionFilesDetails.UpdateAcquisitionFile(acquisitionFile, "Main");
 
             //Save Acquisition File
             acquisitionFilesDetails.SaveAcquisitionFileDetails();
 
-            //Get Research File code
+            //Get Acquisition File code
             acquisitionFileCode = acquisitionFilesDetails.GetAcquisitionFileCode();
 
             //Validate View File Details View Mode
-            acquisitionFilesDetails.VerifyAcquisitionFileView(acquisitionFile);
+            acquisitionFilesDetails.VerifyAcquisitionFileView(acquisitionFile, "Main");
 
             //Verify automatic note created when
             if (acquisitionFile.AcquisitionStatus != "Active")
@@ -492,7 +493,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                     else
                     {
                         //Click on edit the Interest Stakeholder button
-                        stakeholders.EditStakeholderNonInterestsButton();
+                        stakeholders.EditStakeholderInterestsButton();
 
                         //Add new Interest Stakeholder to the Acquisition File
                         stakeholders.AddNonInterestStakeholderButton();
@@ -545,13 +546,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I create Compensation Requisition within an Acquisition File")]
         public void CreateCompensationRequisition()
         {
-            /* TEST COVERAGE: PSP-6066, PSP-6067, PSP-6274, PSP-6277, PSP-6355 */
-
             //Navigate to Compensation Requisition Tab
             h120.NavigateCompensationTab();
 
             //Verify initial Compensation Tab List View
-            h120.VerifyCompensationInitTabView();
+            h120.VerifyCompensationInitTabView("Acquisition");
 
             //Update Allowable Compensation Amount
             h120.UpdateTotalAllowableCompensation(acquisitionFile.AcquisitionCompensationTotalAllowableAmount);
@@ -568,12 +567,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
                     h120.OpenCompensationDetails(i);
 
                     //Verify Initial View Form
-                    h120.VerifyCompensationDetailsInitViewForm("Acquisition File");
+                    h120.VerifyCompensationDetailsInitViewForm();
 
                     //Add Details to the Compensation Requisition
                     h120.EditCompensationDetails();
                     //h120.VerifyCompensationDetailsInitCreateForm();
-                    h120.UpdateCompensationDetails(acquisitionFile.AcquisitionCompensations[i]);
+                    h120.UpdateCompensationDetails(acquisitionFile.AcquisitionCompensations[i], "Acquisition File");
 
                     //Save new Compensation Requisition Details
                     h120.SaveAcquisitionFileCompensation();
@@ -583,6 +582,50 @@ namespace PIMS.Tests.Automation.StepDefinitions
                     h120.VerifyCompensationListView(acquisitionFile.AcquisitionCompensations[i]);
                 }
             }
+        }
+
+        [StepDefinition(@"I create Compensation Requisition within an Acquisition Subfile")]
+        public void CreateSubfileCompensationRequisition()
+        {
+            /* TEST COVERAGE: PSP-6066, PSP-6067, PSP-6274, PSP-6277, PSP-6355 */
+
+            //Navigate to Compensation Requisition Tab
+            h120.NavigateCompensationTab();
+
+            //Verify initial Compensation Tab List View
+            h120.VerifyCompensationInitTabView("Subfile");
+
+            //Update Allowable Compensation Amount
+            h120.UpdateTotalAllowableCompensation(acquisitionFile.AcquisitionCompensationTotalAllowableAmount);
+
+            //Create Compensation Requisition Forms
+            if (acquisitionFile.AcquisitionCompensations.Count > 0)
+                for (int i = 0; i < acquisitionFile.AcquisitionCompensations.Count; i++)
+                {
+                    //Click on Add new Compensation
+                    h120.AddCompensationBttn();
+
+                    //Open the created Compensation Requisition details
+                    h120.OpenCompensationDetails(i);
+
+                    //Verify Initial View Form
+                    h120.VerifyCompensationDetailsInitViewForm();
+
+                    //Add Details to the Compensation Requisition
+                    h120.EditCompensationDetails();
+                    //h120.VerifyCompensationDetailsInitCreateForm();
+                    h120.UpdateCompensationDetails(acquisitionFile.AcquisitionCompensations[i], "Acquisition File");
+
+                    //Save new Compensation Requisition Details
+                    h120.SaveAcquisitionFileCompensation();
+
+                    //Verify added Compensation Requisition List View and Details
+                    h120.VerifyCompensationDetailsViewForm(acquisitionFile.AcquisitionCompensations[i], "Acquisition File");
+                    h120.VerifyCompensationListView(acquisitionFile.AcquisitionCompensations[i]);
+                }
+
+            //Verify Compensation requisition Subfile totals
+            h120.VerifyCompensationsTotalDetails(acquisitionFile, "Subfile");
         }
 
         [StepDefinition(@"I update Compensation Requisition within an Acquisition File from row number (.*)")]
@@ -611,14 +654,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
             h120.EditCompensationDetails();
 
             //Make changes on created Compensation Requisition Form
-            h120.UpdateCompensationDetails(acquisitionFile.AcquisitionCompensations[0]);
+            h120.UpdateCompensationDetails(acquisitionFile.AcquisitionCompensations[0], "Acquisition File");
 
             //Cancel changes
             h120.CancelAcquisitionFileCompensation();
 
             //Make changes on created Compensation Requisition Form
             h120.EditCompensationDetails();
-            h120.UpdateCompensationDetails(acquisitionFile.AcquisitionCompensations[0]);
+            h120.UpdateCompensationDetails(acquisitionFile.AcquisitionCompensations[0], "Acquisition File");
 
             //Save changes
             h120.SaveAcquisitionFileCompensation();
@@ -715,7 +758,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I update Expropriation within an Acquisition File from row number (.*)")]
         public void UpdateExpropriation(int rowNumber)
         {
-
             //Populate data
             PopulateAcquisitionFile(rowNumber);
 
@@ -726,7 +768,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Update type of Acquisition File
             acquisitionFilesDetails.EditAcquisitionFileBttn();
-            acquisitionFilesDetails.UpdateAcquisitionFile(acquisitionFile);
+            acquisitionFilesDetails.UpdateAcquisitionFile(acquisitionFile, "Main");
             acquisitionFilesDetails.SaveAcquisitionFileDetails();
 
             //Navigate to Expropriation Requisition Tab
@@ -803,7 +845,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyInformation.ShowLeftSideForms();
 
             //Validate Acquisition File Details Create Form
-            acquisitionFilesDetails.VerifyAcquisitionFileCreate();
+            acquisitionFilesDetails.VerifyAcquisitionFileCreate("Main");
 
             //Cancel empty acquisition file
             acquisitionFilesDetails.CancelAcquisitionFile();
@@ -855,17 +897,44 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Save Acquisition File
             acquisitionFilesDetails.SaveAcquisitionFileDetails();
 
-            //Get Research File code
+            //Get Acquisition File code
             acquisitionFileCode = acquisitionFilesDetails.GetAcquisitionFileCode();
 
             //Edit Acquisition File
             acquisitionFilesDetails.EditAcquisitionFileBttn();
 
             //Add additional information
-            acquisitionFilesDetails.UpdateAcquisitionFile(acquisitionFile);
+            acquisitionFilesDetails.UpdateAcquisitionFile(acquisitionFile, "Main");
 
             //Save Acquisition File
             acquisitionFilesDetails.SaveAcquisitionFileDetails();
+        }
+
+        [StepDefinition(@"I create a new Sub-file from row number (.*)")]
+        public void CreateSubFileDetails(int rowNumber)
+        {
+            PopulateAcquisitionFile(rowNumber);
+
+            //Go to Acquisition File Sub-Files Tab
+            acquisitionFilesDetails.NavigateToSubfilesTab();
+
+            //Add a new subfile
+            acquisitionFilesDetails.AddAcquisitionSubfileBttn();
+
+            //Validate Acquisition File Details Create Form
+            acquisitionFilesDetails.VerifyAcquisitionFileCreate("Subfile");
+
+            //Fill up subfile details
+            acquisitionFilesDetails.UpdateAcquisitionFile(acquisitionFile, "Subfile");
+
+            //Save Acquisition File
+            acquisitionFilesDetails.SaveAcquisitionFileDetails();
+
+            //Get Acquisition Subfile code
+            acquisitionFileCode = acquisitionFilesDetails.GetAcquisitionFileCode();
+
+            //Validate View File Details View Mode
+            acquisitionFilesDetails.VerifyAcquisitionFileView(acquisitionFile, "Subfile");
         }
 
         [StepDefinition(@"I search for an existing Acquisition File from row number (.*)")]
@@ -948,15 +1017,13 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchAcquisitionFiles.SearchAcquisitionFileByAFile(acquisitionFileCode);
 
             Assert.True(searchAcquisitionFiles.SearchFoundResults());
-            searchAcquisitionFiles.Dispose();
         }
 
         [StepDefinition(@"An existing Acquisition file has been edited successfully")]
         public void EditAcquisitionFileSuccess()
         {
             acquisitionFilesDetails.NavigateToFileDetailsTab();
-            acquisitionFilesDetails.VerifyAcquisitionFileView(acquisitionFile);
-            searchAcquisitionFiles.Dispose();
+            acquisitionFilesDetails.VerifyAcquisitionFileView(acquisitionFile, "Main");
         }
 
         [StepDefinition(@"Expected Acquisition File Content is displayed on Acquisition File Table")]
@@ -967,8 +1034,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Verify List View
             searchAcquisitionFiles.VerifyAcquisitionFileListView();
             searchAcquisitionFiles.VerifyAcquisitionFileTableContent(acquisitionFile);
-            searchAcquisitionFiles.Dispose();
-
         }
 
         [StepDefinition(@"Acquisition File's Checklist has been saved successfully")]
@@ -976,7 +1041,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             //Verify Checklist Content after update
             checklist.VerifyChecklistViewForm(acquisitionFile.AcquisitionFileChecklist);
-            searchAcquisitionFiles.Dispose();
         }
 
         [StepDefinition(@"Acquisition File cannot be completed due to Draft items")]
@@ -984,7 +1048,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             //TEST COVERAGE:
             acquisitionFilesDetails.VerifyErrorMessageDraftItems();
-            acquisitionFilesDetails.Dispose();
         }
 
         [StepDefinition(@"Acquisition File cannot be completed without Takes")]
@@ -992,7 +1055,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             //TEST COVERAGE: PSP-8209
             acquisitionFilesDetails.VerifyErrorCannotCompleteWithoutTakes();
-            acquisitionFilesDetails.Dispose();
         }
 
         [StepDefinition(@"Acquisition File cannot be completed due to In-Progress Takes")]
@@ -1000,12 +1062,36 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             //TEST COVERAGE: PSP-7991
             acquisitionFilesDetails.VerifyErrorCannotCompleteInProgressTakes();
-            acquisitionFilesDetails.Dispose();
+        }
+
+        [StepDefinition(@"Main Acquisition File totals are verified successfully from row number (.*)")]
+        public void VerifyMainAcquisitionFileTotalsAfterSubfiles(int rowNumber)
+        {
+            PopulateAcquisitionFile(rowNumber);
+
+            //Navigate to Subfiles Tab
+            acquisitionFilesDetails.NavigateToSubfilesTab();
+
+            //Getting the Linked Files Code
+            var linkedFilesCode = acquisitionFilesDetails.GetLinkedFilesCode();
+
+            //Go to search Acquisition Files
+            searchAcquisitionFiles.NavigateToSearchAcquisitionFile();
+
+            //Search for Main Acquisition File
+            searchAcquisitionFiles.SearchAcquisitionFileByAFile(linkedFilesCode);
+            searchAcquisitionFiles.SelectFirstOption();
+
+            //Navigate to Compensation Requisition Tab
+            h120.NavigateCompensationTab();
+
+            //Verify Compensation requisition Main File totals
+            h120.VerifyCompensationsTotalDetails(acquisitionFile, "Main");
         }
 
         private void PopulateAcquisitionFile(int rowNumber)
         {
-            DataTable acquisitionSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionFiles"]!;
+            System.Data.DataTable acquisitionSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionFiles"]!;
             ExcelDataContext.PopulateInCollection(acquisitionSheet);
             acquisitionFile = new AcquisitionFile();
 
@@ -1020,15 +1106,26 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFile.AcquisitionProjFunding = ExcelDataContext.ReadData(rowNumber, "AcquisitionProjFunding");
             acquisitionFile.AcquisitionFundingOther = ExcelDataContext.ReadData(rowNumber, "AcquisitionFundingOther");
 
+            //Progress Statuses
+            acquisitionFile.AcquisitionFileProgressStatuses = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "AcquisitionFileProgressStatuses"));
+            acquisitionFile.AcquisitionAppraisalStatus = ExcelDataContext.ReadData(rowNumber, "AcquisitionAppraisalStatus");
+            acquisitionFile.AcquisitionLegalSurveyStatus = ExcelDataContext.ReadData(rowNumber, "AcquisitionLegalSurveyStatus");
+            acquisitionFile.AcquisitionTypeTakingStatuses = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "AcquisitionTypeTakingStatuses"));
+            acquisitionFile.AcquisitionExpropriationRiskStatus = ExcelDataContext.ReadData(rowNumber, "AcquisitionExpropriationRiskStatus");
+
             //Schedule
-            acquisitionFile.AssignedDate = ExcelDataContext.ReadData(rowNumber, "AssignedDate");
-            acquisitionFile.DeliveryDate = ExcelDataContext.ReadData(rowNumber, "DeliveryDate");
+            acquisitionFile.AcquisitionAssignedDate = ExcelDataContext.ReadData(rowNumber, "AcquisitionAssignedDate");
+            acquisitionFile.AcquisitionDeliveryDate = ExcelDataContext.ReadData(rowNumber, "AcquisitionDeliveryDate");
+            acquisitionFile.AcquisitionEstimatedDate = ExcelDataContext.ReadData(rowNumber, "AcquisitionEstimatedDate");
+            acquisitionFile.AcquisitionPossesionDate = ExcelDataContext.ReadData(rowNumber, "AcquisitionPossesionDate");
 
             //Acquisition Details
             acquisitionFile.AcquisitionFileName = ExcelDataContext.ReadData(rowNumber, "AcquisitionFileName");
             acquisitionFile.HistoricalFileNumber = ExcelDataContext.ReadData(rowNumber, "HistoricalFileNumber");
             acquisitionFile.PhysicalFileStatus = ExcelDataContext.ReadData(rowNumber, "PhysicalFileStatus");
             acquisitionFile.AcquisitionType = ExcelDataContext.ReadData(rowNumber, "AcquisitionType");
+            acquisitionFile.AcquisitionSubfileInterest = ExcelDataContext.ReadData(rowNumber, "AcquisitionSubfileInterest");
+            acquisitionFile.AcquisitionSubfileInterestOther = ExcelDataContext.ReadData(rowNumber, "AcquisitionSubfileInterestOther");
             acquisitionFile.AcquisitionMOTIRegion = ExcelDataContext.ReadData(rowNumber, "AcquisitionMOTIRegion");
 
             acquisitionFile.AcquisitionTeamStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "AcquisitionTeamStartRow"));
@@ -1036,9 +1133,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Acquisition Team
             if (acquisitionFile.AcquisitionTeamStartRow != 0 && acquisitionFile.AcquisitionTeamCount != 0)
-            {
                 PopulateTeamsCollection(acquisitionFile.AcquisitionTeamStartRow, acquisitionFile.AcquisitionTeamCount);
-            }
+
 
             //Owner
             acquisitionFile.OwnerStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "OwnerStartRow"));
@@ -1054,7 +1150,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFile.AcquisitionSearchPropertiesIndex = int.Parse(ExcelDataContext.ReadData(rowNumber, "AcqSearchPropertiesIndex"));
             if (acquisitionFile.AcquisitionSearchPropertiesIndex > 0)
             {
-                DataTable searchPropertiesSheet = ExcelDataContext.GetInstance().Sheets["SearchProperties"]!;
+                System.Data.DataTable searchPropertiesSheet = ExcelDataContext.GetInstance().Sheets["SearchProperties"]!;
                 ExcelDataContext.PopulateInCollection(searchPropertiesSheet);
 
                 acquisitionFile.AcquisitionSearchProperties.PID = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "PID");
@@ -1075,59 +1171,59 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFile.AcquisitionFileChecklistIndex = int.Parse(ExcelDataContext.ReadData(rowNumber, "AcquisitionFileChecklistIndex"));
             if (acquisitionFile.AcquisitionFileChecklistIndex > 0)
             {
-                DataTable acquisitionFileChecklistSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionChecklist"]!;
+                System.Data.DataTable acquisitionFileChecklistSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionChecklist"]!;
                 ExcelDataContext.PopulateInCollection(acquisitionFileChecklistSheet);
 
-                acquisitionFile.AcquisitionFileChecklist.FileInitiationSelect1 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "FileInitiationSelect1");
-                acquisitionFile.AcquisitionFileChecklist.FileInitiationSelect2 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "FileInitiationSelect2");
-                acquisitionFile.AcquisitionFileChecklist.FileInitiationSelect3 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "FileInitiationSelect3");
-                acquisitionFile.AcquisitionFileChecklist.FileInitiationSelect4 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "FileInitiationSelect4");
-                acquisitionFile.AcquisitionFileChecklist.FileInitiationSelect5 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "FileInitiationSelect5");
+                acquisitionFile.AcquisitionFileChecklist.FileInitiationSelect1 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqFileInitiationSelect1");
+                acquisitionFile.AcquisitionFileChecklist.FileInitiationSelect2 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqFileInitiationSelect2");
+                acquisitionFile.AcquisitionFileChecklist.FileInitiationSelect3 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqFileInitiationSelect3");
+                acquisitionFile.AcquisitionFileChecklist.FileInitiationSelect4 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqFileInitiationSelect4");
+                acquisitionFile.AcquisitionFileChecklist.FileInitiationSelect5 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqFileInitiationSelect5");
 
-                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect1 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "ActiveFileManagementSelect1");
-                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect2 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "ActiveFileManagementSelect2");
-                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect3 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "ActiveFileManagementSelect3");
-                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect4 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "ActiveFileManagementSelect4");
-                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect5 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "ActiveFileManagementSelect5");
-                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect6 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "ActiveFileManagementSelect6");
-                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect7 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "ActiveFileManagementSelect7");
-                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect8 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "ActiveFileManagementSelect8");
-                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect9 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "ActiveFileManagementSelect9");
-                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect10 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "ActiveFileManagementSelect10");
-                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect11 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "ActiveFileManagementSelect11");
-                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect12 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "ActiveFileManagementSelect12");
-                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect13 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "ActiveFileManagementSelect13");
-                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect14 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "ActiveFileManagementSelect14");
-                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect15 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "ActiveFileManagementSelect15");
-                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect16 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "ActiveFileManagementSelect16");
-                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect17 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "ActiveFileManagementSelect17");
+                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect1 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqActiveFileManagementSelect1");
+                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect2 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqActiveFileManagementSelect2");
+                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect3 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqActiveFileManagementSelect3");
+                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect4 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqActiveFileManagementSelect4");
+                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect5 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqActiveFileManagementSelect5");
+                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect6 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqActiveFileManagementSelect6");
+                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect7 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqActiveFileManagementSelect7");
+                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect8 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqActiveFileManagementSelect8");
+                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect9 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqActiveFileManagementSelect9");
+                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect10 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqActiveFileManagementSelect10");
+                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect11 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqActiveFileManagementSelect11");
+                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect12 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqActiveFileManagementSelect12");
+                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect13 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqActiveFileManagementSelect13");
+                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect14 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqActiveFileManagementSelect14");
+                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect15 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqActiveFileManagementSelect15");
+                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect16 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqActiveFileManagementSelect16");
+                acquisitionFile.AcquisitionFileChecklist.ActiveFileManagementSelect17 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqActiveFileManagementSelect17");
 
-                acquisitionFile.AcquisitionFileChecklist.CrownLandSelect1 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "CrownLandSelect1");
-                acquisitionFile.AcquisitionFileChecklist.CrownLandSelect2 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "CrownLandSelect2");
-                acquisitionFile.AcquisitionFileChecklist.CrownLandSelect3 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "CrownLandSelect3");
+                acquisitionFile.AcquisitionFileChecklist.CrownLandSelect1 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqCrownLandSelect1");
+                acquisitionFile.AcquisitionFileChecklist.CrownLandSelect2 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqCrownLandSelect2");
+                acquisitionFile.AcquisitionFileChecklist.CrownLandSelect3 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqCrownLandSelect3");
 
-                acquisitionFile.AcquisitionFileChecklist.Section3AgreementSelect1 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section3AgreementSelect1");
-                acquisitionFile.AcquisitionFileChecklist.Section3AgreementSelect2 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section3AgreementSelect2");
-                acquisitionFile.AcquisitionFileChecklist.Section3AgreementSelect3 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section3AgreementSelect3");
-                acquisitionFile.AcquisitionFileChecklist.Section3AgreementSelect4 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section3AgreementSelect4");
-                acquisitionFile.AcquisitionFileChecklist.Section3AgreementSelect5 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section3AgreementSelect5");
-                acquisitionFile.AcquisitionFileChecklist.Section3AgreementSelect6 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section3AgreementSelect6");
-                acquisitionFile.AcquisitionFileChecklist.Section3AgreementSelect7 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section3AgreementSelect7");
-                acquisitionFile.AcquisitionFileChecklist.Section3AgreementSelect8 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section3AgreementSelect8");
-                acquisitionFile.AcquisitionFileChecklist.Section3AgreementSelect9 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section3AgreementSelect9");
+                acquisitionFile.AcquisitionFileChecklist.Section3AgreementSelect1 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqSection3AgreementSelect1");
+                acquisitionFile.AcquisitionFileChecklist.Section3AgreementSelect2 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqSection3AgreementSelect2");
+                acquisitionFile.AcquisitionFileChecklist.Section3AgreementSelect3 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqSection3AgreementSelect3");
+                acquisitionFile.AcquisitionFileChecklist.Section3AgreementSelect4 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqSection3AgreementSelect4");
+                acquisitionFile.AcquisitionFileChecklist.Section3AgreementSelect5 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqSection3AgreementSelect5");
+                acquisitionFile.AcquisitionFileChecklist.Section3AgreementSelect6 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqSection3AgreementSelect6");
+                acquisitionFile.AcquisitionFileChecklist.Section3AgreementSelect7 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqSection3AgreementSelect7");
+                acquisitionFile.AcquisitionFileChecklist.Section3AgreementSelect8 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqSection3AgreementSelect8");
+                acquisitionFile.AcquisitionFileChecklist.Section3AgreementSelect9 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqSection3AgreementSelect9");
 
-                acquisitionFile.AcquisitionFileChecklist.Section6ExpropriationSelect1 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section6ExpropriationSelect1");
-                acquisitionFile.AcquisitionFileChecklist.Section6ExpropriationSelect2 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section6ExpropriationSelect2");
-                acquisitionFile.AcquisitionFileChecklist.Section6ExpropriationSelect3 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section6ExpropriationSelect3");
-                acquisitionFile.AcquisitionFileChecklist.Section6ExpropriationSelect4 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section6ExpropriationSelect4");
-                acquisitionFile.AcquisitionFileChecklist.Section6ExpropriationSelect5 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section6ExpropriationSelect5");
-                acquisitionFile.AcquisitionFileChecklist.Section6ExpropriationSelect6 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section6ExpropriationSelect6");
-                acquisitionFile.AcquisitionFileChecklist.Section6ExpropriationSelect7 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section6ExpropriationSelect7");
-                acquisitionFile.AcquisitionFileChecklist.Section6ExpropriationSelect8 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section6ExpropriationSelect8");
-                acquisitionFile.AcquisitionFileChecklist.Section6ExpropriationSelect9 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section6ExpropriationSelect9");
-                acquisitionFile.AcquisitionFileChecklist.Section6ExpropriationSelect10 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section6ExpropriationSelect10");
-                acquisitionFile.AcquisitionFileChecklist.Section6ExpropriationSelect11 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section6ExpropriationSelect11");
-                acquisitionFile.AcquisitionFileChecklist.Section6ExpropriationSelect12 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "Section6ExpropriationSelect12");
+                acquisitionFile.AcquisitionFileChecklist.Section6ExpropriationSelect1 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqSection6ExpropriationSelect1");
+                acquisitionFile.AcquisitionFileChecklist.Section6ExpropriationSelect2 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqSection6ExpropriationSelect2");
+                acquisitionFile.AcquisitionFileChecklist.Section6ExpropriationSelect3 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqSection6ExpropriationSelect3");
+                acquisitionFile.AcquisitionFileChecklist.Section6ExpropriationSelect4 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqSection6ExpropriationSelect4");
+                acquisitionFile.AcquisitionFileChecklist.Section6ExpropriationSelect5 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqSection6ExpropriationSelect5");
+                acquisitionFile.AcquisitionFileChecklist.Section6ExpropriationSelect6 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqSection6ExpropriationSelect6");
+                acquisitionFile.AcquisitionFileChecklist.Section6ExpropriationSelect7 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqSection6ExpropriationSelect7");
+                acquisitionFile.AcquisitionFileChecklist.Section6ExpropriationSelect8 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqSection6ExpropriationSelect8");
+                acquisitionFile.AcquisitionFileChecklist.Section6ExpropriationSelect9 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqSection6ExpropriationSelect9");
+                acquisitionFile.AcquisitionFileChecklist.Section6ExpropriationSelect10 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqSection6ExpropriationSelect10");
+                acquisitionFile.AcquisitionFileChecklist.Section6ExpropriationSelect11 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqSection6ExpropriationSelect11");
+                acquisitionFile.AcquisitionFileChecklist.Section6ExpropriationSelect12 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcqSection6ExpropriationSelect12");
 
                 acquisitionFile.AcquisitionFileChecklist.AcquisitionCompletionSelect1 = ExcelDataContext.ReadData(acquisitionFile.AcquisitionFileChecklistIndex, "AcquisitionCompletionSelect1");
             }
@@ -1148,6 +1244,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFile.AcquisitionCompensationStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "AcquisitionCompensationStartRow"));
             acquisitionFile.AcquisitionCompensationCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "AcquisitionCompensationCount"));
             acquisitionFile.AcquisitionCompensationTotalAllowableAmount = ExcelDataContext.ReadData(rowNumber, "AcquisitionCompensationTotalAllowableAmount");
+            acquisitionFile.AcquisitionCompensationMainFileTotal = ExcelDataContext.ReadData(rowNumber, "AcquisitionCompensationMainFileTotal");
+            acquisitionFile.AcquisitionCompensationSubfilesMainFileTotal = ExcelDataContext.ReadData(rowNumber, "AcquisitionCompensationSubfilesMainFileTotal");
+            acquisitionFile.AcquisitionCompensationDraftTotal = ExcelDataContext.ReadData(rowNumber, "AcquisitionCompensationDraftTotal");
             if (acquisitionFile.AcquisitionCompensationStartRow != 0 && acquisitionFile.AcquisitionCompensationCount != 0)
                 PopulateCompensationsCollection(acquisitionFile.AcquisitionCompensationStartRow, acquisitionFile.AcquisitionCompensationCount);
 
@@ -1160,7 +1259,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateTeamsCollection(int startRow, int rowsCount)
         {
-            DataTable teamsSheet = ExcelDataContext.GetInstance().Sheets["TeamMembers"]!;
+            System.Data.DataTable teamsSheet = ExcelDataContext.GetInstance().Sheets["TeamMembers"]!;
             ExcelDataContext.PopulateInCollection(teamsSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -1177,7 +1276,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateOwnersCollection(int startRow, int rowsCount)
         {
-            DataTable ownersSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionOwners"]!;
+            System.Data.DataTable ownersSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionOwners"]!;
             ExcelDataContext.PopulateInCollection(ownersSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -1208,7 +1307,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateTakesCollection(int startRow, int rowsCount)
         {
-            DataTable takeSheet = ExcelDataContext.GetInstance().Sheets["Takes"]!;
+            System.Data.DataTable takeSheet = ExcelDataContext.GetInstance().Sheets["Takes"]!;
             ExcelDataContext.PopulateInCollection(takeSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -1254,7 +1353,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateAgreementsCollection(int startRow, int rowsCount)
         {
-            DataTable agreementSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionAgreement"]!;
+            System.Data.DataTable agreementSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionAgreement"]!;
             ExcelDataContext.PopulateInCollection(agreementSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -1280,7 +1379,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateStakeholdersCollection(int startRow, int rowsCount)
         {
-            DataTable stakeholderSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionStakeholder"]!;
+            System.Data.DataTable stakeholderSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionStakeholder"]!;
             ExcelDataContext.PopulateInCollection(stakeholderSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -1291,7 +1390,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 stakeholder.InterestHolder = ExcelDataContext.ReadData(i, "InterestHolder");
                 stakeholder.InterestType = ExcelDataContext.ReadData(i, "InterestType");
                 stakeholder.StakeholderContactType = ExcelDataContext.ReadData(i, "StakeholderContactType");
-                stakeholder.PrimaryContact = ExcelDataContext.ReadData(i, "PrimaryContact");
+                stakeholder.PrimaryContact = ExcelDataContext.ReadData(i, "StakeholderPrimaryContact");
                 stakeholder.PayeeName = ExcelDataContext.ReadData(i, "PayeeName");
                 stakeholder.StakeholderIndex = int.Parse(ExcelDataContext.ReadData(i, "StakeholderIndex"));
 
@@ -1301,7 +1400,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateCompensationsCollection(int startRow, int rowsCount)
         {
-            DataTable compensationSheet = ExcelDataContext.GetInstance().Sheets["Compensation"]!;
+            System.Data.DataTable compensationSheet = ExcelDataContext.GetInstance().Sheets["Compensation"]!;
             ExcelDataContext.PopulateInCollection(compensationSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -1322,8 +1421,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 compensation.CompensationSTOB = ExcelDataContext.ReadData(i, "CompensationSTOB");
                 compensation.CompensationServiceLine = ExcelDataContext.ReadData(i, "CompensationServiceLine");
                 compensation.CompensationResponsibilityCentre = ExcelDataContext.ReadData(i, "CompensationResponsibilityCentre");
-                compensation.CompensationPayee = ExcelDataContext.ReadData(i, "CompensationPayee");
-                compensation.CompensationPayeeDisplay = ExcelDataContext.ReadData(i, "CompensationPayeeDisplay"); 
+                compensation.AcquisitionCompensationPayee = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "CompensationPayee"));
+                compensation.CompensationPayeeDisplay = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "CompensationPayeeDisplay")); 
                 compensation.CompensationPaymentInTrust = Boolean.Parse(ExcelDataContext.ReadData(i, "CompensationPaymentInTrust"));
                 compensation.CompensationGSTNumber = ExcelDataContext.ReadData(i, "CompensationGSTNumber");
                 compensation.CompensationDetailedRemarks = ExcelDataContext.ReadData(i, "CompensationDetailedRemarks");
@@ -1331,9 +1430,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 compensation.ActivitiesCount = int.Parse(ExcelDataContext.ReadData(i, "ActivitiesCount"));
 
                 if (compensation.ActivitiesStartRow != 0 && compensation.ActivitiesCount != 0)
-                {
                     PopulateActivitiesCollection(compensation.ActivitiesStartRow, compensation.ActivitiesCount, compensation.CompensationActivities);
-                }
 
                 acquisitionFile.AcquisitionCompensations.Add(compensation);
             }
@@ -1341,7 +1438,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateActivitiesCollection(int startRow, int rowsCount, List<CompensationActivity> activities)
         {
-            DataTable activitiesSheet = ExcelDataContext.GetInstance().Sheets["CompensationActivities"]!;
+            System.Data.DataTable activitiesSheet = ExcelDataContext.GetInstance().Sheets["CompensationActivities"]!;
             ExcelDataContext.PopulateInCollection(activitiesSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -1360,7 +1457,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateExpropriationCollection(int startRow, int rowsCount)
         {
-            DataTable expropriationSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionExpropriationForm8"]!;
+            System.Data.DataTable expropriationSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionExpropriationForm8"]!;
             ExcelDataContext.PopulateInCollection(expropriationSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
@@ -1375,17 +1472,15 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 expropriation.ExpPaymentCount = int.Parse(ExcelDataContext.ReadData(i, "ExpPaymentCount"));
                 
                 if (expropriation.ExpPaymentStartRow != 0 && expropriation.ExpPaymentCount != 0)
-                {
                     PopulateExpropPaymentsCollection(expropriation.ExpPaymentStartRow, expropriation.ExpPaymentCount, expropriation.ExpropriationPayments);
-                }
-
+                
                 acquisitionFile.AcquisitionExpropriationForm8s.Add(expropriation);
             }
         }
 
         private void PopulateExpropPaymentsCollection(int startRow, int rowsCount, List<ExpropriationPayment> payments)
         {
-            DataTable paymentsSheet = ExcelDataContext.GetInstance().Sheets["ExpropriationPayment"]!;
+            System.Data.DataTable paymentsSheet = ExcelDataContext.GetInstance().Sheets["ExpropriationPayment"]!;
             ExcelDataContext.PopulateInCollection(paymentsSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)

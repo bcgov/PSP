@@ -60,6 +60,7 @@ describe('PaymentsView component', () => {
         isExercised={renderOptions?.isExercised ?? true}
         isReceivable={renderOptions?.isReceivable ?? true}
         isGstEligible={renderOptions?.isGstEligible ?? true}
+        isFileFinalStatus={renderOptions?.isFileFinalStatus ?? false}
       />,
       {
         ...renderOptions,
@@ -292,6 +293,21 @@ describe('PaymentsView component', () => {
       const deleteButton = await findAllByTitle('delete payment');
       await act(async () => userEvent.click(deleteButton[0]));
       expect(onDelete).toHaveBeenCalledWith(defaultTestFormLeasePayment);
+    });
+
+    it('Hides edit action when file in final status', async () => {
+      const {
+        component: { queryByTestId, getByTestId },
+      } = await setup({
+        initialValues: getDefaultLeaseWithPeriodsPayments(),
+        isReceivable: false,
+        isFileFinalStatus: true,
+      });
+      const editButton = queryByTestId('edit payment');
+      const deleteButton = queryByTestId('delete payment');
+      expect(editButton).toBeNull();
+      expect(deleteButton).toBeNull();
+      expect(getByTestId('tooltip-icon-payments-actions-cannot-edit-tooltip')).toBeVisible();
     });
   });
 });

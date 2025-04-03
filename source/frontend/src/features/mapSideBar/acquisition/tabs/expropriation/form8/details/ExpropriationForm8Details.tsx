@@ -15,6 +15,7 @@ import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_Concepts_ExpropriationPayment } from '@/models/api/generated/ApiGen_Concepts_ExpropriationPayment';
 import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
+import { prettyFormatDate } from '@/utils';
 import { formatMoney } from '@/utils/numberFormatUtils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
@@ -24,13 +25,14 @@ export interface IExpropriationForm8DetailsProps {
   form8Index: number;
   form8: ApiGen_Concepts_ExpropriationPayment;
   acquisitionFileNumber: string;
+  isFileFinalStatus: boolean;
   onDelete: (form8Id: number) => void;
   onGenerate: (form8Id: number, acquisitionFileNumber: string) => void;
 }
 
 export const ExpropriationForm8Details: React.FunctionComponent<
   IExpropriationForm8DetailsProps
-> = ({ form8, form8Index, acquisitionFileNumber, onDelete, onGenerate }) => {
+> = ({ form8, form8Index, acquisitionFileNumber, isFileFinalStatus, onDelete, onGenerate }) => {
   const history = useHistory();
   const match = useRouteMatch();
   const keycloak = useKeycloakWrapper();
@@ -59,7 +61,7 @@ export const ExpropriationForm8Details: React.FunctionComponent<
             Generate Form 8
           </StyledSectionAddButton>
 
-          {keycloak.hasClaim(Claims.ACQUISITION_EDIT) && (
+          {keycloak.hasClaim(Claims.ACQUISITION_EDIT) && !isFileFinalStatus && (
             <>
               <EditButton
                 title="Edit form 8"
@@ -123,6 +125,14 @@ export const ExpropriationForm8Details: React.FunctionComponent<
             <span>{form8?.expropriatingAuthority?.name ?? ''}</span>
             <FaExternalLinkAlt className="ml-2" size="1rem" />
           </StyledLink>
+        </SectionField>
+
+        <SectionField
+          label="Advanced payment served date"
+          labelWidth="4"
+          valueTestId={`form8[${form8Index}].advanced-payment-srv-date`}
+        >
+          {prettyFormatDate(form8?.advancedPaymentServedDate)}
         </SectionField>
 
         <SectionField

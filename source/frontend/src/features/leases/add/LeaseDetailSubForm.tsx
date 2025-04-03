@@ -1,6 +1,5 @@
 import { FormikProps } from 'formik/dist/types';
 import { useCallback, useEffect, useState } from 'react';
-import { Col, Row } from 'react-bootstrap';
 
 import {
   FastDatePicker,
@@ -118,7 +117,7 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
 
   return (
     <Section header="Original Agreement">
-      <SectionField label="Ministry project" labelWidth="3">
+      <SectionField label="Ministry project" labelWidth="4">
         <ProjectSelector
           field="project"
           onChange={(vals: IAutocompletePrediction[]) => {
@@ -142,7 +141,7 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
       )}
       <SectionField
         label="Status"
-        labelWidth="3"
+        labelWidth="4"
         contentWidth="4"
         tooltip={
           <TooltipIcon
@@ -189,46 +188,41 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
         </SectionField>
       )}
 
-      <SectionField label="Account type" labelWidth="3" contentWidth="5" required>
+      <SectionField label="Account type" labelWidth="4" contentWidth="5" required>
         <Select field="paymentReceivableTypeCode" options={paymentReceivableTypes} />
       </SectionField>
-      <Row>
-        <Col>
-          <SectionField
-            label="Commencement"
-            labelWidth="6"
-            required={statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE}
-            tooltip={
-              <TooltipIcon
-                toolTipId="lease-commencement-tooltip"
-                toolTip="The start date defined in the original agreement"
-                placement="right"
-              />
-            }
-          >
-            <FastDatePicker
-              formikProps={formikProps}
-              field="startDate"
-              required={statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE}
-            />
-          </SectionField>
-        </Col>
-        <Col>
-          <SectionField
-            label="Expiry"
-            required={statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE}
-            tooltip={
-              <TooltipIcon
-                toolTipId="lease-expiry-tooltip"
-                toolTip="The end date specified in the original agreement"
-                placement="right"
-              />
-            }
-          >
-            <FastDatePicker formikProps={formikProps} field="expiryDate" />
-          </SectionField>
-        </Col>
-      </Row>
+      <SectionField
+        label="Commencement"
+        labelWidth="4"
+        required={statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE}
+        tooltip={
+          <TooltipIcon
+            toolTipId="lease-commencement-tooltip"
+            toolTip="The start date defined in the original agreement"
+            placement="right"
+          />
+        }
+      >
+        <FastDatePicker
+          formikProps={formikProps}
+          field="startDate"
+          required={statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE}
+        />
+      </SectionField>
+      <SectionField
+        label="Expiry"
+        labelWidth="4"
+        required={statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE}
+        tooltip={
+          <TooltipIcon
+            toolTipId="lease-expiry-tooltip"
+            toolTip="The end date specified in the original agreement"
+            placement="right"
+          />
+        }
+      >
+        <FastDatePicker formikProps={formikProps} field="expiryDate" />
+      </SectionField>
       {statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.TERMINATED && (
         <>
           <SectionField

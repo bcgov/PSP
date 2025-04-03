@@ -5,15 +5,15 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Pims.Core.Api.Exceptions;
 using Pims.Api.Models.Concepts.File;
 using Pims.Api.Models.Concepts.Lease;
-using Pims.Core.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Api.Exceptions;
+using Pims.Core.Api.Policies;
 using Pims.Core.Extensions;
 using Pims.Core.Json;
-using Pims.Dal.Exceptions;
 using Pims.Core.Security;
+using Pims.Dal.Exceptions;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Areas.Lease.Controllers
@@ -121,7 +121,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         }
 
         /// <summary>
-        /// Update the specified lease, and attached properties.
+        /// Update the specified lease.
         /// </summary>
         /// <returns></returns>
         [HttpPut("{id:long}")]
@@ -144,6 +144,30 @@ namespace Pims.Api.Areas.Lease.Controllers
             var updatedLease = _leaseService.Update(leaseEntity, userOverrides);
 
             return new JsonResult(_mapper.Map<LeaseModel>(updatedLease));
+        }
+
+        /// <summary>
+        /// Update the lease file properties.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut("{id:long}/properties")]
+        [HasPermission(Permissions.LeaseEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(LeaseModel), 200)]
+        [SwaggerOperation(Tags = new[] { "lease" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult UpdateLeaseProperties([FromBody] LeaseModel leaseModel, [FromQuery] string[] userOverrideCodes)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(LeaseController),
+                nameof(UpdateLease),
+                User.GetUsername(),
+                DateTime.Now);
+
+            var leaseEntity = _mapper.Map<Dal.Entities.PimsLease>(leaseModel);
+            var lease = _leaseService.UpdateProperties(leaseEntity, userOverrideCodes.Select(oc => UserOverrideCode.Parse(oc)));
+            return new JsonResult(_mapper.Map<LeaseModel>(lease));
         }
 
         /// <summary>

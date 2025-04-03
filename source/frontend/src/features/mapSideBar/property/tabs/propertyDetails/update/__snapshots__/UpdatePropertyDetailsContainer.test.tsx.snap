@@ -341,7 +341,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
 }
 
 .c2 {
@@ -416,7 +416,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
             class="no-gutters row"
           >
             <div
-              class="col"
+              class="align-content-end col"
             >
               Property Address
             </div>
@@ -458,6 +458,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
                       class="form-control"
                       id="input-address.streetAddress1"
                       name="address.streetAddress1"
+                      style="word-break: break-all;"
                       title="45 - 904 Hollywood Crescent"
                       value="45 - 904 Hollywood Crescent"
                     />
@@ -494,6 +495,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
                       class="form-control"
                       id="input-address.streetAddress2"
                       name="address.streetAddress2"
+                      style="word-break: break-all;"
                       title="Living in a van"
                       value="Living in a van"
                     />
@@ -533,6 +535,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
                       class="form-control"
                       id="input-address.streetAddress3"
                       name="address.streetAddress3"
+                      style="word-break: break-all;"
                       title="Down by the River"
                       value="Down by the River"
                     />
@@ -603,6 +606,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
                   class="form-control"
                   id="input-address.municipality"
                   name="address.municipality"
+                  style="word-break: break-all;"
                   title="Hollywood North"
                   value="Hollywood North"
                 />
@@ -1132,6 +1136,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
                   class="form-control"
                   id="input-address.postal"
                   name="address.postal"
+                  style="word-break: break-all;"
                   title="V6Z 5G7"
                   value="V6Z 5G7"
                 />
@@ -1160,6 +1165,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
                   class="form-control"
                   id="input-generalLocation"
                   name="generalLocation"
+                  style="word-break: break-all;"
                   value=""
                 />
               </div>
@@ -1177,7 +1183,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
             class="no-gutters row"
           >
             <div
-              class="col"
+              class="align-content-end col"
             >
               Property Attributes
             </div>
@@ -1236,6 +1242,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
                   class="form-control"
                   id="input-landLegalDescription"
                   name="landLegalDescription"
+                  style="word-break: break-all;"
                 />
               </div>
             </div>
@@ -1641,6 +1648,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
                   class="form-control"
                   id="input-municipalZoning"
                   name="municipalZoning"
+                  style="word-break: break-all;"
                   title="Zoning # 1"
                   value="Zoning # 1"
                 />
@@ -1813,7 +1821,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
             class="no-gutters row"
           >
             <div
-              class="col"
+              class="align-content-end col"
             >
               Tenure Status
             </div>
@@ -2279,7 +2287,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
             class="no-gutters row"
           >
             <div
-              class="col"
+              class="align-content-end col"
             >
               Measurements
             </div>
@@ -2625,7 +2633,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
             class="no-gutters row"
           >
             <div
-              class="col"
+              class="align-content-end col"
             >
               Comments
             </div>
@@ -2642,6 +2650,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
               id="input-notes"
               name="notes"
               rows="4"
+              style="word-break: break-all;"
               title="I edited this Test notes for this property - again"
             >
               I edited this Test notes for this property - again

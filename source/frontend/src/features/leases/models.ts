@@ -89,7 +89,6 @@ export class LeaseFormModel {
   otherLeaseTypeDescription = '';
   otherProgramTypeDescription = '';
   otherCategoryTypeDescription = '';
-  note = '';
   programName = '';
   motiName = '';
   amount: NumberFieldValue = '';
@@ -134,9 +133,9 @@ export class LeaseFormModel {
     leaseDetail.responsibilityEffectiveDate = apiModel?.responsibilityEffectiveDate || '';
     leaseDetail.amount = parseFloat(apiModel?.amount?.toString() ?? '') || 0.0;
     leaseDetail.paymentReceivableTypeCode = fromTypeCode(apiModel?.paymentReceivableType) || '';
-    leaseDetail.purposes = apiModel.leasePurposes?.map(x => LeasePurposeModel.fromApi(x)) ?? [];
+    leaseDetail.purposes = apiModel?.leasePurposes?.map(x => LeasePurposeModel.fromApi(x)) ?? [];
     const otherPurpose =
-      apiModel.leasePurposes?.find(
+      apiModel?.leasePurposes?.find(
         x => x.leasePurposeTypeCode.id === ApiGen_CodeTypes_LeasePurposeTypes.OTHER,
       ) ?? null;
     leaseDetail.purposeOtherDescription = otherPurpose ? otherPurpose.purposeOtherDescription : '';
@@ -147,7 +146,6 @@ export class LeaseFormModel {
     leaseDetail.leaseTypeCode = fromTypeCode(apiModel?.type) || '';
     leaseDetail.regionId = fromTypeCode(apiModel?.region)?.toString() || '';
     leaseDetail.programTypeCode = fromTypeCode(apiModel?.programType) || '';
-    leaseDetail.note = apiModel?.note || '';
     leaseDetail.returnNotes = apiModel?.returnNotes || '';
     leaseDetail.documentationReference = apiModel?.documentationReference || '';
     leaseDetail.motiName = apiModel?.motiName || '';
@@ -165,16 +163,16 @@ export class LeaseFormModel {
       ? { id: apiModel?.project?.id || 0, text: apiModel?.project?.description || '' }
       : undefined;
 
-    leaseDetail.productId = apiModel.productId;
+    leaseDetail.productId = apiModel?.productId;
     leaseDetail.periods = apiModel?.periods?.map(t => FormLeasePeriod.fromApi(t)) || [];
     leaseDetail.stakeholders = apiModel?.stakeholders?.map(t => new FormStakeholder(t)) || [];
     leaseDetail.renewals = apiModel?.renewals?.map(r => FormLeaseRenewal.fromApi(r)) || [];
-    leaseDetail.cancellationReason = apiModel.cancellationReason || '';
-    leaseDetail.terminationReason = apiModel.terminationReason || '';
-    leaseDetail.primaryArbitrationCity = apiModel.primaryArbitrationCity;
-    leaseDetail.isPublicBenefit = apiModel.isPublicBenefit;
-    leaseDetail.isFinancialGain = apiModel.isFinancialGain;
-    leaseDetail.feeDeterminationNote = apiModel.feeDeterminationNote;
+    leaseDetail.cancellationReason = apiModel?.cancellationReason || '';
+    leaseDetail.terminationReason = apiModel?.terminationReason || '';
+    leaseDetail.primaryArbitrationCity = apiModel?.primaryArbitrationCity;
+    leaseDetail.isPublicBenefit = apiModel?.isPublicBenefit;
+    leaseDetail.isFinancialGain = apiModel?.isFinancialGain;
+    leaseDetail.feeDeterminationNote = apiModel?.feeDeterminationNote;
 
     return leaseDetail;
   }
@@ -202,7 +200,7 @@ export class LeaseFormModel {
       type: toTypeCodeNullable(formLease.leaseTypeCode) ?? null,
       region: toTypeCodeNullable(Number(formLease.regionId)) ?? null,
       programType: toTypeCodeNullable(formLease.programTypeCode) ?? null,
-      note: stringToNull(formLease.note),
+      note: null,
       returnNotes: formLease.returnNotes,
       documentationReference: stringToNull(formLease.documentationReference),
       motiName: formLease.motiName,

@@ -4,10 +4,11 @@ import { Col, Row } from 'react-bootstrap';
 import { FaFileExcel, FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
+import styled from 'styled-components';
 
 import AcquisitionFileIcon from '@/assets/images/acquisition-icon.svg?react';
 import { StyledIconButton } from '@/components/common/buttons/IconButton';
-import { StyledAddButton } from '@/components/common/styles';
+import { PaddedScrollable, StyledAddButton } from '@/components/common/styles';
 import * as CommonStyled from '@/components/common/styles';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import Claims from '@/constants/claims';
@@ -24,7 +25,6 @@ import { AcquisitionFilter } from './AcquisitionFilter/AcquisitionFilter';
 import { AcquisitionSearchResults } from './AcquisitionSearchResults/AcquisitionSearchResults';
 import { AcquisitionSearchResultModel } from './AcquisitionSearchResults/models';
 import { AcquisitionFilterModel, ApiGen_Concepts_AcquisitionFilter } from './interfaces';
-import * as Styled from './styles';
 
 /**
  * Page that displays acquisition files information.
@@ -95,13 +95,23 @@ export const AcquisitionListView: React.FunctionComponent<
   }, [loadAcquisitionTeam]);
 
   return (
-    <Styled.ListPage>
-      <Styled.Scrollable>
+    <CommonStyled.ListPage>
+      <PaddedScrollable>
         <CommonStyled.H1>
-          <AcquisitionFileIcon title="Acquisition file icon" fill="currentColor" />
-          <span className="ml-2">Acquisition Files</span>
+          <FlexDiv>
+            <div>
+              <AcquisitionFileIcon title="Acquisition file icon" fill="currentColor" />
+              <span className="ml-2">Acquisition Files</span>
+            </div>
+            {hasClaim(Claims.ACQUISITION_ADD) && (
+              <StyledAddButton onClick={() => history.push('/mapview/sidebar/acquisition/new')}>
+                <FaPlus />
+                &nbsp;Create an Acquisition File
+              </StyledAddButton>
+            )}
+          </FlexDiv>
         </CommonStyled.H1>
-        <Styled.PageToolbar>
+        <CommonStyled.PageToolbar>
           <Row>
             <Col>
               <AcquisitionFilter
@@ -118,13 +128,8 @@ export const AcquisitionListView: React.FunctionComponent<
               </TooltipWrapper>
             </Col>
           </Row>
-        </Styled.PageToolbar>
-        {hasClaim(Claims.ACQUISITION_ADD) && (
-          <StyledAddButton onClick={() => history.push('/mapview/sidebar/acquisition/new')}>
-            <FaPlus />
-            &nbsp;Create an acquisition file
-          </StyledAddButton>
-        )}
+        </CommonStyled.PageToolbar>
+
         <AcquisitionSearchResults
           results={results.map(a => AcquisitionSearchResultModel.fromApi(a))}
           totalItems={totalItems}
@@ -137,9 +142,21 @@ export const AcquisitionListView: React.FunctionComponent<
           setPageIndex={setCurrentPage}
           loading={loading}
         />
-      </Styled.Scrollable>
-    </Styled.ListPage>
+      </PaddedScrollable>
+    </CommonStyled.ListPage>
   );
 };
 
 export default AcquisitionListView;
+
+const FlexDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
+
+  svg {
+    vertical-align: baseline;
+  }
+`;

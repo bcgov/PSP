@@ -214,13 +214,13 @@ exports[`Financial Code Filter > matches snapshot 1`] = `
   margin-right: 0;
 }
 
+.c1 {
+  border-left: 0.2rem solid white;
+}
+
 .c0 {
   background-color: #d9eaf7;
   border-radius: 0.5rem;
-}
-
-.c1 {
-  border-left: 0.2rem solid white;
 }
 
 <form
@@ -316,6 +316,7 @@ exports[`Financial Code Filter > matches snapshot 1`] = `
             id="input-codeValueOrDescription"
             name="codeValueOrDescription"
             placeholder="Code value or description"
+            style="word-break: break-all;"
             title=""
             value=""
           />

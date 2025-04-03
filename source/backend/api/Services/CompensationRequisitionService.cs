@@ -24,6 +24,7 @@ namespace Pims.Api.Services
         private readonly IAcquisitionFileRepository _acqFileRepository;
         private readonly ICompReqFinancialService _compReqFinancialService;
         private readonly IAcquisitionStatusSolver _acquisitionStatusSolver;
+        private readonly ILeaseStatusSolver _leaseStatusSolver;
         private readonly ILeaseRepository _leaseRepository;
         private readonly IPropertyService _propertyService;
 
@@ -36,6 +37,7 @@ namespace Pims.Api.Services
             IAcquisitionFileRepository acqFileRepository,
             ICompReqFinancialService compReqFinancialService,
             IAcquisitionStatusSolver statusSolver,
+            ILeaseStatusSolver leaseStatusSolver,
             ILeaseRepository leaseRepository,
             IPropertyService propertyService)
         {
@@ -47,6 +49,7 @@ namespace Pims.Api.Services
             _acqFileRepository = acqFileRepository;
             _compReqFinancialService = compReqFinancialService;
             _acquisitionStatusSolver = statusSolver;
+            _leaseStatusSolver = leaseStatusSolver;
             _leaseRepository = leaseRepository;
             _propertyService = propertyService;
         }
@@ -106,9 +109,19 @@ namespace Pims.Api.Services
             {
                 var currentAcquisitionStatus = GetCurrentAcquisitionStatus((long)currentCompensation.AcquisitionFileId);
 
-                if (!_acquisitionStatusSolver.CanEditOrDeleteCompensation(currentAcquisitionStatus, currentCompensation.IsDraft) && !_user.HasPermission(Permissions.SystemAdmin))
+                if (!_acquisitionStatusSolver.CanEditOrDeleteCompensation(currentAcquisitionStatus, currentCompensation.IsDraft, _user.HasPermission(Permissions.SystemAdmin)))
                 {
-                    throw new BusinessRuleViolationException("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
+                    throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+                }
+            }
+            else if (currentCompensation.LeaseId is not null)
+            {
+                var currentLeaseFile = _leaseRepository.Get((long)currentCompensation.LeaseId);
+                var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLeaseFile.LeaseStatusTypeCode);
+
+                if (!_leaseStatusSolver.CanEditOrDeleteCompensation(currentLeaseStatus, currentCompensation.IsDraft, _user.HasPermission(Permissions.SystemAdmin)))
+                {
+                    throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
                 }
             }
 
@@ -150,12 +163,28 @@ namespace Pims.Api.Services
             return compReqs;
         }
 
-        public IEnumerable<PimsCompReqFinancial> GetCompensationRequisitionFinancials(long id)
+        public IEnumerable<PimsCompReqFinancial> GetCompensationRequisitionFinancials(long compReqId)
         {
-            _logger.LogInformation("Getting compensations financials for id: {acquisitionFileId}", id);
+            _logger.LogInformation("Getting compensations financials for id: {compReqId}", compReqId);
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
 
-            return _compensationRequisitionRepository.GetCompensationRequisitionFinancials(id);
+            return _compensationRequisitionRepository.GetCompensationRequisitionFinancials(compReqId);
+        }
+
+        public IEnumerable<PimsCompReqAcqPayee> GetCompensationRequisitionAcquisitionPayees(long compReqId)
+        {
+            _logger.LogInformation("Getting acquisition compensations payees for id: {compReqId}", compReqId);
+            _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
+
+            return _compensationRequisitionRepository.GetCompensationRequisitionAcquisitionPayees(compReqId);
+        }
+
+        public IEnumerable<PimsCompReqLeasePayee> GetCompensationRequisitionLeasePayees(long compReqId)
+        {
+            _logger.LogInformation("Getting lease compensations payees for id: {compReqId}", compReqId);
+            _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
+
+            return _compensationRequisitionRepository.GetCompensationRequisitionLeasePayees(compReqId);
         }
 
         private static string GetCompensationRequisitionStatusText(bool? isDraft)
@@ -196,6 +225,13 @@ namespace Pims.Api.Services
 
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, (long)compensationRequisition.AcquisitionFileId);
 
+            var currentAcquisitionFile = _acqFileRepository.GetById((long)compensationRequisition.AcquisitionFileId);
+            var currentAcquisitionStatus = Enum.Parse<AcquisitionStatusTypes>(currentAcquisitionFile.AcquisitionFileStatusTypeCode);
+            if (!_acquisitionStatusSolver.CanEditOrDeleteCompensation(currentAcquisitionStatus, compensationRequisition.IsDraft, _user.HasPermission(Permissions.SystemAdmin)))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+            }
+
             compensationRequisition.IsDraft ??= true;
             var newCompensationRequisition = _compensationRequisitionRepository.Add(compensationRequisition);
             _compensationRequisitionRepository.CommitTransaction();
@@ -214,6 +250,13 @@ namespace Pims.Api.Services
             if (compensationRequisition.LeaseId is null)
             {
                 throw new BadRequestException("Invalid LeaseId.");
+            }
+
+            var currentLeaseFile = _leaseRepository.Get((long)compensationRequisition.LeaseId);
+            var currentLeaseStatus = Enum.Parse<LeaseStatusTypes>(currentLeaseFile.LeaseStatusTypeCode);
+            if (!_leaseStatusSolver.CanEditOrDeleteCompensation(currentLeaseStatus, compensationRequisition.IsDraft, _user.HasPermission(Permissions.SystemAdmin)))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
 
             var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
@@ -256,10 +299,9 @@ namespace Pims.Api.Services
 
             var currentAcquisitionFile = _acqFileRepository.GetById((long)currentCompensation.AcquisitionFileId);
             var currentAcquisitionStatus = Enum.Parse<AcquisitionStatusTypes>(currentAcquisitionFile.AcquisitionFileStatusTypeCode);
-
-            if (!_acquisitionStatusSolver.CanEditOrDeleteCompensation(currentAcquisitionStatus, currentCompensation.IsDraft) && !_user.HasPermission(Permissions.SystemAdmin))
+            if (!_acquisitionStatusSolver.CanEditOrDeleteCompensation(currentAcquisitionStatus, currentCompensation.IsDraft, _user.HasPermission(Permissions.SystemAdmin)))
             {
-                throw new BusinessRuleViolationException("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
 
             CheckTotalAllowableCompensation(currentAcquisitionFile, compensationRequisition);
@@ -279,6 +321,13 @@ namespace Pims.Api.Services
             var currentCompensation = _compensationRequisitionRepository.GetById(compensationRequisition.CompensationRequisitionId);
 
             var currentLeaseFile = _leaseRepository.Get((long)currentCompensation.LeaseId);
+
+            var currentLeaseStatus = Enum.Parse<LeaseStatusTypes>(currentLeaseFile.LeaseStatusTypeCode);
+            if (!_leaseStatusSolver.CanEditOrDeleteCompensation(currentLeaseStatus, currentCompensation.IsDraft, _user.HasPermission(Permissions.SystemAdmin)))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+            }
+
             CheckTotalAllowableCompensation(currentLeaseFile, compensationRequisition);
             compensationRequisition.FinalizedDate = GetFinalizedDate(currentCompensation.IsDraft, compensationRequisition.IsDraft, currentCompensation.FinalizedDate);
 

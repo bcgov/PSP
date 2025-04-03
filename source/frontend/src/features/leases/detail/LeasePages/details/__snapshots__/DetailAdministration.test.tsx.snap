@@ -16,7 +16,7 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
 }
 
 .c0 {
@@ -38,10 +38,6 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
   font-weight: bold;
 }
 
-.c5 input.form-control {
-  font-size: 1.8rem;
-}
-
 <div
     class="c0 form-section"
   >
@@ -52,7 +48,7 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
         class="no-gutters row"
       >
         <div
-          class="col"
+          class="align-content-end col"
         >
           Administration
         </div>
@@ -101,17 +97,7 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
         <div
           class="c4 text-left col"
         >
-          <div
-            class="c5 input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-programName"
-              name="programName"
-              title="A program"
-              value="A program"
-            />
-          </div>
+          A program
         </div>
       </div>
       <div
@@ -128,18 +114,7 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
         </div>
         <div
           class="c4 text-left col"
-        >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-type.description"
-              name="type.description"
-              value=""
-            />
-          </div>
-        </div>
+        />
       </div>
       <div
         class="pb-2 row"
@@ -155,18 +130,7 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
         </div>
         <div
           class="c4 text-left col"
-        >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-paymentReceivableType.description"
-              name="paymentReceivableType.description"
-              value=""
-            />
-          </div>
-        </div>
+        />
       </div>
       <div
         class="pb-2 row"
@@ -235,18 +199,7 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
         </div>
         <div
           class="c4 text-left col"
-        >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-initiatorType.description"
-              name="initiatorType.description"
-              value=""
-            />
-          </div>
-        </div>
+        />
       </div>
       <div
         class="pb-2 row"
@@ -262,18 +215,7 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
         </div>
         <div
           class="c4 text-left col"
-        >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-responsibilityType.description"
-              name="responsibilityType.description"
-              value=""
-            />
-          </div>
-        </div>
+        />
       </div>
       <div
         class="pb-2 row"
@@ -306,17 +248,7 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
         <div
           class="c4 text-left col"
         >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-motiName"
-              name="motiName"
-              title="test moti name"
-              value="test moti name"
-            />
-          </div>
+          test moti name
         </div>
       </div>
       <div
@@ -333,18 +265,7 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
         </div>
         <div
           class="c4 text-left col"
-        >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-region.description"
-              name="region.description"
-              value=""
-            />
-          </div>
-        </div>
+        />
       </div>
       <div
         class="pb-2 row"
@@ -383,17 +304,7 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
         <div
           class="c4 text-left col"
         >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-description"
-              name="description"
-              title="a test description"
-              value="a test description"
-            />
-          </div>
+          a test description
         </div>
       </div>
       <div
@@ -412,35 +323,7 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
           class="c4 text-left col"
           data-testid="primaryArbitrationCity"
         >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-primaryArbitrationCity"
-              name="primaryArbitrationCity"
-              title="VICTORIA"
-              value="VICTORIA"
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-3"
-        >
-          <label
-            class="c3"
-          >
-            Lease comments:
-          </label>
-        </div>
-        <div
-          class="c4 text-left col"
-        >
-          a test note
+          VICTORIA
         </div>
       </div>
     </div>
@@ -464,7 +347,7 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
 }
 
 .c0 {
@@ -486,10 +369,6 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
   font-weight: bold;
 }
 
-.c5 input.form-control {
-  font-size: 1.8rem;
-}
-
 <div
     class="c0 form-section"
   >
@@ -500,7 +379,7 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
         class="no-gutters row"
       >
         <div
-          class="col"
+          class="align-content-end col"
         >
           Administration
         </div>
@@ -548,18 +427,7 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
         </div>
         <div
           class="c4 text-left col"
-        >
-          <div
-            class="c5 input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-programName"
-              name="programName"
-              value=""
-            />
-          </div>
-        </div>
+        />
       </div>
       <div
         class="pb-2 row"
@@ -576,16 +444,7 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
         <div
           class="c4 text-left col"
         >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-type.description"
-              name="type.description"
-              value=""
-            />
-          </div>
+          testLeaseType
         </div>
       </div>
       <div
@@ -602,18 +461,7 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
         </div>
         <div
           class="c4 text-left col"
-        >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-paymentReceivableType.description"
-              name="paymentReceivableType.description"
-              value=""
-            />
-          </div>
-        </div>
+        />
       </div>
       <div
         class="pb-2 row"
@@ -682,18 +530,7 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
         </div>
         <div
           class="c4 text-left col"
-        >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-initiatorType.description"
-              name="initiatorType.description"
-              value=""
-            />
-          </div>
-        </div>
+        />
       </div>
       <div
         class="pb-2 row"
@@ -709,18 +546,7 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
         </div>
         <div
           class="c4 text-left col"
-        >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-responsibilityType.description"
-              name="responsibilityType.description"
-              value=""
-            />
-          </div>
-        </div>
+        />
       </div>
       <div
         class="pb-2 row"
@@ -752,18 +578,7 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
         </div>
         <div
           class="c4 text-left col"
-        >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-motiName"
-              name="motiName"
-              value=""
-            />
-          </div>
-        </div>
+        />
       </div>
       <div
         class="pb-2 row"
@@ -779,18 +594,7 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
         </div>
         <div
           class="c4 text-left col"
-        >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-region.description"
-              name="region.description"
-              value=""
-            />
-          </div>
-        </div>
+        />
       </div>
       <div
         class="pb-2 row"
@@ -828,18 +632,7 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
         </div>
         <div
           class="c4 text-left col"
-        >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-description"
-              name="description"
-              value=""
-            />
-          </div>
-        </div>
+        />
       </div>
       <div
         class="pb-2 row"
@@ -856,33 +649,6 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
         <div
           class="c4 text-left col"
           data-testid="primaryArbitrationCity"
-        >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-primaryArbitrationCity"
-              name="primaryArbitrationCity"
-              value=""
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-3"
-        >
-          <label
-            class="c3"
-          >
-            Lease comments:
-          </label>
-        </div>
-        <div
-          class="c4 text-left col"
         />
       </div>
     </div>

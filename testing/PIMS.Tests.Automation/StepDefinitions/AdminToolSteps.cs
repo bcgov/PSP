@@ -1,4 +1,5 @@
-﻿using PIMS.Tests.Automation.Classes;
+﻿using OpenQA.Selenium;
+using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
 using System.Data;
 
@@ -21,16 +22,16 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private FinancialCode financialCode;
 
-        public AdminToolSteps(BrowserDriver driver)
+        public AdminToolSteps(IWebDriver driver)
         {
             loginSteps = new LoginSteps(driver);
             digitalDocumentSteps = new DigitalDocumentSteps(driver);
-            helpDesk = new HelpDesk(driver.Current);
-            manageUsers = new ManageUsers(driver.Current);
-            digitalDocuments = new DigitalDocuments(driver.Current);
-            financialCodes = new FinancialCodes(driver.Current);
-            cdogsTemplates = new CDOGSTemplates(driver.Current);
-            sharedPagination = new SharedPagination(driver.Current);
+            helpDesk = new HelpDesk(driver);
+            manageUsers = new ManageUsers(driver);
+            digitalDocuments = new DigitalDocuments(driver);
+            financialCodes = new FinancialCodes(driver);
+            cdogsTemplates = new CDOGSTemplates(driver);
+            sharedPagination = new SharedPagination(driver);
             documentFiles = digitalDocumentSteps.UploadFileDocuments();
             financialCode = new FinancialCode();
         }
@@ -137,7 +138,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             sharedPagination.ResetSearch();
 
             //Verify Filters
-            manageUsers.FilterUsers("TRANPSP1", "Cannot determine");
+            manageUsers.FilterUsers("TRANPSP3", "South Coast Region");
             Assert.Equal(0, manageUsers.TotalUsersResult());
 
             manageUsers.FilterUsers("TRANPSP1", "");
@@ -176,7 +177,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             digitalDocuments.SaveDigitalDocumentUpload();
 
             //Verify Document List
-            digitalDocuments.VerifyDocumentsListView("CDOGS Templates");
+            digitalDocuments.VerifyDocumentsListView();
 
             //Add new template
             cdogsTemplates.AddNewTemplate();
@@ -416,7 +417,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             /* TEST COVERAGE: PSP-1764 */
 
             helpDesk.CancelHelpDeskModal();
-            helpDesk.Dispose();
         }
 
         [StepDefinition(@"User Management rendered successfully")]
@@ -426,8 +426,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Verify List View
             manageUsers.VerifyManageUserListView();
-            manageUsers.Dispose();
-
         }
 
         [StepDefinition(@"CDOGS rendered successfully")]
@@ -437,7 +435,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Verify CDOGS List View
             cdogsTemplates.VerifyCDOGSListView();
-            cdogsTemplates.Dispose();
         }
 
         [StepDefinition(@"Financial Codes rendered successfully")]
@@ -447,19 +444,17 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Verify Financial Codes List View
             financialCodes.VerifyFinancialCodeListView();
-            financialCodes.Dispose();
         }
 
         [StepDefinition(@"Financial Code cannot be duplicated successfully")]
         public void FinancialCodesCannotDuplicateSuccessfully()
         {
             Assert.True(financialCodes.DuplicateErrorMessageDisplayed());
-            financialCodes.Dispose();
         }
 
         private void PopulateFinancialCode(int rowNumber)
         {
-            DataTable financialCodesSheet = ExcelDataContext.GetInstance().Sheets["FinancialCodes"]!;
+            System.Data.DataTable financialCodesSheet = ExcelDataContext.GetInstance().Sheets["FinancialCodes"]!;
             ExcelDataContext.PopulateInCollection(financialCodesSheet);
 
             financialCode.FinnCodeType = ExcelDataContext.ReadData(rowNumber, "FinnCodeType");

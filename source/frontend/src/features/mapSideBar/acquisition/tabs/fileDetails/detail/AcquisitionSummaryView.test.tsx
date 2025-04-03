@@ -1,4 +1,5 @@
 import Claims from '@/constants/claims';
+import { InterestHolderType } from '@/constants/interestHolderTypes';
 import { useApiAcquisitionFile } from '@/hooks/pims-api/useApiAcquisitionFile';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import {
@@ -7,7 +8,9 @@ import {
 } from '@/mocks/acquisitionFiles.mock';
 import { getEmptyPerson } from '@/mocks/contacts.mock';
 import { getEmptyOrganization } from '@/mocks/organization.mock';
+import { mockProjects } from '@/mocks/projects.mock';
 import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 import { act, cleanup, render, RenderOptions, userEvent, waitForEffects } from '@/utils/test-utils';
 
@@ -115,6 +118,46 @@ describe('AcquisitionSummaryView component', () => {
     const editWarningText = getByTestId('tooltip-icon-1-summary-cannot-edit-tooltip');
     expect(editWarningText).toBeVisible();
   });
+
+  it.each([
+    ['with project number', '001', 'FTProjectTest', '001 - FTProjectTest'],
+    ['without project number', null, 'FTProjectTest', 'FTProjectTest'],
+  ])(
+    'renders the file Project Number and name concatenated - %s',
+    async (
+      _: string,
+      projectNumber: string | null,
+      projectDescription: string,
+      expectedValue: string,
+    ) => {
+      const { getByText } = setup(
+        {
+          acquisitionFile: {
+            ...mockAcquisitionFileResponse(),
+            project: {
+              id: 1,
+              projectStatusTypeCode: null,
+              code: projectNumber,
+              description: projectDescription,
+              costTypeCode: null,
+              businessFunctionCode: null,
+              workActivityCode: null,
+              regionCode: null,
+              note: null,
+              projectPersons: [],
+              projectProducts: [],
+              ...getEmptyBaseAudit(1),
+            },
+          },
+        },
+        { claims: [] },
+      );
+      await waitForEffects();
+
+      expect(getByText('Ministry project:')).toBeVisible();
+      expect(getByText(expectedValue)).toBeVisible();
+    },
+  );
 
   it('renders historical file number', async () => {
     const { getByText } = setup({ acquisitionFile: mockAcquisitionFileResponse() }, { claims: [] });
@@ -233,11 +276,85 @@ describe('AcquisitionSummaryView component', () => {
     expect(getByTestId('assigned-date')).toHaveTextContent('Dec 18, 2024');
   });
 
+  it('renders multiple owner solicitor information with primary contact', async () => {
+    const { findByText, findAllByText } = setup(
+      {
+        acquisitionFile: {
+          ...mockAcquisitionFileResponse(),
+          acquisitionFileInterestHolders: [
+            {
+              interestHolderId: 1,
+              interestHolderType: toTypeCodeNullable(InterestHolderType.OWNER_SOLICITOR),
+
+              acquisitionFileId: 1,
+              personId: null,
+              person: null,
+              organizationId: 1,
+              organization: {
+                ...getEmptyOrganization(),
+                id: 1,
+                name: 'Millennium Inc',
+                alias: 'M Inc',
+                incorporationNumber: '1234',
+                comment: '',
+                contactMethods: null,
+                isDisabled: false,
+                organizationAddresses: null,
+                organizationPersons: null,
+                rowVersion: null,
+              },
+              interestHolderProperties: [],
+              primaryContactId: 1,
+              primaryContact: null,
+              comment: null,
+              isDisabled: false,
+              ...getEmptyBaseAudit(),
+            },
+            {
+              interestHolderId: 2,
+              interestHolderType: toTypeCodeNullable(InterestHolderType.OWNER_SOLICITOR),
+
+              acquisitionFileId: 1,
+              personId: null,
+              person: null,
+              organizationId: 2,
+              organization: {
+                ...getEmptyOrganization(),
+                id: 2,
+                name: 'Test Org',
+                alias: 'M Inc',
+                incorporationNumber: '12345',
+                comment: '',
+                contactMethods: null,
+                isDisabled: false,
+                organizationAddresses: null,
+                organizationPersons: null,
+                rowVersion: null,
+              },
+              interestHolderProperties: [],
+              primaryContactId: 2,
+              primaryContact: null,
+              comment: null,
+              isDisabled: false,
+              ...getEmptyBaseAudit(),
+            },
+          ],
+        },
+      },
+      { claims: [] },
+    );
+    await waitForEffects();
+    expect(await findByText('Millennium Inc')).toBeVisible();
+    expect(await findByText('Test Org')).toBeVisible();
+    expect(await findAllByText(/Primary contact/)).toHaveLength(2);
+  });
+
   it('renders owner solicitor information with primary contact', async () => {
     const { findByText } = setup(
       { acquisitionFile: mockAcquisitionFileResponse() },
       { claims: [] },
     );
+    await waitForEffects();
     expect(await findByText('Millennium Inc')).toBeVisible();
     expect(await findByText(/Primary contact/)).toBeVisible();
     expect(await findByText('Foo Bar Baz')).toBeVisible();
@@ -466,6 +583,89 @@ describe('AcquisitionSummaryView component', () => {
       ).toBeVisible();
       expect(getByText(/Sub-interest solicitor/i)).toBeVisible();
       expect(getByText(/Sub-interest representative/i)).toBeVisible();
+    });
+  });
+
+  describe('Project persons', () => {
+    it('renders project persons if present', async () => {
+      const { findByText } = setup(
+        {
+          acquisitionFile: {
+            ...mockAcquisitionFileResponse(),
+            project: {
+              ...mockAcquisitionFileResponse().project,
+              projectPersons: [
+                {
+                  id: 1,
+                  personId: 1,
+                  person: {
+                    ...getEmptyPerson(),
+                    id: 1,
+                    surname: 'Doe',
+                    firstName: 'John',
+                    middleNames: 'A',
+                  },
+                  project: mockProjects()[0],
+                  projectId: 1,
+                  ...getEmptyBaseAudit(),
+                },
+              ],
+            },
+          },
+        },
+        { claims: [] },
+      );
+      await waitForEffects();
+      expect(await findByText(/Management team member/)).toBeVisible();
+      expect(await findByText(/John A Doe/)).toBeVisible();
+    });
+
+    it('renders multiple project persons if present', async () => {
+      const { findByText, findAllByText } = setup(
+        {
+          acquisitionFile: {
+            ...mockAcquisitionFileResponse(),
+            project: {
+              ...mockAcquisitionFileResponse().project,
+              projectPersons: [
+                {
+                  id: 1,
+                  personId: 1,
+                  person: {
+                    ...getEmptyPerson(),
+                    id: 1,
+                    surname: 'Doe',
+                    firstName: 'John',
+                    middleNames: 'A',
+                  },
+                  project: mockProjects()[0],
+                  projectId: 1,
+                  ...getEmptyBaseAudit(),
+                },
+                {
+                  id: 2,
+                  personId: 2,
+                  person: {
+                    ...getEmptyPerson(),
+                    id: 2,
+                    surname: 'Smith',
+                    firstName: 'Jane',
+                    middleNames: 'B',
+                  },
+                  project: mockProjects()[0],
+                  projectId: 1,
+                  ...getEmptyBaseAudit(),
+                },
+              ],
+            },
+          },
+        },
+        { claims: [] },
+      );
+      await waitForEffects();
+      expect((await findAllByText(/Management team member/))[0]).toBeVisible();
+      expect(await findByText(/John A Doe/)).toBeVisible();
+      expect(await findByText(/Jane B Smith/)).toBeVisible();
     });
   });
 });

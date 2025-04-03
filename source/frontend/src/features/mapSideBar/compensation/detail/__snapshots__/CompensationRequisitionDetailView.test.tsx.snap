@@ -245,7 +245,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
 }
 
 .c1 {
@@ -302,27 +302,9 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
   flex-direction: row-reverse;
 }
 
-.c13 {
+.c12 {
   font-size: 16px;
   font-weight: 600;
-}
-
-.c12 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-  text-align: left;
-  height: 100%;
-  overflow-y: auto;
-  padding-bottom: 1rem;
 }
 
 <div
@@ -465,7 +447,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-content-end col"
           >
             <div
               class="c5"
@@ -599,38 +581,6 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="pr-0 text-left col-4"
-          >
-            <label
-              class="c9"
-            >
-              Expropriation notice served date:
-            </label>
-          </div>
-          <div
-            class="c10 text-left col"
-          />
-        </div>
-        <div
-          class="pb-2 row"
-        >
-          <div
-            class="pr-0 text-left col-4"
-          >
-            <label
-              class="c9"
-            >
-              Expropriation vesting date:
-            </label>
-          </div>
-          <div
-            class="c10 text-left col"
-          />
-        </div>
-        <div
-          class="pb-2 row"
-        >
-          <div
             class="pr-0 text-left col-12"
           >
             <label
@@ -659,7 +609,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-content-end col"
           >
             <div
               class="d-flex align-items-center"
@@ -733,7 +683,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-content-end col"
           >
             Financial Coding
           </div>
@@ -916,7 +866,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-content-end col"
           >
             Payment
           </div>
@@ -959,18 +909,13 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
             <label
               class="c9"
             >
-              Payee:
+              Payee(s):
             </label>
           </div>
           <div
             class="c10 text-left col"
-          >
-            <div
-              class="c12"
-            >
-              <label />
-            </div>
-          </div>
+            data-testid="comp-req-payees"
+          />
         </div>
         <div
           class="pb-2 row"
@@ -1038,7 +983,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-content-end col"
           >
             Financial Activities
           </div>
@@ -1108,7 +1053,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
         class="collapse show"
       >
         <div
-          class="c13"
+          class="c12"
         >
           <div
             class="row"

@@ -7,8 +7,10 @@ import { EditButton } from '@/components/common/buttons/EditButton';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Section/SectionStyles';
+import TooltipIcon from '@/components/common/TooltipIcon';
 import { UserNameTooltip } from '@/components/common/UserNameTooltip';
 import { Claims } from '@/constants/index';
+import { cannotEditMessage } from '@/features/mapSideBar/acquisition/common/constants';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
 import { ApiGen_CodeTypes_ChecklistItemStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_ChecklistItemStatusTypes';
@@ -21,6 +23,7 @@ import { StyledChecklistItemStatus, StyledSectionCentered } from './styles';
 export interface IChecklistViewProps {
   apiFile?: ApiGen_Concepts_FileWithChecklist;
   onEdit: () => void;
+  isFileFinalStatus?: boolean;
   prefix?: string;
   sectionTypeName: string;
   editClaim: Claims;
@@ -31,6 +34,7 @@ export const ChecklistView: React.FC<IChecklistViewProps> = ({
   apiFile,
   prefix,
   onEdit,
+  isFileFinalStatus,
   sectionTypeName,
   editClaim,
   showEditButton,
@@ -46,9 +50,16 @@ export const ChecklistView: React.FC<IChecklistViewProps> = ({
     <StyledSummarySection>
       {showEditButton && (
         <StyledEditWrapper className="mr-3 my-1">
-          {keycloak.hasClaim(editClaim) ? (
+          {keycloak.hasClaim(editClaim) && !isFileFinalStatus ? (
             <EditButton title="Edit checklist" onClick={onEdit} style={{ float: 'right' }} />
-          ) : null}
+          ) : (
+            isFileFinalStatus && (
+              <TooltipIcon
+                toolTipId={`lease-checklist-cannot-edit-tooltip`}
+                toolTip={cannotEditMessage}
+              />
+            )
+          )}
         </StyledEditWrapper>
       )}
       {lastUpdated && (

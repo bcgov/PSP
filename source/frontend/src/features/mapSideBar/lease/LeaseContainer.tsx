@@ -1,12 +1,23 @@
 import { FormikProps } from 'formik';
-import React, { useCallback, useContext, useEffect, useReducer, useRef, useState } from 'react';
+import { LatLngLiteral } from 'leaflet';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer,
+  useRef,
+  useState,
+} from 'react';
+import { Route, Switch, useHistory } from 'react-router-dom';
+import { useRouteMatch } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import LeaseIcon from '@/assets/images/lease-icon.svg?react';
 import GenericModal from '@/components/common/GenericModal';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { Claims } from '@/constants';
+import { Claims, Roles } from '@/constants';
 import { useLeaseDetail } from '@/features/leases';
 import { AddLeaseYupSchema } from '@/features/leases/add/AddLeaseYupSchema';
 import LeaseChecklistContainer from '@/features/leases/detail/LeasePages/checklist/LeaseChecklistContainer';
@@ -17,20 +28,31 @@ import { ImprovementsContainer } from '@/features/leases/detail/LeasePages/impro
 import InsuranceContainer from '@/features/leases/detail/LeasePages/insurance/InsuranceContainer';
 import PeriodPaymentsContainer from '@/features/leases/detail/LeasePages/payment/PeriodPaymentsContainer';
 import { PeriodPaymentsYupSchema } from '@/features/leases/detail/LeasePages/payment/PeriodPaymentsYupSchema';
-import PeriodPaymentsView, {
-  IPeriodPaymentsViewProps,
-} from '@/features/leases/detail/LeasePages/payment/table/periods/PaymentPeriodsView';
+import PeriodPaymentsView from '@/features/leases/detail/LeasePages/payment/table/periods/PaymentPeriodsView';
 import LeaseStakeholderContainer from '@/features/leases/detail/LeasePages/stakeholders/LeaseStakeholderContainer';
 import Surplus from '@/features/leases/detail/LeasePages/surplus/Surplus';
 import { LeaseFormModel } from '@/features/leases/models';
+import LeaseUpdatePropertySelector from '@/features/leases/shared/propertyPicker/LeaseUpdatePropertySelector';
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
+import { useQuery } from '@/hooks/use-query';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
+import { exists, getLatLng, locationFromFileProperty, stripTrailingSlash } from '@/utils';
 
+import GenerateFormView from '../acquisition/common/GenerateForm/GenerateFormView';
 import { SideBarContext } from '../context/sidebarContext';
+import FileLayout from '../layout/FileLayout';
 import MapSideBarLayout from '../layout/MapSideBarLayout';
+import { InventoryTabNames } from '../property/InventoryTabs';
+import { FilePropertyRouter } from '../router/FilePropertyRouter';
+import { FileTabType } from '../shared/detail/FileTabs';
+import FileMenuView from '../shared/FileMenuView';
 import SidebarFooter from '../shared/SidebarFooter';
+import usePathGenerator from '../shared/sidebarPathGenerator';
 import { StyledFormWrapper } from '../shared/styles';
 import LeaseHeader from './common/LeaseHeader';
 import { LeaseFileTabNames } from './detail/LeaseFileTabs';
+import LeaseGenerateContainer from './LeaseGenerateFormContainer';
 import LeaseRouter from './tabs/LeaseRouter';
 import ViewSelector from './ViewSelector';
 
@@ -127,7 +149,7 @@ export const leasePages: Map<LeasePageNames, ILeasePage<any>> = new Map<
       title: 'Payments',
       validation: PeriodPaymentsYupSchema,
       componentView: PeriodPaymentsView,
-    } as ILeasePage<IPeriodPaymentsViewProps>,
+    },
   ],
   [
     LeasePageNames.IMPROVEMENTS,
@@ -194,6 +216,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
   const formikRef = useRef<FormikProps<LeaseFormModel>>(null);
 
   const close = useCallback(() => onClose && onClose(), [onClose]);
+  const match = useRouteMatch();
   const { lease, setLease, refresh, loading } = useLeaseDetail(leaseId);
   const {
     setStaleFile,
@@ -204,7 +227,14 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
     lastUpdatedBy,
   } = useContext(SideBarContext);
 
+  const query = useQuery();
+  const history = useHistory();
+
   const [isValid, setIsValid] = useState<boolean>(true);
+
+  const { hasClaim, hasRole } = useKeycloakWrapper();
+
+  const pathSolver = usePathGenerator();
 
   const activeTab = containerState.activeTab;
   const { setFullWidthSideBar } = useMapStateMachine();
@@ -212,6 +242,19 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
   const {
     getLastUpdatedBy: { execute: getLastUpdatedBy, loading: getLastUpdatedByLoading },
   } = useLeaseRepository();
+
+  const { setFilePropertyLocations } = useMapStateMachine();
+
+  const locations: LatLngLiteral[] = useMemo(() => {
+    if (exists(lease?.fileProperties)) {
+      return lease?.fileProperties
+        .map(x => locationFromFileProperty(x))
+        .map(y => getLatLng(y))
+        .filter(exists);
+    } else {
+      return [];
+    }
+  }, [lease?.fileProperties]);
 
   const onChildSuccess = useCallback(() => {
     setStaleLastUpdatedBy(true);
@@ -253,6 +296,8 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
     } else {
       handleCancelConfirm();
     }
+
+    setIsPropertyEditing(false);
   };
 
   const fetchLastUpdatedBy = useCallback(async () => {
@@ -297,63 +342,146 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
     }
   }, [fetchLastUpdatedBy, lastUpdatedBy, leaseId, staleLastUpdatedBy]);
 
+  useEffect(() => {
+    setFilePropertyLocations(locations);
+  }, [setFilePropertyLocations, locations]);
+
+  const leaseProperties = useMemo(() => lease?.fileProperties ?? [], [lease?.fileProperties]);
+
+  const onSelectFileSummary = () => {
+    pathSolver.showFile('lease', lease.id);
+  };
+
+  const onSelectProperty = (propertyId: number) => {
+    const menuIndex = leaseProperties.findIndex(x => x.id === propertyId);
+
+    // The index needs to be offset to match the menu index
+    pathSolver.showFilePropertyIndex('lease', lease.id, menuIndex + 1);
+  };
+
+  const onEditProperties = () => {
+    pathSolver.editProperties('lease', lease.id);
+  };
+
+  const setIsPropertyEditing = useCallback(
+    (value: boolean) => {
+      if (value) {
+        query.set('edit', value.toString());
+      } else {
+        query.delete('edit');
+      }
+
+      setContainerState({
+        isEditing: value,
+      });
+      history.push({ search: query.toString() });
+    },
+    [history, query],
+  );
+
+  useEffect(() => {
+    setIsPropertyEditing(query.get('edit') === 'true');
+  }, [query, setIsPropertyEditing]);
+
+  const onPropertyUpdate = () => {
+    setIsPropertyEditing(false);
+    refresh();
+  };
+
   return (
-    <MapSideBarLayout
-      showCloseButton
-      onClose={close}
-      title={containerState.isEditing ? 'Update Lease / Licence' : 'Lease / Licence'}
-      icon={
-        <LeaseIcon
-          title="Lease file icon"
-          width="2.6rem"
-          height="2.6rem"
-          fill="currentColor"
-          className="mr-2"
-        />
-      }
-      header={<LeaseHeader lease={lease} lastUpdatedBy={lastUpdatedBy} />}
-      footer={
-        containerState.isEditing && (
-          <SidebarFooter
-            isOkDisabled={formikRef?.current?.isSubmitting}
-            onSave={handleSaveClick}
-            onCancel={handleCancelClick}
-            displayRequiredFieldError={isValid === false}
+    <Switch>
+      <Route path={`${stripTrailingSlash(match.path)}/property/selector`}>
+        {exists(lease) && <LeaseUpdatePropertySelector lease={lease} />}
+      </Route>
+      <Route>
+        <MapSideBarLayout
+          showCloseButton
+          onClose={close}
+          title={containerState.isEditing ? 'Update Lease / Licence' : 'Lease / Licence'}
+          icon={<LeaseIcon title="Lease file icon" fill="currentColor" />}
+          header={<LeaseHeader lease={lease} lastUpdatedBy={lastUpdatedBy} />}
+          footer={
+            containerState.isEditing && (
+              <SidebarFooter
+                isOkDisabled={formikRef?.current?.isSubmitting}
+                onSave={handleSaveClick}
+                onCancel={handleCancelClick}
+                displayRequiredFieldError={isValid === false}
+              />
+            )
+          }
+        >
+          <FileLayout
+            leftComponent={
+              <FileMenuView
+                properties={leaseProperties}
+                canEdit={hasRole(Roles.SYSTEM_ADMINISTRATOR) || hasClaim(Claims.LEASE_EDIT)}
+                onSelectFileSummary={onSelectFileSummary}
+                onSelectProperty={onSelectProperty}
+                onEditProperties={onEditProperties}
+              >
+                <LeaseGenerateContainer lease={lease} View={GenerateFormView} />
+              </FileMenuView>
+            }
+            bodyComponent={
+              <StyledFormWrapper>
+                <LoadingBackdrop show={loading || getLastUpdatedByLoading} />
+                <Switch>
+                  <Route
+                    path={`${stripTrailingSlash(match.path)}/property/:menuIndex`}
+                    render={({ match }) => (
+                      <FilePropertyRouter
+                        formikRef={formikRef}
+                        selectedMenuIndex={Number(match.params.menuIndex)}
+                        file={lease}
+                        fileType={ApiGen_CodeTypes_FileTypes.Lease}
+                        isEditing={containerState.isEditing}
+                        setIsEditing={setIsPropertyEditing}
+                        defaultFileTab={FileTabType.FILE_DETAILS}
+                        defaultPropertyTab={InventoryTabNames.property}
+                        onSuccess={onPropertyUpdate}
+                      />
+                    )}
+                  />
+                  <Route
+                    path={[`${stripTrailingSlash(match.path)}`]}
+                    render={() => (
+                      <ViewSelector
+                        formikRef={formikRef}
+                        lease={lease}
+                        refreshLease={refresh}
+                        setLease={setLease}
+                        isEditing={containerState.isEditing}
+                        activeEditForm={containerState.activeEditForm}
+                        activeTab={containerState.activeTab}
+                        setContainerState={setContainerState}
+                        onSuccess={onChildSuccess}
+                      />
+                    )}
+                  />
+                </Switch>
+              </StyledFormWrapper>
+            }
           />
-        )
-      }
-    >
-      <GenericModal
-        variant="info"
-        display={containerState.showConfirmModal}
-        title={'Confirm Changes'}
-        message={
-          <>
-            <p>If you choose to cancel now, your changes will not be saved.</p>
-            <p>Do you want to proceed?</p>
-          </>
-        }
-        handleOk={handleCancelConfirm}
-        handleCancel={() => setContainerState({ showConfirmModal: false })}
-        okButtonText="Yes"
-        cancelButtonText="No"
-        show
-      />
-      <StyledFormWrapper>
-        <LoadingBackdrop show={loading || getLastUpdatedByLoading} />
-        <ViewSelector
-          formikRef={formikRef}
-          lease={lease}
-          refreshLease={refresh}
-          setLease={setLease}
-          isEditing={containerState.isEditing}
-          activeEditForm={containerState.activeEditForm}
-          activeTab={containerState.activeTab}
-          setContainerState={setContainerState}
-          onSuccess={onChildSuccess}
+        </MapSideBarLayout>
+        <GenericModal
+          variant="info"
+          display={containerState.showConfirmModal}
+          title={'Confirm Changes'}
+          message={
+            <>
+              <p>If you choose to cancel now, your changes will not be saved.</p>
+              <p>Do you want to proceed?</p>
+            </>
+          }
+          handleOk={handleCancelConfirm}
+          handleCancel={() => setContainerState({ showConfirmModal: false })}
+          okButtonText="Yes"
+          cancelButtonText="No"
+          show
         />
-      </StyledFormWrapper>
-    </MapSideBarLayout>
+      </Route>
+    </Switch>
   );
 };
 

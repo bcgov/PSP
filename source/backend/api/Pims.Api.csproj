@@ -2,8 +2,8 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <UserSecretsId>0ef6255f-9ea0-49ec-8c65-c172304b4926</UserSecretsId>
-    <Version>5.7.3-96.22</Version>
-    <AssemblyVersion>5.7.3.96</AssemblyVersion>
+    <Version>5.8.2-100.21</Version>
+    <AssemblyVersion>5.8.2.100</AssemblyVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <ProjectGuid>{16BC0468-78F6-4C91-87DA-7403C919E646}</ProjectGuid>
     <TargetFramework>net8.0</TargetFramework>
@@ -49,6 +49,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Polly.Extensions" Version="8.5.1" />
     <PackageReference Include="prometheus-net.AspNetCore" Version="8.2.1" />
     <PackageReference Include="prometheus-net.AspNetCore.HealthChecks" Version="8.2.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.9.0" />

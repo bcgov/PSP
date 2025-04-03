@@ -13,7 +13,7 @@ exports[`HelpModalContentContainer component > renders correctly 1`] = `
   border-bottom: solid 0.2rem;
   width: 100%;
   text-align: left;
-  margin-bottom: 2.4rem;
+  margin-bottom: 1.6rem;
 }
 
 .c1 {
@@ -71,6 +71,7 @@ exports[`HelpModalContentContainer component > renders correctly 1`] = `
               class="form-control"
               id="input-user"
               name="user"
+              style="word-break: break-all;"
               title="Chester Tester"
               value="Chester Tester"
             />
@@ -99,6 +100,7 @@ exports[`HelpModalContentContainer component > renders correctly 1`] = `
               class="form-control"
               id="input-email"
               name="email"
+              style="word-break: break-all;"
               title="test@test.com"
               value="test@test.com"
             />
@@ -128,6 +130,7 @@ exports[`HelpModalContentContainer component > renders correctly 1`] = `
               id="input-description"
               name="description"
               placeholder="Question, suggestion, bug..."
+              style="word-break: break-all;"
               title=""
             />
           </div>
