@@ -21,7 +21,8 @@ PRINT N'Create the temporary table to capture the data.'
 GO
 CREATE TABLE dbo.TMP_EXPROP_OWNER_HISTORY (
   ACQUISITION_FILE_ID            bigint       not null,
-  PERSON_ID                      bigint       null,
+  ACQUISITION_OWNER_ID           bigint       null,
+  INTEREST_HOLDER_ID             bigint       null,
   EXPROP_OWNER_HISTORY_TYPE_CODE nvarchar(20) not null,
   EVENT_DT                       datetime
 )
@@ -32,9 +33,10 @@ GO
 -- Populate the temp table from the dbo.PIMS_EXPROP_OWNER_HISTORY table.
 PRINT N'Populate the temp table from the dbo.PIMS_EXPROP_OWNER_HISTORY table.'
 GO
-INSERT INTO TMP_EXPROP_OWNER_HISTORY (ACQUISITION_FILE_ID, PERSON_ID, EXPROP_OWNER_HISTORY_TYPE_CODE, EVENT_DT)
+INSERT INTO TMP_EXPROP_OWNER_HISTORY (ACQUISITION_FILE_ID, ACQUISITION_OWNER_ID, INTEREST_HOLDER_ID, EXPROP_OWNER_HISTORY_TYPE_CODE, EVENT_DT)
   SELECT ACQUISITION_FILE_ID
-       , PERSON_ID
+       , ACQUISITION_OWNER_ID
+       , INTEREST_HOLDER_ID
        , EXPROP_OWNER_HISTORY_TYPE_CODE
        , EVENT_DT
   FROM   dbo.PIMS_EXPROP_OWNER_HISTORY

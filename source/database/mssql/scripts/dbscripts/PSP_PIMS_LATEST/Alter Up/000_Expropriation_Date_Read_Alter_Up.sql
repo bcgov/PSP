@@ -5,6 +5,7 @@ PIMS_EXPROP_OWNER_HISTORY table.
 Author        Date         Comment
 ------------  -----------  -----------------------------------------------------
 Doug Filteau  2025-Mar-21  Initial version.
+Doug Filteau  2025-Apr-03  Changed for reconfigured PIMS_EXPROP_OWNER_HISTORY.
 ----------------------------------------------------------------------------- */
 
 SET XACT_ABORT ON
@@ -21,7 +22,8 @@ PRINT N'Create the temporary table to capture the data.'
 GO
 CREATE TABLE dbo.TMP_EXPROP_OWNER_HISTORY (
   ACQUISITION_FILE_ID            bigint       not null,
-  PERSON_ID                      bigint       null,
+  ACQUISITION_OWNER_ID           bigint       null,
+  INTEREST_HOLDER_ID             bigint       null,
   EXPROP_OWNER_HISTORY_TYPE_CODE nvarchar(20) not null,
   EVENT_DT                       datetime
 )
@@ -32,7 +34,7 @@ GO
 -- Populate the temp table from the PIMS_EXPROPRIATION_NOTICE table.
 PRINT N'Populate the temp table from the PIMS_EXPROPRIATION_NOTICE table.'
 GO
-INSERT INTO TMP_EXPROP_OWNER_HISTORY (ACQUISITION_FILE_ID, PERSON_ID, EXPROP_OWNER_HISTORY_TYPE_CODE, EVENT_DT)
+INSERT INTO TMP_EXPROP_OWNER_HISTORY (ACQUISITION_FILE_ID, ACQUISITION_OWNER_ID, EXPROP_OWNER_HISTORY_TYPE_CODE, EVENT_DT)
   SELECT ACQUISITION_FILE_ID
        , ACQUISITION_OWNER_ID
        , N'NOTCSRVDDT'
@@ -58,13 +60,13 @@ GO
 -- Populate the temp table from the PIMS_EXPROPRIATION_PAYMENT table.
 PRINT N'Populate the temp table from the PIMS_EXPROPRIATION_PAYMENT table.'
 GO
-INSERT INTO TMP_EXPROP_OWNER_HISTORY (ACQUISITION_FILE_ID, PERSON_ID, EXPROP_OWNER_HISTORY_TYPE_CODE, EVENT_DT)
+INSERT INTO TMP_EXPROP_OWNER_HISTORY (ACQUISITION_FILE_ID, ACQUISITION_OWNER_ID, INTEREST_HOLDER_ID, EXPROP_OWNER_HISTORY_TYPE_CODE, EVENT_DT)
   SELECT ACQUISITION_FILE_ID
        , ACQUISITION_OWNER_ID
+       , INTEREST_HOLDER_ID
        , N'ADVPMTSRVDDT'
        , ADV_PMT_SERVED_DT
   FROM   PIMS_EXPROPRIATION_PAYMENT
-  WHERE  ACQUISITION_OWNER_ID IS NOT NULL
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
