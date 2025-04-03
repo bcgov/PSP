@@ -26,14 +26,11 @@ public partial class PimsExpropOwnerHistoryHist
     [Column("ACQUISITION_FILE_ID")]
     public long AcquisitionFileId { get; set; }
 
-    [Column("PERSON_ID")]
-    public long? PersonId { get; set; }
+    [Column("ACQUISITION_OWNER_ID")]
+    public long? AcquisitionOwnerId { get; set; }
 
-    [Column("ORGANIZATION_ID")]
-    public long? OrganizationId { get; set; }
-
-    [Column("PRIMARY_CONTACT_ID")]
-    public long? PrimaryContactId { get; set; }
+    [Column("INTEREST_HOLDER_ID")]
+    public long? InterestHolderId { get; set; }
 
     [Required]
     [Column("EXPROP_OWNER_HISTORY_TYPE_CODE")]
