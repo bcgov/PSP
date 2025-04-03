@@ -60,5 +60,5 @@ public partial class PimsPropertyRoadType
     public string DbLastUpdateUserid { get; set; }
 
     [InverseProperty("PropertyRoadTypeCodeNavigation")]
-    public virtual ICollection<PimsPropPropRoadType> PimsPropPropRoadTypes { get; set; } = new List<PimsPropPropRoadType>();
+    public virtual ICollection<PimsPropPropRoadTyp> PimsPropPropRoadTyps { get; set; } = new List<PimsPropPropRoadTyp>();
 }

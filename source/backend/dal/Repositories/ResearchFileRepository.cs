@@ -51,7 +51,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(o => o.Organization)
                 .Include(r => r.RequestorOrganizationNavigation)
                 .Include(r => r.PimsPropertyResearchFiles)
-                    .ThenInclude(rp => rp.PimsPrfPropResearchPurposeTypes)
+                    .ThenInclude(rp => rp.PimsPrfPropResearchPurposeTyps)
                     .ThenInclude(p => p.PropResearchPurposeTypeCodeNavigation)
                 .Include(r => r.PimsResearchFilePurposes)
                     .ThenInclude(rp => rp.ResearchPurposeTypeCodeNavigation)

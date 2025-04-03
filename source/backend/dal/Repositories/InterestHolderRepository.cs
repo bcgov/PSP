@@ -63,7 +63,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(p => p.PimsPersonAddresses)
                     .ThenInclude(oa => oa.AddressUsageTypeCodeNavigation)
                 .Include(ih => ih.PimsInthldrPropInterests)
-                    .ThenInclude(ip => ip.PimsPropInthldrInterestTypes)
+                    .ThenInclude(ip => ip.PimsPropInthldrInterestTyps)
                     .ThenInclude(ipt => ipt.InterestHolderInterestTypeCodeNavigation)
                 .AsNoTracking()
                 .ToList();
@@ -81,7 +81,7 @@ namespace Pims.Dal.Repositories
                         // ignore interest holders properties, as those are new and do not require updates, the will be inserted by the parent's updateChild.
                         if (ihp.PimsInthldrPropInterestId > 0)
                         {
-                            Context.UpdateChild<PimsInthldrPropInterest, long, PimsPropInthldrInterestType, long>(p => p.PimsPropInthldrInterestTypes, ihp.PimsInthldrPropInterestId, ihp.PimsPropInthldrInterestTypes.ToArray());
+                            Context.UpdateChild<PimsInthldrPropInterest, long, PimsPropInthldrInterestTyp, long>(p => p.PimsPropInthldrInterestTyps, ihp.PimsInthldrPropInterestId, ihp.PimsPropInthldrInterestTyps.ToArray());
                         }
                     });
                     Context.UpdateChild<PimsInterestHolder, long, PimsInthldrPropInterest, long>(p => p.PimsInthldrPropInterests, ih.InterestHolderId, ih.PimsInthldrPropInterests.ToArray());

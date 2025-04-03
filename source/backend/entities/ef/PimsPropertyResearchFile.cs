@@ -123,7 +123,7 @@ public partial class PimsPropertyResearchFile
     public string DbLastUpdateUserid { get; set; }
 
     [InverseProperty("PropertyResearchFile")]
-    public virtual ICollection<PimsPrfPropResearchPurposeType> PimsPrfPropResearchPurposeTypes { get; set; } = new List<PimsPrfPropResearchPurposeType>();
+    public virtual ICollection<PimsPrfPropResearchPurposeTyp> PimsPrfPropResearchPurposeTyps { get; set; } = new List<PimsPrfPropResearchPurposeTyp>();
 
     [ForeignKey("PropertyId")]
     [InverseProperty("PimsPropertyResearchFiles")]

@@ -8,13 +8,13 @@ namespace Pims.Api.Models.Concepts.Property
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.PimsPropPropTenureType, PropertyTenureModel>()
+            config.NewConfig<Entity.PimsPropPropTenureTyp, PropertyTenureModel>()
                 .Map(dest => dest.Id, src => src.PropPropTenureTypeId)
                 .Map(dest => dest.PropertyId, src => src.PropertyId)
                 .Map(dest => dest.PropertyTenureTypeCode, src => src.PropertyTenureTypeCodeNavigation)
                 .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
 
-            config.NewConfig<PropertyTenureModel, Entity.PimsPropPropTenureType>()
+            config.NewConfig<PropertyTenureModel, Entity.PimsPropPropTenureTyp>()
                 .Map(dest => dest.PropPropTenureTypeId, src => src.Id)
                 .Map(dest => dest.PropertyId, src => src.PropertyId)
                 .Map(dest => dest.PropertyTenureTypeCode, src => src.PropertyTenureTypeCode.Id)

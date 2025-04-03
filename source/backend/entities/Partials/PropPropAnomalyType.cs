@@ -5,7 +5,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// PimsPropPropAnomalyType class, provides an entity for the datamodel to manage property anomaly types.
     /// </summary>
-    public partial class PimsPropPropAnomalyType : StandardIdentityBaseAppEntity<long>, IBaseAppEntity
+    public partial class PimsPropPropAnomalyTyp : StandardIdentityBaseAppEntity<long>, IBaseAppEntity
     {
         #region Properties
         [NotMapped]

@@ -55,12 +55,6 @@ public partial class PimsExpropriationPayment
     public string Description { get; set; }
 
     /// <summary>
-    /// Date that the advanced payment was made.
-    /// </summary>
-    [Column("ADV_PMT_SERVED_DT")]
-    public DateOnly? AdvPmtServedDt { get; set; }
-
-    /// <summary>
     /// Indicates if the Form 8 payment is inactive.
     /// </summary>
     [Column("IS_DISABLED")]

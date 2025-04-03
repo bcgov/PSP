@@ -60,5 +60,5 @@ public partial class PimsPropResearchPurposeType
     public string DbLastUpdateUserid { get; set; }
 
     [InverseProperty("PropResearchPurposeTypeCodeNavigation")]
-    public virtual ICollection<PimsPrfPropResearchPurposeType> PimsPrfPropResearchPurposeTypes { get; set; } = new List<PimsPrfPropResearchPurposeType>();
+    public virtual ICollection<PimsPrfPropResearchPurposeTyp> PimsPrfPropResearchPurposeTyps { get; set; } = new List<PimsPrfPropResearchPurposeTyp>();
 }
