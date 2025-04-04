@@ -60,7 +60,7 @@ exports[`MotiInventoryHeader component > renders as expected 1`] = `
             class="pl-1 text-left col"
           />
           <div
-            class="pr-0 text-left col"
+            class="pr-0 text-left col-auto"
           >
             <label
               class="c1"
@@ -123,7 +123,7 @@ exports[`MotiInventoryHeader component > renders as expected 1`] = `
             class="justify-content-end row"
           >
             <div
-              class="pr-0 text-left col"
+              class="pr-0 text-left col-auto"
             >
               <label
                 class="c1"
