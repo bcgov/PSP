@@ -14,7 +14,7 @@ import { IHealthCheckIssue, IHealthCheckViewProps } from './HealthcheckView';
 
 export interface IHealthcheckContainerProps {
   systemDegraded: boolean;
-  updateHealthcheckResult: (checkResult: boolean) => void;
+  updateHealthcheckResult: (systemDegraded: boolean) => void;
   View: React.FunctionComponent<IHealthCheckViewProps>;
 }
 
@@ -46,6 +46,47 @@ export const HealthcheckContainer: React.FunctionComponent<IHealthcheckContainer
     [pimsHealthcheckMessages],
   );
 
+  const checkAllSystemsHealth = useCallback(
+    (response: ISystemCheck, systemIssues: IHealthCheckIssue[]) => {
+      checkExternalSystemStatus(
+        response.entries?.Geoserver,
+        HealthcheckMessagesTypesEnum.GEOSERVER,
+        systemIssues,
+      );
+
+      checkExternalSystemStatus(
+        response.entries?.PmbcExternalApi,
+        HealthcheckMessagesTypesEnum.PMBC,
+        systemIssues,
+      );
+
+      checkExternalSystemStatus(
+        response.entries?.Mayan,
+        HealthcheckMessagesTypesEnum.MAYAN,
+        systemIssues,
+      );
+
+      checkExternalSystemStatus(
+        response.entries?.Ltsa,
+        HealthcheckMessagesTypesEnum.LTSA,
+        systemIssues,
+      );
+
+      checkExternalSystemStatus(
+        response.entries?.Geocoder,
+        HealthcheckMessagesTypesEnum.GEOCODER,
+        systemIssues,
+      );
+
+      checkExternalSystemStatus(
+        response.entries?.Cdogs,
+        HealthcheckMessagesTypesEnum.CDOGS,
+        systemIssues,
+      );
+    },
+    [checkExternalSystemStatus],
+  );
+
   const handleError = useCallback(
     async (axiosError: AxiosError<IApiError>): Promise<void> => {
       const systemIssues: IHealthCheckIssue[] = [];
@@ -65,47 +106,13 @@ export const HealthcheckContainer: React.FunctionComponent<IHealthcheckContainer
       if (axiosError?.response?.status === 503) {
         const data = axiosError?.response?.data as unknown as ISystemCheck;
 
-        checkExternalSystemStatus(
-          data.entries?.Geoserver,
-          HealthcheckMessagesTypesEnum.GEOSERVER,
-          systemIssues,
-        );
-
-        checkExternalSystemStatus(
-          data.entries?.PmbcExternalApi,
-          HealthcheckMessagesTypesEnum.PMBC,
-          systemIssues,
-        );
-
-        checkExternalSystemStatus(
-          data.entries?.Mayan,
-          HealthcheckMessagesTypesEnum.MAYAN,
-          systemIssues,
-        );
-
-        checkExternalSystemStatus(
-          data.entries?.Ltsa,
-          HealthcheckMessagesTypesEnum.LTSA,
-          systemIssues,
-        );
-
-        checkExternalSystemStatus(
-          data.entries?.Geocoder,
-          HealthcheckMessagesTypesEnum.GEOCODER,
-          systemIssues,
-        );
-
-        checkExternalSystemStatus(
-          data.entries?.Cdogs,
-          HealthcheckMessagesTypesEnum.CDOGS,
-          systemIssues,
-        );
+        checkAllSystemsHealth(data, systemIssues);
 
         setHealthCheckIssues(systemIssues);
         updateHealthcheckResult(true);
       }
     },
-    [checkExternalSystemStatus, pimsHealthcheckMessages, updateHealthcheckResult],
+    [checkAllSystemsHealth, pimsHealthcheckMessages, updateHealthcheckResult],
   );
 
   const fetchSystemCheckInformation = useCallback(async () => {
@@ -127,6 +134,7 @@ export const HealthcheckContainer: React.FunctionComponent<IHealthcheckContainer
 
       const systemCheck = await getSystemCheck();
       if (systemCheck.data.status !== 'Healthy') {
+        checkAllSystemsHealth(systemCheck.data, systemIssues);
         systemDegraded = true;
       }
 
@@ -139,7 +147,14 @@ export const HealthcheckContainer: React.FunctionComponent<IHealthcheckContainer
     } finally {
       setSystemChecked(true);
     }
-  }, [getLive, getSystemCheck, handleError, pimsHealthcheckMessages, updateHealthcheckResult]);
+  }, [
+    checkAllSystemsHealth,
+    getLive,
+    getSystemCheck,
+    handleError,
+    pimsHealthcheckMessages,
+    updateHealthcheckResult,
+  ]);
 
   useEffect(() => {
     if (systemChecked == null && keycloak.obj.authenticated) {
