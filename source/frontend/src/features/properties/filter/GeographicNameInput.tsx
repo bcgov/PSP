@@ -84,7 +84,7 @@ export const GeographicNameInput: React.FC<React.PropsWithChildren<IGeographicNa
       <ul className="suggestionList">
         {options.map((x: Feature<Geometry, IGeographicNamesProperties>, index: number) => (
           <li key={x.id ?? index}>
-            <StyledButton onClick={() => suggestionSelected(x)} role="menuitem">
+            <StyledButton onClick={() => suggestionSelected(x)} type="button">
               {x?.properties?.name} - {x?.properties?.featureType} -{' '}
               {x?.properties?.featureCategoryDescription}
             </StyledButton>
