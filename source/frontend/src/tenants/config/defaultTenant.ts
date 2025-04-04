@@ -93,7 +93,7 @@ export const defaultTenant: ITenantConfig2 = {
   doubleClickInterval: 250,
   telemetry: {
     enabled: true,
-    debug: true,
+    debug: false,
     environment: 'local',
     serviceName: 'frontend',
     endpoint: 'http://localhost:4318',
