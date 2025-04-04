@@ -199,7 +199,7 @@ const mockUseTenant = vi.mocked(useTenant);
 
 describe('UpdatePropertyDetailsForm component', () => {
   // render component under test
-  const setup = (
+  const setup = async (
     renderOptions: RenderOptions & { initialValues: UpdatePropertyDetailsFormModel },
   ) => {
     const utils = render(
@@ -230,13 +230,13 @@ describe('UpdatePropertyDetailsForm component', () => {
     vi.clearAllMocks();
   });
 
-  it('renders as expected', () => {
-    const { asFragment } = setup({ initialValues });
+  it('renders as expected', async () => {
+    const { asFragment } = await setup({ initialValues });
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('shows property address if available', () => {
-    const { container } = setup({ initialValues });
+  it('shows property address if available', async () => {
+    const { container } = await setup({ initialValues });
     const addressLine1 = container.querySelector(`input[name='address.streetAddress1']`);
     const province = container.querySelector(`select[name='address.provinceStateId']`);
 
@@ -244,23 +244,23 @@ describe('UpdatePropertyDetailsForm component', () => {
     expect(province).toHaveValue('1');
   });
 
-  it('province defaults to BC when null', () => {
+  it('province defaults to BC when null', async () => {
     mockUseTenant.mockReturnValue({...defaultTenant, provinceStateId: 2});
 
     initialValues.address.provinceStateId = null;
-    const { container } = setup({ initialValues });
-    waitForEffects();
+    const { container } = await setup({ initialValues });
+    await waitForEffects();
 
     const province = container.querySelector(`select[name='address.provinceStateId']`);
     expect(province).toHaveValue('2');
   });
 
-  it('province defaults to BC when null no tenant', () => {
+  it('province defaults to BC when null no tenant', async () => {
     mockUseTenant.mockReturnValue({...defaultTenant, provinceStateId: null});
 
     initialValues.address.provinceStateId = null;
-    const { container } = setup({ initialValues });
-    waitForEffects();
+    const { container } = await setup({ initialValues });
+    await waitForEffects();
 
     const province = container.querySelector(`select[name='address.provinceStateId']`);
     expect(province).toHaveValue('1');
