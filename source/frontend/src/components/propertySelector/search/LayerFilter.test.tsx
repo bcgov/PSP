@@ -2,7 +2,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import { mockGeocoderOptions } from '@/mocks/index.mock';
-import { act, fillInput, render, RenderOptions } from '@/utils/test-utils';
+import { act, fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import LayerFilter, { defaultLayerFilter } from './LayerFilter';
 
@@ -20,7 +20,7 @@ describe('LayerFilter component', () => {
     const searchBy = renderOptions.searchBy || 'address';
     const utils = render(
       <LayerFilter
-        setFilter={setFilter}
+        onSearch={setFilter}
         addressResults={mockGeocoderOptions}
         filter={{ ...defaultLayerFilter, searchBy }}
         onAddressChange={onAddressChange}
@@ -96,5 +96,52 @@ describe('LayerFilter component', () => {
 
     const option = getByText('1234 Fake St');
     expect(option).toBeInTheDocument();
+  });
+
+  it('shall have a coordinate searchBy field', async () => {
+    const { container, getByText } = setup({});
+
+    await act(async () => {
+      await fillInput(container, 'searchBy', 'coordinates', 'select');
+    });
+
+    expect(getByText('Lat:')).toBeVisible();
+  });
+
+  it('searches by coordinates', async () => {
+    const { container, getByTestId } = setup({});
+
+    await act(async () => {
+      await fillInput(container, 'searchBy', 'coordinates', 'select');
+    });
+
+    const searchButton = getByTestId('search');
+
+    await act(async () => {
+      userEvent.click(searchButton);
+    });
+
+    expect(setFilter).toHaveBeenCalledWith({
+      address: '',
+      coordinates: {
+        latitude: {
+          degrees: 0,
+          direction: '1',
+          minutes: 0,
+          seconds: 0,
+        },
+        longitude: {
+          degrees: 0,
+          direction: '-1',
+          minutes: 0,
+          seconds: 0,
+        },
+      },
+      legalDescription: '',
+      pid: '',
+      pin: '',
+      planNumber: '',
+      searchBy: 'coordinates',
+    });
   });
 });

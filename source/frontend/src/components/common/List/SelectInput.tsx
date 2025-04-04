@@ -19,6 +19,7 @@ interface ISelectInputProps<SelectTypes> {
     key: keyof SelectTypes;
     label: string;
     placeholder: string;
+    hideInput?: boolean;
   }[];
   autoSetting?: string;
   /** Callback to notify when the selected option in the drop-down changes */
@@ -58,6 +59,7 @@ export function SelectInput<SelectTypes, FormikType>({
       field={value}
       placeholder={selectedOption?.placeholder}
       disabled={disabled}
+      content={selectedOption?.hideInput ? <></> : undefined}
       {...rest}
     ></InputGroup>
   );

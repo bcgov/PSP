@@ -8,6 +8,9 @@ import styled from 'styled-components';
 import { ResetButton, SearchButton } from '@/components/common/buttons';
 import { Form } from '@/components/common/form';
 import { SelectInput } from '@/components/common/List/SelectInput';
+import { CoordinateSearchForm } from '@/features/properties/filter/CoordinateSearch/CoordinateSearchForm';
+import { DmsCoordinates } from '@/features/properties/filter/CoordinateSearch/models';
+import { PropertyFilterValidationSchema } from '@/features/properties/filter/validation';
 import { IResearchFilterProps } from '@/features/research/list/ResearchFilter/ResearchFilter';
 import { IGeocoderResponse } from '@/hooks/pims-api/interfaces/IGeocoder';
 
@@ -19,11 +22,12 @@ export const defaultLayerFilter: ILayerSearchCriteria = {
   planNumber: '',
   legalDescription: '',
   address: '',
+  coordinates: null,
   searchBy: 'pid',
 };
 
 export interface ILayerFilterProps {
-  setFilter: (searchCriteria: ILayerSearchCriteria) => void;
+  onSearch: (searchCriteria: ILayerSearchCriteria) => void;
   filter?: ILayerSearchCriteria;
   addressResults?: IGeocoderResponse[];
   onAddressChange: (searchText: string) => void;
@@ -36,7 +40,7 @@ export interface ILayerFilterProps {
  * @param {IResearchFilterProps} props
  */
 export const LayerFilter: React.FunctionComponent<React.PropsWithChildren<ILayerFilterProps>> = ({
-  setFilter,
+  onSearch,
   filter,
   addressResults,
   onAddressChange,
@@ -46,11 +50,7 @@ export const LayerFilter: React.FunctionComponent<React.PropsWithChildren<ILayer
   const formikRef = useRef<FormikProps<ILayerSearchCriteria>>(null);
 
   const onSearchSubmit = (values: ILayerSearchCriteria) => {
-    setFilter(values);
-  };
-
-  const resetFilter = () => {
-    setFilter(defaultLayerFilter);
+    onSearch(values);
   };
 
   const onSuggestionSelected = (val: IGeocoderResponse) => {
@@ -79,8 +79,16 @@ export const LayerFilter: React.FunctionComponent<React.PropsWithChildren<ILayer
   };
 
   const internalFilter = filter ?? { ...defaultLayerFilter };
-  const isSearchByAddress = internalFilter?.searchBy === 'address';
-  const isSearchByLegalDescription = internalFilter?.searchBy === 'legalDescription';
+
+  const getSpacing = (searchBy: string) => {
+    let searchColSpacing = 6;
+    if (searchBy === 'legalDescription') {
+      searchColSpacing = 10;
+    } else if (searchBy === 'coordinates') {
+      searchColSpacing = 3;
+    }
+    return searchColSpacing;
+  };
 
   return (
     <Formik
@@ -88,25 +96,28 @@ export const LayerFilter: React.FunctionComponent<React.PropsWithChildren<ILayer
       initialValues={internalFilter}
       onSubmit={onSearchSubmit}
       innerRef={formikRef}
+      validationSchema={PropertyFilterValidationSchema}
     >
       {formikProps => (
         <FilterBoxForm className="p-3">
-          <Row>
-            <Col xl={isSearchByLegalDescription ? 10 : 6}>
+          <Row noGutters>
+            <Col xs={getSpacing(formikProps.values.searchBy)}>
               <SelectInput<ILayerSearchCriteria, IResearchFilterProps>
                 field="searchBy"
                 defaultKey="pid"
-                as={isSearchByLegalDescription ? 'textarea' : 'input'}
+                as={formikProps.values.searchBy === 'legalDescription' ? 'textarea' : 'input'}
                 helpText={
-                  isSearchByLegalDescription
+                  formikProps.values.searchBy === 'legalDescription'
                     ? 'Searching by Legal Description may result in a slower search.'
                     : ''
                 }
                 onSelectItemChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-                  setFilter({ ...internalFilter, searchBy: e.target.value });
+                  if (e.target.value === 'coordinates') {
+                    formikProps.setFieldValue('coordinates', new DmsCoordinates());
+                  }
                 }}
                 onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  if (isSearchByAddress && onAddressChange) {
+                  if (formikProps.values.searchBy === 'address' && onAddressChange) {
                     onAddressChange(e.target.value);
                   }
                 }}
@@ -136,12 +147,26 @@ export const LayerFilter: React.FunctionComponent<React.PropsWithChildren<ILayer
                     placeholder: '',
                     label: 'Legal Description',
                   },
+                  {
+                    label: 'Lat/Long',
+                    key: 'coordinates',
+                    placeholder: `Enter a Latitude and Longitude`,
+                    hideInput: true,
+                  },
                 ]}
                 autoSetting="off"
               />
-              {isSearchByAddress && renderAddressSuggestions()}
+              {formikProps.values.searchBy === 'address' && renderAddressSuggestions()}
             </Col>
-            <Col xl={2} className="pr-0">
+            {formikProps.values.searchBy === 'coordinates' && (
+              <Col>
+                <CoordinateSearchForm
+                  field="coordinates"
+                  innerClassName="flex-column"
+                ></CoordinateSearchForm>
+              </Col>
+            )}
+            <Col xs={2} className="pr-0">
               <Row>
                 <Col className="pr-0">
                   <SearchButton disabled={loading} onClick={formikProps.submitForm} type="button" />
@@ -151,7 +176,6 @@ export const LayerFilter: React.FunctionComponent<React.PropsWithChildren<ILayer
                     disabled={loading}
                     onClick={() => {
                       formikProps.resetForm();
-                      resetFilter();
                     }}
                   />
                 </Col>

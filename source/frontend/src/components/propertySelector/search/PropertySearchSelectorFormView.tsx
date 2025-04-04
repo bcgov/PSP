@@ -59,7 +59,7 @@ export const PropertySearchSelectorFormView: React.FunctionComponent<
       <Section header={undefined}>
         <Styled.H3>Search for a property</Styled.H3>
         <LayerFilter
-          setFilter={onSearch}
+          onSearch={onSearch}
           filter={search}
           addressResults={addressResults}
           onAddressChange={onAddressChange}
