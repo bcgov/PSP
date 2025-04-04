@@ -12,6 +12,21 @@ import {
 } from '@/utils/test-utils';
 
 import MapSearch from './MapSearch';
+import { useGeographicNamesRepository } from '@/hooks/useGeographicNamesRepository';
+
+vi.mock('@/hooks/useGeographicNamesRepository');
+
+const mockSearchName = {
+  execute: vi.fn(),
+  error: null,
+  loading: false,
+  status: null,
+  response: null,
+};
+
+vi.mocked(useGeographicNamesRepository).mockReturnValue({
+  searchName: mockSearchName,
+});
 
 describe('MapSearch component', () => {
   afterEach(cleanup);
@@ -84,6 +99,57 @@ describe('MapSearch component', () => {
       const input = getByName('coordinates.latitude.seconds');
       userEvent.paste(input, '48.155');
     });
+    await act(async () => {
+      userEvent.click(searchButton);
+    });
+
+    // it tells the map FSM to execute a map click and center on the lat/long
+    expect(mapMachineBaseMock.mapClick).toHaveBeenCalled();
+    expect(mapMachineBaseMock.requestCenterToLocation).toHaveBeenCalled();
+  });
+
+  it('searches by geographic name', async () => {
+    mockSearchName.execute.mockResolvedValueOnce({
+      features: [
+        {
+          geometry: {
+            type: 'Point',
+            coordinates: [1, 2],
+          },
+          properties: {
+            name: 'Test Location',
+            featureType: 'Type1',
+            featureCategoryDescription: 'Category1',
+          },
+        },
+        {
+          properties: {
+            name: 'Another Location',
+            featureType: 'Type2',
+            featureCategoryDescription: 'Category2',
+          },
+        },
+      ],
+    });
+
+    const { searchByDropdown, searchButton } = await setup({
+      mockMapMachine: mapMachineBaseMock,
+    });
+
+    await act(async () => {
+      userEvent.selectOptions(searchByDropdown, 'name');
+    });
+
+    await act(async () => {
+      const input = getByName('name');
+      userEvent.paste(input, 'langford');
+    });
+
+    const nameSuggestion = await screen.findByText('Test Location', { exact: false });
+    await act(async () => {
+      userEvent.click(nameSuggestion!);
+    });
+
     await act(async () => {
       userEvent.click(searchButton);
     });
