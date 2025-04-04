@@ -11,7 +11,9 @@ namespace Pims.Dal.Entities;
 /// </summary>
 [Table("PIMS_EXPROP_OWNER_HISTORY")]
 [Index("AcquisitionFileId", Name = "XPOWNH_ACQUISITION_FILE_ID_IDX")]
+[Index("AcquisitionOwnerId", Name = "XPOWNH_ACQUISITION_OWNER_ID_IDX")]
 [Index("ExpropOwnerHistoryTypeCode", Name = "XPOWNH_EXPROP_OWNER_HISTORY_TYPE_CODE_IDX")]
+[Index("InterestHolderId", Name = "XPOWNH_INTEREST_HOLDER_ID_IDX")]
 public partial class PimsExpropOwnerHistory
 {
     /// <summary>
@@ -22,28 +24,22 @@ public partial class PimsExpropOwnerHistory
     public long ExpropOwnerHistoryId { get; set; }
 
     /// <summary>
-    /// Foreign key to the PIMS_ACQUISITION_FILE file.
+    /// Foreign key to the PIMS_ACQUISITION_FILE table.
     /// </summary>
     [Column("ACQUISITION_FILE_ID")]
     public long AcquisitionFileId { get; set; }
 
     /// <summary>
-    /// Foreign key to the PIMS_PERSON table.
+    /// Foreign key to the PIMS_ACQUISITION_HOLDER table.
     /// </summary>
-    [Column("PERSON_ID")]
-    public long? PersonId { get; set; }
+    [Column("ACQUISITION_OWNER_ID")]
+    public long? AcquisitionOwnerId { get; set; }
 
     /// <summary>
-    /// Foreign key to the PIMS_ORGANIZATION table.
+    /// Foreign key to the PIMS_INTEREST_HOLDER table.
     /// </summary>
-    [Column("ORGANIZATION_ID")]
-    public long? OrganizationId { get; set; }
-
-    /// <summary>
-    /// Foreign key to the PIMS_PERSON table.
-    /// </summary>
-    [Column("PRIMARY_CONTACT_ID")]
-    public long? PrimaryContactId { get; set; }
+    [Column("INTEREST_HOLDER_ID")]
+    public long? InterestHolderId { get; set; }
 
     /// <summary>
     /// Foreign key to the PIMS_EXPROP_OWNER_HISTORY_TYPE file.
@@ -159,19 +155,15 @@ public partial class PimsExpropOwnerHistory
     [InverseProperty("PimsExpropOwnerHistories")]
     public virtual PimsAcquisitionFile AcquisitionFile { get; set; }
 
+    [ForeignKey("AcquisitionOwnerId")]
+    [InverseProperty("PimsExpropOwnerHistories")]
+    public virtual PimsAcquisitionOwner AcquisitionOwner { get; set; }
+
     [ForeignKey("ExpropOwnerHistoryTypeCode")]
     [InverseProperty("PimsExpropOwnerHistories")]
     public virtual PimsExpropOwnerHistoryType ExpropOwnerHistoryTypeCodeNavigation { get; set; }
 
-    [ForeignKey("OrganizationId")]
+    [ForeignKey("InterestHolderId")]
     [InverseProperty("PimsExpropOwnerHistories")]
-    public virtual PimsOrganization Organization { get; set; }
-
-    [ForeignKey("PersonId")]
-    [InverseProperty("PimsExpropOwnerHistoryPeople")]
-    public virtual PimsPerson Person { get; set; }
-
-    [ForeignKey("PrimaryContactId")]
-    [InverseProperty("PimsExpropOwnerHistoryPrimaryContacts")]
-    public virtual PimsPerson PrimaryContact { get; set; }
+    public virtual PimsInterestHolder InterestHolder { get; set; }
 }

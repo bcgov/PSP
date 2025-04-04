@@ -14,6 +14,7 @@ import AppRoute from '@/utils/AppRoute';
 import AcquisitionContainer from '../acquisition/AcquisitionContainer';
 import AcquisitionView from '../acquisition/AcquisitionView';
 import AddAcquisitionContainer from '../acquisition/add/AddAcquisitionContainer';
+import AddAcquisitionForm from '../acquisition/add/AddAcquisitionForm';
 import AddConsolidationContainer from '../consolidation/AddConsolidationContainer';
 import AddConsolidationView from '../consolidation/AddConsolidationView';
 import { SideBarContext } from '../context/sidebarContext';
@@ -215,6 +216,7 @@ export const MapRouter: React.FunctionComponent = memo(() => {
             onSuccess={(newAcquisitionId: number) => {
               history.push(`/mapview/sidebar/acquisition/${newAcquisitionId}`);
             }}
+            View={AddAcquisitionForm}
           />
         )}
         claim={Claims.ACQUISITION_ADD}

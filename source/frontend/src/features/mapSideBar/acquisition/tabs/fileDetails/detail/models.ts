@@ -16,6 +16,7 @@ export class DetailAcquisitionFile {
   legalSurveyStatusDescription: string;
   expropriationRiskStatusDescription: string;
   acquisitionPhysFileStatusTypeDescription?: string;
+  physicalFileDetails?: string;
   acquisitionTypeDescription?: string;
   subfileInterestTypeDescription: string | null = null;
   regionDescription?: string;
@@ -41,6 +42,7 @@ export class DetailAcquisitionFile {
       model.acquisitionFileExpropiationRiskStatusTypeCode?.description ?? '';
     detail.acquisitionPhysFileStatusTypeDescription =
       model?.acquisitionPhysFileStatusTypeCode?.description ?? undefined;
+    detail.physicalFileDetails = model?.physicalFileDetails ?? '';
     detail.acquisitionTypeDescription = model?.acquisitionTypeCode?.description ?? undefined;
 
     if (detail.isSubFile) {

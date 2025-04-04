@@ -32,6 +32,7 @@ export interface ApiGen_Concepts_AcquisitionFile extends ApiGen_Concepts_FileWit
   acquisitionFileTakingStatuses: ApiGen_Concepts_AcquisitionFileTakingStatuses[] | null;
   acquisitionFileExpropiationRiskStatusTypeCode: ApiGen_Base_CodeType<string> | null;
   acquisitionPhysFileStatusTypeCode: ApiGen_Base_CodeType<string> | null;
+  physicalFileDetails: string | null;
   acquisitionTypeCode: ApiGen_Base_CodeType<string> | null;
   productId: number | null;
   product: ApiGen_Concepts_Product | null;

@@ -140,12 +140,6 @@ public partial class PimsPerson
     public virtual ICollection<PimsDspPurchSolicitor> PimsDspPurchSolicitorPrimaryContacts { get; set; } = new List<PimsDspPurchSolicitor>();
 
     [InverseProperty("Person")]
-    public virtual ICollection<PimsExpropOwnerHistory> PimsExpropOwnerHistoryPeople { get; set; } = new List<PimsExpropOwnerHistory>();
-
-    [InverseProperty("PrimaryContact")]
-    public virtual ICollection<PimsExpropOwnerHistory> PimsExpropOwnerHistoryPrimaryContacts { get; set; } = new List<PimsExpropOwnerHistory>();
-
-    [InverseProperty("Person")]
     public virtual ICollection<PimsInterestHolder> PimsInterestHolderPeople { get; set; } = new List<PimsInterestHolder>();
 
     [InverseProperty("PrimaryContact")]
