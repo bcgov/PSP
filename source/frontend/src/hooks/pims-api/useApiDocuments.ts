@@ -19,7 +19,7 @@ import { ApiGen_Mayan_FilePage } from './../../models/api/generated/ApiGen_Mayan
 import useAxiosApi from './useApi';
 
 /**
- * PIMS API wrapper to centralize all AJAX requests to the note endpoints.
+ * PIMS API wrapper to centralize all AJAX requests to the document endpoints.
  * @returns Object containing functions to make requests to the PIMS API.
  */
 

@@ -5,12 +5,14 @@ interface IFileDragAndDropProps {
   onSelectFiles: (files: File[]) => void;
   validExtensions: string[];
   multiple?: boolean;
+  keyName?: string;
 }
 
 const FileDragAndDrop: FunctionComponent<React.PropsWithChildren<IFileDragAndDropProps>> = ({
   onSelectFiles,
   validExtensions,
   multiple = true,
+  keyName,
 }) => {
   const validDocumentExtensions: string = validExtensions.map(x => `.${x}`).join(',');
 
@@ -83,6 +85,7 @@ const FileDragAndDrop: FunctionComponent<React.PropsWithChildren<IFileDragAndDro
               onChange={handleFileInput}
               className=""
               multiple={multiple}
+              key={keyName ?? ''}
             />
           </StyledUploadLabel>
         </StyledContent>
