@@ -1,8 +1,4 @@
-import {
-  act,
-  render,
-  RenderOptions,
-} from '@/utils/test-utils';
+import { act, render, RenderOptions } from '@/utils/test-utils';
 
 import { HealthcheckContainer, IHealthcheckContainerProps } from './HealthcheckContainer';
 import { useApiHealth } from '@/hooks/pims-api/useApiHealth';
