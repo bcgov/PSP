@@ -5,10 +5,8 @@ import { hideLoading, showLoading } from 'react-redux-loading-bar';
 
 import { SelectOption } from '@/components/common/form';
 import { TableSort } from '@/components/Table/TableSort';
-import { IKeycloak } from '@/hooks/useKeycloakWrapper';
 import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { logRequest, logSuccess } from '@/store/slices/network/networkSlice';
-import { TraceUser } from '@/telemetry/SpanEnrichment';
 
 /**
  * Removes a trailing slash from a string.
@@ -202,19 +200,6 @@ export function truncateName(name: string, length: number): string {
   } else {
     return name;
   }
-}
-
-export function getUserFromSession(session: IKeycloak): TraceUser {
-  const displayName =
-    session.displayName ??
-    (exists(session.firstName) && exists(session.surname)
-      ? `${session.firstName} ${session.surname}`
-      : 'default');
-
-  return {
-    displayName,
-    idir: session.businessIdentifierValue,
-  };
 }
 
 /**

@@ -10,8 +10,8 @@ import { IGenericNetworkAction } from '@/store/slices/network/interfaces';
 import { logError } from '@/store/slices/network/networkSlice';
 import { RootState, store } from '@/store/store';
 
-import { SpanEnrichment } from './telemetry/SpanEnrichment';
 import { startTrace } from './telemetry/traces';
+import { SpanEnrichment } from './telemetry/traces/SpanEnrichment';
 import { buildUrl } from './telemetry/utils';
 import { exists } from './utils';
 

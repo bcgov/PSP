@@ -1,4 +1,5 @@
 import { metrics, trace } from '@opentelemetry/api';
+import { W3CTraceContextPropagator } from '@opentelemetry/core';
 import { OTLPMetricExporter } from '@opentelemetry/exporter-metrics-otlp-http';
 import { OTLPTraceExporter } from '@opentelemetry/exporter-trace-otlp-http';
 import { browserDetector } from '@opentelemetry/opentelemetry-browser-detector';
@@ -11,7 +12,11 @@ import {
   SpanProcessor,
   WebTracerProvider,
 } from '@opentelemetry/sdk-trace-web';
-import { ATTR_SERVICE_NAME, ATTR_SERVICE_VERSION } from '@opentelemetry/semantic-conventions';
+import {
+  ATTR_SERVICE_NAME,
+  ATTR_SERVICE_VERSION,
+  ATTR_USER_AGENT_ORIGINAL,
+} from '@opentelemetry/semantic-conventions';
 import {
   ATTR_DEPLOYMENT_ENVIRONMENT_NAME,
   ATTR_SERVICE_INSTANCE_ID,
@@ -20,6 +25,8 @@ import isAbsoluteUrl from 'is-absolute-url';
 import { v4 as uuidv4 } from 'uuid';
 
 import { TelemetryConfig } from './config';
+import { BrowserAttributesSpanProcessor } from './traces/BrowserAttributesSpanProcessor';
+import { UserInfoSpanProcessor } from './traces/UserInfoSpanProcessor';
 
 export const isBrowserEnvironment = () => {
   return typeof window !== 'undefined';
@@ -56,9 +63,10 @@ const makeResource = (config: TelemetryConfig, extraAttributes?: ResourceAttribu
     [ATTR_SERVICE_NAME]: config?.name,
     [ATTR_SERVICE_VERSION]: config?.appVersion,
     [ATTR_SERVICE_INSTANCE_ID]: uuid,
+    [ATTR_USER_AGENT_ORIGINAL]: typeof navigator !== 'undefined' ? navigator.userAgent : '',
     'session.instance.id': uuid,
-    'browser.width': window.screen.width,
-    'browser.height': window.screen.height,
+    'screen.width': window.screen.width,
+    'screen.height': window.screen.height,
     ...extraAttributes,
   });
 
@@ -110,11 +118,16 @@ export const registerTracerProvider = (
   });
 
   const processors: SpanProcessor[] = [];
+
   if (config.debug) {
     processors.push(new SimpleSpanProcessor(new ConsoleSpanExporter()));
   }
+
+  // use the batch processor for better performance
   processors.push(
     new BatchSpanProcessor(exporter, { scheduledDelayMillis: config?.exportInterval || 5000 }), // export traces every 5s by default
+    new BrowserAttributesSpanProcessor(),
+    new UserInfoSpanProcessor(),
   );
 
   const provider = new WebTracerProvider({
@@ -122,7 +135,10 @@ export const registerTracerProvider = (
     spanProcessors: [...processors],
   });
 
-  provider.register();
+  // set up context propagation
+  provider.register({
+    propagator: new W3CTraceContextPropagator(),
+  });
 
   // set this TracerProvider to be global to the app
   trace.setGlobalTracerProvider(provider);

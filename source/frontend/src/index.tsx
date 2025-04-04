@@ -31,7 +31,7 @@ import { ITenantConfig2 } from './hooks/pims-api/interfaces/ITenantConfig';
 import { useRefreshSiteminder } from './hooks/useRefreshSiteminder';
 import { initializeTelemetry } from './telemetry';
 import { TelemetryConfig } from './telemetry/config';
-import { ReactRouterSpanProcessor } from './telemetry/ReactRouterSpanProcessor';
+import { ReactRouterSpanProcessor } from './telemetry/traces/ReactRouterSpanProcessor';
 
 async function prepare() {
   if (process.env.NODE_ENV === 'development') {
@@ -90,7 +90,6 @@ const InnerComponent = ({ tenant }: { tenant: ITenantConfig2 }) => {
         LoadingComponent={
           <EmptyLayout>
             <LoginLoading />
-            <ReactRouterSpanProcessor />
           </EmptyLayout>
         }
         onEvent={getKeycloakEventHandler(keycloak, refresh)}
