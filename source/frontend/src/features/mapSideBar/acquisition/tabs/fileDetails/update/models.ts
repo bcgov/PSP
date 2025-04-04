@@ -28,12 +28,13 @@ export class UpdateAcquisitionSummaryFormModel
   fileNumber?: string;
   fileName?: string = '';
   legacyFileNumber?: string = '';
+  physicalFileDetails?: string = '';
   assignedDate?: string;
   deliveryDate?: string;
   estimatedCompletionDate?: string;
   possessionDate?: string;
 
-  //Progress Statuses
+  // Progress Statuses
   progressStatuses: ProgressStatusModel[] = [];
   appraisalStatusType: string | null = null;
   legalSurveyStatusType: string | null = null;
@@ -98,9 +99,10 @@ export class UpdateAcquisitionSummaryFormModel
       ),
       fileStatusTypeCode: toTypeCodeNullable(this.fileStatusTypeCode),
       acquisitionPhysFileStatusTypeCode: toTypeCodeNullable(this.acquisitionPhysFileStatusType),
+      physicalFileDetails: this.physicalFileDetails ?? null,
       acquisitionTypeCode: toTypeCodeNullable(this.acquisitionType),
       regionCode: toTypeCodeNullable(Number(this.region)),
-      projectId: isValidId(this.project?.id) ? this.project!.id : null,
+      projectId: isValidId(this.project?.id) ? this.project.id : null,
       productId: this.product !== '' ? Number(this.product) : null,
       fundingTypeCode: toTypeCodeNullable(this.fundingTypeCode),
       fundingOther: this.fundingTypeOtherDescription,
@@ -147,6 +149,7 @@ export class UpdateAcquisitionSummaryFormModel
     newForm.fileNumberSuffix = model.fileNumberSuffix;
     newForm.fileNumber = model.fileNumber ?? undefined;
     newForm.legacyFileNumber = model.legacyFileNumber ?? undefined;
+    newForm.physicalFileDetails = model.physicalFileDetails ?? undefined;
     newForm.fileName = model.fileName || '';
     newForm.rowVersion = model.rowVersion ?? undefined;
     newForm.assignedDate = model.assignedDate ?? undefined;

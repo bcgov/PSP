@@ -37,6 +37,10 @@ export const UpdateAcquisitionFileYupSchema = yup
     acquisitionType: yup.string().required('Acquisition type is required'),
     region: yup.string().required('Ministry region is required'),
     legacyFileNumber: yup.string().max(18, 'Legacy file number must be at most ${max} characters'),
+    physicalFileDetails: yup
+      .string()
+      .nullable()
+      .max(2000, 'Physical file details must be at most ${max} characters'),
   })
   .concat(UpdateAcquisitionTeamYupSchema)
   .concat(UpdateAcquisitionOwnersYupSchema);
