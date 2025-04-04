@@ -30,8 +30,10 @@ export interface IGeoSearchParams {
   SURVEY_PLAN_NUMBER?: string;
   HISTORICAL_FILE_NUMBER_STR?: string;
   BBOX?: string;
+  GEOGRAPHIC_NAME?: string;
   latitude?: number | string;
   longitude?: number | string;
+
   forceExactMatch?: boolean;
 }
 

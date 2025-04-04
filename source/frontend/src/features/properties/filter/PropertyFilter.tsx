@@ -1,4 +1,5 @@
 import { Formik } from 'formik';
+import { Feature, Geometry } from 'geojson';
 import React, { useMemo } from 'react';
 import Col from 'react-bootstrap/Col';
 import { useHistory } from 'react-router';
@@ -7,14 +8,17 @@ import styled from 'styled-components';
 
 import { ResetButton, SearchButton } from '@/components/common/buttons';
 import { Form, Input, Select } from '@/components/common/form';
+import { getFeatureLatLng } from '@/components/maps/leaflet/Layers/PointClusterer';
 import { TableSort } from '@/components/Table/TableSort';
+import { IGeographicNamesProperties } from '@/hooks/pims-api/interfaces/IGeographicNamesProperties';
 import { useGeocoderRepository } from '@/hooks/useGeocoderRepository';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
-import { pidFormatter } from '@/utils';
+import { exists, pidFormatter } from '@/utils';
 
 import { GeocoderAutoComplete } from '../components/GeocoderAutoComplete';
 import { CoordinateSearchForm } from './CoordinateSearch/CoordinateSearchForm';
 import { DmsCoordinates } from './CoordinateSearch/models';
+import { GeographicNameInput } from './GeographicNameInput';
 import { defaultPropertyFilter, IPropertyFilter } from './IPropertyFilter';
 import PropertySearchToggle, { SearchToggleOption } from './PropertySearchToggle';
 import { PropertyFilterValidationSchema } from './validation';
@@ -87,6 +91,10 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
 
   if (toggle === SearchToggleOption.Map) {
     searchOptions.push({
+      label: 'POI Name',
+      value: 'name',
+    });
+    searchOptions.push({
       label: 'Lat/Long',
       value: 'coordinates',
     });
@@ -121,6 +129,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                   setFieldValue('pin', null);
                   setFieldValue('planNumber', null);
                   setFieldValue('historical', null);
+                  setFieldValue('name', null);
                   if (e.target.value === 'coordinates') {
                     setFieldValue('coordinates', new DmsCoordinates());
                   } else {
@@ -184,6 +193,21 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                   field="historical"
                   placeholder="Enter a historical file# (LIS, PS, etc.)"
                 ></Input>
+              )}
+              {values.searchBy === 'name' && (
+                <GeographicNameInput
+                  field="name"
+                  placeholder='Enter a POI name (e.g. "Langford Lake")'
+                  onSelectionChanged={(
+                    selection: Feature<Geometry, IGeographicNamesProperties>,
+                  ) => {
+                    if (exists(selection.geometry)) {
+                      const lngLat = getFeatureLatLng(selection);
+                      setFieldValue('latitude', lngLat[1]);
+                      setFieldValue('longitude', lngLat[0]);
+                    }
+                  }}
+                />
               )}
               {values.searchBy === 'coordinates' && (
                 <CoordinateSearchForm field="coordinates"></CoordinateSearchForm>

@@ -29,6 +29,8 @@ export interface IPropertyFilter {
   ownership: string;
   /** The coordinates to search by lat/long in degrees, minutes and seconds (DMS) */
   coordinates: DmsCoordinates | null;
+  /** The geographic name of the property */
+  name: string;
 }
 
 export const defaultPropertyFilter: IPropertyFilter = {
@@ -44,4 +46,5 @@ export const defaultPropertyFilter: IPropertyFilter = {
   page: undefined,
   quantity: undefined,
   ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
+  name: '',
 };

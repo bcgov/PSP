@@ -103,6 +103,7 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
       historical: '',
       ownership: '',
       coordinates: null,
+      name: '',
     };
 
     const result = await getProperties.execute(params);
