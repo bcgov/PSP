@@ -67,6 +67,10 @@ export interface ITenantConfig2 {
   doubleClickInterval: number;
   pimsTrainingResourceUrl: string;
   pimsHealthcheckMessages: { [key: string]: string };
+  // the url to the geographic names api
+  geographicNamesUrl: string;
+  // the number of results to display when searching for geographic names
+  geographicNamesResultLimit: number;
 }
 
 export interface ITenantLoginConfig {
