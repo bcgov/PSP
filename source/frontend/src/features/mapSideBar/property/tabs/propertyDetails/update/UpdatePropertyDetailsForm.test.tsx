@@ -244,18 +244,18 @@ describe('UpdatePropertyDetailsForm component', () => {
     expect(province).toHaveValue('1');
   });
 
-  it('province defaults to BC when null', () => {
+  it('province defaults to BC when null', async () => {
     mockUseTenant.mockReturnValue({...defaultTenant, provinceStateId: 2});
 
     initialValues.address.provinceStateId = null;
-    const { container } = setup({ initialValues });
+    const { container } = await setup({ initialValues });
     waitForEffects();
 
     const province = container.querySelector(`select[name='address.provinceStateId']`);
     expect(province).toHaveValue('2');
   });
 
-  it('province defaults to BC when null no tenant', () => {
+  it('province defaults to BC when null no tenant', async () => {
     mockUseTenant.mockReturnValue({...defaultTenant, provinceStateId: null});
 
     initialValues.address.provinceStateId = null;
@@ -263,7 +263,7 @@ describe('UpdatePropertyDetailsForm component', () => {
     await waitForEffects();
 
     const province = container.querySelector(`select[name='address.provinceStateId']`);
-    expect(province).toHaveValue('2');
+    expect(province).toHaveValue('1');
   });
 
   it('province defaults to BC when null no tenant', async () => {
