@@ -50,7 +50,7 @@
   "doubleClickInterval": 250,
   "telemetry": {
     "enabled": true,
-    "debug": true,
+    "debug": false,
     "environment": "local",
     "serviceName": "frontend",
     "endpoint": "https://collector-3cd915-dev.apps.silver.devops.gov.bc.ca",
