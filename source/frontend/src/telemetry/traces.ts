@@ -4,6 +4,7 @@ export const BROWSER_TRACER = 'react-client';
 
 export type AsyncFn = () => Promise<unknown>;
 
+// Export the tracer for custom instrumentation
 export const getTracer = (): Tracer => {
   return trace.getTracer(BROWSER_TRACER);
 };
