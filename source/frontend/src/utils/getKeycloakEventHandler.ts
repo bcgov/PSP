@@ -2,12 +2,11 @@ import { AuthClientError, AuthClientEvent } from '@react-keycloak/core/lib/index
 import Keycloak from 'keycloak-js';
 import { toast } from 'react-toastify';
 
-import { IUserInfo } from '@/hooks/useKeycloakWrapper';
 import { clearJwt, saveJwt } from '@/store/slices/jwt/JwtSlice';
 import { setKeycloakReady } from '@/store/slices/keycloakReady/keycloakReadySlice';
 import { store } from '@/store/store';
 import { user } from '@/telemetry';
-import { getUserDetailsFromKeycloak } from '@/telemetry/users/UserAPI';
+import { getUserDetailsFromKeycloakToken } from '@/telemetry/users/UserAPI';
 
 const getKeycloakEventHandler = (keycloak: Keycloak, onRefresh: () => void) => {
   const errorMessage =
@@ -19,7 +18,7 @@ const getKeycloakEventHandler = (keycloak: Keycloak, onRefresh: () => void) => {
     if (eventType === 'onAuthSuccess') {
       store.dispatch(saveJwt(keycloak.token ?? ''));
       // store the currently logged user so that telemetry spans can be traced back to user actions
-      const userDetails = getUserDetailsFromKeycloak(keycloak.userInfo as IUserInfo);
+      const userDetails = getUserDetailsFromKeycloakToken(keycloak.tokenParsed);
       user.getUserManager().setUser(userDetails);
     } else if (eventType === 'onAuthRefreshSuccess') {
       onRefresh();
