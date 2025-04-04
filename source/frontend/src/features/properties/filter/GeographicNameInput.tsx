@@ -1,10 +1,12 @@
 import { useFormikContext } from 'formik';
 import { Feature, Geometry } from 'geojson';
+import { sortBy } from 'lodash';
 import debounce from 'lodash/debounce';
 import { useEffect, useRef, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import { FormControlProps } from 'react-bootstrap/FormControl';
 import ClickAwayListener from 'react-click-away-listener';
+import styled from 'styled-components';
 
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import { IGeographicNamesProperties } from '@/hooks/pims-api/interfaces/IGeographicNamesProperties';
@@ -41,10 +43,13 @@ export const GeographicNameInput: React.FC<React.PropsWithChildren<IGeographicNa
             ...defaultGeographicNameSearchCriteria,
             name: val,
           });
-          setOptions(collection?.features || []);
+          const sortedFeatures = sortBy(collection?.features, item => {
+            return item.properties.score;
+          });
+          setOptions(sortedFeatures ?? []);
         }
       },
-      debounceTimeout || 500,
+      debounceTimeout ?? 500,
       { trailing: true },
     ),
   ).current;
@@ -78,9 +83,11 @@ export const GeographicNameInput: React.FC<React.PropsWithChildren<IGeographicNa
     return (
       <ul className="suggestionList">
         {options.map((x: Feature<Geometry, IGeographicNamesProperties>, index: number) => (
-          <li key={index} onClick={() => suggestionSelected(x)}>
-            {x?.properties?.name} - {x?.properties?.featureType} -{' '}
-            {x?.properties?.featureCategoryDescription}
+          <li key={x.id ?? index}>
+            <StyledButton onClick={() => suggestionSelected(x)} role="menuitem">
+              {x?.properties?.name} - {x?.properties?.featureType} -{' '}
+              {x?.properties?.featureCategoryDescription}
+            </StyledButton>
           </li>
         ))}
       </ul>
@@ -153,3 +160,10 @@ const InputControl: React.FC<React.PropsWithChildren<IDebounceInputProps>> = ({
     />
   );
 };
+
+const StyledButton = styled.button`
+  border: 0;
+  padding: 0;
+  background-color: transparent;
+  text-align: left;
+`;
