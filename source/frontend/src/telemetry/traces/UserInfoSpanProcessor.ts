@@ -12,11 +12,11 @@ import { user } from '..';
  */
 export class UserInfoSpanProcessor implements SpanProcessor {
   onStart(span: Span) {
-    const userInfo = user.getUserManager().getUser();
+    const userDetails = user.getUserManager().getUser();
 
     span.setAttributes({
-      [ATTR_USER_FULL_NAME]: userInfo?.displayName ?? '',
-      [ATTR_USER_NAME]: userInfo?.idir ?? '',
+      [ATTR_USER_FULL_NAME]: userDetails?.displayName ?? '',
+      [ATTR_USER_NAME]: userDetails?.idir ?? '',
     });
   }
 

@@ -1,4 +1,4 @@
-import { IKeycloak } from '@/hooks/useKeycloakWrapper';
+import { IUserInfo } from '@/hooks/useKeycloakWrapper';
 import { exists } from '@/utils';
 
 export interface TraceUser {
@@ -49,15 +49,15 @@ export class TelemetryUserManager implements UserManager {
   }
 }
 
-export function getUserFromSession(session: IKeycloak): TraceUser {
-  const displayName =
-    session.displayName ??
-    (exists(session.firstName) && exists(session.surname)
-      ? `${session.firstName} ${session.surname}`
-      : 'default');
+export function getUserDetailsFromKeycloak(userInfo: IUserInfo): TraceUser {
+  const displayName = userInfo?.name ?? userInfo?.preferred_businessIdentifier;
+  const fullName =
+    exists(userInfo.firstName) && exists(userInfo.surname)
+      ? `${userInfo.firstName} ${userInfo.surname}`
+      : 'default';
 
   return {
-    displayName,
-    idir: session.businessIdentifierValue,
+    displayName: displayName ?? fullName,
+    idir: userInfo.businessIdentifierValue,
   };
 }
