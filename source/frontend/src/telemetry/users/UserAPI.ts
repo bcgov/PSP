@@ -49,15 +49,15 @@ export class TelemetryUserManager implements UserManager {
   }
 }
 
-export function getUserDetailsFromKeycloakToken(userInfo: KeycloakTokenParsed): TraceUser {
+export function getUserDetailsFromKeycloakToken(userInfo?: KeycloakTokenParsed): TraceUser {
   const displayName = userInfo?.display_name;
   const fullName =
-    exists(userInfo.given_name) && exists(userInfo.family_name)
-      ? `${userInfo.given_name} ${userInfo.family_name}`
+    exists(userInfo?.given_name) && exists(userInfo?.family_name)
+      ? `${userInfo?.given_name} ${userInfo?.family_name}`
       : 'default';
 
   return {
     displayName: displayName ?? fullName,
-    idir: userInfo.idir_username,
+    idir: userInfo?.idir_username ?? '',
   };
 }
