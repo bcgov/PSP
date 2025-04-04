@@ -10,7 +10,7 @@ import './assets/scss/index.scss'; // should be loaded last to allow for overrid
 
 import * as bcTokens from '@bcgov/design-tokens/js/variables.js';
 import { ReactKeycloakProvider } from '@react-keycloak/web';
-import Keycloak, { KeycloakInstance } from 'keycloak-js';
+import Keycloak from 'keycloak-js';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -44,7 +44,7 @@ async function prepare() {
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
-const keycloak: KeycloakInstance = new Keycloak('/keycloak.json');
+const keycloak: Keycloak = new Keycloak('/keycloak.json');
 const Index = () => {
   return (
     <TenantProvider>
