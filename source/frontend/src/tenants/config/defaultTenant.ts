@@ -93,6 +93,8 @@ export const defaultTenant: ITenantConfig2 = {
   doubleClickInterval: 250,
   pimsTrainingResourceUrl:
     'https://sp.th.gov.bc.ca/sites/PropertiesServices/Project%20Management/03.%20Execution%20and%20Control/PIMS%20Training',
+  geographicNamesUrl: 'https://apps.gov.bc.ca/pub/bcgnws',
+  geographicNamesResultLimit: 20,
   pimsHealthcheckMessages: {
     PIMS_API:
       'The PIMS server is currently unavailable, PIMS will not be useable until this is resolved.',
