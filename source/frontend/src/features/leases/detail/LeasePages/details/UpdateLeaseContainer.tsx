@@ -8,6 +8,7 @@ import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { useLeaseDetail } from '@/features/leases/hooks/useLeaseDetail';
 import { useUpdateLease } from '@/features/leases/hooks/useUpdateLease';
 import { LeaseFormModel } from '@/features/leases/models';
+import { LeaseStatusUpdateSolver } from '@/features/leases/models/LeaseStatusUpdateSolver';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { useModalContext } from '@/hooks/useModalContext';
@@ -36,11 +37,10 @@ export const UpdateLeaseContainer: React.FunctionComponent<UpdateLeaseContainerP
   const withUserOverride = useApiUserOverride<
     (userOverrideCodes: UserOverrideCode[]) => Promise<any | void>
   >('Failed to update Lease File');
-
-  const { setModalContent, setDisplayModal } = useModalContext();
-
   const { getByType } = useLookupCodeHelpers();
+  const { setModalContent, setDisplayModal } = useModalContext();
   const consultationTypes = getByType(API.CONSULTATION_TYPES);
+  const leaseStatusTypes = getByType(API.LEASE_STATUS_TYPES);
 
   // Not all consultations might be coming from the backend. Add the ones missing.
 
@@ -110,13 +110,46 @@ export const UpdateLeaseContainer: React.FunctionComponent<UpdateLeaseContainerP
     <>
       <LoadingBackdrop show={loading} parentScreen></LoadingBackdrop>
       <View
-        onSubmit={(lease: LeaseFormModel) =>
-          withUserOverride(
-            (userOverrideCodes: UserOverrideCode[]) => onSubmit(lease, userOverrideCodes),
-            [],
-            customErrorHandler,
-          )
-        }
+        onSubmit={async (values: LeaseFormModel) => {
+          const updatedFile = LeaseFormModel.toApi(values);
+          const currentFileSolver = new LeaseStatusUpdateSolver(lease.fileStatusTypeCode);
+          const updatedFileSolver = new LeaseStatusUpdateSolver(updatedFile.fileStatusTypeCode);
+
+          if (!currentFileSolver.isAdminProtected() && updatedFileSolver.isAdminProtected()) {
+            const statusCode = leaseStatusTypes.find(x => x.id === values.statusTypeCode);
+            setModalContent({
+              variant: 'info',
+              title: 'Confirm status change',
+              message: (
+                <>
+                  <p>
+                    You marked this file as {statusCode.name}. If you save it, only the
+                    administrator can turn it back on. You will still see it in the management
+                    table.
+                  </p>
+                  <p>Do you want to acknowledge and proceed?</p>
+                </>
+              ),
+              okButtonText: 'Yes',
+              cancelButtonText: 'No',
+              handleOk: async () => {
+                await withUserOverride(
+                  (userOverrideCodes: UserOverrideCode[]) => onSubmit(values, userOverrideCodes),
+                  [],
+                  customErrorHandler,
+                );
+              },
+              handleCancel: () => setDisplayModal(false),
+            });
+            setDisplayModal(true);
+          } else {
+            await withUserOverride(
+              (userOverrideCodes: UserOverrideCode[]) => onSubmit(values, userOverrideCodes),
+              [],
+              customErrorHandler,
+            );
+          }
+        }}
         formikRef={formikRef}
         initialValues={LeaseFormModel.fromApi(lease)}
       />

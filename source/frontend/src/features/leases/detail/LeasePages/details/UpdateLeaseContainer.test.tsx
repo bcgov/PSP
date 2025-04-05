@@ -3,11 +3,11 @@ import MockAdapter from 'axios-mock-adapter';
 import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
 import noop from 'lodash/noop';
-import React, { forwardRef } from 'react';
+import React, { createRef, forwardRef } from 'react';
 
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { useLeaseDetail } from '@/features/leases/hooks/useLeaseDetail';
-import { getDefaultFormLease } from '@/features/leases/models';
+import { getDefaultFormLease, LeaseFormModel } from '@/features/leases/models';
 import { getMockApiLease } from '@/mocks/lease.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { ApiGen_CodeTypes_LeaseAccountTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseAccountTypes';
@@ -50,11 +50,12 @@ describe('Update lease container component', () => {
 
   // render component under test
   const setup = (renderOptions: RenderOptions & Partial<UpdateLeaseContainerProps> = {}) => {
+    const formikRef = createRef<FormikProps<LeaseFormModel>>();
     const component = render(
       <LeaseStateContext.Provider
         value={{ lease: { ...getMockApiLease(), id: 1 }, setLease: noop }}
       >
-        <UpdateLeaseContainer View={View} formikRef={React.createRef()} onEdit={onEdit} />
+        <UpdateLeaseContainer View={View} formikRef={formikRef} onEdit={onEdit} />
       </LeaseStateContext.Provider>,
       {
         ...renderOptions,
@@ -65,7 +66,8 @@ describe('Update lease container component', () => {
     );
 
     return {
-      component,
+      ...component,
+      formikRef,
     };
   };
 
@@ -75,8 +77,8 @@ describe('Update lease container component', () => {
   });
 
   it('renders as expected', () => {
-    const { component } = setup({});
-    expect(component.asFragment()).toMatchSnapshot();
+    const { asFragment } = setup({});
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('saves the form with minimal data', async () => {
@@ -152,6 +154,22 @@ describe('Update lease container component', () => {
     await act(async () => userEvent.click(button));
 
     expect(JSON.parse(mockAxios.history.put[1].data)).toEqual(expectedLease);
+  });
+
+  it(`triggers the modal for ARCHIVED status update`, async () => {
+    const { formikRef, findByText } = setup();
+
+    await act(async () =>
+      viewProps.onSubmit({
+        ...getDefaultFormLease(),
+        statusTypeCode: ApiGen_CodeTypes_LeaseStatusTypes.ARCHIVED,
+      }),
+    );
+
+    await act(async () => formikRef.current?.submitForm());
+
+    const popup = await findByText(/You marked this file as/i);
+    expect(popup).toBeVisible();
   });
 });
 
