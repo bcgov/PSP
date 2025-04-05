@@ -105,7 +105,7 @@ class ResearchStatusUpdateSolver {
     }
 
     const statusCode = this.researchFile.fileStatusTypeCode.id;
-    let isProtected = false;
+    let isProtected: boolean;
 
     switch (statusCode) {
       case ApiGen_CodeTypes_ResearchFileStatusTypes.ACTIVE:

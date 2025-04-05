@@ -169,7 +169,7 @@ class DispositionStatusUpdateSolver implements IUpdateChecklistStrategy {
     }
 
     const statusCode = this.dispositionFile.fileStatusTypeCode?.id;
-    let isProtected = false;
+    let isProtected: boolean;
 
     switch (statusCode) {
       case ApiGen_CodeTypes_DispositionFileStatusTypes.ACTIVE:
