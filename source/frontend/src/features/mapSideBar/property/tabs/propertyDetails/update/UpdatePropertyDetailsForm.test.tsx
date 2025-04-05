@@ -245,7 +245,7 @@ describe('UpdatePropertyDetailsForm component', () => {
   });
 
   it('province defaults to BC when null', async () => {
-    mockUseTenant.mockReturnValue({...defaultTenant, provinceStateId: 2});
+    mockUseTenant.mockReturnValue({ ...defaultTenant, provinceStateId: 2 });
 
     initialValues.address.provinceStateId = null;
     const { container } = await setup({ initialValues });
@@ -256,7 +256,7 @@ describe('UpdatePropertyDetailsForm component', () => {
   });
 
   it('province defaults to BC when null no tenant', async () => {
-    mockUseTenant.mockReturnValue({...defaultTenant, provinceStateId: null});
+    mockUseTenant.mockReturnValue({ ...defaultTenant, provinceStateId: null });
 
     initialValues.address.provinceStateId = null;
     const { container } = await setup({ initialValues });
@@ -267,7 +267,7 @@ describe('UpdatePropertyDetailsForm component', () => {
   });
 
   it('province defaults to BC when null no tenant', async () => {
-    mockUseTenant.mockReturnValue({...defaultTenant, provinceStateId: null});
+    mockUseTenant.mockReturnValue({ ...defaultTenant, provinceStateId: null });
 
     initialValues.address.provinceStateId = null;
     const { container } = await setup({ initialValues });
