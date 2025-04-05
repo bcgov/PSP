@@ -71,7 +71,7 @@ export const HealthcheckContainer: React.FunctionComponent<IHealthcheckContainer
   const handleError = useCallback(
     async (axiosError: AxiosError<IApiError>): Promise<void> => {
       const systemIssues: IHealthCheckIssue[] = [];
-      let systemDegraded = false;
+      let systemDegradedCheck = false;
 
       // 500 - API NOT Responding
       if (axiosError?.response?.status === 500) {
@@ -83,7 +83,7 @@ export const HealthcheckContainer: React.FunctionComponent<IHealthcheckContainer
         });
 
         setHealthCheckIssues(systemIssues);
-        systemDegraded = true;
+        systemDegradedCheck = true;
       }
 
       // 503 - API responding service not available
@@ -91,17 +91,17 @@ export const HealthcheckContainer: React.FunctionComponent<IHealthcheckContainer
         const data = axiosError?.response?.data as unknown as ISystemCheck;
 
         checkAllSystemsHealth(data);
-        systemDegraded = true;
+        systemDegradedCheck = true;
       }
 
-      updateHealthcheckResult(systemDegraded);
+      updateHealthcheckResult(systemDegradedCheck);
     },
     [checkAllSystemsHealth, pimsHealthcheckMessages, updateHealthcheckResult],
   );
 
   const fetchSystemCheckInformation = useCallback(async () => {
     const systemIssues: IHealthCheckIssue[] = [];
-    let systemDegraded = false;
+    let systemDegradedCheck = false;
     try {
       const pimsApi = await getLive();
       if (pimsApi.data.status !== 'Healthy') {
@@ -113,16 +113,16 @@ export const HealthcheckContainer: React.FunctionComponent<IHealthcheckContainer
         });
 
         setHealthCheckIssues(systemIssues);
-        systemDegraded = true;
+        systemDegradedCheck = true;
       }
 
       const systemCheck = await getSystemCheck();
       if (systemCheck.data.status !== 'Healthy') {
         checkAllSystemsHealth(systemCheck.data);
-        systemDegraded = true;
+        systemDegradedCheck = true;
       }
 
-      updateHealthcheckResult(systemDegraded);
+      updateHealthcheckResult(systemDegradedCheck);
     } catch (e) {
       if (axios.isAxiosError(e)) {
         const axiosError = e as AxiosError<IApiError>;
@@ -146,9 +146,9 @@ export const HealthcheckContainer: React.FunctionComponent<IHealthcheckContainer
     }
   }, [fetchSystemCheckInformation, keycloak.obj.authenticated, systemChecked, systemDegraded]);
 
-  return systemChecked && systemDegraded ? (
+  return systemChecked ? (
     <HealthCheckStyled>
-      <View systemChecks={healthCheckIssues}></View>
+      <View systemDegraded={systemDegraded} systemChecks={healthCheckIssues}></View>
     </HealthCheckStyled>
   ) : null;
 };

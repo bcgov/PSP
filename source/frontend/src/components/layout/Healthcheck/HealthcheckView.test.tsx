@@ -15,6 +15,7 @@ describe('Healthcheck View component', () => {
     const utils = render(
       <HealthcheckView
         {...renderOptions.props}
+        systemDegraded={renderOptions.props?.systemDegraded ?? false}
         systemChecks={renderOptions.props?.systemChecks ?? mockHealthcheckIssues}
       />,
       {
@@ -39,6 +40,7 @@ describe('Healthcheck View component', () => {
   it(`renders 'See the full list here' link`, async () => {
     const { getByTestId } = await setup({
       props: {
+        systemDegraded: true,
         systemChecks: [
           {
             key: 'Mayan',
