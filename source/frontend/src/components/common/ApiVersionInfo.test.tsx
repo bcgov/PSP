@@ -3,6 +3,8 @@ import { useApiHealth } from '@/hooks/pims-api/useApiHealth';
 import { render, RenderOptions, waitForEffects } from '@/utils/test-utils';
 
 import { ApiVersionInfo } from './ApiVersionInfo';
+import ISystemCheck from '@/hooks/pims-api/interfaces/ISystemCheck';
+import { AxiosResponse } from 'axios';
 
 const defaultVersion: IApiVersion = {
   environment: 'test',
@@ -15,12 +17,14 @@ const defaultVersion: IApiVersion = {
 const mockGetVersionApi = vi.fn();
 const mockGetLiveApi = vi.fn();
 const mockGetReady = vi.fn();
+const mockGetSystemCheckApi = vi.fn();
 
 vi.mock('@/hooks/pims-api/useApiHealth');
 vi.mocked(useApiHealth).mockReturnValue({
   getVersion: mockGetVersionApi,
   getLive: mockGetLiveApi,
   getReady: mockGetReady,
+  getSystemCheck: mockGetSystemCheckApi,
 });
 
 describe('ApiVersionInfo suite', () => {

@@ -131,7 +131,7 @@ const AcquisitionDetailSubForm: React.FC<{
   React.useEffect(() => {
     values.ownerSolicitors
       .filter(os => isValidId(+os?.organizationId))
-      .map(async os => {
+      .forEach(async os => {
         os.contact.organization = await fetchOrganization(+os.organizationId);
       });
   }, [values.ownerSolicitors, fetchOrganization]);
@@ -319,6 +319,12 @@ const AcquisitionDetailSubForm: React.FC<{
             options={acquisitionPhysFileTypes}
             placeholder="Select..."
           />
+        </SectionField>
+        <SectionField
+          label="Physical file details"
+          tooltip="Location, the lawyer involved, which office it's with, and who currently has it."
+        >
+          <TextArea field="physicalFileDetails"></TextArea>
         </SectionField>
         <SectionField label="Acquisition type" required>
           <Select

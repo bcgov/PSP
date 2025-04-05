@@ -14,9 +14,11 @@ import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockResearchFile } from '@/mocks/researchFile.mock';
 import { getEmptyProperty } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, render, RenderOptions } from '@/utils/test-utils';
+import { act, render, RenderOptions, waitForEffects } from '@/utils/test-utils';
 
 import PropertyFileContainer, { IPropertyFileContainerProps } from './PropertyFileContainer';
+import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
+import Claims from '@/constants/claims';
 
 const mockAxios = new MockAdapter(axios);
 
@@ -163,5 +165,56 @@ describe('PropertyFileContainer component', () => {
     expect(viewProps?.tabViews[2].key).toBe(InventoryTabNames.value);
     expect(viewProps?.tabViews[3].key).toBe(InventoryTabNames.property);
     expect(viewProps?.tabViews[4].key).toBe(InventoryTabNames.pims);
+  });
+
+  it('does not call lease endpoints when user does not have lease permissions', async () => {
+    mockAxios.onGet(new RegExp('properties/495/associations')).reply(200, {
+      id: 1,
+      leaseAssociations: [
+        {
+          id: 34,
+          fileNumber: '951547254',
+          fileName: '-',
+          createdDateTime: '2022-05-13T11:51:29.23',
+          createdBy: 'Lease Seed Data',
+          status: 'Active',
+          statusCode: ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE,
+          createdByGuid: null,
+        },
+      ],
+      researchAssociations: [],
+      acquisitionAssociations: [],
+      dispositionAssociations: [],
+    });
+
+    await setup(undefined, { claims: [] });
+    await waitForEffects();
+    expect(mockAxios.history.get.map(m => m.url)).not.toContain('/leases/34');
+  });
+
+  it('calls lease endpoints when user does has lease permissions', async () => {
+    mockAxios.onGet(new RegExp('properties/495/associations')).reply(200, {
+      id: 1,
+      leaseAssociations: [
+        {
+          id: 34,
+          fileNumber: '951547254',
+          fileName: '-',
+          createdDateTime: '2022-05-13T11:51:29.23',
+          createdBy: 'Lease Seed Data',
+          status: 'Active',
+          statusCode: ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE,
+          createdByGuid: null,
+        },
+      ],
+      researchAssociations: [],
+      acquisitionAssociations: [],
+      dispositionAssociations: [],
+    });
+
+    await setup(undefined, { claims: [Claims.LEASE_VIEW] });
+    await waitForEffects();
+    const test = mockAxios.history.get;
+    expect(mockAxios.history.get.map(m => m.url)).toContain('/leases/34');
   });
 });

@@ -28,12 +28,10 @@ export interface IUpdateAcquisitionContainerProps {
 
 export const RemoveSelfContractorContent = (): React.ReactNode => {
   return (
-    <>
-      <p>
-        Contractors cannot remove themselves from a file. Please contact the admin at{' '}
-        <a href="mailto: pims@gov.bc.ca">pims@gov.bc.ca</a>
-      </p>
-    </>
+    <p>
+      Contractors cannot remove themselves from a file. Please contact the admin at{' '}
+      <a href="mailto: pims@gov.bc.ca">pims@gov.bc.ca</a>
+    </p>
   );
 };
 

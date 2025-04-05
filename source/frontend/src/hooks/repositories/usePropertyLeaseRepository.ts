@@ -37,7 +37,7 @@ export const usePropertyLeaseRepository = () => {
       [putLeaseProperties],
     ),
     requestName: 'UpdateLeaseProperties',
-    onSuccess: useAxiosSuccessHandler('Lease File Properties updated'),
+    onSuccess: useAxiosSuccessHandler(),
     throwError: true,
   });
 
