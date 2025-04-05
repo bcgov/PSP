@@ -4,7 +4,7 @@ import { Alert } from 'react-bootstrap';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { AccessRequestStatus } from '@/constants/accessStatus';
 import { useAccessRequests } from '@/hooks/pims-api/useAccessRequests';
-import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import useKeycloakWrapper, { IUserInfo } from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_AccessRequest } from '@/models/api/generated/ApiGen_Concepts_AccessRequest';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { isValidId } from '@/utils';
@@ -40,7 +40,7 @@ export const AccessRequestContainer: React.FunctionComponent<
     },
   } = useAccessRequests();
   const keycloak = useKeycloakWrapper();
-  const userInfo = keycloak?.obj?.userInfo;
+  const userInfo = keycloak?.obj?.userInfo as IUserInfo;
 
   useEffect(() => {
     if (!isValidId(accessRequestId)) {

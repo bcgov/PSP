@@ -36,7 +36,7 @@ const TestCommonWrapper: React.FunctionComponent<
       keycloak: {
         userInfo: {
           organizations: organizations ?? [1],
-          client_roles: [...(claims ?? []), ...(roles ?? [])] ?? [],
+          client_roles: [...(claims ?? []), ...(roles ?? [])],
           email: 'test@test.com',
           name: 'Chester Tester',
         },

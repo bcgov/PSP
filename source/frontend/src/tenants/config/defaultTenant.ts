@@ -91,6 +91,14 @@ export const defaultTenant: ITenantConfig2 = {
   idlePromptTimeout: 15,
   idleTimeout: 45,
   doubleClickInterval: 250,
+  telemetry: {
+    enabled: true,
+    debug: false,
+    environment: 'local',
+    serviceName: 'frontend',
+    endpoint: 'http://localhost:4318',
+    exportInterval: 10000,
+  },
   pimsTrainingResourceUrl:
     'https://sp.th.gov.bc.ca/sites/PropertiesServices/Project%20Management/03.%20Execution%20and%20Control/PIMS%20Training',
   pimsHealthcheckMessages: {

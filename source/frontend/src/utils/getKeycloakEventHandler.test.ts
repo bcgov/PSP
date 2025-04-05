@@ -2,8 +2,8 @@ import { clearJwt, saveJwt } from '@/store/slices/jwt/JwtSlice';
 import { setKeycloakReady } from '@/store/slices/keycloakReady/keycloakReadySlice';
 import { store } from '@/store/store';
 
+import Keycloak from 'keycloak-js';
 import getKeycloakEventHandler from './getKeycloakEventHandler';
-import { KeycloakInstance } from 'keycloak-js';
 
 vi.mock('@/store/slices/jwt/JwtSlice', () => ({
   saveJwt: vi.fn(),
@@ -18,15 +18,21 @@ vi.mock('@/store/store', () => ({
 
 const onRefresh = vi.fn();
 
-const keycloak = {
+const keycloak: Partial<Keycloak> = {
   subject: 'test',
   userInfo: {
     roles: [],
     organizations: ['1'],
   },
   token: '123456789',
-} as any as KeycloakInstance;
-const keyclockEventHandler = getKeycloakEventHandler(keycloak, onRefresh);
+  tokenParsed: {
+    display_name: 'Chester Tester',
+    idir_username: 'CHESTER',
+  },
+};
+
+const keyclockEventHandler = getKeycloakEventHandler(keycloak as Keycloak, onRefresh);
+
 describe('KeycloakEventHandler ', () => {
   beforeEach(() => {
     vi.clearAllMocks();
