@@ -10,7 +10,7 @@ namespace Pims.Dal.Entities
         #region Properties
 
         /// <summary>
-        /// get/set - Primary key to identify disposition physical file status type.
+        /// get/set - Primary key to identify the expropriation event type.
         /// </summary>
         [NotMapped]
         public string Id { get => ExpropOwnerHistoryTypeCode; set => ExpropOwnerHistoryTypeCode = value; }
@@ -20,7 +20,7 @@ namespace Pims.Dal.Entities
         public PimsExpropOwnerHistoryType() { }
 
         /// <summary>
-        /// Create a new instance of a PimsDspPhysFileStatusType class.
+        /// Create a new instance of a PimsExpropOwnerHistoryType class.
         /// </summary>
         /// <param name="id"></param>
         public PimsExpropOwnerHistoryType(string id)

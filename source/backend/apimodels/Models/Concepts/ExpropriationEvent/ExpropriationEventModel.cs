@@ -19,6 +19,8 @@ namespace Pims.Api.Models.Concepts.ExpropriationEvent
 
         public InterestHolderModel InterestHolder { get; set; }
 
+        public CodeTypeModel<string> EventType { get; set; }
+
         public DateOnly? EventDate { get; set; }
     }
 }
