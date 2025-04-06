@@ -25,7 +25,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
     public class ExpropriationEventController : ControllerBase
     {
         #region Variables
-        private readonly IExpropriationHistoryService _expropriationHistoryService;
+        private readonly IExpropriationEventService _expropriationEventService;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
         #endregion
@@ -33,12 +33,12 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         /// <summary>
         /// Creates a new instance of a ExpropriationEventController class, initializes it with the specified arguments.
         /// </summary>
-        /// <param name="expropriationHistoryService"></param>
+        /// <param name="expropriationEventService"></param>
         /// <param name="mapper"></param>
         /// <param name="logger"></param>
-        public ExpropriationEventController(IExpropriationHistoryService expropriationHistoryService, IMapper mapper, ILogger<ExpropriationEventController> logger)
+        public ExpropriationEventController(IExpropriationEventService expropriationEventService, IMapper mapper, ILogger<ExpropriationEventController> logger)
         {
-            _expropriationHistoryService = expropriationHistoryService;
+            _expropriationEventService = expropriationEventService;
             _mapper = mapper;
             _logger = logger;
         }
@@ -63,7 +63,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
                 User.GetUsername(),
                 DateTime.Now);
 
-            var expropriationEvents = _expropriationHistoryService.GetExpropriationEvents(id);
+            var expropriationEvents = _expropriationEventService.GetExpropriationEvents(id);
             return new JsonResult(_mapper.Map<List<ExpropriationEventModel>>(expropriationEvents));
         }
 

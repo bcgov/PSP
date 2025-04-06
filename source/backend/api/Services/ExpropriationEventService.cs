@@ -8,7 +8,7 @@ using Pims.Dal.Repositories;
 
 namespace Pims.Api.Services
 {
-    public class ExpropriationEventService : IExpropriationHistoryService
+    public class ExpropriationEventService : IExpropriationEventService
     {
         private readonly IExpropriationEventRepository _expropriationEventRepository;
         private readonly ClaimsPrincipal _user;

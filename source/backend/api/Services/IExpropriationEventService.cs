@@ -3,7 +3,7 @@ using Pims.Dal.Entities;
 
 namespace Pims.Api.Services
 {
-    public interface IExpropriationHistoryService
+    public interface IExpropriationEventService
     {
         IEnumerable<PimsExpropOwnerHistory> GetExpropriationEvents(long acquisitionFileId);
 
