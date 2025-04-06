@@ -5,7 +5,7 @@ namespace Pims.Dal.Repositories
 {
     public interface IExpropriationEventRepository : IRepository<PimsExpropOwnerHistory>
     {
-        List<PimsExpropOwnerHistory> GetExpropriationEventsByAcquisitionFile(long acquisitionFileId);
+        IEnumerable<PimsExpropOwnerHistory> GetExpropriationEventsByAcquisitionFile(long acquisitionFileId);
 
         PimsExpropOwnerHistory GetExpropriationEventById(long expropriationHistoryId);
 

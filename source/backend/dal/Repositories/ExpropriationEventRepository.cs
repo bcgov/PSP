@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
@@ -13,20 +15,22 @@ namespace Pims.Dal.Repositories
         {
         }
 
-        public List<PimsExpropOwnerHistory> GetExpropriationEventsByAcquisitionFile(long acquisitionFileId)
+        public IEnumerable<PimsExpropOwnerHistory> GetExpropriationEventsByAcquisitionFile(long acquisitionFileId)
         {
             using var scope = Logger.QueryScope();
 
-            // TODO: Implement
-            throw new System.NotImplementedException();
+            return Context.PimsExpropOwnerHistories.AsNoTracking()
+                .Include(eoh => eoh.ExpropOwnerHistoryTypeCodeNavigation)
+                .Where(eoh => eoh.AcquisitionFileId == acquisitionFileId);
         }
 
         public PimsExpropOwnerHistory GetExpropriationEventById(long expropriationHistoryId)
         {
             using var scope = Logger.QueryScope();
 
-            // TODO: Implement
-            throw new System.NotImplementedException();
+            return Context.PimsExpropOwnerHistories.AsNoTracking()
+                .Include(eoh => eoh.ExpropOwnerHistoryTypeCodeNavigation)
+                .FirstOrDefault(eoh => eoh.ExpropOwnerHistoryId == expropriationHistoryId) ?? throw new KeyNotFoundException();
         }
 
         public PimsExpropOwnerHistory AddExpropriationEvent(PimsExpropOwnerHistory expropriationHistory)
