@@ -98,6 +98,28 @@ class ResearchStatusUpdateSolver {
 
     return canEdit;
   }
+
+  isAdminProtected(): boolean {
+    if (this.researchFile === null) {
+      return false;
+    }
+
+    const statusCode = this.researchFile.fileStatusTypeCode.id;
+    let isProtected: boolean;
+
+    switch (statusCode) {
+      case ApiGen_CodeTypes_ResearchFileStatusTypes.ACTIVE:
+      case ApiGen_CodeTypes_ResearchFileStatusTypes.INACTIVE:
+      case ApiGen_CodeTypes_ResearchFileStatusTypes.CLOSED:
+        isProtected = false;
+        break;
+      case ApiGen_CodeTypes_ResearchFileStatusTypes.ARCHIVED:
+        isProtected = true;
+        break;
+    }
+
+    return isProtected;
+  }
 }
 
 export default ResearchStatusUpdateSolver;

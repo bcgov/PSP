@@ -84,6 +84,11 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         public CodeTypeModel<string> AcquisitionPhysFileStatusTypeCode { get; set; }
 
         /// <summary>
+        /// get/set - The comments to provide details about the physical acquisition file.
+        /// </summary>
+        public string PhysicalFileDetails { get; set; }
+
+        /// <summary>
         /// get/set - The acquisition type.
         /// </summary>
         public CodeTypeModel<string> AcquisitionTypeCode { get; set; }

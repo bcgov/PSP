@@ -11,14 +11,18 @@ export interface IHealthCheckIssue {
 }
 
 export interface IHealthCheckViewProps {
+  systemDegraded: boolean;
   systemChecks: IHealthCheckIssue[] | null;
 }
 
-const HealthcheckView: React.FunctionComponent<IHealthCheckViewProps> = ({ systemChecks }) => {
+const HealthcheckView: React.FunctionComponent<IHealthCheckViewProps> = ({
+  systemDegraded,
+  systemChecks,
+}) => {
   const { setModalContent, setDisplayModal } = useModalContext();
 
   return (
-    systemChecks?.length && (
+    systemDegraded && (
       <StyledWrapperDiv>
         <StyledIconDiv>
           <FaBan size={24} />

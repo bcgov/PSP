@@ -425,6 +425,7 @@ export const mockAcquisitionFileResponse = (
   acquisitionFileLegalSurveyStatusTypeCode: null,
   acquisitionFileTakingStatuses: [],
   acquisitionFileExpropiationRiskStatusTypeCode: null,
+  physicalFileDetails: null,
 });
 
 export const getMockExpropriationFile = (
@@ -1537,6 +1538,7 @@ export const mockAcquisitionFileSubFilesResponse = (): ApiGen_Concepts_Acquisiti
     acquisitionFileLegalSurveyStatusTypeCode: null,
     acquisitionFileTakingStatuses: [],
     acquisitionFileExpropiationRiskStatusTypeCode: null,
+    physicalFileDetails: null,
   },
   {
     parentAcquisitionFileId: 64,
@@ -1592,5 +1594,6 @@ export const mockAcquisitionFileSubFilesResponse = (): ApiGen_Concepts_Acquisiti
     acquisitionFileLegalSurveyStatusTypeCode: null,
     acquisitionFileTakingStatuses: [],
     acquisitionFileExpropiationRiskStatusTypeCode: null,
+    physicalFileDetails: null,
   },
 ];
