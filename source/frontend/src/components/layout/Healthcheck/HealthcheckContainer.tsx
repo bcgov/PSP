@@ -6,7 +6,6 @@ import ISystemCheck from '@/hooks/pims-api/interfaces/ISystemCheck';
 import { useApiHealth } from '@/hooks/pims-api/useApiHealth';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { IApiError } from '@/interfaces/IApiError';
-import HealthCheckStyled from '@/layouts/Healthcheck';
 import { HealthcheckMessagesTypesEnum } from '@/layouts/models/HealthcheckMessagesTypes';
 import { useTenant } from '@/tenants/useTenant';
 
@@ -146,9 +145,11 @@ export const HealthcheckContainer: React.FunctionComponent<IHealthcheckContainer
     }
   }, [fetchSystemCheckInformation, keycloak.obj.authenticated, systemChecked, systemDegraded]);
 
-  return systemChecked ? (
-    <HealthCheckStyled>
-      <View systemDegraded={systemDegraded} systemChecks={healthCheckIssues}></View>
-    </HealthCheckStyled>
-  ) : null;
+  return (
+    <View
+      systemChecked={systemChecked}
+      systemDegraded={systemDegraded}
+      systemChecks={healthCheckIssues}
+    ></View>
+  );
 };
