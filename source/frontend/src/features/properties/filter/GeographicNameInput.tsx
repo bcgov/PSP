@@ -12,6 +12,7 @@ import TooltipWrapper from '@/components/common/TooltipWrapper';
 import { IGeographicNamesProperties } from '@/hooks/pims-api/interfaces/IGeographicNamesProperties';
 import { defaultGeographicNameSearchCriteria } from '@/hooks/pims-api/useApiGeographicNames';
 import { useGeographicNamesRepository } from '@/hooks/useGeographicNamesRepository';
+import { exists } from '@/utils';
 
 interface IGeographicNameInputProps {
   field: string;
@@ -85,8 +86,13 @@ export const GeographicNameInput: React.FC<React.PropsWithChildren<IGeographicNa
         {options.map((x: Feature<Geometry, IGeographicNamesProperties>, index: number) => (
           <li key={x.id ?? index}>
             <StyledButton onClick={() => suggestionSelected(x)} type="button">
-              {x?.properties?.name} - {x?.properties?.featureType} -{' '}
-              {x?.properties?.featureCategoryDescription}
+              {[
+                x?.properties?.name,
+                x?.properties?.featureType,
+                x?.properties?.featureCategoryDescription,
+              ]
+                .filter(exists)
+                .join(' - ')}
             </StyledButton>
           </li>
         ))}
