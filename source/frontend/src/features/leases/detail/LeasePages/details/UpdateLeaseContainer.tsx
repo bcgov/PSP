@@ -123,7 +123,7 @@ export const UpdateLeaseContainer: React.FunctionComponent<UpdateLeaseContainerP
               message: (
                 <>
                   <p>
-                    You marked this file as {statusCode.name}. If you save it, only the
+                    You marked this file as {statusCode?.name ?? ''}. If you save it, only the
                     administrator can turn it back on. You will still see it in the management
                     table.
                   </p>
