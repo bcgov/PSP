@@ -40,7 +40,12 @@ Scenario: 07._Invalid_Property_Not_Found
 	Given I search for an Invalid Property from row number 10
 	Then No Properties were found
 
-Scenario Outline: 08._Property_Management_Lease_Active_Indicator
+Scenario: 08._Map_Features
+	Given I verify the Maps Layers
+	When I verify the Maps Filters
+	Then Map Features rendered successfully
+
+Scenario Outline: 09._Property_Management_Lease_Active_Indicator
 	Given I create a new minimum Lease from row number <RowNumber>
 	When  I add additional Information to the Lease Details
 	And I add Properties to the Lease Details
@@ -56,4 +61,6 @@ Scenario Outline: 08._Property_Management_Lease_Active_Indicator
 	| No                | 15        |
 	| No				| 16        |
 	| Yes               | 17        |
+
+
 
