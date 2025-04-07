@@ -1,7 +1,6 @@
 ﻿using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
-using System.Data;
 
 namespace PIMS.Tests.Automation.StepDefinitions
 {
@@ -103,6 +102,22 @@ namespace PIMS.Tests.Automation.StepDefinitions
             subdivisionConsolidationProps.SaveConsolidation();
         }
 
+        [StepDefinition(@"I attept to create a Consolidation from row number (.*)")]
+        public void AttemptCreateConsolidation(int rowNumber)
+        {
+            //TEST COVERAGE: PSP-8029, PSP-8031, PSP-8032, PSP-8039, PSP-8042
+
+            //Login to PIMS
+            loginSteps.Idir(userName);
+
+            //Navigate to Consolidation Menu
+            PopulateConsolidationData(rowNumber);
+            subdivisionConsolidationProps.NavigateToCreateNewConsolidation();
+
+            //Create a Consolidation
+            subdivisionConsolidationProps.InsertParentConsolidation(propertyConsolidation.ConsolidationSource[0].PropertyHistoryIdentifier);
+        }
+
         [StepDefinition(@"Subdivision is created successfully")]
         public void SubdivisionCreatedSuccessfully()
         {
@@ -154,6 +169,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             //TEST COVERAGE: PSP-8036
 
+            subdivisionConsolidationProps.VerifyMissingParentMessage();
+        }
+
+        [StepDefinition(@"Consolidation Parent cannot be Disposed error")]
+        public void ConsolidationParentDisposedError()
+        {
             subdivisionConsolidationProps.VerifyMissingParentMessage();
         }
 
