@@ -43,31 +43,40 @@ namespace Pims.Api.Services
             return _expropriationEventRepository.GetExpropriationEventById(expropriationHistoryId);
         }
 
-        public PimsExpropOwnerHistory AddExpropriationEvent(long acquisitionFileId, PimsExpropOwnerHistory expropriationHistory)
+        public PimsExpropOwnerHistory AddExpropriationEvent(long acquisitionFileId, PimsExpropOwnerHistory expropriationEvent)
         {
-            _logger.LogInformation("Getting expropriation events with AcquisitionFile Id: {Id}", acquisitionFileId);
+            _logger.LogInformation("Adding expropriation event with AcquisitionFile Id: {Id}", acquisitionFileId);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
 
-            // TODO: Implement
-            throw new System.NotImplementedException();
+            // Add expropriation event to the event history
+            var addedEvent = _expropriationEventRepository.AddExpropriationEvent(expropriationEvent);
+            _expropriationEventRepository.CommitTransaction();
+
+            return addedEvent;
         }
 
-        public PimsExpropOwnerHistory UpdateExpropriationEvent(long acquisitionFileId, PimsExpropOwnerHistory expropriationHistory)
+        public PimsExpropOwnerHistory UpdateExpropriationEvent(long acquisitionFileId, PimsExpropOwnerHistory expropriationEvent)
         {
             _logger.LogInformation("Updating expropriation event with AcquisitionFile Id: {Id}", acquisitionFileId);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
 
-            // TODO: Implement
-            throw new System.NotImplementedException();
+            // Update the expropriation event
+            var updatedEvent = _expropriationEventRepository.UpdateExpropriationEvent(expropriationEvent);
+            _expropriationEventRepository.CommitTransaction();
+
+            return updatedEvent;
         }
 
-        public bool DeleteExpropriationEvent(long acquisitionFileId, long expropriationHistoryId)
+        public bool DeleteExpropriationEvent(long acquisitionFileId, long expropriationEventId)
         {
-            _logger.LogInformation("Deleting expropriation event with ExpropriationHistoryId: {Id}", expropriationHistoryId);
+            _logger.LogInformation("Deleting expropriation event with ExpropriationHistoryId: {Id}", expropriationEventId);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
 
-            // TODO: Implement
-            throw new System.NotImplementedException();
+            // Delete the expropriation event
+            var deleteResult = _expropriationEventRepository.TryDeleteExpropriationEvent(acquisitionFileId, expropriationEventId);
+            _expropriationEventRepository.CommitTransaction();
+
+            return deleteResult;
         }
     }
 }

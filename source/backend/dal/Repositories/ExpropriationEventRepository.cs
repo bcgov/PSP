@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
@@ -20,41 +20,68 @@ namespace Pims.Dal.Repositories
             using var scope = Logger.QueryScope();
 
             return Context.PimsExpropOwnerHistories.AsNoTracking()
+                .Include(eoh => eoh.AcquisitionFile)
+                .Include(x => x.InterestHolder)
+                    .ThenInclude(y => y.Person)
+                .Include(x => x.InterestHolder)
+                    .ThenInclude(y => y.Organization)
+                .Include(x => x.InterestHolder)
+                    .ThenInclude(y => y.InterestHolderTypeCodeNavigation)
+                .Include(eoh => eoh.AcquisitionOwner)
                 .Include(eoh => eoh.ExpropOwnerHistoryTypeCodeNavigation)
                 .Where(eoh => eoh.AcquisitionFileId == acquisitionFileId);
         }
 
-        public PimsExpropOwnerHistory GetExpropriationEventById(long expropriationHistoryId)
+        public PimsExpropOwnerHistory GetExpropriationEventById(long expropriationEventId)
         {
             using var scope = Logger.QueryScope();
 
             return Context.PimsExpropOwnerHistories.AsNoTracking()
+                .Include(eoh => eoh.AcquisitionFile)
+                .Include(x => x.InterestHolder)
+                    .ThenInclude(y => y.Person)
+                .Include(x => x.InterestHolder)
+                    .ThenInclude(y => y.Organization)
+                .Include(x => x.InterestHolder)
+                    .ThenInclude(y => y.InterestHolderTypeCodeNavigation)
+                .Include(eoh => eoh.AcquisitionOwner)
                 .Include(eoh => eoh.ExpropOwnerHistoryTypeCodeNavigation)
-                .FirstOrDefault(eoh => eoh.ExpropOwnerHistoryId == expropriationHistoryId) ?? throw new KeyNotFoundException();
+                .FirstOrDefault(eoh => eoh.ExpropOwnerHistoryId == expropriationEventId) ?? throw new KeyNotFoundException();
         }
 
-        public PimsExpropOwnerHistory AddExpropriationEvent(PimsExpropOwnerHistory expropriationHistory)
+        public PimsExpropOwnerHistory AddExpropriationEvent(PimsExpropOwnerHistory expropriationEvent)
         {
             using var scope = Logger.QueryScope();
 
-            // TODO: Implement
-            throw new System.NotImplementedException();
+            Context.PimsExpropOwnerHistories.Add(expropriationEvent);
+
+            return expropriationEvent;
         }
 
-        public PimsExpropOwnerHistory UpdateExpropriationEvent(PimsExpropOwnerHistory expropriationHistory)
+        public PimsExpropOwnerHistory UpdateExpropriationEvent(PimsExpropOwnerHistory expropriationEvent)
         {
             using var scope = Logger.QueryScope();
 
-            // TODO: Implement
-            throw new System.NotImplementedException();
+            var existingEvent = Context.PimsExpropOwnerHistories
+                .FirstOrDefault(x => x.ExpropOwnerHistoryId == expropriationEvent.ExpropOwnerHistoryId) ?? throw new KeyNotFoundException();
+
+            Context.Entry(existingEvent).CurrentValues.SetValues(expropriationEvent);
+
+            return existingEvent;
         }
 
-        public bool TryDeleteExpropriationEvent(long acquisitionFileId, long expropriationHistoryId)
+        public bool TryDeleteExpropriationEvent(long acquisitionFileId, long expropriationEventId)
         {
             using var scope = Logger.QueryScope();
 
-            // TODO: Implement
-            throw new System.NotImplementedException();
+            var eventToDelete = Context.PimsExpropOwnerHistories.FirstOrDefault(x => x.ExpropOwnerHistoryId == expropriationEventId && x.AcquisitionFileId == acquisitionFileId);
+            if (eventToDelete is not null)
+            {
+                Context.PimsExpropOwnerHistories.Remove(eventToDelete);
+                return true;
+            }
+
+            return false;
         }
     }
 }

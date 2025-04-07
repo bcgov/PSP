@@ -7,12 +7,12 @@ namespace Pims.Dal.Repositories
     {
         IEnumerable<PimsExpropOwnerHistory> GetExpropriationEventsByAcquisitionFile(long acquisitionFileId);
 
-        PimsExpropOwnerHistory GetExpropriationEventById(long expropriationHistoryId);
+        PimsExpropOwnerHistory GetExpropriationEventById(long expropriationEventId);
 
-        PimsExpropOwnerHistory AddExpropriationEvent(PimsExpropOwnerHistory expropriationHistory);
+        PimsExpropOwnerHistory AddExpropriationEvent(PimsExpropOwnerHistory expropriationEvent);
 
-        PimsExpropOwnerHistory UpdateExpropriationEvent(PimsExpropOwnerHistory expropriationHistory);
+        PimsExpropOwnerHistory UpdateExpropriationEvent(PimsExpropOwnerHistory expropriationEvent);
 
-        bool TryDeleteExpropriationEvent(long acquisitionFileId, long expropriationHistoryId);
+        bool TryDeleteExpropriationEvent(long acquisitionFileId, long expropriationEventId);
     }
 }

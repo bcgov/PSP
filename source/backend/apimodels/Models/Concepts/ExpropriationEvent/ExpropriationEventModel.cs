@@ -7,7 +7,7 @@ namespace Pims.Api.Models.Concepts.ExpropriationEvent
 {
     public class ExpropriationEventModel : BaseAuditModel
     {
-        public long Id { get; set; }
+        public long? Id { get; set; }
 
         public long AcquisitionFileId { get; set; }
 

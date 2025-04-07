@@ -9,10 +9,10 @@ namespace Pims.Api.Services
 
         PimsExpropOwnerHistory GetExpropriationEventById(long expropriationHistoryId);
 
-        PimsExpropOwnerHistory AddExpropriationEvent(long acquisitionFileId, PimsExpropOwnerHistory expropriationHistory);
+        PimsExpropOwnerHistory AddExpropriationEvent(long acquisitionFileId, PimsExpropOwnerHistory expropriationEvent);
 
-        PimsExpropOwnerHistory UpdateExpropriationEvent(long acquisitionFileId, PimsExpropOwnerHistory expropriationHistory);
+        PimsExpropOwnerHistory UpdateExpropriationEvent(long acquisitionFileId, PimsExpropOwnerHistory expropriationEvent);
 
-        bool DeleteExpropriationEvent(long acquisitionFileId, long expropriationHistoryId);
+        bool DeleteExpropriationEvent(long acquisitionFileId, long expropriationEventId);
     }
 }
