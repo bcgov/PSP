@@ -15,6 +15,7 @@ describe('Healthcheck View component', () => {
     const utils = render(
       <HealthcheckView
         {...renderOptions.props}
+        systemChecked={renderOptions.props?.systemChecked ?? true}
         systemDegraded={renderOptions.props?.systemDegraded ?? false}
         systemChecks={renderOptions.props?.systemChecks ?? mockHealthcheckIssues}
       />,
