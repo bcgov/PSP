@@ -1,5 +1,4 @@
 import { Formik, FormikHelpers, FormikProps } from 'formik';
-import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { AddLeaseYupSchema } from '@/features/leases/add/AddLeaseYupSchema';
@@ -66,16 +65,10 @@ export const UpdateLeaseForm: React.FunctionComponent<IUpdateLeaseFormProps> = (
       >
         {formikProps => (
           <>
-            <Prompt
-              when={formikProps.dirty}
-              message="You have made changes on this form. Do you wish to leave without saving?"
-            />
-            <>
-              <LeaseDetailSubForm formikProps={formikProps} />
-              <RenewalSubForm formikProps={formikProps} />
-              <AdministrationSubForm formikProps={formikProps} />
-              <FeeDeterminationSubForm formikProps={formikProps} />
-            </>
+            <LeaseDetailSubForm formikProps={formikProps} />
+            <RenewalSubForm formikProps={formikProps} />
+            <AdministrationSubForm formikProps={formikProps} />
+            <FeeDeterminationSubForm formikProps={formikProps} />
           </>
         )}
       </Formik>

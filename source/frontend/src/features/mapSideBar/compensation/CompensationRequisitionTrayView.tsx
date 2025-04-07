@@ -1,11 +1,12 @@
 import clsx from 'classnames';
 import React from 'react';
-import { MdClose } from 'react-icons/md';
+import { Col } from 'react-bootstrap';
 import ReactVisibilitySensor from 'react-visibility-sensor';
 import styled from 'styled-components';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import * as Styled from '@/components/common/styles';
+import { TrayHeaderContent } from '@/components/common/styles';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
@@ -107,19 +108,23 @@ export const CompensationRequisitionTrayView: React.FunctionComponent<
       }}
     >
       <Styled.PopupTray className={clsx({ show: show })}>
-        <Styled.TrayHeader>
-          {editMode ? 'Edit ' : ''}Compensation Requisition (H120)
-          <Styled.CloseButton
-            id="close-tray"
-            icon={<MdClose size={24} />}
-            title="close"
-            onClick={() => {
-              setShow(false);
-              setEditMode(false);
-              onClose();
-            }}
-          ></Styled.CloseButton>
-        </Styled.TrayHeader>
+        <TrayHeaderContent>
+          <Styled.TrayHeader>
+            {editMode ? 'Edit ' : ''}Compensation Requisition (H120)
+          </Styled.TrayHeader>
+          <Col xs="auto" className="text-right">
+            <Styled.CloseIcon
+              id="close-tray"
+              title="close"
+              onClick={() => {
+                setShow(false);
+                setEditMode(false);
+                onClose();
+              }}
+            ></Styled.CloseIcon>
+          </Col>
+        </TrayHeaderContent>
+
         <Styled.TrayContent>{trayContent}</Styled.TrayContent>
       </Styled.PopupTray>
     </ReactVisibilitySensor>

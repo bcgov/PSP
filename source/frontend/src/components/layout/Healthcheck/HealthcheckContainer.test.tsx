@@ -1,14 +1,9 @@
-import {
-  act,
-  render,
-  RenderOptions,
-} from '@/utils/test-utils';
+import { act, render, RenderOptions } from '@/utils/test-utils';
 
 import { HealthcheckContainer, IHealthcheckContainerProps } from './HealthcheckContainer';
 import { useApiHealth } from '@/hooks/pims-api/useApiHealth';
 import { IHealthCheckViewProps } from './HealthcheckView';
 import IHealthLive from '@/hooks/pims-api/interfaces/IHealthLive';
-import { HttpStatusCode } from 'node_modules/axios/index.cjs';
 
 const mockGetLiveApi = vi.fn();
 const mockGetSystemCheckApi = vi.fn();

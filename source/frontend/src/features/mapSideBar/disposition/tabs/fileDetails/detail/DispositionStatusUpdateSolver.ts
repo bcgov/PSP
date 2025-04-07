@@ -162,6 +162,30 @@ class DispositionStatusUpdateSolver implements IUpdateChecklistStrategy {
 
     return canEdit;
   }
+
+  isAdminProtected(): boolean {
+    if (this.dispositionFile === null) {
+      return false;
+    }
+
+    const statusCode = this.dispositionFile.fileStatusTypeCode?.id;
+    let isProtected: boolean;
+
+    switch (statusCode) {
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.ACTIVE:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.DRAFT:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.HOLD:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.COMPLETE:
+        isProtected = false;
+        break;
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.ARCHIVED:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.CANCELLED:
+        isProtected = true;
+        break;
+    }
+
+    return isProtected;
+  }
 }
 
 export default DispositionStatusUpdateSolver;
