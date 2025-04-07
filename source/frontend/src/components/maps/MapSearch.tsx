@@ -10,7 +10,6 @@ import {
   defaultPropertyFilter,
   IPropertyFilter,
 } from '@/features/properties/filter/IPropertyFilter';
-import { exists } from '@/utils';
 
 export type MapSearchProps = object;
 
@@ -31,10 +30,20 @@ const MapSearch: React.FC<React.PropsWithChildren<MapSearchProps>> = () => {
   }, [propertySearchFilter, mapSearchCriteria, setMapSearchCriteria]);
 
   const handleMapFilterChange = (filter: IPropertyFilter) => {
-    if (filter.searchBy === 'coordinates' && exists(filter.coordinates)) {
-      const latLng: LatLngLiteral = filter.coordinates.toLatLng();
-      mapClick(latLng);
-      requestCenterToLocation(latLng);
+    if (['coordinates', 'name', 'address'].includes(filter.searchBy)) {
+      let latLng: LatLngLiteral = undefined;
+      switch (filter.searchBy) {
+        case 'name':
+        case 'address':
+          latLng = { lat: +filter.latitude, lng: +filter.longitude };
+          break;
+        case 'coordinates':
+          latLng = filter.coordinates?.toLatLng();
+      }
+      if (latLng) {
+        mapClick(latLng);
+        requestCenterToLocation(latLng);
+      }
     } else {
       setPropertySearchFilter(filter);
     }
