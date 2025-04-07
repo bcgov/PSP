@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
 using OpenQA.Selenium;
-using PIMS.Tests.Automation.Reports;
 
 
 namespace PIMS.Tests.Automation.StepDefinitions

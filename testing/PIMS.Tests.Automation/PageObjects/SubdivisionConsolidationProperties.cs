@@ -197,12 +197,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void CreateConsolidation(PropertyConsolidation consolidation)
         {
             foreach (PropertyHistory parent in consolidation.ConsolidationSource)
-            {
-                Wait();
-                webDriver.FindElement(subconSearchParentResetBttn).Click();
-                webDriver.FindElement(subdconSearchParentByPIDInput).SendKeys(parent.PropertyHistoryIdentifier);
-                webDriver.FindElement(subconSearchParentBttn).Click();
-            }
+                InsertParentConsolidation(parent.PropertyHistoryIdentifier);
 
             webDriver.FindElement(subconChildrenSearchTab).Click();
             webDriver.FindElement(subconChildrenSearchByPIDInput).SendKeys(consolidation.ConsolidationDestination.PropertyHistoryIdentifier);
@@ -211,6 +206,14 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilTableSpinnerDisappear();
             webDriver.FindElement(subconChildren1stResultCheckbox).Click();
             webDriver.FindElement(subconChildernAddToSelectionBttn).Click();
+        }
+
+        public void InsertParentConsolidation(string propertyID)
+        {
+                Wait();
+                webDriver.FindElement(subconSearchParentResetBttn).Click();
+                webDriver.FindElement(subdconSearchParentByPIDInput).SendKeys(propertyID);
+                webDriver.FindElement(subconSearchParentBttn).Click();
         }
 
         public void VerifyInitCreateSubdivisionForm()
@@ -322,6 +325,13 @@ namespace PIMS.Tests.Automation.PageObjects
         }
 
         public void VerifyMissingParentMessage()
+        {
+            WaitUntilVisible(subconModalWindow);
+            Assert.Equal("Error", sharedModals.ModalHeader());
+            Assert.Equal("Only properties that are part of the Core Inventory (owned) can be subdivided/consolidated. This property is not in core inventory within PIMS.", sharedModals.ModalContent());
+        }
+
+        public void VerifyDisposedParentErrorMessage()
         {
             WaitUntilVisible(consolidationChooseParentsErrorMsg);
             AssertTrueIsDisplayed(consolidationChooseParentsErrorMsg);

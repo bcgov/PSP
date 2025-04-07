@@ -4,6 +4,9 @@ namespace PIMS.Tests.Automation.PageObjects
 {
     public class SearchProperties : PageObjectBase
     {
+        //Homepage Button
+        private By homePageBttn = By.CssSelector("div[data-testid='nav-tooltip-mapview'] a");
+
         //Search Bar Elements
         private By searchPropertyTypeSelect = By.Id("input-searchBy");
         private By searchPropertyByPIDInput = By.Id("input-pid");
@@ -55,6 +58,12 @@ namespace PIMS.Tests.Automation.PageObjects
         public SearchProperties(IWebDriver webDriver) : base(webDriver)
         {
             sharedModals = new SharedModals(webDriver);
+        }
+
+        public void NavigateToHomePage()
+        {
+            Wait();
+            webDriver.FindElement(homePageBttn).Click();
         }
 
         public void SearchPropertyByPID(string PID)
@@ -150,6 +159,12 @@ namespace PIMS.Tests.Automation.PageObjects
                 FocusAndClick(searchPropertyFoundCluster);
 
             FocusAndClick(searchPropertyFoundPin);
+        }
+
+        public void SelectFirstFoundPropertyList()
+        {
+            WaitUntilTableSpinnerDisappear();
+            webDriver.FindElement(searchPropertyListContent1stViewTabBttn).Click();
         }
 
         public void NavigatePropertyListView()

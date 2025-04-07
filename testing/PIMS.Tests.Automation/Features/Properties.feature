@@ -39,3 +39,28 @@ Scenario: 06._Non-Inventory_Property_Information
 Scenario: 07._Invalid_Property_Not_Found
 	Given I search for an Invalid Property from row number 10
 	Then No Properties were found
+
+Scenario: 08._Map_Features
+	Given I verify the Maps Layers
+	When I verify the Maps Filters
+	Then Map Features rendered successfully
+
+Scenario Outline: 09._Property_Management_Lease_Active_Indicator
+	Given I create a new minimum Lease from row number <RowNumber>
+	When  I add additional Information to the Lease Details
+	And I add Properties to the Lease Details
+	And I search for a Property in the Properties List by PID from row number 33
+	Then Expected Active Lease status is displayed as "<ActiveLeaseStatus>" successfully
+	Examples:
+	| ActiveLeaseStatus | RowNumber |
+	| No                | 10        |
+	| No                | 11        |
+	| No                | 12        |
+	| No                | 13        |
+	| No                | 14        |
+	| No                | 15        |
+	| No				| 16        |
+	| Yes               | 17        |
+
+
+
