@@ -5,8 +5,16 @@ import {
   METRIC_HTTP_CLIENT_RESPONSE_BODY_SIZE,
 } from '@opentelemetry/semantic-conventions/incubating';
 
+import { exists, isNumber } from '@/utils';
+
 import { TelemetryConfig } from './config';
 import { isBlocked, isBrowserEnvironment, NETWORK_METER } from './utils';
+
+// These values are lifted from suggested defaults in open-telemetry documentation:
+// https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/metrics/sdk.md#explicit-bucket-histogram-aggregation
+const defaultHistogramBucketsInSeconds = [
+  0.005, 0.01, 0.025, 0.05, 0.075, 0.1, 0.25, 0.5, 0.75, 1, 2.5, 5, 7.5, 10,
+];
 
 export const registerNetworkMetrics = (config: TelemetryConfig) => {
   if (!isBrowserEnvironment() || !window.performance) {
@@ -20,13 +28,16 @@ export const registerNetworkMetrics = (config: TelemetryConfig) => {
   const meter = metrics.getMeter(NETWORK_METER);
 
   // measure the time it takes to make an XHR request
+  const buckets =
+    exists(config.histogramBuckets) && config.histogramBuckets.length > 0
+      ? [...config.histogramBuckets]
+      : [...defaultHistogramBucketsInSeconds];
+
   const timeSpentMetric = meter.createHistogram(METRIC_HTTP_CLIENT_REQUEST_DURATION, {
     description: 'The duration of an outgoing HTTP request.',
     unit: 's',
     advice: {
-      explicitBucketBoundaries: [
-        0.005, 0.01, 0.025, 0.05, 0.075, 0.1, 0.25, 0.5, 0.75, 1, 2.5, 5, 7.5, 10,
-      ],
+      explicitBucketBoundaries: buckets,
     },
   });
 
@@ -45,6 +56,11 @@ export const registerNetworkMetrics = (config: TelemetryConfig) => {
         'initiatorType' in entry &&
         (entry.initiatorType === 'xmlhttprequest' || entry.initiatorType === 'fetch')
       ) {
+        // Exit early if entry.name is null
+        if (!exists(entry.name) || !isNumber(entry.duration)) {
+          return;
+        }
+
         const uri = new URL(entry.name);
         uri.search = '';
         const sanitizedUri = uri.toString();

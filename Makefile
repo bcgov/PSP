@@ -183,7 +183,7 @@ infra: ## Starts infrastructure containers (e.g. database, geoserver). Useful fo
 	@"$(MAKE)" start n="database geoserver proxy"
 
 monitoring-up: ## Calls the docker compose up for the monitoring/telemetry images
-	@echo "$(P) Create or start mayan-edms system"
+	@echo "$(P) Create or start local monitoring containers..."
 	@docker-compose --profile monitoring up -d
 
 start: ## Starts the local containers (n=service name)

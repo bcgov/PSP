@@ -98,6 +98,7 @@ export const defaultTenant: ITenantConfig2 = {
     serviceName: 'frontend',
     endpoint: 'http://localhost:4318',
     exportInterval: 10000,
+    histogramBuckets: [0.005, 0.01, 0.025, 0.05, 0.075, 0.1, 0.25, 0.5, 0.75, 1, 2.5, 5, 7.5, 10],
   },
   pimsTrainingResourceUrl:
     'https://sp.th.gov.bc.ca/sites/PropertiesServices/Project%20Management/03.%20Execution%20and%20Control/PIMS%20Training',

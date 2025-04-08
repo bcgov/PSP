@@ -4,6 +4,7 @@ import { exists } from '@/utils';
 export interface TraceUser {
   displayName: string;
   idir: string;
+  client_roles: string[];
 }
 
 export interface UserManager {
@@ -59,5 +60,6 @@ export function getUserDetailsFromKeycloakToken(userInfo?: KeycloakTokenParsed):
   return {
     displayName: displayName ?? fullName,
     idir: userInfo?.idir_username ?? '',
+    client_roles: [...(userInfo?.client_roles ?? [])],
   };
 }

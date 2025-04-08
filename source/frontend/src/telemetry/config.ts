@@ -6,4 +6,5 @@ export interface TelemetryConfig {
   denyUrls?: string[];
   debug?: boolean;
   exportInterval?: number;
+  histogramBuckets?: number[];
 }

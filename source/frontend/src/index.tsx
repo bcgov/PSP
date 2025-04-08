@@ -69,6 +69,7 @@ const InnerComponent = ({ tenant }: { tenant: ITenantConfig2 }) => {
       otlpEndpoint: tenant?.telemetry?.endpoint || '',
       debug: tenant?.telemetry?.debug ?? false,
       exportInterval: tenant?.telemetry?.exportInterval ?? 30_000,
+      histogramBuckets: tenant?.telemetry?.histogramBuckets ?? [],
     };
 
     // configure browser telemetry (if enabled via dynamic config-map)

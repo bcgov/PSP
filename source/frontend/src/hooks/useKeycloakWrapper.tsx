@@ -14,6 +14,7 @@ export interface KeycloakTokenParsed extends BaseKeycloakTokenParsed {
   given_name?: string;
   family_name?: string;
   email?: string;
+  client_roles?: string[];
 }
 
 /**
