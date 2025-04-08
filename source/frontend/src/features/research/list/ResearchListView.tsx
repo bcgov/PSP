@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router';

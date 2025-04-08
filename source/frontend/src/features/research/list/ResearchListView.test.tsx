@@ -15,7 +15,6 @@ import {
   RenderOptions,
   screen,
   userEvent,
-  waitFor,
   waitForElementToBeRemoved,
 } from '@/utils/test-utils';
 
@@ -67,9 +66,8 @@ describe('Research List View', () => {
     setupMockSearch();
     const { asFragment, getByTitle } = setup();
 
-    const fragment = await waitFor(() => asFragment());
     await waitForElementToBeRemoved(getByTitle('table-loading'));
-    expect(fragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('searches by region', async () => {
@@ -77,6 +75,7 @@ describe('Research List View', () => {
     const { container, searchButton, findByText, getByTitle } = setup();
     await waitForElementToBeRemoved(getByTitle('table-loading'));
 
+    await act(async () => {});
     fillInput(container, 'regionCode', 'South Coast Region', 'select');
     await act(async () => userEvent.click(searchButton));
 
