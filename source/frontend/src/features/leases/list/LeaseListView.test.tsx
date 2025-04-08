@@ -125,6 +125,8 @@ describe('Lease and License List View', () => {
         expiryEndDate: '',
         regionType: '',
         details: '',
+        leaseTeamOrganizationId: undefined,
+        leaseTeamPersonId: undefined,
       }),
     );
 
@@ -179,6 +181,8 @@ describe('Lease and License List View', () => {
         expiryEndDate: '',
         regionType: '',
         details: '',
+        leaseTeamOrganizationId: undefined,
+        leaseTeamPersonId: undefined,
       }),
     );
 
@@ -435,6 +439,8 @@ describe('Lease and License List View', () => {
         expiryEndDate: '',
         regionType: '',
         details: '',
+        leaseTeamOrganizationId: undefined,
+        leaseTeamPersonId: undefined,
       }),
     );
 
@@ -462,6 +468,8 @@ describe('Lease and License List View', () => {
         expiryEndDate: '',
         regionType: '',
         details: '',
+        leaseTeamOrganizationId: undefined,
+        leaseTeamPersonId: undefined,
       }),
     );
     const toasts = await findAllByText('Lease / Licence details do not exist in PIMS inventory');
@@ -490,6 +498,8 @@ describe('Lease and License List View', () => {
         expiryEndDate: '',
         regionType: '',
         details: '',
+        leaseTeamOrganizationId: undefined,
+        leaseTeamPersonId: undefined,
       }),
     );
     const toasts = await findAllByText('network error');
