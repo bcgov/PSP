@@ -65,6 +65,8 @@ describe('Lease Filter', () => {
         expiryEndDate: '',
         regionType: '',
         details: '',
+        leaseTeamOrganizationId: undefined,
+        leaseTeamPersonId: undefined,
       }),
     );
   });
@@ -89,6 +91,8 @@ describe('Lease Filter', () => {
         expiryEndDate: '',
         regionType: '',
         details: '',
+        leaseTeamOrganizationId: undefined,
+        leaseTeamPersonId: undefined,
       }),
     );
   });
@@ -113,6 +117,8 @@ describe('Lease Filter', () => {
         expiryEndDate: '',
         regionType: '',
         details: '',
+        leaseTeamOrganizationId: undefined,
+        leaseTeamPersonId: undefined,
       }),
     );
   });
@@ -137,6 +143,8 @@ describe('Lease Filter', () => {
         expiryEndDate: '',
         regionType: '',
         details: '',
+        leaseTeamOrganizationId: undefined,
+        leaseTeamPersonId: undefined,
       }),
     );
   });
@@ -161,6 +169,8 @@ describe('Lease Filter', () => {
         expiryEndDate: '',
         regionType: '',
         details: '',
+        leaseTeamOrganizationId: undefined,
+        leaseTeamPersonId: undefined,
       }),
     );
   });
