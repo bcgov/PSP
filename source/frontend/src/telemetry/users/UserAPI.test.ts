@@ -24,7 +24,7 @@ describe('Telemetry', () => {
     });
 
     it('should set the current user as expected', () => {
-      const mockUser: TraceUser = { displayName: 'mocked user', idir: 'MOCKED' };
+      const mockUser: TraceUser = { displayName: 'mocked user', idir: 'MOCKED', client_roles: [] };
       const userManager = userAPI.getUserManager();
       userManager.setUser(mockUser);
       expect(userManager.getUser()).not.toBeNull();
@@ -32,7 +32,7 @@ describe('Telemetry', () => {
     });
 
     it('should clear the current user', () => {
-      const mockUser: TraceUser = { displayName: 'mocked user', idir: 'MOCKED' };
+      const mockUser: TraceUser = { displayName: 'mocked user', idir: 'MOCKED', client_roles: [] };
       const userManager = userAPI.getUserManager();
       userManager.setUser(mockUser);
 
