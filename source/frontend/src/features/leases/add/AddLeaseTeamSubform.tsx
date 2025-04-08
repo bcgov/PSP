@@ -29,7 +29,7 @@ export const AddLeaseTeamSubForm: React.FunctionComponent<
       render={arrayHelpers => (
         <>
           {values.team.map((teamMember, index) => (
-            <React.Fragment key={`lease-team-${index}`}>
+            <React.Fragment key={`lease-team-${teamMember?.id ?? index}`}>
               <Row className="py-3" data-testid={`teamMemberRow[${index}]`}>
                 <Col xs="auto" xl="5">
                   <Select

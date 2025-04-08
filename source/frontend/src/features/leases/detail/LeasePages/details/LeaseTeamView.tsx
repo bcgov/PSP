@@ -5,6 +5,7 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledLink } from '@/components/maps/leaflet/LayerPopup/styles';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { exists } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 export interface ILeaseTeamProps {
@@ -16,7 +17,7 @@ export const LeaseTeamView: React.FunctionComponent<React.PropsWithChildren<ILea
   return (
     <Section header="Lease Team">
       {lease.leaseTeam.map((teamMember, index) => (
-        <React.Fragment key={`lease-team-${index}`}>
+        <React.Fragment key={`lease-team-${teamMember?.id ?? index}`}>
           <SectionField label={teamMember?.teamProfileType.description || ''}>
             <StyledLink
               target="_blank"
@@ -35,7 +36,7 @@ export const LeaseTeamView: React.FunctionComponent<React.PropsWithChildren<ILea
               <FaExternalLinkAlt className="ml-2" size="1rem" />
             </StyledLink>
           </SectionField>
-          {teamMember?.organizationId && (
+          {exists(teamMember?.organizationId) && (
             <SectionField label="Primary contact">
               {teamMember?.primaryContactId ? (
                 <StyledLink
