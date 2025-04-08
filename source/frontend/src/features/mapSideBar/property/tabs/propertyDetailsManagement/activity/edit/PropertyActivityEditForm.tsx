@@ -13,6 +13,7 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import * as Styled from '@/components/common/styles';
+import { TrayHeaderContent } from '@/components/common/styles';
 import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
 import { PROP_MGMT_ACTIVITY_STATUS_TYPES, PROP_MGMT_ACTIVITY_TYPES } from '@/constants/API';
 import SaveCancelButtons from '@/features/leases/SaveCancelButtons';
@@ -104,7 +105,9 @@ export const PropertyActivityEditForm: React.FunctionComponent<
       }}
     >
       <Styled.PopupTray className={clsx({ show: props.show })}>
-        <Styled.TrayHeader>{isEditMode ? 'Edit ' : 'New '}Property Activity</Styled.TrayHeader>
+        <TrayHeaderContent>
+          <Styled.TrayHeader>{isEditMode ? 'Edit ' : 'New '}Property Activity</Styled.TrayHeader>
+        </TrayHeaderContent>
         <Styled.TrayContent>
           <StyledFormWrapper>
             <StyledSummarySection>

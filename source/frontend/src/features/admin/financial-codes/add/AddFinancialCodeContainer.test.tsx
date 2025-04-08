@@ -98,6 +98,5 @@ describe('AddFinancialCode container', () => {
       await viewProps?.onSuccess({} as ApiGen_Concepts_FinancialCode);
     });
     expect(history.location.pathname).toBe(`/admin/financial-code/list`);
-    expect(await screen.findByText(/Financial code saved/)).toBeVisible();
   });
 });

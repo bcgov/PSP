@@ -334,6 +334,31 @@ class AcquisitionFileStatusUpdateSolver
 
     return canEdit;
   }
+
+  isAdminProtected(): boolean {
+    if (this.fileStatus === null) {
+      return false;
+    }
+
+    const statusCode = this.fileStatus.id;
+    let isProtected: boolean;
+
+    switch (statusCode) {
+      case ApiGen_CodeTypes_AcquisitionStatusTypes.ACTIVE:
+      case ApiGen_CodeTypes_AcquisitionStatusTypes.DRAFT:
+      case ApiGen_CodeTypes_AcquisitionStatusTypes.HOLD:
+      case ApiGen_CodeTypes_AcquisitionStatusTypes.CLOSED:
+      case ApiGen_CodeTypes_AcquisitionStatusTypes.COMPLT:
+        isProtected = false;
+        break;
+      case ApiGen_CodeTypes_AcquisitionStatusTypes.ARCHIV:
+      case ApiGen_CodeTypes_AcquisitionStatusTypes.CANCEL:
+        isProtected = true;
+        break;
+    }
+
+    return isProtected;
+  }
 }
 
 export default AcquisitionFileStatusUpdateSolver;

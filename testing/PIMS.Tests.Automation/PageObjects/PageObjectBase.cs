@@ -21,6 +21,8 @@ namespace PIMS.Tests.Automation.PageObjects
             wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(120));
         }
 
+        
+
         protected virtual void Wait(int milliseconds = 3000) => Thread.Sleep(milliseconds);
 
         protected void WaitUntilSpinnerDisappear()
@@ -177,6 +179,15 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 element.SendKeys(Keys.Backspace);
             }
+        }
+
+        protected void SendKeysToCurencyInput(By elementBy, string sendKeysValue)
+        {
+            WaitUntilVisible(elementBy);
+
+            var js = (IJavaScriptExecutor)webDriver;
+            webDriver.FindElement(elementBy).SendKeys(Keys.NumberPad1);
+
         }
 
         protected void ClearMultiSelectInput(By elementBy)

@@ -126,12 +126,7 @@ export const MotiInventoryContainer: React.FunctionComponent<
         <MotiInventoryHeader
           composedProperty={composedPropertyState.composedProperty}
           onZoom={handleZoom}
-          isLoading={
-            composedPropertyState.ltsaWrapper?.loading ||
-            composedPropertyState.apiWrapper?.loading ||
-            composedPropertyState.parcelMapWrapper?.loading ||
-            false
-          }
+          isLoading={composedPropertyState.apiWrapper?.loading}
         />
       }
       footer={

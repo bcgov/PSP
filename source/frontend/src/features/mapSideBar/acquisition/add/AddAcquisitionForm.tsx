@@ -40,6 +40,7 @@ import { AcquisitionPropertiesSubForm } from './AcquisitionPropertiesSubForm';
 import { AcquisitionForm } from './models';
 
 export interface IAddAcquisitionFormProps {
+  formikRef: React.RefObject<FormikProps<AcquisitionForm>>;
   /** The parent acquisition file id - only applies to sub-files */
   parentId?: number;
   /** Initial values of the form */
@@ -55,11 +56,14 @@ export interface IAddAcquisitionFormProps {
   confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
 }
 
-export const AddAcquisitionForm = React.forwardRef<
-  FormikProps<AcquisitionForm>,
-  IAddAcquisitionFormProps
->((props, ref) => {
-  const { parentId, initialValues, validationSchema, onSubmit, confirmBeforeAdd } = props;
+export const AddAcquisitionForm: React.FunctionComponent<IAddAcquisitionFormProps> = ({
+  parentId,
+  initialValues,
+  validationSchema,
+  onSubmit,
+  confirmBeforeAdd,
+  formikRef,
+}) => {
   const [showDiffMinistryRegionModal, setShowDiffMinistryRegionModal] =
     React.useState<boolean>(false);
 
@@ -83,7 +87,7 @@ export const AddAcquisitionForm = React.forwardRef<
 
   return (
     <Formik<AcquisitionForm>
-      innerRef={ref}
+      innerRef={formikRef}
       initialValues={initialValues}
       validationSchema={validationSchema}
       validateOnChange={false}
@@ -105,7 +109,7 @@ export const AddAcquisitionForm = React.forwardRef<
       }}
     </Formik>
   );
-});
+};
 
 const AddAcquisitionDetailSubForm: React.FC<{
   parentId?: number;
@@ -356,6 +360,12 @@ const AddAcquisitionDetailSubForm: React.FC<{
               options={acquisitionPhysFileTypes}
               placeholder="Select..."
             />
+          </SectionField>
+          <SectionField
+            label="Physical file details"
+            tooltip="Location, the lawyer involved, which office it's with, and who currently has it."
+          >
+            <TextArea field="physicalFileDetails"></TextArea>
           </SectionField>
           <SectionField label="Acquisition type" required>
             <Select

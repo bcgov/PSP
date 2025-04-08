@@ -73,7 +73,6 @@ export const useGenerateExpropriationForm1 = () => {
       impactedProperties: selectedProperties,
       landInterest: formModel?.landInterest,
       purpose: formModel?.purpose,
-      expropriationNoticeServedDate: formModel?.expropriationNoticeServedDate,
     });
 
     const generatedFile = await generate({

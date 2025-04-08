@@ -41,6 +41,7 @@ export const defaultTenant: ITenantConfig2 = {
   title: 'Default Tenant Name',
   shortName: 'PIMS',
   colour: '#003366',
+  provinceStateId: 1,
   logo: {
     favicon: '',
     image: '',
@@ -88,10 +89,26 @@ export const defaultTenant: ITenantConfig2 = {
     },
   },
   idlePromptTimeout: 15,
-  idleTimeout: 15,
+  idleTimeout: 45,
   doubleClickInterval: 250,
   pimsTrainingResourceUrl:
     'https://sp.th.gov.bc.ca/sites/PropertiesServices/Project%20Management/03.%20Execution%20and%20Control/PIMS%20Training',
+  geographicNamesUrl: 'https://apps.gov.bc.ca/pub/bcgnws',
+  geographicNamesResultLimit: 20,
+  pimsHealthcheckMessages: {
+    PIMS_API:
+      'The PIMS server is currently unavailable, PIMS will not be useable until this is resolved.',
+    PMBC: 'The BC Data Warehouse is experiencing service degradation, this will limit PIMS map functionality until resolved.',
+    GEOSERVER:
+      'The MOTT Geoserver is experiencing service degradation, PIMS map layer functionality will be limited until resolved.',
+    MAYAN:
+      'The PIMS Document server is experiencing service degradation, you will be unable to view, download or upload documents until resolved.',
+    LTSA: 'The LTSA title service is experiencing service degradation, the LTSA tab within a property will not be viewable until resolved.',
+    GEOCODER:
+      'The BC Geocoder is experiencing service degradation, address search will be unavailable until resolved.',
+    CDOGS:
+      'The DevExchange Document Generation Service is experiencing service degradation, you will be unable to generate form documents (ie. H120, H1005) until resolved.',
+  },
 };
 
 export default defaultTenant;

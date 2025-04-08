@@ -29,6 +29,8 @@ export interface ITenantConfig2 {
   shortName: string;
   // The colour to identify the environment.
   colour: string;
+  // The Default Province State ID from PIMS_PROVINCE_STATE table.)
+  provinceStateId: number;
   // The logos to display.
   logo: ITenantLogoConfig;
   // Login page settings.
@@ -64,6 +66,11 @@ export interface ITenantConfig2 {
   // the amount of time where the system will treat two clicks as a double click instead of two single clicks.
   doubleClickInterval: number;
   pimsTrainingResourceUrl: string;
+  pimsHealthcheckMessages: { [key: string]: string };
+  // the url to the geographic names api
+  geographicNamesUrl: string;
+  // the number of results to display when searching for geographic names
+  geographicNamesResultLimit: number;
 }
 
 export interface ITenantLoginConfig {

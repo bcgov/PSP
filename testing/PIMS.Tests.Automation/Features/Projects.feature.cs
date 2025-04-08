@@ -94,18 +94,19 @@ namespace PIMS.Tests.Automation.Features
             await this.TestTearDownAsync();
         }
         
-        [Xunit.SkippableTheoryAttribute(DisplayName="Type of Projects")]
+        [Xunit.SkippableTheoryAttribute(DisplayName="Type_of_Projects")]
         [Xunit.TraitAttribute("FeatureTitle", "Projects")]
-        [Xunit.TraitAttribute("Description", "Type of Projects")]
+        [Xunit.TraitAttribute("Description", "Type_of_Projects")]
         [Xunit.InlineDataAttribute("1", new string[0])]
         [Xunit.InlineDataAttribute("2", new string[0])]
         [Xunit.InlineDataAttribute("3", new string[0])]
-        public async System.Threading.Tasks.Task TypeOfProjects(string rowNumber, string[] exampleTags)
+        [Xunit.InlineDataAttribute("8", new string[0])]
+        public async System.Threading.Tasks.Task Type_Of_Projects(string rowNumber, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             argumentsOfScenario.Add("RowNumber", rowNumber);
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Type of Projects", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Type_of_Projects", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 4
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -126,15 +127,15 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="01. Project Details")]
+        [Xunit.SkippableFactAttribute(DisplayName="01._Project_Details")]
         [Xunit.TraitAttribute("FeatureTitle", "Projects")]
-        [Xunit.TraitAttribute("Description", "01. Project Details")]
-        public async System.Threading.Tasks.Task _01_ProjectDetails()
+        [Xunit.TraitAttribute("Description", "01._Project_Details")]
+        public async System.Threading.Tasks.Task _01__Project_Details()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("01. Project Details", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 13
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("01._Project_Details", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 14
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -144,28 +145,28 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 14
+#line 15
  await testRunner.GivenAsync("I create a new Project from row number 4", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 15
+#line 16
  await testRunner.WhenAsync("I update an existing project from row number 5", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 16
+#line 17
  await testRunner.ThenAsync("A new Project is created successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="02. Project Documents")]
+        [Xunit.SkippableFactAttribute(DisplayName="02._Project_Documents")]
         [Xunit.TraitAttribute("FeatureTitle", "Projects")]
-        [Xunit.TraitAttribute("Description", "02. Project Documents")]
-        public async System.Threading.Tasks.Task _02_ProjectDocuments()
+        [Xunit.TraitAttribute("Description", "02._Project_Documents")]
+        public async System.Threading.Tasks.Task _02__Project_Documents()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("02. Project Documents", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 18
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("02._Project_Documents", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 19
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -175,31 +176,31 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 19
+#line 20
  await testRunner.GivenAsync("I create a new Project from row number 6", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 20
+#line 21
  await testRunner.WhenAsync("I create Digital Documents for a \"Project\" row number 8", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 21
+#line 22
  await testRunner.AndAsync("I edit a Digital Document for a \"Project\" from row number 9", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 22
+#line 23
  await testRunner.ThenAsync("A new Project is created successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="03. Project Notes")]
+        [Xunit.SkippableFactAttribute(DisplayName="03._Project_Notes")]
         [Xunit.TraitAttribute("FeatureTitle", "Projects")]
-        [Xunit.TraitAttribute("Description", "03. Project Notes")]
-        public async System.Threading.Tasks.Task _03_ProjectNotes()
+        [Xunit.TraitAttribute("Description", "03._Project_Notes")]
+        public async System.Threading.Tasks.Task _03__Project_Notes()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("03. Project Notes", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 24
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("03._Project_Notes", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 25
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -209,31 +210,31 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 25
+#line 26
  await testRunner.GivenAsync("I create a new Project from row number 7", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 26
+#line 27
  await testRunner.WhenAsync("I create a new Note on the Notes Tab from row number 6", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 27
+#line 28
  await testRunner.AndAsync("I edit a Note on the Notes Tab from row number 7", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 28
+#line 29
  await testRunner.ThenAsync("A new Project is created successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="04. Project List View")]
+        [Xunit.SkippableFactAttribute(DisplayName="04._Project_List_View")]
         [Xunit.TraitAttribute("FeatureTitle", "Projects")]
-        [Xunit.TraitAttribute("Description", "04. Project List View")]
-        public async System.Threading.Tasks.Task _04_ProjectListView()
+        [Xunit.TraitAttribute("Description", "04._Project_List_View")]
+        public async System.Threading.Tasks.Task _04__Project_List_View()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("04. Project List View", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 30
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("04._Project_List_View", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 31
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -243,25 +244,25 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 31
+#line 32
  await testRunner.GivenAsync("I search for existing Projects from row number 2", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 32
+#line 33
  await testRunner.ThenAsync("Expected Project Content is displayed on Projects Table", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="05. Duplicate Project")]
+        [Xunit.SkippableFactAttribute(DisplayName="05._Duplicate_Project")]
         [Xunit.TraitAttribute("FeatureTitle", "Projects")]
-        [Xunit.TraitAttribute("Description", "05. Duplicate Project")]
-        public async System.Threading.Tasks.Task _05_DuplicateProject()
+        [Xunit.TraitAttribute("Description", "05._Duplicate_Project")]
+        public async System.Threading.Tasks.Task _05__Duplicate_Project()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("05. Duplicate Project", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 34
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("05._Duplicate_Project", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 35
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -271,10 +272,10 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 35
+#line 36
  await testRunner.GivenAsync("I create a duplicate Project from row number 2", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 36
+#line 37
  await testRunner.ThenAsync("Duplicate Project Alert is displayed", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }

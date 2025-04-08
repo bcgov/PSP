@@ -11,7 +11,7 @@ export const QUERY_MAP = 'Querying BC Geographic Warehouse (BCGW) map layer';
 // max zoom level when clicking on pins
 export const MAX_ZOOM = 16;
 export const MAP_MAX_ZOOM = 20;
-export const MAP_MAX_NATIVE_ZOOM = 17;
+export const MAP_MAX_NATIVE_ZOOM = 20;
 
 // Global
 export const DISCLAIMER_URL = 'https://www2.gov.bc.ca//gov/content/home/disclaimer';

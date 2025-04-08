@@ -352,6 +352,20 @@ exports[`MapFilterBar > renders correctly 1`] = `
             >
               Historical File #
             </option>
+            <option
+              class="option"
+              data-testid="select-option-name"
+              value="name"
+            >
+              POI Name
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-coordinates"
+              value="coordinates"
+            >
+              Lat/Long
+            </option>
           </select>
         </div>
       </div>

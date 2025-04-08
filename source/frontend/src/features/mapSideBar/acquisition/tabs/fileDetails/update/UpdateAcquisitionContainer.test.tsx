@@ -20,6 +20,7 @@ import {
 import { UpdateAcquisitionSummaryFormModel } from './models';
 import { UpdateAcquisitionContainer } from './UpdateAcquisitionContainer';
 import { IUpdateAcquisitionFormProps } from './UpdateAcquisitionForm';
+import { ApiGen_CodeTypes_AcquisitionStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionStatusTypes';
 
 // mock API service calls
 vi.mock('@/hooks/repositories/useAcquisitionProvider');
@@ -105,6 +106,34 @@ describe('UpdateAcquisition container', () => {
     const fileData = viewProps?.initialValues.toApi();
     expect(mockUpdateAcquisitionFile).toHaveBeenCalledWith(fileData, []);
     expect(onSuccess).toHaveBeenCalled();
+  });
+
+  it(`triggers the modal for CANCEL status update`, async () => {
+
+    const { formikRef, findByText } = setup();
+
+    expect(formikRef.current).not.toBeNull();
+    await act(async () => formikRef.current.setFieldValue('fileStatusTypeCode', ApiGen_CodeTypes_AcquisitionStatusTypes.CANCEL));
+    await act(async () => formikRef.current?.submitForm());
+
+    const popup = await findByText(
+      /You marked this file as/i,
+    );
+    expect(popup).toBeVisible();
+  });
+
+  it(`triggers the modal for ARCHIVED status update`, async () => {
+
+    const { formikRef, findByText } = setup();
+
+    expect(formikRef.current).not.toBeNull();
+    await act(async () => formikRef.current.setFieldValue('fileStatusTypeCode', ApiGen_CodeTypes_AcquisitionStatusTypes.ARCHIV));
+    await act(async () => formikRef.current?.submitForm());
+
+    const popup = await findByText(
+      /You marked this file as/i,
+    );
+    expect(popup).toBeVisible();
   });
 
   it('displays a toast with server-returned error responses', async () => {

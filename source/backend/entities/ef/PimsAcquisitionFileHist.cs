@@ -102,6 +102,10 @@ public partial class PimsAcquisitionFileHist
     [Column("POSSESSION_DT", TypeName = "datetime")]
     public DateTime? PossessionDt { get; set; }
 
+    [Column("PHYSICAL_FILE_DETAILS")]
+    [StringLength(2000)]
+    public string PhysicalFileDetails { get; set; }
+
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
 

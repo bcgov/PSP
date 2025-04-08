@@ -55,7 +55,7 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
       <DispositionSummaryView dispositionFile={dispositionFile} onEdit={() => setIsEditing(true)} />
     ),
     key: FileTabType.FILE_DETAILS,
-    name: 'File details',
+    name: 'File Details',
   });
 
   if (dispositionFile?.id) {

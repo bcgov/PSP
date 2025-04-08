@@ -1,4 +1,5 @@
 import Claims from '@/constants/claims';
+import { InterestHolderType } from '@/constants/interestHolderTypes';
 import { useApiAcquisitionFile } from '@/hooks/pims-api/useApiAcquisitionFile';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import {
@@ -7,14 +8,13 @@ import {
 } from '@/mocks/acquisitionFiles.mock';
 import { getEmptyPerson } from '@/mocks/contacts.mock';
 import { getEmptyOrganization } from '@/mocks/organization.mock';
+import { mockProjects } from '@/mocks/projects.mock';
 import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
-import { formatMinistryProject, toTypeCodeNullable } from '@/utils/formUtils';
+import { toTypeCodeNullable } from '@/utils/formUtils';
 import { act, cleanup, render, RenderOptions, userEvent, waitForEffects } from '@/utils/test-utils';
 
 import AcquisitionSummaryView, { IAcquisitionSummaryViewProps } from './AcquisitionSummaryView';
-import { mockProjects } from '@/mocks/projects.mock';
-import { InterestHolderType } from '@/constants/interestHolderTypes';
 
 // mock auth library
 
@@ -120,11 +120,16 @@ describe('AcquisitionSummaryView component', () => {
   });
 
   it.each([
-    ['with project number', '001', `FTProjectTest`],
-    ['without project number', null, `FTProjectTest`],
+    ['with project number', '001', 'FTProjectTest', '001 - FTProjectTest'],
+    ['without project number', null, 'FTProjectTest', 'FTProjectTest'],
   ])(
     'renders the file Project Number and name concatenated - %s',
-    async (_: string, projectNumber: string | null, projectDescription: string) => {
+    async (
+      _: string,
+      projectNumber: string | null,
+      projectDescription: string,
+      expectedValue: string,
+    ) => {
       const { getByText } = setup(
         {
           acquisitionFile: {
@@ -150,7 +155,7 @@ describe('AcquisitionSummaryView component', () => {
       await waitForEffects();
 
       expect(getByText('Ministry project:')).toBeVisible();
-      expect(getByText(formatMinistryProject(projectNumber, projectDescription))).toBeVisible();
+      expect(getByText(expectedValue)).toBeVisible();
     },
   );
 
@@ -158,6 +163,20 @@ describe('AcquisitionSummaryView component', () => {
     const { getByText } = setup({ acquisitionFile: mockAcquisitionFileResponse() }, { claims: [] });
     await waitForEffects();
     expect(getByText('legacy file number')).toBeVisible();
+  });
+
+  it('renders physical file details', async () => {
+    const { getByText } = setup(
+      {
+        acquisitionFile: {
+          ...mockAcquisitionFileResponse(),
+          physicalFileDetails: 'mocked physical file details',
+        },
+      },
+      { claims: [] },
+    );
+    await waitForEffects();
+    expect(getByText('mocked physical file details')).toBeVisible();
   });
 
   it('renders the file progress statuses', async () => {

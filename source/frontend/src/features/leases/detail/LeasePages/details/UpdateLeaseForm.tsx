@@ -1,5 +1,4 @@
 import { Formik, FormikHelpers, FormikProps } from 'formik';
-import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { Section } from '@/components/common/Section/Section';
@@ -69,24 +68,18 @@ export const UpdateLeaseForm: React.FunctionComponent<IUpdateLeaseFormProps> = (
       >
         {formikProps => (
           <>
-            <Prompt
-              when={formikProps.dirty}
-              message="You have made changes on this form. Do you wish to leave without saving?"
-            />
-            <>
-              <LeaseDetailSubForm formikProps={formikProps} />
-              <RenewalSubForm formikProps={formikProps} />
-              <AdministrationSubForm formikProps={formikProps} />
-              <Section header="Lease Team">
-                <AddLeaseTeamSubForm />
-                {formikProps.errors?.team && typeof formikProps.errors?.team === 'string' && (
-                  <div className="invalid-feedback" data-testid="team-profile-dup-error">
-                    {formikProps.errors.team.toString()}
-                  </div>
-                )}
-              </Section>
-              <FeeDeterminationSubForm formikProps={formikProps} />
-            </>
+            <LeaseDetailSubForm formikProps={formikProps} />
+            <RenewalSubForm formikProps={formikProps} />
+            <AdministrationSubForm formikProps={formikProps} />
+            <Section header="Lease Team">
+              <AddLeaseTeamSubForm />
+              {formikProps.errors?.team && typeof formikProps.errors?.team === 'string' && (
+                <div className="invalid-feedback" data-testid="team-profile-dup-error">
+                  {formikProps.errors.team.toString()}
+                </div>
+              )}
+            </Section>
+            <FeeDeterminationSubForm formikProps={formikProps} />
           </>
         )}
       </Formik>

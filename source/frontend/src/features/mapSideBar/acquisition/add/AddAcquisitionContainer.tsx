@@ -20,16 +20,17 @@ import { PropertyForm } from '../../shared/models';
 import SidebarFooter from '../../shared/SidebarFooter';
 import { StyledFormWrapper } from '../../shared/styles';
 import { useAddAcquisitionFormManagement } from '../hooks/useAddAcquisitionFormManagement';
-import { AddAcquisitionForm } from './AddAcquisitionForm';
+import { IAddAcquisitionFormProps } from './AddAcquisitionForm';
 import { AcquisitionForm } from './models';
 
 export interface IAddAcquisitionContainerProps {
   onClose: (nextLocation?: string) => void;
   onSuccess: (newAcquisitionId: number) => void;
+  View: React.FC<IAddAcquisitionFormProps>;
 }
 
 export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = props => {
-  const { onClose } = props;
+  const { onClose, View } = props;
   const history = useHistory();
   const formikRef = useRef<FormikProps<AcquisitionForm>>(null);
   const [isValid, setIsValid] = useState<boolean>(true);
@@ -210,8 +211,8 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
     >
       <StyledFormWrapper>
         <LoadingBackdrop show={helper.loading} parentScreen={true} />
-        <AddAcquisitionForm
-          ref={formikRef}
+        <View
+          formikRef={formikRef}
           parentId={isSubFile ? Number(parentId) : null}
           initialValues={initialValues}
           onSubmit={helper.handleSubmit}

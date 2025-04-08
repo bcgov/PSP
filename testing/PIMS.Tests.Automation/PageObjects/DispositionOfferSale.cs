@@ -142,7 +142,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateoffersAndSaleTab()
         {
-            WaitUntilClickable(offersAndSaleTab);
+            Wait();
             webDriver.FindElement(offersAndSaleTab).Click();
         }
 
@@ -661,6 +661,13 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(dispositionSalesDetailsRemediationCostLabel);
             if (disposition.RemediationCost != "")
                 AssertTrueContentEquals(dispositionSalesDetailsRemediationCostContent, TransformCurrencyFormat(disposition.RemediationCost));
+        }
+
+        public void VerifySalePriceError()
+        {
+            Wait();
+            Assert.Equal("Error", sharedModals.ModalHeader());
+            Assert.Equal("You have not added a Sales Price. Please add a Sales Price before completion.", sharedModals.ModalContent());
         }
 
         private void VerifyInitOfferForm()
