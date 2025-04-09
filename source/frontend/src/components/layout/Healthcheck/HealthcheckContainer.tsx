@@ -30,39 +30,63 @@ export const HealthcheckContainer: React.FunctionComponent<IHealthcheckContainer
   const keycloak = useKeycloakWrapper();
 
   const checkExternalSystemStatus = useCallback(
-    (response: IHealthcheckResponse, service: HealthcheckMessagesTypesEnum) => {
+    (
+      response: IHealthcheckResponse,
+      service: HealthcheckMessagesTypesEnum,
+      issues: IHealthCheckIssue[],
+    ) => {
       if (response && response.status !== 'Healthy') {
-        setHealthCheckIssues([
-          ...healthCheckIssues,
-          {
-            key: service,
-            msg: pimsHealthcheckMessages[HealthcheckMessagesTypesEnum[service]],
-          },
-        ]);
+        const newIssue: IHealthCheckIssue = {
+          key: service,
+          msg: pimsHealthcheckMessages[HealthcheckMessagesTypesEnum[service]],
+        };
+
+        issues.push(newIssue);
       }
     },
-    [healthCheckIssues, pimsHealthcheckMessages],
+    [pimsHealthcheckMessages],
   );
 
   const checkAllSystemsHealth = useCallback(
     (response: ISystemCheck) => {
+      const issuesSummary: IHealthCheckIssue[] = [];
       checkExternalSystemStatus(
         response.entries?.Geoserver,
         HealthcheckMessagesTypesEnum.GEOSERVER,
+        issuesSummary,
       );
 
       checkExternalSystemStatus(
         response.entries?.PmbcExternalApi,
         HealthcheckMessagesTypesEnum.PMBC,
+        issuesSummary,
       );
 
-      checkExternalSystemStatus(response.entries?.Mayan, HealthcheckMessagesTypesEnum.MAYAN);
+      checkExternalSystemStatus(
+        response.entries?.Mayan,
+        HealthcheckMessagesTypesEnum.MAYAN,
+        issuesSummary,
+      );
 
-      checkExternalSystemStatus(response.entries?.Ltsa, HealthcheckMessagesTypesEnum.LTSA);
+      checkExternalSystemStatus(
+        response.entries?.Ltsa,
+        HealthcheckMessagesTypesEnum.LTSA,
+        issuesSummary,
+      );
 
-      checkExternalSystemStatus(response.entries?.Geocoder, HealthcheckMessagesTypesEnum.GEOCODER);
+      checkExternalSystemStatus(
+        response.entries?.Geocoder,
+        HealthcheckMessagesTypesEnum.GEOCODER,
+        issuesSummary,
+      );
 
-      checkExternalSystemStatus(response.entries?.Cdogs, HealthcheckMessagesTypesEnum.CDOGS);
+      checkExternalSystemStatus(
+        response.entries?.Cdogs,
+        HealthcheckMessagesTypesEnum.CDOGS,
+        issuesSummary,
+      );
+
+      setHealthCheckIssues(issuesSummary);
     },
     [checkExternalSystemStatus],
   );
