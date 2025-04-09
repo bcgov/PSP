@@ -107,9 +107,11 @@ export const H3 = styled.h3`
 export const FilterBoxForm = styled(Form)`
   background-color: ${({ theme }) => theme.css.filterBoxColor};
   border-radius: 0.5rem;
-  .input-group: min-width: 100%;
+  .input-group: {
+    min-width: 100%;
+  }
   .idir-input-group {
-  margin: 0;
+    margin: 0;
     div {
       padding: 0;
     }

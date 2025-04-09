@@ -1,7 +1,7 @@
 import userEvent from '@testing-library/user-event';
 
 import { Claims } from '@/constants/index';
-import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
+import { IPaginateLeases, useApiLeases } from '@/hooks/pims-api/useApiLeases';
 import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
 import { getEmptyAddress } from '@/mocks/address.mock';
 import { getEmptyPerson } from '@/mocks/contacts.mock';
@@ -113,7 +113,7 @@ describe('Lease and License List View', () => {
     await act(async () => userEvent.click(searchButton));
 
     expect(getLeases).toHaveBeenCalledWith(
-      expect.objectContaining<ILeaseFilter>({
+      expect.objectContaining<IPaginateLeases>({
         lFileNo: '',
         pid: '123',
         pin: '',
@@ -126,7 +126,10 @@ describe('Lease and License List View', () => {
         regionType: '',
         details: '',
         leaseTeamOrganizationId: undefined,
-        leaseTeamPersonId: undefined,
+        leaseTeamPersonId: null,
+        quantity: 10,
+        sort: undefined,
+        page: 1,
       }),
     );
 
@@ -169,7 +172,7 @@ describe('Lease and License List View', () => {
     await act(async () => userEvent.click(searchButton));
 
     expect(getLeases).toHaveBeenCalledWith(
-      expect.objectContaining<ILeaseFilter>({
+      expect.objectContaining<IPaginateLeases>({
         lFileNo: '',
         pid: '',
         pin: '123',
@@ -182,7 +185,10 @@ describe('Lease and License List View', () => {
         regionType: '',
         details: '',
         leaseTeamOrganizationId: undefined,
-        leaseTeamPersonId: undefined,
+        leaseTeamPersonId: null,
+        page: 1,
+        quantity: 10,
+        sort: undefined,
       }),
     );
 
@@ -439,8 +445,8 @@ describe('Lease and License List View', () => {
         expiryEndDate: '',
         regionType: '',
         details: '',
-        leaseTeamOrganizationId: undefined,
-        leaseTeamPersonId: undefined,
+        leaseTeamOrganizationId: null,
+        leaseTeamPersonId: null,
       }),
     );
 
@@ -469,7 +475,7 @@ describe('Lease and License List View', () => {
         regionType: '',
         details: '',
         leaseTeamOrganizationId: undefined,
-        leaseTeamPersonId: undefined,
+        leaseTeamPersonId: null,
       }),
     );
     const toasts = await findAllByText('Lease / Licence details do not exist in PIMS inventory');
@@ -499,7 +505,7 @@ describe('Lease and License List View', () => {
         regionType: '',
         details: '',
         leaseTeamOrganizationId: undefined,
-        leaseTeamPersonId: undefined,
+        leaseTeamPersonId: null,
       }),
     );
     const toasts = await findAllByText('network error');

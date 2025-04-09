@@ -7,6 +7,9 @@ import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, fillInput, render, RenderOptions } from '@/utils/test-utils';
 
 import { ILeaseFilterProps, LeaseFilter } from './LeaseFilter';
+import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: [] },
@@ -19,6 +22,31 @@ vi.mocked(useUserInfoRepository).mockReturnValue({
   retrieveUserInfo: vi.fn(),
   retrieveUserInfoLoading: true,
   retrieveUserInfoResponse: getUserMock(),
+});
+
+vi.mock('@/hooks/pims-api/useApiLeases');
+vi.mocked(useApiLeases).mockReturnValue({
+  getLeases: vi.fn().mockResolvedValue({
+    data: {
+      items: [{ lFileNo: 'l-1234' }],
+      page: 1,
+      total: 1,
+      quantity: 1,
+    } as ApiGen_Base_Page<ApiGen_Concepts_Lease>,
+  }),
+  getApiLease: vi.fn(),
+  getLastUpdatedByApi: vi.fn(),
+  postLease: vi.fn(),
+  putApiLease: vi.fn(),
+  exportLeases: vi.fn(),
+  exportAggregatedLeases: vi.fn(),
+  exportLeasePayments: vi.fn(),
+  putLeaseChecklist: vi.fn(),
+  getLeaseChecklist: vi.fn(),
+  getLeaseRenewals: vi.fn(),
+  getLeaseStakeholderTypes: vi.fn(),
+  putLeaseProperties: vi.fn(),
+  getAllLeaseFileTeamMembers: vi.fn(),
 });
 
 // render component under test
@@ -66,7 +94,7 @@ describe('Lease Filter', () => {
         regionType: '',
         details: '',
         leaseTeamOrganizationId: undefined,
-        leaseTeamPersonId: undefined,
+        leaseTeamPersonId: null,
       }),
     );
   });
@@ -92,7 +120,7 @@ describe('Lease Filter', () => {
         regionType: '',
         details: '',
         leaseTeamOrganizationId: undefined,
-        leaseTeamPersonId: undefined,
+        leaseTeamPersonId: null,
       }),
     );
   });
@@ -118,7 +146,7 @@ describe('Lease Filter', () => {
         regionType: '',
         details: '',
         leaseTeamOrganizationId: undefined,
-        leaseTeamPersonId: undefined,
+        leaseTeamPersonId: null,
       }),
     );
   });
@@ -144,7 +172,7 @@ describe('Lease Filter', () => {
         regionType: '',
         details: '',
         leaseTeamOrganizationId: undefined,
-        leaseTeamPersonId: undefined,
+        leaseTeamPersonId: null,
       }),
     );
   });
@@ -169,8 +197,8 @@ describe('Lease Filter', () => {
         expiryEndDate: '',
         regionType: '',
         details: '',
-        leaseTeamOrganizationId: undefined,
-        leaseTeamPersonId: undefined,
+        leaseTeamOrganizationId: null,
+        leaseTeamPersonId: null,
       }),
     );
   });
