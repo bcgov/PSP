@@ -23,7 +23,7 @@ export enum ProjectExportTypes {
   AGREEMENT = 'Agreement Export',
 }
 
-const getParameterIdFromOptions = (
+export const getParameterIdFromOptions = (
   options: CodeTypeSelectOption[],
   selector: IdSelector = 'P',
 ): number[] => {

@@ -219,6 +219,18 @@ exports[`Project Filter > matches snapshot 1`] = `
   border-radius: 0.5rem;
 }
 
+.c0 .input-group: {
+  min-width: 100%;
+}
+
+.c0 .idir-input-group {
+  margin: 0;
+}
+
+.c0 .idir-input-group div {
+  padding: 0;
+}
+
 .c1 {
   border-left: 0.2rem solid white;
 }

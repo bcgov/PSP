@@ -4,6 +4,7 @@ using Pims.Api.Models.Base;
 using Pims.Api.Models.Concepts.File;
 using Pims.Api.Models.Concepts.Product;
 using Pims.Api.Models.Concepts.Project;
+using Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts.Lease
 {
@@ -135,31 +136,6 @@ namespace Pims.Api.Models.Concepts.Lease
         public DateOnly? ResponsibilityEffectiveDate { get; set; }
 
         /// <summary>
-        /// get/set - A list of properties associated with this lease.
-        /// </summary>
-        public new IList<PropertyLeaseModel> FileProperties { get; set; }
-
-        /// <summary>
-        /// get/set - A collection the consultations for this lease.
-        /// </summary>
-        public IEnumerable<ConsultationLeaseModel> Consultations { get; set; }
-
-        /// <summary>
-        /// get/set - A collection of the stakeholders for this lease.
-        /// </summary>
-        public IEnumerable<LeaseStakeholderModel> Stakeholders { get; set; }
-
-        /// <summary>
-        /// get/set - A collection of the periods for this lease.
-        /// </summary>
-        public IEnumerable<LeasePeriodModel> Periods { get; set; }
-
-        /// <summary>
-        /// get/set - A collection of the renewals for this lease.
-        /// </summary>
-        public IEnumerable<LeaseRenewalModel> Renewals { get; set; }
-
-        /// <summary>
         /// get/set - Whether this improvement contains a building that is subject to RTA (Residential Tenancy Act).
         /// </summary>
         public bool IsResidential { get; set; }
@@ -222,6 +198,36 @@ namespace Pims.Api.Models.Concepts.Lease
         /// get/set - fee determination notes.
         /// </summary>
         public string FeeDeterminationNote { get; set; }
+
+        /// <summary>
+        /// get/set - A list of properties associated with this lease.
+        /// </summary>
+        public new IList<PropertyLeaseModel> FileProperties { get; set; }
+
+        /// <summary>
+        /// get/set - A collection the consultations for this lease.
+        /// </summary>
+        public IEnumerable<ConsultationLeaseModel> Consultations { get; set; }
+
+        /// <summary>
+        /// get/set - A collection of the stakeholders for this lease.
+        /// </summary>
+        public IEnumerable<LeaseStakeholderModel> Stakeholders { get; set; }
+
+        /// <summary>
+        /// get/set - A collection of the periods for this lease.
+        /// </summary>
+        public IEnumerable<LeasePeriodModel> Periods { get; set; }
+
+        /// <summary>
+        /// get/set - A collection of the renewals for this lease.
+        /// </summary>
+        public IEnumerable<LeaseRenewalModel> Renewals { get; set; }
+
+        /// <summary>
+        /// get/set - A collection of the renewals for this lease.
+        /// </summary>
+        public IEnumerable<LeaseFileTeamModel> LeaseTeam { get; set; }
         #endregion
     }
 }
