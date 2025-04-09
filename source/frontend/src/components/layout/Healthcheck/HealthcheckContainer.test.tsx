@@ -1,4 +1,4 @@
-import { act, render, RenderOptions } from '@/utils/test-utils';
+import { act, render, RenderOptions, waitForEffects } from '@/utils/test-utils';
 
 import { HealthcheckContainer, IHealthcheckContainerProps } from './HealthcheckContainer';
 import { useApiHealth } from '@/hooks/pims-api/useApiHealth';
@@ -119,5 +119,12 @@ describe('Healthcheck container', () => {
     });
 
     expect(updateHealthcheckResult).toHaveBeenCalledWith(true);
+  });
+
+  it(`sets the right amount of healtcheck issues`, async () => {
+    const { } = await setup();
+    await waitForEffects();
+
+    expect(viewProps.systemChecks.length).toBe(2);
   });
 });
