@@ -122,7 +122,7 @@ describe('Healthcheck container', () => {
   });
 
   it(`sets the right amount of healtcheck issues`, async () => {
-    const { } = await setup();
+    await setup();
     await waitForEffects();
 
     expect(viewProps.systemChecks.length).toBe(2);
