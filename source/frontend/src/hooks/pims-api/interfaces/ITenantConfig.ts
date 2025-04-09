@@ -71,6 +71,26 @@ export interface ITenantConfig2 {
   geographicNamesUrl: string;
   // the number of results to display when searching for geographic names
   geographicNamesResultLimit: number;
+  // the configuration for browser telemetry (metrics and logs)
+  telemetry: ITenantConfigTelemetry;
+}
+
+// The configuration for browser telemetry (metrics and logs)
+export interface ITenantConfigTelemetry {
+  // if disabled, the telemetry code will not run
+  enabled: boolean;
+  // if true, it will output extra information to the console
+  debug: boolean;
+  // set this to match the deployed environment (dev, test, uat, prod) or set to local for local development
+  environment: string;
+  // by default the service name is set to 'frontend' - helps finding traces in the trace UI dashboard
+  serviceName: string;
+  // the URL to the open-telemetry collector
+  endpoint: string;
+  // how often to send traces and metrics back to the collector - defaults to 30 seconds
+  exportInterval: number;
+  // the default buckets to apply to histogram metrics
+  histogramBuckets: number[];
 }
 
 export interface ITenantLoginConfig {

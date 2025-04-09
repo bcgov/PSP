@@ -1,4 +1,4 @@
-export enum HealthcheckMessagesTypesEnum {
+export enum HealthCheckMessagesTypesEnum {
   PIMS_API = 'PIMS API',
   PMBC = 'PMBC',
   GEOSERVER = 'GEOSERVER',
