@@ -9,12 +9,7 @@
     "plugin:react/jsx-runtime"
   ],
   "parser": "@typescript-eslint/parser",
-  "plugins": [
-    "@typescript-eslint",
-    "unused-imports",
-    "eslint-plugin-react",
-    "simple-import-sort"
-  ],
+  "plugins": ["@typescript-eslint", "unused-imports", "eslint-plugin-react", "simple-import-sort"],
   "rules": {
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
@@ -37,11 +32,7 @@
     "no-prototype-builtins": "off",
     "no-debugger": "off"
   },
-  "ignorePatterns": [
-    "src/**/*.test.ts",
-    "src/**/*.test.tsx",
-    "src/**/mockServiceWorker.js"
-  ],
+  "ignorePatterns": ["src/**/*.test.ts", "src/**/*.test.tsx", "src/**/mockServiceWorker.js"],
   "settings": {
     "react": {
       "version": "detect"

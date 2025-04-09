@@ -433,7 +433,7 @@ describe('Lease and License List View', () => {
     await act(async () => userEvent.click(searchButton));
 
     expect(getLeases).toHaveBeenCalledWith(
-      expect.objectContaining<ILeaseFilter>({
+      expect.objectContaining<IPaginateLeases>({
         lFileNo: '',
         pid: '',
         pin: '',
@@ -445,8 +445,11 @@ describe('Lease and License List View', () => {
         expiryEndDate: '',
         regionType: '',
         details: '',
-        leaseTeamOrganizationId: null,
+        leaseTeamOrganizationId: undefined,
         leaseTeamPersonId: null,
+        page: 1,
+        quantity: 10,
+        sort: undefined,
       }),
     );
 
