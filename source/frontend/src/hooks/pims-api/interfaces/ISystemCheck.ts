@@ -1,4 +1,4 @@
-import IHealthcheckResponse from './IHealthcheckResponse';
+import IHealthCheckResponse from './IHealthcheckResponse';
 
 export interface ISystemCheck {
   // Status of the api.
@@ -7,12 +7,12 @@ export interface ISystemCheck {
   totalDuration: Date;
   // Dictionary of health information.
   entries: {
-    PmbcExternalApi: IHealthcheckResponse;
-    Geoserver: IHealthcheckResponse;
-    Mayan: IHealthcheckResponse;
-    Ltsa: IHealthcheckResponse;
-    Geocoder: IHealthcheckResponse;
-    Cdogs: IHealthcheckResponse;
+    PmbcExternalApi: IHealthCheckResponse;
+    Geoserver: IHealthCheckResponse;
+    Mayan: IHealthCheckResponse;
+    Ltsa: IHealthCheckResponse;
+    Geocoder: IHealthCheckResponse;
+    Cdogs: IHealthCheckResponse;
   };
 }
 
