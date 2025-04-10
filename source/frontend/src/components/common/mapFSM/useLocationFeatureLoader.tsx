@@ -1,6 +1,7 @@
 import { Feature, FeatureCollection, Geometry } from 'geojson';
 import { LatLngLiteral } from 'leaflet';
 import { useCallback } from 'react';
+import { toast } from 'react-toastify';
 
 import { useAdminBoundaryMapLayer } from '@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer';
 import { useCrownLandLayer } from '@/hooks/repositories/mapLayer/useCrownLandLayer';
@@ -59,7 +60,7 @@ const useLocationFeatureLoader = () => {
   } = useMapProperties();
   const { findOneByBoundary } = usePimsPropertyLayer();
 
-  const fullyAttributedServiceFindOne = fullyAttributedService.findOne;
+  const fullyAttributedServiceFindMultiple = fullyAttributedService.findMultiple;
   const adminBoundaryLayerServiceFindRegion = adminBoundaryLayerService.findRegion;
   const adminBoundaryLayerServiceFindDistrict = adminBoundaryLayerService.findDistrict;
   const adminLegalBoundaryLayerServiceFindOneMunicipality =
@@ -76,9 +77,11 @@ const useLocationFeatureLoader = () => {
     async ({
       latLng,
       pimsPropertyId,
+      isSelecting,
     }: {
       latLng: LatLngLiteral;
       pimsPropertyId?: number | null;
+      isSelecting?: boolean;
     }): Promise<LocationFeatureDataset> => {
       const result: LocationFeatureDataset = {
         selectingComponentId: null,
@@ -98,7 +101,7 @@ const useLocationFeatureLoader = () => {
       };
 
       // call these APIs in parallel - notice there is no "await"
-      const fullyAttributedTask = fullyAttributedServiceFindOne(latLng);
+      const fullyAttributedTask = fullyAttributedServiceFindMultiple(latLng);
       const regionTask = adminBoundaryLayerServiceFindRegion(latLng, 'SHAPE');
       const districtTask = adminBoundaryLayerServiceFindDistrict(latLng, 'SHAPE');
       const highwayTask = highwayLayerServiceFindMultiple(latLng, 'GEOMETRY');
@@ -110,7 +113,7 @@ const useLocationFeatureLoader = () => {
       const municipalityFeatureTask = adminLegalBoundaryLayerServiceFindOneMunicipality(latLng);
 
       const [
-        parcelFeature,
+        parcelFeatures,
         regionFeature,
         districtFeature,
         highwayFeatures,
@@ -137,6 +140,9 @@ const useLocationFeatureLoader = () => {
         | FeatureCollection<Geometry, PIMS_Property_Location_View>
         | undefined = undefined;
 
+      const parcelFeature: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties> =
+        parcelFeatures?.length > 0 ? parcelFeatures[0] : null;
+
       // Load PimsProperties
       // - first attempt to find it by our internal PIMS id
       // - then try to find it on our boundary layer.
@@ -159,6 +165,28 @@ const useLocationFeatureLoader = () => {
         }
       }
 
+      const parcelFeaturesNotInPims =
+        parcelFeatures?.filter(pf => {
+          const matchingProperty = pimsLocationProperties?.features?.find(
+            plp =>
+              (isValidId(pf.properties.PID_NUMBER) &&
+                plp.properties.PID === pf.properties.PID_NUMBER) ||
+              (isValidId(pf.properties.PIN) && plp.properties.PIN === pf.properties.PIN),
+          );
+          return !exists(matchingProperty);
+        }) ?? [];
+      // psp-10193, we cannot support adding a property via click when there are multiple parcel map of multiple pims references already at this location.
+      if (
+        isSelecting &&
+        parcelFeaturesNotInPims.length + (pimsLocationProperties?.features?.length ?? 0) > 1
+      ) {
+        toast.error(
+          'There are multiple properties at the clicked location. Use the "Search" functionality instead of "Locate on Map" to add one of the properties at this location instead.',
+          { autoClose: false },
+        );
+        throw Error('Unable to load properties at location');
+      }
+
       if (exists(pimsLocationProperties?.features) && pimsLocationProperties.features.length > 0) {
         result.pimsFeature = pimsLocationProperties.features[0] ?? null;
       }
@@ -177,7 +205,7 @@ const useLocationFeatureLoader = () => {
       return result;
     },
     [
-      fullyAttributedServiceFindOne,
+      fullyAttributedServiceFindMultiple,
       adminBoundaryLayerServiceFindRegion,
       adminBoundaryLayerServiceFindDistrict,
       highwayLayerServiceFindMultiple,
