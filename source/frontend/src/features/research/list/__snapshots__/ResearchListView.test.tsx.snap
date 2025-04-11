@@ -293,6 +293,27 @@ exports[`Research List View > matches snapshot 1`] = `
   height: 1.6rem;
 }
 
+.c18 {
+  margin-top: 0.3rem;
+}
+
+.c19 {
+  min-width: 5rem;
+  max-width: 5rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  text-align: center;
+  padding: 0;
+}
+
+.c19:-moz-read-only {
+  background: white;
+}
+
+.c19:read-only {
+  background: white;
+}
+
 .c3 {
   color: #474543;
   font-family: 'BCSans-Bold';
@@ -1256,13 +1277,381 @@ exports[`Research List View > matches snapshot 1`] = `
           </div>
         </div>
         <div
-          class="table-loading"
+          class="tbody"
+          role="rowgroup"
         >
           <div
-            class="spinner-border"
-            role="status"
-            title="table-loading"
-          />
+            class="tr-wrapper"
+          >
+            <div
+              class="tr"
+              role="row"
+              style="display: flex; flex: 1 0 auto; min-width: 240px;"
+            >
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                <a
+                  href="/mapview/sidebar/research/1"
+                >
+                  R100-100-100
+                </a>
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                name
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                Southern Interior Region, South Coast Region
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                dbo
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                Dec 31, 2019
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                dbo
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                Dec 31, 2020
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              />
+            </div>
+          </div>
+          <div
+            class="tr-wrapper"
+          >
+            <div
+              class="tr"
+              role="row"
+              style="display: flex; flex: 1 0 auto; min-width: 240px;"
+            >
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                <a
+                  href="/mapview/sidebar/research/2"
+                >
+                  R100-100-101
+                </a>
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                name
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              />
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                dbo
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                Feb 1, 2020
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                dbo
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                Feb 1, 2021
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              />
+            </div>
+          </div>
+          <div
+            class="tr-wrapper"
+          >
+            <div
+              class="tr"
+              role="row"
+              style="display: flex; flex: 1 0 auto; min-width: 240px;"
+            >
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                <a
+                  href="/mapview/sidebar/research/3"
+                >
+                  R100-100-102
+                </a>
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                test file name 1
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              />
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                dbo
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                Mar 2, 2020
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                dbo
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                Apr 3, 2020
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              />
+            </div>
+          </div>
+          <div
+            class="tr-wrapper"
+          >
+            <div
+              class="tr"
+              role="row"
+              style="display: flex; flex: 1 0 auto; min-width: 240px;"
+            >
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                <a
+                  href="/mapview/sidebar/research/4"
+                >
+                  R100-100-103
+                </a>
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                name
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              />
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                createUser
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                May 4, 2020
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                dbo
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                Jun 5, 2020
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              />
+            </div>
+          </div>
+          <div
+            class="tr-wrapper"
+          >
+            <div
+              class="tr"
+              role="row"
+              style="display: flex; flex: 1 0 auto; min-width: 240px;"
+            >
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                <a
+                  href="/mapview/sidebar/research/5"
+                >
+                  R100-100-104
+                </a>
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                name
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              />
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                a user
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                May 4, 2020
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                updateUser
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                Jun 5, 2020
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              />
+            </div>
+          </div>
         </div>
       </div>
       <div
@@ -1270,13 +1659,136 @@ exports[`Research List View > matches snapshot 1`] = `
       >
         <div
           class="align-self-center col-auto"
-        />
+        >
+          <span>
+            1 - 5 of 5
+          </span>
+        </div>
         <div
           class="ml-auto align-self-center col-auto"
         />
         <div
           class="align-self-center col-auto"
-        />
+        >
+          <div
+            class="Menu-root"
+          >
+            <div
+              class="Menu-button"
+            >
+              <div
+                class="d-flex"
+              >
+                <span
+                  class="c18"
+                >
+                  Show
+                </span>
+                <input
+                  class="c19 form-control"
+                  data-testid="input-page-size"
+                  readonly=""
+                  type="number"
+                  value="10"
+                />
+                <span
+                  class="c18"
+                >
+                  Entries
+                </span>
+              </div>
+            </div>
+            <div
+              class="Menu-items"
+              style="width: 10.0rem;"
+            >
+              <div
+                class="Menu-options scrollable list-group"
+              >
+                <div
+                  class="Menu-item list-group-item"
+                  title="menu-item-5"
+                >
+                  5
+                </div>
+                <div
+                  class="Menu-item list-group-item"
+                  title="menu-item-10"
+                >
+                  10
+                </div>
+                <div
+                  class="Menu-item list-group-item"
+                  title="menu-item-20"
+                >
+                  20
+                </div>
+                <div
+                  class="Menu-item list-group-item"
+                  title="menu-item-50"
+                >
+                  50
+                </div>
+                <div
+                  class="Menu-item list-group-item"
+                  title="menu-item-100"
+                >
+                  100
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="align-self-center col-auto"
+        >
+          <ul
+            class="pagination"
+          >
+            <li
+              class="page-item disabled"
+            >
+              <a
+                aria-disabled="true"
+                aria-label="Previous page"
+                class="page-link "
+                rel="prev"
+                role="button"
+                tabindex="-1"
+              >
+                &lt;
+              </a>
+            </li>
+            <li
+              class="page-item active"
+            >
+              <a
+                aria-current="page"
+                aria-label="Page 1 is your current page"
+                class="page-link"
+                rel="canonical"
+                role="button"
+                tabindex="-1"
+              >
+                1
+              </a>
+            </li>
+            <li
+              class="page-item disabled"
+            >
+              <a
+                aria-disabled="true"
+                aria-label="Next page"
+                class="page-link "
+                rel="next"
+                role="button"
+                tabindex="-1"
+              >
+                &gt;
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>

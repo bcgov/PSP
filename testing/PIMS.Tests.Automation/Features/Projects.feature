@@ -9,6 +9,7 @@ Scenario Outline: Type_of_Projects
 	| 1         |
 	| 2         |
 	| 3         |
+	| 8         |
 
 Scenario: 01._Project_Details
 	Given I create a new Project from row number 4

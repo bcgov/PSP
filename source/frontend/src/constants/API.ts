@@ -30,8 +30,10 @@ export interface IGeoSearchParams {
   SURVEY_PLAN_NUMBER?: string;
   HISTORICAL_FILE_NUMBER_STR?: string;
   BBOX?: string;
+  GEOGRAPHIC_NAME?: string;
   latitude?: number | string;
   longitude?: number | string;
+
   forceExactMatch?: boolean;
 }
 
@@ -124,6 +126,7 @@ export const ACQUISITION_APPRAISAL_STATUS_TYPES = 'PimsAcqFileAppraisalType';
 export const ACQUISITION_LEGALSURVEY_STATUS_TYPES = 'PimsAcqFileLglSrvyType';
 export const ACQUISITION_TAKING_STATUS_TYPES = 'PimsAcqFileTakeType';
 export const ACQUISITION_EXPROPIATIONRISK_STATUS_TYPES = 'PimsAcqFileExpropRiskType';
+export const LEASE_TEAM_PROFILE_TYPES = 'PimsLlTeamProfileType';
 
 // TODO: PSP-4395 This should all be removed from this and moved to the useApi* hooks.
 // Auth Service

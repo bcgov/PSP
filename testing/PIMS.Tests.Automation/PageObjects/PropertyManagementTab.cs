@@ -632,6 +632,12 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElements(By.CssSelector("div[data-testid='PropertyManagementActivitiesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ lastInsertedActivityIndex +") div[role='cell']:nth-child(5) button")).Count > 0);
         }
 
+        public string VerifyLeaseActiveStatus()
+        {
+            Wait();
+            return webDriver.FindElement(managementLeaseContent).Text;
+        }
+
         private void AddInvoice(ManagementPropertyActivityInvoice invoice, int index)
         {
             Wait();

@@ -12,9 +12,7 @@ export const TrayHeader = styled(H1)`
 `;
 
 export const SideNavBar = styled.div`
-  height: calc(
-    100vh - ${props => props.theme.css.headerHeight} - ${props => props.theme.css.footerHeight}
-  );
+  height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
   padding-top: 1.5rem;

@@ -39,6 +39,7 @@ export const TooltipWrapper: React.FunctionComponent<
           <Tooltip
             style={{ visibility: !props.tooltip ? 'hidden' : 'visible' }}
             id={props.tooltipId}
+            data-testid={props.tooltipId}
             className={props.className}
           >
             {props.tooltip}

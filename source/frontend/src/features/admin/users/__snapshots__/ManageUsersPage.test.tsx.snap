@@ -347,8 +347,16 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
   border-radius: 0.5rem;
 }
 
-.c3 .form-select {
-  min-width: 15rem;
+.c3 .input-group: {
+  min-width: 100%;
+}
+
+.c3 .idir-input-group {
+  margin: 0;
+}
+
+.c3 .idir-input-group div {
+  padding: 0;
 }
 
 .c7 {

@@ -21,6 +21,9 @@ export const AdminTools = ({ onLinkClick }: ISideTrayPageProps) => {
       <Link to="/admin/financial-code/list" onClick={onLinkClick} className="nav-item pl-9 pb-3">
         Manage Project and Financial Codes
       </Link>
+      <Link to="/admin/bctfa/ownership" onClick={onLinkClick} className="nav-item pl-9 pb-3">
+        Manage BCTFA Property Ownership
+      </Link>
     </>
   );
 };

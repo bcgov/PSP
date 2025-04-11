@@ -265,11 +265,7 @@ exports[`PropertyAssociationTabView component > renders as expected when provide
                   style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                   title=""
                 >
-                  <a
-                    href="/mapview/sidebar/research/1"
-                  >
-                    R-1
-                  </a>
+                  R-1
                 </div>
                 <div
                   class="td"
@@ -492,11 +488,7 @@ exports[`PropertyAssociationTabView component > renders as expected when provide
                   style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                   title=""
                 >
-                  <a
-                    href="/mapview/sidebar/acquisition/45"
-                  >
-                    95154
-                  </a>
+                  95154
                 </div>
                 <div
                   class="td"
@@ -719,11 +711,7 @@ exports[`PropertyAssociationTabView component > renders as expected when provide
                   style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                   title=""
                 >
-                  <a
-                    href="/mapview/sidebar/lease/34"
-                  >
-                    951547254
-                  </a>
+                  951547254
                 </div>
                 <div
                   class="td"

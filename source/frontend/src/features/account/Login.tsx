@@ -9,7 +9,7 @@ import { Button } from '@/components/common/buttons';
 import * as actionTypes from '@/constants/actionTypes';
 import { Roles } from '@/constants/roles';
 import { useQuery } from '@/hooks/use-query';
-import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import useKeycloakWrapper, { IUserInfo } from '@/hooks/useKeycloakWrapper';
 import { useAppSelector } from '@/store/hooks';
 import { Logo, useTenant } from '@/tenants';
 
@@ -23,7 +23,8 @@ const Login = () => {
   const query = useQuery();
   const redirect = query.get('redirect');
   const keyCloakWrapper = useKeycloakWrapper();
-  const keycloak = keyCloakWrapper.obj;
+  const keycloak = keyCloakWrapper?.obj;
+  const userInfo = keycloak?.userInfo as IUserInfo;
   const isIE = usingIE();
   const activated = useAppSelector(state => state.network[actionTypes.ADD_ACTIVATE_USER]);
   const tenant = useTenant();
@@ -32,7 +33,7 @@ const Login = () => {
     return <Spinner animation="border"></Spinner>;
   }
   if (keycloak?.authenticated) {
-    if (activated?.status === 201 || !keyCloakWrapper?.obj?.userInfo?.client_roles?.length) {
+    if (activated?.status === 201 || !userInfo?.client_roles?.length) {
       return <Redirect to={{ pathname: '/access/request' }} />;
     } else if (typeof redirect === 'string' && redirect.length) {
       return <Redirect to={redirect} />;

@@ -25,6 +25,7 @@ interface IAssociationInfo {
   status: string;
   stakeholders: string;
   expiryDate: string;
+  disable: boolean;
 }
 
 export interface ILeaseAssociationContentProps {
@@ -34,6 +35,7 @@ export interface ILeaseAssociationContentProps {
   leases: ApiGen_Concepts_Lease[];
   associations?: ApiGen_Concepts_Association[];
   linkUrlMask: string;
+  disable?: boolean;
 }
 
 const getFormattedTenants = (stakeholders: ApiGen_Concepts_LeaseStakeholder[]) => {
@@ -86,6 +88,7 @@ export const LeaseAssociationContent: React.FunctionComponent<
           props.stakeholders?.filter(stakeholder => x.id === stakeholder?.leaseId),
         ),
         expiryDate: calculatedExpiry,
+        disable: props.disable ?? false,
       };
     }),
     (association: IAssociationInfo) => {
@@ -112,7 +115,11 @@ const associationColumns: ColumnWithProps<IAssociationInfo>[] = [
     accessor: 'fileIdentifier',
     align: 'left',
     Cell: (props: CellProps<IAssociationInfo>) => {
-      return <Link to={props.row.original.linkUrl}>{props.row.original.fileIdentifier}</Link>;
+      return props.row.original.disable ? (
+        <>{props.row.original.fileIdentifier}</>
+      ) : (
+        <Link to={props.row.original.linkUrl}>{props.row.original.fileIdentifier}</Link>
+      );
     },
     width: 50,
   },

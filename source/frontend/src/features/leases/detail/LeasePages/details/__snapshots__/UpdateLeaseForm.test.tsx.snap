@@ -214,6 +214,21 @@ exports[`UpdateLeaseForm component > renders as expected 1`] = `
   margin-right: 0;
 }
 
+.c2 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
+}
+
+.c1 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
 .c5 button.close {
   font-size: 2.4rem;
 }
@@ -276,6 +291,17 @@ exports[`UpdateLeaseForm component > renders as expected 1`] = `
   flex-shrink: 0;
 }
 
+.c4.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c3 {
+  font-weight: bold;
+}
+
 .c9 {
   font-size: 16px;
   color: #1a5a96;
@@ -313,32 +339,6 @@ exports[`UpdateLeaseForm component > renders as expected 1`] = `
 
 .c10 {
   cursor: pointer;
-}
-
-.c2 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
-.c1 {
-  margin: 1.6rem;
-  padding: 1.6rem;
-  background-color: white;
-  text-align: left;
-  border-radius: 0.5rem;
-}
-
-.c4.required::before {
-  content: '*';
-  position: absolute;
-  top: 0.75rem;
-  left: 0rem;
-}
-
-.c3 {
-  font-weight: bold;
 }
 
 .c16 {
@@ -1721,6 +1721,39 @@ exports[`UpdateLeaseForm component > renders as expected 1`] = `
             </div>
           </div>
         </div>
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c2"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="align-content-end col"
+          >
+            Lease Team
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <button
+          class="c8 Button btn btn-link"
+          data-testid="add-team-member"
+          type="button"
+        >
+          <div
+            class="Button__value"
+          >
+            + Add another team member
+          </div>
+        </button>
+        <div />
       </div>
     </div>
     <div

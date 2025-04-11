@@ -206,6 +206,18 @@ export const LeaseFilter: React.FunctionComponent<React.PropsWithChildren<ILease
                       <Input field="tenantName" placeholder="Tenant Name" />
                     </Col>
                   </Row>
+                  <Row>
+                  <Col>
+                  <StyledMultiselect
+                field="acquisitionTeamMembers"
+                ref={multiselectTeamRef}
+                displayValue="text"
+                placeholder="Team member"
+                hidePlaceholder
+                options={leaseTeamOptions}
+                selectionLimit={1}
+              /></Col>
+              </Row>
                 </Col>
               </Row>
             </Col>

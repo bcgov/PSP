@@ -71,6 +71,11 @@ namespace Pims.Api.Areas.Tools.Controllers
                 _user.GetUsername(),
                 DateTime.Now);
 
+            if (string.IsNullOrEmpty(pid) || PidTranslator.ConvertPID(pid) == 0)
+            {
+                throw new BadHttpRequestException("The pid of the desired property must be specified");
+            }
+
             var result = await _ltsaService.GetTitleSummariesAsync(PidTranslator.ConvertPID(pid));
             return new JsonResult(result.TitleSummaries);
         }
@@ -120,12 +125,12 @@ namespace Pims.Api.Areas.Tools.Controllers
                 _user.GetUsername(),
                 DateTime.Now);
 
-            if (!string.IsNullOrEmpty(pid))
+            if (string.IsNullOrEmpty(pid) || PidTranslator.ConvertPID(pid) == 0)
             {
-                var result = await _ltsaService.PostParcelInfoOrder(PidTranslator.ConvertPIDToDash(pid));
-                return new JsonResult(result?.Order);
+                throw new BadHttpRequestException("The pid of the desired property must be specified");
             }
-            throw new BadHttpRequestException("The pid of the desired property must be specified");
+            var result = await _ltsaService.PostParcelInfoOrder(PidTranslator.ConvertPIDToDash(pid));
+            return new JsonResult(result?.Order);
         }
 
         /// <summary>
@@ -171,6 +176,11 @@ namespace Pims.Api.Areas.Tools.Controllers
                 nameof(PostLtsaFields),
                 _user.GetUsername(),
                 DateTime.Now);
+
+            if (string.IsNullOrEmpty(pid) || PidTranslator.ConvertPID(pid) == 0)
+            {
+                throw new BadHttpRequestException("The pid of the desired property must be specified");
+            }
 
             var result = await _ltsaService.PostLtsaFields(pid);
             return new JsonResult(result);
