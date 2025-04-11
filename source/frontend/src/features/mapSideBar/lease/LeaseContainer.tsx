@@ -426,42 +426,40 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
             bodyComponent={
               <StyledFormWrapper>
                 <LoadingBackdrop show={loading || getLastUpdatedByLoading} />
-                <Route
-                  path={`${stripTrailingSlash(match.path)}/property/:menuIndex`}
-                  render={({ match }) => (
-                    <FilePropertyRouter
-                      formikRef={formikRef}
-                      selectedMenuIndex={Number(match.params.menuIndex)}
-                      file={lease}
-                      fileType={ApiGen_CodeTypes_FileTypes.Lease}
-                      isEditing={containerState.isEditing}
-                      setIsEditing={setIsPropertyEditing}
-                      defaultFileTab={FileTabType.FILE_DETAILS}
-                      defaultPropertyTab={InventoryTabNames.property}
-                      onSuccess={onPropertyUpdate}
-                    />
-                  )}
-                />
-                <Route
-                  path={[
-                    `${stripTrailingSlash(match.path)}`,
-                    `${stripTrailingSlash(match.path)}/compensation-requisition/*`,
-                  ]}
-                  exact={true}
-                  render={() => (
-                    <ViewSelector
-                      formikRef={formikRef}
-                      lease={lease}
-                      refreshLease={refresh}
-                      setLease={setLease}
-                      isEditing={containerState.isEditing}
-                      activeEditForm={containerState.activeEditForm}
-                      activeTab={containerState.activeTab}
-                      setContainerState={setContainerState}
-                      onSuccess={onChildSuccess}
-                    />
-                  )}
-                />
+                <Switch>
+                  <Route
+                    path={`${stripTrailingSlash(match.path)}/property/:menuIndex`}
+                    render={({ match }) => (
+                      <FilePropertyRouter
+                        formikRef={formikRef}
+                        selectedMenuIndex={Number(match.params.menuIndex)}
+                        file={lease}
+                        fileType={ApiGen_CodeTypes_FileTypes.Lease}
+                        isEditing={containerState.isEditing}
+                        setIsEditing={setIsPropertyEditing}
+                        defaultFileTab={FileTabType.FILE_DETAILS}
+                        defaultPropertyTab={InventoryTabNames.property}
+                        onSuccess={onPropertyUpdate}
+                      />
+                    )}
+                  />
+                  <Route
+                    path={[`${stripTrailingSlash(match.path)}`]}
+                    render={() => (
+                      <ViewSelector
+                        formikRef={formikRef}
+                        lease={lease}
+                        refreshLease={refresh}
+                        setLease={setLease}
+                        isEditing={containerState.isEditing}
+                        activeEditForm={containerState.activeEditForm}
+                        activeTab={containerState.activeTab}
+                        setContainerState={setContainerState}
+                        onSuccess={onChildSuccess}
+                      />
+                    )}
+                  />
+                </Switch>
               </StyledFormWrapper>
             }
           />

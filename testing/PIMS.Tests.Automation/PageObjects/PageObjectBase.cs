@@ -1,5 +1,4 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.DevTools.V85.IndexedDB;
 using OpenQA.Selenium.Support.UI;
 using PIMS.Tests.Automation.Classes;
 using SeleniumExtras.WaitHelpers;
@@ -21,6 +20,8 @@ namespace PIMS.Tests.Automation.PageObjects
             this.webDriver = webDriver;
             wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(120));
         }
+
+        
 
         protected virtual void Wait(int milliseconds = 3000) => Thread.Sleep(milliseconds);
 

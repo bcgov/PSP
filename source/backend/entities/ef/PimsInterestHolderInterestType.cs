@@ -60,5 +60,5 @@ public partial class PimsInterestHolderInterestType
     public string DbLastUpdateUserid { get; set; }
 
     [InverseProperty("InterestHolderInterestTypeCodeNavigation")]
-    public virtual ICollection<PimsPropInthldrInterestType> PimsPropInthldrInterestTypes { get; set; } = new List<PimsPropInthldrInterestType>();
+    public virtual ICollection<PimsPropInthldrInterestTyp> PimsPropInthldrInterestTyps { get; set; } = new List<PimsPropInthldrInterestTyp>();
 }

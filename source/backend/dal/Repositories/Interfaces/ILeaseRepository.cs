@@ -46,5 +46,7 @@ namespace Pims.Dal.Repositories
         PimsLeaseChecklistItem UpdateChecklistItem(PimsLeaseChecklistItem checklistItem);
 
         IEnumerable<PimsLeaseStakeholderType> GetAllLeaseStakeholderTypes();
+
+        List<PimsLeaseLicenseTeam> GetTeamMembers(HashSet<short> regions, long? contractorPersonId = null);
     }
 }

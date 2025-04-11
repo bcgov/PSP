@@ -60,5 +60,5 @@ public partial class PimsPropertyAnomalyType
     public string DbLastUpdateUserid { get; set; }
 
     [InverseProperty("PropertyAnomalyTypeCodeNavigation")]
-    public virtual ICollection<PimsPropPropAnomalyType> PimsPropPropAnomalyTypes { get; set; } = new List<PimsPropPropAnomalyType>();
+    public virtual ICollection<PimsPropPropAnomalyTyp> PimsPropPropAnomalyTyps { get; set; } = new List<PimsPropPropAnomalyTyp>();
 }

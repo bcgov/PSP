@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
+using PIMS.Tests.Automation.PageObjects;
 using System.Data;
 
 namespace PIMS.Tests.Automation.StepDefinitions
@@ -69,6 +70,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             /* TEST COVERAGE:  PSP-7505, PSP-7558 */
 
+            //Navigate to File Details
+            dispositionFileDetails.NavigateToFileDetailsTab();
+
             //Enter to Edit mode of Disposition File
             dispositionFileDetails.EditDispositionFileBttn();
 
@@ -90,6 +94,24 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 notes.NavigateNotesTab();
                 notes.VerifyAutomaticNotes("Disposition File", "Active", dispositionFile.DispositionFileStatus);
             }
+        }
+
+        [StepDefinition(@"I change status of the Disposition File")]
+        public void ChangeStatusDispositionFile()
+        {
+            /* TEST COVERAGE:  PSP-7505, PSP-7558 */
+
+            //Navigate to File Details
+            dispositionFileDetails.NavigateToFileDetailsTab();
+
+            //Enter to Edit mode of Disposition File
+            dispositionFileDetails.EditDispositionFileBttn();
+
+            //Add Additional Optional information to the disposition file
+            dispositionFileDetails.AddAdditionalInformation(dispositionFile);
+
+            //Save Disposition File
+            dispositionFileDetails.SaveDispositionFileDetails();
         }
 
         [StepDefinition(@"I update the File details from an existing Disposition File from row number (.*)")]
@@ -579,6 +601,42 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchDispositionFiles.VerifyDispositionFileTableContent(dispositionFile);
         }
 
+        [StepDefinition(@"Disposition File Main Path completed successfully")]
+        public void DispositionMainPathSuccess()
+        {
+            //Verify Disposition File status when completed
+            Assert.Equal("COMPLETE", dispositionFileDetails.VerifyDispositionFileHeaderStatus());
+
+            //Navigate to Properties to verify associated property
+            dispositionFileDetails.CloseDispositionForm();
+            searchProperties.NavigatePropertyListView();
+
+            //Select all properties ownership types and look for the property
+            searchProperties.IncludeAllPropertyOwnershipSearch();
+            searchProperties.SearchPropertyByPID(dispositionFile.DispositionSearchProperties.PID);
+
+            //Verify Property is associated to the Disposition File is disposed
+            Assert.Equal("Disposed", searchProperties.FirstPropertyOwnership());
+        }
+
+        [StepDefinition(@"Disposition File without Sales Price error appears")]
+        public void DispositionSalesPriceError()
+        {
+            offerSale.VerifySalePriceError();
+        }
+
+        [StepDefinition(@"Disposition File without SOLD Status error appears")]
+        public void DispositionSoldStatusError()
+        {
+            dispositionFileDetails.SoldStatusError();
+        }
+
+        [StepDefinition(@"Disposition File with non-Core property error appears")]
+        public void DispositionNonCorePropertyError()
+        {
+            dispositionFileDetails.NonCorePropertyError();
+        }
+
         private void PopulateDispositionFile(int rowNumber)
         {
             System.Data.DataTable dispositionSheet = ExcelDataContext.GetInstance().Sheets["DispositionFiles"]!;
@@ -772,7 +830,5 @@ namespace PIMS.Tests.Automation.StepDefinitions
                dispositionFile.PurchaserNames.Add(purchaseMember);
             }
         }
-
-
     }
 }

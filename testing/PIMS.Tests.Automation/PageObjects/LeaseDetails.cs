@@ -75,15 +75,14 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By licenseDetailsCancelReasonInput = By.Id("input-cancellationReason");
         private readonly By licenseDetailsCancelContent = By.XPath("//label[contains(text(),'Cancellation reason')]/parent::div/following-sibling::div");
 
-        private readonly By licenseDetailsViewTerminateDateLabel = By.XPath("//div[contains(text(),'Details')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[6]/div/label[contains(text(),'Termination')]");
         private readonly By licenseDetailsTerminateDateLabel = By.XPath("//div[contains(text(),'Original Agreement')]/parent::div/parent::h2/following-sibling::div/div[6]/div/label");
         private readonly By licenseDetailsViewTerminationTooltip = By.CssSelector("span[data-testid='tooltip-icon-lease-termination-tooltip']");
         private readonly By licenseDetailsTerminatedReasonLabel = By.XPath("//label[contains(text(),'Termination reason')]");
         private readonly By licenseDetailsTerminateReasonInput = By.Id("input-terminationReason");
         private readonly By licenseDetailsTerminateDateInput = By.Id("datepicker-terminationDate");
         private readonly By licenseDetailsTerminateReasonContent = By.XPath("//label[contains(text(),'Termination reason')]/parent::div/following-sibling::div");
-        private readonly By licenseDetailsViewTerminateDateContent = By.XPath("//div[contains(text(),'Details')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[6]/div[2]");
-        private readonly By licenseDetailsViewTerminateCancelReason = By.XPath("//div[@role='tabpanel']/div/div/div/button/preceding-sibling::div");
+        private readonly By licenseDetailsViewTerminateDateContent = By.XPath("//div[contains(text(),'Original Agreement')]/parent::div/parent::h2/following-sibling::div/div[6]/div[2]");
+        private readonly By licenseDetailsViewTerminateCancelReason = By.XPath("//label[contains(text(),'Termination reason')]/parent::div/following-sibling::div");
 
         //Create/View Renewal Options Elements
         private readonly By licenseDetailsRenewalTitle = By.XPath("//h2/div/div[contains(text(),'Renewal Option')]");
@@ -608,9 +607,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
                     Wait();
                 }
-                    
-                   
-                
             }
         }
 
@@ -831,7 +827,7 @@ namespace PIMS.Tests.Automation.PageObjects
             
             if (lease.LeaseTerminationReason != "")
             {
-                AssertTrueIsDisplayed(licenseDetailsViewTerminateDateLabel);
+                AssertTrueIsDisplayed(licenseDetailsTerminateDateLabel);
                 AssertTrueIsDisplayed(licenseDetailsViewTerminationTooltip);
                 AssertTrueContentEquals(licenseDetailsViewTerminateDateContent, TransformDateFormat(lease.LeaseTerminationDate));
                 AssertTrueIsDisplayed(licenseDetailsTerminatedReasonLabel);
@@ -900,7 +896,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (lease.PurposeOther != "")
                 AssertTrueElementContains(licenseDetailsOtherPurposeContent, lease.PurposeOther);
-            
+
             AssertTrueIsDisplayed(licenseDetailsInitiatorLabel);
 
             if (lease.Initiator != "")
@@ -1014,6 +1010,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //    }
         //}
-        
+
     }
 }

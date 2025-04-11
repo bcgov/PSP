@@ -663,6 +663,13 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueContentEquals(dispositionSalesDetailsRemediationCostContent, TransformCurrencyFormat(disposition.RemediationCost));
         }
 
+        public void VerifySalePriceError()
+        {
+            Wait();
+            Assert.Equal("Error", sharedModals.ModalHeader());
+            Assert.Equal("You have not added a Sales Price. Please add a Sales Price before completion.", sharedModals.ModalContent());
+        }
+
         private void VerifyInitOfferForm()
         {
             AssertTrueIsDisplayed(dispositionOfferCreateSubtitle);

@@ -138,6 +138,7 @@ namespace Pims.Api.Controllers
                 var acquisitionFileLegalSurveyStatuses = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionFileLegalSurveyStatusTypes());
                 var acquisitionFileTakeTypesStatuses = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionFileTakeStatusTypes());
                 var acquisitionFileExpropiationRiskStatuses = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionFileExpropiationRiskStatusTypes());
+                var llTeamProfileTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllLlTeamProfileTypes());
 
                 var codes = new List<object>();
                 codes.AddRange(areaUnitTypes);
@@ -219,6 +220,7 @@ namespace Pims.Api.Controllers
                 codes.AddRange(acquisitionFileLegalSurveyStatuses);
                 codes.AddRange(acquisitionFileTakeTypesStatuses);
                 codes.AddRange(acquisitionFileExpropiationRiskStatuses);
+                codes.AddRange(llTeamProfileTypes);
 
                 var response = new JsonResult(codes);
 

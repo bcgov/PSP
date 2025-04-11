@@ -1,5 +1,4 @@
-﻿using System.Data;
-using PIMS.Tests.Automation.Data;
+﻿using PIMS.Tests.Automation.Data;
 using PIMS.Tests.Automation.Classes;
 using OpenQA.Selenium;
 

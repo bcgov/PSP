@@ -11,7 +11,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By createAcquisitionFileButton = By.XPath("//a[contains(text(),'Create an Acquisition File')]");
 
         private readonly By acquisitionFileSummaryBttn = By.CssSelector("div[data-testid='menu-item-row-0'] div button[title='File Details']");
-        private readonly By acquisitionFileDetailsTab = By.XPath("//a[contains(text(),'File details')]");
+        private readonly By acquisitionFileDetailsTab = By.XPath("//a[contains(text(),'File Details')]");
         private readonly By acquisitionSubfilesTab = By.XPath("//a[contains(text(),'Sub-Files')]");
 
         //Acquisition File Details View Form Elements

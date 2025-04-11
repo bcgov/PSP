@@ -396,7 +396,7 @@ export default PointClusterer;
  * @param feature the feature to obtain lat/lng coordinates for.
  * @returns [lat, lng]
  */
-const getLatLng = <P,>(feature: Feature<Geometry, P>) => {
+export const getFeatureLatLng = <P,>(feature: Feature<Geometry, P>) => {
   if (feature?.geometry?.type === 'Polygon') {
     return polylabel((feature.geometry as Polygon).coordinates, ONE_HUNDRED_METER_PRECISION);
   } else if (feature?.geometry?.type === 'MultiPolygon') {
@@ -427,7 +427,7 @@ const featureCollectionResponseToPointFeature = <P,>(
 const featureResponseToPointFeature = <P,>(feature: Feature<Geometry, P>): PointFeature<P> => {
   const data: PointFeature<P> = {
     ...feature,
-    geometry: { type: 'Point', coordinates: getLatLng(feature) },
+    geometry: { type: 'Point', coordinates: getFeatureLatLng(feature) },
     properties: {
       ...feature.properties,
     },

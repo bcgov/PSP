@@ -45,3 +45,7 @@ Scenario: 07._Consolidation_Error_Message-Repeated_Parent
 Scenario: 08._Consolidation_Error_Message-Missing_Parent
 	When I create a Consolidation from row number 22
 	Then Consolidation has only one Parent error
+
+Scenario: 09._Consolidation_Error_Message-Retired_Parent
+	When I attept to create a Consolidation from row number 31
+	Then Consolidation Parent cannot be Disposed error

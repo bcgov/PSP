@@ -14,6 +14,7 @@ import { act, getByName, renderAsync, RenderOptions, screen, userEvent } from '@
 
 import { AcquisitionOwnerFormModel, OwnerAddressFormModel } from '../common/models';
 import { AddAcquisitionContainer, IAddAcquisitionContainerProps } from './AddAcquisitionContainer';
+import AddAcquisitionForm from './AddAcquisitionForm';
 import { AcquisitionForm } from './models';
 
 const history = createMemoryHistory();
@@ -24,6 +25,7 @@ const onSuccess = vi.fn();
 const DEFAULT_PROPS: IAddAcquisitionContainerProps = {
   onClose,
   onSuccess,
+  View: AddAcquisitionForm,
 };
 
 // Need to mock this library for unit tests

@@ -12,6 +12,17 @@ export const AppGridContainer = styled.div`
     'header header'
     'iconbar content'
     'footer footer';
+
+  &.healthcheck {
+    grid: ${props => props.theme.css.healthcheckHeight} ${props => props.theme.css.headerHeight} 1fr ${props =>
+        props.theme.css.footerHeight} / min-content 1fr;
+
+    grid-template-areas:
+      'health health'
+      'header header'
+      'iconbar content'
+      'footer footer';
+  }
 `;
 
 export const EmptyAppGridContainer = styled.div`

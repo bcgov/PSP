@@ -335,4 +335,5 @@ const leaseData: ApiGen_Concepts_Lease = {
       ...getEmptyBaseAudit(),
     },
   ],
+  leaseTeam: [],
 };

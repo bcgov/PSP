@@ -4,6 +4,9 @@ namespace PIMS.Tests.Automation.PageObjects
 {
     public class SearchProperties : PageObjectBase
     {
+        //Homepage Button
+        private By homePageBttn = By.CssSelector("div[data-testid='nav-tooltip-mapview'] a");
+
         //Search Bar Elements
         private By searchPropertyTypeSelect = By.Id("input-searchBy");
         private By searchPropertyByPIDInput = By.Id("input-pid");
@@ -15,13 +18,17 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchPropertySearchBttn = By.Id("search-button");
         private By searchPropertyResetBttn = By.Id("reset-button");
 
-        private By searchPropertyListViewIcon = By.CssSelector("div[class='bar-item col-auto'] div div:nth-child(2)");
+        private By searchPropertyListViewIcon = By.CssSelector("button[title='list-view']");
 
         //Map Pin element
         private By searchPropertyFoundPin = By.XPath("//div[@class='leaflet-pane leaflet-marker-pane']/img[1]");
         private By searchPropertyFoundCluster = By.CssSelector("div[class='leaflet-marker-icon marker-cluster marker-cluster-small leaflet-zoom-animated leaflet-interactive']");
 
         //Properties List View Elements
+        private By searchPropertyViewByInput = By.Id("properties-selector_input");
+        private By searchPropertyViewByInputOptions = By.CssSelector("ul[class='optionContainer']");
+        private By searchPropertyViewByFirstOption = By.CssSelector("ul[class='optionContainer'] li:nth-child(1)");
+
         private By searchPropertyListViewTitle = By.XPath("//h3[contains(text(),'Search Results')]");
         private By searchPropertyViewByLabel = By.XPath("//div/strong[contains(text(),'View by')]");
         private By searchViewByContainer = By.CssSelector("div[id='properties-selector']");
@@ -51,6 +58,12 @@ namespace PIMS.Tests.Automation.PageObjects
         public SearchProperties(IWebDriver webDriver) : base(webDriver)
         {
             sharedModals = new SharedModals(webDriver);
+        }
+
+        public void NavigateToHomePage()
+        {
+            Wait();
+            webDriver.FindElement(homePageBttn).Click();
         }
 
         public void SearchPropertyByPID(string PID)
@@ -119,6 +132,16 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilSpinnerDisappear();
         }
 
+        public void IncludeAllPropertyOwnershipSearch()
+        {
+            Wait();
+            webDriver.FindElement(searchPropertyViewByInput).Click();
+
+            WaitUntilVisible(searchPropertyViewByInputOptions);
+            while (webDriver.FindElements(searchPropertyViewByFirstOption).Count == 1)
+                webDriver.FindElement(searchPropertyViewByFirstOption).Click();
+        }
+
         public void SearchPropertyReset()
         {
             Wait();
@@ -136,6 +159,12 @@ namespace PIMS.Tests.Automation.PageObjects
                 FocusAndClick(searchPropertyFoundCluster);
 
             FocusAndClick(searchPropertyFoundPin);
+        }
+
+        public void SelectFirstFoundPropertyList()
+        {
+            WaitUntilTableSpinnerDisappear();
+            webDriver.FindElement(searchPropertyListContent1stViewTabBttn).Click();
         }
 
         public void NavigatePropertyListView()

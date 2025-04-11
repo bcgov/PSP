@@ -65,6 +65,11 @@ namespace Pims.Api
     [ExcludeFromCodeCoverage]
     public class Startup
     {
+        private const string SYSTEMCHECK = "system-check";
+        private const string SERVICES = "services";
+        private const string EXTERNAL = "external";
+        private const string SYSTEM = "system";
+
         #region Properties
 
         /// <summary>
@@ -274,7 +279,7 @@ namespace Pims.Api
                             return new SqlServerHealthCheck(options);
                         },
                         default,
-                        new[] { "services" })
+                        new[] { SERVICES })
                     { Period = TimeSpan.FromMinutes(allHealthCheckOptions.SqlServer.Period) });
             }
 
@@ -284,7 +289,7 @@ namespace Pims.Api
                     "PimsDBCollation",
                     sp => new PimsDatabaseHealthcheck(csBuilder.ConnectionString),
                     default,
-                    new string[] { "services" })
+                    new string[] { SERVICES })
                 { Period = TimeSpan.FromMinutes(allHealthCheckOptions.PimsDBCollation.Period) });
             }
 
@@ -294,7 +299,7 @@ namespace Pims.Api
                     "ApiMetrics",
                     sp => new PimsMetricsHealthcheck(csBuilder.ConnectionString),
                     HealthStatus.Unhealthy,
-                    new string[] { "services" })
+                    new string[] { SERVICES })
                 { Period = TimeSpan.FromMinutes(allHealthCheckOptions.ApiMetrics.Period) });
             }
 
@@ -304,7 +309,7 @@ namespace Pims.Api
                     "PmbcExternalApi",
                     sp => new PimsExternalApiHealthcheck(this.Configuration.GetSection("HealthChecks:PmbcExternalApi")),
                     null,
-                    new string[] { "services", "external" })
+                    new string[] { SERVICES, EXTERNAL, SYSTEMCHECK })
                 { Period = TimeSpan.FromMinutes(allHealthCheckOptions.PmbcExternalApi.Period) });
             }
 
@@ -314,7 +319,7 @@ namespace Pims.Api
                     "Geoserver",
                     sp => new PimsGeoserverHealthCheck(this.Configuration),
                     null,
-                    new string[] { "services" })
+                    new string[] { SERVICES, SYSTEM, SYSTEMCHECK })
                 { Period = TimeSpan.FromMinutes(allHealthCheckOptions.Geoserver.Period) });
             }
 
@@ -324,7 +329,7 @@ namespace Pims.Api
                     "Mayan",
                     sp => new PimsMayanHealthcheck(sp.GetService<IEdmsDocumentRepository>()),
                     null,
-                    new string[] { "services" })
+                    new string[] { SERVICES, SYSTEMCHECK })
                 { Period = TimeSpan.FromMinutes(allHealthCheckOptions.Mayan.Period) });
             }
 
@@ -334,7 +339,7 @@ namespace Pims.Api
                     "Ltsa",
                     sp => new PimsLtsaHealthcheck(allHealthCheckOptions.Ltsa, sp.GetService<ILtsaService>()),
                     null,
-                    new string[] { "services", "external" })
+                    new string[] { SERVICES, EXTERNAL, SYSTEMCHECK })
                 { Period = TimeSpan.FromMinutes(allHealthCheckOptions.Ltsa.Period) });
             }
 
@@ -344,7 +349,7 @@ namespace Pims.Api
                     "Geocoder",
                     sp => new PimsGeocoderHealthcheck(this.Configuration, sp.GetService<IGeocoderService>()),
                     null,
-                    new string[] { "services", "external" })
+                    new string[] { SERVICES, EXTERNAL, SYSTEMCHECK })
                 { Period = TimeSpan.FromMinutes(allHealthCheckOptions.Geocoder.Period) });
             }
 
@@ -354,7 +359,7 @@ namespace Pims.Api
                     "Cdogs",
                     sp => new PimsCdogsHealthcheck(sp.GetService<IDocumentGenerationRepository>()),
                     null,
-                    new string[] { "services", "external" })
+                    new string[] { SERVICES, EXTERNAL, SYSTEMCHECK })
                 { Period = TimeSpan.FromMinutes(allHealthCheckOptions.Cdogs.Period) });
             }
 
@@ -489,6 +494,11 @@ namespace Pims.Api
             app.UseEndpoints(config =>
             {
                 config.MapControllers();
+                config.MapHealthChecks("health/system", new HealthCheckOptions()
+                {
+                    Predicate = r => r.Tags.Contains("system-check"),
+                    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
+                });
 
                 // Enable the /metrics page to export Prometheus metrics
                 config.MapMetrics();
@@ -547,6 +557,7 @@ namespace Pims.Api
             services.AddScoped<IEnvironmentService, EnvironmentService>();
             services.AddScoped<IDocumentQueueService, DocumentQueueService>();
             services.AddScoped<IResearchStatusSolver, ResearchStatusSolver>();
+            services.AddScoped<IBctfaOwnershipService, BctfaOwnershipService>();
         }
 
         /// <summary>
