@@ -1,6 +1,6 @@
 import { Formik } from 'formik';
 import Multiselect from 'multiselect-react-dropdown';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaTimes } from 'react-icons/fa';
 import styled from 'styled-components';
@@ -13,7 +13,11 @@ import { SectionField } from '@/components/common/Section/SectionField';
 import { ColButtons } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { LEASE_PROGRAM_TYPES, LEASE_STATUS_TYPES } from '@/constants/API';
+import { getParameterIdFromOptions } from '@/features/acquisition/list/interfaces';
+import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { exists, isValidId } from '@/utils';
+import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { ILeaseFilter, ILeaseSearchBy } from '../../interfaces';
 import { LeaseFilterSchema } from './LeaseFilterYupSchema';
@@ -40,6 +44,8 @@ export const defaultFilter: ILeaseFilter = {
   expiryEndDate: '',
   regionType: '',
   details: '',
+  leaseTeamOrganizationId: null,
+  leaseTeamPersonId: null,
 };
 
 /**
@@ -53,23 +59,49 @@ export const LeaseFilter: React.FunctionComponent<React.PropsWithChildren<ILease
   const onSearchSubmit = (values: ILeaseFilter, { setSubmitting }: any) => {
     const selectedPrograms: MultiSelectOption[] = multiselectProgramRef.current?.getSelectedItems();
     const selectedStatuses: MultiSelectOption[] = multiselectStatusRef.current?.getSelectedItems();
+    const selectedTeam: MultiSelectOption[] = multiselectTeamRef.current?.getSelectedItems();
     const programIds = selectedPrograms.map<string>(x => x.id);
     const statuses = selectedStatuses.map<string>(x => x.id);
-    values = { ...values, programs: programIds, leaseStatusTypes: statuses };
+    const leaseTeamPersonId = exists(selectedTeam)
+      ? +getParameterIdFromOptions(selectedTeam, 'P')
+      : undefined;
+    const leaseTeamOrganizationId = exists(selectedTeam)
+      ? +getParameterIdFromOptions(selectedTeam, 'O')
+      : undefined;
+    values = {
+      ...values,
+      programs: programIds,
+      leaseStatusTypes: statuses,
+      leaseTeamPersonId: isValidId(leaseTeamPersonId) ? leaseTeamPersonId : null,
+      leaseTeamOrganizationId:
+        exists(selectedTeam) && isValidId(leaseTeamOrganizationId)
+          ? leaseTeamOrganizationId
+          : undefined,
+    };
     setFilter(values);
     setSubmitting(false);
   };
   const resetFilter = () => {
     multiselectProgramRef.current?.resetSelectedValues();
-    setInitialSelectedStatus(
+    multiselectTeamRef.current?.resetSelectedValues();
+    setSelectedStatus(
       statusFilterOptions.filter(x => defaultFilter.leaseStatusTypes.includes(x.id)),
     );
 
     setFilter(defaultFilter);
   };
 
+  const {
+    getAllLeaseTeamMembers: { response: leaseTeam, execute: loadLeaseTeam },
+  } = useLeaseRepository();
+
+  useEffect(() => {
+    loadLeaseTeam();
+  }, [loadLeaseTeam]);
+
   const multiselectProgramRef = React.createRef<Multiselect>();
   const multiselectStatusRef = React.createRef<Multiselect>();
+  const multiselectTeamRef = React.createRef<Multiselect>();
 
   const lookupCodes = useLookupCodeHelpers();
 
@@ -83,20 +115,31 @@ export const LeaseFilter: React.FunctionComponent<React.PropsWithChildren<ILease
   const statusFilterOptions: MultiSelectOption[] = leaseStatusOptions.map<MultiSelectOption>(x => {
     return { id: x.id as string, text: x.name };
   });
+
+  const leaseTeamOptions = useMemo(() => {
+    if (exists(leaseTeam)) {
+      return leaseTeam?.map<MultiSelectOption>(x => ({
+        id: x.personId ? `P-${x.personId}` : `O-${x.organizationId}`,
+        text: x.personId ? formatApiPersonNames(x.person) : x.organization?.name ?? '',
+      }));
+    } else {
+      return [];
+    }
+  }, [leaseTeam]);
+
   const initialLeaseStatusList = statusFilterOptions.filter(x =>
     defaultFilter.leaseStatusTypes.includes(x.id),
   );
 
-  const [selectedStatus, setInitialSelectedStatus] =
-    useState<MultiSelectOption[]>(initialLeaseStatusList);
+  const [selectedStatus, setSelectedStatus] = useState<MultiSelectOption[]>(initialLeaseStatusList);
 
   // Necessary since the lookup codes might have not been loaded before the first render
   useEffect(() => {
-    setInitialSelectedStatus([{ id: 'ACTIVE', text: 'Active' }]);
+    setSelectedStatus([{ id: 'ACTIVE', text: 'Active' }]);
   }, []);
 
   function onSelectedStatusChange(selectedList: MultiSelectOption[]) {
-    setInitialSelectedStatus(selectedList);
+    setSelectedStatus(selectedList);
   }
 
   return (
@@ -207,17 +250,18 @@ export const LeaseFilter: React.FunctionComponent<React.PropsWithChildren<ILease
                     </Col>
                   </Row>
                   <Row>
-                  <Col>
-                  <StyledMultiselect
-                field="acquisitionTeamMembers"
-                ref={multiselectTeamRef}
-                displayValue="text"
-                placeholder="Team member"
-                hidePlaceholder
-                options={leaseTeamOptions}
-                selectionLimit={1}
-              /></Col>
-              </Row>
+                    <Col xl={7}>
+                      <StyledMultiselect
+                        field="acquisitionTeamMembers"
+                        ref={multiselectTeamRef}
+                        displayValue="text"
+                        placeholder="Team member"
+                        hidePlaceholder
+                        options={leaseTeamOptions}
+                        selectionLimit={1}
+                      />
+                    </Col>
+                  </Row>
                 </Col>
               </Row>
             </Col>
@@ -291,6 +335,30 @@ const FilterBoxForm = styled(Form)`
     .form-select {
       @media only screen and (max-width: 1199px) {
         width: 8rem;
+      }
+    }
+  }
+`;
+
+const StyledMultiselect = styled(Multiselect)`
+  .chip {
+    background: #f2f2f2;
+    border-radius: 0.4rem;
+    color: black;
+    font-size: 1.6rem;
+    margin-right: 1em;
+  }
+  &.multiselect-container {
+    width: auto;
+    color: black;
+    padding-bottom: 1.2rem;
+    .searchWrapper {
+      background: white;
+      border: 1px solid #606060;
+      min-height: 2.4rem;
+      padding: 0.5rem;
+      input {
+        margin: 0;
       }
     }
   }

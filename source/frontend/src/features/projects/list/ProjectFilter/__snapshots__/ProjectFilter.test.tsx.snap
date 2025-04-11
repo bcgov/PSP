@@ -219,6 +219,10 @@ exports[`Project Filter > matches snapshot 1`] = `
   border-radius: 0.5rem;
 }
 
+.c0 .form-select {
+  min-width: 15rem;
+}
+
 .c0 .input-group: {
   min-width: 100%;
 }
@@ -233,6 +237,7 @@ exports[`Project Filter > matches snapshot 1`] = `
 
 .c1 {
   border-left: 0.2rem solid white;
+  min-width: 2.5rem;
 }
 
 <form
@@ -262,7 +267,7 @@ exports[`Project Filter > matches snapshot 1`] = `
               class="row"
             >
               <div
-                class="col-xl-3"
+                class="col-xl-4"
               >
                 <div
                   class="input form-group"
@@ -279,7 +284,7 @@ exports[`Project Filter > matches snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="col-xl-9"
+                class="col-xl-8"
               >
                 <div
                   class="input form-group"
@@ -306,7 +311,7 @@ exports[`Project Filter > matches snapshot 1`] = `
           class="row"
         >
           <div
-            class="col-xl-4"
+            class="col-xl-6"
           >
             <div
               class="d-flex form-group"
@@ -341,7 +346,7 @@ exports[`Project Filter > matches snapshot 1`] = `
             </div>
           </div>
           <div
-            class="col-xl-4"
+            class="col-xl-6"
           >
             <div
               class="form-group"

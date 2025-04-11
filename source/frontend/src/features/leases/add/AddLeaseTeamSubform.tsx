@@ -11,6 +11,7 @@ import { SectionField } from '@/components/common/Section/SectionField';
 import * as API from '@/constants/API';
 import { TeamMemberFormModal } from '@/features/mapSideBar/acquisition/common/modals/AcquisitionFormModal';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { isValidId } from '@/utils';
 
 import { LeaseTeamFormModel, WithLeaseTeam } from '../models';
 
@@ -60,14 +61,15 @@ export const AddLeaseTeamSubForm: React.FunctionComponent<
                   />
                 </Col>
               </Row>
-              {teamMember.contact?.organizationId && !teamMember.contact?.personId && (
-                <SectionField label="Primary contact" labelWidth="5" noGutters>
-                  <PrimaryContactSelector
-                    field={`team.${index}.primaryContactId`}
-                    contactInfo={teamMember?.contact}
-                  ></PrimaryContactSelector>
-                </SectionField>
-              )}
+              {isValidId(teamMember.contact?.organizationId) &&
+                !isValidId(teamMember.contact?.personId) && (
+                  <SectionField label="Primary contact" labelWidth={{ xl: 5 }} noGutters>
+                    <PrimaryContactSelector
+                      field={`team.${index}.primaryContactId`}
+                      contactInfo={teamMember?.contact}
+                    ></PrimaryContactSelector>
+                  </SectionField>
+                )}
             </React.Fragment>
           ))}
           <LinkButton

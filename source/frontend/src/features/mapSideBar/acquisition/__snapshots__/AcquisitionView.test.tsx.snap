@@ -1645,7 +1645,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                               </label>
                             </div>
                             <div
-                              class="c37 text-left col"
+                              class="c38 text-left col"
                             />
                           </div>
                           <div
@@ -1655,7 +1655,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-4"
                             >
                               <label
-                                class="c36"
+                                class="c37"
                               >
                                 Acquisition type:
                               </label>

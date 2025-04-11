@@ -293,11 +293,11 @@ exports[`Research List View > matches snapshot 1`] = `
   height: 1.6rem;
 }
 
-.c18 {
+.c19 {
   margin-top: 0.3rem;
 }
 
-.c19 {
+.c20 {
   min-width: 5rem;
   max-width: 5rem;
   margin-left: 1rem;
@@ -306,11 +306,11 @@ exports[`Research List View > matches snapshot 1`] = `
   padding: 0;
 }
 
-.c19:-moz-read-only {
+.c20:-moz-read-only {
   background: white;
 }
 
-.c19:read-only {
+.c20:read-only {
   background: white;
 }
 
@@ -1680,19 +1680,19 @@ exports[`Research List View > matches snapshot 1`] = `
                 class="d-flex"
               >
                 <span
-                  class="c18"
+                  class="c19"
                 >
                   Show
                 </span>
                 <input
-                  class="c19 form-control"
+                  class="c20 form-control"
                   data-testid="input-page-size"
                   readonly=""
                   type="number"
                   value="10"
                 />
                 <span
-                  class="c18"
+                  class="c19"
                 >
                   Entries
                 </span>
