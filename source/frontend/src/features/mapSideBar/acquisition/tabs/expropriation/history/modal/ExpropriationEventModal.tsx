@@ -44,3 +44,5 @@ export const ExpropriationEventModal: React.FunctionComponent<IExpropriationEven
     ></GenericModal>
   );
 };
+
+export default ExpropriationEventModal;
