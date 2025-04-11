@@ -13,7 +13,7 @@ import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { ApiGen_Concepts_PropertyOperation } from '@/models/api/generated/ApiGen_Concepts_PropertyOperation';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { exists, featuresetToMapProperty, firstOrNull, isValidString } from '@/utils';
+import { exists, featuresetToMapProperty, isValidString } from '@/utils';
 
 import { AddressForm, PropertyForm } from '../shared/models';
 import { SubdivisionFormModel } from './AddSubdivisionModel';
@@ -64,13 +64,13 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({
         );
         if (isValidString(propertyForm.pid)) {
           // TODO: This should work with multiple properties
-          const firstPimsFeature = firstOrNull(selectedFeatureDataset.pimsFeatures);
-          propertyForm.address = firstPimsFeature?.properties
-            ? AddressForm.fromPimsView(firstPimsFeature?.properties)
+          const pimsFeature = selectedFeatureDataset.pimsFeature;
+          propertyForm.address = pimsFeature?.properties
+            ? AddressForm.fromPimsView(pimsFeature?.properties)
             : undefined;
           const subdivisionFormModel = new SubdivisionFormModel();
           subdivisionFormModel.sourceProperty = propertyForm.toApi();
-          subdivisionFormModel.sourceProperty.isOwned = firstPimsFeature.properties.IS_OWNED;
+          subdivisionFormModel.sourceProperty.isOwned = pimsFeature.properties.IS_OWNED;
           setInitialForm(subdivisionFormModel);
         }
       }

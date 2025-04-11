@@ -96,7 +96,7 @@ export const usePimsPropertyLayer = () => {
       geometryName?: string | undefined,
       spatialReferenceId?: number | undefined,
     ) => {
-      const featureCollection = await findOneWhereContainsWrappedExecute(
+      const featureCollection = await findMultipleWhereContainsWrappedExecute(
         latlng,
         geometryName,
         spatialReferenceId,
@@ -113,7 +113,7 @@ export const usePimsPropertyLayer = () => {
         ? forceCasted.features
         : undefined;
     },
-    [findOneWhereContainsWrappedExecute],
+    [findMultipleWhereContainsWrappedExecute],
   );
 
   return useMemo(

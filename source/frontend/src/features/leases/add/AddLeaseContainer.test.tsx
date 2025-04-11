@@ -276,22 +276,16 @@ describe('AddLeaseContainer component', () => {
       selectedFeatureDataset: {
         location: { lng: -120.69195885, lat: 50.25163372 },
         fileLocation: null,
-        pimsFeatures: null,
-        parcelFeatures: null,
+        pimsFeature: null,
+        parcelFeature: null,
         regionFeature: {
           type: 'Feature',
           properties: { ...emptyRegion, REGION_NUMBER: 1, REGION_NAME: 'South Coast Region' },
           geometry: getMockPolygon(),
         },
         districtFeature: null,
-        municipalityFeatures: null,
-        highwayFeatures: null,
         selectingComponentId: null,
-        crownLandLeasesFeatures: null,
-        crownLandLicensesFeatures: null,
-        crownLandTenuresFeatures: null,
-        crownLandInventoryFeatures: null,
-        crownLandInclusionsFeatures: null,
+        municipalityFeature: null,
       },
     };
 

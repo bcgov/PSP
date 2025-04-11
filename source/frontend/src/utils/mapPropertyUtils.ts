@@ -12,10 +12,7 @@ import { compact, isNumber } from 'lodash';
 import polylabel from 'polylabel';
 import { toast } from 'react-toastify';
 
-import {
-  LocationFeatureDataset,
-  SelectedFeatureDataset,
-} from '@/components/common/mapFSM/useLocationFeatureLoader';
+import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { ONE_HUNDRED_METER_PRECISION } from '@/components/maps/constants';
 import { IMapProperty } from '@/components/propertySelector/models';
 import { AreaUnitTypes } from '@/constants';
@@ -26,7 +23,7 @@ import { ApiGen_CodeTypes_GeoJsonTypes } from '@/models/api/generated/ApiGen_Cod
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Geometry } from '@/models/api/generated/ApiGen_Concepts_Geometry';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
-import { enumFromValue, exists, firstOrNull, formatApiAddress, pidFormatter } from '@/utils';
+import { enumFromValue, exists, formatApiAddress, pidFormatter } from '@/utils';
 
 export enum NameSourceType {
   PID = 'PID',
@@ -323,11 +320,12 @@ export function latLngFromMapProperty(
  */
 export function isLatLngInFeatureSetBoundary(
   latLng: LatLngLiteral,
-  featureset: LocationFeatureDataset,
+  featureset: SelectedFeatureDataset,
 ): boolean {
   const location = point([latLng.lng, latLng.lat]);
-  const boundary = (firstOrNull(featureset?.pimsFeatures)?.geometry ??
-    firstOrNull(featureset?.parcelFeatures)?.geometry) as Polygon | MultiPolygon;
+  const boundary = (featureset?.pimsFeature?.geometry ?? featureset?.parcelFeature?.geometry) as
+    | Polygon
+    | MultiPolygon;
 
   return exists(boundary) && booleanPointInPolygon(location, boundary);
 }

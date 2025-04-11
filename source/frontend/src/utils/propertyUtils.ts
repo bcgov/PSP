@@ -1,8 +1,11 @@
+import { Feature, Geometry } from 'geojson';
+
 import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
 import { ApiGen_Concepts_PropertyManagement } from '@/models/api/generated/ApiGen_Concepts_PropertyManagement';
 import { IBcAssessmentSummary } from '@/models/layers/bcAssesment';
+import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 
-import { isNumber, isValidString } from './utils';
+import { exists, isNumber, isValidString } from './utils';
 
 /**
  * The pidFormatter is used to format the specified PID value
@@ -116,4 +119,13 @@ export function formatApiPropertyManagementLease(
   } else {
     return 'No';
   }
+}
+
+export function isStrataLot(
+  feature: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties> | undefined | null,
+) {
+  if (!exists(feature)) {
+    return false;
+  }
+  return feature.properties.PID === null && feature.properties.OWNER_TYPE === 'Unclassified';
 }

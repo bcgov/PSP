@@ -147,7 +147,7 @@ export const LayerPopupContainer: React.FC<
         exists(featureSet.crownLandInventoryFeatures) &&
         featureSet.crownLandInventoryFeatures.length > 0
       ) {
-        featureSet.crownLandInclusionsFeatures.forEach((crownLandInventoryFeature, index) => {
+        featureSet.crownLandInventoryFeatures.forEach((crownLandInventoryFeature, index) => {
           const parcelData: LayerData = {
             title: `Crown Land Inventory (${index + 1} of ${
               featureSet.crownLandInventoryFeatures.length

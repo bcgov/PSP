@@ -4,17 +4,11 @@ import { CellProps } from 'react-table';
 import { ColumnWithProps } from '@/components/Table';
 import { AddressForm } from '@/features/mapSideBar/shared/models';
 import { WHSE_Municipalities_Feature_Properties } from '@/models/layers/municipalities';
-import {
-  firstOrNull,
-  formatApiAddress,
-  pidFormatter,
-  pidFromFeatureSet,
-  pinFromFeatureSet,
-} from '@/utils';
+import { formatApiAddress, pidFormatter, pidFromFeatureSet, pinFromFeatureSet } from '@/utils';
 
-import { IIdentifiedLocationFeatureDataset } from './PropertySearchSelectorFormView';
+import { IIdentifiedSelectedFeatureDataset } from './PropertySearchSelectorFormView';
 
-const columns: ColumnWithProps<IIdentifiedLocationFeatureDataset>[] = [
+const columns: ColumnWithProps<IIdentifiedSelectedFeatureDataset>[] = [
   {
     Header: 'PID',
     align: 'left',
@@ -22,7 +16,7 @@ const columns: ColumnWithProps<IIdentifiedLocationFeatureDataset>[] = [
     minWidth: 20,
     Cell: (
       props: CellProps<
-        IIdentifiedLocationFeatureDataset,
+        IIdentifiedSelectedFeatureDataset,
         Feature<Geometry, WHSE_Municipalities_Feature_Properties>
       >,
     ) => {
@@ -36,7 +30,7 @@ const columns: ColumnWithProps<IIdentifiedLocationFeatureDataset>[] = [
     maxWidth: 20,
     Cell: (
       props: CellProps<
-        IIdentifiedLocationFeatureDataset,
+        IIdentifiedSelectedFeatureDataset,
         Feature<Geometry, WHSE_Municipalities_Feature_Properties>
       >,
     ) => {
@@ -50,14 +44,14 @@ const columns: ColumnWithProps<IIdentifiedLocationFeatureDataset>[] = [
     maxWidth: 20,
     Cell: (
       props: CellProps<
-        IIdentifiedLocationFeatureDataset,
+        IIdentifiedSelectedFeatureDataset,
         Feature<Geometry, WHSE_Municipalities_Feature_Properties>
       >,
     ) => {
       return (
         <>
-          {firstOrNull(props.row.original?.pimsFeatures)?.properties?.SURVEY_PLAN_NUMBER ??
-            firstOrNull(props.row.original?.parcelFeatures)?.properties?.PLAN_NUMBER}
+          {props.row.original?.pimsFeature?.properties?.SURVEY_PLAN_NUMBER ??
+            props.row.original?.parcelFeature?.properties?.PLAN_NUMBER}
         </>
       );
     },
@@ -69,17 +63,15 @@ const columns: ColumnWithProps<IIdentifiedLocationFeatureDataset>[] = [
     maxWidth: 20,
     Cell: (
       props: CellProps<
-        IIdentifiedLocationFeatureDataset,
+        IIdentifiedSelectedFeatureDataset,
         Feature<Geometry, WHSE_Municipalities_Feature_Properties>
       >,
     ) => {
       return (
         <>
-          {props.row.original?.pimsFeatures
+          {props.row.original?.pimsFeature
             ? formatApiAddress(
-                AddressForm.fromPimsView(
-                  firstOrNull(props.row.original?.pimsFeatures)?.properties,
-                ).toApi(),
+                AddressForm.fromPimsView(props.row.original?.pimsFeature?.properties).toApi(),
               )
             : ''}
         </>

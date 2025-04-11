@@ -10,10 +10,10 @@ import { mockFAParcelLayerResponse, mockGeocoderOptions } from '@/mocks/index.mo
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { act, fillInput, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
-import { PropertyForm } from '../../features/mapSideBar/shared/models';
 import MapSelectorContainer, { IMapSelectorContainerProps } from './MapSelectorContainer';
 import { IMapProperty } from './models';
 import { IMapStateMachineContext } from '../common/mapFSM/MapStateMachineContext';
+import { PropertyForm } from '@/features/mapSideBar/shared/models';
 
 const mockStore = configureMockStore([thunk]);
 
@@ -42,7 +42,7 @@ vi.mocked(useMapProperties).mockReturnValue({
     error: null,
     response: { features: [] } as any,
     execute: vi.fn().mockResolvedValue({
-      features: [PropertyForm.fromMapProperty(testProperty).toFeatureDataset().pimsFeatures],
+      features: [PropertyForm.fromMapProperty(testProperty).toFeatureDataset().pimsFeature],
     }),
     loading: false,
     status: 200,
@@ -255,7 +255,7 @@ describe('MapSelectorContainer component', () => {
         regionFeature: {},
         districtFeature: {},
         municipalityFeature: null,
-        highwayFeatures: null,
+        fileLocation: null,
         id: 'PID-009-727-493-48.76613749999999--123.46163749999998',
       },
     ]);

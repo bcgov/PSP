@@ -5,7 +5,7 @@ import isNumber from 'lodash/isNumber';
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
+import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { IGeocoderResponse } from '@/hooks/pims-api/interfaces/IGeocoder';
 import { useAdminBoundaryMapLayer } from '@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer';
 import { useFullyAttributedParcelMapLayer } from '@/hooks/repositories/mapLayer/useFullyAttributedParcelMapLayer';
@@ -21,8 +21,8 @@ import { ILayerSearchCriteria, IMapProperty } from '../models';
 import PropertySearchSelectorFormView from './PropertySearchSelectorFormView';
 
 export interface IPropertySelectorSearchContainerProps {
-  selectedProperties: LocationFeatureDataset[];
-  setSelectedProperties: (properties: LocationFeatureDataset[]) => void;
+  selectedProperties: SelectedFeatureDataset[];
+  setSelectedProperties: (properties: SelectedFeatureDataset[]) => void;
 }
 
 export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchContainerProps> = ({
@@ -30,7 +30,7 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
   setSelectedProperties,
 }) => {
   const [layerSearch, setLayerSearch] = useState<ILayerSearchCriteria | undefined>();
-  const [searchResults, setSearchResults] = useState<LocationFeatureDataset[]>([]);
+  const [searchResults, setSearchResults] = useState<SelectedFeatureDataset[]>([]);
   const [addressResults, setAddressResults] = useState<IGeocoderResponse[]>([]);
 
   const pimsPropertyLayerService = usePimsPropertyLayer();
@@ -102,24 +102,23 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
         const regionDistrictResults = await Promise.all(matchTasks);
         const pimsResults = await Promise.all(getPimsTasks);
 
-        const locations = result.features.map((p, i) => {
+        const locations = result.features.map<SelectedFeatureDataset>((p, i) => {
           const foundProperty = featureToLocationFeatureDataset(p);
           foundProperty.regionFeature = regionDistrictResults[i]?.regionFeature;
           foundProperty.districtFeature = regionDistrictResults[i]?.districtFeature;
-          if (exists(foundProperty?.pimsFeatures)) {
+
+          if (exists(foundProperty?.pimsFeature)) {
             // TODO: This needs to be changed to work with multiple properties
-            foundProperty.pimsFeatures = pimsResults[i]?.features?.length
-              ? [pimsResults[i]?.features[0]]
-              : [
-                  {
-                    properties: {
-                      STREET_ADDRESS_1: addressResults[i]?.fullAddress,
-                    },
-                  } as Feature<Geometry, PIMS_Property_Location_View>,
-                ];
+            foundProperty.pimsFeature = pimsResults[i]?.features?.length
+              ? pimsResults[i]?.features[0]
+              : ({
+                  properties: {
+                    STREET_ADDRESS_1: addressResults[i]?.fullAddress,
+                  },
+                } as Feature<Geometry, PIMS_Property_Location_View>);
           }
           return foundProperty;
-        }) as LocationFeatureDataset[];
+        });
         setSearchResults(locations);
       } else {
         const locations = result?.features?.map(p => featureToLocationFeatureDataset(p));
@@ -160,7 +159,7 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
 
       const responses = await Promise.all(findByPidCalls);
 
-      let propertyResults: LocationFeatureDataset[] = [];
+      let propertyResults: SelectedFeatureDataset[] = [];
       responses?.forEach((item: FeatureCollection<Geometry, GeoJsonProperties> | undefined) => {
         if (item) {
           item.features.forEach(feature => {
@@ -232,28 +231,22 @@ export const featureToLocationFeatureDataset = (feature: Feature<Geometry, GeoJs
   const center = getFeatureBoundedCenter(feature);
 
   // TODO: This looks funky. Why is this reconstructing a location dataset from a feature?
-  const locationDataSet: LocationFeatureDataset = {
-    parcelFeatures: [feature as Feature<Geometry, PMBC_FullyAttributed_Feature_Properties>],
-    selectingComponentId: null,
-    pimsFeatures: null,
+  const locationDataSet: SelectedFeatureDataset = {
+    parcelFeature: feature as Feature<Geometry, PMBC_FullyAttributed_Feature_Properties>,
+    pimsFeature: null,
     location: { lat: center[1], lng: center[0] },
     regionFeature: null,
-    districtFeature: null,
-    municipalityFeatures: null,
-    highwayFeatures: null,
-    crownLandLeasesFeatures: null,
-    crownLandLicensesFeatures: null,
-    crownLandTenuresFeatures: null,
-    crownLandInventoryFeatures: null,
-    crownLandInclusionsFeatures: null,
     fileLocation: null,
+    districtFeature: null,
+    municipalityFeature: null,
+    selectingComponentId: null,
   };
   return locationDataSet;
 };
 
 // Not thread safe. Modifies the passed property.
 async function matchRegionAndDistrict(
-  property: LocationFeatureDataset,
+  property: SelectedFeatureDataset,
   regionSearch: (
     latlng: LatLngLiteral,
     geometryName?: string | undefined,

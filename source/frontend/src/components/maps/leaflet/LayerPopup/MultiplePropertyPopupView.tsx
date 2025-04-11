@@ -10,6 +10,7 @@ import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFe
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import { StyledScrollable } from '@/features/documents/commonStyles';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
+import { isStrataLot } from '@/utils/propertyUtils';
 
 export interface IMultiplePropertyPopupView {
   featureDataset: LocationFeatureDataset | null;
@@ -42,7 +43,7 @@ export const MultiplePropertyPopupView: React.FC<
       ?.map<PropertyProjection>(x => {
         return {
           pid: x.properties.PID_FORMATTED,
-          isStrataLot: x.properties.PID === null && x.properties.OWNER_TYPE === 'Unclassified',
+          isStrataLot: isStrataLot(x),
           feature: x,
         };
       })

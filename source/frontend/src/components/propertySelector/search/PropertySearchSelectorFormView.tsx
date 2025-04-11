@@ -1,23 +1,24 @@
-import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
+import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { Section } from '@/components/common/Section/Section';
 import * as Styled from '@/components/common/styles';
 import { Table } from '@/components/Table';
 import { IGeocoderResponse } from '@/hooks/pims-api/interfaces/IGeocoder';
 import { featuresetToMapProperty, getPropertyName } from '@/utils/mapPropertyUtils';
+import { isStrataLot } from '@/utils/propertyUtils';
 
 import { ILayerSearchCriteria, IMapProperty } from '../models';
 import LayerFilter from './LayerFilter';
 import mapPropertyColumns from './mapPropertyColumns';
 
-export interface IIdentifiedLocationFeatureDataset extends LocationFeatureDataset {
+export interface IIdentifiedSelectedFeatureDataset extends SelectedFeatureDataset {
   id: string;
 }
 
 export interface IPropertySearchSelectorFormViewProps {
-  onSelectedProperties: (properties: LocationFeatureDataset[]) => void;
-  selectedProperties: LocationFeatureDataset[];
+  onSelectedProperties: (properties: SelectedFeatureDataset[]) => void;
+  selectedProperties: SelectedFeatureDataset[];
   onSearch: (search: ILayerSearchCriteria) => void;
-  searchResults: LocationFeatureDataset[];
+  searchResults: SelectedFeatureDataset[];
   search?: ILayerSearchCriteria;
   loading: boolean;
   addressResults?: IGeocoderResponse[];
@@ -38,7 +39,7 @@ export const PropertySearchSelectorFormView: React.FunctionComponent<
   onAddressChange,
   onAddressSelect,
 }) => {
-  const selectedData = selectedProperties.map<IIdentifiedLocationFeatureDataset>(x => {
+  const selectedData = selectedProperties.map<IIdentifiedSelectedFeatureDataset>(x => {
     return { ...x, id: generatePropertyId(featuresetToMapProperty(x)) };
   });
 
@@ -46,9 +47,18 @@ export const PropertySearchSelectorFormView: React.FunctionComponent<
 
   const identifiedSearchResults =
     searchResults?.length <= maxCount
-      ? searchResults.map<IIdentifiedLocationFeatureDataset>(x => {
-          return { ...x, id: generatePropertyId(featuresetToMapProperty(x)) };
-        })
+      ? searchResults
+          .map<IIdentifiedSelectedFeatureDataset>(x => {
+            return { ...x, id: generatePropertyId(featuresetToMapProperty(x)) };
+          })
+          .sort((a, b) => {
+            const aIsStrataLot = isStrataLot(a?.parcelFeature);
+            const bIsStrataLot = isStrataLot(b?.parcelFeature);
+            if (aIsStrataLot === bIsStrataLot) return 0;
+            if (aIsStrataLot) return -1;
+            if (bIsStrataLot) return 1;
+            return 0;
+          })
       : [];
 
   function generatePropertyId(mapProperty: IMapProperty): string {
@@ -70,7 +80,7 @@ export const PropertySearchSelectorFormView: React.FunctionComponent<
         />
       </Section>
       <Section header={undefined}>
-        <Table<IIdentifiedLocationFeatureDataset>
+        <Table<IIdentifiedSelectedFeatureDataset>
           manualPagination={false}
           name="map-properties"
           columns={mapPropertyColumns}
