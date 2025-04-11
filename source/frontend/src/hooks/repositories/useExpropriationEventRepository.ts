@@ -18,7 +18,7 @@ export const useExpropriationEventRepository = () => {
     deleteAcquisitionExpropriationEventApi,
   } = useApiExpropriationEvents();
 
-  const getAcquisitionExpropriationEvents = useApiRequestWrapper<
+  const getExpropriationEvents = useApiRequestWrapper<
     (acqFileId: number) => Promise<AxiosResponse<ApiGen_Concepts_ExpropriationEvent[], any>>
   >({
     requestFunction: useCallback(
@@ -29,7 +29,7 @@ export const useExpropriationEventRepository = () => {
     onError: useAxiosErrorHandler('Failed to load Acquisition Expropriation Events'),
   });
 
-  const getAcquisitionExpropriationEventById = useApiRequestWrapper<
+  const getExpropriationEventById = useApiRequestWrapper<
     (
       acqFileId: number,
       eventId: number,
@@ -44,7 +44,7 @@ export const useExpropriationEventRepository = () => {
     onError: useAxiosErrorHandler('Failed to load Acquisition Expropriation Event'),
   });
 
-  const addAcquisitionExpropriationEvent = useApiRequestWrapper<
+  const addExpropriationEvent = useApiRequestWrapper<
     (
       acqFileId: number,
       expropriationEvent: ApiGen_Concepts_ExpropriationEvent,
@@ -59,7 +59,7 @@ export const useExpropriationEventRepository = () => {
     onError: useAxiosErrorHandler('Failed to create Acquisition Expropriation Event'),
   });
 
-  const updateAcquisitionExpropriationEvent = useApiRequestWrapper<
+  const updateExpropriationEvent = useApiRequestWrapper<
     (
       acqFileId: number,
       expropriationEvent: ApiGen_Concepts_ExpropriationEvent,
@@ -74,7 +74,7 @@ export const useExpropriationEventRepository = () => {
     onError: useAxiosErrorHandler('Failed to update Acquisition File Agreement'),
   });
 
-  const deleteAcquisitionExpropriationEvent = useApiRequestWrapper<
+  const deleteExpropriationEvent = useApiRequestWrapper<
     (acqFileId: number, agreementId: number) => Promise<AxiosResponse<boolean, any>>
   >({
     requestFunction: useCallback(
@@ -88,18 +88,18 @@ export const useExpropriationEventRepository = () => {
 
   return useMemo(
     () => ({
-      getAcquisitionExpropriationEvents,
-      getAcquisitionExpropriationEventById,
-      addAcquisitionExpropriationEvent,
-      updateAcquisitionExpropriationEvent,
-      deleteAcquisitionExpropriationEvent,
+      getExpropriationEvents,
+      getExpropriationEventById,
+      addExpropriationEvent,
+      updateExpropriationEvent,
+      deleteExpropriationEvent,
     }),
     [
-      getAcquisitionExpropriationEvents,
-      getAcquisitionExpropriationEventById,
-      addAcquisitionExpropriationEvent,
-      updateAcquisitionExpropriationEvent,
-      deleteAcquisitionExpropriationEvent,
+      getExpropriationEvents,
+      getExpropriationEventById,
+      addExpropriationEvent,
+      updateExpropriationEvent,
+      deleteExpropriationEvent,
     ],
   );
 };

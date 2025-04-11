@@ -8,7 +8,7 @@ import { ColumnWithProps, DateCell } from '@/components/Table';
 import { Claims } from '@/constants';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
 
-import { ExpropriationEventRow } from '../../models';
+import { ExpropriationEventRow } from '../models';
 
 export const getExpropriationEventColumns = (
   onUpdate: (expropriationEventId: number) => void,

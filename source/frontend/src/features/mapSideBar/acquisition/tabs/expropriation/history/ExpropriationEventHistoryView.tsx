@@ -7,8 +7,8 @@ import { StyledSectionAddButton } from '@/components/common/styles';
 import { TableSort } from '@/components/Table/TableSort';
 import { ApiGen_Concepts_ExpropriationEvent } from '@/models/api/generated/ApiGen_Concepts_ExpropriationEvent';
 
-import { ExpropriationEventRow } from '../models';
-import { ExpropriationEventResults } from './results/ExpropriationEventResults';
+import { ExpropriationEventResults } from './list/ExpropriationEventResults';
+import { ExpropriationEventRow } from './models';
 
 export interface IExpropriationEventHistoryViewProps {
   isLoading?: boolean;

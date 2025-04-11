@@ -2,7 +2,7 @@ import { ApiGen_Concepts_ExpropriationEvent } from '@/models/api/generated/ApiGe
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { fromTypeCodeNullable, stringToNull, toTypeCodeNullable } from '@/utils/formUtils';
 
-export class ExpropriationEventForm {
+export class ExpropriationEventFormModel {
   id: number | null = null;
   readonly acquisitionFileId: number;
   acquisitionOwnerId: number | null = null;
@@ -29,8 +29,8 @@ export class ExpropriationEventForm {
     };
   }
 
-  static fromApi(apiModel: ApiGen_Concepts_ExpropriationEvent): ExpropriationEventForm {
-    const newForm = new ExpropriationEventForm(apiModel.acquisitionFileId);
+  static fromApi(apiModel: ApiGen_Concepts_ExpropriationEvent): ExpropriationEventFormModel {
+    const newForm = new ExpropriationEventFormModel(apiModel.acquisitionFileId);
     newForm.id = apiModel.id;
     newForm.acquisitionOwnerId = apiModel.acquisitionOwnerId;
     newForm.interestHolderId = apiModel.interestHolderId;

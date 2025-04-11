@@ -20,8 +20,8 @@ import ExpropriationForm1 from './form1/ExpropriationForm1';
 import ExpropriationForm5 from './form5/ExpropriationForm5';
 import ExpropriationForm8Details from './form8/details/ExpropriationForm8Details';
 import ExpropriationForm9 from './form9/ExpropriationForm9';
-import ExpropriationEventHistoryContainer from './history/list/ExpropriationEventHistoryContainer';
-import ExpropriationEventHistoryView from './history/list/ExpropriationEventHistoryView';
+import ExpropriationEventHistoryContainer from './history/ExpropriationEventHistoryContainer';
+import ExpropriationEventHistoryView from './history/ExpropriationEventHistoryView';
 
 export interface IExpropriationTabContainerViewProps {
   loading: boolean;

@@ -3,7 +3,7 @@ import React, { useMemo } from 'react';
 import { Table } from '@/components/Table';
 import { TableSort } from '@/components/Table/TableSort';
 
-import { ExpropriationEventRow } from '../../models';
+import { ExpropriationEventRow } from '../models';
 import { getExpropriationEventColumns } from './columns';
 
 export interface IDocumentResultProps {
