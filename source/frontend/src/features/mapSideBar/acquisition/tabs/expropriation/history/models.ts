@@ -42,7 +42,7 @@ export class ExpropriationEventForm {
   }
 }
 
-export class ExpropriationEventRowDetail {
+export class ExpropriationEventRow {
   id: number | null = null;
   readonly acquisitionFileId: number;
   eventDescription: string | null = null;
@@ -53,8 +53,8 @@ export class ExpropriationEventRowDetail {
     this.acquisitionFileId = acquisitionFileId;
   }
 
-  static fromApi(apiModel: ApiGen_Concepts_ExpropriationEvent): ExpropriationEventRowDetail {
-    const newForm = new ExpropriationEventRowDetail(apiModel.acquisitionFileId);
+  static fromApi(apiModel: ApiGen_Concepts_ExpropriationEvent): ExpropriationEventRow {
+    const newForm = new ExpropriationEventRow(apiModel.acquisitionFileId);
     newForm.id = apiModel.id;
     newForm.ownerOrInterestHolder = 'Change me (Test Value)';
     newForm.eventDescription = apiModel.eventType?.description;

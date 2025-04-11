@@ -4,13 +4,13 @@ import { useExpropriationEventRepository } from '@/hooks/repositories/useExpropr
 
 import { IExpropriationEventHistoryViewProps } from './ExpropriationEventHistoryView';
 
-interface IUpdateBctfaOwnershipContainerProps {
+interface IExpropriationEventHistoryContainerProps {
   acquisitionFileId: number;
   View: React.FunctionComponent<IExpropriationEventHistoryViewProps>;
 }
 
 export const ExpropriationEventHistoryContainer: React.FunctionComponent<
-  IUpdateBctfaOwnershipContainerProps
+  IExpropriationEventHistoryContainerProps
 > = ({ acquisitionFileId, View }) => {
   const {
     getAcquisitionExpropriationEvents: {
@@ -24,7 +24,27 @@ export const ExpropriationEventHistoryContainer: React.FunctionComponent<
     getAcquisitionExpropriationEvents(acquisitionFileId);
   }, [acquisitionFileId, getAcquisitionExpropriationEvents]);
 
-  return <View isLoading={loading} expropriationEvents={response} />;
+  const handleAdd = () => {
+    // TODO:
+  };
+
+  const handleUpdate = (expropriationEventId: number) => {
+    // TODO:
+  };
+
+  const handleDelete = (expropriationEventId: number) => {
+    // TODO:
+  };
+
+  return (
+    <View
+      isLoading={loading}
+      expropriationEvents={response ?? []}
+      onAdd={handleAdd}
+      onUpdate={handleUpdate}
+      onDelete={handleDelete}
+    />
+  );
 };
 
 export default ExpropriationEventHistoryContainer;
