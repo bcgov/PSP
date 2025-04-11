@@ -37,8 +37,8 @@ export const useApiExpropriationEvents = () => {
           `/acquisitionfiles/${acqFileId}/expropriation-events/${expropriationEvent.id}`,
           expropriationEvent,
         ),
-      deleteAcquisitionExpropriationEventApi: (acqFileId: number, agreementId: number) =>
-        api.delete<boolean>(`/acquisitionfiles/${acqFileId}/expropriation-events/${agreementId}`),
+      deleteAcquisitionExpropriationEventApi: (acqFileId: number, eventId: number) =>
+        api.delete<boolean>(`/acquisitionfiles/${acqFileId}/expropriation-events/${eventId}`),
     }),
     [api],
   );

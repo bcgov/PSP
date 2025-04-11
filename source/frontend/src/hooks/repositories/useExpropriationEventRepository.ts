@@ -75,11 +75,11 @@ export const useExpropriationEventRepository = () => {
   });
 
   const deleteExpropriationEvent = useApiRequestWrapper<
-    (acqFileId: number, agreementId: number) => Promise<AxiosResponse<boolean, any>>
+    (acqFileId: number, eventId: number) => Promise<AxiosResponse<boolean, any>>
   >({
     requestFunction: useCallback(
-      async (acqFileId: number, agreementId: number) =>
-        await deleteAcquisitionExpropriationEventApi(acqFileId, agreementId),
+      async (acqFileId: number, eventId: number) =>
+        await deleteAcquisitionExpropriationEventApi(acqFileId, eventId),
       [deleteAcquisitionExpropriationEventApi],
     ),
     requestName: 'deleteAcquisitionExpropriationEvent',

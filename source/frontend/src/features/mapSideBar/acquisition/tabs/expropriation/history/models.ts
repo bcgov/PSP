@@ -29,6 +29,11 @@ export class ExpropriationEventFormModel {
     };
   }
 
+  static createEmpty(acquisitionFileId: number) {
+    const newForm = new ExpropriationEventFormModel(acquisitionFileId);
+    return newForm;
+  }
+
   static fromApi(apiModel: ApiGen_Concepts_ExpropriationEvent): ExpropriationEventFormModel {
     const newForm = new ExpropriationEventFormModel(apiModel.acquisitionFileId);
     newForm.id = apiModel.id;
@@ -56,7 +61,7 @@ export class ExpropriationEventRow {
   static fromApi(apiModel: ApiGen_Concepts_ExpropriationEvent): ExpropriationEventRow {
     const newForm = new ExpropriationEventRow(apiModel.acquisitionFileId);
     newForm.id = apiModel.id;
-    newForm.ownerOrInterestHolder = 'Change me (Test Value)';
+    newForm.ownerOrInterestHolder = 'TODO - mocked value'; // TODO: implement
     newForm.eventDescription = apiModel.eventType?.description;
     newForm.eventDate = apiModel.eventDate || '';
 
