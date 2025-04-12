@@ -8,6 +8,7 @@ import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOptio
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 
 import { ExpropriationEventFormModel } from '../models';
+import { ExpropriationEventYupSchema } from './validation';
 
 export interface IExpropriationEventFormProps {
   formikRef: React.Ref<FormikProps<ExpropriationEventFormModel>>;
@@ -34,6 +35,7 @@ export const ExpropriationEventForm: React.FunctionComponent<IExpropriationEvent
       innerRef={formikRef}
       enableReinitialize
       initialValues={initialValues}
+      validationSchema={ExpropriationEventYupSchema}
       onSubmit={values => onSave(values)}
     >
       {formikProps => (
@@ -48,7 +50,7 @@ export const ExpropriationEventForm: React.FunctionComponent<IExpropriationEvent
               placeholder="Select..."
             />
           </SectionField>
-          <SectionField label="Event">
+          <SectionField label="Event" required>
             <Select
               options={expropriationEventOptions}
               field="eventTypeCode"

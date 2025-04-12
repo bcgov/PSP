@@ -1,5 +1,6 @@
 import { FormikProps } from 'formik';
 import React, { useRef } from 'react';
+import { FaCalendarAlt } from 'react-icons/fa';
 
 import GenericModal, { ModalSize } from '@/components/common/GenericModal';
 import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOptionModel';
@@ -29,8 +30,9 @@ export const ExpropriationEventModal: React.FunctionComponent<IExpropriationEven
     <GenericModal
       variant="info"
       title="Expropriation Date History"
+      headerIcon={<FaCalendarAlt size={22} />}
       display={display}
-      modalSize={ModalSize.LARGE}
+      modalSize={ModalSize.MEDIUM}
       okButtonText="Save"
       cancelButtonText="Cancel"
       handleOk={() => {

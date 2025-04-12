@@ -129,7 +129,7 @@ export const ExpropriationEventHistoryContainer: React.FunctionComponent<
       ...getDeleteModalProps(),
       variant: 'error',
       title: 'Delete Expropriation Event',
-      message: `You have selected to delete this Exproprpriation Event from the history.
+      message: `You have selected to delete this Event from the history.
                                             Do you want to proceed?`,
       okButtonText: 'Yes',
       cancelButtonText: 'No',
@@ -139,6 +139,7 @@ export const ExpropriationEventHistoryContainer: React.FunctionComponent<
           if (!result) {
             console.error('Unable to delete expropriation event');
           }
+          await getExpropriationEvents(acquisitionFileId);
         } else {
           console.error('Invalid expropriation event');
         }

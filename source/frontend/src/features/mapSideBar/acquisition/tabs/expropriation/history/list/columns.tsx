@@ -20,7 +20,7 @@ export const getExpropriationEventColumns = (
       accessor: 'eventDate',
       align: 'left',
       sortable: true,
-      width: 10,
+      width: 20,
       maxWidth: 20,
       Cell: DateCell,
     },
@@ -29,21 +29,21 @@ export const getExpropriationEventColumns = (
       accessor: 'ownerOrInterestHolder',
       align: 'left',
       sortable: true,
-      width: 10,
-      maxWidth: 20,
+      width: 35,
+      maxWidth: 35,
     },
     {
       Header: 'Event',
       accessor: 'eventDescription',
       align: 'left',
       sortable: true,
-      width: 40,
-      maxWidth: 40,
+      width: 20,
+      maxWidth: 20,
     },
     {
       Header: 'Actions',
-      width: 20,
-      maxWidth: 20,
+      width: 15,
+      maxWidth: 15,
       sortable: false,
       Cell: (cell: CellProps<ExpropriationEventRow>) => {
         const { hasClaim } = useKeycloakWrapper();
@@ -73,7 +73,6 @@ export const getExpropriationEventColumns = (
 
 const ExpropriationActionsDiv = styled(InlineFlexDiv)`
   justify-content: center;
-  gap: 1rem;
   align-items: center;
   flex-grow: 1;
   align-content: space-between;
