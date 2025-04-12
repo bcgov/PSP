@@ -493,258 +493,6 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                     <span
                       class="px-2"
                     >
-                      First nation
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="pl-2 d-flex align-items-end col-auto"
-              >
-                <svg
-                  class="c9"
-                  fill="currentColor"
-                  height="1em"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <title>
-                    expand-section
-                  </title>
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
-                    d="m7 10 5 5 5-5z"
-                  />
-                </svg>
-              </div>
-            </div>
-          </h2>
-          <div
-            class="collapse"
-          >
-            <p
-              class="pl-2"
-            >
-              There are no approvals / consultations.
-            </p>
-          </div>
-        </div>
-        <div
-          class="c7 form-section"
-        >
-          <h2
-            class="c2"
-          >
-            <div
-              class="no-gutters row"
-            >
-              <div
-                class="align-content-end col"
-              >
-                <div
-                  class="c8 row"
-                >
-                  <div
-                    class="col-auto"
-                  >
-                    <span
-                      class="px-2"
-                    >
-                      Strategic Real Estate (SRE)
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="pl-2 d-flex align-items-end col-auto"
-              >
-                <svg
-                  class="c9"
-                  fill="currentColor"
-                  height="1em"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <title>
-                    expand-section
-                  </title>
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
-                    d="m7 10 5 5 5-5z"
-                  />
-                </svg>
-              </div>
-            </div>
-          </h2>
-          <div
-            class="collapse"
-          >
-            <p
-              class="pl-2"
-            >
-              There are no approvals / consultations.
-            </p>
-          </div>
-        </div>
-        <div
-          class="c7 form-section"
-        >
-          <h2
-            class="c2"
-          >
-            <div
-              class="no-gutters row"
-            >
-              <div
-                class="align-content-end col"
-              >
-                <div
-                  class="c8 row"
-                >
-                  <div
-                    class="col-auto"
-                  >
-                    <span
-                      class="px-2"
-                    >
-                      Regional planning
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="pl-2 d-flex align-items-end col-auto"
-              >
-                <svg
-                  class="c9"
-                  fill="currentColor"
-                  height="1em"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <title>
-                    expand-section
-                  </title>
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
-                    d="m7 10 5 5 5-5z"
-                  />
-                </svg>
-              </div>
-            </div>
-          </h2>
-          <div
-            class="collapse"
-          >
-            <p
-              class="pl-2"
-            >
-              There are no approvals / consultations.
-            </p>
-          </div>
-        </div>
-        <div
-          class="c7 form-section"
-        >
-          <h2
-            class="c2"
-          >
-            <div
-              class="no-gutters row"
-            >
-              <div
-                class="align-content-end col"
-              >
-                <div
-                  class="c8 row"
-                >
-                  <div
-                    class="col-auto"
-                  >
-                    <span
-                      class="px-2"
-                    >
-                      Regional property services
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="pl-2 d-flex align-items-end col-auto"
-              >
-                <svg
-                  class="c9"
-                  fill="currentColor"
-                  height="1em"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <title>
-                    expand-section
-                  </title>
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
-                    d="m7 10 5 5 5-5z"
-                  />
-                </svg>
-              </div>
-            </div>
-          </h2>
-          <div
-            class="collapse"
-          >
-            <p
-              class="pl-2"
-            >
-              There are no approvals / consultations.
-            </p>
-          </div>
-        </div>
-        <div
-          class="c7 form-section"
-        >
-          <h2
-            class="c2"
-          >
-            <div
-              class="no-gutters row"
-            >
-              <div
-                class="align-content-end col"
-              >
-                <div
-                  class="c8 row"
-                >
-                  <div
-                    class="col-auto"
-                  >
-                    <span
-                      class="px-2"
-                    >
                       District
                     </span>
                     <svg
@@ -1316,7 +1064,322 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                     <span
                       class="px-2"
                     >
+                      Engineering
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pl-2 d-flex align-items-end col-auto"
+              >
+                <svg
+                  class="c9"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    expand-section
+                  </title>
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="m7 10 5 5 5-5z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </h2>
+          <div
+            class="collapse"
+          >
+            <p
+              class="pl-2"
+            >
+              There are no approvals / consultations.
+            </p>
+          </div>
+        </div>
+        <div
+          class="c7 form-section"
+        >
+          <h2
+            class="c2"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="align-content-end col"
+              >
+                <div
+                  class="c8 row"
+                >
+                  <div
+                    class="col-auto"
+                  >
+                    <span
+                      class="px-2"
+                    >
+                      First Nation
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pl-2 d-flex align-items-end col-auto"
+              >
+                <svg
+                  class="c9"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    expand-section
+                  </title>
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="m7 10 5 5 5-5z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </h2>
+          <div
+            class="collapse"
+          >
+            <p
+              class="pl-2"
+            >
+              There are no approvals / consultations.
+            </p>
+          </div>
+        </div>
+        <div
+          class="c7 form-section"
+        >
+          <h2
+            class="c2"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="align-content-end col"
+              >
+                <div
+                  class="c8 row"
+                >
+                  <div
+                    class="col-auto"
+                  >
+                    <span
+                      class="px-2"
+                    >
                       Headquarter (HQ)
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pl-2 d-flex align-items-end col-auto"
+              >
+                <svg
+                  class="c9"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    expand-section
+                  </title>
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="m7 10 5 5 5-5z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </h2>
+          <div
+            class="collapse"
+          >
+            <p
+              class="pl-2"
+            >
+              There are no approvals / consultations.
+            </p>
+          </div>
+        </div>
+        <div
+          class="c7 form-section"
+        >
+          <h2
+            class="c2"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="align-content-end col"
+              >
+                <div
+                  class="c8 row"
+                >
+                  <div
+                    class="col-auto"
+                  >
+                    <span
+                      class="px-2"
+                    >
+                      Regional Planning
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pl-2 d-flex align-items-end col-auto"
+              >
+                <svg
+                  class="c9"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    expand-section
+                  </title>
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="m7 10 5 5 5-5z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </h2>
+          <div
+            class="collapse"
+          >
+            <p
+              class="pl-2"
+            >
+              There are no approvals / consultations.
+            </p>
+          </div>
+        </div>
+        <div
+          class="c7 form-section"
+        >
+          <h2
+            class="c2"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="align-content-end col"
+              >
+                <div
+                  class="c8 row"
+                >
+                  <div
+                    class="col-auto"
+                  >
+                    <span
+                      class="px-2"
+                    >
+                      Regional Property Services
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pl-2 d-flex align-items-end col-auto"
+              >
+                <svg
+                  class="c9"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    expand-section
+                  </title>
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="m7 10 5 5 5-5z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </h2>
+          <div
+            class="collapse"
+          >
+            <p
+              class="pl-2"
+            >
+              There are no approvals / consultations.
+            </p>
+          </div>
+        </div>
+        <div
+          class="c7 form-section"
+        >
+          <h2
+            class="c2"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="align-content-end col"
+              >
+                <div
+                  class="c8 row"
+                >
+                  <div
+                    class="col-auto"
+                  >
+                    <span
+                      class="px-2"
+                    >
+                      Strategic Real Estate (SRE)
                     </span>
                   </div>
                 </div>
