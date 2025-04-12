@@ -474,6 +474,11 @@ namespace Pims.Dal.Repositories
         {
             return Context.PimsLlTeamProfileTypes.AsNoTracking().ToArray();
         }
+
+        public IEnumerable<PimsExpropOwnerHistoryType> GetAllExpropriationEventTypes()
+        {
+            return Context.PimsExpropOwnerHistoryTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToList();
+        }
         #endregion
     }
 }
