@@ -3,7 +3,9 @@ import React from 'react';
 
 import { FastDatePicker, Select, SelectOption } from '@/components/common/form';
 import { SectionField } from '@/components/common/Section/SectionField';
+import * as API from '@/constants/API';
 import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOptionModel';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 
 import { ExpropriationEventFormModel } from '../models';
 
@@ -24,6 +26,9 @@ export const ExpropriationEventForm: React.FunctionComponent<IExpropriationEvent
   payeeOptions,
   onSave,
 }) => {
+  const { getOptionsByType } = useLookupCodeHelpers();
+  const expropriationEventOptions = getOptionsByType(API.ACQUISITION_EXPROPRIATION_EVENT_TYPES);
+
   return (
     <Formik<ExpropriationEventFormModel>
       innerRef={formikRef}
@@ -43,7 +48,13 @@ export const ExpropriationEventForm: React.FunctionComponent<IExpropriationEvent
               placeholder="Select..."
             />
           </SectionField>
-          <SectionField label="Event">{' TODO '}</SectionField>
+          <SectionField label="Event">
+            <Select
+              options={expropriationEventOptions}
+              field="eventTypeCode"
+              placeholder="Select type..."
+            />
+          </SectionField>
           <SectionField label="Date">
             <FastDatePicker formikProps={formikProps} field="eventDate" />
           </SectionField>
