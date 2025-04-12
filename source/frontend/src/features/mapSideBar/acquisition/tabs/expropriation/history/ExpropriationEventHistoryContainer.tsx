@@ -1,6 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
+import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOptionModel';
+import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useExpropriationEventRepository } from '@/hooks/repositories/useExpropriationEventRepository';
+import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_Concepts_ExpropriationEvent } from '@/models/api/generated/ApiGen_Concepts_ExpropriationEvent';
 import { exists, isValidId } from '@/utils';
@@ -18,6 +21,7 @@ interface IExpropriationEventHistoryContainerProps {
 export const ExpropriationEventHistoryContainer: React.FunctionComponent<
   IExpropriationEventHistoryContainerProps
 > = ({ acquisitionFileId, View, ModalView }) => {
+  const [payeeOptions, setPayeeOptions] = useState<PayeeOption[]>([]);
   const [showExpropriationEditModal, setShowExpropriationEditModal] = useState<boolean>(false);
   const [editExpropiationEventValue, setEditExpropiationEventValue] = useState(
     ExpropriationEventFormModel.createEmpty(acquisitionFileId),
@@ -26,9 +30,18 @@ export const ExpropriationEventHistoryContainer: React.FunctionComponent<
   const { setModalContent, setDisplayModal } = useModalContext();
 
   const {
+    getAcquisitionOwners: { execute: retrieveAcquisitionOwners, loading: loadingAcquisitionOwners },
+  } = useAcquisitionProvider();
+  const {
+    getAcquisitionInterestHolders: {
+      execute: fetchInterestHolders,
+      loading: loadingInterestHolders,
+    },
+  } = useInterestHolderRepository();
+  const {
     getExpropriationEvents: {
       execute: getExpropriationEvents,
-      loading,
+      loading: loadingExpropriationEvents,
       response: expropriationEventsResponse,
     },
     addExpropriationEvent: { execute: addExpropriationEvent },
@@ -39,9 +52,43 @@ export const ExpropriationEventHistoryContainer: React.FunctionComponent<
   const expropriationEvents: ApiGen_Concepts_ExpropriationEvent[] =
     expropriationEventsResponse ?? [];
 
+  const fetchPayeeOptions = useCallback(
+    async (acquisitionFileId: number) => {
+      const acquisitionOwnersCall = retrieveAcquisitionOwners(acquisitionFileId);
+      const interestHoldersCall = fetchInterestHolders(acquisitionFileId);
+
+      await Promise.all([acquisitionOwnersCall, interestHoldersCall]).then(
+        ([acquisitionOwners, interestHolders]) => {
+          const options = [];
+
+          if (acquisitionOwners !== undefined) {
+            const ownersOptions: PayeeOption[] = acquisitionOwners.map(x =>
+              PayeeOption.createOwner(x, null),
+            );
+            options.push(...ownersOptions);
+          }
+
+          if (interestHolders !== undefined) {
+            const interestHolderOptions: PayeeOption[] = interestHolders.map(x =>
+              PayeeOption.createInterestHolder(x, null),
+            );
+            options.push(...interestHolderOptions);
+          }
+
+          setPayeeOptions(options);
+        },
+      );
+    },
+    [retrieveAcquisitionOwners, fetchInterestHolders],
+  );
+
+  // Load the expropriation event history (and payee options) upon rendering this component
   useEffect(() => {
-    getExpropriationEvents(acquisitionFileId);
-  }, [acquisitionFileId, getExpropriationEvents]);
+    if (isValidId(acquisitionFileId)) {
+      getExpropriationEvents(acquisitionFileId);
+      fetchPayeeOptions(acquisitionFileId);
+    }
+  }, [acquisitionFileId, fetchPayeeOptions, getExpropriationEvents]);
 
   // Launch the expropriation modal in response to the user clicking the "Add" button
   const onAddExpropriation = () => {
@@ -61,8 +108,8 @@ export const ExpropriationEventHistoryContainer: React.FunctionComponent<
   const onSaveExpropriationEvent = async (values: ExpropriationEventFormModel) => {
     if (exists(values)) {
       const updatedEvent = isValidId(values.id)
-        ? await updateExpropriationEvent(acquisitionFileId, values.toApi())
-        : await addExpropriationEvent(acquisitionFileId, values.toApi());
+        ? await updateExpropriationEvent(acquisitionFileId, values.toApi(payeeOptions))
+        : await addExpropriationEvent(acquisitionFileId, values.toApi(payeeOptions));
 
       if (isValidId(updatedEvent?.id)) {
         setEditExpropiationEventValue(ExpropriationEventFormModel.createEmpty(acquisitionFileId));
@@ -108,7 +155,7 @@ export const ExpropriationEventHistoryContainer: React.FunctionComponent<
   return (
     <>
       <View
-        isLoading={loading}
+        isLoading={loadingExpropriationEvents || loadingAcquisitionOwners || loadingInterestHolders}
         expropriationEvents={expropriationEvents}
         onAdd={onAddExpropriation}
         onUpdate={onUpdateExpropriation}
@@ -118,6 +165,7 @@ export const ExpropriationEventHistoryContainer: React.FunctionComponent<
         acquisitionFileId={acquisitionFileId}
         display={showExpropriationEditModal}
         initialValues={editExpropiationEventValue}
+        payeeOptions={payeeOptions}
         onCancel={() => {
           setEditExpropiationEventValue(ExpropriationEventFormModel.createEmpty(acquisitionFileId));
           setShowExpropriationEditModal(false);

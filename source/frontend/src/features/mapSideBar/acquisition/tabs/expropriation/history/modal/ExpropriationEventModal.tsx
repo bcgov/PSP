@@ -2,6 +2,7 @@ import { FormikProps } from 'formik';
 import React, { useRef } from 'react';
 
 import GenericModal, { ModalSize } from '@/components/common/GenericModal';
+import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOptionModel';
 
 import { ExpropriationEventFormModel } from '../models';
 import { ExpropriationEventForm } from './ExpropriationEventForm';
@@ -10,6 +11,7 @@ export interface IExpropriationEventModalProps {
   acquisitionFileId: number;
   display?: boolean;
   initialValues?: ExpropriationEventFormModel;
+  payeeOptions: PayeeOption[];
   onSave: (values: ExpropriationEventFormModel) => void;
   onCancel: () => void;
 }
@@ -18,6 +20,7 @@ export const ExpropriationEventModal: React.FunctionComponent<IExpropriationEven
   acquisitionFileId,
   display,
   initialValues,
+  payeeOptions,
   onSave,
   onCancel,
 }) => {
@@ -38,6 +41,7 @@ export const ExpropriationEventModal: React.FunctionComponent<IExpropriationEven
         <ExpropriationEventForm
           formikRef={formikRef}
           initialValues={initialValues ?? new ExpropriationEventFormModel(acquisitionFileId)}
+          payeeOptions={payeeOptions}
           onSave={onSave}
         />
       }
