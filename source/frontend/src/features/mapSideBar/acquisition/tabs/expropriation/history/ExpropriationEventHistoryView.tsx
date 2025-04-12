@@ -1,3 +1,4 @@
+import orderBy from 'lodash/orderBy';
 import React, { useMemo, useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
 
@@ -6,6 +7,7 @@ import { SimpleSectionHeader } from '@/components/common/SimpleSectionHeader';
 import { StyledSectionAddButton } from '@/components/common/styles';
 import { TableSort } from '@/components/Table/TableSort';
 import { ApiGen_Concepts_ExpropriationEvent } from '@/models/api/generated/ApiGen_Concepts_ExpropriationEvent';
+import { exists } from '@/utils';
 
 import { ExpropriationEventResults } from './list/ExpropriationEventResults';
 import { ExpropriationEventRow } from './models';
@@ -23,10 +25,22 @@ export const ExpropriationEventHistoryView: React.FunctionComponent<
 > = ({ isLoading, expropriationEvents, onAdd, onUpdate, onDelete }) => {
   const [sort, setSort] = useState<TableSort<ExpropriationEventRow>>({});
 
-  const sortedResults = useMemo(
-    () => expropriationEvents.map(x => ExpropriationEventRow.fromApi(x)),
+  const eventRows = useMemo(
+    () => (expropriationEvents ?? []).map(x => ExpropriationEventRow.fromApi(x)),
     [expropriationEvents],
   );
+
+  const sortedEventRows = useMemo(() => {
+    if (exists(sort) && eventRows.length > 0) {
+      const sortFields = Object.keys(sort);
+      if (sortFields?.length > 0) {
+        const keyName = sort[sortFields[0]];
+        return orderBy(eventRows, sortFields[0], keyName);
+      }
+      return eventRows;
+    }
+    return [];
+  }, [eventRows, sort]);
 
   return (
     <Section
@@ -43,7 +57,7 @@ export const ExpropriationEventHistoryView: React.FunctionComponent<
     >
       <ExpropriationEventResults
         loading={isLoading}
-        results={sortedResults}
+        results={sortedEventRows}
         onUpdate={onUpdate}
         onDelete={onDelete}
         sort={sort}
