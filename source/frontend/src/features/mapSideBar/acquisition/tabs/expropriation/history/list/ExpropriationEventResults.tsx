@@ -6,7 +6,7 @@ import { TableSort } from '@/components/Table/TableSort';
 import { ExpropriationEventRow } from '../models';
 import { getExpropriationEventColumns } from './columns';
 
-export interface IDocumentResultProps {
+export interface IExpropriationEventResultsProps {
   results: ExpropriationEventRow[];
   loading?: boolean;
   sort: TableSort<ExpropriationEventRow>;
@@ -15,14 +15,9 @@ export interface IDocumentResultProps {
   onDelete: (expropriationEventId: number) => void;
 }
 
-export const ExpropriationEventResults: React.FunctionComponent<IDocumentResultProps> = ({
-  results,
-  loading,
-  setSort,
-  sort,
-  onUpdate,
-  onDelete,
-}) => {
+export const ExpropriationEventResults: React.FunctionComponent<
+  IExpropriationEventResultsProps
+> = ({ results, loading, setSort, sort, onUpdate, onDelete }) => {
   const columns = useMemo(
     () => getExpropriationEventColumns(onUpdate, onDelete),
     [onUpdate, onDelete],

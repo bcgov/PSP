@@ -46,7 +46,7 @@ export const ExpropriationEventHistoryView: React.FunctionComponent<
     <Section
       header={
         <SimpleSectionHeader title="Expropriation Date History">
-          <StyledSectionAddButton onClick={onAdd}>
+          <StyledSectionAddButton data-testid="add-expropriation-event" onClick={onAdd}>
             <FaPlus size="2rem" />
             &nbsp;{'Add'}
           </StyledSectionAddButton>

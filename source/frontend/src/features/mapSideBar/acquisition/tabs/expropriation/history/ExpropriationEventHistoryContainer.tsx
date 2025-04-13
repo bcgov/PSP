@@ -12,7 +12,7 @@ import { IExpropriationEventHistoryViewProps } from './ExpropriationEventHistory
 import { IExpropriationEventModalProps } from './modal/ExpropriationEventModal';
 import { ExpropriationEventFormModel } from './models';
 
-interface IExpropriationEventHistoryContainerProps {
+export interface IExpropriationEventHistoryContainerProps {
   acquisitionFileId: number;
   View: React.FunctionComponent<IExpropriationEventHistoryViewProps>;
   ModalView: React.FunctionComponent<IExpropriationEventModalProps>;
@@ -99,8 +99,12 @@ export const ExpropriationEventHistoryContainer: React.FunctionComponent<
   // Launch the expropriation modal in response to the user clicking the "Update" icon-button on a given row in the history table
   const onUpdateExpropriation = (id: number) => {
     const event = expropriationEvents.find((x: ApiGen_Concepts_ExpropriationEvent) => x.id === id);
-    setEditExpropiationEventValue(ExpropriationEventFormModel.fromApi(event));
-    setShowExpropriationEditModal(true);
+    if (exists(event)) {
+      setEditExpropiationEventValue(ExpropriationEventFormModel.fromApi(event));
+      setShowExpropriationEditModal(true);
+    } else {
+      console.error('Invalid expropriation event');
+    }
   };
 
   // Called when the SAVE button is clicked on the expropriation event modal.
@@ -117,7 +121,7 @@ export const ExpropriationEventHistoryContainer: React.FunctionComponent<
         await getExpropriationEvents(acquisitionFileId);
       }
     } else {
-      console.error();
+      console.error('Invalid expropriation event');
     }
   };
 
@@ -134,7 +138,7 @@ export const ExpropriationEventHistoryContainer: React.FunctionComponent<
       okButtonText: 'Yes',
       cancelButtonText: 'No',
       handleOk: async () => {
-        if (isValidId(event.id)) {
+        if (isValidId(event?.id)) {
           const result = await deleteExpropriationEvent(acquisitionFileId, event.id);
           if (!result) {
             console.error('Unable to delete expropriation event');
