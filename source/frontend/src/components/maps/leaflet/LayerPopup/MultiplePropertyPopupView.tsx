@@ -10,6 +10,7 @@ import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFe
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import { StyledScrollable } from '@/features/documents/commonStyles';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
+import { exists } from '@/utils';
 import { isStrataLot } from '@/utils/propertyUtils';
 
 export interface IMultiplePropertyPopupView {
@@ -35,11 +36,13 @@ export const MultiplePropertyPopupView: React.FC<
 
   const handlePropertySelect = (index: number) => {
     const selectedProperty = propertyProjections[index];
-    onSelectProperty(selectedProperty.feature);
+    if (exists(selectedProperty?.feature)) {
+      onSelectProperty(selectedProperty.feature);
+    }
   };
 
   const propertyProjections =
-    featureDataset.parcelFeatures
+    featureDataset?.parcelFeatures
       ?.map<PropertyProjection>(x => {
         return {
           pid: x.properties.PID_FORMATTED,
@@ -66,7 +69,7 @@ export const MultiplePropertyPopupView: React.FC<
       <StyledScrollable className="pb-4">
         {propertyProjections.map((property, index) => (
           <StyledRow
-            key={`feature-${index}`}
+            key={`feature-${property.pid}-${index}`}
             onClick={(e: Event) => {
               e.stopPropagation();
               handlePropertySelect(index);

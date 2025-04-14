@@ -142,8 +142,8 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
     activeFeatureLayer?.clearLayers();
 
     if (isRepositioning) {
-      const pimsFeature = repositioningFeatureDataset.pimsFeature;
-      if (pimsFeature !== null) {
+      const pimsFeature = repositioningFeatureDataset?.pimsFeature;
+      if (exists(pimsFeature)) {
         // File marker repositioning is active - highlight the property and the corresponding boundary when user triggers the relocate action.
         activeFeatureLayer?.addData(pimsFeature);
       }
@@ -271,7 +271,7 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
           <LeafletLayerListener pane="dataLayers" />
         </Pane>
 
-        {mapMachine.showPopup && (
+        {mapMachine.showPopup && !mapMachine.isRepositioning && (
           // Draws the popup on top of the map
           <LocationPopupContainer ref={popupRef} />
         )}

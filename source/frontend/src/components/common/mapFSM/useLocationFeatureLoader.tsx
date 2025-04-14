@@ -1,4 +1,4 @@
-import { Feature, Geometry } from 'geojson';
+import { Feature, FeatureCollection, Geometry } from 'geojson';
 import { LatLngLiteral } from 'leaflet';
 import { useCallback } from 'react';
 
@@ -170,23 +170,35 @@ const useLocationFeatureLoader = () => {
         pimsLocationProperties = (await loadProperties({ PROPERTY_ID: Number(pimsPropertyId) }))
           .features;
       } else {
-        const boundaryPimsFeature = await findAllByBoundary(latLng, 'GEOMETRY', 4326);
-        if (exists(boundaryPimsFeature)) {
-          pimsLocationProperties = boundaryPimsFeature;
+        const boundaryPimsFeatures = await findAllByBoundary(latLng, 'GEOMETRY', 4326);
+        if (exists(boundaryPimsFeatures)) {
+          pimsLocationProperties = boundaryPimsFeatures;
         } else if (exists(parcelFeatures)) {
           pimsLocationProperties = [];
+
+          const pimsFeatureTasks: Promise<
+            FeatureCollection<Geometry, PIMS_Property_Location_View>
+          >[] = [];
 
           for (let i = 0; i < parcelFeatures.length; i++) {
             const parcelFeature = parcelFeatures[i];
             if (exists(parcelFeature.properties?.PID) || exists(parcelFeature.properties?.PIN)) {
-              const pimsFeatures = await loadProperties({
+              const pimsFeaturesTask = loadProperties({
                 PID: parcelFeature.properties?.PID || '',
                 PIN: parcelFeature.properties?.PIN?.toString() || '',
               });
 
-              pimsFeatures.features.forEach(x => pimsLocationProperties.push(x));
+              pimsFeatureTasks.push(pimsFeaturesTask);
             }
           }
+
+          const pimsFeatures = await Promise.all(pimsFeatureTasks);
+
+          pimsFeatures
+            .filter(exists)
+            .flatMap(x => x.features)
+            .filter(exists)
+            .forEach(y => pimsLocationProperties.push(y));
         }
       }
 

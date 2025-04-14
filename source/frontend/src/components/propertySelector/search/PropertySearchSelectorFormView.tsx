@@ -43,23 +43,18 @@ export const PropertySearchSelectorFormView: React.FunctionComponent<
     return { ...x, id: generatePropertyId(featuresetToMapProperty(x)) };
   });
 
-  const maxCount = 150;
-
-  const identifiedSearchResults =
-    searchResults?.length <= maxCount
-      ? searchResults
-          .map<IIdentifiedSelectedFeatureDataset>(x => {
-            return { ...x, id: generatePropertyId(featuresetToMapProperty(x)) };
-          })
-          .sort((a, b) => {
-            const aIsStrataLot = isStrataLot(a?.parcelFeature);
-            const bIsStrataLot = isStrataLot(b?.parcelFeature);
-            if (aIsStrataLot === bIsStrataLot) return 0;
-            if (aIsStrataLot) return -1;
-            if (bIsStrataLot) return 1;
-            return 0;
-          })
-      : [];
+  const identifiedSearchResults = searchResults
+    .map<IIdentifiedSelectedFeatureDataset>(x => {
+      return { ...x, id: generatePropertyId(featuresetToMapProperty(x)) };
+    })
+    .sort((a, b) => {
+      const aIsStrataLot = isStrataLot(a?.parcelFeature);
+      const bIsStrataLot = isStrataLot(b?.parcelFeature);
+      if (aIsStrataLot === bIsStrataLot) return 0;
+      if (aIsStrataLot) return -1;
+      if (bIsStrataLot) return 1;
+      return 0;
+    });
 
   function generatePropertyId(mapProperty: IMapProperty): string {
     const propertyName = getPropertyName(mapProperty);
@@ -85,16 +80,12 @@ export const PropertySearchSelectorFormView: React.FunctionComponent<
           name="map-properties"
           columns={mapPropertyColumns}
           data={identifiedSearchResults}
-          setSelectedRows={searchResults?.length <= maxCount ? onSelectedProperties : undefined}
+          setSelectedRows={onSelectedProperties}
           selectedRows={selectedData}
           loading={loading}
           lockPageSize={true}
-          showSelectedRowCount={searchResults?.length <= maxCount}
-          noRowsMessage={
-            searchResults?.length <= 15
-              ? 'No results found for your search criteria.'
-              : 'Too many results (more than 15) match this criteria. Please refine your search.'
-          }
+          showSelectedRowCount={true}
+          noRowsMessage={'No results found for your search criteria.'}
           pageSize={5}
         />
       </Section>

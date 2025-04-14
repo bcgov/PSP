@@ -127,5 +127,9 @@ export function isStrataLot(
   if (!exists(feature)) {
     return false;
   }
-  return feature.properties.PID === null && feature.properties.OWNER_TYPE === 'Unclassified';
+  return (
+    feature.properties.PID === null &&
+    feature.properties.PIN === null &&
+    feature.properties.OWNER_TYPE === 'Unclassified'
+  );
 }

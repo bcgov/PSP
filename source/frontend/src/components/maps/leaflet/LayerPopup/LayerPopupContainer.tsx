@@ -82,7 +82,9 @@ export const LayerPopupContainer: React.FC<
       ) {
         featureSet.crownLandLeasesFeatures.forEach((crownLandLeasesFeature, index) => {
           const parcelData: LayerData = {
-            title: `Crown Land Leases (${index + 1} of ${featureSet.municipalityFeatures.length})`,
+            title: `Crown Land Leases (${index + 1} of ${
+              featureSet.crownLandLeasesFeatures.length
+            })`,
             data: null,
             config: {},
           };

@@ -187,7 +187,8 @@ describe('PropertySearchSelectorFormView component', () => {
 
     /*
     TODO: Re-assess if this is necessary
-    it('does not display results but displays a warning when more then 15 results are returned', async () => {
+    */
+    it.skip('does not display results but displays a warning when more then 15 results are returned', async () => {
       const { getByText } = setup({
         searchResults: [
           ...mockPropertyLayerSearchResponse.features,
@@ -201,7 +202,6 @@ describe('PropertySearchSelectorFormView component', () => {
         ),
       ).toBeVisible();
     });
-    */
   });
 
   describe('selecting results', () => {
