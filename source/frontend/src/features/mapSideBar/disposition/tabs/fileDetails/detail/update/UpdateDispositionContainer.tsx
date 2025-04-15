@@ -32,7 +32,7 @@ export const UpdateDispositionContainer = React.forwardRef<
   const { setModalContent, setDisplayModal } = useModalContext();
   const { getByType } = useLookupCodeHelpers();
 
-  const dispositionStatusTypes = getByType(API.DISPOSITION_STATUS_TYPES);
+  const dispositionStatusTypes = getByType(API.DISPOSITION_FILE_STATUS_TYPES);
 
   const {
     putDispositionFile: { execute: updateDispositionFile, loading },
