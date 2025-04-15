@@ -1,6 +1,6 @@
 import clsx from 'classnames';
 import React from 'react';
-import { MdClose } from 'react-icons/md';
+import { Col } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import ReactVisibilitySensor from 'react-visibility-sensor';
 
@@ -63,15 +63,16 @@ export const PropertyActivityDetailView: React.FunctionComponent<
         }}
       >
         <Styled.PopupTray className={clsx({ show: props.show })}>
-          <Styled.TrayHeader>
-            Property Activity
-            <Styled.CloseButton
-              id="close-tray"
-              icon={<MdClose size={24} />}
-              title="close"
-              onClick={onCloseClick}
-            />
-          </Styled.TrayHeader>
+          <Styled.TrayHeaderContent>
+            <Styled.TrayHeader>Property Activity</Styled.TrayHeader>
+            <Col xs="auto" className="text-right">
+              <Styled.CloseIcon
+                id="close-tray"
+                title="close"
+                onClick={onCloseClick}
+              ></Styled.CloseIcon>
+            </Col>
+          </Styled.TrayHeaderContent>
           <Styled.TrayContent>
             <StyledFormWrapper>
               <StyledSummarySection>
@@ -79,7 +80,7 @@ export const PropertyActivityDetailView: React.FunctionComponent<
                 <StyledEditWrapper className="mr-3 my-1">
                   {hasClaim(Claims.MANAGEMENT_EDIT) && (
                     <EditButton
-                      title="Edit property activity"
+                      title="Edit Property Activity"
                       onClick={() => {
                         history.push(
                           `/mapview/sidebar/property/${props.propertyId}/management/activity/${props.activity?.id}/edit`,
