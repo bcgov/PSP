@@ -1,10 +1,11 @@
 import { LatLngLiteral } from 'leaflet';
+import { toast } from 'react-toastify';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import useDraftMarkerSynchronizer from '@/hooks/useDraftMarkerSynchronizer';
 import { usePrevious } from '@/hooks/usePrevious';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
-import { firstOrNull } from '@/utils';
+import { exists, firstOrNull, isValidId } from '@/utils';
 import { featuresetToMapProperty } from '@/utils/mapPropertyUtils';
 
 import { SelectedFeatureDataset } from '../common/mapFSM/useLocationFeatureLoader';
@@ -51,6 +52,30 @@ export const MapClickMonitor: React.FunctionComponent<IMapClickMonitorProps> = (
         selectingComponentId: mapMachine.mapLocationFeatureDataset.selectingComponentId,
         fileLocation: mapMachine.mapLocationFeatureDataset.fileLocation,
       };
+      const parcelFeaturesNotInPims =
+        mapMachine.mapLocationFeatureDataset.parcelFeatures?.filter(pf => {
+          const matchingProperty = mapMachine.mapLocationFeatureDataset.pimsFeatures?.find(
+            plp =>
+              (isValidId(pf.properties.PID_NUMBER) &&
+                plp.properties.PID === pf.properties.PID_NUMBER) ||
+              (isValidId(pf.properties.PIN) && plp.properties.PIN === pf.properties.PIN),
+          );
+          return !exists(matchingProperty);
+        }) ?? [];
+
+      // psp-10193, we cannot support adding a property via click when there are multiple parcel map of multiple pims references already at this location.
+      if (
+        parcelFeaturesNotInPims.length +
+          (mapMachine.mapLocationFeatureDataset.pimsFeatures?.length ?? 0) >
+        1
+      ) {
+        toast.error(
+          'There are multiple properties at the clicked location. Use the "Search" functionality instead of "Locate on Map" to add one of the properties at this location instead.',
+          { autoClose: false },
+        );
+        return;
+      }
+
       addProperty(selectedFeature);
     }
 
