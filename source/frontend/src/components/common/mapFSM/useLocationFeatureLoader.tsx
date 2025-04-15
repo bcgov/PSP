@@ -74,7 +74,7 @@ const useLocationFeatureLoader = () => {
   } = useMapProperties();
   const { findAllByBoundary } = usePimsPropertyLayer();
 
-  const fullyAttributedServiceFindAll = fullyAttributedService.findAll;
+  const fullyAttributedServiceFindAll = fullyAttributedService.findMany;
 
   // Single result
   const adminBoundaryLayerServiceFindRegion = adminBoundaryLayerService.findRegion;
@@ -135,7 +135,7 @@ const useLocationFeatureLoader = () => {
       const municipalityFeatureTask = adminLegalBoundaryLayerServiceFindOneMunicipality(latLng);
 
       const [
-        parcelFeatures,
+        parcelFeatureCollection,
         regionFeature,
         districtFeature,
         highwayFeatures,
@@ -173,7 +173,8 @@ const useLocationFeatureLoader = () => {
         const boundaryPimsFeatures = await findAllByBoundary(latLng, 'GEOMETRY', 4326);
         if (exists(boundaryPimsFeatures)) {
           pimsLocationProperties = boundaryPimsFeatures;
-        } else if (exists(parcelFeatures)) {
+        } else if (exists(parcelFeatureCollection?.features)) {
+          const parcelFeatures = parcelFeatureCollection.features;
           pimsLocationProperties = [];
 
           const pimsFeatureTasks: Promise<
@@ -203,7 +204,7 @@ const useLocationFeatureLoader = () => {
       }
 
       result.pimsFeatures = pimsLocationProperties ?? null;
-      result.parcelFeatures = parcelFeatures ?? null;
+      result.parcelFeatures = parcelFeatureCollection?.features ?? null;
       result.regionFeature = regionFeature ?? null;
       result.districtFeature = districtFeature ?? null;
       result.municipalityFeatures = municipalityFeatures ?? null;

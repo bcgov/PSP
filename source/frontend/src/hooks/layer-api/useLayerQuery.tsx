@@ -87,7 +87,7 @@ export interface IUserLayerQuery {
   >;
 }
 
-/**
+/**uselayerque
  * // TODO: PSP-4393 This should be deprecated
  * Custom hook to fetch layer feature collection from wfs url
  * @param url wfs request url
@@ -165,9 +165,9 @@ export const useLayerQuery = (
         >(
           `${baseUrl}${
             sortBy ? '&' + sortBy : ''
-          }&cql_filter=CONTAINS(${geometryName},SRID=${spatialReferenceId};POINT ( ${latlng.lng} ${
-            latlng.lat
-          }))`,
+          }&count=1&cql_filter=CONTAINS(${geometryName},SRID=${spatialReferenceId};POINT ( ${
+            latlng.lng
+          } ${latlng.lat}))`,
         );
         return data;
       },

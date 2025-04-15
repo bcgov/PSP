@@ -142,7 +142,6 @@ export const useFullyAttributedParcelMapLayer = () => {
         return featureCollection as
           | FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties>
           | undefined;
-
       } catch (e: unknown) {
         handleError();
         return undefined;

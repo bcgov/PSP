@@ -21,7 +21,7 @@ import {
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { MAP_MAX_NATIVE_ZOOM, MAP_MAX_ZOOM, MAX_ZOOM } from '@/constants/strings';
 import { useTenant } from '@/tenants';
-import { exists } from '@/utils';
+import { exists, firstOrNull } from '@/utils';
 
 import { DEFAULT_MAP_ZOOM, defaultBounds, defaultLatLng } from './constants';
 import AdvancedFilterButton from './leaflet/Control/AdvancedFilter/AdvancedFilterButton';
@@ -157,10 +157,10 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
           type: 'Feature',
           properties: {},
         };
-        if (mapLocationFeatureDataset.parcelFeatures !== null) {
+        if (firstOrNull(mapLocationFeatureDataset.parcelFeatures) !== null) {
           activeFeature = mapLocationFeatureDataset.parcelFeatures[0];
           activeFeatureLayer?.addData(activeFeature);
-        } else if (mapLocationFeatureDataset.municipalityFeatures !== null) {
+        } else if (firstOrNull(mapLocationFeatureDataset.municipalityFeatures) !== null) {
           activeFeature = mapLocationFeatureDataset.municipalityFeatures[0];
           if (activeFeature?.geometry?.type === 'Polygon') {
             activeFeatureLayer?.addData(activeFeature);

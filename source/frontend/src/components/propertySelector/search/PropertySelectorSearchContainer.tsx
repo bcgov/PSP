@@ -29,7 +29,6 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
   selectedProperties,
   setSelectedProperties,
 }) => {
-  const [layerSearch, setLayerSearch] = useState<ILayerSearchCriteria | undefined>();
   const [searchResults, setSearchResults] = useState<SelectedFeatureDataset[]>([]);
   const [addressResults, setAddressResults] = useState<IGeocoderResponse[]>([]);
 
