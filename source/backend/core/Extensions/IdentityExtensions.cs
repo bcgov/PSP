@@ -22,7 +22,7 @@ namespace Pims.Core.Extensions
         /// <returns></returns>
         public static Guid GetUserKey(this ClaimsPrincipal user)
         {
-            var value = user?.FindFirstValue("sub")?.Split("@")?.FirstOrDefault().ToUpperInvariant();
+            var value = user?.FindFirstValue("sub")?.Split("@").FirstOrDefault()?.ToUpperInvariant();
             return Guid.TryParse(value, out var newGuid) ? newGuid : Guid.Empty;
         }
 
