@@ -1,13 +1,12 @@
 import axios, { AxiosError } from 'axios';
 import { useCallback, useEffect, useState } from 'react';
 
-import IHealthcheckResponse from '@/hooks/pims-api/interfaces/IHealthcheckResponse';
+import IHealthCheckResponse from '@/hooks/pims-api/interfaces/IHealthcheckResponse';
 import ISystemCheck from '@/hooks/pims-api/interfaces/ISystemCheck';
 import { useApiHealth } from '@/hooks/pims-api/useApiHealth';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { IApiError } from '@/interfaces/IApiError';
-import HealthCheckStyled from '@/layouts/Healthcheck';
-import { HealthcheckMessagesTypesEnum } from '@/layouts/models/HealthcheckMessagesTypes';
+import { HealthCheckMessagesTypesEnum } from '@/layouts/models/HealthcheckMessagesTypes';
 import { useTenant } from '@/tenants/useTenant';
 
 import { IHealthCheckIssue, IHealthCheckViewProps } from './HealthcheckView';
@@ -31,39 +30,63 @@ export const HealthcheckContainer: React.FunctionComponent<IHealthcheckContainer
   const keycloak = useKeycloakWrapper();
 
   const checkExternalSystemStatus = useCallback(
-    (response: IHealthcheckResponse, service: HealthcheckMessagesTypesEnum) => {
+    (
+      response: IHealthCheckResponse,
+      service: HealthCheckMessagesTypesEnum,
+      issues: IHealthCheckIssue[],
+    ) => {
       if (response && response.status !== 'Healthy') {
-        setHealthCheckIssues([
-          ...healthCheckIssues,
-          {
-            key: service,
-            msg: pimsHealthcheckMessages[HealthcheckMessagesTypesEnum[service]],
-          },
-        ]);
+        const newIssue: IHealthCheckIssue = {
+          key: service,
+          msg: pimsHealthcheckMessages[HealthCheckMessagesTypesEnum[service]],
+        };
+
+        issues.push(newIssue);
       }
     },
-    [healthCheckIssues, pimsHealthcheckMessages],
+    [pimsHealthcheckMessages],
   );
 
   const checkAllSystemsHealth = useCallback(
     (response: ISystemCheck) => {
+      const issuesSummary: IHealthCheckIssue[] = [];
       checkExternalSystemStatus(
         response.entries?.Geoserver,
-        HealthcheckMessagesTypesEnum.GEOSERVER,
+        HealthCheckMessagesTypesEnum.GEOSERVER,
+        issuesSummary,
       );
 
       checkExternalSystemStatus(
         response.entries?.PmbcExternalApi,
-        HealthcheckMessagesTypesEnum.PMBC,
+        HealthCheckMessagesTypesEnum.PMBC,
+        issuesSummary,
       );
 
-      checkExternalSystemStatus(response.entries?.Mayan, HealthcheckMessagesTypesEnum.MAYAN);
+      checkExternalSystemStatus(
+        response.entries?.Mayan,
+        HealthCheckMessagesTypesEnum.MAYAN,
+        issuesSummary,
+      );
 
-      checkExternalSystemStatus(response.entries?.Ltsa, HealthcheckMessagesTypesEnum.LTSA);
+      checkExternalSystemStatus(
+        response.entries?.Ltsa,
+        HealthCheckMessagesTypesEnum.LTSA,
+        issuesSummary,
+      );
 
-      checkExternalSystemStatus(response.entries?.Geocoder, HealthcheckMessagesTypesEnum.GEOCODER);
+      checkExternalSystemStatus(
+        response.entries?.Geocoder,
+        HealthCheckMessagesTypesEnum.GEOCODER,
+        issuesSummary,
+      );
 
-      checkExternalSystemStatus(response.entries?.Cdogs, HealthcheckMessagesTypesEnum.CDOGS);
+      checkExternalSystemStatus(
+        response.entries?.Cdogs,
+        HealthCheckMessagesTypesEnum.CDOGS,
+        issuesSummary,
+      );
+
+      setHealthCheckIssues(issuesSummary);
     },
     [checkExternalSystemStatus],
   );
@@ -76,9 +99,9 @@ export const HealthcheckContainer: React.FunctionComponent<IHealthcheckContainer
       // 500 - API NOT Responding
       if (axiosError?.response?.status === 500) {
         systemIssues.push({
-          key: HealthcheckMessagesTypesEnum.PIMS_API,
+          key: HealthCheckMessagesTypesEnum.PIMS_API,
           msg: pimsHealthcheckMessages[
-            HealthcheckMessagesTypesEnum[HealthcheckMessagesTypesEnum.PIMS_API]
+            HealthCheckMessagesTypesEnum[HealthCheckMessagesTypesEnum.PIMS_API]
           ],
         });
 
@@ -106,9 +129,9 @@ export const HealthcheckContainer: React.FunctionComponent<IHealthcheckContainer
       const pimsApi = await getLive();
       if (pimsApi.data.status !== 'Healthy') {
         systemIssues.push({
-          key: HealthcheckMessagesTypesEnum.PIMS_API,
+          key: HealthCheckMessagesTypesEnum.PIMS_API,
           msg: pimsHealthcheckMessages[
-            HealthcheckMessagesTypesEnum[HealthcheckMessagesTypesEnum.PIMS_API]
+            HealthCheckMessagesTypesEnum[HealthCheckMessagesTypesEnum.PIMS_API]
           ],
         });
 
@@ -146,9 +169,11 @@ export const HealthcheckContainer: React.FunctionComponent<IHealthcheckContainer
     }
   }, [fetchSystemCheckInformation, keycloak.obj.authenticated, systemChecked, systemDegraded]);
 
-  return systemChecked ? (
-    <HealthCheckStyled>
-      <View systemDegraded={systemDegraded} systemChecks={healthCheckIssues}></View>
-    </HealthCheckStyled>
-  ) : null;
+  return (
+    <View
+      systemChecked={systemChecked}
+      systemDegraded={systemDegraded}
+      systemChecks={healthCheckIssues}
+    ></View>
+  );
 };

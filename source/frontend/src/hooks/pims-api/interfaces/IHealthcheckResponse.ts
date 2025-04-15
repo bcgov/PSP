@@ -1,8 +1,8 @@
-export interface IHealthcheckResponse {
+export interface IHealthCheckResponse {
   data: object;
   duration: Date;
   status: string;
   tags: string[];
 }
 
-export default IHealthcheckResponse;
+export default IHealthCheckResponse;

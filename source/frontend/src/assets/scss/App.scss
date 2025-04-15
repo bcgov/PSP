@@ -42,6 +42,12 @@
   display: block !important;
 }
 
+.multiselect-container {
+  .chip {
+    white-space: wrap;
+  }
+}
+
 // see https://github.com/Hacker0x01/react-datepicker/issues/624
 .react-datepicker {
   font-size: 1em;

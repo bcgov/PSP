@@ -656,12 +656,6 @@ namespace Pims.Api.Services
                 throw new BusinessRuleViolationException("File Disposition Status has not been set to SOLD, so the related file properties cannot be Disposed. To proceed, set file disposition status to SOLD, or cancel the Disposition file.");
             }
 
-            // confirm user action - file is changing to non-editable state
-            if (!userOverrides.Contains(UserOverrideCode.DispositionFileFinalStatus) && isFileChangingToNonEditableState)
-            {
-                throw new UserOverrideException(UserOverrideCode.DispositionFileFinalStatus, "You are changing this file to a non-editable state. (Only system administrators can edit the file when set to Archived, Cancelled or Completed state). Do you wish to continue?");
-            }
-
             if (isFileClosing && !userOverrides.Contains(UserOverrideCode.DisposeOfProperties))
             {
                 throw new UserOverrideException(UserOverrideCode.DisposeOfProperties, "You are completing this Disposition File with owned PIMS inventory properties. All properties will be removed from the PIMS inventory (any Other Interests will remain). Do you wish to proceed?");

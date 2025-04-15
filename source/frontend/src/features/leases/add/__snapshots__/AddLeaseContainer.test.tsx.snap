@@ -1345,10 +1345,10 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                               novalidate=""
                             >
                               <div
-                                class="row"
+                                class="row no-gutters"
                               >
                                 <div
-                                  class="col-xl-6"
+                                  class="col-6"
                                 >
                                   <div
                                     class="flex-nowrap input-group row"
@@ -1402,6 +1402,13 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                                             >
                                               Legal Description
                                             </option>
+                                            <option
+                                              class="option"
+                                              data-testid="select-option-coordinates"
+                                              value="coordinates"
+                                            >
+                                              Lat/Long
+                                            </option>
                                           </select>
                                         </div>
                                       </div>
@@ -1427,7 +1434,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                                   </div>
                                 </div>
                                 <div
-                                  class="pr-0 col-xl-2"
+                                  class="pr-0 col-2"
                                 >
                                   <div
                                     class="row"
@@ -2635,6 +2642,39 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+          <div
+            class="c12 form-section"
+          >
+            <h2
+              class="c13"
+            >
+              <div
+                class="no-gutters row"
+              >
+                <div
+                  class="align-content-end col"
+                >
+                  Lease Team
+                </div>
+              </div>
+            </h2>
+            <div
+              class="collapse show"
+            >
+              <button
+                class="c4 Button btn btn-link"
+                data-testid="add-team-member"
+                type="button"
+              >
+                <div
+                  class="Button__value"
+                >
+                  + Add another team member
+                </div>
+              </button>
+              <div />
             </div>
           </div>
         </div>

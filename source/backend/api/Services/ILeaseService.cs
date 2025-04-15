@@ -52,5 +52,7 @@ namespace Pims.Api.Services
         PimsLeaseConsultation UpdateConsultation(PimsLeaseConsultation consultation);
 
         bool DeleteConsultation(long consultationId);
+
+        IEnumerable<PimsLeaseLicenseTeam> GetTeamMembers();
     }
 }

@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 
 import { ApiGen_CodeTypes_LeasePurposeTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePurposeTypes';
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
-import { exists } from '@/utils';
+import { exists, isValidId } from '@/utils';
 
 import { LeasePurposeModel } from '../models/LeasePurposeModel';
 
@@ -67,10 +67,14 @@ export const AddLeaseYupSchema = Yup.object().shape({
     Yup.object().shape({
       name: Yup.string().max(250, 'Property name must be at most ${max} characters'),
       property: Yup.object().shape({
-        isRetired: Yup.boolean().notOneOf(
-          [true],
-          'Selected property is retired and can not be added to the file',
-        ),
+        isRetired: Yup.boolean().when('id', {
+          is: (id: number) => !isValidId(id),
+          then: Yup.boolean().notOneOf(
+            [true],
+            'Selected property is retired and can not be added to the file',
+          ),
+          otherwise: Yup.boolean().nullable(),
+        }),
         isDisposed: Yup.boolean().notOneOf(
           [true],
           'Selected property is disposed and can not be added to the file',

@@ -2,7 +2,7 @@ import { Feature, FeatureCollection, GeoJsonProperties, Geometry } from 'geojson
 import { LatLngLiteral } from 'leaflet';
 import debounce from 'lodash/debounce';
 import isNumber from 'lodash/isNumber';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
@@ -29,7 +29,6 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
   selectedProperties,
   setSelectedProperties,
 }) => {
-  const [layerSearch, setLayerSearch] = useState<ILayerSearchCriteria | undefined>();
   const [searchResults, setSearchResults] = useState<LocationFeatureDataset[]>([]);
   const [addressResults, setAddressResults] = useState<IGeocoderResponse[]>([]);
 
@@ -54,10 +53,12 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
     findByPlanNumber,
     findByLegalDescription,
     findByLoading: isMapLayerLoading,
+    findMany,
+    findManyLoading,
   } = useFullyAttributedParcelMapLayer();
 
-  useEffect(() => {
-    const searchFunc = async () => {
+  const searchFunc = useCallback(
+    async (layerSearch: ILayerSearchCriteria) => {
       let result: FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties> | undefined =
         undefined;
       if (layerSearch?.searchBy === 'pid' && layerSearch.pid) {
@@ -75,6 +76,8 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
       } else if (layerSearch?.searchBy === 'address' && layerSearch.address) {
         // Ignore address searches
         return;
+      } else if (layerSearch?.searchBy === 'coordinates' && layerSearch.coordinates) {
+        result = await findMany(layerSearch.coordinates.toLatLng());
       }
 
       // match the region and district for all found properties
@@ -122,19 +125,19 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
         const locations = result?.features?.map(p => featureToLocationFeatureDataset(p));
         setSearchResults(locations ?? []);
       }
-    };
-    searchFunc();
-  }, [
-    findByLegalDescription,
-    findByPid,
-    findByPin,
-    findByPlanNumber,
-    getNearestToPoint,
-    layerSearch,
-    findRegion,
-    findDistrict,
-    loadPimsProperties,
-  ]);
+    },
+    [
+      findByLegalDescription,
+      findByPid,
+      findByPin,
+      findByPlanNumber,
+      getNearestToPoint,
+      findRegion,
+      findDistrict,
+      loadPimsProperties,
+      findMany,
+    ],
+  );
 
   const handleOnAddressSelect = async (selectedItem: IGeocoderResponse) => {
     if (!selectedItem.siteId) {
@@ -205,9 +208,8 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
 
   return (
     <PropertySearchSelectorFormView
-      onSearch={setLayerSearch}
+      onSearch={searchFunc}
       selectedProperties={selectedProperties}
-      search={layerSearch}
       searchResults={searchResults}
       loading={
         isMapLayerLoading ||
@@ -215,7 +217,8 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
         isLoadingNearestToPoint ||
         isLoadingSitePids ||
         findRegionLoading ||
-        findDistrictLoading
+        findDistrictLoading ||
+        findManyLoading
       }
       onSelectedProperties={setSelectedProperties}
       addressResults={addressResults}

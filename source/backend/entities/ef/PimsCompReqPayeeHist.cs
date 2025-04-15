@@ -34,10 +34,6 @@ public partial class PimsCompReqPayeeHist
     [Column("ACQUISITION_FILE_TEAM_ID")]
     public long? AcquisitionFileTeamId { get; set; }
 
-    [Column("LEGACY_PAYEE")]
-    [StringLength(1000)]
-    public string LegacyPayee { get; set; }
-
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
 
@@ -88,4 +84,8 @@ public partial class PimsCompReqPayeeHist
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
+
+    [Column("LEGACY_PAYEE")]
+    [StringLength(1000)]
+    public string LegacyPayee { get; set; }
 }

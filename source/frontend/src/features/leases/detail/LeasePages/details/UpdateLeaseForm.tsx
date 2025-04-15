@@ -1,6 +1,9 @@
 import { Formik, FormikHelpers, FormikProps } from 'formik';
 import styled from 'styled-components';
 
+import { Section } from '@/components/common/Section/Section';
+import { AddLeaseTeamSubForm } from '@/features/leases/add/AddLeaseTeamSubform';
+import { AddLeaseTeamYupSchema } from '@/features/leases/add/AddLeaseTeamYupSchema';
 import { AddLeaseYupSchema } from '@/features/leases/add/AddLeaseYupSchema';
 import AdministrationSubForm from '@/features/leases/add/AdministrationSubForm';
 import FeeDeterminationSubForm from '@/features/leases/add/FeeDeterminationSubForm';
@@ -58,7 +61,7 @@ export const UpdateLeaseForm: React.FunctionComponent<IUpdateLeaseFormProps> = (
   return (
     <StyledFormWrapper>
       <Formik<LeaseFormModel>
-        validationSchema={AddLeaseYupSchema}
+        validationSchema={AddLeaseYupSchema.concat(AddLeaseTeamYupSchema)}
         onSubmit={handleSubmit}
         initialValues={getDefaultFormLease()}
         innerRef={formikRef}
@@ -68,6 +71,14 @@ export const UpdateLeaseForm: React.FunctionComponent<IUpdateLeaseFormProps> = (
             <LeaseDetailSubForm formikProps={formikProps} />
             <RenewalSubForm formikProps={formikProps} />
             <AdministrationSubForm formikProps={formikProps} />
+            <Section header="Lease Team">
+              <AddLeaseTeamSubForm />
+              {formikProps.errors?.team && typeof formikProps.errors?.team === 'string' && (
+                <div className="invalid-feedback" data-testid="team-profile-dup-error">
+                  {formikProps.errors.team.toString()}
+                </div>
+              )}
+            </Section>
             <FeeDeterminationSubForm formikProps={formikProps} />
           </>
         )}

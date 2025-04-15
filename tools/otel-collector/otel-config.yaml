@@ -1,0 +1,74 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/dash0hq/otelbin/refs/heads/main/packages/otelbin/src/components/monaco-editor/schema.json
+
+# service.pipelines pull the configured receivers, processors, and exporters together into
+# pipelines that process data.
+#
+# receivers, processors, and exporters that are not used in pipelines are silently ignored.
+service:
+  extensions: [health_check, zpages]
+  pipelines:
+    logs:
+      receivers: [otlp]
+      processors: [memory_limiter, batch]
+      exporters: [debug, otlp/jaeger]
+    traces:
+      receivers: [otlp]
+      exporters: [debug, otlp/jaeger, spanmetrics]
+    metrics/spanmetrics:
+      receivers: [spanmetrics]
+      exporters: [debug, prometheus]
+
+extensions:
+  # IMPORTANT!
+  # The health_check extension is mandatory for this chart.
+  # Without the `health_check` extension the collector will fail the readiness and liveliness probes in kubernetes/openshift.
+  # The health_check extension can be modified, but should never be removed.
+  health_check:
+    endpoint: ${env:OTEL_COLLECTOR_HOST:-0.0.0.0}:13133
+  zpages:
+    endpoint: ${env:OTEL_COLLECTOR_HOST:-0.0.0.0}:55679
+
+# Enable the spanmetrics connector to bridge the traces pipeline into the metrics pipeline.
+connectors:
+  spanmetrics:
+
+# receivers configure how data gets into the Collector.
+receivers:
+  # opentelemety receiver - PIMS browser metrics will be sent here
+  otlp:
+    protocols:
+      # IMPORTANT!
+      # Since this collector needs to receive data from the web, enable cors for all origins.
+      # `allowed_origins` can be refined for your deployment domain
+      http:
+        endpoint: ${env:OTEL_COLLECTOR_HOST:-0.0.0.0}:4318
+        cors:
+          allowed_origins:
+            - "http://*"
+            - "https://*"
+
+# processors specify what happens with the received data.
+processors:
+  batch:
+    timeout: 5s
+  # Default memory limiter configuration for the collector based on k8s resource limits.
+  # `check_interval` is the time between measurements of memory usage.
+  memory_limiter:
+    check_interval: 5s
+    limit_percentage: 80
+    spike_limit_percentage: 25
+
+# exporters configure how to send processed data to one or more backends.
+exporters:
+  # application metrics (i.e. PIMS frontend) are exported here [0.0.0.0:9464]
+  # Prometheus server needs to be configured to scrape the metrics from this endpoint.
+  prometheus:
+    endpoint: ${env:OTEL_COLLECTOR_HOST:-0.0.0.0}:9464
+  # forward traces/spans to JAEGER for further processing and visualization
+  otlp/jaeger:
+    endpoint: ${env:JAEGER_HOST:-jaeger}:4317
+    tls:
+      insecure: true
+  # the debug exporter prints logs to stdout
+  debug:
+    verbosity: detailed

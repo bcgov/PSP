@@ -11,6 +11,7 @@ import { ApiGen_Concepts_LeaseRenewal } from '@/models/api/generated/ApiGen_Conc
 import { ApiGen_Concepts_LeaseStakeholderType } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholderType';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
+import { ApiGen_Concepts_LeaseFileTeam } from './../../models/api/generated/ApiGen_Concepts_LeaseFileTeam';
 import { IPaginateRequest } from './interfaces/IPaginateRequest';
 import useAxiosApi from './useApi';
 
@@ -81,6 +82,8 @@ export const useApiLeases = () => {
         api.put<ApiGen_Concepts_Lease>(`/leases/${lease?.id}/checklist`, lease.fileChecklistItems),
       getLeaseStakeholderTypes: () =>
         api.get<ApiGen_Concepts_LeaseStakeholderType[]>(`/leases/stakeholdertypes`),
+      getAllLeaseFileTeamMembers: () =>
+        api.get<ApiGen_Concepts_LeaseFileTeam[]>(`/leases/team-members`),
     }),
     [api],
   );
