@@ -4,7 +4,7 @@ import isNumber from 'lodash/isNumber';
 import { Col, Row } from 'react-bootstrap';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
-import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
+import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { Section } from '@/components/common/Section/Section';
 import MapSelectorContainer from '@/components/propertySelector/MapSelectorContainer';
 import SelectedPropertyHeaderRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyHeaderRow';
@@ -39,7 +39,7 @@ const ResearchProperties: React.FC<IResearchPropertiesProps> = ({ confirmBeforeA
             <Row className="py-3 no-gutters">
               <Col>
                 <MapSelectorContainer
-                  addSelectedProperties={(newProperties: LocationFeatureDataset[]) => {
+                  addSelectedProperties={(newProperties: SelectedFeatureDataset[]) => {
                     newProperties.reduce(async (promise, property) => {
                       return promise.then(async () => {
                         const formProperty = PropertyForm.fromFeatureDataset(property);
@@ -81,7 +81,7 @@ const ResearchProperties: React.FC<IResearchPropertiesProps> = ({ confirmBeforeA
                     }, Promise.resolve());
                   }}
                   repositionSelectedProperty={(
-                    featureset: LocationFeatureDataset,
+                    featureset: SelectedFeatureDataset,
                     latLng: LatLngLiteral,
                     index: number | null,
                   ) => {

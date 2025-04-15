@@ -2,14 +2,20 @@ import { polygon } from '@turf/turf';
 import { Feature, FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
 import { LatLngLiteral } from 'leaflet';
 
-import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
+import {
+  LocationFeatureDataset,
+  SelectedFeatureDataset,
+} from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { IMapProperty } from '@/components/propertySelector/models';
 import { AreaUnitTypes } from '@/constants';
 import {
   mockFAParcelLayerResponse,
   mockFAParcelLayerResponseMultiPolygon,
 } from '@/mocks/faParcelLayerResponse.mock';
-import { getMockLocationFeatureDataset } from '@/mocks/featureset.mock';
+import {
+  getMockLocationFeatureDataset,
+  getMockSelectedFeatureDataset,
+} from '@/mocks/featureset.mock';
 import { getEmptyFileProperty } from '@/mocks/fileProperty.mock';
 import { getMockLocation } from '@/mocks/geometries.mock';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
@@ -244,10 +250,10 @@ describe('mapPropertyUtils', () => {
   );
 
   it.each([
-    [getMockLocationFeatureDataset(), '', expectedMapProperty],
-    [{ ...getMockLocationFeatureDataset(), pimsFeature: {} as any }, '', expectedMapProperty],
+    [getMockSelectedFeatureDataset(), '', expectedMapProperty],
+    [{ ...getMockSelectedFeatureDataset(), pimsFeatures: {} as any }, '', expectedMapProperty],
     [
-      { ...getMockLocationFeatureDataset(), parcelFeature: {} as any },
+      { ...getMockSelectedFeatureDataset(), parcelFeature: {} as any },
       '',
       {
         ...expectedMapProperty,
@@ -258,14 +264,14 @@ describe('mapPropertyUtils', () => {
       },
     ],
     [
-      { ...getMockLocationFeatureDataset(), pimsFeature: {} as any },
+      { ...getMockSelectedFeatureDataset(), pimsFeatures: {} as any },
       'address',
       { ...expectedMapProperty, address: 'address' },
     ],
   ])(
     'featuresetToMapProperty test with feature set %o address %o expectedPropertyFile %o',
     (
-      featureSet: LocationFeatureDataset,
+      featureSet: SelectedFeatureDataset,
       address: string = 'unknown',
       expectedPropertyFile?: IMapProperty,
     ) => {
@@ -276,12 +282,12 @@ describe('mapPropertyUtils', () => {
 
   it.each([
     [
-      { ...getMockLocationFeatureDataset(), pimsFeature: { properties: { PID: '1234' } } as any },
+      { ...getMockSelectedFeatureDataset(), pimsFeature: { properties: { PID: '1234' } } as any },
       '1234',
     ],
     [
       {
-        ...getMockLocationFeatureDataset(),
+        ...getMockSelectedFeatureDataset(),
         pimsFeature: {} as any,
         parcelFeature: { properties: { PID: '9999' } } as any,
       },
@@ -289,7 +295,7 @@ describe('mapPropertyUtils', () => {
     ],
     [
       {
-        ...getMockLocationFeatureDataset(),
+        ...getMockSelectedFeatureDataset(),
         pimsFeature: {} as any,
         parcelFeature: {} as any,
       },
@@ -297,7 +303,7 @@ describe('mapPropertyUtils', () => {
     ],
   ])(
     'pidFromFeatureSet test with feature set %o - expected %s',
-    (featureSet: LocationFeatureDataset, expectedValue: string | null) => {
+    (featureSet: SelectedFeatureDataset, expectedValue: string | null) => {
       const pid = pidFromFeatureSet(featureSet);
       expect(pid).toEqual(expectedValue);
     },
@@ -305,20 +311,20 @@ describe('mapPropertyUtils', () => {
 
   it.each([
     [
-      { ...getMockLocationFeatureDataset(), pimsFeature: { properties: { PIN: 1234 } } as any },
+      { ...getMockSelectedFeatureDataset(), pimsFeature: { properties: { PIN: 1234 } } as any },
       '1234',
     ],
     [
       {
-        ...getMockLocationFeatureDataset(),
+        ...getMockSelectedFeatureDataset(),
         pimsFeature: {} as any,
-        parcelFeature: { properties: { PIN: 9999 } } as any,
+        parcelFeature :{ properties: { PIN: 9999 } } as any,
       },
       '9999',
     ],
     [
       {
-        ...getMockLocationFeatureDataset(),
+        ...getMockSelectedFeatureDataset(),
         pimsFeature: {} as any,
         parcelFeature: {} as any,
       },
@@ -333,7 +339,7 @@ describe('mapPropertyUtils', () => {
     ],
   ])(
     'pinFromFeatureSet test with feature set %o - expected %s',
-    (featureSet: LocationFeatureDataset, expectedValue: string | null) => {
+    (featureSet: SelectedFeatureDataset, expectedValue: string | null) => {
       const pid = pinFromFeatureSet(featureSet);
       expect(pid).toEqual(expectedValue);
     },
@@ -395,7 +401,7 @@ describe('mapPropertyUtils', () => {
     [
       { lat: 44, lng: -77 },
       {
-        ...getMockLocationFeatureDataset(),
+        ...getMockSelectedFeatureDataset(),
         pimsFeature: polygon([
           [
             [-81, 41],
@@ -411,7 +417,7 @@ describe('mapPropertyUtils', () => {
     [
       { lat: 44, lng: 80 },
       {
-        ...getMockLocationFeatureDataset(),
+        ...getMockSelectedFeatureDataset(),
         pimsFeature: polygon([
           [
             [-81, 41],
@@ -427,7 +433,7 @@ describe('mapPropertyUtils', () => {
     [
       { lat: 44, lng: -77 },
       {
-        ...getMockLocationFeatureDataset(),
+        ...getMockSelectedFeatureDataset(),
         pimsFeature: null,
         parcelFeature: polygon([
           [
@@ -444,7 +450,7 @@ describe('mapPropertyUtils', () => {
     [
       { lat: 44, lng: 80 },
       {
-        ...getMockLocationFeatureDataset(),
+        ...getMockSelectedFeatureDataset(),
         pimsFeature: null,
         parcelFeature: polygon([
           [
@@ -461,7 +467,7 @@ describe('mapPropertyUtils', () => {
     [
       { lat: 44, lng: -77 },
       {
-        ...getMockLocationFeatureDataset(),
+        ...getMockSelectedFeatureDataset(),
         location: null,
         fileLocation: null,
         pimsFeature: null,
@@ -471,7 +477,7 @@ describe('mapPropertyUtils', () => {
     ],
   ])(
     'isLatLngInFeatureSetBoundary test with lat/long %o, feature set %o - expected %o',
-    (latLng: LatLngLiteral, featureset: LocationFeatureDataset, expectedValue: boolean) => {
+    (latLng: LatLngLiteral, featureset: SelectedFeatureDataset, expectedValue: boolean) => {
       const result = isLatLngInFeatureSetBoundary(latLng, featureset);
       expect(result).toEqual(expectedValue);
     },

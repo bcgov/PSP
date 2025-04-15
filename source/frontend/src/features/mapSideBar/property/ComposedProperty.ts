@@ -16,5 +16,7 @@ export interface ComposedProperty {
   parcelMapFeatureCollection: FeatureCollection<Geometry, GeoJsonProperties> | undefined; // TODO: These need to be strongly typed
   geoserverFeatureCollection: FeatureCollection<Geometry, GeoJsonProperties> | undefined; // TODO: These need to be strongly typed
   bcAssessmentSummary: IBcAssessmentSummary | undefined;
-  crownTenureFeature: Feature<Geometry, TANTALIS_CrownLandTenures_Feature_Properties> | undefined;
+  crownTenureFeatures:
+    | Feature<Geometry, TANTALIS_CrownLandTenures_Feature_Properties>[]
+    | undefined;
 }

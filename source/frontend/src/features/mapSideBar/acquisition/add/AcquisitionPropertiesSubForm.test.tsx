@@ -6,9 +6,9 @@ import thunk from 'redux-thunk';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
-import { PropertyForm } from '../../shared/models';
 import { AcquisitionPropertiesSubForm } from './AcquisitionPropertiesSubForm';
 import { AcquisitionForm } from './models';
+import { PropertyForm } from '../../shared/models';
 
 const mockStore = configureMockStore([thunk]);
 

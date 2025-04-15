@@ -21,7 +21,7 @@ import {
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { MAP_MAX_NATIVE_ZOOM, MAP_MAX_ZOOM, MAX_ZOOM } from '@/constants/strings';
 import { useTenant } from '@/tenants';
-import { exists } from '@/utils';
+import { exists, firstOrNull } from '@/utils';
 
 import { DEFAULT_MAP_ZOOM, defaultBounds, defaultLatLng } from './constants';
 import AdvancedFilterButton from './leaflet/Control/AdvancedFilter/AdvancedFilterButton';
@@ -30,7 +30,7 @@ import { BaseLayer, isVectorBasemap } from './leaflet/Control/BaseMapToggle/type
 import LayersControl from './leaflet/Control/LayersControl/LayersControl';
 import { LegendControl } from './leaflet/Control/Legend/LegendControl';
 import { ZoomOutButton } from './leaflet/Control/ZoomOut/ZoomOutButton';
-import { LayerPopupContainer } from './leaflet/LayerPopup/LayerPopupContainer';
+import { LocationPopupContainer } from './leaflet/LayerPopup/LocationPopupContainer';
 import { InventoryLayer } from './leaflet/Layers/InventoryLayer';
 import { LeafletLayerListener } from './leaflet/Layers/LeafletLayerListener';
 import { useConfiguredMapLayers } from './leaflet/Layers/useConfiguredMapLayers';
@@ -142,12 +142,10 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
     activeFeatureLayer?.clearLayers();
 
     if (isRepositioning) {
-      if (
-        repositioningFeatureDataset !== null &&
-        repositioningFeatureDataset.pimsFeature !== null
-      ) {
+      const pimsFeature = repositioningFeatureDataset?.pimsFeature;
+      if (exists(pimsFeature)) {
         // File marker repositioning is active - highlight the property and the corresponding boundary when user triggers the relocate action.
-        activeFeatureLayer?.addData(repositioningFeatureDataset.pimsFeature);
+        activeFeatureLayer?.addData(pimsFeature);
       }
     } else {
       // Not repositioning - highlight parcels on map click as usual workflow
@@ -159,12 +157,12 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
           type: 'Feature',
           properties: {},
         };
-        if (mapLocationFeatureDataset.parcelFeature !== null) {
-          activeFeature = mapLocationFeatureDataset.parcelFeature;
+        if (firstOrNull(mapLocationFeatureDataset.parcelFeatures) !== null) {
+          activeFeature = mapLocationFeatureDataset.parcelFeatures[0];
           activeFeatureLayer?.addData(activeFeature);
-        } else if (mapLocationFeatureDataset.municipalityFeature !== null) {
-          activeFeature = mapLocationFeatureDataset.municipalityFeature;
-          if (mapLocationFeatureDataset.municipalityFeature?.geometry?.type === 'Polygon') {
+        } else if (firstOrNull(mapLocationFeatureDataset.municipalityFeatures) !== null) {
+          activeFeature = mapLocationFeatureDataset.municipalityFeatures[0];
+          if (activeFeature?.geometry?.type === 'Polygon') {
             activeFeatureLayer?.addData(activeFeature);
           }
         }
@@ -273,9 +271,9 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
           <LeafletLayerListener pane="dataLayers" />
         </Pane>
 
-        {mapMachine.showPopup && (
+        {mapMachine.showPopup && !mapMachine.isRepositioning && (
           // Draws the popup on top of the map
-          <LayerPopupContainer ref={popupRef} />
+          <LocationPopupContainer ref={popupRef} />
         )}
 
         <LegendControl />
