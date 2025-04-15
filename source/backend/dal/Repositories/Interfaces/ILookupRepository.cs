@@ -146,8 +146,6 @@ namespace Pims.Dal.Repositories
 
         IEnumerable<PimsChklstItemStatusType> GetAllChecklistItemStatusTypes();
 
-        IEnumerable<PimsDspChklstItemType> GetAllDispositionChecklistItemTypes();
-
         IEnumerable<PimsDspChklstSectionType> GetAllDispositionChecklistSectionTypes();
 
         IEnumerable<PimsHistoricalFileNumberType> GetAllHistoricalNumberTypes();
@@ -171,5 +169,7 @@ namespace Pims.Dal.Repositories
         IEnumerable<PimsAcqFileExpropRiskType> GetAllAcquisitionFileExpropiationRiskStatusTypes();
 
         IEnumerable<PimsLlTeamProfileType> GetAllLlTeamProfileTypes();
+
+        IEnumerable<PimsExpropOwnerHistoryType> GetAllExpropriationEventTypes();
     }
 }

@@ -485,24 +485,24 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
                 </option>
                 <option
                   class="option"
-                  data-testid="select-option-ARCHIVED"
-                  value="ARCHIVED"
-                >
-                  Archived
-                </option>
-                <option
-                  class="option"
                   data-testid="select-option-CLOSED"
                   value="CLOSED"
                 >
-                  Closed
+                  Complete
                 </option>
                 <option
                   class="option"
                   data-testid="select-option-INACTIVE"
                   value="INACTIVE"
                 >
-                  Inactive
+                  Hold
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-ARCHIVED"
+                  value="ARCHIVED"
+                >
+                  Archived
                 </option>
               </select>
             </div>

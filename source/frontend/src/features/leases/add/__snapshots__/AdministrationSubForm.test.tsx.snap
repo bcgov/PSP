@@ -342,24 +342,10 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
               </option>
               <option
                 class="option"
-                data-testid="select-option-BCFERRIES"
-                value="BCFERRIES"
+                data-testid="select-option-AGRIC"
+                value="AGRIC"
               >
-                BC Ferries
-              </option>
-              <option
-                class="option"
-                data-testid="select-option-BCTRANSIT"
-                value="BCTRANSIT"
-              >
-                BC Transit
-              </option>
-              <option
-                class="option"
-                data-testid="select-option-BELLETERM"
-                value="BELLETERM"
-              >
-                Belleville Terminal
+                Agricultural
               </option>
               <option
                 class="option"
@@ -370,17 +356,59 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
               </option>
               <option
                 class="option"
+                data-testid="select-option-ENGINEER"
+                value="ENGINEER"
+              >
+                Engineering
+              </option>
+              <option
+                class="option"
                 data-testid="select-option-LCLGOVT"
                 value="LCLGOVT"
               >
-                Local Government/RCMP
+                Government
+              </option>
+              <option
+                class="option"
+                data-testid="select-option-MOTIUSE"
+                value="MOTIUSE"
+              >
+                MoTI Use
+              </option>
+              <option
+                class="option"
+                data-testid="select-option-TMEP"
+                value="TMEP"
+              >
+                Oil/Gas
               </option>
               <option
                 class="option"
                 data-testid="select-option-OTHER"
                 value="OTHER"
               >
-                Other Licencing
+                Other
+              </option>
+              <option
+                class="option"
+                data-testid="select-option-PARKING"
+                value="PARKING"
+              >
+                Parking and/or Storage
+              </option>
+              <option
+                class="option"
+                data-testid="select-option-PUBTRANS"
+                value="PUBTRANS"
+              >
+                Public Transportation
+              </option>
+              <option
+                class="option"
+                data-testid="select-option-RAIL"
+                value="RAIL"
+              >
+                Rail
               </option>
               <option
                 class="option"
@@ -395,20 +423,6 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
                 value="RESRENTAL"
               >
                 Residential Rentals
-              </option>
-              <option
-                class="option"
-                data-testid="select-option-TMEP"
-                value="TMEP"
-              >
-                TMEP
-              </option>
-              <option
-                class="option"
-                data-testid="select-option-TRANSLINK"
-                value="TRANSLINK"
-              >
-                TransLink
               </option>
               <option
                 class="option"
@@ -452,73 +466,87 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
               </option>
               <option
                 class="option"
-                data-testid="select-option-LIMOTIPRJ"
-                value="LIMOTIPRJ"
+                data-testid="select-option-AMNDAGREE"
+                value="AMNDAGREE"
               >
-                MOTI Project Use License
+                Amending Agreement
               </option>
               <option
                 class="option"
-                data-testid="select-option-LIOCCACCS"
-                value="LIOCCACCS"
+                data-testid="select-option-BLDGLSRCV"
+                value="BLDGLSRCV"
               >
-                License of Occupation (access)
+                Building Lease (receivable)
               </option>
               <option
                 class="option"
-                data-testid="select-option-LIOCCTTLD"
-                value="LIOCCTTLD"
+                data-testid="select-option-ROADXING"
+                value="ROADXING"
               >
-                License of Occupation (titled)
+                Crossing Agreement
               </option>
               <option
                 class="option"
-                data-testid="select-option-LIOCCUSE"
-                value="LIOCCUSE"
+                data-testid="select-option-LTRINDMNY"
+                value="LTRINDMNY"
               >
-                License of Occupation (use)
-              </option>
-              <option
-                class="option"
-                data-testid="select-option-LIOCCUTIL"
-                value="LIOCCUTIL"
-              >
-                License of Occupation (utilities)
-              </option>
-              <option
-                class="option"
-                data-testid="select-option-LIPPUBHWY"
-                value="LIPPUBHWY"
-              >
-                License of Prov Public Highway
+                Indemnity letter
               </option>
               <option
                 class="option"
                 data-testid="select-option-LSGRND"
                 value="LSGRND"
               >
-                Ground Lease
+                Land Lease (receivable)
               </option>
               <option
                 class="option"
                 data-testid="select-option-LSREG"
                 value="LSREG"
               >
-                Lease - Registered
+                Lease - Registered (payable)
               </option>
               <option
                 class="option"
                 data-testid="select-option-LSUNREG"
                 value="LSUNREG"
               >
-                Lease - Unregistered
+                Lease - Unregistered (payable)
+              </option>
+              <option
+                class="option"
+                data-testid="select-option-LTRINTENT"
+                value="LTRINTENT"
+              >
+                Letter of Intended Use
+              </option>
+              <option
+                class="option"
+                data-testid="select-option-LOOBCTFA"
+                value="LOOBCTFA"
+              >
+                Licence of Occupation (BCTFA fee simple)
+              </option>
+              <option
+                class="option"
+                data-testid="select-option-LIOCCHMK"
+                value="LIOCCHMK"
+              >
+                Licence of Occupation (HMK fee simple)
+              </option>
+              <option
+                class="option"
+                data-testid="select-option-LIPPUBHWY"
+                value="LIPPUBHWY"
+              >
+                Licence of Occupation of Provincial Public Highway
               </option>
               <option
                 class="option"
                 data-testid="select-option-MANUFHOME"
                 value="MANUFHOME"
               >
-                Manufactured Home Act
+                Manufactured Home Tenancy
               </option>
               <option
                 class="option"
@@ -532,14 +560,7 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
                 data-testid="select-option-RESLNDTEN"
                 value="RESLNDTEN"
               >
-                Residential Tenancy Act
-              </option>
-              <option
-                class="option"
-                data-testid="select-option-ROADXING"
-                value="ROADXING"
-              >
-                Road Crossing
+                Residential Tenancy Agreement
               </option>
             </select>
           </div>
@@ -592,22 +613,22 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
                     <li
                       class="option  highlightOption highlight  "
                     >
-                      Access (Industrial/Commercial)
+                      Access
                     </li>
                     <li
                       class="option    "
                     >
-                      Access (Residential)
-                    </li>
-                    <li
-                      class="option    "
-                    >
-                      Agricultural
+                      Archeological investigations
                     </li>
                     <li
                       class="option    "
                     >
                       BC Ferries
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      BC Transit
                     </li>
                     <li
                       class="option    "
@@ -622,6 +643,11 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
                     <li
                       class="option    "
                     >
+                      Crossing
+                    </li>
+                    <li
+                      class="option    "
+                    >
                       Emergency Services
                     </li>
                     <li
@@ -632,12 +658,22 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
                     <li
                       class="option    "
                     >
+                      Environmental
+                    </li>
+                    <li
+                      class="option    "
+                    >
                       Fencing/Gate
                     </li>
                     <li
                       class="option    "
                     >
-                      Gardening
+                      Garden
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      Geotechnical Investigations
                     </li>
                     <li
                       class="option    "
@@ -647,12 +683,32 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
                     <li
                       class="option    "
                     >
-                      Grazing
+                      Grazing/haying
                     </li>
                     <li
                       class="option    "
                     >
-                      Logging/Timber Harvest
+                      Historical
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      Housing
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      Land Survey
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      Landscaping/Vegetation Clearing
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      Maintenance Yard
                     </li>
                     <li
                       class="option    "
@@ -667,27 +723,17 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
                     <li
                       class="option    "
                     >
-                      Maintenance Yard
-                    </li>
-                    <li
-                      class="option    "
-                    >
-                      Other*
-                    </li>
-                    <li
-                      class="option    "
-                    >
                       Park
                     </li>
                     <li
                       class="option    "
                     >
-                      Parking
+                      Park and Ride
                     </li>
                     <li
                       class="option    "
                     >
-                      Park and Ride
+                      Parking
                     </li>
                     <li
                       class="option    "
@@ -707,7 +753,17 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
                     <li
                       class="option    "
                     >
-                      Railway
+                      Railway crossing
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      Railway trespass
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      Remediation
                     </li>
                     <li
                       class="option    "
@@ -717,7 +773,12 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
                     <li
                       class="option    "
                     >
-                      Sidewalks/Landscaping
+                      Riparian restoration
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      Sidewalks
                     </li>
                     <li
                       class="option    "
@@ -747,12 +808,22 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
                     <li
                       class="option    "
                     >
-                      Tourist Info
+                      Tourism
                     </li>
                     <li
                       class="option    "
                     >
                       Trail
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      Transit Oriented Development (TOD)
+                    </li>
+                    <li
+                      class="option    "
+                    >
+                      Translink
                     </li>
                     <li
                       class="option    "
@@ -782,7 +853,7 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
                     <li
                       class="option    "
                     >
-                      Crossing
+                      Other*
                     </li>
                   </ul>
                 </div>

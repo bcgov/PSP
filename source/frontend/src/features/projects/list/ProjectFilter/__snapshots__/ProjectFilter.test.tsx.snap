@@ -365,20 +365,6 @@ exports[`Project Filter > matches snapshot 1`] = `
                 </option>
                 <option
                   class="option"
-                  data-testid="select-option-CA"
-                  value="CA"
-                >
-                  Cancelled (CA)
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-CNCN"
-                  value="CNCN"
-                >
-                  Consolidated (CNCN)
-                </option>
-                <option
-                  class="option"
                   data-testid="select-option-CO"
                   value="CO"
                 >
@@ -397,6 +383,20 @@ exports[`Project Filter > matches snapshot 1`] = `
                   value="PL"
                 >
                   Planning (PL)
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-CA"
+                  value="CA"
+                >
+                  Cancelled (CA)
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-CNCN"
+                  value="CNCN"
+                >
+                  Consolidated (CNCN)
                 </option>
               </select>
             </div>

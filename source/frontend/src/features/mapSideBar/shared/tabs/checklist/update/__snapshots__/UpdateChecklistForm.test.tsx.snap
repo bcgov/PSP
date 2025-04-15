@@ -108,9 +108,25 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 name="checklistSections[0].items[0].statusType"
               >
                 <option
-                  value=""
+                  class="option"
+                  data-testid="select-option-INCOMP"
+                  value="INCOMP"
                 >
-                  N/A
+                  Incomplete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-COMPLT"
+                  value="COMPLT"
+                >
+                  Complete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NOTAPP"
+                  value="NOTAPP"
+                >
+                  Not applicable
                 </option>
               </select>
             </div>
@@ -140,9 +156,25 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 name="checklistSections[0].items[1].statusType"
               >
                 <option
-                  value=""
+                  class="option"
+                  data-testid="select-option-INCOMP"
+                  value="INCOMP"
                 >
-                  N/A
+                  Incomplete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-COMPLT"
+                  value="COMPLT"
+                >
+                  Complete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NOTAPP"
+                  value="NOTAPP"
+                >
+                  Not applicable
                 </option>
               </select>
             </div>
@@ -172,9 +204,25 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 name="checklistSections[0].items[2].statusType"
               >
                 <option
-                  value=""
+                  class="option"
+                  data-testid="select-option-INCOMP"
+                  value="INCOMP"
                 >
-                  N/A
+                  Incomplete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-COMPLT"
+                  value="COMPLT"
+                >
+                  Complete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NOTAPP"
+                  value="NOTAPP"
+                >
+                  Not applicable
                 </option>
               </select>
             </div>
@@ -204,9 +252,25 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 name="checklistSections[0].items[3].statusType"
               >
                 <option
-                  value=""
+                  class="option"
+                  data-testid="select-option-INCOMP"
+                  value="INCOMP"
                 >
-                  N/A
+                  Incomplete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-COMPLT"
+                  value="COMPLT"
+                >
+                  Complete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NOTAPP"
+                  value="NOTAPP"
+                >
+                  Not applicable
                 </option>
               </select>
             </div>
@@ -258,9 +322,25 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 name="checklistSections[0].items[4].statusType"
               >
                 <option
-                  value=""
+                  class="option"
+                  data-testid="select-option-INCOMP"
+                  value="INCOMP"
                 >
-                  N/A
+                  Incomplete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-COMPLT"
+                  value="COMPLT"
+                >
+                  Complete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NOTAPP"
+                  value="NOTAPP"
+                >
+                  Not applicable
                 </option>
               </select>
             </div>
@@ -311,9 +391,25 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 name="checklistSections[1].items[0].statusType"
               >
                 <option
-                  value=""
+                  class="option"
+                  data-testid="select-option-INCOMP"
+                  value="INCOMP"
                 >
-                  N/A
+                  Incomplete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-COMPLT"
+                  value="COMPLT"
+                >
+                  Complete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NOTAPP"
+                  value="NOTAPP"
+                >
+                  Not applicable
                 </option>
               </select>
             </div>
@@ -343,9 +439,25 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 name="checklistSections[1].items[1].statusType"
               >
                 <option
-                  value=""
+                  class="option"
+                  data-testid="select-option-INCOMP"
+                  value="INCOMP"
                 >
-                  N/A
+                  Incomplete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-COMPLT"
+                  value="COMPLT"
+                >
+                  Complete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NOTAPP"
+                  value="NOTAPP"
+                >
+                  Not applicable
                 </option>
               </select>
             </div>
@@ -397,9 +509,25 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 name="checklistSections[1].items[2].statusType"
               >
                 <option
-                  value=""
+                  class="option"
+                  data-testid="select-option-INCOMP"
+                  value="INCOMP"
                 >
-                  N/A
+                  Incomplete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-COMPLT"
+                  value="COMPLT"
+                >
+                  Complete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NOTAPP"
+                  value="NOTAPP"
+                >
+                  Not applicable
                 </option>
               </select>
             </div>
@@ -429,9 +557,25 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 name="checklistSections[1].items[3].statusType"
               >
                 <option
-                  value=""
+                  class="option"
+                  data-testid="select-option-INCOMP"
+                  value="INCOMP"
                 >
-                  N/A
+                  Incomplete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-COMPLT"
+                  value="COMPLT"
+                >
+                  Complete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NOTAPP"
+                  value="NOTAPP"
+                >
+                  Not applicable
                 </option>
               </select>
             </div>
@@ -461,9 +605,25 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 name="checklistSections[1].items[4].statusType"
               >
                 <option
-                  value=""
+                  class="option"
+                  data-testid="select-option-INCOMP"
+                  value="INCOMP"
                 >
-                  N/A
+                  Incomplete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-COMPLT"
+                  value="COMPLT"
+                >
+                  Complete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NOTAPP"
+                  value="NOTAPP"
+                >
+                  Not applicable
                 </option>
               </select>
             </div>
@@ -515,9 +675,25 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 name="checklistSections[1].items[5].statusType"
               >
                 <option
-                  value=""
+                  class="option"
+                  data-testid="select-option-INCOMP"
+                  value="INCOMP"
                 >
-                  N/A
+                  Incomplete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-COMPLT"
+                  value="COMPLT"
+                >
+                  Complete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NOTAPP"
+                  value="NOTAPP"
+                >
+                  Not applicable
                 </option>
               </select>
             </div>
@@ -569,9 +745,25 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 name="checklistSections[1].items[6].statusType"
               >
                 <option
-                  value=""
+                  class="option"
+                  data-testid="select-option-INCOMP"
+                  value="INCOMP"
                 >
-                  N/A
+                  Incomplete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-COMPLT"
+                  value="COMPLT"
+                >
+                  Complete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NOTAPP"
+                  value="NOTAPP"
+                >
+                  Not applicable
                 </option>
               </select>
             </div>
@@ -601,9 +793,25 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 name="checklistSections[1].items[7].statusType"
               >
                 <option
-                  value=""
+                  class="option"
+                  data-testid="select-option-INCOMP"
+                  value="INCOMP"
                 >
-                  N/A
+                  Incomplete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-COMPLT"
+                  value="COMPLT"
+                >
+                  Complete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NOTAPP"
+                  value="NOTAPP"
+                >
+                  Not applicable
                 </option>
               </select>
             </div>
@@ -633,9 +841,25 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 name="checklistSections[1].items[8].statusType"
               >
                 <option
-                  value=""
+                  class="option"
+                  data-testid="select-option-INCOMP"
+                  value="INCOMP"
                 >
-                  N/A
+                  Incomplete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-COMPLT"
+                  value="COMPLT"
+                >
+                  Complete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NOTAPP"
+                  value="NOTAPP"
+                >
+                  Not applicable
                 </option>
               </select>
             </div>
@@ -665,9 +889,25 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 name="checklistSections[1].items[9].statusType"
               >
                 <option
-                  value=""
+                  class="option"
+                  data-testid="select-option-INCOMP"
+                  value="INCOMP"
                 >
-                  N/A
+                  Incomplete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-COMPLT"
+                  value="COMPLT"
+                >
+                  Complete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NOTAPP"
+                  value="NOTAPP"
+                >
+                  Not applicable
                 </option>
               </select>
             </div>
@@ -697,9 +937,25 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 name="checklistSections[1].items[10].statusType"
               >
                 <option
-                  value=""
+                  class="option"
+                  data-testid="select-option-INCOMP"
+                  value="INCOMP"
                 >
-                  N/A
+                  Incomplete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-COMPLT"
+                  value="COMPLT"
+                >
+                  Complete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NOTAPP"
+                  value="NOTAPP"
+                >
+                  Not applicable
                 </option>
               </select>
             </div>
@@ -729,9 +985,25 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 name="checklistSections[1].items[11].statusType"
               >
                 <option
-                  value=""
+                  class="option"
+                  data-testid="select-option-INCOMP"
+                  value="INCOMP"
                 >
-                  N/A
+                  Incomplete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-COMPLT"
+                  value="COMPLT"
+                >
+                  Complete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NOTAPP"
+                  value="NOTAPP"
+                >
+                  Not applicable
                 </option>
               </select>
             </div>
@@ -783,9 +1055,25 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 name="checklistSections[1].items[12].statusType"
               >
                 <option
-                  value=""
+                  class="option"
+                  data-testid="select-option-INCOMP"
+                  value="INCOMP"
                 >
-                  N/A
+                  Incomplete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-COMPLT"
+                  value="COMPLT"
+                >
+                  Complete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NOTAPP"
+                  value="NOTAPP"
+                >
+                  Not applicable
                 </option>
               </select>
             </div>
@@ -837,9 +1125,25 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 name="checklistSections[1].items[13].statusType"
               >
                 <option
-                  value=""
+                  class="option"
+                  data-testid="select-option-INCOMP"
+                  value="INCOMP"
                 >
-                  N/A
+                  Incomplete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-COMPLT"
+                  value="COMPLT"
+                >
+                  Complete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NOTAPP"
+                  value="NOTAPP"
+                >
+                  Not applicable
                 </option>
               </select>
             </div>
@@ -869,9 +1173,25 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 name="checklistSections[1].items[14].statusType"
               >
                 <option
-                  value=""
+                  class="option"
+                  data-testid="select-option-INCOMP"
+                  value="INCOMP"
                 >
-                  N/A
+                  Incomplete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-COMPLT"
+                  value="COMPLT"
+                >
+                  Complete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NOTAPP"
+                  value="NOTAPP"
+                >
+                  Not applicable
                 </option>
               </select>
             </div>
@@ -964,9 +1284,25 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 name="checklistSections[3].items[0].statusType"
               >
                 <option
-                  value=""
+                  class="option"
+                  data-testid="select-option-INCOMP"
+                  value="INCOMP"
                 >
-                  N/A
+                  Incomplete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-COMPLT"
+                  value="COMPLT"
+                >
+                  Complete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NOTAPP"
+                  value="NOTAPP"
+                >
+                  Not applicable
                 </option>
               </select>
             </div>
@@ -996,9 +1332,25 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 name="checklistSections[3].items[1].statusType"
               >
                 <option
-                  value=""
+                  class="option"
+                  data-testid="select-option-INCOMP"
+                  value="INCOMP"
                 >
-                  N/A
+                  Incomplete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-COMPLT"
+                  value="COMPLT"
+                >
+                  Complete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NOTAPP"
+                  value="NOTAPP"
+                >
+                  Not applicable
                 </option>
               </select>
             </div>
@@ -1028,9 +1380,25 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 name="checklistSections[3].items[2].statusType"
               >
                 <option
-                  value=""
+                  class="option"
+                  data-testid="select-option-INCOMP"
+                  value="INCOMP"
                 >
-                  N/A
+                  Incomplete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-COMPLT"
+                  value="COMPLT"
+                >
+                  Complete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NOTAPP"
+                  value="NOTAPP"
+                >
+                  Not applicable
                 </option>
               </select>
             </div>
@@ -1060,9 +1428,25 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 name="checklistSections[3].items[3].statusType"
               >
                 <option
-                  value=""
+                  class="option"
+                  data-testid="select-option-INCOMP"
+                  value="INCOMP"
                 >
-                  N/A
+                  Incomplete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-COMPLT"
+                  value="COMPLT"
+                >
+                  Complete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NOTAPP"
+                  value="NOTAPP"
+                >
+                  Not applicable
                 </option>
               </select>
             </div>
@@ -1092,9 +1476,25 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 name="checklistSections[3].items[4].statusType"
               >
                 <option
-                  value=""
+                  class="option"
+                  data-testid="select-option-INCOMP"
+                  value="INCOMP"
                 >
-                  N/A
+                  Incomplete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-COMPLT"
+                  value="COMPLT"
+                >
+                  Complete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NOTAPP"
+                  value="NOTAPP"
+                >
+                  Not applicable
                 </option>
               </select>
             </div>
@@ -1124,9 +1524,25 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 name="checklistSections[3].items[5].statusType"
               >
                 <option
-                  value=""
+                  class="option"
+                  data-testid="select-option-INCOMP"
+                  value="INCOMP"
                 >
-                  N/A
+                  Incomplete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-COMPLT"
+                  value="COMPLT"
+                >
+                  Complete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NOTAPP"
+                  value="NOTAPP"
+                >
+                  Not applicable
                 </option>
               </select>
             </div>
@@ -1178,9 +1594,25 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 name="checklistSections[3].items[6].statusType"
               >
                 <option
-                  value=""
+                  class="option"
+                  data-testid="select-option-INCOMP"
+                  value="INCOMP"
                 >
-                  N/A
+                  Incomplete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-COMPLT"
+                  value="COMPLT"
+                >
+                  Complete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NOTAPP"
+                  value="NOTAPP"
+                >
+                  Not applicable
                 </option>
               </select>
             </div>
@@ -1253,9 +1685,25 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 name="checklistSections[4].items[0].statusType"
               >
                 <option
-                  value=""
+                  class="option"
+                  data-testid="select-option-INCOMP"
+                  value="INCOMP"
                 >
-                  N/A
+                  Incomplete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-COMPLT"
+                  value="COMPLT"
+                >
+                  Complete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NOTAPP"
+                  value="NOTAPP"
+                >
+                  Not applicable
                 </option>
               </select>
             </div>
@@ -1307,9 +1755,25 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 name="checklistSections[4].items[1].statusType"
               >
                 <option
-                  value=""
+                  class="option"
+                  data-testid="select-option-INCOMP"
+                  value="INCOMP"
                 >
-                  N/A
+                  Incomplete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-COMPLT"
+                  value="COMPLT"
+                >
+                  Complete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NOTAPP"
+                  value="NOTAPP"
+                >
+                  Not applicable
                 </option>
               </select>
             </div>
@@ -1361,9 +1825,25 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 name="checklistSections[4].items[2].statusType"
               >
                 <option
-                  value=""
+                  class="option"
+                  data-testid="select-option-INCOMP"
+                  value="INCOMP"
                 >
-                  N/A
+                  Incomplete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-COMPLT"
+                  value="COMPLT"
+                >
+                  Complete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NOTAPP"
+                  value="NOTAPP"
+                >
+                  Not applicable
                 </option>
               </select>
             </div>
@@ -1415,9 +1895,25 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 name="checklistSections[4].items[3].statusType"
               >
                 <option
-                  value=""
+                  class="option"
+                  data-testid="select-option-INCOMP"
+                  value="INCOMP"
                 >
-                  N/A
+                  Incomplete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-COMPLT"
+                  value="COMPLT"
+                >
+                  Complete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NOTAPP"
+                  value="NOTAPP"
+                >
+                  Not applicable
                 </option>
               </select>
             </div>
@@ -1447,9 +1943,25 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 name="checklistSections[4].items[4].statusType"
               >
                 <option
-                  value=""
+                  class="option"
+                  data-testid="select-option-INCOMP"
+                  value="INCOMP"
                 >
-                  N/A
+                  Incomplete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-COMPLT"
+                  value="COMPLT"
+                >
+                  Complete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NOTAPP"
+                  value="NOTAPP"
+                >
+                  Not applicable
                 </option>
               </select>
             </div>
@@ -1479,9 +1991,25 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 name="checklistSections[4].items[5].statusType"
               >
                 <option
-                  value=""
+                  class="option"
+                  data-testid="select-option-INCOMP"
+                  value="INCOMP"
                 >
-                  N/A
+                  Incomplete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-COMPLT"
+                  value="COMPLT"
+                >
+                  Complete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NOTAPP"
+                  value="NOTAPP"
+                >
+                  Not applicable
                 </option>
               </select>
             </div>
@@ -1554,9 +2082,25 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 name="checklistSections[5].items[0].statusType"
               >
                 <option
-                  value=""
+                  class="option"
+                  data-testid="select-option-INCOMP"
+                  value="INCOMP"
                 >
-                  N/A
+                  Incomplete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-COMPLT"
+                  value="COMPLT"
+                >
+                  Complete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NOTAPP"
+                  value="NOTAPP"
+                >
+                  Not applicable
                 </option>
               </select>
             </div>

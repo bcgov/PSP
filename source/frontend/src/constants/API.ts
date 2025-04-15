@@ -127,6 +127,7 @@ export const ACQUISITION_LEGALSURVEY_STATUS_TYPES = 'PimsAcqFileLglSrvyType';
 export const ACQUISITION_TAKING_STATUS_TYPES = 'PimsAcqFileTakeType';
 export const ACQUISITION_EXPROPIATIONRISK_STATUS_TYPES = 'PimsAcqFileExpropRiskType';
 export const LEASE_TEAM_PROFILE_TYPES = 'PimsLlTeamProfileType';
+export const ACQUISITION_EXPROPRIATION_EVENT_TYPES = 'PimsExpropOwnerHistoryType';
 
 // TODO: PSP-4395 This should all be removed from this and moved to the useApi* hooks.
 // Auth Service
