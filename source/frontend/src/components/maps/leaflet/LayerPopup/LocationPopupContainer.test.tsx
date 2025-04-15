@@ -1,17 +1,11 @@
 import { screen } from '@testing-library/react';
 import { describe, it, expect, vi } from 'vitest';
 import { LayerPopupContainer } from './LayerPopupContainer';
-import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
 import { render } from '@/utils/test-utils';
-import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { getMockLocationFeatureDataset } from '@/mocks/featureset.mock';
 import getMockISSResult from '@/mocks/mockISSResult';
-import { Popup } from 'react-leaflet/Popup';
-
-const mockMapStateMachine = {
-  ...mapMachineBaseMock,
-  mapLocationFeatureDataset: getMockLocationFeatureDataset(),
-};
+import { SinglePropertyFeatureDataSet } from './LocationPopupContainer';
+import { firstOrNull } from '@/utils';
 
 vi.mock('react-leaflet/Popup', () => ({
   Popup: ({ children }: any) => <>{children}</>,
@@ -22,30 +16,35 @@ describe('LayerPopupContainer', () => {
     vi.resetAllMocks();
   });
 
-  const setup = (context?: IMapStateMachineContext) => {
-    return render(<LayerPopupContainer />, { mockMapMachine: context ?? mockMapStateMachine });
+  const setup = (featureDataset?: SinglePropertyFeatureDataSet) => {
+    return render(<LayerPopupContainer featureDataset={featureDataset} />, {});
   };
 
   it('matches snapshot', () => {
-    const { asFragment } = setup();
+    const { asFragment } = setup({
+      ...getMockLocationFeatureDataset(),
+      parcelFeature: getMockLocationFeatureDataset().parcelFeatures[0],
+      pimsFeature: firstOrNull(getMockLocationFeatureDataset().pimsFeatures),
+    });
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('displays the correct title for parcel data', () => {
-    setup();
+    setup({
+      ...getMockLocationFeatureDataset(),
+      parcelFeature: getMockLocationFeatureDataset().parcelFeatures[0],
+      pimsFeature: firstOrNull(getMockLocationFeatureDataset().pimsFeatures),
+    });
     expect(screen.getByText('LTSA ParcelMap data')).toBeInTheDocument();
   });
 
   it('displays multiple highway layers correctly', () => {
     setup({
-      ...mapMachineBaseMock,
-      mapLocationFeatureDataset: {
-        ...getMockLocationFeatureDataset(),
-        pimsFeature: null,
-        parcelFeature: null,
-        municipalityFeature: null,
-        highwayFeatures: getMockISSResult().features,
-      },
+      ...getMockLocationFeatureDataset(),
+      pimsFeature: null,
+      parcelFeature: null,
+      municipalityFeatures: null,
+      highwayFeatures: getMockISSResult().features,
     });
     expect(screen.getByText('Highway Research (1 of 2)')).toBeInTheDocument();
     expect(screen.getByText('Hyperlink to plan documents:')).toBeInTheDocument();

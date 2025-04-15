@@ -34,7 +34,7 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
     location: null,
   },
   requestedFitBounds: defaultBounds,
-  mapFeatureSelected: null,
+  mapMarkerSelected: null,
   mapLocationSelected: null,
   mapLocationFeatureDataset: null,
   repositioningFeatureDataset: null,

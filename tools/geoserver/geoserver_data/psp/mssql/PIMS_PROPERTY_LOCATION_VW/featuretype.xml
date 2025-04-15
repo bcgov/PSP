@@ -1,5 +1,5 @@
 <featureType>
-  <id>FeatureTypeInfoImpl--3da53034:17d0594c855:-7131</id>
+  <id>FeatureTypeInfoImpl--3f9dd415:1955df6c091:-7ff9</id>
   <name>PIMS_PROPERTY_LOCATION_VW</name>
   <nativeName>PIMS_PROPERTY_LOCATION_VW</nativeName>
   <namespace>
@@ -34,23 +34,23 @@
   AUTHORITY[&quot;EPSG&quot;,&quot;3005&quot;]]</nativeCRS>
   <srs>EPSG:3005</srs>
   <nativeBoundingBox>
-    <minx>593913.8585748569</minx>
+    <minx>593898.7153878355</minx>
     <maxx>1677969.564075983</maxx>
     <miny>380698.3425773544</miny>
-    <maxy>1303737.645752608</maxy>
+    <maxy>1348138.0868588968</maxy>
     <crs class="projected">EPSG:3005</crs>
   </nativeBoundingBox>
   <latLonBoundingBox>
-    <minx>-132.6266178439845</minx>
-    <maxx>-114.99383662436095</maxx>
+    <minx>-132.69518517588838</minx>
+    <maxx>-114.88154780880323</maxx>
     <miny>48.049005189764884</miny>
-    <maxy>56.72280217252524</maxy>
+    <maxy>57.120790108858706</maxy>
     <crs>EPSG:4326</crs>
   </latLonBoundingBox>
   <projectionPolicy>FORCE_DECLARED</projectionPolicy>
   <enabled>true</enabled>
   <store class="dataStore">
-    <id>DataStoreInfoImpl--47c96824:17c20b17224:-7ff6</id>
+    <id>DataStoreInfoImpl--3f9dd415:1955df6c091:-7ffc</id>
   </store>
   <serviceConfiguration>false</serviceConfiguration>
   <simpleConversionEnabled>false</simpleConversionEnabled>

@@ -1,5 +1,5 @@
 <featureType>
-  <id>FeatureTypeInfoImpl--679c7b53:182fb30d43f:-7215</id>
+  <id>FeatureTypeInfoImpl--3f9dd415:1955df6c091:-7ffb</id>
   <name>PIMS_PROPERTY_BOUNDARY_VW</name>
   <nativeName>PIMS_PROPERTY_BOUNDARY_VW</nativeName>
   <namespace>
@@ -50,7 +50,7 @@
   <projectionPolicy>FORCE_DECLARED</projectionPolicy>
   <enabled>true</enabled>
   <store class="dataStore">
-    <id>DataStoreInfoImpl--47c96824:17c20b17224:-7ff6</id>
+    <id>DataStoreInfoImpl--3f9dd415:1955df6c091:-7ffc</id>
   </store>
   <serviceConfiguration>false</serviceConfiguration>
   <simpleConversionEnabled>false</simpleConversionEnabled>

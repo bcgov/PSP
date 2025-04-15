@@ -280,10 +280,10 @@ exports[`PropertySearchSelectorFormView component > renders as expected when pro
         novalidate=""
       >
         <div
-          class="row"
+          class="row no-gutters"
         >
           <div
-            class="col-xl-6"
+            class="col-6"
           >
             <div
               class="flex-nowrap input-group row"
@@ -337,6 +337,13 @@ exports[`PropertySearchSelectorFormView component > renders as expected when pro
                       >
                         Legal Description
                       </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-coordinates"
+                        value="coordinates"
+                      >
+                        Lat/Long
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -362,7 +369,7 @@ exports[`PropertySearchSelectorFormView component > renders as expected when pro
             </div>
           </div>
           <div
-            class="pr-0 col-xl-2"
+            class="pr-0 col-2"
           >
             <div
               class="row"

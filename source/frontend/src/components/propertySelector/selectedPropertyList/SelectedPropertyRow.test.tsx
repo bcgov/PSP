@@ -4,13 +4,13 @@ import noop from 'lodash/noop';
 
 import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { IMapProperty } from '@/components/propertySelector/models';
-import { PropertyForm } from '@/features/mapSideBar/shared/models';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import SelectedPropertyRow, { ISelectedPropertyRowProps } from './SelectedPropertyRow';
+import { PropertyForm } from '@/features/mapSideBar/shared/models';
 
 const history = createMemoryHistory();
 const storeState = {
