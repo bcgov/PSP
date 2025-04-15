@@ -318,7 +318,7 @@ describe('mapPropertyUtils', () => {
       {
         ...getMockSelectedFeatureDataset(),
         pimsFeature: {} as any,
-        parcelFeature :{ properties: { PIN: 9999 } } as any,
+        parcelFeature: { properties: { PIN: 9999 } } as any,
       },
       '9999',
     ],

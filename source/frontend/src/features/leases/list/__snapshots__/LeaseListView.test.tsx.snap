@@ -738,7 +738,7 @@ exports[`Lease and License List View > matches snapshot 1`] = `
                         class="row"
                       >
                         <div
-                          class="col"
+                          class="col-xl-7"
                         >
                           <div>
                             <div

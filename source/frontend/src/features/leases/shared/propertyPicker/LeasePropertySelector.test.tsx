@@ -3,7 +3,10 @@ import noop from 'lodash/noop';
 import React from 'react';
 
 import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
-import { LocationFeatureDataset, SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
+import {
+  LocationFeatureDataset,
+  SelectedFeatureDataset,
+} from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { FormLeaseProperty, getDefaultFormLease, LeaseFormModel } from '@/features/leases/models';
 import { getMockPolygon } from '@/mocks/geometries.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
