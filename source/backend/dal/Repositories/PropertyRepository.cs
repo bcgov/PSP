@@ -70,13 +70,6 @@ namespace Pims.Dal.Repositories
                 .Take(filter.Quantity)
                 .ToArray();
 
-            if (!string.IsNullOrWhiteSpace(filter.Pid))
-            {
-                Regex nonInteger = new Regex("[^\\d]");
-                var formattedPid = nonInteger.Replace(filter.Pid, string.Empty);
-                items = items.Where(i => i.Pid.ToString().PadLeft(9, '0').Contains(formattedPid)).ToArray();
-            }
-
             return new Paged<PimsPropertyVw>(items, filter.Page, filter.Quantity, query.Count());
         }
 
