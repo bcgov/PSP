@@ -24,7 +24,7 @@ namespace Pims.Api.Test.Core.Extensions
             var id = Guid.NewGuid();
             var claims = new List<Claim>()
             {
-                new Claim("idir_user_guid", id.ToString()),
+                new Claim("sub", $"{id.ToString()}@idir"),
             };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims));
 
