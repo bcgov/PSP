@@ -66,11 +66,12 @@ const AddConsolidationContainer: React.FC<IAddConsolidationContainerProps> = ({
           featuresetToMapProperty(selectedFeatureDataset),
         );
         if (isValidString(propertyForm.pid)) {
-          propertyForm.address = selectedFeatureDataset.pimsFeature?.properties
-            ? AddressForm.fromPimsView(selectedFeatureDataset.pimsFeature?.properties)
+          const pimsFeature = selectedFeatureDataset.pimsFeature;
+          propertyForm.address = pimsFeature?.properties
+            ? AddressForm.fromPimsView(pimsFeature?.properties)
             : undefined;
           // TODO: Remove this once the conversion is cleaner
-          propertyForm.isOwned = selectedFeatureDataset.pimsFeature?.properties.IS_OWNED;
+          propertyForm.isOwned = pimsFeature?.properties.IS_OWNED;
           const consolidationFormModel = new ConsolidationFormModel();
           consolidationFormModel.sourceProperties = [propertyForm.toApi()];
           setInitialForm(consolidationFormModel);

@@ -71,7 +71,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
 
   const mapMachine = useMapStateMachine();
 
-  const selectedFeature = mapMachine.mapFeatureSelected;
+  const selectedMarker = mapMachine.mapMarkerSelected;
 
   const mapInstance: L.Map = useMap();
   if (!mapInstance) {
@@ -249,7 +249,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
       const group: L.FeatureGroup = featureGroupRef.current;
       const groupBounds = group.getBounds();
 
-      if (groupBounds.isValid() && filterState.changed && !selectedFeature && tilesLoaded) {
+      if (groupBounds.isValid() && filterState.changed && !selectedMarker && tilesLoaded) {
         filterState.setChanged(false);
       }
 
@@ -257,7 +257,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
       spiderfierRef.current?.unspiderfy();
       setCurrentCluster(undefined);
     }
-  }, [featureGroupRef, mapInstance, clusters, selectedFeature, tilesLoaded]);
+  }, [featureGroupRef, mapInstance, clusters, selectedMarker, tilesLoaded]);
 
   const mapMarkerClickFn = mapMachine.mapMarkerClick;
   const renderedPoints = useMemo(() => {
@@ -306,7 +306,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
               >;
 
               const isSelected =
-                selectedFeature !== null ? clusterFeature.id === selectedFeature.clusterId : false;
+                selectedMarker !== null ? clusterFeature.id === selectedMarker?.clusterId : false;
 
               const latlng = { lat: latitude, lng: longitude };
 
@@ -381,7 +381,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
   }, [
     clusters,
     draftPoints,
-    selectedFeature,
+    selectedMarker,
     spider.lines,
     spider.markers,
     zoomOrSpiderfy,

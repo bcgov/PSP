@@ -1,7 +1,7 @@
 import { LatLngLiteral } from 'leaflet';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
+import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { Section } from '@/components/common/Section/Section';
 import * as Styled from '@/components/common/styles';
 
@@ -9,14 +9,14 @@ import MapClickMonitor from '../MapClickMonitor';
 import PropertyMapSelectorSubForm from './PropertyMapSelectorSubForm';
 
 export interface IPropertyMapSelectorFormViewProps {
-  onSelectedProperty: (property: LocationFeatureDataset) => void;
+  onSelectedProperty: (property: SelectedFeatureDataset) => void;
   onRepositionedProperty: (
-    property: LocationFeatureDataset,
+    property: SelectedFeatureDataset,
     latLng: LatLngLiteral,
     propertyIndex: number | null,
   ) => void;
-  lastSelectedProperty?: LocationFeatureDataset;
-  selectedProperties: LocationFeatureDataset[];
+  lastSelectedProperty?: SelectedFeatureDataset;
+  selectedProperties: SelectedFeatureDataset[];
   selectedComponentId?: string | null;
 }
 

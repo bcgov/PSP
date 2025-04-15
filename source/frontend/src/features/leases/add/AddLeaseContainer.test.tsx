@@ -284,14 +284,8 @@ describe('AddLeaseContainer component', () => {
           geometry: getMockPolygon(),
         },
         districtFeature: null,
-        municipalityFeature: null,
-        highwayFeatures: null,
         selectingComponentId: null,
-        crownLandLeasesFeature: null,
-        crownLandLicensesFeature: null,
-        crownLandTenuresFeature: null,
-        crownLandInventoryFeature: null,
-        crownLandInclusionsFeature: null,
+        municipalityFeature: null,
       },
     };
 

@@ -111,10 +111,10 @@ describe('PropertySelectorSearchContainer component', () => {
       );
       // calls the region and district layers
       expect(mockAxios.history.get[1].url).toBe(
-        'https://maps.th.gov.bc.ca/geoV05/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=hwy:DSA_REGION_BOUNDARY&srsName=EPSG:4326&count=1&cql_filter=CONTAINS(SHAPE,SRID=4326;POINT ( -123.46163749999998 48.76613749999999))',
+        'https://maps.th.gov.bc.ca/geoV05/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=hwy:DSA_REGION_BOUNDARY&srsName=EPSG:4326&cql_filter=CONTAINS(SHAPE,SRID=4326;POINT ( -123.46163749999998 48.76613749999999))',
       );
       expect(mockAxios.history.get[2].url).toBe(
-        'https://maps.th.gov.bc.ca/geoV05/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=hwy:DSA_DISTRICT_BOUNDARY&srsName=EPSG:4326&count=1&cql_filter=CONTAINS(SHAPE,SRID=4326;POINT ( -123.46163749999998 48.76613749999999))',
+        'https://maps.th.gov.bc.ca/geoV05/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=hwy:DSA_DISTRICT_BOUNDARY&srsName=EPSG:4326&cql_filter=CONTAINS(SHAPE,SRID=4326;POINT ( -123.46163749999998 48.76613749999999))',
       );
     });
   });
@@ -139,10 +139,10 @@ describe('PropertySelectorSearchContainer component', () => {
 
       // calls the region and district layers
       expect(mockAxios.history.get[1].url).toBe(
-        'https://maps.th.gov.bc.ca/geoV05/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=hwy:DSA_REGION_BOUNDARY&srsName=EPSG:4326&count=1&cql_filter=CONTAINS(SHAPE,SRID=4326;POINT ( -123.46163749999998 48.76613749999999))',
+        'https://maps.th.gov.bc.ca/geoV05/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=hwy:DSA_REGION_BOUNDARY&srsName=EPSG:4326&cql_filter=CONTAINS(SHAPE,SRID=4326;POINT ( -123.46163749999998 48.76613749999999))',
       );
       expect(mockAxios.history.get[2].url).toBe(
-        'https://maps.th.gov.bc.ca/geoV05/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=hwy:DSA_DISTRICT_BOUNDARY&srsName=EPSG:4326&count=1&cql_filter=CONTAINS(SHAPE,SRID=4326;POINT ( -123.46163749999998 48.76613749999999))',
+        'https://maps.th.gov.bc.ca/geoV05/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=hwy:DSA_DISTRICT_BOUNDARY&srsName=EPSG:4326&cql_filter=CONTAINS(SHAPE,SRID=4326;POINT ( -123.46163749999998 48.76613749999999))',
       );
     });
   });
@@ -166,10 +166,10 @@ describe('PropertySelectorSearchContainer component', () => {
       );
       // calls the region and district layers
       expect(mockAxios.history.get[1].url).toBe(
-        'https://maps.th.gov.bc.ca/geoV05/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=hwy:DSA_REGION_BOUNDARY&srsName=EPSG:4326&count=1&cql_filter=CONTAINS(SHAPE,SRID=4326;POINT ( -123.46163749999998 48.76613749999999))',
+        'https://maps.th.gov.bc.ca/geoV05/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=hwy:DSA_REGION_BOUNDARY&srsName=EPSG:4326&cql_filter=CONTAINS(SHAPE,SRID=4326;POINT ( -123.46163749999998 48.76613749999999))',
       );
       expect(mockAxios.history.get[2].url).toBe(
-        'https://maps.th.gov.bc.ca/geoV05/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=hwy:DSA_DISTRICT_BOUNDARY&srsName=EPSG:4326&count=1&cql_filter=CONTAINS(SHAPE,SRID=4326;POINT ( -123.46163749999998 48.76613749999999))',
+        'https://maps.th.gov.bc.ca/geoV05/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=hwy:DSA_DISTRICT_BOUNDARY&srsName=EPSG:4326&cql_filter=CONTAINS(SHAPE,SRID=4326;POINT ( -123.46163749999998 48.76613749999999))',
       );
     });
   });
@@ -200,10 +200,10 @@ describe('PropertySelectorSearchContainer component', () => {
 
       // calls the region and district layers
       expect(mockAxios.history.get[1].url).toBe(
-        'https://maps.th.gov.bc.ca/geoV05/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=hwy:DSA_REGION_BOUNDARY&srsName=EPSG:4326&count=1&cql_filter=CONTAINS(SHAPE,SRID=4326;POINT ( -123.46163749999998 48.76613749999999))',
+        'https://maps.th.gov.bc.ca/geoV05/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=hwy:DSA_REGION_BOUNDARY&srsName=EPSG:4326&cql_filter=CONTAINS(SHAPE,SRID=4326;POINT ( -123.46163749999998 48.76613749999999))',
       );
       expect(mockAxios.history.get[2].url).toBe(
-        'https://maps.th.gov.bc.ca/geoV05/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=hwy:DSA_DISTRICT_BOUNDARY&srsName=EPSG:4326&count=1&cql_filter=CONTAINS(SHAPE,SRID=4326;POINT ( -123.46163749999998 48.76613749999999))',
+        'https://maps.th.gov.bc.ca/geoV05/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=hwy:DSA_DISTRICT_BOUNDARY&srsName=EPSG:4326&cql_filter=CONTAINS(SHAPE,SRID=4326;POINT ( -123.46163749999998 48.76613749999999))',
       );
 
       // calls the geocoder nearest api to retrieve address
@@ -244,10 +244,29 @@ describe('PropertySelectorSearchContainer component', () => {
       );
       // calls the region and district layers
       expect(mockAxios.history.get[3].url).toBe(
-        'https://maps.th.gov.bc.ca/geoV05/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=hwy:DSA_REGION_BOUNDARY&srsName=EPSG:4326&count=1&cql_filter=CONTAINS(SHAPE,SRID=4326;POINT ( -123.46163749999998 48.76613749999999))',
+        'https://maps.th.gov.bc.ca/geoV05/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=hwy:DSA_REGION_BOUNDARY&srsName=EPSG:4326&cql_filter=CONTAINS(SHAPE,SRID=4326;POINT ( -123.46163749999998 48.76613749999999))',
       );
       expect(mockAxios.history.get[4].url).toBe(
-        'https://maps.th.gov.bc.ca/geoV05/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=hwy:DSA_DISTRICT_BOUNDARY&srsName=EPSG:4326&count=1&cql_filter=CONTAINS(SHAPE,SRID=4326;POINT ( -123.46163749999998 48.76613749999999))',
+        'https://maps.th.gov.bc.ca/geoV05/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=hwy:DSA_DISTRICT_BOUNDARY&srsName=EPSG:4326&cql_filter=CONTAINS(SHAPE,SRID=4326;POINT ( -123.46163749999998 48.76613749999999))',
+      );
+    });
+  });
+
+  it('searches by lat/lng', async () => {
+    const { container, getByTitle } = setup({});
+
+    await act(async () => {
+      await fillInput(container, 'searchBy', 'coordinates', 'select');
+    });
+
+    const searchButton = getByTitle('search');
+    await act(async () => {
+      userEvent.click(searchButton);
+    });
+
+    await waitFor(() => {
+      expect(mockAxios.history.get[0].url).toBe(
+        'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/wfs?service=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&srsName=EPSG:4326&cql_filter=CONTAINS(SHAPE,SRID=4326;POINT ( 0 0))',
       );
     });
   });

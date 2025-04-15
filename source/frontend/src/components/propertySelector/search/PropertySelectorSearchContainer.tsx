@@ -2,10 +2,10 @@ import { Feature, FeatureCollection, GeoJsonProperties, Geometry } from 'geojson
 import { LatLngLiteral } from 'leaflet';
 import debounce from 'lodash/debounce';
 import isNumber from 'lodash/isNumber';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
+import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { IGeocoderResponse } from '@/hooks/pims-api/interfaces/IGeocoder';
 import { useAdminBoundaryMapLayer } from '@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer';
 import { useFullyAttributedParcelMapLayer } from '@/hooks/repositories/mapLayer/useFullyAttributedParcelMapLayer';
@@ -21,16 +21,15 @@ import { ILayerSearchCriteria, IMapProperty } from '../models';
 import PropertySearchSelectorFormView from './PropertySearchSelectorFormView';
 
 export interface IPropertySelectorSearchContainerProps {
-  selectedProperties: LocationFeatureDataset[];
-  setSelectedProperties: (properties: LocationFeatureDataset[]) => void;
+  selectedProperties: SelectedFeatureDataset[];
+  setSelectedProperties: (properties: SelectedFeatureDataset[]) => void;
 }
 
 export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchContainerProps> = ({
   selectedProperties,
   setSelectedProperties,
 }) => {
-  const [layerSearch, setLayerSearch] = useState<ILayerSearchCriteria | undefined>();
-  const [searchResults, setSearchResults] = useState<LocationFeatureDataset[]>([]);
+  const [searchResults, setSearchResults] = useState<SelectedFeatureDataset[]>([]);
   const [addressResults, setAddressResults] = useState<IGeocoderResponse[]>([]);
 
   const pimsPropertyLayerService = usePimsPropertyLayer();
@@ -54,10 +53,12 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
     findByPlanNumber,
     findByLegalDescription,
     findByLoading: isMapLayerLoading,
+    findMany,
+    findManyLoading,
   } = useFullyAttributedParcelMapLayer();
 
-  useEffect(() => {
-    const searchFunc = async () => {
+  const searchFunc = useCallback(
+    async (layerSearch: ILayerSearchCriteria) => {
       let result: FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties> | undefined =
         undefined;
       if (layerSearch?.searchBy === 'pid' && layerSearch.pid) {
@@ -75,6 +76,8 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
       } else if (layerSearch?.searchBy === 'address' && layerSearch.address) {
         // Ignore address searches
         return;
+      } else if (layerSearch?.searchBy === 'coordinates' && layerSearch.coordinates) {
+        result = await findMany(layerSearch.coordinates.toLatLng());
       }
 
       // match the region and district for all found properties
@@ -102,11 +105,13 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
         const regionDistrictResults = await Promise.all(matchTasks);
         const pimsResults = await Promise.all(getPimsTasks);
 
-        const locations = result.features.map((p, i) => {
+        const locations = result.features.map<SelectedFeatureDataset>((p, i) => {
           const foundProperty = featureToLocationFeatureDataset(p);
           foundProperty.regionFeature = regionDistrictResults[i]?.regionFeature;
           foundProperty.districtFeature = regionDistrictResults[i]?.districtFeature;
+
           if (exists(foundProperty?.pimsFeature)) {
+            // TODO: This needs to be changed to work with multiple properties
             foundProperty.pimsFeature = pimsResults[i]?.features?.length
               ? pimsResults[i]?.features[0]
               : ({
@@ -116,25 +121,25 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
                 } as Feature<Geometry, PIMS_Property_Location_View>);
           }
           return foundProperty;
-        }) as LocationFeatureDataset[];
+        });
         setSearchResults(locations);
       } else {
         const locations = result?.features?.map(p => featureToLocationFeatureDataset(p));
         setSearchResults(locations ?? []);
       }
-    };
-    searchFunc();
-  }, [
-    findByLegalDescription,
-    findByPid,
-    findByPin,
-    findByPlanNumber,
-    getNearestToPoint,
-    layerSearch,
-    findRegion,
-    findDistrict,
-    loadPimsProperties,
-  ]);
+    },
+    [
+      findByLegalDescription,
+      findByPid,
+      findByPin,
+      findByPlanNumber,
+      getNearestToPoint,
+      findRegion,
+      findDistrict,
+      loadPimsProperties,
+      findMany,
+    ],
+  );
 
   const handleOnAddressSelect = async (selectedItem: IGeocoderResponse) => {
     if (!selectedItem.siteId) {
@@ -157,7 +162,7 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
 
       const responses = await Promise.all(findByPidCalls);
 
-      let propertyResults: LocationFeatureDataset[] = [];
+      let propertyResults: SelectedFeatureDataset[] = [];
       responses?.forEach((item: FeatureCollection<Geometry, GeoJsonProperties> | undefined) => {
         if (item) {
           item.features.forEach(feature => {
@@ -205,9 +210,8 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
 
   return (
     <PropertySearchSelectorFormView
-      onSearch={setLayerSearch}
+      onSearch={searchFunc}
       selectedProperties={selectedProperties}
-      search={layerSearch}
       searchResults={searchResults}
       loading={
         isMapLayerLoading ||
@@ -215,7 +219,8 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
         isLoadingNearestToPoint ||
         isLoadingSitePids ||
         findRegionLoading ||
-        findDistrictLoading
+        findDistrictLoading ||
+        findManyLoading
       }
       onSelectedProperties={setSelectedProperties}
       addressResults={addressResults}
@@ -227,21 +232,24 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
 
 export const featureToLocationFeatureDataset = (feature: Feature<Geometry, GeoJsonProperties>) => {
   const center = getFeatureBoundedCenter(feature);
-  return {
-    parcelFeature: feature,
-    selectingComponentId: null,
+
+  // TODO: This looks funky. Why is this reconstructing a location dataset from a feature?
+  const locationDataSet: SelectedFeatureDataset = {
+    parcelFeature: feature as Feature<Geometry, PMBC_FullyAttributed_Feature_Properties>,
     pimsFeature: null,
     location: { lat: center[1], lng: center[0] },
     regionFeature: null,
+    fileLocation: null,
     districtFeature: null,
     municipalityFeature: null,
-    highwayFeatures: null,
-  } as LocationFeatureDataset;
+    selectingComponentId: null,
+  };
+  return locationDataSet;
 };
 
 // Not thread safe. Modifies the passed property.
 async function matchRegionAndDistrict(
-  property: LocationFeatureDataset,
+  property: SelectedFeatureDataset,
   regionSearch: (
     latlng: LatLngLiteral,
     geometryName?: string | undefined,

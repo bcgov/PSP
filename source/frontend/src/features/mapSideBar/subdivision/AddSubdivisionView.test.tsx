@@ -8,20 +8,14 @@ import { lookupCodesSlice } from '@/store/slices/lookupCodes/lookupCodesSlice';
 import {
   render,
   RenderOptions,
-  waitFor,
   screen,
-  getByTitle,
   userEvent,
   act,
 } from '@/utils/test-utils';
 import { SubdivisionFormModel } from './AddSubdivisionModel';
 import AddSubdivisionView, { IAddSubdivisionViewProps } from './AddSubdivisionView';
-import PropertySelectorPidSearchContainer, {
-  PropertySelectorPidSearchContainerProps,
-} from '@/components/propertySelector/search/PropertySelectorPidSearchContainer';
-import MapSelectorContainer, {
-  IMapSelectorContainerProps,
-} from '@/components/propertySelector/MapSelectorContainer';
+import { PropertySelectorPidSearchContainerProps } from '@/components/propertySelector/search/PropertySelectorPidSearchContainer';
+import { IMapSelectorContainerProps } from '@/components/propertySelector/MapSelectorContainer';
 import { IMapProperty } from '@/components/propertySelector/models';
 import { getMockApiProperty } from '@/mocks/properties.mock';
 import { AreaUnitTypes } from '@/constants';

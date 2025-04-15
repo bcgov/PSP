@@ -7,7 +7,7 @@ import {
   PIMS_Property_Location_View,
 } from '@/models/layers/pimsPropertyLocationView';
 
-export interface FeatureSelected {
+export interface MarkerSelected {
   readonly clusterId: string;
   readonly pimsLocationFeature: PIMS_Property_Location_View | null;
   readonly pimsBoundaryFeature: PIMS_Property_Boundary_View | null;
