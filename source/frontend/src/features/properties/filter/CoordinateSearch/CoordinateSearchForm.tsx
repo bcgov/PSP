@@ -1,6 +1,6 @@
+import clsx from 'classnames';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
-import { clsx } from 'yet-another-react-lightbox';
 
 import { NumberInput, Select } from '@/components/common/form';
 import { withNameSpace } from '@/utils/formUtils';
