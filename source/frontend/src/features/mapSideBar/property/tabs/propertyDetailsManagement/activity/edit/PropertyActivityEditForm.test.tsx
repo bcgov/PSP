@@ -28,6 +28,7 @@ const storeState = {
 const onCancel = vi.fn();
 const onSave = vi.fn();
 const setShow = vi.fn();
+const onClose = vi.fn();
 
 describe('PropertyActivityEditForm component', () => {
   const setup = (
@@ -46,8 +47,7 @@ describe('PropertyActivityEditForm component', () => {
         loading={renderOptions?.props?.loading ?? false}
         show={renderOptions?.props?.show ?? true}
         setShow={renderOptions?.props?.setShow ?? setShow}
-        onSave={renderOptions?.props?.onSave ?? onSave}
-      />,
+        onSave={renderOptions?.props?.onSave ?? onSave} onClose={renderOptions?.props?.onClose ?? onClose }      />,
       {
         store: storeState,
         useMockAuthentication: true,
