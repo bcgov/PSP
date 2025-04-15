@@ -2363,6 +2363,13 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                         >
                           Pending Litigation
                         </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-UNKNOWN"
+                          value="UNKNOWN"
+                        >
+                          Unknown
+                        </option>
                       </select>
                     </div>
                   </div>
@@ -2531,6 +2538,13 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-LSHOLDR"
+                          value="LSHOLDR"
+                        >
+                          Leaseholder
+                        </option>
+                        <option
+                          class="option"
                           data-testid="select-option-LICOCCUPY"
                           value="LICOCCUPY"
                         >
@@ -2542,6 +2556,13 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                           value="LIEN"
                         >
                           Lis Pendens / Lien
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-MOBILE"
+                          value="MOBILE"
+                        >
+                          Mobile Home Owner
                         </option>
                         <option
                           class="option"
@@ -2576,14 +2597,14 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                           data-testid="select-option-TENANT"
                           value="TENANT"
                         >
-                          Tenant (Monthly) Leaseholder
+                          Tenant (Monthly)
                         </option>
                         <option
                           class="option"
                           data-testid="select-option-OTHER"
                           value="OTHER"
                         >
-                          Other 
+                          Other
                         </option>
                       </select>
                     </div>
@@ -5295,6 +5316,13 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                           value="PENDING"
                         >
                           Pending Litigation
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-UNKNOWN"
+                          value="UNKNOWN"
+                        >
+                          Unknown
                         </option>
                       </select>
                     </div>

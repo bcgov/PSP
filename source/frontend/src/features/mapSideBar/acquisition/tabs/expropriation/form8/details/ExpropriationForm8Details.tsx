@@ -15,8 +15,8 @@ import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_Concepts_ExpropriationPayment } from '@/models/api/generated/ApiGen_Concepts_ExpropriationPayment';
 import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
+import { formatInterestHolderName } from '@/utils/formUtils';
 import { formatMoney } from '@/utils/numberFormatUtils';
-import { formatApiPersonNames } from '@/utils/personUtils';
 
 import ExpropriationPaymentItemsTable from './ExpropriationPaymentItemsTable';
 
@@ -43,7 +43,7 @@ export const ExpropriationForm8Details: React.FunctionComponent<
       : null;
 
   const interestHolderContactLink = getInterestHolderLink(form8.interestHolder);
-  const interestHolderDisplayName = getInterestHolderDisplayName(form8.interestHolder);
+  const interestHolderDisplayName = formatInterestHolderName(form8.interestHolder);
   const paymentItemsTotal =
     form8.paymentItems?.map(x => x.totalAmount ?? 0).reduce((prev, next) => prev + next, 0) ?? 0;
 
@@ -217,18 +217,4 @@ const getInterestHolderLink = (
   }
 
   return 'O' + interestHolder.organization?.id;
-};
-
-const getInterestHolderDisplayName = (
-  interestHolder: ApiGen_Concepts_InterestHolder | null,
-): string | null => {
-  if (!interestHolder) {
-    return null;
-  }
-
-  if (interestHolder.personId && interestHolder.person) {
-    return formatApiPersonNames(interestHolder.person);
-  }
-
-  return interestHolder.organization?.name ?? '';
 };

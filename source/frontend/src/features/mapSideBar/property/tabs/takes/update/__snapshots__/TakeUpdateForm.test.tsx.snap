@@ -280,6 +280,13 @@ exports[`TakeUpdateForm component > renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-INPROGRESS"
+                  value="INPROGRESS"
+                >
+                  In-progress
+                </option>
+                <option
+                  class="option"
                   data-testid="select-option-COMPLETE"
                   value="COMPLETE"
                 >
@@ -287,10 +294,10 @@ exports[`TakeUpdateForm component > renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
-                  data-testid="select-option-INPROGRESS"
-                  value="INPROGRESS"
+                  data-testid="select-option-HOLD"
+                  value="HOLD"
                 >
-                  In-progress
+                  Hold
                 </option>
               </select>
             </div>
@@ -1133,13 +1140,6 @@ exports[`TakeUpdateForm component > renders as expected 1`] = `
                         </option>
                         <option
                           class="option"
-                          data-testid="select-option-Crown Grant"
-                          value="Crown Grant"
-                        >
-                          Crown Grant Crown Grant
-                        </option>
-                        <option
-                          class="option"
                           data-testid="select-option-Section 16"
                           value="Section 16"
                         >
@@ -1165,6 +1165,20 @@ exports[`TakeUpdateForm component > renders as expected 1`] = `
                           value="Section 66"
                         >
                           Section 66 Prohibited Use Area
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-Crown Grant"
+                          value="Crown Grant"
+                        >
+                          Crown Grant Crown Grant
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-Transfer Admin"
+                          value="Transfer Admin"
+                        >
+                          Transfer Admin Transfer of Admin and Control
                         </option>
                       </select>
                     </div>

@@ -628,10 +628,17 @@ exports[`Disposition List View > matches snapshot 1`] = `
                           </option>
                           <option
                             class="option"
-                            data-testid="select-option-ARCHIVED"
-                            value="ARCHIVED"
+                            data-testid="select-option-COMPLETE"
+                            value="COMPLETE"
                           >
-                            Archived
+                            Complete
+                          </option>
+                          <option
+                            class="option"
+                            data-testid="select-option-HOLD"
+                            value="HOLD"
+                          >
+                            Hold
                           </option>
                           <option
                             class="option"
@@ -642,24 +649,10 @@ exports[`Disposition List View > matches snapshot 1`] = `
                           </option>
                           <option
                             class="option"
-                            data-testid="select-option-COMPLETE"
-                            value="COMPLETE"
+                            data-testid="select-option-ARCHIVED"
+                            value="ARCHIVED"
                           >
-                            Complete
-                          </option>
-                          <option
-                            class="option"
-                            data-testid="select-option-DRAFT"
-                            value="DRAFT"
-                          >
-                            Draft
-                          </option>
-                          <option
-                            class="option"
-                            data-testid="select-option-HOLD"
-                            value="HOLD"
-                          >
-                            Hold
+                            Archived
                           </option>
                         </select>
                       </div>

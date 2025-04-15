@@ -2117,6 +2117,13 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                 >
                   Pending Litigation
                 </option>
+                <option
+                  class="option"
+                  data-testid="select-option-UNKNOWN"
+                  value="UNKNOWN"
+                >
+                  Unknown
+                </option>
               </select>
             </div>
           </div>
@@ -2285,6 +2292,13 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-LSHOLDR"
+                  value="LSHOLDR"
+                >
+                  Leaseholder
+                </option>
+                <option
+                  class="option"
                   data-testid="select-option-LICOCCUPY"
                   value="LICOCCUPY"
                 >
@@ -2296,6 +2310,13 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                   value="LIEN"
                 >
                   Lis Pendens / Lien
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-MOBILE"
+                  value="MOBILE"
+                >
+                  Mobile Home Owner
                 </option>
                 <option
                   class="option"
@@ -2330,14 +2351,14 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                   data-testid="select-option-TENANT"
                   value="TENANT"
                 >
-                  Tenant (Monthly) Leaseholder
+                  Tenant (Monthly)
                 </option>
                 <option
                   class="option"
                   data-testid="select-option-OTHER"
                   value="OTHER"
                 >
-                  Other 
+                  Other
                 </option>
               </select>
             </div>
@@ -4749,6 +4770,13 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
                   value="PENDING"
                 >
                   Pending Litigation
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-UNKNOWN"
+                  value="UNKNOWN"
+                >
+                  Unknown
                 </option>
               </select>
             </div>

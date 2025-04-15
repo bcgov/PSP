@@ -205,21 +205,7 @@ exports[`LeaseDetailSubForm component > renders as expected 1`] = `
                 data-testid="select-option-ACTIVE"
                 value="ACTIVE"
               >
-                Archived
-              </option>
-              <option
-                class="option"
-                data-testid="select-option-ARCHIVED"
-                value="ARCHIVED"
-              >
                 Active
-              </option>
-              <option
-                class="option"
-                data-testid="select-option-DISCARD"
-                value="DISCARD"
-              >
-                Discarded
               </option>
               <option
                 class="option"
@@ -240,7 +226,14 @@ exports[`LeaseDetailSubForm component > renders as expected 1`] = `
                 data-testid="select-option-INACTIVE"
                 value="INACTIVE"
               >
-                Inactive
+                Hold
+              </option>
+              <option
+                class="option"
+                data-testid="select-option-DISCARD"
+                value="DISCARD"
+              >
+                Cancelled
               </option>
               <option
                 class="option"
@@ -248,6 +241,13 @@ exports[`LeaseDetailSubForm component > renders as expected 1`] = `
                 value="TERMINATED"
               >
                 Terminated
+              </option>
+              <option
+                class="option"
+                data-testid="select-option-ARCHIVED"
+                value="ARCHIVED"
+              >
+                Archived
               </option>
             </select>
           </div>

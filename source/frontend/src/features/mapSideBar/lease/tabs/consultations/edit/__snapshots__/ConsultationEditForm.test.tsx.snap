@@ -429,34 +429,6 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
                   </option>
                   <option
                     class="option"
-                    data-testid="select-option-1STNATION"
-                    value="1STNATION"
-                  >
-                    First nation
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-STRATRE"
-                    value="STRATRE"
-                  >
-                    Strategic Real Estate (SRE)
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-REGPLANG"
-                    value="REGPLANG"
-                  >
-                    Regional planning
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-REGPRPSVC"
-                    value="REGPRPSVC"
-                  >
-                    Regional property services
-                  </option>
-                  <option
-                    class="option"
                     data-testid="select-option-DISTRICT"
                     value="DISTRICT"
                   >
@@ -464,10 +436,45 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-ENGINEERG"
+                    value="ENGINEERG"
+                  >
+                    Engineering
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-1STNATION"
+                    value="1STNATION"
+                  >
+                    First Nation
+                  </option>
+                  <option
+                    class="option"
                     data-testid="select-option-HQ"
                     value="HQ"
                   >
                     Headquarter (HQ)
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-REGPLANG"
+                    value="REGPLANG"
+                  >
+                    Regional Planning
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-REGPRPSVC"
+                    value="REGPRPSVC"
+                  >
+                    Regional Property Services
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-STRATRE"
+                    value="STRATRE"
+                  >
+                    Strategic Real Estate (SRE)
                   </option>
                   <option
                     class="option"
@@ -809,10 +816,10 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
                   </option>
                   <option
                     class="option"
-                    data-testid="select-option-APPRDENIED"
-                    value="APPRDENIED"
+                    data-testid="select-option-INPROGRESS"
+                    value="INPROGRESS"
                   >
-                    Approval denied
+                    In-progress
                   </option>
                   <option
                     class="option"
@@ -820,6 +827,13 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
                     value="APPRGRANTED"
                   >
                     Approval granted
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-APPRDENIED"
+                    value="APPRDENIED"
+                  >
+                    Approval denied
                   </option>
                   <option
                     class="option"
@@ -834,13 +848,6 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
                     value="CONSDISCONT"
                   >
                     Consultation discontinued
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-INPROGRESS"
-                    value="INPROGRESS"
-                  >
-                    In-progress
                   </option>
                 </select>
               </div>

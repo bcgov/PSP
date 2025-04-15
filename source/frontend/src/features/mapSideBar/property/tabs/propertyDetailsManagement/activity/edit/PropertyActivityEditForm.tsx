@@ -1,6 +1,7 @@
 import clsx from 'classnames';
 import { Formik, FormikProps } from 'formik';
 import React, { ChangeEvent, useMemo, useRef, useState } from 'react';
+import { Col } from 'react-bootstrap';
 import ReactVisibilitySensor from 'react-visibility-sensor';
 
 import { CancelConfirmationModal } from '@/components/common/CancelConfirmationModal';
@@ -37,6 +38,7 @@ export interface IPropertyActivityEditFormProps {
   gstConstant: number;
   pstConstant: number;
   onCancel: () => void;
+  onClose: () => void;
   loading: boolean;
   show: boolean;
   setShow: (show: boolean) => void;
@@ -98,6 +100,11 @@ export const PropertyActivityEditForm: React.FunctionComponent<
 
   const isEditMode = exists(props.activity);
 
+  const onCloseClick = () => {
+    props.setShow(false);
+    props.onClose();
+  };
+
   return (
     <ReactVisibilitySensor
       onChange={(isVisible: boolean) => {
@@ -107,6 +114,13 @@ export const PropertyActivityEditForm: React.FunctionComponent<
       <Styled.PopupTray className={clsx({ show: props.show })}>
         <TrayHeaderContent>
           <Styled.TrayHeader>{isEditMode ? 'Edit ' : 'New '}Property Activity</Styled.TrayHeader>
+          <Col xs="auto" className="text-right">
+            <Styled.CloseIcon
+              id="close-tray"
+              title="close"
+              onClick={onCloseClick}
+            ></Styled.CloseIcon>
+          </Col>
         </TrayHeaderContent>
         <Styled.TrayContent>
           <StyledFormWrapper>
