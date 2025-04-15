@@ -564,7 +564,7 @@ export const mapMachine = createMachine<MachineContext>({
         },
         PREPARE_FOR_CREATION: {
           actions: assign({
-            selectedFeatureDataset: (context: MachineContext) => context.mapLocationFeatureDataset,
+            selectedFeatureDataset: (_, event: any) => event.selectedFeature,
           }),
         },
         DEFAULT_MAP_LAYERS: {

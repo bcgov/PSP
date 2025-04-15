@@ -6,7 +6,7 @@ import { Col, Row } from 'react-bootstrap';
 
 import { ModalProps } from '@/components/common/GenericModal';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
-import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
+import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { Section } from '@/components/common/Section/Section';
 import MapSelectorContainer from '@/components/propertySelector/MapSelectorContainer';
 import { IMapProperty } from '@/components/propertySelector/models';
@@ -108,7 +108,7 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
     [confirmAdd, cancelAdd],
   );
 
-  const processAddedProperties = async (newProperties: LocationFeatureDataset[]) => {
+  const processAddedProperties = async (newProperties: SelectedFeatureDataset[]) => {
     let needsWarning = false;
     const newFormProperties: FormLeaseProperty[] = [];
 
@@ -209,7 +209,7 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
                     <MapSelectorContainer
                       addSelectedProperties={processAddedProperties}
                       repositionSelectedProperty={(
-                        featureset: LocationFeatureDataset,
+                        featureset: SelectedFeatureDataset,
                         latLng: LatLngLiteral,
                         index: number | null,
                       ) => {

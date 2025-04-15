@@ -12,12 +12,14 @@ export interface ILayerPopupLinksProps {
   bounds: LatLngBounds | undefined;
   onEllipsisClick?: () => void;
   onViewPropertyInfo: (event: React.MouseEvent<HTMLElement>) => void;
+  showViewPropertyInfo: boolean;
 }
 
 export const LayerPopupLinks: React.FC<React.PropsWithChildren<ILayerPopupLinksProps>> = ({
   bounds,
   onViewPropertyInfo,
   onEllipsisClick,
+  showViewPropertyInfo,
 }) => {
   const { requestFlyToBounds } = useMapStateMachine();
 
@@ -30,10 +32,12 @@ export const LayerPopupLinks: React.FC<React.PropsWithChildren<ILayerPopupLinksP
   return (
     <StyledContainer>
       <StyledLinksWrapper>
-        <LinkButton onClick={onViewPropertyInfo}>
-          <FaEye size={18} className="mr-2" />
-          <span>View Property Info</span>
-        </LinkButton>
+        {showViewPropertyInfo && (
+          <LinkButton onClick={onViewPropertyInfo}>
+            <FaEye size={18} className="mr-2" />
+            <span>View Property Info</span>
+          </LinkButton>
+        )}
         <LinkButton onClick={onZoomToBounds}>
           <FaSearchPlus size={18} className="mr-2" />
           <span>Zoom map</span>

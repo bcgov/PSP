@@ -140,8 +140,8 @@ describe('AddLeaseContainer component', () => {
       selectOptions('paymentReceivableTypeCode', ApiGen_CodeTypes_LeaseAccountTypes.RCVBL),
     );
     await act(async () => selectOptions('regionId', '1'));
-    await act(async () => selectOptions('programTypeCode', 'BCFERRIES'));
-    await act(async () => selectOptions('leaseTypeCode', 'LIOCCTTLD'));
+    await act(async () => selectOptions('programTypeCode', 'COMMBLDG'));
+    await act(async () => selectOptions('leaseTypeCode', 'LOOBCTFA'));
     await act(async () => {
       fillInput(container, 'startDate', '01/01/2020', 'datepicker');
     });
@@ -158,8 +158,11 @@ describe('AddLeaseContainer component', () => {
 
     await act(async () => {
       userEvent.type(multiSelectPurposes, 'BC Ferries');
+    });
+    await act(async () => {
       userEvent.click(multiSelectPurposes);
-
+    });
+    await act(async () => {
       const firstOption = container.querySelector(`div ul li.option`);
       userEvent.click(firstOption);
     });
@@ -183,8 +186,8 @@ describe('AddLeaseContainer component', () => {
       selectOptions('paymentReceivableTypeCode', ApiGen_CodeTypes_LeaseAccountTypes.RCVBL),
     );
     await act(async () => selectOptions('regionId', '1'));
-    await act(async () => selectOptions('programTypeCode', 'BCFERRIES'));
-    await act(async () => selectOptions('leaseTypeCode', 'LIOCCTTLD'));
+    await act(async () => selectOptions('programTypeCode', 'COMMBLDG'));
+    await act(async () => selectOptions('leaseTypeCode', 'LOOBCTFA'));
     await act(async () => {
       fillInput(container, 'startDate', '01/01/2020', 'datepicker');
     });
@@ -227,8 +230,8 @@ describe('AddLeaseContainer component', () => {
       selectOptions('paymentReceivableTypeCode', ApiGen_CodeTypes_LeaseAccountTypes.RCVBL),
     );
     await act(async () => selectOptions('regionId', '1'));
-    await act(async () => selectOptions('programTypeCode', 'BCFERRIES'));
-    await act(async () => selectOptions('leaseTypeCode', 'LIOCCTTLD'));
+    await act(async () => selectOptions('programTypeCode', 'COMMBLDG'));
+    await act(async () => selectOptions('leaseTypeCode', 'LOOBCTFA'));
     await act(async () => {
       fillInput(container, 'startDate', '01/01/2020', 'datepicker');
     });
@@ -284,14 +287,8 @@ describe('AddLeaseContainer component', () => {
           geometry: getMockPolygon(),
         },
         districtFeature: null,
-        municipalityFeature: null,
-        highwayFeatures: null,
         selectingComponentId: null,
-        crownLandLeasesFeature: null,
-        crownLandLicensesFeature: null,
-        crownLandTenuresFeature: null,
-        crownLandInventoryFeature: null,
-        crownLandInclusionsFeature: null,
+        municipalityFeature: null,
       },
     };
 
@@ -308,9 +305,9 @@ const leaseData: ApiGen_Concepts_Lease = {
   amount: 0,
   paymentReceivableType: toTypeCodeNullable(ApiGen_CodeTypes_LeaseAccountTypes.RCVBL),
   fileStatusTypeCode: toTypeCodeNullable('DRAFT'),
-  type: toTypeCodeNullable('LIOCCTTLD'),
+  type: toTypeCodeNullable('LOOBCTFA'),
   region: toTypeCodeNullable(1),
-  programType: toTypeCodeNullable('BCFERRIES'),
+  programType: toTypeCodeNullable('COMMBLDG'),
   returnNotes: '',
   motiName: '',
   fileProperties: [],

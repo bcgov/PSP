@@ -55,7 +55,7 @@ export interface IUserLayerQuery {
    * @param geometryName the name of the geometry field for this layer; can be 'GEOMETRY' or 'SHAPE'
    * @param spatialReferenceId the spatial reference of the location argument; common values are: 4326 (WGS84 - lat/lng) and 3005 (BC Albers)
    */
-  findMetadataByLocation: (
+  findOneMetadataByLocation: (
     latlng: LatLngLiteral,
     geometryName?: string,
     spatialReferenceId?: number,
@@ -87,7 +87,7 @@ export interface IUserLayerQuery {
   >;
 }
 
-/**
+/**uselayerque
  * // TODO: PSP-4393 This should be deprecated
  * Custom hook to fetch layer feature collection from wfs url
  * @param url wfs request url
@@ -100,7 +100,7 @@ export const useLayerQuery = (
   withCredentials?: boolean,
 ): IUserLayerQuery => {
   const baseAllUrl = `${url}&srsName=EPSG:4326`;
-  const baseUrl = `${url}&srsName=EPSG:4326&count=1`;
+  const baseUrl = `${url}&srsName=EPSG:4326`;
 
   const findOneWhereContains = useCallback(
     async (
@@ -110,7 +110,7 @@ export const useLayerQuery = (
     ): Promise<FeatureCollection> => {
       const data: FeatureCollection = (
         await wfsAxios2({ authenticated, withCredentials }).get<FeatureCollection>(
-          `${baseUrl}&cql_filter=CONTAINS(${geometryName},SRID=${spatialReferenceId};POINT ( ${latlng.lng} ${latlng.lat}))`,
+          `${baseUrl}&count=1&cql_filter=CONTAINS(${geometryName},SRID=${spatialReferenceId};POINT ( ${latlng.lng} ${latlng.lat}))`,
         )
       )?.data;
       return data;
@@ -165,9 +165,9 @@ export const useLayerQuery = (
         >(
           `${baseUrl}${
             sortBy ? '&' + sortBy : ''
-          }&cql_filter=CONTAINS(${geometryName},SRID=${spatialReferenceId};POINT ( ${latlng.lng} ${
-            latlng.lat
-          }))`,
+          }&count=1&cql_filter=CONTAINS(${geometryName},SRID=${spatialReferenceId};POINT ( ${
+            latlng.lng
+          } ${latlng.lat}))`,
         );
         return data;
       },
@@ -198,7 +198,7 @@ export const useLayerQuery = (
       },
       [baseAllUrl, authenticated],
     ),
-    requestName: `findOneWhereContainsWrapped-${baseAllUrl}`,
+    requestName: `findMultipleWhereContainsWrapped-${baseAllUrl}`,
   });
 
   const findOneWhereExactWrapped = useApiRequestWrapper({
@@ -257,7 +257,7 @@ export const useLayerQuery = (
     requestName: 'planNumber',
   });
 
-  const findMetadataByLocation = useCallback(
+  const findOneMetadataByLocation = useCallback(
     async (
       latlng: LatLngLiteral,
       geometryName = 'SHAPE',
@@ -286,7 +286,7 @@ export const useLayerQuery = (
     findByPinLoading,
     findByPlanNumber,
     findByPlanNumberLoading,
-    findMetadataByLocation,
+    findOneMetadataByLocation,
     findOneWhereContainsWrapped,
     findMultipleWhereContainsWrapped,
     findOneWhereExactWrapped,

@@ -5,7 +5,7 @@ import { RiDragMove2Line } from 'react-icons/ri';
 import { RemoveButton, StyledIconButton } from '@/components/common/buttons';
 import { InlineInput } from '@/components/common/form/styles';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
+import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import OverflowTip from '@/components/common/OverflowTip';
 import AreaContainer from '@/components/measurements/AreaContainer';
 import DraftCircleNumber from '@/components/propertySelector/selectedPropertyList/DraftCircleNumber';
@@ -17,7 +17,7 @@ export interface ISelectedPropertyRowProps {
   index: number;
   nameSpace?: string;
   onRemove: () => void;
-  property: LocationFeatureDataset;
+  property: SelectedFeatureDataset;
   formikProps: FormikProps<LeaseFormModel>;
   showSeparator?: boolean;
 }

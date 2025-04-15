@@ -1272,21 +1272,7 @@ exports[`FilterContentForm component > renders as expected 1`] = `
                   data-testid="select-option-ACTIVE"
                   value="ACTIVE"
                 >
-                  Archived
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-ARCHIVED"
-                  value="ARCHIVED"
-                >
                   Active
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-DISCARD"
-                  value="DISCARD"
-                >
-                  Discarded
                 </option>
                 <option
                   class="option"
@@ -1307,7 +1293,14 @@ exports[`FilterContentForm component > renders as expected 1`] = `
                   data-testid="select-option-INACTIVE"
                   value="INACTIVE"
                 >
-                  Inactive
+                  Hold
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-DISCARD"
+                  value="DISCARD"
+                >
+                  Cancelled
                 </option>
                 <option
                   class="option"
@@ -1315,6 +1308,13 @@ exports[`FilterContentForm component > renders as expected 1`] = `
                   value="TERMINATED"
                 >
                   Terminated
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-ARCHIVED"
+                  value="ARCHIVED"
+                >
+                  Archived
                 </option>
               </select>
             </div>
@@ -1367,52 +1367,62 @@ exports[`FilterContentForm component > renders as expected 1`] = `
                       <li
                         class="option  highlightOption highlight  "
                       >
-                        MOTI Project Use License
+                        Amending Agreement
                       </li>
                       <li
                         class="option    "
                       >
-                        License of Occupation (access)
+                        Building Lease (receivable)
                       </li>
                       <li
                         class="option    "
                       >
-                        License of Occupation (titled)
+                        Crossing Agreement
                       </li>
                       <li
                         class="option    "
                       >
-                        License of Occupation (use)
+                        Indemnity letter
                       </li>
                       <li
                         class="option    "
                       >
-                        License of Occupation (utilities)
+                        Land Lease (receivable)
                       </li>
                       <li
                         class="option    "
                       >
-                        License of Prov Public Highway
+                        Lease - Registered (payable)
                       </li>
                       <li
                         class="option    "
                       >
-                        Ground Lease
+                        Lease - Unregistered (payable)
                       </li>
                       <li
                         class="option    "
                       >
-                        Lease - Registered
+                        Letter of Intended Use
                       </li>
                       <li
                         class="option    "
                       >
-                        Lease - Unregistered
+                        Licence of Occupation (BCTFA fee simple)
                       </li>
                       <li
                         class="option    "
                       >
-                        Manufactured Home Act
+                        Licence of Occupation (HMK fee simple)
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Licence of Occupation of Provincial Public Highway
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Manufactured Home Tenancy
                       </li>
                       <li
                         class="option    "
@@ -1422,12 +1432,7 @@ exports[`FilterContentForm component > renders as expected 1`] = `
                       <li
                         class="option    "
                       >
-                        Residential Tenancy Act
-                      </li>
-                      <li
-                        class="option    "
-                      >
-                        Road Crossing
+                        Residential Tenancy Agreement
                       </li>
                     </ul>
                   </div>
@@ -1483,22 +1488,22 @@ exports[`FilterContentForm component > renders as expected 1`] = `
                       <li
                         class="option  highlightOption highlight  "
                       >
-                        Access (Industrial/Commercial)
+                        Access
                       </li>
                       <li
                         class="option    "
                       >
-                        Access (Residential)
-                      </li>
-                      <li
-                        class="option    "
-                      >
-                        Agricultural
+                        Archeological investigations
                       </li>
                       <li
                         class="option    "
                       >
                         BC Ferries
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        BC Transit
                       </li>
                       <li
                         class="option    "
@@ -1513,6 +1518,11 @@ exports[`FilterContentForm component > renders as expected 1`] = `
                       <li
                         class="option    "
                       >
+                        Crossing
+                      </li>
+                      <li
+                        class="option    "
+                      >
                         Emergency Services
                       </li>
                       <li
@@ -1523,12 +1533,22 @@ exports[`FilterContentForm component > renders as expected 1`] = `
                       <li
                         class="option    "
                       >
+                        Environmental
+                      </li>
+                      <li
+                        class="option    "
+                      >
                         Fencing/Gate
                       </li>
                       <li
                         class="option    "
                       >
-                        Gardening
+                        Garden
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Geotechnical Investigations
                       </li>
                       <li
                         class="option    "
@@ -1538,12 +1558,32 @@ exports[`FilterContentForm component > renders as expected 1`] = `
                       <li
                         class="option    "
                       >
-                        Grazing
+                        Grazing/haying
                       </li>
                       <li
                         class="option    "
                       >
-                        Logging/Timber Harvest
+                        Historical
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Housing
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Land Survey
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Landscaping/Vegetation Clearing
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Maintenance Yard
                       </li>
                       <li
                         class="option    "
@@ -1558,27 +1598,17 @@ exports[`FilterContentForm component > renders as expected 1`] = `
                       <li
                         class="option    "
                       >
-                        Maintenance Yard
-                      </li>
-                      <li
-                        class="option    "
-                      >
-                        Other*
-                      </li>
-                      <li
-                        class="option    "
-                      >
                         Park
                       </li>
                       <li
                         class="option    "
                       >
-                        Parking
+                        Park and Ride
                       </li>
                       <li
                         class="option    "
                       >
-                        Park and Ride
+                        Parking
                       </li>
                       <li
                         class="option    "
@@ -1598,7 +1628,17 @@ exports[`FilterContentForm component > renders as expected 1`] = `
                       <li
                         class="option    "
                       >
-                        Railway
+                        Railway crossing
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Railway trespass
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Remediation
                       </li>
                       <li
                         class="option    "
@@ -1608,7 +1648,12 @@ exports[`FilterContentForm component > renders as expected 1`] = `
                       <li
                         class="option    "
                       >
-                        Sidewalks/Landscaping
+                        Riparian restoration
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Sidewalks
                       </li>
                       <li
                         class="option    "
@@ -1638,12 +1683,22 @@ exports[`FilterContentForm component > renders as expected 1`] = `
                       <li
                         class="option    "
                       >
-                        Tourist Info
+                        Tourism
                       </li>
                       <li
                         class="option    "
                       >
                         Trail
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Transit Oriented Development (TOD)
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Translink
                       </li>
                       <li
                         class="option    "
@@ -1673,7 +1728,7 @@ exports[`FilterContentForm component > renders as expected 1`] = `
                       <li
                         class="option    "
                       >
-                        Crossing
+                        Other*
                       </li>
                     </ul>
                   </div>

@@ -14,7 +14,8 @@ import { useTenant } from '@/tenants';
 export const useIndianReserveBandMapLayer = () => {
   const { reservesLayerUrl } = useTenant();
 
-  const { findOneWhereContainsWrapped } = useLayerQuery(reservesLayerUrl);
+  const { findMultipleWhereContainsWrapped: findOneWhereContainsWrapped } =
+    useLayerQuery(reservesLayerUrl);
   const findOneWhereContainsWrappedExecute = findOneWhereContainsWrapped.execute;
   const findOneWhereContainsWrappedLoading = findOneWhereContainsWrapped.loading;
 

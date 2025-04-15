@@ -83,9 +83,9 @@ export const useComposedProperties = ({
   const { findByPid, findByPin, findByWrapper } = useFullyAttributedParcelMapLayer();
   const { getSummaryWrapper } = useBcAssessmentLayer(bcAssessment.url, bcAssessment.names);
 
-  const { findOneCrownLandTenure, findOneCrownLandTenureLoading } = useCrownLandLayer();
+  const { findMultipleCrownLandTenure, findMultipleCrownLandTenureLoading } = useCrownLandLayer();
   const [crownResponse, setCrownResponse] = useState<
-    Feature<Geometry, TANTALIS_CrownLandTenures_Feature_Properties> | undefined
+    Feature<Geometry, TANTALIS_CrownLandTenures_Feature_Properties>[] | undefined
   >();
 
   const retrievedPid = getPropertyWrapper?.response?.pid?.toString() ?? pid?.toString();
@@ -101,7 +101,7 @@ export const useComposedProperties = ({
     parcelMapFeatureCollection: undefined,
     geoserverFeatureCollection: undefined,
     bcAssessmentSummary: undefined,
-    crownTenureFeature: undefined,
+    crownTenureFeatures: undefined,
   });
 
   const typeCheckWrapper = useDeepCompareCallback(
@@ -153,7 +153,7 @@ export const useComposedProperties = ({
     // Crown land doesn't necessarily have a PIMS ID or PID or PIN so we need to use the lat/long of the selected property
     if (exists(latLng)) {
       typeCheckWrapper(async () => {
-        const result = await findOneCrownLandTenure(latLng);
+        const result = await findMultipleCrownLandTenure(latLng);
         setCrownResponse(result);
       }, PROPERTY_TYPES.CROWN_TENURES);
     }
@@ -165,7 +165,7 @@ export const useComposedProperties = ({
     retrievedPin,
     typeCheckWrapper,
     executeBcAssessmentSummary,
-    findOneCrownLandTenure,
+    findMultipleCrownLandTenure,
     latLng,
   ]);
 
@@ -180,7 +180,7 @@ export const useComposedProperties = ({
       parcelMapFeatureCollection: findByWrapper.response,
       geoserverFeatureCollection: getPropertyWfsWrapper.response,
       bcAssessmentSummary: getSummaryWrapper.response,
-      crownTenureFeature: crownResponse,
+      crownTenureFeatures: crownResponse,
     });
   }, [
     setComposedProperty,
@@ -215,7 +215,7 @@ export const useComposedProperties = ({
         findByWrapper?.loading ||
         getPropertyWfsWrapper?.loading ||
         getSummaryWrapper?.loading ||
-        findOneCrownLandTenureLoading,
+        findMultipleCrownLandTenureLoading,
     }),
     [
       id,
@@ -230,7 +230,7 @@ export const useComposedProperties = ({
       findByWrapper,
       getPropertyWfsWrapper,
       getSummaryWrapper,
-      findOneCrownLandTenureLoading,
+      findMultipleCrownLandTenureLoading,
     ],
   );
 };

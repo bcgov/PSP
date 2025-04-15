@@ -503,17 +503,17 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
                       </option>
                       <option
                         class="option"
-                        data-testid="select-option-1STNTNCONSULT"
-                        value="1STNTNCONSULT"
-                      >
-                        First Nations Consultation
-                      </option>
-                      <option
-                        class="option"
                         data-testid="select-option-APPLICPERMIT"
                         value="APPLICPERMIT"
                       >
                         Applications/Permits
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-1STNTNCONSULT"
+                        value="1STNTNCONSULT"
+                      >
+                        First Nations Consultation
                       </option>
                       <option
                         class="option"
@@ -552,10 +552,31 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
                       </option>
                       <option
                         class="option"
+                        data-testid="select-option-PROPERTYMGMT"
+                        value="PROPERTYMGMT"
+                      >
+                        Property Management
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-TAXESLEVIES"
+                        value="TAXESLEVIES"
+                      >
+                        Taxes and Levies
+                      </option>
+                      <option
+                        class="option"
                         data-testid="select-option-TENANTIMPROV"
                         value="TENANTIMPROV"
                       >
                         Tenant's Improvements
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-UTILITYBILL"
+                        value="UTILITYBILL"
+                      >
+                        Utility bills
                       </option>
                     </select>
                   </div>

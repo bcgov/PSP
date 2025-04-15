@@ -132,11 +132,16 @@ export const useFullyAttributedParcelMapLayer = () => {
   const findMany = useCallback(
     async (latlng: LatLngLiteral, geometryName?: string, spatialReferenceId?: number) => {
       try {
-        return (await findMultipleWhereContainsWrapped.execute(
+        const featureCollection = await findMultipleWhereContainsWrapped.execute(
           latlng,
           geometryName,
           spatialReferenceId,
-        )) as FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties>;
+        );
+
+        // TODO: Enhance useLayerQuery to allow generics to match the Property types
+        return featureCollection as
+          | FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties>
+          | undefined;
       } catch (e: unknown) {
         handleError();
         return undefined;

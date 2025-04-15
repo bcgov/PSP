@@ -1,14 +1,14 @@
 import { Col, Form as BsForm, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
-import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
+import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { SelectProperty } from '@/components/common/mapping/SelectProperty';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { featuresetToMapProperty, pidFormatter } from '@/utils';
 
 export interface IPropertyMapSelectorSubFormProps {
   onClickDraftMarker: () => void;
-  selectedProperty?: LocationFeatureDataset;
+  selectedProperty?: SelectedFeatureDataset;
 }
 
 export const PropertyMapSelectorSubForm: React.FunctionComponent<

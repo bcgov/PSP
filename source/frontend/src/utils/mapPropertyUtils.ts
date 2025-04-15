@@ -12,7 +12,7 @@ import { compact, isNumber } from 'lodash';
 import polylabel from 'polylabel';
 import { toast } from 'react-toastify';
 
-import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
+import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { ONE_HUNDRED_METER_PRECISION } from '@/components/maps/constants';
 import { IMapProperty } from '@/components/propertySelector/models';
 import { AreaUnitTypes } from '@/constants';
@@ -197,9 +197,12 @@ function toMapProperty(
 }
 
 export function featuresetToMapProperty(
-  featureSet: LocationFeatureDataset,
+  featureSet: SelectedFeatureDataset,
   address?: string,
 ): IMapProperty {
+  if (!exists(featureSet)) {
+    return undefined;
+  }
   const pimsFeature = featureSet?.pimsFeature;
   const parcelFeature = featureSet?.parcelFeature;
   const regionFeature = featureSet?.regionFeature;
@@ -208,12 +211,11 @@ export function featuresetToMapProperty(
   const propertyId = pimsFeature?.properties?.PROPERTY_ID;
   const pid = pidFromFeatureSet(featureSet);
   const pin = pinFromFeatureSet(featureSet);
+
   const formattedAddress = pimsFeature?.properties?.STREET_ADDRESS_1
     ? formatApiAddress(AddressForm.fromPimsView(pimsFeature.properties).toApi())
     : undefined;
-  if (featureSet === undefined) {
-    return undefined;
-  }
+
   const commonFeature = {
     propertyId: propertyId ? Number.parseInt(propertyId?.toString()) : undefined,
     pid: pid ?? undefined,
@@ -269,25 +271,27 @@ export function featuresetToMapProperty(
   }
 }
 
-export function pidFromFeatureSet(featureset: LocationFeatureDataset): string | null {
-  if (exists(featureset?.pimsFeature?.properties)) {
-    return exists(featureset?.pimsFeature?.properties?.PID)
-      ? featureset?.pimsFeature?.properties?.PID?.toString()
+export function pidFromFeatureSet(featureset: SelectedFeatureDataset): string | null {
+  if (exists(featureset.pimsFeature?.properties)) {
+    return exists(featureset.pimsFeature?.properties?.PID)
+      ? featureset.pimsFeature?.properties?.PID?.toString()
       : null;
   }
-  return exists(featureset?.parcelFeature?.properties)
-    ? featureset?.parcelFeature?.properties?.PID
+
+  return exists(featureset.parcelFeature?.properties)
+    ? featureset.parcelFeature?.properties?.PID
     : null;
 }
 
-export function pinFromFeatureSet(featureset: LocationFeatureDataset): string | null {
-  if (exists(featureset?.pimsFeature?.properties)) {
-    return exists(featureset?.pimsFeature?.properties?.PIN)
-      ? featureset?.pimsFeature?.properties?.PIN?.toString()
+export function pinFromFeatureSet(featureset: SelectedFeatureDataset): string | null {
+  if (exists(featureset.pimsFeature?.properties)) {
+    return exists(featureset.pimsFeature?.properties?.PIN)
+      ? featureset.pimsFeature?.properties?.PIN?.toString()
       : null;
   }
-  return exists(featureset?.parcelFeature?.properties?.PIN)
-    ? featureset?.parcelFeature?.properties?.PIN?.toString()
+
+  return exists(featureset.parcelFeature?.properties)
+    ? featureset.parcelFeature?.properties?.PIN?.toString()
     : null;
 }
 
@@ -316,7 +320,7 @@ export function latLngFromMapProperty(
  */
 export function isLatLngInFeatureSetBoundary(
   latLng: LatLngLiteral,
-  featureset: LocationFeatureDataset,
+  featureset: SelectedFeatureDataset,
 ): boolean {
   const location = point([latLng.lng, latLng.lat]);
   const boundary = (featureset?.pimsFeature?.geometry ?? featureset?.parcelFeature?.geometry) as
