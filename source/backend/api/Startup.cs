@@ -181,7 +181,6 @@ namespace Pims.Api
                     options.Audience = Configuration["Keycloak:Audience"];
                     options.SaveToken = true;
                     options.UseSecurityTokenValidators = true;
-                    options.MapInboundClaims = true;
                     options.MapInboundClaims = false;
                     options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
                     {
