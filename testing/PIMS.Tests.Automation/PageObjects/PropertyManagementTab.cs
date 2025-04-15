@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
 using System.Diagnostics;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -354,8 +355,6 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(managementActServiceProviderBttn).Click();
                 sharedSelectContact.SelectContact(activity.PropertyActivityServiceProvider, "");
             }
-
-            System.Diagnostics.Debug.WriteLine(activity.ManagementPropertyActivityInvoices.Count);
             if (activity.ManagementPropertyActivityInvoices.Count > 0)
                 for (int i = 0; i < activity.ManagementPropertyActivityInvoices.Count; i++)
                     AddInvoice(activity.ManagementPropertyActivityInvoices[i], i);
@@ -651,12 +650,11 @@ namespace PIMS.Tests.Automation.PageObjects
 
             webDriver.FindElement(By.Id("input-invoices."+ index +".description")).SendKeys(invoice.PropertyActivityInvoiceDescription);
 
-            //ClearInput(By.Id("input-invoices."+ index +".pretaxAmount"));
-            //webDriver.FindElement(By.Id("input-invoices."+ index +".pretaxAmount")).Click();
-            //webDriver.FindElement(By.Id("input-invoices."+ index +".pretaxAmount")).Clear();
-            Wait(10000);
-            webDriver.FindElement(By.Id("input-invoices."+ index +".pretaxAmount")).SendKeys(invoice.PropertyActivityInvoicePretaxAmount);
-            SendKeysToCurencyInput(By.Id("input-invoices."+ index +".pretaxAmount"), invoice.PropertyActivityInvoicePretaxAmount);
+            webDriver.FindElement(By.Id("input-invoices."+ index +".pretaxAmount")).Click();
+            CleanUpCurrencyInput(By.Id("input-invoices."+ index +".pretaxAmount"));
+
+            foreach (char c in invoice.PropertyActivityInvoicePretaxAmount)
+                SendKeysToCurrencyInput(By.Id("input-invoices."+ index +".pretaxAmount"), c);
 
             ChooseSpecificSelectOption(By.Id("input-invoices."+ index +".isPstRequired"), invoice.PropertyActivityInvoicePSTApplicable);
 

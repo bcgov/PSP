@@ -335,7 +335,6 @@ namespace PIMS.Tests.Automation.PageObjects
         public void VerifyDocumentFields(string documentType)
         {
             VerifyGeneralUpdateDocumentForm();
-            System.Diagnostics.Debug.WriteLine(documentType);
 
             switch (documentType)
             {

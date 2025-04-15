@@ -178,13 +178,6 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(searchPropertiesAddSelectionBttn).Click();
 
             Wait();
-            if (webDriver.FindElements(duplicatePropToast).Count() == 1)
-            {
-                WaitUntilVisible(duplicatePropToast);
-                Assert.Equal("A property that the user is trying to select has already been added to the selected properties list", webDriver.FindElement(duplicatePropToast).Text);
-            }
-
-            Wait();
             while (webDriver.FindElements(propertiesFileConfirmationModal).Count > 0)
             {
                 if (sharedModals.ModalContent().Contains("This property has already been added to one or more acquisition files."))

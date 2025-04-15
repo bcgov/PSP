@@ -709,9 +709,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 propertyActivity.ManagementPropertyActivityTotalPST = ExcelDataContext.ReadData(i, "ManagementPropertyActivityTotalPST");
                 propertyActivity.ManagementPropertyActivityGrandTotal = ExcelDataContext.ReadData(i, "ManagementPropertyActivityGrandTotal");
 
-                System.Diagnostics.Debug.WriteLine("PropertyActivityInvoiceStartRow: " + propertyActivity.ManagementPropertyActivityInvoicesStartRow);
-                System.Diagnostics.Debug.WriteLine("PropertyActivityInvoiceCount: " + propertyActivity.ManagementPropertyActivityInvoicesCount);
-
                 if (propertyActivity.ManagementPropertyActivityInvoicesStartRow != 0 && propertyActivity.ManagementPropertyActivityInvoicesCount != 0)
                     PopulateManagementActivitiesInvoiceCollection(propertyManagement.ManagementPropertyActivitiesStartRow, propertyManagement.ManagementPropertyActivitiesCount, propertyActivity.ManagementPropertyActivityInvoices);
                 else

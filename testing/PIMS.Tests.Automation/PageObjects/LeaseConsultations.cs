@@ -99,7 +99,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (consultation.leaseConsultationType == "Other")
             {
-                System.Diagnostics.Debug.WriteLine("OTHER: " + consultation.leaseConsultationOtherDescription);
                 AssertTrueIsDisplayed(consultationOtherDescriptionLabel);
                 AssertTrueIsDisplayed(consultationOtherDescriptionTooltip);
                 ClearInput(consultationOtherDescriptionInput);
