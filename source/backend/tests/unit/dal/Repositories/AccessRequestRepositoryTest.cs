@@ -181,7 +181,7 @@ namespace Pims.Dal.Test.Repositories
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission();
-            var eUser = EntityHelper.CreateUser(1, new Guid(user.FindFirstValue("idir_user_guid")), "test user");
+            var eUser = EntityHelper.CreateUser(1, new Guid(user.FindFirstValue("sub").Split("@").FirstOrDefault()), "test user");
             var accessRequest = EntityHelper.CreateAccessRequest(1, user: eUser, region: new PimsRegion() { Id = 2, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "desc" });
             helper.CreatePimsContext(user, true).AddAndSaveChanges(eUser);
 
