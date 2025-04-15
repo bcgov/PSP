@@ -18,6 +18,7 @@ import { cleanup } from './utils/test-utils';
 if (typeof global.URL.createObjectURL === 'undefined') {
   global.URL.createObjectURL = vi.fn();
 }
+global.innerWidth = 1920;
 
 // workaround to allow polyline and other svg map renderers to function correctly in tests.
 const createElementNSOrig = (global as any).document.createElementNS;

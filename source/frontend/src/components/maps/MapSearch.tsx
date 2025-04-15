@@ -1,7 +1,6 @@
 import { dequal } from 'dequal';
 import { LatLngLiteral } from 'leaflet';
 import React, { useEffect, useState } from 'react';
-import { Container } from 'react-bootstrap';
 import styled from 'styled-components';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
@@ -50,7 +49,7 @@ const MapSearch: React.FC<React.PropsWithChildren<MapSearchProps>> = () => {
   };
 
   return (
-    <StyledFilterContainer fluid className="px-0">
+    <StyledFilterContainer className="px-0">
       <PropertyFilter
         propertyFilter={propertySearchFilter}
         useGeocoder={true}
@@ -65,7 +64,7 @@ const MapSearch: React.FC<React.PropsWithChildren<MapSearchProps>> = () => {
 
 export default MapSearch;
 
-const StyledFilterContainer = styled(Container)`
+const StyledFilterContainer = styled.div`
   transition: margin 1s;
 
   grid-area: filter;
