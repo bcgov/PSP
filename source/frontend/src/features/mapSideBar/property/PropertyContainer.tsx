@@ -88,19 +88,21 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
     composedPropertyState?.propertyAssociationWrapper?.response?.leaseAssociations;
   useMemo(
     () =>
-      getLeaseInfo(
-        leaseAssociations,
-        getLease.execute,
-        getLeaseStakeholders.execute,
-        getLeaseRenewals.execute,
-        setLeaseAssociationInfo,
-      ),
+      hasClaim(Claims.LEASE_VIEW)
+        ? getLeaseInfo(
+            leaseAssociations,
+            getLease.execute,
+            getLeaseStakeholders.execute,
+            getLeaseRenewals.execute,
+            setLeaseAssociationInfo,
+          )
+        : null,
     [
-      setLeaseAssociationInfo,
+      hasClaim,
       leaseAssociations,
+      getLease.execute,
       getLeaseStakeholders.execute,
       getLeaseRenewals.execute,
-      getLease.execute,
     ],
   );
 

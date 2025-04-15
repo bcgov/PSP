@@ -95,27 +95,6 @@ public partial class PimsAcquisitionFile
     public string SubfileInterestTypeCode { get; set; }
 
     /// <summary>
-    /// Foreign key to the PIMS_ACQ_FILE_APPRAISAL_TYPE table.
-    /// </summary>
-    [Column("ACQ_FILE_APPRAISAL_TYPE_CODE")]
-    [StringLength(20)]
-    public string AcqFileAppraisalTypeCode { get; set; }
-
-    /// <summary>
-    /// Foreign key to the PIMS_ACQ_FILE_LGL_SRVY_TYPE table.
-    /// </summary>
-    [Column("ACQ_FILE_LGL_SRVY_TYPE_CODE")]
-    [StringLength(20)]
-    public string AcqFileLglSrvyTypeCode { get; set; }
-
-    /// <summary>
-    /// Foreign key to the PIMS_ACQ_FILE_EXPROP_RISK_TYPE table.
-    /// </summary>
-    [Column("ACQ_FILE_EXPROP_RISK_TYPE_CODE")]
-    [StringLength(20)]
-    public string AcqFileExpropRiskTypeCode { get; set; }
-
-    /// <summary>
     /// Descriptive name given to the acquisition file.
     /// </summary>
     [Required]
@@ -198,6 +177,13 @@ public partial class PimsAcquisitionFile
     /// </summary>
     [Column("POSSESSION_DT", TypeName = "datetime")]
     public DateTime? PossessionDt { get; set; }
+
+    /// <summary>
+    /// Comments to provide details about the physical acquisition file.
+    /// </summary>
+    [Column("PHYSICAL_FILE_DETAILS")]
+    [StringLength(2000)]
+    public string PhysicalFileDetails { get; set; }
 
     /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
@@ -289,6 +275,27 @@ public partial class PimsAcquisitionFile
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
+    /// <summary>
+    /// Foreign key to the PIMS_ACQ_FILE_APPRAISAL_TYPE table.
+    /// </summary>
+    [Column("ACQ_FILE_APPRAISAL_TYPE_CODE")]
+    [StringLength(20)]
+    public string AcqFileAppraisalTypeCode { get; set; }
+
+    /// <summary>
+    /// Foreign key to the PIMS_ACQ_FILE_LGL_SRVY_TYPE table.
+    /// </summary>
+    [Column("ACQ_FILE_LGL_SRVY_TYPE_CODE")]
+    [StringLength(20)]
+    public string AcqFileLglSrvyTypeCode { get; set; }
+
+    /// <summary>
+    /// Foreign key to the PIMS_ACQ_FILE_EXPROP_RISK_TYPE table.
+    /// </summary>
+    [Column("ACQ_FILE_EXPROP_RISK_TYPE_CODE")]
+    [StringLength(20)]
+    public string AcqFileExpropRiskTypeCode { get; set; }
+
     [ForeignKey("AcqFileAppraisalTypeCode")]
     [InverseProperty("PimsAcquisitionFiles")]
     public virtual PimsAcqFileAppraisalType AcqFileAppraisalTypeCodeNavigation { get; set; }
@@ -351,13 +358,10 @@ public partial class PimsAcquisitionFile
     public virtual ICollection<PimsCompensationRequisition> PimsCompensationRequisitions { get; set; } = new List<PimsCompensationRequisition>();
 
     [InverseProperty("AcquisitionFile")]
-    public virtual ICollection<PimsExpropriationNotice> PimsExpropriationNotices { get; set; } = new List<PimsExpropriationNotice>();
+    public virtual ICollection<PimsExpropOwnerHistory> PimsExpropOwnerHistories { get; set; } = new List<PimsExpropOwnerHistory>();
 
     [InverseProperty("AcquisitionFile")]
     public virtual ICollection<PimsExpropriationPayment> PimsExpropriationPayments { get; set; } = new List<PimsExpropriationPayment>();
-
-    [InverseProperty("AcquisitionFile")]
-    public virtual ICollection<PimsExpropriationVesting> PimsExpropriationVestings { get; set; } = new List<PimsExpropriationVesting>();
 
     [InverseProperty("AcquisitionFile")]
     public virtual ICollection<PimsInterestHolder> PimsInterestHolders { get; set; } = new List<PimsInterestHolder>();

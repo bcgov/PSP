@@ -21,7 +21,7 @@ import {
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { MAP_MAX_NATIVE_ZOOM, MAP_MAX_ZOOM, MAX_ZOOM } from '@/constants/strings';
 import { useTenant } from '@/tenants';
-import { exists, firstOrNull } from '@/utils';
+import { exists } from '@/utils';
 
 import { DEFAULT_MAP_ZOOM, defaultBounds, defaultLatLng } from './constants';
 import AdvancedFilterButton from './leaflet/Control/AdvancedFilter/AdvancedFilterButton';
@@ -142,10 +142,10 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
     activeFeatureLayer?.clearLayers();
 
     if (isRepositioning) {
-      const firstPimsFeature = firstOrNull(repositioningFeatureDataset.pimsFeatures);
-      if (firstPimsFeature !== null) {
+      const pimsFeature = repositioningFeatureDataset?.pimsFeature;
+      if (exists(pimsFeature)) {
         // File marker repositioning is active - highlight the property and the corresponding boundary when user triggers the relocate action.
-        activeFeatureLayer?.addData(firstPimsFeature);
+        activeFeatureLayer?.addData(pimsFeature);
       }
     } else {
       // Not repositioning - highlight parcels on map click as usual workflow
@@ -271,7 +271,7 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
           <LeafletLayerListener pane="dataLayers" />
         </Pane>
 
-        {mapMachine.showPopup && (
+        {mapMachine.showPopup && !mapMachine.isRepositioning && (
           // Draws the popup on top of the map
           <LocationPopupContainer ref={popupRef} />
         )}

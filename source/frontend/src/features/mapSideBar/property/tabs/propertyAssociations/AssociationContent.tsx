@@ -15,12 +15,14 @@ interface IAssociationInfo {
   createdByGuid: string;
   createdDate: string;
   status: string;
+  disable: boolean;
 }
 
 export interface IAssociationContentProps {
   associationName: string;
   associations?: ApiGen_Concepts_Association[];
   linkUrlMask: string;
+  disable?: boolean;
 }
 
 const AssociationContent: React.FunctionComponent<
@@ -41,6 +43,7 @@ const AssociationContent: React.FunctionComponent<
         createdByGuid: x.createdByGuid || '',
         createdDate: x.createdDateTime || '',
         status: x.status || '',
+        disable: props.disable ?? false,
       };
     }),
     (association: IAssociationInfo) => {
@@ -67,7 +70,11 @@ const associationColumns: ColumnWithProps<IAssociationInfo>[] = [
     accessor: 'fileIdentifier',
     align: 'left',
     Cell: (props: CellProps<IAssociationInfo>) => {
-      return <Link to={props.row.original.linkUrl}>{props.row.original.fileIdentifier}</Link>;
+      return props.row.original.disable ? (
+        <>{props.row.original.fileIdentifier}</>
+      ) : (
+        <Link to={props.row.original.linkUrl}>{props.row.original.fileIdentifier}</Link>
+      );
     },
     width: 50,
   },

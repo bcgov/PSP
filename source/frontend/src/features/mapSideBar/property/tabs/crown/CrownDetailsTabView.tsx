@@ -7,7 +7,7 @@ import { TANTALIS_CrownLandTenures_Feature_Properties } from '@/models/layers/cr
 import { exists, formatUTCDateTime } from '@/utils';
 
 export interface ICrownDetailsTabViewProps {
-  crownFeatures?: Feature<Geometry, TANTALIS_CrownLandTenures_Feature_Properties>[] | undefined;
+  crownFeatures: Feature<Geometry, TANTALIS_CrownLandTenures_Feature_Properties>[] | undefined;
 }
 
 export const CrownDetailsTabView: React.FunctionComponent<ICrownDetailsTabViewProps> = ({
@@ -21,7 +21,7 @@ export const CrownDetailsTabView: React.FunctionComponent<ICrownDetailsTabViewPr
     <StyledSummarySection>
       {crownFeatures.map((crownFeature, index) => (
         <Section
-          header={`Crown Details (${index} out of ${crownFeatures.length}`}
+          header={`Crown Details (${index} out of ${crownFeatures.length + 1}`}
           key={`crown-detail-${index}`}
         >
           <SectionField label="Tenure stage">

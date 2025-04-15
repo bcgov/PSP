@@ -71,7 +71,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
 
   const mapMachine = useMapStateMachine();
 
-  const selectedFeature = mapMachine.mapFeatureSelected;
+  const selectedMarker = mapMachine.mapMarkerSelected;
 
   const mapInstance: L.Map = useMap();
   if (!mapInstance) {
@@ -249,7 +249,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
       const group: L.FeatureGroup = featureGroupRef.current;
       const groupBounds = group.getBounds();
 
-      if (groupBounds.isValid() && filterState.changed && !selectedFeature && tilesLoaded) {
+      if (groupBounds.isValid() && filterState.changed && !selectedMarker && tilesLoaded) {
         filterState.setChanged(false);
       }
 
@@ -257,7 +257,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
       spiderfierRef.current?.unspiderfy();
       setCurrentCluster(undefined);
     }
-  }, [featureGroupRef, mapInstance, clusters, selectedFeature, tilesLoaded]);
+  }, [featureGroupRef, mapInstance, clusters, selectedMarker, tilesLoaded]);
 
   const mapMarkerClickFn = mapMachine.mapMarkerClick;
   const renderedPoints = useMemo(() => {
@@ -306,7 +306,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
               >;
 
               const isSelected =
-                selectedFeature !== null ? clusterFeature.id === selectedFeature.clusterId : false;
+                selectedMarker !== null ? clusterFeature.id === selectedMarker?.clusterId : false;
 
               const latlng = { lat: latitude, lng: longitude };
 
@@ -381,7 +381,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
   }, [
     clusters,
     draftPoints,
-    selectedFeature,
+    selectedMarker,
     spider.lines,
     spider.markers,
     zoomOrSpiderfy,
@@ -396,7 +396,7 @@ export default PointClusterer;
  * @param feature the feature to obtain lat/lng coordinates for.
  * @returns [lat, lng]
  */
-const getLatLng = <P,>(feature: Feature<Geometry, P>) => {
+export const getFeatureLatLng = <P,>(feature: Feature<Geometry, P>) => {
   if (feature?.geometry?.type === 'Polygon') {
     return polylabel((feature.geometry as Polygon).coordinates, ONE_HUNDRED_METER_PRECISION);
   } else if (feature?.geometry?.type === 'MultiPolygon') {
@@ -427,7 +427,7 @@ const featureCollectionResponseToPointFeature = <P,>(
 const featureResponseToPointFeature = <P,>(feature: Feature<Geometry, P>): PointFeature<P> => {
   const data: PointFeature<P> = {
     ...feature,
-    geometry: { type: 'Point', coordinates: getLatLng(feature) },
+    geometry: { type: 'Point', coordinates: getFeatureLatLng(feature) },
     properties: {
       ...feature.properties,
     },

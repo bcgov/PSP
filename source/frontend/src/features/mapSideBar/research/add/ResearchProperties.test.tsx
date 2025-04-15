@@ -10,9 +10,9 @@ import {
 } from '@/components/common/mapFSM/MapStateMachineContext';
 import { render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
-import { PropertyForm } from '../../shared/models';
 import { ResearchForm } from './models';
 import ResearchProperties from './ResearchProperties';
+import { PropertyForm } from '../../shared/models';
 
 const mockStore = configureMockStore([thunk]);
 

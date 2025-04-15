@@ -2,7 +2,7 @@ import { MultiPolygon, Polygon } from 'geojson';
 import { LatLngLiteral } from 'leaflet';
 import { isNumber } from 'lodash';
 
-import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
+import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { IMapProperty } from '@/components/propertySelector/models';
 import { AreaUnitTypes, DistrictCodes, RegionCodes } from '@/constants';
 import { ApiGen_CodeTypes_GeoJsonTypes } from '@/models/api/generated/ApiGen_CodeTypes_GeoJsonTypes';
@@ -20,7 +20,6 @@ import {
 import {
   enumFromValue,
   exists,
-  firstOrNull,
   formatApiAddress,
   formatBcaAddress,
   getLatLng,
@@ -120,27 +119,25 @@ export class PropertyForm {
     });
   }
 
-  public static fromFeatureDataset(model: LocationFeatureDataset): PropertyForm {
+  public static fromFeatureDataset(model: SelectedFeatureDataset): PropertyForm {
     // TODO: Make it work with multiple properties
-    const firstPimsFeature = firstOrNull(model?.pimsFeatures);
-    const firstParcelFeature = firstOrNull(model?.parcelFeatures);
+    const pimsFeature = model?.pimsFeature;
+    const parcelFeature = model?.parcelFeature;
 
     return new PropertyForm({
-      apiId: +(firstPimsFeature?.properties?.PROPERTY_ID ?? 0),
+      apiId: +(pimsFeature?.properties?.PROPERTY_ID ?? 0),
       pid: pidFromFeatureSet(model),
       pin: pinFromFeatureSet(model),
       latitude: model?.location?.lat,
       longitude: model?.location?.lng,
       fileLocation: model?.fileLocation ?? model?.location ?? undefined,
       planNumber:
-        firstPimsFeature?.properties?.SURVEY_PLAN_NUMBER ??
-        firstParcelFeature?.properties?.PLAN_NUMBER ??
-        '',
+        pimsFeature?.properties?.SURVEY_PLAN_NUMBER ?? parcelFeature?.properties?.PLAN_NUMBER ?? '',
       polygon:
-        firstParcelFeature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.Polygon
-          ? (firstParcelFeature?.geometry as Polygon)
-          : firstParcelFeature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.MultiPolygon
-          ? (firstParcelFeature?.geometry as MultiPolygon)
+        parcelFeature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.Polygon
+          ? (parcelFeature?.geometry as Polygon)
+          : parcelFeature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.MultiPolygon
+          ? (parcelFeature?.geometry as MultiPolygon)
           : undefined,
       region: isNumber(model?.regionFeature?.properties?.REGION_NUMBER)
         ? model?.regionFeature?.properties?.REGION_NUMBER
@@ -151,17 +148,17 @@ export class PropertyForm {
         : DistrictCodes.Unknown,
       districtName: model?.districtFeature?.properties?.DISTRICT_NAME ?? 'Cannot determine',
       formattedAddress: 'unknown',
-      landArea: firstPimsFeature?.properties?.LAND_AREA
-        ? +firstPimsFeature?.properties?.LAND_AREA
-        : firstParcelFeature?.properties?.FEATURE_AREA_SQM ?? 0,
-      areaUnit: firstPimsFeature?.properties?.PROPERTY_AREA_UNIT_TYPE_CODE
-        ? enumFromValue(firstPimsFeature?.properties?.PROPERTY_AREA_UNIT_TYPE_CODE, AreaUnitTypes)
+      landArea: pimsFeature?.properties?.LAND_AREA
+        ? +pimsFeature?.properties?.LAND_AREA
+        : parcelFeature?.properties?.FEATURE_AREA_SQM ?? 0,
+      areaUnit: pimsFeature?.properties?.PROPERTY_AREA_UNIT_TYPE_CODE
+        ? enumFromValue(pimsFeature?.properties?.PROPERTY_AREA_UNIT_TYPE_CODE, AreaUnitTypes)
         : AreaUnitTypes.SquareMeters,
-      isRetired: firstPimsFeature?.properties?.IS_RETIRED ?? false,
-      isDisposed: firstPimsFeature?.properties?.IS_DISPOSED ?? false,
+      isRetired: pimsFeature?.properties?.IS_RETIRED ?? false,
+      isDisposed: pimsFeature?.properties?.IS_DISPOSED ?? false,
       legalDescription:
-        firstPimsFeature?.properties?.LAND_LEGAL_DESCRIPTION ??
-        firstParcelFeature?.properties?.LEGAL_DESCRIPTION ??
+        pimsFeature?.properties?.LAND_LEGAL_DESCRIPTION ??
+        parcelFeature?.properties?.LEGAL_DESCRIPTION ??
         '',
     });
   }
@@ -184,35 +181,33 @@ export class PropertyForm {
     };
   }
 
-  public toFeatureDataset(): LocationFeatureDataset {
+  public toFeatureDataset(): SelectedFeatureDataset {
     return {
-      parcelFeatures: null,
+      parcelFeature: null,
       selectingComponentId: null,
-      pimsFeatures: [
-        {
-          properties: {
-            ...EmptyPropertyLocation,
-            PROPERTY_ID: this.apiId,
-            PID: this.pid ? +this.pid.replaceAll(/-/g, '') : null,
-            PID_PADDED: this?.pid?.padStart(9, '0'),
-            PIN: this.pin ? +this.pin : null,
-            SURVEY_PLAN_NUMBER: this.planNumber,
-            REGION_CODE: this.region,
-            DISTRICT_CODE: this.district,
-            LAND_AREA: this.landArea,
-            PROPERTY_AREA_UNIT_TYPE_CODE: this.areaUnit,
-            STREET_ADDRESS_1: this.address?.streetAddress1 ?? this.formattedAddress,
-            STREET_ADDRESS_2: this.address?.streetAddress2,
-            STREET_ADDRESS_3: this.address?.streetAddress3,
-            MUNICIPALITY_NAME: this.address?.municipality,
-            POSTAL_CODE: this.address?.postalCode,
-            IS_RETIRED: this.isRetired,
-            LAND_LEGAL_DESCRIPTION: this.legalDescription,
-          },
-          type: 'Feature',
-          geometry: this.polygon ? this.polygon : null,
+      pimsFeature: {
+        properties: {
+          ...EmptyPropertyLocation,
+          PROPERTY_ID: this.apiId,
+          PID: this.pid ? +this.pid.replaceAll(/-/g, '') : null,
+          PID_PADDED: this?.pid?.padStart(9, '0'),
+          PIN: this.pin ? +this.pin : null,
+          SURVEY_PLAN_NUMBER: this.planNumber,
+          REGION_CODE: this.region,
+          DISTRICT_CODE: this.district,
+          LAND_AREA: this.landArea,
+          PROPERTY_AREA_UNIT_TYPE_CODE: this.areaUnit,
+          STREET_ADDRESS_1: this.address?.streetAddress1 ?? this.formattedAddress,
+          STREET_ADDRESS_2: this.address?.streetAddress2,
+          STREET_ADDRESS_3: this.address?.streetAddress3,
+          MUNICIPALITY_NAME: this.address?.municipality,
+          POSTAL_CODE: this.address?.postalCode,
+          IS_RETIRED: this.isRetired,
+          LAND_LEGAL_DESCRIPTION: this.legalDescription,
         },
-      ],
+        type: 'Feature',
+        geometry: this.polygon ? this.polygon : null,
+      },
       location: { lat: this.latitude, lng: this.longitude },
       fileLocation: this.fileLocation ?? { lat: this.latitude, lng: this.longitude },
       regionFeature: {
@@ -241,13 +236,7 @@ export class PropertyForm {
         type: 'Feature',
         geometry: null,
       },
-      municipalityFeatures: null,
-      highwayFeatures: null,
-      crownLandLeasesFeatures: null,
-      crownLandLicensesFeatures: null,
-      crownLandTenuresFeatures: null,
-      crownLandInventoryFeatures: null,
-      crownLandInclusionsFeatures: null,
+      municipalityFeature: null,
     };
   }
 

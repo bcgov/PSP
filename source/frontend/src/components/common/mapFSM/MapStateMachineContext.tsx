@@ -36,7 +36,7 @@ export interface IMapStateMachineContext {
   mapLocationSelected: LatLngLiteral | null;
   mapLocationFeatureDataset: LocationFeatureDataset | null;
   selectedFeatureDataset: SelectedFeatureDataset | null;
-  repositioningFeatureDataset: LocationFeatureDataset | null;
+  repositioningFeatureDataset: SelectedFeatureDataset | null;
   repositioningPropertyIndex: number | null;
   showPopup: boolean;
   isLoading: boolean;
@@ -80,7 +80,7 @@ export interface IMapStateMachineContext {
   startSelection: (selectingComponentId?: string) => void;
   finishSelection: () => void;
   startReposition: (
-    repositioningFeatureDataset: LocationFeatureDataset,
+    repositioningFeatureDataset: SelectedFeatureDataset,
     index: number,
     selectingComponentId?: string,
   ) => void;
@@ -124,6 +124,12 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     actions: {
       navigateToProperty: context => {
         const selectedFeatureData = context.mapLocationFeatureDataset;
+
+        // if there is more that one property on the location, further action is needed.
+        if (selectedFeatureData.parcelFeatures?.length > 1) {
+          return;
+        }
+
         const pimsFeature = firstOrNull(selectedFeatureData?.pimsFeatures);
         const parcelFeature = firstOrNull(selectedFeatureData?.parcelFeatures);
 
@@ -327,7 +333,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
 
   const startReposition = useCallback(
     (
-      repositioningFeatureDataset: LocationFeatureDataset,
+      repositioningFeatureDataset: SelectedFeatureDataset,
       index: number,
       selectingComponentId?: string,
     ) => {
@@ -457,8 +463,8 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         requestedCenterTo: state.context.requestedCenterTo,
         mapMarkerSelected: state.context.mapFeatureSelected,
         mapLocationSelected: state.context.mapLocationSelected,
-        mapLocationFeatureDataset: state.context.mapLocationFeatureDataset,
         selectedFeatureDataset: state.context.selectedFeatureDataset,
+        mapLocationFeatureDataset: state.context.mapLocationFeatureDataset,
         repositioningFeatureDataset: state.context.repositioningFeatureDataset,
         repositioningPropertyIndex: state.context.repositioningPropertyIndex,
         showPopup: showPopup,

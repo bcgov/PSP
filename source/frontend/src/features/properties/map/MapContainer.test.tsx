@@ -7,7 +7,7 @@ import thunk from 'redux-thunk';
 
 import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
 import {
-  FeatureSelected,
+  MarkerSelected,
   emptyPimsBoundaryFeatureCollection,
   emptyPimsLocationFeatureCollection,
   emptyPmbcFeatureCollection,
@@ -387,7 +387,7 @@ describe('MapContainer', () => {
     const feature = pimsFeatures.features[2];
     const [longitude, latitude] = feature.geometry.coordinates;
 
-    const expectedFeature: FeatureSelected = {
+    const expectedFeature: MarkerSelected = {
       clusterId: feature.id?.toString() || '',
       pimsLocationFeature: feature.properties,
       pimsBoundaryFeature: null,
@@ -425,7 +425,7 @@ describe('MapContainer', () => {
     const feature = pimsFeatures.features[2];
     const [longitude, latitude] = feature.geometry.coordinates;
 
-    const expectedFeature: FeatureSelected = {
+    const expectedFeature: MarkerSelected = {
       clusterId: feature.id?.toString() || '',
       pimsLocationFeature: feature.properties,
       pimsBoundaryFeature: null,
@@ -502,7 +502,7 @@ describe('MapContainer', () => {
     const feature = pimsFeatures.features[0];
     const [longitude, latitude] = feature.geometry.coordinates;
 
-    const expectedFeature: FeatureSelected = {
+    const expectedFeature: MarkerSelected = {
       clusterId: feature.id?.toString() || '',
       pimsLocationFeature: feature.properties,
       pimsBoundaryFeature: null,
@@ -548,7 +548,7 @@ describe('MapContainer', () => {
     const feature = pimsFeatures.features[0];
     const [longitude, latitude] = feature.geometry.coordinates;
 
-    const expectedFeature: FeatureSelected = {
+    const expectedFeature: MarkerSelected = {
       clusterId: feature.id?.toString() || '',
       pimsLocationFeature: feature.properties,
       pimsBoundaryFeature: null,

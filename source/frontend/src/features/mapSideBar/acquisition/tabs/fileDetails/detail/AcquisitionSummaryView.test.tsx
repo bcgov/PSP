@@ -165,6 +165,20 @@ describe('AcquisitionSummaryView component', () => {
     expect(getByText('legacy file number')).toBeVisible();
   });
 
+  it('renders physical file details', async () => {
+    const { getByText } = setup(
+      {
+        acquisitionFile: {
+          ...mockAcquisitionFileResponse(),
+          physicalFileDetails: 'mocked physical file details',
+        },
+      },
+      { claims: [] },
+    );
+    await waitForEffects();
+    expect(getByText('mocked physical file details')).toBeVisible();
+  });
+
   it('renders the file progress statuses', async () => {
     const { getByTestId } = setup(
       {

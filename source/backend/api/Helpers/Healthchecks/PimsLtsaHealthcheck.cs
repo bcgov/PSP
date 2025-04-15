@@ -26,7 +26,7 @@ namespace Pims.Api.Helpers.Healthchecks
                 if (!_pid.HasValue || _pid.Value == 0)
                 {
                     var token = await _ltsaService.GetTokenAsync();
-                    if (token.AccessToken != null)
+                    if (token.AccessToken is null)
                     {
                         return new HealthCheckResult(HealthStatus.Degraded, $"received invalid token response from LTSA");
                     }

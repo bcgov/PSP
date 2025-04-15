@@ -14,6 +14,7 @@ import { act, getByName, renderAsync, RenderOptions, screen, userEvent } from '@
 
 import { AcquisitionOwnerFormModel, OwnerAddressFormModel } from '../common/models';
 import { AddAcquisitionContainer, IAddAcquisitionContainerProps } from './AddAcquisitionContainer';
+import AddAcquisitionForm from './AddAcquisitionForm';
 import { AcquisitionForm } from './models';
 
 const history = createMemoryHistory();
@@ -24,6 +25,7 @@ const onSuccess = vi.fn();
 const DEFAULT_PROPS: IAddAcquisitionContainerProps = {
   onClose,
   onSuccess,
+  View: AddAcquisitionForm,
 };
 
 // Need to mock this library for unit tests
@@ -250,8 +252,8 @@ describe('AddAcquisitionContainer component', () => {
       selectedFeatureDataset: {
         location: { lng: -120.69195885, lat: 50.25163372 },
         fileLocation: null,
-        pimsFeatures: null,
-        parcelFeatures: null,
+        pimsFeature: null,
+        parcelFeature: null,
         regionFeature: {
           type: 'Feature',
           properties: { ...emptyRegion, REGION_NUMBER: 1, REGION_NAME: 'South Coast Region' },
@@ -261,14 +263,8 @@ describe('AddAcquisitionContainer component', () => {
           },
         },
         districtFeature: null,
-        municipalityFeatures: null,
-        highwayFeatures: null,
+        municipalityFeature: null,
         selectingComponentId: null,
-        crownLandLeasesFeatures: null,
-        crownLandLicensesFeatures: null,
-        crownLandTenuresFeatures: null,
-        crownLandInventoryFeatures: null,
-        crownLandInclusionsFeatures: null,
       },
     };
 
@@ -285,8 +281,8 @@ describe('AddAcquisitionContainer component', () => {
       selectedFeatureDataset: {
         location: { lng: -120.69195885, lat: 50.25163372 },
         fileLocation: null,
-        pimsFeatures: null,
-        parcelFeatures: null,
+        pimsFeature: null,
+        parcelFeature: null,
         regionFeature: {
           type: 'Feature',
           properties: { ...emptyRegion, REGION_NUMBER: 4 },
@@ -296,14 +292,8 @@ describe('AddAcquisitionContainer component', () => {
           },
         },
         districtFeature: null,
-        municipalityFeatures: null,
-        highwayFeatures: null,
+        municipalityFeature: null,
         selectingComponentId: null,
-        crownLandLeasesFeatures: null,
-        crownLandLicensesFeatures: null,
-        crownLandTenuresFeatures: null,
-        crownLandInventoryFeatures: null,
-        crownLandInclusionsFeatures: null,
       },
     };
 

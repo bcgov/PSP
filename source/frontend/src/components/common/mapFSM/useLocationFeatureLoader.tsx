@@ -1,4 +1,4 @@
-import { Feature, Geometry } from 'geojson';
+import { Feature, FeatureCollection, Geometry } from 'geojson';
 import { LatLngLiteral } from 'leaflet';
 import { useCallback } from 'react';
 
@@ -22,12 +22,15 @@ import { WHSE_Municipalities_Feature_Properties } from '@/models/layers/municipa
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { ISS_ProvincialPublicHighway } from '@/models/layers/pimsHighwayLayer';
 import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
-import { isValidId } from '@/utils';
+import { exists, isValidId } from '@/utils';
 
-export interface LocationFeatureDataset {
+export interface FeatureDataset {
   selectingComponentId: string | null;
   location: LatLngLiteral;
   fileLocation: LatLngLiteral | null;
+}
+
+export interface LocationFeatureDataset extends FeatureDataset {
   parcelFeatures: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties>[] | null;
   pimsFeatures: Feature<Geometry, PIMS_Property_Location_View>[] | null;
   regionFeature: Feature<Geometry, MOT_RegionalBoundary_Feature_Properties> | null;
@@ -49,9 +52,9 @@ export interface LocationFeatureDataset {
     | null;
 }
 
-export interface SelectedFeatureDataset {
+export interface SelectedFeatureDataset extends FeatureDataset {
+  id?: string;
   location: LatLngLiteral;
-  fileLocation: LatLngLiteral | null;
   parcelFeature: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties> | null;
   pimsFeature: Feature<Geometry, PIMS_Property_Location_View> | null;
   regionFeature: Feature<Geometry, MOT_RegionalBoundary_Feature_Properties> | null;
@@ -167,20 +170,36 @@ const useLocationFeatureLoader = () => {
         pimsLocationProperties = (await loadProperties({ PROPERTY_ID: Number(pimsPropertyId) }))
           .features;
       } else {
-        pimsLocationProperties = await findAllByBoundary(latLng, 'GEOMETRY', 4326);
+        const boundaryPimsFeatures = await findAllByBoundary(latLng, 'GEOMETRY', 4326);
+        if (exists(boundaryPimsFeatures)) {
+          pimsLocationProperties = boundaryPimsFeatures;
+        } else if (exists(parcelFeatures)) {
+          pimsLocationProperties = [];
 
-        /*
-         * TODO: Figure out how to do this with multiple results
-        else if (
-          exists(parcelFeatures) &&
-          (exists(parcelFeature.properties?.PID) || exists(parcelFeature.properties?.PIN))
-        ) {
-          pimsLocationProperties = await loadProperties({
-            PID: parcelFeatures.properties?.PID || '',
-            PIN: parcelFeatures.properties?.PIN?.toString() || '',
-          });
+          const pimsFeatureTasks: Promise<
+            FeatureCollection<Geometry, PIMS_Property_Location_View>
+          >[] = [];
+
+          for (let i = 0; i < parcelFeatures.length; i++) {
+            const parcelFeature = parcelFeatures[i];
+            if (exists(parcelFeature.properties?.PID) || exists(parcelFeature.properties?.PIN)) {
+              const pimsFeaturesTask = loadProperties({
+                PID: parcelFeature.properties?.PID || '',
+                PIN: parcelFeature.properties?.PIN?.toString() || '',
+              });
+
+              pimsFeatureTasks.push(pimsFeaturesTask);
+            }
+          }
+
+          const pimsFeatures = await Promise.all(pimsFeatureTasks);
+
+          pimsFeatures
+            .filter(exists)
+            .flatMap(x => x.features)
+            .filter(exists)
+            .forEach(y => pimsLocationProperties.push(y));
         }
-        */
       }
 
       result.pimsFeatures = pimsLocationProperties ?? null;

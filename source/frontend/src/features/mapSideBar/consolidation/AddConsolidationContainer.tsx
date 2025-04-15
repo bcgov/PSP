@@ -13,7 +13,7 @@ import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { ApiGen_Concepts_PropertyOperation } from '@/models/api/generated/ApiGen_Concepts_PropertyOperation';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { exists, featuresetToMapProperty, firstOrNull, isValidString } from '@/utils';
+import { exists, featuresetToMapProperty, isValidString } from '@/utils';
 
 import { AddressForm, PropertyForm } from '../shared/models';
 import { ConsolidationFormModel } from './AddConsolidationModel';
@@ -66,13 +66,12 @@ const AddConsolidationContainer: React.FC<IAddConsolidationContainerProps> = ({
           featuresetToMapProperty(selectedFeatureDataset),
         );
         if (isValidString(propertyForm.pid)) {
-          // TODO: This should work with multiple properties
-          const firstPimsFeature = firstOrNull(selectedFeatureDataset.pimsFeatures);
-          propertyForm.address = firstPimsFeature?.properties
-            ? AddressForm.fromPimsView(firstPimsFeature?.properties)
+          const pimsFeature = selectedFeatureDataset.pimsFeature;
+          propertyForm.address = pimsFeature?.properties
+            ? AddressForm.fromPimsView(pimsFeature?.properties)
             : undefined;
           // TODO: Remove this once the conversion is cleaner
-          propertyForm.isOwned = firstPimsFeature?.properties.IS_OWNED;
+          propertyForm.isOwned = pimsFeature?.properties.IS_OWNED;
           const consolidationFormModel = new ConsolidationFormModel();
           consolidationFormModel.sourceProperties = [propertyForm.toApi()];
           setInitialForm(consolidationFormModel);

@@ -10,7 +10,7 @@ import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFe
 import { Scrollable } from '@/components/common/Scrollable/Scrollable';
 import SimplePagination from '@/components/common/SimplePagination';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
-import { exists, firstOrNull, isValidId, pidParser, pinParser } from '@/utils';
+import { exists, firstOrNull, isStrataLot, isValidId, pidParser, pinParser } from '@/utils';
 
 import { LayerPopupContent } from './components/LayerPopupContent';
 import { LayerPopupFlyout } from './components/LayerPopupFlyout';
@@ -45,23 +45,32 @@ export const LayerPopupView: React.FC<React.PropsWithChildren<ILayerPopupViewPro
   // Converts to an object that can be consumed by the file creation process
   const selectedFeature: SelectedFeatureDataset = useMemo(() => {
     return {
-      location: featureDataset.location,
-      fileLocation: featureDataset.fileLocation,
-      parcelFeature: featureDataset.parcelFeature,
-      pimsFeature: featureDataset.pimsFeature,
-      regionFeature: featureDataset.regionFeature,
-      districtFeature: featureDataset.districtFeature,
-      municipalityFeature: firstOrNull(featureDataset.municipalityFeatures),
+      location: featureDataset?.location,
+      fileLocation: featureDataset?.fileLocation,
+      parcelFeature: featureDataset?.parcelFeature,
+      pimsFeature: featureDataset?.pimsFeature,
+      regionFeature: featureDataset?.regionFeature,
+      districtFeature: featureDataset?.districtFeature,
+      municipalityFeature: firstOrNull(featureDataset?.municipalityFeatures),
+      selectingComponentId: featureDataset?.selectingComponentId,
     };
   }, [
-    featureDataset.districtFeature,
-    featureDataset.fileLocation,
-    featureDataset.location,
-    featureDataset.municipalityFeatures,
-    featureDataset.parcelFeature,
-    featureDataset.pimsFeature,
-    featureDataset.regionFeature,
+    featureDataset?.districtFeature,
+    featureDataset?.fileLocation,
+    featureDataset?.location,
+    featureDataset?.municipalityFeatures,
+    featureDataset?.parcelFeature,
+    featureDataset?.pimsFeature,
+    featureDataset?.regionFeature,
+    featureDataset?.selectingComponentId,
   ]);
+
+  const showViewPropertyInfo = useMemo(() => {
+    return (
+      !isStrataLot(selectedFeature?.parcelFeature) &&
+      !isValidId(Number(selectedFeature?.pimsFeature?.id))
+    );
+  }, [selectedFeature.parcelFeature, selectedFeature.pimsFeature]);
 
   const onPropertyViewClicked = () => {
     if (isInPims) {
@@ -170,6 +179,7 @@ export const LayerPopupView: React.FC<React.PropsWithChildren<ILayerPopupViewPro
         onViewPropertyInfo={handleViewPropertyInfo}
         bounds={getFirstBounds(layerPopup.layers)}
         onEllipsisClick={showFlyout ? closeFlyout : openFlyout}
+        showViewPropertyInfo={showViewPropertyInfo}
       />
 
       {showFlyout && (

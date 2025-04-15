@@ -1,4 +1,7 @@
-import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
+import {
+  LocationFeatureDataset,
+  SelectedFeatureDataset,
+} from '@/components/common/mapFSM/useLocationFeatureLoader';
 
 import getMockISSResult from './mockISSResult';
 
@@ -143,3 +146,17 @@ export const getMockLocationFeatureDataset = (): LocationFeatureDataset => ({
   crownLandInventoryFeatures: [],
   crownLandInclusionsFeatures: [],
 });
+
+export const getMockSelectedFeatureDataset = (): SelectedFeatureDataset => {
+  const locationFeatureDataset = getMockLocationFeatureDataset();
+  return {
+    selectingComponentId: locationFeatureDataset.selectingComponentId,
+    location: locationFeatureDataset.location,
+    fileLocation: locationFeatureDataset.fileLocation,
+    parcelFeature: locationFeatureDataset.parcelFeatures[0],
+    pimsFeature: locationFeatureDataset.pimsFeatures[0],
+    regionFeature: locationFeatureDataset.regionFeature,
+    districtFeature: locationFeatureDataset.districtFeature,
+    municipalityFeature: locationFeatureDataset.municipalityFeatures[0],
+  };
+};

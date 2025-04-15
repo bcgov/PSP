@@ -318,6 +318,84 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
+        [Xunit.SkippableFactAttribute(DisplayName="08._Map_Features")]
+        [Xunit.TraitAttribute("FeatureTitle", "Properties")]
+        [Xunit.TraitAttribute("Description", "08._Map_Features")]
+        public async System.Threading.Tasks.Task _08__Map_Features()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("08._Map_Features", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 43
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 44
+ await testRunner.GivenAsync("I verify the Maps Layers", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 45
+ await testRunner.WhenAsync("I verify the Maps Filters", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 46
+ await testRunner.ThenAsync("Map Features rendered successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [Xunit.SkippableTheoryAttribute(DisplayName="09._Property_Management_Lease_Active_Indicator")]
+        [Xunit.TraitAttribute("FeatureTitle", "Properties")]
+        [Xunit.TraitAttribute("Description", "09._Property_Management_Lease_Active_Indicator")]
+        [Xunit.InlineDataAttribute("No", "10", new string[0])]
+        [Xunit.InlineDataAttribute("No", "11", new string[0])]
+        [Xunit.InlineDataAttribute("No", "12", new string[0])]
+        [Xunit.InlineDataAttribute("No", "13", new string[0])]
+        [Xunit.InlineDataAttribute("No", "14", new string[0])]
+        [Xunit.InlineDataAttribute("No", "15", new string[0])]
+        [Xunit.InlineDataAttribute("No", "16", new string[0])]
+        [Xunit.InlineDataAttribute("Yes", "17", new string[0])]
+        public async System.Threading.Tasks.Task _09__Property_Management_Lease_Active_Indicator(string activeLeaseStatus, string rowNumber, string[] exampleTags)
+        {
+            string[] tagsOfScenario = exampleTags;
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("ActiveLeaseStatus", activeLeaseStatus);
+            argumentsOfScenario.Add("RowNumber", rowNumber);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("09._Property_Management_Lease_Active_Indicator", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 48
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 49
+ await testRunner.GivenAsync(string.Format("I create a new minimum Lease from row number {0}", rowNumber), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 50
+ await testRunner.WhenAsync("I add additional Information to the Lease Details", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 51
+ await testRunner.AndAsync("I add Properties to the Lease Details", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 52
+ await testRunner.AndAsync("I search for a Property in the Properties List by PID from row number 33", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 53
+ await testRunner.ThenAsync(string.Format("Expected Active Lease status is displayed as \"{0}\" successfully", activeLeaseStatus), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
         [System.CodeDom.Compiler.GeneratedCodeAttribute("Reqnroll", "2.0.0.0")]
         [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
         public class FixtureData : object, Xunit.IAsyncLifetime

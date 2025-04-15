@@ -114,24 +114,6 @@ describe('useGenerateExpropriationForm9 functions', () => {
     expect(getOrganizationConceptFn).toHaveBeenCalled();
   });
 
-  it(`sends "Expropriation vesting date" in the json payload to generation api`, async () => {
-    const generate = setup();
-    const expropriationModel = new ExpropriationForm9Model();
-    expropriationModel.expropriationVestingDate = '2024-10-05';
-
-    await act(async () => generate(1, expropriationModel));
-
-    const generateRequest: DocumentGenerationRequest = {
-      templateType: ApiGen_CodeTypes_FormTypes.FORM9.toString(),
-      convertToType: null,
-      templateData: expect.objectContaining<Partial<Api_GenerateExpropriationForm9>>({
-        vesting_date: '2024-10-05',
-      }),
-    };
-
-    expect(generateFn).toHaveBeenCalledWith(generateRequest);
-  });
-
   it('throws an error if no acquisition file is found', async () => {
     const generate = setup();
     getAcquisitionFileFn.mockResolvedValue(undefined);

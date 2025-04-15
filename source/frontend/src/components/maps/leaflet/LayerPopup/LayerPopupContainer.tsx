@@ -82,7 +82,9 @@ export const LayerPopupContainer: React.FC<
       ) {
         featureSet.crownLandLeasesFeatures.forEach((crownLandLeasesFeature, index) => {
           const parcelData: LayerData = {
-            title: `Crown Land Leases (${index + 1} of ${featureSet.municipalityFeatures.length})`,
+            title: `Crown Land Leases (${index + 1} of ${
+              featureSet.crownLandLeasesFeatures.length
+            })`,
             data: null,
             config: {},
           };
@@ -147,7 +149,7 @@ export const LayerPopupContainer: React.FC<
         exists(featureSet.crownLandInventoryFeatures) &&
         featureSet.crownLandInventoryFeatures.length > 0
       ) {
-        featureSet.crownLandInclusionsFeatures.forEach((crownLandInventoryFeature, index) => {
+        featureSet.crownLandInventoryFeatures.forEach((crownLandInventoryFeature, index) => {
           const parcelData: LayerData = {
             title: `Crown Land Inventory (${index + 1} of ${
               featureSet.crownLandInventoryFeatures.length

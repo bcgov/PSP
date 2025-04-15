@@ -51,7 +51,7 @@ export interface SinglePropertyFeatureDataSet {
 export const LocationPopupContainer = React.forwardRef<
   LeafletPopup,
   React.PropsWithChildren<unknown>
->((props, ref) => {
+>((_, ref) => {
   const mapMachine = useMapStateMachine();
 
   const [singleFeatureDataset, setSingleFeatureDataset] =
@@ -89,7 +89,7 @@ export const LocationPopupContainer = React.forwardRef<
   return (
     <Popup
       ref={ref}
-      position={mapMachine.mapLocationSelected}
+      position={mapMachine.mapLocationFeatureDataset?.location}
       offset={[0, -25]}
       closeButton={false}
       autoPan={false}

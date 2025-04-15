@@ -78,6 +78,7 @@ export const getEmptyLease = (): ApiGen_Concepts_Lease => ({
   isFinancialGain: null,
   feeDeterminationNote: null,
   leasePurposes: [],
+  leaseTeam: [],
 });
 
 /**
@@ -229,5 +230,6 @@ export const getEmptyAcquisitionFile = (): ApiGen_Concepts_AcquisitionFile => {
     fileNumber: null,
     fileNumberSuffix: 0,
     fileStatusTypeCode: null,
+    physicalFileDetails: null,
   };
 };
