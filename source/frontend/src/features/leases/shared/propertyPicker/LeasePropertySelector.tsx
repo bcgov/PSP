@@ -71,6 +71,8 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
       longitude: undefined,
       historical: '',
       ownership: '',
+      coordinates: null,
+      name: '',
     };
 
     const result = await getProperties.execute(params);

@@ -18,6 +18,7 @@ import * as API from '@/constants/API';
 import { PropertyTenureTypes } from '@/constants/index';
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
+import { useTenant } from '@/tenants/useTenant';
 import { prettyFormatUTCDate } from '@/utils';
 import { stringToBoolean } from '@/utils/formUtils';
 
@@ -37,10 +38,11 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
   IUpdatePropertyDetailsFormProps
 > = ({ formikProps }) => {
   const { values } = useFormikContext<UpdatePropertyDetailsFormModel>();
-
   const [showAddressLine2, setShowAddressLine2] = useState(false);
   const [showAddressLine3, setShowAddressLine3] = useState(false);
   const address = values.address;
+
+  const { provinceStateId } = useTenant();
 
   // Lookup codes
   const { getByType, getOptionsByType } = useLookupCodeHelpers();
@@ -105,9 +107,9 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
 
   useEffect(() => {
     if (!provinceState) {
-      setFieldValue('address.provinceStateId', 1);
+      setFieldValue('address.provinceStateId', provinceStateId ?? 1);
     }
-  }, [provinceState, setFieldValue]);
+  }, [provinceState, provinceStateId, setFieldValue]);
 
   const cannotDetermineInfoText =
     'This means the property is out of bounds or there was an error at the time of determining this value. If needed, edit property details and pick the appropriate  value to update it.';

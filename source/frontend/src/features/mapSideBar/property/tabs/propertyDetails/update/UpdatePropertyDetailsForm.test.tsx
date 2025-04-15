@@ -9,6 +9,8 @@ import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts
 import { getEmptyBaseAudit, getEmptyProperty } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { render, RenderOptions, waitForEffects } from '@/utils/test-utils';
+import { useTenant } from '@/tenants/useTenant';
+import defaultTenant from '@/tenants/config/defaultTenant';
 
 import { UpdatePropertyDetailsFormModel } from './models';
 import { UpdatePropertyDetailsForm } from './UpdatePropertyDetailsForm';
@@ -192,9 +194,12 @@ const fakeProperty: ApiGen_Concepts_Property = {
   rowVersion: 5,
 };
 
+vi.mock('@/tenants/useTenant');
+const mockUseTenant = vi.mocked(useTenant);
+
 describe('UpdatePropertyDetailsForm component', () => {
   // render component under test
-  const setup = (
+  const setup = async (
     renderOptions: RenderOptions & { initialValues: UpdatePropertyDetailsFormModel },
   ) => {
     const utils = render(
@@ -218,19 +223,20 @@ describe('UpdatePropertyDetailsForm component', () => {
   beforeEach(() => {
     mockAxios.onGet(new RegExp('users/info/*')).reply(200, {});
     initialValues = UpdatePropertyDetailsFormModel.fromApi(fakeProperty);
+    mockUseTenant.mockReturnValue(defaultTenant);
   });
 
   afterEach(() => {
     vi.clearAllMocks();
   });
 
-  it('renders as expected', () => {
-    const { asFragment } = setup({ initialValues });
+  it('renders as expected', async () => {
+    const { asFragment } = await setup({ initialValues });
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('shows property address if available', () => {
-    const { container } = setup({ initialValues });
+  it('shows property address if available', async () => {
+    const { container } = await setup({ initialValues });
     const addressLine1 = container.querySelector(`input[name='address.streetAddress1']`);
     const province = container.querySelector(`select[name='address.provinceStateId']`);
 
@@ -238,10 +244,34 @@ describe('UpdatePropertyDetailsForm component', () => {
     expect(province).toHaveValue('1');
   });
 
-  it('province defaults to BC when null', () => {
+  it('province defaults to BC when null', async () => {
+    mockUseTenant.mockReturnValue({ ...defaultTenant, provinceStateId: 2 });
+
     initialValues.address.provinceStateId = null;
-    const { container } = setup({ initialValues });
+    const { container } = await setup({ initialValues });
     waitForEffects();
+
+    const province = container.querySelector(`select[name='address.provinceStateId']`);
+    expect(province).toHaveValue('2');
+  });
+
+  it('province defaults to BC when null no tenant', async () => {
+    mockUseTenant.mockReturnValue({ ...defaultTenant, provinceStateId: null });
+
+    initialValues.address.provinceStateId = null;
+    const { container } = await setup({ initialValues });
+    await waitForEffects();
+
+    const province = container.querySelector(`select[name='address.provinceStateId']`);
+    expect(province).toHaveValue('1');
+  });
+
+  it('province defaults to BC when null no tenant', async () => {
+    mockUseTenant.mockReturnValue({ ...defaultTenant, provinceStateId: null });
+
+    initialValues.address.provinceStateId = null;
+    const { container } = await setup({ initialValues });
+    await waitForEffects();
 
     const province = container.querySelector(`select[name='address.provinceStateId']`);
     expect(province).toHaveValue('1');

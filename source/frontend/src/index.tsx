@@ -1,16 +1,16 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import '@bcgov/design-tokens/css/variables.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import 'leaflet/dist/leaflet.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'react-toastify/dist/ReactToastify.css';
-import 'yet-another-react-lightbox/styles.css';
 import 'yet-another-react-lightbox/plugins/captions.css';
 import 'yet-another-react-lightbox/plugins/counter.css';
+import 'yet-another-react-lightbox/styles.css';
 import './assets/scss/index.scss'; // should be loaded last to allow for overrides without having to resort to "!important"
 
 import * as bcTokens from '@bcgov/design-tokens/js/variables.js';
 import { ReactKeycloakProvider } from '@react-keycloak/web';
-import Keycloak, { KeycloakInstance } from 'keycloak-js';
+import Keycloak from 'keycloak-js';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { BrowserRouter as Router } from 'react-router-dom';
@@ -29,6 +29,9 @@ import App from './App';
 import { DocumentViewerContextProvider } from './features/documents/context/DocumentViewerContext';
 import { ITenantConfig2 } from './hooks/pims-api/interfaces/ITenantConfig';
 import { useRefreshSiteminder } from './hooks/useRefreshSiteminder';
+import { initializeTelemetry } from './telemetry';
+import { TelemetryConfig } from './telemetry/config';
+import { ReactRouterSpanProcessor } from './telemetry/traces/ReactRouterSpanProcessor';
 
 async function prepare() {
   if (process.env.NODE_ENV === 'development') {
@@ -41,12 +44,14 @@ async function prepare() {
 
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
-const keycloak: KeycloakInstance = new Keycloak('/keycloak.json');
+const keycloak: Keycloak = new Keycloak('/keycloak.json');
 const Index = () => {
   return (
     <TenantProvider>
       <ModalContextProvider>
-        <TenantConsumer>{({ tenant }) => <InnerComponent tenant={tenant} />}</TenantConsumer>
+        <Router>
+          <TenantConsumer>{({ tenant }) => <InnerComponent tenant={tenant} />}</TenantConsumer>
+        </Router>
       </ModalContextProvider>
     </TenantProvider>
   );
@@ -54,6 +59,30 @@ const Index = () => {
 
 const InnerComponent = ({ tenant }: { tenant: ITenantConfig2 }) => {
   const refresh = useRefreshSiteminder();
+
+  // get telemetry configuration from tenant json
+  if (tenant?.telemetry?.enabled) {
+    const config: TelemetryConfig = {
+      name: tenant?.telemetry?.serviceName ?? 'frontend',
+      appVersion: import.meta.env.VITE_PACKAGE_VERSION ?? '',
+      environment: tenant?.telemetry?.environment || 'local',
+      otlpEndpoint: tenant?.telemetry?.endpoint || '',
+      debug: tenant?.telemetry?.debug ?? false,
+      exportInterval: tenant?.telemetry?.exportInterval ?? 30_000,
+      histogramBuckets: tenant?.telemetry?.histogramBuckets ?? [],
+    };
+
+    // configure browser telemetry (if enabled via dynamic config-map)
+    initializeTelemetry(config);
+
+    console.log('[INFO] Telemetry enabled');
+    if (tenant?.telemetry?.debug) {
+      console.log(config);
+    }
+  } else {
+    console.log('[INFO] Telemetry disabled');
+  }
+
   return (
     <ThemeProvider theme={{ tenant, css, bcTokens }}>
       <ReactKeycloakProvider
@@ -69,9 +98,8 @@ const InnerComponent = ({ tenant }: { tenant: ITenantConfig2 }) => {
         <Provider store={store}>
           <AuthStateContextProvider>
             <DocumentViewerContextProvider>
-              <Router>
-                <App />
-              </Router>
+              <App />
+              <ReactRouterSpanProcessor />
             </DocumentViewerContextProvider>
           </AuthStateContextProvider>
         </Provider>

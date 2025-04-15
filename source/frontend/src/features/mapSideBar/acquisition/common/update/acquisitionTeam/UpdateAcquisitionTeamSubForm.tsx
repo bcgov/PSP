@@ -11,7 +11,7 @@ import { SectionField } from '@/components/common/Section/SectionField';
 import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 
-import { AcquisitionFormModal } from '../../modals/AcquisitionFormModal';
+import { TeamMemberFormModal } from '../../modals/AcquisitionFormModal';
 import { AcquisitionTeamFormModel, WithAcquisitionTeam } from '../../models';
 
 export const UpdateAcquisitionTeamSubForm: React.FunctionComponent<
@@ -80,7 +80,7 @@ export const UpdateAcquisitionTeamSubForm: React.FunctionComponent<
             + Add another team member
           </LinkButton>
 
-          <AcquisitionFormModal
+          <TeamMemberFormModal
             message="Are you sure you want to remove this row?"
             title="Remove Team Member"
             display={showRemoveMemberModal}
@@ -93,7 +93,7 @@ export const UpdateAcquisitionTeamSubForm: React.FunctionComponent<
               setShowRemoveMemberModal(false);
               setRemoveIndex(-1);
             }}
-          ></AcquisitionFormModal>
+          ></TeamMemberFormModal>
         </>
       )}
     />

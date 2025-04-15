@@ -27,6 +27,8 @@ import AppRoute from '@/utils/AppRoute';
 import componentLoader from '@/utils/utils';
 
 import Login from './features/account/Login';
+import UpdateBctfaOwnershipContainer from './features/admin/bctfa/UpdateBctfaOwnershipContainer';
+import UpdateBctfaOwnershipView from './features/admin/bctfa/UpdateBctfaOwnershipView';
 import DateTestContainer from './features/DateTestContainer';
 import AccessDenied from './pages/401/AccessDenied';
 
@@ -181,6 +183,17 @@ const AppRouter: FC<PropsWithChildren<unknown>> = () => {
             )}
             role={Roles.SYSTEM_ADMINISTRATOR}
             title={getTitle('Update Financial Code')}
+          />
+          <AppRoute
+            protected
+            path="/admin/bctfa/ownership"
+            customRender={() => (
+              <AuthLayout>
+                <UpdateBctfaOwnershipContainer View={UpdateBctfaOwnershipView} />
+              </AuthLayout>
+            )}
+            role={Roles.SYSTEM_ADMINISTRATOR}
+            title={getTitle('Update BCTFA Ownership')}
           />
           <AppRoute
             protected

@@ -39,9 +39,6 @@ public partial class PimsExpropriationPaymentHist
     [StringLength(2000)]
     public string Description { get; set; }
 
-    [Column("ADV_PMT_SERVED_DT")]
-    public DateOnly? AdvPmtServedDt { get; set; }
-
     [Column("IS_DISABLED")]
     public bool? IsDisabled { get; set; }
 
@@ -95,4 +92,7 @@ public partial class PimsExpropriationPaymentHist
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
+
+    [Column("ADV_PMT_SERVED_DT")]
+    public DateOnly? AdvPmtServedDt { get; set; }
 }

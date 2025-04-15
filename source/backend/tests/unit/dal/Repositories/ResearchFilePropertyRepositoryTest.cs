@@ -27,7 +27,7 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.ResearchFileView);
             var pimsPropertyResearchFile = new PimsPropertyResearchFile() { Property = EntityHelper.CreateProperty(1) };
-            pimsPropertyResearchFile.PimsPrfPropResearchPurposeTypes = new List<PimsPrfPropResearchPurposeType>() { new PimsPrfPropResearchPurposeType() { PropResearchPurposeTypeCode = "RESEARCH" } };
+            pimsPropertyResearchFile.PimsPrfPropResearchPurposeTyps = new List<PimsPrfPropResearchPurposeTyp>() { new PimsPrfPropResearchPurposeTyp() { PropResearchPurposeTypeCode = "RESEARCH" } };
 
             var context = helper.CreatePimsContext(user, true);
             context.AddAndSaveChanges(pimsPropertyResearchFile);

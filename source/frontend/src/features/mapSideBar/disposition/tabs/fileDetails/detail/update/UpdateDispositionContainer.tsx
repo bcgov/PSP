@@ -3,8 +3,10 @@ import { FormikHelpers, FormikProps } from 'formik';
 import React from 'react';
 
 import { ModalSize } from '@/components/common/GenericModal';
+import * as API from '@/constants/API';
 import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvider';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_CodeTypes_DispositionFileStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_DispositionFileStatusTypes';
@@ -13,6 +15,7 @@ import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { isValidId } from '@/utils';
 
 import { DispositionFormModel } from '../../../../models/DispositionFormModel';
+import DispositionStatusUpdateSolver from '../DispositionStatusUpdateSolver';
 import { IUpdateDispositionFormProps } from './UpdateDispositionForm';
 
 export interface IUpdateDispositionContainerProps {
@@ -27,6 +30,9 @@ export const UpdateDispositionContainer = React.forwardRef<
 >((props, formikRef) => {
   const { dispositionFile, onSuccess, View } = props;
   const { setModalContent, setDisplayModal } = useModalContext();
+  const { getByType } = useLookupCodeHelpers();
+
+  const dispositionStatusTypes = getByType(API.DISPOSITION_STATUS_TYPES);
 
   const {
     putDispositionFile: { execute: updateDispositionFile, loading },
@@ -113,19 +119,54 @@ export const UpdateDispositionContainer = React.forwardRef<
     <View
       formikRef={formikRef}
       initialValues={DispositionFormModel.fromApi(dispositionFile)}
-      onSubmit={(
+      onSubmit={async (
         values: DispositionFormModel,
         formikHelpers: FormikHelpers<DispositionFormModel>,
-      ) =>
-        withUserOverride(
-          (userOverrideCodes: UserOverrideCode[]) =>
-            handleSubmit(values, formikHelpers, userOverrideCodes),
-          [],
-          (axiosError: AxiosError<IApiError>) => {
-            handleError(axiosError);
-          },
-        )
-      }
+      ) => {
+        const updatedFile = values.toApi();
+        const currentFileSolver = new DispositionStatusUpdateSolver(dispositionFile);
+        const updatedFileSolver = new DispositionStatusUpdateSolver(updatedFile);
+
+        if (!currentFileSolver.isAdminProtected() && updatedFileSolver.isAdminProtected()) {
+          const statusCode = dispositionStatusTypes.find(x => x.id === values.fileStatusTypeCode);
+          setModalContent({
+            variant: 'info',
+            title: 'Confirm status change',
+            message: (
+              <>
+                <p>
+                  You marked this file as {statusCode.name}. If you save it, only the administrator
+                  can turn it back on. You will still see it in the management table.
+                </p>
+                <p>Do you want to acknowledge and proceed?</p>
+              </>
+            ),
+            okButtonText: 'Yes',
+            cancelButtonText: 'No',
+            handleOk: async () => {
+              await withUserOverride(
+                (userOverrideCodes: UserOverrideCode[]) =>
+                  handleSubmit(values, formikHelpers, userOverrideCodes),
+                [],
+                (axiosError: AxiosError<IApiError>) => {
+                  handleError(axiosError);
+                },
+              );
+            },
+            handleCancel: () => setDisplayModal(false),
+          });
+          setDisplayModal(true);
+        } else {
+          await withUserOverride(
+            (userOverrideCodes: UserOverrideCode[]) =>
+              handleSubmit(values, formikHelpers, userOverrideCodes),
+            [],
+            (axiosError: AxiosError<IApiError>) => {
+              handleError(axiosError);
+            },
+          );
+        }
+      }}
       loading={loading}
     ></View>
   );

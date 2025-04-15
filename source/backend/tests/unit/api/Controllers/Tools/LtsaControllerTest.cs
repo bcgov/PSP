@@ -9,6 +9,9 @@ using Pims.Core.Security;
 using Pims.Ltsa;
 using Xunit;
 using Model = Pims.Ltsa.Models;
+using System;
+using FluentAssertions;
+using System.Threading.Tasks;
 
 namespace Pims.Api.Test.Controllers.Tools
 {
@@ -89,12 +92,27 @@ namespace Pims.Api.Test.Controllers.Tools
             this._service.Setup(m => m.PostParcelInfoOrder(It.IsAny<string>())).ReturnsAsync(response);
 
             // Act
-            var result = await this._controller.PostParcelInfoOrderAsync("titleNumber");
+            var result = await this._controller.PostParcelInfoOrderAsync("1");
 
             // Assert
             JsonResult actionResult = Assert.IsType<JsonResult>(result);
             var results = Assert.IsAssignableFrom<Model.ParcelInfoOrder>(actionResult.Value);
             this._service.Verify(m => m.PostParcelInfoOrder(It.IsAny<string>()), Times.Once());
+        }
+
+        [Fact]
+        public void PostParcelInfoOrderAsync_InvalidPid()
+        {
+            // Arrange
+            var response = new Model.OrderWrapper<Model.OrderParent<Model.ParcelInfo>>(new Model.ParcelInfoOrder());
+
+            this._service.Setup(m => m.PostParcelInfoOrder(It.IsAny<string>())).ReturnsAsync(response);
+
+            // Act
+            Func<Task> act = async () => await this._controller.PostParcelInfoOrderAsync("1");
+
+            // Assert
+            act.Should().ThrowAsync<BadHttpRequestException>();
         }
 
         [Fact]
@@ -154,10 +172,25 @@ namespace Pims.Api.Test.Controllers.Tools
             this._service.Setup(m => m.PostLtsaFields(It.IsAny<string>())).ReturnsAsync(response);
 
             // Act
-            var result = await this._controller.PostLtsaFields("pid");
+            var result = await this._controller.PostLtsaFields("1");
 
             // Assert
             this._service.Verify(m => m.PostLtsaFields(It.IsAny<string>()), Times.Once());
+        }
+
+        [Fact]
+        public void PostLtsaFieldsAsync_InvalidPid()
+        {
+            // Arrange
+            var response = new Model.LtsaOrders();
+
+            this._service.Setup(m => m.PostLtsaFields(It.IsAny<string>())).ReturnsAsync(response);
+
+            // Act
+            Func<Task> act = async () => await this._controller.PostLtsaFields("1");
+
+            // Assert
+            act.Should().ThrowAsync<BadHttpRequestException>();
         }
         #endregion
         #endregion

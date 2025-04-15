@@ -36,7 +36,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By stakeholderTotalRepresentativeView = By.XPath("//div[contains(text(),'Property manager')]/parent::div/parent::h2/parent::div/following-sibling::div/h2/div/div[contains(text(),'Representative')]/parent::div/parent::h2/following-sibling::div/div");
         private readonly By stakeholderTotalManagerView = By.XPath("//div[contains(text(),'Property manager')]/parent::div/parent::h2/following-sibling::div/div");
         private readonly By stakeholderTotalUnknownView = By.XPath("//div[contains(text(),'Unknown')]/parent::div/parent::h2/following-sibling::div/div");
-        private readonly By stakeholderTotalOwnerView = By.XPath("//div[@class='tab-content']/div/div/div/div[1]/div/div");
+        private readonly By stakeholderTotalOwnerView = By.XPath("//div[@class='tab-content']/div/div/div[2]/div/div");
         private readonly By stakeholderTotalOwnerRepView = By.XPath("//div[contains(text(),'Owner Representative')]/parent::div/parent::h2/following-sibling::div/div");
 
         //Confirm Tenants Save Modal

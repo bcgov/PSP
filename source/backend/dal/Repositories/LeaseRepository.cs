@@ -104,6 +104,14 @@ namespace Pims.Dal.Repositories
                 .Include(r => r.Project)
                     .ThenInclude(x => x.BusinessFunctionCode)
                 .Include(r => r.Product)
+                .Include(r => r.PimsLeaseLicenseTeams)
+                    .ThenInclude(r => r.LlTeamProfileTypeCodeNavigation)
+                .Include(r => r.PimsLeaseLicenseTeams)
+                    .ThenInclude(r => r.Person)
+                .Include(r => r.PimsLeaseLicenseTeams)
+                    .ThenInclude(r => r.Organization)
+                .Include(r => r.PimsLeaseLicenseTeams)
+                    .ThenInclude(r => r.PrimaryContact)
                 .FirstOrDefault(l => l.LeaseId == id) ?? throw new KeyNotFoundException();
 
             lease.PimsPropertyImprovements = lease.PimsPropertyImprovements.OrderBy(i => i.PropertyImprovementTypeCode).ToArray();
@@ -872,6 +880,7 @@ namespace Pims.Dal.Repositories
 
             Context.Entry(existingLease).CurrentValues.SetValues(lease);
             Context.UpdateChild<PimsLease, long, PimsLeaseLeasePurpose, long>(p => p.PimsLeaseLeasePurposes, lease.LeaseId, lease.PimsLeaseLeasePurposes.ToArray());
+            Context.UpdateChild<PimsLease, long, PimsLeaseLicenseTeam, long>(p => p.PimsLeaseLicenseTeams, lease.LeaseId, lease.PimsLeaseLicenseTeams.ToArray());
 
             if (commitTransaction)
             {
@@ -1053,11 +1062,30 @@ namespace Pims.Dal.Repositories
                     .ToList();
         }
 
+        public List<PimsLeaseLicenseTeam> GetTeamMembers(HashSet<short> regions, long? contractorPersonId = null)
+        {
+            var predicate = PredicateBuilder.New<PimsLeaseLicenseTeam>(acq => true);
+
+            predicate.And(x => x.Lease.RegionCode.HasValue && regions.Contains(x.Lease.RegionCode.Value));
+
+            if (contractorPersonId != null)
+            {
+                predicate.And(x => x.Lease.PimsLeaseLicenseTeams.Any(p => p.PersonId == contractorPersonId));
+            }
+
+            return Context.PimsLeaseLicenseTeams.AsNoTracking()
+                .Include(x => x.Lease)
+                .Include(x => x.Person)
+                .Include(x => x.Organization)
+                .Where(predicate)
+                .ToList();
+        }
+
         /// <summary>
-        /// Generate an SQL statement for the specified 'user' and 'filter'.
+        /// Generate an SQL statement for the specified 'region' and 'filter'.
         /// </summary>
-        /// <param name="query"></param>
         /// <param name="filter"></param>
+        /// <param name="regions"></param>
         /// <returns></returns>
         private static ExpressionStarter<PimsLease> GenerateCommonLeaseQuery(LeaseFilter filter, HashSet<short> regions)
         {
@@ -1138,6 +1166,16 @@ namespace Pims.Dal.Repositories
             if (filter.LeaseStatusTypes.Count > 0)
             {
                 predicateBuilder = predicateBuilder.And(l => filter.LeaseStatusTypes.Any(p => p == l.LeaseStatusTypeCode));
+            }
+
+            if (filter.LeaseTeamPersonId.HasValue)
+            {
+                predicateBuilder = predicateBuilder.And(l => l.PimsLeaseLicenseTeams.Any(lt => lt.PersonId == filter.LeaseTeamPersonId.Value));
+            }
+
+            if (filter.LeaseTeamOrganizationId.HasValue)
+            {
+                predicateBuilder = predicateBuilder.And(l => l.PimsLeaseLicenseTeams.Any(lt => lt.OrganizationId == filter.LeaseTeamOrganizationId.Value));
             }
 
             var expiryStartDate = filter.ExpiryStartDate.ToNullableDateTime();

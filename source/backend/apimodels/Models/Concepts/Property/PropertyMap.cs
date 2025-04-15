@@ -37,9 +37,9 @@ namespace Pims.Api.Models.Concepts.Property
                 .Map(dest => dest.IsOwned, src => src.IsOwned)
 
                 // multi-selects
-                .Map(dest => dest.Anomalies, src => src.PimsPropPropAnomalyTypes)
-                .Map(dest => dest.Tenures, src => src.PimsPropPropTenureTypes)
-                .Map(dest => dest.RoadTypes, src => src.PimsPropPropRoadTypes)
+                .Map(dest => dest.Anomalies, src => src.PimsPropPropAnomalyTyps)
+                .Map(dest => dest.Tenures, src => src.PimsPropPropTenureTyps)
+                .Map(dest => dest.RoadTypes, src => src.PimsPropPropRoadTyps)
 
                 .Map(dest => dest.LandArea, src => src.LandArea)
                 .Map(dest => dest.AreaUnit, src => src.PropertyAreaUnitTypeCodeNavigation)
@@ -129,6 +129,9 @@ namespace Pims.Api.Models.Concepts.Property
                 //.Map(dest => dest.PimsPropPropAnomalyTypes, src => src.PimsPropPropAnomalies)
                 //.Map(dest => dest.PimsPropPropTenureTypes, src => src.Tenures)
                 //.Map(dest => dest.PimsPropPropRoadTypes, src => src.RoadTypes)
+                .Map(dest => dest.PimsPropPropAnomalyTyps, src => src.Anomalies)
+                .Map(dest => dest.PimsPropPropTenureTyps, src => src.Tenures)
+                .Map(dest => dest.PimsPropPropRoadTyps, src => src.RoadTypes)
 
                 .Map(dest => dest.LandArea, src => src.LandArea)
                 .Map(dest => dest.PropertyAreaUnitTypeCode, src => src.PropertyAreaUnitTypeCode)

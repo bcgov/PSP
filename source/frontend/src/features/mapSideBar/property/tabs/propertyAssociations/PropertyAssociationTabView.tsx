@@ -5,6 +5,8 @@ import ResearchIcon from '@/assets/images/research-grey-icon.svg?react';
 import { Section } from '@/components/common/Section/Section';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import TooltipIcon from '@/components/common/TooltipIcon';
+import Claims from '@/constants/claims';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_LeaseRenewal } from '@/models/api/generated/ApiGen_Concepts_LeaseRenewal';
@@ -30,6 +32,7 @@ const PropertyAssociationTabView: React.FunctionComponent<
     props.associations?.leaseAssociations?.filter(
       x => x.statusCode !== ApiGen_CodeTypes_LeaseStatusTypes.DUPLICATE,
     ) ?? [];
+  const { hasClaim } = useKeycloakWrapper();
 
   return (
     <StyledSummarySection>
@@ -55,6 +58,7 @@ const PropertyAssociationTabView: React.FunctionComponent<
           associationName="research"
           associations={props.associations?.researchAssociations ?? undefined}
           linkUrlMask="/mapview/sidebar/research/|id|"
+          disable={!hasClaim(Claims.RESEARCH_VIEW)}
         />
       </Section>
       <Section
@@ -71,6 +75,7 @@ const PropertyAssociationTabView: React.FunctionComponent<
           associationName="acquisition"
           associations={props.associations?.acquisitionAssociations ?? undefined}
           linkUrlMask="/mapview/sidebar/acquisition/|id|"
+          disable={!hasClaim(Claims.ACQUISITION_VIEW)}
         />
       </Section>
       <Section
@@ -90,6 +95,7 @@ const PropertyAssociationTabView: React.FunctionComponent<
           stakeholders={props.associatedLeaseStakeholders}
           renewals={props.associatedLeaseRenewals}
           leases={props.associatedLeases}
+          disable={!hasClaim(Claims.LEASE_VIEW)}
         />
       </Section>
       <Section
@@ -106,6 +112,7 @@ const PropertyAssociationTabView: React.FunctionComponent<
           associationName="disposition"
           associations={props.associations?.dispositionAssociations ?? undefined}
           linkUrlMask="/mapview/sidebar/disposition/|id|"
+          disable={!hasClaim(Claims.DISPOSITION_VIEW)}
         />
       </Section>
     </StyledSummarySection>

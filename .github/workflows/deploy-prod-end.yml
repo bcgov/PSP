@@ -27,7 +27,7 @@ jobs:
           namespace: 3cd915-tools
       - name: Hide the maintenance page and display the app
         run: |
-          ./tools/cicd/maintenance/maintenance.sh prod off
+          APPLICATION_NAME=pims-app-prod ./tools/cicd/maintenance/maintenance.sh prod off
 
   ci-cd-end-notification:
     name: CI-CD End Notification to Teams Channel
