@@ -297,7 +297,7 @@ exports[`MapFilterBar > renders correctly 1`] = `
     novalidate=""
   >
     <div
-      class="map-filter-bar pb-4 form-row"
+      class="map-filter-bar pb-4 row"
     >
       <div
         class="col-auto"
@@ -370,7 +370,7 @@ exports[`MapFilterBar > renders correctly 1`] = `
         </div>
       </div>
       <div
-        class="c2 col-xl-3 col-lg-4 col-md-2 col-3"
+        class="c2 col-xl-3 col-4"
       >
         <div
           class="input form-group"

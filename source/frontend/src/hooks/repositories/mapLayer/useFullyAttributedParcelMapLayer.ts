@@ -22,7 +22,7 @@ export const useFullyAttributedParcelMapLayer = () => {
     withCredentials: true,
   });
 
-  const { findOneWhereContains, findAllWhereContains } = useLayerQuery(
+  const { findOneWhereContains, findMultipleWhereContainsWrapped } = useLayerQuery(
     fullyAttributedParcelsLayerUrl,
     false,
     true,
@@ -129,28 +129,26 @@ export const useFullyAttributedParcelMapLayer = () => {
     [findOneWhereContains, handleError],
   );
 
-  const findAll = useCallback(
+  const findMany = useCallback(
     async (latlng: LatLngLiteral, geometryName?: string, spatialReferenceId?: number) => {
       try {
-        const featureCollection = await findAllWhereContains(
+        const featureCollection = await findMultipleWhereContainsWrapped.execute(
           latlng,
           geometryName,
           spatialReferenceId,
         );
 
         // TODO: Enhance useLayerQuery to allow generics to match the Property types
-        const forceCasted = featureCollection as
+        return featureCollection as
           | FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties>
           | undefined;
-        return forceCasted !== undefined && forceCasted.features.length > 0
-          ? forceCasted.features
-          : undefined;
+
       } catch (e: unknown) {
         handleError();
         return undefined;
       }
     },
-    [findAllWhereContains, handleError],
+    [findMultipleWhereContainsWrapped, handleError],
   );
 
   return {
@@ -161,6 +159,7 @@ export const useFullyAttributedParcelMapLayer = () => {
     findByLoading: getAllFeaturesLoading,
     findByWrapper: getAllFeaturesWrapper,
     findOne,
-    findAll,
+    findMany,
+    findManyLoading: findMultipleWhereContainsWrapped.loading,
   };
 };

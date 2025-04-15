@@ -363,12 +363,12 @@ export class LeaseStatusUpdateSolver
     switch (statusCode) {
       case ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE:
       case ApiGen_CodeTypes_LeaseStatusTypes.DRAFT:
-      case ApiGen_CodeTypes_LeaseStatusTypes.DISCARD:
       case ApiGen_CodeTypes_LeaseStatusTypes.DUPLICATE:
       case ApiGen_CodeTypes_LeaseStatusTypes.EXPIRED:
       case ApiGen_CodeTypes_LeaseStatusTypes.INACTIVE:
         isProtected = false;
         break;
+      case ApiGen_CodeTypes_LeaseStatusTypes.DISCARD:
       case ApiGen_CodeTypes_LeaseStatusTypes.ARCHIVED:
       case ApiGen_CodeTypes_LeaseStatusTypes.TERMINATED:
         isProtected = true;

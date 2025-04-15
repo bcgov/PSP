@@ -153,6 +153,8 @@ describe('PropertySearchSelectorFormView component', () => {
         await fillInput(container, 'pid', '123-456-789');
       });
       expect(queryByDisplayValue('123-456-789')).toBeVisible(); //ensure that expected input value is present.
+      const searchButton = getByTitle('search');
+      act(() => userEvent.click(searchButton));
 
       const resetButton = getByTitle('reset-button');
       await act(async () => userEvent.click(resetButton));
