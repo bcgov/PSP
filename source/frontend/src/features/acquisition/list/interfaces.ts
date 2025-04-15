@@ -90,7 +90,7 @@ export interface MultiSelectOption {
   text: string;
 }
 
-const getParameterIdFromOptions = (
+export const getParameterIdFromOptions = (
   options: MultiSelectOption[],
   selector: IdSelector = 'P',
 ): string => {

@@ -35,17 +35,15 @@ const TooltipIcon: React.FunctionComponent<React.PropsWithChildren<TooltipIconPr
     );
 
   return (
-    <>
-      <OverlayTrigger placement={props.placement} overlay={overlay}>
-        <span
-          data-testid={`tooltip-icon-${props.toolTipId}`}
-          className="tooltip-icon"
-          id={props.toolTipId}
-        >
-          {icon}
-        </span>
-      </OverlayTrigger>
-    </>
+    <OverlayTrigger placement={props.placement} overlay={overlay}>
+      <span
+        data-testid={`tooltip-icon-${props.toolTipId}`}
+        className={classNames('tooltip-icon', props.className)}
+        id={props.toolTipId}
+      >
+        {icon}
+      </span>
+    </OverlayTrigger>
   );
 };
 

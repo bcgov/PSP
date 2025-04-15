@@ -80,13 +80,25 @@ namespace Pims.Dal.Entities.Models
         /// </summary>
         public DateOnly? ExpiryEndDate { get; set; }
 
-        public LeaseFilter(string lFileNo, string tenantName, string pid, string pin, string historical, string[] sort)
+        /// <summary>
+        /// get/set - The lease team person id to filter by.
+        /// </summary>
+        public int? LeaseTeamPersonId { get; set; }
+
+        /// <summary>
+        /// get/set - The lease team organization id to filter by.
+        /// </summary>
+        public int? LeaseTeamOrganizationId { get; set; }
+
+        public LeaseFilter(string lFileNo, string tenantName, string pid, string pin, string historical, int? leaseTeamPersonId, int? leaseTeamOrganizationId, string[] sort)
         {
             this.LFileNo = lFileNo;
             this.TenantName = tenantName;
             this.Pid = pid;
             this.Pin = pin;
             this.Historical = historical;
+            this.LeaseTeamPersonId = leaseTeamPersonId;
+            this.LeaseTeamOrganizationId = leaseTeamOrganizationId;
             this.Sort = sort;
         }
 

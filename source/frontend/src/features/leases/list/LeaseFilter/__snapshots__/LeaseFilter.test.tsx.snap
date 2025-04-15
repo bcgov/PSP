@@ -6,7 +6,7 @@ exports[`Lease Filter > matches snapshot 1`] = `
     class="Toastify"
   />
   <div />
-  .c8.btn {
+  .c11.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,19 +35,19 @@ exports[`Lease Filter > matches snapshot 1`] = `
   cursor: pointer;
 }
 
-.c8.btn .Button__value {
+.c11.btn .Button__value {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
-.c8.btn:hover {
+.c11.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c8.btn:focus {
+.c11.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -55,31 +55,31 @@ exports[`Lease Filter > matches snapshot 1`] = `
   box-shadow: none;
 }
 
-.c8.btn.btn-primary {
+.c11.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c8.btn.btn-primary:hover,
-.c8.btn.btn-primary:active,
-.c8.btn.btn-primary:focus {
+.c11.btn.btn-primary:hover,
+.c11.btn.btn-primary:active,
+.c11.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c8.btn.btn-secondary {
+.c11.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c8.btn.btn-secondary:hover,
-.c8.btn.btn-secondary:active,
-.c8.btn.btn-secondary:focus {
+.c11.btn.btn-secondary:hover,
+.c11.btn.btn-secondary:active,
+.c11.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c8.btn.btn-info {
+.c11.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -87,66 +87,66 @@ exports[`Lease Filter > matches snapshot 1`] = `
   padding-right: 0.6rem;
 }
 
-.c8.btn.btn-info:hover,
-.c8.btn.btn-info:active,
-.c8.btn.btn-info:focus {
+.c11.btn.btn-info:hover,
+.c11.btn.btn-info:active,
+.c11.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c8.btn.btn-light {
+.c11.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c8.btn.btn-light:hover,
-.c8.btn.btn-light:active,
-.c8.btn.btn-light:focus {
+.c11.btn.btn-light:hover,
+.c11.btn.btn-light:active,
+.c11.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c8.btn.btn-dark {
+.c11.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c8.btn.btn-dark:hover,
-.c8.btn.btn-dark:active,
-.c8.btn.btn-dark:focus {
+.c11.btn.btn-dark:hover,
+.c11.btn.btn-dark:active,
+.c11.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c8.btn.btn-danger {
+.c11.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c8.btn.btn-danger:hover,
-.c8.btn.btn-danger:active,
-.c8.btn.btn-danger:focus {
+.c11.btn.btn-danger:hover,
+.c11.btn.btn-danger:active,
+.c11.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c8.btn.btn-warning {
+.c11.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c8.btn.btn-warning:hover,
-.c8.btn.btn-warning:active,
-.c8.btn.btn-warning:focus {
+.c11.btn.btn-warning:hover,
+.c11.btn.btn-warning:active,
+.c11.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c8.btn.btn-link {
+.c11.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -170,9 +170,9 @@ exports[`Lease Filter > matches snapshot 1`] = `
   text-decoration: underline;
 }
 
-.c8.btn.btn-link:hover,
-.c8.btn.btn-link:active,
-.c8.btn.btn-link:focus {
+.c11.btn.btn-link:hover,
+.c11.btn.btn-link:active,
+.c11.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -182,15 +182,15 @@ exports[`Lease Filter > matches snapshot 1`] = `
   outline: none;
 }
 
-.c8.btn.btn-link:disabled,
-.c8.btn.btn-link.disabled {
+.c11.btn.btn-link:disabled,
+.c11.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c8.btn:disabled,
-.c8.btn:disabled:hover {
+.c11.btn:disabled,
+.c11.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -202,19 +202,19 @@ exports[`Lease Filter > matches snapshot 1`] = `
   cursor: not-allowed;
 }
 
-.c8.Button .Button__icon {
+.c11.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c8.Button--icon-only:focus {
+.c11.Button--icon-only:focus {
   outline: none;
 }
 
-.c8.Button--icon-only .Button__icon {
+.c11.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c5 .react-datepicker__calendar-icon {
+.c6 .react-datepicker__calendar-icon {
   width: 2.4rem;
   height: 3rem;
   margin-top: 0.5rem;
@@ -224,19 +224,19 @@ exports[`Lease Filter > matches snapshot 1`] = `
   pointer-events: none;
 }
 
-.c5 .react-datepicker__view-calendar-icon input {
+.c6 .react-datepicker__view-calendar-icon input {
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c5 .react-datepicker-wrapper {
+.c6 .react-datepicker-wrapper {
   max-width: 17rem;
 }
 
-.c6.c6.form-control.is-valid {
+.c8.c8.form-control.is-valid {
   background-image: none;
 }
 
-.c6.c6.form-control.is-invalid {
+.c8.c8.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
@@ -258,24 +258,76 @@ exports[`Lease Filter > matches snapshot 1`] = `
   border-bottom-left-radius: 0;
 }
 
+.c9 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
 .c0 {
   background-color: #d9eaf7;
   border-radius: 0.5rem;
 }
 
-.c7 {
-  border-left: 0.2rem solid white;
+.c0 .input-group: {
+  min-width: 100%;
 }
 
-.c4.required::before {
+.c0 .idir-input-group {
+  margin: 0;
+}
+
+.c0 .idir-input-group div {
+  padding: 0;
+}
+
+.c5.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c3 {
+.c4 {
   font-weight: bold;
+}
+
+.c3 .chip {
+  background: #f2f2f2;
+  border-radius: 0.4rem;
+  color: black;
+  font-size: 1.6rem;
+  margin-right: 1em;
+}
+
+.c3.multiselect-container {
+  width: auto;
+  color: black;
+  padding-bottom: 1.2rem;
+}
+
+.c3.multiselect-container .searchWrapper {
+  background: white;
+  border: 1px solid #606060;
+  min-height: 2.4rem;
+  padding: 0.5rem;
+}
+
+.c3.multiselect-container .searchWrapper input {
+  margin: 0;
+}
+
+.c7 .react-datepicker-wrapper.d-block {
+  max-width: 100%;
+}
+
+.c10 {
+  position: absolute;
+  right: -0.5rem;
 }
 
 <form
@@ -286,490 +338,439 @@ exports[`Lease Filter > matches snapshot 1`] = `
       class="row"
     >
       <div
-        class="col-6"
+        class="col-1"
+      >
+        <strong>
+          Search by:
+        </strong>
+      </div>
+      <div
+        class="col-3"
       >
         <div
-          class="row"
+          class="idir-input-group flex-nowrap input-group row"
         >
           <div
-            class="col-auto"
-          >
-            <strong>
-              Search by:
-            </strong>
-          </div>
-          <div
-            class="col"
+            class="c1 col-auto"
           >
             <div
-              class="row"
+              class="input-group-prepend"
             >
               <div
-                class="col-xl-7"
+                class="form-group"
               >
-                <div
-                  class="idir-input-group flex-nowrap input-group row"
+                <select
+                  class="form-select form-control"
+                  id="input-searchBy"
+                  name="searchBy"
                 >
-                  <div
-                    class="c1 col-auto"
+                  <option
+                    class="option"
+                    data-testid="select-option-pid"
+                    value="pid"
                   >
-                    <div
-                      class="input-group-prepend"
-                    >
-                      <div
-                        class="form-group"
-                      >
-                        <select
-                          class="form-select form-control"
-                          id="input-searchBy"
-                          name="searchBy"
-                        >
-                          <option
-                            class="option"
-                            data-testid="select-option-pid"
-                            value="pid"
-                          >
-                            PID
-                          </option>
-                          <option
-                            class="option"
-                            data-testid="select-option-pin"
-                            value="pin"
-                          >
-                            PIN
-                          </option>
-                          <option
-                            class="option"
-                            data-testid="select-option-address"
-                            value="address"
-                          >
-                            Address
-                          </option>
-                          <option
-                            class="option"
-                            data-testid="select-option-lFileNo"
-                            value="lFileNo"
-                          >
-                            L-File #
-                          </option>
-                          <option
-                            class="option"
-                            data-testid="select-option-historical"
-                            value="historical"
-                          >
-                            Historical File #
-                          </option>
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                  <div
-                    class="c2 col"
+                    PID
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-pin"
+                    value="pin"
                   >
-                    <div
-                      class="input form-group"
-                    >
-                      <input
-                        class="form-control"
-                        id="input-lFileNo"
-                        name="lFileNo"
-                        placeholder="Enter an L-File number"
-                        style="word-break: break-all;"
-                        title=""
-                        value=""
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="col-xl-5"
-              >
-                <div>
-                  <div
-                    class="multiselect-container multiSelectContainer  "
-                    id="status-selector"
-                    style="width: auto; color: black; padding-bottom: 12px;"
+                    PIN
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-address"
+                    value="address"
                   >
-                    <div
-                      class="search-wrapper searchWrapper "
-                      style="background: white; border: 1px solid #606060;"
-                    >
-                      <span
-                        class="chip  false false"
-                        style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em;"
-                      >
-                        Active
-                        <i
-                          class="custom-close"
-                        >
-                          <svg
-                            class="ml-3"
-                            fill="currentColor"
-                            height="18px"
-                            stroke="currentColor"
-                            stroke-width="0"
-                            viewBox="0 0 352 512"
-                            width="18px"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-                            />
-                          </svg>
-                        </i>
-                      </span>
-                      <input
-                        autocomplete="off"
-                        class="searchBox "
-                        id="status-selector_input"
-                        name="search_name_input"
-                        placeholder=""
-                        type="text"
-                        value=""
-                      />
-                    </div>
-                    <div
-                      class="optionListContainer displayNone"
-                    >
-                      <ul
-                        class="optionContainer"
-                      >
-                        <span
-                          class="notFound"
-                        >
-                          No Options Available
-                        </span>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
+                    Address
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-lFileNo"
+                    value="lFileNo"
+                  >
+                    L-File #
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-historical"
+                    value="historical"
+                  >
+                    Historical File #
+                  </option>
+                </select>
               </div>
             </div>
+          </div>
+          <div
+            class="c2 col"
+          >
             <div
-              class="row"
+              class="input form-group"
             >
-              <div
-                class="col-xl-7"
+              <input
+                class="form-control"
+                id="input-lFileNo"
+                name="lFileNo"
+                placeholder="Enter an L-File number"
+                style="word-break: break-all;"
+                title=""
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="multiselect-container multiSelectContainer  c3"
+            id="program-selector"
+          >
+            <div
+              class="search-wrapper searchWrapper "
+            >
+              <input
+                autocomplete="off"
+                class="searchBox "
+                id="program-selector_input"
+                name="search_name_input"
+                placeholder="Select Program(s)"
+                type="text"
+                value=""
+              />
+            </div>
+            <div
+              class="optionListContainer displayNone"
+            >
+              <ul
+                class="optionContainer"
               >
-                <div>
-                  <div
-                    class="multiselect-container multiSelectContainer  "
-                    id="properties-selector"
-                    style="width: auto; color: black; padding-bottom: 12px;"
-                  >
-                    <div
-                      class="search-wrapper searchWrapper "
-                      style="background: white; border: 1px solid #606060;"
-                    >
-                      <input
-                        autocomplete="off"
-                        class="searchBox "
-                        id="properties-selector_input"
-                        name="search_name_input"
-                        placeholder="Select Program(s)"
-                        type="text"
-                        value=""
-                      />
-                    </div>
-                    <div
-                      class="optionListContainer displayNone"
-                    >
-                      <ul
-                        class="optionContainer"
-                      >
-                        <span
-                          class="notFound"
-                        >
-                          No Options Available
-                        </span>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="col-xl-5"
-              >
-                <div
-                  class="input form-group"
+                <span
+                  class="notFound"
                 >
-                  <input
-                    class="form-control"
-                    id="input-tenantName"
-                    name="tenantName"
-                    placeholder="Tenant Name"
-                    style="word-break: break-all;"
-                    title=""
-                    value=""
-                  />
-                </div>
-              </div>
+                  No Options Available
+                </span>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div
+            class="multiselect-container multiSelectContainer  c3"
+            id="multiselectContainerReact"
+          >
+            <div
+              class="search-wrapper searchWrapper "
+            >
+              <input
+                autocomplete="off"
+                class="searchBox "
+                id="search_input"
+                name="search_name_input"
+                placeholder="Team member"
+                type="text"
+                value=""
+              />
+            </div>
+            <div
+              class="optionListContainer displayNone"
+            >
+              <ul
+                class="optionContainer"
+              >
+                <span
+                  class="notFound"
+                >
+                  No Options Available
+                </span>
+              </ul>
             </div>
           </div>
         </div>
       </div>
       <div
-        class="col-5"
+        class="col-xl-2"
+      >
+        <div>
+          <div
+            class="multiselect-container multiSelectContainer  c3"
+            id="status-selector"
+          >
+            <div
+              class="search-wrapper searchWrapper "
+            >
+              <span
+                class="chip  false false"
+              >
+                Active
+                <i
+                  class="custom-close"
+                >
+                  <svg
+                    class="ml-3"
+                    fill="currentColor"
+                    height="18px"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 352 512"
+                    width="18px"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                    />
+                  </svg>
+                </i>
+              </span>
+              <input
+                autocomplete="off"
+                class="searchBox "
+                id="status-selector_input"
+                name="search_name_input"
+                placeholder=""
+                type="text"
+                value=""
+              />
+            </div>
+            <div
+              class="optionListContainer displayNone"
+            >
+              <ul
+                class="optionContainer"
+              >
+                <span
+                  class="notFound"
+                >
+                  No Options Available
+                </span>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div
+          class="input form-group"
+        >
+          <input
+            class="form-control"
+            id="input-tenantName"
+            name="tenantName"
+            placeholder="Tenant Name"
+            style="word-break: break-all;"
+            title=""
+            value=""
+          />
+        </div>
+      </div>
+      <div
+        class="justify-content-end col-3"
       >
         <div
           class="pb-2 row"
         >
           <div
-            class="pr-0 text-left col-2"
+            class="pr-0 text-left col-3"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Expiry date:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col-9"
           >
             <div
-              class="row"
+              class="c6 c7 form-group"
             >
               <div
-                class="col"
+                class="react-datepicker-wrapper d-block"
               >
                 <div
-                  class="c5 form-group"
+                  class="react-datepicker__input-container react-datepicker__view-calendar-icon"
                 >
-                  <div
-                    class="react-datepicker-wrapper d-block"
+                  <svg
+                    class="react-datepicker__calendar-icon"
+                    viewBox="0 0 448 512"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    <div
-                      class="react-datepicker__input-container react-datepicker__view-calendar-icon"
-                    >
-                      <svg
-                        class="react-datepicker__calendar-icon"
-                        viewBox="0 0 448 512"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
-                        />
-                      </svg>
-                      <input
-                        autocomplete="off"
-                        class="c6 form-control date-picker"
-                        id="datepicker-expiryStartDate"
-                        name="expiryStartDate"
-                        placeholder="from date"
-                        type="text"
-                        value=""
-                      />
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="col"
-              >
-                <div
-                  class="c5 form-group"
-                >
-                  <div
-                    class="react-datepicker-wrapper d-block"
-                  >
-                    <div
-                      class="react-datepicker__input-container react-datepicker__view-calendar-icon"
-                    >
-                      <svg
-                        class="react-datepicker__calendar-icon"
-                        viewBox="0 0 448 512"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
-                        />
-                      </svg>
-                      <input
-                        autocomplete="off"
-                        class="c6 form-control date-picker"
-                        id="datepicker-expiryEndDate"
-                        name="expiryEndDate"
-                        placeholder="to date"
-                        type="text"
-                        value=""
-                      />
-                    </div>
-                  </div>
+                    <path
+                      d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                    />
+                  </svg>
+                  <input
+                    autocomplete="off"
+                    class="c8 form-control date-picker"
+                    id="datepicker-expiryStartDate"
+                    name="expiryStartDate"
+                    placeholder="from date"
+                    type="text"
+                    value=""
+                  />
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div
-          class="pb-2 row"
-        >
-          <div
-            class="pr-0 text-left col-2"
-          />
-          <div
-            class="c4 text-left col"
-          >
             <div
-              class="row"
+              class="form-group"
             >
-              <div
-                class="col"
+              <span
+                class="tooltip-icon"
+                data-testid="tooltip-icon-regionType-tooltip"
+                id="regionType-tooltip"
               >
-                <div
-                  class="form-group"
+                <svg
+                  class="tooltip-icon"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 512 512"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
                 >
-                  <span
-                    class="tooltip-icon"
-                    data-testid="tooltip-icon-regionType-tooltip"
-                    id="regionType-tooltip"
-                  >
-                    <svg
-                      class="tooltip-icon"
-                      fill="currentColor"
-                      height="1em"
-                      stroke="currentColor"
-                      stroke-width="0"
-                      viewBox="0 0 512 512"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                      />
-                    </svg>
-                  </span>
-                  <select
-                    class="form-select form-control"
-                    id="input-regionType"
-                    name="regionType"
-                  >
-                    <option
-                      value=""
-                    >
-                      All Regions
-                    </option>
-                  </select>
-                </div>
-              </div>
-              <div
-                class="col"
+                  <path
+                    d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                  />
+                </svg>
+              </span>
+              <select
+                class="form-select form-control"
+                id="input-regionType"
+                name="regionType"
               >
-                <div
-                  class="row no-gutters"
+                <option
+                  value=""
                 >
-                  <div
-                    class="col-9"
-                  >
-                    <div
-                      class="input form-group"
-                    >
-                      <input
-                        class="form-control"
-                        id="input-details"
-                        name="details"
-                        placeholder="Keyword"
-                        style="word-break: break-all;"
-                        title=""
-                        value=""
-                      />
-                    </div>
-                  </div>
-                  <div
-                    class="col-1"
-                  >
-                    <span
-                      class="tooltip-icon"
-                      data-testid="tooltip-icon-lease-search-keyword-tooltip"
-                      id="lease-search-keyword-tooltip"
-                    >
-                      <svg
-                        class="tooltip-icon"
-                        fill="currentColor"
-                        height="1em"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 512 512"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                        />
-                      </svg>
-                    </span>
-                  </div>
-                </div>
-              </div>
+                  All Regions
+                </option>
+              </select>
             </div>
           </div>
         </div>
       </div>
       <div
-        class="c7 col-xl-1"
+        class="col"
       >
         <div
-          class="row"
+          class="c6 c7 form-group"
         >
           <div
-            class="pr-0 col-auto"
+            class="react-datepicker-wrapper d-block"
           >
-            <button
-              class="c8 Button Button--icon-only primary btn btn-primary"
-              data-testid="search"
-              id="search-button"
-              title="search"
-              type="submit"
+            <div
+              class="react-datepicker__input-container react-datepicker__view-calendar-icon"
             >
-              <div
-                class="Button__icon"
+              <svg
+                class="react-datepicker__calendar-icon"
+                viewBox="0 0 448 512"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <svg
-                  fill="currentColor"
-                  height="20"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 512 512"
-                  width="20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
-                  />
-                </svg>
-              </div>
-            </button>
-          </div>
-          <div
-            class="col-auto"
-          >
-            <button
-              class="c8 Button Button--icon-only btn btn-info"
-              data-testid="reset-button"
-              id="reset-button"
-              title="reset-button"
-              type="reset"
-            >
-              <div
-                class="Button__icon"
-              >
-                <svg
-                  fill="currentColor"
-                  height="20"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 512 512"
-                  width="20"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M212.333 224.333H12c-6.627 0-12-5.373-12-12V12C0 5.373 5.373 0 12 0h48c6.627 0 12 5.373 12 12v78.112C117.773 39.279 184.26 7.47 258.175 8.007c136.906.994 246.448 111.623 246.157 248.532C504.041 393.258 393.12 504 256.333 504c-64.089 0-122.496-24.313-166.51-64.215-5.099-4.622-5.334-12.554-.467-17.42l33.967-33.967c4.474-4.474 11.662-4.717 16.401-.525C170.76 415.336 211.58 432 256.333 432c97.268 0 176-78.716 176-176 0-97.267-78.716-176-176-176-58.496 0-110.28 28.476-142.274 72.333h98.274c6.627 0 12 5.373 12 12v48c0 6.627-5.373 12-12 12z"
-                  />
-                </svg>
-              </div>
-            </button>
+                <path
+                  d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                />
+              </svg>
+              <input
+                autocomplete="off"
+                class="c8 form-control date-picker"
+                id="datepicker-expiryEndDate"
+                name="expiryEndDate"
+                placeholder="to date"
+                type="text"
+                value=""
+              />
+            </div>
           </div>
         </div>
+        <div
+          class="c9"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-details"
+              name="details"
+              placeholder="Keyword"
+              style="word-break: break-all;"
+              title=""
+              value=""
+            />
+          </div>
+          <span
+            class="tooltip-icon c10"
+            data-testid="tooltip-icon-lease-search-keyword-tooltip"
+            id="lease-search-keyword-tooltip"
+          >
+            <svg
+              class="tooltip-icon"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 512 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+              />
+            </svg>
+          </span>
+        </div>
+      </div>
+      <div
+        class="pr-0 col-1"
+      >
+        <button
+          class="c11 Button Button--icon-only primary btn btn-primary"
+          data-testid="search"
+          id="search-button"
+          title="search"
+          type="submit"
+        >
+          <div
+            class="Button__icon"
+          >
+            <svg
+              fill="currentColor"
+              height="20"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 512 512"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+              />
+            </svg>
+          </div>
+        </button>
+        <button
+          class="c11 Button Button--icon-only btn btn-info"
+          data-testid="reset-button"
+          id="reset-button"
+          title="reset-button"
+          type="reset"
+        >
+          <div
+            class="Button__icon"
+          >
+            <svg
+              fill="currentColor"
+              height="20"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 512 512"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M212.333 224.333H12c-6.627 0-12-5.373-12-12V12C0 5.373 5.373 0 12 0h48c6.627 0 12 5.373 12 12v78.112C117.773 39.279 184.26 7.47 258.175 8.007c136.906.994 246.448 111.623 246.157 248.532C504.041 393.258 393.12 504 256.333 504c-64.089 0-122.496-24.313-166.51-64.215-5.099-4.622-5.334-12.554-.467-17.42l33.967-33.967c4.474-4.474 11.662-4.717 16.401-.525C170.76 415.336 211.58 432 256.333 432c97.268 0 176-78.716 176-176 0-97.267-78.716-176-176-176-58.496 0-110.28 28.476-142.274 72.333h98.274c6.627 0 12 5.373 12 12v48c0 6.627-5.373 12-12 12z"
+              />
+            </svg>
+          </div>
+        </button>
       </div>
     </div>
   </form>

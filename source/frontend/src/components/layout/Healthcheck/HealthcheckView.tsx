@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { LinkButton } from '@/components/common/buttons/LinkButton';
 import { ModalSize } from '@/components/common/GenericModal';
 import { useModalContext } from '@/hooks/useModalContext';
+import HealthCheckStyled from '@/layouts/Healthcheck';
 
 export interface IHealthCheckIssue {
   key: string;
@@ -11,18 +12,20 @@ export interface IHealthCheckIssue {
 }
 
 export interface IHealthCheckViewProps {
+  systemChecked: boolean;
   systemDegraded: boolean;
   systemChecks: IHealthCheckIssue[] | null;
 }
 
 const HealthcheckView: React.FunctionComponent<IHealthCheckViewProps> = ({
+  systemChecked,
   systemDegraded,
   systemChecks,
 }) => {
   const { setModalContent, setDisplayModal } = useModalContext();
 
-  return (
-    systemDegraded && (
+  return systemChecked && systemDegraded ? (
+    <HealthCheckStyled>
       <StyledWrapperDiv>
         <StyledIconDiv>
           <FaBan size={24} />
@@ -65,8 +68,8 @@ const HealthcheckView: React.FunctionComponent<IHealthCheckViewProps> = ({
           )}
         </StyledContainer>
       </StyledWrapperDiv>
-    )
-  );
+    </HealthCheckStyled>
+  ) : null;
 };
 
 const StyledWrapperDiv = styled.div`

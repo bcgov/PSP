@@ -5189,6 +5189,48 @@ export const mockLookups: ILookupCode[] = [
     displayOrder: 4,
     type: 'PimsAcqFileExpropRiskType',
   },
+  {
+    id: 'EXPROPAGENT',
+    name: 'Expropriation agent',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsLlTeamProfileType',
+  },
+  {
+    id: 'MOTILAWYER',
+    name: 'MoTI Solicitor',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsLlTeamProfileType',
+  },
+  {
+    id: 'NEGOTAGENT',
+    name: 'Negotiation agent',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsLlTeamProfileType',
+  },
+  {
+    id: 'PROPAGENT',
+    name: 'Property agent',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsLlTeamProfileType',
+  },
+  {
+    id: 'PROPANALYST',
+    name: 'Property analyst',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsLlTeamProfileType',
+  },
+  {
+    id: 'PROPCOORD',
+    name: 'Property coordinator',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsLlTeamProfileType',
+  },
 ];
 
 export const getMockLookUpsByType = (codeType: string): SelectOption[] => {

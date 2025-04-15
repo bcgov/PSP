@@ -509,7 +509,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
               Status:
               <span>
                 <span
-                  class="tooltip-icon"
+                  class="tooltip-icon tooltip-light"
                   data-testid="tooltip-icon-status-field-tooltip"
                   id="status-field-tooltip"
                 >

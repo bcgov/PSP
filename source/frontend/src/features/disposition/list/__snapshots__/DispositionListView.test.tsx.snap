@@ -357,6 +357,18 @@ exports[`Disposition List View > matches snapshot 1`] = `
   border-radius: 0.5rem;
 }
 
+.c6 .input-group: {
+  min-width: 100%;
+}
+
+.c6 .idir-input-group {
+  margin: 0;
+}
+
+.c6 .idir-input-group div {
+  padding: 0;
+}
+
 .c5 {
   -webkit-align-items: center;
   -webkit-box-align: center;

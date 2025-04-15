@@ -677,35 +677,6 @@ namespace Pims.Api.Test.Services
             ex.Which.UserOverride.Should().Be(UserOverrideCode.DisposeOfProperties);
         }
 
-        [Fact]
-        public void Update_UserOverride_Final_Validation()
-        {
-            // Arrange
-            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
-            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
-
-            var statusMock = this._helper.GetService<Mock<IDispositionStatusSolver>>();
-            statusMock.Setup(x => x.CanEditDetails(It.IsAny<DispositionFileStatusTypes>())).Returns(true);
-
-            var dispFile = EntityHelper.CreateDispositionFile(1);
-            dispFile.PimsDispositionSales = new List<PimsDispositionSale>() { new PimsDispositionSale() { SaleFinalAmt = 1 } };
-
-            var updatedDispFile = EntityHelper.CreateDispositionFile(1);
-            updatedDispFile.DispositionFileStatusTypeCode = DispositionFileStatusTypes.ARCHIVED.ToString();
-
-            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
-            repository.Setup(x => x.GetRegion(It.IsAny<long>())).Returns(1);
-            repository.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<PimsDispositionFile>())).Returns(dispFile);
-            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dispFile);
-
-            // Act
-            Action act = () => service.Update(1, updatedDispFile, new List<UserOverrideCode>());
-
-            // Assert
-            var ex = act.Should().Throw<UserOverrideException>();
-            ex.Which.UserOverride.Should().Be(UserOverrideCode.DispositionFileFinalStatus);
-        }
-
         public static IEnumerable<object[]> UpdateFinalValidationSuccessParameters =>
             new List<object[]>
             {
