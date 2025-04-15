@@ -1,12 +1,9 @@
 using System;
-using System.Data.Entity.SqlServer;
 using System.Linq;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
-using DocumentFormat.OpenXml.Spreadsheet;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
-using MoreLinq;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 
