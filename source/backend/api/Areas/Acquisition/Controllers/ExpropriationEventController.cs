@@ -53,13 +53,13 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         /// Get the acquisition file expropriation events (history).
         /// </summary>
         /// <returns>The expropriation events.</returns>
-        [HttpGet("{id:long}/expropriation-events")]
+        [HttpGet("{acquisitionFileId:long}/expropriation-events")]
         [HasPermission(Permissions.AcquisitionFileView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<ExpropriationEventModel>), 200)]
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult GetAcquisitionFileExpropriationEvents([FromRoute] long id)
+        public IActionResult GetAcquisitionFileExpropriationEvents([FromRoute] long acquisitionFileId)
         {
             _logger.LogInformation(
                 LogMessage,
@@ -68,7 +68,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
                 User.GetUsername(),
                 DateTime.Now);
 
-            var expropriationEvents = _expropriationEventService.GetExpropriationEvents(id);
+            var expropriationEvents = _expropriationEventService.GetExpropriationEvents(acquisitionFileId);
             return new JsonResult(_mapper.Map<List<ExpropriationEventModel>>(expropriationEvents));
         }
 
@@ -76,13 +76,13 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         /// Get an expropriation event by Id.
         /// </summary>
         /// <returns>The expropriation event details.</returns>
-        [HttpGet("{id:long}/expropriation-events/{eventId:long}")]
+        [HttpGet("{acquisitionFileId:long}/expropriation-events/{eventId:long}")]
         [HasPermission(Permissions.AcquisitionFileView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ExpropriationEventModel), 200)]
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult GetAcquisitionFileExpropriationEventById([FromRoute] long id, [FromRoute] long eventId)
+        public IActionResult GetAcquisitionFileExpropriationEventById([FromRoute] long acquisitionFileId, [FromRoute] long eventId)
         {
             _logger.LogInformation(
                 LogMessage,
@@ -99,13 +99,13 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         /// Create an entry in the expropriation event history.
         /// </summary>
         /// <returns>The expropriation event details.</returns>
-        [HttpPost("{id:long}/expropriation-events")]
+        [HttpPost("{acquisitionFileId:long}/expropriation-events")]
         [HasPermission(Permissions.AcquisitionFileEdit)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ExpropriationEventModel), 201)]
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult AddAcquisitionFileExpropriationEvent([FromRoute] long id, [FromBody] ExpropriationEventModel expropriationEvent)
+        public IActionResult AddAcquisitionFileExpropriationEvent([FromRoute] long acquisitionFileId, [FromBody] ExpropriationEventModel expropriationEvent)
         {
             _logger.LogInformation(
                 LogMessage,
@@ -114,12 +114,12 @@ namespace Pims.Api.Areas.Acquisition.Controllers
                 User.GetUsername(),
                 DateTime.Now);
 
-            if (id != expropriationEvent.AcquisitionFileId)
+            if (acquisitionFileId != expropriationEvent.AcquisitionFileId)
             {
                 throw new BadRequestException("Invalid AcquisitionFileId.");
             }
 
-            var newExpropriationEvent = _expropriationEventService.AddExpropriationEvent(id, _mapper.Map<Dal.Entities.PimsExpropOwnerHistory>(expropriationEvent));
+            var newExpropriationEvent = _expropriationEventService.AddExpropriationEvent(acquisitionFileId, _mapper.Map<Dal.Entities.PimsExpropOwnerHistory>(expropriationEvent));
             return new JsonResult(_mapper.Map<ExpropriationEventModel>(newExpropriationEvent));
         }
 
@@ -127,13 +127,13 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         /// Update the expropriation event by Id.
         /// </summary>
         /// <returns>The expropriation event details.</returns>
-        [HttpPut("{id:long}/expropriation-events/{eventId:long}")]
+        [HttpPut("{acquisitionFileId:long}/expropriation-events/{eventId:long}")]
         [HasPermission(Permissions.AcquisitionFileEdit)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ExpropriationEventModel), 201)]
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult UpdateAcquisitionFileExpropriationEvent([FromRoute] long id, [FromRoute] long eventId, [FromBody] ExpropriationEventModel expropriationEvent)
+        public IActionResult UpdateAcquisitionFileExpropriationEvent([FromRoute] long acquisitionFileId, [FromRoute] long eventId, [FromBody] ExpropriationEventModel expropriationEvent)
         {
             _logger.LogInformation(
                 LogMessage,
@@ -142,12 +142,12 @@ namespace Pims.Api.Areas.Acquisition.Controllers
                 User.GetUsername(),
                 DateTime.Now);
 
-            if (id != expropriationEvent.AcquisitionFileId)
+            if (acquisitionFileId != expropriationEvent.AcquisitionFileId)
             {
                 throw new BadRequestException("Invalid AcquisitionFileId.");
             }
 
-            var updatedExpropriationEvent = _expropriationEventService.UpdateExpropriationEvent(id, _mapper.Map<Dal.Entities.PimsExpropOwnerHistory>(expropriationEvent));
+            var updatedExpropriationEvent = _expropriationEventService.UpdateExpropriationEvent(acquisitionFileId, _mapper.Map<Dal.Entities.PimsExpropOwnerHistory>(expropriationEvent));
             return new JsonResult(_mapper.Map<ExpropriationEventModel>(updatedExpropriationEvent));
         }
 
@@ -155,13 +155,13 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         /// Delete an expropriation event by Id.
         /// </summary>
         /// <returns>True if the operation was successful; false otherwise.</returns>
-        [HttpDelete("{id:long}/expropriation-events/{eventId:long}")]
+        [HttpDelete("{acquisitionFileId:long}/expropriation-events/{eventId:long}")]
         [HasPermission(Permissions.AcquisitionFileEdit)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ExpropriationEventModel), 200)]
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult DeleteAcquisitionFileExpropriationEvent([FromRoute] long id, [FromRoute] long eventId)
+        public IActionResult DeleteAcquisitionFileExpropriationEvent([FromRoute] long acquisitionFileId, [FromRoute] long eventId)
         {
             _logger.LogInformation(
                 LogMessage,
@@ -170,7 +170,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
                 User.GetUsername(),
                 DateTime.Now);
 
-            var result = _expropriationEventService.DeleteExpropriationEvent(id, eventId);
+            var result = _expropriationEventService.DeleteExpropriationEvent(acquisitionFileId, eventId);
             return new JsonResult(result);
         }
 

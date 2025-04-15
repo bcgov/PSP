@@ -14,7 +14,7 @@ import {
 } from './ExpropriationEventHistoryContainer';
 import { IExpropriationEventHistoryViewProps } from './ExpropriationEventHistoryView';
 import { IExpropriationEventModalProps } from './modal/ExpropriationEventModal';
-import { ExpropriationEventFormModel } from './models';
+import { ExpropriationEventFormModel, ExpropriationEventRow } from './models';
 
 vi.mock('@/hooks/repositories/useExpropriationEventRepository');
 const mockGetExpropriationEventsApi = getMockRepositoryObj([]);
@@ -130,7 +130,7 @@ describe('ExpropriationEventHistoryContainer', () => {
     expect(ViewMock).toHaveBeenCalledWith(
       expect.objectContaining<Partial<IExpropriationEventHistoryViewProps>>({
         isLoading: false,
-        expropriationEvents: [apiEvent],
+        eventRows: [ExpropriationEventRow.fromApi(apiEvent)],
         onAdd: expect.any(Function),
         onUpdate: expect.any(Function),
         onDelete: expect.any(Function),
@@ -339,5 +339,68 @@ describe('ExpropriationEventHistoryContainer', () => {
     await act(async () => userEvent.click(screen.getByTitle('cancel-modal')));
 
     expect(mockDeleteExpropriationEventsApi.execute).not.toHaveBeenCalled();
+  });
+
+  it('displays the expropriation event history unsorted by default', async () => {
+    const apiEvents: ApiGen_Concepts_ExpropriationEvent[] = [
+      {
+        ...getMockExpropriationEvent(),
+        eventDate: '2025-01-10',
+      },
+      {
+        ...getMockExpropriationEvent(),
+        eventDate: '2001-03-30',
+      },
+      {
+        ...getMockExpropriationEvent(),
+        eventDate: '2014-12-31',
+      },
+    ];
+    mockDeleteExpropriationEventsApi.execute.mockResolvedValueOnce(true);
+    mockGetExpropriationEventsApi.execute.mockImplementationOnce(async () => {
+      mockGetExpropriationEventsApi.response = apiEvents;
+      return apiEvents;
+    });
+
+    await setup();
+
+    expect(viewProps.eventRows.length).toBe(3);
+    expect(viewProps.eventRows[0].eventDate).toBe('2025-01-10');
+    expect(viewProps.eventRows[1].eventDate).toBe('2001-03-30');
+    expect(viewProps.eventRows[2].eventDate).toBe('2014-12-31');
+  });
+
+  it('sorts the expropriation event history by date', async () => {
+    const apiEvents: ApiGen_Concepts_ExpropriationEvent[] = [
+      {
+        ...getMockExpropriationEvent(),
+        eventDate: '2025-01-10',
+      },
+      {
+        ...getMockExpropriationEvent(),
+        eventDate: '2001-03-30',
+      },
+      {
+        ...getMockExpropriationEvent(),
+        eventDate: '2014-12-31',
+      },
+    ];
+    mockDeleteExpropriationEventsApi.execute.mockResolvedValueOnce(true);
+    mockGetExpropriationEventsApi.execute.mockImplementationOnce(async () => {
+      mockGetExpropriationEventsApi.response = apiEvents;
+      return apiEvents;
+    });
+
+    await setup();
+
+    await act(async () => {
+      viewProps.setSort({ eventDate: 'asc' });
+    });
+
+    // column should be sorted in ascending order
+    expect(viewProps.eventRows.length).toBe(3);
+    expect(viewProps.eventRows[0].eventDate).toBe('2001-03-30');
+    expect(viewProps.eventRows[1].eventDate).toBe('2014-12-31');
+    expect(viewProps.eventRows[2].eventDate).toBe('2025-01-10');
   });
 });

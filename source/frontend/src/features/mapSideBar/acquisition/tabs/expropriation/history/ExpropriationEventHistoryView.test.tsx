@@ -7,6 +7,7 @@ import { act, render, RenderOptions, screen, userEvent } from '@/utils/test-util
 import ExpropriationEventHistoryView, {
   IExpropriationEventHistoryViewProps,
 } from './ExpropriationEventHistoryView';
+import { ExpropriationEventRow } from './models';
 
 describe('ExpropriationEventHistoryView', () => {
   const setup = (
@@ -14,7 +15,9 @@ describe('ExpropriationEventHistoryView', () => {
   ) => {
     const defaultProps: IExpropriationEventHistoryViewProps = {
       isLoading: false,
-      expropriationEvents: [],
+      eventRows: [],
+      sort: {},
+      setSort: vi.fn(),
       onAdd: vi.fn(),
       onUpdate: vi.fn(),
       onDelete: vi.fn(),
@@ -32,14 +35,9 @@ describe('ExpropriationEventHistoryView', () => {
 
     const tableRows = document.querySelectorAll('.table .tbody .tr-wrapper');
 
-    const dateColumnCells = document.querySelectorAll(
-      '.table .tbody .tr-wrapper .tr .td:first-child',
-    );
-
     return {
       ...rendered,
       tableRows,
-      dateColumnCells,
     };
   };
 
@@ -50,14 +48,14 @@ describe('ExpropriationEventHistoryView', () => {
   });
 
   it('displays a message when no matching records found', async () => {
-    const { tableRows } = setup({ props: { expropriationEvents: [] } });
+    const { tableRows } = setup({ props: { eventRows: [] } });
     expect(tableRows.length).toBe(0);
     expect(await screen.findByText(/No matching expropriations found/i)).toBeVisible();
   });
 
   it('displays expropriation row buttons (update, delete), when the user has permissions', async () => {
     setup({
-      props: { expropriationEvents: [getMockExpropriationEvent()] },
+      props: { eventRows: [ExpropriationEventRow.fromApi(getMockExpropriationEvent())] },
       claims: [Claims.ACQUISITION_EDIT],
     });
 
@@ -72,7 +70,7 @@ describe('ExpropriationEventHistoryView', () => {
     const onAdd = vi.fn();
     setup({
       props: {
-        expropriationEvents: [getMockExpropriationEvent()],
+        eventRows: [ExpropriationEventRow.fromApi(getMockExpropriationEvent())],
         onAdd,
       },
       claims: [Claims.ACQUISITION_EDIT],
@@ -90,7 +88,7 @@ describe('ExpropriationEventHistoryView', () => {
     const onUpdate = vi.fn();
     setup({
       props: {
-        expropriationEvents: [getMockExpropriationEvent()],
+        eventRows: [ExpropriationEventRow.fromApi(getMockExpropriationEvent())],
         onUpdate,
       },
       claims: [Claims.ACQUISITION_EDIT],
@@ -108,7 +106,7 @@ describe('ExpropriationEventHistoryView', () => {
     const onDelete = vi.fn();
     setup({
       props: {
-        expropriationEvents: [getMockExpropriationEvent()],
+        eventRows: [ExpropriationEventRow.fromApi(getMockExpropriationEvent())],
         onDelete,
       },
       claims: [Claims.ACQUISITION_EDIT],
@@ -120,64 +118,5 @@ describe('ExpropriationEventHistoryView', () => {
     await act(async () => userEvent.click(deleteButton));
 
     expect(onDelete).toHaveBeenCalled();
-  });
-
-  it('displays the expropriation event history unsorted by default', async () => {
-    const { dateColumnCells } = setup({
-      props: {
-        expropriationEvents: [
-          {
-            ...getMockExpropriationEvent(),
-            eventDate: '2025-01-10',
-          },
-          {
-            ...getMockExpropriationEvent(),
-            eventDate: '2001-03-30',
-          },
-          {
-            ...getMockExpropriationEvent(),
-            eventDate: '2014-12-31',
-          },
-        ],
-      },
-      claims: [Claims.ACQUISITION_EDIT],
-    });
-
-    expect(dateColumnCells.length).toBe(3);
-    expect(dateColumnCells[0]).toHaveTextContent('Jan 10, 2025');
-    expect(dateColumnCells[1]).toHaveTextContent('Mar 30, 2001');
-    expect(dateColumnCells[2]).toHaveTextContent('Dec 31, 2014');
-  });
-
-  it('sorts the expropriation event history by date', async () => {
-    const { dateColumnCells } = setup({
-      props: {
-        expropriationEvents: [
-          {
-            ...getMockExpropriationEvent(),
-            eventDate: '2025-01-10',
-          },
-          {
-            ...getMockExpropriationEvent(),
-            eventDate: '2001-03-30',
-          },
-          {
-            ...getMockExpropriationEvent(),
-            eventDate: '2014-12-31',
-          },
-        ],
-      },
-      claims: [Claims.ACQUISITION_EDIT],
-    });
-
-    await act(async () => {
-      userEvent.click(screen.getByTestId('sort-column-eventDate'));
-    });
-
-    // column should be sorted in ascending order
-    expect(dateColumnCells.length).toBe(3);
-    expect(dateColumnCells[0]).toHaveTextContent('Mar 30, 2001');
-    expect(dateColumnCells[1]).toHaveTextContent('Dec 31, 2014');
-    expect(dateColumnCells[2]).toHaveTextContent('Jan 10, 2025');
   });
 });

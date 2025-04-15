@@ -1,5 +1,7 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import orderBy from 'lodash/orderBy';
+import React, { useCallback, useEffect, useMemo, useReducer, useState } from 'react';
 
+import { TableSort } from '@/components/Table/TableSort';
 import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOptionModel';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useExpropriationEventRepository } from '@/hooks/repositories/useExpropriationEventRepository';
@@ -10,7 +12,7 @@ import { exists, isValidId } from '@/utils';
 
 import { IExpropriationEventHistoryViewProps } from './ExpropriationEventHistoryView';
 import { IExpropriationEventModalProps } from './modal/ExpropriationEventModal';
-import { ExpropriationEventFormModel } from './models';
+import { ExpropriationEventFormModel, ExpropriationEventRow } from './models';
 
 export interface IExpropriationEventHistoryContainerProps {
   acquisitionFileId: number;
@@ -18,13 +20,28 @@ export interface IExpropriationEventHistoryContainerProps {
   ModalView: React.FunctionComponent<IExpropriationEventModalProps>;
 }
 
+// internal container state vars
+interface ContainerState {
+  editExpropriationEventValue: ExpropriationEventFormModel;
+  showExpropriationEditModal: boolean;
+  sort: TableSort<ExpropriationEventRow>;
+}
+
 export const ExpropriationEventHistoryContainer: React.FunctionComponent<
   IExpropriationEventHistoryContainerProps
 > = ({ acquisitionFileId, View, ModalView }) => {
   const [payeeOptions, setPayeeOptions] = useState<PayeeOption[]>([]);
-  const [showExpropriationEditModal, setShowExpropriationEditModal] = useState<boolean>(false);
-  const [editExpropiationEventValue, setEditExpropiationEventValue] = useState(
-    ExpropriationEventFormModel.createEmpty(acquisitionFileId),
+
+  const [containerState, setContainerState] = useReducer(
+    (prevState: ContainerState, newState: Partial<ContainerState>) => ({
+      ...prevState,
+      ...newState,
+    }),
+    {
+      showExpropriationEditModal: false,
+      editExpropriationEventValue: ExpropriationEventFormModel.createEmpty(acquisitionFileId),
+      sort: {},
+    },
   );
 
   const { setModalContent, setDisplayModal } = useModalContext();
@@ -49,8 +66,10 @@ export const ExpropriationEventHistoryContainer: React.FunctionComponent<
     deleteExpropriationEvent: { execute: deleteExpropriationEvent },
   } = useExpropriationEventRepository();
 
-  const expropriationEvents: ApiGen_Concepts_ExpropriationEvent[] =
-    expropriationEventsResponse ?? [];
+  const expropriationEvents: ApiGen_Concepts_ExpropriationEvent[] = useMemo(
+    () => expropriationEventsResponse ?? [],
+    [expropriationEventsResponse],
+  );
 
   const fetchPayeeOptions = useCallback(
     async (acquisitionFileId: number) => {
@@ -61,14 +80,14 @@ export const ExpropriationEventHistoryContainer: React.FunctionComponent<
         ([acquisitionOwners, interestHolders]) => {
           const options = [];
 
-          if (acquisitionOwners !== undefined) {
+          if (exists(acquisitionOwners)) {
             const ownersOptions: PayeeOption[] = acquisitionOwners.map(x =>
               PayeeOption.createOwner(x, null),
             );
             options.push(...ownersOptions);
           }
 
-          if (interestHolders !== undefined) {
+          if (exists(interestHolders)) {
             const interestHolderOptions: PayeeOption[] = interestHolders.map(x =>
               PayeeOption.createInterestHolder(x, null),
             );
@@ -92,16 +111,20 @@ export const ExpropriationEventHistoryContainer: React.FunctionComponent<
 
   // Launch the expropriation modal in response to the user clicking the "Add" button
   const onAddExpropriation = () => {
-    setEditExpropiationEventValue(ExpropriationEventFormModel.createEmpty(acquisitionFileId));
-    setShowExpropriationEditModal(true);
+    setContainerState({
+      editExpropriationEventValue: ExpropriationEventFormModel.createEmpty(acquisitionFileId),
+      showExpropriationEditModal: true,
+    });
   };
 
   // Launch the expropriation modal in response to the user clicking the "Update" icon-button on a given row in the history table
   const onUpdateExpropriation = (id: number) => {
     const event = expropriationEvents.find((x: ApiGen_Concepts_ExpropriationEvent) => x.id === id);
     if (exists(event)) {
-      setEditExpropiationEventValue(ExpropriationEventFormModel.fromApi(event));
-      setShowExpropriationEditModal(true);
+      setContainerState({
+        editExpropriationEventValue: ExpropriationEventFormModel.fromApi(event),
+        showExpropriationEditModal: true,
+      });
     } else {
       console.error('Invalid expropriation event');
     }
@@ -116,8 +139,10 @@ export const ExpropriationEventHistoryContainer: React.FunctionComponent<
         : await addExpropriationEvent(acquisitionFileId, values.toApi(payeeOptions));
 
       if (isValidId(updatedEvent?.id)) {
-        setEditExpropiationEventValue(ExpropriationEventFormModel.createEmpty(acquisitionFileId));
-        setShowExpropriationEditModal(false);
+        setContainerState({
+          editExpropriationEventValue: ExpropriationEventFormModel.createEmpty(acquisitionFileId),
+          showExpropriationEditModal: false,
+        });
         await getExpropriationEvents(acquisitionFileId);
       }
     } else {
@@ -140,7 +165,7 @@ export const ExpropriationEventHistoryContainer: React.FunctionComponent<
       handleOk: async () => {
         if (isValidId(event?.id)) {
           const result = await deleteExpropriationEvent(acquisitionFileId, event.id);
-          if (!result) {
+          if (result === false) {
             console.error('Unable to delete expropriation event');
           }
           await getExpropriationEvents(acquisitionFileId);
@@ -157,23 +182,47 @@ export const ExpropriationEventHistoryContainer: React.FunctionComponent<
     setDisplayModal(true);
   };
 
+  // client-side sorting of table rows
+  const eventRows = useMemo(
+    () => (expropriationEvents ?? []).map(x => ExpropriationEventRow.fromApi(x)),
+    [expropriationEvents],
+  );
+
+  const sortedEventRows = useMemo(() => {
+    if (exists(containerState.sort) && eventRows.length > 0) {
+      const sortFields = Object.keys(containerState.sort);
+      if (sortFields?.length > 0) {
+        const keyName = containerState.sort[sortFields[0]];
+        return orderBy(eventRows, sortFields[0], keyName);
+      }
+      return eventRows;
+    }
+    return [];
+  }, [containerState.sort, eventRows]);
+
   return (
     <>
       <View
         isLoading={loadingExpropriationEvents || loadingAcquisitionOwners || loadingInterestHolders}
-        expropriationEvents={expropriationEvents}
+        eventRows={sortedEventRows}
+        sort={containerState.sort}
+        setSort={value => {
+          setContainerState({ sort: value });
+        }}
         onAdd={onAddExpropriation}
         onUpdate={onUpdateExpropriation}
         onDelete={onDeleteExpropriation}
       />
       <ModalView
         acquisitionFileId={acquisitionFileId}
-        display={showExpropriationEditModal}
-        initialValues={editExpropiationEventValue}
+        display={containerState.showExpropriationEditModal}
+        initialValues={containerState.editExpropriationEventValue}
         payeeOptions={payeeOptions}
         onCancel={() => {
-          setEditExpropiationEventValue(ExpropriationEventFormModel.createEmpty(acquisitionFileId));
-          setShowExpropriationEditModal(false);
+          setContainerState({
+            editExpropriationEventValue: ExpropriationEventFormModel.createEmpty(acquisitionFileId),
+            showExpropriationEditModal: false,
+          });
         }}
         onSave={onSaveExpropriationEvent}
       />
