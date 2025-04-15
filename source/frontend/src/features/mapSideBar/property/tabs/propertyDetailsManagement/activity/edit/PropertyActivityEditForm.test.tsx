@@ -47,7 +47,9 @@ describe('PropertyActivityEditForm component', () => {
         loading={renderOptions?.props?.loading ?? false}
         show={renderOptions?.props?.show ?? true}
         setShow={renderOptions?.props?.setShow ?? setShow}
-        onSave={renderOptions?.props?.onSave ?? onSave} onClose={renderOptions?.props?.onClose ?? onClose }      />,
+        onSave={renderOptions?.props?.onSave ?? onSave}
+        onClose={renderOptions?.props?.onClose ?? onClose}
+      />,
       {
         store: storeState,
         useMockAuthentication: true,
