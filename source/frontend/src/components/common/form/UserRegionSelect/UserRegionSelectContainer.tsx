@@ -21,7 +21,7 @@ export const UserRegionSelectContainer: React.FunctionComponent<
   const { getOptionsByType } = useLookupCodeHelpers();
   const { obj } = useKeycloakWrapper();
   const { sub } = obj.userInfo as IUserInfo;
-  const formattedGuid = first(sub.split('@'))?.replace(
+  const formattedGuid = first(sub?.split('@'))?.replace(
     /(.{8})(.{4})(.{4})(.{4})(.{12})/,
     '$1-$2-$3-$4-$5',
   );

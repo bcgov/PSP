@@ -201,7 +201,6 @@ namespace Pims.Api
                     {
                         OnTokenValidated = context =>
                         {
-                            JsonWebToken token = context.SecurityToken as JsonWebToken;
                             return Task.CompletedTask;
                         },
                         OnAuthenticationFailed = context =>
