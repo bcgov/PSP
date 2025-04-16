@@ -666,7 +666,7 @@ exports[`MapContainer > Renders the map 1`] = `
               </div>
               <div
                 class="leaflet-layer "
-                style="z-index: 5000;"
+                style="z-index: 4000;"
               >
                 <div
                   class="leaflet-tile-container leaflet-zoom-animated"
