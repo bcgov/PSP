@@ -155,14 +155,14 @@ describe('LeasePropertySelector component', () => {
       pimsFeatures: [
         {
           type: 'Feature',
-          properties: { ...EmptyPropertyLocation, PROPERTY_ID: 1 },
+          properties: { ...EmptyPropertyLocation, PROPERTY_ID: 1, PID: 1 },
           geometry: getMockPolygon(),
         },
       ],
       parcelFeatures: [
         {
           type: 'Feature',
-          properties: { ...emptyPmbcParcel },
+          properties: { ...emptyPmbcParcel, PID_NUMBER: 1 },
           geometry: getMockPolygon(),
         },
       ],

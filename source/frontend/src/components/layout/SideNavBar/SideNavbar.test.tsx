@@ -43,6 +43,7 @@ const renderComponent = (props?: IRenderProps) => {
     email: 'test@test.com',
     name: 'Chester Tester',
     idir_user_guid: '00000000000000000000000000000000',
+    sub: '00000000000000000000000000000000@idir',
   };
 
   mocks.useKeycloak.mockImplementation(() => ({

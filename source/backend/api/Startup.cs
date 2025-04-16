@@ -56,6 +56,8 @@ using Pims.Geocoder;
 using Pims.Ltsa;
 using Polly;
 using Prometheus;
+using DotNetEnv;
+using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace Pims.Api
 {
@@ -173,16 +175,20 @@ namespace Pims.Api
                 })
                 .AddJwtBearer(options =>
                 {
-                    var key = Encoding.ASCII.GetBytes(Configuration["Keycloak:Secret"]);
+                    var key = Encoding.ASCII.GetBytes(Env.GetString("KEYCLOAK__SECRET"));
                     options.RequireHttpsMetadata = false;
                     options.Authority = Configuration["OpenIdConnect:Authority"];
                     options.Audience = Configuration["Keycloak:Audience"];
                     options.SaveToken = true;
+                    options.UseSecurityTokenValidators = true;
+                    options.MapInboundClaims = false;
                     options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
                     {
                         ValidateIssuerSigningKey = true,
-                        ValidateIssuer = false,
-                        ValidateAudience = false,
+                        ValidateIssuer = true,
+                        ValidAudiences = new List<string> { Configuration["Keycloak:ValidAudience"] },
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
                         ValidAlgorithms = new List<string>() { "RS256" },
                     };
                     if (key.Length > 0)

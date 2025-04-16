@@ -59,9 +59,11 @@ namespace Pims.Core.Test
         {
             permission ??= new Permissions[0];
 
+            var testGuid = Guid.NewGuid();
             var claims = new List<Claim>
             {
-                new Claim("idir_user_guid", Guid.NewGuid().ToString().Replace("-", string.Empty)),
+                new Claim("sub", $"{testGuid}@idir"),
+                new Claim("idir_user_guid", testGuid.ToString().Replace("-", string.Empty)),
                 new Claim("idir_username", "username@"),
                 new Claim(ClaimTypes.Email, "test@test.com"),
             };
