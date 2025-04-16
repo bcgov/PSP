@@ -7,6 +7,8 @@ $contentheading-height: 6rem;
   flex-direction: column;
   flex-grow: 1;
   padding: 0;
+  overflow: hidden;
+
   .filter-container {
     padding: 0;
     background-color: $highlight-background-color;
@@ -35,14 +37,11 @@ $contentheading-height: 6rem;
   }
   .ScrollContainer {
     padding: 1.6rem 3.2rem;
+    overflow-x: hidden;
     flex-grow: 1; // because all parents are flex and have flex-grow set to 1 this takes all available space - calc no longer needed!
     overflow-y: auto;
     table {
       background-color: #fff;
-    }
-    .table {
-      overflow-x: auto;
-      overflow-y: hidden;
     }
   }
 }

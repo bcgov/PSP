@@ -115,7 +115,7 @@ const UpdateOrganization: React.FC<FormikProps<IEditableOrganizationForm>> = ({
             <Section className="py-2">
               <SectionField
                 label="Organization"
-                contentWidth="auto"
+                contentWidth={{ xs: 'auto' }}
                 className="py-3"
                 valueClassName="ml-auto"
               >
@@ -133,7 +133,7 @@ const UpdateOrganization: React.FC<FormikProps<IEditableOrganizationForm>> = ({
             <Section header="Individual Contacts">
               <SectionField
                 label="Connected to this organization"
-                labelWidth="auto"
+                labelWidth={{ xs: 'auto' }}
                 tooltip="To unlink a contact from this organization, or edit a contact's information, click on the name and unlink from the individual contact page"
               >
                 {persons &&

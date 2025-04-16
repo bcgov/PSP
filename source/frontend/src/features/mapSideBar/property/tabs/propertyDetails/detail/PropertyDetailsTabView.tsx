@@ -185,14 +185,18 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
       )}
 
       <Section header="Measurements">
-        <SectionField label="Area" labelWidth="2">
+        <SectionField label="Area" labelWidth={{ xs: 2 }}>
           <AreaContainer
             landArea={property?.landArea ?? undefined}
             unitCode={property?.areaUnit?.id ?? undefined}
           />
         </SectionField>
 
-        <SectionField label="Is this a volumetric parcel?" labelWidth="auto" className="py-4">
+        <SectionField
+          label="Is this a volumetric parcel?"
+          labelWidth={{ xs: 'auto' }}
+          className="py-4"
+        >
           <Form.Check
             inline
             label="Yes"
@@ -214,7 +218,7 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
           />
         </SectionField>
         {isVolumetricParcel && (
-          <SectionField label="Volume" labelWidth="2">
+          <SectionField label="Volume" labelWidth={{ xs: 2 }}>
             <Row>
               <Col>
                 <VolumeContainer
@@ -224,7 +228,7 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
                 />
               </Col>
               <Col>
-                <SectionField label="Type" labelWidth="auto">
+                <SectionField label="Type" labelWidth={{ xs: 'auto' }}>
                   {property?.volumetricType?.description}
                 </SectionField>
               </Col>

@@ -302,7 +302,7 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
         </Section>
       )}
       <Section header="Measurements">
-        <SectionField label="Area" labelWidth="2">
+        <SectionField label="Area" labelWidth={{ xs: 2 }}>
           <AreaContainer
             landArea={landArea}
             unitCode={areaUnit}
@@ -313,7 +313,11 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
             }}
           />
         </SectionField>
-        <SectionField label="Is this a volumetric parcel?" labelWidth="auto" className="py-4">
+        <SectionField
+          label="Is this a volumetric parcel?"
+          labelWidth={{ xs: 'auto' }}
+          className="py-4"
+        >
           <RadioGroup
             flexDirection="row"
             field="isVolumetricParcel"
@@ -331,7 +335,7 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
           />
         </SectionField>
         {isVolumetricParcel && (
-          <SectionField label="Volume" labelWidth="2">
+          <SectionField label="Volume" labelWidth={{ xs: 2 }}>
             <Row>
               <Col>
                 <VolumeContainer
@@ -346,7 +350,7 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
                 />
               </Col>
               <Col>
-                <SectionField label="Type" labelWidth="3" contentWidth="auto">
+                <SectionField label="Type" labelWidth={{ xs: 3 }} contentWidth={{ xs: 'auto' }}>
                   <Select
                     field="volumetricParcelTypeCode"
                     options={volumetricTypeOptions}

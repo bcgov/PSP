@@ -216,6 +216,7 @@ exports[`Financial Code Filter > matches snapshot 1`] = `
 
 .c1 {
   border-left: 0.2rem solid white;
+  min-width: 2.5rem;
 }
 
 .c0 {

@@ -2,10 +2,18 @@
 
 exports[`AddLeaseContainer component > renders as expected 1`] = `
 <DocumentFragment>
-  <div
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div
     class="Toastify"
   />
-  <div />
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div />
   .c4.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -232,10 +240,6 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c17 .react-datepicker-wrapper {
-  max-width: 17rem;
-}
-
 .c18.c18.form-control.is-valid {
   background-image: none;
 }
@@ -255,6 +259,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
 
 .c28:not(:first-child) {
   padding-left: 0;
+  padding-right: 0;
 }
 
 .c28:not(:first-child) .form-control {
@@ -531,15 +536,6 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c26 .idir-input-group .input-group-prepend select {
-  width: 16rem;
-}
-
-.c26 .idir-input-group input {
-  width: 18rem;
-  max-width: 100%;
-}
-
 .c30 {
   font-size: 1.6rem;
   border-bottom: 0.2rem solid #606060;
@@ -591,6 +587,12 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
   background-color: #f2f2f2;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+}
+
+@media only screen and (max-width:1199px) {
+  .c0.expanded {
+    min-width: 70rem;
+  }
 }
 
 <div
@@ -1351,7 +1353,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                                   class="col-6"
                                 >
                                   <div
-                                    class="flex-nowrap input-group row"
+                                    class="flex-nowrap input-group row no-gutters"
                                   >
                                     <div
                                       class="c27 col-auto"

@@ -2,10 +2,18 @@
 
 exports[`Add Disposition Container View > matches snapshot 1`] = `
 <DocumentFragment>
-  <div
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div
     class="Toastify"
   />
-  <div />
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div />
   .c4.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -232,10 +240,6 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c18 .react-datepicker-wrapper {
-  max-width: 17rem;
-}
-
 .c19.c19.form-control.is-valid {
   background-image: none;
 }
@@ -255,6 +259,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
 
 .c29:not(:first-child) {
   padding-left: 0;
+  padding-right: 0;
 }
 
 .c29:not(:first-child) .form-control {
@@ -530,15 +535,6 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
   border-radius: 0.5rem;
 }
 
-.c27 .idir-input-group .input-group-prepend select {
-  width: 16rem;
-}
-
-.c27 .idir-input-group input {
-  width: 18rem;
-  max-width: 100%;
-}
-
 .c31 {
   font-size: 1.6rem;
   color: #9F9D9C;
@@ -560,6 +556,12 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
 
 .c12 [name='region'] {
   max-width: 25rem;
+}
+
+@media only screen and (max-width:1199px) {
+  .c0.expanded {
+    min-width: 70rem;
+  }
 }
 
 <div
@@ -1210,7 +1212,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                                     class="col-6"
                                   >
                                     <div
-                                      class="flex-nowrap input-group row"
+                                      class="flex-nowrap input-group row no-gutters"
                                     >
                                       <div
                                         class="c28 col-auto"

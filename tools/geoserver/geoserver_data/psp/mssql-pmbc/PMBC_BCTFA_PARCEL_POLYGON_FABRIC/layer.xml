@@ -1,0 +1,17 @@
+<layer>
+  <name>PMBC_BCTFA_PARCEL_POLYGON_FABRIC</name>
+  <id>LayerInfoImpl-73f74f01:1963b191c95:30ae</id>
+  <type>VECTOR</type>
+  <defaultStyle>
+    <id>StyleInfoImpl-73f74f01:1963be6d9d1:-3b8c</id>
+  </defaultStyle>
+  <resource class="featureType">
+    <id>FeatureTypeInfoImpl-73f74f01:1963b191c95:30ad</id>
+  </resource>
+  <attribution>
+    <logoWidth>0</logoWidth>
+    <logoHeight>0</logoHeight>
+  </attribution>
+  <dateCreated>2025-04-15 23:57:13.600 UTC</dateCreated>
+  <dateModified>2025-04-16 00:14:16.270 UTC</dateModified>
+</layer>

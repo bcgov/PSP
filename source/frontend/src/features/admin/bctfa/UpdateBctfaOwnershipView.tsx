@@ -54,7 +54,7 @@ export const UpdateBcftaOwnershipView: React.FunctionComponent<IUpdateBcftaOwner
             <StyledSectionHeader>
               <Row className="justify-content-center">
                 <Col xs={6} className="m-4">
-                  <SectionField label="File" labelWidth="12">
+                  <SectionField label="File" labelWidth={{ xs: 12 }}>
                     {truncate(formikProps.values?.selectedFile?.name, { length: 100 })}
                     <FaCheck
                       data-testid="file-check-icon"
