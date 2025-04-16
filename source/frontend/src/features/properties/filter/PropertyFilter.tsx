@@ -258,6 +258,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
 };
 const StyledSelect = styled(Select)`
   padding-right: 0 !important;
+  min-width: 15rem;
   .form-control {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
