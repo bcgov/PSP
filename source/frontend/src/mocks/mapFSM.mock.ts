@@ -7,7 +7,7 @@ import {
 } from '@/components/common/mapFSM/models';
 import { defaultBounds } from '@/components/maps/constants';
 import { PropertyFilterFormModel } from '@/components/maps/leaflet/Control/AdvancedFilter/models';
-import { layersTree } from '@/components/maps/leaflet/Control/LayersControl/data';
+import { layersTree } from '@/components/maps/leaflet/Control/LayersControl/DefaultLayers';
 
 export const mapMachineBaseMock: IMapStateMachineContext = {
   requestFlyToBounds: vi.fn(),

@@ -160,11 +160,6 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
         if (firstOrNull(mapLocationFeatureDataset.parcelFeatures) !== null) {
           activeFeature = mapLocationFeatureDataset.parcelFeatures[0];
           activeFeatureLayer?.addData(activeFeature);
-        } else if (firstOrNull(mapLocationFeatureDataset.municipalityFeatures) !== null) {
-          activeFeature = mapLocationFeatureDataset.municipalityFeatures[0];
-          if (activeFeature?.geometry?.type === 'Polygon') {
-            activeFeatureLayer?.addData(activeFeature);
-          }
         }
       }
     }

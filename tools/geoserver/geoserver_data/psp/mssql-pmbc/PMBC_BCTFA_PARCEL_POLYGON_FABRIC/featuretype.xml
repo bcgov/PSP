@@ -1,14 +1,14 @@
 <featureType>
-  <id>FeatureTypeInfoImpl-416a62db:1814e6b4f8d:-7f32</id>
-  <name>PMBC_PARCEL_POLYGON_FABRIC</name>
-  <nativeName>PMBC_PARCEL_POLYGON_FABRIC</nativeName>
+  <id>FeatureTypeInfoImpl-73f74f01:1963b191c95:30ad</id>
+  <name>PMBC_BCTFA_PARCEL_POLYGON_FABRIC</name>
+  <nativeName>PMBC_BCTFA_PARCEL_POLYGON_FABRIC</nativeName>
   <namespace>
     <id>NamespaceInfoImpl-7e0faa3c:17c208de014:-7ff5</id>
   </namespace>
-  <title>PMBC_PARCEL_POLYGON_FABRIC</title>
+  <title>PMBC_BCTFA_PARCEL_POLYGON_FABRIC</title>
   <keywords>
     <string>features</string>
-    <string>PMBC_PARCEL_POLYGON_FABRIC</string>
+    <string>PMBC_BCTFA_PARCEL_POLYGON_FABRIC</string>
   </keywords>
   <nativeCRS class="projected">PROJCS[&quot;NAD83 / BC Albers&quot;, 
   GEOGCS[&quot;NAD83&quot;, 
@@ -21,7 +21,7 @@
     AXIS[&quot;Geodetic longitude&quot;, EAST], 
     AXIS[&quot;Geodetic latitude&quot;, NORTH], 
     AUTHORITY[&quot;EPSG&quot;,&quot;4269&quot;]], 
-  PROJECTION[&quot;Albers_Conic_Equal_Area&quot;], 
+  PROJECTION[&quot;Albers_Conic_Equal_Area&quot;, AUTHORITY[&quot;EPSG&quot;,&quot;9822&quot;]], 
   PARAMETER[&quot;central_meridian&quot;, -126.0], 
   PARAMETER[&quot;latitude_of_origin&quot;, 45.0], 
   PARAMETER[&quot;standard_parallel_1&quot;, 50.0], 
@@ -35,20 +35,23 @@
   <srs>EPSG:3005</srs>
   <nativeBoundingBox>
     <minx>593889.6322000003</minx>
-    <maxx>1816903.9800000002</maxx>
+    <maxx>1812095.5244</maxx>
     <miny>373879.5288601117</miny>
-    <maxy>1329082.7478000037</maxy>
+    <maxy>1304051.2684000023</maxy>
     <crs class="projected">EPSG:3005</crs>
   </nativeBoundingBox>
   <latLonBoundingBox>
-    <minx>-132.6658404820933</minx>
-    <maxx>-112.71004148313507</maxx>
-    <miny>47.81156889895305</miny>
-    <maxy>56.952056582463584</maxy>
+    <minx>-132.62748859553298</minx>
+    <maxx>-112.86118173378573</maxx>
+    <miny>47.81821283721033</miny>
+    <maxy>56.72768642441647</maxy>
     <crs>EPSG:4326</crs>
   </latLonBoundingBox>
   <projectionPolicy>FORCE_DECLARED</projectionPolicy>
   <enabled>true</enabled>
+  <metadata>
+    <entry key="cachingEnabled">false</entry>
+  </metadata>
   <store class="dataStore">
     <id>DataStoreInfoImpl-416a62db:1814e6b4f8d:-7f33</id>
   </store>

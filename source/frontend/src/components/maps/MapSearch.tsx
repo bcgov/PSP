@@ -1,6 +1,7 @@
 import { dequal } from 'dequal';
 import { LatLngLiteral } from 'leaflet';
 import React, { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
@@ -9,6 +10,7 @@ import {
   defaultPropertyFilter,
   IPropertyFilter,
 } from '@/features/properties/filter/IPropertyFilter';
+import { exists } from '@/utils';
 
 export type MapSearchProps = object;
 
@@ -34,7 +36,11 @@ const MapSearch: React.FC<React.PropsWithChildren<MapSearchProps>> = () => {
       switch (filter.searchBy) {
         case 'name':
         case 'address':
-          latLng = { lat: +filter.latitude, lng: +filter.longitude };
+          if (exists(filter.latitude)) {
+            latLng = { lat: +filter.latitude, lng: +filter.longitude };
+          } else {
+            toast.warn('No valid location found for address - unable to zoom to location.');
+          }
           break;
         case 'coordinates':
           latLng = filter.coordinates?.toLatLng();
