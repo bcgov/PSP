@@ -347,6 +347,7 @@ exports[`Property list view > matches snapshot 1`] = `
 
 .c2 {
   padding-right: 0 !important;
+  min-width: 15rem;
 }
 
 .c2 .form-control {

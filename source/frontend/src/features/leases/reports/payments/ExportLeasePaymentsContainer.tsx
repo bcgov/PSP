@@ -42,7 +42,7 @@ export const ExportLeasePaymentsContainer: React.FunctionComponent<unknown> = ()
                 label="Select fiscal year"
                 field="fiscalYear"
                 options={fiscalYearOptions}
-                className="mb-0"
+                className="mb-0 w-50"
               ></InlineSelect>
               <DownloadButton
                 title="Export Lease Payments Report"
