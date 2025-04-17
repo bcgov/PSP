@@ -98,5 +98,12 @@ namespace PIMS.Tests.Automation.PageObjects
 
             webDriver.FindElement(documentDeleteOkBttn).Click();
         }
+
+        public void VerifyTemplateExistence()
+        {
+            Wait();
+            if (webDriver.FindElements(CDOGSTableResults1stDeleteBttn).Count == 1)
+                Delete1stTemplate();   
+        }
     }
 }

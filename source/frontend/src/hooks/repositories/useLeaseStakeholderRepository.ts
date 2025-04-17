@@ -35,7 +35,7 @@ export const useLeaseStakeholderRepository = () => {
       [],
     ),
     requestName: 'updateLeaseStakeholders',
-    onSuccess: useAxiosSuccessHandler('Stakeholders saved successfully.'),
+    onSuccess: useAxiosSuccessHandler(),
     throwError: true,
   });
 

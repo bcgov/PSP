@@ -225,6 +225,7 @@ exports[`PropertySearchSelectorFormView component > renders as expected when pro
 
 .c4:not(:first-child) {
   padding-left: 0;
+  padding-right: 0;
 }
 
 .c4:not(:first-child) .form-control {
@@ -245,15 +246,6 @@ exports[`PropertySearchSelectorFormView component > renders as expected when pro
 .c2 {
   background-color: #d9eaf7;
   border-radius: 0.5rem;
-}
-
-.c2 .idir-input-group .input-group-prepend select {
-  width: 16rem;
-}
-
-.c2 .idir-input-group input {
-  width: 18rem;
-  max-width: 100%;
 }
 
 .c0 {
@@ -280,13 +272,13 @@ exports[`PropertySearchSelectorFormView component > renders as expected when pro
         novalidate=""
       >
         <div
-          class="row"
+          class="row no-gutters"
         >
           <div
-            class="col-xl-6"
+            class="col-6"
           >
             <div
-              class="flex-nowrap input-group row"
+              class="flex-nowrap input-group row no-gutters"
             >
               <div
                 class="c3 col-auto"
@@ -337,6 +329,13 @@ exports[`PropertySearchSelectorFormView component > renders as expected when pro
                       >
                         Legal Description
                       </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-coordinates"
+                        value="coordinates"
+                      >
+                        Lat/Long
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -362,7 +361,7 @@ exports[`PropertySearchSelectorFormView component > renders as expected when pro
             </div>
           </div>
           <div
-            class="pr-0 col-xl-2"
+            class="pr-0 col-2"
           >
             <div
               class="row"

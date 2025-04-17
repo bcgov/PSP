@@ -30,17 +30,17 @@ const LtsaLegalNotationsSubForm: FunctionComponent<
                 <Fragment key={`notation-row-${innerNameSpace}`}>
                   <Row className="pb-2">
                     <Col>
-                      <SectionField label="Legal notations#" labelWidth="auto">
+                      <SectionField label="Legal notations#" labelWidth={{ xs: 'auto' }}>
                         {getIn(values, innerNameSpace + '.legalNotationNumber')}
                       </SectionField>
                     </Col>
                     <Col>
-                      <SectionField label="Status" labelWidth="auto">
+                      <SectionField label="Status" labelWidth={{ xs: 'auto' }}>
                         {getIn(values, innerNameSpace + '.status')}
                       </SectionField>
                     </Col>
                     <Col>
-                      <SectionField label="Cancellation date" labelWidth="auto">
+                      <SectionField label="Cancellation date" labelWidth={{ xs: 'auto' }}>
                         {prettyFormatDate(
                           getIn(values, innerNameSpace + '.legalNotation.applicationReceivedDate'),
                         )}

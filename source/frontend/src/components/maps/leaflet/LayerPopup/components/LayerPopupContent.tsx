@@ -41,8 +41,8 @@ export const LayerPopupContent: React.FC<React.PropsWithChildren<IPopupContentPr
         <SectionField
           key={key}
           label={config[key].label}
-          labelWidth="5"
-          contentWidth="7"
+          labelWidth={{ xs: 5 }}
+          contentWidth={{ xs: 7 }}
           noGutters
           className="no-gutters text-break pb-2"
         >

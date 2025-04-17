@@ -86,7 +86,7 @@ const DispositionOfferDetails: React.FunctionComponent<IDispositionOfferDetailsP
       </StyledSubHeader>
       <SectionField
         label="Offer status"
-        labelWidth="4"
+        labelWidth={{ xs: 4 }}
         tooltip="Open = Offer has been received.
         Rejected, = Offer was not responded to (due to receiving a better competing offer or the offer was just highly undesirable).
         Countered, = Offer was responded to with a counteroffer. If counteroffer is accepted, new terms should be recorded in Notes.
@@ -96,29 +96,37 @@ const DispositionOfferDetails: React.FunctionComponent<IDispositionOfferDetailsP
       >
         {dispositionOffer.dispositionOfferStatusType?.description}
       </SectionField>
-      <SectionField label="Offer name(s)" labelWidth="4" valueTestId={`offer[${index}].offerName`}>
+      <SectionField
+        label="Offer name(s)"
+        labelWidth={{ xs: 4 }}
+        valueTestId={`offer[${index}].offerName`}
+      >
         {dispositionOffer.offerName ?? ''}
       </SectionField>
-      <SectionField label="Offer date" labelWidth="4" valueTestId={`offer[${index}].offerDate`}>
+      <SectionField
+        label="Offer date"
+        labelWidth={{ xs: 4 }}
+        valueTestId={`offer[${index}].offerDate`}
+      >
         {prettyFormatDate(dispositionOffer.offerDate)}
       </SectionField>
       <SectionField
         label="Offer expiry date"
-        labelWidth="4"
+        labelWidth={{ xs: 4 }}
         valueTestId={`offer[${index}].offerExpiryDate`}
       >
         {prettyFormatDate(dispositionOffer.offerExpiryDate)}
       </SectionField>
       <SectionField
         label="Offer price ($)"
-        labelWidth="4"
+        labelWidth={{ xs: 4 }}
         valueTestId={`offer[${index}].offerPrice`}
       >
         {formatMoney(dispositionOffer.offerAmount)}
       </SectionField>
       <SectionField
         label="Comments"
-        labelWidth="4"
+        labelWidth={{ xs: 4 }}
         tooltip="Provide any additional details such as offer terms or conditions, and any commentary on why the offer was accepted/countered/rejected"
         valueTestId={`offer[${index}].notes`}
       >

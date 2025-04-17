@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import { FaWindowClose } from 'react-icons/fa';
 import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
@@ -6,21 +6,22 @@ import styled from 'styled-components';
 
 import { StyledIconButton } from '@/components/common/buttons';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
+import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { Scrollable } from '@/components/common/Scrollable/Scrollable';
 import SimplePagination from '@/components/common/SimplePagination';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
-import { exists, isValidId, pidParser, pinParser } from '@/utils';
+import { exists, firstOrNull, isStrataLot, isValidId, pidParser, pinParser } from '@/utils';
 
 import { LayerPopupContent } from './components/LayerPopupContent';
 import { LayerPopupFlyout } from './components/LayerPopupFlyout';
 import { LayerPopupLinks } from './components/LayerPopupLinks';
 import { LayerData, LayerPopupInformation } from './LayerPopupContainer';
+import { SinglePropertyFeatureDataSet } from './LocationPopupContainer';
 import { LayerPopupTitle } from './styles';
 
 export interface ILayerPopupViewProps {
   layerPopup: LayerPopupInformation;
-  featureDataset: LocationFeatureDataset | null;
+  featureDataset: SinglePropertyFeatureDataSet | null;
 }
 
 export const LayerPopupView: React.FC<React.PropsWithChildren<ILayerPopupViewProps>> = ({
@@ -40,6 +41,36 @@ export const LayerPopupView: React.FC<React.PropsWithChildren<ILayerPopupViewPro
   const isInPims = isValidId(Number(pimsPropertyId));
   const isRetiredProperty = featureDataset?.pimsFeature?.properties?.IS_RETIRED ?? false;
   const isDisposedProperty = featureDataset?.pimsFeature?.properties?.IS_DISPOSED ?? false;
+
+  // Converts to an object that can be consumed by the file creation process
+  const selectedFeature: SelectedFeatureDataset = useMemo(() => {
+    return {
+      location: featureDataset?.location,
+      fileLocation: featureDataset?.fileLocation,
+      parcelFeature: featureDataset?.parcelFeature,
+      pimsFeature: featureDataset?.pimsFeature,
+      regionFeature: featureDataset?.regionFeature,
+      districtFeature: featureDataset?.districtFeature,
+      municipalityFeature: firstOrNull(featureDataset?.municipalityFeatures),
+      selectingComponentId: featureDataset?.selectingComponentId,
+    };
+  }, [
+    featureDataset?.districtFeature,
+    featureDataset?.fileLocation,
+    featureDataset?.location,
+    featureDataset?.municipalityFeatures,
+    featureDataset?.parcelFeature,
+    featureDataset?.pimsFeature,
+    featureDataset?.regionFeature,
+    featureDataset?.selectingComponentId,
+  ]);
+
+  const showViewPropertyInfo = useMemo(() => {
+    return (
+      !isStrataLot(selectedFeature?.parcelFeature) &&
+      !isValidId(Number(selectedFeature?.pimsFeature?.id))
+    );
+  }, [selectedFeature.parcelFeature, selectedFeature.pimsFeature]);
 
   const onPropertyViewClicked = () => {
     if (isInPims) {
@@ -68,49 +99,49 @@ export const LayerPopupView: React.FC<React.PropsWithChildren<ILayerPopupViewPro
 
   const handleViewPropertyInfo = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
     event.stopPropagation();
-    mapMachine.prepareForCreation();
+    mapMachine.prepareForCreation(selectedFeature);
     closeFlyout();
     onPropertyViewClicked();
   };
 
   const handleCreateResearchFile = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
     event.stopPropagation();
-    mapMachine.prepareForCreation();
+    mapMachine.prepareForCreation(selectedFeature);
     closeFlyout();
     history.push('/mapview/sidebar/research/new');
   };
 
   const handleCreateAcquisitionFile = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
     event.stopPropagation();
-    mapMachine.prepareForCreation();
+    mapMachine.prepareForCreation(selectedFeature);
     closeFlyout();
     history.push('/mapview/sidebar/acquisition/new');
   };
 
   const handleCreateLeaseLicence = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
     event.stopPropagation();
-    mapMachine.prepareForCreation();
+    mapMachine.prepareForCreation(selectedFeature);
     closeFlyout();
     history.push('/mapview/sidebar/lease/new');
   };
 
   const handleCreateDispositionFile = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
     event.stopPropagation();
-    mapMachine.prepareForCreation();
+    mapMachine.prepareForCreation(selectedFeature);
     closeFlyout();
     history.push('/mapview/sidebar/disposition/new');
   };
 
   const handleCreateSubdivision = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
     event.stopPropagation();
-    mapMachine.prepareForCreation();
+    mapMachine.prepareForCreation(selectedFeature);
     closeFlyout();
     history.push('/mapview/sidebar/subdivision/new');
   };
 
   const handleCreateConsolidation = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
     event.stopPropagation();
-    mapMachine.prepareForCreation();
+    mapMachine.prepareForCreation(selectedFeature);
     closeFlyout();
     history.push('/mapview/sidebar/consolidation/new');
   };
@@ -148,6 +179,7 @@ export const LayerPopupView: React.FC<React.PropsWithChildren<ILayerPopupViewPro
         onViewPropertyInfo={handleViewPropertyInfo}
         bounds={getFirstBounds(layerPopup.layers)}
         onEllipsisClick={showFlyout ? closeFlyout : openFlyout}
+        showViewPropertyInfo={showViewPropertyInfo}
       />
 
       {showFlyout && (

@@ -1,0 +1,24 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`GeographicNameInput > renders correctly 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  <div
+    class="form-group"
+  >
+    <input
+      autocomplete="off"
+      class="form-control"
+      data-testid="geographic-name-input"
+      field="testField"
+      id="input-testField"
+      name="testField"
+      placeholder="Search..."
+      value=""
+    />
+  </div>
+</DocumentFragment>
+`;

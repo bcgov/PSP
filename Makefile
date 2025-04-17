@@ -180,7 +180,11 @@ refresh: | down build up ## Recreates local docker environment
 .PHONY: infra
 infra: ## Starts infrastructure containers (e.g. database, geoserver). Useful for local debugging
 	@echo "$(P) Starting up infrastructure containers..."
-	@"$(MAKE)" start n="database geoserver grafana prometheus proxy"
+	@"$(MAKE)" start n="database geoserver proxy"
+
+monitoring-up: ## Calls the docker compose up for the monitoring/telemetry images
+	@echo "$(P) Create or start local monitoring containers..."
+	@docker-compose --profile monitoring up -d
 
 start: ## Starts the local containers (n=service name)
 	@echo "$(P) Starting client and server containers..."
@@ -279,7 +283,7 @@ db-upgrade: ## Upgrade an existing database to the TARGET_VERSION (if passed) or
 
 db-scaffold: ## Requires local install of sqlcmd
 	@echo "$(P) regenerate ef core entities from database"
-	@cd source/backend/entities; eval $(grep -v '^#' .env | xargs) dotnet ef dbcontext scaffold Name=PIMS Microsoft.EntityFrameworkCore.SqlServer -o ../entities/ef --schema dbo --context PimsBaseContext --context-namespace Pims.Dal --context-dir . --no-onconfiguring --namespace Pims.Dal.Entities --data-annotations -v -f --startup-project ../api
+	@cd source/backend/entities; eval $(grep -v '^#' .env | xargs) dotnet ef dbcontext scaffold Name=PIMS Microsoft.EntityFrameworkCore.SqlServer -o ../entities/ef --schema "dbo" --schema "pmbc" --context PimsBaseContext --context-namespace Pims.Dal --context-dir . --no-onconfiguring --namespace Pims.Dal.Entities --data-annotations -v -f --startup-project ../api
 
 db-generate-master:
 	@echo "$(P) Generates a master script that for the given sprint."

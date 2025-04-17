@@ -1,3 +1,4 @@
+/* eslint-disable no-template-curly-in-string */
 import * as Yup from 'yup';
 
 export const AccessRequestSchema = Yup.object().shape({
@@ -26,9 +27,26 @@ export const UserUpdateSchema = Yup.object().shape({
   roles: Yup.array().min(1, 'A user must have at least one role'),
 });
 
-export const FilterBarSchema = Yup.object().shape({
-  pid: Yup.string()
-    .nullable()
-    .matches(/^\d{0,3}-\d{3}-\d{3}$|^\d{0,9}$/, 'Invalid PID'),
-  pin: Yup.string().nullable().matches(/^\d+$/, 'Invalid PIN'),
-});
+// allow numbers & empty string
+export const createNumberSchema = (
+  label: string,
+  min: number,
+  max: number,
+  isRequired = false,
+  isInteger = false,
+) => {
+  let schema = Yup.number()
+    .label(label)
+    .transform((value, original) => (original === '' || isNaN(original) ? undefined : value))
+    .min(min, '${label} must be greater than ${min}')
+    .max(max, '${label} must be less than ${max}');
+
+  if (isRequired) {
+    schema = schema.required('Numeric value is required for ${label}');
+  }
+  if (isInteger) {
+    schema = schema.integer(`\${label} (${min} to ${max}) must be an integer number`);
+  }
+
+  return schema;
+};

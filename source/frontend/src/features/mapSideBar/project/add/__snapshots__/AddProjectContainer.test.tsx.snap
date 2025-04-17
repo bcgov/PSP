@@ -2,10 +2,18 @@
 
 exports[`AddProjectContainer component > renders as expected 1`] = `
 <DocumentFragment>
-  <div
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div
     class="Toastify"
   />
-  <div />
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div />
   .c4.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -328,8 +336,15 @@ exports[`AddProjectContainer component > renders as expected 1`] = `
   position: sticky;
   padding-top: 2rem;
   bottom: 0;
+  border-top: 2px solid #e5e5e5;
   background: white;
   z-index: 10;
+}
+
+@media only screen and (max-width:1199px) {
+  .c0.expanded {
+    min-width: 70rem;
+  }
 }
 
 <div
@@ -435,7 +450,7 @@ exports[`AddProjectContainer component > renders as expected 1`] = `
         class=""
       >
         <div
-          class="c11 justify-content-end mb-6 mt-6 p-0 no-gutters row"
+          class="c11 justify-content-end pt-4 p-0 no-gutters row"
         >
           <div
             class="pr-3 col-auto"

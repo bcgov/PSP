@@ -87,7 +87,7 @@ export const InvoiceForm: React.FunctionComponent<React.PropsWithChildren<IInvoi
 
   return (
     <Section header={`Invoice ${index + 1}`} isCollapsable initiallyExpanded>
-      <SectionField label="Invoice number" contentWidth="7">
+      <SectionField label="Invoice number" contentWidth={{ xs: 7 }}>
         <Row className="no-gutters">
           <Col className="col-10">
             <Input field={`${namespace}.invoiceNum`} />
@@ -103,15 +103,15 @@ export const InvoiceForm: React.FunctionComponent<React.PropsWithChildren<IInvoi
         </Row>
       </SectionField>
 
-      <SectionField label="Invoice date" contentWidth="7" required>
+      <SectionField label="Invoice date" contentWidth={{ xs: 7 }} required>
         <FastDatePicker field={`${namespace}.invoiceDateTime`} formikProps={formikProps} />
       </SectionField>
 
-      <SectionField label="Description" contentWidth="12" required>
+      <SectionField label="Description" contentWidth={{ xs: 12 }} required>
         <TextArea field={`${namespace}.description`} />
       </SectionField>
 
-      <SectionField label="Amount (before tax)" contentWidth="7" required>
+      <SectionField label="Amount (before tax)" contentWidth={{ xs: 7 }} required>
         <FastCurrencyInput
           field={`${namespace}.pretaxAmount`}
           formikProps={formikProps}
@@ -119,7 +119,7 @@ export const InvoiceForm: React.FunctionComponent<React.PropsWithChildren<IInvoi
         />
       </SectionField>
 
-      <SectionField label="GST amount" contentWidth="7">
+      <SectionField label="GST amount" contentWidth={{ xs: 7 }}>
         <FastCurrencyInput
           field={`${namespace}.gstAmount`}
           formikProps={formikProps}
@@ -127,13 +127,13 @@ export const InvoiceForm: React.FunctionComponent<React.PropsWithChildren<IInvoi
         />
       </SectionField>
 
-      <SectionField label="PST applicable?" contentWidth="7">
+      <SectionField label="PST applicable?" contentWidth={{ xs: 7 }}>
         <YesNoSelect field={`${namespace}.isPstRequired`} notNullable />
       </SectionField>
 
       <SectionField
         label="PST amount"
-        contentWidth="7"
+        contentWidth={{ xs: 7 }}
         required={formikProps.values.invoices[index].isPstRequired}
       >
         <FastCurrencyInput
@@ -144,7 +144,7 @@ export const InvoiceForm: React.FunctionComponent<React.PropsWithChildren<IInvoi
         />
       </SectionField>
 
-      <SectionField label="Total amount" contentWidth="7">
+      <SectionField label="Total amount" contentWidth={{ xs: 7 }}>
         <FastCurrencyInput field={`${namespace}.totalAmount`} formikProps={formikProps} disabled />
       </SectionField>
     </Section>

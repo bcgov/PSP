@@ -24,6 +24,10 @@ export const usePimsPropertyLayer = () => {
   } = useContext(TenantContext);
 
   const {
+    findMultipleWhereContainsWrapped: {
+      execute: findMultipleWhereContainsWrappedExecute,
+      loading: findMultipleWhereContainsWrappedLoading,
+    },
     findOneWhereContainsWrapped: {
       execute: findOneWhereContainsWrappedExecute,
       loading: findOneWhereContainsWrappedLoading,
@@ -86,17 +90,47 @@ export const usePimsPropertyLayer = () => {
     [findOneWhereContainsWrappedExecute],
   );
 
+  const findAllByBoundary = useCallback(
+    async (
+      latlng: LatLngLiteral,
+      geometryName?: string | undefined,
+      spatialReferenceId?: number | undefined,
+    ) => {
+      const featureCollection = await findMultipleWhereContainsWrappedExecute(
+        latlng,
+        geometryName,
+        spatialReferenceId,
+        'SORTBY=IS_RETIRED%20ASC',
+      );
+
+      // TODO: Enhance useLayerQuery to allow generics to match the Property types
+      const forceCasted = featureCollection as FeatureCollection<
+        Geometry,
+        PIMS_Property_Boundary_View
+      >;
+
+      return forceCasted !== undefined && forceCasted.features.length > 0
+        ? forceCasted.features
+        : undefined;
+    },
+    [findMultipleWhereContainsWrappedExecute],
+  );
+
   return useMemo(
     () => ({
       loadPropertyLayer,
       loadPropertyLayerMinimal,
+      findAllByBoundary,
+      findAllByBoundaryLoading: findMultipleWhereContainsWrappedLoading,
       findOneByBoundary,
       findOneByBoundaryLoading: findOneWhereContainsWrappedLoading,
     }),
     [
-      loadPropertyLayer,
+      findAllByBoundary,
+      findMultipleWhereContainsWrappedLoading,
       findOneByBoundary,
       findOneWhereContainsWrappedLoading,
+      loadPropertyLayer,
       loadPropertyLayerMinimal,
     ],
   );

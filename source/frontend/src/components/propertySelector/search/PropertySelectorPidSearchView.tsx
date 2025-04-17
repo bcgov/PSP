@@ -21,7 +21,7 @@ export const PropertySearchSelectorPidFormView: React.FunctionComponent<
     <>
       <Section header={undefined}>
         <Row>
-          <Col xs={8} className="pr-0">
+          <Col xs={8}>
             <SelectInput<{ pid: string }, SubdivisionFormModel>
               field="searchBy"
               defaultKey="pid"

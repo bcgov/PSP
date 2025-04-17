@@ -32,7 +32,7 @@ namespace Pims.Core.Test
             dataSource ??= CreateDataSourceType($"LIS-{pid}");
             status ??= CreatePropertyStatusType($"Status-{pid}");
 
-            var property = new PimsProperty(pid, type, address, new PimsPropPropTenureType { PropertyTenureTypeCodeNavigation = tenure }, areaUnit, dataSource, DateTime.UtcNow, status)
+            var property = new PimsProperty(pid, type, address, new PimsPropPropTenureTyp { PropertyTenureTypeCodeNavigation = tenure }, areaUnit, dataSource, DateTime.UtcNow, status)
             {
                 PropertyId = pid,
                 Pin = pin,
@@ -139,6 +139,7 @@ namespace Pims.Core.Test
             property.PropertyDataSourceTypeCode = dataSource.DataSourceTypeCode;
             property.PropertyTenureTypeCode = tenure.PropertyTenureTypeCode;
             property.PropertyAreaUnitTypeCode = areaUnit.AreaUnitTypeCode;
+            property.PidPadded = pid.ToString().PadLeft(9, '0');
 
             context.PimsPropertyVws.Add(property);
             return property;

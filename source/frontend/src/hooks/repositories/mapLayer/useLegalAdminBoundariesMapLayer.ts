@@ -15,12 +15,18 @@ import { useTenant } from '@/tenants';
 export const useLegalAdminBoundariesMapLayer = () => {
   const { alrLayerUrl, municipalLayerUrl } = useTenant();
 
-  const { findOneWhereContainsWrapped: findOneAlrWrapped_ } = useLayerQuery(alrLayerUrl);
+  const { findMultipleWhereContainsWrapped: findOneAlrWrapped_ } = useLayerQuery(alrLayerUrl);
   const findOneAlrWrappedExecute = findOneAlrWrapped_.execute;
   const findOneAlrWrappedLoading = findOneAlrWrapped_.loading;
 
-  const { findOneWhereContainsWrapped: findOneMunicipalWrapped_ } =
-    useLayerQuery(municipalLayerUrl);
+  const {
+    findMultipleWhereContainsWrapped: findOneMunicipalWrapped_,
+    findMultipleWhereContainsWrapped: findMultipleMunicipalWrapped_,
+  } = useLayerQuery(municipalLayerUrl);
+
+  const findMultipleMunicipalWrappedExecute = findMultipleMunicipalWrapped_.execute;
+  const findMultipleMunicipalWrappedLoading = findMultipleMunicipalWrapped_.loading;
+
   const findOneMunicipalWrappedExecute = findOneMunicipalWrapped_.execute;
   const findOneMunicipalWrappedLoading = findOneMunicipalWrapped_.loading;
 
@@ -62,16 +68,39 @@ export const useLegalAdminBoundariesMapLayer = () => {
     [findOneMunicipalWrappedExecute],
   );
 
+  const findMultipleMunicipality = useCallback(
+    async (latlng: LatLngLiteral, geometryName?: string, spatialReferenceId?: number) => {
+      const featureCollection = await findMultipleMunicipalWrappedExecute(
+        latlng,
+        geometryName,
+        spatialReferenceId,
+      );
+
+      // TODO: Enhance useLayerQuery to allow generics to match the Property types
+      const forceCasted = featureCollection as
+        | FeatureCollection<Geometry, WHSE_Municipalities_Feature_Properties>
+        | undefined;
+      return forceCasted !== undefined && forceCasted.features.length > 0
+        ? forceCasted.features
+        : undefined;
+    },
+    [findMultipleMunicipalWrappedExecute],
+  );
+
   return useMemo(
     () => ({
       findOneAgriculturalReserve,
       findOneAgriculturalReserveLoading: findOneAlrWrappedLoading,
+      findMultipleMunicipality,
+      findMultipleMunicipalLoading: findMultipleMunicipalWrappedLoading,
       findOneMunicipality,
       findOneMunicipalLoading: findOneMunicipalWrappedLoading,
     }),
     [
       findOneAgriculturalReserve,
       findOneAlrWrappedLoading,
+      findMultipleMunicipality,
+      findMultipleMunicipalWrappedLoading,
       findOneMunicipality,
       findOneMunicipalWrappedLoading,
     ],

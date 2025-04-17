@@ -68,6 +68,16 @@ namespace Pims.Api.Areas.Lease.Models.Search
         /// get/set - Filter for additional lease details.
         /// </summary>
         public string Details { get; set; }
+
+        /// <summary>
+        /// get/set - The person id of the lease team member.
+        /// </summary>
+        public int? LeaseTeamPersonId { get; set; }
+
+        /// <summary>
+        /// get/set - The organization id of the lease team member.
+        /// </summary>
+        public int? LeaseTeamOrganizationId { get; set; }
         #endregion
 
         #region Constructors
@@ -101,6 +111,8 @@ namespace Pims.Api.Areas.Lease.Models.Search
             this.ExpiryEndDate = filter.GetDateOnlyNullValue(nameof(this.ExpiryEndDate));
             this.RegionType = filter.GetIntNullValue(nameof(this.RegionType));
             this.Details = filter.GetStringValue(nameof(this.Details));
+            this.LeaseTeamPersonId = filter.GetIntNullValue(nameof(this.LeaseTeamPersonId));
+            this.LeaseTeamOrganizationId = filter.GetIntNullValue(nameof(this.LeaseTeamOrganizationId));
             this.Sort = filter.GetStringArrayValue(nameof(this.Sort));
         }
         #endregion
@@ -130,6 +142,8 @@ namespace Pims.Api.Areas.Lease.Models.Search
                 ExpiryEndDate = model.ExpiryEndDate,
                 RegionType = model.RegionType,
                 Details = model.Details,
+                LeaseTeamOrganizationId = model.LeaseTeamOrganizationId,
+                LeaseTeamPersonId = model.LeaseTeamPersonId,
 
                 Sort = model.Sort,
             };

@@ -107,6 +107,18 @@ export const H3 = styled.h3`
 export const FilterBoxForm = styled(Form)`
   background-color: ${({ theme }) => theme.css.filterBoxColor};
   border-radius: 0.5rem;
+  .form-select {
+    min-width: 15rem;
+  }
+  .input-group: {
+    min-width: 100%;
+  }
+  .idir-input-group {
+    margin: 0;
+    div {
+      padding: 0;
+    }
+  }
 `;
 
 export const StyledAddButton = styled(Button)`
@@ -144,9 +156,19 @@ export const StyledSectionParagraph = styled.p`
 `;
 
 export const TrayHeader = styled(H1)`
-  padding: 1rem;
-  background-color: ${props => props.theme.bcTokens.surfaceColorPrimaryButtonDefault};
-  color: white;
+  font-size: 2.5rem;
+  color: #313132;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  padding: 1.2rem;
+  padding-left: 3rem;
+  border-bottom: none;
+`;
+
+export const TrayHeaderContent = styled.div`
+  background-color: ${props => props.theme.css.filterBoxColor};
+  display: flex;
+  align-items: anchor-center;
 `;
 
 export const TrayContent = styled.div``;
@@ -171,6 +193,7 @@ export const PopupTray = styled.div`
   text-align: left;
   transition: transform 0.5s ease-in-out;
   position: relative;
+  min-width: 50rem;
 `;
 
 export const VerticalLine = styled.div`
@@ -214,6 +237,7 @@ export const PageToolbar = styled.div`
 
 export const ColButtons = styled(Col)`
   border-left: 0.2rem solid white;
+  min-width: 2.5rem;
 `;
 
 export const PaddedScrollable = styled(ScrollableBase)`

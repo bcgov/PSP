@@ -2,10 +2,18 @@
 
 exports[`AddAcquisitionContainer component > Sub-interest file > renders as expected 1`] = `
 <DocumentFragment>
-  <div
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div
     class="Toastify"
   />
-  <div />
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div />
   .c4.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -228,10 +236,6 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c17 .react-datepicker-wrapper {
-  max-width: 17rem;
-}
-
 .c18.c18.form-control.is-valid {
   background-image: none;
 }
@@ -251,6 +255,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
 
 .c28:not(:first-child) {
   padding-left: 0;
+  padding-right: 0;
 }
 
 .c28:not(:first-child) .form-control {
@@ -394,6 +399,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   position: sticky;
   padding-top: 2rem;
   bottom: 0;
+  border-top: 2px solid #e5e5e5;
   background: white;
   z-index: 10;
 }
@@ -550,15 +556,6 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   border-radius: 0.5rem;
 }
 
-.c26 .idir-input-group .input-group-prepend select {
-  width: 16rem;
-}
-
-.c26 .idir-input-group input {
-  width: 18rem;
-  max-width: 100%;
-}
-
 .c30 {
   font-size: 1.6rem;
   color: #9F9D9C;
@@ -585,6 +582,12 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
 
 .c12 [name='region'] {
   max-width: 25rem;
+}
+
+@media only screen and (max-width:1199px) {
+  .c0.expanded {
+    min-width: 70rem;
+  }
 }
 
 <div
@@ -1873,13 +1876,13 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                                 novalidate=""
                               >
                                 <div
-                                  class="row"
+                                  class="row no-gutters"
                                 >
                                   <div
-                                    class="col-xl-6"
+                                    class="col-6"
                                   >
                                     <div
-                                      class="flex-nowrap input-group row"
+                                      class="flex-nowrap input-group row no-gutters"
                                     >
                                       <div
                                         class="c27 col-auto"
@@ -1930,6 +1933,13 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                                               >
                                                 Legal Description
                                               </option>
+                                              <option
+                                                class="option"
+                                                data-testid="select-option-coordinates"
+                                                value="coordinates"
+                                              >
+                                                Lat/Long
+                                              </option>
                                             </select>
                                           </div>
                                         </div>
@@ -1955,7 +1965,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                                     </div>
                                   </div>
                                   <div
-                                    class="pr-0 col-xl-2"
+                                    class="pr-0 col-2"
                                   >
                                     <div
                                       class="row"
@@ -2353,7 +2363,64 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                         >
                           Pending Litigation
                         </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-UNKNOWN"
+                          value="UNKNOWN"
+                        >
+                          Unknown
+                        </option>
                       </select>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c15"
+                    >
+                      Physical file details:
+                      <span>
+                        <span
+                          class="tooltip-icon"
+                          data-testid="tooltip-icon-section-field-tooltip"
+                          id="section-field-tooltip"
+                        >
+                          <svg
+                            class="tooltip-icon"
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 512 512"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                            />
+                          </svg>
+                        </span>
+                      </span>
+                    </label>
+                  </div>
+                  <div
+                    class="c16 text-left col"
+                  >
+                    <div
+                      class="textarea input form-group"
+                    >
+                      <textarea
+                        class="form-control"
+                        id="input-physicalFileDetails"
+                        name="physicalFileDetails"
+                        style="word-break: break-all;"
+                        title=""
+                      />
                     </div>
                   </div>
                 </div>
@@ -2471,6 +2538,13 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-LSHOLDR"
+                          value="LSHOLDR"
+                        >
+                          Leaseholder
+                        </option>
+                        <option
+                          class="option"
                           data-testid="select-option-LICOCCUPY"
                           value="LICOCCUPY"
                         >
@@ -2482,6 +2556,13 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                           value="LIEN"
                         >
                           Lis Pendens / Lien
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-MOBILE"
+                          value="MOBILE"
+                        >
+                          Mobile Home Owner
                         </option>
                         <option
                           class="option"
@@ -2516,14 +2597,14 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                           data-testid="select-option-TENANT"
                           value="TENANT"
                         >
-                          Tenant (Monthly) Leaseholder
+                          Tenant (Monthly)
                         </option>
                         <option
                           class="option"
                           data-testid="select-option-OTHER"
                           value="OTHER"
                         >
-                          Other 
+                          Other
                         </option>
                       </select>
                     </div>
@@ -2833,7 +2914,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
         class=""
       >
         <div
-          class="c34 justify-content-end mb-6 mt-6 p-0 no-gutters row"
+          class="c34 justify-content-end pt-4 p-0 no-gutters row"
         >
           <div
             class="pr-3 col-auto"
@@ -2875,10 +2956,18 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
 
 exports[`AddAcquisitionContainer component > renders as expected 1`] = `
 <DocumentFragment>
-  <div
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div
     class="Toastify"
   />
-  <div />
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div />
   .c4.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -3105,10 +3194,6 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c18 .react-datepicker-wrapper {
-  max-width: 17rem;
-}
-
 .c19.c19.form-control.is-valid {
   background-image: none;
 }
@@ -3128,6 +3213,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
 
 .c29:not(:first-child) {
   padding-left: 0;
+  padding-right: 0;
 }
 
 .c29:not(:first-child) .form-control {
@@ -3271,6 +3357,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
   position: sticky;
   padding-top: 2rem;
   bottom: 0;
+  border-top: 2px solid #e5e5e5;
   background: white;
   z-index: 10;
 }
@@ -3427,15 +3514,6 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c27 .idir-input-group .input-group-prepend select {
-  width: 16rem;
-}
-
-.c27 .idir-input-group input {
-  width: 18rem;
-  max-width: 100%;
-}
-
 .c31 {
   font-size: 1.6rem;
   color: #9F9D9C;
@@ -3462,6 +3540,12 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
 
 .c12 [name='region'] {
   max-width: 25rem;
+}
+
+@media only screen and (max-width:1199px) {
+  .c0.expanded {
+    min-width: 70rem;
+  }
 }
 
 <div
@@ -4746,13 +4830,13 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                                 novalidate=""
                               >
                                 <div
-                                  class="row"
+                                  class="row no-gutters"
                                 >
                                   <div
-                                    class="col-xl-6"
+                                    class="col-6"
                                   >
                                     <div
-                                      class="flex-nowrap input-group row"
+                                      class="flex-nowrap input-group row no-gutters"
                                     >
                                       <div
                                         class="c28 col-auto"
@@ -4803,6 +4887,13 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                                               >
                                                 Legal Description
                                               </option>
+                                              <option
+                                                class="option"
+                                                data-testid="select-option-coordinates"
+                                                value="coordinates"
+                                              >
+                                                Lat/Long
+                                              </option>
                                             </select>
                                           </div>
                                         </div>
@@ -4828,7 +4919,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                                     </div>
                                   </div>
                                   <div
-                                    class="pr-0 col-xl-2"
+                                    class="pr-0 col-2"
                                   >
                                     <div
                                       class="row"
@@ -5226,7 +5317,64 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                         >
                           Pending Litigation
                         </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-UNKNOWN"
+                          value="UNKNOWN"
+                        >
+                          Unknown
+                        </option>
                       </select>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c15"
+                    >
+                      Physical file details:
+                      <span>
+                        <span
+                          class="tooltip-icon"
+                          data-testid="tooltip-icon-section-field-tooltip"
+                          id="section-field-tooltip"
+                        >
+                          <svg
+                            class="tooltip-icon"
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 512 512"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                            />
+                          </svg>
+                        </span>
+                      </span>
+                    </label>
+                  </div>
+                  <div
+                    class="c16 text-left col"
+                  >
+                    <div
+                      class="textarea input form-group"
+                    >
+                      <textarea
+                        class="form-control"
+                        id="input-physicalFileDetails"
+                        name="physicalFileDetails"
+                        style="word-break: break-all;"
+                        title=""
+                      />
                     </div>
                   </div>
                 </div>
@@ -5602,7 +5750,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
         class=""
       >
         <div
-          class="c35 justify-content-end mb-6 mt-6 p-0 no-gutters row"
+          class="c35 justify-content-end pt-4 p-0 no-gutters row"
         >
           <div
             class="pr-3 col-auto"

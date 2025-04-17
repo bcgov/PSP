@@ -57,18 +57,6 @@ public partial class PimsAcquisitionFileHist
     [StringLength(20)]
     public string SubfileInterestTypeCode { get; set; }
 
-    [Column("ACQ_FILE_APPRAISAL_TYPE_CODE")]
-    [StringLength(20)]
-    public string AcqFileAppraisalTypeCode { get; set; }
-
-    [Column("ACQ_FILE_LGL_SRVY_TYPE_CODE")]
-    [StringLength(20)]
-    public string AcqFileLglSrvyTypeCode { get; set; }
-
-    [Column("ACQ_FILE_EXPROP_RISK_TYPE_CODE")]
-    [StringLength(20)]
-    public string AcqFileExpropRiskTypeCode { get; set; }
-
     [Required]
     [Column("FILE_NAME")]
     [StringLength(500)]
@@ -113,6 +101,10 @@ public partial class PimsAcquisitionFileHist
 
     [Column("POSSESSION_DT", TypeName = "datetime")]
     public DateTime? PossessionDt { get; set; }
+
+    [Column("PHYSICAL_FILE_DETAILS")]
+    [StringLength(2000)]
+    public string PhysicalFileDetails { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
@@ -171,4 +163,16 @@ public partial class PimsAcquisitionFileHist
     [Column("FILE_NUMBER")]
     [StringLength(18)]
     public string FileNumber { get; set; }
+
+    [Column("ACQ_FILE_APPRAISAL_TYPE_CODE")]
+    [StringLength(20)]
+    public string AcqFileAppraisalTypeCode { get; set; }
+
+    [Column("ACQ_FILE_LGL_SRVY_TYPE_CODE")]
+    [StringLength(20)]
+    public string AcqFileLglSrvyTypeCode { get; set; }
+
+    [Column("ACQ_FILE_EXPROP_RISK_TYPE_CODE")]
+    [StringLength(20)]
+    public string AcqFileExpropRiskTypeCode { get; set; }
 }

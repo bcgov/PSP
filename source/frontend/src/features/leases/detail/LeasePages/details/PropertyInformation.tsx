@@ -32,24 +32,24 @@ export const PropertyInformation: React.FunctionComponent<
   const pidText = isValidId(pid) ? `PID: ${pidFormatter(pid.toString())}` : '';
   return (
     <StyledPropertyInfo>
-      <SectionField label="PID" labelWidth="3">
+      <SectionField label="PID" labelWidth={{ xs: 3 }}>
         {pidText}
       </SectionField>
-      <SectionField label="Descriptive name" labelWidth="3">
+      <SectionField label="Descriptive name" labelWidth={{ xs: 3 }}>
         {property.propertyName}
       </SectionField>
-      <SectionField label="Area included" labelWidth="3" className="py-4">
+      <SectionField label="Area included" labelWidth={{ xs: 3 }} className="py-4">
         <AreaContainer
           landArea={landArea}
           unitCode={areaUnitType?.id ?? AreaUnitTypes.SquareMeters}
         />
       </SectionField>
       {!hideAddress ? (
-        <SectionField label="Address" labelWidth="3" className="py-2">
+        <SectionField label="Address" labelWidth={{ xs: 3 }} className="py-2">
           <AddressView address={property.property.address} />
         </SectionField>
       ) : null}
-      <SectionField label="Legal description" labelWidth="3">
+      <SectionField label="Legal description" labelWidth={{ xs: 3 }}>
         {legalDescription}
       </SectionField>
 

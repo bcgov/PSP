@@ -21,6 +21,8 @@ export interface IResearchFilterProps {
 }
 
 export const defaultResearchFilter: IResearchFilter = {
+  pid: '',
+  pin: '',
   regionCode: '',
   researchFileStatusTypeCode: 'ACTIVE',
   name: '',
@@ -32,7 +34,7 @@ export const defaultResearchFilter: IResearchFilter = {
   updatedOnEndDate: '',
   updatedOnStartDate: '',
   rfileNumber: '',
-  researchSearchBy: 'name',
+  researchSearchBy: 'pid',
   createOrUpdateRange: 'updatedOnStartDate',
   createOrUpdateBy: 'appLastUpdateUserid',
 };
@@ -70,51 +72,51 @@ export const ResearchFilter: React.FunctionComponent<
       {formikProps => (
         <FilterBoxForm className="p-3">
           <Row>
-            <Col xl="1">
+            <Col lg="1">
               <strong>Search by:</strong>
             </Col>
-            <Col xl="5">
+            <Col lg="5">
               <Row>
-                <Col xl="12">
+                <Col lg="12">
                   <Row>
-                    <Col xl="4">
+                    <Col lg="4">
                       <Select
                         options={regionOptions}
                         field="regionCode"
                         placeholder="All Regions"
                       />
                     </Col>
-                    <Col xl="8">
+                    <StyledSelectInputCol lg="8">
                       <ResearchFileSelect />
-                    </Col>
+                    </StyledSelectInputCol>
                   </Row>
                 </Col>
               </Row>
               <Row>
-                <Col xl="12">
+                <Col lg="12">
                   <Row>
-                    <Col xl="4">
+                    <Col lg="4">
                       <Select
                         placeholder="All Status"
                         options={researchStatusOptions}
                         field="researchFileStatusTypeCode"
                       />
                     </Col>
-                    <Col xl="8">
+                    <Col lg="8">
                       <Input field="roadOrAlias" placeholder="Road name or alias" />
                     </Col>
                   </Row>
                 </Col>
               </Row>
             </Col>
-            <Col xl="5">
+            <Col lg="5">
               <Row>
-                <Col xl="12">
+                <Col lg="12">
                   <AppCreateUpdateRangeSelect />
                 </Col>
               </Row>
               <Row>
-                <Col xl="12">
+                <Col lg="8">
                   <SelectInput<
                     {
                       appCreateUserid: string;
@@ -141,12 +143,12 @@ export const ResearchFilter: React.FunctionComponent<
                 </Col>
               </Row>
             </Col>
-            <ColButtons xl="1">
+            <ColButtons lg="1">
               <Row>
-                <Col xl="auto" className="pr-0">
+                <Col lg="auto" className="pr-0">
                   <SearchButton disabled={formikProps.isSubmitting} />
                 </Col>
-                <Col xl="auto">
+                <Col lg="auto">
                   <ResetButton
                     disabled={formikProps.isSubmitting}
                     onClick={() => {
@@ -166,16 +168,18 @@ export const ResearchFilter: React.FunctionComponent<
 
 export default ResearchFilter;
 
+const StyledSelectInputCol = styled(Col)`
+  .form-select {
+    max-width: 10rem;
+  }
+`;
+
 const FilterBoxForm = styled(Form)`
   background-color: ${({ theme }) => theme.css.filterBoxColor};
   border-radius: 0.5rem;
   .idir-input-group {
     .input-group-prepend select {
       width: 16rem;
-    }
-    input {
-      width: 18rem;
-      max-width: 100%;
     }
   }
 `;

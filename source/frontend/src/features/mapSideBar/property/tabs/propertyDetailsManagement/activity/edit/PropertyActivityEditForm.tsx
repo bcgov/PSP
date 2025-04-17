@@ -1,6 +1,7 @@
 import clsx from 'classnames';
 import { Formik, FormikProps } from 'formik';
 import React, { ChangeEvent, useMemo, useRef, useState } from 'react';
+import { Col } from 'react-bootstrap';
 import ReactVisibilitySensor from 'react-visibility-sensor';
 
 import { CancelConfirmationModal } from '@/components/common/CancelConfirmationModal';
@@ -13,6 +14,7 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import * as Styled from '@/components/common/styles';
+import { TrayHeaderContent } from '@/components/common/styles';
 import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
 import { PROP_MGMT_ACTIVITY_STATUS_TYPES, PROP_MGMT_ACTIVITY_TYPES } from '@/constants/API';
 import SaveCancelButtons from '@/features/leases/SaveCancelButtons';
@@ -36,6 +38,7 @@ export interface IPropertyActivityEditFormProps {
   gstConstant: number;
   pstConstant: number;
   onCancel: () => void;
+  onClose: () => void;
   loading: boolean;
   show: boolean;
   setShow: (show: boolean) => void;
@@ -97,6 +100,11 @@ export const PropertyActivityEditForm: React.FunctionComponent<
 
   const isEditMode = exists(props.activity);
 
+  const onCloseClick = () => {
+    props.setShow(false);
+    props.onClose();
+  };
+
   return (
     <ReactVisibilitySensor
       onChange={(isVisible: boolean) => {
@@ -104,7 +112,16 @@ export const PropertyActivityEditForm: React.FunctionComponent<
       }}
     >
       <Styled.PopupTray className={clsx({ show: props.show })}>
-        <Styled.TrayHeader>{isEditMode ? 'Edit ' : 'New '}Property Activity</Styled.TrayHeader>
+        <TrayHeaderContent>
+          <Styled.TrayHeader>{isEditMode ? 'Edit ' : 'New '}Property Activity</Styled.TrayHeader>
+          <Col xs="auto" className="text-right">
+            <Styled.CloseIcon
+              id="close-tray"
+              title="close"
+              onClick={onCloseClick}
+            ></Styled.CloseIcon>
+          </Col>
+        </TrayHeaderContent>
         <Styled.TrayContent>
           <StyledFormWrapper>
             <StyledSummarySection>
@@ -120,7 +137,7 @@ export const PropertyActivityEditForm: React.FunctionComponent<
                   {formikProps => (
                     <>
                       <Section header="Activity Details">
-                        <SectionField label="Activity type" contentWidth="7" required>
+                        <SectionField label="Activity type" contentWidth={{ xs: 7 }} required>
                           <Select
                             field="activityTypeCode"
                             options={activityTypeOptions}
@@ -128,35 +145,39 @@ export const PropertyActivityEditForm: React.FunctionComponent<
                             onChange={onActivityTypeChange}
                           />
                         </SectionField>
-                        <SectionField label="Sub-type" contentWidth="7" required>
+                        <SectionField label="Sub-type" contentWidth={{ xs: 7 }} required>
                           <Select
                             field="activitySubtypeCode"
                             options={activitySubtypeOptions}
                             placeholder="Select subtype"
                           />
                         </SectionField>
-                        <SectionField label="Activity status" contentWidth="7" required>
+                        <SectionField label="Activity status" contentWidth={{ xs: 7 }} required>
                           <Select
                             field="activityStatusCode"
                             options={activityStatusOptions}
                             placeholder="Select status"
                           />
                         </SectionField>
-                        <SectionField label="Requested added date" contentWidth="7" required>
+                        <SectionField
+                          label="Requested added date"
+                          contentWidth={{ xs: 7 }}
+                          required
+                        >
                           <FastDatePicker field="requestedDate" formikProps={formikProps} />
                         </SectionField>
                         <SectionField
                           label="Completion date"
-                          contentWidth="7"
+                          contentWidth={{ xs: 7 }}
                           required={formikProps.values.activityStatusCode === 'COMPLETED'}
                         >
                           <FastDatePicker field="completionDate" formikProps={formikProps} />
                         </SectionField>
-                        <SectionField label="Description" contentWidth="12" required>
+                        <SectionField label="Description" contentWidth={{ xs: 12 }} required>
                           <TextArea field="description" />
                         </SectionField>
 
-                        <SectionField label="Ministry contacts" contentWidth="8">
+                        <SectionField label="Ministry contacts" contentWidth={{ xs: 8 }}>
                           <ContactListForm
                             field="ministryContacts"
                             formikProps={formikProps}
@@ -165,19 +186,19 @@ export const PropertyActivityEditForm: React.FunctionComponent<
                         </SectionField>
                         <SectionField
                           label="Requestor"
-                          contentWidth="7"
+                          contentWidth={{ xs: 7 }}
                           tooltip="Document the source of the request by entering the name of the person, organization or other entity from which the request has been received"
                         >
                           <Input field="requestedSource" />
                         </SectionField>
-                        <SectionField label="Involved parties" contentWidth="8">
+                        <SectionField label="Involved parties" contentWidth={{ xs: 8 }}>
                           <ContactListForm
                             field="involvedParties"
                             formikProps={formikProps}
                             contactType={RestrictContactType.ALL}
                           />
                         </SectionField>
-                        <SectionField label="Service provider" contentWidth="7">
+                        <SectionField label="Service provider" contentWidth={{ xs: 7 }}>
                           <ContactInputContainer
                             field="serviceProvider"
                             View={ContactInputView}

@@ -4,6 +4,7 @@
 // learn more: https://github.com/testing-library/jest-dom
 import '@testing-library/jest-dom';
 import 'jest-styled-components';
+import 'vitest-webgl-canvas-mock';
 
 import noop from 'lodash/noop';
 import moment from 'moment';
@@ -12,6 +13,12 @@ import failOnConsole from 'vitest-fail-on-console';
 
 import { server } from './mocks/msw/server';
 import { cleanup } from './utils/test-utils';
+
+// Mock this function for maplibre-gl to work in tests
+if (typeof global.URL.createObjectURL === 'undefined') {
+  global.URL.createObjectURL = vi.fn();
+}
+global.innerWidth = 1920;
 
 // workaround to allow polyline and other svg map renderers to function correctly in tests.
 const createElementNSOrig = (global as any).document.createElementNS;
@@ -23,8 +30,6 @@ const createElementNSOrig = (global as any).document.createElementNS;
   }
   return createElementNSOrig.apply(this, arguments);
 };
-
-tz.setDefault('America/Vancouver');
 
 tz.setDefault('America/Vancouver');
 

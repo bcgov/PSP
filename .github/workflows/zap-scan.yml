@@ -18,17 +18,3 @@ jobs:
           target: "https://dev-pims.th.gov.bc.ca/"
           cmd_options: "-r ${{ env.HTML_ZAP_REPORT }} -x ${{ env.ZAP_REPORT }}"
           fail_action: false
-      - name: SonarQube Scan
-        uses: sonarsource/sonarqube-scan-action@master
-        if: ${{ github.event_name == 'push' }}
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_URL }}
-          PROJECT_KEY: PIMS-ZAP
-          PROJECT_NAME: PIMS-ZAP
-        with:
-          args: >
-            -Dsonar.projectKey=${{ env.PROJECT_KEY }}
-            -Dsonar.projectName=${{ env.PROJECT_NAME }}
-            -Dsonar.zaproxy.reportPath=${{ env.ZAP_REPORT }}
-            -Dsonar.zaproxy.htmlReportPath=${{ env.HTML_ZAP_REPORT }}

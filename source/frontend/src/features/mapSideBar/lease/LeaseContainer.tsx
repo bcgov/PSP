@@ -248,8 +248,8 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
   const locations: LatLngLiteral[] = useMemo(() => {
     if (exists(lease?.fileProperties)) {
       return lease?.fileProperties
-        .map(x => locationFromFileProperty(x))
-        .map(y => getLatLng(y))
+        .map(leaseProp => locationFromFileProperty(leaseProp))
+        .map(geom => getLatLng(geom))
         .filter(exists);
     } else {
       return [];

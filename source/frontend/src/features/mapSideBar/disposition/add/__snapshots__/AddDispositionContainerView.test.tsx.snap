@@ -2,10 +2,18 @@
 
 exports[`Add Disposition Container View > matches snapshot 1`] = `
 <DocumentFragment>
-  <div
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div
     class="Toastify"
   />
-  <div />
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div />
   .c4.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -232,10 +240,6 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c18 .react-datepicker-wrapper {
-  max-width: 17rem;
-}
-
 .c19.c19.form-control.is-valid {
   background-image: none;
 }
@@ -255,6 +259,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
 
 .c29:not(:first-child) {
   padding-left: 0;
+  padding-right: 0;
 }
 
 .c29:not(:first-child) .form-control {
@@ -391,6 +396,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
   position: sticky;
   padding-top: 2rem;
   bottom: 0;
+  border-top: 2px solid #e5e5e5;
   background: white;
   z-index: 10;
 }
@@ -529,15 +535,6 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
   border-radius: 0.5rem;
 }
 
-.c27 .idir-input-group .input-group-prepend select {
-  width: 16rem;
-}
-
-.c27 .idir-input-group input {
-  width: 18rem;
-  max-width: 100%;
-}
-
 .c31 {
   font-size: 1.6rem;
   color: #9F9D9C;
@@ -559,6 +556,12 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
 
 .c12 [name='region'] {
   max-width: 25rem;
+}
+
+@media only screen and (max-width:1199px) {
+  .c0.expanded {
+    min-width: 70rem;
+  }
 }
 
 <div
@@ -782,6 +785,83 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                           value=""
                         >
                           Select funding...
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-BCTFA"
+                          value="BCTFA"
+                        >
+                          BCTFA
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-CAPPROG"
+                          value="CAPPROG"
+                        >
+                          Capital Program
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-DFAA"
+                          value="DFAA"
+                        >
+                          DFAA (Disaster Financial Assistance Arrangement)
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-EVERGREEN"
+                          value="EVERGREEN"
+                        >
+                          Evergreen
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-FEDERAL"
+                          value="FEDERAL"
+                        >
+                          Federal
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-MAJORPRJ"
+                          value="MAJORPRJ"
+                        >
+                          Major Projects
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-MOTIDIS"
+                          value="MOTIDIS"
+                        >
+                          MoTI District
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-MOTIREG"
+                          value="MOTIREG"
+                        >
+                          MoTI Region
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-OTHER"
+                          value="OTHER"
+                        >
+                          Other
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-REHAB"
+                          value="REHAB"
+                        >
+                          Rehab & Maintenance
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-TICORP"
+                          value="TICORP"
+                        >
+                          TI Corp
                         </option>
                       </select>
                     </div>
@@ -1126,13 +1206,13 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                                 novalidate=""
                               >
                                 <div
-                                  class="row"
+                                  class="row no-gutters"
                                 >
                                   <div
-                                    class="col-xl-6"
+                                    class="col-6"
                                   >
                                     <div
-                                      class="flex-nowrap input-group row"
+                                      class="flex-nowrap input-group row no-gutters"
                                     >
                                       <div
                                         class="c28 col-auto"
@@ -1183,6 +1263,13 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                                               >
                                                 Legal Description
                                               </option>
+                                              <option
+                                                class="option"
+                                                data-testid="select-option-coordinates"
+                                                value="coordinates"
+                                              >
+                                                Lat/Long
+                                              </option>
                                             </select>
                                           </div>
                                         </div>
@@ -1208,7 +1295,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                                     </div>
                                   </div>
                                   <div
-                                    class="pr-0 col-xl-2"
+                                    class="pr-0 col-2"
                                   >
                                     <div
                                       class="row"
@@ -2054,7 +2141,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
         class=""
       >
         <div
-          class="c32 justify-content-end mb-6 mt-6 p-0 no-gutters row"
+          class="c32 justify-content-end pt-4 p-0 no-gutters row"
         >
           <div
             class="pr-3 col-auto"

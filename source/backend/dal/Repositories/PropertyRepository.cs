@@ -70,13 +70,6 @@ namespace Pims.Dal.Repositories
                 .Take(filter.Quantity)
                 .ToArray();
 
-            if (!string.IsNullOrWhiteSpace(filter.Pid))
-            {
-                Regex nonInteger = new Regex("[^\\d]");
-                var formattedPid = nonInteger.Replace(filter.Pid, string.Empty);
-                items = items.Where(i => i.Pid.ToString().PadLeft(9, '0').Contains(formattedPid)).ToArray();
-            }
-
             return new Paged<PimsPropertyVw>(items, filter.Page, filter.Quantity, query.Count());
         }
 
@@ -95,11 +88,11 @@ namespace Pims.Dal.Repositories
                 .Include(p => p.PropertyTypeCodeNavigation)
                 .Include(p => p.PropertyStatusTypeCodeNavigation)
                 .Include(p => p.PropertyDataSourceTypeCodeNavigation)
-                .Include(p => p.PimsPropPropAnomalyTypes)
+                .Include(p => p.PimsPropPropAnomalyTyps)
                     .ThenInclude(t => t.PropertyAnomalyTypeCodeNavigation)
-                .Include(p => p.PimsPropPropRoadTypes)
+                .Include(p => p.PimsPropPropRoadTyps)
                     .ThenInclude(t => t.PropertyRoadTypeCodeNavigation)
-                .Include(p => p.PimsPropPropTenureTypes)
+                .Include(p => p.PimsPropPropTenureTyps)
                     .ThenInclude(t => t.PropertyTenureTypeCodeNavigation)
                 .Include(p => p.PimsPropPropPurposes)
                     .ThenInclude(t => t.PropertyPurposeTypeCodeNavigation)
@@ -144,11 +137,11 @@ namespace Pims.Dal.Repositories
                 .Include(p => p.PropertyTypeCodeNavigation)
                 .Include(p => p.PropertyStatusTypeCodeNavigation)
                 .Include(p => p.PropertyDataSourceTypeCodeNavigation)
-                .Include(p => p.PimsPropPropAnomalyTypes)
+                .Include(p => p.PimsPropPropAnomalyTyps)
                     .ThenInclude(t => t.PropertyAnomalyTypeCodeNavigation)
-                .Include(p => p.PimsPropPropRoadTypes)
+                .Include(p => p.PimsPropPropRoadTyps)
                     .ThenInclude(t => t.PropertyRoadTypeCodeNavigation)
-                .Include(p => p.PimsPropPropTenureTypes)
+                .Include(p => p.PimsPropPropTenureTyps)
                     .ThenInclude(t => t.PropertyTenureTypeCodeNavigation)
                 .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
                 .Include(p => p.VolumetricTypeCodeNavigation)
@@ -202,11 +195,11 @@ namespace Pims.Dal.Repositories
                     .Include(p => p.PropertyTypeCodeNavigation)
                     .Include(p => p.PropertyStatusTypeCodeNavigation)
                     .Include(p => p.PropertyDataSourceTypeCodeNavigation)
-                    .Include(p => p.PimsPropPropAnomalyTypes)
+                    .Include(p => p.PimsPropPropAnomalyTyps)
                         .ThenInclude(t => t.PropertyAnomalyTypeCodeNavigation)
-                    .Include(p => p.PimsPropPropRoadTypes)
+                    .Include(p => p.PimsPropPropRoadTyps)
                         .ThenInclude(t => t.PropertyRoadTypeCodeNavigation)
-                    .Include(p => p.PimsPropPropTenureTypes)
+                    .Include(p => p.PimsPropPropTenureTyps)
                         .ThenInclude(t => t.PropertyTenureTypeCodeNavigation)
                     .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
                     .Include(p => p.VolumetricTypeCodeNavigation)
@@ -243,11 +236,11 @@ namespace Pims.Dal.Repositories
                 .Include(p => p.PropertyTypeCodeNavigation)
                 .Include(p => p.PropertyStatusTypeCodeNavigation)
                 .Include(p => p.PropertyDataSourceTypeCodeNavigation)
-                .Include(p => p.PimsPropPropAnomalyTypes)
+                .Include(p => p.PimsPropPropAnomalyTyps)
                     .ThenInclude(t => t.PropertyAnomalyTypeCodeNavigation)
-                .Include(p => p.PimsPropPropRoadTypes)
+                .Include(p => p.PimsPropPropRoadTyps)
                     .ThenInclude(t => t.PropertyRoadTypeCodeNavigation)
-                .Include(p => p.PimsPropPropTenureTypes)
+                .Include(p => p.PimsPropPropTenureTyps)
                     .ThenInclude(t => t.PropertyTenureTypeCodeNavigation)
                 .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
                 .Include(p => p.VolumetricTypeCodeNavigation)
@@ -370,9 +363,9 @@ namespace Pims.Dal.Repositories
             }
 
             // update direct relationships - anomalies, tenures, etc
-            Context.UpdateChild<PimsProperty, long, PimsPropPropAnomalyType, long>(p => p.PimsPropPropAnomalyTypes, propertyId, property.PimsPropPropAnomalyTypes.ToArray());
-            Context.UpdateChild<PimsProperty, long, PimsPropPropRoadType, long>(p => p.PimsPropPropRoadTypes, propertyId, property.PimsPropPropRoadTypes.ToArray());
-            Context.UpdateChild<PimsProperty, long, PimsPropPropTenureType, long>(p => p.PimsPropPropTenureTypes, propertyId, property.PimsPropPropTenureTypes.ToArray());
+            Context.UpdateChild<PimsProperty, long, PimsPropPropAnomalyTyp, long>(p => p.PimsPropPropAnomalyTyps, propertyId, property.PimsPropPropAnomalyTyps.ToArray());
+            Context.UpdateChild<PimsProperty, long, PimsPropPropRoadTyp, long>(p => p.PimsPropPropRoadTyps, propertyId, property.PimsPropPropRoadTyps.ToArray());
+            Context.UpdateChild<PimsProperty, long, PimsPropPropTenureTyp, long>(p => p.PimsPropPropTenureTyps, propertyId, property.PimsPropPropTenureTyps.ToArray());
 
             return existingProperty;
         }
@@ -455,7 +448,7 @@ namespace Pims.Dal.Repositories
             if (filter.TenureStatuses != null && filter.TenureStatuses.Count > 0)
             {
                 predicate.And(p =>
-                    p.PimsPropPropTenureTypes.Any(pl => filter.TenureStatuses.Contains(pl.PropertyTenureTypeCode)));
+                    p.PimsPropPropTenureTyps.Any(pl => filter.TenureStatuses.Contains(pl.PropertyTenureTypeCode)));
             }
 
             if (!string.IsNullOrEmpty(filter.TenurePPH))
@@ -466,7 +459,7 @@ namespace Pims.Dal.Repositories
             if (filter.TenureRoadTypes != null && filter.TenureRoadTypes.Count > 0)
             {
                 predicate.And(p =>
-                    p.PimsPropPropRoadTypes.Any(pl => filter.TenureRoadTypes.Contains(pl.PropertyRoadTypeCode)));
+                    p.PimsPropPropRoadTyps.Any(pl => filter.TenureRoadTypes.Contains(pl.PropertyRoadTypeCode)));
             }
 
             // Lease filters
@@ -506,7 +499,7 @@ namespace Pims.Dal.Repositories
             if (filter.AnomalyIds != null && filter.AnomalyIds.Count > 0)
             {
                 predicate.And(p =>
-                    p.PimsPropPropAnomalyTypes.Any(at => filter.AnomalyIds.Contains(at.PropertyAnomalyTypeCode)));
+                    p.PimsPropPropAnomalyTyps.Any(at => filter.AnomalyIds.Contains(at.PropertyAnomalyTypeCode)));
             }
 
             var authorizationTypes = new List<string>()

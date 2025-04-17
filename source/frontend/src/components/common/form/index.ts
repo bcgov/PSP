@@ -9,6 +9,7 @@ export * from './FormItem';
 export * from './Input';
 export * from './InputGroup';
 export * from './Multiselect';
+export * from './NumberInput';
 export * from './ProjectSelector/ProjectSelector';
 export * from './Select';
 export * from './TableSelect';

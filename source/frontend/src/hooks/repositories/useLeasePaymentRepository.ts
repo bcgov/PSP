@@ -27,7 +27,7 @@ export const useLeasePaymentRepository = () => {
       [],
     ),
     requestName: 'putLeasePayment',
-    onSuccess: useAxiosSuccessHandler('payment saved successfully.'),
+    onSuccess: useAxiosSuccessHandler(),
     onError: useAxiosErrorHandler(),
   });
 
@@ -43,7 +43,7 @@ export const useLeasePaymentRepository = () => {
       [],
     ),
     requestName: 'postLeasePayment',
-    onSuccess: useAxiosSuccessHandler('payment saved successfully.'),
+    onSuccess: useAxiosSuccessHandler(),
     onError: useAxiosErrorHandler(),
   });
 
@@ -56,7 +56,7 @@ export const useLeasePaymentRepository = () => {
       [],
     ),
     requestName: 'deleteLeasePayment',
-    onSuccess: useAxiosSuccessHandler('payment deleted successfully.'),
+    onSuccess: useAxiosSuccessHandler(),
     onError: useAxiosErrorHandler(),
   });
 

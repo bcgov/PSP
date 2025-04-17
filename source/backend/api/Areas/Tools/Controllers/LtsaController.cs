@@ -1,9 +1,13 @@
+using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Pims.Core.Api.Policies;
+using Pims.Core.Extensions;
 using Pims.Core.Helpers;
 using Pims.Core.Security;
 using Pims.Ltsa;
@@ -25,6 +29,8 @@ namespace Pims.Api.Areas.Tools.Controllers
     {
         #region Variables
         private readonly ILtsaService _ltsaService;
+        private readonly ILogger _logger;
+        private readonly ClaimsPrincipal _user;
         #endregion
 
         #region Constructors
@@ -33,9 +39,13 @@ namespace Pims.Api.Areas.Tools.Controllers
         /// Creates a new instance of a LtsaController class.
         /// </summary>
         /// <param name="ltsaService"></param>
-        public LtsaController(ILtsaService ltsaService)
+        /// <param name="logger"></param>
+        /// <param name="user"></param>
+        public LtsaController(ILtsaService ltsaService, ILogger<LtsaController> logger, ClaimsPrincipal user)
         {
             _ltsaService = ltsaService;
+            _logger = logger;
+            _user = user;
         }
         #endregion
 
@@ -54,6 +64,18 @@ namespace Pims.Api.Areas.Tools.Controllers
         [HasPermission(Permissions.PropertyEdit)]
         public async Task<IActionResult> FindTitleSummariesAsync(string pid)
         {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(LtsaController),
+                nameof(FindTitleSummariesAsync),
+                _user.GetUsername(),
+                DateTime.Now);
+
+            if (string.IsNullOrEmpty(pid) || PidTranslator.ConvertPID(pid) == 0)
+            {
+                throw new BadHttpRequestException("The pid of the desired property must be specified");
+            }
+
             var result = await _ltsaService.GetTitleSummariesAsync(PidTranslator.ConvertPID(pid));
             return new JsonResult(result.TitleSummaries);
         }
@@ -72,6 +94,13 @@ namespace Pims.Api.Areas.Tools.Controllers
         [HasPermission(Permissions.PropertyView)]
         public async Task<IActionResult> PostTitleOrderAsync(string titleNumber, string landTitleDistrictCode)
         {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(LtsaController),
+                nameof(PostTitleOrderAsync),
+                _user.GetUsername(),
+                DateTime.Now);
+
             var result = await _ltsaService.PostTitleOrder(titleNumber, landTitleDistrictCode);
             return new JsonResult(result?.Order);
         }
@@ -89,12 +118,19 @@ namespace Pims.Api.Areas.Tools.Controllers
         [HasPermission(Permissions.PropertyView)]
         public async Task<IActionResult> PostParcelInfoOrderAsync(string pid)
         {
-            if (!string.IsNullOrEmpty(pid))
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(LtsaController),
+                nameof(PostParcelInfoOrderAsync),
+                _user.GetUsername(),
+                DateTime.Now);
+
+            if (string.IsNullOrEmpty(pid) || PidTranslator.ConvertPID(pid) == 0)
             {
-                var result = await _ltsaService.PostParcelInfoOrder(PidTranslator.ConvertPIDToDash(pid));
-                return new JsonResult(result?.Order);
+                throw new BadHttpRequestException("The pid of the desired property must be specified");
             }
-            throw new BadHttpRequestException("The pid of the desired property must be specified");
+            var result = await _ltsaService.PostParcelInfoOrder(PidTranslator.ConvertPIDToDash(pid));
+            return new JsonResult(result?.Order);
         }
 
         /// <summary>
@@ -110,6 +146,13 @@ namespace Pims.Api.Areas.Tools.Controllers
         [HasPermission(Permissions.PropertyView)]
         public async Task<IActionResult> PostSpcpOrderAsync(string strataPlanNumber)
         {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(LtsaController),
+                nameof(PostSpcpOrderAsync),
+                _user.GetUsername(),
+                DateTime.Now);
+
             var result = await _ltsaService.PostSpcpOrder(strataPlanNumber);
             return new JsonResult(result?.Order);
         }
@@ -127,6 +170,18 @@ namespace Pims.Api.Areas.Tools.Controllers
         [HasPermission(Permissions.PropertyView)]
         public async Task<IActionResult> PostLtsaFields(string pid)
         {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(LtsaController),
+                nameof(PostLtsaFields),
+                _user.GetUsername(),
+                DateTime.Now);
+
+            if (string.IsNullOrEmpty(pid) || PidTranslator.ConvertPID(pid) == 0)
+            {
+                throw new BadHttpRequestException("The pid of the desired property must be specified");
+            }
+
             var result = await _ltsaService.PostLtsaFields(pid);
             return new JsonResult(result);
         }

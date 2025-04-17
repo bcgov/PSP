@@ -14,6 +14,7 @@ import { act, getByName, renderAsync, RenderOptions, screen, userEvent } from '@
 
 import { AcquisitionOwnerFormModel, OwnerAddressFormModel } from '../common/models';
 import { AddAcquisitionContainer, IAddAcquisitionContainerProps } from './AddAcquisitionContainer';
+import AddAcquisitionForm from './AddAcquisitionForm';
 import { AcquisitionForm } from './models';
 
 const history = createMemoryHistory();
@@ -24,6 +25,7 @@ const onSuccess = vi.fn();
 const DEFAULT_PROPS: IAddAcquisitionContainerProps = {
   onClose,
   onSuccess,
+  View: AddAcquisitionForm,
 };
 
 // Need to mock this library for unit tests
@@ -104,6 +106,7 @@ describe('AddAcquisitionContainer component', () => {
       email: 'test@test.com',
       name: 'Chester Tester',
       idir_user_guid: '00000000000000000000000000000000',
+      sub: '00000000000000000000000000000000@idir',
     };
 
     mocks.useKeycloak.mockImplementation(() => ({
@@ -262,13 +265,7 @@ describe('AddAcquisitionContainer component', () => {
         },
         districtFeature: null,
         municipalityFeature: null,
-        highwayFeatures: null,
         selectingComponentId: null,
-        crownLandLeasesFeature: null,
-        crownLandLicensesFeature: null,
-        crownLandTenuresFeature: null,
-        crownLandInventoryFeature: null,
-        crownLandInclusionsFeature: null,
       },
     };
 
@@ -297,13 +294,7 @@ describe('AddAcquisitionContainer component', () => {
         },
         districtFeature: null,
         municipalityFeature: null,
-        highwayFeatures: null,
         selectingComponentId: null,
-        crownLandLeasesFeature: null,
-        crownLandLicensesFeature: null,
-        crownLandTenuresFeature: null,
-        crownLandInventoryFeature: null,
-        crownLandInclusionsFeature: null,
       },
     };
 

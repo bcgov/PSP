@@ -1,7 +1,6 @@
 ﻿using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
-using System.Data;
 
 namespace PIMS.Tests.Automation.StepDefinitions
 {
@@ -73,7 +72,29 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Save Acquisition File
             acquisitionFilesDetails.SaveAcquisitionFileDetails();
 
-            //Get Research File code
+            //Get Acquisition File code
+            acquisitionFileCode = acquisitionFilesDetails.GetAcquisitionFileCode();
+        }
+
+        [StepDefinition(@"I navigate and create a new Acquisition File from row number (.*)")]
+        public void NavigateCreateAcquisitionFile(int rowNumber)
+        {
+            /* TEST COVERAGE: PSP-4163, PSP-4164, PSP-4165, PSP-4323, PSP-4472, PSP-4553 */
+
+            //Navigate to Acquisition File
+            PopulateAcquisitionFile(rowNumber);
+            acquisitionFilesDetails.NavigateToCreateNewAcquisitionFile();
+
+            //Validate Acquisition File Details Create Form
+            acquisitionFilesDetails.VerifyAcquisitionFileCreate("Main");
+
+            //Create basic Acquisition File
+            acquisitionFilesDetails.CreateMinimumAcquisitionFile(acquisitionFile);
+
+            //Save Acquisition File
+            acquisitionFilesDetails.SaveAcquisitionFileDetails();
+
+            //Get Acquisition File code
             acquisitionFileCode = acquisitionFilesDetails.GetAcquisitionFileCode();
         }
 
@@ -541,6 +562,19 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             var nonInterestStakeholderAfterDelete = stakeholders.TotalNonInterestHolders();
             Assert.True(nonInterestStakeholderBeforeDelete - nonInterestStakeholderAfterDelete == 1);
+        }
+
+        [StepDefinition(@"I generate Compensation Requisition within an Acquisition File")]
+        public void GenerateCompensationRequisition()
+        {
+            //Navigate to Compensation Requisition Tab
+            h120.NavigateCompensationTab();
+
+            //Generate Compensation Requisition Forms
+            h120.AddCompensationBttn();
+
+            //Open the created Compensation Requisition details
+            h120.OpenCompensationDetails(0);
         }
 
         [StepDefinition(@"I create Compensation Requisition within an Acquisition File")]
@@ -1089,6 +1123,16 @@ namespace PIMS.Tests.Automation.StepDefinitions
             h120.VerifyCompensationsTotalDetails(acquisitionFile, "Main");
         }
 
+        [StepDefinition(@"Error message of CDOG Template missing appears successfully")]
+        public void VerifyCDOGMissingErrorMessage()
+        {
+            //Click on Generate Document Button
+            h120.GenerateH120Document();
+
+            //Error message of CDOG Template missing appears
+            h120.VerifyMissingTemplateErrorMessage();
+        }
+
         private void PopulateAcquisitionFile(int rowNumber)
         {
             System.Data.DataTable acquisitionSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionFiles"]!;
@@ -1421,7 +1465,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 compensation.CompensationSTOB = ExcelDataContext.ReadData(i, "CompensationSTOB");
                 compensation.CompensationServiceLine = ExcelDataContext.ReadData(i, "CompensationServiceLine");
                 compensation.CompensationResponsibilityCentre = ExcelDataContext.ReadData(i, "CompensationResponsibilityCentre");
-                compensation.AcquisitionCompensationPayee = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "CompensationPayee"));
+                compensation.CompensationPayee = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "CompensationPayee"));
                 compensation.CompensationPayeeDisplay = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "CompensationPayeeDisplay")); 
                 compensation.CompensationPaymentInTrust = Boolean.Parse(ExcelDataContext.ReadData(i, "CompensationPaymentInTrust"));
                 compensation.CompensationGSTNumber = ExcelDataContext.ReadData(i, "CompensationGSTNumber");

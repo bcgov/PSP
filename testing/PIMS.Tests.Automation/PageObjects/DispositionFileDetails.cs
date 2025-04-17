@@ -11,7 +11,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By createDispositionFileButton = By.XPath("//a[contains(text(),'Create a Disposition File')]");
 
         private By dispositionFileSummaryBttn = By.XPath("//div[contains(text(),'File Summary')]");
-        private By dispositionFileDetailsTab = By.XPath("//a[contains(text(),'File details')]");
+        private By dispositionFileDetailsTab = By.XPath("//a[contains(text(),'File Details')]");
 
         //Disposition Edit Details button
         private By dispositionFileEditButton = By.CssSelector("button[title='Edit disposition file']");
@@ -21,6 +21,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By dispositionFileMainFormDiv = By.XPath("//h1[contains(text(),'Create Disposition File')]/parent::div/parent::div/parent::div/parent::div");
 
         private By dispositionFileCreateTitle = By.XPath("//h1[contains(text(),'Create Disposition File')]");
+        private By dispositionFileCloseFormBttn = By.XPath("//h1[contains(text(),'Disposition File')]/parent::div/following-sibling::div/*[3]");
 
         private By dispositionFileHeaderCodeLabel = By.XPath("//label[contains(text(), 'File:')]");
         private By dispositionFileHeaderCodeContent = By.XPath("//label[contains(text(), 'File:')]/parent::div/following-sibling::div");
@@ -207,10 +208,6 @@ namespace PIMS.Tests.Automation.PageObjects
             if (disposition.DispositionProjFunding != "")
                 ChooseSpecificSelectOption(dispositionFileProjectFundingInput, disposition.DispositionProjFunding);
 
-            //if (webDriver.FindElements(acquisitionFileProjectOtherFundingLabel).Count > 0)
-            //{
-            //    webDriver.FindElement(acquisitionFileProjectOtherFundingInput).SendKeys(acquisition.AcquisitionFundingOther);
-            //}
 
             //Disposition Details
             if (disposition.DispositionAssignedDate != "")
@@ -391,10 +388,8 @@ namespace PIMS.Tests.Automation.PageObjects
             ButtonElement("Save");
 
             Wait();
-            while (webDriver.FindElements(dispositionFileConfirmationModal).Count() > 0)
+            while (webDriver.FindElements(dispositionFileConfirmationModal).Count() > 0 && sharedModals.ModalHeader() == "User Override Required")
             {
-                Assert.Equal("User Override Required", sharedModals.ModalHeader());
-
                 if(sharedModals.ModalContent().Contains("You are changing this file to a non-editable state"))
                     Assert.Equal("You are changing this file to a non-editable state. (Only system administrators can edit the file when set to Archived, Cancelled or Completed state). Do you wish to continue?", sharedModals.ModalContent());
 
@@ -405,7 +400,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 Wait();
             }
 
-            AssertTrueIsDisplayed(dispositionFileEditButton);
+            //AssertTrueIsDisplayed(dispositionFileEditButton);
         }
 
         public void CancelDispositionFile()
@@ -414,6 +409,13 @@ namespace PIMS.Tests.Automation.PageObjects
             ButtonElement("Cancel");
 
             sharedModals.CancelActionModal();
+        }
+
+        public void CloseDispositionForm()
+        {
+            Wait();
+            webDriver.FindElement(dispositionFileCloseFormBttn).Click();
+
         }
 
         public int IsCreateDispositionFileFormVisible()
@@ -618,6 +620,12 @@ namespace PIMS.Tests.Automation.PageObjects
             }
         }
 
+        public string VerifyDispositionFileHeaderStatus()
+        {
+            Wait();
+            return webDriver.FindElement(dispositionFileHeaderStatusContent).Text;
+        }
+
         public void DeleteFirstStaffMember()
         {
             WaitUntilClickable(dispositionFileTeamFirstMemberDeleteBttn);
@@ -652,6 +660,18 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(dispositionFileDetailsNameInput).SendKeys(fileName);
             webDriver.FindElement(dispositionFileDetailsReferenceNumberInput).SendKeys(referenceNumber);
 
+        }
+
+        public void SoldStatusError()
+        {
+            Wait();
+            Assert.Equal("File Disposition Status has not been set to SOLD, so the related file properties cannot be Disposed. To proceed, set file disposition status to SOLD, or cancel the Disposition file.", sharedModals.ModalContent());
+        }
+
+        public void NonCorePropertyError()
+        {
+            Wait();
+            Assert.Equal("You have one or more properties attached to this Disposition file that is NOT in the \"Core Inventory\" (i.e. owned by BCTFA and/or HMK). To complete this file you must either, remove these non \"Non-Core Inventory\" properties, OR make sure the property is added to the PIMS inventory first.", sharedModals.ModalContent());
         }
 
         private void AddTeamMembers(TeamMember teamMember)

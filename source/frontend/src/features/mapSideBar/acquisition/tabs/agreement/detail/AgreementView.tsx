@@ -131,45 +131,45 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
               isCollapsable
               initiallyExpanded
             >
-              <SectionField labelWidth="6" label="Agreement status">
+              <SectionField labelWidth={{ xs: 6 }} label="Agreement status">
                 {agreement.agreementStatusType?.description ?? ''}
               </SectionField>
               {agreement.agreementStatusType?.id ===
                 ApiGen_CodeTypes_AgreementStatusTypes.CANCELLED && (
-                <SectionField labelWidth="6" label="Cancellation reason">
+                <SectionField labelWidth={{ xs: 6 }} label="Cancellation reason">
                   {agreement.cancellationNote ?? ''}
                 </SectionField>
               )}
-              <SectionField labelWidth="6" label="Legal survey plan">
+              <SectionField labelWidth={{ xs: 6 }} label="Legal survey plan">
                 {agreement.legalSurveyPlanNum}
               </SectionField>
-              <SectionField labelWidth="6" label="Agreement type">
+              <SectionField labelWidth={{ xs: 6 }} label="Agreement type">
                 {agreement.agreementType?.description}
               </SectionField>
-              <SectionField labelWidth="6" label="Agreement date">
+              <SectionField labelWidth={{ xs: 6 }} label="Agreement date">
                 {prettyFormatDate(agreement.agreementDate)}
               </SectionField>
               {agreement.agreementType?.id === ApiGen_CodeTypes_AgreementTypes.H0074 && (
-                <SectionField labelWidth="6" label="Commencement date">
+                <SectionField labelWidth={{ xs: 6 }} label="Commencement date">
                   {prettyFormatDate(agreement.commencementDate)}
                 </SectionField>
               )}
-              <SectionField labelWidth="6" label="Completion date">
+              <SectionField labelWidth={{ xs: 6 }} label="Completion date">
                 {prettyFormatDate(agreement.completionDate)}
               </SectionField>
-              <SectionField labelWidth="6" label="Termination date">
+              <SectionField labelWidth={{ xs: 6 }} label="Termination date">
                 {prettyFormatDate(agreement.terminationDate)}
               </SectionField>
-              <SectionField labelWidth="6" label="Possession date">
+              <SectionField labelWidth={{ xs: 6 }} label="Possession date">
                 {prettyFormatDate(agreement.possessionDate)}
               </SectionField>
 
               <StyledAgreementSubheader>Financial</StyledAgreementSubheader>
-              <SectionField labelWidth="6" label="Purchase price">
+              <SectionField labelWidth={{ xs: 6 }} label="Purchase price">
                 {formatMoney(agreement.purchasePrice)}
               </SectionField>
               <SectionField
-                labelWidth="6"
+                labelWidth={{ xs: 6 }}
                 label="Deposit due no later than"
                 tooltip="Generally, if applicable, this is number of days from the execution of the agreement"
               >
@@ -181,7 +181,7 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                   ''
                 )}
               </SectionField>
-              <SectionField labelWidth="6" label="Deposit amount">
+              <SectionField labelWidth={{ xs: 6 }} label="Deposit amount">
                 {formatMoney(agreement.depositAmount)}
               </SectionField>
             </Section>
