@@ -2,11 +2,19 @@
 
 exports[`Lease and License List View > matches snapshot 1`] = `
 <DocumentFragment>
-  <div
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div
     class="Toastify"
   />
-  <div />
-  .c14.btn {
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div />
+  .c15.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,19 +43,19 @@ exports[`Lease and License List View > matches snapshot 1`] = `
   cursor: pointer;
 }
 
-.c14.btn .Button__value {
+.c15.btn .Button__value {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
-.c14.btn:hover {
+.c15.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c14.btn:focus {
+.c15.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -55,31 +63,31 @@ exports[`Lease and License List View > matches snapshot 1`] = `
   box-shadow: none;
 }
 
-.c14.btn.btn-primary {
+.c15.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c14.btn.btn-primary:hover,
-.c14.btn.btn-primary:active,
-.c14.btn.btn-primary:focus {
+.c15.btn.btn-primary:hover,
+.c15.btn.btn-primary:active,
+.c15.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c14.btn.btn-secondary {
+.c15.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c14.btn.btn-secondary:hover,
-.c14.btn.btn-secondary:active,
-.c14.btn.btn-secondary:focus {
+.c15.btn.btn-secondary:hover,
+.c15.btn.btn-secondary:active,
+.c15.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c14.btn.btn-info {
+.c15.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -87,66 +95,66 @@ exports[`Lease and License List View > matches snapshot 1`] = `
   padding-right: 0.6rem;
 }
 
-.c14.btn.btn-info:hover,
-.c14.btn.btn-info:active,
-.c14.btn.btn-info:focus {
+.c15.btn.btn-info:hover,
+.c15.btn.btn-info:active,
+.c15.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c14.btn.btn-light {
+.c15.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c14.btn.btn-light:hover,
-.c14.btn.btn-light:active,
-.c14.btn.btn-light:focus {
+.c15.btn.btn-light:hover,
+.c15.btn.btn-light:active,
+.c15.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c14.btn.btn-dark {
+.c15.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c14.btn.btn-dark:hover,
-.c14.btn.btn-dark:active,
-.c14.btn.btn-dark:focus {
+.c15.btn.btn-dark:hover,
+.c15.btn.btn-dark:active,
+.c15.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c14.btn.btn-danger {
+.c15.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c14.btn.btn-danger:hover,
-.c14.btn.btn-danger:active,
-.c14.btn.btn-danger:focus {
+.c15.btn.btn-danger:hover,
+.c15.btn.btn-danger:active,
+.c15.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c14.btn.btn-warning {
+.c15.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c14.btn.btn-warning:hover,
-.c14.btn.btn-warning:active,
-.c14.btn.btn-warning:focus {
+.c15.btn.btn-warning:hover,
+.c15.btn.btn-warning:active,
+.c15.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c14.btn.btn-link {
+.c15.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -170,9 +178,9 @@ exports[`Lease and License List View > matches snapshot 1`] = `
   text-decoration: underline;
 }
 
-.c14.btn.btn-link:hover,
-.c14.btn.btn-link:active,
-.c14.btn.btn-link:focus {
+.c15.btn.btn-link:hover,
+.c15.btn.btn-link:active,
+.c15.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -182,15 +190,15 @@ exports[`Lease and License List View > matches snapshot 1`] = `
   outline: none;
 }
 
-.c14.btn.btn-link:disabled,
-.c14.btn.btn-link.disabled {
+.c15.btn.btn-link:disabled,
+.c15.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c14.btn:disabled,
-.c14.btn:disabled:hover {
+.c15.btn:disabled,
+.c15.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -202,62 +210,62 @@ exports[`Lease and License List View > matches snapshot 1`] = `
   cursor: not-allowed;
 }
 
-.c14.Button .Button__icon {
+.c15.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c14.Button--icon-only:focus {
+.c15.Button--icon-only:focus {
   outline: none;
 }
 
-.c14.Button--icon-only .Button__icon {
+.c15.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c15.c15.btn {
+.c16.c16.btn {
   background-color: unset;
   border: none;
 }
 
-.c15.c15.btn:hover,
-.c15.c15.btn:focus,
-.c15.c15.btn:active {
+.c16.c16.btn:hover,
+.c16.c16.btn:focus,
+.c16.c16.btn:active {
   background-color: unset;
   outline: none;
   box-shadow: none;
 }
 
-.c15.c15.btn svg {
+.c16.c16.btn svg {
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
 
-.c15.c15.btn svg:hover {
+.c16.c16.btn svg:hover {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
 }
 
-.c15.c15.btn.btn-primary svg {
+.c16.c16.btn.btn-primary svg {
   color: #013366;
 }
 
-.c15.c15.btn.btn-primary svg:hover {
+.c16.c16.btn.btn-primary svg:hover {
   color: #013366;
 }
 
-.c15.c15.btn.btn-light svg {
+.c16.c16.btn.btn-light svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c15.c15.btn.btn-light svg:hover {
+.c16.c16.btn.btn-light svg:hover {
   color: #CE3E39;
 }
 
-.c15.c15.btn.btn-info svg {
+.c16.c16.btn.btn-info svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c15.c15.btn.btn-info svg:hover {
+.c16.c16.btn.btn-info svg:hover {
   color: var(--surface-color-primary-button-hover);
 }
 
@@ -270,7 +278,7 @@ exports[`Lease and License List View > matches snapshot 1`] = `
   overflow-y: auto;
 }
 
-.c11 .react-datepicker__calendar-icon {
+.c12 .react-datepicker__calendar-icon {
   width: 2.4rem;
   height: 3rem;
   margin-top: 0.5rem;
@@ -280,19 +288,15 @@ exports[`Lease and License List View > matches snapshot 1`] = `
   pointer-events: none;
 }
 
-.c11 .react-datepicker__view-calendar-icon input {
+.c12 .react-datepicker__view-calendar-icon input {
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c11 .react-datepicker-wrapper {
-  max-width: 17rem;
-}
-
-.c12.c12.form-control.is-valid {
+.c13.c13.form-control.is-valid {
   background-image: none;
 }
 
-.c12.c12.form-control.is-invalid {
+.c13.c13.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
@@ -307,6 +311,7 @@ exports[`Lease and License List View > matches snapshot 1`] = `
 
 .c8:not(:first-child) {
   padding-left: 0;
+  padding-right: 0;
 }
 
 .c8:not(:first-child) .form-control {
@@ -314,7 +319,7 @@ exports[`Lease and License List View > matches snapshot 1`] = `
   border-bottom-left-radius: 0;
 }
 
-.c16 {
+.c17 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -333,12 +338,12 @@ exports[`Lease and License List View > matches snapshot 1`] = `
   margin-left: 0.5rem;
 }
 
-.c18 {
+.c19 {
   width: 1.6rem;
   height: 1.6rem;
 }
 
-.c17 {
+.c18 {
   width: 1.6rem;
   height: 1.6rem;
 }
@@ -353,11 +358,6 @@ exports[`Lease and License List View > matches snapshot 1`] = `
   margin-bottom: 2.4rem;
 }
 
-.c6 {
-  background-color: #d9eaf7;
-  border-radius: 0.5rem;
-}
-
 .c5 {
   -webkit-align-items: center;
   -webkit-box-align: center;
@@ -367,8 +367,9 @@ exports[`Lease and License List View > matches snapshot 1`] = `
   padding-bottom: 2rem;
 }
 
-.c13 {
+.c14 {
   border-left: 0.2rem solid white;
+  min-width: 2.5rem;
 }
 
 .c2 {
@@ -393,15 +394,45 @@ exports[`Lease and License List View > matches snapshot 1`] = `
   padding: 0;
 }
 
-.c10.required::before {
+.c11.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c9 {
+.c10 {
   font-weight: bold;
+}
+
+.c6 {
+  background-color: #d9eaf7;
+  border-radius: 0.5rem;
+}
+
+.c9 .chip {
+  background: #f2f2f2;
+  border-radius: 0.4rem;
+  color: black;
+  font-size: 1.6rem;
+  margin-right: 1em;
+}
+
+.c9.multiselect-container {
+  width: auto;
+  color: black;
+  padding-bottom: 1.2rem;
+}
+
+.c9.multiselect-container .searchWrapper {
+  background: white;
+  border: 1px solid #606060;
+  min-height: 2.4rem;
+  padding: 0.5rem;
+}
+
+.c9.multiselect-container .searchWrapper input {
+  margin: 0;
 }
 
 .c4 {
@@ -425,6 +456,12 @@ exports[`Lease and License List View > matches snapshot 1`] = `
 
 .c4 svg {
   vertical-align: baseline;
+}
+
+@media only screen and (max-width:1199px) {
+  .c6 .idir-input-group .form-select {
+    width: 8rem;
+  }
 }
 
 <div
@@ -477,7 +514,7 @@ exports[`Lease and License List View > matches snapshot 1`] = `
                 class="row"
               >
                 <div
-                  class="col-6"
+                  class="col-xl-6"
                 >
                   <div
                     class="row"
@@ -499,7 +536,7 @@ exports[`Lease and License List View > matches snapshot 1`] = `
                           class="col-xl-7"
                         >
                           <div
-                            class="idir-input-group flex-nowrap input-group row"
+                            class="idir-input-group flex-nowrap input-group row no-gutters"
                           >
                             <div
                               class="c7 col-auto"
@@ -697,26 +734,67 @@ exports[`Lease and License List View > matches snapshot 1`] = `
                           </div>
                         </div>
                       </div>
+                      <div
+                        class="row"
+                      >
+                        <div
+                          class="col-xl-7"
+                        >
+                          <div>
+                            <div
+                              class="multiselect-container multiSelectContainer  c9"
+                              id="multiselectContainerReact"
+                            >
+                              <div
+                                class="search-wrapper searchWrapper "
+                              >
+                                <input
+                                  autocomplete="off"
+                                  class="searchBox "
+                                  id="search_input"
+                                  name="search_name_input"
+                                  placeholder="Team member"
+                                  type="text"
+                                  value=""
+                                />
+                              </div>
+                              <div
+                                class="optionListContainer displayNone"
+                              >
+                                <ul
+                                  class="optionContainer"
+                                >
+                                  <span
+                                    class="notFound"
+                                  >
+                                    No Options Available
+                                  </span>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
                 <div
-                  class="col-5"
+                  class="col-xl-5 col-12"
                 >
                   <div
-                    class="pb-2 row"
+                    class="pb-0 row"
                   >
                     <div
-                      class="pr-0 text-left col-2"
+                      class="pr-0 text-left col-xl-2"
                     >
                       <label
-                        class="c9"
+                        class="c10"
                       >
                         Expiry date:
                       </label>
                     </div>
                     <div
-                      class="c10 text-left col"
+                      class="c11 text-left col"
                     >
                       <div
                         class="row"
@@ -725,7 +803,7 @@ exports[`Lease and License List View > matches snapshot 1`] = `
                           class="col"
                         >
                           <div
-                            class="c11 form-group"
+                            class="c12 form-group"
                           >
                             <div
                               class="react-datepicker-wrapper d-block"
@@ -744,7 +822,7 @@ exports[`Lease and License List View > matches snapshot 1`] = `
                                 </svg>
                                 <input
                                   autocomplete="off"
-                                  class="c12 form-control date-picker"
+                                  class="c13 form-control date-picker"
                                   id="datepicker-expiryStartDate"
                                   name="expiryStartDate"
                                   placeholder="from date"
@@ -759,7 +837,7 @@ exports[`Lease and License List View > matches snapshot 1`] = `
                           class="col"
                         >
                           <div
-                            class="c11 form-group"
+                            class="c12 form-group"
                           >
                             <div
                               class="react-datepicker-wrapper d-block"
@@ -778,7 +856,7 @@ exports[`Lease and License List View > matches snapshot 1`] = `
                                 </svg>
                                 <input
                                   autocomplete="off"
-                                  class="c12 form-control date-picker"
+                                  class="c13 form-control date-picker"
                                   id="datepicker-expiryEndDate"
                                   name="expiryEndDate"
                                   placeholder="to date"
@@ -796,10 +874,10 @@ exports[`Lease and License List View > matches snapshot 1`] = `
                     class="pb-2 row"
                   >
                     <div
-                      class="pr-0 text-left col-2"
+                      class="pr-0 text-left col-xl-2"
                     />
                     <div
-                      class="c10 text-left col"
+                      class="c11 text-left col"
                     >
                       <div
                         class="row"
@@ -897,7 +975,7 @@ exports[`Lease and License List View > matches snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="c13 col-xl-1"
+                  class="c14 col-xl-1"
                 >
                   <div
                     class="row"
@@ -906,7 +984,7 @@ exports[`Lease and License List View > matches snapshot 1`] = `
                       class="pr-0 col-auto"
                     >
                       <button
-                        class="c14 Button Button--icon-only primary btn btn-primary"
+                        class="c15 Button Button--icon-only primary btn btn-primary"
                         data-testid="search"
                         id="search-button"
                         title="search"
@@ -935,7 +1013,7 @@ exports[`Lease and License List View > matches snapshot 1`] = `
                       class="col-auto"
                     >
                       <button
-                        class="c14 Button Button--icon-only btn btn-info"
+                        class="c15 Button Button--icon-only btn btn-info"
                         data-testid="reset-button"
                         id="reset-button"
                         title="reset-button"
@@ -969,7 +1047,7 @@ exports[`Lease and License List View > matches snapshot 1`] = `
             class="px-0 col-md-auto"
           >
             <button
-              class="c14 Button c15 btn btn-primary"
+              class="c15 Button c16 btn btn-primary"
               type="button"
             >
               <div
@@ -996,7 +1074,7 @@ exports[`Lease and License List View > matches snapshot 1`] = `
             class="px-0 col-md-auto"
           >
             <button
-              class="c14 Button c15 btn btn-primary"
+              class="c15 Button c16 btn btn-primary"
               type="button"
             >
               <div
@@ -1045,11 +1123,11 @@ exports[`Lease and License List View > matches snapshot 1`] = `
               >
                 L-File Number
                 <div
-                  class="c16"
+                  class="c17"
                   data-testid="sort-column-lFileNo"
                 >
                   <svg
-                    class="c17"
+                    class="c18"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -1064,7 +1142,7 @@ exports[`Lease and License List View > matches snapshot 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c18"
+                    class="c19"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -1091,11 +1169,11 @@ exports[`Lease and License List View > matches snapshot 1`] = `
               >
                 Expiry Date
                 <div
-                  class="c16"
+                  class="c17"
                   data-testid="sort-column-expiryDate"
                 >
                   <svg
-                    class="c17"
+                    class="c18"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -1110,7 +1188,7 @@ exports[`Lease and License List View > matches snapshot 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c18"
+                    class="c19"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -1137,11 +1215,11 @@ exports[`Lease and License List View > matches snapshot 1`] = `
               >
                 Program Name
                 <div
-                  class="c16"
+                  class="c17"
                   data-testid="sort-column-programName"
                 >
                   <svg
-                    class="c17"
+                    class="c18"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -1156,7 +1234,7 @@ exports[`Lease and License List View > matches snapshot 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c18"
+                    class="c19"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -1219,11 +1297,11 @@ exports[`Lease and License List View > matches snapshot 1`] = `
               >
                 Status
                 <div
-                  class="c16"
+                  class="c17"
                   data-testid="sort-column-fileStatusTypeCode"
                 >
                   <svg
-                    class="c17"
+                    class="c18"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -1238,7 +1316,7 @@ exports[`Lease and License List View > matches snapshot 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c18"
+                    class="c19"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"

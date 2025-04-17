@@ -2,13 +2,25 @@
 
 exports[`ProjectHeader component > renders as expected 1`] = `
 <DocumentFragment>
-  <div
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div
     class="Toastify"
   />
-  <div />
-  .c4 {
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div />
+  .c5 {
   font-size: 0.87em;
   line-height: 1.9;
+}
+
+.c4 {
+  text-align: right;
 }
 
 .c2 {
@@ -16,7 +28,7 @@ exports[`ProjectHeader component > renders as expected 1`] = `
   white-space: nowrap;
 }
 
-.c6 {
+.c7 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -26,7 +38,7 @@ exports[`ProjectHeader component > renders as expected 1`] = `
   flex-wrap: nowrap;
 }
 
-.c7 {
+.c8 {
   font-family: 'BCSans-Bold';
   font-size: 1.4rem;
   border-radius: 0.4rem;
@@ -45,7 +57,7 @@ exports[`ProjectHeader component > renders as expected 1`] = `
   background-color: #dff0d8;
 }
 
-.c5 {
+.c6 {
   margin-top: auto;
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -74,11 +86,17 @@ exports[`ProjectHeader component > renders as expected 1`] = `
   max-width: 60rem;
 }
 
+@media only screen and (max-width:1199px) {
+  .c4 {
+    text-align: left;
+  }
+}
+
 <div
     class="c0 no-gutters row"
   >
     <div
-      class="c1 col-7"
+      class="c1 col-xl-7 col-12"
     >
       <div
         class="row"
@@ -127,10 +145,10 @@ exports[`ProjectHeader component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="text-right col"
+            class="c4 col"
           >
             <span
-              class="c4"
+              class="c5"
             >
               <strong>
                 Created: 
@@ -152,10 +170,10 @@ exports[`ProjectHeader component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="text-right col"
+            class="c4 col"
           >
             <span
-              class="c4"
+              class="c5"
             >
               <strong>
                 Updated: 
@@ -174,7 +192,7 @@ exports[`ProjectHeader component > renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="c5"
+          class="c6"
         >
           <div
             class="no-gutters justify-content-end align-items-end row"
@@ -186,12 +204,12 @@ exports[`ProjectHeader component > renders as expected 1`] = `
               class="align-self-end d-flex col-auto"
             >
               <span
-                class="c4"
+                class="c5"
               >
                 <b />
               </span>
               <div
-                class="c6 c7"
+                class="c7 c8"
               >
                 <svg
                   fill="currentColor"

@@ -18,6 +18,7 @@ import * as API from '@/constants/API';
 import { PropertyTenureTypes } from '@/constants/index';
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
+import { useTenant } from '@/tenants/useTenant';
 import { prettyFormatUTCDate } from '@/utils';
 import { stringToBoolean } from '@/utils/formUtils';
 
@@ -37,10 +38,11 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
   IUpdatePropertyDetailsFormProps
 > = ({ formikProps }) => {
   const { values } = useFormikContext<UpdatePropertyDetailsFormModel>();
-
   const [showAddressLine2, setShowAddressLine2] = useState(false);
   const [showAddressLine3, setShowAddressLine3] = useState(false);
   const address = values.address;
+
+  const { provinceStateId } = useTenant();
 
   // Lookup codes
   const { getByType, getOptionsByType } = useLookupCodeHelpers();
@@ -105,9 +107,9 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
 
   useEffect(() => {
     if (!provinceState) {
-      setFieldValue('address.provinceStateId', 1);
+      setFieldValue('address.provinceStateId', provinceStateId ?? 1);
     }
-  }, [provinceState, setFieldValue]);
+  }, [provinceState, provinceStateId, setFieldValue]);
 
   const cannotDetermineInfoText =
     'This means the property is out of bounds or there was an error at the time of determining this value. If needed, edit property details and pick the appropriate  value to update it.';
@@ -300,7 +302,7 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
         </Section>
       )}
       <Section header="Measurements">
-        <SectionField label="Area" labelWidth="2">
+        <SectionField label="Area" labelWidth={{ xs: 2 }}>
           <AreaContainer
             landArea={landArea}
             unitCode={areaUnit}
@@ -311,7 +313,11 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
             }}
           />
         </SectionField>
-        <SectionField label="Is this a volumetric parcel?" labelWidth="auto" className="py-4">
+        <SectionField
+          label="Is this a volumetric parcel?"
+          labelWidth={{ xs: 'auto' }}
+          className="py-4"
+        >
           <RadioGroup
             flexDirection="row"
             field="isVolumetricParcel"
@@ -329,7 +335,7 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
           />
         </SectionField>
         {isVolumetricParcel && (
-          <SectionField label="Volume" labelWidth="2">
+          <SectionField label="Volume" labelWidth={{ xs: 2 }}>
             <Row>
               <Col>
                 <VolumeContainer
@@ -344,7 +350,7 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
                 />
               </Col>
               <Col>
-                <SectionField label="Type" labelWidth="3" contentWidth="auto">
+                <SectionField label="Type" labelWidth={{ xs: 3 }} contentWidth={{ xs: 'auto' }}>
                   <Select
                     field="volumetricParcelTypeCode"
                     options={volumetricTypeOptions}

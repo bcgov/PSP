@@ -228,10 +228,6 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c11 .react-datepicker-wrapper {
-  max-width: 17rem;
-}
-
 .c13.c13.form-control.is-valid {
   background-image: none;
 }
@@ -485,24 +481,24 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
                 </option>
                 <option
                   class="option"
-                  data-testid="select-option-ARCHIVED"
-                  value="ARCHIVED"
-                >
-                  Archived
-                </option>
-                <option
-                  class="option"
                   data-testid="select-option-CLOSED"
                   value="CLOSED"
                 >
-                  Closed
+                  Complete
                 </option>
                 <option
                   class="option"
                   data-testid="select-option-INACTIVE"
                   value="INACTIVE"
                 >
-                  Inactive
+                  Hold
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-ARCHIVED"
+                  value="ARCHIVED"
+                >
+                  Archived
                 </option>
               </select>
             </div>

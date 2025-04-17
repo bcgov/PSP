@@ -3,13 +3,12 @@ import { createRef } from 'react';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
-import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
-import { PropertyForm } from '../../shared/models';
 import { DispositionFormModel } from '../models/DispositionFormModel';
 import DispositionPropertiesSubForm from './DispositionPropertiesSubForm';
+import { PropertyForm } from '../../shared/models';
 
 const mockStore = configureMockStore([thunk]);
 

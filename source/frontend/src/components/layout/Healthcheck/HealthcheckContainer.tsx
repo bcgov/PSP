@@ -1,20 +1,19 @@
 import axios, { AxiosError } from 'axios';
 import { useCallback, useEffect, useState } from 'react';
 
-import IHealthcheckResponse from '@/hooks/pims-api/interfaces/IHealthcheckResponse';
+import IHealthCheckResponse from '@/hooks/pims-api/interfaces/IHealthcheckResponse';
 import ISystemCheck from '@/hooks/pims-api/interfaces/ISystemCheck';
 import { useApiHealth } from '@/hooks/pims-api/useApiHealth';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { IApiError } from '@/interfaces/IApiError';
-import HealthCheckStyled from '@/layouts/Healthcheck';
-import { HealthcheckMessagesTypesEnum } from '@/layouts/models/HealthcheckMessagesTypes';
+import { HealthCheckMessagesTypesEnum } from '@/layouts/models/HealthcheckMessagesTypes';
 import { useTenant } from '@/tenants/useTenant';
 
 import { IHealthCheckIssue, IHealthCheckViewProps } from './HealthcheckView';
 
 export interface IHealthcheckContainerProps {
   systemDegraded: boolean;
-  updateHealthcheckResult: (checkResult: boolean) => void;
+  updateHealthcheckResult: (systemDegraded: boolean) => void;
   View: React.FunctionComponent<IHealthCheckViewProps>;
 }
 
@@ -24,7 +23,7 @@ export const HealthcheckContainer: React.FunctionComponent<IHealthcheckContainer
   View,
 }) => {
   const [systemChecked, setSystemChecked] = useState<boolean>(null);
-  const [healthCheckIssues, setHealthCheckIssues] = useState<IHealthCheckIssue[]>(null);
+  const [healthCheckIssues, setHealthCheckIssues] = useState<IHealthCheckIssue[]>([]);
 
   const { pimsHealthcheckMessages } = useTenant();
   const { getLive, getSystemCheck } = useApiHealth();
@@ -32,105 +31,121 @@ export const HealthcheckContainer: React.FunctionComponent<IHealthcheckContainer
 
   const checkExternalSystemStatus = useCallback(
     (
-      response: IHealthcheckResponse,
-      service: HealthcheckMessagesTypesEnum,
-      systemIssues: IHealthCheckIssue[],
+      response: IHealthCheckResponse,
+      service: HealthCheckMessagesTypesEnum,
+      issues: IHealthCheckIssue[],
     ) => {
       if (response && response.status !== 'Healthy') {
-        systemIssues.push({
+        const newIssue: IHealthCheckIssue = {
           key: service,
-          msg: pimsHealthcheckMessages[HealthcheckMessagesTypesEnum[service]],
-        });
+          msg: pimsHealthcheckMessages[HealthCheckMessagesTypesEnum[service]],
+        };
+
+        issues.push(newIssue);
       }
     },
     [pimsHealthcheckMessages],
   );
 
+  const checkAllSystemsHealth = useCallback(
+    (response: ISystemCheck) => {
+      const issuesSummary: IHealthCheckIssue[] = [];
+      checkExternalSystemStatus(
+        response.entries?.Geoserver,
+        HealthCheckMessagesTypesEnum.GEOSERVER,
+        issuesSummary,
+      );
+
+      checkExternalSystemStatus(
+        response.entries?.PmbcExternalApi,
+        HealthCheckMessagesTypesEnum.PMBC,
+        issuesSummary,
+      );
+
+      checkExternalSystemStatus(
+        response.entries?.Mayan,
+        HealthCheckMessagesTypesEnum.MAYAN,
+        issuesSummary,
+      );
+
+      checkExternalSystemStatus(
+        response.entries?.Ltsa,
+        HealthCheckMessagesTypesEnum.LTSA,
+        issuesSummary,
+      );
+
+      checkExternalSystemStatus(
+        response.entries?.Geocoder,
+        HealthCheckMessagesTypesEnum.GEOCODER,
+        issuesSummary,
+      );
+
+      checkExternalSystemStatus(
+        response.entries?.Cdogs,
+        HealthCheckMessagesTypesEnum.CDOGS,
+        issuesSummary,
+      );
+
+      setHealthCheckIssues(issuesSummary);
+    },
+    [checkExternalSystemStatus],
+  );
+
   const handleError = useCallback(
     async (axiosError: AxiosError<IApiError>): Promise<void> => {
       const systemIssues: IHealthCheckIssue[] = [];
+      let systemDegradedCheck = false;
 
       // 500 - API NOT Responding
       if (axiosError?.response?.status === 500) {
         systemIssues.push({
-          key: HealthcheckMessagesTypesEnum.PIMS_API,
+          key: HealthCheckMessagesTypesEnum.PIMS_API,
           msg: pimsHealthcheckMessages[
-            HealthcheckMessagesTypesEnum[HealthcheckMessagesTypesEnum.PIMS_API]
+            HealthCheckMessagesTypesEnum[HealthCheckMessagesTypesEnum.PIMS_API]
           ],
         });
-        updateHealthcheckResult(true);
+
+        setHealthCheckIssues(systemIssues);
+        systemDegradedCheck = true;
       }
 
       // 503 - API responding service not available
       if (axiosError?.response?.status === 503) {
         const data = axiosError?.response?.data as unknown as ISystemCheck;
 
-        checkExternalSystemStatus(
-          data.entries?.Geoserver,
-          HealthcheckMessagesTypesEnum.GEOSERVER,
-          systemIssues,
-        );
-
-        checkExternalSystemStatus(
-          data.entries?.PmbcExternalApi,
-          HealthcheckMessagesTypesEnum.PMBC,
-          systemIssues,
-        );
-
-        checkExternalSystemStatus(
-          data.entries?.Mayan,
-          HealthcheckMessagesTypesEnum.MAYAN,
-          systemIssues,
-        );
-
-        checkExternalSystemStatus(
-          data.entries?.Ltsa,
-          HealthcheckMessagesTypesEnum.LTSA,
-          systemIssues,
-        );
-
-        checkExternalSystemStatus(
-          data.entries?.Geocoder,
-          HealthcheckMessagesTypesEnum.GEOCODER,
-          systemIssues,
-        );
-
-        checkExternalSystemStatus(
-          data.entries?.Cdogs,
-          HealthcheckMessagesTypesEnum.CDOGS,
-          systemIssues,
-        );
-
-        setHealthCheckIssues(systemIssues);
-        updateHealthcheckResult(true);
+        checkAllSystemsHealth(data);
+        systemDegradedCheck = true;
       }
+
+      updateHealthcheckResult(systemDegradedCheck);
     },
-    [checkExternalSystemStatus, pimsHealthcheckMessages, updateHealthcheckResult],
+    [checkAllSystemsHealth, pimsHealthcheckMessages, updateHealthcheckResult],
   );
 
   const fetchSystemCheckInformation = useCallback(async () => {
     const systemIssues: IHealthCheckIssue[] = [];
-    let systemDegraded = false;
+    let systemDegradedCheck = false;
     try {
       const pimsApi = await getLive();
       if (pimsApi.data.status !== 'Healthy') {
         systemIssues.push({
-          key: HealthcheckMessagesTypesEnum.PIMS_API,
+          key: HealthCheckMessagesTypesEnum.PIMS_API,
           msg: pimsHealthcheckMessages[
-            HealthcheckMessagesTypesEnum[HealthcheckMessagesTypesEnum.PIMS_API]
+            HealthCheckMessagesTypesEnum[HealthCheckMessagesTypesEnum.PIMS_API]
           ],
         });
 
         setHealthCheckIssues(systemIssues);
-        systemDegraded = true;
+        systemDegradedCheck = true;
       }
 
       const systemCheck = await getSystemCheck();
       if (systemCheck.data.status !== 'Healthy') {
-        systemDegraded = true;
+        checkAllSystemsHealth(systemCheck.data);
+        systemDegradedCheck = true;
       }
 
-      updateHealthcheckResult(systemDegraded);
+      updateHealthcheckResult(systemDegradedCheck);
     } catch (e) {
       if (axios.isAxiosError(e)) {
         const axiosError = e as AxiosError<IApiError>;
@@ -139,7 +154,14 @@ export const HealthcheckContainer: React.FunctionComponent<IHealthcheckContainer
     } finally {
       setSystemChecked(true);
     }
-  }, [getLive, getSystemCheck, handleError, pimsHealthcheckMessages, updateHealthcheckResult]);
+  }, [
+    checkAllSystemsHealth,
+    getLive,
+    getSystemCheck,
+    handleError,
+    pimsHealthcheckMessages,
+    updateHealthcheckResult,
+  ]);
 
   useEffect(() => {
     if (systemChecked == null && keycloak.obj.authenticated) {
@@ -147,9 +169,11 @@ export const HealthcheckContainer: React.FunctionComponent<IHealthcheckContainer
     }
   }, [fetchSystemCheckInformation, keycloak.obj.authenticated, systemChecked, systemDegraded]);
 
-  return systemChecked && systemDegraded ? (
-    <HealthCheckStyled>
-      <View systemChecks={healthCheckIssues}></View>
-    </HealthCheckStyled>
-  ) : null;
+  return (
+    <View
+      systemChecked={systemChecked}
+      systemDegraded={systemDegraded}
+      systemChecks={healthCheckIssues}
+    ></View>
+  );
 };

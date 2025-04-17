@@ -15,7 +15,7 @@ export const AuditSection: React.FC<IAuditSectionProps> = ({ baseAudit, lastUpda
   return (
     <>
       <Row className="no-gutters">
-        <Col className="text-right">
+        <StyledCol>
           <StyledSmallText>
             <strong>Created: </strong>
             {prettyFormatUTCDate(baseAudit?.appCreateTimestamp)} by{' '}
@@ -24,10 +24,10 @@ export const AuditSection: React.FC<IAuditSectionProps> = ({ baseAudit, lastUpda
               userGuid={baseAudit?.appCreateUserGuid}
             />
           </StyledSmallText>
-        </Col>
+        </StyledCol>
       </Row>
       <Row className="no-gutters">
-        <Col className="text-right">
+        <StyledCol>
           <StyledSmallText>
             <strong>Updated: </strong>
             {prettyFormatUTCDate(
@@ -39,7 +39,7 @@ export const AuditSection: React.FC<IAuditSectionProps> = ({ baseAudit, lastUpda
               userGuid={lastUpdatedBy?.appLastUpdateUserGuid ?? baseAudit?.appLastUpdateUserGuid}
             />
           </StyledSmallText>
-        </Col>
+        </StyledCol>
       </Row>
     </>
   );
@@ -50,4 +50,11 @@ export default AuditSection;
 export const StyledSmallText = styled.span`
   font-size: 0.87em;
   line-height: 1.9;
+`;
+
+const StyledCol = styled(Col)`
+  text-align: right;
+  @media only screen and (max-width: 1199px) {
+    text-align: left;
+  }
 `;

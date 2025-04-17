@@ -146,6 +146,7 @@ export const PropertyActivityEditContainer: React.FunctionComponent<
       show={show && viewEnabled}
       setShow={setShow}
       onSave={onSave}
+      onClose={onClose}
     />
   );
 };

@@ -52,7 +52,7 @@ Scenario: 09._Disposition_File_Main_Path
 	When I add Properties to the Disposition File
 	And I create Appraisal, Assessment, Offers and Sales Details within a Disposition File
 	And I add additional information to the Disposition File Details
-	Then Disposition File Main Path completed successfully 
+	Then Disposition File Main Path completed successfully
 
 Scenario: 10._Disposition_File_Sales_Price_Error
 	Given I create a new Disposition File from row number 14

@@ -347,6 +347,22 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
   border-radius: 0.5rem;
 }
 
+.c3 .form-select {
+  min-width: 15rem;
+}
+
+.c3 .input-group: {
+  min-width: 100%;
+}
+
+.c3 .idir-input-group {
+  margin: 0;
+}
+
+.c3 .idir-input-group div {
+  padding: 0;
+}
+
 .c7 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -492,15 +508,15 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
                       </option>
                       <option
                         class="option"
-                        data-testid="select-option-25"
-                        value="25"
+                        data-testid="select-option-13"
+                        value="13"
                       >
                         Disposition functional
                       </option>
                       <option
                         class="option"
-                        data-testid="select-option-26"
-                        value="26"
+                        data-testid="select-option-14"
+                        value="14"
                       >
                         Disposition read-only
                       </option>
@@ -509,14 +525,14 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
                         data-testid="select-option-5"
                         value="5"
                       >
-                        Lease/License functional
+                        Lease License functional
                       </option>
                       <option
                         class="option"
                         data-testid="select-option-6"
                         value="6"
                       >
-                        Lease/License read-only
+                        Lease License read-only
                       </option>
                       <option
                         class="option"

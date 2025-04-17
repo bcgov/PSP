@@ -17,13 +17,12 @@
   // sizes below set by trial-and-error to look good
   background-position-x: calc(100% - 0.8rem);
   background-position-y: 6px;
-  padding-right: 3.5rem;
-
-  min-width: 9.5rem;
 
   .option {
     padding: 0.5rem;
   }
+  margin-right: 2rem;
+  min-width: fit-content;
 }
 
 .form-select:not(.is-invalid),

@@ -10,6 +10,8 @@ export interface ILeaseFilter {
   expiryEndDate: string;
   regionType: string;
   details: string;
+  leaseTeamPersonId: number | null;
+  leaseTeamOrganizationId: number | null;
 }
 
 export interface ILeaseSearchBy {

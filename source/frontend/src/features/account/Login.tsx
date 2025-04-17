@@ -9,11 +9,11 @@ import { Button } from '@/components/common/buttons';
 import * as actionTypes from '@/constants/actionTypes';
 import { Roles } from '@/constants/roles';
 import { useQuery } from '@/hooks/use-query';
-import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import useKeycloakWrapper, { IUserInfo } from '@/hooks/useKeycloakWrapper';
 import { useAppSelector } from '@/store/hooks';
 import { Logo, useTenant } from '@/tenants';
 
-import { LoginStyled } from './LoginStyled';
+import { LoginStyled, VertialAlign } from './LoginStyled';
 
 /**
  * Login component provides information and links for the user to login.
@@ -23,7 +23,8 @@ const Login = () => {
   const query = useQuery();
   const redirect = query.get('redirect');
   const keyCloakWrapper = useKeycloakWrapper();
-  const keycloak = keyCloakWrapper.obj;
+  const keycloak = keyCloakWrapper?.obj;
+  const userInfo = keycloak?.userInfo as IUserInfo;
   const isIE = usingIE();
   const activated = useAppSelector(state => state.network[actionTypes.ADD_ACTIVATE_USER]);
   const tenant = useTenant();
@@ -32,7 +33,7 @@ const Login = () => {
     return <Spinner animation="border"></Spinner>;
   }
   if (keycloak?.authenticated) {
-    if (activated?.status === 201 || !keyCloakWrapper?.obj?.userInfo?.client_roles?.length) {
+    if (activated?.status === 201 || !userInfo?.client_roles?.length) {
       return <Redirect to={{ pathname: '/access/request' }} />;
     } else if (typeof redirect === 'string' && redirect.length) {
       return <Redirect to={redirect} />;
@@ -52,49 +53,51 @@ const Login = () => {
 
   return (
     <LoginStyled className="login" fluid={true}>
-      <Container className="unauth" fluid={true}>
-        <Row>
-          <Col xs={1} />
-          <Col xs={1} md={3}>
-            <Logo withText={false} />
-          </Col>
-          <Col xs={16} md={6} className="logo-title">
-            <h1>{tenant.login.title}</h1>
-          </Col>
-        </Row>
+      <VertialAlign>
+        <Container className="unauth" fluid={true}>
+          <Row>
+            <Col xs={1} />
+            <Col xs={1} md={3}>
+              <Logo withText={false} />
+            </Col>
+            <Col xs={16} md={6} className="logo-title">
+              <h1>{tenant.login.title}</h1>
+            </Col>
+          </Row>
 
-        <Row className="sign-in">
-          <div className="message-container">
-            <div className="message-header">
-              <div className="header-icon">
-                <MdLocationPin size={27} />
+          <Row className="sign-in">
+            <div className="message-container">
+              <div className="message-header">
+                <div className="header-icon">
+                  <MdLocationPin size={27} />
+                </div>
+                <p className="message-title">Welcome!</p>
               </div>
-              <p className="message-title">Welcome!</p>
+              <div className="message-body">
+                <p>{tenant.login.heading}</p>
+                <hr className="spacer" />
+                <p>{tenant.login.body}</p>
+              </div>
+              <Row className="message-footer">
+                <Col xs={16} md={6} />
+                <Col xs={16} md={6}>
+                  <Button variant="primary" onClick={() => keycloak.login({ idpHint: 'idir' })}>
+                    Sign In
+                  </Button>
+                </Col>
+              </Row>
             </div>
-            <div className="message-body">
-              <p>{tenant.login.heading}</p>
-              <hr className="spacer" />
-              <p>{tenant.login.body}</p>
-            </div>
-            <Row className="message-footer">
-              <Col xs={16} md={6} />
-              <Col xs={16} md={6}>
-                <Button variant="primary" onClick={() => keycloak.login({ idpHint: 'idir' })}>
-                  Sign In
-                </Button>
-              </Col>
-            </Row>
-          </div>
-        </Row>
+          </Row>
 
-        <Row>
-          <Col xs={1} md={3} />
-          <Col xs={16} md={6} className="foot-note">
-            <p>Sign into PIMS with your government issued IDIR</p>
-          </Col>
-          <Col xs={1} md={3} />
-        </Row>
-      </Container>
+          <Row>
+            <Col xs={1} md={3} />
+            <Col xs={16} md={6} className="foot-note">
+              <p>Sign into PIMS with your government issued IDIR</p>
+            </Col>
+            <Col xs={1} md={3} />
+          </Row>
+        </Container>
+      </VertialAlign>
     </LoginStyled>
   );
 };

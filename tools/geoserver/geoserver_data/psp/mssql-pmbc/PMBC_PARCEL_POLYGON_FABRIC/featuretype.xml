@@ -21,7 +21,7 @@
     AXIS[&quot;Geodetic longitude&quot;, EAST], 
     AXIS[&quot;Geodetic latitude&quot;, NORTH], 
     AUTHORITY[&quot;EPSG&quot;,&quot;4269&quot;]], 
-  PROJECTION[&quot;Albers_Conic_Equal_Area&quot;, AUTHORITY[&quot;EPSG&quot;,&quot;9822&quot;]], 
+  PROJECTION[&quot;Albers_Conic_Equal_Area&quot;], 
   PARAMETER[&quot;central_meridian&quot;, -126.0], 
   PARAMETER[&quot;latitude_of_origin&quot;, 45.0], 
   PARAMETER[&quot;standard_parallel_1&quot;, 50.0], 

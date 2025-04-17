@@ -41,6 +41,7 @@ export const defaultTenant: ITenantConfig2 = {
   title: 'Default Tenant Name',
   shortName: 'PIMS',
   colour: '#003366',
+  provinceStateId: 1,
   logo: {
     favicon: '',
     image: '',
@@ -90,8 +91,19 @@ export const defaultTenant: ITenantConfig2 = {
   idlePromptTimeout: 15,
   idleTimeout: 45,
   doubleClickInterval: 250,
+  telemetry: {
+    enabled: true,
+    debug: false,
+    environment: 'local',
+    serviceName: 'frontend',
+    endpoint: 'http://localhost:4318',
+    exportInterval: 10000,
+    histogramBuckets: [0.005, 0.01, 0.025, 0.05, 0.075, 0.1, 0.25, 0.5, 0.75, 1, 2.5, 5, 7.5, 10],
+  },
   pimsTrainingResourceUrl:
     'https://sp.th.gov.bc.ca/sites/PropertiesServices/Project%20Management/03.%20Execution%20and%20Control/PIMS%20Training',
+  geographicNamesUrl: 'https://apps.gov.bc.ca/pub/bcgnws',
+  geographicNamesResultLimit: 20,
   pimsHealthcheckMessages: {
     PIMS_API:
       'The PIMS server is currently unavailable, PIMS will not be useable until this is resolved.',

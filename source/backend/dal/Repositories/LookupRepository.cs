@@ -410,11 +410,6 @@ namespace Pims.Dal.Repositories
             return Context.PimsChklstItemStatusTypes.AsNoTracking().ToArray();
         }
 
-        public IEnumerable<PimsDspChklstItemType> GetAllDispositionChecklistItemTypes()
-        {
-            return Context.PimsDspChklstItemTypes.AsNoTracking().ToArray();
-        }
-
         public IEnumerable<PimsDspChklstSectionType> GetAllDispositionChecklistSectionTypes()
         {
             return Context.PimsDspChklstSectionTypes.AsNoTracking().ToArray();
@@ -470,6 +465,15 @@ namespace Pims.Dal.Repositories
             return Context.PimsAcqFileExpropRiskTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToList();
         }
 
+        public IEnumerable<PimsLlTeamProfileType> GetAllLlTeamProfileTypes()
+        {
+            return Context.PimsLlTeamProfileTypes.AsNoTracking().ToArray();
+        }
+
+        public IEnumerable<PimsExpropOwnerHistoryType> GetAllExpropriationEventTypes()
+        {
+            return Context.PimsExpropOwnerHistoryTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToList();
+        }
         #endregion
     }
 }

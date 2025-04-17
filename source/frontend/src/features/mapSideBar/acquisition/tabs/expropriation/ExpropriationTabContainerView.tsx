@@ -20,6 +20,9 @@ import ExpropriationForm1 from './form1/ExpropriationForm1';
 import ExpropriationForm5 from './form5/ExpropriationForm5';
 import ExpropriationForm8Details from './form8/details/ExpropriationForm8Details';
 import ExpropriationForm9 from './form9/ExpropriationForm9';
+import ExpropriationEventHistoryContainer from './history/ExpropriationEventHistoryContainer';
+import ExpropriationEventHistoryView from './history/ExpropriationEventHistoryView';
+import ExpropriationEventModal from './history/modal/ExpropriationEventModal';
 
 export interface IExpropriationTabContainerViewProps {
   loading: boolean;
@@ -51,6 +54,13 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
   return (
     <>
       <LoadingBackdrop show={loading} />
+
+      <ExpropriationEventHistoryContainer
+        acquisitionFileId={acquisitionFile.id}
+        View={ExpropriationEventHistoryView}
+        ModalView={ExpropriationEventModal}
+      />
+
       {acquisitionFileTypeCode === EnumAcquisitionFileType.SECTN6 && (
         <Section
           isCollapsable

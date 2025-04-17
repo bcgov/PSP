@@ -302,7 +302,7 @@ exports[`ExportLeasePaymentsContainer component > renders as expected 1`] = `
         class="c1 align-items-center"
       >
         <div
-          class="c2 mb-0 form-group"
+          class="c2 mb-0 w-50 form-group"
         >
           <label
             class="form-label"

@@ -27,19 +27,19 @@ export const useCrownLandLayer = () => {
   } = useTenant();
 
   const {
-    findOneWhereContainsWrapped: {
-      execute: findOneWhereContainsCrownLandLeasesExecute,
-      loading: findOneWhereContainsCrownLandLeasesLoading,
+    findMultipleWhereContainsWrapped: {
+      execute: findMultipleWhereContainsCrownLandLeasesExecute,
+      loading: findMultipleWhereContainsCrownLandLeasesLoading,
     },
   } = useLayerQuery(crownLandLeasesUrl);
 
-  const findOneCrownLandLease = useCallback(
+  const findMultipleCrownLandLease = useCallback(
     async (
       latlng: LatLngLiteral,
       geometryName?: string | undefined,
       spatialReferenceId?: number | undefined,
     ) => {
-      const featureCollection = await findOneWhereContainsCrownLandLeasesExecute(
+      const featureCollection = await findMultipleWhereContainsCrownLandLeasesExecute(
         latlng,
         geometryName,
         spatialReferenceId,
@@ -52,26 +52,26 @@ export const useCrownLandLayer = () => {
       >;
 
       return forceCasted !== undefined && forceCasted.features.length > 0
-        ? forceCasted.features[0]
+        ? forceCasted.features
         : undefined;
     },
-    [findOneWhereContainsCrownLandLeasesExecute],
+    [findMultipleWhereContainsCrownLandLeasesExecute],
   );
 
   const {
-    findOneWhereContainsWrapped: {
-      execute: findOneWhereContainsCrownLandLicensesExecute,
-      loading: findOneWhereContainsCrownLandLicensesLoading,
+    findMultipleWhereContainsWrapped: {
+      execute: findMultipleWhereContainsCrownLandLicensesExecute,
+      loading: findMultipleWhereContainsCrownLandLicensesLoading,
     },
   } = useLayerQuery(crownLandLicensesUrl);
 
-  const findOneCrownLandLicense = useCallback(
+  const findMultipleCrownLandLicense = useCallback(
     async (
       latlng: LatLngLiteral,
       geometryName?: string | undefined,
       spatialReferenceId?: number | undefined,
     ) => {
-      const featureCollection = await findOneWhereContainsCrownLandLicensesExecute(
+      const featureCollection = await findMultipleWhereContainsCrownLandLicensesExecute(
         latlng,
         geometryName,
         spatialReferenceId,
@@ -84,26 +84,26 @@ export const useCrownLandLayer = () => {
       >;
 
       return forceCasted !== undefined && forceCasted.features.length > 0
-        ? forceCasted.features[0]
+        ? forceCasted.features
         : undefined;
     },
-    [findOneWhereContainsCrownLandLicensesExecute],
+    [findMultipleWhereContainsCrownLandLicensesExecute],
   );
 
   const {
-    findOneWhereContainsWrapped: {
-      execute: findOneWhereContainsCrownLandTenuresExecute,
-      loading: findOneWhereContainsCrownLandTenuresLoading,
+    findMultipleWhereContainsWrapped: {
+      execute: findMultipleWhereContainsCrownLandTenuresExecute,
+      loading: findMultipleWhereContainsCrownLandTenuresLoading,
     },
   } = useLayerQuery(crownLandTenuresUrl);
 
-  const findOneCrownLandTenure = useCallback(
+  const findMultipleCrownLandTenure = useCallback(
     async (
       latlng: LatLngLiteral,
       geometryName?: string | undefined,
       spatialReferenceId?: number | undefined,
     ) => {
-      const featureCollection = await findOneWhereContainsCrownLandTenuresExecute(
+      const featureCollection = await findMultipleWhereContainsCrownLandTenuresExecute(
         latlng,
         geometryName,
         spatialReferenceId,
@@ -116,26 +116,26 @@ export const useCrownLandLayer = () => {
       >;
 
       return forceCasted !== undefined && forceCasted.features.length > 0
-        ? forceCasted.features[0]
+        ? forceCasted.features
         : undefined;
     },
-    [findOneWhereContainsCrownLandTenuresExecute],
+    [findMultipleWhereContainsCrownLandTenuresExecute],
   );
 
   const {
-    findOneWhereContainsWrapped: {
-      execute: findOneWhereContainsCrownLandInventoryExecute,
-      loading: findOneWhereContainsCrownLandInventoryLoading,
+    findMultipleWhereContainsWrapped: {
+      execute: findMultipleWhereContainsCrownLandInventoryExecute,
+      loading: findMultipleWhereContainsCrownLandInventoryLoading,
     },
   } = useLayerQuery(crownLandInventoryUrl);
 
-  const findOneCrownLandInventory = useCallback(
+  const findMultipleCrownLandInventory = useCallback(
     async (
       latlng: LatLngLiteral,
       geometryName?: string | undefined,
       spatialReferenceId?: number | undefined,
     ) => {
-      const featureCollection = await findOneWhereContainsCrownLandInventoryExecute(
+      const featureCollection = await findMultipleWhereContainsCrownLandInventoryExecute(
         latlng,
         geometryName,
         spatialReferenceId,
@@ -148,26 +148,26 @@ export const useCrownLandLayer = () => {
       >;
 
       return forceCasted !== undefined && forceCasted.features.length > 0
-        ? forceCasted.features[0]
+        ? forceCasted.features
         : undefined;
     },
-    [findOneWhereContainsCrownLandInventoryExecute],
+    [findMultipleWhereContainsCrownLandInventoryExecute],
   );
 
   const {
-    findOneWhereContainsWrapped: {
-      execute: findOneWhereContainsCrownLandInclusionsExecute,
-      loading: findOneWhereContainsCrownLandInclusionsLoading,
+    findMultipleWhereContainsWrapped: {
+      execute: findMultipleWhereContainsCrownLandInclusionsExecute,
+      loading: findMultipleWhereContainsCrownLandInclusionsLoading,
     },
   } = useLayerQuery(crownLandInclusionsUrl);
 
-  const findOneCrownLandInclusion = useCallback(
+  const findMultipleCrownLandInclusion = useCallback(
     async (
       latlng: LatLngLiteral,
       geometryName?: string | undefined,
       spatialReferenceId?: number | undefined,
     ) => {
-      const featureCollection = await findOneWhereContainsCrownLandInclusionsExecute(
+      const featureCollection = await findMultipleWhereContainsCrownLandInclusionsExecute(
         latlng,
         geometryName,
         spatialReferenceId,
@@ -180,22 +180,22 @@ export const useCrownLandLayer = () => {
       >;
 
       return forceCasted !== undefined && forceCasted.features.length > 0
-        ? forceCasted.features[0]
+        ? forceCasted.features
         : undefined;
     },
-    [findOneWhereContainsCrownLandInclusionsExecute],
+    [findMultipleWhereContainsCrownLandInclusionsExecute],
   );
 
   return {
-    findOneCrownLandLease,
-    findOneCrownLandLeaseLoading: findOneWhereContainsCrownLandLeasesLoading,
-    findOneCrownLandLicense,
-    findOneCrownLandLicenseLoading: findOneWhereContainsCrownLandLicensesLoading,
-    findOneCrownLandTenure,
-    findOneCrownLandTenureLoading: findOneWhereContainsCrownLandTenuresLoading,
-    findOneCrownLandInventory,
-    findOneCrownLandInventoryLoading: findOneWhereContainsCrownLandInventoryLoading,
-    findOneCrownLandInclusion,
-    findOneCrownLandInclusionsLoading: findOneWhereContainsCrownLandInclusionsLoading,
+    findMultipleCrownLandLease,
+    findMultipleCrownLandLeaseLoading: findMultipleWhereContainsCrownLandLeasesLoading,
+    findMultipleCrownLandLicense: findMultipleCrownLandLicense,
+    findMultipleCrownLandLicenseLoading: findMultipleWhereContainsCrownLandLicensesLoading,
+    findMultipleCrownLandTenure,
+    findMultipleCrownLandTenureLoading: findMultipleWhereContainsCrownLandTenuresLoading,
+    findMultipleCrownLandInventory: findMultipleCrownLandInventory,
+    findMultipleCrownLandInventoryLoading: findMultipleWhereContainsCrownLandInventoryLoading,
+    findMultipleCrownLandInclusion: findMultipleCrownLandInclusion,
+    findMultipleCrownLandInclusionsLoading: findMultipleWhereContainsCrownLandInclusionsLoading,
   };
 };

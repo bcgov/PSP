@@ -59,7 +59,7 @@ export const SubFileListView: React.FunctionComponent<ISubFileListViewProps> = (
           </SimpleSectionHeader>
         }
       >
-        <SectionField label="Linked files" labelWidth="3" valueTestId="linked-files-header">
+        <SectionField label="Linked files" labelWidth={{ xs: 3 }} valueTestId="linked-files-header">
           {parentAcquisitionFileNoValue}
         </SectionField>
 

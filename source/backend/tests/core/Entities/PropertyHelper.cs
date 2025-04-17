@@ -139,6 +139,7 @@ namespace Pims.Core.Test
             property.PropertyDataSourceTypeCode = dataSource.DataSourceTypeCode;
             property.PropertyTenureTypeCode = tenure.PropertyTenureTypeCode;
             property.PropertyAreaUnitTypeCode = areaUnit.AreaUnitTypeCode;
+            property.PidPadded = pid.ToString().PadLeft(9, '0');
 
             context.PimsPropertyVws.Add(property);
             return property;

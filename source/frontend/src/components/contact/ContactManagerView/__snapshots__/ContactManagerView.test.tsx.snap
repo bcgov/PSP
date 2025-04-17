@@ -2,19 +2,11 @@
 
 exports[`ContactManagerView > matches snapshot 1`] = `
 <DocumentFragment>
-  @media only screen and (max-width:1199px) {
-
-}
-
-<div
+  <div
     class="Toastify"
   />
-  @media only screen and (max-width:1199px) {
-
-}
-
-<div />
-  .c10.btn {
+  <div />
+  .c9.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -43,19 +35,19 @@ exports[`ContactManagerView > matches snapshot 1`] = `
   cursor: pointer;
 }
 
-.c10.btn .Button__value {
+.c9.btn .Button__value {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
-.c10.btn:hover {
+.c9.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c10.btn:focus {
+.c9.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -63,31 +55,31 @@ exports[`ContactManagerView > matches snapshot 1`] = `
   box-shadow: none;
 }
 
-.c10.btn.btn-primary {
+.c9.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c10.btn.btn-primary:hover,
-.c10.btn.btn-primary:active,
-.c10.btn.btn-primary:focus {
+.c9.btn.btn-primary:hover,
+.c9.btn.btn-primary:active,
+.c9.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c10.btn.btn-secondary {
+.c9.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c10.btn.btn-secondary:hover,
-.c10.btn.btn-secondary:active,
-.c10.btn.btn-secondary:focus {
+.c9.btn.btn-secondary:hover,
+.c9.btn.btn-secondary:active,
+.c9.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c10.btn.btn-info {
+.c9.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -95,66 +87,66 @@ exports[`ContactManagerView > matches snapshot 1`] = `
   padding-right: 0.6rem;
 }
 
-.c10.btn.btn-info:hover,
-.c10.btn.btn-info:active,
-.c10.btn.btn-info:focus {
+.c9.btn.btn-info:hover,
+.c9.btn.btn-info:active,
+.c9.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c10.btn.btn-light {
+.c9.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c10.btn.btn-light:hover,
-.c10.btn.btn-light:active,
-.c10.btn.btn-light:focus {
+.c9.btn.btn-light:hover,
+.c9.btn.btn-light:active,
+.c9.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c10.btn.btn-dark {
+.c9.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c10.btn.btn-dark:hover,
-.c10.btn.btn-dark:active,
-.c10.btn.btn-dark:focus {
+.c9.btn.btn-dark:hover,
+.c9.btn.btn-dark:active,
+.c9.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c10.btn.btn-danger {
+.c9.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c10.btn.btn-danger:hover,
-.c10.btn.btn-danger:active,
-.c10.btn.btn-danger:focus {
+.c9.btn.btn-danger:hover,
+.c9.btn.btn-danger:active,
+.c9.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c10.btn.btn-warning {
+.c9.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c10.btn.btn-warning:hover,
-.c10.btn.btn-warning:active,
-.c10.btn.btn-warning:focus {
+.c9.btn.btn-warning:hover,
+.c9.btn.btn-warning:active,
+.c9.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c10.btn.btn-link {
+.c9.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -178,9 +170,9 @@ exports[`ContactManagerView > matches snapshot 1`] = `
   text-decoration: underline;
 }
 
-.c10.btn.btn-link:hover,
-.c10.btn.btn-link:active,
-.c10.btn.btn-link:focus {
+.c9.btn.btn-link:hover,
+.c9.btn.btn-link:active,
+.c9.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -190,15 +182,15 @@ exports[`ContactManagerView > matches snapshot 1`] = `
   outline: none;
 }
 
-.c10.btn.btn-link:disabled,
-.c10.btn.btn-link.disabled {
+.c9.btn.btn-link:disabled,
+.c9.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c10.btn:disabled,
-.c10.btn:disabled:hover {
+.c9.btn:disabled,
+.c9.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -210,15 +202,15 @@ exports[`ContactManagerView > matches snapshot 1`] = `
   cursor: not-allowed;
 }
 
-.c10.Button .Button__icon {
+.c9.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c10.Button--icon-only:focus {
+.c9.Button--icon-only:focus {
   outline: none;
 }
 
-.c10.Button--icon-only .Button__icon {
+.c9.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
@@ -253,7 +245,7 @@ exports[`ContactManagerView > matches snapshot 1`] = `
   flex-shrink: 0;
 }
 
-.c11 {
+.c10 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -272,12 +264,12 @@ exports[`ContactManagerView > matches snapshot 1`] = `
   margin-left: 0.5rem;
 }
 
-.c13 {
+.c12 {
   width: 1.6rem;
   height: 1.6rem;
 }
 
-.c12 {
+.c11 {
   width: 1.6rem;
   height: 1.6rem;
 }
@@ -303,9 +295,14 @@ exports[`ContactManagerView > matches snapshot 1`] = `
   gap: 0;
 }
 
-.c14 {
+.c13 {
   font-size: 1.4rem;
   color: #42814A;
+}
+
+.c8 {
+  border-left: 0.2rem solid white;
+  min-width: 2.5rem;
 }
 
 .c1.form-group {
@@ -356,23 +353,11 @@ exports[`ContactManagerView > matches snapshot 1`] = `
   margin-bottom: unset;
 }
 
-.c8 {
-  border-left: 1px solid white;
-  font-size: 3.4rem;
-  margin: 0 36px 0 36px;
-  vertical-align: top;
-}
-
 .c0 {
   background-color: #d9eaf7;
   border-radius: 0.4rem;
   padding: 1rem;
   max-width: 85%;
-}
-
-.c9 {
-  padding-right: 0rem;
-  padding-left: 1rem;
 }
 
 .c4 {
@@ -381,12 +366,6 @@ exports[`ContactManagerView > matches snapshot 1`] = `
 
 .c5 {
   max-width: 25rem;
-}
-
-@media only screen and (max-width:1199px) {
-  .c0 {
-    max-width: 50%;
-  }
 }
 
 <div>
@@ -404,175 +383,179 @@ exports[`ContactManagerView > matches snapshot 1`] = `
             class="p-5 row"
           >
             <div
-              class="pb-5 row"
+              class="col-lg-6"
             >
               <div
-                class="col-auto"
+                class="pb-5 row"
               >
                 <div
-                  class="c1 form-group"
+                  class="col-auto"
                 >
-                  <label
-                    class="form-label"
-                    for="searchBy"
-                  >
-                    Search by:
-                  </label>
                   <div
-                    class="radio-group"
+                    class="c1 form-group"
                   >
+                    <label
+                      class="form-label"
+                      for="searchBy"
+                    >
+                      Search by:
+                    </label>
                     <div
-                      class="c2 pb-3"
+                      class="radio-group"
                     >
                       <div
-                        class="form-check"
+                        class="c2 pb-3"
                       >
-                        <input
-                          class="form-check-input position-static"
-                          data-testid="radio-searchby-[object object]"
-                          id="input-organizations"
-                          name="searchBy"
-                          type="radio"
-                          value="organizations"
-                        />
-                      </div>
-                      <label
-                        class="form-check-label form-label"
-                        for="searchBy"
-                      >
-                        <svg
-                          fill="currentColor"
-                          height="20"
-                          stroke="currentColor"
-                          stroke-width="0"
-                          viewBox="0 0 448 512"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
+                        <div
+                          class="form-check"
                         >
-                          <path
-                            d="M128 148v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12zm140 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-128 96h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm128 0h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-76 84v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm76 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm180 124v36H0v-36c0-6.6 5.4-12 12-12h19.5V24c0-13.3 10.7-24 24-24h337c13.3 0 24 10.7 24 24v440H436c6.6 0 12 5.4 12 12zM79.5 463H192v-67c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v67h112.5V49L80 48l-.5 415z"
+                          <input
+                            class="form-check-input position-static"
+                            data-testid="radio-searchby-[object object]"
+                            id="input-organizations"
+                            name="searchBy"
+                            type="radio"
+                            value="organizations"
                           />
-                        </svg>
-                        <span>
-                          Organizations
-                        </span>
-                      </label>
-                    </div>
-                    <div
-                      class="c2 pb-3"
-                    >
+                        </div>
+                        <label
+                          class="form-check-label form-label"
+                          for="searchBy"
+                        >
+                          <svg
+                            fill="currentColor"
+                            height="20"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 448 512"
+                            width="20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M128 148v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12zm140 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-128 96h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm128 0h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-76 84v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm76 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm180 124v36H0v-36c0-6.6 5.4-12 12-12h19.5V24c0-13.3 10.7-24 24-24h337c13.3 0 24 10.7 24 24v440H436c6.6 0 12 5.4 12 12zM79.5 463H192v-67c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v67h112.5V49L80 48l-.5 415z"
+                            />
+                          </svg>
+                          <span>
+                            Organizations
+                          </span>
+                        </label>
+                      </div>
                       <div
-                        class="form-check"
+                        class="c2 pb-3"
                       >
-                        <input
-                          class="form-check-input position-static"
-                          data-testid="radio-searchby-[object object]"
-                          id="input-persons"
-                          name="searchBy"
-                          type="radio"
-                          value="persons"
-                        />
-                      </div>
-                      <label
-                        class="form-check-label form-label"
-                        for="searchBy"
-                      >
-                        <svg
-                          fill="currentColor"
-                          height="20"
-                          stroke="currentColor"
-                          stroke-width="0"
-                          viewBox="0 0 448 512"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
+                        <div
+                          class="form-check"
                         >
-                          <path
-                            d="M313.6 304c-28.7 0-42.5 16-89.6 16-47.1 0-60.8-16-89.6-16C60.2 304 0 364.2 0 438.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-25.6c0-74.2-60.2-134.4-134.4-134.4zM400 464H48v-25.6c0-47.6 38.8-86.4 86.4-86.4 14.6 0 38.3 16 89.6 16 51.7 0 74.9-16 89.6-16 47.6 0 86.4 38.8 86.4 86.4V464zM224 288c79.5 0 144-64.5 144-144S303.5 0 224 0 80 64.5 80 144s64.5 144 144 144zm0-240c52.9 0 96 43.1 96 96s-43.1 96-96 96-96-43.1-96-96 43.1-96 96-96z"
+                          <input
+                            class="form-check-input position-static"
+                            data-testid="radio-searchby-[object object]"
+                            id="input-persons"
+                            name="searchBy"
+                            type="radio"
+                            value="persons"
                           />
-                        </svg>
-                        <span>
-                          Individuals
-                        </span>
-                      </label>
-                    </div>
-                    <div
-                      class="c2 pb-3"
-                    >
+                        </div>
+                        <label
+                          class="form-check-label form-label"
+                          for="searchBy"
+                        >
+                          <svg
+                            fill="currentColor"
+                            height="20"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 448 512"
+                            width="20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M313.6 304c-28.7 0-42.5 16-89.6 16-47.1 0-60.8-16-89.6-16C60.2 304 0 364.2 0 438.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-25.6c0-74.2-60.2-134.4-134.4-134.4zM400 464H48v-25.6c0-47.6 38.8-86.4 86.4-86.4 14.6 0 38.3 16 89.6 16 51.7 0 74.9-16 89.6-16 47.6 0 86.4 38.8 86.4 86.4V464zM224 288c79.5 0 144-64.5 144-144S303.5 0 224 0 80 64.5 80 144s64.5 144 144 144zm0-240c52.9 0 96 43.1 96 96s-43.1 96-96 96-96-43.1-96-96 43.1-96 96-96z"
+                            />
+                          </svg>
+                          <span>
+                            Individuals
+                          </span>
+                        </label>
+                      </div>
                       <div
-                        class="form-check"
+                        class="c2 pb-3"
                       >
-                        <input
-                          checked=""
-                          class="form-check-input position-static"
-                          data-testid="radio-searchby-[object object]"
-                          id="input-all"
-                          name="searchBy"
-                          type="radio"
-                          value="all"
-                        />
+                        <div
+                          class="form-check"
+                        >
+                          <input
+                            checked=""
+                            class="form-check-input position-static"
+                            data-testid="radio-searchby-[object object]"
+                            id="input-all"
+                            name="searchBy"
+                            type="radio"
+                            value="all"
+                          />
+                        </div>
+                        <label
+                          class="form-check-label form-label"
+                          for="searchBy"
+                        >
+                          <svg
+                            fill="currentColor"
+                            height="20"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 448 512"
+                            width="20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M128 148v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12zm140 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-128 96h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm128 0h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-76 84v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm76 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm180 124v36H0v-36c0-6.6 5.4-12 12-12h19.5V24c0-13.3 10.7-24 24-24h337c13.3 0 24 10.7 24 24v440H436c6.6 0 12 5.4 12 12zM79.5 463H192v-67c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v67h112.5V49L80 48l-.5 415z"
+                            />
+                          </svg>
+                          +
+                          <svg
+                            fill="currentColor"
+                            height="20"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 448 512"
+                            width="20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M313.6 304c-28.7 0-42.5 16-89.6 16-47.1 0-60.8-16-89.6-16C60.2 304 0 364.2 0 438.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-25.6c0-74.2-60.2-134.4-134.4-134.4zM400 464H48v-25.6c0-47.6 38.8-86.4 86.4-86.4 14.6 0 38.3 16 89.6 16 51.7 0 74.9-16 89.6-16 47.6 0 86.4 38.8 86.4 86.4V464zM224 288c79.5 0 144-64.5 144-144S303.5 0 224 0 80 64.5 80 144s64.5 144 144 144zm0-240c52.9 0 96 43.1 96 96s-43.1 96-96 96-96-43.1-96-96 43.1-96 96-96z"
+                            />
+                          </svg>
+                          <span>
+                            All
+                          </span>
+                        </label>
                       </div>
-                      <label
-                        class="form-check-label form-label"
-                        for="searchBy"
-                      >
-                        <svg
-                          fill="currentColor"
-                          height="20"
-                          stroke="currentColor"
-                          stroke-width="0"
-                          viewBox="0 0 448 512"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M128 148v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12zm140 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-128 96h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm128 0h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-76 84v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm76 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm180 124v36H0v-36c0-6.6 5.4-12 12-12h19.5V24c0-13.3 10.7-24 24-24h337c13.3 0 24 10.7 24 24v440H436c6.6 0 12 5.4 12 12zM79.5 463H192v-67c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v67h112.5V49L80 48l-.5 415z"
-                          />
-                        </svg>
-                        +
-                        <svg
-                          fill="currentColor"
-                          height="20"
-                          stroke="currentColor"
-                          stroke-width="0"
-                          viewBox="0 0 448 512"
-                          width="20"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M313.6 304c-28.7 0-42.5 16-89.6 16-47.1 0-60.8-16-89.6-16C60.2 304 0 364.2 0 438.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-25.6c0-74.2-60.2-134.4-134.4-134.4zM400 464H48v-25.6c0-47.6 38.8-86.4 86.4-86.4 14.6 0 38.3 16 89.6 16 51.7 0 74.9-16 89.6-16 47.6 0 86.4 38.8 86.4 86.4V464zM224 288c79.5 0 144-64.5 144-144S303.5 0 224 0 80 64.5 80 144s64.5 144 144 144zm0-240c52.9 0 96 43.1 96 96s-43.1 96-96 96-96-43.1-96-96 43.1-96 96-96z"
-                          />
-                        </svg>
-                        <span>
-                          All
-                        </span>
-                      </label>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div
-                class="pl-0 col-lg-auto"
-              >
                 <div
-                  class="c3 c4 input form-group"
+                  class="pl-0 col-lg-auto"
                 >
-                  <input
-                    class="form-control"
-                    id="input-summary"
-                    name="summary"
-                    placeholder="Name"
-                    style="word-break: break-all;"
-                    title=""
-                    value=""
-                  />
+                  <div
+                    class="c3 c4 input form-group"
+                  >
+                    <input
+                      class="form-control"
+                      id="input-summary"
+                      name="summary"
+                      placeholder="Name"
+                      style="word-break: break-all;"
+                      title=""
+                      value=""
+                    />
+                  </div>
                 </div>
               </div>
             </div>
             <div
-              class="col-xl-auto"
+              class="col-lg-5"
             >
               <div
-                class="ml-10 row"
+                class="row"
               >
                 <div
                   class="pl-0 col"
@@ -657,83 +640,68 @@ exports[`ContactManagerView > matches snapshot 1`] = `
               </div>
             </div>
             <div
-              class="ml-2 col-md-auto"
+              class="c8 col-lg-1"
             >
               <div
                 class="row"
               >
                 <div
-                  class="pr-0 col-auto"
+                  class="pr-0 col-lg-auto"
                 >
-                  <span
-                    class="c8"
-                  />
-                </div>
-                <div
-                  class="col"
-                >
-                  <div
-                    class="row"
+                  <button
+                    class="c9 Button Button--icon-only primary btn btn-primary"
+                    data-testid="search"
+                    id="search-button"
+                    title="search"
+                    type="submit"
                   >
                     <div
-                      class="c9 col-auto"
+                      class="Button__icon"
                     >
-                      <button
-                        class="c10 Button Button--icon-only primary btn btn-primary"
-                        data-testid="search"
-                        id="search-button"
-                        title="search"
-                        type="button"
+                      <svg
+                        fill="currentColor"
+                        height="20"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="20"
+                        xmlns="http://www.w3.org/2000/svg"
                       >
-                        <div
-                          class="Button__icon"
-                        >
-                          <svg
-                            fill="currentColor"
-                            height="20"
-                            stroke="currentColor"
-                            stroke-width="0"
-                            viewBox="0 0 512 512"
-                            width="20"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
-                            />
-                          </svg>
-                        </div>
-                      </button>
+                        <path
+                          d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+                        />
+                      </svg>
                     </div>
+                  </button>
+                </div>
+                <div
+                  class="col-lg-auto"
+                >
+                  <button
+                    class="c9 Button Button--icon-only btn btn-info"
+                    data-testid="reset-button"
+                    id="reset-button"
+                    title="reset-button"
+                    type="reset"
+                  >
                     <div
-                      class="c9 col-auto"
+                      class="Button__icon"
                     >
-                      <button
-                        class="c10 Button Button--icon-only btn btn-info"
-                        data-testid="reset-button"
-                        id="reset-button"
-                        title="reset-button"
-                        type="button"
+                      <svg
+                        fill="currentColor"
+                        height="20"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="20"
+                        xmlns="http://www.w3.org/2000/svg"
                       >
-                        <div
-                          class="Button__icon"
-                        >
-                          <svg
-                            fill="currentColor"
-                            height="20"
-                            stroke="currentColor"
-                            stroke-width="0"
-                            viewBox="0 0 512 512"
-                            width="20"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <path
-                              d="M212.333 224.333H12c-6.627 0-12-5.373-12-12V12C0 5.373 5.373 0 12 0h48c6.627 0 12 5.373 12 12v78.112C117.773 39.279 184.26 7.47 258.175 8.007c136.906.994 246.448 111.623 246.157 248.532C504.041 393.258 393.12 504 256.333 504c-64.089 0-122.496-24.313-166.51-64.215-5.099-4.622-5.334-12.554-.467-17.42l33.967-33.967c4.474-4.474 11.662-4.717 16.401-.525C170.76 415.336 211.58 432 256.333 432c97.268 0 176-78.716 176-176 0-97.267-78.716-176-176-176-58.496 0-110.28 28.476-142.274 72.333h98.274c6.627 0 12 5.373 12 12v48c0 6.627-5.373 12-12 12z"
-                            />
-                          </svg>
-                        </div>
-                      </button>
+                        <path
+                          d="M212.333 224.333H12c-6.627 0-12-5.373-12-12V12C0 5.373 5.373 0 12 0h48c6.627 0 12 5.373 12 12v78.112C117.773 39.279 184.26 7.47 258.175 8.007c136.906.994 246.448 111.623 246.157 248.532C504.041 393.258 393.12 504 256.333 504c-64.089 0-122.496-24.313-166.51-64.215-5.099-4.622-5.334-12.554-.467-17.42l33.967-33.967c4.474-4.474 11.662-4.717 16.401-.525C170.76 415.336 211.58 432 256.333 432c97.268 0 176-78.716 176-176 0-97.267-78.716-176-176-176-58.496 0-110.28 28.476-142.274 72.333h98.274c6.627 0 12 5.373 12 12v48c0 6.627-5.373 12-12 12z"
+                        />
+                      </svg>
                     </div>
-                  </div>
+                  </button>
                 </div>
               </div>
             </div>
@@ -806,11 +774,11 @@ exports[`ContactManagerView > matches snapshot 1`] = `
               >
                 Summary
                 <div
-                  class="c11"
+                  class="c10"
                   data-testid="sort-column-summary"
                 >
                   <svg
-                    class="c12"
+                    class="c11"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -825,7 +793,7 @@ exports[`ContactManagerView > matches snapshot 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c13"
+                    class="c12"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -852,11 +820,11 @@ exports[`ContactManagerView > matches snapshot 1`] = `
               >
                 First name
                 <div
-                  class="c11"
+                  class="c10"
                   data-testid="sort-column-firstName"
                 >
                   <svg
-                    class="c12"
+                    class="c11"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -871,7 +839,7 @@ exports[`ContactManagerView > matches snapshot 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c13"
+                    class="c12"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -898,11 +866,11 @@ exports[`ContactManagerView > matches snapshot 1`] = `
               >
                 Last name
                 <div
-                  class="c11"
+                  class="c10"
                   data-testid="sort-column-surname"
                 >
                   <svg
-                    class="c12"
+                    class="c11"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -917,7 +885,7 @@ exports[`ContactManagerView > matches snapshot 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c13"
+                    class="c12"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -944,11 +912,11 @@ exports[`ContactManagerView > matches snapshot 1`] = `
               >
                 Organization
                 <div
-                  class="c11"
+                  class="c10"
                   data-testid="sort-column-organizationName"
                 >
                   <svg
-                    class="c12"
+                    class="c11"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -963,7 +931,7 @@ exports[`ContactManagerView > matches snapshot 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c13"
+                    class="c12"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -1014,11 +982,11 @@ exports[`ContactManagerView > matches snapshot 1`] = `
               >
                 City
                 <div
-                  class="c11"
+                  class="c10"
                   data-testid="sort-column-municipalityName"
                 >
                   <svg
-                    class="c12"
+                    class="c11"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -1033,7 +1001,7 @@ exports[`ContactManagerView > matches snapshot 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c13"
+                    class="c12"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -1091,7 +1059,7 @@ exports[`ContactManagerView > matches snapshot 1`] = `
           class="ml-auto align-self-center col-auto"
         >
           <p
-            class="c14"
+            class="c13"
           >
             0 selected
           </p>

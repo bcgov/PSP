@@ -63,7 +63,8 @@ namespace Pims.Api.Models.Concepts.Lease
                 .Map(dest => dest.IsPublicBenefit, src => src.IsPublicBenefit)
                 .Map(dest => dest.IsFinancialGain, src => src.IsFinancialGain)
                 .Map(dest => dest.FeeDeterminationNote, src => src.FeeDeterminationNote)
-                .Map(dest => dest.Renewals, src => src.PimsLeaseRenewals);
+                .Map(dest => dest.Renewals, src => src.PimsLeaseRenewals)
+                .Map(dest => dest.LeaseTeam, src => src.PimsLeaseLicenseTeams);
 
             config.NewConfig<LeaseModel, PimsLease>()
                 .PreserveReference(true)
@@ -109,6 +110,7 @@ namespace Pims.Api.Models.Concepts.Lease
                 .Map(dest => dest.IsFinancialGain, src => src.IsFinancialGain)
                 .Map(dest => dest.FeeDeterminationNote, src => src.FeeDeterminationNote)
                 .Map(dest => dest.PimsLeaseRenewals, src => src.Renewals)
+                .Map(dest => dest.PimsLeaseLicenseTeams, src => src.LeaseTeam)
                 .IgnoreNullValues(true);
         }
     }

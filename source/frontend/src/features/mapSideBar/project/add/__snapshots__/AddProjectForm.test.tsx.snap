@@ -1049,10 +1049,6 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c10 .react-datepicker-wrapper {
-  max-width: 17rem;
-}
-
 .c11.c11.form-control.is-valid {
   background-image: none;
 }

@@ -1,5 +1,7 @@
 import { Formik } from 'formik';
+import { Feature, Geometry } from 'geojson';
 import React, { useMemo } from 'react';
+import { Row } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
 import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
@@ -7,14 +9,17 @@ import styled from 'styled-components';
 
 import { ResetButton, SearchButton } from '@/components/common/buttons';
 import { Form, Input, Select } from '@/components/common/form';
+import { getFeatureLatLng } from '@/components/maps/leaflet/Layers/PointClusterer';
 import { TableSort } from '@/components/Table/TableSort';
+import { IGeographicNamesProperties } from '@/hooks/pims-api/interfaces/IGeographicNamesProperties';
 import { useGeocoderRepository } from '@/hooks/useGeocoderRepository';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
-import { pidFormatter } from '@/utils';
+import { exists, pidFormatter } from '@/utils';
 
 import { GeocoderAutoComplete } from '../components/GeocoderAutoComplete';
 import { CoordinateSearchForm } from './CoordinateSearch/CoordinateSearchForm';
 import { DmsCoordinates } from './CoordinateSearch/models';
+import { GeographicNameInput } from './GeographicNameInput';
 import { defaultPropertyFilter, IPropertyFilter } from './IPropertyFilter';
 import PropertySearchToggle, { SearchToggleOption } from './PropertySearchToggle';
 import { PropertyFilterValidationSchema } from './validation';
@@ -87,6 +92,10 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
 
   if (toggle === SearchToggleOption.Map) {
     searchOptions.push({
+      label: 'POI Name',
+      value: 'name',
+    });
+    searchOptions.push({
       label: 'Lat/Long',
       value: 'coordinates',
     });
@@ -105,7 +114,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
     >
       {({ isSubmitting, setFieldValue, values, resetForm, isValid }) => (
         <Form>
-          <Form.Row className="map-filter-bar pb-4">
+          <Row className="map-filter-bar pb-4">
             <Col xs="auto">
               <span>Search:</span>
             </Col>
@@ -121,6 +130,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                   setFieldValue('pin', null);
                   setFieldValue('planNumber', null);
                   setFieldValue('historical', null);
+                  setFieldValue('name', null);
                   if (e.target.value === 'coordinates') {
                     setFieldValue('coordinates', new DmsCoordinates());
                   } else {
@@ -130,9 +140,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
               />
             </NoRightPaddingColumn>
             <StyledCol
-              xs="3"
-              md="2"
-              lg={values.searchBy === 'coordinates' ? 'auto' : 4}
+              xs={values.searchBy === 'coordinates' ? 'auto' : 4}
               xl={values.searchBy === 'coordinates' ? 'auto' : 3}
             >
               {values.searchBy === 'pid' && (
@@ -185,8 +193,26 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                   placeholder="Enter a historical file# (LIS, PS, etc.)"
                 ></Input>
               )}
+              {values.searchBy === 'name' && (
+                <GeographicNameInput
+                  field="name"
+                  placeholder='Enter a POI name (e.g. "Langford Lake")'
+                  onSelectionChanged={(
+                    selection: Feature<Geometry, IGeographicNamesProperties>,
+                  ) => {
+                    if (exists(selection.geometry)) {
+                      const lngLat = getFeatureLatLng(selection);
+                      setFieldValue('latitude', lngLat[1]);
+                      setFieldValue('longitude', lngLat[0]);
+                    }
+                  }}
+                />
+              )}
               {values.searchBy === 'coordinates' && (
-                <CoordinateSearchForm field="coordinates"></CoordinateSearchForm>
+                <CoordinateSearchForm
+                  field="coordinates"
+                  innerClassName="flex-nowrap"
+                ></CoordinateSearchForm>
               )}
             </StyledCol>
             <Col xs="auto">
@@ -224,7 +250,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                 toggle={toggle}
               />
             </Col>
-          </Form.Row>
+          </Row>
         </Form>
       )}
     </Formik>
@@ -232,6 +258,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
 };
 const StyledSelect = styled(Select)`
   padding-right: 0 !important;
+  min-width: 15rem;
   .form-control {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;

@@ -271,6 +271,7 @@ exports[`MapSearch component > renders as expected 1`] = `
 
 .c2 {
   padding-right: 0 !important;
+  min-width: 15rem;
 }
 
 .c2 .form-control {
@@ -339,14 +340,14 @@ exports[`MapSearch component > renders as expected 1`] = `
 }
 
 <div
-    class="c0 px-0 container-fluid"
+    class="c0 px-0"
   >
     <form
       class=""
       novalidate=""
     >
       <div
-        class="map-filter-bar pb-4 form-row"
+        class="map-filter-bar pb-4 row"
       >
         <div
           class="col-auto"
@@ -403,6 +404,13 @@ exports[`MapSearch component > renders as expected 1`] = `
               </option>
               <option
                 class="option"
+                data-testid="select-option-name"
+                value="name"
+              >
+                POI Name
+              </option>
+              <option
+                class="option"
                 data-testid="select-option-coordinates"
                 value="coordinates"
               >
@@ -412,7 +420,7 @@ exports[`MapSearch component > renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="c3 col-xl-3 col-lg-4 col-md-2 col-3"
+          class="c3 col-xl-3 col-4"
         >
           <div
             class="input form-group"

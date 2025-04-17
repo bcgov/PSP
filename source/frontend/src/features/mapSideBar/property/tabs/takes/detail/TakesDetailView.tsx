@@ -86,14 +86,14 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
         <H2>Takes for {getApiPropertyName(fileProperty.property).value}</H2>
         <StyledBlueSection>
           <SectionField
-            labelWidth="8"
+            labelWidth={{ xs: 8 }}
             label="Takes for this property in the current file"
             tooltip="The number of takes in completed, In-progress or cancelled state for this property in this acquisition file"
           >
             {takes?.length ?? 0}
           </SectionField>
           <SectionField
-            labelWidth="8"
+            labelWidth={{ xs: 8 }}
             label="Takes for this property in other files"
             tooltip="The number of takes in completed, In-progress or cancelled state for this property, in files other than this acquisition file. The other files can be found under the Acquisition section of the PIMS Files tab"
             valueTestId="takes-in-other-files"
@@ -178,26 +178,26 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
                   ? getCodeById(API.TAKE_SITE_CONTAM_TYPES, take.takeSiteContamTypeCode.id)
                   : ''}
               </SectionField>
-              <SectionField label="Description" labelWidth="12">
+              <SectionField label="Description" labelWidth={{ xs: 12 }}>
                 {take.description}
               </SectionField>
               <StyledNoTabSection header="Area">
                 <StyledBorderSection>
                   <SectionField
                     label="Is there a new highway dedication? *"
-                    labelWidth="9"
+                    labelWidth={{ xs: 9 }}
                     tooltip="The term new highway dedication includes municipal road or provincial public highway"
                   >
                     {booleanToYesNoUnknownString(take.isNewHighwayDedication ?? undefined)}
                   </SectionField>
                   {take.isNewHighwayDedication && (
-                    <SectionField label="Area" labelWidth="12">
+                    <SectionField label="Area" labelWidth={{ xs: 12 }}>
                       <AreaContainer landArea={take.newHighwayDedicationArea ?? undefined} />
                     </SectionField>
                   )}
                   <SectionField
                     label="Is this being acquired for MoTI inventory? *"
-                    labelWidth="9"
+                    labelWidth={{ xs: 9 }}
                     tooltip="The property will be added to inventory"
                     className="pt-4"
                   >
@@ -207,35 +207,39 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
                 <StyledBorderSection>
                   <SectionField
                     label="Is there a new registered interest in land (SRW, Easement or Covenant)? *"
-                    labelWidth="9"
+                    labelWidth={{ xs: 9 }}
                   >
                     {booleanToYesNoUnknownString(take.isNewInterestInSrw ?? undefined)}
                   </SectionField>
                   {take.isNewInterestInSrw && (
                     <>
-                      <SectionField label="Area" labelWidth="12">
+                      <SectionField label="Area" labelWidth={{ xs: 12 }}>
                         <AreaContainer landArea={take.statutoryRightOfWayArea ?? undefined} />
                       </SectionField>
 
-                      <SectionField label="SRW end date" labelWidth="3" contentWidth="4">
+                      <SectionField
+                        label="SRW end date"
+                        labelWidth={{ xs: 3 }}
+                        contentWidth={{ xs: 4 }}
+                      >
                         {prettyFormatDate(take.srwEndDt ?? undefined)}
                       </SectionField>
                     </>
                   )}
                 </StyledBorderSection>
                 <StyledBorderSection>
-                  <SectionField label="Is there a new Land Act tenure? *" labelWidth="9">
+                  <SectionField label="Is there a new Land Act tenure? *" labelWidth={{ xs: 9 }}>
                     {booleanToYesNoUnknownString(take.isNewLandAct ?? undefined)}
                   </SectionField>
                   {take.isNewLandAct && (
                     <>
-                      <SectionField label="Land Act" labelWidth="3">
+                      <SectionField label="Land Act" labelWidth={{ xs: 3 }}>
                         {take.landActTypeCode
                           ? take.landActTypeCode.id + ' ' + take.landActTypeCode.description
                           : ''}
                       </SectionField>
 
-                      <SectionField label="Area" labelWidth="12">
+                      <SectionField label="Area" labelWidth={{ xs: 12 }}>
                         <AreaContainer landArea={take.landActArea ?? undefined} />
                       </SectionField>
 
@@ -243,7 +247,11 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
                         ApiGen_CodeTypes_LandActTypes.TRANSFER_OF_ADMIN_AND_CONTROL.toString(),
                         ApiGen_CodeTypes_LandActTypes.CROWN_GRANT.toString(),
                       ].includes(take.landActTypeCode.id) && (
-                        <SectionField label="End date" labelWidth="3" contentWidth="4">
+                        <SectionField
+                          label="End date"
+                          labelWidth={{ xs: 3 }}
+                          contentWidth={{ xs: 4 }}
+                        >
                           {prettyFormatDate(take.landActEndDt ?? undefined)}
                         </SectionField>
                       )}
@@ -253,33 +261,41 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
                 <StyledBorderSection>
                   <SectionField
                     label="Is there a new Licence for Construction Access (TLCA/LTC)? *"
-                    labelWidth="9"
+                    labelWidth={{ xs: 9 }}
                   >
                     {booleanToYesNoUnknownString(take.isNewLicenseToConstruct ?? undefined)}
                   </SectionField>
                   {take.isNewLicenseToConstruct && (
                     <>
-                      <SectionField label="Area" labelWidth="12">
+                      <SectionField label="Area" labelWidth={{ xs: 12 }}>
                         <AreaContainer landArea={take.licenseToConstructArea ?? undefined} />
                       </SectionField>
 
-                      <SectionField label="LTC end date" labelWidth="3" contentWidth="4">
+                      <SectionField
+                        label="LTC end date"
+                        labelWidth={{ xs: 3 }}
+                        contentWidth={{ xs: 4 }}
+                      >
                         {prettyFormatDate(take.ltcEndDt ?? undefined)}
                       </SectionField>
                     </>
                   )}
                 </StyledBorderSection>
                 <StyledBorderSection>
-                  <SectionField label="Is there a Lease (Payable)? *" labelWidth="9">
+                  <SectionField label="Is there a Lease (Payable)? *" labelWidth={{ xs: 9 }}>
                     {booleanToYesNoUnknownString(take.isLeasePayable ?? undefined)}
                   </SectionField>
                   {take.isLeasePayable && (
                     <>
-                      <SectionField label="Area" labelWidth="12">
+                      <SectionField label="Area" labelWidth={{ xs: 12 }}>
                         <AreaContainer landArea={take.leasePayableArea ?? undefined} />
                       </SectionField>
 
-                      <SectionField label="End date" labelWidth="3" contentWidth="4">
+                      <SectionField
+                        label="End date"
+                        labelWidth={{ xs: 3 }}
+                        contentWidth={{ xs: 4 }}
+                      >
                         {prettyFormatDate(take.leasePayableEndDt ?? undefined)}
                       </SectionField>
                     </>
@@ -288,11 +304,11 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
               </StyledNoTabSection>
               <StyledNoTabSection header="Surplus">
                 <StyledBorderSection>
-                  <SectionField label="Is there a Surplus? *" labelWidth="9">
+                  <SectionField label="Is there a Surplus? *" labelWidth={{ xs: 9 }}>
                     {booleanToYesNoUnknownString(take.isThereSurplus ?? undefined)}
                   </SectionField>
                   {take.isThereSurplus && (
-                    <SectionField label="Area" labelWidth="12">
+                    <SectionField label="Area" labelWidth={{ xs: 12 }}>
                       <AreaContainer landArea={take.surplusArea ?? undefined} />
                     </SectionField>
                   )}

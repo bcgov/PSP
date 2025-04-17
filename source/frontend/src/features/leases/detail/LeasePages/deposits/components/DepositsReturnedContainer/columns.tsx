@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 import { RemoveIconButton } from '@/components/common/buttons';
 import EditButton from '@/components/common/buttons/EditButton';
-import { InlineFlexDiv } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { ColumnWithProps, renderDate, renderMoney } from '@/components/Table';
 import Claims from '@/constants/claims';
@@ -122,7 +121,8 @@ export const getColumns = ({
       Header: 'Termination or Surrender date',
       accessor: 'terminationDate',
       align: 'right',
-      maxWidth: 50,
+      maxWidth: 70,
+      minWidth: 70,
       Cell: renderDate,
     },
     {
@@ -170,13 +170,14 @@ export const getColumns = ({
     {
       Header: 'Actions',
       align: 'right',
+      minWidth: 30,
       maxWidth: 30,
       Cell: depositActions(isFileFinalStatus, onEdit, onDelete),
     },
   ];
 };
 
-const StyledIcons = styled(InlineFlexDiv)`
+const StyledIcons = styled.div`
   [id^='edit-depositreturn'] {
     color: ${props => props.theme.css.activeActionColor};
   }
@@ -188,5 +189,9 @@ const StyledIcons = styled(InlineFlexDiv)`
   }
   .btn.btn-primary {
     background-color: transparent;
+  }
+  display: flex;
+  @media only screen and (max-width: 1199px) {
+    display: block;
   }
 `;

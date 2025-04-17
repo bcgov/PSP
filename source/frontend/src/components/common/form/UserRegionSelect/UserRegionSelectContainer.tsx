@@ -1,8 +1,9 @@
+import { first } from 'lodash';
 import { useEffect } from 'react';
 
 import * as API from '@/constants/API';
 import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
-import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import useKeycloakWrapper, { IUserInfo } from '@/hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { exists } from '@/utils';
 
@@ -19,8 +20,8 @@ export const UserRegionSelectContainer: React.FunctionComponent<
 > = ({ field, includeAll, ...rest }) => {
   const { getOptionsByType } = useLookupCodeHelpers();
   const { obj } = useKeycloakWrapper();
-  const { idir_user_guid } = obj.userInfo;
-  const formattedGuid = idir_user_guid?.replace(
+  const { sub } = obj.userInfo as IUserInfo;
+  const formattedGuid = first(sub?.split('@'))?.replace(
     /(.{8})(.{4})(.{4})(.{4})(.{12})/,
     '$1-$2-$3-$4-$5',
   );

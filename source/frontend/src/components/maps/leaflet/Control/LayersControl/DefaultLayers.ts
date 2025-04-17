@@ -288,6 +288,22 @@ export const layersTree: ILayerItem[] = [
         maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
         maxZoom: MAP_MAX_ZOOM,
       },
+      {
+        key: 'PMBC_BCTFA_PARCEL_POLYGON_FABRIC_KEY',
+        label: 'BCTFA Ownership',
+        on: true,
+        layers: 'psp:PMBC_BCTFA_PARCEL_POLYGON_FABRIC',
+        url: '/ogs-internal/ows?',
+        transparent: true,
+        format: 'image/png',
+        zIndex: 4000,
+        zIndexAbsolute: true,
+        id: 'bctfa_property',
+        color: '#42814A',
+        maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+        maxZoom: MAP_MAX_ZOOM,
+        authenticated: true,
+      },
     ],
   },
   {
@@ -375,8 +391,8 @@ export const layersTree: ILayerItem[] = [
     nodes: [
       {
         key: 'PIMS_PROPERTY_BOUNDARY_KEY',
-        label: 'Property Boundaries',
-        on: true,
+        label: 'Boundaries of Properties in any PIMS file',
+        on: false,
         layers: 'psp:PIMS_PROPERTY_BOUNDARY_VW',
         url: '/ogs-internal/ows?',
         transparent: true,

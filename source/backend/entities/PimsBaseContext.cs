@@ -4138,7 +4138,8 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.ExpropOwnerHistoryId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_EXPROP_OWNER_HISTORY_ID_SEQ])")
                 .HasComment("Unique auto-generated surrogate primary key.");
-            entity.Property(e => e.AcquisitionFileId).HasComment("Foreign key to the PIMS_ACQUISITION_FILE file.");
+            entity.Property(e => e.AcquisitionFileId).HasComment("Foreign key to the PIMS_ACQUISITION_FILE table.");
+            entity.Property(e => e.AcquisitionOwnerId).HasComment("Foreign key to the PIMS_ACQUISITION_HOLDER table.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the user created the record.");
@@ -4176,26 +4177,22 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.EventDt).HasComment("Date of the expropriation owner event.");
             entity.Property(e => e.ExpropOwnerHistoryTypeCode).HasComment("Foreign key to the PIMS_EXPROP_OWNER_HISTORY_TYPE file.");
+            entity.Property(e => e.InterestHolderId).HasComment("Foreign key to the PIMS_INTEREST_HOLDER table.");
             entity.Property(e => e.IsDisabled)
                 .HasDefaultValue(false)
                 .HasComment("Indicates if the row is inactive.");
-            entity.Property(e => e.OrganizationId).HasComment("Foreign key to the PIMS_ORGANIZATION table.");
-            entity.Property(e => e.PersonId).HasComment("Foreign key to the PIMS_PERSON table.");
-            entity.Property(e => e.PrimaryContactId).HasComment("Foreign key to the PIMS_PERSON table.");
 
             entity.HasOne(d => d.AcquisitionFile).WithMany(p => p.PimsExpropOwnerHistories)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("PIM_ACQNFL_PIM_XPOWNH_FK");
 
+            entity.HasOne(d => d.AcquisitionOwner).WithMany(p => p.PimsExpropOwnerHistories).HasConstraintName("PIM_ACQOWN_PIM_XPOWNH_FK");
+
             entity.HasOne(d => d.ExpropOwnerHistoryTypeCodeNavigation).WithMany(p => p.PimsExpropOwnerHistories)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("PIM_XPOHTY_PIM_XPOWNH_FK");
 
-            entity.HasOne(d => d.Organization).WithMany(p => p.PimsExpropOwnerHistories).HasConstraintName("PIM_ORG_PIM_XPOWNH_FK");
-
-            entity.HasOne(d => d.Person).WithMany(p => p.PimsExpropOwnerHistoryPeople).HasConstraintName("PIM_PERSON_PIM_XPOWNH_PER_FK");
-
-            entity.HasOne(d => d.PrimaryContact).WithMany(p => p.PimsExpropOwnerHistoryPrimaryContacts).HasConstraintName("PIM_PERSON_PIM_XPOWNH_PRM_FK");
+            entity.HasOne(d => d.InterestHolder).WithMany(p => p.PimsExpropOwnerHistories).HasConstraintName("PIM_INTHLD_PIM_XPOWNH_FK");
         });
 
         modelBuilder.Entity<PimsExpropOwnerHistoryHist>(entity =>
@@ -9844,6 +9841,7 @@ public partial class PimsBaseContext : DbContext
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_COMP_REQ_ACQ_PAYEE_ID_SEQ")
+            .StartsAt(11L)
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_COMP_REQ_FINANCIAL_H_ID_SEQ")

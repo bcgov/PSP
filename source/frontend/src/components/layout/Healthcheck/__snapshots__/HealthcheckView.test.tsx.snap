@@ -7,6 +7,11 @@ exports[`Healthcheck View component > renders as expected 1`] = `
   />
   <div />
   .c0 {
+  grid-area: health;
+  border: 1px solid #CE3E39;
+}
+
+.c1 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -15,7 +20,7 @@ exports[`Healthcheck View component > renders as expected 1`] = `
   background-color: #f2dede;
 }
 
-.c1 {
+.c2 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -34,11 +39,11 @@ exports[`Healthcheck View component > renders as expected 1`] = `
   background-color: #CE3E39;
 }
 
-.c1 svg {
+.c2 svg {
   color: #f2f2f2;
 }
 
-.c2 {
+.c3 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -62,16 +67,16 @@ exports[`Healthcheck View component > renders as expected 1`] = `
   background-color: #f2dede;
 }
 
-.c2 label {
+.c3 label {
   display: list-item;
   margin-bottom: 0;
 }
 
-.c2 label span {
+.c3 label span {
   font-weight: bolder;
 }
 
-.c2 button {
+.c3 button {
   margin-left: 6rem;
 }
 
@@ -81,29 +86,33 @@ exports[`Healthcheck View component > renders as expected 1`] = `
     <div
       class="c1"
     >
-      <svg
-        fill="currentColor"
-        height="24"
-        stroke="currentColor"
-        stroke-width="0"
-        viewBox="0 0 512 512"
-        width="24"
-        xmlns="http://www.w3.org/2000/svg"
+      <div
+        class="c2"
       >
-        <path
-          d="M256 8C119.034 8 8 119.033 8 256s111.034 248 248 248 248-111.034 248-248S392.967 8 256 8zm130.108 117.892c65.448 65.448 70 165.481 20.677 235.637L150.47 105.216c70.204-49.356 170.226-44.735 235.638 20.676zM125.892 386.108c-65.448-65.448-70-165.481-20.677-235.637L361.53 406.784c-70.203 49.356-170.226 44.736-235.638-20.676z"
-        />
-      </svg>
-    </div>
-    <div
-      class="c2"
-    >
-      <label>
-        <span>
-          PimsApi: 
-        </span>
-        The PIMS server is currently unavailable, PIMS will not be useable until this is resolved.
-      </label>
+        <svg
+          fill="currentColor"
+          height="24"
+          stroke="currentColor"
+          stroke-width="0"
+          viewBox="0 0 512 512"
+          width="24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M256 8C119.034 8 8 119.033 8 256s111.034 248 248 248 248-111.034 248-248S392.967 8 256 8zm130.108 117.892c65.448 65.448 70 165.481 20.677 235.637L150.47 105.216c70.204-49.356 170.226-44.735 235.638 20.676zM125.892 386.108c-65.448-65.448-70-165.481-20.677-235.637L361.53 406.784c-70.203 49.356-170.226 44.736-235.638-20.676z"
+          />
+        </svg>
+      </div>
+      <div
+        class="c3"
+      >
+        <label>
+          <span>
+            PimsApi: 
+          </span>
+          The PIMS server is currently unavailable, PIMS will not be useable until this is resolved.
+        </label>
+      </div>
     </div>
   </div>
 </DocumentFragment>

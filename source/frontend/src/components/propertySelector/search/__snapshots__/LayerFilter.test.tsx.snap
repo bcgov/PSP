@@ -225,6 +225,7 @@ exports[`LayerFilter component > renders as expected 1`] = `
 
 .c2:not(:first-child) {
   padding-left: 0;
+  padding-right: 0;
 }
 
 .c2:not(:first-child) .form-control {
@@ -237,27 +238,18 @@ exports[`LayerFilter component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c0 .idir-input-group .input-group-prepend select {
-  width: 16rem;
-}
-
-.c0 .idir-input-group input {
-  width: 18rem;
-  max-width: 100%;
-}
-
 <form
     class="c0 p-3"
     novalidate=""
   >
     <div
-      class="row"
+      class="row no-gutters"
     >
       <div
-        class="col-xl-6"
+        class="col-6"
       >
         <div
-          class="flex-nowrap input-group row"
+          class="flex-nowrap input-group row no-gutters"
         >
           <div
             class="c1 col-auto"
@@ -308,6 +300,13 @@ exports[`LayerFilter component > renders as expected 1`] = `
                   >
                     Legal Description
                   </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-coordinates"
+                    value="coordinates"
+                  >
+                    Lat/Long
+                  </option>
                 </select>
               </div>
             </div>
@@ -343,7 +342,7 @@ exports[`LayerFilter component > renders as expected 1`] = `
         </div>
       </div>
       <div
-        class="pr-0 col-xl-2"
+        class="pr-0 col-2"
       >
         <div
           class="row"

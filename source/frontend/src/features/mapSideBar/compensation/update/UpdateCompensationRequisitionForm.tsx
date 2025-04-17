@@ -158,7 +158,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
 
             <StyledContent>
               <Section header="Requisition Details">
-                <SectionField label="Status" labelWidth="5">
+                <SectionField label="Status" labelWidth={{ xs: 5 }}>
                   <Select
                     field="status"
                     placeholder="Select..."
@@ -174,7 +174,11 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                     ]}
                   />
                 </SectionField>
-                <SectionField label="Alternate project" labelWidth="5" contentWidth="6">
+                <SectionField
+                  label="Alternate project"
+                  labelWidth={{ xs: 5 }}
+                  contentWidth={{ xs: 6 }}
+                >
                   <ProjectSelector
                     field="alternateProject"
                     onChange={(vals: IAutocompletePrediction[]) => {
@@ -184,17 +188,21 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                 </SectionField>
                 <SectionField
                   label="Final date"
-                  labelWidth="5"
-                  contentWidth="4"
+                  labelWidth={{ xs: 5 }}
+                  contentWidth={{ xs: 4 }}
                   valueTestId="compensation-finalized-date"
                 >
                   {prettyFormatDate(initialValues.finalizedDate)}
                 </SectionField>
-                <SectionField label="Agreement date" labelWidth="5" contentWidth="4">
+                <SectionField
+                  label="Agreement date"
+                  labelWidth={{ xs: 5 }}
+                  contentWidth={{ xs: 4 }}
+                >
                   <FastDatePicker field="agreementDateTime" formikProps={formikProps} />
                 </SectionField>
 
-                <SectionField label="Special instructions" labelWidth="12">
+                <SectionField label="Special instructions" labelWidth={{ xs: 12 }}>
                   <MediumTextArea field="specialInstruction" />
                 </SectionField>
               </Section>
@@ -211,7 +219,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                   </div>
                 }
               >
-                <SectionField label="Selected Properties" labelWidth="5">
+                <SectionField label="Selected Properties" labelWidth={{ xs: 5 }}>
                   <FilePropertiesTable
                     disabledSelection={false}
                     fileProperties={file.fileProperties ?? []}
@@ -224,33 +232,33 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
               </Section>
 
               <Section header="Financial Coding">
-                <SectionField label="Product" labelWidth="4">
+                <SectionField label="Product" labelWidth={{ xs: 4 }}>
                   {file.product?.code ?? ''}
                 </SectionField>
-                <SectionField label="Business function" labelWidth="4">
+                <SectionField label="Business function" labelWidth={{ xs: 4 }}>
                   {file.project?.businessFunctionCode?.code ?? ''}
                 </SectionField>
-                <SectionField label="Work activity" labelWidth="4">
+                <SectionField label="Work activity" labelWidth={{ xs: 4 }}>
                   {file.project?.workActivityCode?.code ?? ''}
                 </SectionField>
-                <SectionField label="Cost type" labelWidth="4">
+                <SectionField label="Cost type" labelWidth={{ xs: 4 }}>
                   {file.project?.costTypeCode?.code ?? ''}
                 </SectionField>
                 <SectionField
                   label="Fiscal year"
-                  labelWidth="4"
-                  contentWidth="4"
+                  labelWidth={{ xs: 4 }}
+                  contentWidth={{ xs: 4 }}
                   required={formikProps.values.status === 'final'}
                 >
                   <Select field="fiscalYear" options={fiscalYearOptions} placeholder="Select..." />
                 </SectionField>
-                <SectionField label="STOB" labelWidth="4">
+                <SectionField label="STOB" labelWidth={{ xs: 4 }}>
                   <TypeaheadSelect field="stob" options={yearlyFinancialOptions} />
                 </SectionField>
-                <SectionField label="Service line" labelWidth="4">
+                <SectionField label="Service line" labelWidth={{ xs: 4 }}>
                   <TypeaheadSelect field="serviceLine" options={chartOfAccountsOptions} />
                 </SectionField>
-                <SectionField label="Responsibility centre" labelWidth="4">
+                <SectionField label="Responsibility centre" labelWidth={{ xs: 4 }}>
                   <TypeaheadSelect
                     field="responsibilityCentre"
                     options={responsiblityCentreOptions}
@@ -259,7 +267,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
               </Section>
 
               <Section header="Payment" isCollapsable initiallyExpanded>
-                <SectionField label="Payee" labelWidth="4" required>
+                <SectionField label="Payee" labelWidth={{ xs: 4 }} required>
                   <Multiselect<PayeeOption, PayeeOption>
                     field="payees"
                     selectFunction={(optionPayees, selectedPayees) =>
@@ -326,7 +334,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
               </Section>
 
               <Section>
-                <SectionField label="Detailed remarks" labelWidth="12">
+                <SectionField label="Detailed remarks" labelWidth={{ xs: 12 }}>
                   <MediumTextArea field="detailedRemarks" />
                 </SectionField>
               </Section>

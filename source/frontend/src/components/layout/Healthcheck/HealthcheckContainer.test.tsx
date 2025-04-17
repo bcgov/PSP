@@ -1,14 +1,9 @@
-import {
-  act,
-  render,
-  RenderOptions,
-} from '@/utils/test-utils';
+import { act, render, RenderOptions, waitForEffects } from '@/utils/test-utils';
 
 import { HealthcheckContainer, IHealthcheckContainerProps } from './HealthcheckContainer';
 import { useApiHealth } from '@/hooks/pims-api/useApiHealth';
 import { IHealthCheckViewProps } from './HealthcheckView';
 import IHealthLive from '@/hooks/pims-api/interfaces/IHealthLive';
-import { HttpStatusCode } from 'node_modules/axios/index.cjs';
 
 const mockGetLiveApi = vi.fn();
 const mockGetSystemCheckApi = vi.fn();
@@ -124,5 +119,12 @@ describe('Healthcheck container', () => {
     });
 
     expect(updateHealthcheckResult).toHaveBeenCalledWith(true);
+  });
+
+  it(`sets the right amount of healtcheck issues`, async () => {
+    await setup();
+    await waitForEffects();
+
+    expect(viewProps.systemChecks.length).toBe(2);
   });
 });
