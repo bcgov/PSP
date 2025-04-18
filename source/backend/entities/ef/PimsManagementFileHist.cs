@@ -6,12 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-[Table("PIMS_COMP_REQ_PAYEE_HIST")]
-public partial class PimsCompReqPayeeHist
+[Table("PIMS_MANAGEMENT_FILE_HIST")]
+[Index("ManagementFileHistId", "EndDateHist", Name = "PIMS_MGMTFL_H_UK", IsUnique = true)]
+public partial class PimsManagementFileHist
 {
     [Key]
-    [Column("_COMP_REQ_PAYEE_HIST_ID")]
-    public long CompReqPayeeHistId { get; set; }
+    [Column("_MANAGEMENT_FILE_HIST_ID")]
+    public long ManagementFileHistId { get; set; }
 
     [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
     public DateTime EffectiveDateHist { get; set; }
@@ -19,24 +20,45 @@ public partial class PimsCompReqPayeeHist
     [Column("END_DATE_HIST", TypeName = "datetime")]
     public DateTime? EndDateHist { get; set; }
 
-    [Column("COMP_REQ_PAYEE_ID")]
-    public long CompReqPayeeId { get; set; }
+    [Column("MANAGEMENT_FILE_ID")]
+    public long ManagementFileId { get; set; }
 
-    [Column("COMPENSATION_REQUISITION_ID")]
-    public long? CompensationRequisitionId { get; set; }
+    [Column("PROJECT_ID")]
+    public long? ProjectId { get; set; }
 
-    [Column("ACQUISITION_OWNER_ID")]
-    public long? AcquisitionOwnerId { get; set; }
+    [Column("PRODUCT_ID")]
+    public long? ProductId { get; set; }
 
-    [Column("INTEREST_HOLDER_ID")]
-    public long? InterestHolderId { get; set; }
+    [Column("ACQUISITION_FUNDING_TYPE_CODE")]
+    [StringLength(20)]
+    public string AcquisitionFundingTypeCode { get; set; }
 
-    [Column("ACQUISITION_FILE_TEAM_ID")]
-    public long? AcquisitionFileTeamId { get; set; }
+    [Required]
+    [Column("MANAGEMENT_FILE_STATUS_TYPE_CODE")]
+    [StringLength(20)]
+    public string ManagementFileStatusTypeCode { get; set; }
 
-    [Column("LEGACY_PAYEE")]
-    [StringLength(1000)]
-    public string LegacyPayee { get; set; }
+    [Required]
+    [Column("MANAGEMENT_FILE_PROGRAM_TYPE_CODE")]
+    [StringLength(20)]
+    public string ManagementFileProgramTypeCode { get; set; }
+
+    [Required]
+    [Column("FILE_NAME")]
+    [StringLength(500)]
+    public string FileName { get; set; }
+
+    [Column("LEGACY_FILE_NUM")]
+    [StringLength(100)]
+    public string LegacyFileNum { get; set; }
+
+    [Column("FILE_PURPOSE")]
+    [StringLength(2000)]
+    public string FilePurpose { get; set; }
+
+    [Column("ADDITIONAL_DETAILS")]
+    [StringLength(2000)]
+    public string AdditionalDetails { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
@@ -76,7 +98,6 @@ public partial class PimsCompReqPayeeHist
     [Column("DB_CREATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime DbCreateTimestamp { get; set; }
 
-    [Required]
     [Column("DB_CREATE_USERID")]
     [StringLength(30)]
     public string DbCreateUserid { get; set; }

@@ -57,6 +57,9 @@ public partial class PimsPropertyActivity
     [Column("SERVICE_PROVIDER_ORG_ID")]
     public long? ServiceProviderOrgId { get; set; }
 
+    [Column("MANAGEMENT_FILE_ID")]
+    public long? ManagementFileId { get; set; }
+
     /// <summary>
     /// Date the request for a property management activity was added
     /// </summary>
@@ -138,6 +141,10 @@ public partial class PimsPropertyActivity
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
+
+    [ForeignKey("ManagementFileId")]
+    [InverseProperty("PimsPropertyActivities")]
+    public virtual PimsManagementFile ManagementFile { get; set; }
 
     [InverseProperty("PimsPropertyActivity")]
     public virtual ICollection<PimsPropActInvolvedParty> PimsPropActInvolvedParties { get; set; } = new List<PimsPropActInvolvedParty>();

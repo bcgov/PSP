@@ -7,21 +7,21 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Codified values for the acquistion funding type.
+/// Table containing information about the management file program.
 /// </summary>
-[Table("PIMS_ACQUISITION_FUNDING_TYPE")]
-public partial class PimsAcquisitionFundingType
+[Table("PIMS_MANAGEMENT_FILE_PROGRAM_TYPE")]
+public partial class PimsManagementFileProgramType
 {
     /// <summary>
-    /// Code value for the acquistion funding type.
+    /// Code value of the management file program type.
     /// </summary>
     [Key]
-    [Column("ACQUISITION_FUNDING_TYPE_CODE")]
+    [Column("MANAGEMENT_FILE_PROGRAM_TYPE_CODE")]
     [StringLength(20)]
-    public string AcquisitionFundingTypeCode { get; set; }
+    public string ManagementFileProgramTypeCode { get; set; }
 
     /// <summary>
-    /// Description of the acquistion funding type.
+    /// Description of the management file program type.
     /// </summary>
     [Required]
     [Column("DESCRIPTION")]
@@ -29,39 +29,51 @@ public partial class PimsAcquisitionFundingType
     public string Description { get; set; }
 
     /// <summary>
-    /// Indicates if the code value is inactive.
+    /// Indicates if the record is disabled.
     /// </summary>
     [Column("IS_DISABLED")]
     public bool IsDisabled { get; set; }
 
     /// <summary>
-    /// Designates a preferred presentation order of the code descriptions.
+    /// Specifies the display order of the code description.
     /// </summary>
     [Column("DISPLAY_ORDER")]
     public int? DisplayOrder { get; set; }
 
+    /// <summary>
+    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
+    /// </summary>
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
 
+    /// <summary>
+    /// The date and time the record was created.
+    /// </summary>
     [Column("DB_CREATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime DbCreateTimestamp { get; set; }
 
+    /// <summary>
+    /// The user or proxy account that created the record.
+    /// </summary>
     [Required]
     [Column("DB_CREATE_USERID")]
     [StringLength(30)]
     public string DbCreateUserid { get; set; }
 
+    /// <summary>
+    /// The date and time the record was created or last updated.
+    /// </summary>
     [Column("DB_LAST_UPDATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime DbLastUpdateTimestamp { get; set; }
 
+    /// <summary>
+    /// The user or proxy account that created or last updated the record.
+    /// </summary>
     [Required]
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    [InverseProperty("AcquisitionFundingTypeCodeNavigation")]
-    public virtual ICollection<PimsAcquisitionFile> PimsAcquisitionFiles { get; set; } = new List<PimsAcquisitionFile>();
-
-    [InverseProperty("AcquisitionFundingTypeCodeNavigation")]
+    [InverseProperty("ManagementFileProgramTypeCodeNavigation")]
     public virtual ICollection<PimsManagementFile> PimsManagementFiles { get; set; } = new List<PimsManagementFile>();
 }
