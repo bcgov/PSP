@@ -6,12 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-[Table("PIMS_COMP_REQ_PAYEE_HIST")]
-public partial class PimsCompReqPayeeHist
+[Table("PIMS_MANAGEMENT_FILE_DOCUMENT_HIST")]
+[Index("ManagementFileDocumentHistId", "EndDateHist", Name = "PIMS_MGTDOC_H_UK", IsUnique = true)]
+public partial class PimsManagementFileDocumentHist
 {
     [Key]
-    [Column("_COMP_REQ_PAYEE_HIST_ID")]
-    public long CompReqPayeeHistId { get; set; }
+    [Column("_MANAGEMENT_FILE_DOCUMENT_HIST_ID")]
+    public long ManagementFileDocumentHistId { get; set; }
 
     [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
     public DateTime EffectiveDateHist { get; set; }
@@ -19,24 +20,14 @@ public partial class PimsCompReqPayeeHist
     [Column("END_DATE_HIST", TypeName = "datetime")]
     public DateTime? EndDateHist { get; set; }
 
-    [Column("COMP_REQ_PAYEE_ID")]
-    public long CompReqPayeeId { get; set; }
+    [Column("MANAGEMENT_FILE_DOCUMENT_ID")]
+    public long ManagementFileDocumentId { get; set; }
 
-    [Column("COMPENSATION_REQUISITION_ID")]
-    public long? CompensationRequisitionId { get; set; }
+    [Column("MANAGEMENT_FILE_ID")]
+    public long ManagementFileId { get; set; }
 
-    [Column("ACQUISITION_OWNER_ID")]
-    public long? AcquisitionOwnerId { get; set; }
-
-    [Column("INTEREST_HOLDER_ID")]
-    public long? InterestHolderId { get; set; }
-
-    [Column("ACQUISITION_FILE_TEAM_ID")]
-    public long? AcquisitionFileTeamId { get; set; }
-
-    [Column("LEGACY_PAYEE")]
-    [StringLength(1000)]
-    public string LegacyPayee { get; set; }
+    [Column("DOCUMENT_ID")]
+    public long? DocumentId { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
@@ -76,7 +67,6 @@ public partial class PimsCompReqPayeeHist
     [Column("DB_CREATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime DbCreateTimestamp { get; set; }
 
-    [Required]
     [Column("DB_CREATE_USERID")]
     [StringLength(30)]
     public string DbCreateUserid { get; set; }

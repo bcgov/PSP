@@ -91,6 +91,9 @@ public partial class PimsNote
     public virtual ICollection<PimsLeaseNote> PimsLeaseNotes { get; set; } = new List<PimsLeaseNote>();
 
     [InverseProperty("Note")]
+    public virtual ICollection<PimsManagementFileNote> PimsManagementFileNotes { get; set; } = new List<PimsManagementFileNote>();
+
+    [InverseProperty("Note")]
     public virtual ICollection<PimsProjectNote> PimsProjectNotes { get; set; } = new List<PimsProjectNote>();
 
     [InverseProperty("Note")]

@@ -397,6 +397,9 @@ public partial class PimsProperty
     public virtual ICollection<PimsHistoricalFileNumber> PimsHistoricalFileNumbers { get; set; } = new List<PimsHistoricalFileNumber>();
 
     [InverseProperty("Property")]
+    public virtual ICollection<PimsManagementFileProperty> PimsManagementFileProperties { get; set; } = new List<PimsManagementFileProperty>();
+
+    [InverseProperty("Property")]
     public virtual ICollection<PimsPropPropActivity> PimsPropPropActivities { get; set; } = new List<PimsPropPropActivity>();
 
     [InverseProperty("Property")]
