@@ -26,12 +26,15 @@ import { TenantConsumer, TenantProvider } from '@/tenants';
 import getKeycloakEventHandler from '@/utils/getKeycloakEventHandler';
 
 import App from './App';
+import { config } from './config';
 import { DocumentViewerContextProvider } from './features/documents/context/DocumentViewerContext';
 import { ITenantConfig2 } from './hooks/pims-api/interfaces/ITenantConfig';
 import { useRefreshSiteminder } from './hooks/useRefreshSiteminder';
 import { initializeTelemetry } from './telemetry';
-import { TelemetryConfig } from './telemetry/config';
+import { defaultHistogramBuckets, TelemetryConfig } from './telemetry/config';
 import { ReactRouterSpanProcessor } from './telemetry/traces/ReactRouterSpanProcessor';
+import { exists } from './utils';
+import { stringToNull, stringToNullableBoolean, stringToNumberOrNull } from './utils/formUtils';
 
 async function prepare() {
   if (process.env.NODE_ENV === 'development') {
@@ -60,29 +63,6 @@ const Index = () => {
 const InnerComponent = ({ tenant }: { tenant: ITenantConfig2 }) => {
   const refresh = useRefreshSiteminder();
 
-  // get telemetry configuration from tenant json
-  if (tenant?.telemetry?.enabled) {
-    const config: TelemetryConfig = {
-      name: tenant?.telemetry?.serviceName ?? 'frontend',
-      appVersion: import.meta.env.VITE_PACKAGE_VERSION ?? '',
-      environment: tenant?.telemetry?.environment || 'local',
-      otlpEndpoint: tenant?.telemetry?.endpoint || '',
-      debug: tenant?.telemetry?.debug ?? false,
-      exportInterval: tenant?.telemetry?.exportInterval ?? 30_000,
-      histogramBuckets: tenant?.telemetry?.histogramBuckets ?? [],
-    };
-
-    // configure browser telemetry (if enabled via dynamic config-map)
-    initializeTelemetry(config);
-
-    console.log('[INFO] Telemetry enabled');
-    if (tenant?.telemetry?.debug) {
-      console.log(config);
-    }
-  } else {
-    console.log('[INFO] Telemetry disabled');
-  }
-
   return (
     <ThemeProvider theme={{ tenant, css, bcTokens }}>
       <ReactKeycloakProvider
@@ -108,7 +88,39 @@ const InnerComponent = ({ tenant }: { tenant: ITenantConfig2 }) => {
   );
 };
 
+// get telemetry options from global configuration.
+// window.config is set in index.html, populated by env variables.
+const setupTelemetry = () => {
+  const isTelemetryEnabled = stringToNullableBoolean(config.VITE_TELEMERY_ENABLED) ?? false;
+  const isDebugEnabled = stringToNullableBoolean(config.VITE_TELEMERY_DEBUG) ?? false;
+
+  if (isTelemetryEnabled) {
+    const jsonValues = stringToNull(config.VITE_TELEMERY_HISTOGRAM_BUCKETS);
+    const buckets: number[] = exists(jsonValues) ? JSON.parse(jsonValues) : defaultHistogramBuckets;
+    const options: TelemetryConfig = {
+      name: config.VITE_TELEMERY_SERVICE_NAME ?? 'frontend',
+      appVersion: import.meta.env.VITE_PACKAGE_VERSION ?? '',
+      environment: config.VITE_TELEMERY_ENVIRONMENT || 'local',
+      otlpEndpoint: config.VITE_TELEMERY_URL || '',
+      debug: isDebugEnabled,
+      exportInterval: stringToNumberOrNull(config.VITE_TELEMERY_EXPORT_INTERVAL) ?? 30000,
+      histogramBuckets: buckets,
+    };
+
+    // configure browser telemetry (if enabled via dynamic config-map)
+    initializeTelemetry(options);
+
+    console.log('[INFO] Telemetry enabled');
+    if (isDebugEnabled) {
+      console.log(options);
+    }
+  } else {
+    console.log('[INFO] Telemetry disabled');
+  }
+};
+
 prepare().then(() => {
+  setupTelemetry();
   const root = createRoot(document.getElementById('root') as Element);
   root.render(<Index />);
 });
