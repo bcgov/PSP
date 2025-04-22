@@ -45,9 +45,8 @@ async function prepare() {
   return Promise.resolve();
 }
 
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-//@ts-ignore
 const keycloak: Keycloak = new Keycloak('/keycloak.json');
+
 const Index = () => {
   return (
     <TenantProvider>
