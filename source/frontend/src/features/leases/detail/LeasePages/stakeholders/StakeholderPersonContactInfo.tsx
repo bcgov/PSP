@@ -25,7 +25,7 @@ export const TenantPersonContactInfo: React.FunctionComponent<
   const tenant: FormStakeholder = getIn(values, nameSpace);
   return (
     <StyledSectionWrapper>
-      <SectionField labelWidth="2" contentWidth="10" label="Individual">
+      <SectionField labelWidth={{ xs: 2 }} contentWidth={{ xs: 10 }} label="Individual">
         {getIn(values, withNameSpace(nameSpace, 'summary')) && (
           <>
             <StyledLink to={`/contact/${tenant?.id}`} target="_blank" rel="noopener noreferrer">

@@ -47,7 +47,7 @@ const EditUserForm: React.FunctionComponent<React.PropsWithChildren<IEditUserFor
     >
       {formikProps => (
         <Form className="userInfo">
-          <SectionField label="IDIR/BCeID" labelWidth="2">
+          <SectionField label="IDIR/BCeID" labelWidth={{ xs: 2 }}>
             <Input
               data-testid="businessIdentifierValue"
               field="businessIdentifierValue"
@@ -57,7 +57,7 @@ const EditUserForm: React.FunctionComponent<React.PropsWithChildren<IEditUserFor
             />
           </SectionField>
 
-          <SectionField label="First name" labelWidth="2">
+          <SectionField label="First name" labelWidth={{ xs: 2 }}>
             <Input
               data-testid="firstName"
               field="firstName"
@@ -66,7 +66,7 @@ const EditUserForm: React.FunctionComponent<React.PropsWithChildren<IEditUserFor
             />
           </SectionField>
 
-          <SectionField label="Last name" labelWidth="2">
+          <SectionField label="Last name" labelWidth={{ xs: 2 }}>
             <Input
               data-testid="surname"
               field="surname"
@@ -75,7 +75,7 @@ const EditUserForm: React.FunctionComponent<React.PropsWithChildren<IEditUserFor
             />
           </SectionField>
 
-          <SectionField label="Email" labelWidth="2">
+          <SectionField label="Email" labelWidth={{ xs: 2 }}>
             <Input
               data-testid="email"
               field="email"
@@ -84,7 +84,7 @@ const EditUserForm: React.FunctionComponent<React.PropsWithChildren<IEditUserFor
             />
           </SectionField>
 
-          <SectionField label="Position" labelWidth="2">
+          <SectionField label="Position" labelWidth={{ xs: 2 }}>
             <Input
               field="position"
               placeholder="e.g) Director, Real Estate and Stakeholder Engagement"
@@ -93,7 +93,7 @@ const EditUserForm: React.FunctionComponent<React.PropsWithChildren<IEditUserFor
             />
           </SectionField>
 
-          <SectionField label="Internal staff / Contractor" labelWidth="2" required>
+          <SectionField label="Internal staff / Contractor" labelWidth={{ xs: 2 }} required>
             <RadioGroup
               field="userTypeCode.id"
               radioValues={userTypeCodeValues}
@@ -101,7 +101,7 @@ const EditUserForm: React.FunctionComponent<React.PropsWithChildren<IEditUserFor
             ></RadioGroup>
           </SectionField>
 
-          <SectionField label="Role(s)" required labelWidth="2">
+          <SectionField label="Role(s)" required labelWidth={{ xs: 2 }}>
             <Multiselect placeholder="" field="roles" options={roles} displayValue="name" />
             <TooltipWrapper
               tooltipId="role description tooltip icon"
@@ -113,7 +113,7 @@ const EditUserForm: React.FunctionComponent<React.PropsWithChildren<IEditUserFor
             </TooltipWrapper>
           </SectionField>
 
-          <SectionField label="MoTI Region(s)" required labelWidth="2">
+          <SectionField label="MoTI Region(s)" required labelWidth={{ xs: 2 }}>
             <Multiselect<ILookupCode, ApiGen_Base_CodeType<number>>
               placeholder=""
               field="regions"
@@ -127,7 +127,7 @@ const EditUserForm: React.FunctionComponent<React.PropsWithChildren<IEditUserFor
             />
           </SectionField>
 
-          <SectionField label="Comments" labelWidth="2">
+          <SectionField label="Comments" labelWidth={{ xs: 2 }}>
             <Input
               as="textarea"
               field="note"
@@ -137,7 +137,7 @@ const EditUserForm: React.FunctionComponent<React.PropsWithChildren<IEditUserFor
             />
           </SectionField>
 
-          <SectionField className="d-flex" label="Disable account?" labelWidth="2">
+          <SectionField className="d-flex" label="Disable account?" labelWidth={{ xs: 2 }}>
             <TooltipWrapper
               tooltipId="is-disabled-tooltip"
               tooltip={'Click to change account status then click Save.'}

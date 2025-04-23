@@ -271,6 +271,7 @@ exports[`MapFilterBar > renders correctly 1`] = `
 
 .c1 {
   padding-right: 0 !important;
+  min-width: 15rem;
 }
 
 .c1 .form-control {

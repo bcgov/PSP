@@ -301,10 +301,6 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c6 .react-datepicker-wrapper {
-  max-width: 17rem;
-}
-
 .c7.c7.form-control.is-valid {
   background-image: none;
 }
@@ -557,17 +553,10 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
-                  data-testid="select-option-ARCHIV"
-                  value="ARCHIV"
+                  data-testid="select-option-DRAFT"
+                  value="DRAFT"
                 >
-                  Archived
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-CANCEL"
-                  value="CANCEL"
-                >
-                  Cancelled
+                  Draft
                 </option>
                 <option
                   class="option"
@@ -578,17 +567,24 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
-                  data-testid="select-option-DRAFT"
-                  value="DRAFT"
-                >
-                  Draft
-                </option>
-                <option
-                  class="option"
                   data-testid="select-option-HOLD"
                   value="HOLD"
                 >
                   Hold
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-CANCEL"
+                  value="CANCEL"
+                >
+                  Cancelled
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-ARCHIV"
+                  value="ARCHIV"
+                >
+                  Archived
                 </option>
               </select>
             </div>
@@ -1676,6 +1672,13 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
                   value="PENDING"
                 >
                   Pending Litigation
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-UNKNOWN"
+                  value="UNKNOWN"
+                >
+                  Unknown
                 </option>
               </select>
             </div>

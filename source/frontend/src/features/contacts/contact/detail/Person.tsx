@@ -46,18 +46,26 @@ const PersonFormView: React.FunctionComponent<React.PropsWithChildren<PersonForm
           </Row>
         </H2>
 
-        <SectionField label="Individual name" labelWidth="4" valueTestId="contact-person-fullname">
+        <SectionField
+          label="Individual name"
+          labelWidth={{ xs: 4 }}
+          valueTestId="contact-person-fullname"
+        >
           <FaRegUser size={20} className="mr-2" />
           <b>{formatApiPersonNames(person)}</b>
         </SectionField>
 
-        <SectionField label="Preferred name" labelWidth="4" valueTestId="contact-person-preferred">
+        <SectionField
+          label="Preferred name"
+          labelWidth={{ xs: 4 }}
+          valueTestId="contact-person-preferred"
+        >
           <p>{person.preferredName}</p>
         </SectionField>
 
         <SectionField
           label="Linked organization"
-          labelWidth="4"
+          labelWidth={{ xs: 4 }}
           valueTestId="contact-person-organization"
         >
           {person.personOrganizations &&

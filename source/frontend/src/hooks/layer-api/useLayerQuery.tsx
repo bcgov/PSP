@@ -160,7 +160,7 @@ export const useLayerQuery = (
         spatialReferenceId = 4326,
         sortBy = '',
       ): Promise<AxiosResponse<FeatureCollection<Geometry, GeoJsonProperties>>> => {
-        const data = await wfsAxios2({ authenticated }).get<
+        const data = await wfsAxios2({ authenticated, withCredentials }).get<
           FeatureCollection<Geometry, GeoJsonProperties>
         >(
           `${baseUrl}${
@@ -171,7 +171,7 @@ export const useLayerQuery = (
         );
         return data;
       },
-      [baseUrl, authenticated],
+      [authenticated, withCredentials, baseUrl],
     ),
     requestName: `findOneWhereContainsWrapped-${baseUrl}`,
   });
@@ -185,7 +185,7 @@ export const useLayerQuery = (
         spatialReferenceId = 4326,
         sortBy = '',
       ): Promise<AxiosResponse<FeatureCollection<Geometry, GeoJsonProperties>>> => {
-        const data = await wfsAxios2({ authenticated }).get<
+        const data = await wfsAxios2({ authenticated, withCredentials }).get<
           FeatureCollection<Geometry, GeoJsonProperties>
         >(
           `${baseAllUrl}${
@@ -196,7 +196,7 @@ export const useLayerQuery = (
         );
         return data;
       },
-      [baseAllUrl, authenticated],
+      [authenticated, withCredentials, baseAllUrl],
     ),
     requestName: `findMultipleWhereContainsWrapped-${baseAllUrl}`,
   });

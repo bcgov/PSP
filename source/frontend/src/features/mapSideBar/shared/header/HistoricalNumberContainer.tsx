@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { ColProps } from 'react-bootstrap';
 
 import { useHistoricalNumberRepository } from '@/hooks/repositories/useHistoricalNumberRepository';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
@@ -8,8 +9,8 @@ import { IHistoricalNumbersViewProps } from './HistoricalNumberSectionView';
 
 export interface IHistoricalNumbersContainerProps {
   propertyIds: number[];
-  labelWidth?: '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12' | 'auto';
-  contentWidth?: '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12' | 'auto';
+  labelWidth?: ColProps;
+  contentWidth?: ColProps;
   View: React.FunctionComponent<IHistoricalNumbersViewProps>;
 }
 const HistoricalNumbersContainer: React.FC<IHistoricalNumbersContainerProps> = ({

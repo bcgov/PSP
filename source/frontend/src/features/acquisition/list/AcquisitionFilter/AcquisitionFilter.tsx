@@ -81,10 +81,10 @@ export const AcquisitionFilter: React.FC<React.PropsWithChildren<IAcquisitionFil
       {formikProps => (
         <FilterBoxForm className="p-3">
           <Row>
-            <Col xl="1">
+            <Col lg="1">
               <strong>Search by:</strong>
             </Col>
-            <Col xl="5">
+            <Col lg="5">
               <Row>
                 <Col>
                   <SelectInput<
@@ -115,7 +115,7 @@ export const AcquisitionFilter: React.FC<React.PropsWithChildren<IAcquisitionFil
                 </Col>
               </Row>
               <Row>
-                <Col xl="7">
+                <Col lg="7">
                   <Multiselect
                     field="acquisitionTeamMembers"
                     displayValue="text"
@@ -125,7 +125,7 @@ export const AcquisitionFilter: React.FC<React.PropsWithChildren<IAcquisitionFil
                     selectionLimit={1}
                   />
                 </Col>
-                <Col xl="4">
+                <Col lg="5">
                   <Select
                     options={acquisitionStatusOptions}
                     field="acquisitionFileStatusTypeCode"
@@ -134,9 +134,9 @@ export const AcquisitionFilter: React.FC<React.PropsWithChildren<IAcquisitionFil
                 </Col>
               </Row>
             </Col>
-            <Col xl="5">
+            <Col lg="5">
               <Row>
-                <Col xl="12">
+                <Col lg="12">
                   <Input
                     field="acquisitionFileNameOrNumber"
                     placeholder="Acquisition file number or name or historical file number"
@@ -144,7 +144,7 @@ export const AcquisitionFilter: React.FC<React.PropsWithChildren<IAcquisitionFil
                 </Col>
               </Row>
               <Row>
-                <Col xl="12">
+                <Col lg="12">
                   <Input
                     field="projectNameOrNumber"
                     placeholder="Ministry or alternate project name or number"
@@ -152,12 +152,12 @@ export const AcquisitionFilter: React.FC<React.PropsWithChildren<IAcquisitionFil
                 </Col>
               </Row>
             </Col>
-            <ColButtons xl="1">
+            <ColButtons lg="1">
               <Row>
-                <Col xl="auto" className="pr-0">
+                <Col lg="auto" className="pr-0">
                   <SearchButton disabled={formikProps.isSubmitting} />
                 </Col>
-                <Col xl="auto">
+                <Col lg="auto">
                   <ResetButton
                     disabled={formikProps.isSubmitting}
                     onClick={() => onResetClick(formikProps)}

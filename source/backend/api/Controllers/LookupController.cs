@@ -126,7 +126,6 @@ namespace Pims.Api.Controllers
                 var dispositionInitiatingDocTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionInitiatingDocTypes());
                 var dispositionTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionTypes());
                 var dispositionOfferStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionOfferStatusTypes());
-                var dispositionChecklistItemTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionChecklistItemTypes());
                 var dispositionChecklistSectionTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionChecklistSectionTypes());
                 var historicalNumberTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllHistoricalNumberTypes());
                 var leaseChecklistSectionTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllLeaseChecklistSectionTypes());
@@ -139,6 +138,7 @@ namespace Pims.Api.Controllers
                 var acquisitionFileTakeTypesStatuses = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionFileTakeStatusTypes());
                 var acquisitionFileExpropiationRiskStatuses = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionFileExpropiationRiskStatusTypes());
                 var llTeamProfileTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllLlTeamProfileTypes());
+                var expropriationEventTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllExpropriationEventTypes());
 
                 var codes = new List<object>();
                 codes.AddRange(areaUnitTypes);
@@ -208,7 +208,6 @@ namespace Pims.Api.Controllers
                 codes.AddRange(dispositionTypes);
                 codes.AddRange(dispositionStatusTypes);
                 codes.AddRange(dispositionOfferStatusTypes);
-                codes.AddRange(dispositionChecklistItemTypes);
                 codes.AddRange(dispositionChecklistSectionTypes);
                 codes.AddRange(historicalNumberTypes);
                 codes.AddRange(leaseChecklistSectionTypes);
@@ -221,6 +220,7 @@ namespace Pims.Api.Controllers
                 codes.AddRange(acquisitionFileTakeTypesStatuses);
                 codes.AddRange(acquisitionFileExpropiationRiskStatuses);
                 codes.AddRange(llTeamProfileTypes);
+                codes.AddRange(expropriationEventTypes);
 
                 var response = new JsonResult(codes);
 

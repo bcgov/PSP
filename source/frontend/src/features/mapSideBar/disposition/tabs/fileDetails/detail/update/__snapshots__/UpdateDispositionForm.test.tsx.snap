@@ -266,10 +266,6 @@ exports[`UpdateDispositionForm component > renders as expected 1`] = `
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c6 .react-datepicker-wrapper {
-  max-width: 17rem;
-}
-
 .c7.c7.form-control.is-valid {
   background-image: none;
 }
@@ -397,25 +393,16 @@ exports[`UpdateDispositionForm component > renders as expected 1`] = `
                 required=""
               >
                 <option
+                  value=""
+                >
+                  N/A
+                </option>
+                <option
                   class="option"
                   data-testid="select-option-ACTIVE"
                   value="ACTIVE"
                 >
                   Active
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-ARCHIVED"
-                  value="ARCHIVED"
-                >
-                  Archived
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-CANCELLED"
-                  value="CANCELLED"
-                >
-                  Cancelled
                 </option>
                 <option
                   class="option"
@@ -426,17 +413,24 @@ exports[`UpdateDispositionForm component > renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
-                  data-testid="select-option-DRAFT"
-                  value="DRAFT"
-                >
-                  Draft
-                </option>
-                <option
-                  class="option"
                   data-testid="select-option-HOLD"
                   value="HOLD"
                 >
                   Hold
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-CANCELLED"
+                  value="CANCELLED"
+                >
+                  Cancelled
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-ARCHIVED"
+                  value="ARCHIVED"
+                >
+                  Archived
                 </option>
               </select>
             </div>
@@ -563,6 +557,83 @@ exports[`UpdateDispositionForm component > renders as expected 1`] = `
                   value=""
                 >
                   Select funding...
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-BCTFA"
+                  value="BCTFA"
+                >
+                  BCTFA
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-CAPPROG"
+                  value="CAPPROG"
+                >
+                  Capital Program
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-DFAA"
+                  value="DFAA"
+                >
+                  DFAA (Disaster Financial Assistance Arrangement)
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-EVERGREEN"
+                  value="EVERGREEN"
+                >
+                  Evergreen
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-FEDERAL"
+                  value="FEDERAL"
+                >
+                  Federal
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-MAJORPRJ"
+                  value="MAJORPRJ"
+                >
+                  Major Projects
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-MOTIDIS"
+                  value="MOTIDIS"
+                >
+                  MoTI District
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-MOTIREG"
+                  value="MOTIREG"
+                >
+                  MoTI Region
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-OTHER"
+                  value="OTHER"
+                >
+                  Other
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-REHAB"
+                  value="REHAB"
+                >
+                  Rehab & Maintenance
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-TICORP"
+                  value="TICORP"
+                >
+                  TI Corp
                 </option>
               </select>
             </div>

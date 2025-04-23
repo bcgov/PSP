@@ -117,7 +117,7 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
 
   return (
     <Section header="Original Agreement">
-      <SectionField label="Ministry project" labelWidth="4">
+      <SectionField label="Ministry project" labelWidth={{ xs: 4 }}>
         <ProjectSelector
           field="project"
           onChange={(vals: IAutocompletePrediction[]) => {
@@ -129,7 +129,7 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
         />
       </SectionField>
       {projectProducts !== undefined && (
-        <SectionField label="Product" labelWidth="3">
+        <SectionField label="Product" labelWidth={{ xs: 3 }}>
           <Select
             field="productId"
             options={projectProducts.map<SelectOption>(x => {
@@ -141,8 +141,8 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
       )}
       <SectionField
         label="Status"
-        labelWidth="4"
-        contentWidth="4"
+        labelWidth={{ xs: 4 }}
+        contentWidth={{ xs: 4 }}
         tooltip={
           <TooltipIcon
             toolTipId="lease-status-tooltip"
@@ -183,17 +183,17 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
       </SectionField>
 
       {statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.DISCARD && (
-        <SectionField label="Cancellation reason" contentWidth="12" required>
+        <SectionField label="Cancellation reason" contentWidth={{ xs: 12 }} required>
           <TextArea field="cancellationReason" />
         </SectionField>
       )}
 
-      <SectionField label="Account type" labelWidth="4" contentWidth="5" required>
+      <SectionField label="Account type" labelWidth={{ xs: 4 }} contentWidth={{ xs: 5 }} required>
         <Select field="paymentReceivableTypeCode" options={paymentReceivableTypes} />
       </SectionField>
       <SectionField
         label="Commencement"
-        labelWidth="4"
+        labelWidth={{ xs: 4 }}
         required={statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE}
         tooltip={
           <TooltipIcon
@@ -211,7 +211,7 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
       </SectionField>
       <SectionField
         label="Expiry"
-        labelWidth="4"
+        labelWidth={{ xs: 4 }}
         required={statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE}
         tooltip={
           <TooltipIcon
@@ -227,7 +227,7 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
         <>
           <SectionField
             label="Termination"
-            labelWidth="3"
+            labelWidth={{ xs: 3 }}
             tooltip={
               <TooltipIcon
                 toolTipId="lease-termination-tooltip"
@@ -238,7 +238,7 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
           >
             <FastDatePicker formikProps={formikProps} field="terminationDate" />
           </SectionField>
-          <SectionField label="Termination reason" contentWidth="12" required>
+          <SectionField label="Termination reason" contentWidth={{ xs: 12 }} required>
             <TextArea field="terminationReason" />
           </SectionField>
         </>

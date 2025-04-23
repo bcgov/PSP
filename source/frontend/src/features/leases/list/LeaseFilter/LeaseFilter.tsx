@@ -6,11 +6,11 @@ import { FaTimes } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import { ResetButton, SearchButton } from '@/components/common/buttons';
-import { FastDatePicker, Input } from '@/components/common/form';
+import { FastDatePicker, Form, Input } from '@/components/common/form';
 import { UserRegionSelectContainer } from '@/components/common/form/UserRegionSelect/UserRegionSelectContainer';
 import { SelectInput } from '@/components/common/List/SelectInput';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { FilterBoxForm, InlineFlexDiv } from '@/components/common/styles';
+import { ColButtons } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { LEASE_PROGRAM_TYPES, LEASE_STATUS_TYPES } from '@/constants/API';
 import { getParameterIdFromOptions } from '@/features/acquisition/list/interfaces';
@@ -84,7 +84,7 @@ export const LeaseFilter: React.FunctionComponent<React.PropsWithChildren<ILease
   const resetFilter = () => {
     multiselectProgramRef.current?.resetSelectedValues();
     multiselectTeamRef.current?.resetSelectedValues();
-    setInitialSelectedStatus(
+    setSelectedStatus(
       statusFilterOptions.filter(x => defaultFilter.leaseStatusTypes.includes(x.id)),
     );
 
@@ -131,127 +131,214 @@ export const LeaseFilter: React.FunctionComponent<React.PropsWithChildren<ILease
     defaultFilter.leaseStatusTypes.includes(x.id),
   );
 
-  const [selectedStatus, setInitialSelectedStatus] =
-    useState<MultiSelectOption[]>(initialLeaseStatusList);
+  const [selectedStatus, setSelectedStatus] = useState<MultiSelectOption[]>(initialLeaseStatusList);
 
   // Necessary since the lookup codes might have not been loaded before the first render
   useEffect(() => {
-    setInitialSelectedStatus([{ id: 'ACTIVE', text: 'Active' }]);
+    setSelectedStatus([{ id: 'ACTIVE', text: 'Active' }]);
   }, []);
 
   function onSelectedStatusChange(selectedList: MultiSelectOption[]) {
-    setInitialSelectedStatus(selectedList);
+    setSelectedStatus(selectedList);
   }
 
   return (
     <Formik
       enableReinitialize
-      initialValues={exists(filter) ? filter : defaultFilter}
+      initialValues={filter ?? defaultFilter}
       onSubmit={onSearchSubmit}
       validationSchema={LeaseFilterSchema}
     >
       {formikProps => (
         <FilterBoxForm className="p-3">
           <Row>
-            <Col xs="1">
-              <strong>Search by:</strong>
+            <Col xl="6">
+              <Row>
+                <Col xs="auto">
+                  <strong>Search by:</strong>
+                </Col>
+                <Col>
+                  <Row>
+                    <Col xl="7">
+                      <SelectInput<ILeaseSearchBy, ILeaseFilter>
+                        field="searchBy"
+                        defaultKey="pid"
+                        defaultValue={''}
+                        selectOptions={[
+                          { label: 'PID', key: 'pid', placeholder: 'Enter a PID' },
+                          { label: 'PIN', key: 'pin', placeholder: 'Enter a PIN' },
+                          { label: 'Address', key: 'address', placeholder: 'Enter an address' },
+                          {
+                            label: 'L-File #',
+                            key: 'lFileNo',
+                            placeholder: 'Enter an L-File number',
+                          },
+                          {
+                            label: 'Historical File #',
+                            key: 'historical',
+                            placeholder: 'Enter a Historical file# (LIS, PS, etc.)',
+                          },
+                        ]}
+                        className="idir-input-group"
+                      />
+                    </Col>
+                    <Col xl="5">
+                      <Multiselect
+                        id="status-selector"
+                        ref={multiselectStatusRef}
+                        options={statusFilterOptions}
+                        onSelect={onSelectedStatusChange}
+                        onRemove={onSelectedStatusChange}
+                        selectedValues={selectedStatus}
+                        displayValue="text"
+                        placeholder="Select Status(s)"
+                        customCloseIcon={<FaTimes size="18px" className="ml-3" />}
+                        hidePlaceholder={true}
+                        style={{
+                          chips: {
+                            background: '#F2F2F2',
+                            borderRadius: '4px',
+                            color: 'black',
+                            fontSize: '16px',
+                            marginRight: '1em',
+                          },
+                          multiselectContainer: {
+                            width: 'auto',
+                            color: 'black',
+                            paddingBottom: '12px',
+                          },
+                          searchBox: {
+                            background: 'white',
+                            border: '1px solid #606060',
+                          },
+                        }}
+                      />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col xl="7">
+                      <Multiselect
+                        id="properties-selector"
+                        ref={multiselectProgramRef}
+                        options={programFilterOptions}
+                        displayValue="text"
+                        placeholder="Select Program(s)"
+                        customCloseIcon={<FaTimes size="18px" className="ml-3" />}
+                        hidePlaceholder={true}
+                        style={{
+                          chips: {
+                            background: '#F2F2F2',
+                            borderRadius: '4px',
+                            color: 'black',
+                            fontSize: '16px',
+                            marginRight: '1em',
+                          },
+                          multiselectContainer: {
+                            width: 'auto',
+                            color: 'black',
+                            paddingBottom: '12px',
+                          },
+                          searchBox: {
+                            background: 'white',
+                            border: '1px solid #606060',
+                          },
+                        }}
+                      />
+                    </Col>
+                    <Col xl="5">
+                      <Input field="tenantName" placeholder="Tenant Name" />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col xl={7}>
+                      <StyledMultiselect
+                        field="acquisitionTeamMembers"
+                        ref={multiselectTeamRef}
+                        displayValue="text"
+                        placeholder="Team member"
+                        hidePlaceholder
+                        options={leaseTeamOptions}
+                        selectionLimit={1}
+                      />
+                    </Col>
+                  </Row>
+                </Col>
+              </Row>
             </Col>
-            <Col xs="3">
-              <SelectInput<ILeaseSearchBy, ILeaseFilter>
-                field="searchBy"
-                defaultKey="pid"
-                defaultValue={''}
-                selectOptions={[
-                  { label: 'PID', key: 'pid', placeholder: 'Enter a PID' },
-                  { label: 'PIN', key: 'pin', placeholder: 'Enter a PIN' },
-                  { label: 'Address', key: 'address', placeholder: 'Enter an address' },
-                  {
-                    label: 'L-File #',
-                    key: 'lFileNo',
-                    placeholder: 'Enter an L-File number',
-                  },
-                  {
-                    label: 'Historical File #',
-                    key: 'historical',
-                    placeholder: 'Enter a Historical file# (LIS, PS, etc.)',
-                  },
-                ]}
-                className="idir-input-group"
-              />
-              <StyledMultiselect
-                id="program-selector"
-                ref={multiselectProgramRef}
-                options={programFilterOptions}
-                displayValue="text"
-                placeholder="Select Program(s)"
-                customCloseIcon={<FaTimes size="18px" className="ml-3" />}
-                hidePlaceholder={true}
-              />
-              <StyledMultiselect
-                field="acquisitionTeamMembers"
-                ref={multiselectTeamRef}
-                displayValue="text"
-                placeholder="Team member"
-                hidePlaceholder
-                options={leaseTeamOptions}
-                selectionLimit={1}
-              />
-            </Col>
-            <Col xl="2">
-              <StyledMultiselect
-                id="status-selector"
-                ref={multiselectStatusRef}
-                options={statusFilterOptions}
-                onSelect={onSelectedStatusChange}
-                onRemove={onSelectedStatusChange}
-                selectedValues={selectedStatus}
-                displayValue="text"
-                placeholder="Select Status(s)"
-                customCloseIcon={<FaTimes size="18px" className="ml-3" />}
-                hidePlaceholder={true}
-              />
-              <Input field="tenantName" placeholder="Tenant Name" />
-            </Col>
-            <Col xs="3" className="justify-content-end">
-              <SectionField label="Expiry date" labelWidth="3" contentWidth="9">
-                <StyledFastDatePicker
-                  field="expiryStartDate"
-                  formikProps={formikProps}
-                  placeholderText="from date"
-                />
-                <UserRegionSelectContainer field="regionType" placeholder="All Regions" />
+            <Col xl="5" xs="12">
+              <SectionField className="pb-0" label="Expiry date" labelWidth={{ xl: '2' }}>
+                <Row>
+                  <Col>
+                    <FastDatePicker
+                      field="expiryStartDate"
+                      formikProps={formikProps}
+                      placeholderText="from date"
+                    />
+                  </Col>
+                  <Col>
+                    <FastDatePicker
+                      field="expiryEndDate"
+                      formikProps={formikProps}
+                      placeholderText="to date"
+                    />
+                  </Col>
+                </Row>
+              </SectionField>
+              <SectionField label="" labelWidth={{ xl: '2' }}>
+                <Row>
+                  <Col>
+                    <UserRegionSelectContainer field="regionType" placeholder="All Regions" />
+                  </Col>
+                  <Col>
+                    <Row noGutters>
+                      <Col xs="9">
+                        <Input field="details" placeholder="Keyword" />
+                      </Col>
+                      <Col xs="1">
+                        <TooltipIcon
+                          toolTipId="lease-search-keyword-tooltip"
+                          toolTip="Search 'Lease description' and 'Notes' fields"
+                        />
+                      </Col>
+                    </Row>
+                  </Col>
+                </Row>
               </SectionField>
             </Col>
-            <Col>
-              <StyledFastDatePicker
-                field="expiryEndDate"
-                formikProps={formikProps}
-                placeholderText="to date"
-              />
-              <InlineFlexDiv>
-                <Input field="details" placeholder="Keyword" />
-                <StyledTooltip
-                  toolTipId="lease-search-keyword-tooltip"
-                  toolTip="Search 'Lease description' and 'Notes' fields"
-                />
-              </InlineFlexDiv>
-            </Col>
-            <Col xs="1" className="pr-0">
-              <SearchButton disabled={formikProps.isSubmitting} />
-              <ResetButton
-                disabled={formikProps.isSubmitting}
-                onClick={() => {
-                  formikProps.resetForm();
-                  resetFilter();
-                }}
-              />
-            </Col>
+            <ColButtons xl="1">
+              <Row>
+                <Col xs="auto" className="pr-0">
+                  <SearchButton disabled={formikProps.isSubmitting} />
+                </Col>
+                <Col xs="auto">
+                  <ResetButton
+                    disabled={formikProps.isSubmitting}
+                    onClick={() => {
+                      formikProps.resetForm();
+                      resetFilter();
+                    }}
+                  />
+                </Col>
+              </Row>
+            </ColButtons>
           </Row>
         </FilterBoxForm>
       )}
     </Formik>
   );
 };
+
+const FilterBoxForm = styled(Form)`
+  background-color: ${({ theme }) => theme.css.filterBoxColor};
+  border-radius: 0.5rem;
+  .idir-input-group {
+    .form-select {
+      @media only screen and (max-width: 1199px) {
+        width: 8rem;
+      }
+    }
+  }
+`;
 
 const StyledMultiselect = styled(Multiselect)`
   .chip {
@@ -275,17 +362,6 @@ const StyledMultiselect = styled(Multiselect)`
       }
     }
   }
-`;
-
-const StyledFastDatePicker = styled(FastDatePicker)`
-  .react-datepicker-wrapper.d-block {
-    max-width: 100%;
-  }
-`;
-
-const StyledTooltip = styled(TooltipIcon)`
-  position: absolute;
-  right: -0.5rem;
 `;
 
 export default LeaseFilter;

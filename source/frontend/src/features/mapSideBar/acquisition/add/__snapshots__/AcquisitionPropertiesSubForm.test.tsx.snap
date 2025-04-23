@@ -230,6 +230,7 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
 
 .c12:not(:first-child) {
   padding-left: 0;
+  padding-right: 0;
 }
 
 .c12:not(:first-child) .form-control {
@@ -360,15 +361,6 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
 .c10 {
   background-color: #d9eaf7;
   border-radius: 0.5rem;
-}
-
-.c10 .idir-input-group .input-group-prepend select {
-  width: 16rem;
-}
-
-.c10 .idir-input-group input {
-  width: 18rem;
-  max-width: 100%;
 }
 
 <div
@@ -622,7 +614,7 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
                       class="col-6"
                     >
                       <div
-                        class="flex-nowrap input-group row"
+                        class="flex-nowrap input-group row no-gutters"
                       >
                         <div
                           class="c11 col-auto"

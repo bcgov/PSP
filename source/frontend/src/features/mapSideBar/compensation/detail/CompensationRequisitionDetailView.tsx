@@ -185,39 +185,39 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
       <LoadingBackdrop show={loading} parentScreen={true} />
       <Section>
         <StyledRow className="no-gutters">
-          <Col xs="6">
-            <HeaderField label="Client:" labelWidth="8" valueTestId="compensation-client">
+          <Col xl="6" xs="12">
+            <HeaderField label="Client:" labelWidth={{ xs: 8 }} valueTestId="compensation-client">
               {clientConstant}
             </HeaderField>
             <HeaderField
               label="Requisition number:"
-              labelWidth="8"
+              labelWidth={{ xs: 8 }}
               valueTestId="compensation-number"
             >
               {compensation.isDraft ? 'Draft' : compensation.id}
             </HeaderField>
           </Col>
-          <Col xs="6">
+          <Col xl="6" xs="12">
             <HeaderField
               label="Compensation amount:"
-              labelWidth="8"
-              contentWidth="4"
+              labelWidth={{ xs: 8 }}
+              contentWidth={{ xs: 4 }}
               valueTestId="header-pretax-amount"
             >
               <p className="mb-0 text-right">{formatMoney(compPretaxAmount ?? 0)}</p>
             </HeaderField>
             <HeaderField
               label="Applicable GST:"
-              labelWidth="8"
-              contentWidth="4"
+              labelWidth={{ xs: 8 }}
+              contentWidth={{ xs: 4 }}
               valueTestId="header-tax-amount"
             >
               <p className="mb-0 text-right">{formatMoney(compTaxAmount ?? 0)}</p>
             </HeaderField>
             <HeaderField
               label="Total cheque amount:"
-              labelWidth="8"
-              contentWidth="4"
+              labelWidth={{ xs: 8 }}
+              contentWidth={{ xs: 4 }}
               valueTestId="header-total-amount"
             >
               <p className="mb-0 text-right">{formatMoney(compTotalAmount ?? 0)}</p>
@@ -251,19 +251,27 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
           </FlexDiv>
         }
       >
-        <SectionField label="Status" labelWidth="4" valueTestId="compensation-status">
+        <SectionField label="Status" labelWidth={{ xl: '4' }} valueTestId="compensation-status">
           {compensation.isDraft ? 'Draft' : 'Final'}
         </SectionField>
-        <SectionField label="Alternate project" labelWidth="4">
+        <SectionField label="Alternate project" labelWidth={{ xl: '4' }}>
           {alternateProjectName}
         </SectionField>
-        <SectionField label="Final date" labelWidth="4" valueTestId="compensation-finalized-date">
+        <SectionField
+          label="Final date"
+          labelWidth={{ xl: '4' }}
+          valueTestId="compensation-finalized-date"
+        >
           {prettyFormatDate(compensation.finalizedDate)}
         </SectionField>
-        <SectionField label="Agreement date" labelWidth="4">
+        <SectionField label="Agreement date" labelWidth={{ xl: '4' }}>
           {prettyFormatDate(compensation.agreementDate)}
         </SectionField>
-        <SectionField label="Special instructions" labelWidth={'12'} valueClassName="pre-wrap">
+        <SectionField
+          label="Special instructions"
+          labelWidth={{ xl: '12' }}
+          valueClassName="pre-wrap"
+        >
           <p style={{ whiteSpace: 'pre-wrap' }}>{compensation.specialInstruction}</p>
         </SectionField>
       </Section>
@@ -280,7 +288,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
           </div>
         }
       >
-        <SectionField label="Properties" labelWidth="4">
+        <SectionField label="Properties" labelWidth={{ xl: '4' }}>
           {compensationProperties.map(x => {
             const propertyName = getFilePropertyName(x);
             return (
@@ -293,36 +301,36 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
       </Section>
 
       <Section header="Financial Coding" isCollapsable initiallyExpanded>
-        <SectionField label="Product" labelWidth="4" valueTestId="file-product">
+        <SectionField label="Product" labelWidth={{ xl: '4' }} valueTestId="file-product">
           {product?.code ?? ''}
         </SectionField>
-        <SectionField label="Business function" labelWidth="4">
+        <SectionField label="Business function" labelWidth={{ xl: '4' }}>
           {project?.businessFunctionCode?.code ?? ''}
         </SectionField>
-        <SectionField label="Work activity" labelWidth="4">
+        <SectionField label="Work activity" labelWidth={{ xl: '4' }}>
           {project?.workActivityCode?.code ?? ''}
         </SectionField>
-        <SectionField label="Cost type" labelWidth="4">
+        <SectionField label="Cost type" labelWidth={{ xl: '4' }}>
           {project?.costTypeCode?.code ?? ''}
         </SectionField>
-        <SectionField label="Fiscal year" labelWidth="4">
+        <SectionField label="Fiscal year" labelWidth={{ xl: '4' }}>
           {compensation.fiscalYear ?? ''}
         </SectionField>
-        <SectionField label="STOB" labelWidth="4">
+        <SectionField label="STOB" labelWidth={{ xl: '4' }}>
           {compensation.yearlyFinancial && (
             <label>
               {compensation.yearlyFinancial?.code} - {compensation.yearlyFinancial?.description}
             </label>
           )}
         </SectionField>
-        <SectionField label="Service line" labelWidth="4">
+        <SectionField label="Service line" labelWidth={{ xl: '4' }}>
           {compensation.chartOfAccounts && (
             <label>
               {compensation.chartOfAccounts?.code} - {compensation.chartOfAccounts?.description}
             </label>
           )}
         </SectionField>
-        <SectionField label="Responsibility centre" labelWidth="4">
+        <SectionField label="Responsibility centre" labelWidth={{ xl: '4' }}>
           {compensation.responsibility && (
             <label>
               {compensation.responsibility?.code} - {compensation.responsibility?.description}
@@ -332,7 +340,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
       </Section>
 
       <Section header="Payment" isCollapsable initiallyExpanded>
-        <SectionField label="Payee(s)" labelWidth="4" valueTestId="comp-req-payees">
+        <SectionField label="Payee(s)" labelWidth={{ xl: '4' }} valueTestId="comp-req-payees">
           {payeeDetails.map(payeeDetail => (
             <StyledPayeeDisplayName key={`compensations-payee-${payeeDetail.compReqPayeeId}`}>
               {payeeDetail?.contactEnabled && payeeDetail?.contactString && (
@@ -372,19 +380,19 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
             <StyledSubHeader>
               <label>Activity {index + 1}</label>
             </StyledSubHeader>
-            <SectionField label="Code & Description" labelWidth="4">
+            <SectionField label="Code & Description" labelWidth={{ xl: '4' }}>
               {item.financialActivityCode?.code} - {item.financialActivityCode?.description}
             </SectionField>
-            <SectionField label="Amount (before tax)" labelWidth="4">
+            <SectionField label="Amount (before tax)" labelWidth={{ xl: '4' }}>
               {formatMoney(item.pretaxAmount ?? 0)}
             </SectionField>
-            <SectionField label="GST applicable?" labelWidth="4">
+            <SectionField label="GST applicable?" labelWidth={{ xl: '4' }}>
               {item.isGstRequired ? 'Yes' : 'No'}
             </SectionField>
-            <SectionField label="GST amount" labelWidth="4">
+            <SectionField label="GST amount" labelWidth={{ xl: '4' }}>
               {formatMoney(item.taxAmount ?? 0)}
             </SectionField>
-            <SectionField label="Total amount" labelWidth="4">
+            <SectionField label="Total amount" labelWidth={{ xl: '4' }}>
               {formatMoney(item.totalAmount ?? 0)}
             </SectionField>
           </React.Fragment>
@@ -392,7 +400,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
       </Section>
 
       <Section>
-        <SectionField label="Detailed remarks" labelWidth="12">
+        <SectionField label="Detailed remarks" labelWidth={{ xl: '12' }}>
           <p style={{ whiteSpace: 'pre-wrap' }}>{compensation.detailedRemarks}</p>
         </SectionField>
       </Section>

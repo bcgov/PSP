@@ -2,10 +2,18 @@
 
 exports[`MapSideBarLayout component > matches snapshot 1`] = `
 <DocumentFragment>
-  <div
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div
     class="Toastify"
   />
-  <div />
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div />
   .c4.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -316,6 +324,12 @@ exports[`MapSideBarLayout component > matches snapshot 1`] = `
   -webkit-box-align: end;
   -ms-flex-align: end;
   align-items: end;
+}
+
+@media only screen and (max-width:1199px) {
+  .c0.expanded {
+    min-width: 70rem;
+  }
 }
 
 <div

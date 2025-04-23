@@ -2,7 +2,7 @@ import { useContext, useMemo } from 'react';
 
 import { TenantContext } from '@/tenants';
 
-import { layersTree } from '../Control/LayersControl/data';
+import { layersTree } from '../Control/LayersControl/DefaultLayers';
 import { ILayerItem } from '../Control/LayersControl/types';
 
 export const useConfiguredMapLayers = () => {
