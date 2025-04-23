@@ -253,26 +253,14 @@ namespace Pims.Dal.Repositories
 
             var compreq = _mapper.Map<PimsCompensationRequisition>(compreqHist);
 
+            // Retrieve financial information
             var financialsHist = Context.PimsCompReqFinancialHists.AsNoTracking()
-               .Where(crh => crh.CompensationRequisitionId == compReqId)
-               .Where(crh => crh.EffectiveDateHist <= time)
-               .OrderByDescending(a => a.EffectiveDateHist).ToList();
+               .Where(crfh => crfh.CompensationRequisitionId == compReqId)
+               .Where(crfh => crfh.EffectiveDateHist <= time)
+               .GroupBy(crfh => crfh.CompReqFinancialId)
+               .Select(gcrfh => gcrfh.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault()).ToList();
 
             compreq.PimsCompReqFinancials = _mapper.Map<ICollection<PimsCompReqFinancial>>(financialsHist);
-
-            var financialCode = Context.PimsFinancialActivityCodeHists.AsNoTracking()
-               .Where(crh => financialsHist.Select(x => x.FinancialActivityCodeId).Contains(crh.Id))
-               .Where(crh => crh.EffectiveDateHist <= time)
-               .OrderByDescending(a => a.EffectiveDateHist).ToList();
-
-            foreach (var financial in compreq.PimsCompReqFinancials)
-            {
-                var foundCode = financialCode.Find(x => x.Id == financial.FinancialActivityCodeId);
-                if (foundCode != null)
-                {
-                    financial.FinancialActivityCode = _mapper.Map<PimsFinancialActivityCode>(foundCode);
-                }
-            }
 
             return compreq;
         }
@@ -312,6 +300,30 @@ namespace Pims.Dal.Repositories
 
         public IEnumerable<PimsCompReqAcqPayee> GetCompensationRequisitionAcquisitionPayeesAtTime(long compReqId, DateTime time)
         {
+            var acqPayeeHist = Context.PimsCompReqAcqPayeeHists.AsNoTracking()
+               .Where(pacr => pacr.CompensationRequisitionId == compReqId)
+               .Where(pacr => pacr.EffectiveDateHist <= time)
+               .GroupBy(pacr => pacr.CompReqAcqPayeeId)
+               .Select(gpacr => gpacr.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault()).ToList();
+
+            return _mapper.Map<ICollection<PimsCompReqAcqPayee>>(acqPayeeHist);
+
+
+            //TODO...
+            //retrieve relationship tables
+            /*
+                .Include(x => x.AcquisitionOwner)
+                .Include(x => x.AcquisitionFileTeam)
+                    .ThenInclude(y => y.Person)
+                    .ThenInclude(y => y.Organization)
+                .Include(x => x.InterestHolder)
+                    .ThenInclude(y => y.InterestHolderTypeCodeNavigation) | This might not be necessary
+                    .ThenInclude(y => y.Person)
+                    .ThenInclude(y => y.Organization)
+                    */
+
+            List<PimsPropertyAcquisitionFile> acqfileProperties = new List<PimsPropertyAcquisitionFile>();
+
             return null;
         }
     }
