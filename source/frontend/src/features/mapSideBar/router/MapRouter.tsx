@@ -23,6 +23,10 @@ import AddDispositionContainerView from '../disposition/add/AddDispositionContai
 import DispositionContainer from '../disposition/DispositionContainer';
 import DispositionView from '../disposition/DispositionView';
 import LeaseContainer from '../lease/LeaseContainer';
+import AddManagementContainer from '../management/add/AddManagementContainer';
+import AddManagementContainerView from '../management/add/AddManagementContainerView';
+import ManagementContainer from '../management/ManagementContainer';
+import ManagementView from '../management/ManagementView';
 import AddProjectContainer from '../project/add/AddProjectContainer';
 import AddProjectForm from '../project/add/AddProjectForm';
 import ProjectContainer from '../project/ProjectContainer';
@@ -388,6 +392,34 @@ export const MapRouter: React.FunctionComponent = memo(() => {
         claim={Claims.PROPERTY_EDIT}
         key={'NewConsolidation'}
         title={'Create Consolidation'}
+      />
+      <AppRoute
+        path={`/mapview/sidebar/management/new`}
+        customRender={() => (
+          <AddManagementContainer
+            onClose={onClose}
+            View={AddManagementContainerView}
+            onSuccess={(newManagementId: number) => {
+              history.replace(`/mapview/sidebar/management/${newManagementId}`);
+            }}
+          />
+        )}
+        claim={Claims.DISPOSITION_ADD}
+        key={'NewDisposition'}
+        title={'Create Disposition File'}
+      />
+      <AppRoute
+        path={`/mapview/sidebar/management/:managementFileId`}
+        customRender={({ match }) => (
+          <ManagementContainer
+            managementFileId={Number(match.params.managementFileId)}
+            onClose={onClose}
+            View={ManagementView}
+          />
+        )}
+        claim={Claims.MANAGEMENT_VIEW}
+        key={'ManagementView'}
+        title={'Management File'}
       />
     </Switch>
   );

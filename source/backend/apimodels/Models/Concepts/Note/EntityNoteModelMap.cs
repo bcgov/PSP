@@ -50,6 +50,20 @@ namespace Pims.Api.Models.Concepts.Note
                 .Map(dest => dest.LeaseId, src => src.Parent.Id)
                 .Inherits<BaseAuditModel, Entity.IBaseAppEntity>();
 
+            // PimsManagementNote -> EntityNoteModel
+            config.NewConfig<Entity.PimsManagementFileNote, EntityNoteModel>()
+                .Map(dest => dest.Id, src => src.ManagementFileNoteId)
+                .Map(dest => dest.Note, src => src.Note)
+                .Map(dest => dest.Parent, src => src)
+                .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
+
+            // PimsManagementNote <- EntityNoteModel
+            config.NewConfig<EntityNoteModel, Entity.PimsManagementFileNote>()
+                .Map(dest => dest.ManagementFileNoteId, src => src.Id)
+                .Map(dest => dest.Note, src => src.Note)
+                .Map(dest => dest.ManagementFileId, src => src.Parent.Id)
+                .Inherits<BaseAuditModel, Entity.IBaseAppEntity>();
+
             config.NewConfig<Entity.PimsProjectNote, EntityNoteModel>()
                 .Map(dest => dest.Id, src => src.ProjectNoteId)
                 .Map(dest => dest.Note, src => src.Note)

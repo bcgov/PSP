@@ -87,6 +87,8 @@ namespace Pims.Dal
             repositories.AddScoped<Repositories.IDocumentQueueRepository, Repositories.DocumentQueueRepository>();
             repositories.AddScoped<Repositories.IPmbcBctfaPidRepository, Repositories.PmbcBctfaPidRepository>();
             repositories.AddScoped<Repositories.IExpropriationEventRepository, Repositories.ExpropriationEventRepository>();
+            repositories.AddScoped<Repositories.IManagementFilePropertyRepository, Repositories.ManagementFilePropertyRepository>();
+            repositories.AddScoped<Repositories.IManagementFileRepository, Repositories.ManagementFileRepository>();
             return repositories;
         }
 

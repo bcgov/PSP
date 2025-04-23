@@ -139,6 +139,9 @@ namespace Pims.Api.Controllers
                 var acquisitionFileExpropiationRiskStatuses = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionFileExpropiationRiskStatusTypes());
                 var llTeamProfileTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllLlTeamProfileTypes());
                 var expropriationEventTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllExpropriationEventTypes());
+                var managementFileProgramTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllManagementFileProgramTypes());
+                var managementFileStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllManagementFileStatusTypes());
+                var managementFileProfileTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllManagementFileProfileTypes());
 
                 var codes = new List<object>();
                 codes.AddRange(areaUnitTypes);
@@ -221,6 +224,9 @@ namespace Pims.Api.Controllers
                 codes.AddRange(acquisitionFileExpropiationRiskStatuses);
                 codes.AddRange(llTeamProfileTypes);
                 codes.AddRange(expropriationEventTypes);
+                codes.AddRange(managementFileProgramTypes);
+                codes.AddRange(managementFileStatusTypes);
+                codes.AddRange(managementFileProfileTypes);
 
                 var response = new JsonResult(codes);
 

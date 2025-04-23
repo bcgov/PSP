@@ -1,0 +1,289 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
+using Pims.Core.Exceptions;
+using Pims.Core.Extensions;
+using Pims.Dal.Entities;
+using Pims.Dal.Entities.Models;
+using Pims.Dal.Helpers.Extensions;
+
+namespace Pims.Dal.Repositories
+{
+    /// <summary>
+    /// Provides a repository to interact with management files within the datasource.
+    /// </summary>
+    public class ManagementFileRepository : BaseRepository<PimsManagementFile>, IManagementFileRepository
+    {
+        #region Constructors
+
+        /// <summary>
+        /// Creates a new instance of a ManagementFileRepository, and initializes it with the specified arguments.
+        /// </summary>
+        /// <param name="dbContext"></param>
+        /// <param name="user"></param>
+        /// <param name="logger"></param>
+        public ManagementFileRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<ManagementFileRepository> logger)
+            : base(dbContext, user, logger)
+        {
+        }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Retrieves the management file with the specified id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public PimsManagementFile GetById(long id)
+        {
+            using var scope = Logger.QueryScope();
+
+            return this.Context.PimsManagementFiles.AsNoTracking()
+                .Include(d => d.ManagementFileStatusTypeCodeNavigation)
+                .Include(d => d.Project)
+                .Include(d => d.Product)
+                .Include(d => d.AcquisitionFundingTypeCodeNavigation)
+                .Include(d => d.ManagementFileProgramTypeCodeNavigation)
+                .Include(d => d.ManagementFileStatusTypeCodeNavigation)
+                .Include(d => d.PimsManagementFileProperties)
+                .Include(d => d.PimsManagementFileTeams)
+                    .ThenInclude(d => d.Organization)
+                .Include(d => d.PimsManagementFileTeams)
+                    .ThenInclude(d => d.Person)
+                .Include(d => d.PimsManagementFileTeams)
+                    .ThenInclude(d => d.PrimaryContact)
+                .Include(d => d.PimsManagementFileTeams)
+                    .ThenInclude(d => d.ManagementFileProfileTypeCodeNavigation)
+                .FirstOrDefault(d => d.ManagementFileId == id) ?? throw new KeyNotFoundException();
+        }
+
+        /// <summary>
+        /// Add the new Management File to Context.
+        /// </summary>
+        /// <param name="managementFile"></param>
+        /// <returns></returns>
+        public PimsManagementFile Add(PimsManagementFile managementFile)
+        {
+            using var scope = Logger.QueryScope();
+            managementFile.ThrowIfNull(nameof(managementFile));
+
+            if (managementFile.PimsManagementFileProperties.Any(x => x.Property != null && x.Property.IsRetired.HasValue && x.Property.IsRetired.Value))
+            {
+                throw new BusinessRuleViolationException("Retired property can not be selected.");
+            }
+
+            // Existing properties should not be added.
+            foreach (var managementProperty in managementFile.PimsManagementFileProperties)
+            {
+                if (managementProperty.Property.Internal_Id != 0)
+                {
+                    managementProperty.Property = null;
+                }
+            }
+
+            Context.PimsManagementFiles.Add(managementFile);
+
+            return managementFile;
+        }
+
+        /// <summary>
+        /// Retrieves the management file with the specified id last update information.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public LastUpdatedByModel GetLastUpdateBy(long id)
+        {
+            // Management File
+            var lastUpdatedByAggregate = new List<LastUpdatedByModel>();
+            var fileLastUpdatedBy = this.Context.PimsManagementFiles.AsNoTracking()
+                .Where(d => d.ManagementFileId == id)
+                .Select(d => new LastUpdatedByModel()
+                {
+                    ParentId = id,
+                    AppLastUpdateUserid = d.AppLastUpdateUserid,
+                    AppLastUpdateUserGuid = d.AppLastUpdateUserGuid,
+                    AppLastUpdateTimestamp = d.AppLastUpdateTimestamp,
+                })
+                .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+                .Take(1)
+                .ToList();
+            lastUpdatedByAggregate.AddRange(fileLastUpdatedBy);
+
+            // Management Team
+            var teamLastUpdatedBy = this.Context.PimsManagementFileTeams.AsNoTracking()
+              .Where(dp => dp.ManagementFileId == id)
+              .Select(dp => new LastUpdatedByModel()
+              {
+                  ParentId = id,
+                  AppLastUpdateUserid = dp.AppLastUpdateUserid,
+                  AppLastUpdateUserGuid = dp.AppLastUpdateUserGuid,
+                  AppLastUpdateTimestamp = dp.AppLastUpdateTimestamp,
+              })
+              .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+              .Take(1)
+              .ToList();
+            lastUpdatedByAggregate.AddRange(teamLastUpdatedBy);
+
+            // Management Deleted Team
+            // This is needed to get the management team last-updated-by when deleted
+            var deletedTeams = this.Context.PimsManagementFileTeamHists.AsNoTracking()
+               .Where(aph => aph.ManagementFileId == id)
+               .GroupBy(aph => aph.PimsManagementFileTeamId)
+               .Select(gaph => gaph.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault()).ToList();
+
+            var teamHistLastUpdatedBy = deletedTeams
+              .Select(dph => new LastUpdatedByModel()
+              {
+                  ParentId = id,
+                  AppLastUpdateUserid = dph.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
+                  AppLastUpdateUserGuid = dph.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                  AppLastUpdateTimestamp = dph.EndDateHist ?? DateTime.UnixEpoch,
+              })
+              .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+              .Take(1)
+              .ToList();
+            lastUpdatedByAggregate.AddRange(teamHistLastUpdatedBy);
+
+            // Management Properties
+            var propertiesLastUpdatedBy = this.Context.PimsManagementFileProperties.AsNoTracking()
+                .Where(dp => dp.ManagementFileId == id)
+                .Select(dp => new LastUpdatedByModel()
+                {
+                    ParentId = id,
+                    AppLastUpdateUserid = dp.AppLastUpdateUserid,
+                    AppLastUpdateUserGuid = dp.AppLastUpdateUserGuid,
+                    AppLastUpdateTimestamp = dp.AppLastUpdateTimestamp,
+                })
+                .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+                .Take(1)
+                .ToList();
+            lastUpdatedByAggregate.AddRange(propertiesLastUpdatedBy);
+
+            // Management Deleted Properties
+            // This is needed to get the notes last-updated-by from the notes that where deleted
+            var deletedProperties = this.Context.PimsManagementFilePropertyHists.AsNoTracking()
+               .Where(aph => aph.ManagementFileId == id)
+               .GroupBy(aph => aph.ManagementFilePropertyId)
+               .Select(gaph => gaph.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault()).ToList();
+
+            var propertiesHistoryLastUpdatedBy = deletedProperties
+            .Select(dph => new LastUpdatedByModel()
+            {
+                ParentId = id,
+                AppLastUpdateUserid = dph.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserGuid = dph.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateTimestamp = dph.EndDateHist ?? DateTime.UnixEpoch,
+            })
+            .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+            .Take(1)
+            .ToList();
+            lastUpdatedByAggregate.AddRange(propertiesHistoryLastUpdatedBy);
+
+            // Management Document
+            var documentLastUpdatedBy = this.Context.PimsManagementFileDocuments.AsNoTracking()
+                .Where(dp => dp.ManagementFileId == id)
+                .Select(dp => new LastUpdatedByModel()
+                {
+                    ParentId = id,
+                    AppLastUpdateUserid = dp.AppLastUpdateUserid,
+                    AppLastUpdateUserGuid = dp.AppLastUpdateUserGuid,
+                    AppLastUpdateTimestamp = dp.AppLastUpdateTimestamp,
+                })
+                .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+                .Take(1)
+                .ToList();
+            lastUpdatedByAggregate.AddRange(documentLastUpdatedBy);
+
+            // Management Deleted Documents
+            var documentHistoryLastUpdatedBy = Context.PimsManagementFileDocumentHists.AsNoTracking()
+            .Where(dph => dph.ManagementFileId == id)
+            .Select(dph => new LastUpdatedByModel()
+            {
+                ParentId = id,
+                AppLastUpdateUserid = dph.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserGuid = dph.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateTimestamp = dph.EndDateHist ?? DateTime.UnixEpoch,
+            })
+            .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+            .Take(1)
+            .ToList();
+            lastUpdatedByAggregate.AddRange(documentHistoryLastUpdatedBy);
+
+            // Management Notes
+            var notesLastUpdatedBy = this.Context.PimsManagementFileNotes.AsNoTracking()
+                .Where(dp => dp.ManagementFileId == id)
+                .Select(dp => new LastUpdatedByModel()
+                {
+                    ParentId = id,
+                    AppLastUpdateUserid = dp.AppLastUpdateUserid,
+                    AppLastUpdateUserGuid = dp.AppLastUpdateUserGuid,
+                    AppLastUpdateTimestamp = dp.AppLastUpdateTimestamp,
+                })
+                .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+                .Take(1)
+                .ToList();
+            lastUpdatedByAggregate.AddRange(notesLastUpdatedBy);
+
+            // Management Deleted Notes
+            var notesHistoryLastUpdatedBy = Context.PimsManagementFileNoteHists.AsNoTracking()
+            .Where(dph => dph.ManagementFileId == id)
+            .Select(dph => new LastUpdatedByModel()
+            {
+                ParentId = id,
+                AppLastUpdateUserid = dph.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserGuid = dph.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateTimestamp = dph.EndDateHist ?? DateTime.UnixEpoch,
+            })
+            .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+            .Take(1)
+            .ToList();
+            lastUpdatedByAggregate.AddRange(notesHistoryLastUpdatedBy);
+
+            return lastUpdatedByAggregate.OrderByDescending(x => x.AppLastUpdateTimestamp).FirstOrDefault();
+        }
+
+        public PimsManagementFile Update(long managementFileId, PimsManagementFile managementFile)
+        {
+            using var scope = Logger.QueryScope();
+            managementFile.ThrowIfNull(nameof(managementFile));
+
+            var existingFile = Context.PimsManagementFiles
+                .FirstOrDefault(x => x.ManagementFileId == managementFileId) ?? throw new KeyNotFoundException();
+
+            Context.Entry(existingFile).CurrentValues.SetValues(managementFile);
+            Context.UpdateChild<PimsManagementFile, long, PimsManagementFileTeam, long>(p => p.PimsManagementFileTeams, managementFile.Internal_Id, managementFile.PimsManagementFileTeams.ToArray());
+
+            return existingFile;
+        }
+
+        /// <summary>
+        /// Retrieves the version of the management file with the specified id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>The file row version.</returns>
+        public long GetRowVersion(long id)
+        {
+            using var scope = Logger.QueryScope();
+
+            var result = this.Context.PimsManagementFiles.AsNoTracking()
+                .Where(p => p.ManagementFileId == id)?
+                .FirstOrDefault() ?? throw new KeyNotFoundException();
+            return result.ConcurrencyControlNumber;
+        }
+
+        public List<PimsManagementFileTeam> GetTeamMembers()
+        {
+            return Context.PimsManagementFileTeams.AsNoTracking()
+                .Include(x => x.ManagementFile)
+                .Include(x => x.Person)
+                .Include(x => x.Organization)
+                .ToList();
+        }
+        #endregion
+    }
+}

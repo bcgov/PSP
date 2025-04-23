@@ -15,5 +15,7 @@ namespace Pims.Api.Models.Concepts.Property
         public IList<AssociationModel> AcquisitionAssociations { get; set; }
 
         public IList<AssociationModel> DispositionAssociations { get; set; }
+
+        public IList<AssociationModel> ManagementAssociations { get; set; }
     }
 }
