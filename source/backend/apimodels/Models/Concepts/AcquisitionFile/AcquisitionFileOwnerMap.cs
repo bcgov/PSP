@@ -7,7 +7,8 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.PimsAcquisitionOwner, AcquisitionFileOwnerModel>()
+            config
+                .NewConfig<Entity.PimsAcquisitionOwner, AcquisitionFileOwnerModel>()
                 .Map(dest => dest.Id, src => src.AcquisitionOwnerId)
                 .Map(dest => dest.AcquisitionFileId, src => src.AcquisitionFileId)
                 .Map(dest => dest.RowVersion, src => src.ConcurrencyControlNumber)
@@ -22,7 +23,8 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
                 .Map(dest => dest.RegistrationNumber, src => src.RegistrationNumber)
                 .Map(dest => dest.Address, src => src.Address);
 
-            config.NewConfig<AcquisitionFileOwnerModel, Entity.PimsAcquisitionOwner>()
+            config
+                .NewConfig<AcquisitionFileOwnerModel, Entity.PimsAcquisitionOwner>()
                 .Map(dest => dest.AcquisitionOwnerId, src => src.Id)
                 .Map(dest => dest.AcquisitionFileId, src => src.AcquisitionFileId)
                 .Map(dest => dest.ConcurrencyControlNumber, src => src.RowVersion)
@@ -37,6 +39,21 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
                 .Map(dest => dest.RegistrationNumber, src => src.RegistrationNumber)
                 .Map(dest => dest.AddressId, src => src.Address.Id)
                 .Map(dest => dest.Address, src => src.Address);
+
+            config
+                .NewConfig<Entity.PimsAcquisitionOwnerHist, Entity.PimsAcquisitionOwner>()
+                .Map(dest => dest.AcquisitionOwnerId, src => src.AcquisitionOwnerId)
+                .Map(dest => dest.AcquisitionFileId, src => src.AcquisitionFileId)
+                .Map(dest => dest.IsPrimaryOwner, src => src.IsPrimaryOwner)
+                .Map(dest => dest.IsOrganization, src => src.IsOrganization)
+                .Map(dest => dest.LastNameAndCorpName, src => src.LastNameAndCorpName)
+                .Map(dest => dest.OtherName, src => src.OtherName)
+                .Map(dest => dest.GivenName, src => src.GivenName)
+                .Map(dest => dest.ContactEmailAddr, src => src.ContactEmailAddr)
+                .Map(dest => dest.ContactPhoneNum, src => src.ContactPhoneNum)
+                .Map(dest => dest.IncorporationNumber, src => src.IncorporationNumber)
+                .Map(dest => dest.RegistrationNumber, src => src.RegistrationNumber)
+                .Map(dest => dest.AddressId, src => src.AddressId);
         }
     }
 }
