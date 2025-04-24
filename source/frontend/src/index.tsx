@@ -10,6 +10,7 @@ import './assets/scss/index.scss'; // should be loaded last to allow for overrid
 
 import * as bcTokens from '@bcgov/design-tokens/js/variables.js';
 import { ReactKeycloakProvider } from '@react-keycloak/web';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Keycloak from 'keycloak-js';
 import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
@@ -45,13 +46,22 @@ async function prepare() {
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 //@ts-ignore
 const keycloak: Keycloak = new Keycloak('/keycloak.json');
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 600000, // when this is set, a query is set stale after 10 minutes. Stale queries are refreshed when useQuery is mounted.
+    },
+  },
+}); // set various defaults to control the caching and refetching of queries. Could be set by tenant.
 const Index = () => {
   return (
     <TenantProvider>
       <ModalContextProvider>
-        <Router>
-          <TenantConsumer>{({ tenant }) => <InnerComponent tenant={tenant} />}</TenantConsumer>
-        </Router>
+        <QueryClientProvider client={queryClient}>
+          <Router>
+            <TenantConsumer>{({ tenant }) => <InnerComponent tenant={tenant} />}</TenantConsumer>
+          </Router>
+        </QueryClientProvider>
       </ModalContextProvider>
     </TenantProvider>
   );

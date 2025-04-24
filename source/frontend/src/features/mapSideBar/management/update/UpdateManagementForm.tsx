@@ -69,7 +69,6 @@ const UpdateManagementForm: React.FC<IUpdateManagementFormProps> = ({
 
   return (
     <Formik<ManagementFormModel>
-      enableReinitialize
       innerRef={formikRef}
       initialValues={initialValues}
       validationSchema={AddManagementFormYupSchema}

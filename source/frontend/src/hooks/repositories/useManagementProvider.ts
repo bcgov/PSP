@@ -1,5 +1,7 @@
-import { AxiosResponse } from 'axios';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { AxiosError, AxiosResponse } from 'axios';
 import { useCallback, useMemo } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { Api_LastUpdatedBy } from '@/models/api/File';
@@ -7,18 +9,15 @@ import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Co
 import { ApiGen_Concepts_ManagementFileProperty } from '@/models/api/generated/ApiGen_Concepts_ManagementFileProperty';
 import { ApiGen_Concepts_ManagementFileTeam } from '@/models/api/generated/ApiGen_Concepts_ManagementFileTeam';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import {
-  useAxiosErrorHandler,
-  useAxiosErrorHandlerWithAuthorization,
-  useAxiosSuccessHandler,
-} from '@/utils';
+import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 import { useApiManagementFile } from '../pims-api/useApiManagementFile';
+import { handleAxiosResponseRaw } from './../../utils/utils';
 
 /**
  * hook that interacts with the Management File API.
  */
-export const useManagementProvider = () => {
+export const useManagementProvider = ({ managementFileId }: { managementFileId?: number }) => {
   const {
     postManagementFileApi,
     getManagementFile,
@@ -28,54 +27,58 @@ export const useManagementProvider = () => {
     getLastUpdatedByApi,
     getAllManagementFileTeamMembers,
   } = useApiManagementFile();
+  const dispatch = useDispatch();
+  const queryClient = useQueryClient();
 
-  const addManagementFileApi = useApiRequestWrapper<
-    (
-      managementFile: ApiGen_Concepts_ManagementFile,
-      userOverrideCodes: UserOverrideCode[],
-    ) => Promise<AxiosResponse<ApiGen_Concepts_ManagementFile, any>>
+  const addManagementFileMutation = useMutation<
+    ApiGen_Concepts_ManagementFile,
+    AxiosError,
+    {
+      managementFile: ApiGen_Concepts_ManagementFile;
+      userOverrideCodes: UserOverrideCode[];
+    }
   >({
-    requestFunction: useCallback(
-      async (
-        managementFile: ApiGen_Concepts_ManagementFile,
-        useOverride: UserOverrideCode[] = [],
-      ) => await postManagementFileApi(managementFile, useOverride),
-      [postManagementFileApi],
-    ),
-    requestName: 'AddManagementFile',
-    onSuccess: useAxiosSuccessHandler(),
-    throwError: true,
+    mutationFn: async ({ managementFile, userOverrideCodes }) =>
+      await handleAxiosResponseRaw(
+        dispatch,
+        'AddManagementFile',
+        postManagementFileApi(managementFile, userOverrideCodes ?? []),
+      ),
+    mutationKey: ['AddManagementFile'],
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['GetManagementFiles'] }); // invalidate the list of management files as a new one has been added.
+    },
   });
 
-  const getManagementFileApi = useApiRequestWrapper<
-    (managementFileId: number) => Promise<AxiosResponse<ApiGen_Concepts_ManagementFile, any>>
-  >({
-    requestFunction: useCallback(
-      async (managementFileId: number) => await getManagementFile(managementFileId),
-      [getManagementFile],
-    ),
-    requestName: 'RetrieveManagementFile',
-    onError: useAxiosErrorHandlerWithAuthorization('Failed to load Management File'),
+  const getManagementFileQuery = useQuery({
+    queryKey: ['RetrieveManagementFile', managementFileId],
+    queryFn: async () =>
+      await handleAxiosResponseRaw(
+        dispatch,
+        'RetrieveManagementFile',
+        getManagementFile(managementFileId),
+      ),
   });
 
-  const updateManagementFileApi = useApiRequestWrapper<
-    (
-      managementFileId: number,
-      managementFile: ApiGen_Concepts_ManagementFile,
-      userOverrideCodes: UserOverrideCode[],
-    ) => Promise<AxiosResponse<ApiGen_Concepts_ManagementFile, any>>
+  const updateManagementFileMutation = useMutation<
+    ApiGen_Concepts_ManagementFile,
+    AxiosError,
+    {
+      managementFileId: number;
+      managementFile: ApiGen_Concepts_ManagementFile;
+      userOverrideCodes: UserOverrideCode[];
+    }
   >({
-    requestFunction: useCallback(
-      async (
-        managementFileId: number,
-        managementFile: ApiGen_Concepts_ManagementFile,
-        useOverride: UserOverrideCode[] = [],
-      ) => await putManagementFileApi(managementFileId, managementFile, useOverride),
-      [putManagementFileApi],
-    ),
-    requestName: 'UpdateManagementFile',
-    onSuccess: useAxiosSuccessHandler(),
-    throwError: true,
+    mutationFn: async ({ managementFileId, managementFile, userOverrideCodes }) =>
+      await handleAxiosResponseRaw(
+        dispatch,
+        'UpdateManagementFile',
+        putManagementFileApi(managementFileId, managementFile, userOverrideCodes ?? []),
+      ),
+    mutationKey: ['UpdateManagementFile'],
+    onSuccess: (data: ApiGen_Concepts_ManagementFile) => {
+      queryClient.invalidateQueries({ queryKey: ['RetrieveManagementFile', data?.id] }); // invalidate the management file.
+    },
   });
 
   const updateManagementPropertiesApi = useApiRequestWrapper<
@@ -133,22 +136,22 @@ export const useManagementProvider = () => {
 
   return useMemo(
     () => ({
-      addManagementFileApi: addManagementFileApi,
-      getManagementFile: getManagementFileApi,
-      putManagementFile: updateManagementFileApi,
       getLastUpdatedBy,
       updateManagementProperties: updateManagementPropertiesApi,
       getManagementProperties: getManagementPropertiesApi,
       getAllManagementTeamMembers: getAllManagementTeamMembersApi,
+      addManagementFileMutation,
+      updateManagementFileMutation,
+      getManagementFileQuery,
     }),
     [
-      addManagementFileApi,
-      getManagementFileApi,
-      updateManagementFileApi,
       getLastUpdatedBy,
+      updateManagementPropertiesApi,
       getManagementPropertiesApi,
       getAllManagementTeamMembersApi,
-      updateManagementPropertiesApi,
+      addManagementFileMutation,
+      updateManagementFileMutation,
+      getManagementFileQuery,
     ],
   );
 };

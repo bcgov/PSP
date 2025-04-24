@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios';
 import { FormikProps } from 'formik';
-import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useContext, useMemo, useRef, useState } from 'react';
 import { matchPath, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
@@ -11,7 +11,6 @@ import { useQuery } from '@/hooks/use-query';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
-import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
@@ -38,12 +37,7 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
   >('Failed to update Management File Properties');
 
   const {
-    getManagementFile: {
-      execute: retrieveManagementFile,
-      loading: loadingManagementFile,
-      error,
-      response: managementFile,
-    },
+    getManagementFileQuery: { status: getManagementFileStatus, data: managementFile },
     getManagementProperties: {
       execute: retrieveManagementFileProperties,
       loading: loadingManagementFileProperties,
@@ -51,7 +45,7 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
     },
     updateManagementProperties,
     getLastUpdatedBy: { execute: getLastUpdatedBy, loading: loadingGetLastUpdatedBy },
-  } = useManagementProvider();
+  } = useManagementProvider({ managementFileId: managementFileId });
   const { execute: getPropertyAssociations } = usePropertyAssociations();
 
   const { setModalContent, setDisplayModal } = useModalContext();
@@ -83,20 +77,6 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
     [location.pathname, match.path],
   );
 
-  // Retrieve management file from API and save it to local state and side-bar context
-  const fetchManagementFile = useCallback(async () => {
-    const retrieved = await retrieveManagementFile(managementFileId);
-    if (exists(retrieved)) {
-      // retrieve related entities (ie properties items) in parallel
-      const fileProperties = await retrieveManagementFileProperties(managementFileId);
-
-      retrieved.fileProperties = fileProperties ?? null;
-      setFile({ ...retrieved, fileType: ApiGen_CodeTypes_FileTypes.Management });
-    } else {
-      setFile(undefined);
-    }
-  }, [retrieveManagementFile, managementFileId, retrieveManagementFileProperties, setFile]);
-
   const fetchLastUpdatedBy = React.useCallback(async () => {
     const retrieved = await getLastUpdatedBy(managementFileId);
     if (retrieved !== undefined) {
@@ -115,22 +95,6 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
       fetchLastUpdatedBy();
     }
   }, [fetchLastUpdatedBy, lastUpdatedBy, managementFileId, staleLastUpdatedBy]);
-
-  useEffect(() => {
-    if (
-      (!error && managementFileId !== managementFile?.id && !loadingManagementFile) ||
-      staleFile
-    ) {
-      fetchManagementFile();
-    }
-  }, [
-    managementFile,
-    fetchManagementFile,
-    managementFileId,
-    staleFile,
-    loadingManagementFile,
-    error,
-  ]);
 
   const close = useCallback(() => onClose && onClose(), [onClose]);
 
@@ -195,12 +159,9 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
     setIsEditing(false);
   };
 
-  const onSuccess = (refreshProperties?: boolean, refreshFile?: boolean) => {
+  const onSuccess = (refreshProperties?: boolean) => {
     setIsEditing(false);
     fetchLastUpdatedBy();
-    if (refreshFile) {
-      fetchManagementFile();
-    }
     if (refreshProperties) {
       mapMachine.refreshMapProperties();
     }
@@ -227,7 +188,7 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
           )
           .then(response => {
             history.push(`${stripTrailingSlash(match.url)}`);
-            onSuccess(true, true);
+            onSuccess(true);
             return response;
           });
       },
@@ -270,10 +231,10 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
 
   // UI components
   const loading =
-    loadingManagementFile ||
+    getManagementFileStatus === 'pending' ||
     loadingGetLastUpdatedBy ||
     (loadingManagementFileProperties && !isPropertySelector) ||
-    !managementFile;
+    (!managementFile && getManagementFileStatus !== 'error');
 
   return (
     <>
@@ -291,7 +252,7 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
         canRemove={canRemove}
         formikRef={formikRef}
         isFormValid={isValid}
-        error={error}
+        isError={getManagementFileStatus === 'error'}
         managementFile={
           managementFile?.id === managementFileId
             ? {

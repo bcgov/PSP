@@ -33,9 +33,9 @@ export const UpdateManagementContainer = React.forwardRef<
 
   const dispositionStatusTypes = getByType(API.DISPOSITION_FILE_STATUS_TYPES);
 
-  const {
-    putManagementFile: { execute: updateManagementFile, loading },
-  } = useManagementProvider();
+  const { updateManagementFileMutation } = useManagementProvider({
+    managementFileId: managementFile?.id,
+  });
 
   const withUserOverride = useApiUserOverride<
     (userOverrideCodes: UserOverrideCode[]) => Promise<ApiGen_Concepts_ManagementFile | void>
@@ -49,11 +49,11 @@ export const UpdateManagementContainer = React.forwardRef<
     try {
       const managementFile = values.toApi();
       if (managementFile.id) {
-        const response = await updateManagementFile(
-          managementFile.id,
+        const response = await updateManagementFileMutation.mutateAsync({
+          managementFileId: managementFile.id,
           managementFile,
           userOverrideCodes,
-        );
+        });
 
         if (isValidId(response?.id)) {
           formikHelpers?.resetForm();
@@ -141,7 +141,7 @@ export const UpdateManagementContainer = React.forwardRef<
           );
         }
       }}
-      loading={loading}
+      loading={updateManagementFileMutation.isPending}
     ></View>
   );
 });

@@ -1,4 +1,3 @@
-import { AxiosError } from 'axios';
 import { FormikProps } from 'formik';
 import React, { useContext } from 'react';
 import {
@@ -14,7 +13,6 @@ import {
 import ManagementIcon from '@/assets/images/management-grey-icon.svg?react';
 import FileLayout from '@/features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
-import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
@@ -47,7 +45,7 @@ export interface IManagementViewProps {
   setIsEditing: (value: boolean) => void;
   formikRef: React.RefObject<FormikProps<any>>;
   isFormValid: boolean;
-  error: AxiosError<IApiError, any> | undefined;
+  isError: boolean;
   managementFile?: ApiGen_Concepts_ManagementFile;
 }
 
@@ -65,7 +63,7 @@ export const ManagementView: React.FunctionComponent<IManagementViewProps> = ({
   setIsEditing,
   formikRef,
   isFormValid,
-  error,
+  isError,
   managementFile,
 }) => {
   // match for the current route
@@ -152,7 +150,7 @@ export const ManagementView: React.FunctionComponent<IManagementViewProps> = ({
             }
             bodyComponent={
               <StyledFormWrapper>
-                {error && (
+                {isError && (
                   <b>
                     Failed to load Management File. Check the detailed error in the top right for
                     more details.

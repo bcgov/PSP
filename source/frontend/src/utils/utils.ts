@@ -123,6 +123,30 @@ export const handleAxiosResponse = <ResponseType>(
     });
 };
 
+/** Provides default redux boilerplate applicable to most axios redux actions
+ * @param dispatch Dispatch function
+ * @param actionType All dispatched GenericNetworkActions will use this action type.
+ * @param axiosPromise The result of an axios.get, .put, ..., call.
+ */
+export const handleAxiosResponseRaw = <ResponseType>(
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  dispatch: Function,
+  actionType: string,
+  axiosPromise: Promise<AxiosResponse<ResponseType>>,
+): Promise<ResponseType> => {
+  dispatch(logRequest(actionType));
+  dispatch(showLoading());
+  return axiosPromise
+    .then((response: AxiosResponse<ResponseType>) => {
+      dispatch(logSuccess({ name: actionType, status: response.status }));
+      dispatch(hideLoading());
+      return response?.data;
+    })
+    .finally(() => {
+      dispatch(hideLoading());
+    });
+};
+
 /**
  * convert table sort config to api sort query
  * {name: 'desc} = ['Name desc']
