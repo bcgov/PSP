@@ -160,7 +160,7 @@ export const useMapSearch = () => {
               }
             : emptyPimsLocationFeatureCollection,
           pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-          fullyAttributedFeatures: exists(attributedFeatures)
+          fullyAttributedFeatures: exists(validPmbcFeatures)
             ? {
                 type: attributedFeatures.type,
                 bbox: attributedFeatures.bbox,
