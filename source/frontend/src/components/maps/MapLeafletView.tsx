@@ -17,7 +17,6 @@ import {
   ScaleControl,
   TileLayer,
 } from 'react-leaflet';
-import ReactVisibilitySensor from 'react-visibility-sensor';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { MAP_MAX_NATIVE_ZOOM, MAP_MAX_ZOOM, MAX_ZOOM } from '@/constants/strings';
@@ -38,6 +37,7 @@ import { useConfiguredMapLayers } from './leaflet/Layers/useConfiguredMapLayers'
 import { MapEvents } from './leaflet/MapEvents/MapEvents';
 import * as Styled from './leaflet/styles';
 import { EsriVectorTileLayer } from './leaflet/VectorTileLayer/EsriVectorTileLayer';
+
 export type MapLeafletViewProps = {
   parentWidth: number | undefined;
 };
@@ -242,28 +242,23 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
         />
         {/* The basemap is the first layer to draw, followed by data layers and then graphics */}
         <Pane name="basemap" style={{ zIndex: 200 }}>
-          <ReactVisibilitySensor>
-            {({ isVisible }) =>
-              activeBasemap &&
-              isVisible && (
-                <LayerGroup attribution={activeBasemap.attribution}>
-                  {isVectorBasemap(activeBasemap) ? (
-                    <EsriVectorTileLayer zIndex={0} itemId={activeBasemap.itemId} />
-                  ) : (
-                    activeBasemap.urls?.map((tileUrl, index) => (
-                      <TileLayer
-                        key={`${activeBasemap.name}-${index}`}
-                        zIndex={index}
-                        url={tileUrl}
-                        maxZoom={MAP_MAX_ZOOM}
-                        maxNativeZoom={MAP_MAX_NATIVE_ZOOM}
-                      />
-                    ))
-                  )}
-                </LayerGroup>
-              )
-            }
-          </ReactVisibilitySensor>
+          {activeBasemap && (
+            <LayerGroup attribution={activeBasemap.attribution}>
+              {isVectorBasemap(activeBasemap) ? (
+                <EsriVectorTileLayer zIndex={0} itemId={activeBasemap.itemId} />
+              ) : (
+                activeBasemap.urls?.map((tileUrl, index) => (
+                  <TileLayer
+                    key={`${activeBasemap.name}-${index}`}
+                    zIndex={index}
+                    url={tileUrl}
+                    maxZoom={MAP_MAX_ZOOM}
+                    maxNativeZoom={MAP_MAX_NATIVE_ZOOM}
+                  />
+                ))
+              )}
+            </LayerGroup>
+          )}
         </Pane>
 
         {/* Data layers (i.e. parcelmap, tantalis, etc) are drawn on top of basemaps */}
