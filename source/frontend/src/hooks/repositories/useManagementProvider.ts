@@ -1,5 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { useCallback, useMemo } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { Api_LastUpdatedBy } from '@/models/api/File';
@@ -7,7 +8,10 @@ import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Co
 import { ApiGen_Concepts_ManagementFileProperty } from '@/models/api/generated/ApiGen_Concepts_ManagementFileProperty';
 import { ApiGen_Concepts_ManagementFileTeam } from '@/models/api/generated/ApiGen_Concepts_ManagementFileTeam';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+import { setManagementFile } from '@/store/slices/files/managementFileSlice';
+import { RootState } from '@/store/store';
 import {
+  exists,
   useAxiosErrorHandler,
   useAxiosErrorHandlerWithAuthorization,
   useAxiosSuccessHandler,
@@ -28,6 +32,8 @@ export const useManagementProvider = () => {
     getLastUpdatedByApi,
     getAllManagementFileTeamMembers,
   } = useApiManagementFile();
+  const dispatch = useDispatch();
+  const cachedManagementFiles = useSelector((state: RootState) => state.managementFiles);
 
   const addManagementFileApi = useApiRequestWrapper<
     (
@@ -39,8 +45,14 @@ export const useManagementProvider = () => {
       async (
         managementFile: ApiGen_Concepts_ManagementFile,
         useOverride: UserOverrideCode[] = [],
-      ) => await postManagementFileApi(managementFile, useOverride),
-      [postManagementFileApi],
+      ) => {
+        const response = await postManagementFileApi(managementFile, useOverride);
+        if (response.status === 201 && exists(response.data)) {
+          dispatch(setManagementFile(response.data));
+        }
+        return response;
+      },
+      [dispatch, postManagementFileApi],
     ),
     requestName: 'AddManagementFile',
     onSuccess: useAxiosSuccessHandler(),
@@ -51,8 +63,20 @@ export const useManagementProvider = () => {
     (managementFileId: number) => Promise<AxiosResponse<ApiGen_Concepts_ManagementFile, any>>
   >({
     requestFunction: useCallback(
-      async (managementFileId: number) => await getManagementFile(managementFileId),
-      [getManagementFile],
+      async (managementFileId: number) => {
+        if (exists(cachedManagementFiles[managementFileId])) {
+          return { data: cachedManagementFiles[managementFileId] } as any as AxiosResponse<
+            ApiGen_Concepts_ManagementFile,
+            any
+          >;
+        }
+        const response = await getManagementFile(managementFileId);
+        if (response.status === 200 && exists(response.data)) {
+          dispatch(setManagementFile(response.data));
+        }
+        return response;
+      },
+      [cachedManagementFiles, dispatch, getManagementFile],
     ),
     requestName: 'RetrieveManagementFile',
     onError: useAxiosErrorHandlerWithAuthorization('Failed to load Management File'),
@@ -70,8 +94,14 @@ export const useManagementProvider = () => {
         managementFileId: number,
         managementFile: ApiGen_Concepts_ManagementFile,
         useOverride: UserOverrideCode[] = [],
-      ) => await putManagementFileApi(managementFileId, managementFile, useOverride),
-      [putManagementFileApi],
+      ) => {
+        const response = await putManagementFileApi(managementFileId, managementFile, useOverride);
+        if (response.status === 200 && exists(response.data)) {
+          dispatch(setManagementFile(response.data));
+        }
+        return response;
+      },
+      [dispatch, putManagementFileApi],
     ),
     requestName: 'UpdateManagementFile',
     onSuccess: useAxiosSuccessHandler(),

@@ -1,5 +1,6 @@
 import { loadingBarReducer } from 'react-redux-loading-bar';
 
+import managementFileSlice from '@/store/slices/files/managementFileSlice';
 import filterSlice from '@/store/slices/filter/filterSlice';
 import jwtSlice from '@/store/slices/jwt/JwtSlice';
 import keycloakReadySlice from '@/store/slices/keycloakReady/keycloakReadySlice';
@@ -19,5 +20,6 @@ export const reducer = {
   [jwtSlice.name]: jwtSlice.reducer,
   [filterSlice.name]: filterSlice.reducer,
   [keycloakReadySlice.name]: keycloakReadySlice.reducer,
+  [managementFileSlice.name]: managementFileSlice.reducer,
   [tenantsSlice.name]: tenantsSlice.reducer,
 };
