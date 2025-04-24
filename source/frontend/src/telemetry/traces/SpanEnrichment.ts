@@ -39,11 +39,11 @@ export abstract class SpanEnrichment {
     const accessTokenExpiry = (keycloak?.tokenParsed?.exp ?? 0) * 1000;
     // access token stats
     attributes['access.token.expiration'] = accessTokenExpiry;
-    attributes['access.token.expiration_date'] = new Date(accessTokenExpiry).toISOString();
+    attributes['access.token.expiration.date'] = new Date(accessTokenExpiry).toISOString();
     attributes['access.token.is_expired'] = keycloak?.isTokenExpired() ?? false;
     // refresh token stats
     const refreshTokenExpiry = (keycloak?.refreshTokenParsed?.exp ?? 0) * 1000;
     attributes['refresh.token.expiration'] = refreshTokenExpiry;
-    attributes['refresh.token.expiration_date'] = new Date(refreshTokenExpiry).toISOString();
+    attributes['refresh.token.expiration.date'] = new Date(refreshTokenExpiry).toISOString();
   }
 }
