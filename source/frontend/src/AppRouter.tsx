@@ -8,17 +8,6 @@ import { Claims } from '@/constants/claims';
 import { Roles } from '@/constants/roles';
 import { IENotSupportedPage } from '@/features/account/IENotSupportedPage';
 import { LogoutPage } from '@/features/account/Logout';
-import { AdminAccessRequestPage } from '@/features/admin/access-request/AdminAccessRequestPage';
-import { AddFinancialCodeContainer } from '@/features/admin/financial-codes/add/AddFinancialCodeContainer';
-import { AddFinancialCodeForm } from '@/features/admin/financial-codes/add/AddFinancialCodeForm';
-import { UpdateFinancialCodeContainer } from '@/features/admin/financial-codes/update/UpdateFinancialCodeContainer';
-import { UpdateFinancialCodeForm } from '@/features/admin/financial-codes/update/UpdateFinancialCodeForm';
-import { ContactListPage } from '@/features/contacts';
-import CreateContactContainer from '@/features/contacts/contact/create/CreateContactContainer';
-import ContactViewContainer from '@/features/contacts/contact/detail/Container';
-import UpdateContactContainer from '@/features/contacts/contact/edit/UpdateContactContainer';
-import ProjectListView from '@/features/projects/list/ProjectListView';
-import { ResearchListView } from '@/features/research/list/ResearchListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import AuthLayout from '@/layouts/AuthLayout';
 import PublicLayout from '@/layouts/PublicLayout';
@@ -27,8 +16,6 @@ import AppRoute from '@/utils/AppRoute';
 import componentLoader from '@/utils/utils';
 
 import Login from './features/account/Login';
-import UpdateBctfaOwnershipContainer from './features/admin/bctfa/UpdateBctfaOwnershipContainer';
-import UpdateBctfaOwnershipView from './features/admin/bctfa/UpdateBctfaOwnershipView';
 import AccessDenied from './pages/401/AccessDenied';
 
 const MapView = lazy(() => componentLoader(import('@/features/properties/map/MapContainer'), 2));
@@ -38,17 +25,19 @@ const AccessRequestPage = lazy(() =>
 const EditUserPage = lazy(() =>
   componentLoader(import('@/features/admin/edit-user/EditUserPage'), 2),
 );
+const AdminAccessRequestPage = lazy(() =>
+  componentLoader(import('@/features/admin/access-request/AdminAccessRequestPage'), 2),
+);
+
 const ManageAccessRequests = lazy(() =>
   componentLoader(import('@/features/admin/access/ManageAccessRequestsPage'), 2),
 );
 const ManageUsers = lazy(() =>
   componentLoader(import('@/features/admin/users/ManageUsersPage'), 2),
 );
-
 const ManageDocumentTemplate = lazy(() =>
   componentLoader(import('@/features/admin/document-template/DocumentTemplateManagementPage'), 2),
 );
-
 const PropertyListView = lazy(() =>
   componentLoader(import('@/features/properties/list/PropertyListView'), 2),
 );
@@ -61,9 +50,48 @@ const AcquisitionListView = lazy(() =>
 const FinancialCodesListView = lazy(() =>
   componentLoader(import('@/features/admin/financial-codes/list/FinancialCodeListView'), 2),
 );
-
 const DispositionListView = lazy(() =>
   componentLoader(import('@/features/disposition/list/DispositionListView'), 2),
+);
+const ProjectListView = lazy(() =>
+  componentLoader(import('@/features/projects/list/ProjectListView'), 2),
+);
+const ResearchListView = lazy(() =>
+  componentLoader(import('@/features/research/list/ResearchListView'), 2),
+);
+
+const AddFinancialCodeContainer = lazy(() =>
+  componentLoader(import('@/features/admin/financial-codes/add/AddFinancialCodeContainer'), 2),
+);
+const AddFinancialCodeForm = lazy(() =>
+  componentLoader(import('@/features/admin/financial-codes/add/AddFinancialCodeForm'), 2),
+);
+const UpdateFinancialCodeContainer = lazy(() =>
+  componentLoader(
+    import('@/features/admin/financial-codes/update/UpdateFinancialCodeContainer'),
+    2,
+  ),
+);
+const UpdateFinancialCodeForm = lazy(() =>
+  componentLoader(import('@/features/admin/financial-codes/update/UpdateFinancialCodeForm'), 2),
+);
+
+const ContactListPage = lazy(() => componentLoader(import('@/features/contacts'), 2));
+const CreateContactContainer = lazy(() =>
+  componentLoader(import('@/features/contacts/contact/create/CreateContactContainer'), 2),
+);
+const ContactViewContainer = lazy(() =>
+  componentLoader(import('@/features/contacts/contact/detail/Container'), 2),
+);
+const UpdateContactContainer = lazy(() =>
+  componentLoader(import('./features/contacts/contact/edit/UpdateContactContainer'), 2),
+);
+
+const UpdateBctfaOwnershipContainer = lazy(() =>
+  componentLoader(import('./features/admin/bctfa/UpdateBctfaOwnershipContainer'), 2),
+);
+const UpdateBctfaOwnershipView = lazy(() =>
+  componentLoader(import('./features/admin/bctfa/UpdateBctfaOwnershipView'), 2),
 );
 
 const AppRouter: FC<PropsWithChildren<unknown>> = () => {

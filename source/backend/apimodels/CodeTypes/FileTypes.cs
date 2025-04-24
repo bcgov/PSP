@@ -15,5 +15,8 @@ namespace Pims.Api.Models.CodeTypes
 
         [EnumMember(Value = "lease")]
         Lease,
+
+        [EnumMember(Value = "management")]
+        Management,
     }
 }

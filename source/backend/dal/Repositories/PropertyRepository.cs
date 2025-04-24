@@ -293,8 +293,9 @@ namespace Pims.Dal.Repositories
             var researchAssociationCount = propertyWithAssociations.PimsPropertyResearchFiles.Count;
             var acquisitionAssociationCount = propertyWithAssociations.PimsPropertyAcquisitionFiles.Count;
             var dispositionAssociationCount = propertyWithAssociations.PimsDispositionFileProperties.Count;
+            var managementAssociationCount = propertyWithAssociations.PimsManagementFileProperties.Count;
 
-            return leaseAssociationCount + researchAssociationCount + acquisitionAssociationCount + dispositionAssociationCount;
+            return leaseAssociationCount + researchAssociationCount + acquisitionAssociationCount + dispositionAssociationCount + managementAssociationCount;
         }
 
         /// <summary>

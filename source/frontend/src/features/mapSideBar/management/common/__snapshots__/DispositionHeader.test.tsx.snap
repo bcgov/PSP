@@ -1,0 +1,161 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`DispositionHeader component > renders as expected when no data is provided 1`] = `
+<DocumentFragment>
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div
+    class="Toastify"
+  />
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div />
+  .c5 {
+  font-size: 0.87em;
+  line-height: 1.9;
+}
+
+.c4 {
+  text-align: right;
+}
+
+.c2 {
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.c0 {
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom-style: solid;
+  border-bottom-color: grey;
+  border-bottom-width: 0.1rem;
+}
+
+.c3 {
+  height: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c1 {
+  max-width: 60rem;
+}
+
+@media only screen and (max-width:1199px) {
+  .c4 {
+    text-align: left;
+  }
+}
+
+<div
+    class="c0 no-gutters row"
+  >
+    <div
+      class="c1 col-7"
+    >
+      <div
+        class="row"
+      >
+        <div
+          class="pr-0 text-left col-3"
+        >
+          <label
+            class="c2"
+          >
+            File:
+          </label>
+        </div>
+        <div
+          class="pl-1 text-left col-9"
+        >
+          D-
+        </div>
+      </div>
+      <div
+        class="row"
+      >
+        <div
+          class="pr-0 text-left col-3"
+        >
+          <label
+            class="c2"
+          >
+            Historical file #:
+          </label>
+        </div>
+        <div
+          class="pl-1 text-left col-9"
+        />
+      </div>
+    </div>
+    <div
+      class="col-5"
+    >
+      <div
+        class="c3"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="c4 col"
+          >
+            <span
+              class="c5"
+            >
+              <strong>
+                Created: 
+              </strong>
+               by 
+              <span
+                class="tooltip-icon"
+                data-testid="tooltip-icon-userNameTooltip"
+                id="userNameTooltip"
+              >
+                <strong>
+                  USER
+                </strong>
+              </span>
+            </span>
+          </div>
+        </div>
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="c4 col"
+          >
+            <span
+              class="c5"
+            >
+              <strong>
+                Updated: 
+              </strong>
+               by 
+              <span
+                class="tooltip-icon"
+                data-testid="tooltip-icon-userNameTooltip"
+                id="userNameTooltip"
+              >
+                <strong>
+                  USER
+                </strong>
+              </span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
