@@ -409,10 +409,10 @@ export const MapRouter: React.FunctionComponent = memo(() => {
         title={'Create Disposition File'}
       />
       <AppRoute
-        path={`/mapview/sidebar/management/:managementFileId`}
+        path={`/mapview/sidebar/management/:id`}
         customRender={({ match }) => (
           <ManagementContainer
-            managementFileId={Number(match.params.managementFileId)}
+            managementFileId={Number(match.params.id)}
             onClose={onClose}
             View={ManagementView}
           />

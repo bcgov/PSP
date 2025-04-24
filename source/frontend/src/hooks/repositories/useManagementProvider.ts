@@ -80,13 +80,15 @@ export const useManagementProvider = () => {
 
   const updateManagementPropertiesApi = useApiRequestWrapper<
     (
-      acqFile: ApiGen_Concepts_ManagementFile,
+      managementFile: ApiGen_Concepts_ManagementFile,
       userOverrideCodes: UserOverrideCode[],
     ) => Promise<AxiosResponse<ApiGen_Concepts_ManagementFile, any>>
   >({
     requestFunction: useCallback(
-      async (acqFile: ApiGen_Concepts_ManagementFile, userOverrideCodes: UserOverrideCode[]) =>
-        await putManagementFileProperties(acqFile, userOverrideCodes),
+      async (
+        managementFile: ApiGen_Concepts_ManagementFile,
+        userOverrideCodes: UserOverrideCode[],
+      ) => await putManagementFileProperties(managementFile, userOverrideCodes),
       [putManagementFileProperties],
     ),
     requestName: 'UpdateManagementFileProperties',
