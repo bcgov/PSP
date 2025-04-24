@@ -18,14 +18,14 @@ export const useApiManagementFile = () => {
   return React.useMemo(
     () => ({
       putManagementFileProperties: (
-        dspFile: ApiGen_Concepts_ManagementFile,
+        managementFile: ApiGen_Concepts_ManagementFile,
         userOverrideCodes: UserOverrideCode[] = [],
       ) =>
         api.put<ApiGen_Concepts_ManagementFile>(
-          `/managementfiles/${dspFile?.id}/properties?${userOverrideCodes
+          `/managementfiles/${managementFile?.id}/properties?${userOverrideCodes
             .map(o => `userOverrideCodes=${o}`)
             .join('&')}`,
-          dspFile,
+          managementFile,
         ),
       postManagementFileApi: (
         managementFile: ApiGen_Concepts_ManagementFile,

@@ -1,7 +1,6 @@
 import { AxiosError } from 'axios';
 import { FormikProps } from 'formik';
 import React, { useContext } from 'react';
-import { MdLibraryAdd } from 'react-icons/md';
 import {
   match,
   matchPath,
@@ -12,6 +11,7 @@ import {
   useRouteMatch,
 } from 'react-router-dom';
 
+import ManagementIcon from '@/assets/images/management-grey-icon.svg?react';
 import FileLayout from '@/features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { IApiError } from '@/interfaces/IApiError';
@@ -125,7 +125,7 @@ export const ManagementView: React.FunctionComponent<IManagementViewProps> = ({
           showCloseButton
           onClose={onClose}
           title={formTitle}
-          icon={<MdLibraryAdd title="Management file Icon" size={28} />}
+          icon={<ManagementIcon title="Management file Icon" width="2.8rem" height="2.8rem" />}
           header={
             <ManagementHeader managementFile={managementFile} lastUpdatedBy={lastUpdatedBy} />
           }
