@@ -40,52 +40,58 @@ namespace Pims.Dal.Repositories
             where T : class
         {
             entity.ThrowIfNull(nameof(entity));
-            this.Context.Add<T>(entity);
+            Context.Add<T>(entity);
             return entity;
         }
 
         public IEnumerable<PimsNote> GetAllAcquisitionNotesById(long acquisitionId)
         {
-            return this.Context.PimsAcquisitionFileNotes
+            return Context.PimsAcquisitionFileNotes
                 .Where(x => x.AcquisitionFileId == acquisitionId).AsNoTracking().Select(x => x.Note).ToList();
         }
 
         public IEnumerable<PimsNote> GetAllDispositionNotesById(long dispositionId)
         {
-            return this.Context.PimsDispositionFileNotes
+            return Context.PimsDispositionFileNotes
                 .Where(x => x.DispositionFileId == dispositionId).AsNoTracking().Select(x => x.Note).ToList();
         }
 
         public IEnumerable<PimsNote> GetAllLeaseNotesById(long leaseId)
         {
-            return this.Context.PimsLeaseNotes
+            return Context.PimsLeaseNotes
                 .Where(x => x.LeaseId == leaseId).AsNoTracking().Select(x => x.Note).ToList();
         }
 
-        public IEnumerable<PimsNote> GetAllProjectNotesById(long entityId)
+        public IEnumerable<PimsNote> GetAllProjectNotesById(long projectId)
         {
-            return this.Context.PimsProjectNotes
-                .Where(x => x.ProjectId == entityId).AsNoTracking().Select(x => x.Note).ToList();
+            return Context.PimsProjectNotes
+                .Where(x => x.ProjectId == projectId).AsNoTracking().Select(x => x.Note).ToList();
         }
 
-        public IEnumerable<PimsNote> GetAllResearchNotesById(long entityId)
+        public IEnumerable<PimsNote> GetAllResearchNotesById(long researchId)
         {
-            return this.Context.PimsResearchFileNotes
-                .Where(x => x.ResearchFileId == entityId).AsNoTracking().Select(x => x.Note).ToList();
+            return Context.PimsResearchFileNotes
+                .Where(x => x.ResearchFileId == researchId).AsNoTracking().Select(x => x.Note).ToList();
+        }
+
+        public IEnumerable<PimsNote> GetAllManagementNotesById(long managementId)
+        {
+            return Context.PimsManagementFileNotes
+                .Where(x => x.ManagementFileId == managementId).AsNoTracking().Select(x => x.Note).ToList();
         }
 
         public bool DeleteAcquisitionFileNotes(long noteId)
         {
-            var acquisitionFileNotes = this.Context.PimsAcquisitionFileNotes.
-                                        Include(an => an.Note).
-                                        Where(x => x.NoteId == noteId).ToList();
+            var acquisitionFileNotes = Context.PimsAcquisitionFileNotes
+                .Include(an => an.Note)
+                .Where(x => x.NoteId == noteId).ToList();
 
-            if (acquisitionFileNotes.Any())
+            if (acquisitionFileNotes.Count != 0)
             {
                 foreach (var acquisitionFileNote in acquisitionFileNotes)
                 {
-                    this.Context.PimsAcquisitionFileNotes.Remove(acquisitionFileNote);
-                    this.Context.PimsNotes.Remove(acquisitionFileNote.Note);
+                    Context.PimsAcquisitionFileNotes.Remove(acquisitionFileNote);
+                    Context.PimsNotes.Remove(acquisitionFileNote.Note);
                 }
                 return true;
             }
@@ -94,16 +100,16 @@ namespace Pims.Dal.Repositories
 
         public bool DeleteDispositionFileNotes(long noteId)
         {
-            var dispositionFileNotes = this.Context.PimsDispositionFileNotes.
-                                        Include(an => an.Note).
-                                        Where(x => x.NoteId == noteId).ToList();
+            var dispositionFileNotes = Context.PimsDispositionFileNotes
+                .Include(an => an.Note)
+                .Where(x => x.NoteId == noteId).ToList();
 
-            if (dispositionFileNotes.Any())
+            if (dispositionFileNotes.Count != 0)
             {
                 foreach (var dispositionFileNote in dispositionFileNotes)
                 {
-                    this.Context.PimsDispositionFileNotes.Remove(dispositionFileNote);
-                    this.Context.PimsNotes.Remove(dispositionFileNote.Note);
+                    Context.PimsDispositionFileNotes.Remove(dispositionFileNote);
+                    Context.PimsNotes.Remove(dispositionFileNote.Note);
                 }
                 return true;
             }
@@ -112,16 +118,16 @@ namespace Pims.Dal.Repositories
 
         public bool DeleteLeaseFileNotes(long noteId)
         {
-            var leaseFileNotes = this.Context.PimsLeaseNotes.
-                                        Include(ln => ln.Note).
-                                        Where(x => x.NoteId == noteId).ToList();
+            var leaseFileNotes = Context.PimsLeaseNotes
+                .Include(ln => ln.Note)
+                .Where(x => x.NoteId == noteId).ToList();
 
-            if (leaseFileNotes.Any())
+            if (leaseFileNotes.Count != 0)
             {
                 foreach (var leaseFileNote in leaseFileNotes)
                 {
-                    this.Context.PimsLeaseNotes.Remove(leaseFileNote);
-                    this.Context.PimsNotes.Remove(leaseFileNote.Note);
+                    Context.PimsLeaseNotes.Remove(leaseFileNote);
+                    Context.PimsNotes.Remove(leaseFileNote.Note);
                 }
                 return true;
             }
@@ -134,12 +140,12 @@ namespace Pims.Dal.Repositories
                 .Include(x => x.Note)
                 .Where(x => x.NoteId == noteId).ToList();
 
-            if (projectNotes.Any())
+            if (projectNotes.Count != 0)
             {
                 foreach (var note in projectNotes)
                 {
-                    this.Context.PimsProjectNotes.Remove(note);
-                    this.Context.PimsNotes.Remove(note.Note);
+                    Context.PimsProjectNotes.Remove(note);
+                    Context.PimsNotes.Remove(note.Note);
                 }
                 return true;
             }
@@ -152,12 +158,30 @@ namespace Pims.Dal.Repositories
                 .Include(x => x.Note)
                 .Where(x => x.NoteId == noteId).ToList();
 
-            if (researchNotes.Any())
+            if (researchNotes.Count != 0)
             {
                 foreach (var note in researchNotes)
                 {
-                    this.Context.PimsResearchFileNotes.Remove(note);
-                    this.Context.PimsNotes.Remove(note.Note);
+                    Context.PimsResearchFileNotes.Remove(note);
+                    Context.PimsNotes.Remove(note.Note);
+                }
+                return true;
+            }
+            return false;
+        }
+
+        public bool DeleteManagementFileNotes(long noteId)
+        {
+            var managementFileNotes = Context.PimsManagementFileNotes
+                .Include(an => an.Note)
+                .Where(x => x.NoteId == noteId).ToList();
+
+            if (managementFileNotes.Count != 0)
+            {
+                foreach (var managementFileNote in managementFileNotes)
+                {
+                    Context.PimsManagementFileNotes.Remove(managementFileNote);
+                    Context.PimsNotes.Remove(managementFileNote.Note);
                 }
                 return true;
             }
