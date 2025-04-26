@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
+using Pims.Core.Security;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
-using Pims.Core.Security;
 
 namespace Pims.Dal.Repositories
 {
@@ -18,15 +19,19 @@ namespace Pims.Dal.Repositories
     /// </summary>
     public class ProjectRepository : BaseRepository<PimsProject>, IProjectRepository
     {
+        private readonly IMapper _mapper;
+
         /// <summary>
         /// Creates a new instance of a ProjectRepository, and initializes it with the specified arguments.
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public ProjectRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<ProjectRepository> logger)
+        /// <param name="mapper"></param>
+        public ProjectRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<ProjectRepository> logger, IMapper mapper)
             : base(dbContext, user, logger)
         {
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -224,6 +229,51 @@ namespace Pims.Dal.Repositories
             }
 
             return;
+        }
+
+        public PimsProject GetProjectAtTime(long projectId, DateTime time)
+        {
+            var projectHist = Context
+                .PimsProjectHists.AsNoTracking()
+                .Where(pacr => pacr.Id == projectId)
+                .Where(pacr => pacr.EffectiveDateHist <= time
+                    && (pacr.EndDateHist == null || pacr.EndDateHist > time))
+                .GroupBy(pacr => pacr.Id)
+                .Select(gpacr => gpacr.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault())
+                .FirstOrDefault();
+
+            var workActivityHist = Context
+                .PimsWorkActivityCodeHists.AsNoTracking()
+                .Where(pacr => pacr.Id == projectHist.WorkActivityCodeId)
+                .Where(pacr => pacr.EffectiveDateHist <= time
+                    && (pacr.EndDateHist == null || pacr.EndDateHist > time))
+                .GroupBy(pacr => pacr.Id)
+                .Select(gpacr => gpacr.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault())
+                .FirstOrDefault();
+
+            var costTypeHist = Context
+                .PimsCostTypeCodeHists.AsNoTracking()
+                .Where(pacr => pacr.Id == projectHist.CostTypeCodeId)
+                .Where(pacr => pacr.EffectiveDateHist <= time
+                    && (pacr.EndDateHist == null || pacr.EndDateHist > time))
+                .GroupBy(pacr => pacr.Id)
+                .Select(gpacr => gpacr.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault())
+                .FirstOrDefault();
+
+            var businessFunctionHist = Context
+                .PimsBusinessFunctionCodeHists.AsNoTracking()
+                .Where(pacr => pacr.Id == projectHist.BusinessFunctionCodeId)
+                .Where(pacr => pacr.EffectiveDateHist <= time
+                    && (pacr.EndDateHist == null || pacr.EndDateHist > time))
+                .GroupBy(pacr => pacr.Id)
+                .Select(gpacr => gpacr.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault())
+                .FirstOrDefault();
+
+            var project = _mapper.Map<PimsProject>(projectHist);
+            project.WorkActivityCode = _mapper.Map<PimsWorkActivityCode>(workActivityHist);
+            project.CostTypeCode = _mapper.Map<PimsCostTypeCode>(costTypeHist);
+            project.BusinessFunctionCode = _mapper.Map<PimsBusinessFunctionCode>(businessFunctionHist);
+            return project;
         }
 
         private async Task<Paged<PimsProject>> GetPage(ProjectFilter filter, IEnumerable<short> userRegions)

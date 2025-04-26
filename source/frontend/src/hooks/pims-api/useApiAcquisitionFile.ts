@@ -118,6 +118,10 @@ export const useApiAcquisitionFile = () => {
         ),
       getAcquisitionSubFiles: (acqFileId: number) =>
         api.get<ApiGen_Concepts_AcquisitionFile[]>(`/acquisitionfiles/${acqFileId}/sub-files`),
+      getAcquisitionAtTime: (acqFileId: number, time: string) =>
+        api.get<ApiGen_Concepts_AcquisitionFile>(
+          `/acquisitionfiles/${acqFileId}/test-time?time=${time}`,
+        ),
     }),
     [api],
   );

@@ -32,5 +32,7 @@ namespace Pims.Api.Services
         IEnumerable<PimsPropertyAcquisitionFile> GetCompensationRequisitionPropertiesAtTime(long compReqId, DateTime time);
 
         IEnumerable<PimsCompReqAcqPayee> GetCompensationRequisitionAcquisitionPayeesAtTime(long compReqId, DateTime time);
+
+        IEnumerable<PimsCompReqLeasePayee> GetCompensationRequisitionLeasePayeesAtTime(long compReqId, DateTime time);
     }
 }

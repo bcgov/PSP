@@ -83,3 +83,11 @@ export const getCompensationRequisitionAcqPayeesAtTimeApi = (
   CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<ApiGen_Concepts_CompReqAcqPayee[]>(
     `/compensation-requisitions/${compensationId}/acquisition-payees/test-time?time=${time}`,
   );
+
+export const getCompensationRequisitionLeasePayeesAtTimeApi = (
+  compensationId: number,
+  time: string,
+) =>
+  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<ApiGen_Concepts_CompReqLeasePayee[]>(
+    `/compensation-requisitions/${compensationId}/lease-payees/test-time?time=${time}`,
+  );

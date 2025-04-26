@@ -27,6 +27,8 @@ namespace Pims.Api.Services
         private readonly ILeaseStatusSolver _leaseStatusSolver;
         private readonly ILeaseRepository _leaseRepository;
         private readonly IPropertyService _propertyService;
+        private readonly IOrganizationRepository _organizationRepository;
+        private readonly IPersonRepository _personRepository;
 
         public CompensationRequisitionService(
             ClaimsPrincipal user,
@@ -39,6 +41,8 @@ namespace Pims.Api.Services
             IAcquisitionStatusSolver statusSolver,
             ILeaseStatusSolver leaseStatusSolver,
             ILeaseRepository leaseRepository,
+            IOrganizationRepository organizationRepository,
+            IPersonRepository personRepository,
             IPropertyService propertyService)
         {
             _user = user;
@@ -52,6 +56,8 @@ namespace Pims.Api.Services
             _leaseStatusSolver = leaseStatusSolver;
             _leaseRepository = leaseRepository;
             _propertyService = propertyService;
+            _organizationRepository = organizationRepository;
+            _personRepository = personRepository;
         }
 
         public PimsCompensationRequisition GetById(long compensationRequisitionId)
@@ -199,7 +205,90 @@ namespace Pims.Api.Services
 
         public IEnumerable<PimsCompReqAcqPayee> GetCompensationRequisitionAcquisitionPayeesAtTime(long compReqId, DateTime time)
         {
-            return _compensationRequisitionRepository.GetCompensationRequisitionAcquisitionPayeesAtTime(compReqId, time);
+            var acqPayees = _compensationRequisitionRepository.GetCompensationRequisitionAcquisitionPayeesAtTime(compReqId, time);
+
+            foreach (var payee in acqPayees)
+            {
+                if (payee.InterestHolder != null)
+                {
+                    var interestHolder = payee.InterestHolder;
+                    if (interestHolder.OrganizationId.HasValue)
+                    {
+                        var organization = _organizationRepository.GetOrganizationAtTime(interestHolder.OrganizationId.Value, time);
+                        interestHolder.Organization = organization;
+                    }
+
+                    if (interestHolder.PersonId.HasValue)
+                    {
+                        var person = _personRepository.GetPersonAtTime(interestHolder.PersonId.Value, time);
+
+                        interestHolder.Person = person;
+                    }
+                }
+
+                if (payee.AcquisitionFileTeam != null)
+                {
+                    var acqTeam = payee.AcquisitionFileTeam;
+                    if (acqTeam.OrganizationId.HasValue)
+                    {
+                        var organization = _organizationRepository.GetOrganizationAtTime(acqTeam.OrganizationId.Value, time);
+                        acqTeam.Organization = organization;
+                    }
+
+                    if (acqTeam.PersonId.HasValue)
+                    {
+                        var person = _personRepository.GetPersonAtTime(acqTeam.PersonId.Value, time);
+
+                        acqTeam.Person = person;
+                    }
+                }
+            }
+
+            return acqPayees;
+        }
+
+        public IEnumerable<PimsCompReqLeasePayee> GetCompensationRequisitionLeasePayeesAtTime(long compReqId, DateTime time)
+        {
+            var leasePayees = _compensationRequisitionRepository.GetCompensationRequisitionLeasePayeesAtTime(compReqId, time);
+
+            foreach (var payee in leasePayees)
+            {
+                if (payee.LeaseStakeholder != null)
+                {
+                    var stakeholder = payee.LeaseStakeholder;
+                    if (stakeholder.OrganizationId.HasValue)
+                    {
+                        var organization = _organizationRepository.GetOrganizationAtTime(stakeholder.OrganizationId.Value, time);
+                        stakeholder.Organization = organization;
+                    }
+
+                    if (stakeholder.PersonId.HasValue)
+                    {
+                        var person = _personRepository.GetPersonAtTime(stakeholder.PersonId.Value, time);
+
+                        stakeholder.Person = person;
+                    }
+                }
+
+                if (payee.LeaseLicenseTeam != null)
+                {
+                    var leaseTeam = payee.LeaseLicenseTeam;
+                    if (leaseTeam.OrganizationId.HasValue)
+                    {
+                        var organization = _organizationRepository.GetOrganizationAtTime(leaseTeam.OrganizationId.Value, time);
+                        leaseTeam.Organization = organization;
+                    }
+
+                    if (leaseTeam.PersonId.HasValue)
+                    {
+                        var person = _personRepository.GetPersonAtTime(leaseTeam.PersonId.Value, time);
+
+                        leaseTeam.Person = person;
+                    }
+                }
+            }
+
+            return leasePayees;
         }
 
         private static string GetCompensationRequisitionStatusText(bool? isDraft)

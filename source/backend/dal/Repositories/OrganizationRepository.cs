@@ -1,13 +1,15 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
+using Pims.Core.Security;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
-using Pims.Core.Security;
 
 namespace Pims.Dal.Repositories
 {
@@ -16,6 +18,8 @@ namespace Pims.Dal.Repositories
     /// </summary>
     public class OrganizationRepository : BaseRepository<PimsOrganization>, IOrganizationRepository
     {
+        private readonly IMapper _mapper;
+
         #region Constructors
 
         /// <summary>
@@ -24,9 +28,10 @@ namespace Pims.Dal.Repositories
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public OrganizationRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<OrganizationRepository> logger)
+        public OrganizationRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<OrganizationRepository> logger, IMapper mapper)
             : base(dbContext, user, logger)
         {
+            _mapper = mapper;
         }
         #endregion
 
@@ -122,6 +127,19 @@ namespace Pims.Dal.Repositories
             this.Context.UpdateGrandchild<PimsOrganization, long, PimsOrganizationAddress>(o => o.PimsOrganizationAddresses, oa => oa.Address, orgId, organization.PimsOrganizationAddresses.ToArray());
 
             return existingOrganization;
+        }
+
+        public PimsOrganization GetOrganizationAtTime(long organizationId, DateTime time)
+        {
+            var organizationHist = Context
+                .PimsOrganizationHists.AsNoTracking()
+                .Where(pacr => pacr.OrganizationId == organizationId)
+                .Where(pacr => pacr.EffectiveDateHist <= time)
+                .GroupBy(pacr => pacr.OrganizationId)
+                .Select(gpacr => gpacr.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault())
+                .FirstOrDefault();
+
+            return _mapper.Map<PimsOrganization>(organizationHist);
         }
         #endregion
     }

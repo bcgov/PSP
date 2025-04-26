@@ -303,9 +303,22 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetCompensationRequisitionAcquisitionPayees([FromRoute] long id, [FromQuery] DateTime time)
         {
-            var histCompReqPayees = _compensationRequisitionService.GetCompensationRequisitionAcquisitionPayeesAtTime(id, time);
+            var acquisitionPayees = _compensationRequisitionService.GetCompensationRequisitionAcquisitionPayeesAtTime(id, time);
 
-            return new JsonResult(_mapper.Map<IEnumerable<CompReqAcqPayeeModel>>(histCompReqPayees));
+            return new JsonResult(_mapper.Map<IEnumerable<CompReqAcqPayeeModel>>(acquisitionPayees));
+        }
+
+        [HttpGet("{id:long}/lease-payees/test-time")]
+        [HasPermission(Permissions.CompensationRequisitionView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(List<CompReqLeasePayeeModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "compensation-requisition" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetCompensationRequisitionLeasePayees([FromRoute] long id, [FromQuery] DateTime time)
+        {
+            var leasePayees = _compensationRequisitionService.GetCompensationRequisitionLeasePayeesAtTime(id, time);
+
+            return new JsonResult(_mapper.Map<IEnumerable<CompReqLeasePayeeModel>>(leasePayees));
         }
     }
 }

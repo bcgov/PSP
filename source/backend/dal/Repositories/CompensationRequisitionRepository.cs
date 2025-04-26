@@ -365,7 +365,8 @@ namespace Pims.Dal.Repositories
             var acqCompReqPropHist = Context
                 .PimsPropAcqFlCompReqHists.AsNoTracking()
                 .Where(pacr => pacr.CompensationRequisitionId == compReqId)
-                .Where(pacr => pacr.EffectiveDateHist <= time)
+                .Where(pacr => pacr.EffectiveDateHist <= time
+                    && (pacr.EndDateHist == null || pacr.EndDateHist > time))
                 .GroupBy(pacr => pacr.PropertyAcquisitionFileId)
                 .Select(gpacr => gpacr.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault())
                 .ToList();
@@ -448,59 +449,82 @@ namespace Pims.Dal.Repositories
                         .FirstOrDefault();
 
                     var interestHolder = _mapper.Map<PimsInterestHolder>(interestHolderHist);
-                    if (interestHolder.OrganizationId != null)
-                    {
-                        var organizationHist = Context
-                            .PimsOrganizationHists.AsNoTracking()
-                            .Where(aoh => aoh.OrganizationId == interestHolder.OrganizationId)
-                            .Where(aoh => aoh.EffectiveDateHist <= time)
-                            .GroupBy(aoh => aoh.OrganizationId)
-                            .Select(gaoh =>
-                                gaoh.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault()
-                            )
-                            .FirstOrDefault();
-
-                        interestHolder.Organization = _mapper.Map<PimsOrganization>(
-                            organizationHist
-                        );
-                    }
-                    if (interestHolder.PersonId != null)
-                    {
-                        var personHist = Context
-                            .PimsPersonHists.AsNoTracking()
-                            .Where(aoh => aoh.PersonId == interestHolder.PersonId)
-                            .Where(aoh => aoh.EffectiveDateHist <= time)
-                            .GroupBy(aoh => aoh.PersonId)
-                            .Select(gaoh =>
-                                gaoh.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault()
-                            )
-                            .FirstOrDefault();
-
-                        interestHolder.Person = _mapper.Map<PimsPerson>(personHist);
-                    }
                     payee.InterestHolder = interestHolder;
+                }
+
+                if (payee.AcquisitionFileTeamId != null)
+                {
+                    var acqTeamHist = Context
+                        .PimsAcquisitionFileTeamHists.AsNoTracking()
+                        .Where(ihh => ihh.AcquisitionFileTeamId == payee.AcquisitionFileTeamId)
+                        .Where(ihh => ihh.EffectiveDateHist <= time)
+                        .GroupBy(ihh => ihh.AcquisitionFileTeamId)
+                        .Select(gihh =>
+                            gihh.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault()
+                        )
+                        .FirstOrDefault();
+
+                    var acqTeam = _mapper.Map<PimsAcquisitionFileTeam>(acqTeamHist);
+                    payee.AcquisitionFileTeam = acqTeam;
                 }
             }
 
             return acqPayee;
+        }
 
-            //TODO...
-            //retrieve relationship tables
-            /*
-                .Include(x => x.AcquisitionOwner)
-                .Include(x => x.AcquisitionFileTeam)
-                    .ThenInclude(y => y.Person)
-                    .ThenInclude(y => y.Organization)
-                .Include(x => x.InterestHolder)
-                    .ThenInclude(y => y.InterestHolderTypeCodeNavigation) | This might not be necessary
-                    .ThenInclude(y => y.Person)
-                    .ThenInclude(y => y.Organization)
-                    */
+        public IEnumerable<PimsCompReqLeasePayee> GetCompensationRequisitionLeasePayeesAtTime(
+            long compReqId,
+            DateTime time
+        )
+        {
+            var leasePayeeHist = Context
+                .PimsCompReqLeasePayeeHists.AsNoTracking()
+                .Where(pacr => pacr.CompensationRequisitionId == compReqId)
+                .Where(pacr =>
+                    pacr.EffectiveDateHist <= time
+                    && (pacr.EndDateHist == null || pacr.EndDateHist > time)
+                )
+                .GroupBy(pacr => pacr.CompReqLeasePayeeId)
+                .Select(gpacr => gpacr.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault())
+                .ToList();
 
-            List<PimsPropertyAcquisitionFile> acqfileProperties =
-                new List<PimsPropertyAcquisitionFile>();
+            var leasePayees = _mapper.Map<ICollection<PimsCompReqLeasePayee>>(leasePayeeHist);
 
-            return null;
+            foreach (var payee in leasePayees)
+            {
+                if (payee.LeaseStakeholderId != null)
+                {
+                    var leaseStakeholderHist = Context
+                        .PimsLeaseStakeholderHists.AsNoTracking()
+                        .Where(aoh => aoh.LeaseStakeholderId == payee.LeaseStakeholderId)
+                        .Where(aoh => aoh.EffectiveDateHist <= time)
+                        .GroupBy(aoh => aoh.LeaseStakeholderId)
+                        .Select(gaoh =>
+                            gaoh.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault()
+                        )
+                        .FirstOrDefault();
+
+                    payee.LeaseStakeholder = _mapper.Map<PimsLeaseStakeholder>(leaseStakeholderHist);
+                }
+
+                if (payee.LeaseLicenseTeamId != null)
+                {
+                    var leaseTeamHist = Context
+                        .PimsLeaseLicenseTeamHists.AsNoTracking()
+                        .Where(ihh => ihh.LeaseLicenseTeamId == payee.LeaseLicenseTeamId)
+                        .Where(ihh => ihh.EffectiveDateHist <= time)
+                        .GroupBy(ihh => ihh.LeaseLicenseTeamId)
+                        .Select(gihh =>
+                            gihh.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault()
+                        )
+                        .FirstOrDefault();
+
+                    var leaseTeam = _mapper.Map<PimsLeaseLicenseTeam>(leaseTeamHist);
+                    payee.LeaseLicenseTeam = leaseTeam;
+                }
+            }
+
+            return leasePayees;
         }
     }
 }

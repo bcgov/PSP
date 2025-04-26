@@ -14,8 +14,8 @@ using Pims.Core.Extensions;
 using Pims.Core.Json;
 using Pims.Core.Security;
 using Pims.Dal.Exceptions;
+using Pims.Dal.Repositories;
 using Swashbuckle.AspNetCore.Annotations;
-using Pims.Api.Models.Concepts.AcquisitionFile;
 
 namespace Pims.Api.Areas.Lease.Controllers
 {
@@ -32,6 +32,7 @@ namespace Pims.Api.Areas.Lease.Controllers
     {
         #region Variables
         private readonly ILeaseService _leaseService;
+        private readonly ILeaseRepository _leaseRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<LeaseController> _logger;
         #endregion
@@ -44,12 +45,13 @@ namespace Pims.Api.Areas.Lease.Controllers
         /// <param name="leaseService"></param>
         /// <param name="mapper"></param>
         /// <param name="logger"></param>
-        ///
-        public LeaseController(ILeaseService leaseService, IMapper mapper, ILogger<LeaseController> logger)
+        /// <param name="leaseRepository"></param>
+        public LeaseController(ILeaseService leaseService, IMapper mapper, ILogger<LeaseController> logger, ILeaseRepository leaseRepository)
         {
             _mapper = mapper;
             _leaseService = leaseService;
             _logger = logger;
+            _leaseRepository = leaseRepository;
         }
         #endregion
 
@@ -234,6 +236,23 @@ namespace Pims.Api.Areas.Lease.Controllers
             return new JsonResult(_mapper.Map<IEnumerable<LeaseFileTeamModel>>(team));
         }
 
+        /// <summary>
+        /// Gets a collection of documents for the specified type and owner id.
+        /// </summary>
+        /// <param name="id">Used to identify document type.</param>
+        /// <param name="time">Used to identify document's parent entity.</param>
+        /// <returns></returns>
+        [HttpGet("{id:long}/test-time")]
+        [Produces("application/json")]
+        [HasPermission(Permissions.LeaseView)]
+        [ProducesResponseType(typeof(LeaseModel), 200)]
+        [SwaggerOperation(Tags = new[] { "lease" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetLeaseAtTime([FromRoute] long id, [FromQuery] DateTime time)
+        {
+            var pimsLease = _leaseRepository.GetLeaseAtTime(id, time);
+            return new JsonResult(_mapper.Map<LeaseModel>(pimsLease));
+        }
         #endregion
     }
 }

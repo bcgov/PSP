@@ -5,14 +5,23 @@ import styled from 'styled-components';
 import { Button } from '@/components/common/buttons/Button';
 import { Scrollable } from '@/components/common/Scrollable/Scrollable';
 import { Section } from '@/components/common/Section/Section';
+import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useFinancialCodeRepository } from '@/hooks/repositories/useFinancialCodeRepository';
+import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
+import { useProductProvider } from '@/hooks/repositories/useProductProvider';
+import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_CompensationFinancial } from '@/models/api/generated/ApiGen_Concepts_CompensationFinancial';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { ApiGen_Concepts_CompReqAcqPayee } from '@/models/api/generated/ApiGen_Concepts_CompReqAcqPayee';
+import { ApiGen_Concepts_CompReqLeasePayee } from '@/models/api/generated/ApiGen_Concepts_CompReqLeasePayee';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Concepts_FinancialCode';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_Product';
+import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
 import { exists, isValidId } from '@/utils';
 
 import CompensationRequisitionDetailView from './mapSideBar/compensation/detail/CompensationRequisitionDetailView';
@@ -23,11 +32,19 @@ interface IDateTestContainerProps {
 
 const DateTestContainer: React.FC<React.PropsWithChildren<IDateTestContainerProps>> = () => {
   // TEST PARAMETERS -----------------------------------------
-  const compReqId = 11;
+  const compReqId = 52;
   //const time = '2025-03-21T21:32:15.247';
-  const time = '2025-03-21T21:33:00.247';
-  const fileType = ApiGen_CodeTypes_FileTypes.Acquisition;
+  const time = '2025-04-26T21:33:00.247';
+  const fileType: ApiGen_CodeTypes_FileTypes = ApiGen_CodeTypes_FileTypes.Lease;
+  const parentFileId = 18;
   // -----------------------------------------
+
+  const [parentFile, setParentFile] = useState<
+    ApiGen_Concepts_Lease | ApiGen_Concepts_AcquisitionFile | null
+  >(null);
+  const [project, setProject] = useState<ApiGen_Concepts_Project | null>(null);
+  const [alternateProject, setAlternateProject] = useState<ApiGen_Concepts_Project | null>(null);
+  const [product, setProduct] = useState<ApiGen_Concepts_Product | null>(null);
 
   const [timedCompensation, setTimedCompensation] =
     useState<ApiGen_Concepts_CompensationRequisition | null>(null);
@@ -55,6 +72,7 @@ const DateTestContainer: React.FC<React.PropsWithChildren<IDateTestContainerProp
   >([]);
 
   const [acquisitionPayees, setAcquisitionPayees] = useState<ApiGen_Concepts_CompReqAcqPayee[]>([]);
+  const [leasePayees, setLeasePayees] = useState<ApiGen_Concepts_CompReqLeasePayee[]>([]);
 
   const {
     getFinancialActivityCodeTypes: {
@@ -88,7 +106,58 @@ const DateTestContainer: React.FC<React.PropsWithChildren<IDateTestContainerProp
       loading: loadingCompReqAcqPayees,
       response: compReqAcqPayees,
     },
+    getCompensationRequisitionLeasePayeesAtTime: {
+      execute: getCompensationLeasePayees,
+      loading: loadingCompReqLeasePayees,
+      response: compReqLeasePayees,
+    },
   } = useCompensationRequisitionRepository();
+
+  const {
+    getAcquisitionAtTime: { execute: getAcquisition },
+  } = useAcquisitionProvider();
+
+  const {
+    getLeaseAtTime: { execute: getLease },
+  } = useLeaseRepository();
+
+  const {
+    getProjectAtTime: { execute: getProject },
+  } = useProjectProvider();
+
+  const {
+    getProductAtTime: { execute: getProduct },
+  } = useProductProvider();
+
+  const fetchParentFile = useCallback(async () => {
+    if (fileType === ApiGen_CodeTypes_FileTypes.Acquisition) {
+      const response = await getAcquisition(parentFileId, time);
+      setParentFile(response);
+    } else if (fileType === ApiGen_CodeTypes_FileTypes.Lease) {
+      const response = await getLease(parentFileId, time);
+      setParentFile(response);
+    }
+  }, [fileType, getAcquisition, getLease]);
+
+  const fetchProject = useCallback(
+    async (
+      projectId: number,
+      setter: (value: React.SetStateAction<ApiGen_Concepts_Project>) => void,
+    ) => {
+      const response = await getProject(projectId, time);
+      setter(response);
+    },
+    [getProject],
+  );
+
+  const fetchProduct = useCallback(
+    async (product: number) => {
+      setProduct(null);
+      const response = await getProduct(product, time);
+      setProduct(response);
+    },
+    [getProduct],
+  );
 
   const fetchCurrentCompensationRequisition = useCallback(async () => {
     setTimedCompensation(null);
@@ -117,10 +186,15 @@ const DateTestContainer: React.FC<React.PropsWithChildren<IDateTestContainerProp
 
   const fetchCompensationPayees = useCallback(async () => {
     if (isValidId(timedCompensation?.id)) {
-      const compReqAcqPayees = await getCompensationAcqPayees(timedCompensation.id, time);
-      setAcquisitionPayees(compReqAcqPayees);
+      if (fileType === ApiGen_CodeTypes_FileTypes.Acquisition) {
+        const compReqAcqPayees = await getCompensationAcqPayees(timedCompensation.id, time);
+        setAcquisitionPayees(compReqAcqPayees);
+      } else if (fileType === ApiGen_CodeTypes_FileTypes.Lease) {
+        const compReqLeasePayees = await getCompensationLeasePayees(timedCompensation.id, time);
+        setLeasePayees(compReqLeasePayees);
+      }
     }
-  }, [timedCompensation?.id, getCompensationAcqPayees]);
+  }, [timedCompensation?.id, fileType, getCompensationAcqPayees]);
 
   const fetchFinancialCodes = useCallback(async () => {
     const fetchFinancialActivitiesCall = fetchFinancialActivities();
@@ -145,6 +219,28 @@ const DateTestContainer: React.FC<React.PropsWithChildren<IDateTestContainerProp
     fetchResponsibilityCodes,
     fetchYearlyFinancials,
   ]);
+
+  useEffect(() => {
+    fetchParentFile();
+  }, [fetchParentFile]);
+
+  useEffect(() => {
+    if (isValidId(parentFile?.projectId)) {
+      fetchProject(parentFile.projectId, setProject);
+    }
+  }, [fetchProject, parentFile?.projectId]);
+
+  useEffect(() => {
+    if (isValidId(parentFile?.productId)) {
+      fetchProduct(parentFile.productId);
+    }
+  }, [fetchProduct, parentFile?.productId]);
+
+  useEffect(() => {
+    if (isValidId(timedCompensation?.alternateProjectId)) {
+      fetchProject(timedCompensation.alternateProjectId, setAlternateProject);
+    }
+  }, [fetchProject, timedCompensation?.alternateProjectId]);
 
   useEffect(() => {
     fetchCurrentAcquisitionPayees();
@@ -184,8 +280,10 @@ const DateTestContainer: React.FC<React.PropsWithChildren<IDateTestContainerProp
       responsibility: responsibilityCentreCodes.find(
         x => x.id === timedCompensation?.responsibilityId,
       ),
+      alternateProject: alternateProject,
     };
   }, [
+    alternateProject,
     chartOfAccountCodes,
     financialActivityCodes,
     responsibilityCentreCodes,
@@ -205,12 +303,12 @@ const DateTestContainer: React.FC<React.PropsWithChildren<IDateTestContainerProp
               {exists(composedCompReq) && (
                 <CompensationRequisitionDetailView
                   fileType={fileType}
-                  product={undefined}
-                  project={undefined}
+                  product={product}
+                  project={project}
                   compensation={composedCompReq}
                   compensationProperties={compensationRequisitionProperties}
                   compensationAcqPayees={acquisitionPayees}
-                  compensationLeasePayees={[]}
+                  compensationLeasePayees={leasePayees}
                   clientConstant={''}
                   loading={false}
                   setEditMode={() => {

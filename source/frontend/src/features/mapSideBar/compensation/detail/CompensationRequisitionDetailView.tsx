@@ -36,7 +36,6 @@ import { PayeeDetail } from './PayeeDetail';
 
 export interface CompensationRequisitionDetailViewProps {
   fileType: ApiGen_CodeTypes_FileTypes;
-  //file: ApiGen_Concepts_AcquisitionFile | ApiGen_Concepts_Lease;
   product: ApiGen_Concepts_Product | undefined;
   project: ApiGen_Concepts_Project | undefined;
   compensation: ApiGen_Concepts_CompensationRequisition;
@@ -57,7 +56,6 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
   CompensationRequisitionDetailViewProps
 > = ({
   fileType,
-  //file,
   product,
   project,
   compensation,

@@ -9,6 +9,7 @@ import {
   getCompensationRequisitionAtTimeApi,
   getCompensationRequisitionFinancialsApi,
   getCompensationRequisitionLeasePayeesApi,
+  getCompensationRequisitionLeasePayeesAtTimeApi,
   getCompensationRequisitionPropertiesApi,
   getCompensationRequisitionPropertiesAtTimeApi,
   getFileCompensationsApi,
@@ -223,6 +224,23 @@ export const useCompensationRequisitionRepository = () => {
     invoke: false,
   });
 
+  const getCompensationRequisitionLeasePayeesAtTime = useApiRequestWrapper<
+    (
+      compensationId: number,
+      time: string,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_CompReqLeasePayee[], any>>
+  >({
+    requestFunction: useCallback(
+      async (compensationId: number, time: string) =>
+        await getCompensationRequisitionLeasePayeesAtTimeApi(compensationId, time),
+      [],
+    ),
+    requestName: 'getCompensationRequisitionLeasePayeesAtTime',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler('Failed to get compensation requisition lease payees'),
+    invoke: false,
+  });
+
   return useMemo(
     () => ({
       postCompensationRequisition: postCompensationRequisition,
@@ -237,6 +255,7 @@ export const useCompensationRequisitionRepository = () => {
       getCompensationRequisitionAtTime: getCompensationRequisitionAtTime,
       getCompensationRequisitionPropertiesAtTime: getCompensationRequisitionPropertiesAtTime,
       getCompensationRequisitionAcqPayeesAtTime: getCompensationRequisitionAcqPayeesAtTime,
+      getCompensationRequisitionLeasePayeesAtTime: getCompensationRequisitionLeasePayeesAtTime,
     }),
     [
       postCompensationRequisition,
@@ -251,6 +270,7 @@ export const useCompensationRequisitionRepository = () => {
       getCompensationRequisitionAtTime,
       getCompensationRequisitionPropertiesAtTime,
       getCompensationRequisitionAcqPayeesAtTime,
+      getCompensationRequisitionLeasePayeesAtTime,
     ],
   );
 };

@@ -43,6 +43,7 @@ export const useAcquisitionProvider = () => {
     getCompensationReport,
     getLastUpdatedByApi,
     getAcquisitionSubFiles,
+    getAcquisitionAtTime,
   } = useApiAcquisitionFile();
 
   const addAcquisitionFileApi = useApiRequestWrapper<
@@ -262,6 +263,22 @@ export const useAcquisitionProvider = () => {
     ),
   });
 
+  const getAcquisitionAtTimeApi = useApiRequestWrapper<
+    (
+      acqFileId: number,
+      time: string,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_AcquisitionFile, any>>
+  >({
+    requestFunction: useCallback(
+      async (acqFileId: number, time: string) => await getAcquisitionAtTime(acqFileId, time),
+      [getAcquisitionAtTime],
+    ),
+    requestName: 'getAcquisitionAtTime',
+    onError: useAxiosErrorHandler(
+      'Failed to load historical acquisition file. Refresh the page to try again.',
+    ),
+  });
+
   return useMemo(
     () => ({
       addAcquisitionFile: addAcquisitionFileApi,
@@ -281,6 +298,7 @@ export const useAcquisitionProvider = () => {
       getAgreementsReport: getAgreementsReportApi,
       getCompensationReport: getCompensationReportApi,
       getAcquisitionSubFiles: getAcquisitionSubFilesApi,
+      getAcquisitionAtTime: getAcquisitionAtTimeApi,
     }),
     [
       addAcquisitionFileApi,

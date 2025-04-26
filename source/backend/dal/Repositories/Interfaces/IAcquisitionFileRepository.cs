@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
@@ -33,5 +34,7 @@ namespace Pims.Dal.Repositories
         List<PimsAcquisitionFile> GetAcquisitionFileExportDeep(AcquisitionFilter filter, HashSet<short> regions, long? contractorPersonId = null);
 
         List<PimsAcquisitionFile> GetAcquisitionSubFiles(long acquisitionFileId, HashSet<short> regions, long? contractorPersonId = null);
+
+        PimsAcquisitionFile GetAcquisitionAtTime(long acquisitionFileId, DateTime time);
     }
 }

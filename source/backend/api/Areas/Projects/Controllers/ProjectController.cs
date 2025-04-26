@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using MapsterMapper;
@@ -12,6 +13,7 @@ using Pims.Core.Exceptions;
 using Pims.Core.Json;
 using Pims.Core.Security;
 using Pims.Dal.Exceptions;
+using Pims.Dal.Repositories;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Areas.Projects.Controllers
@@ -30,6 +32,7 @@ namespace Pims.Api.Areas.Projects.Controllers
         #region fields
         private readonly IProjectService _projectService;
         private readonly IMapper _mapper;
+        private readonly IProjectRepository _projectRepository;
         #endregion
 
         /// <summary>
@@ -38,9 +41,10 @@ namespace Pims.Api.Areas.Projects.Controllers
         /// <param name="projectService"></param>
         /// <param name="mapper"></param>
         ///
-        public ProjectController(IProjectService projectService, IMapper mapper)
+        public ProjectController(IProjectService projectService, IProjectRepository projectRepository, IMapper mapper)
         {
             _projectService = projectService;
+            _projectRepository = projectRepository;
             _mapper = mapper;
         }
 
@@ -175,6 +179,25 @@ namespace Pims.Api.Areas.Projects.Controllers
             var products = _projectService.GetProducts(projectId);
 
             return new JsonResult(_mapper.Map<IList<ProductModel>>(products));
+        }
+
+        ///
+        /// <summary>
+        /// Gets a collection of documents for the specified type and owner id.
+        /// </summary>
+        /// <param name="id">Used to identify document type.</param>
+        /// <param name="time">Used to identify document's parent entity.</param>
+        /// <returns></returns>
+        [HttpGet("{id:long}/test-time")]
+        [Produces("application/json")]
+        [HasPermission(Permissions.ProjectView)]
+        [ProducesResponseType(typeof(ProjectModel), 200)]
+        [SwaggerOperation(Tags = new[] { "project" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetProjectAtTime([FromRoute] long id, [FromQuery] DateTime time)
+        {
+            var pimsProject = _projectRepository.GetProjectAtTime(id, time);
+            return new JsonResult(_mapper.Map<ProjectModel>(pimsProject));
         }
     }
 }
