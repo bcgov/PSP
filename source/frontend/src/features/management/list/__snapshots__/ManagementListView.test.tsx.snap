@@ -1,0 +1,1461 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Management List View > matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c11.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c11.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
+.c11.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c11.btn:focus {
+  outline-width: 2px;
+  outline-style: solid;
+  outline-color: #2E5DD7;
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+.c11.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c11.btn.btn-primary:hover,
+.c11.btn.btn-primary:active,
+.c11.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
+.c11.btn.btn-secondary {
+  color: #013366;
+  background: none;
+  border-color: #013366;
+}
+
+.c11.btn.btn-secondary:hover,
+.c11.btn.btn-secondary:active,
+.c11.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c11.btn.btn-info {
+  color: #9F9D9C;
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c11.btn.btn-info:hover,
+.c11.btn.btn-info:active,
+.c11.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
+  background: none;
+}
+
+.c11.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
+  border: none;
+}
+
+.c11.btn.btn-light:hover,
+.c11.btn.btn-light:active,
+.c11.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
+.c11.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
+  border: none;
+}
+
+.c11.btn.btn-dark:hover,
+.c11.btn.btn-dark:active,
+.c11.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c11.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c11.btn.btn-danger:hover,
+.c11.btn.btn-danger:active,
+.c11.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c11.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c11.btn.btn-warning:hover,
+.c11.btn.btn-warning:active,
+.c11.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
+}
+
+.c11.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--surface-color-primary-button-default);
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c11.btn.btn-link:hover,
+.c11.btn.btn-link:active,
+.c11.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c11.btn.btn-link:disabled,
+.c11.btn.btn-link.disabled {
+  color: #9F9D9C;
+  background: none;
+  pointer-events: none;
+}
+
+.c11.btn:disabled,
+.c11.btn:disabled:hover {
+  color: #9F9D9C;
+  background-color: #EDEBE9;
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.c11.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c11.Button--icon-only:focus {
+  outline: none;
+}
+
+.c11.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c12.c12.btn {
+  background-color: unset;
+  border: none;
+}
+
+.c12.c12.btn:hover,
+.c12.c12.btn:focus,
+.c12.c12.btn:active {
+  background-color: unset;
+  outline: none;
+  box-shadow: none;
+}
+
+.c12.c12.btn svg {
+  -webkit-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+
+.c12.c12.btn svg:hover {
+  -webkit-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
+}
+
+.c12.c12.btn.btn-primary svg {
+  color: #013366;
+}
+
+.c12.c12.btn.btn-primary svg:hover {
+  color: #013366;
+}
+
+.c12.c12.btn.btn-light svg {
+  color: var(--surface-color-primary-button-default);
+}
+
+.c12.c12.btn.btn-light svg:hover {
+  color: #CE3E39;
+}
+
+.c12.c12.btn.btn-info svg {
+  color: var(--surface-color-primary-button-default);
+}
+
+.c12.c12.btn.btn-info svg:hover {
+  color: var(--surface-color-primary-button-hover);
+}
+
+.c1 {
+  width: 100%;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.c7 {
+  padding-right: 0;
+}
+
+.c7 .form-control {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.c8:not(:first-child) {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.c8:not(:first-child) .form-control {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.c13 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  margin-left: 0.5rem;
+}
+
+.c15 {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.c14 {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.c16 {
+  margin-top: 0.3rem;
+}
+
+.c17 {
+  min-width: 5rem;
+  max-width: 5rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  text-align: center;
+  padding: 0;
+}
+
+.c17:-moz-read-only {
+  background: white;
+}
+
+.c17:read-only {
+  background: white;
+}
+
+.c9 button.close {
+  font-size: 2.4rem;
+}
+
+.c3 {
+  color: #474543;
+  font-family: 'BCSans-Bold';
+  font-size: 2.8rem;
+  border-bottom: solid 0.5rem var(--theme-blue-90);
+  width: 100%;
+  text-align: left;
+  margin-bottom: 2.4rem;
+}
+
+.c6 {
+  background-color: #d9eaf7;
+  border-radius: 0.5rem;
+}
+
+.c6 .form-select {
+  min-width: 15rem;
+}
+
+.c6 .input-group: {
+  min-width: 100%;
+}
+
+.c6 .idir-input-group {
+  margin: 0;
+}
+
+.c6 .idir-input-group div {
+  padding: 0;
+}
+
+.c5 {
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 0;
+  padding-bottom: 2rem;
+}
+
+.c10 {
+  border-left: 0.2rem solid white;
+  min-width: 2.5rem;
+}
+
+.c2 {
+  padding: 1.6rem 3.2rem;
+  width: 100%;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  width: 100%;
+  gap: 2.5rem;
+  padding: 0;
+}
+
+.c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-bottom: 0.25rem;
+}
+
+.c4 svg {
+  vertical-align: baseline;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="c1 c2"
+    >
+      <h1
+        class="c3"
+      >
+        <div
+          class="c4"
+        >
+          <div>
+            <svg
+              fill="currentColor"
+              height="24"
+              title="Management file Icon"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g
+                clip-path="url(#clip0_14089_33934)"
+              >
+                <path
+                  d="M21.83 0L8.06001 0.02C6.94001 0.1 6.12001 1.02 6.01001 2.1V15.75C6.04001 16.98 6.96001 17.89 8.18001 17.99H21.77C23 17.95 23.91 17.03 24.01 15.82V2.24C23.97 1.01 23.05 0.1 21.84 0H21.83ZM20.41 10.07H16.62V13.79H14.48V10.07H10.76V7.93H14.48V4.14H16.62V7.83L16.72 7.93H20.41V10.07Z"
+                  fill="white"
+                />
+                <path
+                  d="M4.48 16.24V6H2.03C1.04 6 0.04 7.13 0 8.11V21.76C0.04 22.99 0.96 23.9 2.17 24H15.82C16.75 24.07 17.99 22.94 17.99 22.03V19.51H7.83C6.43 19.51 4.49 17.64 4.49 16.24H4.48Z"
+                  fill="white"
+                />
+              </g>
+              <defs>
+                <clippath
+                  id="clip0_14089_33934"
+                >
+                  <rect
+                    fill="white"
+                    height="24"
+                    width="24"
+                  />
+                </clippath>
+              </defs>
+            </svg>
+            <span
+              class="ml-2"
+            >
+              Management Files
+            </span>
+          </div>
+        </div>
+      </h1>
+      <div
+        class="c5"
+      >
+        <div
+          class="row"
+        >
+          <div
+            class="col"
+          >
+            <form
+              class="c6 p-3"
+              novalidate=""
+            >
+              <div
+                class="row"
+              >
+                <div
+                  class="col-xl-1"
+                >
+                  <strong>
+                    Search by:
+                  </strong>
+                </div>
+                <div
+                  class="col-xl-5"
+                >
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="col"
+                    >
+                      <div
+                        class="flex-nowrap input-group row no-gutters"
+                      >
+                        <div
+                          class="c7 col-auto"
+                        >
+                          <div
+                            class="input-group-prepend"
+                          >
+                            <div
+                              class="form-group"
+                            >
+                              <select
+                                class="form-select form-control"
+                                id="input-searchBy"
+                                name="searchBy"
+                              >
+                                <option
+                                  class="option"
+                                  data-testid="select-option-address"
+                                  value="address"
+                                >
+                                  Civic Address
+                                </option>
+                                <option
+                                  class="option"
+                                  data-testid="select-option-pid"
+                                  value="pid"
+                                >
+                                  PID
+                                </option>
+                                <option
+                                  class="option"
+                                  data-testid="select-option-pin"
+                                  value="pin"
+                                >
+                                  PIN
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          class="c8 col"
+                        >
+                          <div
+                            class="input form-group"
+                          >
+                            <input
+                              class="form-control"
+                              id="input-address"
+                              name="address"
+                              placeholder="Enter an address"
+                              style="word-break: break-all;"
+                              title=""
+                              value=""
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="col-xl-6"
+                    >
+                      <div
+                        class="c9 form-group"
+                        data-testid="typeahead-select-managementTeamMember"
+                      >
+                        <div
+                          class="rbt"
+                          style="outline: none; position: relative;"
+                          tabindex="-1"
+                        >
+                          <div
+                            style="display: flex; flex: 1; height: 100%; position: relative;"
+                          >
+                            <input
+                              aria-autocomplete="both"
+                              aria-expanded="false"
+                              aria-haspopup="listbox"
+                              autocomplete="off"
+                              class="rbt-input-main form-control rbt-input"
+                              id="typeahead-select-managementTeamMember"
+                              name="typeahead-select-managementTeamMember"
+                              placeholder="Team Member"
+                              role="combobox"
+                              type="text"
+                              value=""
+                            />
+                            <input
+                              aria-hidden="true"
+                              class="rbt-input-hint"
+                              readonly=""
+                              style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.54); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%; border-style: inset inset inset inset; border-width: 2px 2px 2px 2px; line-height: normal; padding: 1px 1px 1px 1px;"
+                              tabindex="-1"
+                              value=""
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="col-xl-6"
+                    >
+                      <div
+                        class="form-group"
+                      >
+                        <select
+                          class="form-select form-control"
+                          id="input-managementFileStatusCode"
+                          name="managementFileStatusCode"
+                        >
+                          <option
+                            value=""
+                          >
+                            Select file status...
+                          </option>
+                          <option
+                            class="option"
+                            data-testid="select-option-ACTIVE"
+                            value="ACTIVE"
+                          >
+                            Active
+                          </option>
+                          <option
+                            class="option"
+                            data-testid="select-option-DRAFT"
+                            value="DRAFT"
+                          >
+                            Draft
+                          </option>
+                          <option
+                            class="option"
+                            data-testid="select-option-HOLD"
+                            value="HOLD"
+                          >
+                            Hold
+                          </option>
+                          <option
+                            class="option"
+                            data-testid="select-option-CANCELLED"
+                            value="CANCELLED"
+                          >
+                            Cancelled
+                          </option>
+                          <option
+                            class="option"
+                            data-testid="select-option-COMPLETE"
+                            value="COMPLETE"
+                          >
+                            Complete
+                          </option>
+                          <option
+                            class="option"
+                            data-testid="select-option-3RDPARTY"
+                            value="3RDPARTY"
+                          >
+                            With 3rd Party
+                          </option>
+                          <option
+                            class="option"
+                            data-testid="select-option-ARCHIVED"
+                            value="ARCHIVED"
+                          >
+                            Archived
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="col-xl-5"
+                >
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="col-xl-12"
+                    >
+                      <div
+                        class="input form-group"
+                      >
+                        <input
+                          class="form-control"
+                          id="input-fileNameOrNumberOrReference"
+                          name="fileNameOrNumberOrReference"
+                          placeholder="Management file number or name or reference number"
+                          style="word-break: break-all;"
+                          title=""
+                          value=""
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="col-xl-6"
+                    >
+                      <div
+                        class="form-group"
+                      >
+                        <select
+                          class="form-select form-control"
+                          id="input-managementFilePurposeCode"
+                          name="managementFilePurposeCode"
+                        >
+                          <option
+                            value=""
+                          >
+                            Select management purpose...
+                          </option>
+                          <option
+                            class="option"
+                            data-testid="select-option-AGRICULT"
+                            value="AGRICULT"
+                          >
+                            Agricultural
+                          </option>
+                          <option
+                            class="option"
+                            data-testid="select-option-COMMBLDG"
+                            value="COMMBLDG"
+                          >
+                            Commercial building
+                          </option>
+                          <option
+                            class="option"
+                            data-testid="select-option-ENCAMP"
+                            value="ENCAMP"
+                          >
+                            Encampments
+                          </option>
+                          <option
+                            class="option"
+                            data-testid="select-option-ENGINEER"
+                            value="ENGINEER"
+                          >
+                            Engineering
+                          </option>
+                          <option
+                            class="option"
+                            data-testid="select-option-GOVERNMT"
+                            value="GOVERNMT"
+                          >
+                            Government
+                          </option>
+                          <option
+                            class="option"
+                            data-testid="select-option-MOTTUSE"
+                            value="MOTTUSE"
+                          >
+                            MOTT use
+                          </option>
+                          <option
+                            class="option"
+                            data-testid="select-option-OILGAS"
+                            value="OILGAS"
+                          >
+                            Oil/Gas
+                          </option>
+                          <option
+                            class="option"
+                            data-testid="select-option-OTHER"
+                            value="OTHER"
+                          >
+                            Other
+                          </option>
+                          <option
+                            class="option"
+                            data-testid="select-option-PARKING"
+                            value="PARKING"
+                          >
+                            Parking and/or storage
+                          </option>
+                          <option
+                            class="option"
+                            data-testid="select-option-PUBTRANS"
+                            value="PUBTRANS"
+                          >
+                            Public transportation
+                          </option>
+                          <option
+                            class="option"
+                            data-testid="select-option-RAIL"
+                            value="RAIL"
+                          >
+                            Rail
+                          </option>
+                          <option
+                            class="option"
+                            data-testid="select-option-TRAILS"
+                            value="TRAILS"
+                          >
+                            Rail trails/trails
+                          </option>
+                          <option
+                            class="option"
+                            data-testid="select-option-RESRENTL"
+                            value="RESRENTL"
+                          >
+                            Residential rentals
+                          </option>
+                          <option
+                            class="option"
+                            data-testid="select-option-UTILITY"
+                            value="UTILITY"
+                          >
+                            Utilities
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                    <div
+                      class="col-xl-6"
+                    >
+                      <div
+                        class="input form-group"
+                      >
+                        <input
+                          class="form-control"
+                          id="input-projectNameOrNumber"
+                          name="projectNameOrNumber"
+                          placeholder="Enter a project name or number..."
+                          style="word-break: break-all;"
+                          title=""
+                          value=""
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="c10 col-xl-1"
+                >
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="pr-0 col-xl-auto"
+                    >
+                      <button
+                        class="c11 Button Button--icon-only primary btn btn-primary"
+                        data-testid="search"
+                        id="search-button"
+                        title="search"
+                        type="submit"
+                      >
+                        <div
+                          class="Button__icon"
+                        >
+                          <svg
+                            fill="currentColor"
+                            height="20"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 512 512"
+                            width="20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+                            />
+                          </svg>
+                        </div>
+                      </button>
+                    </div>
+                    <div
+                      class="col-xl-auto"
+                    >
+                      <button
+                        class="c11 Button Button--icon-only btn btn-info"
+                        data-testid="reset-button"
+                        id="reset-button"
+                        title="reset-button"
+                        type="reset"
+                      >
+                        <div
+                          class="Button__icon"
+                        >
+                          <svg
+                            fill="currentColor"
+                            height="20"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 512 512"
+                            width="20"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M212.333 224.333H12c-6.627 0-12-5.373-12-12V12C0 5.373 5.373 0 12 0h48c6.627 0 12 5.373 12 12v78.112C117.773 39.279 184.26 7.47 258.175 8.007c136.906.994 246.448 111.623 246.157 248.532C504.041 393.258 393.12 504 256.333 504c-64.089 0-122.496-24.313-166.51-64.215-5.099-4.622-5.334-12.554-.467-17.42l33.967-33.967c4.474-4.474 11.662-4.717 16.401-.525C170.76 415.336 211.58 432 256.333 432c97.268 0 176-78.716 176-176 0-97.267-78.716-176-176-176-58.496 0-110.28 28.476-142.274 72.333h98.274c6.627 0 12 5.373 12 12v48c0 6.627-5.373 12-12 12z"
+                            />
+                          </svg>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+          <div
+            class="px-0 col-md-auto"
+          >
+            <button
+              class="c11 Button c12 btn btn-primary"
+              type="button"
+            >
+              <div
+                class="Button__value"
+              >
+                <svg
+                  data-testid="excel-icon"
+                  fill="currentColor"
+                  height="36"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 384 512"
+                  width="36"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zm60.1 106.5L224 336l60.1 93.5c5.1 8-.6 18.5-10.1 18.5h-34.9c-4.4 0-8.5-2.4-10.6-6.3C208.9 405.5 192 373 192 373c-6.4 14.8-10 20-36.6 68.8-2.1 3.9-6.1 6.3-10.5 6.3H110c-9.5 0-15.2-10.5-10.1-18.5l60.3-93.5-60.3-93.5c-5.2-8 .6-18.5 10.1-18.5h34.8c4.4 0 8.5 2.4 10.6 6.3 26.1 48.8 20 33.6 36.6 68.5 0 0 6.1-11.7 36.6-68.5 2.1-3.9 6.2-6.3 10.6-6.3H274c9.5-.1 15.2 10.4 10.1 18.4zM384 121.9v6.1H256V0h6.1c6.4 0 12.5 2.5 17 7l97.9 98c4.5 4.5 7 10.6 7 16.9z"
+                  />
+                </svg>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        class="table"
+        data-testid="managementFilesTable"
+        role="table"
+      >
+        <div
+          class="thead thead-light"
+        >
+          <div
+            class="tr"
+            role="row"
+            style="display: flex; flex: 1 0 auto; min-width: 240px;"
+          >
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Management file #
+                <div
+                  class="c13"
+                  data-testid="sort-column-managementFileId"
+                >
+                  <svg
+                    class="c14"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="margin-bottom: -8px;"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M128 320l128-128 128 128z"
+                    />
+                  </svg>
+                  <svg
+                    class="c15"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M128 192l128 128 128-128z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                File name
+                <div
+                  class="c13"
+                  data-testid="sort-column-fileName"
+                >
+                  <svg
+                    class="c14"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="margin-bottom: -8px;"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M128 320l128-128 128 128z"
+                    />
+                  </svg>
+                  <svg
+                    class="c15"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M128 192l128 128 128-128z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Historical File #
+                <div
+                  class="c13"
+                  data-testid="sort-column-legacyFileNumber"
+                >
+                  <svg
+                    class="c14"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="margin-bottom: -8px;"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M128 320l128-128 128 128z"
+                    />
+                  </svg>
+                  <svg
+                    class="c15"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M128 192l128 128 128-128z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Project
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Purpose
+                <div
+                  class="c13"
+                  data-testid="sort-column-managementFilePurposeCode"
+                >
+                  <svg
+                    class="c14"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="margin-bottom: -8px;"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M128 320l128-128 128 128z"
+                    />
+                  </svg>
+                  <svg
+                    class="c15"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M128 192l128 128 128-128z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Team member
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Civic Address / PID / PIN
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Status
+                <div
+                  class="c13"
+                  data-testid="sort-column-managementFileStatusTypeCode"
+                >
+                  <svg
+                    class="c14"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="margin-bottom: -8px;"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M128 320l128-128 128 128z"
+                    />
+                  </svg>
+                  <svg
+                    class="c15"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M128 192l128 128 128-128z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="tbody"
+          role="rowgroup"
+        >
+          <div
+            class="tr-wrapper"
+          >
+            <div
+              class="tr"
+              role="row"
+              style="display: flex; flex: 1 0 auto; min-width: 240px;"
+            >
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                1
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                Test Management File
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                legacyfile321
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                00048 CLAIMS
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                Utilities
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                <span>
+                  Alejandro Sanchez (MoTI Solicitor, Negotiation agent)
+                </span>
+              </div>
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                <div
+                  class="w-100"
+                />
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                Draft
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="row"
+      >
+        <div
+          class="align-self-center col-auto"
+        >
+          <span>
+            1 - 1 of 1
+          </span>
+        </div>
+        <div
+          class="ml-auto align-self-center col-auto"
+        />
+        <div
+          class="align-self-center col-auto"
+        >
+          <div
+            class="Menu-root"
+          >
+            <div
+              class="Menu-button"
+            >
+              <div
+                class="d-flex"
+              >
+                <span
+                  class="c16"
+                >
+                  Show
+                </span>
+                <input
+                  class="c17 form-control"
+                  data-testid="input-page-size"
+                  readonly=""
+                  type="number"
+                  value="10"
+                />
+                <span
+                  class="c16"
+                >
+                  Entries
+                </span>
+              </div>
+            </div>
+            <div
+              class="Menu-items"
+              style="width: 10.0rem;"
+            >
+              <div
+                class="Menu-options scrollable list-group"
+              >
+                <div
+                  class="Menu-item list-group-item"
+                  title="menu-item-5"
+                >
+                  5
+                </div>
+                <div
+                  class="Menu-item list-group-item"
+                  title="menu-item-10"
+                >
+                  10
+                </div>
+                <div
+                  class="Menu-item list-group-item"
+                  title="menu-item-20"
+                >
+                  20
+                </div>
+                <div
+                  class="Menu-item list-group-item"
+                  title="menu-item-50"
+                >
+                  50
+                </div>
+                <div
+                  class="Menu-item list-group-item"
+                  title="menu-item-100"
+                >
+                  100
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="align-self-center col-auto"
+        >
+          <ul
+            class="pagination"
+          >
+            <li
+              class="page-item disabled"
+            >
+              <a
+                aria-disabled="true"
+                aria-label="Previous page"
+                class="page-link "
+                rel="prev"
+                role="button"
+                tabindex="-1"
+              >
+                &lt;
+              </a>
+            </li>
+            <li
+              class="page-item active"
+            >
+              <a
+                aria-current="page"
+                aria-label="Page 1 is your current page"
+                class="page-link"
+                rel="canonical"
+                role="button"
+                tabindex="-1"
+              >
+                1
+              </a>
+            </li>
+            <li
+              class="page-item disabled"
+            >
+              <a
+                aria-disabled="true"
+                aria-label="Next page"
+                class="page-link "
+                rel="next"
+                role="button"
+                tabindex="-1"
+              >
+                &gt;
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

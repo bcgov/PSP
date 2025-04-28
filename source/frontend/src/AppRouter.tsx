@@ -16,6 +16,7 @@ import AppRoute from '@/utils/AppRoute';
 import componentLoader from '@/utils/utils';
 
 import Login from './features/account/Login';
+import ManagementListView from './features/management/list/ManagementListView';
 import AccessDenied from './pages/401/AccessDenied';
 
 const MapView = lazy(() => componentLoader(import('@/features/properties/map/MapContainer'), 2));
@@ -328,6 +329,15 @@ const AppRouter: FC<PropsWithChildren<unknown>> = () => {
             layout={AuthLayout}
             claim={Claims.DISPOSITION_VIEW}
             title={getTitle('View Disposition Files')}
+          />
+          <AppRoute
+            protected
+            exact
+            path="/management/list"
+            customComponent={ManagementListView}
+            layout={AuthLayout}
+            claim={Claims.MANAGEMENT_VIEW}
+            title={getTitle('View Management Files')}
           />
           <AppRoute
             protected

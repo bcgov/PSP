@@ -17,5 +17,7 @@ namespace Pims.Dal.Repositories
         List<PimsManagementFileTeam> GetTeamMembers();
 
         long GetRowVersion(long id);
+
+        Paged<PimsManagementFile> GetPageDeep(ManagementFilter filter);
     }
 }
