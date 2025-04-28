@@ -198,9 +198,14 @@ namespace Pims.Api.Services
             return _compensationRequisitionRepository.GetCompensationRequisitionAtTime(compReqId, time);
         }
 
-        public IEnumerable<PimsPropertyAcquisitionFile> GetCompensationRequisitionPropertiesAtTime(long compReqId, DateTime time)
+        public IEnumerable<PimsPropertyAcquisitionFile> GetCompensationRequisitionAcqPropertiesAtTime(long compReqId, DateTime time)
         {
-            return _compensationRequisitionRepository.GetCompensationRequisitionPropertiesAtTime(compReqId, time);
+            return _compensationRequisitionRepository.GetCompensationRequisitionAcqPropertiesAtTime(compReqId, time);
+        }
+
+        public IEnumerable<PimsPropertyLease> GetCompensationRequisitionLeasePropertiesAtTime(long compReqId, DateTime time)
+        {
+            return _compensationRequisitionRepository.GetCompensationRequisitionLeasePropertiesAtTime(compReqId, time);
         }
 
         public IEnumerable<PimsCompReqAcqPayee> GetCompensationRequisitionAcquisitionPayeesAtTime(long compReqId, DateTime time)

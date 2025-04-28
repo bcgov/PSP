@@ -85,7 +85,7 @@ export const useApiLeases = () => {
       getAllLeaseFileTeamMembers: () =>
         api.get<ApiGen_Concepts_LeaseFileTeam[]>(`/leases/team-members`),
       getLeaseAtTime: (leaseId: number, time: string) =>
-        api.get<ApiGen_Concepts_Lease>(`/leases/${leaseId}/test-time?time=${time}`),
+        api.get<ApiGen_Concepts_Lease>(`/leases/${leaseId}/historical?time=${time}`),
     }),
     [api],
   );

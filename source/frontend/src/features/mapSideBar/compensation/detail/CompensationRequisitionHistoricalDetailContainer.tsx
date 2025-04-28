@@ -1,10 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Col, Row } from 'react-bootstrap';
-import styled from 'styled-components';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { Button } from '@/components/common/buttons/Button';
-import { Scrollable } from '@/components/common/Scrollable/Scrollable';
-import { Section } from '@/components/common/Section/Section';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useFinancialCodeRepository } from '@/hooks/repositories/useFinancialCodeRepository';
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
@@ -22,25 +17,33 @@ import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Con
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_Product';
 import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
-import { exists, isValidId } from '@/utils';
+import { isValidId } from '@/utils';
 
-import CompensationRequisitionDetailView from './mapSideBar/compensation/detail/CompensationRequisitionDetailView';
+import { CompensationRequisitionDetailViewProps } from './CompensationRequisitionDetailView';
 
-interface IDateTestContainerProps {
-  something?: any;
+export interface ICompensationRequisitionHistoricalDetailContainerProps {
+  fileType: ApiGen_CodeTypes_FileTypes;
+  parentFileId: number;
+  compensationRequisitionId: number;
+  time: string;
+  clientConstant: string;
+  loading: boolean;
+  setEditMode: (editMode: boolean) => void;
+  View: React.FunctionComponent<CompensationRequisitionDetailViewProps>;
 }
 
-const DateTestContainer: React.FC<React.PropsWithChildren<IDateTestContainerProps>> = () => {
-  // TEST PARAMETERS -----------------------------------------
-  const compReqId = 51;
-  //const time = '2025-03-21T21:32:15.247';
-  const time = '2025-04-27T21:33:00.247';
-  let fileType: ApiGen_CodeTypes_FileTypes;
-  fileType = ApiGen_CodeTypes_FileTypes.Acquisition;
-  fileType = ApiGen_CodeTypes_FileTypes.Lease;
-  const parentFileId = 48;
-  // -----------------------------------------
-
+export const CompensationRequisitionHistoricalDetailContainer: React.FunctionComponent<
+  React.PropsWithChildren<ICompensationRequisitionHistoricalDetailContainerProps>
+> = ({
+  fileType,
+  parentFileId,
+  compensationRequisitionId,
+  time,
+  clientConstant,
+  loading,
+  setEditMode,
+  View,
+}) => {
   const [parentFile, setParentFile] = useState<
     ApiGen_Concepts_Lease | ApiGen_Concepts_AcquisitionFile | null
   >(null);
@@ -143,7 +146,7 @@ const DateTestContainer: React.FC<React.PropsWithChildren<IDateTestContainerProp
       const response = await getLease(parentFileId, time);
       setParentFile(response);
     }
-  }, [fileType, getAcquisition, getLease]);
+  }, [parentFileId, fileType, time, getAcquisition, getLease]);
 
   const fetchProject = useCallback(
     async (
@@ -162,42 +165,44 @@ const DateTestContainer: React.FC<React.PropsWithChildren<IDateTestContainerProp
       const response = await getProduct(product, time);
       setProduct(response);
     },
-    [getProduct],
+    [time, getProduct],
   );
 
   const fetchCurrentCompensationRequisition = useCallback(async () => {
     setTimedCompensation(null);
-    const response = await getCurrentCompReq(compReqId);
+    const response = await getCurrentCompReq(compensationRequisitionId);
     setLatestCompensation(response);
-  }, [getCurrentCompReq]);
+  }, [compensationRequisitionId, getCurrentCompReq]);
 
   const fetchCurrentAcquisitionPayees = useCallback(async () => {
     setTimedCompensation(null);
-    const response = await getCurrentAcqPayees(compReqId);
+    const response = await getCurrentAcqPayees(compensationRequisitionId);
     setLatestAcqPayees(response);
-  }, [getCurrentAcqPayees]);
+  }, [compensationRequisitionId, getCurrentAcqPayees]);
 
   const fetchCompensationRequisition = useCallback(async () => {
     setTimedCompensation(null);
-    const response = await getCompensationRequisition(compReqId, time);
+    const response = await getCompensationRequisition(compensationRequisitionId, time);
     setTimedCompensation(response);
-  }, [getCompensationRequisition]);
+  }, [compensationRequisitionId, time, getCompensationRequisition]);
 
   const fetchCompensationProperties = useCallback(async () => {
-    if (isValidId(timedCompensation?.id)) {
-      if (fileType === ApiGen_CodeTypes_FileTypes.Acquisition) {
-        const compReqProperties = await getCompensationAcqProperties(timedCompensation.id, time);
-        setCompensationRequisitionProperties(compReqProperties ?? []);
-      }
-      if (fileType === ApiGen_CodeTypes_FileTypes.Lease) {
-        const compReqProperties = await getCompensationLeaseProperties(timedCompensation.id, time);
-        setCompensationRequisitionProperties(compReqProperties ?? []);
-      }
+    if (fileType === ApiGen_CodeTypes_FileTypes.Acquisition) {
+      const compReqProperties = await getCompensationAcqProperties(compensationRequisitionId, time);
+      setCompensationRequisitionProperties(compReqProperties ?? []);
+    }
+    if (fileType === ApiGen_CodeTypes_FileTypes.Lease) {
+      const compReqProperties = await getCompensationLeaseProperties(
+        compensationRequisitionId,
+        time,
+      );
+      setCompensationRequisitionProperties(compReqProperties ?? []);
     }
   }, [
-    timedCompensation?.id,
+    compensationRequisitionId,
     fileType,
     getCompensationAcqProperties,
+    time,
     getCompensationLeaseProperties,
   ]);
 
@@ -211,7 +216,7 @@ const DateTestContainer: React.FC<React.PropsWithChildren<IDateTestContainerProp
         setLeasePayees(compReqLeasePayees);
       }
     }
-  }, [timedCompensation?.id, fileType, getCompensationAcqPayees, getCompensationLeasePayees]);
+  }, [timedCompensation?.id, fileType, getCompensationAcqPayees, time, getCompensationLeasePayees]);
 
   const fetchFinancialCodes = useCallback(async () => {
     const fetchFinancialActivitiesCall = fetchFinancialActivities();
@@ -307,74 +312,23 @@ const DateTestContainer: React.FC<React.PropsWithChildren<IDateTestContainerProp
     timedCompensation,
     yearlyFinancialCodes,
   ]);
-
   return (
-    <Scrollable>
-      <Row>
-        <Col>
-          <SectionWrapper>
-            <Section header="Date Test Container">
-              <div>
-                <Button onClick={() => fetchCompensationRequisition()}>Fetch Data</Button>
-              </div>
-              {exists(composedCompReq) && (
-                <CompensationRequisitionDetailView
-                  fileType={fileType}
-                  product={product}
-                  project={project}
-                  compensation={composedCompReq}
-                  compensationProperties={compensationRequisitionProperties}
-                  compensationAcqPayees={acquisitionPayees}
-                  compensationLeasePayees={leasePayees}
-                  clientConstant={''}
-                  loading={false}
-                  setEditMode={() => {
-                    console.log('clicked');
-                  }}
-                  onGenerate={() => {
-                    console.log('clicked');
-                  }}
-                />
-              )}
-            </Section>
-          </SectionWrapper>
-        </Col>
-        <Col>
-          <Row>
-            <Col>
-              Timed Comp Req
-              <JsonWrapper>{JSON.stringify(composedCompReq, null, 4)}</JsonWrapper>
-            </Col>
-            <Col>
-              Latest Comp Req
-              <JsonWrapper>{JSON.stringify(latestCompensation, null, 4)}</JsonWrapper>
-            </Col>
-          </Row>
-          <Row>
-            <Col>
-              Timed Acq Payee
-              <JsonWrapper>{JSON.stringify(acquisitionPayees, null, 4)}</JsonWrapper>
-            </Col>
-            <Col>
-              Latest Acq Payee
-              <JsonWrapper>{JSON.stringify(latestAcqPayees, null, 4)}</JsonWrapper>
-            </Col>
-          </Row>
-        </Col>
-      </Row>
-    </Scrollable>
+    <View
+      fileType={fileType}
+      product={product}
+      project={project}
+      compensation={composedCompReq}
+      compensationProperties={compensationRequisitionProperties}
+      compensationAcqPayees={acquisitionPayees}
+      compensationLeasePayees={leasePayees}
+      clientConstant={''}
+      loading={false}
+      setEditMode={() => {
+        console.log('clicked');
+      }}
+      onGenerate={() => {
+        console.log('clicked');
+      }}
+    />
   );
 };
-
-export default DateTestContainer;
-
-const SectionWrapper = styled.div`
-  border: 1px solid red;
-  width: 800px;
-`;
-const JsonWrapper = styled.div`
-  border: 1px solid green;
-  white-space: pre;
-  text-align: left;
-  max-width: 200px;
-`;

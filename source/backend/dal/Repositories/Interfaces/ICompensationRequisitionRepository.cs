@@ -31,7 +31,9 @@ namespace Pims.Dal.Repositories
 
         PimsCompensationRequisition GetCompensationRequisitionAtTime(long compReqId, DateTime time);
 
-        IEnumerable<PimsPropertyAcquisitionFile> GetCompensationRequisitionPropertiesAtTime(long compReqId, DateTime time);
+        IEnumerable<PimsPropertyAcquisitionFile> GetCompensationRequisitionAcqPropertiesAtTime(long compReqId, DateTime time);
+
+        IEnumerable<PimsPropertyLease> GetCompensationRequisitionLeasePropertiesAtTime(long compReqId, DateTime time);
 
         IEnumerable<PimsCompReqAcqPayee> GetCompensationRequisitionAcquisitionPayeesAtTime(long compReqId, DateTime time);
 

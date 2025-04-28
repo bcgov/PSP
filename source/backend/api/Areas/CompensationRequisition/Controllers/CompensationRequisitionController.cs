@@ -268,7 +268,7 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
             return new JsonResult(_mapper.Map<IEnumerable<CompReqLeasePayeeModel>>(compReqPayees));
         }
 
-        [HttpGet("{id:long}/test-time")]
+        [HttpGet("{id:long}/historical")]
         [HasPermission(Permissions.CompensationRequisitionView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(List<CompensationRequisitionModel>), 200)]
@@ -282,7 +282,7 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
             return new JsonResult(_mapper.Map<CompensationRequisitionModel>(histCompReq));
         }
 
-        [HttpGet("acquisition/{id:long}/properties/test-time")]
+        [HttpGet("acquisition/{id:long}/properties/historical")]
         [HasPermission(Permissions.CompensationRequisitionView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<AcquisitionFilePropertyModel>), 200)]
@@ -290,12 +290,25 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetAcquisitionCompensationRequisitionPropertiesAtTime([FromRoute] long id, [FromQuery] DateTime time)
         {
-            var histCompReqProperties = _compensationRequisitionService.GetCompensationRequisitionPropertiesAtTime(id, time);
+            var acqCompReqProperties = _compensationRequisitionService.GetCompensationRequisitionAcqPropertiesAtTime(id, time);
 
-            return new JsonResult(_mapper.Map<IEnumerable<AcquisitionFilePropertyModel>>(histCompReqProperties));
+            return new JsonResult(_mapper.Map<IEnumerable<AcquisitionFilePropertyModel>>(acqCompReqProperties));
         }
 
-        [HttpGet("{id:long}/acquisition-payees/test-time")]
+        [HttpGet("lease/{id:long}/properties/historical")]
+        [HasPermission(Permissions.CompensationRequisitionView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<PropertyLeaseModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "compensation-requisition" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetLeaseCompensationRequisitionPropertiesAtTime([FromRoute] long id, [FromQuery] DateTime time)
+        {
+            var leaseCompReqProperties = _compensationRequisitionService.GetCompensationRequisitionLeasePropertiesAtTime(id, time);
+
+            return new JsonResult(_mapper.Map<IEnumerable<PropertyLeaseModel>>(leaseCompReqProperties));
+        }
+
+        [HttpGet("{id:long}/acquisition-payees/historical")]
         [HasPermission(Permissions.CompensationRequisitionView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(List<CompReqAcqPayeeModel>), 200)]
@@ -308,7 +321,7 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
             return new JsonResult(_mapper.Map<IEnumerable<CompReqAcqPayeeModel>>(acquisitionPayees));
         }
 
-        [HttpGet("{id:long}/lease-payees/test-time")]
+        [HttpGet("{id:long}/lease-payees/historical")]
         [HasPermission(Permissions.CompensationRequisitionView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(List<CompReqLeasePayeeModel>), 200)]

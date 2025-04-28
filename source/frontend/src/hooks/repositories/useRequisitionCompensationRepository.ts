@@ -5,13 +5,14 @@ import {
   deleteCompensationRequisitionApi,
   getCompensationRequisitionAcqPayeesApi,
   getCompensationRequisitionAcqPayeesAtTimeApi,
+  getCompensationRequisitionAcqPropertiesAtTimeApi,
   getCompensationRequisitionApi,
   getCompensationRequisitionAtTimeApi,
   getCompensationRequisitionFinancialsApi,
   getCompensationRequisitionLeasePayeesApi,
   getCompensationRequisitionLeasePayeesAtTimeApi,
+  getCompensationRequisitionLeasePropertiesAtTimeApi,
   getCompensationRequisitionPropertiesApi,
-  getCompensationRequisitionPropertiesAtTimeApi,
   getFileCompensationsApi,
   postFileCompensationRequisitionApi,
   putCompensationRequisitionApi,
@@ -189,7 +190,7 @@ export const useCompensationRequisitionRepository = () => {
     invoke: false,
   });
 
-  const getCompensationRequisitionPropertiesAtTime = useApiRequestWrapper<
+  const getCompensationRequisitionAcqPropertiesAtTime = useApiRequestWrapper<
     (
       compensationId: number,
       time: string,
@@ -197,13 +198,31 @@ export const useCompensationRequisitionRepository = () => {
   >({
     requestFunction: useCallback(
       async (compensationId: number, time: string) =>
-        await getCompensationRequisitionPropertiesAtTimeApi(compensationId, time),
+        await getCompensationRequisitionAcqPropertiesAtTimeApi(compensationId, time),
       [],
     ),
-    requestName: 'getCompensationRequisitionPropertiesAtTime',
+    requestName: 'getCompensationRequisitionAcqPropertiesAtTime',
     onSuccess: useAxiosSuccessHandler(),
     onError: useAxiosErrorHandler(
-      'Failed to get compensation requisition properties. Refresh the page to try again.',
+      'Failed to get compensation requisition properties for the given Acquisition file. Refresh the page to try again.',
+    ),
+  });
+
+  const getCompensationRequisitionLeasePropertiesAtTime = useApiRequestWrapper<
+    (
+      compensationId: number,
+      time: string,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_PropertyLease[], any>>
+  >({
+    requestFunction: useCallback(
+      async (compensationId: number, time: string) =>
+        await getCompensationRequisitionLeasePropertiesAtTimeApi(compensationId, time),
+      [],
+    ),
+    requestName: 'getCompensationRequisitionLeasePropertiesAtTime',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler(
+      'Failed to get compensation requisition properties for the given Lease file. Refresh the page to try again.',
     ),
   });
 
@@ -253,7 +272,9 @@ export const useCompensationRequisitionRepository = () => {
       getCompensationRequisitionAcqPayees: getCompensationRequisitionAcqPayees,
       getCompensationRequisitionLeasePayees: getCompensationRequisitionLeasePayees,
       getCompensationRequisitionAtTime: getCompensationRequisitionAtTime,
-      getCompensationRequisitionPropertiesAtTime: getCompensationRequisitionPropertiesAtTime,
+      getCompensationRequisitionAcqPropertiesAtTime: getCompensationRequisitionAcqPropertiesAtTime,
+      getCompensationRequisitionLeasePropertiesAtTime:
+        getCompensationRequisitionLeasePropertiesAtTime,
       getCompensationRequisitionAcqPayeesAtTime: getCompensationRequisitionAcqPayeesAtTime,
       getCompensationRequisitionLeasePayeesAtTime: getCompensationRequisitionLeasePayeesAtTime,
     }),
@@ -268,7 +289,8 @@ export const useCompensationRequisitionRepository = () => {
       getCompensationRequisitionAcqPayees,
       getCompensationRequisitionLeasePayees,
       getCompensationRequisitionAtTime,
-      getCompensationRequisitionPropertiesAtTime,
+      getCompensationRequisitionAcqPropertiesAtTime,
+      getCompensationRequisitionLeasePropertiesAtTime,
       getCompensationRequisitionAcqPayeesAtTime,
       getCompensationRequisitionLeasePayeesAtTime,
     ],

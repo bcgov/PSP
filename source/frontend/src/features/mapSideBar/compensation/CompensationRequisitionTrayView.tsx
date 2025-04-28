@@ -14,6 +14,7 @@ import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Le
 
 import { CompensationRequisitionDetailContainer } from './detail/CompensationRequisitionDetailContainer';
 import CompensationRequisitionDetailView from './detail/CompensationRequisitionDetailView';
+import { CompensationRequisitionHistoricalDetailContainer } from './detail/CompensationRequisitionHistoricalDetailContainer';
 import UpdateCompensationRequisitionContainer from './update/UpdateCompensationRequisitionContainer';
 import UpdateCompensationRequisitionForm from './update/UpdateCompensationRequisitionForm';
 
@@ -53,7 +54,7 @@ export const CompensationRequisitionTrayView: React.FunctionComponent<
   const detailViewContent =
     !editMode && compensation ? (
       <HalfHeightDiv>
-        {!!compensation?.id && file && (
+        {!!compensation?.id && file && compensation?.isDraft && (
           <CompensationRequisitionDetailContainer
             compensation={compensation}
             fileType={fileType}
@@ -62,7 +63,19 @@ export const CompensationRequisitionTrayView: React.FunctionComponent<
             clientConstant={clientConstant}
             loading={loading}
             setEditMode={setEditMode}
-          ></CompensationRequisitionDetailContainer>
+          />
+        )}
+
+        {!!compensation?.id && file && !compensation?.isDraft && (
+          <CompensationRequisitionHistoricalDetailContainer
+            compensation={compensation}
+            fileType={fileType}
+            file={file}
+            View={CompensationRequisitionDetailView}
+            clientConstant={clientConstant}
+            loading={loading}
+            setEditMode={setEditMode}
+          />
         )}
       </HalfHeightDiv>
     ) : undefined;
@@ -82,7 +95,7 @@ export const CompensationRequisitionTrayView: React.FunctionComponent<
             setEditMode(false);
           }}
           View={UpdateCompensationRequisitionForm}
-        ></UpdateCompensationRequisitionContainer>
+        />
       </HalfHeightDiv>
     ) : undefined;
 

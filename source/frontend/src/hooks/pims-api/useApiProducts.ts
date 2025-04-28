@@ -17,7 +17,7 @@ export const useApiProducts = () => {
       getProductFiles: (id: number) =>
         api.get<ApiGen_Concepts_AcquisitionFile[] | null>(`/products/${id}/acquisitionfiles`),
       getProductAtTime: (productId: number, time: string) =>
-        api.get<ApiGen_Concepts_Product>(`/products/${productId}/test-time?time=${time}`),
+        api.get<ApiGen_Concepts_Product>(`/products/${productId}/historical?time=${time}`),
     }),
     [api],
   );

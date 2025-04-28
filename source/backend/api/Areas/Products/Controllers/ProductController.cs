@@ -64,13 +64,7 @@ namespace Pims.Api.Areas.Projects.Controllers
             return new JsonResult(_mapper.Map<List<AcquisitionFileModel>>(acquisitionFiles));
         }
 
-        /// <summary>
-        /// Gets a collection of documents for the specified type and owner id.
-        /// </summary>
-        /// <param name="id">Used to identify document type.</param>
-        /// <param name="time">Used to identify document's parent entity.</param>
-        /// <returns></returns>
-        [HttpGet("{id:long}/test-time")]
+        [HttpGet("{id:long}/historical")]
         [Produces("application/json")]
         [HasPermission(Permissions.ProjectView)]
         [ProducesResponseType(typeof(ProductModel), 200)]
