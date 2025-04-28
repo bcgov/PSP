@@ -7,4 +7,5 @@ export enum ApiGen_CodeTypes_FileTypes {
   Research = 'research',
   Disposition = 'disposition',
   Lease = 'lease',
+  Management = 'management',
 }

@@ -51,6 +51,7 @@ export const InventoryTabs: React.FunctionComponent<
         if (
           match.path.includes('acquisition') ||
           match.path.includes('disposition') ||
+          match.path.includes('management') ||
           match.path.includes('lease')
         ) {
           const path = generatePath(match.path, {
@@ -78,7 +79,7 @@ export const InventoryTabs: React.FunctionComponent<
       }}
     >
       {tabViews.map((view: TabInventoryView, index: number) => (
-        <Tab eventKey={view.key} title={view.name} key={`inventory-tab-${index}`}>
+        <Tab eventKey={view.key} title={view.name} key={`inventory-tab-${view.key ?? index}`}>
           {view.content}
         </Tab>
       ))}

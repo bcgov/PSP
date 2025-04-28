@@ -8,6 +8,7 @@ import ContactIcon from '@/assets/images/contact-icon.svg?react';
 import DispositionIcon from '@/assets/images/disposition-icon.svg?react';
 import HomeIcon from '@/assets/images/home-icon.svg?react';
 import LeaseIcon from '@/assets/images/lease-icon.svg?react';
+import ManagementIcon from '@/assets/images/management-icon.svg?react';
 import ProjectsIcon from '@/assets/images/projects-icon.svg?react';
 import ResearchIcon from '@/assets/images/research-icon.svg?react';
 import SubdivisionIcon from '@/assets/images/subdivision-icon.svg?react';
@@ -64,6 +65,16 @@ export const SideNavBar = () => {
     () =>
       matchPath(location.pathname, {
         path: ['/acquisition/*', '/mapview/sidebar/acquisition/*'],
+        exact: true,
+        strict: true,
+      }),
+    [location],
+  );
+
+  const isManagement = useMemo(
+    () =>
+      matchPath(location.pathname, {
+        path: ['/management/*', '/mapview/sidebar/management/*'],
         exact: true,
         strict: true,
       }),
@@ -154,6 +165,14 @@ export const SideNavBar = () => {
           showText={expanded}
           claims={[Claims.ACQUISITION_VIEW]}
           isNavActive={isAcquisition != null}
+        />
+        <NavIcon
+          onClick={() => setTrayPage(SidebarContextType.MANAGEMENT)}
+          icon={<ManagementIcon />}
+          text="Management"
+          showText={expanded}
+          claims={[Claims.MANAGEMENT_VIEW]}
+          isNavActive={isManagement != null}
         />
         <NavIcon
           onClick={() => setTrayPage(SidebarContextType.LEASE)}

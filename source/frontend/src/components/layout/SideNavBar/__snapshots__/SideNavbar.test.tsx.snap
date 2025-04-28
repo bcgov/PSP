@@ -356,7 +356,9 @@ exports[`SideNavbar display and logic > renders 1`] = `
   min-width: max-content;
 }
 
-.c3.active svg {
+.c3.active svg,
+.c3.active svg g,
+.c3.active svg g path {
   fill: #fdb913;
 }
 
