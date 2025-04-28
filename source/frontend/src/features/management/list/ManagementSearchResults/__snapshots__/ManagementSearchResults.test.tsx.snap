@@ -152,7 +152,7 @@ exports[`Management search results table > matches snapshot 1`] = `
             Historical File #
             <div
               class="c0"
-              data-testid="sort-column-legacyFileNumber"
+              data-testid="sort-column-legacyFileNum"
             >
               <svg
                 class="c1"
@@ -210,7 +210,7 @@ exports[`Management search results table > matches snapshot 1`] = `
             Purpose
             <div
               class="c0"
-              data-testid="sort-column-managementFilePurposeCode"
+              data-testid="sort-column-managementFileProgramTypeCode"
             >
               <svg
                 class="c1"
