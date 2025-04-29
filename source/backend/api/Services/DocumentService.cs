@@ -8,9 +8,11 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using MapsterMapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Pims.Api.Constants;
 using Pims.Api.Models;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Concepts.Document;
@@ -65,7 +67,7 @@ namespace Pims.Api.Services
         };
 
         private static readonly string MayanConfigSectionKey = "Mayan";
-        private readonly MayanConfig _config;
+        private readonly MayanConfig _mayanConfig;
 
         private readonly IDocumentRepository documentRepository;
         private readonly IEdmsDocumentRepository documentStorageRepository;
@@ -73,6 +75,7 @@ namespace Pims.Api.Services
         private readonly IAvService avService;
         private readonly IMapper mapper;
         private readonly IOptionsMonitor<AuthClientOptions> keycloakOptions;
+        private readonly IMemoryCache _memoryCache;
 
         public DocumentService(
             ClaimsPrincipal user,
@@ -84,7 +87,7 @@ namespace Pims.Api.Services
             IAvService avService,
             IMapper mapper,
             IOptionsMonitor<AuthClientOptions> options,
-            IDocumentQueueRepository queueRepository)
+            IMemoryCache memoryCache)
             : base(user, logger)
         {
             this.documentRepository = documentRepository;
@@ -93,8 +96,15 @@ namespace Pims.Api.Services
             this.avService = avService;
             this.mapper = mapper;
             this.keycloakOptions = options;
-            _config = new MayanConfig();
-            configuration.Bind(MayanConfigSectionKey, _config);
+            _mayanConfig = new MayanConfig();
+            configuration.Bind(MayanConfigSectionKey, _mayanConfig);
+            _memoryCache = memoryCache;
+        }
+
+        public static bool IsValidDocumentExtension(string fileName)
+        {
+            var fileNameExtension = Path.GetExtension(fileName).Replace(".", string.Empty).ToLower();
+            return ValidExtensions.Contains(fileNameExtension);
         }
 
         public IList<PimsDocumentTyp> GetPimsDocumentTypes()
@@ -152,12 +162,12 @@ namespace Pims.Api.Services
             if (externalResponse.Status == ExternalResponseStatus.Success)
             {
                 var externalDocument = externalResponse.Payload;
-                if (externalDocument.FileLatest == null && _config.UploadRetries > 0)
+                if (externalDocument.FileLatest == null && _mayanConfig.UploadRetries > 0)
                 {
                     var retryPolicy = Policy<ExternalResponse<DocumentDetailModel>>
                         .HandleResult(result => result.HttpStatusCode != HttpStatusCode.OK || result.Payload.FileLatest == null)
                         .Or<System.Text.Json.JsonException>()
-                        .WaitAndRetryAsync(_config.UploadRetries, (int retry) => TimeSpan.FromSeconds(Math.Pow(2, retry)));
+                        .WaitAndRetryAsync(_mayanConfig.UploadRetries, (int retry) => TimeSpan.FromSeconds(Math.Pow(2, retry)));
                     var detail = await retryPolicy.ExecuteAsync(async () => await GetStorageDocumentDetail(externalDocument.Id));
                     if (detail?.Payload?.FileLatest == null)
                     {
@@ -421,15 +431,26 @@ namespace Pims.Api.Services
 
         public async Task<ExternalResponse<QueryResponse<Models.Mayan.Document.DocumentTypeModel>>> GetStorageDocumentTypes(string ordering = "", int? page = null, int? pageSize = null)
         {
-            this.Logger.LogInformation("Retrieving storage document types");
-            this.User.ThrowIfNotAuthorizedOrServiceAccount(Permissions.DocumentView, keycloakOptions);
+            Logger.LogInformation("Retrieving storage document types");
+            User.ThrowIfNotAuthorizedOrServiceAccount(Permissions.DocumentView, keycloakOptions);
 
-            ExternalResponse<QueryResponse<Models.Mayan.Document.DocumentTypeModel>> result = await documentStorageRepository.TryGetDocumentTypesAsync(ordering, page, pageSize);
-            if (result.Status != ExternalResponseStatus.Success)
+            if(_mayanConfig.CacheDocumentTypes)
             {
-                throw GetMayanResponseError(result.Message);
+                if (!_memoryCache.TryGetValue(CacheKeys.MayanDocumentTypes, out ExternalResponse<QueryResponse<Models.Mayan.Document.DocumentTypeModel>> cachedDocumentTypesResult) || !_mayanConfig.CacheDocumentTypes)
+                {
+                    ExternalResponse<QueryResponse<Models.Mayan.Document.DocumentTypeModel>> result = await documentStorageRepository.TryGetDocumentTypesAsync(ordering, page, pageSize);
+                    if (result.Status != ExternalResponseStatus.Success)
+                    {
+                        throw GetMayanResponseError(result.Message);
+                    }
+
+                    _memoryCache.Set(CacheKeys.MayanDocumentTypes, result);
+                }
+
+                return cachedDocumentTypesResult;
             }
-            return result;
+
+            return await documentStorageRepository.TryGetDocumentTypesAsync(ordering, page, pageSize);
         }
 
         public async Task<ExternalResponse<QueryResponse<DocumentDetailModel>>> GetStorageDocumentList(string ordering = "", int? page = null, int? pageSize = null)
@@ -584,7 +605,7 @@ namespace Pims.Api.Services
             this.Logger.LogInformation("Retrieving pages for document: {documentId} file: {documentFileId}", documentId, documentFileId);
             this.User.ThrowIfNotAuthorized(Permissions.DocumentView);
 
-            var result = await documentStorageRepository.TryGetFilePageListAsync(documentId, documentFileId, _config.PreviewPages, 1);
+            var result = await documentStorageRepository.TryGetFilePageListAsync(documentId, documentFileId, _mayanConfig.PreviewPages, 1);
             if (result.Status != ExternalResponseStatus.Success)
             {
                 throw GetMayanResponseError(result.Message);
@@ -599,7 +620,7 @@ namespace Pims.Api.Services
 
             var retryPolicy = Policy<HttpResponseMessage>
                         .HandleResult(result => result?.StatusCode != HttpStatusCode.OK || result?.Content == null)
-                        .WaitAndRetryAsync(_config.ImageRetries, (int retry) => TimeSpan.FromSeconds(Math.Pow(2, retry)));
+                        .WaitAndRetryAsync(_mayanConfig.ImageRetries, (int retry) => TimeSpan.FromSeconds(Math.Pow(2, retry)));
 
             var result = await retryPolicy.ExecuteAsync(async () => await documentStorageRepository.TryGetFilePageImage(mayanDocumentId, mayanFileId, mayanFilePageId));
 
@@ -610,21 +631,15 @@ namespace Pims.Api.Services
             return result;
         }
 
-        public static bool IsValidDocumentExtension(string fileName)
-        {
-            var fileNameExtension = Path.GetExtension(fileName).Replace(".", string.Empty).ToLower();
-            return ValidExtensions.Contains(fileNameExtension);
-        }
-
         private async Task PrecacheDocumentPreviews(long documentId, long documentFileId)
         {
-            this.Logger.LogInformation("Precaching the first {_config.PreviewPages} pages in document {documentId}, file {documentFileId}", _config.PreviewPages, documentId, documentFileId);
+            this.Logger.LogInformation("Precaching the first {_config.PreviewPages} pages in document {documentId}, file {documentFileId}", _mayanConfig.PreviewPages, documentId, documentFileId);
 
             // Note that Mayan must generate a list of pages from an uploaded file, so retry if that is not available right away.
             var retryPolicy = Policy<ExternalResponse<QueryResponse<FilePageModel>>>
                         .HandleResult(result => result.HttpStatusCode != HttpStatusCode.OK || result?.Payload?.Results?.Any() == false)
-                        .WaitAndRetryAsync(_config.UploadRetries, (int retry) => TimeSpan.FromSeconds(Math.Pow(2, retry)));
-            var pages = await retryPolicy.ExecuteAsync(async () => await documentStorageRepository.TryGetFilePageListAsync(documentId, documentFileId, _config.PreviewPages, 1));
+                        .WaitAndRetryAsync(_mayanConfig.UploadRetries, (int retry) => TimeSpan.FromSeconds(Math.Pow(2, retry)));
+            var pages = await retryPolicy.ExecuteAsync(async () => await documentStorageRepository.TryGetFilePageListAsync(documentId, documentFileId, _mayanConfig.PreviewPages, 1));
 
             if (pages?.Payload?.Results != null)
             {
@@ -731,7 +746,7 @@ namespace Pims.Api.Services
 
         private MayanRepositoryException GetMayanResponseError(string errorMesage)
         {
-            if (_config.ExposeErrors)
+            if (_mayanConfig.ExposeErrors)
             {
                 return new MayanRepositoryException(errorMesage);
             }
