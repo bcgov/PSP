@@ -16,9 +16,6 @@ import AppRoute from '@/utils/AppRoute';
 import componentLoader from '@/utils/utils';
 
 import Login from './features/account/Login';
-import UpdateBctfaOwnershipContainer from './features/admin/bctfa/UpdateBctfaOwnershipContainer';
-import UpdateBctfaOwnershipView from './features/admin/bctfa/UpdateBctfaOwnershipView';
-import DateTestContainer from './features/DateTestContainer';
 import AccessDenied from './pages/401/AccessDenied';
 
 const MapView = lazy(() => componentLoader(import('@/features/properties/map/MapContainer'), 2));
@@ -339,12 +336,6 @@ const AppRouter: FC<PropsWithChildren<unknown>> = () => {
             layout={AuthLayout}
             claim={Claims.ADMIN_USERS}
             title={getTitle('Edit User')}
-          />
-          <AppRoute
-            path="/test-page"
-            customComponent={DateTestContainer}
-            layout={AuthLayout}
-            title={getTitle('date tester')}
           />
           <AppRoute title="*" path="*" customComponent={() => <Redirect to="/page-not-found" />} />
         </Switch>

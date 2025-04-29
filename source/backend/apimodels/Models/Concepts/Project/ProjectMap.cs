@@ -20,8 +20,6 @@ namespace Pims.Api.Models.Concepts.Project
                 .Map(dest => dest.Note, src => src.Note)
                 .Map(dest => dest.ProjectProducts, src => src.PimsProjectProducts)
                 .Map(dest => dest.ProjectPersons, src => src.PimsProjectPeople)
-                .Map(dest => dest.AppLastUpdateUserid, src => src.AppLastUpdateUserid)
-                .Map(dest => dest.AppLastUpdateTimestamp, src => src.AppLastUpdateTimestamp)
                 .Inherits<Entity.IBaseEntity, BaseConcurrentModel>();
 
             config.NewConfig<ProjectModel, Entity.PimsProject>()

@@ -11,6 +11,7 @@ import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTy
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { exists, isValidId } from '@/utils';
 
 import { CompensationRequisitionDetailContainer } from './detail/CompensationRequisitionDetailContainer';
 import CompensationRequisitionDetailView from './detail/CompensationRequisitionDetailView';
@@ -52,9 +53,9 @@ export const CompensationRequisitionTrayView: React.FunctionComponent<
   onUpdate,
 }) => {
   const detailViewContent =
-    !editMode && compensation ? (
+    !editMode && isValidId(compensation?.id) && exists(file) ? (
       <HalfHeightDiv>
-        {!!compensation?.id && file && compensation?.isDraft && (
+        {compensation.isDraft === true && (
           <CompensationRequisitionDetailContainer
             compensation={compensation}
             fileType={fileType}
@@ -66,15 +67,16 @@ export const CompensationRequisitionTrayView: React.FunctionComponent<
           />
         )}
 
-        {!!compensation?.id && file && !compensation?.isDraft && (
+        {compensation.isDraft === false && (
           <CompensationRequisitionHistoricalDetailContainer
-            compensation={compensation}
             fileType={fileType}
-            file={file}
             View={CompensationRequisitionDetailView}
             clientConstant={clientConstant}
             loading={loading}
             setEditMode={setEditMode}
+            parentFileId={file.id}
+            compensationRequisitionId={compensation.id}
+            time={compensation.appLastUpdateTimestamp}
           />
         )}
       </HalfHeightDiv>

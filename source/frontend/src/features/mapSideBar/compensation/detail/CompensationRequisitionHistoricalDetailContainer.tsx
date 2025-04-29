@@ -1,3 +1,4 @@
+import moment from 'moment';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
@@ -19,6 +20,7 @@ import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_
 import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
 import { isValidId } from '@/utils';
 
+import { useGenerateH120 } from '../../acquisition/common/GenerateForm/hooks/useGenerateH120';
 import { CompensationRequisitionDetailViewProps } from './CompensationRequisitionDetailView';
 
 export interface ICompensationRequisitionHistoricalDetailContainerProps {
@@ -38,12 +40,19 @@ export const CompensationRequisitionHistoricalDetailContainer: React.FunctionCom
   fileType,
   parentFileId,
   compensationRequisitionId,
-  time,
+  time: almostTime,
   clientConstant,
   loading,
   setEditMode,
   View,
 }) => {
+  const onGenerate = useGenerateH120();
+
+  const adjustedTime = useMemo(() => {
+    const momentTime = moment(almostTime);
+    return momentTime.add(1, 'seconds').toISOString();
+  }, [almostTime]);
+
   const [parentFile, setParentFile] = useState<
     ApiGen_Concepts_Lease | ApiGen_Concepts_AcquisitionFile | null
   >(null);
@@ -52,9 +61,6 @@ export const CompensationRequisitionHistoricalDetailContainer: React.FunctionCom
   const [product, setProduct] = useState<ApiGen_Concepts_Product | null>(null);
 
   const [timedCompensation, setTimedCompensation] =
-    useState<ApiGen_Concepts_CompensationRequisition | null>(null);
-
-  const [latestCompensation, setLatestCompensation] =
     useState<ApiGen_Concepts_CompensationRequisition | null>(null);
 
   const [latestAcqPayees, setLatestAcqPayees] = useState<ApiGen_Concepts_CompReqAcqPayee[]>([]);
@@ -96,8 +102,6 @@ export const CompensationRequisitionHistoricalDetailContainer: React.FunctionCom
   } = useFinancialCodeRepository();
 
   const {
-    getCompensationRequisition: { execute: getCurrentCompReq },
-    getCompensationRequisitionAcqPayees: { execute: getCurrentAcqPayees },
     getCompensationRequisitionAtTime: {
       execute: getCompensationRequisition,
       loading: getCompensationRequisitionLoading,
@@ -113,12 +117,10 @@ export const CompensationRequisitionHistoricalDetailContainer: React.FunctionCom
     getCompensationRequisitionAcqPayeesAtTime: {
       execute: getCompensationAcqPayees,
       loading: loadingCompReqAcqPayees,
-      response: compReqAcqPayees,
     },
     getCompensationRequisitionLeasePayeesAtTime: {
       execute: getCompensationLeasePayees,
       loading: loadingCompReqLeasePayees,
-      response: compReqLeasePayees,
     },
   } = useCompensationRequisitionRepository();
 
@@ -140,61 +142,52 @@ export const CompensationRequisitionHistoricalDetailContainer: React.FunctionCom
 
   const fetchParentFile = useCallback(async () => {
     if (fileType === ApiGen_CodeTypes_FileTypes.Acquisition) {
-      const response = await getAcquisition(parentFileId, time);
+      const response = await getAcquisition(parentFileId, adjustedTime);
       setParentFile(response);
     } else if (fileType === ApiGen_CodeTypes_FileTypes.Lease) {
-      const response = await getLease(parentFileId, time);
+      const response = await getLease(parentFileId, adjustedTime);
       setParentFile(response);
     }
-  }, [parentFileId, fileType, time, getAcquisition, getLease]);
+  }, [parentFileId, fileType, adjustedTime, getAcquisition, getLease]);
 
   const fetchProject = useCallback(
     async (
       projectId: number,
       setter: (value: React.SetStateAction<ApiGen_Concepts_Project>) => void,
     ) => {
-      const response = await getProject(projectId, time);
+      const response = await getProject(projectId, adjustedTime);
       setter(response);
     },
-    [getProject],
+    [adjustedTime, getProject],
   );
 
   const fetchProduct = useCallback(
     async (product: number) => {
       setProduct(null);
-      const response = await getProduct(product, time);
+      const response = await getProduct(product, adjustedTime);
       setProduct(response);
     },
-    [time, getProduct],
+    [adjustedTime, getProduct],
   );
-
-  const fetchCurrentCompensationRequisition = useCallback(async () => {
-    setTimedCompensation(null);
-    const response = await getCurrentCompReq(compensationRequisitionId);
-    setLatestCompensation(response);
-  }, [compensationRequisitionId, getCurrentCompReq]);
-
-  const fetchCurrentAcquisitionPayees = useCallback(async () => {
-    setTimedCompensation(null);
-    const response = await getCurrentAcqPayees(compensationRequisitionId);
-    setLatestAcqPayees(response);
-  }, [compensationRequisitionId, getCurrentAcqPayees]);
 
   const fetchCompensationRequisition = useCallback(async () => {
     setTimedCompensation(null);
-    const response = await getCompensationRequisition(compensationRequisitionId, time);
+    const response = await getCompensationRequisition(compensationRequisitionId, adjustedTime);
     setTimedCompensation(response);
-  }, [compensationRequisitionId, time, getCompensationRequisition]);
+  }, [compensationRequisitionId, adjustedTime, getCompensationRequisition]);
 
   const fetchCompensationProperties = useCallback(async () => {
     if (fileType === ApiGen_CodeTypes_FileTypes.Acquisition) {
-      const compReqProperties = await getCompensationAcqProperties(compensationRequisitionId, time);
+      const compReqProperties = await getCompensationAcqProperties(
+        compensationRequisitionId,
+        adjustedTime,
+      );
       setCompensationRequisitionProperties(compReqProperties ?? []);
     }
     if (fileType === ApiGen_CodeTypes_FileTypes.Lease) {
       const compReqProperties = await getCompensationLeaseProperties(
         compensationRequisitionId,
-        time,
+        adjustedTime,
       );
       setCompensationRequisitionProperties(compReqProperties ?? []);
     }
@@ -202,21 +195,31 @@ export const CompensationRequisitionHistoricalDetailContainer: React.FunctionCom
     compensationRequisitionId,
     fileType,
     getCompensationAcqProperties,
-    time,
+    adjustedTime,
     getCompensationLeaseProperties,
   ]);
 
   const fetchCompensationPayees = useCallback(async () => {
-    if (isValidId(timedCompensation?.id)) {
-      if (fileType === ApiGen_CodeTypes_FileTypes.Acquisition) {
-        const compReqAcqPayees = await getCompensationAcqPayees(timedCompensation.id, time);
-        setAcquisitionPayees(compReqAcqPayees);
-      } else if (fileType === ApiGen_CodeTypes_FileTypes.Lease) {
-        const compReqLeasePayees = await getCompensationLeasePayees(timedCompensation.id, time);
-        setLeasePayees(compReqLeasePayees);
-      }
+    if (fileType === ApiGen_CodeTypes_FileTypes.Acquisition) {
+      const compReqAcqPayees = await getCompensationAcqPayees(
+        compensationRequisitionId,
+        adjustedTime,
+      );
+      setAcquisitionPayees(compReqAcqPayees);
+    } else if (fileType === ApiGen_CodeTypes_FileTypes.Lease) {
+      const compReqLeasePayees = await getCompensationLeasePayees(
+        compensationRequisitionId,
+        adjustedTime,
+      );
+      setLeasePayees(compReqLeasePayees);
     }
-  }, [timedCompensation?.id, fileType, getCompensationAcqPayees, time, getCompensationLeasePayees]);
+  }, [
+    compensationRequisitionId,
+    fileType,
+    getCompensationAcqPayees,
+    adjustedTime,
+    getCompensationLeasePayees,
+  ]);
 
   const fetchFinancialCodes = useCallback(async () => {
     const fetchFinancialActivitiesCall = fetchFinancialActivities();
@@ -265,10 +268,6 @@ export const CompensationRequisitionHistoricalDetailContainer: React.FunctionCom
   }, [fetchProject, timedCompensation?.alternateProjectId]);
 
   useEffect(() => {
-    fetchCurrentAcquisitionPayees();
-  }, [fetchCurrentAcquisitionPayees]);
-
-  useEffect(() => {
     fetchFinancialCodes();
   }, [fetchFinancialCodes]);
 
@@ -283,10 +282,6 @@ export const CompensationRequisitionHistoricalDetailContainer: React.FunctionCom
   useEffect(() => {
     fetchCompensationRequisition();
   }, [fetchCompensationRequisition]);
-
-  useEffect(() => {
-    fetchCurrentCompensationRequisition();
-  }, [fetchCurrentCompensationRequisition]);
 
   const composedCompReq: ApiGen_Concepts_CompensationRequisition = useMemo(() => {
     return {
@@ -312,6 +307,31 @@ export const CompensationRequisitionHistoricalDetailContainer: React.FunctionCom
     timedCompensation,
     yearlyFinancialCodes,
   ]);
+
+  const isLoading = useMemo(
+    () =>
+      loading ||
+      loadingFinancialActivities ||
+      loadingResponsibilityCodes ||
+      loadingYearlyFinancials ||
+      getCompensationRequisitionLoading ||
+      loadingCompReqAcqProperties ||
+      loadingCompReqLeaseProperties ||
+      loadingCompReqAcqPayees ||
+      loadingCompReqLeasePayees,
+    [
+      getCompensationRequisitionLoading,
+      loading,
+      loadingCompReqAcqPayees,
+      loadingCompReqAcqProperties,
+      loadingCompReqLeasePayees,
+      loadingCompReqLeaseProperties,
+      loadingFinancialActivities,
+      loadingResponsibilityCodes,
+      loadingYearlyFinancials,
+    ],
+  );
+
   return (
     <View
       fileType={fileType}
@@ -321,14 +341,10 @@ export const CompensationRequisitionHistoricalDetailContainer: React.FunctionCom
       compensationProperties={compensationRequisitionProperties}
       compensationAcqPayees={acquisitionPayees}
       compensationLeasePayees={leasePayees}
-      clientConstant={''}
-      loading={false}
-      setEditMode={() => {
-        console.log('clicked');
-      }}
-      onGenerate={() => {
-        console.log('clicked');
-      }}
+      clientConstant={clientConstant}
+      loading={isLoading}
+      setEditMode={setEditMode}
+      onGenerate={onGenerate}
     />
   );
 };
