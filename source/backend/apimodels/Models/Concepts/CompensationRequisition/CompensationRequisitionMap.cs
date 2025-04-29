@@ -79,19 +79,12 @@ namespace Pims.Api.Models.Concepts.CompensationRequisition
                 .Map(dest => dest.FinalizedDate, src => src.FinalizedDate)
                 .Map(dest => dest.AgreementDate, src => src.AgreementDt)
                 .Map(dest => dest.GenerationDate, src => src.GenerationDt)
-                //.Map(dest => dest.Financials, src => src.PimsCompReqFinancials)
                 .Map(dest => dest.IsPaymentInTrust, src => src.IsPaymentInTrust)
                 .Map(dest => dest.GstNumber, src => src.GstNumber)
                 .Map(dest => dest.FinalizedDate, src => src.FinalizedDate)
                 .Map(dest => dest.SpecialInstruction, src => src.SpecialInstruction)
                 .Map(dest => dest.DetailedRemarks, src => src.DetailedRemarks)
-                .Map(dest => dest.AlternateProjectId, src => src.AlternateProjectId)
-                //.Map(dest => dest.AlternateProject, src => src.AlternateProject)
-                //.Map(dest => dest.CompReqAcqPayees, src => src.PimsCompReqAcqPayees)
-                //.Map(dest => dest.CompReqLeasePayees, src => src.PimsCompReqLeasePayees)
-                //.Map(dest => dest.CompReqAcquisitionProperties, src => src.PimsPropAcqFlCompReqs)
-                //.Map(dest => dest.CompReqLeaseProperties, src => src.PimsPropLeaseCompReqs)
-                ;
+                .Map(dest => dest.AlternateProjectId, src => src.AlternateProjectId);
         }
     }
 }

@@ -335,8 +335,8 @@ export const CompensationRequisitionHistoricalDetailContainer: React.FunctionCom
   return (
     <View
       fileType={fileType}
-      product={product}
-      project={project}
+      fileProduct={product}
+      fileProject={project}
       compensation={composedCompReq}
       compensationProperties={compensationRequisitionProperties}
       compensationAcqPayees={acquisitionPayees}

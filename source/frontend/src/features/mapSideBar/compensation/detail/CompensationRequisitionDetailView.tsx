@@ -36,8 +36,8 @@ import { PayeeDetail } from './PayeeDetail';
 
 export interface CompensationRequisitionDetailViewProps {
   fileType: ApiGen_CodeTypes_FileTypes;
-  product: ApiGen_Concepts_Product | undefined;
-  project: ApiGen_Concepts_Project | undefined;
+  fileProduct: ApiGen_Concepts_Product | undefined;
+  fileProject: ApiGen_Concepts_Project | undefined;
   compensation: ApiGen_Concepts_CompensationRequisition;
   compensationProperties: ApiGen_Concepts_FileProperty[];
   compensationAcqPayees: ApiGen_Concepts_CompReqAcqPayee[];
@@ -56,8 +56,8 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
   CompensationRequisitionDetailViewProps
 > = ({
   fileType,
-  product,
-  project,
+  fileProduct,
+  fileProject,
   compensation,
   compensationProperties,
   compensationAcqPayees,
@@ -300,16 +300,16 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
 
       <Section header="Financial Coding" isCollapsable initiallyExpanded>
         <SectionField label="Product" labelWidth={{ xl: '4' }} valueTestId="file-product">
-          {product?.code ?? ''}
+          {fileProduct?.code ?? ''}
         </SectionField>
         <SectionField label="Business function" labelWidth={{ xl: '4' }}>
-          {project?.businessFunctionCode?.code ?? ''}
+          {fileProject?.businessFunctionCode?.code ?? ''}
         </SectionField>
         <SectionField label="Work activity" labelWidth={{ xl: '4' }}>
-          {project?.workActivityCode?.code ?? ''}
+          {fileProject?.workActivityCode?.code ?? ''}
         </SectionField>
         <SectionField label="Cost type" labelWidth={{ xl: '4' }}>
-          {project?.costTypeCode?.code ?? ''}
+          {fileProject?.costTypeCode?.code ?? ''}
         </SectionField>
         <SectionField label="Fiscal year" labelWidth={{ xl: '4' }}>
           {compensation.fiscalYear ?? ''}

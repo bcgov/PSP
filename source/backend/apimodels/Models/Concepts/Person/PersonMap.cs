@@ -59,11 +59,7 @@ namespace Pims.Api.Models.Concepts.Person
                 .Map(dest => dest.AddressComment, src => src.AddressComment)
                 .Map(dest => dest.UseOrganizationAddress, src => src.UseOrganizationAddress)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.PimsPropertyActivityId, src => src.PimsPropertyActivityId)
-            //.Map(dest => dest.PimsContactMethods, src => src.ContactMethods)
-            //.Map(dest => dest.PimsPersonAddresses, src => src.PersonAddresses)
-            //.Map(dest => dest.PimsPersonOrganizations, src => src.PersonOrganizations)
-            ;
+                .Map(dest => dest.PimsPropertyActivityId, src => src.PimsPropertyActivityId);
         }
     }
 }

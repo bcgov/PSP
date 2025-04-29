@@ -1,7 +1,6 @@
 using Mapster;
 using Pims.Api.Models.Base;
 using Pims.Core.Extensions;
-using Pims.Dal.Entities;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts.Property
@@ -114,8 +113,6 @@ namespace Pims.Api.Models.Concepts.Property
                 .Map(dest => dest.AddressId, src => src.AddressId)
                 .Map(dest => dest.DistrictCode, src => src.DistrictCode)
                 .Map(dest => dest.RegionCode, src => src.RegionCode)
-                //.Map(dest => dest.Location, src => src.Location)
-                //.Map(dest => dest.Boundary, src => src.Boundary)
                 .Map(dest => dest.GeneralLocation, src => src.GeneralLocation)
 
                 .Map(dest => dest.IsRetired, src => src.IsRetired)
@@ -124,14 +121,6 @@ namespace Pims.Api.Models.Concepts.Property
 
                 .Map(dest => dest.Notes, src => src.Notes)
                 .Map(dest => dest.IsOwned, src => src.IsOwned)
-
-                // multi-selects
-                //.Map(dest => dest.PimsPropPropAnomalyTypes, src => src.PimsPropPropAnomalies)
-                //.Map(dest => dest.PimsPropPropTenureTypes, src => src.Tenures)
-                //.Map(dest => dest.PimsPropPropRoadTypes, src => src.RoadTypes)
-                //.Map(dest => dest.PimsPropPropAnomalyTyps, src => src.Anomalies)
-                //.Map(dest => dest.PimsPropPropTenureTyps, src => src.Tenures)
-                //.Map(dest => dest.PimsPropPropRoadTyps, src => src.RoadTypes)
 
                 .Map(dest => dest.LandArea, src => src.LandArea)
                 .Map(dest => dest.PropertyAreaUnitTypeCode, src => src.PropertyAreaUnitTypeCode)

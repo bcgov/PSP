@@ -7,25 +7,24 @@ namespace Pims.Dal.Entities.Mappers
         public void Register(TypeAdapterConfig config)
         {
 
-            config
-                       .NewConfig<PimsCompensationRequisitionHist, PimsCompensationRequisition>()
-                       .Map(dest => dest.CompensationRequisitionId, src => src.CompensationRequisitionId)
-                       .Map(dest => dest.AcquisitionFileId, src => src.AcquisitionFileId)
-                       .Map(dest => dest.LeaseId, src => src.LeaseId)
-                       .Map(dest => dest.IsDraft, src => src.IsDraft)
-                       .Map(dest => dest.FiscalYear, src => src.FiscalYear)
-                       .Map(dest => dest.YearlyFinancialId, src => src.YearlyFinancialId)
-                       .Map(dest => dest.ChartOfAccountsId, src => src.ChartOfAccountsId)
-                       .Map(dest => dest.ResponsibilityId, src => src.ResponsibilityId)
-                       .Map(dest => dest.FinalizedDate, src => src.FinalizedDate)
-                       .Map(dest => dest.AgreementDt, src => src.AgreementDt)
-                       .Map(dest => dest.GenerationDt, src => src.GenerationDt)
-                       .Map(dest => dest.IsPaymentInTrust, src => src.IsPaymentInTrust)
-                       .Map(dest => dest.GstNumber, src => src.GstNumber)
-                       .Map(dest => dest.FinalizedDate, src => src.FinalizedDate)
-                       .Map(dest => dest.SpecialInstruction, src => src.SpecialInstruction)
-                       .Map(dest => dest.DetailedRemarks, src => src.DetailedRemarks)
-                       .Map(dest => dest.AlternateProjectId, src => src.AlternateProjectId);
+            config.NewConfig<PimsCompensationRequisitionHist, PimsCompensationRequisition>()
+                .Map(dest => dest.CompensationRequisitionId, src => src.CompensationRequisitionId)
+                .Map(dest => dest.AcquisitionFileId, src => src.AcquisitionFileId)
+                .Map(dest => dest.LeaseId, src => src.LeaseId)
+                .Map(dest => dest.IsDraft, src => src.IsDraft)
+                .Map(dest => dest.FiscalYear, src => src.FiscalYear)
+                .Map(dest => dest.YearlyFinancialId, src => src.YearlyFinancialId)
+                .Map(dest => dest.ChartOfAccountsId, src => src.ChartOfAccountsId)
+                .Map(dest => dest.ResponsibilityId, src => src.ResponsibilityId)
+                .Map(dest => dest.FinalizedDate, src => src.FinalizedDate)
+                .Map(dest => dest.AgreementDt, src => src.AgreementDt)
+                .Map(dest => dest.GenerationDt, src => src.GenerationDt)
+                .Map(dest => dest.IsPaymentInTrust, src => src.IsPaymentInTrust)
+                .Map(dest => dest.GstNumber, src => src.GstNumber)
+                .Map(dest => dest.FinalizedDate, src => src.FinalizedDate)
+                .Map(dest => dest.SpecialInstruction, src => src.SpecialInstruction)
+                .Map(dest => dest.DetailedRemarks, src => src.DetailedRemarks)
+                .Map(dest => dest.AlternateProjectId, src => src.AlternateProjectId);
 
             config.NewConfig<PimsCompReqFinancialHist, PimsCompReqFinancial>()
                 .Map(dest => dest.CompReqFinancialId, src => src.CompReqFinancialId)
@@ -36,21 +35,6 @@ namespace Pims.Dal.Entities.Mappers
                 .Map(dest => dest.TotalAmt, src => src.TotalAmt)
                 .Map(dest => dest.IsGstRequired, src => src.IsGstRequired)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled);
-
-            config.NewConfig<PimsFinancialActivityCodeHist, PimsFinancialActivityCode>()
-                .Map(dest => dest.Id, src => src.Id)
-                .Map(dest => dest.Code, src => src.Code)
-                .Map(dest => dest.Description, src => src.Description);
-        }
-    }
-
-    public class HistoryRegister : ICodeGenerationRegister
-    {
-        public void Register(CodeGenerationConfig config)
-        {
-            config.GenerateMapper("[name]Mapper")
-               .ForType<PimsCompensationRequisition>()
-               .ForType<PimsCompensationRequisitionHist>();
         }
     }
 }

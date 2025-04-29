@@ -64,11 +64,7 @@ namespace Pims.Api.Models.Concepts.Organization
                 .Map(dest => dest.IncorporationNumber, src => src.IncorporationNumber)
                 .Map(dest => dest.Website, src => src.Website)
                 .Map(dest => dest.Comment, src => src.Comment)
-                .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-            //.Map(dest => dest.PimsContactMethods, src => src.PimsContactMethods)
-            //.Map(dest => dest.PimsOrganizationAddresses, src => src.OrganizationAddresses)
-            //.Map(dest => dest.PimsPersonOrganizations, src => src.OrganizationPersons)
-            ;
+                .Map(dest => dest.IsDisabled, src => src.IsDisabled);
         }
     }
 }
