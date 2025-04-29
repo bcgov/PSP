@@ -29,7 +29,7 @@ export const ManagementSearchResults: React.FC<IManagementSearchResultsProps> = 
   // This will get called when the table needs new data
   const updateCurrentPage = useCallback(
     ({ pageIndex }: { pageIndex: number }) => {
-      setPageIndex && setPageIndex(pageIndex);
+      setPageIndex?.(pageIndex);
     },
     [setPageIndex],
   );

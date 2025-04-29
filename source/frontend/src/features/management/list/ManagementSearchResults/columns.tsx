@@ -99,26 +99,26 @@ export const columns: ColumnWithProps<ManagementSearchResultModel>[] = [
       const personsAsString: MemberRoleGroup[] = chain(personsInTeam)
         .groupBy((groupedTeams: ApiGen_Concepts_ManagementFileTeam) => groupedTeams.personId)
         .map<MemberRoleGroup>(x => ({
-          id: x[0].id?.toString() || '',
-          person: x[0].person || null,
+          id: x[0].id?.toString() ?? '',
+          person: x[0].person ?? null,
           organization: null,
           roles: x
             .map(t => t.teamProfileType)
             .filter(exists)
-            .flatMap(y => y.description || ''),
+            .flatMap(y => y.description ?? ''),
         }))
         .value();
 
       const organizationsAsString: MemberRoleGroup[] = chain(organizationsInTeam)
         .groupBy((groupedTeams: ApiGen_Concepts_ManagementFileTeam) => groupedTeams.organizationId)
         .map<MemberRoleGroup>(x => ({
-          id: x[0].id?.toString() || '',
+          id: x[0].id?.toString() ?? '',
           person: null,
-          organization: x[0].organization || null,
+          organization: x[0].organization ?? null,
           roles: x
             .map(t => t.teamProfileType)
             .filter(exists)
-            .flatMap(y => y.description || ''),
+            .flatMap(y => y.description ?? ''),
         }))
         .value();
 

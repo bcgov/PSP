@@ -46,7 +46,7 @@ namespace Pims.Api.Areas.Management.Controllers
         /// <param name="mapper"></param>
         /// <param name="logger"></param>
         ///
-        public SearchController(IManagementFileService managementService, IMapper mapper, ILogger<ManagementFileController> logger)
+        public SearchController(IManagementFileService managementService, IMapper mapper, ILogger<SearchController> logger)
         {
             _managementService = managementService;
             _mapper = mapper;

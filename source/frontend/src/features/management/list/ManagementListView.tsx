@@ -107,7 +107,7 @@ export const ManagementListView: React.FC<unknown> = () => {
               <ManagementFilter
                 filter={filter}
                 setFilter={changeFilter}
-                managementTeam={team || []}
+                managementTeam={team ?? []}
                 fileStatusOptions={managementFileStatusOptions}
                 managementPurposeOptions={managementPurposeOptions}
               />

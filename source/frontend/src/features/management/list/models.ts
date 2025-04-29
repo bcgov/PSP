@@ -58,11 +58,15 @@ export class ManagementFilterModel {
     newModel.managementFilePurposeCode = base.managementFilePurposeCode ?? '';
     newModel.projectNameOrNumber = base.projectNameOrNumber ?? '';
     // management team members
-    newModel.managementTeamMember = base.teamMemberPersonId
-      ? teamMemberOptions.find(c => c.value === `P-${base.teamMemberPersonId}`) ?? null
-      : base.teamMemberOrganizationId
-      ? teamMemberOptions.find(c => c.value === `O-${base.teamMemberOrganizationId}`) ?? null
-      : null;
+    if (base.teamMemberPersonId) {
+      newModel.managementTeamMember =
+        teamMemberOptions.find(c => c.value === `P-${base.teamMemberPersonId}`) ?? null;
+    } else if (base.teamMemberOrganizationId) {
+      newModel.managementTeamMember =
+        teamMemberOptions.find(c => c.value === `O-${base.teamMemberOrganizationId}`) ?? null;
+    } else {
+      newModel.managementTeamMember = null;
+    }
 
     return newModel;
   }

@@ -41,7 +41,7 @@ export const ManagementFilter: React.FC<IManagementFilterProps> = ({
   };
 
   const managementTeamOptions = React.useMemo<SelectOption[]>(() => {
-    const arr = managementTeam || [];
+    const arr = managementTeam ?? [];
     return arr.map<SelectOption>(t => ({
       value: t.personId ? `P-${t.personId}` : `O-${t.organizationId}`,
       label: t.personId && t.person ? formatApiPersonNames(t.person) : t.organization?.name ?? '',
@@ -53,7 +53,7 @@ export const ManagementFilter: React.FC<IManagementFilterProps> = ({
       enableReinitialize
       initialValues={
         filter
-          ? ManagementFilterModel.fromApi(filter, managementTeamOptions || [])
+          ? ManagementFilterModel.fromApi(filter, managementTeamOptions ?? [])
           : new ManagementFilterModel()
       }
       onSubmit={onSearchSubmit}
