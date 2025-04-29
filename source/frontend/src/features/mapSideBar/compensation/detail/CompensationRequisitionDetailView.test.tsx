@@ -48,8 +48,8 @@ describe('Compensation Detail View Component', () => {
     const component = render(
       <CompensationRequisitionDetailView
         fileType={renderOptions?.props?.fileType ?? ApiGen_CodeTypes_FileTypes.Acquisition}
-        product={renderOptions?.props?.product ?? mockAcquisitionFileResponse().product}
-        project={renderOptions?.props?.project ?? mockAcquisitionFileResponse().project}
+        fileProduct={renderOptions?.props?.fileProduct ?? mockAcquisitionFileResponse().product}
+        fileProject={renderOptions?.props?.fileProject ?? mockAcquisitionFileResponse().project}
         compensation={renderOptions?.props?.compensation ?? getMockApiDefaultCompensation()}
         compensationProperties={
           renderOptions?.props?.compensationProperties ?? getMockCompensationPropertiesReq()
@@ -151,8 +151,8 @@ describe('Compensation Detail View Component', () => {
     const { queryByTitle } = await setup({
       claims: [Claims.COMPENSATION_REQUISITION_VIEW],
       props: {
-        product: { ...acquisition.product },
-        project: { ...acquisition.project },
+        fileProduct: { ...acquisition.product },
+        fileProject: { ...acquisition.project },
         compensation: { ...mockFinalCompensation, isDraft: true },
       },
     });
@@ -185,8 +185,8 @@ describe('Compensation Detail View Component', () => {
     const { queryByTitle, getByTestId } = await setup({
       claims: [Claims.COMPENSATION_REQUISITION_EDIT],
       props: {
-        product: { ...acquisition.product },
-        project: { ...acquisition.project },
+        fileProduct: { ...acquisition.product },
+        fileProject: { ...acquisition.project },
         compensation: { ...mockFinalCompensation, isDraft: false },
       },
     });
@@ -203,8 +203,8 @@ describe('Compensation Detail View Component', () => {
     const { queryByTitle, getByTestId } = await setup({
       claims: [Claims.COMPENSATION_REQUISITION_EDIT],
       props: {
-        product: { ...acquisition.product },
-        project: { ...acquisition.project },
+        fileProduct: { ...acquisition.product },
+        fileProject: { ...acquisition.project },
         compensation: { ...mockFinalCompensation, isDraft: false },
         isFileFinalStatus: true,
       },
