@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Text.RegularExpressions;
+using DocumentFormat.OpenXml.Office2010.Excel;
+using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Exceptions;
@@ -283,6 +286,121 @@ namespace Pims.Dal.Repositories
                 .Include(x => x.Person)
                 .Include(x => x.Organization)
                 .ToList();
+        }
+
+        /// <summary>
+        /// Retrieves a page with an array of management files within the specified filters.
+        /// Note that the 'filter' will control the 'page' and 'quantity'.
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        public Paged<PimsManagementFile> GetPageDeep(ManagementFilter filter)
+        {
+            using var scope = Logger.QueryScope();
+
+            filter.ThrowIfNull(nameof(filter));
+            if (!filter.IsValid())
+            {
+                throw new ArgumentException("Argument must have a valid filter", nameof(filter));
+            }
+
+            var query = GetCommonManagementFileQueryDeep(filter);
+
+            var skip = (filter.Page - 1) * filter.Quantity;
+            var pageItems = query.Skip(skip).Take(filter.Quantity).ToList();
+
+            return new Paged<PimsManagementFile>(pageItems, filter.Page, filter.Quantity, query.Count());
+        }
+
+        /// <summary>
+        /// Generate a Common IQueryable for Management Files.
+        /// </summary>
+        /// <param name="filter">The filter to apply.</param>
+        /// <returns></returns>
+        private IQueryable<PimsManagementFile> GetCommonManagementFileQueryDeep(ManagementFilter filter)
+        {
+            filter.FileNameOrNumberOrReference = Regex.Replace(filter.FileNameOrNumberOrReference ?? string.Empty, @"^[m,M]-", string.Empty);
+            var predicate = PredicateBuilder.New<PimsManagementFile>(disp => true);
+            if (!string.IsNullOrWhiteSpace(filter.Pid))
+            {
+                var pidValue = filter.Pid.Replace("-", string.Empty).Trim().TrimStart('0');
+                predicate = predicate.And(disp => disp.PimsManagementFileProperties.Any(pd => pd != null && EF.Functions.Like(pd.Property.Pid.ToString(), $"%{pidValue}%")));
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.Pin))
+            {
+                var pinValue = filter.Pin.Replace("-", string.Empty).Trim().TrimStart('0');
+                predicate = predicate.And(acq => acq.PimsManagementFileProperties.Any(pd => pd != null && EF.Functions.Like(pd.Property.Pin.ToString(), $"%{pinValue}%")));
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.Address))
+            {
+                predicate = predicate.And(disp => disp.PimsManagementFileProperties.Any(pd => pd != null &&
+                    (EF.Functions.Like(pd.Property.Address.StreetAddress1, $"%{filter.Address}%") ||
+                    EF.Functions.Like(pd.Property.Address.StreetAddress2, $"%{filter.Address}%") ||
+                    EF.Functions.Like(pd.Property.Address.StreetAddress3, $"%{filter.Address}%") ||
+                    EF.Functions.Like(pd.Property.Address.MunicipalityName, $"%{filter.Address}%"))));
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.FileNameOrNumberOrReference))
+            {
+                predicate = predicate.And(r => EF.Functions.Like(r.FileName, $"%{filter.FileNameOrNumberOrReference}%")
+                || EF.Functions.Like(r.ManagementFileId.ToString(), $"%{filter.FileNameOrNumberOrReference}%")
+                || EF.Functions.Like(r.LegacyFileNum, $"%{filter.FileNameOrNumberOrReference}%"));
+            }
+
+            // filter by various statuses
+            if (!string.IsNullOrWhiteSpace(filter.ManagementFileStatusCode))
+            {
+                predicate = predicate.And(disp => disp.ManagementFileStatusTypeCode == filter.ManagementFileStatusCode);
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.ManagementFilePurposeCode))
+            {
+                predicate = predicate.And(disp => disp.ManagementFileProgramTypeCode == filter.ManagementFilePurposeCode);
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.ProjectNameOrNumber))
+            {
+                predicate = predicate.And(acq => EF.Functions.Like(acq.Project.Code, $"%{filter.ProjectNameOrNumber}%") || EF.Functions.Like(acq.Project.Description, $"%{filter.ProjectNameOrNumber}%"));
+            }
+
+            // filter by team members
+            if (filter.TeamMemberPersonId.HasValue)
+            {
+                predicate = predicate.And(disp => disp.PimsManagementFileTeams.Any(x => x.PersonId == filter.TeamMemberPersonId.Value));
+            }
+
+            if (filter.TeamMemberOrganizationId.HasValue)
+            {
+                predicate = predicate.And(disp => disp.PimsManagementFileTeams.Any(x => x.OrganizationId == filter.TeamMemberOrganizationId.Value));
+            }
+
+            var query = this.Context.PimsManagementFiles.AsNoTracking()
+                .Include(d => d.ManagementFileStatusTypeCodeNavigation)
+                .Include(d => d.Project)
+                .Include(d => d.Product)
+                .Include(d => d.AcquisitionFundingTypeCodeNavigation)
+                .Include(d => d.ManagementFileProgramTypeCodeNavigation)
+                .Include(d => d.ManagementFileStatusTypeCodeNavigation)
+                .Include(d => d.PimsManagementFileProperties)
+                .Include(d => d.PimsManagementFileTeams)
+                    .ThenInclude(d => d.Organization)
+                .Include(d => d.PimsManagementFileTeams)
+                    .ThenInclude(d => d.Person)
+                .Include(d => d.PimsManagementFileTeams)
+                    .ThenInclude(d => d.PrimaryContact)
+                .Include(d => d.PimsManagementFileTeams)
+                    .ThenInclude(d => d.ManagementFileProfileTypeCodeNavigation)
+                .Include(d => d.PimsManagementFileProperties)
+                    .ThenInclude(d => d.Property)
+                        .ThenInclude(d => d.Address)
+                .Where(predicate);
+
+            // As per Confluence - default sort to show chronological, newest first
+            query = (filter.Sort?.Any() == true) ? query.OrderByProperty(true, filter.Sort) : query.OrderByDescending(disp => disp.DbCreateTimestamp);
+
+            return query;
         }
         #endregion
     }

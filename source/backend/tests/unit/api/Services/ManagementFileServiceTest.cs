@@ -1148,5 +1148,40 @@ namespace Pims.Api.Test.Services
         }
 
         #endregion
+
+        #region GetPage
+        [Fact]
+        public void GetPage_Success()
+        {
+            // Arrange
+            var service = this.CreateManagementServiceWithPermissions(Permissions.ManagementView);
+
+            var managementFile = EntityHelper.CreateManagementFile();
+
+            var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
+            repository.Setup(x => x.GetPageDeep(It.IsAny<ManagementFilter>())).Returns(new Paged<PimsManagementFile>(new[] { managementFile }));
+
+            // Act
+            var result = service.GetPage(new ManagementFilter());
+
+            // Assert
+            repository.Verify(x => x.GetPageDeep(It.IsAny<ManagementFilter>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetPage_NoPermission()
+        {
+            // Arrange
+            var service = this.CreateManagementServiceWithPermissions();
+
+            var managementFile = EntityHelper.CreateManagementFile();
+
+            // Act
+            Action act = () => service.GetPage(new ManagementFilter());
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+        #endregion
     }
 }

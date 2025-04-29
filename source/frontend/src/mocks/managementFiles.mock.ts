@@ -126,7 +126,7 @@ export const mockManagementFileResponse = (
   filePurpose: 'TEST PURPOSE',
   additionalDetails: 'ADDITIONAL DETAILS',
   fileNumber: 'FILE_NUMBER 3A8F46B',
-  legacyFileNum: '',
+  legacyFileNum: 'legacyfile321',
   fileStatusTypeCode: {
     id: 'DRAFT',
     description: 'Draft',
