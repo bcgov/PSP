@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
+using Pims.Core.Security;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Repositories;
-using Pims.Core.Security;
 using Xunit;
 
 namespace Pims.Dal.Test.Repositories
@@ -149,6 +149,7 @@ namespace Pims.Dal.Test.Repositories
             result.Should().HaveCount(0);
         }
 
+        [Fact]
         public void GetDispositionFileNotes_Success()
         {
             // Arrange
@@ -191,6 +192,7 @@ namespace Pims.Dal.Test.Repositories
             result.Should().HaveCount(0);
         }
 
+        [Fact]
         public void GetLeaseFileNotes_Success()
         {
             // Arrange
@@ -277,6 +279,7 @@ namespace Pims.Dal.Test.Repositories
             result.Should().HaveCount(0);
         }
 
+        [Fact]
         public void GetResearchFileNotes_Success()
         {
             // Arrange
@@ -312,6 +315,49 @@ namespace Pims.Dal.Test.Repositories
 
             // Act
             var result = repository.GetAllResearchNotesById(1);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<IEnumerable<PimsNote>>();
+            result.Should().HaveCount(0);
+        }
+
+        [Fact]
+        public void GetManagementFileNotes_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.NoteView);
+
+            var note1 = EntityHelper.CreateNote("Test Note 1", id: 1);
+            var file = EntityHelper.CreateManagementFile(1);
+            var fileNote = EntityHelper.CreateManagementFileNote(file, note1);
+
+            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(fileNote);
+
+            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+
+            // Act
+            var result = repository.GetAllManagementNotesById(1);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<IEnumerable<PimsNote>>();
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void GetManagementFileNotes_NotFound()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.NoteView);
+
+            var context = helper.CreatePimsContext(user, true);
+            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+
+            // Act
+            var result = repository.GetAllManagementNotesById(1);
 
             // Assert
             result.Should().NotBeNull();
@@ -666,6 +712,64 @@ namespace Pims.Dal.Test.Repositories
 
             // Act
             var deleted = repository.DeleteResearchNotes(1);
+
+            // Assert
+            deleted.Should().BeFalse();
+        }
+
+        [Fact]
+        public void Delete_Management_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission();
+
+            var fileNote = EntityHelper.CreateManagementFileNote();
+            fileNote.ManagementFileId = 2;
+            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(fileNote);
+
+            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+
+            // Act
+            var deleted = repository.DeleteManagementFileNotes(1);
+
+            // Assert
+            deleted.Should().BeTrue();
+        }
+
+        [Fact]
+        public void Delete_Management_WrongId()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission();
+
+            var fileNote = EntityHelper.CreateManagementFileNote();
+            fileNote.ManagementFileId = 2;
+            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(fileNote);
+
+            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+
+            // Act
+            var deleted = repository.DeleteManagementFileNotes(2);
+
+            // Assert
+            deleted.Should().BeFalse();
+        }
+
+        [Fact]
+        public void Delete_Management_NoNote()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission();
+
+            var context = helper.CreatePimsContext(user, true);
+
+            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+
+            // Act
+            var deleted = repository.DeleteManagementFileNotes(1);
 
             // Assert
             deleted.Should().BeFalse();

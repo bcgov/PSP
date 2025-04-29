@@ -1,29 +1,15 @@
-import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter';
 import { FormikProps } from 'formik';
 import { createRef } from 'react';
 
-import { mockLookups } from '@/mocks/lookups.mock';
-import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import {
-  act,
-  prettyDOM,
-  render,
-  RenderOptions,
-  userEvent,
-  waitFor,
-  waitForEffects,
-} from '@/utils/test-utils';
-
-import UpdateManagementForm, { IUpdateManagementFormProps } from './UpdateManagementForm';
 import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
-import { ManagementFormModel } from '../models/ManagementFormModel';
-import { mockManagementFileResponse } from '@/mocks/managementFiles.mock';
 import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { mockManagementFileResponse } from '@/mocks/managementFiles.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
-const mockAxios = new MockAdapter(axios);
-
-// mock auth library
+import { ManagementFormModel } from '../models/ManagementFormModel';
+import UpdateManagementForm, { IUpdateManagementFormProps } from './UpdateManagementForm';
 
 const onSubmit = vi.fn();
 const ref = createRef<FormikProps<ManagementFormModel>>();
@@ -47,7 +33,7 @@ vi.mocked(useProjectProvider).mockReturnValue({
 
 describe('UpdateManagementForm component', () => {
   // render component under test
-  const setup = (props: IUpdateManagementFormProps, renderOptions: RenderOptions = {}) => {
+  const setup = async (props: IUpdateManagementFormProps, renderOptions: RenderOptions = {}) => {
     const utils = render(
       <UpdateManagementForm
         formikRef={ref}
@@ -63,6 +49,8 @@ describe('UpdateManagementForm component', () => {
         },
       },
     );
+
+    await act(async () => {});
 
     return {
       ...utils,
@@ -90,24 +78,21 @@ describe('UpdateManagementForm component', () => {
   });
 
   afterEach(() => {
-    mockAxios.resetHistory();
     vi.clearAllMocks();
   });
 
   it('renders as expected', async () => {
-    const { asFragment } = setup({ initialValues, loading: false, formikRef: ref, onSubmit });
-    await act(async () => {});
+    const { asFragment } = await setup({ initialValues, loading: false, formikRef: ref, onSubmit });
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders loading spinner', async () => {
-    const { getByTestId } = setup({ initialValues, loading: true, formikRef: ref, onSubmit });
-    await act(async () => {});
+    const { getByTestId } = await setup({ initialValues, loading: true, formikRef: ref, onSubmit });
     expect(getByTestId('filter-backdrop-loading')).toBeVisible();
   });
 
   it('it validates that only profile is not repeated on another team member', async () => {
-    const { getByTestId, queryByTestId, getTeamMemberProfileDropDownList } = setup({
+    const { getByTestId, queryByTestId, getTeamMemberProfileDropDownList } = await setup({
       initialValues,
       loading: false,
       formikRef: ref,
@@ -135,15 +120,14 @@ describe('UpdateManagementForm component', () => {
       getProductDropDownList,
       getFormikRef,
       getTeamMemberProfileDropDownList,
-    } = setup({
+    } = await setup({
       initialValues,
       loading: false,
       formikRef: ref,
       onSubmit,
     });
 
-    await waitFor(() => userEvent.click(getRemoveProjectButton()));
-    await waitForEffects();
+    await act(async () => userEvent.click(getRemoveProjectButton()));
 
     initialValues.productId = '';
     initialValues.fileName = 'test';
@@ -156,9 +140,8 @@ describe('UpdateManagementForm component', () => {
       userEvent.selectOptions(getTeamMemberProfileDropDownList(0), 'MINSTAFF');
     });
 
-    await waitFor(() => getFormikRef().current?.submitForm());
+    await act(async () => getFormikRef().current?.submitForm());
 
-    console.log(prettyDOM(undefined, 99999));
     expect(onSubmit).toHaveBeenCalled();
   });
 });
