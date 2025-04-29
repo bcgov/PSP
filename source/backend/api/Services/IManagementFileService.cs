@@ -20,5 +20,7 @@ namespace Pims.Api.Services
         IEnumerable<PimsManagementFileTeam> GetTeamMembers();
 
         PimsManagementFile UpdateProperties(PimsManagementFile managementFile, IEnumerable<UserOverrideCode> userOverrides);
+
+        Paged<PimsManagementFile> GetPage(ManagementFilter filter);
     }
 }

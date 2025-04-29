@@ -237,6 +237,15 @@ namespace Pims.Api.Services
             return _managementFileRepository.GetById(managementFile.Internal_Id);
         }
 
+        public Paged<PimsManagementFile> GetPage(ManagementFilter filter)
+        {
+            _logger.LogInformation("Searching for management files...");
+            _logger.LogDebug("Management file search with filter: {filter}", filter);
+            _user.ThrowIfNotAuthorized(Permissions.ManagementView);
+
+            return _managementFileRepository.GetPageDeep(filter);
+        }
+
         private static void ValidateStaff(PimsManagementFile managementFile)
         {
             bool duplicate = managementFile.PimsManagementFileTeams.GroupBy(p => $"{p.ManagementFileProfileTypeCode}-O-{p.OrganizationId}-P-{p.PersonId}").Any(g => g.Count() > 1);

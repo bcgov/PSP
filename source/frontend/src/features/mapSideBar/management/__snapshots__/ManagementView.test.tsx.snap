@@ -779,7 +779,7 @@ exports[`ManagementView component > renders as expected 1`] = `
               <div
                 class="pl-1 text-left col-8"
               >
-                M-001
+                M-1
               </div>
             </div>
             <div
@@ -1216,7 +1216,9 @@ exports[`ManagementView component > renders as expected 1`] = `
                             </div>
                             <div
                               class="c37 text-left col"
-                            />
+                            >
+                              legacyfile321
+                            </div>
                           </div>
                           <div
                             class="pb-2 row"

@@ -205,7 +205,9 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
           </div>
           <div
             class="c4 text-left col"
-          />
+          >
+            legacyfile321
+          </div>
         </div>
         <div
           class="pb-2 row"
