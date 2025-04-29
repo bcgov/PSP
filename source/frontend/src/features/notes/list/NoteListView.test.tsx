@@ -1,37 +1,59 @@
-import axios from 'axios';
-import MockAdapter from 'axios-mock-adapter';
-
 import Claims from '@/constants/claims';
 import { NoteTypes } from '@/constants/noteTypes';
-import { mockNotesResponse } from '@/mocks/noteResponses.mock';
+import { useApiUsers } from '@/hooks/pims-api/useApiUsers';
+import { useNoteRepository } from '@/hooks/repositories/useNoteRepository';
+import { getMockApiNote, mockNotesResponse } from '@/mocks/noteResponses.mock';
 import {
-  mockKeycloak,
+  act,
+  getMockRepositoryObj,
   render,
   RenderOptions,
   screen,
-  waitFor,
-  waitForElementToBeRemoved,
+  userEvent,
   within,
 } from '@/utils/test-utils';
 
 import { INoteListViewProps, NoteListView } from './NoteListView';
 
-// mock auth library
+vi.mock('@/hooks/repositories/useNoteRepository');
+const mockGetAllNotesApi = getMockRepositoryObj([]);
+const mockGetNoteApi = getMockRepositoryObj();
+const mockAddNoteApi = getMockRepositoryObj();
+const mockUpdateNoteApi = getMockRepositoryObj();
+const mockDeleteNoteApi = getMockRepositoryObj();
+
+vi.mock('@/hooks/pims-api/useApiUsers');
+
+const onSuccess = vi.fn();
 
 describe('Note List View', () => {
-  const mockAxios = new MockAdapter(axios);
-  const setup = (renderOptions?: RenderOptions & INoteListViewProps) => {
+  const setup = async (renderOptions?: RenderOptions & INoteListViewProps) => {
     // render component under test
-    const component = render(<NoteListView type={NoteTypes.Acquisition_File} entityId={0} />, {
-      ...renderOptions,
-    });
+    const rendered = render(
+      <NoteListView
+        type={renderOptions?.type ?? NoteTypes.Acquisition_File}
+        entityId={renderOptions?.entityId ?? 1}
+        onSuccess={renderOptions?.onSuccess ?? onSuccess}
+      />,
+      {
+        ...renderOptions,
+        claims: renderOptions?.claims ?? [
+          Claims.NOTE_VIEW,
+          Claims.NOTE_EDIT,
+          Claims.NOTE_ADD,
+          Claims.NOTE_DELETE,
+        ],
+      },
+    );
 
     const getTableRows = () => {
-      return component.container.querySelectorAll<HTMLDivElement>('.table .tbody .tr-wrapper');
+      return document.querySelectorAll<HTMLDivElement>('.table .tbody .tr-wrapper');
     };
 
+    await act(async () => {});
+
     return {
-      ...component,
+      ...rendered,
       getTableRows,
       getTableCell: (row = 0, col = 0) => {
         const rows = getTableRows();
@@ -45,53 +67,172 @@ describe('Note List View', () => {
   };
 
   beforeEach(() => {
-    mockKeycloak({ claims: [Claims.NOTE_DELETE] });
-    mockAxios.reset();
+    vi.mocked(useNoteRepository, { partial: true }).mockReturnValue({
+      getAllNotes: mockGetAllNotesApi,
+      getNote: mockGetNoteApi,
+      addNote: mockAddNoteApi,
+      updateNote: mockUpdateNoteApi,
+      deleteNote: mockDeleteNoteApi,
+    });
+    vi.mocked(useApiUsers, { partial: true }).mockReturnValue({
+      getUserInfo: vi.fn().mockResolvedValue({}),
+    });
+  });
+
+  afterEach(() => {
+    vi.clearAllMocks();
   });
 
   it('renders as expected', async () => {
-    mockAxios.onGet(new RegExp(`notes/${NoteTypes.Acquisition_File}/*`)).reply(200, {});
-    const { asFragment, getByTitle } = setup();
-    await waitForElementToBeRemoved(getByTitle('table-loading'));
-    const fragment = await waitFor(() => asFragment());
-    expect(fragment).toMatchSnapshot();
+    const { asFragment } = await setup();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('should call the API Endpoint with given type', async () => {
-    mockAxios.onGet(new RegExp(`notes/${NoteTypes.Acquisition_File}/*`)).reply(200, {});
-    const { getByTitle } = setup({
-      type: NoteTypes.Acquisition_File,
-      entityId: 0,
-    });
-    await waitForElementToBeRemoved(getByTitle('table-loading'));
-    await waitFor(() => {
-      expect(mockAxios.history.get).toHaveLength(1);
-      expect(mockAxios.history.get[0].url).toBe(`/notes/${NoteTypes.Acquisition_File}/0`);
-    });
+    await setup({ type: NoteTypes.Acquisition_File, entityId: 1 });
+    expect(mockGetAllNotesApi.execute).toHaveBeenCalledWith(NoteTypes.Acquisition_File, 1);
   });
 
   it('should have the Notes header in the component', async () => {
-    mockAxios.onGet(new RegExp(`notes/${NoteTypes.Acquisition_File}/*`)).reply(200, {});
-    const { getByTitle } = setup({ type: NoteTypes.Acquisition_File, entityId: 0 });
-    await waitForElementToBeRemoved(getByTitle('table-loading'));
+    await setup({ type: NoteTypes.Acquisition_File, entityId: 1 });
     expect(await screen.findByText(`Notes`)).toBeInTheDocument();
   });
 
   it('should display notes by default in descending order of created date', async () => {
-    mockAxios
-      .onGet(new RegExp(`notes/${NoteTypes.Acquisition_File}/*`))
-      .reply(200, mockNotesResponse());
-
-    const { getTableRows, getTableCell, getByTitle } = setup({
-      type: NoteTypes.Acquisition_File,
-      entityId: 0,
+    vi.mocked(useNoteRepository, { partial: true }).mockReturnValue({
+      getAllNotes: getMockRepositoryObj([...mockNotesResponse()]),
+      addNote: mockAddNoteApi,
+      updateNote: mockUpdateNoteApi,
+      deleteNote: mockDeleteNoteApi,
     });
-    await waitForElementToBeRemoved(getByTitle('table-loading'));
+
+    const { getTableRows, getTableCell, debug } = await setup({
+      type: NoteTypes.Acquisition_File,
+      entityId: 1,
+    });
 
     expect(getTableRows()).toHaveLength(4);
     expect(getTableCell(0, 0)).toHaveTextContent('Note 4');
     expect(getTableCell(1, 0)).toHaveTextContent('Note 3');
     expect(getTableCell(2, 0)).toHaveTextContent('Note 2');
     expect(getTableCell(3, 0)).toHaveTextContent('Note 1');
+  });
+
+  it('shows the modal when onAdd is triggered', async () => {
+    await setup();
+
+    const addButton = screen.getByText(/Add a Note/i);
+    expect(addButton).toBeInTheDocument();
+    await act(async () => userEvent.click(addButton));
+
+    expect(screen.getByLabelText('Type a note:')).toBeVisible();
+  });
+
+  it('dismisses the popup and does not call the API when the user cancels', async () => {
+    await setup();
+
+    const addButton = screen.getByText(/Add a Note/i);
+    expect(addButton).toBeInTheDocument();
+    await act(async () => userEvent.click(addButton));
+
+    expect(screen.getByLabelText('Type a note:')).toBeVisible();
+    const cancel = await screen.findByTitle('cancel-modal');
+    expect(cancel).toBeVisible();
+    await act(async () => userEvent.click(cancel));
+
+    expect(onSuccess).not.toHaveBeenCalled();
+  });
+
+  it('calls onSuccess when a note is added successfully', async () => {
+    mockAddNoteApi.execute.mockResolvedValueOnce(getMockApiNote());
+
+    await setup();
+
+    const addButton = screen.getByText(/Add a Note/i);
+    expect(addButton).toBeInTheDocument();
+    await act(async () => userEvent.click(addButton));
+
+    const noteInput = screen.getByLabelText('Type a note:');
+    expect(noteInput).toBeVisible();
+    await act(async () => {
+      userEvent.paste(noteInput, 'Lorem Ipsum note');
+    });
+
+    const ok = await screen.findByTitle('ok-modal');
+    expect(ok).toBeVisible();
+    await act(async () => userEvent.click(ok));
+
+    expect(onSuccess).toHaveBeenCalled();
+  });
+
+  it('populates the modal with existing values', async () => {
+    const apiNote = getMockApiNote();
+    vi.mocked(useNoteRepository, { partial: true }).mockReturnValue({
+      getAllNotes: getMockRepositoryObj([apiNote]),
+      addNote: mockAddNoteApi,
+      updateNote: mockUpdateNoteApi,
+      deleteNote: mockDeleteNoteApi,
+      getNote: getMockRepositoryObj(apiNote),
+    });
+
+    await setup();
+
+    expect(await screen.findByText(apiNote.note)).toBeVisible();
+
+    const viewButton = await screen.findByTitle(/View Note/i);
+    expect(viewButton).toBeVisible();
+    await act(async () => userEvent.click(viewButton));
+
+    const noteField: HTMLTextAreaElement = await screen.findByTitle('Note');
+    expect(noteField).toBeVisible();
+    expect(noteField).toBeInstanceOf(HTMLTextAreaElement);
+    expect(noteField).toHaveAttribute('readonly');
+    expect(noteField).toHaveTextContent(apiNote.note);
+  });
+
+  it('shows a confirmation popup when onDelete is triggered', async () => {
+    const apiNote = getMockApiNote();
+    vi.mocked(useNoteRepository, { partial: true }).mockReturnValue({
+      getAllNotes: getMockRepositoryObj([apiNote]),
+      addNote: mockAddNoteApi,
+      updateNote: mockUpdateNoteApi,
+      deleteNote: mockDeleteNoteApi,
+      getNote: getMockRepositoryObj(apiNote),
+    });
+
+    await setup();
+
+    expect(await screen.findByText(apiNote.note)).toBeVisible();
+
+    const trashcan = await screen.findByTitle(/Delete Note/i);
+    expect(trashcan).toBeVisible();
+    await act(async () => userEvent.click(trashcan));
+
+    expect(await screen.findByText('Are you sure you want to delete this note?')).toBeVisible();
+  });
+
+  it('calls the API when the user confirms the removal', async () => {
+    const apiNote = getMockApiNote();
+    vi.mocked(useNoteRepository, { partial: true }).mockReturnValue({
+      getAllNotes: getMockRepositoryObj([apiNote]),
+      addNote: mockAddNoteApi,
+      updateNote: mockUpdateNoteApi,
+      deleteNote: mockDeleteNoteApi,
+      getNote: getMockRepositoryObj(apiNote),
+    });
+
+    await setup();
+
+    expect(await screen.findByText(apiNote.note)).toBeVisible();
+
+    const trashcan = await screen.findByTitle(/Delete Note/i);
+    expect(trashcan).toBeVisible();
+    await act(async () => userEvent.click(trashcan));
+
+    expect(await screen.findByText('Are you sure you want to delete this note?')).toBeVisible();
+    await act(async () => userEvent.click(screen.getByTitle('ok-modal')));
+
+    expect(mockDeleteNoteApi.execute).toHaveBeenCalled();
+    expect(onSuccess).toHaveBeenCalled();
   });
 });
