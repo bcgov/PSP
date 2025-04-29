@@ -318,6 +318,7 @@ export const useAcquisitionProvider = () => {
       getAgreementsReportApi,
       getCompensationReportApi,
       getAcquisitionSubFilesApi,
+      getAcquisitionAtTimeApi,
     ],
   );
 };

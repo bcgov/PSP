@@ -63,8 +63,6 @@ export const CompensationRequisitionHistoricalDetailContainer: React.FunctionCom
   const [timedCompensation, setTimedCompensation] =
     useState<ApiGen_Concepts_CompensationRequisition | null>(null);
 
-  const [latestAcqPayees, setLatestAcqPayees] = useState<ApiGen_Concepts_CompReqAcqPayee[]>([]);
-
   const [financialActivityCodes, setFinancialActivityCodes] = useState<
     ApiGen_Concepts_FinancialCode[]
   >([]);
@@ -311,6 +309,7 @@ export const CompensationRequisitionHistoricalDetailContainer: React.FunctionCom
   const isLoading = useMemo(
     () =>
       loading ||
+      loadingChartOfAccounts ||
       loadingFinancialActivities ||
       loadingResponsibilityCodes ||
       loadingYearlyFinancials ||
@@ -321,6 +320,7 @@ export const CompensationRequisitionHistoricalDetailContainer: React.FunctionCom
       loadingCompReqLeasePayees,
     [
       getCompensationRequisitionLoading,
+      loadingChartOfAccounts,
       loading,
       loadingCompReqAcqPayees,
       loadingCompReqAcqProperties,
