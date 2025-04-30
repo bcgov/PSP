@@ -107,8 +107,8 @@ namespace Pims.Api.Services
 
         public IList<PimsDocumentTyp> GetPimsDocumentTypes(DocumentRelationType relationshipType)
         {
-            this.Logger.LogInformation("Retrieving PIMS document types for relationship type {relationshipType}", relationshipType);
-            this.User.ThrowIfNotAuthorized(Permissions.DocumentView);
+            Logger.LogInformation("Retrieving PIMS document types for relationship type {RelationshipType}", relationshipType);
+            User.ThrowIfNotAuthorized(Permissions.DocumentView);
 
             string categoryType;
             switch (relationshipType)
@@ -126,6 +126,7 @@ namespace Pims.Api.Services
                     categoryType = "PROJECT";
                     break;
                 case DocumentRelationType.ManagementActivities:
+                case DocumentRelationType.ManagementFiles:
                     categoryType = "MANAGEMENT";
                     break;
                 case DocumentRelationType.DispositionFiles:

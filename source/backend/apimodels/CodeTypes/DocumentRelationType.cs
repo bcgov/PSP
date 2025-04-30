@@ -18,6 +18,8 @@ namespace Pims.Api.Models.CodeTypes
         Projects,
         [EnumMember(Value = "ManagementActivities")]
         ManagementActivities,
+        [EnumMember(Value = "ManagementFiles")]
+        ManagementFiles,
         [EnumMember(Value = "DispositionFiles")]
         DispositionFiles,
     }

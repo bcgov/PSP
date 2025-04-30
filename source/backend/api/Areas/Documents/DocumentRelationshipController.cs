@@ -115,6 +115,10 @@ namespace Pims.Api.Controllers
                     var managementDocuments = _documentFileService.GetFileDocuments<PimsPropertyActivityDocument>(FileType.ManagementActivity, long.Parse(parentId));
                     var mappedPropertyActivityDocuments = _mapper.Map<List<DocumentRelationshipModel>>(managementDocuments);
                     return new JsonResult(mappedPropertyActivityDocuments);
+                case DocumentRelationType.ManagementFiles:
+                    var managementFileDocuments = _documentFileService.GetFileDocuments<PimsManagementFileDocument>(FileType.ManagementFile, long.Parse(parentId));
+                    var mappedManagementFileDocuments = _mapper.Map<List<DocumentRelationshipModel>>(managementFileDocuments);
+                    return new JsonResult(mappedManagementFileDocuments);
                 case DocumentRelationType.DispositionFiles:
                     var dispositionFileDocuments = _documentFileService.GetFileDocuments<PimsDispositionFileDocument>(FileType.Disposition, long.Parse(parentId));
                     var mappedDispositionFileDocuments = _mapper.Map<List<DocumentRelationshipModel>>(dispositionFileDocuments);
@@ -154,6 +158,8 @@ namespace Pims.Api.Controllers
                     await _documentFileService.UploadLeaseDocument(long.Parse(parentId), uploadRequest); break;
                 case DocumentRelationType.ManagementActivities:
                     await _documentFileService.UploadPropertyActivityDocument(long.Parse(parentId), uploadRequest); break;
+                case DocumentRelationType.ManagementFiles:
+                    await _documentFileService.UploadManagementFileDocument(long.Parse(parentId), uploadRequest); break;
                 case DocumentRelationType.DispositionFiles:
                     await _documentFileService.UploadDispositionDocument(long.Parse(parentId), uploadRequest); break;
                 case DocumentRelationType.Templates:
@@ -205,6 +211,10 @@ namespace Pims.Api.Controllers
                     var propertyActivityRelationship = _mapper.Map<PimsPropertyActivityDocument>(model);
                     var propertyActivityResult = await _documentFileService.DeletePropertyActivityDocumentAsync(propertyActivityRelationship);
                     return new JsonResult(propertyActivityResult);
+                case DocumentRelationType.ManagementFiles:
+                    var managementRelationship = _mapper.Map<PimsManagementFileDocument>(model);
+                    var managementResult = await _documentFileService.DeleteManagementFileDocumentAsync(managementRelationship);
+                    return new JsonResult(managementResult);
                 case DocumentRelationType.DispositionFiles:
                     var dispositionRelationship = _mapper.Map<PimsDispositionFileDocument>(model);
                     var dispositionResult = await _documentFileService.DeleteDispositionDocumentAsync(dispositionRelationship);

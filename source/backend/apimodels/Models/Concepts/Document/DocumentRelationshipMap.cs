@@ -1,5 +1,4 @@
 using Mapster;
-
 using Pims.Api.Models.Base;
 using Pims.Api.Models.CodeTypes;
 using Entity = Pims.Dal.Entities;
@@ -106,7 +105,7 @@ namespace Pims.Api.Models.Concepts.Document.Document
                 .Map(dest => dest.Id, src => src.Internal_Id)
                 .Map(dest => dest.ParentId, src => src.FileId)
                 .Map(dest => dest.Document, src => src.Document)
-                .Map(dest => dest.RelationshipType, src => DocumentRelationType.ManagementActivities)
+                .Map(dest => dest.RelationshipType, src => DocumentRelationType.ManagementFiles)
                 .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
 
             config.NewConfig<DocumentRelationshipModel, Entity.PimsManagementFileDocument>()

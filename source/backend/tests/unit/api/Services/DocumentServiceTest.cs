@@ -45,6 +45,7 @@ namespace Pims.Api.Test.Services
                 new object[] {DocumentRelationType.Leases, "LEASLIC"},
                 new object[] {DocumentRelationType.Projects, "PROJECT"},
                 new object[] {DocumentRelationType.ManagementActivities, "MANAGEMENT"},
+                new object[] {DocumentRelationType.ManagementFiles, "MANAGEMENT"},
                 new object[] {DocumentRelationType.DispositionFiles, "DISPOSE"},
             };
 

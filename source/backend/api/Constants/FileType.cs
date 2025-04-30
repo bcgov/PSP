@@ -16,6 +16,8 @@ namespace Pims.Api.Constants
         Lease,
         [EnumMember(Value = "managementActivity")]
         ManagementActivity,
+        [EnumMember(Value = "managementFile")]
+        ManagementFile,
         [EnumMember(Value = "disposition")]
         Disposition,
         [EnumMember(Value = "unknown")] // Used in tests/logic only. This does not correspond to a valid file type in the db.
