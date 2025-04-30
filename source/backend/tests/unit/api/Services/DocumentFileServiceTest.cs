@@ -1,25 +1,25 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data.Common;
 using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using FluentAssertions;
+using Microsoft.EntityFrameworkCore.Storage;
 using Moq;
-using Pims.Core.Api.Exceptions;
+using Pims.Api.Models.CodeTypes;
+using Pims.Api.Models.Concepts.Document;
+using Pims.Api.Models.Requests.Document.Upload;
+using Pims.Api.Models.Requests.Http;
 using Pims.Api.Services;
+using Pims.Core.Api.Exceptions;
+using Pims.Core.Exceptions;
+using Pims.Core.Security;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
-using Pims.Core.Security;
 using Xunit;
-using Pims.Api.Models.Concepts.Document;
-using Pims.Api.Models.Requests.Document.Upload;
-using Pims.Api.Models.Requests.Http;
-using Pims.Api.Models.CodeTypes;
-using Pims.Core.Exceptions;
-using System.ComponentModel;
-using Microsoft.EntityFrameworkCore.Storage;
-using System.Data.Common;
 
 namespace Pims.Api.Test.Services
 {
@@ -143,7 +143,7 @@ namespace Pims.Api.Test.Services
             propertyActivityDocumentRepository.Setup(x => x.GetAllByPropertyActivity(It.IsAny<long>())).Returns(new List<PimsPropertyActivityDocument>());
 
             // Act
-            var sut = service.GetFileDocuments<PimsPropertyActivityDocument>(Constants.FileType.Management, 1);
+            var sut = service.GetFileDocuments<PimsPropertyActivityDocument>(Constants.FileType.ManagementActivity, 1);
 
             // Assert
             propertyActivityDocumentRepository.Verify(x => x.GetAllByPropertyActivity(It.IsAny<long>()), Times.Once);

@@ -111,8 +111,8 @@ namespace Pims.Api.Controllers
                     var projectDocuments = _documentFileService.GetFileDocuments<PimsProjectDocument>(FileType.Project, long.Parse(parentId));
                     var mappedProjectDocuments = _mapper.Map<List<DocumentRelationshipModel>>(projectDocuments);
                     return new JsonResult(mappedProjectDocuments);
-                case DocumentRelationType.ManagementFiles:
-                    var managementDocuments = _documentFileService.GetFileDocuments<PimsPropertyActivityDocument>(FileType.Management, long.Parse(parentId));
+                case DocumentRelationType.ManagementActivities:
+                    var managementDocuments = _documentFileService.GetFileDocuments<PimsPropertyActivityDocument>(FileType.ManagementActivity, long.Parse(parentId));
                     var mappedPropertyActivityDocuments = _mapper.Map<List<DocumentRelationshipModel>>(managementDocuments);
                     return new JsonResult(mappedPropertyActivityDocuments);
                 case DocumentRelationType.DispositionFiles:
@@ -152,7 +152,7 @@ namespace Pims.Api.Controllers
                     await _documentFileService.UploadProjectDocument(long.Parse(parentId), uploadRequest); break;
                 case DocumentRelationType.Leases:
                     await _documentFileService.UploadLeaseDocument(long.Parse(parentId), uploadRequest); break;
-                case DocumentRelationType.ManagementFiles:
+                case DocumentRelationType.ManagementActivities:
                     await _documentFileService.UploadPropertyActivityDocument(long.Parse(parentId), uploadRequest); break;
                 case DocumentRelationType.DispositionFiles:
                     await _documentFileService.UploadDispositionDocument(long.Parse(parentId), uploadRequest); break;
@@ -177,7 +177,7 @@ namespace Pims.Api.Controllers
         [ProducesResponseType(typeof(bool), 200)]
         [SwaggerOperation(Tags = new[] { "document" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public async Task<IActionResult> DeleteDocumentRelationship([FromRoute]DocumentRelationType relationshipType, [FromBody]DocumentRelationshipModel model)
+        public async Task<IActionResult> DeleteDocumentRelationship([FromRoute] DocumentRelationType relationshipType, [FromBody] DocumentRelationshipModel model)
         {
             switch (relationshipType)
             {
@@ -201,7 +201,7 @@ namespace Pims.Api.Controllers
                     var projectRelationship = _mapper.Map<PimsProjectDocument>(model);
                     var projectResult = await _documentFileService.DeleteProjectDocumentAsync(projectRelationship);
                     return new JsonResult(projectResult);
-                case DocumentRelationType.ManagementFiles:
+                case DocumentRelationType.ManagementActivities:
                     var propertyActivityRelationship = _mapper.Map<PimsPropertyActivityDocument>(model);
                     var propertyActivityResult = await _documentFileService.DeletePropertyActivityDocumentAsync(propertyActivityRelationship);
                     return new JsonResult(propertyActivityResult);

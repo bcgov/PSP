@@ -125,7 +125,7 @@ namespace Pims.Api.Services
                 case DocumentRelationType.Projects:
                     categoryType = "PROJECT";
                     break;
-                case DocumentRelationType.ManagementFiles:
+                case DocumentRelationType.ManagementActivities:
                     categoryType = "MANAGEMENT";
                     break;
                 case DocumentRelationType.DispositionFiles:
@@ -406,7 +406,7 @@ namespace Pims.Api.Services
             User.ThrowIfNotAuthorized(Permissions.DocumentDelete);
 
             ExternalResponse<string> result = await documentStorageRepository.TryDeleteDocument(mayanDocumentId);
-            if(result.Status == ExternalResponseStatus.Error && result.HttpStatusCode == HttpStatusCode.NotFound)
+            if (result.Status == ExternalResponseStatus.Error && result.HttpStatusCode == HttpStatusCode.NotFound)
             {
                 return result;
             }

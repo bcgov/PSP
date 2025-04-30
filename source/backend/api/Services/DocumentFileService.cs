@@ -81,7 +81,7 @@ namespace Pims.Api.Services
                 case FileType.Lease:
                     User.ThrowIfNotAuthorized(Permissions.LeaseView);
                     return _leaseRepository.GetAllLeaseDocuments(fileId).Select(f => f as T).ToArray();
-                case FileType.Management:
+                case FileType.ManagementActivity:
                     User.ThrowIfNotAuthorized(Permissions.ManagementView);
                     return _propertyActivityDocumentRepository.GetAllByPropertyActivity(fileId).Select(f => f as T).ToArray();
                 case FileType.Disposition:
@@ -463,7 +463,7 @@ namespace Pims.Api.Services
             }
 
             bool deleted = _documentQueueRepository.Delete(documentQueuedItem);
-            if(!deleted)
+            if (!deleted)
             {
                 Logger.LogWarning("Failed to delete Queued Document {documentId}", documentId);
                 throw new InvalidOperationException("Could not delete document queue item");
