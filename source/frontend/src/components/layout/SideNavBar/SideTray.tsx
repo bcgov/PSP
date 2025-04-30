@@ -8,6 +8,7 @@ import AdminIcon from '@/assets/images/admin-icon.svg?react';
 import ContactIcon from '@/assets/images/contact-icon.svg?react';
 import DispositionFileIcon from '@/assets/images/disposition-icon.svg?react';
 import LeaseIcon from '@/assets/images/lease-icon.svg?react';
+import ManagementIcon from '@/assets/images/management-grey-icon.svg?react';
 import ProjectIcon from '@/assets/images/projects-icon.svg?react';
 import ResearchFileIcon from '@/assets/images/research-icon.svg?react';
 import SubdivisionIcon from '@/assets/images/subdivision-icon.svg?react';
@@ -16,6 +17,7 @@ import { AdminTools, LeaseAndLicenses, ResearchTray } from '@/components/layout'
 import { AcquisitionTray } from './AcquisitionTray';
 import { ContactTray } from './ContactTray';
 import { DispositionTray } from './DispositionTray';
+import { Management } from './Management';
 import { ProjectTray } from './ProjectTray';
 import { SideTrayLayout } from './SideTrayLayout';
 import * as Styled from './styles';
@@ -30,6 +32,7 @@ export enum SidebarContextType {
   ACQUISITION = 'acquisition',
   DISPOSITION = 'disposition',
   SUBDCONS = 'subdivision-consolidation',
+  MANAGEMENT = 'management',
 }
 
 interface ISideTrayProps {
@@ -130,6 +133,16 @@ export const SideTray = ({ context, setContext }: ISideTrayProps) => {
         onClose={onClose}
       >
         <SubdivisionConsolidationTray onLinkClick={onClose} />
+      </SideTrayLayout>,
+    ],
+    [
+      SidebarContextType.MANAGEMENT,
+      <SideTrayLayout
+        icon={<ManagementIcon title="Managment icon" fill="currentColor" />}
+        title="Management"
+        onClose={onClose}
+      >
+        <Management onLinkClick={onClose} />
       </SideTrayLayout>,
     ],
   ]);

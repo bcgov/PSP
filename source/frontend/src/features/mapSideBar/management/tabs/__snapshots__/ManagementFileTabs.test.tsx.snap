@@ -1,0 +1,443 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ManagementFileTabs component > matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c0 {
+  height: 100%;
+}
+
+.c0 .tab-content {
+  border-radius: 0 0.4rem 0.4rem 0.4rem;
+  overflow-y: auto;
+  background-color: #f2f2f2;
+}
+
+.c0 .tab-content .tab-pane {
+  position: relative;
+}
+
+.c1 {
+  background-color: white;
+  color: var(--surface-color-primary-button-default);
+  font-size: 1.4rem;
+  border-color: transparent;
+}
+
+.c1 .nav-tabs {
+  height: auto;
+}
+
+.c1 .nav-item {
+  color: var(--surface-color-primary-button-default);
+  min-width: 5rem;
+  padding: 0.1rem 1.3rem;
+  margin-bottom: 0.1rem;
+  margin-left: 0.1rem;
+}
+
+.c1 .nav-item:hover {
+  color: #f2f2f2;
+  background-color: #1e5189;
+  border-color: transparent;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border-radius: 0.4rem;
+  text-shadow: 0.1rem 0 0 currentColor;
+}
+
+.c1 .nav-item.active {
+  border-radius: 0.4rem;
+  color: #f2f2f2;
+  background-color: #053662;
+  border-color: transparent;
+  text-shadow: 0.1rem 0 0 currentColor;
+}
+
+.c2 {
+  background-color: #f2f2f2;
+  padding-top: 1rem;
+}
+
+.c3 {
+  text-align: right;
+  overflow: hidden;
+}
+
+.c7 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
+}
+
+.c4 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c6.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c5 {
+  font-weight: bold;
+}
+
+.c8 {
+  padding: 0 0.4rem;
+  display: block;
+}
+
+<div
+    class="c0"
+  >
+    <nav
+      class="c1 nav nav-tabs"
+      role="tablist"
+    >
+      <a
+        aria-selected="true"
+        class="nav-item nav-link active"
+        data-rb-event-key="fileDetails"
+        href="#"
+        role="tab"
+      >
+        File Details
+      </a>
+      <a
+        aria-selected="false"
+        class="nav-item nav-link"
+        data-rb-event-key="documents"
+        href="#"
+        role="tab"
+      >
+        Documents
+      </a>
+    </nav>
+    <div
+      class="tab-content"
+    >
+      <div
+        aria-hidden="false"
+        class="fade tab-pane active show"
+        role="tabpanel"
+      >
+        <div
+          class="c2"
+        >
+          <div
+            class="c3 mr-3 my-1"
+          />
+          <div
+            class="c4 form-section"
+          >
+            <div
+              class="collapse show"
+            >
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-5"
+                >
+                  <label
+                    class="c5"
+                  >
+                    Status:
+                  </label>
+                </div>
+                <div
+                  class="c6 text-left col"
+                >
+                  Draft
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="c4 form-section"
+          >
+            <h2
+              class="c7"
+            >
+              <div
+                class="no-gutters row"
+              >
+                <div
+                  class="align-content-end col"
+                >
+                  Project
+                </div>
+              </div>
+            </h2>
+            <div
+              class="collapse show"
+            >
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-5"
+                >
+                  <label
+                    class="c5"
+                  >
+                    Ministry project:
+                  </label>
+                </div>
+                <div
+                  class="c6 text-left col"
+                  data-testid="management-project"
+                >
+                  00048 - CLAIMS
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-5"
+                >
+                  <label
+                    class="c5"
+                  >
+                    Product:
+                  </label>
+                </div>
+                <div
+                  class="c6 text-left col"
+                  data-testid="management-product"
+                >
+                  00055 AVALANCHE  &  PROGRAM REVIEW
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-5"
+                >
+                  <label
+                    class="c5"
+                  >
+                    Funding:
+                  </label>
+                </div>
+                <div
+                  class="c6 text-left col"
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="c4 form-section"
+          >
+            <h2
+              class="c7"
+            >
+              <div
+                class="no-gutters row"
+              >
+                <div
+                  class="align-content-end col"
+                >
+                  Management Details
+                </div>
+              </div>
+            </h2>
+            <div
+              class="collapse show"
+            >
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-5"
+                >
+                  <label
+                    class="c5"
+                  >
+                    Management file name:
+                  </label>
+                </div>
+                <div
+                  class="c6 text-left col"
+                >
+                  Test Management File
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-5"
+                >
+                  <label
+                    class="c5"
+                  >
+                    Historical file number:
+                  </label>
+                </div>
+                <div
+                  class="c6 text-left col"
+                >
+                  legacyfile321
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-5"
+                >
+                  <label
+                    class="c5"
+                  >
+                    Purpose:
+                  </label>
+                </div>
+                <div
+                  class="c6 text-left col"
+                >
+                  Utilities
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-5"
+                >
+                  <label
+                    class="c5"
+                  >
+                    Additional details:
+                  </label>
+                </div>
+                <div
+                  class="c6 text-left col"
+                >
+                  ADDITIONAL DETAILS
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="c4 form-section"
+          >
+            <h2
+              class="c7"
+            >
+              <div
+                class="no-gutters row"
+              >
+                <div
+                  class="align-content-end col"
+                >
+                  Management Team
+                </div>
+              </div>
+            </h2>
+            <div
+              class="collapse show"
+            >
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-5"
+                >
+                  <label
+                    class="c5"
+                  >
+                    MoTI Solicitor:
+                  </label>
+                </div>
+                <div
+                  class="c6 text-left col"
+                >
+                  <a
+                    class="c8"
+                    href="/contact/P6"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    <span>
+                      Alejandro Sanchez
+                    </span>
+                    <svg
+                      class="ml-2"
+                      fill="currentColor"
+                      height="1rem"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 512 512"
+                      width="1rem"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                      />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-5"
+                >
+                  <label
+                    class="c5"
+                  >
+                    Negotiation agent:
+                  </label>
+                </div>
+                <div
+                  class="c6 text-left col"
+                >
+                  <a
+                    class="c8"
+                    href="/contact/P6"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    <span>
+                      Alejandro Sanchez
+                    </span>
+                    <svg
+                      class="ml-2"
+                      fill="currentColor"
+                      height="1rem"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 512 512"
+                      width="1rem"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                      />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

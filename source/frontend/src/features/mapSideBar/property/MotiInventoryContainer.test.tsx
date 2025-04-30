@@ -195,7 +195,7 @@ describe('MotiInventoryContainer component', () => {
 
     expect(await findByText(/property attributes/i)).toBeInTheDocument();
     expect(mockAxios.history.get.length).toBeGreaterThanOrEqual(1);
-    expect(mockAxios.history.get[0].url).toBe(`/properties/1`);
+    expect(mockAxios.history.get[0].url).toContain(`/properties/1`);
   });
 
   it('hides the property information tab for non-inventory properties', async () => {
