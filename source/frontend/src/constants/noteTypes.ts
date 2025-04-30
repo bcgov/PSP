@@ -5,4 +5,5 @@ export enum NoteTypes {
   Lease_File = 'lease_file',
   Project = 'project',
   Research_File = 'research_file',
+  Management_File = 'management_file',
 }

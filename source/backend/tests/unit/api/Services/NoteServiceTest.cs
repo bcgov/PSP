@@ -3,16 +3,16 @@ using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using MapsterMapper;
 using Moq;
-using Pims.Api.Models.Concepts.Note;
 using Pims.Api.Constants;
+using Pims.Api.Models.Concepts.Note;
 using Pims.Api.Services;
+using Pims.Core.Exceptions;
+using Pims.Core.Security;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
-using Pims.Core.Security;
 using Xunit;
-using Pims.Core.Exceptions;
 
 namespace Pims.Api.Test.Services
 {
@@ -156,6 +156,26 @@ namespace Pims.Api.Test.Services
 
             // Assert
             repository.Verify(x => x.Add(It.IsAny<PimsResearchFileNote>()), Times.Once);
+        }
+
+        [Fact]
+        public void Add_ManagementFileNote_Success()
+        {
+            // Arrange
+            var service = this.CreateNoteServiceWithPermissions(Permissions.NoteAdd);
+
+            var mapper = this._helper.GetService<IMapper>();
+            var managementFileNote = EntityHelper.CreateManagementFileNote();
+            var noteModel = mapper.Map<EntityNoteModel>(managementFileNote);
+
+            var repository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            repository.Setup(x => x.Add(It.IsAny<PimsManagementFileNote>())).Returns(managementFileNote);
+
+            // Act
+            var result = service.Add(NoteType.Management_File, noteModel);
+
+            // Assert
+            repository.Verify(x => x.Add(It.IsAny<PimsManagementFileNote>()), Times.Once);
         }
 
         [Fact]
@@ -324,6 +344,24 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void GetNotes_Management_Success()
+        {
+            // Arrange
+            var service = this.CreateNoteServiceWithPermissions(Permissions.NoteView);
+
+            var notes = new[] { EntityHelper.CreateNote("Test Note 1"), EntityHelper.CreateNote("Test Note 2") };
+
+            var repository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            repository.Setup(x => x.GetAllManagementNotesById(It.IsAny<long>())).Returns(notes);
+
+            // Act
+            var result = service.GetNotes(NoteType.Management_File, 1);
+
+            // Assert
+            repository.Verify(x => x.GetAllManagementNotesById(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
         public void GetNotes_NoPermission()
         {
             // Arrange
@@ -472,6 +510,22 @@ namespace Pims.Api.Test.Services
 
             // Assert
             repository.Verify(x => x.DeleteResearchNotes(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void DeleteNote_ManagementFile_Success()
+        {
+            // Arrange
+            var service = this.CreateNoteServiceWithPermissions(Permissions.NoteDelete);
+
+            var repository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            repository.Setup(x => x.DeleteManagementFileNotes(It.IsAny<long>()));
+
+            // Act
+            service.DeleteNote(NoteType.Management_File, 1);
+
+            // Assert
+            repository.Verify(x => x.DeleteManagementFileNotes(It.IsAny<long>()), Times.Once);
         }
 
         [Fact]

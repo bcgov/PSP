@@ -4,7 +4,7 @@ import {
   updateGridLayer,
 } from '@react-leaflet/core';
 import { vectorTileLayer } from 'esri-leaflet-vector';
-import { TileLayer as LeafletTileLayer, TileLayerOptions } from 'leaflet';
+import L, { TileLayer as LeafletTileLayer, TileLayerOptions } from 'leaflet';
 
 export interface EsriVectorTileLayerProps extends TileLayerOptions {
   itemId: string;
@@ -23,3 +23,32 @@ export const EsriVectorTileLayer = createTileLayerComponent<
     updateGridLayer(layer, props, prevProps);
   },
 );
+
+// psp-10192 monkeypatch recommended by https://github.com/slutske22/react-esri-leaflet/issues/22
+L.Map.include({
+  removeLayer(layer: L.Layer) {
+    if (!layer) return this;
+
+    const id = L.Util.stamp(layer);
+
+    if (!this._layers[id]) {
+      return this;
+    }
+
+    if (this._loaded) {
+      layer.onRemove(this);
+    }
+
+    delete this._layers[id];
+
+    if (this._loaded) {
+      this.fire('layerremove', { layer });
+      layer.fire('remove');
+    }
+
+    // @ts-expect-error leaflet TS very incomplete
+    layer._map = layer._mapToAdd = null;
+
+    return this;
+  },
+});

@@ -40,6 +40,11 @@ namespace Pims.Dal.Exceptions
             get { return new UserOverrideCode("DISPOSING_PROPERTY_NOT_INVENTORIED"); }
         }
 
+        public static UserOverrideCode ManagingPropertyNotInventoried
+        {
+            get { return new UserOverrideCode("MANAGING_PROPERTY_NOT_INVENTORIED"); }
+        }
+
         public static UserOverrideCode DispositionFileFinalStatus
         {
             get { return new UserOverrideCode("DISPOSITION_FILE_FINAL_STATUS"); }

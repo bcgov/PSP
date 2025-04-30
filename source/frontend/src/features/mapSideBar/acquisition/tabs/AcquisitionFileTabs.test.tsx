@@ -5,8 +5,9 @@ import Claims from '@/constants/claims';
 import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
+import { useNoteRepository } from '@/hooks/repositories/useNoteRepository';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
-import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
+import { act, getMockRepositoryObj, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import AcquisitionFileTabs, { IAcquisitionFileTabsProps } from './AcquisitionFileTabs';
 
@@ -63,6 +64,15 @@ vi.mock('@/features/documents/hooks/useDocumentProvider', () => ({
       getDocumentTypesLoading: false,
     };
   },
+}));
+
+vi.mock('@/hooks/repositories/useNoteRepository');
+vi.mocked(useNoteRepository, { partial: true }).mockImplementation(() => ({
+  getAllNotes: getMockRepositoryObj([]),
+  addNote: getMockRepositoryObj(),
+  getNote: getMockRepositoryObj(),
+  updateNote: getMockRepositoryObj(),
+  deleteNote: getMockRepositoryObj(),
 }));
 
 describe('AcquisitionFileTabs component', () => {
@@ -137,6 +147,36 @@ describe('AcquisitionFileTabs component', () => {
 
     expect(getByText('Documents')).toHaveClass('active');
     expect(history.location.pathname).toBe(`/blah/${FileTabType.DOCUMENTS}`);
+  });
+
+  it('has a notes tab', async () => {
+    const { getAllByText } = setup(
+      {
+        acquisitionFile: mockAcquisitionFileResponse(),
+        defaultTab: FileTabType.FILE_DETAILS,
+      },
+      { claims: [Claims.NOTE_VIEW] },
+    );
+    await act(async () => {});
+
+    const tab = getAllByText('Notes')[0];
+    expect(tab).toBeVisible();
+  });
+
+  it('notes tab can be changed to', async () => {
+    const { getAllByText } = setup(
+      {
+        acquisitionFile: mockAcquisitionFileResponse(),
+        defaultTab: FileTabType.FILE_DETAILS,
+      },
+      { claims: [Claims.NOTE_VIEW] },
+    );
+
+    const tab = getAllByText('Notes')[0];
+    await act(async () => userEvent.click(tab));
+
+    expect(tab).toHaveClass('active');
+    expect(history.location.pathname).toBe(`/blah/${FileTabType.NOTES}`);
   });
 
   it('hides the expropriation tab when the Acquisition file type is "Consensual Agreement"', async () => {
