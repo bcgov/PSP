@@ -261,7 +261,7 @@ namespace Pims.Api.Services
         private void ValidateName(PimsManagementFile managementFile)
         {
             var existingFile = _managementFileRepository.GetByName(managementFile.FileName);
-            if (managementFile.ManagementFileId != existingFile?.ManagementFileId && managementFile.ManagementFileId != existingFile.ManagementFileId)
+            if (existingFile != null && managementFile.ManagementFileId != existingFile.ManagementFileId)
             {
                 throw new BadRequestException("The specified file name already exists. Management File names must be unique, please choose another file name.");
             }

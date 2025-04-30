@@ -90,7 +90,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(d => d.PrimaryContact)
                 .Include(d => d.PimsManagementFileTeams)
                     .ThenInclude(d => d.ManagementFileProfileTypeCodeNavigation)
-                .FirstOrDefault(d => d.FileName == name) ?? throw new KeyNotFoundException();
+                .FirstOrDefault(d => d.FileName == name);
         }
 
         /// <summary>
