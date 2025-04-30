@@ -25,6 +25,7 @@ import { exists, getLatLng, isValidId } from '@/utils';
 
 import { getLeaseInfo, LeaseAssociationInfo } from '../../property/PropertyContainer';
 import CrownDetailsTabView from '../../property/tabs/crown/CrownDetailsTabView';
+import { PropertyManagementTabView } from '../../property/tabs/propertyDetailsManagement/detail/PropertyManagementTabView';
 import PropertyResearchTabView from '../../property/tabs/propertyResearch/detail/PropertyResearchTabView';
 import ResearchStatusUpdateSolver from '../../research/tabs/fileDetails/ResearchStatusUpdateSolver';
 
@@ -148,6 +149,19 @@ export const PropertyFileContainer: React.FunctionComponent<
       ),
       key: InventoryTabNames.research,
       name: 'Property Research',
+    });
+  }
+
+  if (props.fileContext === ApiGen_CodeTypes_FileTypes.Management) {
+    tabViews.push({
+      content: (
+        <PropertyManagementTabView
+          property={composedProperties.apiWrapper?.response}
+          loading={composedProperties.apiWrapper?.loading ?? false}
+        />
+      ),
+      key: InventoryTabNames.management,
+      name: 'Management',
     });
   }
 
