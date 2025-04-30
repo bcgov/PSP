@@ -46,10 +46,10 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateManagementServiceWithPermissions(Permissions.ManagementView);
 
-            var dispFile = EntityHelper.CreateManagementFile();
+            var managementFile = EntityHelper.CreateManagementFile();
 
             var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
-            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dispFile);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(managementFile);
 
             // Act
             var result = service.GetById(1);
@@ -64,7 +64,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateManagementServiceWithPermissions();
 
-            var dispFile = EntityHelper.CreateManagementFile();
+            var managementFile = EntityHelper.CreateManagementFile();
 
             // Act
             Action act = () => service.GetById(1);
@@ -82,7 +82,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateManagementServiceWithPermissions(Permissions.ManagementView);
 
-            var dispFile = EntityHelper.CreateManagementFile();
+            var managementFile = EntityHelper.CreateManagementFile();
 
             var repository = this._helper.GetService<Mock<IManagementFilePropertyRepository>>();
             repository.Setup(x => x.GetPropertiesByManagementFileId(It.IsAny<long>())).Returns(new List<PimsManagementFileProperty>());
@@ -100,7 +100,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateManagementServiceWithPermissions(Permissions.ManagementView, Permissions.PropertyView);
 
-            var dispFile = EntityHelper.CreateManagementFile();
+            var managementFile = EntityHelper.CreateManagementFile();
 
             var repository = this._helper.GetService<Mock<IManagementFilePropertyRepository>>();
             repository.Setup(x => x.GetPropertiesByManagementFileId(It.IsAny<long>())).Returns(new List<PimsManagementFileProperty>());
@@ -118,7 +118,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateManagementServiceWithPermissions(Permissions.ManagementView, Permissions.PropertyView);
 
-            var dispFile = EntityHelper.CreateManagementFile();
+            var managementFile = EntityHelper.CreateManagementFile();
 
             var repository = this._helper.GetService<Mock<IManagementFilePropertyRepository>>();
             repository.Setup(x => x.GetPropertiesByManagementFileId(It.IsAny<long>()))
@@ -146,7 +146,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateManagementServiceWithPermissions();
 
-            var dispFile = EntityHelper.CreateManagementFile();
+            var managementFile = EntityHelper.CreateManagementFile();
 
             var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
             repository.Setup(x => x.GetLastUpdateBy(It.IsAny<long>())).Returns(new LastUpdatedByModel());
@@ -164,7 +164,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateManagementServiceWithPermissions(Permissions.ManagementView);
 
-            var dispFile = EntityHelper.CreateManagementFile();
+            var managementFile = EntityHelper.CreateManagementFile();
 
             var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
             repository.Setup(x => x.GetLastUpdateBy(It.IsAny<long>())).Returns(new LastUpdatedByModel());
@@ -184,10 +184,10 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var service = this.CreateManagementServiceWithPermissions();
-            var dispFile = EntityHelper.CreateManagementFile(1);
+            var managementFile = EntityHelper.CreateManagementFile(1);
 
             // Act
-            Action act = () => service.Add(dispFile, new List<UserOverrideCode>());
+            Action act = () => service.Add(managementFile, new List<UserOverrideCode>());
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
@@ -217,16 +217,17 @@ namespace Pims.Api.Test.Services
         public void Add_Success_SameRole_Team()
         {
             var service = this.CreateManagementServiceWithPermissions(Permissions.ManagementAdd);
-            var dispFile = EntityHelper.CreateManagementFile();
+            var managementFile = EntityHelper.CreateManagementFile();
 
-            dispFile.PimsManagementFileTeams.Add(new PimsManagementFileTeam() { PersonId = 1, ManagementFileProfileTypeCode = "LISTAGENT" });
-            dispFile.PimsManagementFileTeams.Add(new PimsManagementFileTeam() { PersonId = 2, ManagementFileProfileTypeCode = "LISTAGENT" });
+            managementFile.PimsManagementFileTeams.Add(new PimsManagementFileTeam() { PersonId = 1, ManagementFileProfileTypeCode = "LISTAGENT" });
+            managementFile.PimsManagementFileTeams.Add(new PimsManagementFileTeam() { PersonId = 2, ManagementFileProfileTypeCode = "LISTAGENT" });
 
             var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
+            repository.Setup(x => x.GetByName(It.IsAny<string>())).Returns(managementFile);
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
 
             // Act
-            service.Add(dispFile, new List<UserOverrideCode>() { UserOverrideCode.AddPropertyToInventory });
+            service.Add(managementFile, new List<UserOverrideCode>() { UserOverrideCode.AddPropertyToInventory });
 
             // Assert
             repository.Verify(x => x.Add(It.IsAny<PimsManagementFile>()), Times.Once);
@@ -236,16 +237,17 @@ namespace Pims.Api.Test.Services
         public void Add_Fails_Duplicate_Team()
         {
             var service = this.CreateManagementServiceWithPermissions(Permissions.ManagementAdd);
-            var dispFile = EntityHelper.CreateManagementFile();
+            var managementFile = EntityHelper.CreateManagementFile();
 
-            dispFile.PimsManagementFileTeams.Add(new PimsManagementFileTeam() { PersonId = 1, ManagementFileProfileTypeCode = "LISTAGENT" });
-            dispFile.PimsManagementFileTeams.Add(new PimsManagementFileTeam() { PersonId = 1, ManagementFileProfileTypeCode = "LISTAGENT" });
+            managementFile.PimsManagementFileTeams.Add(new PimsManagementFileTeam() { PersonId = 1, ManagementFileProfileTypeCode = "LISTAGENT" });
+            managementFile.PimsManagementFileTeams.Add(new PimsManagementFileTeam() { PersonId = 1, ManagementFileProfileTypeCode = "LISTAGENT" });
 
             var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
+            repository.Setup(x => x.GetByName(It.IsAny<string>())).Returns(managementFile);
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
 
             // Act
-            Action act = () => service.Add(dispFile, new List<UserOverrideCode>() { UserOverrideCode.AddPropertyToInventory });
+            Action act = () => service.Add(managementFile, new List<UserOverrideCode>() { UserOverrideCode.AddPropertyToInventory });
 
             // Assert
             act.Should().Throw<BadRequestException>();
@@ -266,6 +268,7 @@ namespace Pims.Api.Test.Services
 
             var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
             repository.Setup(x => x.Add(It.IsAny<PimsManagementFile>())).Returns(managementFile);
+            repository.Setup(x => x.GetByName(It.IsAny<string>())).Returns(managementFile);
 
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(property);
@@ -302,6 +305,7 @@ namespace Pims.Api.Test.Services
             };
 
             var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
+            repository.Setup(x => x.GetByName(It.IsAny<string>())).Returns(managementFile);
             repository.Setup(x => x.Add(It.IsAny<PimsManagementFile>())).Returns(managementFile);
 
             var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
@@ -330,10 +334,10 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var service = this.CreateManagementServiceWithPermissions();
-            var dispFile = EntityHelper.CreateManagementFile(1);
+            var managementFile = EntityHelper.CreateManagementFile(1);
 
             // Act
-            Action act = () => service.Update(1, dispFile, new List<UserOverrideCode>());
+            Action act = () => service.Update(1, managementFile, new List<UserOverrideCode>());
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
@@ -345,12 +349,12 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateManagementServiceWithPermissions(Permissions.ManagementEdit);
             var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
-            var dispFile = EntityHelper.CreateManagementFile(1);
+            var managementFile = EntityHelper.CreateManagementFile(1);
 
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
 
             // Act
-            Action act = () => service.Update(2, dispFile, new List<UserOverrideCode>());
+            Action act = () => service.Update(2, managementFile, new List<UserOverrideCode>());
 
             // Assert
             act.Should().Throw<BadRequestException>();
@@ -366,16 +370,17 @@ namespace Pims.Api.Test.Services
             var statusMock = this._helper.GetService<Mock<IManagementStatusSolver>>();
             statusMock.Setup(x => x.CanEditDetails(It.IsAny<ManagementFileStatusTypes>())).Returns(true);
 
-            var dispFile = EntityHelper.CreateManagementFile(1);
+            var managementFile = EntityHelper.CreateManagementFile(1);
 
-            dispFile.PimsManagementFileTeams.Add(new PimsManagementFileTeam() { PersonId = 1, ManagementFileProfileTypeCode = "LISTAGENT" });
-            dispFile.PimsManagementFileTeams.Add(new PimsManagementFileTeam() { OrganizationId = 1, ManagementFileProfileTypeCode = "LISTAGENT" });
+            managementFile.PimsManagementFileTeams.Add(new PimsManagementFileTeam() { PersonId = 1, ManagementFileProfileTypeCode = "LISTAGENT" });
+            managementFile.PimsManagementFileTeams.Add(new PimsManagementFileTeam() { OrganizationId = 1, ManagementFileProfileTypeCode = "LISTAGENT" });
 
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
-            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dispFile);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(managementFile);
+            repository.Setup(x => x.GetByName(It.IsAny<string>())).Returns(managementFile);
 
             // Act
-            var result = service.Update(1, dispFile, new List<UserOverrideCode>() {  });
+            var result = service.Update(1, managementFile, new List<UserOverrideCode>() {  });
 
             // Assert
             Assert.NotNull(result);
@@ -392,16 +397,16 @@ namespace Pims.Api.Test.Services
             var statusMock = this._helper.GetService<Mock<IManagementStatusSolver>>();
             statusMock.Setup(x => x.CanEditDetails(It.IsAny<ManagementFileStatusTypes>())).Returns(true);
 
-            var dispFile = EntityHelper.CreateManagementFile(1);
+            var managementFile = EntityHelper.CreateManagementFile(1);
 
-            dispFile.PimsManagementFileTeams.Add(new PimsManagementFileTeam() { PersonId = 1, ManagementFileProfileTypeCode = "LISTAGENT" });
-            dispFile.PimsManagementFileTeams.Add(new PimsManagementFileTeam() { PersonId = 1, ManagementFileProfileTypeCode = "LISTAGENT" });
+            managementFile.PimsManagementFileTeams.Add(new PimsManagementFileTeam() { PersonId = 1, ManagementFileProfileTypeCode = "LISTAGENT" });
+            managementFile.PimsManagementFileTeams.Add(new PimsManagementFileTeam() { PersonId = 1, ManagementFileProfileTypeCode = "LISTAGENT" });
 
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
-            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dispFile);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(managementFile);
 
             // Act
-            Action act = () => service.Update(1, dispFile, new List<UserOverrideCode>());
+            Action act = () => service.Update(1, managementFile, new List<UserOverrideCode>());
 
             // Assert
             act.Should().Throw<BadRequestException>();
@@ -418,21 +423,23 @@ namespace Pims.Api.Test.Services
             var statusMock = this._helper.GetService<Mock<IManagementStatusSolver>>();
             statusMock.Setup(x => x.CanEditDetails(It.IsAny<ManagementFileStatusTypes>())).Returns(true);
 
-            var dispFile = EntityHelper.CreateManagementFile(1);
-            dispFile.PimsManagementFileProperties = new List<PimsManagementFileProperty>() { new PimsManagementFileProperty() };
-            var updateDispFile = EntityHelper.CreateManagementFile(2);
-            updateDispFile.ManagementFileStatusTypeCode = ManagementFileStatusTypes.COMPLETE.ToString();
+            var managementFile = EntityHelper.CreateManagementFile(1);
+            managementFile.PimsManagementFileProperties = new List<PimsManagementFileProperty>() { new PimsManagementFileProperty() };
+            var updatedManagementFile = EntityHelper.CreateManagementFile(2);
+            updatedManagementFile.ManagementFileId = 1;
+            updatedManagementFile.ManagementFileStatusTypeCode = ManagementFileStatusTypes.COMPLETE.ToString();
 
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
-            repository.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<PimsManagementFile>())).Returns(dispFile);
-            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dispFile);
+            repository.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<PimsManagementFile>())).Returns(managementFile);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(managementFile);
+            repository.Setup(x => x.GetByName(It.IsAny<string>())).Returns(managementFile);
 
             var nonInventoryProperty = EntityHelper.CreateProperty(1);
             nonInventoryProperty.IsOwned = false;
             managementFilePropertyRepository.Setup(x => x.GetPropertiesByManagementFileId(It.IsAny<long>())).Returns(new List<PimsManagementFileProperty>() { new PimsManagementFileProperty() { Property = nonInventoryProperty } });
 
             // Act
-            Action act = () => service.Update(2, updateDispFile, new List<UserOverrideCode>() { });
+            Action act = () => service.Update(1, updatedManagementFile, new List<UserOverrideCode>() { });
 
             // Assert
             var ex = act.Should().Throw<BusinessRuleViolationException>();
@@ -454,18 +461,19 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateManagementServiceWithPermissions(Permissions.ManagementEdit);
             var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
-            var dispFile = EntityHelper.CreateManagementFile(1);
-            dispFile.ManagementFileStatusTypeCode = fileStatus.ToString();
+            var managementFile = EntityHelper.CreateManagementFile(1);
+            managementFile.ManagementFileStatusTypeCode = fileStatus.ToString();
 
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
-            repository.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<PimsManagementFile>())).Returns(dispFile);
-            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dispFile);
+            repository.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<PimsManagementFile>())).Returns(managementFile);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(managementFile);
+            repository.Setup(x => x.GetByName(It.IsAny<string>())).Returns(managementFile);
 
             var statusMock = this._helper.GetService<Mock<IManagementStatusSolver>>();
             statusMock.Setup(x => x.CanEditDetails(It.IsAny<ManagementFileStatusTypes>())).Returns(false);
 
             // Act
-            Action act = () => service.Update(1, dispFile, new List<UserOverrideCode>() { });
+            Action act = () => service.Update(1, managementFile, new List<UserOverrideCode>() { });
 
             // Assert
             var ex = act.Should().Throw<BusinessRuleViolationException>();
@@ -487,18 +495,19 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateManagementServiceWithPermissions(Permissions.ManagementEdit);
             var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
-            var dispFile = EntityHelper.CreateManagementFile(1);
-            dispFile.ManagementFileStatusTypeCode = fileStatus.ToString();
+            var managementFile = EntityHelper.CreateManagementFile(1);
+            managementFile.ManagementFileStatusTypeCode = fileStatus.ToString();
 
             var statusMock = this._helper.GetService<Mock<IManagementStatusSolver>>();
             statusMock.Setup(x => x.CanEditDetails(It.IsAny<ManagementFileStatusTypes>())).Returns(true);
 
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
-            repository.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<PimsManagementFile>())).Returns(dispFile);
-            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dispFile);
+            repository.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<PimsManagementFile>())).Returns(managementFile);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(managementFile);
+            repository.Setup(x => x.GetByName(It.IsAny<string>())).Returns(managementFile);
 
             // Act
-            var result = service.Update(1, dispFile, new List<UserOverrideCode>());
+            var result = service.Update(1, managementFile, new List<UserOverrideCode>());
 
             // Assert
             result.Should().NotBeNull();
@@ -515,14 +524,15 @@ namespace Pims.Api.Test.Services
             var statusMock = this._helper.GetService<Mock<IManagementStatusSolver>>();
             statusMock.Setup(x => x.CanEditDetails(It.IsAny<ManagementFileStatusTypes>())).Returns(true);
 
-            var dispFile = EntityHelper.CreateManagementFile(1);
+            var managementFile = EntityHelper.CreateManagementFile(1);
 
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
-            repository.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<PimsManagementFile>())).Returns(dispFile);
-            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dispFile);
+            repository.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<PimsManagementFile>())).Returns(managementFile);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(managementFile);
+            repository.Setup(x => x.GetByName(It.IsAny<string>())).Returns(managementFile);
 
             // Act
-            var result = service.Update(1, dispFile, new List<UserOverrideCode>() {  });
+            var result = service.Update(1, managementFile, new List<UserOverrideCode>() {  });
 
             // Assert
             Assert.NotNull(result);
@@ -536,18 +546,19 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateManagementServiceWithPermissions(Permissions.SystemAdmin, Permissions.ManagementEdit);
             var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
-            var dispFile = EntityHelper.CreateManagementFile(1);
-            dispFile.ManagementFileStatusTypeCode = ManagementFileStatusTypes.COMPLETE.ToString();
+            var managementFile = EntityHelper.CreateManagementFile(1);
+            managementFile.ManagementFileStatusTypeCode = ManagementFileStatusTypes.COMPLETE.ToString();
 
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
-            repository.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<PimsManagementFile>())).Returns(dispFile);
-            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dispFile);
+            repository.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<PimsManagementFile>())).Returns(managementFile);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(managementFile);
+            repository.Setup(x => x.GetByName(It.IsAny<string>())).Returns(managementFile);
 
             var statusMock = this._helper.GetService<Mock<IManagementStatusSolver>>();
             statusMock.Setup(x => x.CanEditDetails(It.IsAny<ManagementFileStatusTypes>())).Returns(false);
 
             // Act
-            var result = service.Update(1, dispFile, new List<UserOverrideCode>() { });
+            var result = service.Update(1, managementFile, new List<UserOverrideCode>() { });
 
             // Assert
             Assert.NotNull(result);
@@ -578,6 +589,7 @@ namespace Pims.Api.Test.Services
                 ManagementFileStatusTypeCode = "CLOSED",
                 ManagementFileStatusTypeCodeNavigation = new PimsManagementFileStatusType() { Description = "Closed" },
             });
+            repository.Setup(x => x.GetByName(It.IsAny<string>())).Returns(managementFile);
             lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
             lookupRepository.Setup(x => x.GetAllManagementFileStatusTypes()).Returns(new PimsManagementFileStatusType[]{ new PimsManagementFileStatusType() {
                 Id = managementFile.ManagementFileStatusTypeCodeNavigation.Id,
@@ -719,6 +731,7 @@ namespace Pims.Api.Test.Services
             var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(managementFile);
+            repository.Setup(x => x.GetByName(It.IsAny<string>())).Returns(managementFile);
 
             var filePropertyRepository = this._helper.GetService<Mock<IManagementFilePropertyRepository>>();
             filePropertyRepository.Setup(x => x.GetPropertiesByManagementFileId(It.IsAny<long>())).Returns(managementFile.PimsManagementFileProperties.ToList());
@@ -748,7 +761,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             var exception = act.Should().Throw<UserOverrideException>();
-            exception.WithMessage("You have added one or more properties to the management file that are not in the MoTI Inventory. Do you want to proceed?");
+            exception.WithMessage("You have added one or more properties to the management file that are not in the MOTI Inventory. To acquire these properties, add them to an acquisition file. Do you want to proceed?");
         }
 
         [Fact]
@@ -1112,13 +1125,13 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateManagementServiceWithPermissions(Permissions.ManagementView, Permissions.ContactView);
 
-            var dispFile = EntityHelper.CreateManagementFile();
+            var managementFile = EntityHelper.CreateManagementFile();
             var person = EntityHelper.CreatePerson(1, "tester", "chester");
             var org = EntityHelper.CreateOrganization(1, "tester org");
             List<PimsManagementFileTeam> allTeamMembers = new()
             {
-                new() { ManagementFileId = dispFile.Internal_Id, PersonId = person.Internal_Id, Person = person },
-                new() { ManagementFileId = dispFile.Internal_Id, OrganizationId = org.Internal_Id, Organization = org }
+                new() { ManagementFileId = managementFile.Internal_Id, PersonId = person.Internal_Id, Person = person },
+                new() { ManagementFileId = managementFile.Internal_Id, OrganizationId = org.Internal_Id, Organization = org }
             };
 
             var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
@@ -1138,7 +1151,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateManagementServiceWithPermissions();
 
-            var dispFile = EntityHelper.CreateManagementFile();
+            var managementFile = EntityHelper.CreateManagementFile();
 
             // Act
             Action act = () => service.GetTeamMembers();
