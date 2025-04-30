@@ -60,6 +60,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.ManagementAdd);
             ArgumentNullException.ThrowIfNull(managementFile);
 
+            ValidateName(managementFile);
             managementFile.ManagementFileStatusTypeCode ??= ManagementFileStatusTypes.ACTIVE.ToString();
             ValidateStaff(managementFile);
 
@@ -98,6 +99,8 @@ namespace Pims.Api.Services
             {
                 throw new BadRequestException("Invalid managementFileId.");
             }
+
+            ValidateName(managementFile);
 
             ManagementFileStatusTypes? currentManagementStatus = GetCurrentManagementStatus(managementFile.Internal_Id);
             if (!_managementStatusSolver.CanEditDetails(currentManagementStatus) && !_user.HasPermission(Permissions.SystemAdmin))
@@ -255,6 +258,15 @@ namespace Pims.Api.Services
             }
         }
 
+        private void ValidateName(PimsManagementFile managementFile)
+        {
+            var existingFile = _managementFileRepository.GetByName(managementFile.FileName);
+            if (managementFile.ManagementFileId != existingFile.ManagementFileId)
+            {
+                throw new BadRequestException("The specified file name already exists. Management File names must be unique, please choose another file name.");
+            }
+        }
+
         private void ValidateFileBeforeUpdate(PimsManagementFile incomingManagementFile, PimsManagementFile currentManagementFile)
         {
             // Implement file validation logic before proceeding to update. This includes file closing validation.
@@ -326,11 +338,11 @@ namespace Pims.Api.Services
                         if (overrideCodes.Contains(UserOverrideCode.ManagingPropertyNotInventoried))
                         {
                             _logger.LogDebug("Adding new property with pid:{pid}", pid);
-                            managementProperty.Property = _propertyService.PopulateNewProperty(managementProperty.Property, true, false);
+                            managementProperty.Property = _propertyService.PopulateNewProperty(managementProperty.Property, false, false);
                         }
                         else
                         {
-                            throw new UserOverrideException(UserOverrideCode.ManagingPropertyNotInventoried, "You have added one or more properties to the management file that are not in the MOTI Inventory. Do you want to proceed?");
+                            throw new UserOverrideException(UserOverrideCode.ManagingPropertyNotInventoried, "You have added one or more properties to the management file that are not in the MOTI Inventory. To acquire these properties, add them to an acquisition file. Do you want to proceed?");
                         }
                     }
                 }
@@ -354,11 +366,11 @@ namespace Pims.Api.Services
                         if (overrideCodes.Contains(UserOverrideCode.DisposingPropertyNotInventoried))
                         {
                             _logger.LogDebug("Adding new property with pin:{pin}", pin);
-                            managementProperty.Property = _propertyService.PopulateNewProperty(managementProperty.Property, true, false);
+                            managementProperty.Property = _propertyService.PopulateNewProperty(managementProperty.Property, false, false);
                         }
                         else
                         {
-                            throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the management file that are not in the MoTI Inventory. Do you want to proceed?");
+                            throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the management file that are not in the MOTI Inventory. To acquire these properties, add them to an acquisition file. Do you want to proceed?");
                         }
                     }
                 }
@@ -367,11 +379,11 @@ namespace Pims.Api.Services
                     if (overrideCodes.Contains(UserOverrideCode.DisposingPropertyNotInventoried))
                     {
                         _logger.LogDebug("Adding new property without a pid");
-                        managementProperty.Property = _propertyService.PopulateNewProperty(managementProperty.Property, true, false);
+                        managementProperty.Property = _propertyService.PopulateNewProperty(managementProperty.Property, false, false);
                     }
                     else
                     {
-                        throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the management file that are not in the MoTI Inventory. Do you want to proceed?");
+                        throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the management file that are not in the MOTI Inventory. To acquire these properties, add them to an acquisition file. Do you want to proceed?");
                     }
                 }
             }

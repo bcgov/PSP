@@ -98,6 +98,7 @@ namespace Pims.Dal.Exceptions
             UserOverrideCode.DeleteTakeActiveDisposition,
             UserOverrideCode.UpdateSubFilesProjectProduct,
             UserOverrideCode.CommencementOverlapExpiryDate,
+            UserOverrideCode.ManagingPropertyNotInventoried,
         };
 
         private UserOverrideCode(string code)
