@@ -74,7 +74,7 @@ export const UpdateForm8Form: React.FC<IForm8FormProps> = ({
               <>
                 <StyledContent>
                   <Section header="Form 8 Notice of Advance Payment">
-                    <SectionField label="Payee" labelWidth="4" required>
+                    <SectionField label="Payee" labelWidth={{ xs: 4 }} required>
                       <Select
                         field="payeeKey"
                         title={

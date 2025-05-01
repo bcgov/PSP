@@ -113,7 +113,7 @@ export const useMapSearch = () => {
           | undefined;
         try {
           planNumberInventoryData = await loadPropertiesTask;
-        } catch (err) {
+        } catch {
           setModalContent({
             variant: 'error',
             title: 'Unable to connect to PIMS Inventory',
@@ -132,48 +132,49 @@ export const useMapSearch = () => {
         }
         const planNumberPmbcData = await findByPlanNumberTask;
 
-        // If the property was found on the pims inventory, use that.
-        if (planNumberInventoryData?.features && planNumberInventoryData?.features?.length > 0) {
-          const validFeatures = planNumberInventoryData.features.filter(
-            feature => !!feature?.geometry,
+        const validFeatures = planNumberInventoryData?.features?.filter(
+          feature => !!feature?.geometry,
+        );
+
+        const attributedFeatures: FeatureCollection<
+          Geometry,
+          PMBC_FullyAttributed_Feature_Properties
+        > =
+          planNumberPmbcData?.features?.length > 0
+            ? {
+                type: 'FeatureCollection',
+                features: [...(planNumberPmbcData?.features || [])],
+                bbox: planNumberPmbcData?.bbox,
+              }
+            : null;
+        const validPmbcFeatures = attributedFeatures?.features?.filter(
+          feature => !!feature?.geometry,
+        );
+
+        result = {
+          pimsLocationFeatures: exists(validFeatures)
+            ? {
+                type: planNumberInventoryData.type,
+                bbox: planNumberInventoryData.bbox,
+                features: validFeatures,
+              }
+            : emptyPimsLocationFeatureCollection,
+          pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
+          fullyAttributedFeatures: exists(validPmbcFeatures)
+            ? {
+                type: attributedFeatures.type,
+                bbox: attributedFeatures.bbox,
+                features: validPmbcFeatures,
+              }
+            : emptyPmbcFeatureCollection,
+        };
+
+        if ((validFeatures?.length ?? 0) + (validPmbcFeatures?.length ?? 0) === 0) {
+          toast.info('No search results found');
+        } else {
+          toast.info(
+            `${(validFeatures?.length ?? 0) + (validPmbcFeatures?.length ?? 0)} properties found`,
           );
-
-          const attributedFeatures: FeatureCollection<
-            Geometry,
-            PMBC_FullyAttributed_Feature_Properties
-          > =
-            planNumberPmbcData?.features?.length > 0
-              ? {
-                  type: 'FeatureCollection',
-                  features: [...(planNumberPmbcData?.features || [])],
-                  bbox: planNumberPmbcData?.bbox,
-                }
-              : null;
-          const validPmbcFeatures = attributedFeatures.features.filter(
-            feature => !!feature?.geometry,
-          );
-
-          result = {
-            pimsLocationFeatures: {
-              type: planNumberInventoryData.type,
-              bbox: planNumberInventoryData.bbox,
-              features: validFeatures,
-            },
-            pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-            fullyAttributedFeatures: exists(attributedFeatures)
-              ? {
-                  type: attributedFeatures.type,
-                  bbox: attributedFeatures.bbox,
-                  features: validPmbcFeatures,
-                }
-              : emptyPmbcFeatureCollection,
-          };
-
-          if (validFeatures.length === 0) {
-            toast.info('No search results found');
-          } else {
-            toast.info(`${validFeatures.length} properties found`);
-          }
         }
       } catch (error) {
         toast.error((error as Error).message, { autoClose: 7000 });
@@ -195,7 +196,7 @@ export const useMapSearch = () => {
           | undefined;
         try {
           historicalNumberInventoryData = await loadPropertiesTask;
-        } catch (err) {
+        } catch {
           setModalContent({
             variant: 'error',
             title: 'Unable to connect to PIMS Inventory',
@@ -276,7 +277,7 @@ export const useMapSearch = () => {
           | undefined;
         try {
           pidPinInventoryData = await loadPropertiesTask;
-        } catch (err) {
+        } catch {
           setModalContent({
             variant: 'error',
             title: 'Unable to connect to PIMS Inventory',
@@ -368,7 +369,7 @@ export const useMapSearch = () => {
       let pidPinInventoryData: FeatureCollection<Geometry, PIMS_Property_Location_View> | undefined;
       try {
         pidPinInventoryData = await loadPropertiesTask;
-      } catch (err) {
+      } catch {
         setModalContent({
           variant: 'error',
           title: 'Unable to connect to PIMS Inventory',

@@ -21,9 +21,11 @@ export const useGeocoderRepository = () => {
     ),
     requestName: 'getSitePids',
     onError: useCallback((axiosError: AxiosError<IApiError>) => {
-      toast.error(
-        `Failed to get PIMS property data. error from backend: ${axiosError?.response?.data.error}`,
-      );
+      if (axiosError.response.status !== 404) {
+        toast.error(
+          `Failed to get PIMS property data. error from backend: ${axiosError?.response?.data.error}`,
+        );
+      }
       return Promise.resolve();
     }, []),
   });
@@ -39,9 +41,11 @@ export const useGeocoderRepository = () => {
     ),
     requestName: 'searchAddress',
     onError: useCallback((axiosError: AxiosError<IApiError>) => {
-      toast.error(
-        `Failed to get PIMS property data. error from backend: ${axiosError?.response?.data.error}`,
-      );
+      if (axiosError.response.status !== 404) {
+        toast.error(
+          `Failed to get PIMS property data. error from backend: ${axiosError?.response?.data.error}`,
+        );
+      }
       return Promise.resolve();
     }, []),
   });
@@ -56,9 +60,11 @@ export const useGeocoderRepository = () => {
     ),
     requestName: 'getNearestToPoint',
     onError: useCallback((axiosError: AxiosError<IApiError>) => {
-      toast.error(
-        `Failed to get PIMS property data. error from backend: ${axiosError?.response?.data.error}`,
-      );
+      if (axiosError.response.status !== 404) {
+        toast.error(
+          `Failed to get PIMS property data. error from backend: ${axiosError?.response?.data.error}`,
+        );
+      }
       return Promise.resolve();
     }, []),
   });

@@ -106,6 +106,7 @@ describe('AddAcquisitionContainer component', () => {
       email: 'test@test.com',
       name: 'Chester Tester',
       idir_user_guid: '00000000000000000000000000000000',
+      sub: '00000000000000000000000000000000@idir',
     };
 
     mocks.useKeycloak.mockImplementation(() => ({
@@ -264,13 +265,7 @@ describe('AddAcquisitionContainer component', () => {
         },
         districtFeature: null,
         municipalityFeature: null,
-        highwayFeatures: null,
         selectingComponentId: null,
-        crownLandLeasesFeature: null,
-        crownLandLicensesFeature: null,
-        crownLandTenuresFeature: null,
-        crownLandInventoryFeature: null,
-        crownLandInclusionsFeature: null,
       },
     };
 
@@ -299,13 +294,7 @@ describe('AddAcquisitionContainer component', () => {
         },
         districtFeature: null,
         municipalityFeature: null,
-        highwayFeatures: null,
         selectingComponentId: null,
-        crownLandLeasesFeature: null,
-        crownLandLicensesFeature: null,
-        crownLandTenuresFeature: null,
-        crownLandInventoryFeature: null,
-        crownLandInclusionsFeature: null,
       },
     };
 

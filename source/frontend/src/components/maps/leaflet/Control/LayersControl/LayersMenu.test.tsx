@@ -2,7 +2,7 @@ import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { act, cleanup, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
 import { LayersMenu } from './LayersMenu';
-import { layersTree } from './data';
+import { layersTree } from './DefaultLayers';
 
 describe('LayersMenu View', () => {
   afterEach(cleanup);

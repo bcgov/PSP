@@ -100,7 +100,7 @@ const DispositionOfferForm: React.FC<IDispositionOfferFormProps> = ({
                   <Section header="Offer">
                     <SectionField
                       label="Offer status"
-                      contentWidth="6"
+                      contentWidth={{ xs: 6 }}
                       tooltip="Open = Offer has been received.
                     Rejected, = Offer was not responded to (due to receiving a better competing offer or the offer was just highly undesirable).
                     Countered, = Offer was responded to with a counteroffer. If counteroffer is accepted, new terms should be recorded in Notes.
@@ -118,7 +118,12 @@ const DispositionOfferForm: React.FC<IDispositionOfferFormProps> = ({
                         </div>
                       )}
                     </SectionField>
-                    <SectionField label="Offer name(s)" labelWidth="4" contentWidth="6" required>
+                    <SectionField
+                      label="Offer name(s)"
+                      labelWidth={{ xs: 4 }}
+                      contentWidth={{ xs: 6 }}
+                      required
+                    >
                       <Input field="offerName" />
                     </SectionField>
                     <SectionField label="Offer date" required>
@@ -127,12 +132,12 @@ const DispositionOfferForm: React.FC<IDispositionOfferFormProps> = ({
                     <SectionField label="Offer expiry date">
                       <FastDatePicker field="offerExpiryDate" formikProps={formikProps} />
                     </SectionField>
-                    <SectionField label="Offer price ($)" contentWidth="5" required>
+                    <SectionField label="Offer price ($)" contentWidth={{ xs: 5 }} required>
                       <FastCurrencyInput formikProps={formikProps} field="offerAmount" />
                     </SectionField>
                     <SectionField
                       label="Comments"
-                      contentWidth="12"
+                      contentWidth={{ xs: 12 }}
                       tooltip="Provide any additional details such as offer terms or conditions, and any commentary on why the offer was accepted/countered/rejected"
                     >
                       <TextArea field="offerNote" />

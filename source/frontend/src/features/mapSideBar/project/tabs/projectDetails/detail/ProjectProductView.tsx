@@ -25,19 +25,19 @@ const ProjectProductView: React.FunctionComponent<
             key={`project-${project.id}-product-${product.id}`}
           >
             <StyledProductDescription>{`${product.code} - ${product.description}`}</StyledProductDescription>
-            <SectionField label="Start Date" labelWidth={'2'}>
+            <SectionField label="Start Date" labelWidth={{ xs: 2 }}>
               {prettyFormatDate(product.startDate)}
             </SectionField>
-            <SectionField label="Cost estimate" labelWidth={'2'}>
+            <SectionField label="Cost estimate" labelWidth={{ xs: 2 }}>
               {formatMoney(product.costEstimate)}
               {product.costEstimateDate
                 ? ` as of ${prettyFormatDate(product.costEstimateDate)}`
                 : ' no estimate date entered'}
             </SectionField>
-            <SectionField label="Objectives" labelWidth={'12'}>
+            <SectionField label="Objectives" labelWidth={{ xs: 12 }}>
               {product.objective || 'no objective entered'}
             </SectionField>
-            <SectionField label="Scope" labelWidth={'12'}>
+            <SectionField label="Scope" labelWidth={{ xs: 12 }}>
               {product.scope || 'no scope entered'}
             </SectionField>
           </div>

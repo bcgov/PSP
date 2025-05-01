@@ -92,7 +92,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({ take }) => {
       isCollapsable={true}
       initiallyExpanded={true}
     >
-      <SectionField label="Take type" required labelWidth="4" contentWidth="5">
+      <SectionField label="Take type" required labelWidth={{ xs: 4 }} contentWidth={{ xs: 5 }}>
         <Select
           field="takeTypeCode"
           options={takeTypeOptions}
@@ -100,7 +100,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({ take }) => {
           disabled={!canEditTake}
         />
       </SectionField>
-      <SectionField label="Take status" required labelWidth="4" contentWidth="5">
+      <SectionField label="Take status" required labelWidth={{ xs: 4 }} contentWidth={{ xs: 5 }}>
         <Select
           field="takeStatusTypeCode"
           options={takeStatusTypeOptions}
@@ -111,8 +111,8 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({ take }) => {
         label="Completion date"
         required={take.takeStatusTypeCode === ApiGen_CodeTypes_AcquisitionTakeStatusTypes.COMPLETE}
         tooltip={`This will be enabled when the take status is set to "Completed"`}
-        labelWidth="4"
-        contentWidth="5"
+        labelWidth={{ xs: 4 }}
+        contentWidth={{ xs: 5 }}
       >
         <FastDatePicker
           formikProps={formikProps}
@@ -123,21 +123,21 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({ take }) => {
           }
         />
       </SectionField>
-      <SectionField label="Site contamination" labelWidth="4" contentWidth="5">
+      <SectionField label="Site contamination" labelWidth={{ xs: 4 }} contentWidth={{ xs: 5 }}>
         <Select
           field="takeSiteContamTypeCode"
           options={takeSiteContamTypeOptions}
           disabled={!canEditTake}
         />
       </SectionField>
-      <SectionField label="Description of this Take" labelWidth="12">
+      <SectionField label="Description of this Take" labelWidth={{ xs: 12 }}>
         <TextArea field="description" disabled={!canEditTake} />
       </SectionField>
       <StyledNoTabSection header="Area">
         <StyledBorderSection>
           <SectionField
             label="Is there a new highway dedication? *"
-            labelWidth="8"
+            labelWidth={{ xs: 8 }}
             tooltip="The term new highway dedication includes municipal road or provincial public highway"
           >
             <RadioGroup
@@ -153,7 +153,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({ take }) => {
           </SectionField>
           {take.isNewHighwayDedication === 'true' && (
             <>
-              <SectionField label="Area" labelWidth="12">
+              <SectionField label="Area" labelWidth={{ xs: 12 }}>
                 <AreaContainer
                   onChange={(landArea, areaUnitTypeCode) => {
                     formikProps.setFieldValue('newHighwayDedicationArea', landArea);
@@ -172,7 +172,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({ take }) => {
           )}
           <SectionField
             label="Is this being acquired for MoTI inventory? *"
-            labelWidth="8"
+            labelWidth={{ xs: 8 }}
             tooltip="Selecting Yes for this option will result in the property being added to inventory"
             className="pt-4"
           >
@@ -187,7 +187,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({ take }) => {
         <StyledBorderSection>
           <SectionField
             label="Is there a new registered interest in land (SRW, Easement or Covenant)? *"
-            labelWidth="8"
+            labelWidth={{ xs: 8 }}
           >
             <RadioGroup
               radioValues={yesNoRadioGroupValues}
@@ -203,7 +203,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({ take }) => {
           </SectionField>
           {take.isNewInterestInSrw === 'true' && (
             <>
-              <SectionField label="Area" labelWidth="12">
+              <SectionField label="Area" labelWidth={{ xs: 12 }}>
                 <AreaContainer
                   onChange={(landArea, areaUnitTypeCode) => {
                     formikProps.setFieldValue('statutoryRightOfWayArea', landArea);
@@ -218,14 +218,14 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({ take }) => {
                   field="statutoryRightOfWayArea"
                 />
               </SectionField>
-              <SectionField label="SRW end date" labelWidth="3" className="mt-4">
+              <SectionField label="SRW end date" labelWidth={{ xs: 3 }} className="mt-4">
                 <FastDatePicker field="srwEndDt" formikProps={formikProps} />
               </SectionField>
             </>
           )}
         </StyledBorderSection>
         <StyledBorderSection>
-          <SectionField label="Is there a new Land Act tenure? *" labelWidth="8">
+          <SectionField label="Is there a new Land Act tenure? *" labelWidth={{ xs: 8 }}>
             <RadioGroup
               radioValues={yesNoRadioGroupValues}
               flexDirection="row"
@@ -241,7 +241,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({ take }) => {
           </SectionField>
           {take.isNewLandAct === 'true' && (
             <>
-              <SectionField label="Land Act" required contentWidth="7">
+              <SectionField label="Land Act" required contentWidth={{ xs: 7 }}>
                 <Select
                   field="landActTypeCode"
                   placeholder="Select Land Act"
@@ -259,7 +259,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({ take }) => {
                   }}
                 />
               </SectionField>
-              <SectionField label="Area" labelWidth="12">
+              <SectionField label="Area" labelWidth={{ xs: 12 }}>
                 <AreaContainer
                   onChange={(landArea, areaUnitTypeCode) => {
                     formikProps.setFieldValue('landActArea', landArea);
@@ -276,7 +276,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({ take }) => {
                 ApiGen_CodeTypes_LandActTypes.TRANSFER_OF_ADMIN_AND_CONTROL.toString(),
                 ApiGen_CodeTypes_LandActTypes.CROWN_GRANT.toString(),
               ].includes(take.landActTypeCode) && (
-                <SectionField label="End date" labelWidth="3" className="mt-4">
+                <SectionField label="End date" labelWidth={{ xs: 3 }} className="mt-4">
                   <FastDatePicker
                     field="landActEndDt"
                     formikProps={formikProps}
@@ -291,7 +291,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({ take }) => {
         <StyledBorderSection>
           <SectionField
             label="Is there a new Licence for Construction Access (TLCA/LTC)? *"
-            labelWidth="8"
+            labelWidth={{ xs: 8 }}
           >
             <RadioGroup
               radioValues={yesNoRadioGroupValues}
@@ -307,7 +307,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({ take }) => {
           </SectionField>
           {take.isNewLicenseToConstruct === 'true' && (
             <>
-              <SectionField label="Area" labelWidth="12">
+              <SectionField label="Area" labelWidth={{ xs: 12 }}>
                 <AreaContainer
                   onChange={(landArea, areaUnitTypeCode) => {
                     formikProps.setFieldValue('licenseToConstructArea', landArea);
@@ -323,14 +323,14 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({ take }) => {
                 />
               </SectionField>
 
-              <SectionField label="LTC end date" labelWidth="3" className="mt-4">
+              <SectionField label="LTC end date" labelWidth={{ xs: 3 }} className="mt-4">
                 <FastDatePicker field="ltcEndDt" formikProps={formikProps} />
               </SectionField>
             </>
           )}
         </StyledBorderSection>
         <StyledBorderSection>
-          <SectionField label="Is there a Lease (Payable)? *" labelWidth="8">
+          <SectionField label="Is there a Lease (Payable)? *" labelWidth={{ xs: 8 }}>
             <RadioGroup
               radioValues={yesNoRadioGroupValues}
               flexDirection="row"
@@ -344,7 +344,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({ take }) => {
           </SectionField>
           {take.isLeasePayable === 'true' && (
             <>
-              <SectionField label="Area" labelWidth="12">
+              <SectionField label="Area" labelWidth={{ xs: 12 }}>
                 <AreaContainer
                   onChange={(landArea, areaUnitTypeCode) => {
                     formikProps.setFieldValue('leasePayableArea', landArea);
@@ -357,7 +357,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({ take }) => {
                 />
               </SectionField>
 
-              <SectionField label="End date" labelWidth="3" className="mt-4">
+              <SectionField label="End date" labelWidth={{ xs: 3 }} className="mt-4">
                 <FastDatePicker
                   field="leasePayableEndDt"
                   formikProps={formikProps}
@@ -370,7 +370,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({ take }) => {
       </StyledNoTabSection>
       <StyledNoTabSection header="Surplus">
         <StyledBorderSection>
-          <SectionField label="Is there a Surplus? *" labelWidth="8">
+          <SectionField label="Is there a Surplus? *" labelWidth={{ xs: 8 }}>
             <RadioGroup
               field="isThereSurplus"
               radioValues={yesNoRadioGroupValues}
@@ -384,7 +384,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({ take }) => {
           </SectionField>
           {take.isThereSurplus === 'true' && (
             <>
-              <SectionField label="Area" labelWidth="12">
+              <SectionField label="Area" labelWidth={{ xs: 12 }}>
                 <AreaContainer
                   onChange={(landArea, areaUnitTypeCode) => {
                     formikProps.setFieldValue('surplusArea', landArea);

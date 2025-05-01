@@ -9,8 +9,7 @@ import { ResetButton, SearchButton } from '@/components/common/buttons';
 import ActiveFilterCheck from '@/components/common/form/ActiveFilterCheck';
 import { RadioGroup } from '@/components/common/form/RadioGroup';
 import { InlineInput } from '@/components/common/form/styles';
-import { FlexRowNoGap } from '@/components/common/styles';
-import { VerticalBar } from '@/components/common/VerticalBar';
+import { ColButtons, FlexRowNoGap } from '@/components/common/styles';
 import { IContactFilter } from '@/components/contact/ContactManagerView/IContactFilter';
 
 export const defaultFilter: IContactFilter = {
@@ -73,21 +72,23 @@ export const ContactFilterComponent: React.FunctionComponent<
           }}
         >
           <Row className="p-5">
-            <Row className="pb-5">
-              <Col xs="auto">
-                <RadioGroup
-                  label="Search by:"
-                  field="searchBy"
-                  radioGroupClassName="pb-3"
-                  radioValues={getRestrictedRadioValues(restrictContactType)}
-                />
-              </Col>
-              <Col lg="auto" className="pl-0">
-                <StyledNameInput field="summary" placeholder="Name" />
-              </Col>
-            </Row>
-            <Col xl="auto">
-              <Row className="ml-10">
+            <Col lg="6">
+              <Row className="pb-5">
+                <Col xs="auto">
+                  <RadioGroup
+                    label="Search by:"
+                    field="searchBy"
+                    radioGroupClassName="pb-3"
+                    radioValues={getRestrictedRadioValues(restrictContactType)}
+                  />
+                </Col>
+                <Col lg="auto" className="pl-0">
+                  <StyledNameInput field="summary" placeholder="Name" />
+                </Col>
+              </Row>
+            </Col>
+            <Col lg="5">
+              <Row>
                 <Col className="pl-0">
                   <StyledCityInput
                     field="municipality"
@@ -111,36 +112,27 @@ export const ContactFilterComponent: React.FunctionComponent<
                 </Col>
               </Row>
             </Col>
-            <Col md="auto" className="ml-2">
+            <ColButtons lg="1">
               <Row>
-                <Col className="pr-0" xs="auto">
-                  <VerticalBar />
+                <Col lg="auto" className="pr-0">
+                  <SearchButton
+                    disabled={isSubmitting}
+                    onClick={() => {
+                      submitForm();
+                    }}
+                  />
                 </Col>
-                <Col>
-                  <Row>
-                    <StyledColButton xs="auto">
-                      <SearchButton
-                        type="button"
-                        disabled={isSubmitting}
-                        onClick={() => {
-                          submitForm();
-                        }}
-                      />
-                    </StyledColButton>
-                    <StyledColButton xs="auto">
-                      <ResetButton
-                        type=""
-                        disabled={isSubmitting}
-                        onClick={() => {
-                          resetForm({ values: { ...defaultFilter, searchBy: values.searchBy } });
-                          resetFilter(values);
-                        }}
-                      />
-                    </StyledColButton>
-                  </Row>
+                <Col lg="auto">
+                  <ResetButton
+                    disabled={isSubmitting}
+                    onClick={() => {
+                      resetForm({ values: { ...defaultFilter, searchBy: values.searchBy } });
+                      resetFilter(values);
+                    }}
+                  />
                 </Col>
               </Row>
-            </Col>
+            </ColButtons>
           </Row>
         </StyledFilterBoxForm>
       )}
@@ -211,14 +203,6 @@ const StyledFilterBoxForm = styled(Form)`
   border-radius: 0.4rem;
   padding: 1rem;
   max-width: 85%;
-  @media only screen and (max-width: 1199px) {
-    max-width: 50%;
-  }
-`;
-
-const StyledColButton = styled(Col)`
-  padding-right: 0rem;
-  padding-left: 1rem;
 `;
 
 export const StyledNameInput = styled(InlineInput)`

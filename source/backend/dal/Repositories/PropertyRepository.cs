@@ -276,6 +276,9 @@ namespace Pims.Dal.Repositories
                 .Include(p => p.PimsDispositionFileProperties)
                     .ThenInclude(pa => pa.DispositionFile)
                     .ThenInclude(a => a.DispositionFileStatusTypeCodeNavigation)
+                .Include(p => p.PimsManagementFileProperties)
+                    .ThenInclude(pa => pa.ManagementFile)
+                    .ThenInclude(a => a.ManagementFileStatusTypeCodeNavigation)
                 .FirstOrDefault(p => p.PropertyId == id);
 
             return property;
@@ -293,8 +296,9 @@ namespace Pims.Dal.Repositories
             var researchAssociationCount = propertyWithAssociations.PimsPropertyResearchFiles.Count;
             var acquisitionAssociationCount = propertyWithAssociations.PimsPropertyAcquisitionFiles.Count;
             var dispositionAssociationCount = propertyWithAssociations.PimsDispositionFileProperties.Count;
+            var managementAssociationCount = propertyWithAssociations.PimsManagementFileProperties.Count;
 
-            return leaseAssociationCount + researchAssociationCount + acquisitionAssociationCount + dispositionAssociationCount;
+            return leaseAssociationCount + researchAssociationCount + acquisitionAssociationCount + dispositionAssociationCount + managementAssociationCount;
         }
 
         /// <summary>

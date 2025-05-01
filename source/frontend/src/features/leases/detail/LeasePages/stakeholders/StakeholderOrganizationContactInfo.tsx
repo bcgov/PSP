@@ -34,7 +34,7 @@ export const TenantOrganizationContactInfo: React.FunctionComponent<
   const primaryContactName = formatApiPersonNames(primaryContact);
   return (
     <StyledSectionWrapper>
-      <SectionField labelWidth="2" contentWidth="10" label="Organization">
+      <SectionField labelWidth={{ xs: 2 }} contentWidth={{ xs: 10 }} label="Organization">
         {getIn(values, withNameSpace(nameSpace, 'summary')) && (
           <>
             <StyledLink to={`/contact/${tenant?.id}`} target="_blank" rel="noopener noreferrer">
@@ -43,7 +43,7 @@ export const TenantOrganizationContactInfo: React.FunctionComponent<
           </>
         )}
       </SectionField>
-      <SectionField labelWidth="2" contentWidth="10" label="Primary Contact">
+      <SectionField labelWidth={{ xs: 2 }} contentWidth={{ xs: 10 }} label="Primary Contact">
         {primaryContact && (
           <>
             <StyledLink

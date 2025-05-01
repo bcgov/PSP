@@ -43,6 +43,7 @@ const renderComponent = (props?: IRenderProps) => {
     email: 'test@test.com',
     name: 'Chester Tester',
     idir_user_guid: '00000000000000000000000000000000',
+    sub: '00000000000000000000000000000000@idir',
   };
 
   mocks.useKeycloak.mockImplementation(() => ({
@@ -271,6 +272,24 @@ describe('SideNavbar display and logic', () => {
       });
       await waitFor(async () => {
         expect(history.location.pathname).toBe('/contact/list');
+      });
+    });
+
+    it('Opens management side tray when an icon is clicked.', async () => {
+      const { getByText, getByTestId } = renderComponent({
+        roles: [Roles.SYSTEM_ADMINISTRATOR],
+        claims: [Claims.MANAGEMENT_VIEW],
+      });
+      const managementButton = getByTestId('nav-tooltip-management');
+      await act(async () => {
+        userEvent.click(managementButton);
+      });
+      const managementLink = getByText('Manage Management Files');
+      await act(async () => {
+        userEvent.click(managementLink);
+      });
+      await waitFor(async () => {
+        expect(history.location.pathname).toBe('/management/list');
       });
     });
   });

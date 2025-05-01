@@ -1,22 +1,15 @@
 import { createMemoryHistory } from 'history';
 import { Route } from 'react-router-dom';
-import { act } from 'react-test-renderer';
 
 import Claims from '@/constants/claims';
 import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
-import { useApiNotes } from '@/hooks/pims-api/useApiNotes';
 import { useNoteRepository } from '@/hooks/repositories/useNoteRepository';
 import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
-import { render, RenderOptions, userEvent } from '@/utils/test-utils';
+import { act, getMockRepositoryObj, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import DispositionFileTabs, { IDispositionFileTabsProps } from './DispositionFileTabs';
 
-// mock auth library
-
 vi.mock('@/hooks/repositories/useNoteRepository');
-vi.mock('@/hooks/pims-api/useApiNotes');
-
-const getNotes = vi.fn().mockResolvedValue([]);
 
 const mockGetDispositionFileOffersApi = {
   error: undefined,
@@ -46,21 +39,13 @@ const mockDeleteDispositionFileOfferApi = {
   loading: false,
 };
 
-vi.mocked(useNoteRepository).mockImplementation(
-  () =>
-    ({
-      addNote: { execute: vi.fn() },
-      getNote: { execute: vi.fn() },
-      updateNote: { execute: vi.fn() },
-    } as unknown as ReturnType<typeof useNoteRepository>),
-);
-
-vi.mocked(useApiNotes).mockImplementation(
-  () =>
-    ({
-      getNotes,
-    } as unknown as ReturnType<typeof useApiNotes>),
-);
+vi.mocked(useNoteRepository, { partial: true }).mockImplementation(() => ({
+  getAllNotes: getMockRepositoryObj([]),
+  addNote: getMockRepositoryObj(),
+  getNote: getMockRepositoryObj(),
+  updateNote: getMockRepositoryObj(),
+  deleteNote: getMockRepositoryObj(),
+}));
 
 vi.mock('@/features/documents/hooks/useDocumentRelationshipProvider', () => ({
   useDocumentRelationshipProvider: () => {

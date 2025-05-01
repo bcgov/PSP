@@ -25,7 +25,7 @@ export const PropertyManagementTabView: React.FunctionComponent<IPropertyManagem
   property,
   loading,
 }) => {
-  if (isValidId(property.id)) {
+  if (isValidId(property?.id)) {
     return (
       <StyledSummarySection>
         <LoadingBackdrop show={loading} parentScreen={true} />

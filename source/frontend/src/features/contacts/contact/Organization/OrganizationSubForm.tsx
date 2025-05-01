@@ -22,13 +22,13 @@ export const OrganizationSubForm: React.FunctionComponent<IOrganizationSubFormPr
   return (
     <>
       <Section header="Contact Details">
-        <SectionField label="Organization name" required contentWidth="6">
+        <SectionField label="Organization name" required contentWidth={{ xs: 6 }}>
           <Input field="name" />
         </SectionField>
-        <SectionField label="Alias" contentWidth="6">
+        <SectionField label="Alias" contentWidth={{ xs: 6 }}>
           <Input field="alias" />
         </SectionField>
-        <SectionField label="Incorporation number" contentWidth="6">
+        <SectionField label="Incorporation number" contentWidth={{ xs: 6 }}>
           <Input field="incorporationNumber" />
         </SectionField>
       </Section>

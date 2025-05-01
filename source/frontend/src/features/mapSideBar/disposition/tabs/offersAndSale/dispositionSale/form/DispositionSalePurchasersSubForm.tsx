@@ -67,7 +67,11 @@ const DispositionSalePurchaserSubForm: React.FunctionComponent<
                 {purchaser.contact?.organizationId && !purchaser.contact?.personId && (
                   <Row noGutters>
                     <Col xs="auto" xl="12">
-                      <SectionField label="Primary contact" labelWidth="5" contentWidth="6">
+                      <SectionField
+                        label="Primary contact"
+                        labelWidth={{ xs: 5 }}
+                        contentWidth={{ xs: 6 }}
+                      >
                         <PrimaryContactSelector
                           field={`dispositionPurchasers.${index}.primaryContactId`}
                           contactInfo={purchaser?.contact}

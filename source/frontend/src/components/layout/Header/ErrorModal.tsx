@@ -66,13 +66,13 @@ export const ErrorModal = ({ errors, show, setShow }: IErrorModalProps) => {
             <ErrorEntry key={index}>
               {import.meta.env.DEV ? (
                 <Section header={errorShortUrl(error)} isCollapsable>
-                  <SectionField label="Status" labelWidth="2">
+                  <SectionField label="Status" labelWidth={{ xs: 2 }}>
                     <ErrorDescription>{errorStatus(error)}</ErrorDescription>
                   </SectionField>
-                  <SectionField label="Path" labelWidth="2">
+                  <SectionField label="Path" labelWidth={{ xs: 2 }}>
                     <ErrorDescription>{errorUrl(error)}</ErrorDescription>
                   </SectionField>
-                  <SectionField label="Data" labelWidth="2">
+                  <SectionField label="Data" labelWidth={{ xs: 2 }}>
                     <ErrorDescription>
                       {JSON.stringify(error?.error?.response?.data)}
                     </ErrorDescription>
@@ -80,13 +80,13 @@ export const ErrorModal = ({ errors, show, setShow }: IErrorModalProps) => {
                 </Section>
               ) : (
                 <Section header={errorShortUrl(error)} isCollapsable>
-                  <SectionField label="Status" labelWidth="3">
+                  <SectionField label="Status" labelWidth={{ xs: 3 }}>
                     <ErrorDescription>{errorStatus(error)}</ErrorDescription>
                   </SectionField>
-                  <SectionField label="Path" labelWidth="3">
+                  <SectionField label="Path" labelWidth={{ xs: 3 }}>
                     <ErrorDescription>{errorUrl(error)}</ErrorDescription>
                   </SectionField>
-                  <SectionField label="Data" labelWidth="12">
+                  <SectionField label="Data" labelWidth={{ xs: 12 }}>
                     <ErrorDescription>
                       {(error?.error?.response?.data as unknown & { error: string })?.error ?? ''}
                     </ErrorDescription>

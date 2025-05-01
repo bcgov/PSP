@@ -228,10 +228,6 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c5 .react-datepicker-wrapper {
-  max-width: 17rem;
-}
-
 .c6.c6.form-control.is-valid {
   background-image: none;
 }
@@ -251,6 +247,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
 
 .c16:not(:first-child) {
   padding-left: 0;
+  padding-right: 0;
 }
 
 .c16:not(:first-child) .form-control {
@@ -413,15 +410,6 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
 .c14 {
   background-color: #d9eaf7;
   border-radius: 0.5rem;
-}
-
-.c14 .idir-input-group .input-group-prepend select {
-  width: 16rem;
-}
-
-.c14 .idir-input-group input {
-  width: 18rem;
-  max-width: 100%;
 }
 
 .c19 {
@@ -1648,7 +1636,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                             class="col-6"
                           >
                             <div
-                              class="flex-nowrap input-group row"
+                              class="flex-nowrap input-group row no-gutters"
                             >
                               <div
                                 class="c15 col-auto"
@@ -2129,6 +2117,13 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                 >
                   Pending Litigation
                 </option>
+                <option
+                  class="option"
+                  data-testid="select-option-UNKNOWN"
+                  value="UNKNOWN"
+                >
+                  Unknown
+                </option>
               </select>
             </div>
           </div>
@@ -2297,6 +2292,13 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-LSHOLDR"
+                  value="LSHOLDR"
+                >
+                  Leaseholder
+                </option>
+                <option
+                  class="option"
                   data-testid="select-option-LICOCCUPY"
                   value="LICOCCUPY"
                 >
@@ -2308,6 +2310,13 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                   value="LIEN"
                 >
                   Lis Pendens / Lien
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-MOBILE"
+                  value="MOBILE"
+                >
+                  Mobile Home Owner
                 </option>
                 <option
                   class="option"
@@ -2342,14 +2351,14 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                   data-testid="select-option-TENANT"
                   value="TENANT"
                 >
-                  Tenant (Monthly) Leaseholder
+                  Tenant (Monthly)
                 </option>
                 <option
                   class="option"
                   data-testid="select-option-OTHER"
                   value="OTHER"
                 >
-                  Other 
+                  Other
                 </option>
               </select>
             </div>
@@ -2881,10 +2890,6 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c6 .react-datepicker-wrapper {
-  max-width: 17rem;
-}
-
 .c7.c7.form-control.is-valid {
   background-image: none;
 }
@@ -2904,6 +2909,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
 
 .c17:not(:first-child) {
   padding-left: 0;
+  padding-right: 0;
 }
 
 .c17:not(:first-child) .form-control {
@@ -3066,15 +3072,6 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
 .c15 {
   background-color: #d9eaf7;
   border-radius: 0.5rem;
-}
-
-.c15 .idir-input-group .input-group-prepend select {
-  width: 16rem;
-}
-
-.c15 .idir-input-group input {
-  width: 18rem;
-  max-width: 100%;
 }
 
 .c20 {
@@ -4293,7 +4290,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
                             class="col-6"
                           >
                             <div
-                              class="flex-nowrap input-group row"
+                              class="flex-nowrap input-group row no-gutters"
                             >
                               <div
                                 class="c16 col-auto"
@@ -4773,6 +4770,13 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
                   value="PENDING"
                 >
                   Pending Litigation
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-UNKNOWN"
+                  value="UNKNOWN"
+                >
+                  Unknown
                 </option>
               </select>
             </div>

@@ -139,6 +139,32 @@ namespace Pims.Core.Test
         }
 
         /// <summary>
+        /// Create a new instance of ManagementFileNote.
+        /// </summary>
+        /// <param name="managementFile"></param>
+        /// <param name="note"></param>
+        /// <returns></returns>
+        public static Entity.PimsManagementFileNote CreateManagementFileNote(Entity.PimsManagementFile managementFile = null, Entity.PimsNote note = null)
+        {
+            note ??= EntityHelper.CreateNote("Test Note");
+            managementFile ??= EntityHelper.CreateManagementFile(1);
+
+            return new Entity.PimsManagementFileNote()
+            {
+                Note = note,
+                ManagementFile = managementFile,
+                AppCreateTimestamp = DateTime.Now,
+                AppCreateUserid = "admin",
+                AppCreateUserDirectory = string.Empty,
+                AppLastUpdateUserDirectory = string.Empty,
+                AppLastUpdateUserid = string.Empty,
+                DbCreateUserid = string.Empty,
+                DbLastUpdateUserid = string.Empty,
+                ConcurrencyControlNumber = 1,
+            };
+        }
+
+        /// <summary>
         /// Create a new instance of a Note.
         /// </summary>
         /// <param name="id"></param>

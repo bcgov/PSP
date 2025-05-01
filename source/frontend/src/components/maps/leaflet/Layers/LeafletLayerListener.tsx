@@ -17,12 +17,14 @@ export const LeafletLayerListener = ({ pane }: { pane: string }) => {
   const instance = featureGroupRef.current;
 
   useEffect(() => {
-    if (mapInstance) {
+    if (exists(mapInstance) && exists(instance)) {
       instance.addTo(mapInstance);
     }
 
     return () => {
-      mapInstance?.removeLayer(instance);
+      if (exists(mapInstance) && exists(instance)) {
+        mapInstance?.removeLayer(instance);
+      }
     };
   }, [instance, mapInstance]);
 
@@ -32,7 +34,7 @@ export const LeafletLayerListener = ({ pane }: { pane: string }) => {
       mapLayersToRefresh.forEach(configLayer => {
         const currentLayer = currentLayers.find(l => (l as any).options.key === configLayer.key);
 
-        if (currentLayer) {
+        if (exists(currentLayer) && exists(instance)) {
           instance.removeLayer(currentLayer);
           instance.addLayer(currentLayer);
         }
@@ -42,21 +44,19 @@ export const LeafletLayerListener = ({ pane }: { pane: string }) => {
   }, [instance, mapInstance, mapLayersToRefresh, setMapLayersToRefresh]);
 
   useEffect(() => {
-    if (mapInstance) {
+    if (exists(mapInstance) && exists(instance)) {
       const currentLayers = instance.getLayers().filter(exists);
       const mapLayers = flatten(activeLayers.map(l => l.nodes));
 
       mapLayers.forEach(configLayer => {
         const currentLayer = currentLayers.find(l => (l as any).options.key === configLayer.key);
         if (configLayer.on === true) {
-          if (!currentLayer) {
+          if (!exists(currentLayer)) {
             const newLayer = wmsHeaders(configLayer.url, { ...configLayer, pane });
             instance.addLayer(newLayer);
           }
-        } else {
-          if (currentLayer) {
-            instance.removeLayer(currentLayer);
-          }
+        } else if (exists(currentLayer)) {
+          instance.removeLayer(currentLayer);
         }
       });
     }

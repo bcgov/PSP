@@ -420,7 +420,7 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="pr-0 text-left col-4"
+            class="pr-0 text-left col-xl-4"
           >
             <label
               class="c4"
@@ -524,7 +524,7 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
                 <div />
               </div>
               <div
-                class="col-auto"
+                class="p-0 col-3"
               >
                 <button
                   class="c7 Button c9 c10 btn btn-primary"
@@ -619,6 +619,13 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-RE"
+                  value="RE"
+                >
+                  Conditional Right of Entry
+                </option>
+                <option
+                  class="option"
                   data-testid="select-option-CV"
                   value="CV"
                 >
@@ -682,6 +689,13 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-LUC"
+                  value="LUC"
+                >
+                  Land Use Contract
+                </option>
+                <option
+                  class="option"
                   data-testid="select-option-L"
                   value="L"
                 >
@@ -689,17 +703,17 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
-                  data-testid="select-option-LE"
-                  value="LE"
-                >
-                  Life Estate
-                </option>
-                <option
-                  class="option"
                   data-testid="select-option-LN"
                   value="LN"
                 >
                   Lien
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-LE"
+                  value="LE"
+                >
+                  Life Estate
                 </option>
                 <option
                   class="option"
@@ -717,20 +731,6 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
-                  data-testid="select-option-LUC"
-                  value="LUC"
-                >
-                  Land Use Contract
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-M"
-                  value="M"
-                >
-                  Mortgage
-                </option>
-                <option
-                  class="option"
                   data-testid="select-option-MC"
                   value="MC"
                 >
@@ -745,10 +745,24 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-M"
+                  value="M"
+                >
+                  Mortgage
+                </option>
+                <option
+                  class="option"
                   data-testid="select-option-NIP"
                   value="NIP"
                 >
                   Non-Interest Payee
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-OP"
+                  value="OP"
+                >
+                  Option to Purchase
                 </option>
                 <option
                   class="option"
@@ -759,10 +773,10 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
-                  data-testid="select-option-OP"
-                  value="OP"
+                  data-testid="select-option-PW"
+                  value="PW"
                 >
-                  Option to Purchase
+                  Party Wall Agreement
                 </option>
                 <option
                   class="option"
@@ -780,24 +794,10 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
-                  data-testid="select-option-PW"
-                  value="PW"
+                  data-testid="select-option-RT"
+                  value="RT"
                 >
-                  Party Wall Agreement
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-RA"
-                  value="RA"
-                >
-                  Right to Acquire SRW
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-RAE"
-                  value="RAE"
-                >
-                  Right to Acquire Easement
+                  Residential Tenancy
                 </option>
                 <option
                   class="option"
@@ -805,13 +805,6 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
                   value="RC"
                 >
                   Restrictive Covenant
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-RE"
-                  value="RE"
-                >
-                  Conditional Right of Entry
                 </option>
                 <option
                   class="option"
@@ -829,13 +822,6 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
-                  data-testid="select-option-RT"
-                  value="RT"
-                >
-                  Residential Tenancy
-                </option>
-                <option
-                  class="option"
                   data-testid="select-option-RW"
                   value="RW"
                 >
@@ -843,17 +829,17 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
-                  data-testid="select-option-SL"
-                  value="SL"
+                  data-testid="select-option-RAE"
+                  value="RAE"
                 >
-                  Sub Lease
+                  Right to Acquire Easement
                 </option>
                 <option
                   class="option"
-                  data-testid="select-option-SR"
-                  value="SR"
+                  data-testid="select-option-RA"
+                  value="RA"
                 >
-                  Sub Right of Purchase
+                  Right to Acquire SRW
                 </option>
                 <option
                   class="option"
@@ -871,6 +857,20 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-SL"
+                  value="SL"
+                >
+                  Sub Lease
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-SR"
+                  value="SR"
+                >
+                  Sub Right of Purchase
+                </option>
+                <option
+                  class="option"
                   data-testid="select-option-US"
                   value="US"
                 >
@@ -884,7 +884,7 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="pr-0 text-left col-4"
+            class="pr-0 text-left col-xl-4"
           >
             <label
               class="c4"
@@ -915,7 +915,7 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c5 text-left col-8"
+            class="c5 text-left col-xl-8"
           >
             <div
               class="table"
@@ -1052,7 +1052,7 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="pr-0 text-left col-4"
+            class="pr-0 text-left col-xl-4"
           >
             <label
               class="c4"
@@ -1156,7 +1156,7 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
                 <div />
               </div>
               <div
-                class="col-auto"
+                class="p-0 col-3"
               >
                 <button
                   class="c7 Button c9 c10 btn btn-primary"
@@ -1251,6 +1251,13 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-RE"
+                  value="RE"
+                >
+                  Conditional Right of Entry
+                </option>
+                <option
+                  class="option"
                   data-testid="select-option-CV"
                   value="CV"
                 >
@@ -1314,6 +1321,13 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-LUC"
+                  value="LUC"
+                >
+                  Land Use Contract
+                </option>
+                <option
+                  class="option"
                   data-testid="select-option-L"
                   value="L"
                 >
@@ -1321,17 +1335,17 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
-                  data-testid="select-option-LE"
-                  value="LE"
-                >
-                  Life Estate
-                </option>
-                <option
-                  class="option"
                   data-testid="select-option-LN"
                   value="LN"
                 >
                   Lien
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-LE"
+                  value="LE"
+                >
+                  Life Estate
                 </option>
                 <option
                   class="option"
@@ -1349,20 +1363,6 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
-                  data-testid="select-option-LUC"
-                  value="LUC"
-                >
-                  Land Use Contract
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-M"
-                  value="M"
-                >
-                  Mortgage
-                </option>
-                <option
-                  class="option"
                   data-testid="select-option-MC"
                   value="MC"
                 >
@@ -1377,10 +1377,24 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-M"
+                  value="M"
+                >
+                  Mortgage
+                </option>
+                <option
+                  class="option"
                   data-testid="select-option-NIP"
                   value="NIP"
                 >
                   Non-Interest Payee
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-OP"
+                  value="OP"
+                >
+                  Option to Purchase
                 </option>
                 <option
                   class="option"
@@ -1391,10 +1405,10 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
-                  data-testid="select-option-OP"
-                  value="OP"
+                  data-testid="select-option-PW"
+                  value="PW"
                 >
-                  Option to Purchase
+                  Party Wall Agreement
                 </option>
                 <option
                   class="option"
@@ -1412,24 +1426,10 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
-                  data-testid="select-option-PW"
-                  value="PW"
+                  data-testid="select-option-RT"
+                  value="RT"
                 >
-                  Party Wall Agreement
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-RA"
-                  value="RA"
-                >
-                  Right to Acquire SRW
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-RAE"
-                  value="RAE"
-                >
-                  Right to Acquire Easement
+                  Residential Tenancy
                 </option>
                 <option
                   class="option"
@@ -1437,13 +1437,6 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
                   value="RC"
                 >
                   Restrictive Covenant
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-RE"
-                  value="RE"
-                >
-                  Conditional Right of Entry
                 </option>
                 <option
                   class="option"
@@ -1461,13 +1454,6 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
-                  data-testid="select-option-RT"
-                  value="RT"
-                >
-                  Residential Tenancy
-                </option>
-                <option
-                  class="option"
                   data-testid="select-option-RW"
                   value="RW"
                 >
@@ -1475,17 +1461,17 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
-                  data-testid="select-option-SL"
-                  value="SL"
+                  data-testid="select-option-RAE"
+                  value="RAE"
                 >
-                  Sub Lease
+                  Right to Acquire Easement
                 </option>
                 <option
                   class="option"
-                  data-testid="select-option-SR"
-                  value="SR"
+                  data-testid="select-option-RA"
+                  value="RA"
                 >
-                  Sub Right of Purchase
+                  Right to Acquire SRW
                 </option>
                 <option
                   class="option"
@@ -1503,6 +1489,20 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-SL"
+                  value="SL"
+                >
+                  Sub Lease
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-SR"
+                  value="SR"
+                >
+                  Sub Right of Purchase
+                </option>
+                <option
+                  class="option"
                   data-testid="select-option-US"
                   value="US"
                 >
@@ -1516,7 +1516,7 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="pr-0 text-left col-4"
+            class="pr-0 text-left col-xl-4"
           >
             <label
               class="c4"
@@ -1547,7 +1547,7 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c5 text-left col-8"
+            class="c5 text-left col-xl-8"
           >
             <div
               class="table"

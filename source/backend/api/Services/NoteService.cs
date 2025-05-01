@@ -39,8 +39,8 @@ namespace Pims.Api.Services
 
         public NoteModel GetById(long id)
         {
-            this.Logger.LogInformation("Getting note with id {id}", id);
-            this.User.ThrowIfNotAuthorized(Permissions.NoteView);
+            Logger.LogInformation("Getting note with id {Id}", id);
+            User.ThrowIfNotAuthorized(Permissions.NoteView);
 
             var pimsEntity = _noteRepository.GetById(id);
             var noteModel = _mapper.Map<NoteModel>(pimsEntity);
@@ -50,9 +50,9 @@ namespace Pims.Api.Services
 
         public EntityNoteModel Add(NoteType type, EntityNoteModel model)
         {
-            this.Logger.LogInformation("Adding note with type {type} and model {model}", type, model);
+            Logger.LogInformation("Adding note with type {Type} and model {Model}", type, model);
             model.ThrowIfNull(nameof(model));
-            this.User.ThrowIfNotAuthorized(Permissions.NoteAdd);
+            User.ThrowIfNotAuthorized(Permissions.NoteAdd);
 
             EntityNoteModel result;
 
@@ -98,6 +98,14 @@ namespace Pims.Api.Services
 
                     result = _mapper.Map<EntityNoteModel>(createdResesearchEntity);
                     break;
+                case NoteType.Management_File:
+                    PimsManagementFileNote managementNoteEntity = _mapper.Map<PimsManagementFileNote>(model);
+
+                    PimsManagementFileNote createdManagementNote = _entityNoteRepository.Add<PimsManagementFileNote>(managementNoteEntity);
+                    _entityNoteRepository.CommitTransaction();
+
+                    result = _mapper.Map<EntityNoteModel>(createdManagementNote);
+                    break;
                 default:
                     throw new BadRequestException("Relationship type not valid.");
             }
@@ -109,8 +117,8 @@ namespace Pims.Api.Services
         {
             model.ThrowIfNull(nameof(model));
 
-            this.Logger.LogInformation("Updating note with id {id}", model.Id);
-            this.User.ThrowIfNotAuthorized(Permissions.NoteEdit);
+            Logger.LogInformation("Updating note with id {Id}", model.Id);
+            User.ThrowIfNotAuthorized(Permissions.NoteEdit);
 
             ValidateVersion(model.Id, model.RowVersion);
 
@@ -118,7 +126,7 @@ namespace Pims.Api.Services
             var newNote = _noteRepository.Update(pimsEntity);
             _noteRepository.CommitTransaction();
 
-            this.Logger.LogInformation("Note with id {id} update successfully", model.Id);
+            Logger.LogInformation("Note with id {Id} update successfully", model.Id);
             return GetById(newNote.Internal_Id);
         }
 
@@ -130,8 +138,8 @@ namespace Pims.Api.Services
         /// <param name="commitTransaction">Whether or not this transaction should be commited as part of this function.</param>
         public bool DeleteNote(NoteType type, long noteId, bool commitTransaction = true)
         {
-            this.Logger.LogInformation("Deleting note with type {type} and id {noteId}", type, noteId);
-            this.User.ThrowIfNotAuthorized(Permissions.NoteDelete);
+            Logger.LogInformation("Deleting note with type {Type} and id {NoteId}", type, noteId);
+            User.ThrowIfNotAuthorized(Permissions.NoteDelete);
             bool deleted = false;
 
             deleted = type switch
@@ -141,6 +149,7 @@ namespace Pims.Api.Services
                 NoteType.Project => _entityNoteRepository.DeleteProjectNotes(noteId),
                 NoteType.Lease_File => _entityNoteRepository.DeleteLeaseFileNotes(noteId),
                 NoteType.Research_File => _entityNoteRepository.DeleteResearchNotes(noteId),
+                NoteType.Management_File => _entityNoteRepository.DeleteManagementFileNotes(noteId),
                 _ => deleted
             };
 
@@ -160,8 +169,8 @@ namespace Pims.Api.Services
         /// <returns></returns>
         public IEnumerable<PimsNote> GetNotes(NoteType type, long entityId)
         {
-            this.Logger.LogInformation($"Getting all notes with type {type} and parent id {entityId}");
-            this.User.ThrowIfNotAuthorized(Permissions.NoteView);
+            Logger.LogInformation("Getting all notes with type {Type} and parent id {EntityId}", type, entityId);
+            User.ThrowIfNotAuthorized(Permissions.NoteView);
 
             List<PimsNote> notes = type switch
             {
@@ -170,6 +179,7 @@ namespace Pims.Api.Services
                 NoteType.Project => _entityNoteRepository.GetAllProjectNotesById(entityId).ToList(),
                 NoteType.Lease_File => _entityNoteRepository.GetAllLeaseNotesById(entityId).ToList(),
                 NoteType.Research_File => _entityNoteRepository.GetAllResearchNotesById(entityId).ToList(),
+                NoteType.Management_File => _entityNoteRepository.GetAllManagementNotesById(entityId).ToList(),
                 _ => new List<PimsNote>()
             };
 

@@ -2,8 +2,11 @@ import { createMemoryHistory } from 'history';
 
 import { EnumAcquisitionFileType } from '@/constants/acquisitionFileType';
 import Claims from '@/constants/claims';
+import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
+import { useExpropriationEventRepository } from '@/hooks/repositories/useExpropriationEventRepository';
+import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
 import { getMockExpropriationFile } from '@/mocks/index.mock';
-import { render, RenderOptions } from '@/utils/test-utils';
+import { act, getMockRepositoryObj, render, RenderOptions } from '@/utils/test-utils';
 
 import {
   ExpropriationTabContainerView,
@@ -12,11 +15,23 @@ import {
 
 const history = createMemoryHistory();
 
+vi.mock('@/hooks/repositories/useExpropriationEventRepository');
+const mockGetExpropriationEventsApi = getMockRepositoryObj([]);
+const mockAddExpropriationEventsApi = getMockRepositoryObj();
+const mockUpdateExpropriationEventsApi = getMockRepositoryObj();
+const mockDeleteExpropriationEventsApi = getMockRepositoryObj();
+
+vi.mock('@/hooks/repositories/useAcquisitionProvider');
+const mockGetAcquisitionOwnersApi = getMockRepositoryObj([]);
+
+vi.mock('@/hooks/repositories/useInterestHolderRepository');
+const mockGetAcquisitionInterestHoldersApi = getMockRepositoryObj([]);
+
 describe('Expropriation Tab Container View', () => {
   const setup = async (
     renderOptions: RenderOptions & { props?: Partial<IExpropriationTabContainerViewProps> } = {},
   ) => {
-    const utils = render(
+    const rendered = render(
       <ExpropriationTabContainerView
         {...renderOptions.props}
         loading={renderOptions.props?.loading ?? false}
@@ -33,10 +48,28 @@ describe('Expropriation Tab Container View', () => {
       },
     );
 
+    await act(async () => {});
+
     return {
-      ...utils,
+      ...rendered,
     };
   };
+
+  beforeEach(() => {
+    vi.mocked(useExpropriationEventRepository, { partial: true }).mockReturnValue({
+      getExpropriationEvents: mockGetExpropriationEventsApi,
+      addExpropriationEvent: mockAddExpropriationEventsApi,
+      updateExpropriationEvent: mockUpdateExpropriationEventsApi,
+      deleteExpropriationEvent: mockDeleteExpropriationEventsApi,
+    });
+
+    vi.mocked(useAcquisitionProvider, { partial: true }).mockReturnValue({
+      getAcquisitionOwners: mockGetAcquisitionOwnersApi,
+    });
+    vi.mocked(useInterestHolderRepository, { partial: true }).mockReturnValue({
+      getAcquisitionInterestHolders: mockGetAcquisitionInterestHoldersApi,
+    });
+  });
 
   afterEach(() => {
     vi.clearAllMocks();

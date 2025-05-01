@@ -320,7 +320,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           class="c2 no-gutters row"
         >
           <div
-            class="col-6"
+            class="col-xl-6 col-12"
           >
             <div
               class="row"
@@ -335,7 +335,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
                 </label>
               </div>
               <div
-                class="pl-1 text-left col-auto"
+                class="pl-1 text-left col"
                 data-testid="compensation-client"
               >
                 034
@@ -354,7 +354,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
                 </label>
               </div>
               <div
-                class="pl-1 text-left col-auto"
+                class="pl-1 text-left col"
                 data-testid="compensation-number"
               >
                 Draft
@@ -362,7 +362,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="col-6"
+            class="col-xl-6 col-12"
           >
             <div
               class="row"
@@ -513,7 +513,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="pr-0 text-left col-4"
+            class="pr-0 text-left col-xl-4"
           >
             <label
               class="c9"
@@ -532,7 +532,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="pr-0 text-left col-4"
+            class="pr-0 text-left col-xl-4"
           >
             <label
               class="c9"
@@ -548,7 +548,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="pr-0 text-left col-4"
+            class="pr-0 text-left col-xl-4"
           >
             <label
               class="c9"
@@ -565,7 +565,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="pr-0 text-left col-4"
+            class="pr-0 text-left col-xl-4"
           >
             <label
               class="c9"
@@ -581,7 +581,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="pr-0 text-left col-12"
+            class="pr-0 text-left col-xl-12"
           >
             <label
               class="c9"
@@ -648,7 +648,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="pr-0 text-left col-4"
+            class="pr-0 text-left col-xl-4"
           >
             <label
               class="c9"
@@ -721,7 +721,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="pr-0 text-left col-4"
+            class="pr-0 text-left col-xl-4"
           >
             <label
               class="c9"
@@ -740,7 +740,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="pr-0 text-left col-4"
+            class="pr-0 text-left col-xl-4"
           >
             <label
               class="c9"
@@ -758,7 +758,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="pr-0 text-left col-4"
+            class="pr-0 text-left col-xl-4"
           >
             <label
               class="c9"
@@ -776,7 +776,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="pr-0 text-left col-4"
+            class="pr-0 text-left col-xl-4"
           >
             <label
               class="c9"
@@ -794,7 +794,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="pr-0 text-left col-4"
+            class="pr-0 text-left col-xl-4"
           >
             <label
               class="c9"
@@ -810,7 +810,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="pr-0 text-left col-4"
+            class="pr-0 text-left col-xl-4"
           >
             <label
               class="c9"
@@ -826,7 +826,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="pr-0 text-left col-4"
+            class="pr-0 text-left col-xl-4"
           >
             <label
               class="c9"
@@ -842,7 +842,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="pr-0 text-left col-4"
+            class="pr-0 text-left col-xl-4"
           >
             <label
               class="c9"
@@ -904,7 +904,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="pr-0 text-left col-4"
+            class="pr-0 text-left col-xl-4"
           >
             <label
               class="c9"
@@ -1028,7 +1028,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="pr-0 text-left col-12"
+            class="pr-0 text-left col-xl-12"
           >
             <label
               class="c9"
