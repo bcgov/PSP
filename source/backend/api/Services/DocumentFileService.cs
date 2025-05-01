@@ -271,10 +271,10 @@ namespace Pims.Api.Services
 
             DeleteQueuedDocumentItem(currentDocument.DocumentId);
             _researchFileDocumentRepository.DeleteResearch(researchFileDocument);
-            DeleteDocument(currentDocument);
-
             _documentRepository.SaveChanges();
-            transaction.Commit();
+
+            DeleteDocument(currentDocument);
+            await transaction.CommitAsync();
 
             return result;
         }
@@ -298,10 +298,10 @@ namespace Pims.Api.Services
 
             DeleteQueuedDocumentItem(currentDocument.DocumentId);
             _projectRepository.DeleteProjectDocument(projectDocument.ProjectDocumentId);
-            DeleteDocument(currentDocument);
-
             _documentRepository.SaveChanges();
-            transaction.Commit();
+
+            DeleteDocument(currentDocument);
+            await transaction.CommitAsync();
 
             return result;
         }
@@ -326,11 +326,10 @@ namespace Pims.Api.Services
             DeleteQueuedDocumentItem(acquisitionFileDocument.DocumentId);
 
             _acquisitionFileDocumentRepository.DeleteAcquisition(acquisitionFileDocument);
+            _documentRepository.SaveChanges();
 
             DeleteDocument(currentDocument);
-
-            _documentRepository.SaveChanges();
-            transaction.Commit();
+            await transaction.CommitAsync();
 
             return result;
         }
@@ -355,11 +354,10 @@ namespace Pims.Api.Services
 
             DeleteQueuedDocumentItem(currentDocument.DocumentId);
             _leaseRepository.DeleteLeaseDocument(leaseDocument.LeaseDocumentId);
+            _documentRepository.SaveChanges();
 
             DeleteDocument(currentDocument);
-
-            _documentRepository.SaveChanges();
-            transaction.Commit();
+            await transaction.CommitAsync();
 
             return result;
         }
@@ -384,10 +382,10 @@ namespace Pims.Api.Services
             DeleteQueuedDocumentItem(currentDocument.DocumentId);
 
             _propertyActivityDocumentRepository.DeletePropertyActivityDocument(propertyActivityDocument);
-            DeleteDocument(currentDocument);
-
             _documentRepository.SaveChanges();
-            transaction.Commit();
+
+            DeleteDocument(currentDocument);
+            await transaction.CommitAsync();
 
             return result;
         }
@@ -440,11 +438,10 @@ namespace Pims.Api.Services
             DeleteQueuedDocumentItem(currentDocument.DocumentId);
 
             _dispositionFileDocumentRepository.DeleteDispositionDocument(dispositionFileDocument);
+            _documentRepository.SaveChanges();
 
             DeleteDocument(currentDocument);
-
-            _documentRepository.SaveChanges();
-            transaction.Commit();
+            await transaction.CommitAsync();
 
             return result;
         }
