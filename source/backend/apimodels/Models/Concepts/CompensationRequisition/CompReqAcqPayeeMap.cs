@@ -28,6 +28,14 @@ namespace Pims.Api.Models.Concepts.CompensationRequisition
                 .Map(dest => dest.InterestHolderId, src => src.InterestHolderId)
                 .Map(dest => dest.LegacyPayee, src => src.LegacyPayee)
                 .Inherits<BaseConcurrentModel, Entity.IBaseEntity>();
+
+            config.NewConfig<Entity.PimsCompReqAcqPayeeHist, Entity.PimsCompReqAcqPayee>()
+                .Map(dest => dest.CompReqAcqPayeeId, src => src.CompReqAcqPayeeId)
+                .Map(dest => dest.CompensationRequisitionId, src => src.CompensationRequisitionId)
+                .Map(dest => dest.AcquisitionFileTeamId, src => src.AcquisitionFileTeamId)
+                .Map(dest => dest.AcquisitionOwnerId, src => src.AcquisitionOwnerId)
+                .Map(dest => dest.InterestHolderId, src => src.InterestHolderId)
+                .Map(dest => dest.LegacyPayee, src => src.LegacyPayee);
         }
     }
 }

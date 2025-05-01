@@ -2,13 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
+using Pims.Core.Security;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
-using Pims.Core.Security;
 
 namespace Pims.Dal.Repositories
 {
@@ -17,6 +18,8 @@ namespace Pims.Dal.Repositories
     /// </summary>
     public class PersonRepository : BaseRepository<PimsPerson>, IPersonRepository
     {
+        private readonly IMapper _mapper;
+
         #region Constructors
 
         /// <summary>
@@ -25,9 +28,10 @@ namespace Pims.Dal.Repositories
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public PersonRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<PersonRepository> logger)
+        public PersonRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<PersonRepository> logger, IMapper mapper)
             : base(dbContext, user, logger)
         {
+            _mapper = mapper;
         }
         #endregion
 
@@ -137,6 +141,19 @@ namespace Pims.Dal.Repositories
                 canDeleteGrandchild);
 
             return existingPerson;
+        }
+
+        public PimsPerson GetPersonAtTime(long personId, DateTime time)
+        {
+            var personHist = Context
+                .PimsPersonHists.AsNoTracking()
+                .Where(pacr => pacr.PersonId == personId)
+                .Where(pacr => pacr.EffectiveDateHist <= time)
+                .GroupBy(pacr => pacr.PersonId)
+                .Select(gpacr => gpacr.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault())
+                .FirstOrDefault();
+
+            return _mapper.Map<PimsPerson>(personHist);
         }
 
         #endregion

@@ -20,6 +20,11 @@ namespace Pims.Api.Models.Concepts.CompensationRequisition
                 .Map(dest => dest.CompensationRequisitionId, src => src.CompensationRequisitionId)
                 .Map(dest => dest.LeaseStakeholderId, src => src.LeaseStakeholderId)
                 .Inherits<BaseAuditModel, Entity.IBaseAppEntity>();
+
+            config.NewConfig<Entity.PimsCompReqLeasePayeeHist,  Entity.PimsCompReqLeasePayee>()
+                .Map(dest => dest.CompReqLeasePayeeId, src => src.CompReqLeasePayeeId)
+                .Map(dest => dest.CompensationRequisitionId, src => src.CompensationRequisitionId)
+                .Map(dest => dest.LeaseStakeholderId, src => src.LeaseStakeholderId);
         }
     }
 }

@@ -47,6 +47,7 @@ vi.mocked(useApiLeases).mockReturnValue({
   getLeaseStakeholderTypes: vi.fn(),
   putLeaseProperties: vi.fn(),
   getAllLeaseFileTeamMembers: vi.fn(),
+  getLeaseAtTime: vi.fn(),
 });
 
 // render component under test
