@@ -276,6 +276,12 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetCompensationRequisionAtTime([FromRoute] long id, [FromQuery] DateTime time)
         {
+            _logger.LogInformation(
+               "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+               nameof(CompensationRequisitionController),
+               nameof(GetCompensationRequisionAtTime),
+               User.GetUsername(),
+               DateTime.Now);
 
             var histCompReq = _compensationRequisitionService.GetCompensationRequisitionAtTime(id, time);
 
@@ -290,6 +296,13 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetAcquisitionCompensationRequisitionPropertiesAtTime([FromRoute] long id, [FromQuery] DateTime time)
         {
+            _logger.LogInformation(
+               "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+               nameof(CompensationRequisitionController),
+               nameof(GetAcquisitionCompensationRequisitionPropertiesAtTime),
+               User.GetUsername(),
+               DateTime.Now);
+
             var acqCompReqProperties = _compensationRequisitionService.GetCompensationRequisitionAcqPropertiesAtTime(id, time);
 
             return new JsonResult(_mapper.Map<IEnumerable<AcquisitionFilePropertyModel>>(acqCompReqProperties));
@@ -303,6 +316,13 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetLeaseCompensationRequisitionPropertiesAtTime([FromRoute] long id, [FromQuery] DateTime time)
         {
+            _logger.LogInformation(
+               "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+               nameof(CompensationRequisitionController),
+               nameof(GetLeaseCompensationRequisitionPropertiesAtTime),
+               User.GetUsername(),
+               DateTime.Now);
+
             var leaseCompReqProperties = _compensationRequisitionService.GetCompensationRequisitionLeasePropertiesAtTime(id, time);
 
             return new JsonResult(_mapper.Map<IEnumerable<PropertyLeaseModel>>(leaseCompReqProperties));
@@ -316,6 +336,13 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetCompensationRequisitionAcquisitionPayees([FromRoute] long id, [FromQuery] DateTime time)
         {
+            _logger.LogInformation(
+             "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+             nameof(CompensationRequisitionController),
+             nameof(GetCompensationRequisitionAcquisitionPayees),
+             User.GetUsername(),
+             DateTime.Now);
+
             var acquisitionPayees = _compensationRequisitionService.GetCompensationRequisitionAcquisitionPayeesAtTime(id, time);
 
             return new JsonResult(_mapper.Map<IEnumerable<CompReqAcqPayeeModel>>(acquisitionPayees));
@@ -329,6 +356,13 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetCompensationRequisitionLeasePayees([FromRoute] long id, [FromQuery] DateTime time)
         {
+            _logger.LogInformation(
+              "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+              nameof(CompensationRequisitionController),
+              nameof(GetCompensationRequisitionLeasePayees),
+              User.GetUsername(),
+              DateTime.Now);
+
             var leasePayees = _compensationRequisitionService.GetCompensationRequisitionLeasePayeesAtTime(id, time);
 
             return new JsonResult(_mapper.Map<IEnumerable<CompReqLeasePayeeModel>>(leasePayees));

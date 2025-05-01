@@ -48,6 +48,7 @@ export const CompensationRequisitionHistoricalDetailContainer: React.FunctionCom
 }) => {
   const onGenerate = useGenerateH120();
 
+  // It is possible that there is a small discrepancy between the time the entities get written and their historical counterparts. Adding one second gives enough buffer to correct this.
   const adjustedTime = useMemo(() => {
     const momentTime = moment(almostTime);
     return momentTime.add(1, 'seconds').toISOString();

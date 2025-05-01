@@ -138,7 +138,7 @@ export const useLeaseRepository = () => {
     ),
     requestName: 'getLeaseAtTime',
     onSuccess: useAxiosSuccessHandler(),
-    onError: useAxiosErrorHandler('Failed to retrieve Lease historical informatino'),
+    onError: useAxiosErrorHandler('Failed to retrieve Lease historical information'),
   });
 
   return useMemo(

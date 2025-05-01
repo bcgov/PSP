@@ -244,6 +244,13 @@ namespace Pims.Api.Areas.Lease.Controllers
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetLeaseAtTime([FromRoute] long id, [FromQuery] DateTime time)
         {
+            _logger.LogInformation(
+             "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+             nameof(LeaseController),
+             nameof(GetLeaseAtTime),
+             User.GetUsername(),
+             DateTime.Now);
+
             var pimsLease = _leaseRepository.GetLeaseAtTime(id, time);
             return new JsonResult(_mapper.Map<LeaseModel>(pimsLease));
         }

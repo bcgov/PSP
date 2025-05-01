@@ -60,7 +60,6 @@ namespace Pims.Api.Models.Concepts.Organization
                 .Map(dest => dest.OrganizationIdentifier, src => src.OrganizationIdentifier)
                 .Map(dest => dest.OrganizationName, src => src.OrganizationName)
                 .Map(dest => dest.OrganizationAlias, src => src.OrganizationAlias)
-                .Map(dest => dest.OrganizationAlias, src => src.OrganizationAlias)
                 .Map(dest => dest.IncorporationNumber, src => src.IncorporationNumber)
                 .Map(dest => dest.Website, src => src.Website)
                 .Map(dest => dest.Comment, src => src.Comment)

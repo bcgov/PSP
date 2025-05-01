@@ -1,16 +1,18 @@
+using System;
 using System.Collections.Generic;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Pims.Api.Models.Concepts.AcquisitionFile;
-using Pims.Core.Api.Policies;
+using Pims.Api.Models.Concepts.Product;
 using Pims.Api.Services;
+using Pims.Core.Api.Policies;
+using Pims.Core.Extensions;
 using Pims.Core.Json;
 using Pims.Core.Security;
-using Swashbuckle.AspNetCore.Annotations;
-using Pims.Api.Models.Concepts.Product;
-using System;
 using Pims.Dal.Repositories;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Areas.Projects.Controllers
 {
@@ -29,6 +31,7 @@ namespace Pims.Api.Areas.Projects.Controllers
         private readonly IProjectService _projectService;
         private readonly IProductRepository _productRepository;
         private readonly IMapper _mapper;
+        private readonly ILogger<ProductController> _logger;
         #endregion
 
         /// <summary>
@@ -37,12 +40,14 @@ namespace Pims.Api.Areas.Projects.Controllers
         /// <param name="projectService"></param>
         /// <param name="productRepository"></param>
         /// <param name="mapper"></param>
+        /// <param name="logger"></param>
         ///
-        public ProductController(IProjectService projectService, IProductRepository productRepository, IMapper mapper)
+        public ProductController(IProjectService projectService, IProductRepository productRepository, IMapper mapper, ILogger<ProductController> logger)
         {
             _projectService = projectService;
             _productRepository = productRepository;
             _mapper = mapper;
+            _logger = logger;
         }
 
         /// <summary>
@@ -72,6 +77,13 @@ namespace Pims.Api.Areas.Projects.Controllers
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetProductAtTime([FromRoute] long id, [FromQuery] DateTime time)
         {
+            _logger.LogInformation(
+             "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+             nameof(ProductController),
+             nameof(GetProductAtTime),
+             User.GetUsername(),
+             DateTime.Now);
+
             var pimsProduct = _productRepository.GetProductAtTime(id, time);
             return new JsonResult(_mapper.Map<ProductModel>(pimsProduct));
         }

@@ -214,9 +214,9 @@ namespace Pims.Api.Services
 
             foreach (var payee in acqPayees)
             {
-                if (payee.InterestHolder != null)
+                var interestHolder = payee.InterestHolder;
+                if (interestHolder != null)
                 {
-                    var interestHolder = payee.InterestHolder;
                     if (interestHolder.OrganizationId.HasValue)
                     {
                         var organization = _organizationRepository.GetOrganizationAtTime(interestHolder.OrganizationId.Value, time);
@@ -231,9 +231,9 @@ namespace Pims.Api.Services
                     }
                 }
 
-                if (payee.AcquisitionFileTeam != null)
+                var acqTeam = payee.AcquisitionFileTeam;
+                if (acqTeam != null)
                 {
-                    var acqTeam = payee.AcquisitionFileTeam;
                     if (acqTeam.OrganizationId.HasValue)
                     {
                         var organization = _organizationRepository.GetOrganizationAtTime(acqTeam.OrganizationId.Value, time);
@@ -258,9 +258,9 @@ namespace Pims.Api.Services
 
             foreach (var payee in leasePayees)
             {
-                if (payee.LeaseStakeholder != null)
+                var stakeholder = payee.LeaseStakeholder;
+                if (stakeholder != null)
                 {
-                    var stakeholder = payee.LeaseStakeholder;
                     if (stakeholder.OrganizationId.HasValue)
                     {
                         var organization = _organizationRepository.GetOrganizationAtTime(stakeholder.OrganizationId.Value, time);
@@ -275,9 +275,9 @@ namespace Pims.Api.Services
                     }
                 }
 
-                if (payee.LeaseLicenseTeam != null)
+                var leaseTeam = payee.LeaseLicenseTeam;
+                if (leaseTeam != null)
                 {
-                    var leaseTeam = payee.LeaseLicenseTeam;
                     if (leaseTeam.OrganizationId.HasValue)
                     {
                         var organization = _organizationRepository.GetOrganizationAtTime(leaseTeam.OrganizationId.Value, time);
@@ -287,7 +287,6 @@ namespace Pims.Api.Services
                     if (leaseTeam.PersonId.HasValue)
                     {
                         var person = _personRepository.GetPersonAtTime(leaseTeam.PersonId.Value, time);
-
                         leaseTeam.Person = person;
                     }
                 }

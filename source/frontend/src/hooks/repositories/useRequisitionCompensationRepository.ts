@@ -186,7 +186,7 @@ export const useCompensationRequisitionRepository = () => {
     ),
     requestName: 'getCompensationRequiistionAtTime',
     onSuccess: useAxiosSuccessHandler(),
-    onError: useAxiosErrorHandler('Faied to get compensation requisition finalized'),
+    onError: useAxiosErrorHandler('Failed to get historical compensation requisition'),
     invoke: false,
   });
 
@@ -204,7 +204,7 @@ export const useCompensationRequisitionRepository = () => {
     requestName: 'getCompensationRequisitionAcqPropertiesAtTime',
     onSuccess: useAxiosSuccessHandler(),
     onError: useAxiosErrorHandler(
-      'Failed to get compensation requisition properties for the given Acquisition file. Refresh the page to try again.',
+      'Failed to get historical compensation requisition properties for the given Acquisition file. Refresh the page to try again.',
     ),
   });
 

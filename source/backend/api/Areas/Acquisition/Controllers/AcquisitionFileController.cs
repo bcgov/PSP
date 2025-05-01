@@ -295,12 +295,6 @@ namespace Pims.Api.Areas.Acquisition.Controllers
             return new JsonResult(_mapper.Map<List<AcquisitionFileModel>>(subFiles));
         }
 
-        /// <summary>
-        /// Gets a collection of documents for the specified type and owner id.
-        /// </summary>
-        /// <param name="id">Used to identify document type.</param>
-        /// <param name="time">Used to identify document's parent entity.</param>
-        /// <returns></returns>
         [HttpGet("{id:long}/historical")]
         [Produces("application/json")]
         [HasPermission(Permissions.AcquisitionFileView)]
@@ -309,6 +303,13 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetAcquisitionAtTime([FromRoute] long id, [FromQuery] DateTime time)
         {
+            _logger.LogInformation(
+               "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+               nameof(AcquisitionFileController),
+               nameof(GetAcquisitionAtTime),
+               User.GetUsername(),
+               DateTime.Now);
+
             var pimsAcquisition = _acquisitionRepository.GetAcquisitionAtTime(id, time);
             return new JsonResult(_mapper.Map<AcquisitionFileModel>(pimsAcquisition));
         }
