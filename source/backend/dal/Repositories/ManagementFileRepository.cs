@@ -66,6 +66,34 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
+        /// Retrieves the management file with the specified name.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public PimsManagementFile GetByName(string name)
+        {
+            using var scope = Logger.QueryScope();
+
+            return this.Context.PimsManagementFiles.AsNoTracking()
+                .Include(d => d.ManagementFileStatusTypeCodeNavigation)
+                .Include(d => d.Project)
+                .Include(d => d.Product)
+                .Include(d => d.AcquisitionFundingTypeCodeNavigation)
+                .Include(d => d.ManagementFileProgramTypeCodeNavigation)
+                .Include(d => d.ManagementFileStatusTypeCodeNavigation)
+                .Include(d => d.PimsManagementFileProperties)
+                .Include(d => d.PimsManagementFileTeams)
+                    .ThenInclude(d => d.Organization)
+                .Include(d => d.PimsManagementFileTeams)
+                    .ThenInclude(d => d.Person)
+                .Include(d => d.PimsManagementFileTeams)
+                    .ThenInclude(d => d.PrimaryContact)
+                .Include(d => d.PimsManagementFileTeams)
+                    .ThenInclude(d => d.ManagementFileProfileTypeCodeNavigation)
+                .FirstOrDefault(d => d.FileName == name);
+        }
+
+        /// <summary>
         /// Add the new Management File to Context.
         /// </summary>
         /// <param name="managementFile"></param>
