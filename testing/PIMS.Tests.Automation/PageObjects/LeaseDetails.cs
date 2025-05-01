@@ -608,6 +608,15 @@ namespace PIMS.Tests.Automation.PageObjects
 
                     Wait();
                 }
+                else if (sharedModals.ModalHeader() == "Confirm status change")
+                {
+                    Assert.Equal("Confirm status change", sharedModals.ModalHeader());
+                    Assert.Contains("If you save it, only the administrator can turn it back on. You will still see it in the management table.", sharedModals.ConfirmationModalParagraph1());
+                    Assert.Equal("Do you want to acknowledge and proceed?", sharedModals.ConfirmationModalParagraph2());
+                    sharedModals.ModalClickOKBttn();
+
+                    Wait();
+                }
             }
         }
 

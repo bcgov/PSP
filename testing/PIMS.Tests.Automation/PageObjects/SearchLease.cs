@@ -19,7 +19,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchLicensePINInput = By.Id("input-pin");
         private By searchLicenseAddressInput = By.Id("input-address");
         private By searchLicenseHistoricalFile = By.Id("input-historical");
-        private By searchLicenseProgramSelect = By.Id("program-selector_input");
+        private By searchLicenseProgramSelect = By.Id("properties-selector_input");
         private By searchLicenseStatusInput = By.Id("status-selector_input");
         private By searchLicenseStatusOptions = By.XPath("//input[@id='status-selector_input']/parent::div/following-sibling::div/ul[@class='optionContainer']");
         private By searchLicenseActiveStatusDeleteBttn = By.CssSelector("div[class='search-wrapper searchWrapper '] span i");

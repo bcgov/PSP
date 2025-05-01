@@ -70,7 +70,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //File Confirmation Modal Elements
         private readonly By propertiesFileConfirmationModal = By.CssSelector("div[class='modal-content']");
-        //private By propertiesFileMOTIInventoryModal = By.XPath("//div[@role='dialog'][2]/div/div/div[contains(text(),'You have added one or more properties to the disposition file that are not in the MoTI Inventory. Do you want to proceed?')]");
 
         //Toast Element
         private readonly By duplicatePropToast = By.CssSelector("div[id='duplicate-property'] div[class='Toastify__toast-body']");
@@ -162,6 +161,7 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(searchByLegalDescriptionInput).SendKeys(legalDescription);
 
             FocusAndClick(searchByButton);
+            Wait(5000);
         }
 
         public void AddNameSelectedProperty(string name, int index)

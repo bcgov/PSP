@@ -61,8 +61,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Create Activity Elements
         //Activity Details
-        private readonly By managementActCloseTrayBttn = By.CssSelector("button[id='close-tray']");
-        private readonly By managementActEditButton = By.CssSelector("button[title='Edit property activity']");
+        private readonly By managementActCloseTrayBttn = By.CssSelector("*[id='close-tray']");
+        private readonly By managementActEditButton = By.CssSelector("button[title='Edit Property Activity']");
         private readonly By managementActivityDetailsTitle = By.XPath("//div[contains(text(),'Activity Details')]");
         private readonly By managementActTypeLabel = By.XPath("//label[contains(text(),'Activity type')]");
         private readonly By managementActTypeInput = By.Id("input-activityTypeCode");

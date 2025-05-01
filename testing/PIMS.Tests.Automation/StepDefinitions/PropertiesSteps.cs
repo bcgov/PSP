@@ -245,7 +245,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Look for a non-inventory property
             PopulateSearchProperty(rowNumber);
-            searchProperties.SearchPropertyByAddressMap(searchProperty.Address);
+            searchProperties.SearchPropertyByPID(searchProperty.PID);
 
             //Validate that the result gives only one pin
             Assert.True(searchProperties.PropertiesMapFoundCount() == 1);

@@ -21,6 +21,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By generalToastBody = By.CssSelector("div[class='Toastify__toast-body']");
         private By generalConfirmationModalBody1 = By.CssSelector("div[class='modal-body'] div");
         private By generalConfirmationModalBody2 = By.CssSelector("div[class='modal-body'] strong");
+        private By generalConfirmationModalParagraph1 = By.CssSelector("div[class='modal-body'] p:first-child");
+        private By generalConfirmationModalParagraph2 = By.CssSelector("div[class='modal-body'] p:last-child");
 
         public SharedModals(IWebDriver webDriver) : base(webDriver)
         {}
@@ -41,12 +43,6 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait();
             webDriver.FindElement(generalModalOkBttn).Click();
-        }
-
-        public void ForcedModalClickOKBttn()
-        {
-            Wait();
-            FocusAndClick(generalModalOkBttn);
         }
 
         public void ModalClickCancelBttn()
@@ -91,6 +87,18 @@ namespace PIMS.Tests.Automation.PageObjects
             return (webDriver.FindElement(generalConfirmationModalBody2).Text);
         }
 
+        public string ConfirmationModalParagraph1()
+        {
+            WaitUntilVisible(generalConfirmationModalParagraph1);
+            return (webDriver.FindElement(generalConfirmationModalParagraph1).Text);
+        }
+
+        public string ConfirmationModalParagraph2()
+        {
+            WaitUntilVisible(generalConfirmationModalParagraph2);
+            return (webDriver.FindElement(generalConfirmationModalParagraph2).Text);
+        }
+
         public void VerifyButtonsPresence()
         {
             AssertTrueIsDisplayed(generalModalOkBttn);
@@ -110,15 +118,6 @@ namespace PIMS.Tests.Automation.PageObjects
                 Assert.Contains("If you choose to cancel now, your changes will not be saved.", ModalContent());
                 Assert.Contains("Do you want to proceed?", ModalContent());
                 ModalClickOKBttn();
-            }
-        }
-
-        public void SiteMinderModal()
-        {
-            Wait();
-            if (webDriver.FindElements(generalModal).Count > 0 && ModalHeader() == "SiteMinder Session Expired")
-            {
-                webDriver.FindElement(generalModalCancelBttn).Click();
             }
         }
     }
