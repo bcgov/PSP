@@ -75,7 +75,7 @@ const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = () =>
         <CompensationRequisitionRouter setShowActionBar={setShowActionBar} />
         <PropertyActivityRouter setShowActionBar={setShowActionBar} />
       </SideBarContextProvider>
-      {!(showActionBar || mapSideBarViewState?.isFullWidth) && (
+      {!showActionBar && (
         <FilterProvider>
           <MapView />
         </FilterProvider>
