@@ -38,7 +38,6 @@ const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = () =>
     advancedSearchCriteria,
     isMapVisible,
     isLoading,
-    mapSideBarViewState,
   } = useMapStateMachine();
 
   const { getMatchingProperties } = usePimsPropertyRepository();
