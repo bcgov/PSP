@@ -81,7 +81,9 @@ const StyledLink = styled(Nav.Link)`
   }
 
   &.active {
-    svg {
+    svg,
+    svg g,
+    svg g path {
       fill: ${({ theme }) => theme.css.focusNavbarActionColor};
     }
   }

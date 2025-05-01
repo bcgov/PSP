@@ -21,6 +21,7 @@ export interface KeycloakTokenParsed extends BaseKeycloakTokenParsed {
  * IUserInfo interface, represents the userinfo provided by keycloak.
  */
 export interface IUserInfo {
+  sub: string;
   displayName?: string;
   businessIdentifierValue: string;
   name?: string;

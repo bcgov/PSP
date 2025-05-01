@@ -4,7 +4,7 @@ import { assign, createMachine, raise, send } from 'xstate';
 
 import { defaultBounds } from '@/components/maps/constants';
 import { PropertyFilterFormModel } from '@/components/maps/leaflet/Control/AdvancedFilter/models';
-import { PIMS_PROPERTY_BOUNDARY_KEY } from '@/components/maps/leaflet/Control/LayersControl/data';
+import { PIMS_PROPERTY_BOUNDARY_KEY } from '@/components/maps/leaflet/Control/LayersControl/DefaultLayers';
 import { defaultPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
 
 import { emptyFeatureData } from '../models';
@@ -564,7 +564,7 @@ export const mapMachine = createMachine<MachineContext>({
         },
         PREPARE_FOR_CREATION: {
           actions: assign({
-            selectedFeatureDataset: (context: MachineContext) => context.mapLocationFeatureDataset,
+            selectedFeatureDataset: (_, event: any) => event.selectedFeature,
           }),
         },
         DEFAULT_MAP_LAYERS: {

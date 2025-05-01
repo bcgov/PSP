@@ -225,6 +225,7 @@ exports[`Disposition filter > matches snapshot 1`] = `
 
 .c2:not(:first-child) {
   padding-left: 0;
+  padding-right: 0;
 }
 
 .c2:not(:first-child) .form-control {
@@ -241,6 +242,10 @@ exports[`Disposition filter > matches snapshot 1`] = `
   border-radius: 0.5rem;
 }
 
+.c0 .form-select {
+  min-width: 15rem;
+}
+
 .c0 .input-group: {
   min-width: 100%;
 }
@@ -255,6 +260,7 @@ exports[`Disposition filter > matches snapshot 1`] = `
 
 .c4 {
   border-left: 0.2rem solid white;
+  min-width: 2.5rem;
 }
 
 <form
@@ -281,7 +287,7 @@ exports[`Disposition filter > matches snapshot 1`] = `
             class="col"
           >
             <div
-              class="flex-nowrap input-group row"
+              class="flex-nowrap input-group row no-gutters"
             >
               <div
                 class="c1 col-auto"
@@ -386,7 +392,7 @@ exports[`Disposition filter > matches snapshot 1`] = `
             </div>
           </div>
           <div
-            class="col-xl-4"
+            class="col-xl-5"
           >
             <div
               class="form-group"

@@ -3,7 +3,10 @@ import noop from 'lodash/noop';
 import React from 'react';
 
 import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
-import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
+import {
+  LocationFeatureDataset,
+  SelectedFeatureDataset,
+} from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { FormLeaseProperty, getDefaultFormLease, LeaseFormModel } from '@/features/leases/models';
 import { getMockPolygon } from '@/mocks/geometries.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
@@ -149,30 +152,34 @@ describe('LeasePropertySelector component', () => {
     testMockMachine.mapLocationFeatureDataset = {
       location: { lng: -120.69195885, lat: 50.25163372 },
       fileLocation: null,
-      pimsFeature: {
-        type: 'Feature',
-        properties: { ...EmptyPropertyLocation, PROPERTY_ID: 1 },
-        geometry: getMockPolygon(),
-      },
-      parcelFeature: {
-        type: 'Feature',
-        properties: { ...emptyPmbcParcel },
-        geometry: getMockPolygon(),
-      },
+      pimsFeatures: [
+        {
+          type: 'Feature',
+          properties: { ...EmptyPropertyLocation, PROPERTY_ID: 1, PID: 1 },
+          geometry: getMockPolygon(),
+        },
+      ],
+      parcelFeatures: [
+        {
+          type: 'Feature',
+          properties: { ...emptyPmbcParcel, PID_NUMBER: 1 },
+          geometry: getMockPolygon(),
+        },
+      ],
       regionFeature: {
         type: 'Feature',
         properties: { ...emptyRegion, REGION_NUMBER: 1, REGION_NAME: 'South Coast Region' },
         geometry: getMockPolygon(),
       },
       districtFeature: null,
-      municipalityFeature: null,
+      municipalityFeatures: null,
       highwayFeatures: null,
       selectingComponentId: null,
-      crownLandLeasesFeature: null,
-      crownLandLicensesFeature: null,
-      crownLandTenuresFeature: null,
-      crownLandInventoryFeature: null,
-      crownLandInclusionsFeature: null,
+      crownLandLeasesFeatures: null,
+      crownLandLicensesFeatures: null,
+      crownLandTenuresFeatures: null,
+      crownLandInventoryFeatures: null,
+      crownLandInclusionsFeatures: null,
     };
 
     // verify that upon map click the lease region is auto-selected based on the property region
@@ -200,26 +207,28 @@ describe('LeasePropertySelector component', () => {
     testMockMachine.mapLocationFeatureDataset = {
       location: { lng: -120.69195885, lat: 50.25163372 },
       fileLocation: null,
-      pimsFeature: null, // no PIMS property was found - meaning this property will be added to the inventory.
-      parcelFeature: {
-        type: 'Feature',
-        properties: { ...emptyPmbcParcel },
-        geometry: getMockPolygon(),
-      },
+      pimsFeatures: null, // no PIMS property was found - meaning this property will be added to the inventory.
+      parcelFeatures: [
+        {
+          type: 'Feature',
+          properties: { ...emptyPmbcParcel },
+          geometry: getMockPolygon(),
+        },
+      ],
       regionFeature: {
         type: 'Feature',
         properties: { ...emptyRegion, REGION_NUMBER: 1, REGION_NAME: 'South Coast Region' },
         geometry: getMockPolygon(),
       },
       districtFeature: null,
-      municipalityFeature: null,
+      municipalityFeatures: null,
       highwayFeatures: null,
       selectingComponentId: null,
-      crownLandLeasesFeature: null,
-      crownLandLicensesFeature: null,
-      crownLandTenuresFeature: null,
-      crownLandInventoryFeature: null,
-      crownLandInclusionsFeature: null,
+      crownLandLeasesFeatures: null,
+      crownLandLicensesFeatures: null,
+      crownLandTenuresFeatures: null,
+      crownLandInventoryFeatures: null,
+      crownLandInclusionsFeatures: null,
     };
 
     // verify that upon map click the user gets a confirmation popup to add the property to inventory
@@ -250,7 +259,7 @@ describe('LeasePropertySelector component', () => {
       // provide fake logic for map marker repositioning
       startReposition: vi.fn<
         [
-          repositioningFeatureDataset: LocationFeatureDataset,
+          repositioningFeatureDataset: SelectedFeatureDataset,
           index: number,
           selectingComponentId?: string,
         ],
@@ -285,30 +294,34 @@ describe('LeasePropertySelector component', () => {
     testMockMachine.mapLocationFeatureDataset = {
       location: { lng: -120, lat: 50 }, // new lat/lng for the marker
       fileLocation: null,
-      pimsFeature: {
-        type: 'Feature',
-        properties: { ...EmptyPropertyLocation, PROPERTY_ID: 1 },
-        geometry: getMockPolygon(),
-      },
-      parcelFeature: {
-        type: 'Feature',
-        properties: { ...emptyPmbcParcel },
-        geometry: getMockPolygon(),
-      },
+      pimsFeatures: [
+        {
+          type: 'Feature',
+          properties: { ...EmptyPropertyLocation, PROPERTY_ID: 1 },
+          geometry: getMockPolygon(),
+        },
+      ],
+      parcelFeatures: [
+        {
+          type: 'Feature',
+          properties: { ...emptyPmbcParcel },
+          geometry: getMockPolygon(),
+        },
+      ],
       regionFeature: {
         type: 'Feature',
         properties: { ...emptyRegion, REGION_NUMBER: 1, REGION_NAME: 'South Coast Region' },
         geometry: getMockPolygon(),
       },
       districtFeature: null,
-      municipalityFeature: null,
+      municipalityFeatures: null,
       highwayFeatures: null,
       selectingComponentId: null,
-      crownLandLeasesFeature: null,
-      crownLandLicensesFeature: null,
-      crownLandTenuresFeature: null,
-      crownLandInventoryFeature: null,
-      crownLandInclusionsFeature: null,
+      crownLandLeasesFeatures: null,
+      crownLandLicensesFeatures: null,
+      crownLandTenuresFeatures: null,
+      crownLandInventoryFeatures: null,
+      crownLandInclusionsFeatures: null,
     };
 
     await act(async () => rerender());

@@ -7,18 +7,23 @@ import { TANTALIS_CrownLandTenures_Feature_Properties } from '@/models/layers/cr
 import { exists, formatUTCDateTime } from '@/utils';
 
 export interface ICrownDetailsTabViewProps {
-  crownFeature?: Feature<Geometry, TANTALIS_CrownLandTenures_Feature_Properties> | undefined;
+  crownFeatures: Feature<Geometry, TANTALIS_CrownLandTenures_Feature_Properties>[] | undefined;
 }
 
 export const CrownDetailsTabView: React.FunctionComponent<ICrownDetailsTabViewProps> = ({
-  crownFeature,
+  crownFeatures,
 }) => {
-  if (!exists(crownFeature)) {
+  if (!exists(crownFeatures) || crownFeatures.length === 0) {
     return null;
-  } else {
-    return (
-      <StyledSummarySection>
-        <Section header="Crown Details">
+  }
+
+  return (
+    <StyledSummarySection>
+      {crownFeatures.map((crownFeature, index) => (
+        <Section
+          header={`Crown Details (${index} out of ${crownFeatures.length + 1}`}
+          key={`crown-detail-${index}`}
+        >
           <SectionField label="Tenure stage">
             {crownFeature?.properties?.TENURE_STAGE ?? ''}
           </SectionField>
@@ -59,9 +64,9 @@ export const CrownDetailsTabView: React.FunctionComponent<ICrownDetailsTabViewPr
             {crownFeature?.properties?.FEATURE_LENGTH_M ?? ''}
           </SectionField>
         </Section>
-      </StyledSummarySection>
-    );
-  }
+      ))}
+    </StyledSummarySection>
+  );
 };
 
 export default CrownDetailsTabView;

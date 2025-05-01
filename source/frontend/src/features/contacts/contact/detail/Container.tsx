@@ -70,6 +70,9 @@ const ContactViewContainer: React.FunctionComponent<
 const ContactLayout = styled.div`
   height: 100%;
   width: 50%;
+  @media only screen and (max-width: 1199px) {
+    width: 100%;
+  }
   min-width: 30rem;
   overflow: auto;
   padding: 1rem;

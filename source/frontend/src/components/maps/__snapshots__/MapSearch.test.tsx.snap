@@ -271,6 +271,7 @@ exports[`MapSearch component > renders as expected 1`] = `
 
 .c2 {
   padding-right: 0 !important;
+  min-width: 15rem;
 }
 
 .c2 .form-control {

@@ -112,7 +112,7 @@ describe('AddLeaseTeamSubForm component', () => {
     });
     const addRow = getByTestId('add-team-member');
     await act(async () => userEvent.click(addRow));
-    await act(async () => selectOptions('team.0.contactTypeCode', 'MOTILAWYER'));
+    await act(async () => selectOptions('team.0.contactTypeCode', 'MOTTLAWYER'));
     expect(getIn(getFormikRef().current?.touched, 'team.0.contact')).toBe(true);
   });
 });

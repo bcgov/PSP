@@ -3,16 +3,14 @@ import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import noop from 'lodash/noop';
 
-import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { fakeText, fillInput, render, RenderOptions } from '@/utils/test-utils';
 
-import { PropertyForm } from '../../shared/models';
 import { AddResearchFileYupSchema } from './AddResearchFileYupSchema';
 import AddResearchForm from './AddResearchForm';
 import { ResearchForm } from './models';
+import { PropertyForm } from '../../shared/models';
 
 const history = createMemoryHistory();
 

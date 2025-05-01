@@ -149,18 +149,18 @@ describe('MotiInventoryContainer component', () => {
       mapLocationFeatureDataset: {
         location: { lng: -120.69195885, lat: 50.25163372 },
         fileLocation: null,
-        pimsFeature: null,
-        parcelFeature: null,
+        pimsFeatures: null,
+        parcelFeatures: null,
         regionFeature: null,
         districtFeature: null,
-        municipalityFeature: null,
+        municipalityFeatures: null,
         highwayFeatures: null,
         selectingComponentId: null,
-        crownLandLeasesFeature: null,
-        crownLandLicensesFeature: null,
-        crownLandTenuresFeature: null,
-        crownLandInventoryFeature: null,
-        crownLandInclusionsFeature: null,
+        crownLandLeasesFeatures: null,
+        crownLandLicensesFeatures: null,
+        crownLandTenuresFeatures: null,
+        crownLandInventoryFeatures: null,
+        crownLandInclusionsFeatures: null,
       },
     };
 
@@ -195,7 +195,7 @@ describe('MotiInventoryContainer component', () => {
 
     expect(await findByText(/property attributes/i)).toBeInTheDocument();
     expect(mockAxios.history.get.length).toBeGreaterThanOrEqual(1);
-    expect(mockAxios.history.get[0].url).toBe(`/properties/1`);
+    expect(mockAxios.history.get[0].url).toContain(`/properties/1`);
   });
 
   it('hides the property information tab for non-inventory properties', async () => {

@@ -2,10 +2,18 @@
 
 exports[`AddAcquisitionContainer component > Sub-interest file > renders as expected 1`] = `
 <DocumentFragment>
-  <div
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div
     class="Toastify"
   />
-  <div />
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div />
   .c4.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -228,10 +236,6 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c17 .react-datepicker-wrapper {
-  max-width: 17rem;
-}
-
 .c18.c18.form-control.is-valid {
   background-image: none;
 }
@@ -251,6 +255,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
 
 .c28:not(:first-child) {
   padding-left: 0;
+  padding-right: 0;
 }
 
 .c28:not(:first-child) .form-control {
@@ -551,15 +556,6 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   border-radius: 0.5rem;
 }
 
-.c26 .idir-input-group .input-group-prepend select {
-  width: 16rem;
-}
-
-.c26 .idir-input-group input {
-  width: 18rem;
-  max-width: 100%;
-}
-
 .c30 {
   font-size: 1.6rem;
   color: #9F9D9C;
@@ -586,6 +582,12 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
 
 .c12 [name='region'] {
   max-width: 25rem;
+}
+
+@media only screen and (max-width:1199px) {
+  .c0.expanded {
+    min-width: 70rem;
+  }
 }
 
 <div
@@ -1880,7 +1882,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                                     class="col-6"
                                   >
                                     <div
-                                      class="flex-nowrap input-group row"
+                                      class="flex-nowrap input-group row no-gutters"
                                     >
                                       <div
                                         class="c27 col-auto"
@@ -2361,6 +2363,13 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                         >
                           Pending Litigation
                         </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-UNKNOWN"
+                          value="UNKNOWN"
+                        >
+                          Unknown
+                        </option>
                       </select>
                     </div>
                   </div>
@@ -2529,6 +2538,13 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-LSHOLDR"
+                          value="LSHOLDR"
+                        >
+                          Leaseholder
+                        </option>
+                        <option
+                          class="option"
                           data-testid="select-option-LICOCCUPY"
                           value="LICOCCUPY"
                         >
@@ -2540,6 +2556,13 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                           value="LIEN"
                         >
                           Lis Pendens / Lien
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-MOBILE"
+                          value="MOBILE"
+                        >
+                          Mobile Home Owner
                         </option>
                         <option
                           class="option"
@@ -2574,14 +2597,14 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                           data-testid="select-option-TENANT"
                           value="TENANT"
                         >
-                          Tenant (Monthly) Leaseholder
+                          Tenant (Monthly)
                         </option>
                         <option
                           class="option"
                           data-testid="select-option-OTHER"
                           value="OTHER"
                         >
-                          Other 
+                          Other
                         </option>
                       </select>
                     </div>
@@ -2933,10 +2956,18 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
 
 exports[`AddAcquisitionContainer component > renders as expected 1`] = `
 <DocumentFragment>
-  <div
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div
     class="Toastify"
   />
-  <div />
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div />
   .c4.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -3163,10 +3194,6 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c18 .react-datepicker-wrapper {
-  max-width: 17rem;
-}
-
 .c19.c19.form-control.is-valid {
   background-image: none;
 }
@@ -3186,6 +3213,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
 
 .c29:not(:first-child) {
   padding-left: 0;
+  padding-right: 0;
 }
 
 .c29:not(:first-child) .form-control {
@@ -3486,15 +3514,6 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c27 .idir-input-group .input-group-prepend select {
-  width: 16rem;
-}
-
-.c27 .idir-input-group input {
-  width: 18rem;
-  max-width: 100%;
-}
-
 .c31 {
   font-size: 1.6rem;
   color: #9F9D9C;
@@ -3521,6 +3540,12 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
 
 .c12 [name='region'] {
   max-width: 25rem;
+}
+
+@media only screen and (max-width:1199px) {
+  .c0.expanded {
+    min-width: 70rem;
+  }
 }
 
 <div
@@ -4811,7 +4836,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                                     class="col-6"
                                   >
                                     <div
-                                      class="flex-nowrap input-group row"
+                                      class="flex-nowrap input-group row no-gutters"
                                     >
                                       <div
                                         class="c28 col-auto"
@@ -5291,6 +5316,13 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                           value="PENDING"
                         >
                           Pending Litigation
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-UNKNOWN"
+                          value="UNKNOWN"
+                        >
+                          Unknown
                         </option>
                       </select>
                     </div>

@@ -202,6 +202,13 @@ export function truncateName(name: string, length: number): string {
   }
 }
 
+export function firstOrNull<T>(array: Array<T> | null): T | null {
+  if (exists(array) && array.length > 0) {
+    return array[0];
+  }
+  return null;
+}
+
 /**
  * Add a simple retry wrapper to help avoid chunk errors in deployed pims application, recursively calls promise based on attemptsLeft parameter.
  * @param lazyComponent

@@ -45,7 +45,12 @@ export const ReceivedDepositForm: React.FunctionComponent<
     >
       {formikProps => (
         <form className="mx-3">
-          <SectionField label="Deposit type" labelWidth="3" contentWidth="5" required>
+          <SectionField
+            label="Deposit type"
+            labelWidth={{ xs: 3 }}
+            contentWidth={{ xs: 5 }}
+            required
+          >
             <Select
               field="depositTypeCode"
               placeholder="Select..."
@@ -60,26 +65,31 @@ export const ReceivedDepositForm: React.FunctionComponent<
             ></Select>
           </SectionField>
           {formikProps.values?.depositTypeCode === 'OTHER' && (
-            <SectionField label="Describe other" labelWidth="3" required>
+            <SectionField label="Describe other" labelWidth={{ xs: 3 }} required>
               <InlineInput field="otherTypeDescription" required />
             </SectionField>
           )}
-          <SectionField label="Description" labelWidth="12" required>
+          <SectionField label="Description" labelWidth={{ xs: 12 }} required>
             <TextArea rows={4} field="description" required />
           </SectionField>
           <Row>
             <Col xs="6">
-              <SectionField label="Deposit amount" labelWidth="12" required>
+              <SectionField label="Deposit amount" labelWidth={{ xs: 12 }} required>
                 <FastCurrencyInput formikProps={formikProps} field="amountPaid" required />
               </SectionField>
             </Col>
             <Col xs="6">
-              <SectionField label="Paid date" labelWidth="12" required>
+              <SectionField label="Paid date" labelWidth={{ xs: 12 }} required>
                 <FastDatePicker formikProps={formikProps} field="depositDate" required />
               </SectionField>
             </Col>
           </Row>
-          <SectionField label="Deposit holder" labelWidth="12" contentWidth="9" required>
+          <SectionField
+            label="Deposit holder"
+            labelWidth={{ xs: 12 }}
+            contentWidth={{ xs: 9 }}
+            required
+          >
             <ContactInput
               field="contactHolder"
               setShowContactManager={setShowContactManager}

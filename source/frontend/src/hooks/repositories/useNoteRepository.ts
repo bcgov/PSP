@@ -12,7 +12,7 @@ import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
  * hook that interacts with the Notes API.
  */
 export const useNoteRepository = () => {
-  const { getNote, postNote, putNote } = useApiNotes();
+  const { getNote, postNote, putNote, getNotes, deleteNote } = useApiNotes();
 
   const addNoteApi = useApiRequestWrapper<
     (
@@ -25,6 +25,18 @@ export const useNoteRepository = () => {
       [postNote],
     ),
     requestName: 'AddNote',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler(),
+  });
+
+  const getAllNotesApi = useApiRequestWrapper<
+    (type: NoteTypes, entityId: number) => Promise<AxiosResponse<ApiGen_Concepts_Note[], any>>
+  >({
+    requestFunction: useCallback(
+      async (type: NoteTypes, entityId: number) => await getNotes(type, entityId),
+      [getNotes],
+    ),
+    requestName: 'GetAllNotes',
     onSuccess: useAxiosSuccessHandler(),
     onError: useAxiosErrorHandler(),
   });
@@ -50,12 +62,26 @@ export const useNoteRepository = () => {
     onError: useAxiosErrorHandler(),
   });
 
+  const deleteNoteApi = useApiRequestWrapper<
+    (type: NoteTypes, noteId: number) => Promise<AxiosResponse<boolean, any>>
+  >({
+    requestFunction: useCallback(
+      async (type: NoteTypes, noteId: number) => await deleteNote(type, noteId),
+      [deleteNote],
+    ),
+    requestName: 'DeleteNote',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler(),
+  });
+
   return useMemo(
     () => ({
       addNote: addNoteApi,
       getNote: getNoteApi,
       updateNote: updateNoteApi,
+      getAllNotes: getAllNotesApi,
+      deleteNote: deleteNoteApi,
     }),
-    [addNoteApi, getNoteApi, updateNoteApi],
+    [addNoteApi, deleteNoteApi, getAllNotesApi, getNoteApi, updateNoteApi],
   );
 };

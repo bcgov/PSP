@@ -228,10 +228,6 @@ exports[`UpdateAcquisitionAgreementView component > renders as expected 1`] = `
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c6 .react-datepicker-wrapper {
-  max-width: 17rem;
-}
-
 .c7.c7.form-control.is-valid {
   background-image: none;
 }
@@ -488,6 +484,13 @@ exports[`UpdateAcquisitionAgreementView component > renders as expected 1`] = `
                     value="H0074"
                   >
                     License Of Occupation (H0074)
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-TOTAL"
+                    value="TOTAL"
+                  >
+                    Total - Fee Simple Agreement
                   </option>
                 </select>
               </div>
