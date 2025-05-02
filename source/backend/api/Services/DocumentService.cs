@@ -107,8 +107,8 @@ namespace Pims.Api.Services
 
         public IList<PimsDocumentTyp> GetPimsDocumentTypes(DocumentRelationType relationshipType)
         {
-            this.Logger.LogInformation("Retrieving PIMS document types for relationship type {relationshipType}", relationshipType);
-            this.User.ThrowIfNotAuthorized(Permissions.DocumentView);
+            Logger.LogInformation("Retrieving PIMS document types for relationship type {RelationshipType}", relationshipType);
+            User.ThrowIfNotAuthorized(Permissions.DocumentView);
 
             string categoryType;
             switch (relationshipType)
@@ -125,6 +125,7 @@ namespace Pims.Api.Services
                 case DocumentRelationType.Projects:
                     categoryType = "PROJECT";
                     break;
+                case DocumentRelationType.ManagementActivities:
                 case DocumentRelationType.ManagementFiles:
                     categoryType = "MANAGEMENT";
                     break;
@@ -406,7 +407,7 @@ namespace Pims.Api.Services
             User.ThrowIfNotAuthorized(Permissions.DocumentDelete);
 
             ExternalResponse<string> result = await documentStorageRepository.TryDeleteDocument(mayanDocumentId);
-            if(result.Status == ExternalResponseStatus.Error && result.HttpStatusCode == HttpStatusCode.NotFound)
+            if (result.Status == ExternalResponseStatus.Error && result.HttpStatusCode == HttpStatusCode.NotFound)
             {
                 return result;
             }

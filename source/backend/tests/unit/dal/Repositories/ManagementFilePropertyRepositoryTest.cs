@@ -4,10 +4,10 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using FluentAssertions;
 using Pims.Core.Exceptions;
+using Pims.Core.Security;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Repositories;
-using Pims.Core.Security;
 using Xunit;
 
 namespace Pims.Dal.Test.Repositories
@@ -31,8 +31,8 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.ManagementView);
 
-            var dspFile = EntityHelper.CreateManagementFile();
-            var pimsManagementFileProperty = new PimsManagementFileProperty() { ManagementFileId = dspFile.ManagementFileId, Property = EntityHelper.CreateProperty(1) };
+            var managementFile = EntityHelper.CreateManagementFile();
+            var pimsManagementFileProperty = new PimsManagementFileProperty() { ManagementFileId = managementFile.ManagementFileId, Property = EntityHelper.CreateProperty(1) };
 
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(pimsManagementFileProperty);
             var repository = helper.CreateRepository<ManagementFilePropertyRepository>(user);
@@ -74,9 +74,9 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.ManagementView);
 
-            var dspFile = EntityHelper.CreateManagementFile();
-            var pimsManagementFileProperty = new PimsManagementFileProperty() { ManagementFileId = dspFile.ManagementFileId, Property = EntityHelper.CreateProperty(1) };
-            var pimsManagementFileProperty2 = new PimsManagementFileProperty() { ManagementFileId = dspFile.ManagementFileId, Property = EntityHelper.CreateProperty(2) };
+            var managementFile = EntityHelper.CreateManagementFile();
+            var pimsManagementFileProperty = new PimsManagementFileProperty() { ManagementFileId = managementFile.ManagementFileId, Property = EntityHelper.CreateProperty(1) };
+            var pimsManagementFileProperty2 = new PimsManagementFileProperty() { ManagementFileId = managementFile.ManagementFileId, Property = EntityHelper.CreateProperty(2) };
 
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(pimsManagementFileProperty);
             var repository = helper.CreateRepository<ManagementFilePropertyRepository>(user);
