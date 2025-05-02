@@ -146,7 +146,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By requisitionFinancialActivitiesCount = By.XPath("//div[contains(text(),'Activities')]/parent::div/parent::h2/following-sibling::div/div/div/label");
 
         //Compensation Details Elements
-        private readonly By requisitionCancelBttn = By.XPath("//button[@id='close-tray']/parent::h1/following-sibling::div/div/div/div[2]/div/div[2]/button");
+        private readonly By requisitionCancelBttn = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::h2/parent::div/parent::div/following-sibling::div/div/div[2]/button");
 
         //Acquisition File Confirmation Modal Elements
         private readonly By acquisitionFileConfirmationModal = By.CssSelector("div[class='modal-content']");

@@ -289,6 +289,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void AddPropertyResearchInfo(PropertyResearch propertyResearch, int index)
         {
             //Pick Property
+            Wait();
             var elementIndex = index + 1;
             By propertyLink = By.CssSelector("div[data-testid='menu-item-row-" + elementIndex + "'] div:nth-child(3)");
             WaitUntilClickable(propertyLink);
@@ -514,27 +515,35 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SaveResearchFile()
         {
-            ButtonElement("Save");
-        }
-
-        public void SaveResearchFileProperties()
-        {
             Wait();
             ButtonElement("Save");
 
-            Assert.Equal("Confirm changes", sharedModals.ModalHeader());
-            Assert.Equal("You have made changes to the properties in this file.", sharedModals.ConfirmationModalText1());
-            Assert.Equal("Do you want to save these changes?", sharedModals.ConfirmationModalText2());
-
-            sharedModals.ModalClickOKBttn();
-
             Wait();
-            if (webDriver.FindElements(researchFileConfirmationModal).Count() > 0)
+            while (webDriver.FindElements(researchFileConfirmationModal).Count() > 0)
             {
-                Assert.Equal("User Override Required", sharedModals.SecondaryModalHeader());
-                Assert.Contains("The selected property already exists in the system's inventory. However, the record is missing spatial details.", sharedModals.SecondaryModalContent());
-                Assert.Contains("To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.", sharedModals.SecondaryModalContent());
-                sharedModals.SecondaryModalClickOKBttn();
+                if (sharedModals.ModalHeader() == "Confirm changes")
+                {
+                    Assert.Equal("Confirm changes", sharedModals.ModalHeader());
+                    Assert.Equal("You have made changes to the properties in this file.", sharedModals.ConfirmationModalText1());
+                    Assert.Equal("Do you want to save these changes?", sharedModals.ConfirmationModalText2());
+                    sharedModals.ModalClickOKBttn();
+                }
+                else if (sharedModals.ModalHeader() == "User Override Required")
+                {
+                    Assert.Equal("User Override Required", sharedModals.ModalHeader());
+                    Assert.Contains("The selected property already exists in the system's inventory. However, the record is missing spatial details.", sharedModals.SecondaryModalContent());
+                    Assert.Contains("To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.", sharedModals.SecondaryModalContent());
+                    sharedModals.ModalClickOKBttn();
+                }
+                else if (sharedModals.ModalHeader() == "Confirm status change")
+                {
+                    Assert.Equal("Confirm status change", sharedModals.ModalHeader());
+                    Assert.Contains("If you save it, only the administrator can turn it back on. You will still see it in the management table.", sharedModals.ConfirmationModalParagraph1());
+                    Assert.Equal("Do you want to acknowledge and proceed?", sharedModals.ConfirmationModalParagraph2());
+                    sharedModals.ModalClickOKBttn();
+                }
+
+                Wait();
             }
         }
 

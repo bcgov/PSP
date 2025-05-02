@@ -546,7 +546,6 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueContentEquals(dispositionAppraisalValueContent, TransformCurrencyFormat(disposition.AppraisalAndAssessmentValue));
 
             AssertTrueIsDisplayed(dispositionAppraisalDateLabel);
-            System.Diagnostics.Debug.WriteLine(dispositionAppraisalDateContent);
             if(disposition.AppraisalAndAssessmentDate != "")
                 AssertTrueContentEquals(dispositionAppraisalDateContent, TransformDateFormat(disposition.AppraisalAndAssessmentDate));
 

@@ -24,7 +24,6 @@ Scenario: 04._Subdivision_Error_Messages-Missing_Child
 	When I create a Subdivision from row number 28
 	Then Subdivision has only one Child error
 
-
 Scenario Outline: 05._Create_Consolidations
 	When I create a Consolidation from row number <RowNumber>
 	Then Consolidation is created successfully
