@@ -64,6 +64,7 @@ export const getEmptyLease = (): ApiGen_Concepts_Lease => ({
   hasDigitalLicense: null,
   isExpired: false,
   project: null,
+  projectId: null,
   productId: null,
   product: null,
   fileName: null,

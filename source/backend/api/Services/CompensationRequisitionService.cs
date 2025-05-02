@@ -27,6 +27,8 @@ namespace Pims.Api.Services
         private readonly ILeaseStatusSolver _leaseStatusSolver;
         private readonly ILeaseRepository _leaseRepository;
         private readonly IPropertyService _propertyService;
+        private readonly IOrganizationRepository _organizationRepository;
+        private readonly IPersonRepository _personRepository;
 
         public CompensationRequisitionService(
             ClaimsPrincipal user,
@@ -39,6 +41,8 @@ namespace Pims.Api.Services
             IAcquisitionStatusSolver statusSolver,
             ILeaseStatusSolver leaseStatusSolver,
             ILeaseRepository leaseRepository,
+            IOrganizationRepository organizationRepository,
+            IPersonRepository personRepository,
             IPropertyService propertyService)
         {
             _user = user;
@@ -52,6 +56,8 @@ namespace Pims.Api.Services
             _leaseStatusSolver = leaseStatusSolver;
             _leaseRepository = leaseRepository;
             _propertyService = propertyService;
+            _organizationRepository = organizationRepository;
+            _personRepository = personRepository;
         }
 
         public PimsCompensationRequisition GetById(long compensationRequisitionId)
@@ -185,6 +191,108 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
 
             return _compensationRequisitionRepository.GetCompensationRequisitionLeasePayees(compReqId);
+        }
+
+        public PimsCompensationRequisition GetCompensationRequisitionAtTime(long compReqId, DateTime time)
+        {
+            return _compensationRequisitionRepository.GetCompensationRequisitionAtTime(compReqId, time);
+        }
+
+        public IEnumerable<PimsPropertyAcquisitionFile> GetCompensationRequisitionAcqPropertiesAtTime(long compReqId, DateTime time)
+        {
+            return _compensationRequisitionRepository.GetCompensationRequisitionAcqPropertiesAtTime(compReqId, time);
+        }
+
+        public IEnumerable<PimsPropertyLease> GetCompensationRequisitionLeasePropertiesAtTime(long compReqId, DateTime time)
+        {
+            return _compensationRequisitionRepository.GetCompensationRequisitionLeasePropertiesAtTime(compReqId, time);
+        }
+
+        public IEnumerable<PimsCompReqAcqPayee> GetCompensationRequisitionAcquisitionPayeesAtTime(long compReqId, DateTime time)
+        {
+            var acqPayees = _compensationRequisitionRepository.GetCompensationRequisitionAcquisitionPayeesAtTime(compReqId, time);
+
+            foreach (var payee in acqPayees)
+            {
+                var interestHolder = payee.InterestHolder;
+                if (interestHolder != null)
+                {
+                    if (interestHolder.OrganizationId.HasValue)
+                    {
+                        var organization = _organizationRepository.GetOrganizationAtTime(interestHolder.OrganizationId.Value, time);
+                        interestHolder.Organization = organization;
+                    }
+
+                    if (interestHolder.PersonId.HasValue)
+                    {
+                        var person = _personRepository.GetPersonAtTime(interestHolder.PersonId.Value, time);
+
+                        interestHolder.Person = person;
+                    }
+                }
+
+                var acqTeam = payee.AcquisitionFileTeam;
+                if (acqTeam != null)
+                {
+                    if (acqTeam.OrganizationId.HasValue)
+                    {
+                        var organization = _organizationRepository.GetOrganizationAtTime(acqTeam.OrganizationId.Value, time);
+                        acqTeam.Organization = organization;
+                    }
+
+                    if (acqTeam.PersonId.HasValue)
+                    {
+                        var person = _personRepository.GetPersonAtTime(acqTeam.PersonId.Value, time);
+
+                        acqTeam.Person = person;
+                    }
+                }
+            }
+
+            return acqPayees;
+        }
+
+        public IEnumerable<PimsCompReqLeasePayee> GetCompensationRequisitionLeasePayeesAtTime(long compReqId, DateTime time)
+        {
+            var leasePayees = _compensationRequisitionRepository.GetCompensationRequisitionLeasePayeesAtTime(compReqId, time);
+
+            foreach (var payee in leasePayees)
+            {
+                var stakeholder = payee.LeaseStakeholder;
+                if (stakeholder != null)
+                {
+                    if (stakeholder.OrganizationId.HasValue)
+                    {
+                        var organization = _organizationRepository.GetOrganizationAtTime(stakeholder.OrganizationId.Value, time);
+                        stakeholder.Organization = organization;
+                    }
+
+                    if (stakeholder.PersonId.HasValue)
+                    {
+                        var person = _personRepository.GetPersonAtTime(stakeholder.PersonId.Value, time);
+
+                        stakeholder.Person = person;
+                    }
+                }
+
+                var leaseTeam = payee.LeaseLicenseTeam;
+                if (leaseTeam != null)
+                {
+                    if (leaseTeam.OrganizationId.HasValue)
+                    {
+                        var organization = _organizationRepository.GetOrganizationAtTime(leaseTeam.OrganizationId.Value, time);
+                        leaseTeam.Organization = organization;
+                    }
+
+                    if (leaseTeam.PersonId.HasValue)
+                    {
+                        var person = _personRepository.GetPersonAtTime(leaseTeam.PersonId.Value, time);
+                        leaseTeam.Person = person;
+                    }
+                }
+            }
+
+            return leasePayees;
         }
 
         private static string GetCompensationRequisitionStatusText(bool? isDraft)

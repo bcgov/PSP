@@ -29,6 +29,14 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
                 .Map(dest => dest.PrimaryContactId, src => src.PrimaryContactId)
                 .Map(dest => dest.AcqFlTeamProfileTypeCode, src => src.TeamProfileTypeCode)
                 .Inherits<BaseConcurrentModel, Entity.IBaseEntity>();
+
+            config.NewConfig<Entity.PimsAcquisitionFileTeam, Entity.PimsAcquisitionFileTeam>()
+                .Map(dest => dest.AcquisitionFileTeamId, src => src.AcquisitionFileTeamId)
+                .Map(dest => dest.AcquisitionFileId, src => src.AcquisitionFileId)
+                .Map(dest => dest.PersonId, src => src.PersonId)
+                .Map(dest => dest.OrganizationId, src => src.OrganizationId)
+                .Map(dest => dest.PrimaryContactId, src => src.PrimaryContactId)
+                .Map(dest => dest.AcqFlTeamProfileTypeCode, src => src.AcqFlTeamProfileTypeCode);
         }
     }
 }

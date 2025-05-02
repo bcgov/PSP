@@ -25,6 +25,8 @@ namespace Pims.Api.Services
 
         Task UploadPropertyActivityDocument(long propertyActivityId, DocumentUploadRequest uploadRequest);
 
+        Task UploadManagementFileDocument(long managementFileId, DocumentUploadRequest uploadRequest);
+
         Task UploadDispositionDocument(long dispositionFileId, DocumentUploadRequest uploadRequest);
 
         Task<ExternalResponse<string>> DeleteResearchDocumentAsync(PimsResearchFileDocument researchFileDocument);
@@ -36,6 +38,8 @@ namespace Pims.Api.Services
         Task<ExternalResponse<string>> DeleteLeaseDocumentAsync(PimsLeaseDocument leaseDocument);
 
         Task<ExternalResponse<string>> DeletePropertyActivityDocumentAsync(PimsPropertyActivityDocument propertyActivityDocument);
+
+        Task<ExternalResponse<string>> DeleteManagementFileDocumentAsync(PimsManagementFileDocument managementFileDocument);
 
         Task<ExternalResponse<string>> DeleteDispositionDocumentAsync(PimsDispositionFileDocument dispositionFileDocument);
 

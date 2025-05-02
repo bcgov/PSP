@@ -11,9 +11,11 @@ import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTy
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { exists, isValidId } from '@/utils';
 
 import { CompensationRequisitionDetailContainer } from './detail/CompensationRequisitionDetailContainer';
 import CompensationRequisitionDetailView from './detail/CompensationRequisitionDetailView';
+import { CompensationRequisitionHistoricalDetailContainer } from './detail/CompensationRequisitionHistoricalDetailContainer';
 import UpdateCompensationRequisitionContainer from './update/UpdateCompensationRequisitionContainer';
 import UpdateCompensationRequisitionForm from './update/UpdateCompensationRequisitionForm';
 
@@ -51,9 +53,9 @@ export const CompensationRequisitionTrayView: React.FunctionComponent<
   onUpdate,
 }) => {
   const detailViewContent =
-    !editMode && compensation ? (
+    !editMode && isValidId(compensation?.id) && exists(file) ? (
       <HalfHeightDiv>
-        {!!compensation?.id && file && (
+        {compensation.isDraft === true && (
           <CompensationRequisitionDetailContainer
             compensation={compensation}
             fileType={fileType}
@@ -62,7 +64,20 @@ export const CompensationRequisitionTrayView: React.FunctionComponent<
             clientConstant={clientConstant}
             loading={loading}
             setEditMode={setEditMode}
-          ></CompensationRequisitionDetailContainer>
+          />
+        )}
+
+        {compensation.isDraft === false && (
+          <CompensationRequisitionHistoricalDetailContainer
+            fileType={fileType}
+            View={CompensationRequisitionDetailView}
+            clientConstant={clientConstant}
+            loading={loading}
+            setEditMode={setEditMode}
+            parentFileId={file.id}
+            compensationRequisitionId={compensation.id}
+            time={compensation.appLastUpdateTimestamp}
+          />
         )}
       </HalfHeightDiv>
     ) : undefined;
@@ -82,7 +97,7 @@ export const CompensationRequisitionTrayView: React.FunctionComponent<
             setEditMode(false);
           }}
           View={UpdateCompensationRequisitionForm}
-        ></UpdateCompensationRequisitionContainer>
+        />
       </HalfHeightDiv>
     ) : undefined;
 

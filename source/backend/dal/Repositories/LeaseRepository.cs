@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using LinqKit;
+using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Exceptions;
@@ -21,6 +22,7 @@ namespace Pims.Dal.Repositories
     public class LeaseRepository : BaseRepository<PimsLease>, ILeaseRepository
     {
         private readonly ISequenceRepository _sequenceRepository;
+        private readonly IMapper _mapper;
         #region Constructors
 
         /// <summary>
@@ -29,10 +31,11 @@ namespace Pims.Dal.Repositories
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public LeaseRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<LeaseRepository> logger, ISequenceRepository sequenceRepository)
+        public LeaseRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<LeaseRepository> logger, ISequenceRepository sequenceRepository, IMapper mapper)
             : base(dbContext, user, logger)
         {
             _sequenceRepository = sequenceRepository;
+            _mapper = mapper;
         }
         #endregion
 
@@ -1079,6 +1082,20 @@ namespace Pims.Dal.Repositories
                 .Include(x => x.Organization)
                 .Where(predicate)
                 .ToList();
+        }
+
+        public PimsLease GetLeaseAtTime(long leaseId, DateTime time)
+        {
+            var leaseHist = Context
+                .PimsLeaseHists.AsNoTracking()
+                .Where(pacr => pacr.LeaseId == leaseId)
+                .Where(pacr => pacr.EffectiveDateHist <= time
+                    && (pacr.EndDateHist == null || pacr.EndDateHist > time))
+                .GroupBy(pacr => pacr.LeaseId)
+                .Select(gpacr => gpacr.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault())
+                .FirstOrDefault();
+
+            return _mapper.Map<PimsLease>(leaseHist);
         }
 
         /// <summary>
