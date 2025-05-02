@@ -2729,7 +2729,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                 <div
                   class="align-content-end col"
                 >
-                  Lease Team
+                  Lease & Licence Team
                 </div>
               </div>
             </h2>
