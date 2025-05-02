@@ -2,6 +2,7 @@
 using OpenQA.Selenium.Support.UI;
 using PIMS.Tests.Automation.Classes;
 using SeleniumExtras.WaitHelpers;
+using System;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -181,13 +182,53 @@ namespace PIMS.Tests.Automation.PageObjects
             }
         }
 
-        protected void SendKeysToCurencyInput(By elementBy, string sendKeysValue)
+        protected void CleanUpCurrencyInput(By elementBy)
         {
-            WaitUntilVisible(elementBy);
+            var element = webDriver.FindElement(elementBy);
+            element.SendKeys(Keys.Delete);
+            element.SendKeys(Keys.Delete);
+            element.SendKeys(Keys.Delete);
+            element.SendKeys(Keys.Delete);
+        }
 
-            var js = (IJavaScriptExecutor)webDriver;
-            webDriver.FindElement(elementBy).SendKeys(Keys.NumberPad1);
-
+        protected void SendKeysToCurrencyInput(By elementBy, char digit)
+        {
+            switch(digit)
+            {
+                case '0':
+                    webDriver.FindElement(elementBy).SendKeys(Keys.NumberPad0);
+                    break;
+                case '1':
+                    webDriver.FindElement(elementBy).SendKeys(Keys.NumberPad1);
+                    break;
+                case '2':
+                    webDriver.FindElement(elementBy).SendKeys(Keys.NumberPad2);
+                    break;
+                case '3':
+                    webDriver.FindElement(elementBy).SendKeys(Keys.NumberPad3);
+                    break;
+                case '4':
+                    webDriver.FindElement(elementBy).SendKeys(Keys.NumberPad4);
+                    break;
+                case '5':
+                    webDriver.FindElement(elementBy).SendKeys(Keys.NumberPad5);
+                    break;
+                case '6':
+                    webDriver.FindElement(elementBy).SendKeys(Keys.NumberPad6);
+                    break;
+                case '7':
+                    webDriver.FindElement(elementBy).SendKeys(Keys.NumberPad7);
+                    break;
+                case '8':
+                    webDriver.FindElement(elementBy).SendKeys(Keys.NumberPad8);
+                    break;
+                case '9':
+                    webDriver.FindElement(elementBy).SendKeys(Keys.NumberPad9);
+                    break;
+                case '.':
+                    webDriver.FindElement(elementBy).SendKeys(Keys.Decimal);
+                    break;
+            }
         }
 
         protected void ClearMultiSelectInput(By elementBy)

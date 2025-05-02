@@ -114,6 +114,13 @@ namespace PIMS.Tests.Automation.StepDefinitions
             sharedFileProperties.NavigateToSearchTab();
             sharedFileProperties.VerifySearchPropertiesFeature();
 
+            //Search for a property by Legal Description
+            if (researchFile.SearchProperties.LegalDescription != "")
+            {
+                sharedFileProperties.SelectPropertyByLegalDescription(researchFile.SearchProperties.LegalDescription);
+                sharedFileProperties.SelectFirstOptionFromSearch();
+            }
+
             //Search for a property by PID
             if (researchFile.SearchProperties.PID != "")
             {
@@ -138,15 +145,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 sharedFileProperties.SelectPropertyByAddress(researchFile.SearchProperties.Address);
                 sharedFileProperties.SelectFirstOptionFromSearch();
             }
-            //Search for a property by Legal Description
-            if (researchFile.SearchProperties.LegalDescription != "")
-            {
-                sharedFileProperties.SelectPropertyByLegalDescription(researchFile.SearchProperties.LegalDescription);
-                sharedFileProperties.SelectFirstOptionFromSearch();
-            }
 
             //Save Research File
-            researchFiles.SaveResearchFileProperties();
+            researchFiles.SaveResearchFile();
 
             //Add Property Research Information
             if (researchFile.PropertyResearchRowCount != 0 && researchFile.PropertyResearchRowStart != 0)
@@ -199,7 +200,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             sharedFileProperties.DeleteLastPropertyFromFile();
 
             //Save changes
-            researchFiles.SaveResearchFileProperties();
+            researchFiles.SaveResearchFile();
 
             //Select 1st Property attached
             researchFiles.ChooseFirstPropertyOption();

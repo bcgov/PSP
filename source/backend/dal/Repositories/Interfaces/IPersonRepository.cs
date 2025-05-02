@@ -1,3 +1,4 @@
+using System;
 using Pims.Dal.Entities;
 
 namespace Pims.Dal.Repositories
@@ -14,5 +15,7 @@ namespace Pims.Dal.Repositories
         PimsPerson Add(PimsPerson person, bool userOverride);
 
         PimsPerson Update(PimsPerson person);
+
+        PimsPerson GetPersonAtTime(long personId, DateTime time);
     }
 }

@@ -6,4 +6,11 @@ namespace Pims.Dal.Entities
     public partial class PimsWorkActivityCode : IFinancialCodeEntity
     {
     }
+
+    /// <summary>
+    /// PimsWorkActivityCodeHist class, provides an entity for the datamodel to manage historical work activity function codes.
+    /// </summary>
+    public partial class PimsWorkActivityCodeHist : IFinancialCodeEntityHist
+    {
+    }
 }

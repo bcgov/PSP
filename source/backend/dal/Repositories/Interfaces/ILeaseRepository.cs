@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
@@ -48,5 +49,7 @@ namespace Pims.Dal.Repositories
         IEnumerable<PimsLeaseStakeholderType> GetAllLeaseStakeholderTypes();
 
         List<PimsLeaseLicenseTeam> GetTeamMembers(HashSet<short> regions, long? contractorPersonId = null);
+
+        PimsLease GetLeaseAtTime(long leaseId, DateTime time);
     }
 }

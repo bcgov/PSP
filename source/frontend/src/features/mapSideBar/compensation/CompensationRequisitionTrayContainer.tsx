@@ -103,6 +103,6 @@ export const CompensationRequisitionTrayContainer: React.FunctionComponent<
         setStaleLastUpdatedBy(true);
         setStaleFile(true);
       }}
-    ></View>
+    />
   ) : null;
 };
