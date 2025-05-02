@@ -24,7 +24,7 @@ export const useBctfaOwnershipRepository = () => {
     requestName: 'UpdateBctfaOwnershipApi',
     throwError: true,
     onSuccess: (pids: number[]) =>
-      toast.success(`Successfully updated the ownership of ${pids.length} BCTFA properties.`),
+      toast.info(`Successfully updated the ownership of ${pids.length} BCTFA properties.`),
     onError: useAxiosErrorHandler(
       'Failed to update BCTFA Ownership. Check that the file is valid and try uploading again',
     ),
