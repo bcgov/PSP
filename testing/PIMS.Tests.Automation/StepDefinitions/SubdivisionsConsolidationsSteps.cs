@@ -169,13 +169,13 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             //TEST COVERAGE: PSP-8036
 
-            subdivisionConsolidationProps.VerifyMissingParentMessage();
+            subdivisionConsolidationProps.VerifyMissingParentErrorMessage();
         }
 
         [StepDefinition(@"Consolidation Parent cannot be Disposed error")]
         public void ConsolidationParentDisposedError()
         {
-            subdivisionConsolidationProps.VerifyMissingParentMessage();
+            subdivisionConsolidationProps.VerifyMissingParentMessageModal();
         }
 
         private void PopulateSubdivisionData(int rowNumber)

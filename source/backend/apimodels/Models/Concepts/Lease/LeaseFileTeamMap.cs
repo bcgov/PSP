@@ -29,6 +29,14 @@ namespace Pims.Api.Models.Concepts.Lease
                 .Map(dest => dest.PrimaryContactId, src => src.PrimaryContactId)
                 .Map(dest => dest.LlTeamProfileTypeCode, src => src.TeamProfileTypeCode)
                 .Inherits<BaseConcurrentModel, Entity.IBaseEntity>();
+
+            config.NewConfig<Entity.PimsLeaseLicenseTeamHist, Entity.PimsLeaseLicenseTeam>()
+                .Map(dest => dest.LeaseLicenseTeamId, src => src.LeaseLicenseTeamId)
+                .Map(dest => dest.LeaseId, src => src.LeaseId)
+                .Map(dest => dest.PersonId, src => src.PersonId)
+                .Map(dest => dest.OrganizationId, src => src.OrganizationId)
+                .Map(dest => dest.PrimaryContactId, src => src.PrimaryContactId)
+                .Map(dest => dest.LlTeamProfileTypeCode, src => src.LlTeamProfileTypeCode);
         }
     }
 }

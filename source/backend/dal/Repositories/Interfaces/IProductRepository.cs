@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Pims.Dal.Entities;
 
@@ -15,5 +16,7 @@ namespace Pims.Dal.Repositories
         IEnumerable<PimsProduct> GetProducts(IEnumerable<PimsProduct> incomingProducts);
 
         IEnumerable<PimsProduct> GetByProductBatch(IEnumerable<PimsProduct> incomingProducts, long projectId);
+
+        PimsProduct GetProductAtTime(long productId, DateTime time);
     }
 }

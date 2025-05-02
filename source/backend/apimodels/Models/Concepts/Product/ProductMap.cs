@@ -34,6 +34,16 @@ namespace Pims.Api.Models.Concepts.Product
                 .Map(dest => dest.Objective, src => src.Objective)
                 .Map(dest => dest.Scope, src => src.Scope)
                 .Inherits<BaseConcurrentModel, Entity.IBaseEntity>();
+
+            config.NewConfig<Entity.PimsProductHist, Entity.PimsProduct>()
+                .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.Code, src => src.Code)
+                .Map(dest => dest.Description, src => src.Description)
+                .Map(dest => dest.StartDate, src => src.StartDate)
+                .Map(dest => dest.CostEstimate, src => src.CostEstimate)
+                .Map(dest => dest.CostEstimateDate, src => src.CostEstimateDate)
+                .Map(dest => dest.Objective, src => src.Objective)
+                .Map(dest => dest.Scope, src => src.Scope);
         }
     }
 }

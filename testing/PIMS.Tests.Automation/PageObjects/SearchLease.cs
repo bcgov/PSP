@@ -23,8 +23,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchLicenseStatusInput = By.Id("status-selector_input");
         private By searchLicenseStatusOptions = By.XPath("//input[@id='status-selector_input']/parent::div/following-sibling::div/ul[@class='optionContainer']");
         private By searchLicenseActiveStatusDeleteBttn = By.CssSelector("div[class='search-wrapper searchWrapper '] span i");
-        private By searchLicenseProgramInput = By.Id("properties-selector_input");
-        private By searchLicenseProgramOptions = By.XPath("//input[@id='properties-selector_input']/parent::div/following-sibling::div/ul[@class='optionContainer']");
+        private By searchLicenseProgramOptions = By.XPath("//input[@id='program-selector_input']/parent::div/following-sibling::div/ul[@class='optionContainer']");
         private By searchLicenceTenantInput = By.Id("input-tenantName");
         private By searchLicenceFromDateInput = By.Id("datepicker-expiryStartDate");
         private By searchLicenseToDateInput = By.Id("datepicker-expiryEndDate");
@@ -297,7 +296,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(searchBySelect);
             AssertTrueIsDisplayed(searchLicenseLFileInput);
             AssertTrueIsDisplayed(searchLicenseStatusInput);
-            AssertTrueIsDisplayed(searchLicenseProgramInput);
+            AssertTrueIsDisplayed(searchLicenseProgramSelect);
             AssertTrueIsDisplayed(searchLicenceTenantInput);
             AssertTrueIsDisplayed(searchLicenceFromDateInput);
             AssertTrueIsDisplayed(searchLicenseToDateInput);
