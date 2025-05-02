@@ -9,7 +9,7 @@ exports[`PropertyFileContainer component > renders as expected 1`] = `
       class="Toastify__toast-container Toastify__toast-container--top-right"
     >
       <div
-        class="Toastify__toast Toastify__toast--dark Toastify--animate Toastify__bounce-enter--top-right"
+        class="Toastify__toast Toastify__toast--info Toastify--animate Toastify__bounce-enter--top-right"
         id="LOADING_LAYER_DATA"
       >
         <div
@@ -20,7 +20,7 @@ exports[`PropertyFileContainer component > renders as expected 1`] = `
         </div>
         <button
           aria-label="close"
-          class="Toastify__close-button Toastify__close-button--dark"
+          class="Toastify__close-button Toastify__close-button--info"
           type="button"
         >
           <svg
@@ -36,7 +36,7 @@ exports[`PropertyFileContainer component > renders as expected 1`] = `
         <div
           aria-hidden="true"
           aria-label="notification timer"
-          class="Toastify__progress-bar Toastify__progress-bar--animated Toastify__progress-bar--dark"
+          class="Toastify__progress-bar Toastify__progress-bar--animated Toastify__progress-bar--info"
           role="progressbar"
           style="animation-duration: 5000ms; animation-play-state: running; opacity: 0;"
         />
