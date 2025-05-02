@@ -15,8 +15,14 @@ import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
  * hook that retrieves Project information.
  */
 export const useProjectProvider = () => {
-  const { getProjectProducts, postProject, getProject, getAllProjects, putProject } =
-    useApiProjects();
+  const {
+    getProjectProducts,
+    postProject,
+    getProject,
+    getAllProjects,
+    putProject,
+    getProjectAtTime,
+  } = useApiProjects();
   const { project, setProject } = useContext(ProjectStateContext);
 
   const { execute: retrieveProjectProducts, loading: retrieveProjectProductsLoading } =
@@ -99,6 +105,17 @@ export const useProjectProvider = () => {
     throwError: true,
   });
 
+  const getProjectAtTimeApi = useApiRequestWrapper<
+    (projectId: number, time: string) => Promise<AxiosResponse<ApiGen_Concepts_Project, any>>
+  >({
+    requestFunction: useCallback(
+      async (projectId: number, time: string) => await getProjectAtTime(projectId, time),
+      [getProjectAtTime],
+    ),
+    requestName: 'getProjectAtTime',
+    onError: useAxiosErrorHandler('Failed to load historical project'),
+  });
+
   return useMemo(
     () => ({
       project,
@@ -109,6 +126,7 @@ export const useProjectProvider = () => {
       getProject: getProjectApi,
       updateProject: updateProject,
       getAllProjects: getAllProjectsApi,
+      getProjectAtTime: getProjectAtTimeApi,
     }),
     [
       project,
@@ -119,6 +137,7 @@ export const useProjectProvider = () => {
       getProjectApi,
       updateProject,
       getAllProjectsApi,
+      getProjectAtTimeApi,
     ],
   );
 };

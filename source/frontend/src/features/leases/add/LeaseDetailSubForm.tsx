@@ -129,7 +129,7 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
         />
       </SectionField>
       {projectProducts !== undefined && (
-        <SectionField label="Product" labelWidth={{ xs: 3 }}>
+        <SectionField label="Product" labelWidth={{ xs: 4 }}>
           <Select
             field="productId"
             options={projectProducts.map<SelectOption>(x => {

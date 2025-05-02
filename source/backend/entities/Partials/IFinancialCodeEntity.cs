@@ -21,4 +21,21 @@ namespace Pims.Dal.Entities
 
         #endregion
     }
+
+    public interface IFinancialCodeEntityHist
+    {
+        #region Properties
+
+        string Code { get; set; }
+
+        string Description { get; set; }
+
+        int? DisplayOrder { get; set; }
+
+        DateTime EffectiveDate { get; set; }
+
+        DateTime? ExpiryDate { get; set; }
+
+        #endregion
+    }
 }

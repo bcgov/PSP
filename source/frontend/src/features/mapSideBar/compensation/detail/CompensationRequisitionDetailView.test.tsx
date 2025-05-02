@@ -48,7 +48,8 @@ describe('Compensation Detail View Component', () => {
     const component = render(
       <CompensationRequisitionDetailView
         fileType={renderOptions?.props?.fileType ?? ApiGen_CodeTypes_FileTypes.Acquisition}
-        file={renderOptions?.props?.file ?? mockAcquisitionFileResponse()}
+        fileProduct={renderOptions?.props?.fileProduct ?? mockAcquisitionFileResponse().product}
+        fileProject={renderOptions?.props?.fileProject ?? mockAcquisitionFileResponse().project}
         compensation={renderOptions?.props?.compensation ?? getMockApiDefaultCompensation()}
         compensationProperties={
           renderOptions?.props?.compensationProperties ?? getMockCompensationPropertiesReq()
@@ -150,10 +151,8 @@ describe('Compensation Detail View Component', () => {
     const { queryByTitle } = await setup({
       claims: [Claims.COMPENSATION_REQUISITION_VIEW],
       props: {
-        file: {
-          ...acquisition,
-          fileStatusTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_AcquisitionStatusTypes.ACTIVE),
-        },
+        fileProduct: { ...acquisition.product },
+        fileProject: { ...acquisition.project },
         compensation: { ...mockFinalCompensation, isDraft: true },
       },
     });
@@ -186,10 +185,8 @@ describe('Compensation Detail View Component', () => {
     const { queryByTitle, getByTestId } = await setup({
       claims: [Claims.COMPENSATION_REQUISITION_EDIT],
       props: {
-        file: {
-          ...acquisition,
-          fileStatusTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_AcquisitionStatusTypes.COMPLT),
-        },
+        fileProduct: { ...acquisition.product },
+        fileProject: { ...acquisition.project },
         compensation: { ...mockFinalCompensation, isDraft: false },
       },
     });
@@ -206,10 +203,8 @@ describe('Compensation Detail View Component', () => {
     const { queryByTitle, getByTestId } = await setup({
       claims: [Claims.COMPENSATION_REQUISITION_EDIT],
       props: {
-        file: {
-          ...acquisition,
-          fileStatusTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_AcquisitionStatusTypes.DRAFT),
-        },
+        fileProduct: { ...acquisition.product },
+        fileProject: { ...acquisition.project },
         compensation: { ...mockFinalCompensation, isDraft: false },
         isFileFinalStatus: true,
       },
@@ -238,7 +233,6 @@ describe('Compensation Detail View Component', () => {
       props: {
         compensation: getMockApiCompensationWithProperty(),
         compensationProperties: getMockCompensationPropertiesReq(),
-        file: mockAcquisitionFileResponse(),
       },
     });
 
