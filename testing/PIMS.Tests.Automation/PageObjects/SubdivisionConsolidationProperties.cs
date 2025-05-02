@@ -324,14 +324,14 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.Equal("A property that the user is trying to select has already been added to the selected properties list", sharedModals.ToastifyText());
         }
 
-        public void VerifyMissingParentMessage()
+        public void VerifyMissingParentMessageModal()
         {
             WaitUntilVisible(subconModalWindow);
             Assert.Equal("Error", sharedModals.ModalHeader());
             Assert.Equal("Only properties that are part of the Core Inventory (owned) can be subdivided/consolidated. This property is not in core inventory within PIMS.", sharedModals.ModalContent());
         }
 
-        public void VerifyDisposedParentErrorMessage()
+        public void VerifyMissingParentErrorMessage()
         {
             WaitUntilVisible(consolidationChooseParentsErrorMsg);
             AssertTrueIsDisplayed(consolidationChooseParentsErrorMsg);

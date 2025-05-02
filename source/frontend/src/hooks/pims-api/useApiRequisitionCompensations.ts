@@ -6,6 +6,7 @@ import { ApiGen_Concepts_CompensationFinancial } from '@/models/api/generated/Ap
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { ApiGen_Concepts_CompReqAcqPayee } from '@/models/api/generated/ApiGen_Concepts_CompReqAcqPayee';
 import { ApiGen_Concepts_CompReqLeasePayee } from '@/models/api/generated/ApiGen_Concepts_CompReqLeasePayee';
+import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
 
 export const getCompensationRequisitionApi = (compensationId: number) =>
   CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<ApiGen_Concepts_CompensationRequisition>(
@@ -61,4 +62,41 @@ export const getCompensationRequisitionAcqPayeesApi = (compensationId: number) =
 export const getCompensationRequisitionLeasePayeesApi = (compensationId: number) =>
   CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<ApiGen_Concepts_CompReqLeasePayee[]>(
     `/compensation-requisitions/${compensationId}/lease-payees`,
+  );
+
+export const getCompensationRequisitionAtTimeApi = (compensationId: number, time: string) =>
+  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<ApiGen_Concepts_CompensationRequisition>(
+    `/compensation-requisitions/${compensationId}/historical?time=${time}`,
+  );
+
+export const getCompensationRequisitionAcqPropertiesAtTimeApi = (
+  compensationId: number,
+  time: string,
+) =>
+  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<ApiGen_Concepts_AcquisitionFileProperty[]>(
+    `/compensation-requisitions/acquisition/${compensationId}/properties/historical?time=${time}`,
+  );
+
+export const getCompensationRequisitionLeasePropertiesAtTimeApi = (
+  compensationId: number,
+  time: string,
+) =>
+  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<ApiGen_Concepts_PropertyLease[]>(
+    `/compensation-requisitions/lease/${compensationId}/properties/historical?time=${time}`,
+  );
+
+export const getCompensationRequisitionAcqPayeesAtTimeApi = (
+  compensationId: number,
+  time: string,
+) =>
+  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<ApiGen_Concepts_CompReqAcqPayee[]>(
+    `/compensation-requisitions/${compensationId}/acquisition-payees/historical?time=${time}`,
+  );
+
+export const getCompensationRequisitionLeasePayeesAtTimeApi = (
+  compensationId: number,
+  time: string,
+) =>
+  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<ApiGen_Concepts_CompReqLeasePayee[]>(
+    `/compensation-requisitions/${compensationId}/lease-payees/historical?time=${time}`,
   );

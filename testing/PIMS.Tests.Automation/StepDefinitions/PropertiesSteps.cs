@@ -245,7 +245,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Look for a non-inventory property
             PopulateSearchProperty(rowNumber);
-            searchProperties.SearchPropertyByAddressMap(searchProperty.Address);
+            searchProperties.SearchPropertyByPID(searchProperty.PID);
 
             //Validate that the result gives only one pin
             Assert.True(searchProperties.PropertiesMapFoundCount() == 1);
@@ -708,9 +708,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 propertyActivity.ManagementPropertyActivityTotalGST = ExcelDataContext.ReadData(i, "ManagementPropertyActivityTotalGST");
                 propertyActivity.ManagementPropertyActivityTotalPST = ExcelDataContext.ReadData(i, "ManagementPropertyActivityTotalPST");
                 propertyActivity.ManagementPropertyActivityGrandTotal = ExcelDataContext.ReadData(i, "ManagementPropertyActivityGrandTotal");
-
-                System.Diagnostics.Debug.WriteLine("PropertyActivityInvoiceStartRow: " + propertyActivity.ManagementPropertyActivityInvoicesStartRow);
-                System.Diagnostics.Debug.WriteLine("PropertyActivityInvoiceCount: " + propertyActivity.ManagementPropertyActivityInvoicesCount);
 
                 if (propertyActivity.ManagementPropertyActivityInvoicesStartRow != 0 && propertyActivity.ManagementPropertyActivityInvoicesCount != 0)
                     PopulateManagementActivitiesInvoiceCollection(propertyManagement.ManagementPropertyActivitiesStartRow, propertyManagement.ManagementPropertyActivitiesCount, propertyActivity.ManagementPropertyActivityInvoices);

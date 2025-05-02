@@ -8,7 +8,8 @@ namespace Pims.Api.Models.Concepts.Organization
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.PimsOrganization, OrganizationModel>()
+            config
+                .NewConfig<Entity.PimsOrganization, OrganizationModel>()
                 .Map(dest => dest.Id, src => src.OrganizationId)
                 .Map(dest => dest.ParentOrganizationId, src => src.PrntOrganizationId)
                 .Map(dest => dest.RegionCode, src => src.RegionCode)
@@ -28,7 +29,8 @@ namespace Pims.Api.Models.Concepts.Organization
                 .Map(dest => dest.ParentOrganization, src => src.PrntOrganization)
                 .Inherits<Entity.IBaseEntity, BaseConcurrentModel>();
 
-            config.NewConfig<OrganizationModel, Entity.PimsOrganization>()
+            config
+                .NewConfig<OrganizationModel, Entity.PimsOrganization>()
                 .Map(dest => dest.OrganizationId, src => src.Id)
                 .Map(dest => dest.PrntOrganizationId, src => src.ParentOrganizationId)
                 .Map(dest => dest.RegionCode, src => src.RegionCode)
@@ -46,6 +48,22 @@ namespace Pims.Api.Models.Concepts.Organization
                 .Map(dest => dest.PimsOrganizationAddresses, src => src.OrganizationAddresses)
                 .Map(dest => dest.PimsPersonOrganizations, src => src.OrganizationPersons)
                 .Inherits<BaseConcurrentModel, Entity.IBaseEntity>();
+
+            config
+                .NewConfig<Entity.PimsOrganizationHist, Entity.PimsOrganization>()
+                .Map(dest => dest.OrganizationId, src => src.OrganizationId)
+                .Map(dest => dest.PrntOrganizationId, src => src.PrntOrganizationId)
+                .Map(dest => dest.RegionCode, src => src.RegionCode)
+                .Map(dest => dest.DistrictCode, src => src.DistrictCode)
+                .Map(dest => dest.OrganizationTypeCode, src => src.OrganizationTypeCode)
+                .Map(dest => dest.OrgIdentifierTypeCode, src => src.OrgIdentifierTypeCode)
+                .Map(dest => dest.OrganizationIdentifier, src => src.OrganizationIdentifier)
+                .Map(dest => dest.OrganizationName, src => src.OrganizationName)
+                .Map(dest => dest.OrganizationAlias, src => src.OrganizationAlias)
+                .Map(dest => dest.IncorporationNumber, src => src.IncorporationNumber)
+                .Map(dest => dest.Website, src => src.Website)
+                .Map(dest => dest.Comment, src => src.Comment)
+                .Map(dest => dest.IsDisabled, src => src.IsDisabled);
         }
     }
 }
