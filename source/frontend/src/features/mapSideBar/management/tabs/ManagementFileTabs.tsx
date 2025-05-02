@@ -10,8 +10,10 @@ import NoteListView from '@/features/notes/list/NoteListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
+import { isValidId } from '@/utils';
 
 import { SideBarContext } from '../../context/sidebarContext';
+import ActivitiesTab from './activities/ActivitiesTab';
 import ManagementSummaryView from './fileDetails/detail/ManagementSummaryView';
 
 export interface IManagementFileTabsProps {
@@ -52,7 +54,13 @@ export const ManagementFileTabs: React.FC<IManagementFileTabsProps> = ({
     name: 'File Details',
   });
 
-  if (managementFile?.id && hasClaim(Claims.DOCUMENT_VIEW)) {
+  tabViews.push({
+    content: <ActivitiesTab managementFile={managementFile} />,
+    key: FileTabType.ACTIVITIES,
+    name: 'Activities',
+  });
+
+  if (isValidId(managementFile?.id) && hasClaim(Claims.DOCUMENT_VIEW)) {
     tabViews.push({
       content: (
         <DocumentsTab
@@ -66,7 +74,7 @@ export const ManagementFileTabs: React.FC<IManagementFileTabsProps> = ({
     });
   }
 
-  if (managementFile?.id && hasClaim(Claims.NOTE_VIEW)) {
+  if (isValidId(managementFile?.id) && hasClaim(Claims.NOTE_VIEW)) {
     tabViews.push({
       content: (
         <NoteListView
