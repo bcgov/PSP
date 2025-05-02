@@ -410,10 +410,10 @@ namespace Pims.Api.Services
             DeleteQueuedDocumentItem(currentDocument.DocumentId);
 
             _managementFileDocumentRepository.DeleteManagementFileDocument(managementFileDocument);
-            DeleteDocument(currentDocument);
-
             _documentRepository.SaveChanges();
-            transaction.Commit();
+
+            DeleteDocument(currentDocument);
+            await transaction.CommitAsync();
 
             return result;
         }
