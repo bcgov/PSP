@@ -1,10 +1,7 @@
 import {
-  fromApiOrganization,
-  fromApiPerson,
+  fromApiPersonOrApiOrganization,
   IContactSearchResult,
 } from '@/interfaces/IContactSearchResult';
-import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
-import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
 import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
 import { ApiGen_Concepts_PropertyActivityInvoice } from '@/models/api/generated/ApiGen_Concepts_PropertyActivityInvoice';
 import { ApiGen_Concepts_PropertyActivityInvolvedParty } from '@/models/api/generated/ApiGen_Concepts_PropertyActivityInvolvedParty';
@@ -230,16 +227,4 @@ export class PropertyActivityFormModel {
     }
     return formModel;
   }
-}
-
-function fromApiPersonOrApiOrganization(
-  person: ApiGen_Concepts_Person | null,
-  organization: ApiGen_Concepts_Organization | null,
-): IContactSearchResult | null {
-  if (person !== null) {
-    return fromApiPerson(person);
-  } else if (organization !== null) {
-    return fromApiOrganization(organization);
-  }
-  return null;
 }
