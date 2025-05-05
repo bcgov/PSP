@@ -76,7 +76,7 @@ export const MultiplePropertyPopupView: React.FC<
             }}
             index={index}
           >
-            {property.isStrataLot && <Col>Strata Lot</Col>}
+            {property.isStrataLot && <Col>Common Property</Col>}
             {property.pid && <Col>PID: {property.pid} </Col>}
           </StyledRow>
         ))}
