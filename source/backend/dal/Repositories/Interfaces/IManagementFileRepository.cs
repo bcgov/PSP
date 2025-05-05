@@ -8,6 +8,8 @@ namespace Pims.Dal.Repositories
     {
         PimsManagementFile GetById(long id);
 
+        PimsManagementFile GetByName(string name);
+
         PimsManagementFile Add(PimsManagementFile managementFile);
 
         PimsManagementFile Update(long managementFileId, PimsManagementFile managementFile);

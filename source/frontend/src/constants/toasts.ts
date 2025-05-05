@@ -9,9 +9,9 @@ import { MAP_UNAVAILABLE_STR, QUERY_MAP } from './strings';
 
 /** These toasts are used by the update user api */
 const USER_UPDATING_TOAST_ID = 'UPDATING_USER';
-const USER_UPDATING = () => toast.dark('Updating User...', { toastId: USER_UPDATING_TOAST_ID });
+const USER_UPDATING = () => toast.info('Updating User...', { toastId: USER_UPDATING_TOAST_ID });
 const USER_UPDATED_TOAST_ID = 'USER_UPDATED';
-const USER_UPDATED = () => toast.dark('User updated', { toastId: USER_UPDATED_TOAST_ID });
+const USER_UPDATED = () => toast.info('User updated', { toastId: USER_UPDATED_TOAST_ID });
 const USER_ERROR_TOAST_ID = 'USER_ERROR';
 const USER_ERROR = () => toast.error('Failed to update User', { toastId: USER_ERROR_TOAST_ID });
 export const user = {
@@ -25,7 +25,7 @@ export const user = {
 
 /** These toasts are used to display bc data warehouse loading */
 const LAYER_DATA_LOADING_ID = 'LOADING_LAYER_DATA';
-const LAYER_DATA_LOADING = () => toast.dark(QUERY_MAP, { toastId: LAYER_DATA_LOADING_ID });
+const LAYER_DATA_LOADING = () => toast.info(QUERY_MAP, { toastId: LAYER_DATA_LOADING_ID });
 const LAYER_DATA_ERROR_ID = 'LAYER_DATA_ERROR_ID';
 const LAYER_DATA_ERROR = () => toast.error(MAP_UNAVAILABLE_STR, { toastId: LAYER_DATA_ERROR_ID });
 export const layerData = {

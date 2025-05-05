@@ -84,6 +84,8 @@ export const useApiLeases = () => {
         api.get<ApiGen_Concepts_LeaseStakeholderType[]>(`/leases/stakeholdertypes`),
       getAllLeaseFileTeamMembers: () =>
         api.get<ApiGen_Concepts_LeaseFileTeam[]>(`/leases/team-members`),
+      getLeaseAtTime: (leaseId: number, time: string) =>
+        api.get<ApiGen_Concepts_Lease>(`/leases/${leaseId}/historical?time=${time}`),
     }),
     [api],
   );

@@ -1,7 +1,6 @@
 ﻿using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
-using System.Data;
 
 
 namespace PIMS.Tests.Automation.StepDefinitions
@@ -76,8 +75,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 for (var k = documentStartIdx; k <= documentEndIdx; k++)
                 {
                     digitalDocumentsTab.InsertDocumentTypeStatus(digitalDocumentList[k], documentRoundIdx);
-                    //digitalDocumentsTab.VerifyDocumentFields(digitalDocumentList[k].DocumentType);
-                    //digitalDocumentsTab.InsertDocumentTypeDetails(digitalDocumentList[k]);
                     documentRoundIdx++;
                 }
                     
@@ -191,6 +188,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 digitalDocumentsTab.VerifyDocumentDetailsViewForm(digitalDocumentList[m]);
                 digitalDocumentsTab.CloseDigitalDocumentViewDetails();
             }
+
+            //Set order back to default
+            digitalDocumentsTab.OrderByDocumentFileType();
+            digitalDocumentsTab.OrderByDocumentFileType();
         }
 
         [StepDefinition(@"I edit a Digital Document for a ""(.*)"" from row number (.*)")]
@@ -290,7 +291,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Filter Documents by Name
             digitalDocumentsTab.FilterByName("PSP");
-            //Assert.True(digitalDocumentsTab.TotalSearchDocuments() > 0);
+            Assert.True(digitalDocumentsTab.TotalSearchDocuments() > 0);
 
             //Filter Documents by Status
             digitalDocumentsTab.FilterByStatus(digitalDocumentList[0].DocumentStatus);

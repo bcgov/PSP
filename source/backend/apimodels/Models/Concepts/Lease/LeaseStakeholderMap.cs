@@ -32,6 +32,16 @@ namespace Pims.Api.Models.Concepts.Lease
                 .Map(dest => dest.LeaseStakeholderTypeCode, src => src.StakeholderTypeCode.Id)
                 .Map(dest => dest.LessorTypeCode, src => src.LessorType.Id)
                 .Inherits<BaseAuditModel, Entity.IBaseAppEntity>();
+
+            config.NewConfig<Entity.PimsLeaseStakeholderHist, Entity.PimsLeaseStakeholder>()
+                .Map(dest => dest.LeaseStakeholderId, src => src.LeaseStakeholderId)
+                .Map(dest => dest.LeaseId, src => src.LeaseId)
+                .Map(dest => dest.OrganizationId, src => src.OrganizationId)
+                .Map(dest => dest.PersonId, src => src.PersonId)
+                .Map(dest => dest.PrimaryContactId, src => src.PrimaryContactId)
+                .Map(dest => dest.Note, src => src.Note)
+                .Map(dest => dest.LeaseStakeholderTypeCode, src => src.LeaseStakeholderTypeCode)
+                .Map(dest => dest.LessorTypeCode, src => src.LessorTypeCode);
         }
     }
 }

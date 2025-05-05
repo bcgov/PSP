@@ -15,7 +15,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Lease Header Elements
         private readonly By licenseHeaderNbrLabel = By.XPath("//label[contains(text(),'Lease/Licence #')]");
-        private readonly By licenseHeaderNbrContent = By.XPath("/html[1]/body[1]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/span[1]");
+        private readonly By licenseHeaderNbrContent = By.XPath("//h1[contains(text(),'Lease / Licence')]/parent::div/parent::div/following-sibling::div/div/div/div/div/div[1]/div[2]/span[1]");
         private readonly By licenseHeaderAccountType = By.XPath("//label[contains(text(),'Lease/Licence #')]/parent::div/following-sibling::div/span[2]");
         private readonly By licenseHeaderProperty = By.XPath("//h1[contains(text(),'Lease / Licence')]/parent::div/parent::div/following-sibling::div[2]/div[1]/div/div/div/div[2]/div/label[contains(text(),'Property')]");
         private readonly By licenseHeaderPropertyContent = By.XPath("//h1[contains(text(),'Lease / Licence')]/parent::div/parent::div/following-sibling::div[2]/div[1]/div/div/div/div[2]/div/label[contains(text(),'Property')]/parent::div/following-sibling::div/span");
@@ -82,7 +82,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By licenseDetailsTerminateDateInput = By.Id("datepicker-terminationDate");
         private readonly By licenseDetailsTerminateReasonContent = By.XPath("//label[contains(text(),'Termination reason')]/parent::div/following-sibling::div");
         private readonly By licenseDetailsViewTerminateDateContent = By.XPath("//div[contains(text(),'Original Agreement')]/parent::div/parent::h2/following-sibling::div/div[6]/div[2]");
-        private readonly By licenseDetailsViewTerminateCancelReason = By.XPath("//label[contains(text(),'Termination reason')]/parent::div/following-sibling::div");
+        private readonly By licenseDetailsViewTerminateReason = By.XPath("//label[contains(text(),'Termination reason')]/parent::div/following-sibling::div");
+        private readonly By licenseDetailsViewCancelReason = By.XPath("//label[contains(text(),'Cancellation reason')]/parent::div/following-sibling::div");
 
         //Create/View Renewal Options Elements
         private readonly By licenseDetailsRenewalTitle = By.XPath("//h2/div/div[contains(text(),'Renewal Option')]");
@@ -607,6 +608,15 @@ namespace PIMS.Tests.Automation.PageObjects
 
                     Wait();
                 }
+                else if (sharedModals.ModalHeader() == "Confirm status change")
+                {
+                    Assert.Equal("Confirm status change", sharedModals.ModalHeader());
+                    Assert.Contains("If you save it, only the administrator can turn it back on. You will still see it in the management table.", sharedModals.ConfirmationModalParagraph1());
+                    Assert.Equal("Do you want to acknowledge and proceed?", sharedModals.ConfirmationModalParagraph2());
+                    sharedModals.ModalClickOKBttn();
+
+                    Wait();
+                }
             }
         }
 
@@ -832,14 +842,14 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueContentEquals(licenseDetailsViewTerminateDateContent, TransformDateFormat(lease.LeaseTerminationDate));
                 AssertTrueIsDisplayed(licenseDetailsTerminatedReasonLabel);
                 AssertTrueContentEquals(licenseDetailsTerminateReasonContent, lease.LeaseTerminationReason);
-                AssertTrueContentEquals(licenseDetailsViewTerminateCancelReason, lease.LeaseTerminationReason);
+                AssertTrueContentEquals(licenseDetailsViewTerminateReason, lease.LeaseTerminationReason);
             }
 
             if (lease.LeaseCancellationReason != "")
             {
                 AssertTrueIsDisplayed(licenseDetailsCancelReasonLabel);
                 AssertTrueContentEquals(licenseDetailsCancelContent, lease.LeaseCancellationReason);
-                AssertTrueContentEquals(licenseDetailsViewTerminateCancelReason, lease.LeaseCancellationReason);
+                AssertTrueContentEquals(licenseDetailsViewCancelReason, lease.LeaseCancellationReason);
             }
 
             //RENEWALS

@@ -169,6 +169,8 @@ namespace Pims.Api.Models.Concepts.Lease
 
         public bool IsExpired { get; set; }
 
+        public long? ProjectId { get; set; }
+
         /// <summary>
         /// get/set - The project associated with this lease.
         /// </summary>

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Pims.Dal.Entities;
@@ -29,5 +30,7 @@ namespace Pims.Dal.Repositories
         IList<PimsProjectDocument> GetAllByDocument(long documentId);
 
         void DeleteProjectDocument(long projectDocumentId);
+
+        PimsProject GetProjectAtTime(long projectId, DateTime time);
     }
 }
