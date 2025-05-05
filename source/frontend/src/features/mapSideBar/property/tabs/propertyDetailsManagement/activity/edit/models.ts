@@ -131,6 +131,7 @@ export class PropertyActivityFormModel {
   toApi(propertyId: number): ApiGen_Concepts_PropertyActivity {
     const apiActivity: ApiGen_Concepts_PropertyActivity = {
       id: this.id,
+      managementFileId: null,
       activityTypeCode: toTypeCodeNullable(this.activityTypeCode),
       activitySubtypeCode: toTypeCodeNullable(this.activitySubtypeCode),
       activityStatusTypeCode: toTypeCodeNullable(this.activityStatusCode),
