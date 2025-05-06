@@ -6,7 +6,7 @@ import { exists } from '@/utils';
 import AppRoute from '@/utils/AppRoute';
 
 import { ManagementActivityEditContainer } from '../management/tabs/activities/edit/ManagementActivityEditContainer';
-import { PropertyActivityEditForm } from '../property/tabs/propertyDetailsManagement/activity/edit/PropertyActivityEditForm';
+import { ManagementActivityEditForm } from '../management/tabs/activities/edit/ManagementActivityEditForm';
 
 interface IManagementFileActivityRouterProps {
   setShowActionBar: (show: boolean) => void;
@@ -46,7 +46,7 @@ export const ManagementFileActivityRouter: React.FunctionComponent<
           <ManagementActivityEditContainer
             managementFileId={Number(match.params.managementFileId)}
             onClose={onClose}
-            View={PropertyActivityEditForm}
+            View={ManagementActivityEditForm}
           />
         )}
         claim={Claims.PROPERTY_VIEW}

@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import { useManagementActivityRepository } from '@/hooks/repositories/useManagementActivityRepository';
+import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
 import { ApiGen_Concepts_PropertyActivitySubtype } from '@/models/api/generated/ApiGen_Concepts_PropertyActivitySubtype';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
@@ -21,19 +22,22 @@ export const ManagementActivityEditContainer: React.FunctionComponent<
   IManagementActivityEditContainerProps
 > = ({ managementFileId, activityId, onClose, View }) => {
   const { getSystemConstant } = useSystemConstants();
-
   const history = useHistory();
-
-  const { setStaleLastUpdatedBy } = useContext(SideBarContext);
-
   const [show, setShow] = useState(true);
-
   const [subtypes, setSubtypes] = useState<ApiGen_Concepts_PropertyActivitySubtype[]>([]);
 
   const {
     getActivitySubtypes: { execute: getSubtypes, loading: getSubtypesLoading },
     addManagementActivity: { execute: addManagementActivity, loading: addActivityLoading },
   } = useManagementActivityRepository();
+
+  const { file, fileLoading, setStaleLastUpdatedBy } = useContext(SideBarContext);
+
+  if (!isValidId(file?.id) && fileLoading === false) {
+    throw new Error('Unable to determine id of current file.');
+  }
+
+  const castedFile = file as unknown as ApiGen_Concepts_ManagementFile;
 
   // Load the subtypes
   const fetchSubtypes = useCallback(async () => {
@@ -76,9 +80,9 @@ export const ManagementActivityEditContainer: React.FunctionComponent<
     }
   };
 
-  return (
+  return exists(castedFile) && isValidId(castedFile?.id) ? (
     <View
-      propertyId={managementFileId}
+      managementFile={castedFile}
       subtypes={subtypes}
       gstConstant={gstDecimal}
       pstConstant={pstDecimal}
@@ -89,5 +93,5 @@ export const ManagementActivityEditContainer: React.FunctionComponent<
       onSave={onSave}
       onClose={onClose}
     />
-  );
+  ) : null;
 };

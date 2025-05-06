@@ -18,8 +18,8 @@ export class ManagementActivityFormModel {
   requestedDate = '';
   completionDate = '';
   description = '';
-  ministryContacts: (IContactSearchResult | null)[] = [null];
   requestedSource = '';
+  ministryContacts: (IContactSearchResult | null)[] = [null];
   involvedParties: (IContactSearchResult | null)[] = [null];
   serviceProvider: IContactSearchResult | null = null;
   invoices: ActivityInvoiceFormModel[] = [];
@@ -39,10 +39,10 @@ export class ManagementActivityFormModel {
     this.rowVersion = rowVersion;
   }
 
-  toApi(propertyId: number): ApiGen_Concepts_PropertyActivity {
+  toApi(): ApiGen_Concepts_PropertyActivity {
     const apiActivity: ApiGen_Concepts_PropertyActivity = {
       id: this.id ?? 0,
-      managementFileId: null,
+      managementFileId: this.managementFileId,
       activityTypeCode: toTypeCodeNullable(this.activityTypeCode),
       activitySubtypeCode: toTypeCodeNullable(this.activitySubtypeCode),
       activityStatusTypeCode: toTypeCodeNullable(this.activityStatusCode),
@@ -76,29 +76,19 @@ export class ManagementActivityFormModel {
         .map<ApiGen_Concepts_PropertyMinistryContact>(x => {
           return {
             id: 0,
-            personId: x.personId || 0,
+            personId: x.personId ?? 0,
             person: null,
             propertyActivityId: this.id,
             propertyActivity: null,
             ...getEmptyBaseAudit(0),
           };
         }),
-      activityProperties: [],
+      activityProperties: this.activityProperties
+        .filter(exists)
+        .map<ApiGen_Concepts_PropertyActivityProperty>(x => x.toApi()),
       invoices: this.invoices.map(i => i.toApi(this.id)),
-
       ...getEmptyBaseAudit(this.rowVersion),
     };
-
-    if (this.activityProperties.length > 0) {
-      apiActivity.activityProperties =
-        this.activityProperties.map<ApiGen_Concepts_PropertyActivityProperty>(x => x.toApi());
-    } else {
-      const newProperty = new ActivityPropertyFormModel();
-      newProperty.propertyId = propertyId;
-      newProperty.propertyActivityId = this.id;
-
-      apiActivity.activityProperties = [newProperty.toApi()];
-    }
 
     return apiActivity;
   }
