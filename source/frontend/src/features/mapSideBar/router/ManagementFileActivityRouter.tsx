@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { matchPath, Switch, useHistory, useLocation, useRouteMatch } from 'react-router';
+import { matchPath, Switch, useHistory, useLocation } from 'react-router';
 
 import { Claims } from '@/constants';
 import { exists } from '@/utils';
@@ -17,7 +17,6 @@ export const ManagementFileActivityRouter: React.FunctionComponent<
 > = React.memo(({ setShowActionBar }) => {
   const location = useLocation();
   const history = useHistory();
-  const match = useRouteMatch();
 
   const matched = matchPath(location.pathname, {
     path: '/mapview/sidebar/management/*/activities/*',
@@ -33,11 +32,6 @@ export const ManagementFileActivityRouter: React.FunctionComponent<
     }
   }, [matched, setShowActionBar]);
 
-  const onClose = () => {
-    const parentPath = match?.url.substring(0, match?.url.lastIndexOf('/')) || '/';
-    history.push(parentPath);
-  };
-
   return (
     <Switch>
       <AppRoute
@@ -45,7 +39,10 @@ export const ManagementFileActivityRouter: React.FunctionComponent<
         customRender={({ match }) => (
           <ManagementActivityEditContainer
             managementFileId={Number(match.params.managementFileId)}
-            onClose={onClose}
+            onClose={() => {
+              const parentPath = match?.url.substring(0, match?.url.lastIndexOf('/')) || '/';
+              history.push(parentPath);
+            }}
             View={ManagementActivityEditForm}
           />
         )}
