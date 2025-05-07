@@ -388,13 +388,28 @@ namespace PIMS.Tests.Automation.PageObjects
             ButtonElement("Save");
 
             Wait();
-            while (webDriver.FindElements(dispositionFileConfirmationModal).Count() > 0 && sharedModals.ModalHeader() == "User Override Required")
+            while (webDriver.FindElements(dispositionFileConfirmationModal).Count() > 0)
             {
-                if(sharedModals.ModalContent().Contains("You are changing this file to a non-editable state"))
+                if (sharedModals.ModalContent().Contains("You are changing this file to a non-editable state"))
+                {
+                    Assert.Equal("User Override Required", sharedModals.ModalHeader());
                     Assert.Equal("You are changing this file to a non-editable state. (Only system administrators can edit the file when set to Archived, Cancelled or Completed state). Do you wish to continue?", sharedModals.ModalContent());
 
-                else if(sharedModals.ModalContent().Contains("The Ministry region has been changed"))
+                }
+                else if (sharedModals.ModalContent().Contains("The Ministry region has been changed"))
+                {
+                    Assert.Equal("User Override Required", sharedModals.ModalHeader());
                     Assert.Equal("The Ministry region has been changed, this will result in a change to the file's prefix. This requires user confirmation.", sharedModals.ModalContent());
+                }
+                else if (sharedModals.ModalHeader() == "Confirm status change")
+                {
+                    Assert.Equal("Confirm status change", sharedModals.ModalHeader());
+                    Assert.Contains("If you save it, only the administrator can turn it back on. You will still see it in the management table.", sharedModals.ConfirmationModalParagraph1());
+                    Assert.Equal("Do you want to acknowledge and proceed?", sharedModals.ConfirmationModalParagraph2());
+                    sharedModals.ModalClickOKBttn();
+
+                    Wait();
+                }
 
                 sharedModals.ModalClickOKBttn();
                 Wait();

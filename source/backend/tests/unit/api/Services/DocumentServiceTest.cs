@@ -4,30 +4,28 @@ using System.Diagnostics.CodeAnalysis;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Moq;
-using Pims.Core.Api.Exceptions;
-
+using Pims.Api.Models;
+using Pims.Api.Models.CodeTypes;
+using Pims.Api.Models.Concepts.Document;
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
+using Pims.Api.Models.Mayan.Metadata;
+using Pims.Api.Models.Requests.Document.UpdateMetadata;
+using Pims.Api.Models.Requests.Document.Upload;
+using Pims.Api.Models.Requests.Http;
 using Pims.Api.Repositories.Mayan;
 using Pims.Api.Services;
 using Pims.Av;
+using Pims.Core.Api.Exceptions;
+using Pims.Core.Exceptions;
+using Pims.Core.Security;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
-using Pims.Core.Security;
 using Xunit;
-
-using Pims.Api.Models.Concepts.Document;
-using Pims.Api.Models.Mayan.Metadata;
-using Pims.Api.Models.Requests.Http;
-using Pims.Api.Models.CodeTypes;
-using Pims.Api.Models.Requests.Document.Upload;
-using Pims.Api.Models.Requests.Document.UpdateMetadata;
-using Microsoft.Extensions.Configuration;
-using Pims.Core.Exceptions;
-using Pims.Api.Models;
 
 namespace Pims.Api.Test.Services
 {
@@ -46,6 +44,7 @@ namespace Pims.Api.Test.Services
                 new object[] {DocumentRelationType.AcquisitionFiles, "ACQUIRE"},
                 new object[] {DocumentRelationType.Leases, "LEASLIC"},
                 new object[] {DocumentRelationType.Projects, "PROJECT"},
+                new object[] {DocumentRelationType.ManagementActivities, "MANAGEMENT"},
                 new object[] {DocumentRelationType.ManagementFiles, "MANAGEMENT"},
                 new object[] {DocumentRelationType.DispositionFiles, "DISPOSE"},
             };
@@ -108,6 +107,7 @@ namespace Pims.Api.Test.Services
             // Assert
             documentTypeRepository.Verify(x => x.GetByCategory(category), Times.Once);
         }
+
         [Fact]
         public void UploadDocumentAsync_UploadRequest_ShouldThrowException_NotAuthorized()
         {
@@ -452,7 +452,8 @@ namespace Pims.Api.Test.Services
             documentRepository.Setup(x => x.TryGet(It.IsAny<long>()))
                 .Returns(new PimsDocument() { DocumentTypeId = 1 });
 
-            documentTypeRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsDocumentTyp() {
+            documentTypeRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsDocumentTyp()
+            {
                 DocumentTypeId = 100,
                 MayanId = 200
             });

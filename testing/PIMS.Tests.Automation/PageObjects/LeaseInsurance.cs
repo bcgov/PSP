@@ -737,7 +737,6 @@ namespace PIMS.Tests.Automation.PageObjects
         public int TotalInsuranceCount()
         {
             Wait();
-            System.Diagnostics.Debug.WriteLine(insuranceViewTotal);
             return webDriver.FindElements(insuranceViewTotal).Count;
         }
             

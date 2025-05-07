@@ -11,6 +11,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Search Research File Elements
         private By searchResearchRegionInput = By.Id("input-regionCode");
         private By searchResearchBySelect = By.Id("input-researchSearchBy");
+        private By searchResearchByPID = By.Id("input-pid");
         private By searchResearchNameInput = By.Id("input-name");
         private By searchResearchFileNbrInput = By.Id("input-rfileNumber");
         private By searchResearchStatusSelect = By.Id("input-researchFileStatusTypeCode");
@@ -239,7 +240,9 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilClickable(searchResearchFileResetButton);
             webDriver.FindElement(searchResearchFileResetButton).Click();
 
-            WaitUntilVisible(searchResearchNameInput);
+            WaitUntilVisible(searchResearchByPID);
+
+            ChooseSpecificSelectOption(searchResearchBySelect, "Research file name");
             webDriver.FindElement(searchResearchNameInput).SendKeys(name);
             ChooseSpecificSelectOption(searchResearchStatusSelect, status);
             webDriver.FindElement(searchResearchRoadInput).SendKeys(roadName);

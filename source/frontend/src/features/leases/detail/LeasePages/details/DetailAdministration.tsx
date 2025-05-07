@@ -36,17 +36,22 @@ export const DetailAdministration: React.FunctionComponent<
       <Section initiallyExpanded={true} isCollapsable={true} header="Administration">
         <SectionField label="Program" labelWidth={{ xs: 3 }}>
           {lease.programName}
-          {lease.otherProgramType && lease?.programType?.id === 'OTHER' && (
-            <>{lease.otherProgramType}</>
-          )}
         </SectionField>
-        <SectionField label="Account type" labelWidth={{ xs: 3 }}>
+        {lease.programType?.id === 'OTHER' && (
+          <SectionField label="Other program" labelWidth={{ xs: 3 }}>
+            {lease.otherProgramType}
+          </SectionField>
+        )}
+
+        <SectionField label="Type" labelWidth={{ xs: 3 }}>
           {lease.type?.description}
-          {lease.otherType && lease?.type?.id === 'OTHER' && <>{lease.otherType}</>}
         </SectionField>
-        <SectionField label="Receivable to" labelWidth={{ xs: 3 }}>
-          {lease.paymentReceivableType?.description}
-        </SectionField>
+        {lease?.type?.id === 'OTHER' && (
+          <SectionField label="Other type" labelWidth={{ xs: 3 }}>
+            {lease.otherType}
+          </SectionField>
+        )}
+
         <SectionField label="Purpose(s)" labelWidth={{ xs: 3 }}>
           <Multiselect
             disable

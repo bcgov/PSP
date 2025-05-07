@@ -15,6 +15,7 @@ using Pims.Core.Json;
 using Pims.Core.Security;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
+using Pims.Dal.Repositories;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Areas.Acquisition.Controllers
@@ -32,6 +33,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
     {
         #region Variables
         private readonly IAcquisitionFileService _acquisitionService;
+        private readonly IAcquisitionFileRepository _acquisitionRepository;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
         #endregion
@@ -45,9 +47,10 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         /// <param name="mapper"></param>
         /// <param name="logger"></param>
         ///
-        public AcquisitionFileController(IAcquisitionFileService acquisitionService, IMapper mapper, ILogger<AcquisitionFileController> logger)
+        public AcquisitionFileController(IAcquisitionFileService acquisitionService, IAcquisitionFileRepository acquisitionFileRepository, IMapper mapper, ILogger<AcquisitionFileController> logger)
         {
             _acquisitionService = acquisitionService;
+            _acquisitionRepository = acquisitionFileRepository;
             _mapper = mapper;
             _logger = logger;
         }
@@ -290,6 +293,25 @@ namespace Pims.Api.Areas.Acquisition.Controllers
             var subFiles = _acquisitionService.GetAcquisitionSubFiles(id);
 
             return new JsonResult(_mapper.Map<List<AcquisitionFileModel>>(subFiles));
+        }
+
+        [HttpGet("{id:long}/historical")]
+        [Produces("application/json")]
+        [HasPermission(Permissions.AcquisitionFileView)]
+        [ProducesResponseType(typeof(AcquisitionFileModel), 200)]
+        [SwaggerOperation(Tags = new[] { "acquisition" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetAcquisitionAtTime([FromRoute] long id, [FromQuery] DateTime time)
+        {
+            _logger.LogInformation(
+               "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+               nameof(AcquisitionFileController),
+               nameof(GetAcquisitionAtTime),
+               User.GetUsername(),
+               DateTime.Now);
+
+            var pimsAcquisition = _acquisitionRepository.GetAcquisitionAtTime(id, time);
+            return new JsonResult(_mapper.Map<AcquisitionFileModel>(pimsAcquisition));
         }
 
         #endregion

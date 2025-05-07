@@ -35,6 +35,7 @@ namespace Pims.Api.Services
         private readonly ILeaseRepository _leaseRepository;
         private readonly IPropertyActivityDocumentRepository _propertyActivityDocumentRepository;
         private readonly IDispositionFileDocumentRepository _dispositionFileDocumentRepository;
+        private readonly IManagementFileDocumentRepository _managementFileDocumentRepository;
 
         public DocumentFileService(
             ClaimsPrincipal user,
@@ -47,6 +48,7 @@ namespace Pims.Api.Services
             ILeaseRepository leaseRepository,
             IPropertyActivityDocumentRepository propertyActivityDocumentRepository,
             IDispositionFileDocumentRepository dispositionFileDocumentRepository,
+            IManagementFileDocumentRepository managementFileDocumentRepository,
             IDocumentQueueRepository documentQueueRepository)
             : base(user, logger)
         {
@@ -58,13 +60,14 @@ namespace Pims.Api.Services
             _leaseRepository = leaseRepository;
             _propertyActivityDocumentRepository = propertyActivityDocumentRepository;
             _dispositionFileDocumentRepository = dispositionFileDocumentRepository;
+            _managementFileDocumentRepository = managementFileDocumentRepository;
             _documentQueueRepository = documentQueueRepository;
         }
 
         public IList<T> GetFileDocuments<T>(FileType fileType, long fileId)
             where T : PimsFileDocument
         {
-            Logger.LogInformation("Retrieving PIMS documents related to the file of type ${fileType}", fileType);
+            Logger.LogInformation("Retrieving PIMS documents related to the file of type {FileType}", fileType);
             User.ThrowIfNotAuthorized(Permissions.DocumentView);
 
             switch (fileType)
@@ -81,9 +84,12 @@ namespace Pims.Api.Services
                 case FileType.Lease:
                     User.ThrowIfNotAuthorized(Permissions.LeaseView);
                     return _leaseRepository.GetAllLeaseDocuments(fileId).Select(f => f as T).ToArray();
-                case FileType.Management:
+                case FileType.ManagementActivity:
                     User.ThrowIfNotAuthorized(Permissions.ManagementView);
                     return _propertyActivityDocumentRepository.GetAllByPropertyActivity(fileId).Select(f => f as T).ToArray();
+                case FileType.ManagementFile:
+                    User.ThrowIfNotAuthorized(Permissions.ManagementView);
+                    return _managementFileDocumentRepository.GetAllByManagementFile(fileId).Select(f => f as T).ToArray();
                 case FileType.Disposition:
                     User.ThrowIfNotAuthorized(Permissions.DispositionView);
                     return _dispositionFileDocumentRepository.GetAllByDispositionFile(fileId).Select(f => f as T).ToArray();
@@ -202,6 +208,28 @@ namespace Pims.Api.Services
             return;
         }
 
+        public async Task UploadManagementFileDocument(long managementFileId, DocumentUploadRequest uploadRequest)
+        {
+            Logger.LogInformation("Uploading document for single management file");
+            User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.ManagementEdit);
+            ValidateDocumentUpload(uploadRequest);
+
+            PimsDocument pimsDocument = CreatePimsDocument(uploadRequest);
+            _documentQueueRepository.SaveChanges();
+
+            PimsManagementFileDocument newFileDocument = new()
+            {
+                ManagementFileId = managementFileId,
+                DocumentId = pimsDocument.DocumentId,
+            };
+            _managementFileDocumentRepository.AddManagementFileDocument(newFileDocument);
+
+            await GenerateQueuedDocumentItem(pimsDocument.DocumentId, uploadRequest);
+            _documentQueueRepository.CommitTransaction();
+
+            return;
+        }
+
         public async Task UploadDispositionDocument(long dispositionFileId, DocumentUploadRequest uploadRequest)
         {
             Logger.LogInformation("Uploading document for single disposition file");
@@ -243,10 +271,10 @@ namespace Pims.Api.Services
 
             DeleteQueuedDocumentItem(currentDocument.DocumentId);
             _researchFileDocumentRepository.DeleteResearch(researchFileDocument);
-            DeleteDocument(currentDocument);
-
             _documentRepository.SaveChanges();
-            transaction.Commit();
+
+            DeleteDocument(currentDocument);
+            await transaction.CommitAsync();
 
             return result;
         }
@@ -270,10 +298,10 @@ namespace Pims.Api.Services
 
             DeleteQueuedDocumentItem(currentDocument.DocumentId);
             _projectRepository.DeleteProjectDocument(projectDocument.ProjectDocumentId);
-            DeleteDocument(currentDocument);
-
             _documentRepository.SaveChanges();
-            transaction.Commit();
+
+            DeleteDocument(currentDocument);
+            await transaction.CommitAsync();
 
             return result;
         }
@@ -298,11 +326,10 @@ namespace Pims.Api.Services
             DeleteQueuedDocumentItem(acquisitionFileDocument.DocumentId);
 
             _acquisitionFileDocumentRepository.DeleteAcquisition(acquisitionFileDocument);
+            _documentRepository.SaveChanges();
 
             DeleteDocument(currentDocument);
-
-            _documentRepository.SaveChanges();
-            transaction.Commit();
+            await transaction.CommitAsync();
 
             return result;
         }
@@ -327,11 +354,10 @@ namespace Pims.Api.Services
 
             DeleteQueuedDocumentItem(currentDocument.DocumentId);
             _leaseRepository.DeleteLeaseDocument(leaseDocument.LeaseDocumentId);
+            _documentRepository.SaveChanges();
 
             DeleteDocument(currentDocument);
-
-            _documentRepository.SaveChanges();
-            transaction.Commit();
+            await transaction.CommitAsync();
 
             return result;
         }
@@ -356,10 +382,38 @@ namespace Pims.Api.Services
             DeleteQueuedDocumentItem(currentDocument.DocumentId);
 
             _propertyActivityDocumentRepository.DeletePropertyActivityDocument(propertyActivityDocument);
-            DeleteDocument(currentDocument);
-
             _documentRepository.SaveChanges();
-            transaction.Commit();
+
+            DeleteDocument(currentDocument);
+            await transaction.CommitAsync();
+
+            return result;
+        }
+
+        public async Task<ExternalResponse<string>> DeleteManagementFileDocumentAsync(PimsManagementFileDocument managementFileDocument)
+        {
+            Logger.LogInformation("Deleting PIMS document for single management file");
+            User.ThrowIfNotAllAuthorized(Permissions.DocumentDelete, Permissions.ManagementEdit);
+
+            var result = new ExternalResponse<string>() { Status = ExternalResponseStatus.NotExecuted };
+            PimsDocument currentDocument = _documentRepository.Find(managementFileDocument.Document.DocumentId);
+
+            if (currentDocument.MayanId.HasValue && currentDocument.MayanId.Value > 0)
+            {
+                result = await DeleteMayanDocument((long)currentDocument.MayanId);
+                currentDocument = RemoveDocumentMayanID(currentDocument);
+                _documentRepository.CommitTransaction();
+            }
+
+            using var transaction = _documentRepository.BeginTransaction();
+
+            DeleteQueuedDocumentItem(currentDocument.DocumentId);
+
+            _managementFileDocumentRepository.DeleteManagementFileDocument(managementFileDocument);
+            _documentRepository.SaveChanges();
+
+            DeleteDocument(currentDocument);
+            await transaction.CommitAsync();
 
             return result;
         }
@@ -384,11 +438,10 @@ namespace Pims.Api.Services
             DeleteQueuedDocumentItem(currentDocument.DocumentId);
 
             _dispositionFileDocumentRepository.DeleteDispositionDocument(dispositionFileDocument);
+            _documentRepository.SaveChanges();
 
             DeleteDocument(currentDocument);
-
-            _documentRepository.SaveChanges();
-            transaction.Commit();
+            await transaction.CommitAsync();
 
             return result;
         }
@@ -399,7 +452,7 @@ namespace Pims.Api.Services
 
             if (!DocumentService.IsValidDocumentExtension(uploadRequest.File.FileName))
             {
-                throw new BusinessRuleViolationException($"This file has an invalid file extension.");
+                throw new BusinessRuleViolationException("This file has an invalid file extension.");
             }
         }
 
@@ -453,7 +506,7 @@ namespace Pims.Api.Services
             var documentQueuedItem = _documentQueueRepository.GetByDocumentId(documentId);
             if (documentQueuedItem == null)
             {
-                Logger.LogWarning("Document Queue item not found for document {documentId}", documentId);
+                Logger.LogWarning("Document Queue item not found for document {DocumentId}", documentId);
                 return;
             }
             if (documentQueuedItem.DocumentQueueStatusTypeCode == DocumentQueueStatusTypes.PENDING.ToString()
@@ -463,9 +516,9 @@ namespace Pims.Api.Services
             }
 
             bool deleted = _documentQueueRepository.Delete(documentQueuedItem);
-            if(!deleted)
+            if (!deleted)
             {
-                Logger.LogWarning("Failed to delete Queued Document {documentId}", documentId);
+                Logger.LogWarning("Failed to delete Queued Document {DocumentId}", documentId);
                 throw new InvalidOperationException("Could not delete document queue item");
             }
         }
@@ -475,7 +528,7 @@ namespace Pims.Api.Services
             bool deleted = _documentRepository.DeleteDocument(document);
             if (!deleted)
             {
-                Logger.LogWarning("Failed to delete Document {documentId}", document.DocumentId);
+                Logger.LogWarning("Failed to delete Document {DocumentId}", document.DocumentId);
                 throw new InvalidOperationException("Could not delete document");
             }
         }
