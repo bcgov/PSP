@@ -5,7 +5,7 @@ export const ManagementActivityEditFormYupSchema = Yup.object().shape({
   activityTypeCode: Yup.string().required('Activity type is required'),
   activitySubtypeCode: Yup.string().required('Sub-type is required'),
   activityStatusCode: Yup.string().required('Status is required'),
-  requestedDate: Yup.string().required('Requested added date is required'),
+  requestedDate: Yup.string().required('Commencement date is required'),
 
   completionDate: Yup.string().when('activityStatusCode', {
     is: (activityStatusCode: string) => activityStatusCode === 'COMPLETED',
@@ -15,7 +15,9 @@ export const ManagementActivityEditFormYupSchema = Yup.object().shape({
     .required('Description is required')
     .max(2000, 'Description must be at most ${max} characters'),
 
-  requestedSource: Yup.string().nullable().max(2000, 'Requestor must be at most ${max} characters'),
+  requestedSource: Yup.string()
+    .nullable()
+    .max(2000, 'Contact manager must be at most ${max} characters'),
 
   invoices: Yup.array().of(
     Yup.object().shape({
