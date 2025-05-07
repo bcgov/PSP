@@ -50,7 +50,9 @@ export const CompensationRequisitionHistoricalDetailContainer: React.FunctionCom
 
   // It is possible that there is a small discrepancy between the time the entities get written and their historical counterparts. Adding one second gives enough buffer to correct this.
   const adjustedTime = useMemo(() => {
-    const momentTime = moment(almostTime);
+    console.log(almostTime);
+    const momentTime = moment(almostTime).utc(true);
+    console.log(momentTime);
     return momentTime.add(1, 'seconds').toISOString();
   }, [almostTime]);
 
