@@ -1049,6 +1049,15 @@ exports[`ManagementView component > renders as expected 1`] = `
                   >
                     File Details
                   </a>
+                  <a
+                    aria-selected="false"
+                    class="nav-item nav-link"
+                    data-rb-event-key="activities"
+                    href="#"
+                    role="tab"
+                  >
+                    Activities
+                  </a>
                 </nav>
                 <div
                   class="tab-content"
