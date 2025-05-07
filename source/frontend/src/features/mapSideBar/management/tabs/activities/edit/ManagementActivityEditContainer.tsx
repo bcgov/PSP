@@ -42,7 +42,7 @@ export const ManagementActivityEditContainer: React.FunctionComponent<
   // Load the subtypes
   const fetchSubtypes = useCallback(async () => {
     const retrieved = await getSubtypes();
-    if (retrieved !== undefined) {
+    if (exists(retrieved)) {
       setSubtypes(retrieved);
     } else {
       setSubtypes([]);
@@ -55,8 +55,8 @@ export const ManagementActivityEditContainer: React.FunctionComponent<
 
   const gstConstant = getSystemConstant(SystemConstants.GST);
   const pstConstant = getSystemConstant(SystemConstants.PST);
-  const gstDecimal = gstConstant !== undefined ? parseFloat(gstConstant.value) * 0.01 : 0;
-  const pstDecimal = pstConstant !== undefined ? parseFloat(pstConstant.value) * 0.01 : 0;
+  const gstDecimal = exists(gstConstant) ? parseFloat(gstConstant.value) * 0.01 : 0;
+  const pstDecimal = exists(pstConstant) ? parseFloat(pstConstant.value) * 0.01 : 0;
 
   const onSave = async (model: ApiGen_Concepts_PropertyActivity) => {
     let result: ApiGen_Concepts_PropertyActivity | undefined = undefined;

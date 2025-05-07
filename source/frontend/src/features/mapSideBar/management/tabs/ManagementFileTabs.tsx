@@ -54,11 +54,13 @@ export const ManagementFileTabs: React.FC<IManagementFileTabsProps> = ({
     name: 'File Details',
   });
 
-  tabViews.push({
-    content: <ActivitiesTab managementFile={managementFile} />,
-    key: FileTabType.ACTIVITIES,
-    name: 'Activities',
-  });
+  if (isValidId(managementFile?.id)) {
+    tabViews.push({
+      content: <ActivitiesTab managementFile={managementFile} />,
+      key: FileTabType.ACTIVITIES,
+      name: 'Activities',
+    });
+  }
 
   if (isValidId(managementFile?.id) && hasClaim(Claims.DOCUMENT_VIEW)) {
     tabViews.push({

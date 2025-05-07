@@ -35,8 +35,8 @@ export const ContactListForm: React.FunctionComponent<IContactListForm> = ({
     <FieldArray name={field}>
       {arrayHelpers => (
         <>
-          {contacts.map((_, index) => (
-            <Row key={`${field}.${index}`} className="no-gutters pr-4 mr-2">
+          {contacts.map((contact, index) => (
+            <Row key={`${field}.${contact?.id ?? index}`} className="no-gutters pr-4 mr-2">
               <Col className="col-11">
                 <ContactInputContainer
                   field={`${field}[${index}]`}
