@@ -1,4 +1,5 @@
 import { Feature, Geometry } from 'geojson';
+import { chain } from 'lodash';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaWindowClose } from 'react-icons/fa';
@@ -21,6 +22,8 @@ export interface IMultiplePropertyPopupView {
 interface PropertyProjection {
   isStrataLot: boolean;
   pid: string | null;
+  pin: string | null;
+  plan: string | null;
   feature: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties> | null;
 }
 
@@ -41,21 +44,27 @@ export const MultiplePropertyPopupView: React.FC<
     }
   };
 
-  const propertyProjections =
-    featureDataset?.parcelFeatures
-      ?.map<PropertyProjection>(x => {
-        return {
-          pid: x.properties.PID_FORMATTED,
-          isStrataLot: isStrataLot(x),
-          feature: x,
-        };
-      })
-      .sort((a, b) => {
-        if (a.isStrataLot === b.isStrataLot) return 0;
-        if (a.isStrataLot) return -1;
-        if (b.isStrataLot) return 1;
-        return 0;
-      }) ?? [];
+  const groupedFeatures = chain(featureDataset?.parcelFeatures)
+    .groupBy(feature => feature?.properties?.PLAN_NUMBER)
+    .map(
+      planGroup =>
+        planGroup
+          ?.map<PropertyProjection>(x => ({
+            pid: x.properties.PID_FORMATTED,
+            pin: exists(x.properties.PIN) ? String(x.properties.PIN) : null,
+            isStrataLot: isStrataLot(x),
+            feature: x,
+            plan: x.properties.PLAN_NUMBER,
+          }))
+          .sort((a, b) => {
+            if (a.isStrataLot === b.isStrataLot) return 0;
+            if (a.isStrataLot) return -1;
+            if (b.isStrataLot) return 1;
+            return 0;
+          }) ?? [],
+    );
+
+  const propertyProjections = groupedFeatures.value().flatMap(x => x) ?? [];
 
   return (
     <StyledContainer>
@@ -76,8 +85,9 @@ export const MultiplePropertyPopupView: React.FC<
             }}
             index={index}
           >
-            {property.isStrataLot && <Col>Common Property</Col>}
+            {property.isStrataLot && <Col>Common Property ({property.plan})</Col>}
             {property.pid && <Col>PID: {property.pid} </Col>}
+            {property.pin && <Col>PIN: {property.pin} </Col>}
           </StyledRow>
         ))}
       </StyledScrollable>

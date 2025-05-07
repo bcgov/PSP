@@ -257,6 +257,47 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
+        /// Get the properties that dont hace PIN or PID but have a plan#.
+        /// </summary>
+        /// <param name="plan"></param>
+        /// <returns></returns>
+        public PimsProperty GetWithOnlyPlan(string plan, bool includeRetired = false)
+        {
+            this.User.ThrowIfNotAllAuthorized(Permissions.PropertyView);
+
+            var query = Context.PimsProperties.AsNoTracking();
+
+            if (!includeRetired)
+            {
+                query = query.Where(r => !r.IsRetired.HasValue || (r.IsRetired.HasValue && !r.IsRetired.Value));
+            }
+
+            return query.Include(p => p.DistrictCodeNavigation)
+                .Include(p => p.RegionCodeNavigation)
+                .Include(p => p.PropertyTypeCodeNavigation)
+                .Include(p => p.PropertyStatusTypeCodeNavigation)
+                .Include(p => p.PropertyDataSourceTypeCodeNavigation)
+                .Include(p => p.PimsPropPropAnomalyTyps)
+                    .ThenInclude(t => t.PropertyAnomalyTypeCodeNavigation)
+                .Include(p => p.PimsPropPropRoadTyps)
+                    .ThenInclude(t => t.PropertyRoadTypeCodeNavigation)
+                .Include(p => p.PimsPropPropTenureTyps)
+                    .ThenInclude(t => t.PropertyTenureTypeCodeNavigation)
+                .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
+                .Include(p => p.VolumetricTypeCodeNavigation)
+                .Include(p => p.VolumeUnitTypeCodeNavigation)
+                .Include(p => p.Address)
+                    .ThenInclude(a => a.RegionCodeNavigation)
+                .Include(p => p.Address)
+                    .ThenInclude(a => a.DistrictCodeNavigation)
+                .Include(p => p.Address)
+                    .ThenInclude(a => a.ProvinceState)
+                .Include(p => p.Address)
+                    .ThenInclude(a => a.Country)
+                .FirstOrDefault(p => p.SurveyPlanNumber == plan && p.Pin == null && p.Pid == null) ?? throw new KeyNotFoundException();
+        }
+
+        /// <summary>
         /// Get the property with file associations for the specified id value.
         /// </summary>
         /// <param name="id"></param>
