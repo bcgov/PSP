@@ -1,9 +1,6 @@
-import {
-  ActivityInvoiceFormModel,
-  ActivityPropertyFormModel,
-} from '@/features/mapSideBar/property/tabs/propertyDetailsManagement/activity/edit/models';
 import { fromApiPersonOrApiOrganization, IContactSearchResult } from '@/interfaces';
 import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
+import { ApiGen_Concepts_PropertyActivityInvoice } from '@/models/api/generated/ApiGen_Concepts_PropertyActivityInvoice';
 import { ApiGen_Concepts_PropertyActivityInvolvedParty } from '@/models/api/generated/ApiGen_Concepts_PropertyActivityInvolvedParty';
 import { ApiGen_Concepts_PropertyActivityProperty } from '@/models/api/generated/ApiGen_Concepts_PropertyActivityProperty';
 import { ApiGen_Concepts_PropertyMinistryContact } from '@/models/api/generated/ApiGen_Concepts_PropertyMinistryContact';
@@ -66,7 +63,7 @@ export class ManagementActivityFormModel {
             organization: null,
             personId: x.personId ?? null,
             person: null,
-            propertyActivityId: this.id,
+            propertyActivityId: this.id ?? 0,
             propertyActivity: null,
             ...getEmptyBaseAudit(0),
           };
@@ -78,7 +75,7 @@ export class ManagementActivityFormModel {
             id: 0,
             personId: x.personId ?? 0,
             person: null,
-            propertyActivityId: this.id,
+            propertyActivityId: this.id ?? 0,
             propertyActivity: null,
             ...getEmptyBaseAudit(0),
           };
@@ -86,7 +83,7 @@ export class ManagementActivityFormModel {
       activityProperties: this.activityProperties
         .filter(exists)
         .map<ApiGen_Concepts_PropertyActivityProperty>(x => x.toApi()),
-      invoices: this.invoices.map(i => i.toApi(this.id)),
+      invoices: this.invoices.map(i => i.toApi(this.id ?? 0)),
       ...getEmptyBaseAudit(this.rowVersion),
     };
 
@@ -127,6 +124,100 @@ export class ManagementActivityFormModel {
     formModel.invoices = model.invoices?.map(i => ActivityInvoiceFormModel.fromApi(i)) ?? [];
     formModel.activityProperties =
       model.activityProperties?.map(p => ActivityPropertyFormModel.fromApi(p)) ?? [];
+
+    return formModel;
+  }
+}
+
+export class ActivityPropertyFormModel {
+  id = 0;
+  propertyActivityId = 0;
+  propertyId = 0;
+  rowVersion = 0;
+
+  toApi(): ApiGen_Concepts_PropertyActivityProperty {
+    return {
+      id: this.id,
+      propertyActivityId: this.propertyActivityId,
+      propertyActivity: null,
+      propertyId: this.propertyId,
+      property: null,
+      ...getEmptyBaseAudit(this.rowVersion),
+    };
+  }
+
+  static fromApi(
+    model: ApiGen_Concepts_PropertyActivityProperty | undefined,
+  ): ActivityPropertyFormModel {
+    const newFormModel = new ActivityPropertyFormModel();
+
+    if (exists(model)) {
+      newFormModel.id = model.id;
+      newFormModel.propertyActivityId = model.propertyActivityId;
+      newFormModel.propertyId = model.propertyId;
+      newFormModel.rowVersion = model.rowVersion || 0;
+    }
+
+    return newFormModel;
+  }
+}
+
+export class ActivityInvoiceFormModel {
+  id = 0;
+  invoiceDateTime = '';
+  invoiceNum = '';
+  description = '';
+
+  pretaxAmount = 0;
+  gstAmount = 0;
+  pstAmount = 0;
+  totalAmount = 0;
+  isPstRequired = false;
+
+  isDisabled = false;
+  propertyActivityId = 0;
+  propertyActivity = '';
+  rowVersion = 0;
+
+  toApi(propertyActivityId: number): ApiGen_Concepts_PropertyActivityInvoice {
+    return {
+      id: this.id,
+      invoiceDateTime: this.invoiceDateTime,
+      invoiceNum: this.invoiceNum,
+      description: this.description,
+      pretaxAmount: Number(this.pretaxAmount),
+      gstAmount: Number(this.gstAmount),
+      pstAmount: Number(this.pstAmount),
+      totalAmount: Number(this.totalAmount),
+      isPstRequired: this.isPstRequired,
+      isDisabled: this.isDisabled,
+      propertyActivityId: propertyActivityId,
+      propertyActivity: null,
+      ...getEmptyBaseAudit(this.rowVersion),
+    };
+  }
+
+  static fromApi(
+    model: ApiGen_Concepts_PropertyActivityInvoice | undefined,
+  ): ActivityInvoiceFormModel {
+    const formModel = new ActivityInvoiceFormModel();
+
+    if (exists(model)) {
+      formModel.id = model.id;
+      formModel.invoiceDateTime = isValidIsoDateTime(model.invoiceDateTime)
+        ? model.invoiceDateTime
+        : '';
+      formModel.invoiceNum = model.invoiceNum || '';
+      formModel.description = model.description || '';
+      formModel.pretaxAmount = model.pretaxAmount;
+      formModel.gstAmount = model.gstAmount || 0;
+      formModel.pstAmount = model.pstAmount || 0;
+      formModel.totalAmount = model.totalAmount || 0;
+      formModel.isPstRequired = model.isPstRequired || false;
+      formModel.isDisabled = model.isDisabled || false;
+      formModel.propertyActivityId = model.propertyActivityId || 0;
+      formModel.rowVersion = model.rowVersion || 0;
+    }
 
     return formModel;
   }

@@ -27,7 +27,7 @@ import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Conc
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
 import { ApiGen_Concepts_PropertyActivitySubtype } from '@/models/api/generated/ApiGen_Concepts_PropertyActivitySubtype';
-import { exists, isValidId } from '@/utils';
+import { exists, getCurrentIsoDate, isValidId } from '@/utils';
 import { mapLookupCode } from '@/utils/mapLookupCode';
 
 import { ContactListForm } from './ContactListForm';
@@ -70,16 +70,27 @@ export const ManagementActivityEditForm: React.FunctionComponent<
   const lookupCodes = useLookupCodeHelpers();
 
   const initialForm = useMemo(() => {
-    let initialModel: ManagementActivityFormModel;
+    let activityForm: ManagementActivityFormModel;
+
+    // Update activity flow
     if (exists(activity)) {
-      initialModel = ManagementActivityFormModel.fromApi(activity);
+      activityForm = ManagementActivityFormModel.fromApi(activity);
     } else {
-      initialModel = new ManagementActivityFormModel(null, managementFile.id);
-      initialModel.activityStatusCode = 'NOTSTARTED';
+      // Create activity flow
+      activityForm = new ManagementActivityFormModel(null, managementFile.id);
+      activityForm.activityStatusCode = 'NOTSTARTED';
+      activityForm.requestedDate = getCurrentIsoDate();
+      // By default, all properties are selected but user can unselect all or some
+      activityForm.activityProperties = (managementFile.fileProperties ?? []).map(fp => {
+        const newActivityProperty = new ActivityPropertyFormModel();
+        newActivityProperty.propertyId = fp.propertyId;
+        return newActivityProperty;
+      });
     }
-    setActivityType(initialModel.activityTypeCode);
-    return initialModel;
-  }, [activity, managementFile.id]);
+
+    setActivityType(activityForm.activityTypeCode);
+    return activityForm;
+  }, [activity, managementFile.fileProperties, managementFile.id]);
 
   const activityTypeOptions = lookupCodes
     .getByType(PROP_MGMT_ACTIVITY_TYPES)
