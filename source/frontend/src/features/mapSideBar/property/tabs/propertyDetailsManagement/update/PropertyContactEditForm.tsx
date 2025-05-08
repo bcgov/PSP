@@ -8,13 +8,13 @@ import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
-import { formatContactSearchResult } from '@/features/contacts/contactUtils';
 import { useOrganizationRepository } from '@/features/contacts/repositories/useOrganizationRepository';
 import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';
 import { IContactSearchResult } from '@/interfaces';
 import { ApiGen_Concepts_PersonOrganization } from '@/models/api/generated/ApiGen_Concepts_PersonOrganization';
 import { ApiGen_Concepts_PropertyContact } from '@/models/api/generated/ApiGen_Concepts_PropertyContact';
 import { isValidId } from '@/utils';
+import { formatContactSearchResult } from '@/utils/contactUtils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { PropertyContactFormModel } from './models';

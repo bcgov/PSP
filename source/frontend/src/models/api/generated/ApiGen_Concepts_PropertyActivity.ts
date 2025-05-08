@@ -16,6 +16,7 @@ import { ApiGen_Concepts_PropertyMinistryContact } from './ApiGen_Concepts_Prope
 // LINK: @backend/apimodels/Models/Concepts/Property/PropertyActivityModel.cs
 export interface ApiGen_Concepts_PropertyActivity extends ApiGen_Base_BaseAudit {
   id: number;
+  managementFileId: number | null;
   activityTypeCode: ApiGen_Base_CodeType<string> | null;
   activitySubtypeCode: ApiGen_Base_CodeType<string> | null;
   activityStatusTypeCode: ApiGen_Base_CodeType<string> | null;

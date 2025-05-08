@@ -10,6 +10,10 @@ export const getCurrentFiscalYear = (): number => {
   return now.month() >= 4 ? now.add(1, 'years').year() : now.year();
 };
 
+export const getCurrentIsoDate = (format = 'YYYY-MM-DD'): string => {
+  return moment().format(format);
+};
+
 /**
  * Formats the passed string date (in local timezone) with custom date format: 'MMM D, YYYY'
  * @param date date/time string in LOCAL timezone (not in UTC).

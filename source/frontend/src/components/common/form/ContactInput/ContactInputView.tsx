@@ -10,9 +10,9 @@ import {
   ContactManagerModal,
   IContactManagerModalProps,
 } from '@/components/contact/ContactManagerModal';
-import { formatContactSearchResult } from '@/features/contacts/contactUtils';
 import { IContactSearchResult } from '@/interfaces';
 import { isValidString } from '@/utils';
+import { formatContactSearchResult } from '@/utils/contactUtils';
 
 import { DisplayError } from '../DisplayError';
 import { Input } from '../Input';
