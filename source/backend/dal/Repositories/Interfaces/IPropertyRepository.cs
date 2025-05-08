@@ -23,6 +23,8 @@ namespace Pims.Dal.Repositories
 
         PimsProperty GetByPin(int pin, bool includeRetired = false);
 
+        PimsProperty GetWithOnlyPlan(string plan, bool includeRetired = false);
+
         PimsProperty GetAllAssociationsById(long id);
 
         long GetAllAssociationsCountById(long id);
