@@ -45,6 +45,8 @@ const getKeycloakEventHandler = (keycloak: Keycloak, onRefresh: () => void) => {
       } else if (eventType === 'onAuthLogout' || eventType === 'onTokenExpired') {
         store.dispatch(clearJwt());
         user.getUserManager().clearUser();
+        attributes[ATTR_EXCEPTION_TYPE] = error?.error ?? '';
+        attributes[ATTR_EXCEPTION_MESSAGE] = error?.error_description ?? '';
       } else if (eventType === 'onReady') {
         store.dispatch(setKeycloakReady(true));
       } else {
