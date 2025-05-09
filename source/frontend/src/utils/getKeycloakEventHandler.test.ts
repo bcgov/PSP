@@ -30,7 +30,15 @@ const keycloak: Partial<Keycloak> = {
   tokenParsed: {
     display_name: 'Chester Tester',
     idir_username: 'CHESTER',
+    exp: 1745444220000,
   },
+  refreshToken: '123456789',
+  refreshTokenParsed: {
+    display_name: 'Chester Tester',
+    idir_username: 'CHESTER',
+    exp: 1745445720000,
+  },
+  isTokenExpired: vi.fn().mockReturnValue(false),
 };
 
 const keyclockEventHandler = getKeycloakEventHandler(keycloak as Keycloak, onRefresh);
