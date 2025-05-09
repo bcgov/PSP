@@ -12,7 +12,7 @@ import TooltipWrapper from '@/components/common/TooltipWrapper';
 import { StyledScrollable } from '@/features/documents/commonStyles';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { exists } from '@/utils';
-import { isStrataLot } from '@/utils/propertyUtils';
+import { isStrataCommonProperty } from '@/utils/propertyUtils';
 
 export interface IMultiplePropertyPopupView {
   featureDataset: LocationFeatureDataset | null;
@@ -52,7 +52,7 @@ export const MultiplePropertyPopupView: React.FC<
           ?.map<PropertyProjection>(x => ({
             pid: x.properties.PID_FORMATTED,
             pin: exists(x.properties.PIN) ? String(x.properties.PIN) : null,
-            isStrataLot: isStrataLot(x),
+            isStrataLot: isStrataCommonProperty(x),
             feature: x,
             plan: x.properties.PLAN_NUMBER,
           }))

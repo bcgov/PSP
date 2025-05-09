@@ -4,6 +4,7 @@ import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_
 import { ApiGen_Concepts_PropertyManagement } from '@/models/api/generated/ApiGen_Concepts_PropertyManagement';
 import { IBcAssessmentSummary } from '@/models/layers/bcAssesment';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
+import { firstOrNull } from '@/utils';
 
 import { exists, isNumber, isValidString } from './utils';
 
@@ -121,15 +122,20 @@ export function formatApiPropertyManagementLease(
   }
 }
 
-export function isStrataLot(
+export function isStrataCommonProperty(
   feature: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties> | undefined | null,
 ) {
   if (!exists(feature)) {
     return false;
   }
+
+  const planNumber = feature.properties.PLAN_NUMBER;
+  const nonNumericPrefix = firstOrNull(planNumber?.match(/^\D+/)); // Extract non-numeric prefix
+  const isStrataCommonPropertyPrefix = nonNumericPrefix?.slice(-1) === 'S'; // Check if the last character is 'S' PSP-10455
   return (
     feature.properties.PID === null &&
     feature.properties.PIN === null &&
+    isStrataCommonPropertyPrefix &&
     feature.properties.OWNER_TYPE === 'Unclassified'
   );
 }
