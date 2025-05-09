@@ -54,7 +54,7 @@ VALUES
   (N'INQUIRY',       N'EXPRINTEREST',     N'Expression of Interest'),
   
   (N'INVESTRPT',     N'APPRAISAL',        N'Appraisal'),
-  (N'INVESTRPT',     N'ENGINEERiNG',      N'Engineering'),
+  (N'INVESTRPT',     N'ENGINEERING',      N'Engineering'),
   (N'INVESTRPT',     N'ENVIRONMENT',      N'Environmental'),
   (N'INVESTRPT',     N'GEOTECH',          N'Geotechnical'),
   (N'INVESTRPT',     N'LEGALSURVEY',      N'Legal Survey'),
