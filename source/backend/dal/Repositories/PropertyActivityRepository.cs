@@ -74,7 +74,7 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public PimsPropertyActivity GetActivity(long activityId)
         {
-            var activity = this.Context.PimsPropertyActivities
+            var activity = Context.PimsPropertyActivities
                 .Include(a => a.PimsPropPropActivities)
                 .Include(a => a.PimsPropertyActivityInvoices)
                 .Include(a => a.PropMgmtActivityTypeCodeNavigation)
@@ -110,7 +110,7 @@ namespace Pims.Dal.Repositories
         {
             propertyActivity.ThrowIfNull(nameof(propertyActivity));
 
-            var existingPropertyActivity = this.Context.PimsPropertyActivities
+            var existingPropertyActivity = Context.PimsPropertyActivities
                 .FirstOrDefault(p => p.PimsPropertyActivityId == propertyActivity.PimsPropertyActivityId) ?? throw new KeyNotFoundException();
 
             // update direct relationships - PimsPropActMinContact, PimsPropActInvolvedParty, PimsPropertyActivityInvoice
