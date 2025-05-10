@@ -28,6 +28,7 @@ namespace Pims.Api.Services
         private readonly IEntityNoteRepository _entityNoteRepository;
         private readonly IManagementStatusSolver _managementStatusSolver;
         private readonly IPropertyOperationService _propertyOperationService;
+        private readonly IPropertyActivityRepository _propertyActivityRepository;
 
         public ManagementFileService(
             ClaimsPrincipal user,
@@ -40,7 +41,8 @@ namespace Pims.Api.Services
             ILookupRepository lookupRepository,
             IEntityNoteRepository entityNoteRepository,
             IManagementStatusSolver managementStatusSolver,
-            IPropertyOperationService propertyOperationService)
+            IPropertyOperationService propertyOperationService,
+            IPropertyActivityRepository propertyActivityRepository)
         {
             _user = user;
             _logger = logger;
@@ -52,6 +54,7 @@ namespace Pims.Api.Services
             _entityNoteRepository = entityNoteRepository;
             _managementStatusSolver = managementStatusSolver;
             _propertyOperationService = propertyOperationService;
+            _propertyActivityRepository = propertyActivityRepository;
         }
 
         public PimsManagementFile Add(PimsManagementFile managementFile, IEnumerable<UserOverrideCode> userOverrides)
@@ -247,6 +250,39 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.ManagementView);
 
             return _managementFileRepository.GetPageDeep(filter);
+        }
+
+        public PimsPropertyActivity GetActivity(long managementFileId, long activityId)
+        {
+            _logger.LogInformation("Retrieving property Activity with Id: {ActivityId}", activityId);
+            _user.ThrowIfNotAuthorized(Permissions.ManagementView);
+            _user.ThrowIfNotAuthorized(Permissions.PropertyView);
+
+            var propertyActivity = _propertyActivityRepository.GetActivity(activityId);
+
+            if (propertyActivity.ManagementFileId.HasValue && propertyActivity.ManagementFileId == managementFileId)
+            {
+                return propertyActivity;
+            }
+
+            throw new BadRequestException("Activity with the given id does not match the management file id");
+        }
+
+        public PimsPropertyActivity UpdateActivity(long managementFileId, long activityId, PimsPropertyActivity propertyActivity)
+        {
+            _logger.LogInformation("Updating property Activity with Id: {ActivityId}", activityId);
+            _user.ThrowIfNotAuthorized(Permissions.ManagementEdit);
+            _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
+
+            if (!propertyActivity.ManagementFileId.HasValue || propertyActivity.ManagementFileId != managementFileId || propertyActivity.Internal_Id != activityId)
+            {
+                throw new BadRequestException("Invalid activity identifiers.");
+            }
+
+            var propertyActivityResult = _propertyActivityRepository.Update(propertyActivity);
+            _propertyActivityRepository.CommitTransaction();
+
+            return propertyActivityResult;
         }
 
         private static void ValidateStaff(PimsManagementFile managementFile)

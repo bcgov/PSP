@@ -22,5 +22,9 @@ namespace Pims.Api.Services
         PimsManagementFile UpdateProperties(PimsManagementFile managementFile, IEnumerable<UserOverrideCode> userOverrides);
 
         Paged<PimsManagementFile> GetPage(ManagementFilter filter);
+
+        PimsPropertyActivity GetActivity(long managementFileId, long activityId);
+
+        PimsPropertyActivity UpdateActivity(long managementFileId, long activityId, PimsPropertyActivity propertyActivity);
     }
 }
