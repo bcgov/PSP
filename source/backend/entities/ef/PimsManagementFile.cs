@@ -12,7 +12,7 @@ namespace Pims.Dal.Entities;
 [Table("PIMS_MANAGEMENT_FILE")]
 [Index("AcquisitionFundingTypeCode", Name = "MGMTFL_ACQUISITION_FUNDING_TYPE_CODE_IDX")]
 [Index("FileName", Name = "MGMTFL_FILE_NAME_TUC", IsUnique = true)]
-[Index("ManagementFileProgramTypeCode", Name = "MGMTFL_MANAGEMENT_FILE_PROGRAM_TYPE_CODE_IDX")]
+[Index("ManagementFilePurposeTypeCode", Name = "MGMTFL_MANAGEMENT_FILE_PURPOSE_TYPE_CODE_IDX")]
 [Index("ManagementFileStatusTypeCode", Name = "MGMTFL_MANAGEMENT_FILE_STATUS_TYPE_CODE_IDX")]
 [Index("ProductId", Name = "MGMTFL_PRODUCT_ID_IDX")]
 [Index("ProjectId", Name = "MGMTFL_PROJECT_ID_IDX")]
@@ -53,12 +53,11 @@ public partial class PimsManagementFile
     public string ManagementFileStatusTypeCode { get; set; }
 
     /// <summary>
-    /// Foreign key to the PIMS_MANAGEMENT_FILE_PROGRAM_TYPE table.
+    /// Foreign key to the PIMS_MANAGEMENT_FILE_PURPOSE_TYPE table.
     /// </summary>
-    [Required]
-    [Column("MANAGEMENT_FILE_PROGRAM_TYPE_CODE")]
+    [Column("MANAGEMENT_FILE_PURPOSE_TYPE_CODE")]
     [StringLength(20)]
-    public string ManagementFileProgramTypeCode { get; set; }
+    public string ManagementFilePurposeTypeCode { get; set; }
 
     /// <summary>
     /// Unique name given to the management file.
@@ -182,9 +181,9 @@ public partial class PimsManagementFile
     [InverseProperty("PimsManagementFiles")]
     public virtual PimsAcquisitionFundingType AcquisitionFundingTypeCodeNavigation { get; set; }
 
-    [ForeignKey("ManagementFileProgramTypeCode")]
+    [ForeignKey("ManagementFilePurposeTypeCode")]
     [InverseProperty("PimsManagementFiles")]
-    public virtual PimsManagementFileProgramType ManagementFileProgramTypeCodeNavigation { get; set; }
+    public virtual PimsManagementFilePurposeType ManagementFilePurposeTypeCodeNavigation { get; set; }
 
     [ForeignKey("ManagementFileStatusTypeCode")]
     [InverseProperty("PimsManagementFiles")]

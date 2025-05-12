@@ -6,29 +6,28 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-/// <summary>
-/// Table to contain all applicable notes for the PIMS PSP system.
-/// </summary>
-[Table("PIMS_NOTE")]
-public partial class PimsNote
+[Table("PIMS_PROPERTY_DOCUMENT_HIST")]
+[Index("PropertyDocumentHistId", "EndDateHist", Name = "PIMS_PRPDOC_H_UK", IsUnique = true)]
+public partial class PimsPropertyDocumentHist
 {
     [Key]
-    [Column("NOTE_ID")]
-    public long NoteId { get; set; }
+    [Column("_PROPERTY_DOCUMENT_HIST_ID")]
+    public long PropertyDocumentHistId { get; set; }
 
-    /// <summary>
-    /// Contents of the note.
-    /// </summary>
-    [Required]
-    [Column("NOTE_TXT")]
-    [StringLength(4000)]
-    public string NoteTxt { get; set; }
+    [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
+    public DateTime EffectiveDateHist { get; set; }
 
-    /// <summary>
-    /// Indicatesd if this note is system-generated.
-    /// </summary>
-    [Column("IS_SYSTEM_GENERATED")]
-    public bool IsSystemGenerated { get; set; }
+    [Column("END_DATE_HIST", TypeName = "datetime")]
+    public DateTime? EndDateHist { get; set; }
+
+    [Column("PROPERTY_DOCUMENT_ID")]
+    public long PropertyDocumentId { get; set; }
+
+    [Column("PROPERTY_ID")]
+    public long PropertyId { get; set; }
+
+    [Column("DOCUMENT_ID")]
+    public long DocumentId { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
@@ -68,7 +67,6 @@ public partial class PimsNote
     [Column("DB_CREATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime DbCreateTimestamp { get; set; }
 
-    [Required]
     [Column("DB_CREATE_USERID")]
     [StringLength(30)]
     public string DbCreateUserid { get; set; }
@@ -80,25 +78,4 @@ public partial class PimsNote
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
-
-    [InverseProperty("Note")]
-    public virtual PimsAcquisitionFileNote PimsAcquisitionFileNote { get; set; }
-
-    [InverseProperty("Note")]
-    public virtual ICollection<PimsDispositionFileNote> PimsDispositionFileNotes { get; set; } = new List<PimsDispositionFileNote>();
-
-    [InverseProperty("Note")]
-    public virtual ICollection<PimsLeaseNote> PimsLeaseNotes { get; set; } = new List<PimsLeaseNote>();
-
-    [InverseProperty("Note")]
-    public virtual ICollection<PimsManagementFileNote> PimsManagementFileNotes { get; set; } = new List<PimsManagementFileNote>();
-
-    [InverseProperty("Note")]
-    public virtual ICollection<PimsProjectNote> PimsProjectNotes { get; set; } = new List<PimsProjectNote>();
-
-    [InverseProperty("Note")]
-    public virtual ICollection<PimsPropertyNote> PimsPropertyNotes { get; set; } = new List<PimsPropertyNote>();
-
-    [InverseProperty("Note")]
-    public virtual ICollection<PimsResearchFileNote> PimsResearchFileNotes { get; set; } = new List<PimsResearchFileNote>();
 }

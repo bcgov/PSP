@@ -131,5 +131,8 @@ public partial class PimsDocument
     public virtual ICollection<PimsPropertyActivityDocument> PimsPropertyActivityDocuments { get; set; } = new List<PimsPropertyActivityDocument>();
 
     [InverseProperty("Document")]
+    public virtual ICollection<PimsPropertyDocument> PimsPropertyDocuments { get; set; } = new List<PimsPropertyDocument>();
+
+    [InverseProperty("Document")]
     public virtual ICollection<PimsResearchFileDocument> PimsResearchFileDocuments { get; set; } = new List<PimsResearchFileDocument>();
 }
