@@ -1,4 +1,4 @@
-// Create foreign key constraint dbo.PIM_MGTPGM_PIM_MGMTFL_FK
+-- Create foreign key constraint dbo.PIM_MGTPGM_PIM_MGMTFL_FK
 PRINT N'Create foreign key constraint dbo.PIM_MGTPGM_PIM_MGMTFL_FK'
 GO
 ALTER TABLE [dbo].[PIMS_MANAGEMENT_FILE]
