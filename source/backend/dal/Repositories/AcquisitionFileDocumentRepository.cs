@@ -12,7 +12,7 @@ namespace Pims.Dal.Repositories
     /// <summary>
     /// AcquisitionFileDocumentRepository class, provides a service layer to interact with document acquisition files within the datasource.
     /// </summary>
-    public class AcquisitionFileDocumentRepository : BaseRepository<PimsAcquisitionFileDocument>, IAcquisitionFileDocumentRepository
+    public class AcquisitionFileDocumentRepository : BaseRepository<PimsAcquisitionFileDocument>, IDocumentRelationshipRepository<PimsAcquisitionFileDocument>
     {
         #region Constructors
 
@@ -83,6 +83,21 @@ namespace Pims.Dal.Repositories
 
             this.Context.PimsAcquisitionFileDocuments.Remove(new PimsAcquisitionFileDocument() { AcquisitionFileDocumentId = acquisitionDocument.AcquisitionFileDocumentId });
             return true;
+        }
+
+        public IList<PimsAcquisitionFileDocument> GetAllByParentId(long parentId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public PimsAcquisitionFileDocument AddDocument(PimsAcquisitionFileDocument document)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool DeleteDocument(PimsAcquisitionFileDocument document)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion
