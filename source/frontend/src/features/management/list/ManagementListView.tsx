@@ -144,4 +144,7 @@ const FlexDiv = styled.div`
   svg {
     vertical-align: baseline;
   }
+  svg g path {
+    fill: currentColor;
+  }
 `;

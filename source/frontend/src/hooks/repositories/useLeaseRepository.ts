@@ -126,7 +126,7 @@ export const useLeaseRepository = () => {
     ),
     requestName: 'getAllLeaseFileTeamMembers',
     onSuccess: useAxiosSuccessHandler(),
-    onError: useAxiosErrorHandler('Failed to retrieve Lease Team Members.'),
+    onError: useAxiosErrorHandler('Failed to retrieve Lease & Licence Team Members.'),
   });
 
   const getLeaseAtTimeApi = useApiRequestWrapper<

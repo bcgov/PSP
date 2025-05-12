@@ -2,8 +2,6 @@ import { Attributes, Span, SpanKind, SpanStatusCode, trace, Tracer } from '@open
 
 export const BROWSER_TRACER = 'react-client';
 
-export type AsyncFn = () => Promise<unknown>;
-
 // Export the tracer for custom instrumentation
 export const getTracer = (): Tracer => {
   return trace.getTracer(BROWSER_TRACER);
@@ -18,15 +16,23 @@ export const startTrace = (spanName: string, additionalAttributes?: Attributes) 
   return span;
 };
 
-export const runWithSpan = async (spanName: string, fn: AsyncFn) => {
-  const asyncCallback = wrapExternalCallInSpan(fn);
+export const runWithSpan = async <F extends (span: Span) => unknown>(
+  spanName: string,
+  additionalAttributes: Attributes,
+  fn: F,
+) => {
+  const asyncCallback = wrapExternalCallInSpan(fn, additionalAttributes);
   return getTracer().startActiveSpan(spanName, { kind: SpanKind.CLIENT }, asyncCallback);
 };
 
-const wrapExternalCallInSpan = (fn: AsyncFn): ((span: Span) => ReturnType<AsyncFn>) => {
+const wrapExternalCallInSpan = <F extends (span: Span) => unknown>(
+  fn: F,
+  additionalAttributes: Attributes,
+): ((span: Span) => unknown) => {
   return async span => {
     try {
-      const result = await fn();
+      span.setAttributes(additionalAttributes);
+      const result = await fn(span);
       span.setStatus({ code: SpanStatusCode.OK });
       return result;
     } catch (err) {

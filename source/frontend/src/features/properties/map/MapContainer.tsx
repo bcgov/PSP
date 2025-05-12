@@ -14,6 +14,7 @@ import { FilterProvider } from '@/components/maps/providers/FilterProvider';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import MapSideBar from '@/features/mapSideBar/MapSideBar';
 import CompensationRequisitionRouter from '@/features/mapSideBar/router/CompensationRequisitionRouter';
+import ManagementFileActivityRouter from '@/features/mapSideBar/router/ManagementFileActivityRouter';
 import PropertyActivityRouter from '@/features/mapSideBar/router/PropertyActivityRouter';
 import RightSideLayout from '@/features/rightSideLayout/RightSideLayout';
 import { usePimsPropertyRepository } from '@/hooks/repositories/usePimsPropertyRepository';
@@ -38,7 +39,6 @@ const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = () =>
     advancedSearchCriteria,
     isMapVisible,
     isLoading,
-    mapSideBarViewState,
   } = useMapStateMachine();
 
   const { getMatchingProperties } = usePimsPropertyRepository();
@@ -74,8 +74,9 @@ const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = () =>
         <MapSideBar />
         <CompensationRequisitionRouter setShowActionBar={setShowActionBar} />
         <PropertyActivityRouter setShowActionBar={setShowActionBar} />
+        <ManagementFileActivityRouter setShowActionBar={setShowActionBar} />
       </SideBarContextProvider>
-      {!(showActionBar || mapSideBarViewState?.isFullWidth) && (
+      {!showActionBar && (
         <FilterProvider>
           <MapView />
         </FilterProvider>

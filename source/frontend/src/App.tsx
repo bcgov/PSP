@@ -3,6 +3,7 @@ import 'react-bootstrap-typeahead/css/Typeahead.css';
 
 import { useEffect, useState } from 'react';
 import Col from 'react-bootstrap/Col';
+import { FaWindowClose } from 'react-icons/fa';
 import { ToastContainer } from 'react-toastify';
 
 import AppRouter from '@/AppRouter';
@@ -74,6 +75,7 @@ const App = () => {
               pauseOnFocusLoss={false}
               draggable
               pauseOnHover
+              closeButton={<FaWindowClose />}
             />
             <RoleMismatchModal display={showRoleModal} setDisplay={setShowRoleModal} />
             <ModalContainer />

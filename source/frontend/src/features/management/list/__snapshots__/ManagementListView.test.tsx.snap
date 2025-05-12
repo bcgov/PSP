@@ -386,6 +386,10 @@ exports[`Management List View > matches snapshot 1`] = `
   vertical-align: baseline;
 }
 
+.c4 svg g path {
+  fill: currentColor;
+}
+
 <div
     class="c0"
   >

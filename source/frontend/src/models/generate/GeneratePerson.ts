@@ -1,5 +1,5 @@
 import { ContactMethodTypes } from '@/constants/contactMethodType';
-import { getApiPersonOrOrgMailingAddress } from '@/features/contacts/contactUtils';
+import { getApiPersonOrOrgMailingAddress } from '@/utils/contactUtils';
 import { phoneFormatter } from '@/utils/formUtils';
 import { formatNames } from '@/utils/personUtils';
 

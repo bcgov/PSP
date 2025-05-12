@@ -690,6 +690,27 @@ namespace Pims.Api.Services
                         acquisitionProperty.Property = _propertyService.PopulateNewProperty(acquisitionProperty.Property);
                     }
                 }
+                else if(!string.IsNullOrWhiteSpace(acquisitionProperty.Property.SurveyPlanNumber))
+                {
+                    var plan = acquisitionProperty.Property.SurveyPlanNumber;
+                    try
+                    {
+                        var foundProperty = _propertyRepository.GetWithOnlyPlan(plan);
+                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value)
+                        {
+                            throw new BusinessRuleViolationException("Retired property can not be selected.");
+                        }
+
+                        acquisitionProperty.PropertyId = foundProperty.Internal_Id;
+                        _propertyService.UpdateLocation(acquisitionProperty.Property, ref foundProperty, userOverrideCodes);
+                        acquisitionProperty.Property = foundProperty;
+                    }
+                    catch (KeyNotFoundException)
+                    {
+                        _logger.LogDebug("Adding new property with no pid or pin. plan:{plan}", plan);
+                        acquisitionProperty.Property = _propertyService.PopulateNewProperty(acquisitionProperty.Property);
+                    }
+                }
                 else
                 {
                     _logger.LogDebug("Adding new property without a pid");

@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
+using Pims.Core.Security;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Repositories;
-using Pims.Core.Security;
 using Xunit;
 
 namespace Pims.Dal.Test.Repositories
@@ -47,7 +47,7 @@ namespace Pims.Dal.Test.Repositories
 
             var document = new PimsDocument() { FileName = "test doc", DocumentStatusTypeCodeNavigation = new PimsDocumentStatusType() { DocumentStatusTypeCode = "test", DbCreateUserid = "create user", DbLastUpdateUserid = "last user", Description = "description" }, DocumentType = new PimsDocumentTyp() { DocumentType = "type", DocumentTypeDescription = "description" } };
             var dispositionFileDocument = new PimsDispositionFileDocument() { Document = document };
-            var pimsDispositionFile = new PimsDispositionFile() { DispositionStatusTypeCode ="status", DispositionFileStatusTypeCode = "status", DispositionTypeCode = "dspType", PimsDispositionFileDocuments = new List<PimsDispositionFileDocument>() { dispositionFileDocument } };
+            var pimsDispositionFile = new PimsDispositionFile() { DispositionStatusTypeCode = "status", DispositionFileStatusTypeCode = "status", DispositionTypeCode = "dspType", PimsDispositionFileDocuments = new List<PimsDispositionFileDocument>() { dispositionFileDocument } };
             _helper.AddAndSaveChanges(pimsDispositionFile);
 
             // Act

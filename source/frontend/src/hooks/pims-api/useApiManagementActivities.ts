@@ -1,0 +1,30 @@
+import React from 'react';
+
+import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
+import { ApiGen_Concepts_PropertyActivitySubtype } from '@/models/api/generated/ApiGen_Concepts_PropertyActivitySubtype';
+
+import useAxiosApi from './useApi';
+
+/**
+ * PIMS API wrapper to centralize all AJAX requests to the management activities endpoints.
+ * @returns Object containing functions to make requests to the PIMS API.
+ */
+export const useApiManagementActivities = () => {
+  const api = useAxiosApi();
+
+  return React.useMemo(
+    () => ({
+      getActivitySubtypesApi: () =>
+        api.get<ApiGen_Concepts_PropertyActivitySubtype[]>(
+          `/properties/management-activities/subtypes`,
+        ),
+
+      postActivityApi: (managementFileId: number, activity: ApiGen_Concepts_PropertyActivity) =>
+        api.post<ApiGen_Concepts_PropertyActivity>(
+          `/managementfiles/${managementFileId}/management-activities`,
+          activity,
+        ),
+    }),
+    [api],
+  );
+};
