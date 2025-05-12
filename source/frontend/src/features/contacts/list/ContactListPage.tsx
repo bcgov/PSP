@@ -39,6 +39,8 @@ export const ContactListPage = () => {
   );
 };
 
+export default ContactListPage;
+
 const FlexDiv = styled.div`
   display: flex;
   flex-direction: row;
