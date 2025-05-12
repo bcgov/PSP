@@ -7,25 +7,25 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Table contains the relationship between the management file and the associated documents.
+/// Table contains the relationship between the property and the associated document.
 /// </summary>
-[Table("PIMS_MANAGEMENT_FILE_DOCUMENT")]
-[Index("DocumentId", Name = "MGTDOC_DOCUMENT_ID_IDX")]
-[Index("ManagementFileId", Name = "MGTDOC_MANAGEMENT_FILE_ID_IDX")]
-public partial class PimsManagementFileDocument
+[Table("PIMS_PROPERTY_DOCUMENT")]
+[Index("DocumentId", Name = "PRPDOC_DOCUMENT_ID_IDX")]
+[Index("PropertyId", Name = "PRPDOC_PROPERTY_ID_IDX")]
+public partial class PimsPropertyDocument
 {
     /// <summary>
     /// Generated surrogate primary key.
     /// </summary>
     [Key]
-    [Column("MANAGEMENT_FILE_DOCUMENT_ID")]
-    public long ManagementFileDocumentId { get; set; }
+    [Column("PROPERTY_DOCUMENT_ID")]
+    public long PropertyDocumentId { get; set; }
 
     /// <summary>
-    /// Foreign key to the PIMS_MANAGEMENT_FILE table.
+    /// Foreign key to the PIMS_PROPERTY table.
     /// </summary>
-    [Column("MANAGEMENT_FILE_ID")]
-    public long ManagementFileId { get; set; }
+    [Column("PROPERTY_ID")]
+    public long PropertyId { get; set; }
 
     /// <summary>
     /// Foreign key to the PIMS_DOCUMENT_FILE table.
@@ -123,10 +123,10 @@ public partial class PimsManagementFileDocument
     public string DbLastUpdateUserid { get; set; }
 
     [ForeignKey("DocumentId")]
-    [InverseProperty("PimsManagementFileDocuments")]
+    [InverseProperty("PimsPropertyDocuments")]
     public virtual PimsDocument Document { get; set; }
 
-    [ForeignKey("ManagementFileId")]
-    [InverseProperty("PimsManagementFileDocuments")]
-    public virtual PimsManagementFile ManagementFile { get; set; }
+    [ForeignKey("PropertyId")]
+    [InverseProperty("PimsPropertyDocuments")]
+    public virtual PimsProperty Property { get; set; }
 }

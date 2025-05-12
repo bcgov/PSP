@@ -7,31 +7,31 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Table contains the relationship between the management file and the associated documents.
+/// Table contains the relationship between the property and the associated note.
 /// </summary>
-[Table("PIMS_MANAGEMENT_FILE_DOCUMENT")]
-[Index("DocumentId", Name = "MGTDOC_DOCUMENT_ID_IDX")]
-[Index("ManagementFileId", Name = "MGTDOC_MANAGEMENT_FILE_ID_IDX")]
-public partial class PimsManagementFileDocument
+[Table("PIMS_PROPERTY_NOTE")]
+[Index("NoteId", Name = "PRPNOT_NOTE_ID_IDX")]
+[Index("PropertyId", Name = "PRPNOT_PROPERTY_ID_IDX")]
+public partial class PimsPropertyNote
 {
     /// <summary>
     /// Generated surrogate primary key.
     /// </summary>
     [Key]
-    [Column("MANAGEMENT_FILE_DOCUMENT_ID")]
-    public long ManagementFileDocumentId { get; set; }
+    [Column("PROPERTY_NOTE_ID")]
+    public long PropertyNoteId { get; set; }
 
     /// <summary>
-    /// Foreign key to the PIMS_MANAGEMENT_FILE table.
+    /// Foreign key to the PIMS_PROPERTY table.
     /// </summary>
-    [Column("MANAGEMENT_FILE_ID")]
-    public long ManagementFileId { get; set; }
+    [Column("PROPERTY_ID")]
+    public long PropertyId { get; set; }
 
     /// <summary>
-    /// Foreign key to the PIMS_DOCUMENT_FILE table.
+    /// Foreign key to the PIMS_NOTE table.
     /// </summary>
-    [Column("DOCUMENT_ID")]
-    public long DocumentId { get; set; }
+    [Column("NOTE_ID")]
+    public long NoteId { get; set; }
 
     /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
@@ -122,11 +122,11 @@ public partial class PimsManagementFileDocument
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    [ForeignKey("DocumentId")]
-    [InverseProperty("PimsManagementFileDocuments")]
-    public virtual PimsDocument Document { get; set; }
+    [ForeignKey("NoteId")]
+    [InverseProperty("PimsPropertyNotes")]
+    public virtual PimsNote Note { get; set; }
 
-    [ForeignKey("ManagementFileId")]
-    [InverseProperty("PimsManagementFileDocuments")]
-    public virtual PimsManagementFile ManagementFile { get; set; }
+    [ForeignKey("PropertyId")]
+    [InverseProperty("PimsPropertyNotes")]
+    public virtual PimsProperty Property { get; set; }
 }
