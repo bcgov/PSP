@@ -59,6 +59,19 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
+-- --------------------------------------------------------------
+-- Update the display order.
+-- --------------------------------------------------------------
+UPDATE pmat
+SET    pmat.DISPLAY_ORDER              = seq.ROW_NUM
+     , pmat.CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
+FROM   PIMS_PROP_MGMT_ACTIVITY_TYPE pmat JOIN
+       (SELECT PROP_MGMT_ACTIVITY_TYPE_CODE
+             , ROW_NUMBER() OVER (ORDER BY DESCRIPTION) AS ROW_NUM
+        FROM   PIMS_PROP_MGMT_ACTIVITY_TYPE) seq  ON seq.PROP_MGMT_ACTIVITY_TYPE_CODE = pmat.PROP_MGMT_ACTIVITY_TYPE_CODE
+GO
+
+
 COMMIT TRANSACTION
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
