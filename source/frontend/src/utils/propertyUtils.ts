@@ -131,7 +131,7 @@ export function isStrataCommonProperty(
 
   const planNumber = feature.properties.PLAN_NUMBER;
   const nonNumericPrefix = firstOrNull(planNumber?.match(/^\D+/)); // Extract non-numeric prefix
-  const isStrataCommonPropertyPrefix = nonNumericPrefix?.slice(-1) === 'S'; // Check if the last character is 'S' PSP-10455
+  const isStrataCommonPropertyPrefix = nonNumericPrefix?.toUpperCase()?.endsWith('S'); // Check if the last character is 'S' PSP-10455
   return (
     feature.properties.PID === null &&
     feature.properties.PIN === null &&
