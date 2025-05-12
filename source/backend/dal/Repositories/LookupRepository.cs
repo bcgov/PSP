@@ -480,11 +480,6 @@ namespace Pims.Dal.Repositories
             return Context.PimsManagementFileStatusTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToList();
         }
 
-        public IEnumerable<PimsManagementFileProgramType> GetAllManagementFileProgramTypes()
-        {
-            return Context.PimsManagementFileProgramTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToList();
-        }
-
         public IEnumerable<PimsManagementFileProfileType> GetAllManagementFileProfileTypes()
         {
             return Context.PimsManagementFileProfileTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToList();
