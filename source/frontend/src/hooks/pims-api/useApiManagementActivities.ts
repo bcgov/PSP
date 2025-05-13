@@ -19,9 +19,20 @@ export const useApiManagementActivities = () => {
           `/properties/management-activities/subtypes`,
         ),
 
+      getActivityApi: (managementFileId: number, activityId: number) =>
+        api.get<ApiGen_Concepts_PropertyActivity>(
+          `/managementfiles/${managementFileId}/management-activities/${activityId}`,
+        ),
+
       postActivityApi: (managementFileId: number, activity: ApiGen_Concepts_PropertyActivity) =>
         api.post<ApiGen_Concepts_PropertyActivity>(
           `/managementfiles/${managementFileId}/management-activities`,
+          activity,
+        ),
+
+      putActivityApi: (managementFileId: number, activity: ApiGen_Concepts_PropertyActivity) =>
+        api.put<ApiGen_Concepts_PropertyActivity>(
+          `/managementfiles/${managementFileId}/management-activities/${activity.id}`,
           activity,
         ),
       getActivityApi: (managementFileId: number, propertyActivityId: number) =>

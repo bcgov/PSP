@@ -54,6 +54,24 @@ export const ManagementFileActivityRouter: React.FunctionComponent<
         title={'Activity New'}
       />
       <AppRoute
+        path={`/mapview/sidebar/management/:managementFileId/activities/:activityId/edit`}
+        customRender={({ match }) => (
+          <ManagementActivityEditContainer
+            managementFileId={Number(match.params.managementFileId)}
+            activityId={Number(match.params.activityId)}
+            onClose={() => {
+              const parentPath = match?.url.substring(0, match?.url.lastIndexOf('/')) || '/';
+              history.push(parentPath);
+            }}
+            View={ManagementActivityEditForm}
+          />
+        )}
+        claim={Claims.PROPERTY_VIEW}
+        exact
+        key={'activity_new'}
+        title={'Activity New'}
+      />
+      <AppRoute
         path={`/mapview/sidebar/management/:managementFileId/activities/:activityId`}
         customRender={({ match }) => (
           <FileActivityDetailContainer
