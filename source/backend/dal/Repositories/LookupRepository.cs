@@ -484,6 +484,11 @@ namespace Pims.Dal.Repositories
         {
             return Context.PimsManagementFileProfileTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToList();
         }
+
+        public IEnumerable<PimsManagementFilePurposeType> GetAllManagementFilePurposeTypes()
+        {
+            return Context.PimsManagementFilePurposeTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToList();
+        }
         #endregion
     }
 }

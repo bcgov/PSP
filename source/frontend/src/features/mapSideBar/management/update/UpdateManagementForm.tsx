@@ -43,7 +43,7 @@ const UpdateManagementForm: React.FC<IUpdateManagementFormProps> = ({
 
   const managementFileStatusTypesOptions = getOptionsByType(API.MANAGEMENT_FILE_STATUS_TYPES);
   const managementFundingTypes = getOptionsByType(API.ACQUISITION_FUNDING_TYPES);
-  const managementProgramTypesOptions = getOptionsByType(API.MANAGEMENT_FILE_PROGRAM_TYPES);
+  const managementPurposeTypesOptions = getOptionsByType(API.MANAGEMENT_FILE_PURPOSE_TYPES);
 
   const onMinistryProjectSelected = React.useCallback(
     async (param: IAutocompletePrediction[]) => {
@@ -133,8 +133,8 @@ const UpdateManagementForm: React.FC<IUpdateManagementFormProps> = ({
                 </SectionField>
                 <SectionField label="Purpose" required>
                   <Select
-                    field="programTypeCode"
-                    options={managementProgramTypesOptions}
+                    field="purposeTypeCode"
+                    options={managementPurposeTypesOptions}
                     placeholder="Select..."
                     required
                   />
