@@ -693,104 +693,6 @@ exports[`Management List View > matches snapshot 1`] = `
                           >
                             Select management purpose...
                           </option>
-                          <option
-                            class="option"
-                            data-testid="select-option-AGRICULT"
-                            value="AGRICULT"
-                          >
-                            Agricultural
-                          </option>
-                          <option
-                            class="option"
-                            data-testid="select-option-COMMBLDG"
-                            value="COMMBLDG"
-                          >
-                            Commercial building
-                          </option>
-                          <option
-                            class="option"
-                            data-testid="select-option-ENCAMP"
-                            value="ENCAMP"
-                          >
-                            Encampments
-                          </option>
-                          <option
-                            class="option"
-                            data-testid="select-option-ENGINEER"
-                            value="ENGINEER"
-                          >
-                            Engineering
-                          </option>
-                          <option
-                            class="option"
-                            data-testid="select-option-GOVERNMT"
-                            value="GOVERNMT"
-                          >
-                            Government
-                          </option>
-                          <option
-                            class="option"
-                            data-testid="select-option-MOTTUSE"
-                            value="MOTTUSE"
-                          >
-                            MOTT use
-                          </option>
-                          <option
-                            class="option"
-                            data-testid="select-option-OILGAS"
-                            value="OILGAS"
-                          >
-                            Oil/Gas
-                          </option>
-                          <option
-                            class="option"
-                            data-testid="select-option-OTHER"
-                            value="OTHER"
-                          >
-                            Other
-                          </option>
-                          <option
-                            class="option"
-                            data-testid="select-option-PARKING"
-                            value="PARKING"
-                          >
-                            Parking and/or storage
-                          </option>
-                          <option
-                            class="option"
-                            data-testid="select-option-PUBTRANS"
-                            value="PUBTRANS"
-                          >
-                            Public transportation
-                          </option>
-                          <option
-                            class="option"
-                            data-testid="select-option-RAIL"
-                            value="RAIL"
-                          >
-                            Rail
-                          </option>
-                          <option
-                            class="option"
-                            data-testid="select-option-TRAILS"
-                            value="TRAILS"
-                          >
-                            Rail trails/trails
-                          </option>
-                          <option
-                            class="option"
-                            data-testid="select-option-RESRENTL"
-                            value="RESRENTL"
-                          >
-                            Residential rentals
-                          </option>
-                          <option
-                            class="option"
-                            data-testid="select-option-UTILITY"
-                            value="UTILITY"
-                          >
-                            Utilities
-                          </option>
                         </select>
                       </div>
                     </div>
@@ -1059,7 +961,7 @@ exports[`Management List View > matches snapshot 1`] = `
                 Purpose
                 <div
                   class="c12"
-                  data-testid="sort-column-managementFileProgramTypeCode"
+                  data-testid="sort-column-managementFilePurposeTypeCode"
                 >
                   <svg
                     class="c13"
@@ -1215,7 +1117,7 @@ exports[`Management List View > matches snapshot 1`] = `
                 style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                Utilities
+                Engineering
               </div>
               <div
                 class="td clickable"
