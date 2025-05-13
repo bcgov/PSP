@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,14 +16,14 @@ namespace Pims.Dal.Entities;
 public partial class PimsDispositionSale
 {
     /// <summary>
-    /// Unique auto-generated surrogate primary key
+    /// Unique auto-generated surrogate primary key.
     /// </summary>
     [Key]
     [Column("DISPOSITION_SALE_ID")]
     public long DispositionSaleId { get; set; }
 
     /// <summary>
-    /// Foreign key value for the dispostion file
+    /// Foreign key value for the dispostion file.
     /// </summary>
     [Column("DISPOSITION_FILE_ID")]
     public long DispositionFileId { get; set; }
@@ -71,7 +71,7 @@ public partial class PimsDispositionSale
     public decimal? RealtorCommissionAmt { get; set; }
 
     /// <summary>
-    /// Is GST required for this sale?
+    /// Is GST required for this sale?.
     /// </summary>
     [Column("IS_GST_REQUIRED")]
     public bool IsGstRequired { get; set; }
@@ -107,7 +107,7 @@ public partial class PimsDispositionSale
     public decimal? RemediationAmt { get; set; }
 
     /// <summary>
-    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any
+    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any.
     /// </summary>
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }

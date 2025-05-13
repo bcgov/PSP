@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -34,7 +34,7 @@ public partial class PimsxTableDefinition
     public string TableAlias { get; set; }
 
     /// <summary>
-    /// Is history required for this table?
+    /// Is history required for this table?.
     /// </summary>
     [Column("HIST_REQUIRED")]
     [StringLength(1)]

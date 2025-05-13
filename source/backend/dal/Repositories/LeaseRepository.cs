@@ -998,7 +998,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Gets all stakeholder types
+        /// Gets all stakeholder types.
         /// </summary>
         /// <returns>all stakeholder types.</returns>
         public IEnumerable<PimsLeaseStakeholderType> GetAllLeaseStakeholderTypes()

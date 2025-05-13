@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Resolves many-to-many relationship between PIMS_PROPERTY and PIMS_PROPERTY_TENURE_TYPE
+/// Resolves many-to-many relationship between PIMS_PROPERTY and PIMS_PROPERTY_TENURE_TYPE.
 /// </summary>
 [Table("PIMS_PROP_PROP_TENURE_TYP")]
 [Index("PropertyId", Name = "PRPRTT_PROPERTY_ID_IDX")]

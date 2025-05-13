@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -97,89 +97,89 @@ public partial class PimsLease
     public long? ProductId { get; set; }
 
     /// <summary>
-    /// Generated identifying lease/licence number
+    /// Generated identifying lease/licence number.
     /// </summary>
     [Column("L_FILE_NO")]
     [StringLength(50)]
     public string LFileNo { get; set; }
 
     /// <summary>
-    /// Sourced from t_fileMain.TFA_File_Number
+    /// Sourced from t_fileMain.TFA_File_Number.
     /// </summary>
     [Column("TFA_FILE_NO")]
     public int? TfaFileNo { get; set; }
 
     /// <summary>
-    /// Sourced from t_fileMain.TFA_File_Number || - || t_fileSub.Subfile_Sequence_Code
+    /// Sourced from t_fileMain.TFA_File_Number || - || t_fileSub.Subfile_Sequence_Code.
     /// </summary>
     [Column("TFA_FILE_NUMBER")]
     [StringLength(500)]
     public string TfaFileNumber { get; set; }
 
     /// <summary>
-    /// Sourced from t_fileSubOverrideData.PSFile_No
+    /// Sourced from t_fileSubOverrideData.PSFile_No.
     /// </summary>
     [Column("PS_FILE_NO")]
     [StringLength(50)]
     public string PsFileNo { get; set; }
 
     /// <summary>
-    /// Manually etered lease description, not the legal description
+    /// Manually etered lease description, not the legal description.
     /// </summary>
     [Column("LEASE_DESCRIPTION")]
     [StringLength(4000)]
     public string LeaseDescription { get; set; }
 
     /// <summary>
-    /// Notes accompanying lease
+    /// Notes accompanying lease.
     /// </summary>
     [Column("LEASE_NOTES")]
     [StringLength(4000)]
     public string LeaseNotes { get; set; }
 
     /// <summary>
-    /// Contact of the MoTI person associated with the lease
+    /// Contact of the MoTI person associated with the lease.
     /// </summary>
     [Column("MOTI_CONTACT")]
     [StringLength(200)]
     public string MotiContact { get; set; }
 
     /// <summary>
-    /// Location of documents pertianing to the lease/license
+    /// Location of documents pertianing to the lease/license.
     /// </summary>
     [Column("DOCUMENTATION_REFERENCE")]
     [StringLength(500)]
     public string DocumentationReference { get; set; }
 
     /// <summary>
-    /// Notes accompanying lease
+    /// Notes accompanying lease.
     /// </summary>
     [Column("RETURN_NOTES")]
     [StringLength(1000)]
     public string ReturnNotes { get; set; }
 
     /// <summary>
-    /// Description of a non-standard lease program type
+    /// Description of a non-standard lease program type.
     /// </summary>
     [Column("OTHER_LEASE_PROGRAM_TYPE")]
     [StringLength(200)]
     public string OtherLeaseProgramType { get; set; }
 
     /// <summary>
-    /// Description of a non-standard lease/license type
+    /// Description of a non-standard lease/license type.
     /// </summary>
     [Column("OTHER_LEASE_LICENSE_TYPE")]
     [StringLength(200)]
     public string OtherLeaseLicenseType { get; set; }
 
     /// <summary>
-    /// Original start date of the lease/license
+    /// Original start date of the lease/license.
     /// </summary>
     [Column("ORIG_START_DATE", TypeName = "datetime")]
     public DateTime? OrigStartDate { get; set; }
 
     /// <summary>
-    /// Original expiry date of the lease/license
+    /// Original expiry date of the lease/license.
     /// </summary>
     [Column("ORIG_EXPIRY_DATE", TypeName = "datetime")]
     public DateTime? OrigExpiryDate { get; set; }
@@ -191,87 +191,87 @@ public partial class PimsLease
     public DateTime? TerminationDate { get; set; }
 
     /// <summary>
-    /// Lease/licence amount
+    /// Lease/licence amount.
     /// </summary>
     [Column("LEASE_AMOUNT", TypeName = "money")]
     public decimal? LeaseAmount { get; set; }
 
     /// <summary>
-    /// Date current responsibility came into effect for this lease
+    /// Date current responsibility came into effect for this lease.
     /// </summary>
     [Column("RESPONSIBILITY_EFFECTIVE_DATE", TypeName = "datetime")]
     public DateTime? ResponsibilityEffectiveDate { get; set; }
 
     /// <summary>
-    /// Inspection date
+    /// Inspection date.
     /// </summary>
     [Column("INSPECTION_DATE", TypeName = "datetime")]
     public DateTime? InspectionDate { get; set; }
 
     /// <summary>
-    /// Notes accompanying inspection
+    /// Notes accompanying inspection.
     /// </summary>
     [Column("INSPECTION_NOTES")]
     [StringLength(1000)]
     public string InspectionNotes { get; set; }
 
     /// <summary>
-    /// Is subject the Residential Tenancy Act
+    /// Is subject the Residential Tenancy Act.
     /// </summary>
     [Column("IS_SUBJECT_TO_RTA")]
     public bool? IsSubjectToRta { get; set; }
 
     /// <summary>
-    /// Is a commercial building
+    /// Is a commercial building.
     /// </summary>
     [Column("IS_COMM_BLDG")]
     public bool? IsCommBldg { get; set; }
 
     /// <summary>
-    /// Is improvement of another description
+    /// Is improvement of another description.
     /// </summary>
     [Column("IS_OTHER_IMPROVEMENT")]
     public bool? IsOtherImprovement { get; set; }
 
     /// <summary>
-    /// Incidcator that lease/license has expired
+    /// Incidcator that lease/license has expired.
     /// </summary>
     [Column("IS_EXPIRED")]
     public bool IsExpired { get; set; }
 
     /// <summary>
-    /// Indicator that phyical file exists
+    /// Indicator that phyical file exists.
     /// </summary>
     [Column("HAS_PHYSICAL_FILE")]
     public bool? HasPhysicalFile { get; set; }
 
     /// <summary>
-    /// Indicator that digital file exists
+    /// Indicator that digital file exists.
     /// </summary>
     [Column("HAS_DIGITAL_FILE")]
     public bool? HasDigitalFile { get; set; }
 
     /// <summary>
-    /// Indicator that physical license exists
+    /// Indicator that physical license exists.
     /// </summary>
     [Column("HAS_PHYSICIAL_LICENSE")]
     public bool? HasPhysicialLicense { get; set; }
 
     /// <summary>
-    /// Indicator that digital license exists
+    /// Indicator that digital license exists.
     /// </summary>
     [Column("HAS_DIGITAL_LICENSE")]
     public bool? HasDigitalLicense { get; set; }
 
     /// <summary>
-    /// Reason for the cancellation of the lease.  For example, &quot;The request for leasing the space was withdrawn.&quot;
+    /// Reason for the cancellation of the lease.  For example, &quot;The request for leasing the space was withdrawn.&quot;.
     /// </summary>
     [Column("CANCELLATION_REASON")]
     [StringLength(500)]
     public string CancellationReason { get; set; }
 
     /// <summary>
-    /// Reason for the termination of the lease.  For example, &quot;The tenant is in violation of the terms of the agreement.&quot;
+    /// Reason for the termination of the lease.  For example, &quot;The tenant is in violation of the terms of the agreement.&quot;.
     /// </summary>
     [Column("TERMINATION_REASON")]
     [StringLength(500)]
@@ -310,7 +310,7 @@ public partial class PimsLease
     public decimal? TotalAllowableCompensation { get; set; }
 
     /// <summary>
-    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
+    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o.
     /// </summary>
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }

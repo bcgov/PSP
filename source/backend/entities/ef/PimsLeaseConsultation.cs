@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -85,7 +85,7 @@ public partial class PimsLeaseConsultation
     public DateTime? RequestedOn { get; set; }
 
     /// <summary>
-    /// Has the consultation request response been received?
+    /// Has the consultation request response been received?.
     /// </summary>
     [Column("IS_RESPONSE_RECEIVED")]
     public bool? IsResponseReceived { get; set; }
@@ -110,7 +110,7 @@ public partial class PimsLeaseConsultation
     public bool? IsDisabled { get; set; }
 
     /// <summary>
-    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
+    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o.
     /// </summary>
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }

@@ -19,7 +19,9 @@ namespace Pims.Dal.Entities
 
         #region Constructors
 
-        public PimsManagementFileProgramType() { }
+        public PimsManagementFileProgramType()
+        {
+        }
 
         /// <summary>
         /// Create a new instance of a PimsManagementFileProgramType class.

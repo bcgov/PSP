@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,14 +13,14 @@ namespace Pims.Dal.Entities;
 public partial class PimsTenant
 {
     /// <summary>
-    /// Auto-sequenced unique key value
+    /// Auto-sequenced unique key value.
     /// </summary>
     [Key]
     [Column("TENANT_ID")]
     public long TenantId { get; set; }
 
     /// <summary>
-    /// Code value for entry
+    /// Code value for entry.
     /// </summary>
     [Required]
     [Column("CODE")]
@@ -28,7 +28,7 @@ public partial class PimsTenant
     public string Code { get; set; }
 
     /// <summary>
-    /// Name of the entry for display purposes
+    /// Name of the entry for display purposes.
     /// </summary>
     [Required]
     [Column("NAME")]
@@ -36,14 +36,14 @@ public partial class PimsTenant
     public string Name { get; set; }
 
     /// <summary>
-    /// Description of the entry for display purposes
+    /// Description of the entry for display purposes.
     /// </summary>
     [Column("DESCRIPTION")]
     [StringLength(500)]
     public string Description { get; set; }
 
     /// <summary>
-    /// Serialized JSON value for the configuration
+    /// Serialized JSON value for the configuration.
     /// </summary>
     [Required]
     [Column("SETTINGS")]

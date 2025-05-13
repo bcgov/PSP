@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -28,20 +28,20 @@ public partial class PimsPropertyLease
     public string AreaUnitTypeCode { get; set; }
 
     /// <summary>
-    /// Property/lease name
+    /// Property/lease name.
     /// </summary>
     [Column("NAME")]
     [StringLength(250)]
     public string Name { get; set; }
 
     /// <summary>
-    /// Leased area measurement
+    /// Leased area measurement.
     /// </summary>
     [Column("LEASE_AREA")]
     public float? LeaseArea { get; set; }
 
     /// <summary>
-    /// Geospatial location (pin) of property
+    /// Geospatial location (pin) of property.
     /// </summary>
     [Column("LOCATION", TypeName = "geometry")]
     public Geometry Location { get; set; }

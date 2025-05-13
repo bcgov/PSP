@@ -8,7 +8,7 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig <Entity.PimsAcqFileAcqFlTakeTyp, AcquisitionFileTakingStatusesModel>()
+            config.NewConfig<Entity.PimsAcqFileAcqFlTakeTyp, AcquisitionFileTakingStatusesModel>()
             .Map(dest => dest.Id, src => src.AcqFileAcqFlTakeTypeId)
             .Map(dest => dest.AcquisitionFileId, src => src.AcquisitionFileId)
             .Map(dest => dest.TakingStatusTypeCode, src => src.AcqFileTakeTypeCodeNavigation)

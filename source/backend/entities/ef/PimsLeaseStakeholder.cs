@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Associates a tenant with a lease
+/// Associates a tenant with a lease.
 /// </summary>
 [Table("PIMS_LEASE_STAKEHOLDER")]
 [Index("LeaseId", Name = "LSTKHL_LEASE_ID_IDX")]

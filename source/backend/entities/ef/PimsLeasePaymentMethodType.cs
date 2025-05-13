@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,7 +13,7 @@ namespace Pims.Dal.Entities;
 public partial class PimsLeasePaymentMethodType
 {
     /// <summary>
-    /// Payment method type code
+    /// Payment method type code.
     /// </summary>
     [Key]
     [Column("LEASE_PAYMENT_METHOD_TYPE_CODE")]
@@ -21,7 +21,7 @@ public partial class PimsLeasePaymentMethodType
     public string LeasePaymentMethodTypeCode { get; set; }
 
     /// <summary>
-    /// Payment method type description
+    /// Payment method type description.
     /// </summary>
     [Required]
     [Column("DESCRIPTION")]
@@ -29,13 +29,13 @@ public partial class PimsLeasePaymentMethodType
     public string Description { get; set; }
 
     /// <summary>
-    /// Is this code disabled?
+    /// Is this code disabled?.
     /// </summary>
     [Column("IS_DISABLED")]
     public bool IsDisabled { get; set; }
 
     /// <summary>
-    /// Display order of the descriptions
+    /// Display order of the descriptions.
     /// </summary>
     [Column("DISPLAY_ORDER")]
     public int? DisplayOrder { get; set; }

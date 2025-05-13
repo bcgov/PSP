@@ -40,7 +40,7 @@ namespace Pims.Api.Helpers.Healthchecks
                     }
                 }
             }
-            catch(LtsaException e)
+            catch (LtsaException e)
             {
                 return new HealthCheckResult(context.Registration.FailureStatus, $"LTSA error response: {e.Message}");
             }

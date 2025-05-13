@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -61,7 +61,7 @@ public partial class PimsPropertyActivity
     public long? ManagementFileId { get; set; }
 
     /// <summary>
-    /// Date the request for a property management activity was added
+    /// Date the request for a property management activity was added.
     /// </summary>
     [Column("REQUEST_ADDED_DT")]
     public DateOnly RequestAddedDt { get; set; }

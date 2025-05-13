@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Code table to describe source ot the research request
+/// Code table to describe source ot the research request.
 /// </summary>
 [Table("PIMS_REQUEST_SOURCE_TYPE")]
 public partial class PimsRequestSourceType

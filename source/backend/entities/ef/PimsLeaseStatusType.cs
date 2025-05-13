@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,13 +7,13 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Describes the status of the lease
+/// Describes the status of the lease.
 /// </summary>
 [Table("PIMS_LEASE_STATUS_TYPE")]
 public partial class PimsLeaseStatusType
 {
     /// <summary>
-    /// Code value of the status of the lease
+    /// Code value of the status of the lease.
     /// </summary>
     [Key]
     [Column("LEASE_STATUS_TYPE_CODE")]
@@ -21,7 +21,7 @@ public partial class PimsLeaseStatusType
     public string LeaseStatusTypeCode { get; set; }
 
     /// <summary>
-    /// Description of the status of the lease
+    /// Description of the status of the lease.
     /// </summary>
     [Required]
     [Column("DESCRIPTION")]

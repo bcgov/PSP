@@ -174,8 +174,7 @@ namespace Pims.Dal.Repositories
 
         IEnumerable<PimsManagementFileStatusType> GetAllManagementFileStatusTypes();
 
-        //IEnumerable<PimsManagementFileProgramType> GetAllManagementFileProgramTypes(); // TODO: DB104
-
+        // IEnumerable<PimsManagementFileProgramType> GetAllManagementFileProgramTypes(); // TODO: DB104
         IEnumerable<PimsManagementFileProfileType> GetAllManagementFileProfileTypes();
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -52,7 +52,7 @@ public partial class PimsAddress
     public string PostalCode { get; set; }
 
     /// <summary>
-    /// Other country not listed in drop-down list
+    /// Other country not listed in drop-down list.
     /// </summary>
     [Column("OTHER_COUNTRY")]
     [StringLength(200)]

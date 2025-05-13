@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,13 +7,13 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Describes the status of forecast payments
+/// Describes the status of forecast payments.
 /// </summary>
 [Table("PIMS_LEASE_PAYMENT_STATUS_TYPE")]
 public partial class PimsLeasePaymentStatusType
 {
     /// <summary>
-    /// Payment status type code
+    /// Payment status type code.
     /// </summary>
     [Key]
     [Column("LEASE_PAYMENT_STATUS_TYPE_CODE")]
@@ -21,7 +21,7 @@ public partial class PimsLeasePaymentStatusType
     public string LeasePaymentStatusTypeCode { get; set; }
 
     /// <summary>
-    /// Payment status type description
+    /// Payment status type description.
     /// </summary>
     [Required]
     [Column("DESCRIPTION")]
@@ -29,13 +29,13 @@ public partial class PimsLeasePaymentStatusType
     public string Description { get; set; }
 
     /// <summary>
-    /// Is this code disabled?
+    /// Is this code disabled?.
     /// </summary>
     [Column("IS_DISABLED")]
     public bool IsDisabled { get; set; }
 
     /// <summary>
-    /// Display order of the descriptions
+    /// Display order of the descriptions.
     /// </summary>
     [Column("DISPLAY_ORDER")]
     public int? DisplayOrder { get; set; }

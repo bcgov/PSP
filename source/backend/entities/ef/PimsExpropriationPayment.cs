@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -17,7 +17,7 @@ namespace Pims.Dal.Entities;
 public partial class PimsExpropriationPayment
 {
     /// <summary>
-    /// Unique auto-generated surrogate primary key
+    /// Unique auto-generated surrogate primary key.
     /// </summary>
     [Key]
     [Column("EXPROPRIATION_PAYMENT_ID")]
@@ -48,7 +48,7 @@ public partial class PimsExpropriationPayment
     public long? ExpropriatingAuthority { get; set; }
 
     /// <summary>
-    /// Form 8 description field.  There are lawyer remarks pending.  This field could be used for: - providing remarks particular to an expropriation form, and /or - for any ETL descriptive fields as well as - a place-holder forfields that do not have a mapping
+    /// Form 8 description field.  There are lawyer remarks pending.  This field could be used for: - providing remarks particular to an expropriation form, and /or - for any ETL descriptive fields as well as - a place-holder forfields that do not have a mapping.
     /// </summary>
     [Column("DESCRIPTION")]
     [StringLength(2000)]
@@ -61,7 +61,7 @@ public partial class PimsExpropriationPayment
     public bool? IsDisabled { get; set; }
 
     /// <summary>
-    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
+    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o.
     /// </summary>
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }

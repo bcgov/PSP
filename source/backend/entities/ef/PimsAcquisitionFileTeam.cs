@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -26,19 +26,19 @@ public partial class PimsAcquisitionFileTeam
     public long AcquisitionFileId { get; set; }
 
     /// <summary>
-    /// Foreign key to the team member
+    /// Foreign key to the team member.
     /// </summary>
     [Column("PERSON_ID")]
     public long? PersonId { get; set; }
 
     /// <summary>
-    /// Foreign key to the team member&apos;s organization
+    /// Foreign key to the team member&apos;s organization.
     /// </summary>
     [Column("ORGANIZATION_ID")]
     public long? OrganizationId { get; set; }
 
     /// <summary>
-    /// Primary contact for the organization
+    /// Primary contact for the organization.
     /// </summary>
     [Column("PRIMARY_CONTACT_ID")]
     public long? PrimaryContactId { get; set; }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -48,14 +48,14 @@ public partial class PimsCompReqAcqPayee
     public long? AcquisitionFileTeamId { get; set; }
 
     /// <summary>
-    /// Payee where only the name is known from the PAIMS system,
+    /// Payee where only the name is known from the PAIMS system,.
     /// </summary>
     [Column("LEGACY_PAYEE")]
     [StringLength(1000)]
     public string LegacyPayee { get; set; }
 
     /// <summary>
-    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
+    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o.
     /// </summary>
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }

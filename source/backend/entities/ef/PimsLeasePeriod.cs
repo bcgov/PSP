@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -59,45 +59,45 @@ public partial class PimsLeasePeriod
     public string VblRentFreq { get; set; }
 
     /// <summary>
-    /// Start date of the current period of the lease/licence
+    /// Start date of the current period of the lease/licence.
     /// </summary>
     [Column("PERIOD_START_DATE", TypeName = "datetime")]
     public DateTime PeriodStartDate { get; set; }
 
     /// <summary>
-    /// Expiry date of the current period of the lease/licence
+    /// Expiry date of the current period of the lease/licence.
     /// </summary>
     [Column("PERIOD_EXPIRY_DATE", TypeName = "datetime")]
     public DateTime? PeriodExpiryDate { get; set; }
 
     /// <summary>
-    /// Renewal date of the current period of the lease/licence
+    /// Renewal date of the current period of the lease/licence.
     /// </summary>
     [Column("PERIOD_RENEWAL_DATE", TypeName = "datetime")]
     public DateTime? PeriodRenewalDate { get; set; }
 
     /// <summary>
-    /// Agreed-to payment amount (exclusive of GST)
+    /// Agreed-to payment amount (exclusive of GST).
     /// </summary>
     [Column("PAYMENT_AMOUNT", TypeName = "money")]
     public decimal? PaymentAmount { get; set; }
 
     /// <summary>
-    /// Anecdotal description of payment due date (e.g. 1st of month, end of month)
+    /// Anecdotal description of payment due date (e.g. 1st of month, end of month).
     /// </summary>
     [Column("PAYMENT_DUE_DATE")]
     [StringLength(2000)]
     public string PaymentDueDate { get; set; }
 
     /// <summary>
-    /// Notes regarding payment status for the lease period
+    /// Notes regarding payment status for the lease period.
     /// </summary>
     [Column("PAYMENT_NOTE")]
     [StringLength(2000)]
     public string PaymentNote { get; set; }
 
     /// <summary>
-    /// Is the lease subject to GST?
+    /// Is the lease subject to GST?.
     /// </summary>
     [Column("IS_GST_ELIGIBLE")]
     public bool? IsGstEligible { get; set; }
@@ -109,7 +109,7 @@ public partial class PimsLeasePeriod
     public decimal? GstAmount { get; set; }
 
     /// <summary>
-    /// Has the lease period been exercised?
+    /// Has the lease period been exercised?.
     /// </summary>
     [Column("IS_PERIOD_EXERCISED")]
     public bool? IsPeriodExercised { get; set; }
@@ -139,7 +139,7 @@ public partial class PimsLeasePeriod
     public decimal? AddlRentGstAmount { get; set; }
 
     /// <summary>
-    /// Is the variable additional rent payment subject to GST?
+    /// Is the variable additional rent payment subject to GST?.
     /// </summary>
     [Column("IS_ADDL_RENT_SUBJECT_TO_GST")]
     public bool? IsAddlRentSubjectToGst { get; set; }
@@ -157,13 +157,13 @@ public partial class PimsLeasePeriod
     public decimal? VblRentGstAmount { get; set; }
 
     /// <summary>
-    /// Is the variable rent payment subject to GST?
+    /// Is the variable rent payment subject to GST?.
     /// </summary>
     [Column("IS_VBL_RENT_SUBJECT_TO_GST")]
     public bool? IsVblRentSubjectToGst { get; set; }
 
     /// <summary>
-    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
+    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o.
     /// </summary>
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }

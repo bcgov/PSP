@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -60,44 +60,44 @@ public partial class PimsLeasePayment
     public string LeasePmtFreqTypeCode { get; set; }
 
     /// <summary>
-    /// Date the payment was received or sent
+    /// Date the payment was received or sent.
     /// </summary>
     [Column("PAYMENT_RECEIVED_DATE", TypeName = "datetime")]
     public DateTime PaymentReceivedDate { get; set; }
 
     /// <summary>
-    /// Principal amount of the payment before applicable taxes
+    /// Principal amount of the payment before applicable taxes.
     /// </summary>
     [Column("PAYMENT_AMOUNT_PRE_TAX", TypeName = "money")]
     public decimal PaymentAmountPreTax { get; set; }
 
     /// <summary>
-    /// PST owing on payment if applicable
+    /// PST owing on payment if applicable.
     /// </summary>
     [Column("PAYMENT_AMOUNT_PST", TypeName = "money")]
     public decimal? PaymentAmountPst { get; set; }
 
     /// <summary>
-    /// GST owing on payment if applicable
+    /// GST owing on payment if applicable.
     /// </summary>
     [Column("PAYMENT_AMOUNT_GST", TypeName = "money")]
     public decimal? PaymentAmountGst { get; set; }
 
     /// <summary>
-    /// Total amount of payment including principal plus all applicable taxes
+    /// Total amount of payment including principal plus all applicable taxes.
     /// </summary>
     [Column("PAYMENT_AMOUNT_TOTAL", TypeName = "money")]
     public decimal PaymentAmountTotal { get; set; }
 
     /// <summary>
-    /// Notes regarding this payment
+    /// Notes regarding this payment.
     /// </summary>
     [Column("NOTE")]
     [StringLength(2000)]
     public string Note { get; set; }
 
     /// <summary>
-    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
+    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o.
     /// </summary>
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }

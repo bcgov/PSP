@@ -5,16 +5,15 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Areas.Contact.Models.Search;
-using Pims.Core.Api.Exceptions;
 using Pims.Api.Helpers.Extensions;
 using Pims.Api.Models.Base;
 using Pims.Api.Models.Concepts.Contact;
-using Pims.Core.Api.Policies;
 using Pims.Api.Services.Interfaces;
-using Pims.Dal.Entities.Models;
-using Pims.Core.Security;
-using Swashbuckle.AspNetCore.Annotations;
 using Pims.Core.Api.Exceptions;
+using Pims.Core.Api.Policies;
+using Pims.Core.Security;
+using Pims.Dal.Entities.Models;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Areas.Contact.Controllers
 {

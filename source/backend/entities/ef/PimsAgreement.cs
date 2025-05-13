@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -63,7 +63,7 @@ public partial class PimsAgreement
     public decimal? DepositAmount { get; set; }
 
     /// <summary>
-    /// Deposit due date
+    /// Deposit due date.
     /// </summary>
     [Column("NO_LATER_THAN_DAYS")]
     public int? NoLaterThanDays { get; set; }
@@ -75,7 +75,7 @@ public partial class PimsAgreement
     public decimal? PurchasePrice { get; set; }
 
     /// <summary>
-    /// Legal survey plan number,
+    /// Legal survey plan number,.
     /// </summary>
     [Column("LEGAL_SURVEY_PLAN_NUM")]
     [StringLength(250)]

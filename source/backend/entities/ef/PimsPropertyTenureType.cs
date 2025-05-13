@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// A code table to store property tenure codes. Tenure is defined as : &quot;The act, right, manner or term of holding something(as a landed property)&quot; In this case, tenure is required on Properties to indicate MoTI&apos;s legal tenure on the property. The land parcel
+/// A code table to store property tenure codes. Tenure is defined as : &quot;The act, right, manner or term of holding something(as a landed property)&quot; In this case, tenure is required on Properties to indicate MoTI&apos;s legal tenure on the property. The land parcel.
 /// </summary>
 [Table("PIMS_PROPERTY_TENURE_TYPE")]
 public partial class PimsPropertyTenureType
