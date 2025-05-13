@@ -77,7 +77,10 @@ const UpdateFinancialCodeForm = lazy(() =>
   componentLoader(import('@/features/admin/financial-codes/update/UpdateFinancialCodeForm'), 2),
 );
 
-const ContactListPage = lazy(() => componentLoader(import('@/features/contacts'), 2));
+const ContactListPage = lazy(() =>
+  componentLoader(import('@/features/contacts/list/ContactListPage'), 2),
+);
+
 const CreateContactContainer = lazy(() =>
   componentLoader(import('@/features/contacts/contact/create/CreateContactContainer'), 2),
 );

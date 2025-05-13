@@ -161,7 +161,7 @@ describe('AddLeaseTenantForm component', () => {
     await act(async () => {
       await setup({ showContactManager: true });
     });
-    const modal = screen.getByText('Select a contact');
+    const modal = screen.getByText('Select Contact');
 
     expect(modal).toBeVisible();
   });
@@ -171,7 +171,7 @@ describe('AddLeaseTenantForm component', () => {
       await setup({ showContactManager: true });
     });
 
-    const modal = screen.getByText('Select a contact');
+    const modal = screen.getByText('Select Contact');
     expect(modal).toBeVisible();
 
     const confirm = screen.getByText('Select');
@@ -192,7 +192,7 @@ describe('AddLeaseTenantForm component', () => {
       await setup({ showContactManager: true, selectedStakeholders: tenants });
     });
 
-    const modal = screen.getByText('Select a contact');
+    const modal = screen.getByText('Select Contact');
     expect(modal).toBeVisible();
 
     const cancel = screen.getByText('Cancel');
@@ -207,7 +207,7 @@ describe('AddLeaseTenantForm component', () => {
       await setup({ showContactManager: true });
     });
 
-    const modal = screen.getByText('Select a contact');
+    const modal = screen.getByText('Select Contact');
 
     expect(modal).toBeVisible();
   });

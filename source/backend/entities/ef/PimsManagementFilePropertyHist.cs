@@ -29,6 +29,10 @@ public partial class PimsManagementFilePropertyHist
     [Column("PROPERTY_ID")]
     public long PropertyId { get; set; }
 
+    [Column("PROPERTY_NAME")]
+    [StringLength(500)]
+    public string PropertyName { get; set; }
+
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
 
