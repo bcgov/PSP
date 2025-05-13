@@ -207,7 +207,6 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
           formikProps={formikProps}
           field="startDate"
           required={statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE}
-          popperPlacement="top-end"
         />
       </SectionField>
       <SectionField
