@@ -12,6 +12,8 @@ import { useApiManagementActivities } from '../pims-api/useApiManagementActiviti
  * hook that interacts with the Management File Activity API.
  */
 export const useManagementActivityRepository = () => {
+  const { getActivitySubtypesApi, getActivityApi, postActivityApi, putActivityApi } =
+    useApiManagementActivities();
   const {
     getActivitySubtypesApi,
     postActivityApi,
@@ -32,6 +34,22 @@ export const useManagementActivityRepository = () => {
     onError: useAxiosErrorHandler('Failed to retrieve management activity subtypes.'),
   });
 
+  const getManagementActivity = useApiRequestWrapper<
+    (
+      managementFileId: number,
+      activityId: number,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_PropertyActivity, any>>
+  >({
+    requestFunction: useCallback(
+      async (managementFileId: number, activityId: number) =>
+        await getActivityApi(managementFileId, activityId),
+      [getActivityApi],
+    ),
+    requestName: 'GetManagementActivity',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler('Failed to retrieve a management file activity.'),
+  });
+
   const addManagementActivity = useApiRequestWrapper<
     (
       managementFileId: number,
@@ -46,6 +64,22 @@ export const useManagementActivityRepository = () => {
     requestName: 'AddManagementActivity',
     onSuccess: useAxiosSuccessHandler(),
     onError: useAxiosErrorHandler('Failed to create a management file activity.'),
+  });
+
+  const updateManagementActivity = useApiRequestWrapper<
+    (
+      managementFileId: number,
+      activity: ApiGen_Concepts_PropertyActivity,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_PropertyActivity, any>>
+  >({
+    requestFunction: useCallback(
+      async (managementFileId: number, activity: ApiGen_Concepts_PropertyActivity) =>
+        await putActivityApi(managementFileId, activity),
+      [putActivityApi],
+    ),
+    requestName: 'UpdateManagementActivity',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler('Failed to update a management file activity.'),
   });
 
   const getManagementActivity = useApiRequestWrapper<
@@ -94,11 +128,14 @@ export const useManagementActivityRepository = () => {
   return useMemo(
     () => ({
       getActivitySubtypes,
+      getManagementActivity,
       addManagementActivity,
+      updateManagementActivity,
       getManagementActivity,
       getManagementActivities,
       deleteManagementActivity,
     }),
+    [getActivitySubtypes, getManagementActivity, addManagementActivity, updateManagementActivity],
     [
       getActivitySubtypes,
       addManagementActivity,
