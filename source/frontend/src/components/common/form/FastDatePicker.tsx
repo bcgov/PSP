@@ -7,7 +7,7 @@ import { Form, FormControlProps } from 'react-bootstrap';
 import DatePicker, { ReactDatePickerProps } from 'react-datepicker';
 import styled from 'styled-components';
 
-import { formikFieldMemo } from '@/utils';
+import { exists, formikFieldMemo } from '@/utils';
 
 import TooltipIcon from '../TooltipIcon';
 
@@ -133,7 +133,7 @@ const FormikDatePicker: FunctionComponent<React.PropsWithChildren<FastDatePicker
         maxDate={maxDate}
         {...rest}
         popperModifiers={popperModifiers}
-        popperPlacement={popperPlacement !== undefined ? popperPlacement : 'top-end'}
+        popperPlacement={exists(popperPlacement) ? popperPlacement : 'top-end'}
         onBlur={() => {
           setFieldTouched(field);
         }}
