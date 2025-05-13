@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { matchPath, Switch, useHistory, useLocation } from 'react-router';
+import { generatePath, matchPath, Switch, useHistory, useLocation } from 'react-router';
 
 import { Claims } from '@/constants';
 import { exists } from '@/utils';
@@ -42,7 +42,10 @@ export const ManagementFileActivityRouter: React.FunctionComponent<
           <ManagementActivityEditContainer
             managementFileId={Number(match.params.managementFileId)}
             onClose={() => {
-              const parentPath = match?.url.substring(0, match?.url.lastIndexOf('/')) || '/';
+              const parentPath = generatePath(
+                '/mapview/sidebar/management/:managementFileId/activities',
+                { managementFileId: match.params.managementFileId },
+              );
               history.push(parentPath);
             }}
             View={ManagementActivityEditForm}
@@ -50,8 +53,8 @@ export const ManagementFileActivityRouter: React.FunctionComponent<
         )}
         claim={[Claims.PROPERTY_VIEW, Claims.MANAGEMENT_EDIT]}
         exact
-        key={'activity_new'}
-        title={'Activity New'}
+        key={'activity_add'}
+        title={'Add Activity'}
       />
       <AppRoute
         path={`/mapview/sidebar/management/:managementFileId/activities/:activityId/edit`}
@@ -60,7 +63,10 @@ export const ManagementFileActivityRouter: React.FunctionComponent<
             managementFileId={Number(match.params.managementFileId)}
             activityId={Number(match.params.activityId)}
             onClose={() => {
-              const parentPath = match?.url.substring(0, match?.url.lastIndexOf('/')) || '/';
+              const parentPath = generatePath(
+                '/mapview/sidebar/management/:managementFileId/activities',
+                { managementFileId: match.params.managementFileId },
+              );
               history.push(parentPath);
             }}
             View={ManagementActivityEditForm}
@@ -68,8 +74,8 @@ export const ManagementFileActivityRouter: React.FunctionComponent<
         )}
         claim={Claims.PROPERTY_VIEW}
         exact
-        key={'activity_new'}
-        title={'Activity New'}
+        key={'activity_edit'}
+        title={'Edit Activity'}
       />
       <AppRoute
         path={`/mapview/sidebar/management/:managementFileId/activities/:activityId`}
