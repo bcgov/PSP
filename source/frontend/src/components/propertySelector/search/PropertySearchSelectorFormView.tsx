@@ -1,6 +1,5 @@
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { Section } from '@/components/common/Section/Section';
-import * as Styled from '@/components/common/styles';
 import { Table } from '@/components/Table';
 import { IGeocoderResponse } from '@/hooks/pims-api/interfaces/IGeocoder';
 import { featuresetToMapProperty, getPropertyName } from '@/utils/mapPropertyUtils';
@@ -62,34 +61,29 @@ export const PropertySearchSelectorFormView: React.FunctionComponent<
   }
 
   return (
-    <>
-      <Section header={undefined}>
-        <Styled.H3>Search for a property</Styled.H3>
-        <LayerFilter
-          onSearch={onSearch}
-          filter={search}
-          addressResults={addressResults}
-          onAddressChange={onAddressChange}
-          onAddressSelect={onAddressSelect}
-          loading={loading}
-        />
-      </Section>
-      <Section header={undefined}>
-        <Table<IIdentifiedSelectedFeatureDataset>
-          manualPagination={false}
-          name="map-properties"
-          columns={mapPropertyColumns}
-          data={identifiedSearchResults}
-          setSelectedRows={onSelectedProperties}
-          selectedRows={selectedData}
-          loading={loading}
-          lockPageSize={true}
-          showSelectedRowCount={true}
-          noRowsMessage={'No results found for your search criteria.'}
-          pageSize={5}
-        />
-      </Section>
-    </>
+    <Section header="Search for a property">
+      <LayerFilter
+        onSearch={onSearch}
+        filter={search}
+        addressResults={addressResults}
+        onAddressChange={onAddressChange}
+        onAddressSelect={onAddressSelect}
+        loading={loading}
+      />
+      <Table<IIdentifiedSelectedFeatureDataset>
+        manualPagination={false}
+        name="map-properties"
+        columns={mapPropertyColumns}
+        data={identifiedSearchResults}
+        setSelectedRows={onSelectedProperties}
+        selectedRows={selectedData}
+        loading={loading}
+        lockPageSize={true}
+        showSelectedRowCount={true}
+        noRowsMessage={'No results found for your search criteria.'}
+        pageSize={5}
+      />
+    </Section>
   );
 };
 
