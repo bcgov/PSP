@@ -25,7 +25,7 @@ namespace Pims.Core.Test
             };
             managementFile.ManagementFileStatusTypeCode = "ACTIVE";
             managementFile.ManagementFileStatusTypeCodeNavigation = statusType ?? new Entity.PimsManagementFileStatusType() { Id = "ACTIVE", Description = "Active", DbCreateUserid = "create user", DbLastUpdateUserid = "last user" };
-            managementFile.ManagementFileProgramTypeCodeNavigation = new PimsManagementFileProgramType() { Id = "Program", DbCreateUserid = "create user", DbLastUpdateUserid = "last user", Description = "description" };
+            //managementFile.ManagementFileProgramTypeCodeNavigation = new PimsManagementFileProgramType() { Id = "Program", DbCreateUserid = "create user", DbLastUpdateUserid = "last user", Description = "description" }; // TODO: DB104
             managementFile.AcquisitionFundingTypeCodeNavigation = new PimsAcquisitionFundingType() { Id = "Funded", DbCreateUserid = "create user", DbLastUpdateUserid = "last user", Description = "description" };
 
             return managementFile;

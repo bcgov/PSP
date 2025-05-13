@@ -51,7 +51,7 @@ namespace Pims.Dal.Repositories
                 .Include(d => d.Project)
                 .Include(d => d.Product)
                 .Include(d => d.AcquisitionFundingTypeCodeNavigation)
-                .Include(d => d.ManagementFileProgramTypeCodeNavigation)
+                //.Include(d => d.ManagementFileProgramTypeCodeNavigation)  // TODO: DB104
                 .Include(d => d.ManagementFileStatusTypeCodeNavigation)
                 .Include(d => d.PimsManagementFileProperties)
                 .Include(d => d.PimsManagementFileTeams)
@@ -79,7 +79,7 @@ namespace Pims.Dal.Repositories
                 .Include(d => d.Project)
                 .Include(d => d.Product)
                 .Include(d => d.AcquisitionFundingTypeCodeNavigation)
-                .Include(d => d.ManagementFileProgramTypeCodeNavigation)
+                //.Include(d => d.ManagementFileProgramTypeCodeNavigation) // TODO: DB104
                 .Include(d => d.ManagementFileStatusTypeCodeNavigation)
                 .Include(d => d.PimsManagementFileProperties)
                 .Include(d => d.PimsManagementFileTeams)
@@ -385,7 +385,7 @@ namespace Pims.Dal.Repositories
 
             if (!string.IsNullOrWhiteSpace(filter.ManagementFilePurposeCode))
             {
-                predicate = predicate.And(disp => disp.ManagementFileProgramTypeCode == filter.ManagementFilePurposeCode);
+                //predicate = predicate.And(disp => disp.ManagementFileProgramTypeCode == filter.ManagementFilePurposeCode); // TODO: DB104
             }
 
             if (!string.IsNullOrWhiteSpace(filter.ProjectNameOrNumber))
@@ -409,7 +409,7 @@ namespace Pims.Dal.Repositories
                 .Include(d => d.Project)
                 .Include(d => d.Product)
                 .Include(d => d.AcquisitionFundingTypeCodeNavigation)
-                .Include(d => d.ManagementFileProgramTypeCodeNavigation)
+                //.Include(d => d.ManagementFileProgramTypeCodeNavigation) // TODO: DB104
                 .Include(d => d.ManagementFileStatusTypeCodeNavigation)
                 .Include(d => d.PimsManagementFileProperties)
                 .Include(d => d.PimsManagementFileTeams)

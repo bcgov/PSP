@@ -27,7 +27,7 @@ public partial class PimsManagementFileNoteHist
     public long ManagementFileId { get; set; }
 
     [Column("NOTE_ID")]
-    public long? NoteId { get; set; }
+    public long NoteId { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
