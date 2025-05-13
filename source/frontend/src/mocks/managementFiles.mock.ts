@@ -50,11 +50,11 @@ export const mockManagementFileResponse = (
     rowVersion: 1,
   },
   fundingTypeCode: null,
-  programTypeCode: {
-    id: 'UTILITY',
-    description: 'Utilities',
+  purposeTypeCode: {
+    id: 'ENGINEER',
+    description: 'Engineering',
     isDisabled: false,
-    displayOrder: 1,
+    displayOrder: 6,
   },
   fileProperties: [],
   managementTeam: [

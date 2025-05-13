@@ -513,20 +513,6 @@ exports[`Management filter > matches snapshot 1`] = `
                 </option>
                 <option
                   class="option"
-                  data-testid="select-option-COMMBLDG"
-                  value="COMMBLDG"
-                >
-                  Commercial building
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-ENCAMP"
-                  value="ENCAMP"
-                >
-                  Encampments
-                </option>
-                <option
-                  class="option"
                   data-testid="select-option-ENGINEER"
                   value="ENGINEER"
                 >
@@ -534,73 +520,10 @@ exports[`Management filter > matches snapshot 1`] = `
                 </option>
                 <option
                   class="option"
-                  data-testid="select-option-GOVERNMT"
-                  value="GOVERNMT"
+                  data-testid="select-option-GENERAL"
+                  value="GENERAL"
                 >
-                  Government
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-MOTTUSE"
-                  value="MOTTUSE"
-                >
-                  MOTT use
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-OILGAS"
-                  value="OILGAS"
-                >
-                  Oil/Gas
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-OTHER"
-                  value="OTHER"
-                >
-                  Other
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-PARKING"
-                  value="PARKING"
-                >
-                  Parking and/or storage
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-PUBTRANS"
-                  value="PUBTRANS"
-                >
-                  Public transportation
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-RAIL"
-                  value="RAIL"
-                >
-                  Rail
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-TRAILS"
-                  value="TRAILS"
-                >
-                  Rail trails/trails
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-RESRENTL"
-                  value="RESRENTL"
-                >
-                  Residential rentals
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-UTILITY"
-                  value="UTILITY"
-                >
-                  Utilities
+                  General
                 </option>
               </select>
             </div>

@@ -21,7 +21,7 @@ namespace Pims.Api.Models.Concepts.ManagementFile
                 .Map(dest => dest.Product, src => src.Product)
                 .Map(dest => dest.FileStatusTypeCode, src => src.ManagementFileStatusTypeCodeNavigation)
                 .Map(dest => dest.FundingTypeCode, src => src.AcquisitionFundingTypeCodeNavigation)
-                //.Map(dest => dest.ProgramTypeCode, src => src.ManagementFilePTypeCodeNavigation) // TODO: DB104
+                .Map(dest => dest.PurposeTypeCode, src => src.ManagementFilePurposeTypeCodeNavigation)
                 .Map(dest => dest.ManagementTeam, src => src.PimsManagementFileTeams)
                 .Map(dest => dest.FileProperties, src => src.PimsManagementFileProperties);
 
@@ -36,7 +36,7 @@ namespace Pims.Api.Models.Concepts.ManagementFile
                 .Map(dest => dest.ProductId, src => src.ProductId)
                 .Map(dest => dest.ManagementFileStatusTypeCode, src => src.FileStatusTypeCode.Id)
                 .Map(dest => dest.AcquisitionFundingTypeCode, src => src.FundingTypeCode != null ? src.FundingTypeCode.Id : null)
-                //.Map(dest => dest.ManagementFileProgramTypeCode, src => src.ProgramTypeCode != null ? src.ProgramTypeCode.Id : null) // TODO: DB104
+                .Map(dest => dest.ManagementFilePurposeTypeCode, src => src.PurposeTypeCode != null ? src.PurposeTypeCode.Id : null)
                 .Map(dest => dest.PimsManagementFileTeams, src => src.ManagementTeam)
                 .Map(dest => dest.PimsManagementFileProperties, src => src.FileProperties.ToImmutableList());
         }

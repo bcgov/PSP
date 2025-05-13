@@ -77,7 +77,7 @@ export const columns: ColumnWithProps<ManagementSearchResultModel>[] = [
   },
   {
     Header: 'Purpose',
-    accessor: 'managementFileProgramTypeCode',
+    accessor: 'managementFilePurposeTypeCode',
     align: 'left',
     clickable: true,
     sortable: true,

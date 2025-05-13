@@ -17,7 +17,7 @@ export class ManagementFormModel implements WithManagementTeam {
   project: IAutocompletePrediction | null = null;
   productId: string | null = null;
   fundingTypeCode: string | null = null;
-  programTypeCode: string | null = null;
+  purposeTypeCode: string | null = null;
   fileProperties: PropertyForm[] = [];
   team: ManagementTeamSubFormModel[] = [];
 
@@ -47,7 +47,7 @@ export class ManagementFormModel implements WithManagementTeam {
       product: null,
       productId: this.productId ? Number(this.productId) : null,
       fundingTypeCode: toTypeCodeNullable(this.fundingTypeCode),
-      programTypeCode: toTypeCodeNullable(this.programTypeCode),
+      purposeTypeCode: toTypeCodeNullable(this.purposeTypeCode),
       managementTeam: this.team
         .filter(x => !!x.contact && !!x.teamProfileTypeCode)
         .map(x => x.toApi(this.id || 0))
@@ -80,11 +80,11 @@ export class ManagementFormModel implements WithManagementTeam {
       : null;
     managementForm.productId = model.product?.id?.toString() ?? '';
     managementForm.fundingTypeCode = fromTypeCode(model.fundingTypeCode) ?? '';
+    managementForm.purposeTypeCode = fromTypeCode(model.purposeTypeCode) ?? '';
     managementForm.fileName = model.fileName ?? '';
     managementForm.team =
       model.managementTeam?.map(x => ManagementTeamSubFormModel.fromApi(x)) || [];
     managementForm.fileProperties = model.fileProperties?.map(x => PropertyForm.fromApi(x)) || [];
-    managementForm.programTypeCode = fromTypeCode(model.programTypeCode) ?? '';
 
     return managementForm;
   }
