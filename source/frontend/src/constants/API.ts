@@ -129,7 +129,7 @@ export const ACQUISITION_EXPROPIATIONRISK_STATUS_TYPES = 'PimsAcqFileExpropRiskT
 export const LEASE_TEAM_PROFILE_TYPES = 'PimsLlTeamProfileType';
 export const ACQUISITION_EXPROPRIATION_EVENT_TYPES = 'PimsExpropOwnerHistoryType';
 export const MANAGEMENT_FILE_STATUS_TYPES = 'PimsManagementFileStatusType';
-export const MANAGEMENT_FILE_PROGRAM_TYPES = 'PimsManagementFileProgramType';
+export const MANAGEMENT_FILE_PURPOSE_TYPES = 'PimsManagementFilePurposeType';
 export const MANAGEMENT_TEAM_PROFILE_TYPES = 'PimsManagementFileProfileType';
 
 // TODO: PSP-4395 This should all be removed from this and moved to the useApi* hooks.
