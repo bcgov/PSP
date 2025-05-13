@@ -210,7 +210,7 @@ exports[`Management search results table > matches snapshot 1`] = `
             Purpose
             <div
               class="c0"
-              data-testid="sort-column-managementFileProgramTypeCode"
+              data-testid="sort-column-managementFilePurposeTypeCode"
             >
               <svg
                 class="c1"
@@ -370,7 +370,7 @@ exports[`Management search results table > matches snapshot 1`] = `
             style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
-            Utilities
+            Engineering
           </div>
           <div
             class="td clickable"

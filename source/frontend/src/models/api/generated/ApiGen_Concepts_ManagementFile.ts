@@ -19,7 +19,7 @@ export interface ApiGen_Concepts_ManagementFile extends ApiGen_Concepts_File {
   productId: number | null;
   product: ApiGen_Concepts_Product | null;
   fundingTypeCode: ApiGen_Base_CodeType<string> | null;
-  programTypeCode: ApiGen_Base_CodeType<string> | null;
+  purposeTypeCode: ApiGen_Base_CodeType<string> | null;
   fileProperties: ApiGen_Concepts_ManagementFileProperty[] | null;
   managementTeam: ApiGen_Concepts_ManagementFileTeam[] | null;
 }
