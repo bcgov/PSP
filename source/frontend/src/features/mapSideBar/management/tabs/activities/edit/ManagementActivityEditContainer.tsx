@@ -110,14 +110,14 @@ export const ManagementActivityEditContainer: React.FunctionComponent<
       result = await addManagementActivity(managementFileId, model);
     }
 
-    if (exists(result)) {
+    if (exists(result) && isValidId(managementFileId)) {
       setStaleLastUpdatedBy(true);
       history.push(`/mapview/sidebar/management/${managementFileId}/activities/${result.id}`);
     }
   };
 
   const onCancelClick = () => {
-    if (isValidId(activityId)) {
+    if (isValidId(managementFileId) && isValidId(activityId)) {
       history.push(`/mapview/sidebar/management/${managementFileId}/activities/${activityId}`);
     } else {
       onClose();
