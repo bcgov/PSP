@@ -207,6 +207,7 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
           formikProps={formikProps}
           field="startDate"
           required={statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE}
+          popperPlacement="top-end"
         />
       </SectionField>
       <SectionField
@@ -221,7 +222,7 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
           />
         }
       >
-        <FastDatePicker formikProps={formikProps} field="expiryDate" />
+        <FastDatePicker formikProps={formikProps} field="expiryDate" popperPlacement="top-end" />
       </SectionField>
       {statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.TERMINATED && (
         <>
@@ -236,7 +237,11 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
               />
             }
           >
-            <FastDatePicker formikProps={formikProps} field="terminationDate" />
+            <FastDatePicker
+              formikProps={formikProps}
+              field="terminationDate"
+              popperPlacement="top-end"
+            />
           </SectionField>
           <SectionField label="Termination reason" contentWidth={{ xs: 12 }} required>
             <TextArea field="terminationReason" />
