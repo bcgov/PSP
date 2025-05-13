@@ -222,7 +222,7 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
 
   return (
     <Styled.MapContainer>
-      {baseLayers?.length > 0 && (
+      {baseLayers?.length > 0 && !mapMachine.mapSideBarViewState.isFullWidth && (
         <BasemapToggle baseLayers={baseLayers} onToggle={handleBasemapToggle} />
       )}
 
