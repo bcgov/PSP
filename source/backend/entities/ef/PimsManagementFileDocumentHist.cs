@@ -27,7 +27,7 @@ public partial class PimsManagementFileDocumentHist
     public long ManagementFileId { get; set; }
 
     [Column("DOCUMENT_ID")]
-    public long? DocumentId { get; set; }
+    public long DocumentId { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }

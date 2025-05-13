@@ -6,52 +6,47 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-[Table("PIMS_PROPERTY_FILE_DOCUMENT")]
-[Index("PropertyId", Name = "DSPDOC_DISPOSITION_FILE_ID_IDX")]
-[Index("DocumentId", Name = "DSPDOC_DOCUMENT_ID_IDX")]
+/// <summary>
+/// Table contains the relationship between the property and the associated document.
+/// </summary>
+[Table("PIMS_PROPERTY_DOCUMENT")]
+[Index("DocumentId", Name = "PRPDOC_DOCUMENT_ID_IDX")]
+[Index("PropertyId", Name = "PRPDOC_PROPERTY_ID_IDX")]
 public partial class PimsPropertyDocument
 {
     /// <summary>
-    /// Unique auto-generated surrogate primary key
+    /// Generated surrogate primary key.
     /// </summary>
     [Key]
-    [Column("PROPERTY_FILE_DOCUMENT_ID")]
+    [Column("PROPERTY_DOCUMENT_ID")]
     public long PropertyDocumentId { get; set; }
 
+    /// <summary>
+    /// Foreign key to the PIMS_PROPERTY table.
+    /// </summary>
     [Column("PROPERTY_ID")]
     public long PropertyId { get; set; }
 
+    /// <summary>
+    /// Foreign key to the PIMS_DOCUMENT_FILE table.
+    /// </summary>
     [Column("DOCUMENT_ID")]
     public long DocumentId { get; set; }
 
     /// <summary>
-    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any
+    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
     /// </summary>
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
 
     /// <summary>
-    /// The date and time the record was created by the user.
+    /// The date and time the user created the record.
     /// </summary>
     [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime AppCreateTimestamp { get; set; }
 
     /// <summary>
-    /// User directory of the user that created the record.
-    /// </summary>
-    [Required]
-    [Column("APP_CREATE_USER_DIRECTORY")]
-    [StringLength(30)]
-    public string AppCreateUserDirectory { get; set; }
-
-    /// <summary>
-    /// GUID of the user that created the record.
-    /// </summary>
-    [Column("APP_CREATE_USER_GUID")]
-    public Guid? AppCreateUserGuid { get; set; }
-
-    /// <summary>
-    /// The user that created the record.
+    /// The user account that created the record.
     /// </summary>
     [Required]
     [Column("APP_CREATE_USERID")]
@@ -59,32 +54,46 @@ public partial class PimsPropertyDocument
     public string AppCreateUserid { get; set; }
 
     /// <summary>
-    /// The date and time the record was updated by the user.
+    /// The GUID of the user account that created the record.
+    /// </summary>
+    [Column("APP_CREATE_USER_GUID")]
+    public Guid? AppCreateUserGuid { get; set; }
+
+    /// <summary>
+    /// The directory of the user account that created the record.
+    /// </summary>
+    [Required]
+    [Column("APP_CREATE_USER_DIRECTORY")]
+    [StringLength(30)]
+    public string AppCreateUserDirectory { get; set; }
+
+    /// <summary>
+    /// The date and time the user updated the record.
     /// </summary>
     [Column("APP_LAST_UPDATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime AppLastUpdateTimestamp { get; set; }
 
     /// <summary>
-    /// User directory of the user that updated the record.
-    /// </summary>
-    [Required]
-    [Column("APP_LAST_UPDATE_USER_DIRECTORY")]
-    [StringLength(30)]
-    public string AppLastUpdateUserDirectory { get; set; }
-
-    /// <summary>
-    /// GUID of the user that updated the record.
-    /// </summary>
-    [Column("APP_LAST_UPDATE_USER_GUID")]
-    public Guid? AppLastUpdateUserGuid { get; set; }
-
-    /// <summary>
-    /// The user that updated the record.
+    /// The user account that updated the record.
     /// </summary>
     [Required]
     [Column("APP_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string AppLastUpdateUserid { get; set; }
+
+    /// <summary>
+    /// The GUID of the user account that updated the record.
+    /// </summary>
+    [Column("APP_LAST_UPDATE_USER_GUID")]
+    public Guid? AppLastUpdateUserGuid { get; set; }
+
+    /// <summary>
+    /// The directory of the user account that updated the record.
+    /// </summary>
+    [Required]
+    [Column("APP_LAST_UPDATE_USER_DIRECTORY")]
+    [StringLength(30)]
+    public string AppLastUpdateUserDirectory { get; set; }
 
     /// <summary>
     /// The date and time the record was created.
@@ -95,7 +104,6 @@ public partial class PimsPropertyDocument
     /// <summary>
     /// The user or proxy account that created the record.
     /// </summary>
-    [Required]
     [Column("DB_CREATE_USERID")]
     [StringLength(30)]
     public string DbCreateUserid { get; set; }
@@ -114,11 +122,11 @@ public partial class PimsPropertyDocument
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
+    [ForeignKey("DocumentId")]
+    [InverseProperty("PimsPropertyDocuments")]
+    public virtual PimsDocument Document { get; set; }
+
     [ForeignKey("PropertyId")]
     [InverseProperty("PimsPropertyDocuments")]
     public virtual PimsProperty Property { get; set; }
-
-    [ForeignKey("DocumentId")]
-    [InverseProperty("PimsPropertyFileDocuments")]
-    public virtual PimsDocument Document { get; set; }
 }
