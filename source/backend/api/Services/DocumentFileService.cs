@@ -129,7 +129,7 @@ namespace Pims.Api.Services
         {
             Logger.LogInformation("Uploading document for single Lease");
             User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.LeaseEdit);
-            await UploadDocument(leaseId, uploadRequest, _propertyActivityDocumentRepository);
+            await UploadDocument(leaseId, uploadRequest, _leaseFileDocumentRepository);
         }
 
         public async Task UploadPropertyActivityDocument(long propertyActivityId, DocumentUploadRequest uploadRequest)
