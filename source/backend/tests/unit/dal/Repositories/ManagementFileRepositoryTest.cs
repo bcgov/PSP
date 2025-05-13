@@ -457,7 +457,7 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(managementFile);
 
             // Act
-            var result = repository.GetPageDeep(new ManagementFilter() { ManagementFilePurposeCode = "Program" });
+            var result = repository.GetPageDeep(new ManagementFilter() { ManagementFilePurposeCode = "Purpose" });
 
             // Assert
             result.Should().HaveCount(1);

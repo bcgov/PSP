@@ -1,6 +1,6 @@
 import userEvent from '@testing-library/user-event';
 
-import { MANAGEMENT_FILE_STATUS_TYPES, MANAGEMENT_FILE_PROGRAM_TYPES } from '@/constants/API';
+import { MANAGEMENT_FILE_STATUS_TYPES, MANAGEMENT_FILE_PURPOSE_TYPES } from '@/constants/API';
 import { Claims } from '@/constants/index';
 import { getMockLookUpsByType, mockLookups } from '@/mocks/lookups.mock';
 import { Api_ManagementFilter } from '@/models/api/ManagementFilter';
@@ -13,7 +13,7 @@ import ManagementFilter from './ManagementFilter';
 const setFilter = vi.fn();
 
 const fileStatusOptions = getMockLookUpsByType(MANAGEMENT_FILE_STATUS_TYPES);
-const managementFilePurposeOptions = getMockLookUpsByType(MANAGEMENT_FILE_PROGRAM_TYPES);
+const managementFilePurposeOptions = getMockLookUpsByType(MANAGEMENT_FILE_PURPOSE_TYPES);
 
 describe('Management filter', () => {
   const setup = (renderOptions: RenderOptions = {}) => {
@@ -74,12 +74,12 @@ describe('Management filter', () => {
 
     const dropdown = getByName('managementFilePurposeCode');
     expect(dropdown).not.toBeNull();
-    await act(async () => userEvent.selectOptions(dropdown!, 'UTILITY'));
+    await act(async () => userEvent.selectOptions(dropdown!, 'ENGINEER'));
     await act(async () => userEvent.click(getSearchButton()));
 
     expect(setFilter).toHaveBeenCalledWith(
       expect.objectContaining<Partial<Api_ManagementFilter>>({
-        managementFilePurposeCode: 'UTILITY',
+        managementFilePurposeCode: 'ENGINEER',
       }),
     );
   });

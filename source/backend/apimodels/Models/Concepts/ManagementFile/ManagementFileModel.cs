@@ -53,7 +53,7 @@ namespace Pims.Api.Models.Concepts.ManagementFile
         /// <summary>
         /// get/set - The program management file falls under.
         /// </summary>
-        public CodeTypeModel<string> ProgramTypeCode { get; set; }
+        public CodeTypeModel<string> PurposeTypeCode { get; set; }
 
         /// <summary>
         /// get/set - A list of management file properties.

@@ -87,7 +87,7 @@ export const ManagementSummaryView: React.FunctionComponent<IManagementSummaryVi
           {managementFile?.legacyFileNum}
         </SectionField>
         <SectionField label="Purpose" labelWidth={{ xs: '5' }}>
-          {managementFile?.programTypeCode?.description}
+          {managementFile?.purposeTypeCode?.description}
         </SectionField>
         <SectionField label="Additional details" labelWidth={{ xs: '5' }}>
           {managementFile?.additionalDetails}
