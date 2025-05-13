@@ -1569,6 +1569,27 @@ exports[`Add Management Container View > matches snapshot 1`] = `
                         >
                           Select...
                         </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-AGRICULT"
+                          value="AGRICULT"
+                        >
+                          Agricultural
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-ENGINEER"
+                          value="ENGINEER"
+                        >
+                          Engineering
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-GENERAL"
+                          value="GENERAL"
+                        >
+                          General
+                        </option>
                       </select>
                     </div>
                   </div>
