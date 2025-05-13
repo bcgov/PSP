@@ -31,7 +31,7 @@ public partial class PimsManagementFileDocument
     /// Foreign key to the PIMS_DOCUMENT_FILE table.
     /// </summary>
     [Column("DOCUMENT_ID")]
-    public long? DocumentId { get; set; }
+    public long DocumentId { get; set; }
 
     /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
