@@ -36,7 +36,6 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public IList<PimsPropertyDocument> GetAllByParentId(long parentId)
         {
-            /*
             return this.Context.PimsPropertyDocuments
                 .Include(ad => ad.Document)
                     .ThenInclude(d => d.DocumentStatusTypeCodeNavigation)
@@ -48,9 +47,6 @@ namespace Pims.Dal.Repositories
                 .Where(ad => ad.PropertyId == parentId)
                 .AsNoTracking()
                 .ToList();
-                */
-
-            return new List<PimsPropertyDocument>();
         }
 
         /// <summary>
@@ -62,18 +58,15 @@ namespace Pims.Dal.Repositories
         {
             propertyDocument.ThrowIfNull(nameof(propertyDocument));
 
-            /*
-                        var newEntry = this.Context.PimsPropertyDocuments.Add(propertyDocument);
-                        if (newEntry.State == EntityState.Added)
-                        {
-                            return newEntry.Entity;
-                        }
-                        else
-                        {
-                            throw new InvalidOperationException("Could not create document");
-                        }
-                        */
-            return new PimsPropertyDocument();
+            var newEntry = this.Context.PimsPropertyDocuments.Add(propertyDocument);
+            if (newEntry.State == EntityState.Added)
+            {
+                return newEntry.Entity;
+            }
+            else
+            {
+                throw new InvalidOperationException("Could not create document");
+            }
         }
 
         /// <summary>
@@ -88,9 +81,7 @@ namespace Pims.Dal.Repositories
                 throw new ArgumentNullException(nameof(propertyDocument), "propertyDocument cannot be null.");
             }
 
-            /*
             this.Context.PimsPropertyDocuments.Remove(new PimsPropertyDocument() { PropertyDocumentId = propertyDocument.PropertyDocumentId });
-            */
             return true;
         }
 
