@@ -5,6 +5,8 @@ import { Claims } from '@/constants';
 import { exists } from '@/utils';
 import AppRoute from '@/utils/AppRoute';
 
+import { FileActivityDetailContainer } from '../management/tabs/activities/detail/FileActivityDetailContainer';
+import { FileActivityDetailView } from '../management/tabs/activities/detail/FileActivityDetailView';
 import { ManagementActivityEditContainer } from '../management/tabs/activities/edit/ManagementActivityEditContainer';
 import { ManagementActivityEditForm } from '../management/tabs/activities/edit/ManagementActivityEditForm';
 
@@ -46,7 +48,26 @@ export const ManagementFileActivityRouter: React.FunctionComponent<
             View={ManagementActivityEditForm}
           />
         )}
-        claim={Claims.PROPERTY_VIEW}
+        claim={[Claims.PROPERTY_VIEW, Claims.MANAGEMENT_EDIT]}
+        exact
+        key={'activity_new'}
+        title={'Activity New'}
+      />
+      <AppRoute
+        path={`/mapview/sidebar/management/:managementFileId/activities/:activityId`}
+        customRender={({ match }) => (
+          <FileActivityDetailContainer
+            managementFileId={match.params.managementFileId}
+            propertyActivityId={match.params.activityId}
+            onClose={() => {
+              const parentPath = match?.url.substring(0, match?.url.lastIndexOf('/')) || '/';
+              history.push(parentPath);
+            }}
+            viewEnabled
+            View={FileActivityDetailView}
+          />
+        )}
+        claim={[Claims.PROPERTY_VIEW, Claims.MANAGEMENT_VIEW]}
         exact
         key={'activity_new'}
         title={'Activity New'}

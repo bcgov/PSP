@@ -35,13 +35,19 @@ namespace Pims.Api.Services
 
         IList<PimsPropertyActivity> GetActivities(long propertyId);
 
+        IList<PimsPropertyActivity> GetFileActivities(long managementFileId);
+
         PimsPropertyActivity GetActivity(long propertyId, long activityId);
+
+        PimsPropertyActivity GetFileActivity(long managementFileId, long activityId);
 
         PimsPropertyActivity CreateActivity(PimsPropertyActivity propertyActivity);
 
         PimsPropertyActivity UpdateActivity(long propertyId, long activityId, PimsPropertyActivity propertyActivity);
 
         bool DeleteActivity(long activityId);
+
+        bool DeleteFileActivity(long managementFileId, long activityId);
 
         PimsProperty PopulateNewProperty(PimsProperty property, bool isOwned = false, bool isPropertyOfInterest = true);
 

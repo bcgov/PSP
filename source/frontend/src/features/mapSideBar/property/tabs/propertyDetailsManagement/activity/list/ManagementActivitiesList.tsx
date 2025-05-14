@@ -66,12 +66,12 @@ export function createTableColumns(
       },
     },
     {
-      Header: 'Request added date',
+      Header: 'Commencement',
       accessor: 'requestedAddedDate',
       align: 'left',
       sortable: true,
-      minWidth: 40,
-      maxWidth: 40,
+      minWidth: 45,
+      maxWidth: 45,
       Cell: (cellProps: CellProps<PropertyActivityRow>) => {
         return stringToFragment(prettyFormatDate(cellProps.row.original?.requestedAddedDate));
       },
@@ -151,5 +151,8 @@ export default ManagementActivitiesList;
 
 const StyledDiv = styled(InlineFlexDiv)`
   justify-content: center;
-  width: 80%;
+  > * {
+    margin: 0.5rem;
+    padding: 0 !important;
+  }
 `;

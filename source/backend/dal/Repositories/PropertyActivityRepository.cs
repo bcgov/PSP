@@ -49,6 +49,24 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
+        /// Return a summary List of Management activities for a specific management file.
+        /// </summary>
+        /// <param name="managementFileId"></param>
+        /// <returns>List of Property's management activities.</returns>
+        public IList<PimsPropertyActivity> GetActivitiesByManagementFile(long managementFileId)
+        {
+            List<PimsPropertyActivity> activities = Context.PimsPropertyActivities.AsNoTracking()
+                    .Include(pa => pa.PropMgmtActivityTypeCodeNavigation)
+                    .Include(pa => pa.PropMgmtActivitySubtypeCodeNavigation)
+                    .Include(pa => pa.PropMgmtActivityStatusTypeCodeNavigation)
+                    .Include(pa => pa.PimsPropPropActivities)
+                    .Where(pa => pa.ManagementFileId == managementFileId)
+                    .ToList();
+
+            return activities;
+        }
+
+        /// <summary>
         /// Get the property activity for the specified activity with 'activityId' value.
         /// </summary>
         /// <param name="activityId"></param>
@@ -140,6 +158,29 @@ namespace Pims.Dal.Repositories
             }
 
             return deletedSuccessfully;
+        }
+
+        /// <summary>
+        /// Delete an activity, and all property-activity relationships.
+        /// </summary>
+        /// <param name="activityId"></param>
+        /// <returns>Boolean of deletion sucess.</returns>
+        public bool TryDeleteFile(long activityId, long managementFileId)
+        {
+            // There may be zero to many of these relationships.
+            Context.PimsPropPropActivities.ForEach(pp =>
+            {
+                Context.PimsPropPropActivities.Remove(pp);
+            });
+
+            var propertyActivity = Context.PimsPropertyActivities.FirstOrDefault(x => x.PimsPropertyActivityId == activityId && x.ManagementFileId == managementFileId);
+            if(propertyActivity is null)
+            {
+                return false;
+            }
+            Context.PimsPropertyActivities.Remove(propertyActivity);
+
+            return true;
         }
 
         #endregion
