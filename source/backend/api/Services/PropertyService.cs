@@ -281,6 +281,14 @@ namespace Pims.Api.Services
             return _propertyActivityRepository.GetActivitiesByProperty(propertyId);
         }
 
+        public IList<PimsPropertyActivity> GetFileActivities(long managementFileId)
+        {
+            _logger.LogInformation("Getting property management activities for management file with id {managementFileId}", managementFileId);
+            _user.ThrowIfNotAuthorized(Permissions.ManagementView, Permissions.PropertyView);
+
+            return _propertyActivityRepository.GetActivitiesByManagementFile(managementFileId);
+        }
+
         public PimsPropertyActivity GetActivity(long propertyId, long activityId)
         {
             _logger.LogInformation("Retrieving single property Activity...");
@@ -294,6 +302,21 @@ namespace Pims.Api.Services
             }
 
             throw new BadRequestException("Activity with the given id does not match the property id");
+        }
+
+        public PimsPropertyActivity GetFileActivity(long managementFileId, long activityId)
+        {
+            _logger.LogInformation("Retrieving single property Activity...");
+            _user.ThrowIfNotAuthorized(Permissions.ManagementView, Permissions.PropertyView);
+
+            var propertyActivity = _propertyActivityRepository.GetActivity(activityId);
+
+            if (propertyActivity.ManagementFileId == managementFileId)
+            {
+                return propertyActivity;
+            }
+
+            throw new BadRequestException("Activity with the given id does not match the management file id");
         }
 
         public PimsPropertyActivity CreateActivity(PimsPropertyActivity propertyActivity)
@@ -327,6 +350,29 @@ namespace Pims.Api.Services
             _propertyActivityRepository.CommitTransaction();
 
             return propertyActivityResult;
+        }
+
+        public bool DeleteFileActivity(long managementFileId, long activityId)
+        {
+            _logger.LogInformation("Deleting Management Activity with id {activityId}", activityId);
+            _user.ThrowIfNotAuthorized(Permissions.ManagementDelete, Permissions.PropertyEdit);
+
+            var propertyManagementActivity = _propertyActivityRepository.GetActivity(activityId);
+
+            if(propertyManagementActivity.ManagementFileId != managementFileId)
+            {
+                throw new BadRequestException("Activity with the given id does not match the management file id");
+            }
+
+            if (!propertyManagementActivity.PropMgmtActivityStatusTypeCode.Equals(PropertyActivityStatusTypeCode.NOTSTARTED.ToString()))
+            {
+                throw new BadRequestException($"PropertyManagementActivity can not be deleted since it has already started");
+            }
+
+            var success = _propertyActivityRepository.TryDeleteFile(activityId, managementFileId);
+            _propertyRepository.CommitTransaction();
+
+            return success;
         }
 
         public bool DeleteActivity(long activityId)

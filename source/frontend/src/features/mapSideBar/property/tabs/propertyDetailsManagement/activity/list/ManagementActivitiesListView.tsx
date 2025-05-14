@@ -14,6 +14,7 @@ import { PropertyActivityRow } from './models/PropertyActivityRow';
 export interface IManagementActivitiesListViewProps {
   isLoading: boolean;
   propertyActivities: PropertyActivityRow[];
+  isEmbedded: boolean;
   onCreate: () => void;
   onView: (activityId: number) => void;
   onDelete: (activityId: number) => void;
@@ -22,6 +23,7 @@ export interface IManagementActivitiesListViewProps {
 const ManagementActivitiesListView: React.FunctionComponent<IManagementActivitiesListViewProps> = ({
   isLoading,
   propertyActivities,
+  isEmbedded,
   onCreate,
   onView,
   onDelete,
@@ -58,7 +60,7 @@ const ManagementActivitiesListView: React.FunctionComponent<IManagementActivitie
     return [];
   }, [propertyActivities, sort]);
 
-  return (
+  return !isEmbedded ? (
     <Section
       isCollapsable
       initiallyExpanded
@@ -81,6 +83,15 @@ const ManagementActivitiesListView: React.FunctionComponent<IManagementActivitie
         loading={isLoading}
       ></ManagementActivitiesList>
     </Section>
+  ) : (
+    <ManagementActivitiesList
+      propertyActivities={sortedActivities}
+      handleView={onView}
+      handleDelete={onDelete}
+      sort={sort}
+      setSort={setSort}
+      loading={isLoading}
+    ></ManagementActivitiesList>
   );
 };
 
