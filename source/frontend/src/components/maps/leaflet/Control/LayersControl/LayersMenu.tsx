@@ -201,12 +201,12 @@ const LayersTree: React.FC<React.PropsWithChildren<{ items: TreeMenuItem[] }>> =
   return (
     <ListGroup>
       {items.map(node => {
-        if (node.level === 0) {
+        if (node.level === 0 || node.hasNodes) {
           if (!node.hasNodes) {
             return null;
           }
           return (
-            <ParentNode key={node.key} id={node.key}>
+            <ParentNode key={node.key} id={node.key} className={`ml-${8 * node.level}`}>
               {node.isOpen ? (
                 <OpenedIcon
                   onClick={(event: React.MouseEvent<SVGElement>) => {
@@ -237,7 +237,7 @@ const LayersTree: React.FC<React.PropsWithChildren<{ items: TreeMenuItem[] }>> =
           );
         } else {
           return (
-            <LayerNode key={node.key} id={node.key}>
+            <LayerNode key={node.key} id={node.key} className={`ml-${8 * (node.level - 1)}`}>
               <LayerNodeCheckbox
                 label={node.label}
                 name={`layers[${getParentIndex(
