@@ -93,7 +93,7 @@ export const FileActivityDetailContainer: React.FunctionComponent<
       managementId={managementFileId}
       activity={loadedActivity}
       onClose={onClose}
-      loading={getActivityLoading || isContactLoading}
+      loading={getActivityLoading || isContactLoading || loadingProperties}
       show={show && viewEnabled}
       setShow={setShow}
     />
