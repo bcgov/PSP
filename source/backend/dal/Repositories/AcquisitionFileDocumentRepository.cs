@@ -34,7 +34,7 @@ namespace Pims.Dal.Repositories
         /// Get a list of all the document file relationships for a a given acquisition file.
         /// </summary>
         /// <returns></returns>
-        public IList<PimsAcquisitionFileDocument> GetAllByAcquisitionFile(long fileId)
+        public IList<PimsAcquisitionFileDocument> GetAllByParentId(long parentId)
         {
             return this.Context.PimsAcquisitionFileDocuments
                 .Include(ad => ad.Document)
@@ -44,7 +44,7 @@ namespace Pims.Dal.Repositories
                 .Include(ad => ad.Document)
                     .ThenInclude(q => q.PimsDocumentQueues)
                         .ThenInclude(s => s.DocumentQueueStatusTypeCodeNavigation)
-                .Where(ad => ad.AcquisitionFileId == fileId)
+                .Where(ad => ad.AcquisitionFileId == parentId)
                 .AsNoTracking()
                 .ToList();
         }
@@ -54,7 +54,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="acquisitionDocument"></param>
         /// <returns></returns>
-        public PimsAcquisitionFileDocument AddAcquisition(PimsAcquisitionFileDocument acquisitionDocument)
+        public PimsAcquisitionFileDocument AddDocument(PimsAcquisitionFileDocument acquisitionDocument)
         {
             acquisitionDocument.ThrowIfNull(nameof(acquisitionDocument));
 
@@ -74,7 +74,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="acquisitionDocument"></param>
         /// <returns></returns>
-        public bool DeleteAcquisition(PimsAcquisitionFileDocument acquisitionDocument)
+        public bool DeleteDocument(PimsAcquisitionFileDocument acquisitionDocument)
         {
             if (acquisitionDocument == null)
             {
@@ -84,22 +84,6 @@ namespace Pims.Dal.Repositories
             this.Context.PimsAcquisitionFileDocuments.Remove(new PimsAcquisitionFileDocument() { AcquisitionFileDocumentId = acquisitionDocument.AcquisitionFileDocumentId });
             return true;
         }
-
-        public IList<PimsAcquisitionFileDocument> GetAllByParentId(long parentId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public PimsAcquisitionFileDocument AddDocument(PimsAcquisitionFileDocument document)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool DeleteDocument(PimsAcquisitionFileDocument document)
-        {
-            throw new NotImplementedException();
-        }
-
         #endregion
     }
 }

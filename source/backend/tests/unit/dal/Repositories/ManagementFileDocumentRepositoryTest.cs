@@ -76,7 +76,7 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(pimsManagementFile);
 
             // Act
-            var result = repository.GetAllByManagementFile(pimsManagementFile.ManagementFileId);
+            var result = repository.GetAllByParentId(pimsManagementFile.ManagementFileId);
 
             // Assert
             result.FirstOrDefault().Internal_Id.Should().Be(managementFileDocument.Internal_Id);
