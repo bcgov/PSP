@@ -16,17 +16,20 @@ import ComposedPropertyState from '@/hooks/repositories/useComposedProperties';
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_Concepts_Association } from '@/models/api/generated/ApiGen_Concepts_Association';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_LeaseRenewal } from '@/models/api/generated/ApiGen_Concepts_LeaseRenewal';
 import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
 import { exists, isValidId } from '@/utils';
 
+import DocumentsTab from '../shared/tabs/DocumentsTab';
 import CrownDetailsTabView from './tabs/crown/CrownDetailsTabView';
 import { PropertyManagementTabView } from './tabs/propertyDetailsManagement/detail/PropertyManagementTabView';
 
 export interface IPropertyContainerProps {
   composedPropertyState: ComposedPropertyState;
+  onChildSuccess: () => void;
 }
 
 export interface LeaseAssociationInfo {
@@ -71,6 +74,7 @@ export const getLeaseInfo = async (
  */
 export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps> = ({
   composedPropertyState,
+  onChildSuccess,
 }) => {
   const showPropertyInfoTab = isValidId(composedPropertyState?.id);
   const { hasClaim } = useKeycloakWrapper();
@@ -214,6 +218,21 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
       name: 'Management',
     });
     defaultTab = InventoryTabNames.management;
+  }
+
+  if (exists(composedPropertyState.apiWrapper?.response) && hasClaim(Claims.DOCUMENT_VIEW)) {
+    tabViews.push({
+      content: (
+        <DocumentsTab
+          fileId={composedPropertyState.apiWrapper.response.id}
+          relationshipType={ApiGen_CodeTypes_DocumentRelationType.Properties}
+          onSuccess={onChildSuccess}
+          title={'Property Documents'}
+        />
+      ),
+      key: InventoryTabNames.document,
+      name: 'Documents',
+    });
   }
 
   const params = useParams<{ tab?: string }>();
