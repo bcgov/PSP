@@ -11,7 +11,7 @@ interface IDocumentsTabProps {
 const DocumentsTab: React.FunctionComponent<IDocumentsTabProps> = ({
   fileId,
   relationshipType,
-  title = 'Documents',
+  title = 'File Documents',
   onSuccess,
 }) => {
   return (

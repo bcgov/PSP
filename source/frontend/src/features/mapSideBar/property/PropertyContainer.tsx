@@ -1,6 +1,7 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { Claims } from '@/constants';
 import { usePropertyDetails } from '@/features/mapSideBar/hooks/usePropertyDetails';
 import {
@@ -76,6 +77,8 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
   composedPropertyState,
   onChildSuccess,
 }) => {
+  const { setFullWidthSideBar } = useMapStateMachine();
+
   const showPropertyInfoTab = isValidId(composedPropertyState?.id);
   const { hasClaim } = useKeycloakWrapper();
   const { getLease } = useLeaseRepository();
@@ -237,6 +240,16 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
 
   const params = useParams<{ tab?: string }>();
   const activeTab = Object.values(InventoryTabNames).find(t => t === params.tab) ?? defaultTab;
+
+  useEffect(() => {
+    if (activeTab === InventoryTabNames.document) {
+      setFullWidthSideBar(true);
+    } else {
+      setFullWidthSideBar(false);
+    }
+    return () => setFullWidthSideBar(false);
+  }, [activeTab, setFullWidthSideBar]);
+
   return (
     <InventoryTabs
       loading={composedPropertyState.composedLoading ?? LeaseAssociationInfo.loading ?? false}
