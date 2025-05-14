@@ -1,27 +1,28 @@
 import { createMemoryHistory } from 'history';
+import { http, HttpResponse } from 'msw';
+import { createRef } from 'react';
 import { Route } from 'react-router-dom';
 
 import { Claims } from '@/constants/claims';
 import { useApiNotes } from '@/hooks/pims-api/useApiNotes';
-import { useNoteRepository } from '@/hooks/repositories/useNoteRepository';
-import {
-  mockManagementFilePropertyResponse,
-  mockManagementFileResponse,
-} from '@/mocks/managementFiles.mock';
-import { mockLookups } from '@/mocks/lookups.mock';
-import { server } from '@/mocks/msw/server';
-import { getUserMock } from '@/mocks/user.mock';
-import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { prettyFormatUTCDate } from '@/utils';
-import { RenderOptions, act, cleanup, render, userEvent } from '@/utils/test-utils';
 import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
 import { useHistoricalNumberRepository } from '@/hooks/repositories/useHistoricalNumberRepository';
+import { useNoteRepository } from '@/hooks/repositories/useNoteRepository';
 import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 import { useLtsa } from '@/hooks/useLtsa';
+import { mockLookups } from '@/mocks/lookups.mock';
+import {
+  mockManagementFilePropertiesResponse,
+  mockManagementFileResponse,
+} from '@/mocks/managementFiles.mock';
+import { server } from '@/mocks/msw/server';
+import { getUserMock } from '@/mocks/user.mock';
 import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
-import { http, HttpResponse } from 'msw';
-import { createRef } from 'react';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { prettyFormatUTCDate } from '@/utils';
+import { act, cleanup, render, RenderOptions, userEvent } from '@/utils/test-utils';
+
 import ManagementView, { IManagementViewProps } from './ManagementView';
 
 // mock auth library
@@ -122,7 +123,7 @@ describe('ManagementView component', () => {
             ...props,
             managementFile: {
               ...mockManagementFileResponse(),
-              fileProperties: mockManagementFilePropertyResponse() as any,
+              fileProperties: mockManagementFilePropertiesResponse() as any,
             },
           }}
         />
