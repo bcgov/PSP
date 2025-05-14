@@ -4,12 +4,12 @@ import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import noop from 'lodash/noop';
 
-import {
-  mockManagementFilePropertyResponse,
-  mockManagementFileResponse,
-} from '@/mocks/managementFiles.mock';
 import { mockLastUpdatedBy } from '@/mocks/lastUpdatedBy.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import {
+  mockManagementFilePropertiesResponse,
+  mockManagementFileResponse,
+} from '@/mocks/managementFiles.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
@@ -92,10 +92,10 @@ describe('ManagementContainer component', () => {
     mockAxios.onGet(new RegExp('users/info/*')).reply(200, {});
     mockAxios
       .onGet(new RegExp('managementfiles/1/properties'))
-      .reply(200, mockManagementFilePropertyResponse());
+      .reply(200, mockManagementFilePropertiesResponse());
     mockAxios
       .onPut(new RegExp('managementfiles/1/properties'))
-      .reply(200, mockManagementFilePropertyResponse());
+      .reply(200, mockManagementFilePropertiesResponse());
     mockAxios.onGet(new RegExp('managementfiles/1/updateInfo')).reply(200, mockLastUpdatedBy(1));
     mockAxios.onGet(new RegExp('managementfiles/1')).reply(200, mockManagementFileApi);
   });
