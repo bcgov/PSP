@@ -44,19 +44,39 @@ namespace PIMS.Tests.Automation.PageObjects
                 ChooseSpecificSelectOption(By.Id("input-team."+ teamMemberIndex +".primaryContactId"), teamMember.TeamMemberPrimaryContact);
         }
 
+        public void AddMgmtTeamMembers(TeamMember teamMember)
+        {
+            Wait();
+            FocusAndClick(membersTeamAddAnotherMemberLink);
+
+            Wait();
+            var teamMemberIndex = webDriver.FindElements(fileTeamMembersGroup).Count() -1;
+
+            WaitUntilVisible(By.CssSelector("select[id='input-team."+ teamMemberIndex +".teamProfileTypeCode']"));
+            ChooseSpecificSelectOption(By.CssSelector("select[id='input-team."+ teamMemberIndex +".teamProfileTypeCode']"), teamMember.TeamMemberRole);
+            FocusAndClick(By.CssSelector("div[data-testid='teamMemberRow["+ teamMemberIndex +"]'] div[data-testid='contact-input'] button[title='Select Contact']"));
+
+            Wait();
+            sharedSelectContact.SelectContact(teamMember.TeamMemberContactName, teamMember.TeamMemberContactType);
+
+            Wait();
+            if (webDriver.FindElements(By.Id("input-team."+ teamMemberIndex +".primaryContactId")).Count > 0)
+                ChooseSpecificSelectOption(By.Id("input-team."+ teamMemberIndex +".primaryContactId"), teamMember.TeamMemberPrimaryContact);
+        }
+
         public void VerifyTeamMembersViewForm(List<TeamMember> teamMembers)
         {
             var index = 1;
 
             for (var i = 0; i < teamMembers.Count; i++)
             {
-                AssertTrueContentEquals(By.XPath("//h2/div/div[contains(text(),'Acquisition Team')]/parent::div/parent::h2/following-sibling::div/div[" + index + "]/div/label"), teamMembers[i].TeamMemberRole + ":");
-                AssertTrueContentEquals(By.XPath("//h2/div/div[contains(text(),'Acquisition Team')]/parent::div/parent::h2/following-sibling::div/div[" + index + "]/div/a"), teamMembers[i].TeamMemberContactName);
+                AssertTrueContentEquals(By.XPath("//h2/div/div[contains(text(),'Team')]/parent::div/parent::h2/following-sibling::div/div[" + index + "]/div/label"), teamMembers[i].TeamMemberRole + ":");
+                AssertTrueContentEquals(By.XPath("//h2/div/div[contains(text(),'Team')]/parent::div/parent::h2/following-sibling::div/div[" + index + "]/div/a"), teamMembers[i].TeamMemberContactName);
 
                 if (teamMembers[i].TeamMemberPrimaryContact != "")
                 {
                     index++;
-                    AssertTrueContentEquals(By.XPath("//h2/div/div[contains(text(),'Acquisition Team')]/parent::div/parent::h2/following-sibling::div/div[" + index + "]/div/a"), teamMembers[i].TeamMemberPrimaryContact);
+                    AssertTrueContentEquals(By.XPath("//h2/div/div[contains(text(),'Team')]/parent::div/parent::h2/following-sibling::div/div[" + index + "]/div/a"), teamMembers[i].TeamMemberPrimaryContact);
                 }
 
                 index++;
@@ -90,7 +110,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             WaitUntilVisible(fileConfirmationModal);
             Assert.Equal("Remove Team Member", sharedModals.ModalHeader());
-            Assert.Equal("Are you sure you want to remove this row?", sharedModals.ModalContent());
+            Assert.Equal("Do you wish to remove this team member?", sharedModals.ModalContent());
 
             sharedModals.ModalClickOKBttn();
         }

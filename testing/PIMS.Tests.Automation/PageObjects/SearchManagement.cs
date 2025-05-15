@@ -116,7 +116,7 @@ namespace PIMS.Tests.Automation.PageObjects
             return webDriver.FindElement(managementListViewHistFile1stRecord).Text;
         }
 
-        public string FirstLeasePurpose()
+        public string FirstMgmtPurpose()
         {
             WaitUntilTableSpinnerDisappear();
             return webDriver.FindElement(managementListViewPurpose1stRecord).Text;
@@ -241,7 +241,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(searchMgmtPaginationList);
         }
 
-        public void VerifyLeaseTableContent(ManagementFile managementFile)
+        public void VerifyManagementTableContent(ManagementFile managementFile)
         {
             WaitUntilVisibleText(managementListViewFileName1stRecord, managementFile.ManagementName);
 
@@ -250,8 +250,8 @@ namespace PIMS.Tests.Automation.PageObjects
             if (managementFile.ManagementHistoricalFile != "")
                 AssertTrueContentEquals(managementListViewHistFile1stRecord, managementFile.ManagementHistoricalFile);
 
-            if(managementFile.MinistryProject != "")
-                AssertTrueContentEquals(managementListViewProject1stRecord, managementFile.MinistryProject);
+            if(managementFile.ManagementMinistryProject != "")
+                AssertTrueContentEquals(managementListViewProject1stRecord, managementFile.ManagementMinistryProject);
 
             AssertTrueContentEquals(managementListViewPurpose1stRecord, managementFile.ManagementPurpose);
 
@@ -263,6 +263,5 @@ namespace PIMS.Tests.Automation.PageObjects
 
             AssertTrueContentEquals(managementListViewStatus1stRecord, managementFile.ManagementStatus); 
         }
-
     }
 }

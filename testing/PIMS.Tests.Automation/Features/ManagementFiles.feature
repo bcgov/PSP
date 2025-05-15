@@ -16,13 +16,21 @@ Scenario: 02._Management_File_Properties
 	Then A new Management file is created successfully
 
 Scenario: 03._Management_Files_Digital_Documents
-	Given I create a new Management File from row number 8
-	When I create Digital Documents for a "Management File" row number 4
-	And  I edit a Digital Document for a "Management File" from row number 7
+	Given I create a new Management File from row number 6
+	When I create Digital Documents for a "Management File" row number 14
+	And  I edit a Digital Document for a "Management File" from row number 15
 	Then A new Management file is created successfully
 
 Scenario: 04._Management_File_Notes
-	Given I create a new Management File from row number 9
-	When  I create a new Note on the Notes Tab from row number 3
-	And  I edit a Note on the Notes Tab from row number 4
+	Given I create a new Management File from row number 7
+	When  I create a new Note on the Notes Tab from row number 11
+	And  I edit a Note on the Notes Tab from row number 12
 	Then A new Management file is created successfully
+
+#Scenario: 05._Acquisition_File_from_Pin
+#	Given I create an Acquisition File from a pin on map from row number 5
+#	Then A new Acquisition file is created successfully
+
+Scenario: 06._Management_Files_List_View
+	Given I search for an existing Management File from row number 2
+	Then Expected Management File Content is displayed on Management File Table

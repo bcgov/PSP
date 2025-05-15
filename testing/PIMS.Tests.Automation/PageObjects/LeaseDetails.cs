@@ -106,8 +106,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By licenseDetailsOtherProgramContent = By.Id("input-otherProgramType");
         private readonly By licenseDetailsTypeLabel = By.XPath("//label[contains(text(),'Type')]");
         private readonly By licenseDetailsTypeSelector = By.Id("input-leaseTypeCode");
-        private readonly By licenseDetailsViewTypeLabel = By.XPath("//label[contains(text(),'Account type')]");
-        private readonly By licenseDetailsTypeContent = By.XPath("//div[contains(text(),'Administration')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Account type')]/parent::div/following-sibling::div");
+        private readonly By licenseDetailsTypeContent = By.XPath("//div[contains(text(),'Administration')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Type')]/parent::div/following-sibling::div");
         private readonly By licenseDetailsOtherTypeLabel = By.XPath("//input[@id='input-otherLeaseTypeDescription']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'Describe other')]");
         private readonly By licenseDetailsOtherTypeInput = By.Id("input-otherLeaseTypeDescription");
         private readonly By licenseDetailsOtherTypeContent = By.Id("input-otherType");
@@ -139,6 +138,10 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By licenseDetailsCityArbitrationLabel = By.XPath("//label[contains(text(),'Primary arbitration city')]");
         private readonly By licenseDetailsCityArbitrationInput = By.Id("input-primaryArbitrationCity");
         private readonly By licenseDetailsCityArbitrationContent = By.CssSelector("div[data-testid='primaryArbitrationCity']");
+
+        private readonly By licenseDetailsTeamSubtitle = By.XPath("//div[contains(text(),'Lease & Licence Team')]/parent::div/parent::h2");
+        private readonly By licenseDetailsTeamAddMemberLink = By.CssSelector("button[data-testid='add-team-member']");
+        private readonly By licenseDetailsTeamMembersGroup = By.XPath("//div[contains(text(),'Lease & Licence Team')]/parent::div/parent::h2/following-sibling::div/div[@class='py-3 row']");
 
         private readonly By licenseDetailsFeeDeterminationSubtitle = By.XPath("//div[contains(text(),'Fee Determination')]/parent::div/parent::h2");
         private readonly By licenseDetailsFeeDeterminationPublicBenefitLabel = By.XPath("//label[contains(text(),'Public benefit')]");
@@ -172,11 +175,13 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private readonly SharedFileProperties sharedSearchProperties;
         private readonly SharedModals sharedModals;
+        private SharedTeamMembers sharedTeams;
 
         public LeaseDetails(IWebDriver webDriver) : base(webDriver)
         {
             sharedSearchProperties = new SharedFileProperties(webDriver);
             sharedModals = new SharedModals(webDriver);
+            sharedTeams = new SharedTeamMembers(webDriver);
         }
 
         public void NavigateToCreateNewLicense()
@@ -306,7 +311,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait();
 
-            //MAIN DETAILS
+            //ORIGINAL AGREEMENT
             AssertTrueIsDisplayed(licenseDetailsCreateSubtitle);
 
             //Project
@@ -542,6 +547,17 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(licenseDetailsCityArbitrationInput).SendKeys(lease.ArbitrationCity);
             }
 
+            //LEASE & LICENCE TEAM
+            AssertTrueIsDisplayed(licenseDetailsTeamSubtitle);
+            if (lease.LeaseTeam!.Count > 0)
+            {
+                while (webDriver.FindElements(licenseDetailsTeamMembersGroup).Count > 0)
+                    sharedTeams.DeleteFirstStaffMember();
+
+                for (var i = 0; i < lease.LeaseTeam!.Count; i++)
+                    sharedTeams.AddTeamMembers(lease.LeaseTeam![i]);
+            }
+
             //FEE DETERMINATION
             AssertTrueIsDisplayed(licenseDetailsFeeDeterminationSubtitle);
 
@@ -697,6 +713,10 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(licenseDetailsIntendedUseLabel);
             AssertTrueIsDisplayed(licenseDetailsIntendedUseTextarea);
             AssertTrueIsDisplayed(licenseDetailsCityArbitrationLabel);
+
+            //Lease & Licence Team
+            AssertTrueIsDisplayed(licenseDetailsTeamSubtitle);
+            AssertTrueIsDisplayed(licenseDetailsTeamAddMemberLink);
 
             //Buttons
             AssertTrueIsDisplayed(licenseDetailsSaveButton);
@@ -882,18 +902,12 @@ namespace PIMS.Tests.Automation.PageObjects
             if (lease.ProgramOther != "")
                 //AssertTrueElementValueEquals(licenseDetailsOtherProgramContent, lease.ProgramOther);
 
-            AssertTrueIsDisplayed(licenseDetailsViewTypeLabel);
-
+            AssertTrueIsDisplayed(licenseDetailsTypeLabel);
             if(lease.AdminType != "")
                 AssertTrueContentEquals(licenseDetailsTypeContent, lease.AdminType);
 
             if (lease.TypeOther != "")
                 AssertTrueElementValueEquals(licenseDetailsOtherTypeContent, lease.TypeOther);
-
-            AssertTrueIsDisplayed(licenseDetailsReceivableToLabel);
-
-            if(lease.AccountType != "")
-                AssertTrueContentEquals(licenseDetailsReceivableToContent, lease.AccountType);
 
             AssertTrueIsDisplayed(licenseDetailsPurposeLabel);
             if (lease.LeasePurpose.Count > 0)
@@ -933,7 +947,12 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(licenseDetailsCityArbitrationLabel);
 
             if (lease.ArbitrationCity != "")
-                AssertTrueContentEquals(licenseDetailsCityArbitrationContent, lease.ArbitrationCity); 
+                AssertTrueContentEquals(licenseDetailsCityArbitrationContent, lease.ArbitrationCity);
+
+            //LEASE & LICENSE TEAM
+            AssertTrueIsDisplayed(licenseDetailsTeamSubtitle);
+            if (lease.LeaseTeam!.Count > 0)
+                sharedTeams.VerifyTeamMembersViewForm(lease.LeaseTeam);
 
             //FEE DETERMINATION
             AssertTrueIsDisplayed(licenseDetailsFeeDeterminationSubtitle);

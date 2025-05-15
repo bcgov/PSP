@@ -1,5 +1,4 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.DevTools.V131.Network;
 using PIMS.Tests.Automation.Classes;
 
 namespace PIMS.Tests.Automation.PageObjects
@@ -29,9 +28,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Create / Update / View Management File
         private readonly By createManagementTitle = By.XPath("//h1[contains(text(),'Create Management File')]");
-        private readonly By updateManagementTitle = By.XPath("//h1[contains(text(),'Management File')]");
+        private readonly By viewManagementTitle = By.XPath("//h1[contains(text(),'Management File')]");
+        private readonly By updateManagementTitle = By.XPath("//h1[contains(text(),'Update Management File')]");
 
-        private readonly By managementFileDetailsEditBttn = By.CssSelector("button[data-testid='edit-button']");
+        private readonly By managementFileDetailsEditBttn = By.CssSelector("button[title='Edit management file']");
 
         private readonly By managementFileStatusLabel = By.XPath("//label[contains(text(),'Status')]");
         private readonly By managementFileStatusInput = By.Id("input-fileStatusTypeCode");
@@ -42,7 +42,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By managementFileProjectInput = By.CssSelector("input[id='typeahead-project']");
         private readonly By managementFileProjectContent = By.XPath("//label[contains(text(),'Ministry project')]/parent::div/following-sibling::div");
         private readonly By managementFileProject1stOption = By.CssSelector("div[id='typeahead-project'] a");
-        private readonly By managementFileProductLabel = By.XPath("//label[contains(text(),'Product')]");
+        private readonly By managementFileProjectProductLabel = By.XPath("//label[contains(text(),'Product')]");
         private readonly By managementFileProjectProductSelect = By.Id("input-productId");
         private readonly By managementFileProjectProductOptions = By.CssSelector("select[id='input-productId'] option");
         private readonly By managementFileProjectProductContent = By.XPath("//label[contains(text(),'Product')]/parent::div/following-sibling::div");
@@ -51,14 +51,15 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By managementFileProjectFundingContent = By.XPath("//label[contains(text(),'Funding')]/parent::div/following-sibling::div");
 
         private readonly By managementFileDetailsSubtitle = By.XPath("//h2/div/div[contains(text(),'Management Details')]");
-        private readonly By managementFileNameLabel = By.XPath("//h2/div/div[contains(text(),'File name')]");
+        private readonly By managementFileNameLabel = By.XPath("//label[contains(text(),'File name')]");
+        private readonly By managementFileNameLabelView = By.XPath("//label[contains(text(),'Management file name')]");
         private readonly By managementFileNameInput = By.Id("input-fileName");
-        private readonly By managementFileNameContent = By.XPath("//label[contains(text(),'File name')]/parent::div/following-sibling::div");
+        private readonly By managementFileNameContent = By.XPath("//label[contains(text(),'Management file name')]/parent::div/following-sibling::div");
         private readonly By managementFileHistoricalFileLabel = By.XPath("//label[contains(text(),'Historical file number')]");
         private readonly By managementFileHistoricalFileInput = By.Id("input-legacyFileNum");
         private readonly By managementFileHistoricalFileContent = By.XPath("//label[contains(text(),'Historical file number')]/parent::div/following-sibling::div");
         private readonly By managementFilePurposeLabel = By.XPath("//label[contains(text(),'Purpose')]");
-        private readonly By managementFilePurposeSelect = By.Id("input-programTypeCode");
+        private readonly By managementFilePurposeSelect = By.Id("input-purposeTypeCode");
         private readonly By managemenetFilePurposeContent = By.XPath("//label[contains(text(),'Purpose')]/parent::div/following-sibling::div");
         private readonly By managementFileAdditionalDetailsLabel = By.XPath("//label[contains(text(),'Additional details')]");
         private readonly By managementFileAdditionalDetailsInput = By.Id("input-additionalDetails");
@@ -113,7 +114,7 @@ namespace PIMS.Tests.Automation.PageObjects
             ChooseSpecificSelectOption(managementFilePurposeSelect, mgmtFile.ManagementPurpose);
         }
 
-        public void UpdateLeaseFileDetails(ManagementFile mgmtFile)
+        public void UpdateManagementFileDetails(ManagementFile mgmtFile)
         {
             Wait();
 
@@ -127,10 +128,10 @@ namespace PIMS.Tests.Automation.PageObjects
             //PROJECT
             //Project
             AssertTrueIsDisplayed(managementFileProjectLabel);
-            if (mgmtFile.MinistryProject != "")
+            if (mgmtFile.ManagementMinistryProject != "")
             {
                 ClearInput(managementFileProjectInput);
-                webDriver.FindElement(managementFileProjectInput).SendKeys(mgmtFile.MinistryProject);
+                webDriver.FindElement(managementFileProjectInput).SendKeys(mgmtFile.ManagementMinistryProject);
                 webDriver.FindElement(managementFileProjectInput).SendKeys(Keys.Enter);
                 webDriver.FindElement(managementFileProjectInput).SendKeys(Keys.Backspace);
 
@@ -139,27 +140,31 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             //Product
-            AssertTrueIsDisplayed(managementFileProductLabel);
-            if (mgmtFile.MinistryProduct != "")
-                ChooseSpecificSelectOption(managementFileProjectProductSelect, mgmtFile.MinistryProduct);
-
+            AssertTrueIsDisplayed(managementFileProjectProductLabel);
+            if (mgmtFile.ManagementMinistryProduct != "")
+                ChooseSpecificSelectOption(managementFileProjectProductSelect, mgmtFile.ManagementMinistryProduct);
 
             //Funding
             AssertTrueIsDisplayed(managementFileProjectFundingLabel);
-            if (mgmtFile.MinistryFunding != "")
-                ChooseSpecificSelectOption(managementFileProjectFundingInput, mgmtFile.MinistryFunding);
-
+            if (mgmtFile.ManagementMinistryFunding != "")
+                ChooseSpecificSelectOption(managementFileProjectFundingInput, mgmtFile.ManagementMinistryFunding);
 
             //MANAGEMENT DETAILS
             //File Name
             AssertTrueIsDisplayed(managementFileNameLabel);
-            if (mgmtFile.ManagementName != "") 
+            if (mgmtFile.ManagementName != "")
+            {
+                ClearInput(managementFileNameInput);
                 webDriver.FindElement(managementFileNameInput).SendKeys(mgmtFile.ManagementName);
+            }
 
             //Historical file number
             AssertTrueIsDisplayed(managementFileHistoricalFileLabel);
             if (mgmtFile.ManagementHistoricalFile != "")
+            {
+                ClearInput(managementFileHistoricalFileInput);
                 webDriver.FindElement(managementFileHistoricalFileInput).SendKeys(mgmtFile.ManagementHistoricalFile);
+            }
 
             //Purpose
             AssertTrueIsDisplayed(managementFilePurposeLabel);
@@ -169,7 +174,10 @@ namespace PIMS.Tests.Automation.PageObjects
             //Additional details
             AssertTrueIsDisplayed(managementFileAdditionalDetailsLabel);
             if (mgmtFile.ManagementAdditionalDetails != "")
+            {
+                ClearInput(managementFileAdditionalDetailsInput);
                 webDriver.FindElement(managementFileAdditionalDetailsInput).SendKeys(mgmtFile.ManagementAdditionalDetails);
+            }
 
             //MANAGEMENT TEAM
             if (mgmtFile.ManagementTeam!.Count > 0)
@@ -178,8 +186,7 @@ namespace PIMS.Tests.Automation.PageObjects
                     sharedTeamMembers.DeleteFirstStaffMember();
 
                 for (var i = 0; i < mgmtFile.ManagementTeam.Count; i++)
-                    sharedTeamMembers.AddTeamMembers(mgmtFile.ManagementTeam[i]);
-
+                    sharedTeamMembers.AddMgmtTeamMembers(mgmtFile.ManagementTeam[i]);
             }
         }
 
@@ -227,7 +234,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
         }
 
-        public void CancelLicense()
+        public void CancelManagementFile()
         {
             ButtonElement("Cancel");
             sharedModals.CancelActionModal();
@@ -272,18 +279,53 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(managementFileAddAnotherMemberLink);
         }
 
-        public void VerifyLicenseDetailsViewForm(ManagementFile mgmtFile)
+        public void VerifyManagementUpdateForm()
         {
+            //Title
+            AssertTrueIsDisplayed(updateManagementTitle);
+
+            //Status
+            AssertTrueIsDisplayed(managementFileStatusLabel);
+            AssertTrueIsDisplayed(managementFileStatusInput);
+
+            //Project
+            AssertTrueIsDisplayed(managementFileProjectSubtitle);
+            AssertTrueIsDisplayed(managementFileProjectLabel);
+            AssertTrueIsDisplayed(managementFileProjectInput);
+            AssertTrueIsDisplayed(managementFileProjectFundingLabel);
+            AssertTrueIsDisplayed(managementFileProjectFundingInput);
+
+            //Management Details
+            AssertTrueIsDisplayed(managementFileDetailsSubtitle);
+            AssertTrueIsDisplayed(managementFileNameLabel);
+            AssertTrueIsDisplayed(managementFileNameInput);
+            AssertTrueIsDisplayed(managementFileHistoricalFileLabel);
+            AssertTrueIsDisplayed(managementFileHistoricalFileInput);
+            AssertTrueIsDisplayed(managementFilePurposeLabel);
+            AssertTrueIsDisplayed(managementFilePurposeSelect);
+            AssertTrueIsDisplayed(managementFileAdditionalDetailsLabel);
+            AssertTrueIsDisplayed(managementFileAdditionalDetailsInput);
+
+            //Management Team
+            AssertTrueIsDisplayed(managementFileTeamSubtitle);
+            AssertTrueIsDisplayed(managementFileAddAnotherMemberLink);
+        }
+
+        public void VerifyManagementDetailsViewForm(ManagementFile mgmtFile)
+        {
+            //Title
+            AssertTrueIsDisplayed(viewManagementTitle);
+
             //Header
             AssertTrueIsDisplayed(managementFileHeaderFileNbrLabel);
             AssertTrueIsDisplayed(managementFileHeaderFileNbrContent);
             AssertTrueIsDisplayed(managementFileHeaderProjectLabel);
 
-            if(mgmtFile.MinistryProject != "")
+            if(mgmtFile.ManagementMinistryProject != "")
                 AssertTrueIsDisplayed(managementFileHeaderProjectContent);
 
             AssertTrueIsDisplayed(managementFileHeaderProductLabel);
-            if(mgmtFile.MinistryProduct != "")
+            if(mgmtFile.ManagementMinistryProduct != "")
                 AssertTrueIsDisplayed(managementFileHeaderProductContent);
 
             AssertTrueIsDisplayed(managementFileHeaderCreatedDateLabel);
@@ -294,7 +336,8 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(managementFileHeaderLastUpdateByContent);
 
             AssertTrueIsDisplayed(managementFileHeaderHistoricalFileLabel);
-            AssertTrueIsDisplayed(managementFileHeaderHistoricalFileContent);
+            if(mgmtFile.ManagementSearchPropertiesIndex != 0)
+                AssertTrueIsDisplayed(managementFileHeaderHistoricalFileContent);
 
             AssertTrueIsDisplayed(managementFileHeaderStatusContent);
 
@@ -307,23 +350,23 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //PROJECT
             AssertTrueIsDisplayed(managementFileProjectSubtitle);
-            if (mgmtFile.MinistryProject != "")
-                AssertTrueContentEquals(managementFileProjectContent, mgmtFile.MinistryProjectCode + " - " + mgmtFile.MinistryProject);
+            if (mgmtFile.ManagementMinistryProject != "")
+                AssertTrueContentEquals(managementFileProjectContent, mgmtFile.ManagementMinistryProjectCode + " - " + mgmtFile.ManagementMinistryProject);
 
-            AssertTrueIsDisplayed(managementFileProductLabel);
-            if (mgmtFile.MinistryProduct != "")
-                AssertTrueContentEquals(managementFileProjectProductContent, mgmtFile.MinistryProduct);
+            AssertTrueIsDisplayed(managementFileProjectProductLabel);
+            if (mgmtFile.ManagementMinistryProduct != "")
+                AssertTrueContentEquals(managementFileProjectProductContent, mgmtFile.ManagementMinistryProduct);
 
             //Funding
             AssertTrueIsDisplayed(managementFileProjectFundingLabel);
-            if(mgmtFile.MinistryFunding != "")
-                AssertTrueContentEquals(managementFileProjectFundingContent, mgmtFile.MinistryFunding);
+            if(mgmtFile.ManagementMinistryFunding != "")
+                AssertTrueContentEquals(managementFileProjectFundingContent, mgmtFile.ManagementMinistryFunding);
 
             //MANAGEMENT DETAILS
             AssertTrueIsDisplayed(managementFileDetailsSubtitle);
 
             //Name
-            AssertTrueIsDisplayed(managementFileNameLabel);
+            AssertTrueIsDisplayed(managementFileNameLabelView);
             AssertTrueContentEquals(managementFileNameContent, mgmtFile.ManagementName);
 
             //Historical file number
