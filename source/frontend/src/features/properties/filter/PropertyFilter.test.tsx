@@ -11,6 +11,7 @@ import {
   cleanup,
   fillInput,
   getByName,
+  prettyDOM,
   render,
   RenderOptions,
   screen,
@@ -18,9 +19,11 @@ import {
 } from '@/utils/test-utils';
 
 import { PropertyFilter } from '.';
+import { Dms, DmsCoordinates } from './CoordinateSearch/models';
 import { defaultPropertyFilter, IPropertyFilter } from './IPropertyFilter';
 import { IPropertyFilterProps } from './PropertyFilter';
 import { SearchToggleOption } from './PropertySearchToggle';
+import { useGeographicNamesRepository } from '@/hooks/useGeographicNamesRepository';
 
 const onFilterChange = vi.fn();
 //prevent web calls from being made during tests.
@@ -38,6 +41,20 @@ vi.mocked(useGeocoderRepository).mockReturnValue({
     throw new Error('Function not implemented.');
   },
   isLoadingNearestToPoint: false,
+});
+
+vi.mock('@/hooks/useGeographicNamesRepository');
+
+const mockSearchName = {
+  execute: vi.fn(),
+  error: null,
+  loading: false,
+  status: null,
+  response: null,
+};
+
+vi.mocked(useGeographicNamesRepository).mockReturnValue({
+  searchName: mockSearchName,
 });
 
 const mockedAxios = vi.mocked(axios);
@@ -346,7 +363,9 @@ describe('MapFilterBar', () => {
       latitude: '',
       longitude: '',
       historical: '',
+      coordinates: null,
       ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
+      name: '',
     });
   });
 
@@ -376,7 +395,9 @@ describe('MapFilterBar', () => {
       latitude: '',
       longitude: '',
       historical: '',
+      coordinates: null,
       ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
+      name: '',
     });
   });
 
@@ -406,7 +427,123 @@ describe('MapFilterBar', () => {
       latitude: '',
       longitude: '',
       historical: '',
+      coordinates: null,
       ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
+      name: '',
+    });
+  });
+
+  it('searches by Lat/Long coordinates', async () => {
+    const { searchButton } = setup({
+      props: {
+        propertyFilter: {
+          ...defaultPropertyFilter,
+          searchBy: 'coordinates',
+          coordinates: new DmsCoordinates(),
+        },
+      },
+    });
+
+    // Enter values on the form fields, then click the Search button
+    await act(async () => {
+      const input = getByName('coordinates.latitude.degrees');
+      userEvent.paste(input, '55');
+    });
+    await act(async () => {
+      const input = getByName('coordinates.latitude.minutes');
+      userEvent.paste(input, '46');
+    });
+    await act(async () => {
+      const input = getByName('coordinates.latitude.seconds');
+      userEvent.paste(input, '48.155');
+    });
+    await act(async () => {
+      userEvent.click(searchButton);
+    });
+
+    expect(onFilterChange).toHaveBeenCalledWith<[IPropertyFilter]>({
+      pid: '',
+      pin: '',
+      planNumber: '',
+      address: '',
+      searchBy: 'coordinates',
+      page: undefined,
+      quantity: undefined,
+      latitude: '',
+      longitude: '',
+      historical: '',
+      coordinates: expect.objectContaining<Partial<DmsCoordinates>>({
+        latitude: expect.objectContaining<Partial<Dms>>({
+          degrees: 55,
+          minutes: 46,
+          seconds: 48.155,
+        }),
+      }),
+      ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
+      name: '',
+    });
+  });
+
+  it('submits the form if there is lat/lng for geographic names', async () => {
+    // Arrange
+    const { container, searchButton } = setup({
+      props: {
+        propertyFilter: { ...defaultPropertyFilter, searchBy: 'name' },
+      },
+    });
+    mockSearchName.execute.mockResolvedValueOnce({
+      features: [
+        {
+          geometry: {
+            type: 'Point',
+            coordinates: [1, 2],
+          },
+          properties: {
+            name: 'Test Location',
+            featureType: 'Type1',
+            featureCategoryDescription: 'Category1',
+          },
+        },
+        {
+          properties: {
+            name: 'Another Location',
+            featureType: 'Type2',
+            featureCategoryDescription: 'Category2',
+          },
+        },
+      ],
+    });
+
+    // Act
+    // Enter values on the form fields, then click the Search button
+    await act(async () => {
+      fillInput(container, 'name', 'Victoria');
+    });
+
+    const nameSuggestion = await screen.findByText('Test Location', { exact: false });
+    await act(async () => {
+      userEvent.click(nameSuggestion!);
+    });
+
+    await act(async () => {
+      userEvent.click(searchButton);
+    });
+
+    // Assert
+    expect(onFilterChange).toHaveBeenCalledWith({
+      address: '',
+      coordinates: null,
+      historical: '',
+      latitude: 2,
+      longitude: 1,
+      name: 'Test Location',
+      ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
+      page: undefined,
+      pid: '',
+      pin: '',
+      planNumber: '',
+      quantity: undefined,
+      searchBy: 'name',
     });
   });
 

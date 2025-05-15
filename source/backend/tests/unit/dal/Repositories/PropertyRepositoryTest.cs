@@ -528,7 +528,7 @@ namespace Pims.Dal.Test.Repositories
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
             var property = EntityHelper.CreateProperty(100, isCoreInventory: true);
-            property.PimsPropPropAnomalyTypes.Add(new PimsPropPropAnomalyType() { PropertyAnomalyTypeCode = "test" });
+            property.PimsPropPropAnomalyTyps.Add(new PimsPropPropAnomalyTyp() { PropertyAnomalyTypeCode = "test" });
             _helper.AddAndSaveChanges(property);
 
             // Act
@@ -564,7 +564,7 @@ namespace Pims.Dal.Test.Repositories
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
             var property = EntityHelper.CreateProperty(100, isCoreInventory: true);
-            property.PimsPropPropTenureTypes.Add(new PimsPropPropTenureType() { PropertyTenureTypeCode = "test" });
+            property.PimsPropPropTenureTyps.Add(new PimsPropPropTenureTyp() { PropertyTenureTypeCode = "test" });
             _helper.AddAndSaveChanges(property);
 
             // Act
@@ -581,7 +581,7 @@ namespace Pims.Dal.Test.Repositories
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
             var property = EntityHelper.CreateProperty(100, isCoreInventory: true);
-            property.PimsPropPropRoadTypes.Add(new PimsPropPropRoadType() { PropertyRoadTypeCode = "test" });
+            property.PimsPropPropRoadTyps.Add(new PimsPropPropRoadTyp() { PropertyRoadTypeCode = "test" });
             _helper.AddAndSaveChanges(property);
 
             // Act

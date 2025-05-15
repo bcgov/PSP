@@ -94,8 +94,11 @@ const StyledMapSideBar = styled.div<{ sideBarState: IMapSideBarViewState }>`
       } else {
         return `
           min-width: 93rem;
-          margin-left: 0rem;
           max-width: 93rem;
+          @media only screen and (max-width: 1199px) {
+            min-width: 70rem;
+          }
+          margin-left: 0rem;
         `;
       }
     } else {

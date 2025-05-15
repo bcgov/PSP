@@ -5,8 +5,8 @@ import { ILayerItem } from '@/components/maps/leaflet/Control/LayersControl/type
 import { IMapSideBarViewState as IMapSideBarState } from '@/features/mapSideBar/MapSideBar';
 import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
 
-import { FeatureSelected, MapFeatureData, RequestedCenterTo, RequestedFlyTo } from '../models';
-import { LocationFeatureDataset } from '../useLocationFeatureLoader';
+import { MapFeatureData, MarkerSelected, RequestedCenterTo, RequestedFlyTo } from '../models';
+import { LocationFeatureDataset, SelectedFeatureDataset } from '../useLocationFeatureLoader';
 
 export enum SideBarType {
   NOT_DEFINED = 'NOT_DEFINED',
@@ -24,11 +24,11 @@ export enum SideBarType {
 // Local context for the machine - Not related to React Context!
 export type MachineContext = {
   mapSideBarState: IMapSideBarState | null;
-  mapFeatureSelected: FeatureSelected | null;
+  mapFeatureSelected: MarkerSelected | null;
   mapLocationSelected: LatLngLiteral | null;
   mapLocationFeatureDataset: LocationFeatureDataset | null;
-  selectedFeatureDataset: LocationFeatureDataset | null;
-  repositioningFeatureDataset: LocationFeatureDataset | null;
+  selectedFeatureDataset: SelectedFeatureDataset | null;
+  repositioningFeatureDataset: SelectedFeatureDataset | null;
   repositioningPropertyIndex: number | null;
   selectingComponentId: string | null;
 

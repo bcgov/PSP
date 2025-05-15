@@ -88,19 +88,21 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
     composedPropertyState?.propertyAssociationWrapper?.response?.leaseAssociations;
   useMemo(
     () =>
-      getLeaseInfo(
-        leaseAssociations,
-        getLease.execute,
-        getLeaseStakeholders.execute,
-        getLeaseRenewals.execute,
-        setLeaseAssociationInfo,
-      ),
+      hasClaim(Claims.LEASE_VIEW)
+        ? getLeaseInfo(
+            leaseAssociations,
+            getLease.execute,
+            getLeaseStakeholders.execute,
+            getLeaseRenewals.execute,
+            setLeaseAssociationInfo,
+          )
+        : null,
     [
-      setLeaseAssociationInfo,
+      hasClaim,
       leaseAssociations,
+      getLease.execute,
       getLeaseStakeholders.execute,
       getLeaseRenewals.execute,
-      getLease.execute,
     ],
   );
 
@@ -128,11 +130,11 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
     name: 'Title',
   });
 
-  if (exists(composedPropertyState.composedProperty?.crownTenureFeature)) {
+  if (exists(composedPropertyState.composedProperty?.crownTenureFeatures)) {
     tabViews.push({
       content: (
         <CrownDetailsTabView
-          crownFeature={composedPropertyState.composedProperty?.crownTenureFeature}
+          crownFeatures={composedPropertyState.composedProperty?.crownTenureFeatures}
         />
       ),
       key: InventoryTabNames.crown,

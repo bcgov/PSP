@@ -6,7 +6,7 @@ exports[`Research List View > matches snapshot 1`] = `
     class="Toastify"
   />
   <div />
-  .c14.btn {
+  .c15.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,19 +35,19 @@ exports[`Research List View > matches snapshot 1`] = `
   cursor: pointer;
 }
 
-.c14.btn .Button__value {
+.c15.btn .Button__value {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
-.c14.btn:hover {
+.c15.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c14.btn:focus {
+.c15.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -55,31 +55,31 @@ exports[`Research List View > matches snapshot 1`] = `
   box-shadow: none;
 }
 
-.c14.btn.btn-primary {
+.c15.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c14.btn.btn-primary:hover,
-.c14.btn.btn-primary:active,
-.c14.btn.btn-primary:focus {
+.c15.btn.btn-primary:hover,
+.c15.btn.btn-primary:active,
+.c15.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c14.btn.btn-secondary {
+.c15.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c14.btn.btn-secondary:hover,
-.c14.btn.btn-secondary:active,
-.c14.btn.btn-secondary:focus {
+.c15.btn.btn-secondary:hover,
+.c15.btn.btn-secondary:active,
+.c15.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c14.btn.btn-info {
+.c15.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -87,66 +87,66 @@ exports[`Research List View > matches snapshot 1`] = `
   padding-right: 0.6rem;
 }
 
-.c14.btn.btn-info:hover,
-.c14.btn.btn-info:active,
-.c14.btn.btn-info:focus {
+.c15.btn.btn-info:hover,
+.c15.btn.btn-info:active,
+.c15.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c14.btn.btn-light {
+.c15.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c14.btn.btn-light:hover,
-.c14.btn.btn-light:active,
-.c14.btn.btn-light:focus {
+.c15.btn.btn-light:hover,
+.c15.btn.btn-light:active,
+.c15.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c14.btn.btn-dark {
+.c15.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c14.btn.btn-dark:hover,
-.c14.btn.btn-dark:active,
-.c14.btn.btn-dark:focus {
+.c15.btn.btn-dark:hover,
+.c15.btn.btn-dark:active,
+.c15.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c14.btn.btn-danger {
+.c15.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c14.btn.btn-danger:hover,
-.c14.btn.btn-danger:active,
-.c14.btn.btn-danger:focus {
+.c15.btn.btn-danger:hover,
+.c15.btn.btn-danger:active,
+.c15.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c14.btn.btn-warning {
+.c15.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c14.btn.btn-warning:hover,
-.c14.btn.btn-warning:active,
-.c14.btn.btn-warning:focus {
+.c15.btn.btn-warning:hover,
+.c15.btn.btn-warning:active,
+.c15.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c14.btn.btn-link {
+.c15.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -170,9 +170,9 @@ exports[`Research List View > matches snapshot 1`] = `
   text-decoration: underline;
 }
 
-.c14.btn.btn-link:hover,
-.c14.btn.btn-link:active,
-.c14.btn.btn-link:focus {
+.c15.btn.btn-link:hover,
+.c15.btn.btn-link:active,
+.c15.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -182,15 +182,15 @@ exports[`Research List View > matches snapshot 1`] = `
   outline: none;
 }
 
-.c14.btn.btn-link:disabled,
-.c14.btn.btn-link.disabled {
+.c15.btn.btn-link:disabled,
+.c15.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c14.btn:disabled,
-.c14.btn:disabled:hover {
+.c15.btn:disabled,
+.c15.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -202,15 +202,15 @@ exports[`Research List View > matches snapshot 1`] = `
   cursor: not-allowed;
 }
 
-.c14.Button .Button__icon {
+.c15.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c14.Button--icon-only:focus {
+.c15.Button--icon-only:focus {
   outline: none;
 }
 
-.c14.Button--icon-only .Button__icon {
+.c15.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
@@ -223,7 +223,7 @@ exports[`Research List View > matches snapshot 1`] = `
   overflow-y: auto;
 }
 
-.c10 .react-datepicker__calendar-icon {
+.c11 .react-datepicker__calendar-icon {
   width: 2.4rem;
   height: 3rem;
   margin-top: 0.5rem;
@@ -233,41 +233,38 @@ exports[`Research List View > matches snapshot 1`] = `
   pointer-events: none;
 }
 
-.c10 .react-datepicker__view-calendar-icon input {
+.c11 .react-datepicker__view-calendar-icon input {
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c10 .react-datepicker-wrapper {
-  max-width: 17rem;
-}
-
-.c12.c12.form-control.is-valid {
+.c13.c13.form-control.is-valid {
   background-image: none;
 }
 
-.c12.c12.form-control.is-invalid {
+.c13.c13.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
-.c7 {
+.c8 {
   padding-right: 0;
 }
 
-.c7 .form-control {
+.c8 .form-control {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.c8:not(:first-child) {
+.c9:not(:first-child) {
   padding-left: 0;
+  padding-right: 0;
 }
 
-.c8:not(:first-child) .form-control {
+.c9:not(:first-child) .form-control {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
 
-.c15 {
+.c16 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -286,14 +283,35 @@ exports[`Research List View > matches snapshot 1`] = `
   margin-left: 0.5rem;
 }
 
+.c18 {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
 .c17 {
   width: 1.6rem;
   height: 1.6rem;
 }
 
-.c16 {
-  width: 1.6rem;
-  height: 1.6rem;
+.c19 {
+  margin-top: 0.3rem;
+}
+
+.c20 {
+  min-width: 5rem;
+  max-width: 5rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  text-align: center;
+  padding: 0;
+}
+
+.c20:-moz-read-only {
+  background: white;
+}
+
+.c20:read-only {
+  background: white;
 }
 
 .c3 {
@@ -315,8 +333,9 @@ exports[`Research List View > matches snapshot 1`] = `
   padding-bottom: 2rem;
 }
 
-.c13 {
+.c14 {
   border-left: 0.2rem solid white;
+  min-width: 2.5rem;
 }
 
 .c2 {
@@ -341,13 +360,17 @@ exports[`Research List View > matches snapshot 1`] = `
   padding: 0;
 }
 
-.c9 .input-group-prepend select {
+.c10 .input-group-prepend select {
   width: 16rem;
 }
 
-.c11 {
-  width: 18rem;
+.c12 {
+  min-width: 12rem;
   max-width: 100%;
+}
+
+.c7 .form-select {
+  max-width: 10rem;
 }
 
 .c6 {
@@ -357,11 +380,6 @@ exports[`Research List View > matches snapshot 1`] = `
 
 .c6 .idir-input-group .input-group-prepend select {
   width: 16rem;
-}
-
-.c6 .idir-input-group input {
-  width: 18rem;
-  max-width: 100%;
 }
 
 .c4 {
@@ -437,26 +455,26 @@ exports[`Research List View > matches snapshot 1`] = `
                 class="row"
               >
                 <div
-                  class="col-xl-1"
+                  class="col-lg-1"
                 >
                   <strong>
                     Search by:
                   </strong>
                 </div>
                 <div
-                  class="col-xl-5"
+                  class="col-lg-5"
                 >
                   <div
                     class="row"
                   >
                     <div
-                      class="col-xl-12"
+                      class="col-lg-12"
                     >
                       <div
                         class="row"
                       >
                         <div
-                          class="col-xl-4"
+                          class="col-lg-4"
                         >
                           <div
                             class="form-group"
@@ -503,13 +521,13 @@ exports[`Research List View > matches snapshot 1`] = `
                           </div>
                         </div>
                         <div
-                          class="col-xl-8"
+                          class="c7 col-lg-8"
                         >
                           <div
-                            class="flex-nowrap input-group row"
+                            class="flex-nowrap input-group row no-gutters"
                           >
                             <div
-                              class="c7 col-auto"
+                              class="c8 col-auto"
                             >
                               <div
                                 class="input-group-prepend"
@@ -522,6 +540,20 @@ exports[`Research List View > matches snapshot 1`] = `
                                     id="input-researchSearchBy"
                                     name="researchSearchBy"
                                   >
+                                    <option
+                                      class="option"
+                                      data-testid="select-option-pid"
+                                      value="pid"
+                                    >
+                                      PID
+                                    </option>
+                                    <option
+                                      class="option"
+                                      data-testid="select-option-pin"
+                                      value="pin"
+                                    >
+                                      PIN
+                                    </option>
                                     <option
                                       class="option"
                                       data-testid="select-option-name"
@@ -541,16 +573,16 @@ exports[`Research List View > matches snapshot 1`] = `
                               </div>
                             </div>
                             <div
-                              class="c8 col"
+                              class="c9 col"
                             >
                               <div
                                 class="input form-group"
                               >
                                 <input
                                   class="form-control"
-                                  id="input-name"
-                                  name="name"
-                                  placeholder=""
+                                  id="input-pid"
+                                  name="pid"
+                                  placeholder="Enter a PID"
                                   style="word-break: break-all;"
                                   title=""
                                   value=""
@@ -566,13 +598,13 @@ exports[`Research List View > matches snapshot 1`] = `
                     class="row"
                   >
                     <div
-                      class="col-xl-12"
+                      class="col-lg-12"
                     >
                       <div
                         class="row"
                       >
                         <div
-                          class="col-xl-4"
+                          class="col-lg-4"
                         >
                           <div
                             class="form-group"
@@ -596,30 +628,30 @@ exports[`Research List View > matches snapshot 1`] = `
                               </option>
                               <option
                                 class="option"
-                                data-testid="select-option-ARCHIVED"
-                                value="ARCHIVED"
-                              >
-                                Archived
-                              </option>
-                              <option
-                                class="option"
                                 data-testid="select-option-CLOSED"
                                 value="CLOSED"
                               >
-                                Closed
+                                Complete
                               </option>
                               <option
                                 class="option"
                                 data-testid="select-option-INACTIVE"
                                 value="INACTIVE"
                               >
-                                Inactive
+                                Hold
+                              </option>
+                              <option
+                                class="option"
+                                data-testid="select-option-ARCHIVED"
+                                value="ARCHIVED"
+                              >
+                                Archived
                               </option>
                             </select>
                           </div>
                         </div>
                         <div
-                          class="col-xl-8"
+                          class="col-lg-8"
                         >
                           <div
                             class="input form-group"
@@ -640,25 +672,25 @@ exports[`Research List View > matches snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="col-xl-5"
+                  class="col-lg-5"
                 >
                   <div
                     class="row"
                   >
                     <div
-                      class="col-xl-12"
+                      class="col-lg-12"
                     >
                       <div
                         class="row"
                       >
                         <div
-                          class="col-xl-8 col-lg-12"
+                          class="col-xl-8 col-12"
                         >
                           <div
-                            class="c9 flex-nowrap input-group row"
+                            class="c10 flex-nowrap input-group row no-gutters"
                           >
                             <div
-                              class="c7 col-auto"
+                              class="c8 col-auto"
                             >
                               <div
                                 class="input-group-prepend"
@@ -690,10 +722,10 @@ exports[`Research List View > matches snapshot 1`] = `
                               </div>
                             </div>
                             <div
-                              class="c8 col"
+                              class="c9 col"
                             >
                               <div
-                                class="c10 c11 form-group"
+                                class="c11 c12 form-group"
                               >
                                 <div
                                   class="react-datepicker-wrapper d-block"
@@ -712,7 +744,7 @@ exports[`Research List View > matches snapshot 1`] = `
                                     </svg>
                                     <input
                                       autocomplete="off"
-                                      class="c12 form-control date-picker"
+                                      class="c13 form-control date-picker"
                                       id="datepicker-updatedOnStartDate"
                                       name="updatedOnStartDate"
                                       placeholder="from date"
@@ -726,10 +758,10 @@ exports[`Research List View > matches snapshot 1`] = `
                           </div>
                         </div>
                         <div
-                          class="col-xl-4 col-lg-12"
+                          class="col-xl-4 col-12"
                         >
                           <div
-                            class="c10 c11 form-group"
+                            class="c11 c12 form-group"
                           >
                             <div
                               class="react-datepicker-wrapper d-block"
@@ -748,7 +780,7 @@ exports[`Research List View > matches snapshot 1`] = `
                                 </svg>
                                 <input
                                   autocomplete="off"
-                                  class="c12 form-control date-picker"
+                                  class="c13 form-control date-picker"
                                   id="datepicker-updatedOnEndDate"
                                   name="updatedOnEndDate"
                                   placeholder="to date"
@@ -766,13 +798,13 @@ exports[`Research List View > matches snapshot 1`] = `
                     class="row"
                   >
                     <div
-                      class="col-xl-12"
+                      class="col-lg-8"
                     >
                       <div
-                        class="idir-input-group flex-nowrap input-group row"
+                        class="idir-input-group flex-nowrap input-group row no-gutters"
                       >
                         <div
-                          class="c7 col-auto"
+                          class="c8 col-auto"
                         >
                           <div
                             class="input-group-prepend"
@@ -804,7 +836,7 @@ exports[`Research List View > matches snapshot 1`] = `
                           </div>
                         </div>
                         <div
-                          class="c8 col"
+                          class="c9 col"
                         >
                           <div
                             class="input form-group"
@@ -825,16 +857,16 @@ exports[`Research List View > matches snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="c13 col-xl-1"
+                  class="c14 col-lg-1"
                 >
                   <div
                     class="row"
                   >
                     <div
-                      class="pr-0 col-xl-auto"
+                      class="pr-0 col-lg-auto"
                     >
                       <button
-                        class="c14 Button Button--icon-only primary btn btn-primary"
+                        class="c15 Button Button--icon-only primary btn btn-primary"
                         data-testid="search"
                         id="search-button"
                         title="search"
@@ -860,10 +892,10 @@ exports[`Research List View > matches snapshot 1`] = `
                       </button>
                     </div>
                     <div
-                      class="col-xl-auto"
+                      class="col-lg-auto"
                     >
                       <button
-                        class="c14 Button Button--icon-only btn btn-info"
+                        class="c15 Button Button--icon-only btn btn-info"
                         data-testid="reset-button"
                         id="reset-button"
                         title="reset-button"
@@ -919,11 +951,11 @@ exports[`Research List View > matches snapshot 1`] = `
               >
                 File #
                 <div
-                  class="c15"
+                  class="c16"
                   data-testid="sort-column-rfileNumber"
                 >
                   <svg
-                    class="c16"
+                    class="c17"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -938,7 +970,7 @@ exports[`Research List View > matches snapshot 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c17"
+                    class="c18"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -965,11 +997,11 @@ exports[`Research List View > matches snapshot 1`] = `
               >
                 File name
                 <div
-                  class="c15"
+                  class="c16"
                   data-testid="sort-column-name"
                 >
                   <svg
-                    class="c16"
+                    class="c17"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -984,7 +1016,7 @@ exports[`Research List View > matches snapshot 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c17"
+                    class="c18"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -1023,11 +1055,11 @@ exports[`Research List View > matches snapshot 1`] = `
               >
                 Created by
                 <div
-                  class="c15"
+                  class="c16"
                   data-testid="sort-column-appCreateUserid"
                 >
                   <svg
-                    class="c16"
+                    class="c17"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -1042,7 +1074,7 @@ exports[`Research List View > matches snapshot 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c17"
+                    class="c18"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -1069,11 +1101,11 @@ exports[`Research List View > matches snapshot 1`] = `
               >
                 Created date
                 <div
-                  class="c15"
+                  class="c16"
                   data-testid="sort-column-appCreateTimestamp"
                 >
                   <svg
-                    class="c16"
+                    class="c17"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -1088,7 +1120,7 @@ exports[`Research List View > matches snapshot 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c17"
+                    class="c18"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -1115,11 +1147,11 @@ exports[`Research List View > matches snapshot 1`] = `
               >
                 Last updated by
                 <div
-                  class="c15"
+                  class="c16"
                   data-testid="sort-column-appLastUpdateUserid"
                 >
                   <svg
-                    class="c16"
+                    class="c17"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -1134,7 +1166,7 @@ exports[`Research List View > matches snapshot 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c17"
+                    class="c18"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -1161,11 +1193,11 @@ exports[`Research List View > matches snapshot 1`] = `
               >
                 Last updated date
                 <div
-                  class="c15"
+                  class="c16"
                   data-testid="sort-column-appLastUpdateTimestamp"
                 >
                   <svg
-                    class="c16"
+                    class="c17"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -1180,7 +1212,7 @@ exports[`Research List View > matches snapshot 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c17"
+                    class="c18"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -1207,11 +1239,11 @@ exports[`Research List View > matches snapshot 1`] = `
               >
                 Status
                 <div
-                  class="c15"
+                  class="c16"
                   data-testid="sort-column-researchFileStatusTypeCode"
                 >
                   <svg
-                    class="c16"
+                    class="c17"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -1226,7 +1258,7 @@ exports[`Research List View > matches snapshot 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c17"
+                    class="c18"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -1245,13 +1277,381 @@ exports[`Research List View > matches snapshot 1`] = `
           </div>
         </div>
         <div
-          class="table-loading"
+          class="tbody"
+          role="rowgroup"
         >
           <div
-            class="spinner-border"
-            role="status"
-            title="table-loading"
-          />
+            class="tr-wrapper"
+          >
+            <div
+              class="tr"
+              role="row"
+              style="display: flex; flex: 1 0 auto; min-width: 240px;"
+            >
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                <a
+                  href="/mapview/sidebar/research/1"
+                >
+                  R100-100-100
+                </a>
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                name
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                Southern Interior Region, South Coast Region
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                dbo
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                Dec 31, 2019
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                dbo
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                Dec 31, 2020
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              />
+            </div>
+          </div>
+          <div
+            class="tr-wrapper"
+          >
+            <div
+              class="tr"
+              role="row"
+              style="display: flex; flex: 1 0 auto; min-width: 240px;"
+            >
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                <a
+                  href="/mapview/sidebar/research/2"
+                >
+                  R100-100-101
+                </a>
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                name
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              />
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                dbo
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                Feb 1, 2020
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                dbo
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                Feb 1, 2021
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              />
+            </div>
+          </div>
+          <div
+            class="tr-wrapper"
+          >
+            <div
+              class="tr"
+              role="row"
+              style="display: flex; flex: 1 0 auto; min-width: 240px;"
+            >
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                <a
+                  href="/mapview/sidebar/research/3"
+                >
+                  R100-100-102
+                </a>
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                test file name 1
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              />
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                dbo
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                Mar 2, 2020
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                dbo
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                Apr 3, 2020
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              />
+            </div>
+          </div>
+          <div
+            class="tr-wrapper"
+          >
+            <div
+              class="tr"
+              role="row"
+              style="display: flex; flex: 1 0 auto; min-width: 240px;"
+            >
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                <a
+                  href="/mapview/sidebar/research/4"
+                >
+                  R100-100-103
+                </a>
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                name
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              />
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                createUser
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                May 4, 2020
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                dbo
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                Jun 5, 2020
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              />
+            </div>
+          </div>
+          <div
+            class="tr-wrapper"
+          >
+            <div
+              class="tr"
+              role="row"
+              style="display: flex; flex: 1 0 auto; min-width: 240px;"
+            >
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                <a
+                  href="/mapview/sidebar/research/5"
+                >
+                  R100-100-104
+                </a>
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                name
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              />
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                a user
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                May 4, 2020
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                updateUser
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              >
+                Jun 5, 2020
+              </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              />
+            </div>
+          </div>
         </div>
       </div>
       <div
@@ -1259,13 +1659,136 @@ exports[`Research List View > matches snapshot 1`] = `
       >
         <div
           class="align-self-center col-auto"
-        />
+        >
+          <span>
+            1 - 5 of 5
+          </span>
+        </div>
         <div
           class="ml-auto align-self-center col-auto"
         />
         <div
           class="align-self-center col-auto"
-        />
+        >
+          <div
+            class="Menu-root"
+          >
+            <div
+              class="Menu-button"
+            >
+              <div
+                class="d-flex"
+              >
+                <span
+                  class="c19"
+                >
+                  Show
+                </span>
+                <input
+                  class="c20 form-control"
+                  data-testid="input-page-size"
+                  readonly=""
+                  type="number"
+                  value="10"
+                />
+                <span
+                  class="c19"
+                >
+                  Entries
+                </span>
+              </div>
+            </div>
+            <div
+              class="Menu-items"
+              style="width: 10.0rem;"
+            >
+              <div
+                class="Menu-options scrollable list-group"
+              >
+                <div
+                  class="Menu-item list-group-item"
+                  title="menu-item-5"
+                >
+                  5
+                </div>
+                <div
+                  class="Menu-item list-group-item"
+                  title="menu-item-10"
+                >
+                  10
+                </div>
+                <div
+                  class="Menu-item list-group-item"
+                  title="menu-item-20"
+                >
+                  20
+                </div>
+                <div
+                  class="Menu-item list-group-item"
+                  title="menu-item-50"
+                >
+                  50
+                </div>
+                <div
+                  class="Menu-item list-group-item"
+                  title="menu-item-100"
+                >
+                  100
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="align-self-center col-auto"
+        >
+          <ul
+            class="pagination"
+          >
+            <li
+              class="page-item disabled"
+            >
+              <a
+                aria-disabled="true"
+                aria-label="Previous page"
+                class="page-link "
+                rel="prev"
+                role="button"
+                tabindex="-1"
+              >
+                &lt;
+              </a>
+            </li>
+            <li
+              class="page-item active"
+            >
+              <a
+                aria-current="page"
+                aria-label="Page 1 is your current page"
+                class="page-link"
+                rel="canonical"
+                role="button"
+                tabindex="-1"
+              >
+                1
+              </a>
+            </li>
+            <li
+              class="page-item disabled"
+            >
+              <a
+                aria-disabled="true"
+                aria-label="Next page"
+                class="page-link "
+                rel="next"
+                role="button"
+                tabindex="-1"
+              >
+                &gt;
+              </a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>

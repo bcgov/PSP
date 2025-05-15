@@ -228,10 +228,6 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c5 .react-datepicker-wrapper {
-  max-width: 17rem;
-}
-
 .c6.c6.form-control.is-valid {
   background-image: none;
 }
@@ -251,6 +247,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
 
 .c16:not(:first-child) {
   padding-left: 0;
+  padding-right: 0;
 }
 
 .c16:not(:first-child) .form-control {
@@ -413,15 +410,6 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
 .c14 {
   background-color: #d9eaf7;
   border-radius: 0.5rem;
-}
-
-.c14 .idir-input-group .input-group-prepend select {
-  width: 16rem;
-}
-
-.c14 .idir-input-group input {
-  width: 18rem;
-  max-width: 100%;
 }
 
 .c19 {
@@ -1629,26 +1617,34 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                   <div
                     class="c1 form-section"
                   >
+                    <h2
+                      class="c2"
+                    >
+                      <div
+                        class="no-gutters row"
+                      >
+                        <div
+                          class="align-content-end col"
+                        >
+                          Search for a property
+                        </div>
+                      </div>
+                    </h2>
                     <div
                       class="collapse show"
                     >
-                      <h3
-                        class="c10"
-                      >
-                        Search for a property
-                      </h3>
                       <form
                         class="c14 p-3"
                         novalidate=""
                       >
                         <div
-                          class="row"
+                          class="row no-gutters"
                         >
                           <div
-                            class="col-xl-6"
+                            class="col-6"
                           >
                             <div
-                              class="flex-nowrap input-group row"
+                              class="flex-nowrap input-group row no-gutters"
                             >
                               <div
                                 class="c15 col-auto"
@@ -1699,6 +1695,13 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                                       >
                                         Legal Description
                                       </option>
+                                      <option
+                                        class="option"
+                                        data-testid="select-option-coordinates"
+                                        value="coordinates"
+                                      >
+                                        Lat/Long
+                                      </option>
                                     </select>
                                   </div>
                                 </div>
@@ -1724,7 +1727,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                             </div>
                           </div>
                           <div
-                            class="pr-0 col-xl-2"
+                            class="pr-0 col-2"
                           >
                             <div
                               class="row"
@@ -1791,14 +1794,6 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                           </div>
                         </div>
                       </form>
-                    </div>
-                  </div>
-                  <div
-                    class="c1 form-section"
-                  >
-                    <div
-                      class="collapse show"
-                    >
                       <div
                         class="table"
                         data-testid="map-properties"
@@ -2122,7 +2117,64 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                 >
                   Pending Litigation
                 </option>
+                <option
+                  class="option"
+                  data-testid="select-option-UNKNOWN"
+                  value="UNKNOWN"
+                >
+                  Unknown
+                </option>
               </select>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Physical file details:
+              <span>
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="textarea input form-group"
+            >
+              <textarea
+                class="form-control"
+                id="input-physicalFileDetails"
+                name="physicalFileDetails"
+                style="word-break: break-all;"
+                title=""
+              />
             </div>
           </div>
         </div>
@@ -2240,6 +2292,13 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                 </option>
                 <option
                   class="option"
+                  data-testid="select-option-LSHOLDR"
+                  value="LSHOLDR"
+                >
+                  Leaseholder
+                </option>
+                <option
+                  class="option"
                   data-testid="select-option-LICOCCUPY"
                   value="LICOCCUPY"
                 >
@@ -2251,6 +2310,13 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                   value="LIEN"
                 >
                   Lis Pendens / Lien
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-MOBILE"
+                  value="MOBILE"
+                >
+                  Mobile Home Owner
                 </option>
                 <option
                   class="option"
@@ -2285,14 +2351,14 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                   data-testid="select-option-TENANT"
                   value="TENANT"
                 >
-                  Tenant (Monthly) Leaseholder
+                  Tenant (Monthly)
                 </option>
                 <option
                   class="option"
                   data-testid="select-option-OTHER"
                   value="OTHER"
                 >
-                  Other 
+                  Other
                 </option>
               </select>
             </div>
@@ -2316,26 +2382,6 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
             <div
               class="required d-flex form-group"
             >
-              <span
-                class="tooltip-icon"
-                data-testid="tooltip-icon-region-tooltip"
-                id="region-tooltip"
-              >
-                <svg
-                  class="tooltip-icon"
-                  fill="currentColor"
-                  height="1em"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 512 512"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                  />
-                </svg>
-              </span>
               <select
                 class="form-select form-control"
                 id="input-region"
@@ -2346,6 +2392,13 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                   value=""
                 >
                   Select region...
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-1"
+                  value="1"
+                >
+                  South Coast Region
                 </option>
               </select>
             </div>
@@ -2837,10 +2890,6 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c6 .react-datepicker-wrapper {
-  max-width: 17rem;
-}
-
 .c7.c7.form-control.is-valid {
   background-image: none;
 }
@@ -2860,6 +2909,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
 
 .c17:not(:first-child) {
   padding-left: 0;
+  padding-right: 0;
 }
 
 .c17:not(:first-child) .form-control {
@@ -3022,15 +3072,6 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
 .c15 {
   background-color: #d9eaf7;
   border-radius: 0.5rem;
-}
-
-.c15 .idir-input-group .input-group-prepend select {
-  width: 16rem;
-}
-
-.c15 .idir-input-group input {
-  width: 18rem;
-  max-width: 100%;
 }
 
 .c20 {
@@ -4230,26 +4271,34 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
                   <div
                     class="c1 form-section"
                   >
+                    <h2
+                      class="c2"
+                    >
+                      <div
+                        class="no-gutters row"
+                      >
+                        <div
+                          class="align-content-end col"
+                        >
+                          Search for a property
+                        </div>
+                      </div>
+                    </h2>
                     <div
                       class="collapse show"
                     >
-                      <h3
-                        class="c11"
-                      >
-                        Search for a property
-                      </h3>
                       <form
                         class="c15 p-3"
                         novalidate=""
                       >
                         <div
-                          class="row"
+                          class="row no-gutters"
                         >
                           <div
-                            class="col-xl-6"
+                            class="col-6"
                           >
                             <div
-                              class="flex-nowrap input-group row"
+                              class="flex-nowrap input-group row no-gutters"
                             >
                               <div
                                 class="c16 col-auto"
@@ -4300,6 +4349,13 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
                                       >
                                         Legal Description
                                       </option>
+                                      <option
+                                        class="option"
+                                        data-testid="select-option-coordinates"
+                                        value="coordinates"
+                                      >
+                                        Lat/Long
+                                      </option>
                                     </select>
                                   </div>
                                 </div>
@@ -4325,7 +4381,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
                             </div>
                           </div>
                           <div
-                            class="pr-0 col-xl-2"
+                            class="pr-0 col-2"
                           >
                             <div
                               class="row"
@@ -4392,14 +4448,6 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
                           </div>
                         </div>
                       </form>
-                    </div>
-                  </div>
-                  <div
-                    class="c1 form-section"
-                  >
-                    <div
-                      class="collapse show"
-                    >
                       <div
                         class="table"
                         data-testid="map-properties"
@@ -4723,7 +4771,64 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
                 >
                   Pending Litigation
                 </option>
+                <option
+                  class="option"
+                  data-testid="select-option-UNKNOWN"
+                  value="UNKNOWN"
+                >
+                  Unknown
+                </option>
               </select>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Physical file details:
+              <span>
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="textarea input form-group"
+            >
+              <textarea
+                class="form-control"
+                id="input-physicalFileDetails"
+                name="physicalFileDetails"
+                style="word-break: break-all;"
+                title=""
+              />
             </div>
           </div>
         </div>
@@ -4813,26 +4918,6 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
             <div
               class="required d-flex form-group"
             >
-              <span
-                class="tooltip-icon"
-                data-testid="tooltip-icon-region-tooltip"
-                id="region-tooltip"
-              >
-                <svg
-                  class="tooltip-icon"
-                  fill="currentColor"
-                  height="1em"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 512 512"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                  />
-                </svg>
-              </span>
               <select
                 class="form-select form-control"
                 id="input-region"
@@ -4843,6 +4928,13 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
                   value=""
                 >
                   Select region...
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-1"
+                  value="1"
+                >
+                  South Coast Region
                 </option>
               </select>
             </div>

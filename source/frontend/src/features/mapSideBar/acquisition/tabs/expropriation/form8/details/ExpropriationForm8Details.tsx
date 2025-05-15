@@ -15,9 +15,8 @@ import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_Concepts_ExpropriationPayment } from '@/models/api/generated/ApiGen_Concepts_ExpropriationPayment';
 import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
-import { prettyFormatDate } from '@/utils';
+import { formatInterestHolderName } from '@/utils/formUtils';
 import { formatMoney } from '@/utils/numberFormatUtils';
-import { formatApiPersonNames } from '@/utils/personUtils';
 
 import ExpropriationPaymentItemsTable from './ExpropriationPaymentItemsTable';
 
@@ -44,7 +43,7 @@ export const ExpropriationForm8Details: React.FunctionComponent<
       : null;
 
   const interestHolderContactLink = getInterestHolderLink(form8.interestHolder);
-  const interestHolderDisplayName = getInterestHolderDisplayName(form8.interestHolder);
+  const interestHolderDisplayName = formatInterestHolderName(form8.interestHolder);
   const paymentItemsTotal =
     form8.paymentItems?.map(x => x.totalAmount ?? 0).reduce((prev, next) => prev + next, 0) ?? 0;
 
@@ -93,7 +92,11 @@ export const ExpropriationForm8Details: React.FunctionComponent<
           )}
         </StyledSubHeader>
 
-        <SectionField label="Payee" labelWidth="4" valueTestId={`form8[${form8Index}].payee-name`}>
+        <SectionField
+          label="Payee"
+          labelWidth={{ xs: 4 }}
+          valueTestId={`form8[${form8Index}].payee-name`}
+        >
           <StyledPayeeDisplayName>
             {form8?.acquisitionOwnerId && expropriationPayeeOwner && (
               <label>{expropriationPayeeOwner.ownerName ?? ''}</label>
@@ -114,7 +117,7 @@ export const ExpropriationForm8Details: React.FunctionComponent<
 
         <SectionField
           label="Expropriation Authority"
-          labelWidth="4"
+          labelWidth={{ xs: 4 }}
           valueTestId={`form8[${form8Index}].exp-authority`}
         >
           <StyledLink
@@ -128,16 +131,8 @@ export const ExpropriationForm8Details: React.FunctionComponent<
         </SectionField>
 
         <SectionField
-          label="Advanced payment served date"
-          labelWidth="4"
-          valueTestId={`form8[${form8Index}].advanced-payment-srv-date`}
-        >
-          {prettyFormatDate(form8?.advancedPaymentServedDate)}
-        </SectionField>
-
-        <SectionField
           label="Description"
-          labelWidth="4"
+          labelWidth={{ xs: 4 }}
           valueTestId={`form8[${form8Index}].description`}
         >
           {form8.description}
@@ -222,18 +217,4 @@ const getInterestHolderLink = (
   }
 
   return 'O' + interestHolder.organization?.id;
-};
-
-const getInterestHolderDisplayName = (
-  interestHolder: ApiGen_Concepts_InterestHolder | null,
-): string | null => {
-  if (!interestHolder) {
-    return null;
-  }
-
-  if (interestHolder.personId && interestHolder.person) {
-    return formatApiPersonNames(interestHolder.person);
-  }
-
-  return interestHolder.organization?.name ?? '';
 };

@@ -51,13 +51,13 @@ const HelpRequestForm: React.FunctionComponent<React.PropsWithChildren<HelpReque
         }}
       >
         <Form>
-          <SectionField label="Name" labelWidth="2">
+          <SectionField label="Name" labelWidth={{ xs: 2 }}>
             <Input field="user" />
           </SectionField>
-          <SectionField label="Email" labelWidth="2">
+          <SectionField label="Email" labelWidth={{ xs: 2 }}>
             <Input field="email" />
           </SectionField>
-          <SectionField label="Description" labelWidth="12">
+          <SectionField label="Description" labelWidth={{ xs: 12 }}>
             <TextArea field="description" placeholder="Question, suggestion, bug..." />
           </SectionField>
         </Form>

@@ -28,11 +28,15 @@ export const AcquisitionHeader: React.FunctionComponent<
 
   return (
     <StyledRow className="no-gutters">
-      <StyledLeftHeaderPane xs="8">
-        <HeaderField label="File:" labelWidth={leftColumnLabel} contentWidth="9">
+      <StyledLeftHeaderPane xl="8" xs="12">
+        <HeaderField label="File:" labelWidth={{ xs: leftColumnLabel }} contentWidth={{ xs: 9 }}>
           {acquisitionFile?.fileNumber} - {acquisitionFile?.fileName}
         </HeaderField>
-        <HeaderField label="Ministry project:" labelWidth={leftColumnLabel} contentWidth="9">
+        <HeaderField
+          label="Ministry project:"
+          labelWidth={{ xs: leftColumnLabel }}
+          contentWidth={{ xs: 9 }}
+        >
           {formatMinistryProject(
             acquisitionFile?.project?.code,
             acquisitionFile?.project?.description,
@@ -40,9 +44,9 @@ export const AcquisitionHeader: React.FunctionComponent<
         </HeaderField>
         <HeaderField
           label="Ministry product:"
-          labelWidth={leftColumnLabel}
+          labelWidth={{ xs: leftColumnLabel }}
           valueTestId={'acq-header-product-val'}
-          contentWidth="9"
+          contentWidth={{ xs: 9 }}
         >
           {acquisitionFile?.product && (
             <>

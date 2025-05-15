@@ -1,0 +1,16 @@
+<layer>
+  <name>PIMS_PROPERTY_VW</name>
+  <id>LayerInfoImpl--3f9dd415:1955df6c091:-7800</id>
+  <type>VECTOR</type>
+  <defaultStyle>
+    <id>StyleInfoImpl-13ab16d0:1937440fff2:-7ffc</id>
+  </defaultStyle>
+  <resource class="featureType">
+    <id>FeatureTypeInfoImpl--3f9dd415:1955df6c091:-7801</id>
+  </resource>
+  <attribution>
+    <logoWidth>0</logoWidth>
+    <logoHeight>0</logoHeight>
+  </attribution>
+  <dateCreated>2025-03-06 21:59:57.230 UTC</dateCreated>
+</layer>

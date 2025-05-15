@@ -307,6 +307,7 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
 
 .c13:not(:first-child) {
   padding-left: 0;
+  padding-right: 0;
 }
 
 .c13:not(:first-child) .form-control {
@@ -462,15 +463,6 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
 .c11 {
   background-color: #d9eaf7;
   border-radius: 0.5rem;
-}
-
-.c11 .idir-input-group .input-group-prepend select {
-  width: 16rem;
-}
-
-.c11 .idir-input-group input {
-  width: 18rem;
-  max-width: 100%;
 }
 
 .c16 {
@@ -772,26 +764,34 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
                 <div
                   class="c0 form-section"
                 >
+                  <h2
+                    class="c1"
+                  >
+                    <div
+                      class="no-gutters row"
+                    >
+                      <div
+                        class="align-content-end col"
+                      >
+                        Search for a property
+                      </div>
+                    </div>
+                  </h2>
                   <div
                     class="collapse show"
                   >
-                    <h3
-                      class="c5"
-                    >
-                      Search for a property
-                    </h3>
                     <form
                       class="c11 p-3"
                       novalidate=""
                     >
                       <div
-                        class="row"
+                        class="row no-gutters"
                       >
                         <div
-                          class="col-xl-6"
+                          class="col-6"
                         >
                           <div
-                            class="flex-nowrap input-group row"
+                            class="flex-nowrap input-group row no-gutters"
                           >
                             <div
                               class="c12 col-auto"
@@ -842,6 +842,13 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
                                     >
                                       Legal Description
                                     </option>
+                                    <option
+                                      class="option"
+                                      data-testid="select-option-coordinates"
+                                      value="coordinates"
+                                    >
+                                      Lat/Long
+                                    </option>
                                   </select>
                                 </div>
                               </div>
@@ -867,7 +874,7 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
                           </div>
                         </div>
                         <div
-                          class="pr-0 col-xl-2"
+                          class="pr-0 col-2"
                         >
                           <div
                             class="row"
@@ -934,14 +941,6 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
                         </div>
                       </div>
                     </form>
-                  </div>
-                </div>
-                <div
-                  class="c0 form-section"
-                >
-                  <div
-                    class="collapse show"
-                  >
                     <div
                       class="table"
                       data-testid="map-properties"

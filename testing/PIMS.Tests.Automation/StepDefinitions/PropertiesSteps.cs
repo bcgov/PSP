@@ -1,7 +1,7 @@
 ﻿using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
-using System.Data;
+using PIMS.Tests.Automation.PageObjects;
 
 namespace PIMS.Tests.Automation.StepDefinitions
 {
@@ -13,6 +13,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly PropertyInformation propertyInformation;
         private readonly PropertyManagementTab propertyManagementTab;
         private readonly PropertyPIMSFiles pimsFiles;
+        private readonly MapFeatures mapFeatures;
         private readonly SharedPagination sharedPagination;
 
         private readonly GenericSteps genericSteps;
@@ -30,6 +31,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyInformation = new PropertyInformation(driver);
             propertyManagementTab = new PropertyManagementTab(driver);
             pimsFiles = new PropertyPIMSFiles(driver);
+            mapFeatures = new MapFeatures(driver);
             sharedPagination = new SharedPagination(driver);
             genericSteps = new GenericSteps(driver);
 
@@ -212,7 +214,25 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.SearchPropertyByPlan(searchProperty.PlanNumber);
 
             //Validate that the result gives only one pin
-            Assert.True(searchProperties.PropertiesListFoundCount() == 1);
+            Assert.True(searchProperties.PropertiesListFoundCount() > 1);
+        }
+
+        [StepDefinition(@"I search for a Property in the Properties List by PID from row number (.*)")]
+        public void SearchPropertyInformationListByPID(int rowNumber)
+        {
+            //Navigate to Home Page
+            PopulateSearchProperty(rowNumber);
+            searchProperties.NavigateToHomePage();
+
+            //Navigate to the Inventory List View
+            searchProperties.NavigatePropertyListView();
+
+            //Search for a valid PID in Inventory
+            searchProperties.SearchPropertyReset();
+            searchProperties.SearchPropertyByPID(searchProperty.PID);
+
+            //Select found property
+            searchProperties.SelectFirstFoundPropertyList();
         }
 
         [StepDefinition(@"I search for a non MOTI property from row number (.*)")]
@@ -465,6 +485,29 @@ namespace PIMS.Tests.Automation.StepDefinitions
             pimsFiles.VerifyPimsFiles();
         }
 
+        [StepDefinition(@"I verify the Maps Layers")]
+        public void VerifyMapsLayers()
+        {
+            //Login to PIMS
+            loginSteps.Idir(userName);
+
+            //Open the Map Layers leaflet
+            mapFeatures.OpenMapLayers();
+
+            //Verify the map layers UI
+            mapFeatures.VerifyMapLayers();
+        }
+
+        [StepDefinition(@"I verify the Maps Filters")]
+        public void VerifyMapsFilters()
+        {
+            //Open the Map Filters leaflet
+            mapFeatures.OpenMapFilters();
+
+            //Verify the map Filters UI
+            mapFeatures.VerifyMapFilters();
+        }
+
         [StepDefinition(@"No Properties were found")]
         public void NonPropertyFound()
         {
@@ -512,6 +555,20 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public void PropertySearchBarSuccess()
         {
             searchProperties.SearchPropertyReset();
+        }
+
+        [StepDefinition(@"Expected Active Lease status is displayed as ""(.*)"" successfully")]
+        public void ExpectedActiveLease(string expectedActiveLeaseStatus)
+        {
+            propertyManagementTab.NavigateManagementTab();
+            Assert.Equal(expectedActiveLeaseStatus, propertyManagementTab.VerifyLeaseActiveStatus());
+        }
+
+        [StepDefinition(@"Map Features rendered successfully")]
+        public void MapFeaturesSuccess()
+        {
+            //Reset map filters
+            mapFeatures.ResetMapFeatures();
         }
 
         private void PopulateProperty(int rowNumber)
@@ -652,6 +709,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 propertyActivity.ManagementPropertyActivityTotalPST = ExcelDataContext.ReadData(i, "ManagementPropertyActivityTotalPST");
                 propertyActivity.ManagementPropertyActivityGrandTotal = ExcelDataContext.ReadData(i, "ManagementPropertyActivityGrandTotal");
 
+                System.Diagnostics.Debug.WriteLine("PropertyActivityInvoiceStartRow: " + propertyActivity.ManagementPropertyActivityInvoicesStartRow);
+                System.Diagnostics.Debug.WriteLine("PropertyActivityInvoiceCount: " + propertyActivity.ManagementPropertyActivityInvoicesCount);
+
                 if (propertyActivity.ManagementPropertyActivityInvoicesStartRow != 0 && propertyActivity.ManagementPropertyActivityInvoicesCount != 0)
                     PopulateManagementActivitiesInvoiceCollection(propertyManagement.ManagementPropertyActivitiesStartRow, propertyManagement.ManagementPropertyActivitiesCount, propertyActivity.ManagementPropertyActivityInvoices);
                 else
@@ -665,8 +725,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             System.Data.DataTable invoicesSheet = ExcelDataContext.GetInstance().Sheets["ManagementPropActivityInvoice"]!;
             ExcelDataContext.PopulateInCollection(invoicesSheet);
-
-            invoices = new List<ManagementPropertyActivityInvoice>();
 
             for (int i = startRow; i < startRow + rowsCount; i++)
             {

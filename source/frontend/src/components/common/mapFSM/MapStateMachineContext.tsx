@@ -13,13 +13,16 @@ import {
   defaultPropertyFilter,
   IPropertyFilter,
 } from '@/features/properties/filter/IPropertyFilter';
-import { exists } from '@/utils';
+import { exists, firstOrNull } from '@/utils';
 import { pidParser, pinParser } from '@/utils/propertyUtils';
 
 import { mapMachine } from './machineDefinition/mapMachine';
 import { MachineContext, SideBarType } from './machineDefinition/types';
-import { FeatureSelected, MapFeatureData, RequestedCenterTo, RequestedFlyTo } from './models';
-import useLocationFeatureLoader, { LocationFeatureDataset } from './useLocationFeatureLoader';
+import { MapFeatureData, MarkerSelected, RequestedCenterTo, RequestedFlyTo } from './models';
+import useLocationFeatureLoader, {
+  LocationFeatureDataset,
+  SelectedFeatureDataset,
+} from './useLocationFeatureLoader';
 import { useMapSearch } from './useMapSearch';
 
 export interface IMapStateMachineContext {
@@ -29,11 +32,11 @@ export interface IMapStateMachineContext {
   pendingCenterTo: boolean;
   requestedFlyTo: RequestedFlyTo;
   requestedCenterTo: RequestedCenterTo;
-  mapFeatureSelected: FeatureSelected | null;
+  mapMarkerSelected: MarkerSelected | null;
   mapLocationSelected: LatLngLiteral | null;
   mapLocationFeatureDataset: LocationFeatureDataset | null;
-  selectedFeatureDataset: LocationFeatureDataset | null;
-  repositioningFeatureDataset: LocationFeatureDataset | null;
+  selectedFeatureDataset: SelectedFeatureDataset | null;
+  repositioningFeatureDataset: SelectedFeatureDataset | null;
   repositioningPropertyIndex: number | null;
   showPopup: boolean;
   isLoading: boolean;
@@ -69,15 +72,15 @@ export interface IMapStateMachineContext {
   closePopup: () => void;
 
   mapClick: (latlng: LatLngLiteral) => void;
-  mapMarkerClick: (featureSelected: FeatureSelected) => void;
+  mapMarkerClick: (featureSelected: MarkerSelected) => void;
 
   setMapSearchCriteria: (searchCriteria: IPropertyFilter) => void;
   refreshMapProperties: () => void;
-  prepareForCreation: () => void;
+  prepareForCreation: (selectedFeature: SelectedFeatureDataset) => void;
   startSelection: (selectingComponentId?: string) => void;
   finishSelection: () => void;
   startReposition: (
-    repositioningFeatureDataset: LocationFeatureDataset,
+    repositioningFeatureDataset: SelectedFeatureDataset,
     index: number,
     selectingComponentId?: string,
   ) => void;
@@ -121,15 +124,21 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     actions: {
       navigateToProperty: context => {
         const selectedFeatureData = context.mapLocationFeatureDataset;
-        if (exists(selectedFeatureData?.pimsFeature?.properties?.PROPERTY_ID)) {
-          const pimsFeature = selectedFeatureData.pimsFeature;
+
+        // if there is more that one property on the location, further action is needed.
+        if (selectedFeatureData.parcelFeatures?.length > 1) {
+          return;
+        }
+
+        const pimsFeature = firstOrNull(selectedFeatureData?.pimsFeatures);
+        const parcelFeature = firstOrNull(selectedFeatureData?.parcelFeatures);
+
+        if (exists(pimsFeature?.properties?.PROPERTY_ID)) {
           history.push(`/mapview/sidebar/property/${pimsFeature.properties.PROPERTY_ID}`);
-        } else if (exists(selectedFeatureData?.parcelFeature?.properties?.PID)) {
-          const parcelFeature = selectedFeatureData?.parcelFeature;
+        } else if (exists(parcelFeature?.properties?.PID)) {
           const parsedPid = pidParser(parcelFeature.properties.PID);
           history.push(`/mapview/sidebar/non-inventory-property/pid/${parsedPid}`);
-        } else if (exists(selectedFeatureData?.parcelFeature?.properties?.PIN)) {
-          const parcelFeature = selectedFeatureData?.parcelFeature;
+        } else if (exists(parcelFeature?.properties?.PIN)) {
           const parsedPin = pinParser(parcelFeature.properties.PIN);
           history.push(`/mapview/sidebar/non-inventory-property/pin/${parsedPin}`);
         }
@@ -140,7 +149,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         context: MachineContext,
         event:
           | (AnyEventObject & { type: 'MAP_CLICK'; latlng: LatLngLiteral })
-          | (AnyEventObject & { type: 'MAP_MARKER_CLICK'; featureSelected: FeatureSelected }),
+          | (AnyEventObject & { type: 'MAP_MARKER_CLICK'; featureSelected: MarkerSelected }),
       ) => {
         let result: LocationFeatureDataset | undefined = undefined;
 
@@ -151,17 +160,18 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
             latLng: event.featureSelected.latlng,
             pimsPropertyId: event.featureSelected?.pimsLocationFeature?.PROPERTY_ID ?? null,
           });
+          // TODO: verify that this is still needed
           // In the case of the map marker being clicked, we must use the search result properties, as the minimal layer does not have the necessary feature data.
           // However, use the coordinates of the clicked marker.
-          if (exists(result.pimsFeature)) {
-            result.pimsFeature = {
-              properties: { ...result.pimsFeature?.properties },
+          if (exists(result.pimsFeatures)) {
+            result.pimsFeatures.forEach(pf => ({
+              properties: { ...pf?.properties },
               type: 'Feature',
               geometry: {
                 type: 'Point',
                 coordinates: [event.featureSelected.latlng.lng, event.featureSelected.latlng.lat],
               },
-            };
+            }));
           }
         }
 
@@ -224,7 +234,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
   );
 
   const mapMarkerClick = useCallback(
-    (featureSelected: FeatureSelected) => {
+    (featureSelected: MarkerSelected) => {
       serviceSend({
         type: 'MAP_MARKER_CLICK',
         featureSelected,
@@ -303,9 +313,12 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     [serviceSend],
   );
 
-  const prepareForCreation = useCallback(() => {
-    serviceSend({ type: 'PREPARE_FOR_CREATION' });
-  }, [serviceSend]);
+  const prepareForCreation = useCallback(
+    (selectedFeature: SelectedFeatureDataset) => {
+      serviceSend({ type: 'PREPARE_FOR_CREATION', selectedFeature });
+    },
+    [serviceSend],
+  );
 
   const startSelection = useCallback(
     (selectingComponentId?: string) => {
@@ -320,7 +333,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
 
   const startReposition = useCallback(
     (
-      repositioningFeatureDataset: LocationFeatureDataset,
+      repositioningFeatureDataset: SelectedFeatureDataset,
       index: number,
       selectingComponentId?: string,
     ) => {
@@ -448,10 +461,10 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         pendingCenterTo: state.matches({ mapVisible: { mapRequest: 'pendingCenterTo' } }),
         requestedFlyTo: state.context.requestedFlyTo,
         requestedCenterTo: state.context.requestedCenterTo,
-        mapFeatureSelected: state.context.mapFeatureSelected,
+        mapMarkerSelected: state.context.mapFeatureSelected,
         mapLocationSelected: state.context.mapLocationSelected,
-        mapLocationFeatureDataset: state.context.mapLocationFeatureDataset,
         selectedFeatureDataset: state.context.selectedFeatureDataset,
+        mapLocationFeatureDataset: state.context.mapLocationFeatureDataset,
         repositioningFeatureDataset: state.context.repositioningFeatureDataset,
         repositioningPropertyIndex: state.context.repositioningPropertyIndex,
         showPopup: showPopup,

@@ -12,6 +12,7 @@ import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 import { useApiLeases } from '../pims-api/useApiLeases';
+import { ApiGen_Concepts_LeaseFileTeam } from './../../models/api/generated/ApiGen_Concepts_LeaseFileTeam';
 
 /**
  * hook that interacts with the Lease API.
@@ -25,6 +26,7 @@ export const useLeaseRepository = () => {
     getLeaseChecklist,
     getLeaseRenewals,
     getLeaseStakeholderTypes,
+    getAllLeaseFileTeamMembers,
   } = useApiLeases();
 
   const getLastUpdatedBy = useApiRequestWrapper<
@@ -114,6 +116,18 @@ export const useLeaseRepository = () => {
     onError: useAxiosErrorHandler('Failed to retrieve Lease Stakeholder Types.'),
   });
 
+  const getAllLeaseTeamApi = useApiRequestWrapper<
+    () => Promise<AxiosResponse<ApiGen_Concepts_LeaseFileTeam[], any>>
+  >({
+    requestFunction: useCallback(
+      async () => await getAllLeaseFileTeamMembers(),
+      [getAllLeaseFileTeamMembers],
+    ),
+    requestName: 'getAllLeaseFileTeamMembers',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler('Failed to retrieve Lease Team Members.'),
+  });
+
   return useMemo(
     () => ({
       getLastUpdatedBy: getLastUpdatedBy,
@@ -123,6 +137,7 @@ export const useLeaseRepository = () => {
       getLeaseChecklist: getLeaseChecklistApi,
       putLeaseChecklist: updateLeaseChecklistApi,
       getLeaseStakeholderTypes: getLeaseStakeholderTypesApi,
+      getAllLeaseTeamMembers: getAllLeaseTeamApi,
     }),
     [
       getLastUpdatedBy,
@@ -132,6 +147,7 @@ export const useLeaseRepository = () => {
       getLeaseChecklistApi,
       updateLeaseChecklistApi,
       getLeaseStakeholderTypesApi,
+      getAllLeaseTeamApi,
     ],
   );
 };

@@ -38,7 +38,7 @@ export const usePropertyImprovementRepository = () => {
       [],
     ),
     requestName: 'updatePropertyImprovements',
-    onSuccess: useAxiosSuccessHandler('Improvements saved successfully.'),
+    onSuccess: useAxiosSuccessHandler(),
     onError: useAxiosErrorHandler(),
   });
 

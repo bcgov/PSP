@@ -2,11 +2,19 @@
 
 exports[`Lease Filter > matches snapshot 1`] = `
 <DocumentFragment>
-  <div
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div
     class="Toastify"
   />
-  <div />
-  .c8.btn {
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div />
+  .c9.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,19 +43,19 @@ exports[`Lease Filter > matches snapshot 1`] = `
   cursor: pointer;
 }
 
-.c8.btn .Button__value {
+.c9.btn .Button__value {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
-.c8.btn:hover {
+.c9.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c8.btn:focus {
+.c9.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -55,31 +63,31 @@ exports[`Lease Filter > matches snapshot 1`] = `
   box-shadow: none;
 }
 
-.c8.btn.btn-primary {
+.c9.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c8.btn.btn-primary:hover,
-.c8.btn.btn-primary:active,
-.c8.btn.btn-primary:focus {
+.c9.btn.btn-primary:hover,
+.c9.btn.btn-primary:active,
+.c9.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c8.btn.btn-secondary {
+.c9.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c8.btn.btn-secondary:hover,
-.c8.btn.btn-secondary:active,
-.c8.btn.btn-secondary:focus {
+.c9.btn.btn-secondary:hover,
+.c9.btn.btn-secondary:active,
+.c9.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c8.btn.btn-info {
+.c9.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -87,66 +95,66 @@ exports[`Lease Filter > matches snapshot 1`] = `
   padding-right: 0.6rem;
 }
 
-.c8.btn.btn-info:hover,
-.c8.btn.btn-info:active,
-.c8.btn.btn-info:focus {
+.c9.btn.btn-info:hover,
+.c9.btn.btn-info:active,
+.c9.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c8.btn.btn-light {
+.c9.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c8.btn.btn-light:hover,
-.c8.btn.btn-light:active,
-.c8.btn.btn-light:focus {
+.c9.btn.btn-light:hover,
+.c9.btn.btn-light:active,
+.c9.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c8.btn.btn-dark {
+.c9.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c8.btn.btn-dark:hover,
-.c8.btn.btn-dark:active,
-.c8.btn.btn-dark:focus {
+.c9.btn.btn-dark:hover,
+.c9.btn.btn-dark:active,
+.c9.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c8.btn.btn-danger {
+.c9.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c8.btn.btn-danger:hover,
-.c8.btn.btn-danger:active,
-.c8.btn.btn-danger:focus {
+.c9.btn.btn-danger:hover,
+.c9.btn.btn-danger:active,
+.c9.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c8.btn.btn-warning {
+.c9.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c8.btn.btn-warning:hover,
-.c8.btn.btn-warning:active,
-.c8.btn.btn-warning:focus {
+.c9.btn.btn-warning:hover,
+.c9.btn.btn-warning:active,
+.c9.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c8.btn.btn-link {
+.c9.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -170,9 +178,9 @@ exports[`Lease Filter > matches snapshot 1`] = `
   text-decoration: underline;
 }
 
-.c8.btn.btn-link:hover,
-.c8.btn.btn-link:active,
-.c8.btn.btn-link:focus {
+.c9.btn.btn-link:hover,
+.c9.btn.btn-link:active,
+.c9.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -182,15 +190,15 @@ exports[`Lease Filter > matches snapshot 1`] = `
   outline: none;
 }
 
-.c8.btn.btn-link:disabled,
-.c8.btn.btn-link.disabled {
+.c9.btn.btn-link:disabled,
+.c9.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c8.btn:disabled,
-.c8.btn:disabled:hover {
+.c9.btn:disabled,
+.c9.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -202,19 +210,19 @@ exports[`Lease Filter > matches snapshot 1`] = `
   cursor: not-allowed;
 }
 
-.c8.Button .Button__icon {
+.c9.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c8.Button--icon-only:focus {
+.c9.Button--icon-only:focus {
   outline: none;
 }
 
-.c8.Button--icon-only .Button__icon {
+.c9.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c5 .react-datepicker__calendar-icon {
+.c6 .react-datepicker__calendar-icon {
   width: 2.4rem;
   height: 3rem;
   margin-top: 0.5rem;
@@ -224,19 +232,15 @@ exports[`Lease Filter > matches snapshot 1`] = `
   pointer-events: none;
 }
 
-.c5 .react-datepicker__view-calendar-icon input {
+.c6 .react-datepicker__view-calendar-icon input {
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c5 .react-datepicker-wrapper {
-  max-width: 17rem;
-}
-
-.c6.c6.form-control.is-valid {
+.c7.c7.form-control.is-valid {
   background-image: none;
 }
 
-.c6.c6.form-control.is-invalid {
+.c7.c7.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
@@ -251,6 +255,7 @@ exports[`Lease Filter > matches snapshot 1`] = `
 
 .c2:not(:first-child) {
   padding-left: 0;
+  padding-right: 0;
 }
 
 .c2:not(:first-child) .form-control {
@@ -258,24 +263,56 @@ exports[`Lease Filter > matches snapshot 1`] = `
   border-bottom-left-radius: 0;
 }
 
-.c0 {
-  background-color: #d9eaf7;
-  border-radius: 0.5rem;
-}
-
-.c7 {
+.c8 {
   border-left: 0.2rem solid white;
+  min-width: 2.5rem;
 }
 
-.c4.required::before {
+.c5.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c3 {
+.c4 {
   font-weight: bold;
+}
+
+.c0 {
+  background-color: #d9eaf7;
+  border-radius: 0.5rem;
+}
+
+.c3 .chip {
+  background: #f2f2f2;
+  border-radius: 0.4rem;
+  color: black;
+  font-size: 1.6rem;
+  margin-right: 1em;
+}
+
+.c3.multiselect-container {
+  width: auto;
+  color: black;
+  padding-bottom: 1.2rem;
+}
+
+.c3.multiselect-container .searchWrapper {
+  background: white;
+  border: 1px solid #606060;
+  min-height: 2.4rem;
+  padding: 0.5rem;
+}
+
+.c3.multiselect-container .searchWrapper input {
+  margin: 0;
+}
+
+@media only screen and (max-width:1199px) {
+  .c0 .idir-input-group .form-select {
+    width: 8rem;
+  }
 }
 
 <form
@@ -286,7 +323,7 @@ exports[`Lease Filter > matches snapshot 1`] = `
       class="row"
     >
       <div
-        class="col-6"
+        class="col-xl-6"
       >
         <div
           class="row"
@@ -308,7 +345,7 @@ exports[`Lease Filter > matches snapshot 1`] = `
                 class="col-xl-7"
               >
                 <div
-                  class="idir-input-group flex-nowrap input-group row"
+                  class="idir-input-group flex-nowrap input-group row no-gutters"
                 >
                   <div
                     class="c1 col-auto"
@@ -506,26 +543,67 @@ exports[`Lease Filter > matches snapshot 1`] = `
                 </div>
               </div>
             </div>
+            <div
+              class="row"
+            >
+              <div
+                class="col-xl-7"
+              >
+                <div>
+                  <div
+                    class="multiselect-container multiSelectContainer  c3"
+                    id="multiselectContainerReact"
+                  >
+                    <div
+                      class="search-wrapper searchWrapper "
+                    >
+                      <input
+                        autocomplete="off"
+                        class="searchBox "
+                        id="search_input"
+                        name="search_name_input"
+                        placeholder="Team member"
+                        type="text"
+                        value=""
+                      />
+                    </div>
+                    <div
+                      class="optionListContainer displayNone"
+                    >
+                      <ul
+                        class="optionContainer"
+                      >
+                        <span
+                          class="notFound"
+                        >
+                          No Options Available
+                        </span>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
       <div
-        class="col-5"
+        class="col-xl-5 col-12"
       >
         <div
-          class="pb-2 row"
+          class="pb-0 row"
         >
           <div
-            class="pr-0 text-left col-2"
+            class="pr-0 text-left col-xl-2"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Expiry date:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             <div
               class="row"
@@ -534,7 +612,7 @@ exports[`Lease Filter > matches snapshot 1`] = `
                 class="col"
               >
                 <div
-                  class="c5 form-group"
+                  class="c6 form-group"
                 >
                   <div
                     class="react-datepicker-wrapper d-block"
@@ -553,7 +631,7 @@ exports[`Lease Filter > matches snapshot 1`] = `
                       </svg>
                       <input
                         autocomplete="off"
-                        class="c6 form-control date-picker"
+                        class="c7 form-control date-picker"
                         id="datepicker-expiryStartDate"
                         name="expiryStartDate"
                         placeholder="from date"
@@ -568,7 +646,7 @@ exports[`Lease Filter > matches snapshot 1`] = `
                 class="col"
               >
                 <div
-                  class="c5 form-group"
+                  class="c6 form-group"
                 >
                   <div
                     class="react-datepicker-wrapper d-block"
@@ -587,7 +665,7 @@ exports[`Lease Filter > matches snapshot 1`] = `
                       </svg>
                       <input
                         autocomplete="off"
-                        class="c6 form-control date-picker"
+                        class="c7 form-control date-picker"
                         id="datepicker-expiryEndDate"
                         name="expiryEndDate"
                         placeholder="to date"
@@ -605,10 +683,10 @@ exports[`Lease Filter > matches snapshot 1`] = `
           class="pb-2 row"
         >
           <div
-            class="pr-0 text-left col-2"
+            class="pr-0 text-left col-xl-2"
           />
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             <div
               class="row"
@@ -706,7 +784,7 @@ exports[`Lease Filter > matches snapshot 1`] = `
         </div>
       </div>
       <div
-        class="c7 col-xl-1"
+        class="c8 col-xl-1"
       >
         <div
           class="row"
@@ -715,7 +793,7 @@ exports[`Lease Filter > matches snapshot 1`] = `
             class="pr-0 col-auto"
           >
             <button
-              class="c8 Button Button--icon-only primary btn btn-primary"
+              class="c9 Button Button--icon-only primary btn btn-primary"
               data-testid="search"
               id="search-button"
               title="search"
@@ -744,7 +822,7 @@ exports[`Lease Filter > matches snapshot 1`] = `
             class="col-auto"
           >
             <button
-              class="c8 Button Button--icon-only btn btn-info"
+              class="c9 Button Button--icon-only btn btn-info"
               data-testid="reset-button"
               id="reset-button"
               title="reset-button"

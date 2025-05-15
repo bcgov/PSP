@@ -590,12 +590,12 @@ exports[`EditUserContainer component > makes a request based on the user id 1`] 
                   <li
                     class="option    "
                   >
-                    Lease/License functional
+                    Lease License functional
                   </li>
                   <li
                     class="option    "
                   >
-                    Lease/License read-only
+                    Lease License read-only
                   </li>
                   <li
                     class="option    "

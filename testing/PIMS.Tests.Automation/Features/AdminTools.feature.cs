@@ -94,14 +94,14 @@ namespace PIMS.Tests.Automation.Features
             await this.TestTearDownAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="01. Help Desk Section")]
+        [Xunit.SkippableFactAttribute(DisplayName="01._Help_Desk_Section")]
         [Xunit.TraitAttribute("FeatureTitle", "AdminTools")]
-        [Xunit.TraitAttribute("Description", "01. Help Desk Section")]
-        public async System.Threading.Tasks.Task _01_HelpDeskSection()
+        [Xunit.TraitAttribute("Description", "01._Help_Desk_Section")]
+        public async System.Threading.Tasks.Task _01__Help_Desk_Section()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("01. Help Desk Section", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("01._Help_Desk_Section", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 6
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -122,14 +122,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="02. User Management List View")]
+        [Xunit.SkippableFactAttribute(DisplayName="02._User_Management_List_View")]
         [Xunit.TraitAttribute("FeatureTitle", "AdminTools")]
-        [Xunit.TraitAttribute("Description", "02. User Management List View")]
-        public async System.Threading.Tasks.Task _02_UserManagementListView()
+        [Xunit.TraitAttribute("Description", "02._User_Management_List_View")]
+        public async System.Threading.Tasks.Task _02__User_Management_List_View()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("02. User Management List View", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("02._User_Management_List_View", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 10
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -150,14 +150,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="03. CDOGS Templates")]
+        [Xunit.SkippableFactAttribute(DisplayName="03._CDOGS_Templates")]
         [Xunit.TraitAttribute("FeatureTitle", "AdminTools")]
-        [Xunit.TraitAttribute("Description", "03. CDOGS Templates")]
-        public async System.Threading.Tasks.Task _03_CDOGSTemplates()
+        [Xunit.TraitAttribute("Description", "03._CDOGS_Templates")]
+        public async System.Threading.Tasks.Task _03__CDOGS_Templates()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("03. CDOGS Templates", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("03._CDOGS_Templates", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 14
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -178,14 +178,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="04. Financial Codes")]
+        [Xunit.SkippableFactAttribute(DisplayName="04._CDOGS_Error_Message")]
         [Xunit.TraitAttribute("FeatureTitle", "AdminTools")]
-        [Xunit.TraitAttribute("Description", "04. Financial Codes")]
-        public async System.Threading.Tasks.Task _04_FinancialCodes()
+        [Xunit.TraitAttribute("Description", "04._CDOGS_Error_Message")]
+        public async System.Threading.Tasks.Task _04__CDOGS_Error_Message()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("04. Financial Codes", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("04._CDOGS_Error_Message", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 18
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -197,27 +197,61 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 await this.ScenarioStartAsync();
 #line 19
- await testRunner.GivenAsync("I create a Financial Code from row number 1", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+ await testRunner.GivenAsync("I verify existance of CDOGS Template", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 20
- await testRunner.AndAsync("I update a Financial Code from row number 2", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync("I navigate and create a new Acquisition File from row number 1", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 21
+ await testRunner.AndAsync("I generate Compensation Requisition within an Acquisition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 22
+ await testRunner.ThenAsync("Error message of CDOG Template missing appears successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="04._Financial_Codes")]
+        [Xunit.TraitAttribute("FeatureTitle", "AdminTools")]
+        [Xunit.TraitAttribute("Description", "04._Financial_Codes")]
+        public async System.Threading.Tasks.Task _04__Financial_Codes()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("04._Financial_Codes", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 24
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 25
+ await testRunner.GivenAsync("I create a Financial Code from row number 1", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 26
+ await testRunner.AndAsync("I update a Financial Code from row number 2", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 27
  await testRunner.ThenAsync("Financial Codes rendered successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="05. Duplicate existing Financial Code")]
+        [Xunit.SkippableFactAttribute(DisplayName="05._Duplicate_existing_Financial_Code")]
         [Xunit.TraitAttribute("FeatureTitle", "AdminTools")]
-        [Xunit.TraitAttribute("Description", "05. Duplicate existing Financial Code")]
-        public async System.Threading.Tasks.Task _05_DuplicateExistingFinancialCode()
+        [Xunit.TraitAttribute("Description", "05._Duplicate_existing_Financial_Code")]
+        public async System.Threading.Tasks.Task _05__Duplicate_Existing_Financial_Code()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("05. Duplicate existing Financial Code", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 23
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("05._Duplicate_existing_Financial_Code", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 29
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -227,25 +261,25 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 24
+#line 30
  await testRunner.GivenAsync("I attempt to duplicate a Financial Code from row number 1", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 25
+#line 31
  await testRunner.ThenAsync("Financial Code cannot be duplicated successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="06. Financial Codes List View")]
+        [Xunit.SkippableFactAttribute(DisplayName="06._Financial_Codes_List_View")]
         [Xunit.TraitAttribute("FeatureTitle", "AdminTools")]
-        [Xunit.TraitAttribute("Description", "06. Financial Codes List View")]
-        public async System.Threading.Tasks.Task _06_FinancialCodesListView()
+        [Xunit.TraitAttribute("Description", "06._Financial_Codes_List_View")]
+        public async System.Threading.Tasks.Task _06__Financial_Codes_List_View()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("06. Financial Codes List View", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 27
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("06._Financial_Codes_List_View", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 33
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -255,10 +289,10 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 28
+#line 34
  await testRunner.GivenAsync("I search for an existing Financial Code from row number 1", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 29
+#line 35
  await testRunner.ThenAsync("Financial Codes rendered successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }

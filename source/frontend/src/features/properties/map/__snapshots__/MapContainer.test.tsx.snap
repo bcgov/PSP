@@ -594,54 +594,7 @@ exports[`MapContainer > Renders the map 1`] = `
           >
             <div
               class="leaflet-pane leaflet-tile-pane"
-            >
-              <div
-                class="leaflet-layer "
-                style="z-index: 18;"
-              >
-                <div
-                  class="leaflet-tile-container leaflet-zoom-animated"
-                  style="z-index: 20; left: 0px; top: 0px;"
-                >
-                  <img
-                    alt=""
-                    class="leaflet-tile"
-                    src="https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows?&service=WMS&request=GetMap&layers=pub%3AWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&styles=&format=image%2Fpng&transparent=true&version=1.1.1&key=parcelBoundaries&label=Parcel%20Boundaries&on=true&url=https%3A%2F%2Fopenmaps.gov.bc.ca%2Fgeo%2Fpub%2FWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW%2Fows%3F&id=parcelLayer&color=%23E9AD34&width=256&height=256&srs=EPSG%3A3857&bbox=-14401959.121379772,6887893.492833805,-13775786.985667607,7514065.628545967"
-                    style="width: 256px; height: 256px; left: -214px; top: -231px;"
-                  />
-                </div>
-              </div>
-              <div
-                class="leaflet-layer "
-                style="z-index: 5000;"
-              >
-                <div
-                  class="leaflet-tile-container leaflet-zoom-animated"
-                  style="z-index: 20; left: 0px; top: 0px;"
-                >
-                  <img
-                    class="leaflet-tile leaflet-tile-loaded"
-                    style="width: 256px; height: 256px; left: -214px; top: -231px;"
-                  />
-                </div>
-              </div>
-              <div
-                class="leaflet-layer "
-                style="z-index: 0;"
-              >
-                <div
-                  class="leaflet-tile-container leaflet-zoom-animated"
-                  style="z-index: 20; left: 0px; top: 0px;"
-                >
-                  <img
-                    alt=""
-                    class="leaflet-tile"
-                    src="https://maps.gov.bc.ca/arcgis/rest/services/province/roads_wm/MapServer/tile/6/20/9"
-                    style="width: 256px; height: 256px; left: -214px; top: -231px;"
-                  />
-                </div>
-              </div>
-            </div>
+            />
             <div
               class="leaflet-pane leaflet-overlay-pane"
             />
@@ -670,6 +623,62 @@ exports[`MapContainer > Renders the map 1`] = `
             <div
               class="leaflet-pane leaflet-popup-pane"
             />
+            <div
+              class="leaflet-pane leaflet-basemap-pane"
+              style="z-index: 200;"
+            >
+              <div
+                class="leaflet-layer "
+                style="z-index: 0;"
+              >
+                <div
+                  class="leaflet-tile-container leaflet-zoom-animated"
+                  style="z-index: 20; left: 0px; top: 0px;"
+                >
+                  <img
+                    alt=""
+                    class="leaflet-tile"
+                    src="https://maps.gov.bc.ca/arcgis/rest/services/province/roads_wm/MapServer/tile/6/20/9"
+                    style="width: 256px; height: 256px; left: -214px; top: -231px;"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="leaflet-pane leaflet-dataLayers-pane"
+              style="z-index: 350;"
+            >
+              <div
+                class="leaflet-layer "
+                style="z-index: 18;"
+              >
+                <div
+                  class="leaflet-tile-container leaflet-zoom-animated"
+                  style="z-index: 20; left: 0px; top: 0px;"
+                >
+                  <img
+                    alt=""
+                    class="leaflet-tile"
+                    src="https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows?&service=WMS&request=GetMap&layers=pub%3AWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&styles=&format=image%2Fpng&transparent=true&version=1.1.1&key=parcelBoundaries&label=Parcel%20Boundaries&on=true&url=https%3A%2F%2Fopenmaps.gov.bc.ca%2Fgeo%2Fpub%2FWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW%2Fows%3F&id=parcelLayer&color=%23E9AD34&width=256&height=256&srs=EPSG%3A3857&bbox=-14401959.121379772,6887893.492833805,-13775786.985667607,7514065.628545967"
+                    style="width: 256px; height: 256px; left: -214px; top: -231px;"
+                  />
+                </div>
+              </div>
+              <div
+                class="leaflet-layer "
+                style="z-index: 4000;"
+              >
+                <div
+                  class="leaflet-tile-container leaflet-zoom-animated"
+                  style="z-index: 20; left: 0px; top: 0px;"
+                >
+                  <img
+                    class="leaflet-tile leaflet-tile-loaded"
+                    style="width: 256px; height: 256px; left: -214px; top: -231px;"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
           <div
             class="leaflet-control-container"

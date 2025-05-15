@@ -1,5 +1,6 @@
 import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
+import { concatValues, formatAcquisitionOwnerName } from '@/utils/formUtils';
 import { exists } from '@/utils/utils';
 
 export class DetailAcquisitionFileOwner {
@@ -13,7 +14,7 @@ export class DetailAcquisitionFileOwner {
   static fromApi(owner: ApiGen_Concepts_AcquisitionFileOwner): DetailAcquisitionFileOwner {
     return {
       isPrimary: owner.isPrimaryContact,
-      ownerName: getOwnerDisplayName(owner),
+      ownerName: formatAcquisitionOwnerName(owner),
       ownerOtherName: owner.otherName?.trim() || '',
       ownerDisplayAddress: getFormattedAddress(owner.address),
       ownerContactEmail: owner.contactEmailAddr || '',
@@ -21,28 +22,6 @@ export class DetailAcquisitionFileOwner {
     };
   }
 }
-
-const getOwnerDisplayName = (owner: ApiGen_Concepts_AcquisitionFileOwner): string => {
-  let ownerDisplayName = '';
-  if (owner.isOrganization) {
-    const regNumber = owner.registrationNumber ? `Reg#:${owner.registrationNumber}` : null;
-    const incNumber = owner.incorporationNumber ? `Inc#:${owner.incorporationNumber}` : null;
-    const separator = owner.incorporationNumber && owner.registrationNumber ? ' / ' : null;
-
-    if (incNumber || regNumber) {
-      ownerDisplayName = concatValues(
-        [owner.lastNameAndCorpName, ' (', incNumber, separator, regNumber, ')'],
-        '',
-      );
-    } else {
-      ownerDisplayName = owner.lastNameAndCorpName ? owner.lastNameAndCorpName : '';
-    }
-  } else {
-    ownerDisplayName = concatValues([owner.givenName, owner.lastNameAndCorpName]);
-  }
-
-  return ownerDisplayName;
-};
 
 const getFormattedAddress = (address?: ApiGen_Concepts_Address | null): string => {
   if (!exists(address)) {
@@ -85,8 +64,4 @@ const getFormattedAddress = (address?: ApiGen_Concepts_Address | null): string =
     }
   }
   return addressDisplay;
-};
-
-const concatValues = (nameParts: Array<string | undefined | null>, separator = ' '): string => {
-  return nameParts.filter(n => exists(n) && n.trim() !== '').join(separator);
 };

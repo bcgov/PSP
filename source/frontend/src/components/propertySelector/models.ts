@@ -2,6 +2,7 @@ import { MultiPolygon, Polygon } from 'geojson';
 import { LatLngLiteral } from 'leaflet';
 
 import { AreaUnitTypes } from '@/constants';
+import { DmsCoordinates } from '@/features/properties/filter/CoordinateSearch/models';
 
 export interface IMapProperty {
   propertyId?: number;
@@ -30,4 +31,5 @@ export interface ILayerSearchCriteria {
   searchBy?: string;
   address?: string;
   historical?: string;
+  coordinates?: DmsCoordinates | null;
 }

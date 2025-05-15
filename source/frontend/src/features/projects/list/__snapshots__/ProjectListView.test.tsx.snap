@@ -267,6 +267,22 @@ exports[`Project List View > matches snapshot 1`] = `
   border-radius: 0.5rem;
 }
 
+.c6 .form-select {
+  min-width: 15rem;
+}
+
+.c6 .input-group: {
+  min-width: 100%;
+}
+
+.c6 .idir-input-group {
+  margin: 0;
+}
+
+.c6 .idir-input-group div {
+  padding: 0;
+}
+
 .c5 {
   -webkit-align-items: center;
   -webkit-box-align: center;
@@ -278,6 +294,7 @@ exports[`Project List View > matches snapshot 1`] = `
 
 .c7 {
   border-left: 0.2rem solid white;
+  min-width: 2.5rem;
 }
 
 .c2 {
@@ -394,7 +411,7 @@ exports[`Project List View > matches snapshot 1`] = `
                         class="row"
                       >
                         <div
-                          class="col-xl-3"
+                          class="col-xl-4"
                         >
                           <div
                             class="input form-group"
@@ -411,7 +428,7 @@ exports[`Project List View > matches snapshot 1`] = `
                           </div>
                         </div>
                         <div
-                          class="col-xl-9"
+                          class="col-xl-8"
                         >
                           <div
                             class="input form-group"
@@ -438,7 +455,7 @@ exports[`Project List View > matches snapshot 1`] = `
                     class="row"
                   >
                     <div
-                      class="col-xl-4"
+                      class="col-xl-6"
                     >
                       <div
                         class="form-group"
@@ -471,7 +488,7 @@ exports[`Project List View > matches snapshot 1`] = `
                       </div>
                     </div>
                     <div
-                      class="col-xl-4"
+                      class="col-xl-6"
                     >
                       <div
                         class="form-group"

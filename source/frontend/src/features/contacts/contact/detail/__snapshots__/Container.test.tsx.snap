@@ -2,10 +2,18 @@
 
 exports[`ContactViewContainer component > renders as expected 1`] = `
 <DocumentFragment>
-  <div
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div
     class="Toastify"
   />
-  <div />
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div />
   .c2 {
   color: #474543;
   font-family: 'BCSans-Bold';
@@ -27,6 +35,12 @@ exports[`ContactViewContainer component > renders as expected 1`] = `
   overflow: auto;
   padding: 1rem;
   background-color: #f2f2f2;
+}
+
+@media only screen and (max-width:1199px) {
+  .c0 {
+    width: 100%;
+  }
 }
 
 <div

@@ -12,7 +12,8 @@ import { isEqual } from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   LayerGroup,
-  MapContainer as ReactLeafletMap,
+  MapContainer as LeafletMapContainer,
+  Pane,
   ScaleControl,
   TileLayer,
 } from 'react-leaflet';
@@ -20,23 +21,22 @@ import {
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { MAP_MAX_NATIVE_ZOOM, MAP_MAX_ZOOM, MAX_ZOOM } from '@/constants/strings';
 import { useTenant } from '@/tenants';
-import { exists } from '@/utils';
+import { exists, firstOrNull } from '@/utils';
 
 import { DEFAULT_MAP_ZOOM, defaultBounds, defaultLatLng } from './constants';
 import AdvancedFilterButton from './leaflet/Control/AdvancedFilter/AdvancedFilterButton';
-import BasemapToggle, {
-  BaseLayer,
-  BasemapToggleEvent,
-} from './leaflet/Control/BaseMapToggle/BasemapToggle';
+import BasemapToggle, { BasemapToggleEvent } from './leaflet/Control/BaseMapToggle/BasemapToggle';
+import { BaseLayer, isVectorBasemap } from './leaflet/Control/BaseMapToggle/types';
 import LayersControl from './leaflet/Control/LayersControl/LayersControl';
 import { LegendControl } from './leaflet/Control/Legend/LegendControl';
 import { ZoomOutButton } from './leaflet/Control/ZoomOut/ZoomOutButton';
-import { LayerPopupContainer } from './leaflet/LayerPopup/LayerPopupContainer';
+import { LocationPopupContainer } from './leaflet/LayerPopup/LocationPopupContainer';
 import { InventoryLayer } from './leaflet/Layers/InventoryLayer';
 import { LeafletLayerListener } from './leaflet/Layers/LeafletLayerListener';
 import { useConfiguredMapLayers } from './leaflet/Layers/useConfiguredMapLayers';
 import { MapEvents } from './leaflet/MapEvents/MapEvents';
 import * as Styled from './leaflet/styles';
+import { EsriVectorTileLayer } from './leaflet/VectorTileLayer/EsriVectorTileLayer';
 
 export type MapLeafletViewProps = {
   parentWidth: number | undefined;
@@ -142,12 +142,10 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
     activeFeatureLayer?.clearLayers();
 
     if (isRepositioning) {
-      if (
-        repositioningFeatureDataset !== null &&
-        repositioningFeatureDataset.pimsFeature !== null
-      ) {
+      const pimsFeature = repositioningFeatureDataset?.pimsFeature;
+      if (exists(pimsFeature)) {
         // File marker repositioning is active - highlight the property and the corresponding boundary when user triggers the relocate action.
-        activeFeatureLayer?.addData(repositioningFeatureDataset.pimsFeature);
+        activeFeatureLayer?.addData(pimsFeature);
       }
     } else {
       // Not repositioning - highlight parcels on map click as usual workflow
@@ -159,14 +157,9 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
           type: 'Feature',
           properties: {},
         };
-        if (mapLocationFeatureDataset.parcelFeature !== null) {
-          activeFeature = mapLocationFeatureDataset.parcelFeature;
+        if (firstOrNull(mapLocationFeatureDataset.parcelFeatures) !== null) {
+          activeFeature = mapLocationFeatureDataset.parcelFeatures[0];
           activeFeatureLayer?.addData(activeFeature);
-        } else if (mapLocationFeatureDataset.municipalityFeature !== null) {
-          activeFeature = mapLocationFeatureDataset.municipalityFeature;
-          if (mapLocationFeatureDataset.municipalityFeature?.geometry?.type === 'Polygon') {
-            activeFeatureLayer?.addData(activeFeature);
-          }
         }
       }
     }
@@ -229,11 +222,11 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
 
   return (
     <Styled.MapContainer>
-      {baseLayers?.length > 0 && (
+      {baseLayers?.length > 0 && !mapMachine.mapSideBarViewState.isFullWidth && (
         <BasemapToggle baseLayers={baseLayers} onToggle={handleBasemapToggle} />
       )}
 
-      <ReactLeafletMap
+      <LeafletMapContainer
         center={[defaultLatLng.lat, defaultLatLng.lng]}
         zoom={DEFAULT_MAP_ZOOM}
         maxZoom={MAP_MAX_ZOOM}
@@ -247,23 +240,35 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
           zoomend={e => handleZoomUpdate(e.sourceTarget.getZoom())}
           moveend={handleBounds}
         />
-        {activeBasemap && (
-          // Draws the map itself
-          <LayerGroup attribution={activeBasemap.attribution}>
-            {activeBasemap.urls?.map((tileUrl, index) => (
-              <TileLayer
-                key={`${activeBasemap.name}-${index}`}
-                zIndex={index}
-                url={tileUrl}
-                maxZoom={MAP_MAX_ZOOM}
-                maxNativeZoom={MAP_MAX_NATIVE_ZOOM}
-              />
-            ))}
-          </LayerGroup>
-        )}
-        {mapMachine.showPopup && (
+        {/* The basemap is the first layer to draw, followed by data layers and then graphics */}
+        <Pane name="basemap" style={{ zIndex: 200 }}>
+          {activeBasemap && (
+            <LayerGroup attribution={activeBasemap.attribution}>
+              {isVectorBasemap(activeBasemap) ? (
+                <EsriVectorTileLayer zIndex={0} itemId={activeBasemap.itemId} />
+              ) : (
+                activeBasemap.urls?.map((tileUrl, index) => (
+                  <TileLayer
+                    key={`${activeBasemap.name}-${index}`}
+                    zIndex={index}
+                    url={tileUrl}
+                    maxZoom={MAP_MAX_ZOOM}
+                    maxNativeZoom={MAP_MAX_NATIVE_ZOOM}
+                  />
+                ))
+              )}
+            </LayerGroup>
+          )}
+        </Pane>
+
+        {/* Data layers (i.e. parcelmap, tantalis, etc) are drawn on top of basemaps */}
+        <Pane name="dataLayers" style={{ zIndex: 350 }}>
+          <LeafletLayerListener pane="dataLayers" />
+        </Pane>
+
+        {mapMachine.showPopup && !mapMachine.isRepositioning && (
           // Draws the popup on top of the map
-          <LayerPopupContainer ref={popupRef} />
+          <LocationPopupContainer ref={popupRef} />
         )}
 
         <LegendControl />
@@ -279,8 +284,7 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
           maxZoom={MAP_MAX_ZOOM}
           bounds={mapMachine.currentMapBounds ?? defaultBounds}
         ></InventoryLayer>
-        <LeafletLayerListener />
-      </ReactLeafletMap>
+      </LeafletMapContainer>
     </Styled.MapContainer>
   );
 };

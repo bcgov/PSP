@@ -19,12 +19,12 @@ export const LeaseRenewalsView: React.FunctionComponent<ILeaseRenewalsViewProps>
     <Section header="Renewal Options">
       {renewals.map((renewal, index) => (
         <Section key={`lease-renewal-${index}`} header={`Renewal ${index + 1}`} noPadding>
-          <SectionField label="Exercised?" labelWidth="3">
+          <SectionField label="Exercised?" labelWidth={{ xs: 3 }}>
             {booleanToYesNoUnknownString(renewal.isExercised)}
           </SectionField>
           <Row>
             <Col>
-              <SectionField label="Commencement" labelWidth="6">
+              <SectionField label="Commencement" labelWidth={{ xs: 6 }}>
                 {prettyFormatDate(renewal.commencementDt)}
               </SectionField>
             </Col>
@@ -32,7 +32,7 @@ export const LeaseRenewalsView: React.FunctionComponent<ILeaseRenewalsViewProps>
               <SectionField label="Expiry">{prettyFormatDate(renewal.expiryDt)}</SectionField>
             </Col>
           </Row>
-          <SectionField label="Comments" labelWidth="3">
+          <SectionField label="Comments" labelWidth={{ xs: 3 }}>
             {renewal.renewalNote}
           </SectionField>
         </Section>

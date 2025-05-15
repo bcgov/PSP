@@ -34,6 +34,7 @@ describe('Layer Popup links', () => {
     const { asFragment } = renderLinks({
       bounds: new L.LatLngBounds(southWest, northEast),
       onViewPropertyInfo: onViewPropertyInfoFn,
+      showViewPropertyInfo: true,
     });
     expect(asFragment()).toMatchSnapshot();
   });
@@ -42,6 +43,7 @@ describe('Layer Popup links', () => {
     const { getByText } = renderLinks({
       bounds: new L.LatLngBounds(southWest, northEast),
       onViewPropertyInfo: onViewPropertyInfoFn,
+      showViewPropertyInfo: true,
     });
     const link = getByText(/Zoom/i);
     expect(link).toBeInTheDocument();
@@ -52,6 +54,7 @@ describe('Layer Popup links', () => {
     const { getByText } = renderLinks({
       bounds: new L.LatLngBounds(southWest, northEast),
       onViewPropertyInfo: onViewPropertyInfoFn,
+      showViewPropertyInfo: true,
     });
     const link = getByText(/Zoom/i);
     expect(link).toBeInTheDocument();
@@ -64,6 +67,7 @@ describe('Layer Popup links', () => {
     const { getByText } = renderLinks({
       bounds: new L.LatLngBounds(southWest, northEast),
       onViewPropertyInfo: onViewPropertyInfoFn,
+      showViewPropertyInfo: true,
     });
 
     const link = getByText('View Property Info');

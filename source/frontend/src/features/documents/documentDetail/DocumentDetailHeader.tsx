@@ -17,7 +17,7 @@ const DocumentDetailHeader: React.FunctionComponent<
 
   return (
     <div className="pb-4">
-      <SectionField label={'File name'} labelWidth="4" className="pb-3">
+      <SectionField label={'File name'} labelWidth={{ xs: 4 }} className="pb-3">
         <StyledFileNameRow>
           <div>
             <label>{documentFileName}</label>

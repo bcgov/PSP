@@ -1,7 +1,7 @@
 import { Formik } from 'formik';
 import styled from 'styled-components';
 
-import { FastDatePicker, Select, SelectOption, TextArea } from '@/components/common/form';
+import { Select, SelectOption, TextArea } from '@/components/common/form';
 import { ContactInputContainer } from '@/components/common/form/ContactInput/ContactInputContainer';
 import ContactInputView from '@/components/common/form/ContactInput/ContactInputView';
 import { Section } from '@/components/common/Section/Section';
@@ -74,7 +74,7 @@ export const UpdateForm8Form: React.FC<IForm8FormProps> = ({
               <>
                 <StyledContent>
                   <Section header="Form 8 Notice of Advance Payment">
-                    <SectionField label="Payee" labelWidth="4" required>
+                    <SectionField label="Payee" labelWidth={{ xs: 4 }} required>
                       <Select
                         field="payeeKey"
                         title={
@@ -93,10 +93,6 @@ export const UpdateForm8Form: React.FC<IForm8FormProps> = ({
                         restrictContactType={RestrictContactType.ONLY_ORGANIZATIONS}
                         displayErrorAsTooltip={false}
                       ></ContactInputContainer>
-                    </SectionField>
-
-                    <SectionField label="Advanced payment served date" labelWidth="4">
-                      <FastDatePicker field="advancedPaymentServedDate" formikProps={formikProps} />
                     </SectionField>
 
                     <SectionField label="Description">

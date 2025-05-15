@@ -10,10 +10,10 @@ import { mockFAParcelLayerResponse, mockGeocoderOptions } from '@/mocks/index.mo
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { act, fillInput, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
-import { PropertyForm } from '../../features/mapSideBar/shared/models';
 import MapSelectorContainer, { IMapSelectorContainerProps } from './MapSelectorContainer';
 import { IMapProperty } from './models';
 import { IMapStateMachineContext } from '../common/mapFSM/MapStateMachineContext';
+import { PropertyForm } from '@/features/mapSideBar/shared/models';
 
 const mockStore = configureMockStore([thunk]);
 
@@ -175,7 +175,7 @@ describe('MapSelectorContainer component', () => {
             PLAN_NUMBER: 'NO_PLAN',
             PIN: null,
             PID: '9727493',
-            PID_NUMBER: null,
+            PID_NUMBER: 9727493,
             SOURCE_PARCEL_ID: null,
             PARCEL_STATUS: 'ACTIVE',
             PARCEL_CLASS: 'SUBDIVISION',
@@ -252,10 +252,10 @@ describe('MapSelectorContainer component', () => {
           lat: 48.76613749999999,
           lng: -123.46163749999998,
         },
-        regionFeature: {},
-        districtFeature: {},
+        regionFeature: null,
+        districtFeature: null,
         municipalityFeature: null,
-        highwayFeatures: null,
+        fileLocation: null,
         id: 'PID-009-727-493-48.76613749999999--123.46163749999998',
       },
     ]);

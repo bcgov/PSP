@@ -17,19 +17,19 @@ import { useTenant } from '@/tenants';
  */
 export const useAdminBoundaryMapLayer = () => {
   const tenant = useTenant();
-  const { findOneWhereContainsWrapped: findOneWhereContainsRegionWrapped } = useLayerQuery(
+  const { findMultipleWhereContainsWrapped: findOneWhereContainsRegionWrapped } = useLayerQuery(
     tenant.motiRegionLayerUrl,
   );
   const findOneWhereContainsRegionExecute = findOneWhereContainsRegionWrapped.execute;
   const findOneWhereContainsRegionLoading = findOneWhereContainsRegionWrapped.loading;
 
-  const { findOneWhereContainsWrapped: findOneWhereContainsDistrictWrapped } = useLayerQuery(
+  const { findMultipleWhereContainsWrapped: findOneWhereContainsDistrictWrapped } = useLayerQuery(
     tenant.hwyDistrictLayerUrl,
   );
   const findOneWhereContainsDistrictExecute = findOneWhereContainsDistrictWrapped.execute;
   const findOneWhereContainsDistrictLoading = findOneWhereContainsDistrictWrapped.loading;
 
-  const { findOneWhereContainsWrapped: findOneWhereContainsWrappedElectoral } = useLayerQuery(
+  const { findMultipleWhereContainsWrapped: findOneWhereContainsWrappedElectoral } = useLayerQuery(
     tenant.electoralLayerUrl,
   );
   const findOneWhereContainsElectoralExecute = findOneWhereContainsWrappedElectoral.execute;

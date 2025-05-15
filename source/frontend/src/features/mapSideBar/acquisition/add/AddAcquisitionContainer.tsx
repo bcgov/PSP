@@ -20,16 +20,17 @@ import { PropertyForm } from '../../shared/models';
 import SidebarFooter from '../../shared/SidebarFooter';
 import { StyledFormWrapper } from '../../shared/styles';
 import { useAddAcquisitionFormManagement } from '../hooks/useAddAcquisitionFormManagement';
-import { AddAcquisitionForm } from './AddAcquisitionForm';
+import { IAddAcquisitionFormProps } from './AddAcquisitionForm';
 import { AcquisitionForm } from './models';
 
 export interface IAddAcquisitionContainerProps {
   onClose: (nextLocation?: string) => void;
   onSuccess: (newAcquisitionId: number) => void;
+  View: React.FC<IAddAcquisitionFormProps>;
 }
 
 export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = props => {
-  const { onClose } = props;
+  const { onClose, View } = props;
   const history = useHistory();
   const formikRef = useRef<FormikProps<AcquisitionForm>>(null);
   const [isValid, setIsValid] = useState<boolean>(true);
@@ -65,7 +66,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
       ? AcquisitionForm.fromParentFileApi(parentAcquisitionFile)
       : new AcquisitionForm();
 
-    if (selectedFeatureDataset !== null) {
+    if (selectedFeatureDataset !== null && !isSubFile) {
       const property = PropertyForm.fromMapProperty(
         featuresetToMapProperty(selectedFeatureDataset),
       );
@@ -74,7 +75,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
         property.regionName !== 'Cannot determine' ? property.region?.toString() : undefined;
     }
     return acquisitionForm;
-  }, [parentAcquisitionFile, selectedFeatureDataset]);
+  }, [parentAcquisitionFile, selectedFeatureDataset, isSubFile]);
 
   const handleSave = async () => {
     // Sets the formik field `isValid` to false at start
@@ -210,8 +211,8 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
     >
       <StyledFormWrapper>
         <LoadingBackdrop show={helper.loading} parentScreen={true} />
-        <AddAcquisitionForm
-          ref={formikRef}
+        <View
+          formikRef={formikRef}
           parentId={isSubFile ? Number(parentId) : null}
           initialValues={initialValues}
           onSubmit={helper.handleSubmit}

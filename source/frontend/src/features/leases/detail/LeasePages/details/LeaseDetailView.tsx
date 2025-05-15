@@ -29,16 +29,16 @@ export const LeaseDetailView: React.FunctionComponent<
 
   return (
     <Section header={'Original Agreement'}>
-      <SectionField label="Ministry project" labelWidth="3">
+      <SectionField label="Ministry project" labelWidth={{ xs: 3 }}>
         {projectName}
       </SectionField>
-      <SectionField label="Product" labelWidth="3">
+      <SectionField label="Product" labelWidth={{ xs: 3 }}>
         {productName}
       </SectionField>
       <SectionField
         label="Status"
-        labelWidth="3"
-        contentWidth="4"
+        labelWidth={{ xs: 3 }}
+        contentWidth={{ xs: 4 }}
         tooltip={
           <TooltipIcon
             toolTipId="lease-status-tooltip"
@@ -66,17 +66,17 @@ export const LeaseDetailView: React.FunctionComponent<
       </SectionField>
 
       {lease.fileStatusTypeCode.id === ApiGen_CodeTypes_LeaseStatusTypes.DISCARD && (
-        <SectionField label="Cancellation reason" contentWidth="12" required>
+        <SectionField label="Cancellation reason" contentWidth={{ xs: 12 }} required>
           {lease.cancellationReason}
         </SectionField>
       )}
 
-      <SectionField label="Account type" labelWidth="3" contentWidth="5">
+      <SectionField label="Account type" labelWidth={{ xs: 3 }} contentWidth={{ xs: 5 }}>
         {lease.paymentReceivableType.description}
       </SectionField>
       <Row>
         <Col>
-          <SectionField label="Commencement" labelWidth="6">
+          <SectionField label="Commencement" labelWidth={{ xs: 6 }}>
             {prettyFormatDate(lease.startDate)}
           </SectionField>
         </Col>
@@ -88,7 +88,7 @@ export const LeaseDetailView: React.FunctionComponent<
         <>
           <SectionField
             label="Termination"
-            labelWidth="3"
+            labelWidth={{ xs: 3 }}
             tooltip={
               <TooltipIcon
                 toolTipId="lease-termination-tooltip"
@@ -99,7 +99,7 @@ export const LeaseDetailView: React.FunctionComponent<
           >
             {prettyFormatDate(lease.terminationDate)}
           </SectionField>
-          <SectionField label="Termination reason" labelWidth="3">
+          <SectionField label="Termination reason" labelWidth={{ xs: 3 }}>
             {lease.terminationReason}
           </SectionField>
         </>

@@ -63,13 +63,14 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({
           featuresetToMapProperty(selectedFeatureDataset),
         );
         if (isValidString(propertyForm.pid)) {
-          propertyForm.address = selectedFeatureDataset.pimsFeature?.properties
-            ? AddressForm.fromPimsView(selectedFeatureDataset.pimsFeature?.properties)
+          // TODO: This should work with multiple properties
+          const pimsFeature = selectedFeatureDataset.pimsFeature;
+          propertyForm.address = pimsFeature?.properties
+            ? AddressForm.fromPimsView(pimsFeature?.properties)
             : undefined;
           const subdivisionFormModel = new SubdivisionFormModel();
           subdivisionFormModel.sourceProperty = propertyForm.toApi();
-          subdivisionFormModel.sourceProperty.isOwned =
-            selectedFeatureDataset.pimsFeature.properties.IS_OWNED;
+          subdivisionFormModel.sourceProperty.isOwned = pimsFeature.properties.IS_OWNED;
           setInitialForm(subdivisionFormModel);
         }
       }

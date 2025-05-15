@@ -1,4 +1,5 @@
 import { useKeycloak } from '@react-keycloak/web';
+import { KeycloakTokenParsed as BaseKeycloakTokenParsed } from 'keycloak-js';
 import { useCallback, useMemo } from 'react';
 
 import * as API from '@/constants/API';
@@ -6,10 +7,21 @@ import { exists } from '@/utils';
 
 import useLookupCodeHelpers from './useLookupCodeHelpers';
 
+export interface KeycloakTokenParsed extends BaseKeycloakTokenParsed {
+  idir_username?: string;
+  name?: string;
+  display_name?: string;
+  given_name?: string;
+  family_name?: string;
+  email?: string;
+  client_roles?: string[];
+}
+
 /**
  * IUserInfo interface, represents the userinfo provided by keycloak.
  */
 export interface IUserInfo {
+  sub: string;
   displayName?: string;
   businessIdentifierValue: string;
   name?: string;
@@ -22,13 +34,17 @@ export interface IUserInfo {
   given_name?: string;
   family_name?: string;
   organizations: number[];
+  id?: number;
+  idir_user_guid?: string;
+  idir_username?: string;
+  subject?: string;
 }
 
 /**
  * IKeycloak interface, represents the keycloak object for the authenticated user.
  */
 export interface IKeycloak {
-  obj: any;
+  obj: ReturnType<typeof useKeycloak>['keycloak'];
   displayName?: string;
   businessIdentifierValue: string;
   name?: string;

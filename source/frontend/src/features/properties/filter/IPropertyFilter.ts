@@ -1,6 +1,9 @@
 /**
  * Property filter options used by Formik.
  */
+
+import { DmsCoordinates } from './CoordinateSearch/models';
+
 export interface IPropertyFilter {
   /** Select one of the search options [address, pid, location]. */
   searchBy: string;
@@ -16,12 +19,18 @@ export interface IPropertyFilter {
   historical: string;
   /** The address of the property. */
   address: string;
+  /** The geocoder-returned latitude  */
   latitude: number | string | undefined;
+  /** The geocoder-returned longitude  */
   longitude: number | string | undefined;
   /** The plan number of the property. */
   planNumber?: string;
   /** The property ownership types */
   ownership: string;
+  /** The coordinates to search by lat/long in degrees, minutes and seconds (DMS) */
+  coordinates: DmsCoordinates | null;
+  /** The geographic name of the property */
+  name: string;
 }
 
 export const defaultPropertyFilter: IPropertyFilter = {
@@ -33,7 +42,9 @@ export const defaultPropertyFilter: IPropertyFilter = {
   latitude: '',
   longitude: '',
   historical: '',
+  coordinates: null,
   page: undefined,
   quantity: undefined,
   ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
+  name: '',
 };

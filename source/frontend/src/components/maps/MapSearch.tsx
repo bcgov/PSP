@@ -1,6 +1,7 @@
 import { dequal } from 'dequal';
+import { LatLngLiteral } from 'leaflet';
 import React, { useEffect, useState } from 'react';
-import { Container } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
@@ -9,6 +10,7 @@ import {
   defaultPropertyFilter,
   IPropertyFilter,
 } from '@/features/properties/filter/IPropertyFilter';
+import { exists } from '@/utils';
 
 export type MapSearchProps = object;
 
@@ -17,7 +19,8 @@ export type MapSearchProps = object;
  * @param param0
  */
 const MapSearch: React.FC<React.PropsWithChildren<MapSearchProps>> = () => {
-  const { mapSearchCriteria, setMapSearchCriteria } = useMapStateMachine();
+  const { mapSearchCriteria, setMapSearchCriteria, mapClick, requestCenterToLocation } =
+    useMapStateMachine();
 
   const [propertySearchFilter, setPropertySearchFilter] = useState<IPropertyFilter | null>(null);
 
@@ -28,11 +31,31 @@ const MapSearch: React.FC<React.PropsWithChildren<MapSearchProps>> = () => {
   }, [propertySearchFilter, mapSearchCriteria, setMapSearchCriteria]);
 
   const handleMapFilterChange = (filter: IPropertyFilter) => {
-    setPropertySearchFilter(filter);
+    if (['coordinates', 'name', 'address'].includes(filter.searchBy)) {
+      let latLng: LatLngLiteral = undefined;
+      switch (filter.searchBy) {
+        case 'name':
+        case 'address':
+          if (exists(filter.latitude)) {
+            latLng = { lat: +filter.latitude, lng: +filter.longitude };
+          } else {
+            toast.warn('No valid location found for address - unable to zoom to location.');
+          }
+          break;
+        case 'coordinates':
+          latLng = filter.coordinates?.toLatLng();
+      }
+      if (latLng) {
+        mapClick(latLng);
+        requestCenterToLocation(latLng);
+      }
+    } else {
+      setPropertySearchFilter(filter);
+    }
   };
 
   return (
-    <StyledFilterContainer fluid className="px-0">
+    <StyledFilterContainer className="px-0">
       <PropertyFilter
         propertyFilter={propertySearchFilter}
         useGeocoder={true}
@@ -47,7 +70,7 @@ const MapSearch: React.FC<React.PropsWithChildren<MapSearchProps>> = () => {
 
 export default MapSearch;
 
-const StyledFilterContainer = styled(Container)`
+const StyledFilterContainer = styled.div`
   transition: margin 1s;
 
   grid-area: filter;

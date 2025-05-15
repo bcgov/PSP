@@ -225,6 +225,7 @@ exports[`PropertySearchSelectorFormView component > renders as expected when pro
 
 .c4:not(:first-child) {
   padding-left: 0;
+  padding-right: 0;
 }
 
 .c4:not(:first-child) .form-control {
@@ -232,14 +233,9 @@ exports[`PropertySearchSelectorFormView component > renders as expected when pro
   border-bottom-left-radius: 0;
 }
 
-.c1 {
-  color: var(--theme-blue-100);
-  font-family: 'BCSans-Bold';
-  font-size: 2.2rem;
-  border-bottom: solid 0.2rem;
-  width: 100%;
-  text-align: left;
-  margin-bottom: 1.6rem;
+.c6 {
+  font-size: 1.4rem;
+  color: #42814A;
 }
 
 .c2 {
@@ -247,13 +243,11 @@ exports[`PropertySearchSelectorFormView component > renders as expected when pro
   border-radius: 0.5rem;
 }
 
-.c2 .idir-input-group .input-group-prepend select {
-  width: 16rem;
-}
-
-.c2 .idir-input-group input {
-  width: 18rem;
-  max-width: 100%;
+.c1 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c0 {
@@ -267,26 +261,34 @@ exports[`PropertySearchSelectorFormView component > renders as expected when pro
 <div
     class="c0 form-section"
   >
+    <h2
+      class="c1"
+    >
+      <div
+        class="no-gutters row"
+      >
+        <div
+          class="align-content-end col"
+        >
+          Search for a property
+        </div>
+      </div>
+    </h2>
     <div
       class="collapse show"
     >
-      <h3
-        class="c1"
-      >
-        Search for a property
-      </h3>
       <form
         class="c2 p-3"
         novalidate=""
       >
         <div
-          class="row"
+          class="row no-gutters"
         >
           <div
-            class="col-xl-6"
+            class="col-6"
           >
             <div
-              class="flex-nowrap input-group row"
+              class="flex-nowrap input-group row no-gutters"
             >
               <div
                 class="c3 col-auto"
@@ -337,6 +339,13 @@ exports[`PropertySearchSelectorFormView component > renders as expected when pro
                       >
                         Legal Description
                       </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-coordinates"
+                        value="coordinates"
+                      >
+                        Lat/Long
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -362,7 +371,7 @@ exports[`PropertySearchSelectorFormView component > renders as expected when pro
             </div>
           </div>
           <div
-            class="pr-0 col-xl-2"
+            class="pr-0 col-2"
           >
             <div
               class="row"
@@ -429,27 +438,6 @@ exports[`PropertySearchSelectorFormView component > renders as expected when pro
           </div>
         </div>
       </form>
-    </div>
-  </div>
-  .c1 {
-  font-size: 1.4rem;
-  color: #42814A;
-}
-
-.c0 {
-  margin: 1.6rem;
-  padding: 1.6rem;
-  background-color: white;
-  text-align: left;
-  border-radius: 0.5rem;
-}
-
-<div
-    class="c0 form-section"
-  >
-    <div
-      class="collapse show"
-    >
       <div
         class="table"
         data-testid="map-properties"
@@ -549,7 +537,7 @@ exports[`PropertySearchSelectorFormView component > renders as expected when pro
           class="ml-auto align-self-center col-auto"
         >
           <p
-            class="c1"
+            class="c6"
           >
             0 selected
           </p>

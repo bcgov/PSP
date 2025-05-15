@@ -2,10 +2,18 @@
 
 exports[`AddLeaseContainer component > renders as expected 1`] = `
 <DocumentFragment>
-  <div
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div
     class="Toastify"
   />
-  <div />
+  @media only screen and (max-width:1199px) {
+
+}
+
+<div />
   .c4.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -232,10 +240,6 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c17 .react-datepicker-wrapper {
-  max-width: 17rem;
-}
-
 .c18.c18.form-control.is-valid {
   background-image: none;
 }
@@ -255,6 +259,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
 
 .c28:not(:first-child) {
   padding-left: 0;
+  padding-right: 0;
 }
 
 .c28:not(:first-child) .form-control {
@@ -409,6 +414,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
   position: sticky;
   padding-top: 2rem;
   bottom: 0;
+  border-top: 2px solid #e5e5e5;
   background: white;
   z-index: 10;
 }
@@ -530,15 +536,6 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c26 .idir-input-group .input-group-prepend select {
-  width: 16rem;
-}
-
-.c26 .idir-input-group input {
-  width: 18rem;
-  max-width: 100%;
-}
-
 .c30 {
   font-size: 1.6rem;
   border-bottom: 0.2rem solid #606060;
@@ -590,6 +587,12 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
   background-color: #f2f2f2;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
+}
+
+@media only screen and (max-width:1199px) {
+  .c0.expanded {
+    min-width: 70rem;
+  }
 }
 
 <div
@@ -839,21 +842,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                         data-testid="select-option-ACTIVE"
                         value="ACTIVE"
                       >
-                        Archived
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-ARCHIVED"
-                        value="ARCHIVED"
-                      >
                         Active
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-DISCARD"
-                        value="DISCARD"
-                      >
-                        Discarded
                       </option>
                       <option
                         class="option"
@@ -874,7 +863,14 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                         data-testid="select-option-INACTIVE"
                         value="INACTIVE"
                       >
-                        Inactive
+                        Hold
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-DISCARD"
+                        value="DISCARD"
+                      >
+                        Cancelled
                       </option>
                       <option
                         class="option"
@@ -882,6 +878,13 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                         value="TERMINATED"
                       >
                         Terminated
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-ARCHIVED"
+                        value="ARCHIVED"
+                      >
+                        Archived
                       </option>
                     </select>
                   </div>
@@ -1331,26 +1334,34 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                         <div
                           class="c12 form-section"
                         >
+                          <h2
+                            class="c13"
+                          >
+                            <div
+                              class="no-gutters row"
+                            >
+                              <div
+                                class="align-content-end col"
+                              >
+                                Search for a property
+                              </div>
+                            </div>
+                          </h2>
                           <div
                             class="collapse show"
                           >
-                            <h3
-                              class="c22"
-                            >
-                              Search for a property
-                            </h3>
                             <form
                               class="c26 p-3"
                               novalidate=""
                             >
                               <div
-                                class="row"
+                                class="row no-gutters"
                               >
                                 <div
-                                  class="col-xl-6"
+                                  class="col-6"
                                 >
                                   <div
-                                    class="flex-nowrap input-group row"
+                                    class="flex-nowrap input-group row no-gutters"
                                   >
                                     <div
                                       class="c27 col-auto"
@@ -1401,6 +1412,13 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                                             >
                                               Legal Description
                                             </option>
+                                            <option
+                                              class="option"
+                                              data-testid="select-option-coordinates"
+                                              value="coordinates"
+                                            >
+                                              Lat/Long
+                                            </option>
                                           </select>
                                         </div>
                                       </div>
@@ -1426,7 +1444,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                                   </div>
                                 </div>
                                 <div
-                                  class="pr-0 col-xl-2"
+                                  class="pr-0 col-2"
                                 >
                                   <div
                                     class="row"
@@ -1493,14 +1511,6 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                                 </div>
                               </div>
                             </form>
-                          </div>
-                        </div>
-                        <div
-                          class="c12 form-section"
-                        >
-                          <div
-                            class="collapse show"
-                          >
                             <div
                               class="table"
                               data-testid="map-properties"
@@ -1910,24 +1920,10 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                       </option>
                       <option
                         class="option"
-                        data-testid="select-option-BCFERRIES"
-                        value="BCFERRIES"
+                        data-testid="select-option-AGRIC"
+                        value="AGRIC"
                       >
-                        BC Ferries
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-BCTRANSIT"
-                        value="BCTRANSIT"
-                      >
-                        BC Transit
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-BELLETERM"
-                        value="BELLETERM"
-                      >
-                        Belleville Terminal
+                        Agricultural
                       </option>
                       <option
                         class="option"
@@ -1938,17 +1934,59 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                       </option>
                       <option
                         class="option"
+                        data-testid="select-option-ENGINEER"
+                        value="ENGINEER"
+                      >
+                        Engineering
+                      </option>
+                      <option
+                        class="option"
                         data-testid="select-option-LCLGOVT"
                         value="LCLGOVT"
                       >
-                        Local Government/RCMP
+                        Government
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-MOTIUSE"
+                        value="MOTIUSE"
+                      >
+                        MoTI Use
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-TMEP"
+                        value="TMEP"
+                      >
+                        Oil/Gas
                       </option>
                       <option
                         class="option"
                         data-testid="select-option-OTHER"
                         value="OTHER"
                       >
-                        Other Licencing
+                        Other
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-PARKING"
+                        value="PARKING"
+                      >
+                        Parking and/or Storage
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-PUBTRANS"
+                        value="PUBTRANS"
+                      >
+                        Public Transportation
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-RAIL"
+                        value="RAIL"
+                      >
+                        Rail
                       </option>
                       <option
                         class="option"
@@ -1963,20 +2001,6 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                         value="RESRENTAL"
                       >
                         Residential Rentals
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-TMEP"
-                        value="TMEP"
-                      >
-                        TMEP
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-TRANSLINK"
-                        value="TRANSLINK"
-                      >
-                        TransLink
                       </option>
                       <option
                         class="option"
@@ -2020,73 +2044,87 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                       </option>
                       <option
                         class="option"
-                        data-testid="select-option-LIMOTIPRJ"
-                        value="LIMOTIPRJ"
+                        data-testid="select-option-AMNDAGREE"
+                        value="AMNDAGREE"
                       >
-                        MOTI Project Use License
+                        Amending Agreement
                       </option>
                       <option
                         class="option"
-                        data-testid="select-option-LIOCCACCS"
-                        value="LIOCCACCS"
+                        data-testid="select-option-BLDGLSRCV"
+                        value="BLDGLSRCV"
                       >
-                        License of Occupation (access)
+                        Building Lease (receivable)
                       </option>
                       <option
                         class="option"
-                        data-testid="select-option-LIOCCTTLD"
-                        value="LIOCCTTLD"
+                        data-testid="select-option-ROADXING"
+                        value="ROADXING"
                       >
-                        License of Occupation (titled)
+                        Crossing Agreement
                       </option>
                       <option
                         class="option"
-                        data-testid="select-option-LIOCCUSE"
-                        value="LIOCCUSE"
+                        data-testid="select-option-LTRINDMNY"
+                        value="LTRINDMNY"
                       >
-                        License of Occupation (use)
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-LIOCCUTIL"
-                        value="LIOCCUTIL"
-                      >
-                        License of Occupation (utilities)
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-LIPPUBHWY"
-                        value="LIPPUBHWY"
-                      >
-                        License of Prov Public Highway
+                        Indemnity letter
                       </option>
                       <option
                         class="option"
                         data-testid="select-option-LSGRND"
                         value="LSGRND"
                       >
-                        Ground Lease
+                        Land Lease (receivable)
                       </option>
                       <option
                         class="option"
                         data-testid="select-option-LSREG"
                         value="LSREG"
                       >
-                        Lease - Registered
+                        Lease - Registered (payable)
                       </option>
                       <option
                         class="option"
                         data-testid="select-option-LSUNREG"
                         value="LSUNREG"
                       >
-                        Lease - Unregistered
+                        Lease - Unregistered (payable)
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-LTRINTENT"
+                        value="LTRINTENT"
+                      >
+                        Letter of Intended Use
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-LOOBCTFA"
+                        value="LOOBCTFA"
+                      >
+                        Licence of Occupation (BCTFA fee simple)
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-LIOCCHMK"
+                        value="LIOCCHMK"
+                      >
+                        Licence of Occupation (HMK fee simple)
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-LIPPUBHWY"
+                        value="LIPPUBHWY"
+                      >
+                        Licence of Occupation of Provincial Public Highway
                       </option>
                       <option
                         class="option"
                         data-testid="select-option-MANUFHOME"
                         value="MANUFHOME"
                       >
-                        Manufactured Home Act
+                        Manufactured Home Tenancy
                       </option>
                       <option
                         class="option"
@@ -2100,14 +2138,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                         data-testid="select-option-RESLNDTEN"
                         value="RESLNDTEN"
                       >
-                        Residential Tenancy Act
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-ROADXING"
-                        value="ROADXING"
-                      >
-                        Road Crossing
+                        Residential Tenancy Agreement
                       </option>
                     </select>
                   </div>
@@ -2160,22 +2191,22 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                             <li
                               class="option  highlightOption highlight  "
                             >
-                              Access (Industrial/Commercial)
+                              Access
                             </li>
                             <li
                               class="option    "
                             >
-                              Access (Residential)
-                            </li>
-                            <li
-                              class="option    "
-                            >
-                              Agricultural
+                              Archeological investigations
                             </li>
                             <li
                               class="option    "
                             >
                               BC Ferries
+                            </li>
+                            <li
+                              class="option    "
+                            >
+                              BC Transit
                             </li>
                             <li
                               class="option    "
@@ -2190,6 +2221,11 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                             <li
                               class="option    "
                             >
+                              Crossing
+                            </li>
+                            <li
+                              class="option    "
+                            >
                               Emergency Services
                             </li>
                             <li
@@ -2200,12 +2236,22 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                             <li
                               class="option    "
                             >
+                              Environmental
+                            </li>
+                            <li
+                              class="option    "
+                            >
                               Fencing/Gate
                             </li>
                             <li
                               class="option    "
                             >
-                              Gardening
+                              Garden
+                            </li>
+                            <li
+                              class="option    "
+                            >
+                              Geotechnical Investigations
                             </li>
                             <li
                               class="option    "
@@ -2215,12 +2261,32 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                             <li
                               class="option    "
                             >
-                              Grazing
+                              Grazing/haying
                             </li>
                             <li
                               class="option    "
                             >
-                              Logging/Timber Harvest
+                              Historical
+                            </li>
+                            <li
+                              class="option    "
+                            >
+                              Housing
+                            </li>
+                            <li
+                              class="option    "
+                            >
+                              Land Survey
+                            </li>
+                            <li
+                              class="option    "
+                            >
+                              Landscaping/Vegetation Clearing
+                            </li>
+                            <li
+                              class="option    "
+                            >
+                              Maintenance Yard
                             </li>
                             <li
                               class="option    "
@@ -2235,27 +2301,17 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                             <li
                               class="option    "
                             >
-                              Maintenance Yard
-                            </li>
-                            <li
-                              class="option    "
-                            >
-                              Other*
-                            </li>
-                            <li
-                              class="option    "
-                            >
                               Park
                             </li>
                             <li
                               class="option    "
                             >
-                              Parking
+                              Park and Ride
                             </li>
                             <li
                               class="option    "
                             >
-                              Park and Ride
+                              Parking
                             </li>
                             <li
                               class="option    "
@@ -2275,7 +2331,17 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                             <li
                               class="option    "
                             >
-                              Railway
+                              Railway crossing
+                            </li>
+                            <li
+                              class="option    "
+                            >
+                              Railway trespass
+                            </li>
+                            <li
+                              class="option    "
+                            >
+                              Remediation
                             </li>
                             <li
                               class="option    "
@@ -2285,7 +2351,12 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                             <li
                               class="option    "
                             >
-                              Sidewalks/Landscaping
+                              Riparian restoration
+                            </li>
+                            <li
+                              class="option    "
+                            >
+                              Sidewalks
                             </li>
                             <li
                               class="option    "
@@ -2315,12 +2386,22 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                             <li
                               class="option    "
                             >
-                              Tourist Info
+                              Tourism
                             </li>
                             <li
                               class="option    "
                             >
                               Trail
+                            </li>
+                            <li
+                              class="option    "
+                            >
+                              Transit Oriented Development (TOD)
+                            </li>
+                            <li
+                              class="option    "
+                            >
+                              Translink
                             </li>
                             <li
                               class="option    "
@@ -2350,7 +2431,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                             <li
                               class="option    "
                             >
-                              Crossing
+                              Other*
                             </li>
                           </ul>
                         </div>
@@ -2636,13 +2717,46 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
               </div>
             </div>
           </div>
+          <div
+            class="c12 form-section"
+          >
+            <h2
+              class="c13"
+            >
+              <div
+                class="no-gutters row"
+              >
+                <div
+                  class="align-content-end col"
+                >
+                  Lease Team
+                </div>
+              </div>
+            </h2>
+            <div
+              class="collapse show"
+            >
+              <button
+                class="c4 Button btn btn-link"
+                data-testid="add-team-member"
+                type="button"
+              >
+                <div
+                  class="Button__value"
+                >
+                  + Add another team member
+                </div>
+              </button>
+              <div />
+            </div>
+          </div>
         </div>
       </div>
       <div
         class=""
       >
         <div
-          class="c37 justify-content-end mb-6 mt-6 p-0 no-gutters row"
+          class="c37 justify-content-end pt-4 p-0 no-gutters row"
         >
           <div
             class="pr-3 col-auto"

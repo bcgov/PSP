@@ -2,13 +2,16 @@ import { Placement } from 'react-bootstrap/esm/Overlay';
 
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
+import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 import { ApiGen_Concepts_CodeType } from '@/models/api/generated/ApiGen_Concepts_CodeType';
 import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Concepts_FinancialCode';
 import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
+import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
 import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
 
+import { formatApiPersonNames } from './personUtils';
 import { exists, isString, isValidId, isValidString } from './utils';
 
 /**
@@ -218,6 +221,46 @@ export const getCurrencyCleanValue = (stringValue: string): number => {
 export function formatMinistryProject(projectNumber?: string | null, projectName?: string | null) {
   const formattedValue = [projectNumber, projectName].filter(x => x).join(' - ');
   return formattedValue;
+}
+
+export function concatValues(nameParts: Array<string | undefined | null>, separator = ' '): string {
+  return nameParts.filter(n => exists(n) && n.trim() !== '').join(separator);
+}
+
+export function formatInterestHolderName(
+  interestHolder: ApiGen_Concepts_InterestHolder | null,
+): string | null {
+  if (!exists(interestHolder)) {
+    return null;
+  }
+
+  if (exists(interestHolder.personId) && exists(interestHolder.person)) {
+    return formatApiPersonNames(interestHolder.person);
+  }
+
+  return interestHolder.organization?.name ?? '';
+}
+
+export function formatAcquisitionOwnerName(owner: ApiGen_Concepts_AcquisitionFileOwner): string {
+  let ownerDisplayName = '';
+  if (owner.isOrganization) {
+    const regNumber = owner.registrationNumber ? `Reg#:${owner.registrationNumber}` : null;
+    const incNumber = owner.incorporationNumber ? `Inc#:${owner.incorporationNumber}` : null;
+    const separator = owner.incorporationNumber && owner.registrationNumber ? ' / ' : null;
+
+    if (incNumber || regNumber) {
+      ownerDisplayName = concatValues(
+        [owner.lastNameAndCorpName, ' (', incNumber, separator, regNumber, ')'],
+        '',
+      );
+    } else {
+      ownerDisplayName = owner.lastNameAndCorpName ? owner.lastNameAndCorpName : '';
+    }
+  } else {
+    ownerDisplayName = concatValues([owner.givenName, owner.lastNameAndCorpName]);
+  }
+
+  return ownerDisplayName;
 }
 
 export function renderTooltip(

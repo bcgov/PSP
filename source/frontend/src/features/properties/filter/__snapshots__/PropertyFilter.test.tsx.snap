@@ -271,6 +271,7 @@ exports[`MapFilterBar > renders correctly 1`] = `
 
 .c1 {
   padding-right: 0 !important;
+  min-width: 15rem;
 }
 
 .c1 .form-control {
@@ -297,7 +298,7 @@ exports[`MapFilterBar > renders correctly 1`] = `
     novalidate=""
   >
     <div
-      class="map-filter-bar pb-4 form-row"
+      class="map-filter-bar pb-4 row"
     >
       <div
         class="col-auto"
@@ -352,11 +353,25 @@ exports[`MapFilterBar > renders correctly 1`] = `
             >
               Historical File #
             </option>
+            <option
+              class="option"
+              data-testid="select-option-name"
+              value="name"
+            >
+              POI Name
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-coordinates"
+              value="coordinates"
+            >
+              Lat/Long
+            </option>
           </select>
         </div>
       </div>
       <div
-        class="c2 col-xl-3 col-lg-4 col-md-2 col-3"
+        class="c2 col-xl-3 col-4"
       >
         <div
           class="input form-group"
