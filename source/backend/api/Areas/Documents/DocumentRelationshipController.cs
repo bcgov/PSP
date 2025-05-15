@@ -124,7 +124,7 @@ namespace Pims.Api.Controllers
                     var mappedDispositionFileDocuments = _mapper.Map<List<DocumentRelationshipModel>>(dispositionFileDocuments);
                     return new JsonResult(mappedDispositionFileDocuments);
                 case DocumentRelationType.Properties:
-                    var propertyDocuments = _documentFileService.GetFileDocuments<PimsDispositionFileDocument>(FileType.Property, long.Parse(parentId));
+                    var propertyDocuments = _documentFileService.GetFileDocuments<PimsPropertyDocument>(FileType.Property, long.Parse(parentId));
                     var mappedPropertyFileDocuments = _mapper.Map<List<DocumentRelationshipModel>>(propertyDocuments);
                     return new JsonResult(mappedPropertyFileDocuments);
                 default:
