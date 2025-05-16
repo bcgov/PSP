@@ -26,6 +26,7 @@ export enum InventoryTabNames {
   management = 'management',
   crown = 'crown',
   document = 'document',
+  notes = 'notes',
 }
 /**
  * Tab wrapper, provides styling and nests form components within their corresponding tabs.
