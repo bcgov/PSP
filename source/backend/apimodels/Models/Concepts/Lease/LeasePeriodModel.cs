@@ -97,7 +97,7 @@ namespace Pims.Api.Models.Concepts.Lease
         public bool IsVariable { get; set; }
 
         /// <summary>
-        /// get/set - Additional rent payment amount
+        /// get/set - Additional rent payment amount.
         /// </summary>
         public decimal? AdditionalRentPaymentAmount { get; set; }
 
@@ -112,7 +112,7 @@ namespace Pims.Api.Models.Concepts.Lease
         public CodeTypeModel<string> AdditionalRentFreqTypeCode { get; set; }
 
         /// <summary>
-        /// get/set - Variable rent payment amount
+        /// get/set - Variable rent payment amount.
         /// </summary>
         public decimal? VariableRentPaymentAmount { get; set; }
 

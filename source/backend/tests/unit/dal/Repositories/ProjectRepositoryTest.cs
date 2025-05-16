@@ -4,13 +4,13 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using FluentAssertions;
 using Microsoft.CodeAnalysis;
+using Pims.Core.Exceptions;
+using Pims.Core.Security;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
-using Pims.Core.Security;
 using Xunit;
-using Pims.Core.Exceptions;
 
 namespace Pims.Dal.Test.Repositories
 {
@@ -74,9 +74,15 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.ProjectView);
 
-            var project = new PimsProject() { Description = "test project", RegionCode = 1, Code = "551234",
-                ProjectStatusTypeCode = "ACTIVE", ProjectStatusTypeCodeNavigation = new PimsProjectStatusType() { Id = "ACTIVE", Description = "Active", DbLastUpdateUserid = "test", DbCreateUserid = "test" },
-                RegionCodeNavigation = new PimsRegion() { Id = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", RegionName = "test region" } };
+            var project = new PimsProject()
+            {
+                Description = "test project",
+                RegionCode = 1,
+                Code = "551234",
+                ProjectStatusTypeCode = "ACTIVE",
+                ProjectStatusTypeCodeNavigation = new PimsProjectStatusType() { Id = "ACTIVE", Description = "Active", DbLastUpdateUserid = "test", DbCreateUserid = "test" },
+                RegionCodeNavigation = new PimsRegion() { Id = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", RegionName = "test region" }
+            };
 
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(project);
             var repository = helper.CreateRepository<ProjectRepository>(user);
@@ -252,120 +258,7 @@ namespace Pims.Dal.Test.Repositories
         }
         #endregion
 
-        #region GetAllByDocument
-
-        [Fact]
-        public void GetAllByDocument_Success()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.ProjectView);
-
-            var project = new PimsProject()
-            {
-                Description = "test project",
-                RegionCode = 1,
-                Code = "551234",
-                ProjectStatusTypeCode = "ACTIVE",
-                ProjectStatusTypeCodeNavigation = new PimsProjectStatusType() { Id = "ACTIVE", Description = "Active", DbLastUpdateUserid = "test", DbCreateUserid = "test" },
-                RegionCodeNavigation = new PimsRegion() { Id = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", RegionName = "test region" },
-                PimsProjectDocuments = new List<PimsProjectDocument>() { new PimsProjectDocument() { Document = EntityHelper.CreateDocument() } }
-            };
-
-            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(project);
-            var repository = helper.CreateRepository<ProjectRepository>(user);
-
-            // Act
-            var result = repository.GetAllByDocument(1);
-
-            // Assert
-            result.Should().NotBeNull();
-            result.Should().HaveCount(1);
-        }
-
-        public void GetAllByDocument_Permissions()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.NoteView);
-
-            var context = helper.CreatePimsContext(user, true);
-            var repository = helper.CreateRepository<ProjectRepository>(user);
-
-            // Act
-            Action act = () => repository.GetAllByDocument(1);
-
-            // Assert
-            act.Should().Throw<NotAuthorizedException>();
-        }
-        #endregion
-
-        #region GetAllProjectDocuments
-
-        [Fact]
-        public void GetAllProjectDocuments_Success()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.ProjectView);
-
-            var project = new PimsProject()
-            {
-                Description = "test project",
-                RegionCode = 1,
-                Code = "551234",
-                ProjectStatusTypeCode = "ACTIVE",
-                ProjectStatusTypeCodeNavigation = new PimsProjectStatusType() { Id = "ACTIVE", Description = "Active", DbLastUpdateUserid = "test", DbCreateUserid = "test" },
-                RegionCodeNavigation = new PimsRegion() { Id = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", RegionName = "test region" },
-                PimsProjectDocuments = new List<PimsProjectDocument>() { new PimsProjectDocument() { Document = EntityHelper.CreateDocument() } }
-            };
-
-            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(project);
-            var repository = helper.CreateRepository<ProjectRepository>(user);
-
-            // Act
-            var result = repository.GetAllProjectDocuments(1);
-
-            // Assert
-            result.Should().NotBeNull();
-            result.Should().HaveCount(1);
-        }
-        #endregion
-
-        #region DeleteProjectDocument
-
-        [Fact]
-        public void DeleteProjectDocument_Success()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.NoteView);
-
-            var project = new PimsProject()
-            {
-                Description = "test project",
-                RegionCode = 1,
-                Code = "551234",
-                ProjectStatusTypeCode = "ACTIVE",
-                ProjectStatusTypeCodeNavigation = new PimsProjectStatusType() { Id = "ACTIVE", Description = "Active", DbLastUpdateUserid = "test", DbCreateUserid = "test" },
-                RegionCodeNavigation = new PimsRegion() { Id = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", RegionName = "test region" },
-                PimsProjectDocuments = new List<PimsProjectDocument>() { new PimsProjectDocument() { Document = EntityHelper.CreateDocument() } }
-            };
-
-            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(project);
-            var repository = helper.CreateRepository<ProjectRepository>(user);
-
-            // Act
-            repository.DeleteProjectDocument(1);
-            context.CommitTransaction();
-
-            // Assert
-            context.PimsProjectDocuments.Should().HaveCount(0);
-        }
-        #endregion
-
         #region Add
-
         [Fact]
         public void Add_Success()
         {
@@ -455,49 +348,8 @@ namespace Pims.Dal.Test.Repositories
         }
         #endregion
 
-        #region AddProjectDocument
-
-        [Fact]
-        public void AddProjectDocument_Success()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.NoteView);
-
-            var projectDocument = new PimsProjectDocument() { };
-
-            var context = helper.CreatePimsContext(user, true);
-            var repository = helper.CreateRepository<ProjectRepository>(user);
-
-            // Act
-            repository.AddProjectDocument(projectDocument);
-            context.CommitTransaction();
-
-            // Assert
-            context.PimsProjectDocuments.Should().HaveCount(1);
-        }
-
-        [Fact]
-        public void AddProjectDocument_Null()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.NoteView);
-
-            var context = helper.CreatePimsContext(user, true);
-            var repository = helper.CreateRepository<ProjectRepository>(user);
-
-            // Act
-            Action act = () => repository.AddProjectDocument(null);
-
-            // Assert
-            act.Should().Throw<ArgumentNullException>();
-        }
-
-        #endregion
 
         #region Update
-
         [Fact]
         public void Update_Success()
         {

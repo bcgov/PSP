@@ -4,8 +4,8 @@ using System.Linq.Expressions;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Pims.Core.Extensions;
-using Pims.Dal.Entities;
 using Pims.Core.Security;
+using Pims.Dal.Entities;
 
 namespace Pims.Dal.Helpers.Extensions
 {

@@ -1,6 +1,7 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { Claims } from '@/constants';
 import { usePropertyDetails } from '@/features/mapSideBar/hooks/usePropertyDetails';
 import {
@@ -16,17 +17,20 @@ import ComposedPropertyState from '@/hooks/repositories/useComposedProperties';
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_Concepts_Association } from '@/models/api/generated/ApiGen_Concepts_Association';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_LeaseRenewal } from '@/models/api/generated/ApiGen_Concepts_LeaseRenewal';
 import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
 import { exists, isValidId } from '@/utils';
 
+import DocumentsTab from '../shared/tabs/DocumentsTab';
 import CrownDetailsTabView from './tabs/crown/CrownDetailsTabView';
 import { PropertyManagementTabView } from './tabs/propertyDetailsManagement/detail/PropertyManagementTabView';
 
 export interface IPropertyContainerProps {
   composedPropertyState: ComposedPropertyState;
+  onChildSuccess: () => void;
 }
 
 export interface LeaseAssociationInfo {
@@ -71,7 +75,10 @@ export const getLeaseInfo = async (
  */
 export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps> = ({
   composedPropertyState,
+  onChildSuccess,
 }) => {
+  const { setFullWidthSideBar } = useMapStateMachine();
+
   const showPropertyInfoTab = isValidId(composedPropertyState?.id);
   const { hasClaim } = useKeycloakWrapper();
   const { getLease } = useLeaseRepository();
@@ -216,8 +223,33 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
     defaultTab = InventoryTabNames.management;
   }
 
+  if (exists(composedPropertyState.apiWrapper?.response) && hasClaim(Claims.DOCUMENT_VIEW)) {
+    tabViews.push({
+      content: (
+        <DocumentsTab
+          fileId={composedPropertyState.apiWrapper.response.id}
+          relationshipType={ApiGen_CodeTypes_DocumentRelationType.Properties}
+          onSuccess={onChildSuccess}
+          title={'Property Documents'}
+        />
+      ),
+      key: InventoryTabNames.document,
+      name: 'Documents',
+    });
+  }
+
   const params = useParams<{ tab?: string }>();
   const activeTab = Object.values(InventoryTabNames).find(t => t === params.tab) ?? defaultTab;
+
+  useEffect(() => {
+    if (activeTab === InventoryTabNames.document) {
+      setFullWidthSideBar(true);
+    } else {
+      setFullWidthSideBar(false);
+    }
+    return () => setFullWidthSideBar(false);
+  }, [activeTab, setFullWidthSideBar]);
+
   return (
     <InventoryTabs
       loading={composedPropertyState.composedLoading ?? LeaseAssociationInfo.loading ?? false}

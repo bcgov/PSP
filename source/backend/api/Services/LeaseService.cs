@@ -511,6 +511,27 @@ namespace Pims.Api.Services
             return deleteResult;
         }
 
+        public IEnumerable<PimsLeaseLicenseTeam> GetTeamMembers()
+        {
+            _logger.LogInformation("Getting lease team members");
+            _user.ThrowIfNotAuthorized(Permissions.LeaseView);
+
+            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
+            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
+
+            var teamMembers = _leaseRepository.GetTeamMembers(userRegions, contractorPersonId);
+
+            var persons = teamMembers.Where(x => x.Person != null).GroupBy(x => x.PersonId).Select(x => x.First()).ToList();
+            var organizations = teamMembers.Where(x => x.Organization != null).GroupBy(x => x.OrganizationId).Select(x => x.First()).ToList();
+
+            List<PimsLeaseLicenseTeam> teamFilterOptions = new();
+            teamFilterOptions.AddRange(persons);
+            teamFilterOptions.AddRange(organizations);
+
+            return teamFilterOptions;
+        }
+
         private static void ValidateRenewalDates(PimsLease lease, PimsLease currentLease, IEnumerable<UserOverrideCode> userOverrides)
         {
             if (lease.LeaseStatusTypeCode != PimsLeaseStatusTypes.ACTIVE)
@@ -810,27 +831,6 @@ namespace Pims.Api.Services
                     }
                 }
             }
-        }
-
-        public IEnumerable<PimsLeaseLicenseTeam> GetTeamMembers()
-        {
-            _logger.LogInformation("Getting lease team members");
-            _user.ThrowIfNotAuthorized(Permissions.LeaseView);
-
-            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
-            var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
-            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
-
-            var teamMembers = _leaseRepository.GetTeamMembers(userRegions, contractorPersonId);
-
-            var persons = teamMembers.Where(x => x.Person != null).GroupBy(x => x.PersonId).Select(x => x.First()).ToList();
-            var organizations = teamMembers.Where(x => x.Organization != null).GroupBy(x => x.OrganizationId).Select(x => x.First()).ToList();
-
-            List<PimsLeaseLicenseTeam> teamFilterOptions = new();
-            teamFilterOptions.AddRange(persons);
-            teamFilterOptions.AddRange(organizations);
-
-            return teamFilterOptions;
         }
     }
 }

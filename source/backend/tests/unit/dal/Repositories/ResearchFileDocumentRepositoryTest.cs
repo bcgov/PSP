@@ -22,7 +22,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<ResearchFileDocumentRepository>(user);
 
             // Act
-            var result = repository.AddResearch(researchFileDocument);
+            var result = repository.AddDocument(researchFileDocument);
 
             // Assert
             result.ResearchFileDocumentId.Should().Be(1);
@@ -40,7 +40,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<ResearchFileDocumentRepository>(user);
 
             // Act
-            var result = repository.DeleteResearch(researchFileDocument);
+            var result = repository.DeleteDocument(researchFileDocument);
 
             // Assert
             result.Should().BeTrue();
@@ -56,7 +56,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<ResearchFileDocumentRepository>(user);
 
             // Act
-            Action act = () => repository.DeleteResearch(null);
+            Action act = () => repository.DeleteDocument(null);
 
             // Assert
             act.Should().Throw<ArgumentNullException>();

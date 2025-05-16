@@ -38,7 +38,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = CreateWithPermissions(Permissions.DocumentAdd, Permissions.ManagementEdit);
 
             // Act
-            var result = repository.AddManagementFileDocument(new PimsManagementFileDocument());
+            var result = repository.AddDocument(new PimsManagementFileDocument());
 
             // Assert
             result.ManagementFileDocumentId.Should().Be(1);
@@ -51,7 +51,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = CreateWithPermissions(Permissions.DocumentAdd, Permissions.ManagementEdit);
 
             // Act
-            Action act = () => repository.AddManagementFileDocument(null);
+            Action act = () => repository.AddDocument(null);
 
             // Assert
             act.Should().Throw<ArgumentNullException>();
@@ -76,7 +76,7 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(pimsManagementFile);
 
             // Act
-            var result = repository.GetAllByManagementFile(pimsManagementFile.ManagementFileId);
+            var result = repository.GetAllByParentId(pimsManagementFile.ManagementFileId);
 
             // Assert
             result.FirstOrDefault().Internal_Id.Should().Be(managementFileDocument.Internal_Id);
@@ -102,7 +102,7 @@ namespace Pims.Dal.Test.Repositories
 
             // Act
             context.ChangeTracker.Clear();
-            var result = repository.DeleteManagementFileDocument(managementFileDocument);
+            var result = repository.DeleteDocument(managementFileDocument);
 
             // Assert
             result.Should().BeTrue();
@@ -115,7 +115,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = CreateWithPermissions(Permissions.DocumentAdd, Permissions.ManagementEdit);
 
             // Act
-            Action act = () => repository.DeleteManagementFileDocument(null);
+            Action act = () => repository.DeleteDocument(null);
 
             // Assert
             act.Should().Throw<ArgumentNullException>();

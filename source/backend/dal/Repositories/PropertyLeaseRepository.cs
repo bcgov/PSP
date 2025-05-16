@@ -3,9 +3,9 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Pims.Dal.Entities;
 using Pims.Core.Extensions;
 using Pims.Core.Security;
+using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
 
 namespace Pims.Dal.Repositories

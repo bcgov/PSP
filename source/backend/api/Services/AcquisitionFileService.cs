@@ -263,7 +263,7 @@ namespace Pims.Api.Services
                 ValidateDraftsOnComplete(acquisitionFile);
             }
 
-            if(currentAcquisitionStatus != AcquisitionStatusTypes.CANCEL && acquisitionFile.AcquisitionFileStatusTypeCode == AcquisitionStatusTypes.CANCEL.ToString())
+            if (currentAcquisitionStatus != AcquisitionStatusTypes.CANCEL && acquisitionFile.AcquisitionFileStatusTypeCode == AcquisitionStatusTypes.CANCEL.ToString())
             {
                 ValidateDraftsOnCancelled(acquisitionFile);
             }
@@ -690,7 +690,7 @@ namespace Pims.Api.Services
                         acquisitionProperty.Property = _propertyService.PopulateNewProperty(acquisitionProperty.Property);
                     }
                 }
-                else if(!string.IsNullOrWhiteSpace(acquisitionProperty.Property.SurveyPlanNumber))
+                else if (!string.IsNullOrWhiteSpace(acquisitionProperty.Property.SurveyPlanNumber))
                 {
                     var plan = acquisitionProperty.Property.SurveyPlanNumber;
                     try
