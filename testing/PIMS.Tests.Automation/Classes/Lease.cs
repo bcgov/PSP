@@ -40,6 +40,10 @@
         public string ConsultationOther { get; set; } = null!;
         public string ConsultationOtherDetails { get; set; } = null!;
 
+        public int LeaseTeamStartRow { get; set; } = 0;
+        public int LeaseTeamCount { get; set; } = 0;
+        public List<TeamMember> LeaseTeam { get; set; } = new List<TeamMember>() { };
+
         public string FeeDeterminationPublicBenefit { get; set; } = null!;
         public string FeeDeterminationFinancialGain { get; set; } = null!;
         public string FeeDeterminationSuggestedFee { get; set; } = null!;
