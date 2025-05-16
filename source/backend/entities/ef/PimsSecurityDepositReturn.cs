@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -21,31 +21,31 @@ public partial class PimsSecurityDepositReturn
     public long SecurityDepositId { get; set; }
 
     /// <summary>
-    /// Date the lease/license was terminated or surrendered.
+    /// Date the lease/license was terminated or surrendered
     /// </summary>
     [Column("TERMINATION_DATE", TypeName = "datetime")]
     public DateTime TerminationDate { get; set; }
 
     /// <summary>
-    /// Amount of claims against the deposit.
+    /// Amount of claims against the deposit
     /// </summary>
     [Column("CLAIMS_AGAINST", TypeName = "money")]
     public decimal? ClaimsAgainst { get; set; }
 
     /// <summary>
-    /// Amount returned minus claims.
+    /// Amount returned minus claims
     /// </summary>
     [Column("RETURN_AMOUNT", TypeName = "money")]
     public decimal ReturnAmount { get; set; }
 
     /// <summary>
-    /// Date of deposit return.
+    /// Date of deposit return
     /// </summary>
     [Column("RETURN_DATE", TypeName = "datetime")]
     public DateTime ReturnDate { get; set; }
 
     /// <summary>
-    /// Interest paid on the deposit to the deposit holder.
+    /// Interest paid on the deposit to the deposit holder
     /// </summary>
     [Column("INTEREST_PAID", TypeName = "money")]
     public decimal? InterestPaid { get; set; }

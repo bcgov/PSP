@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -28,21 +28,21 @@ public partial class PimsPropertyImprovement
     public string PropertyImprovementTypeCode { get; set; }
 
     /// <summary>
-    /// Description of the improvements.
+    /// Description of the improvements
     /// </summary>
     [Column("IMPROVEMENT_DESCRIPTION")]
     [StringLength(2000)]
     public string ImprovementDescription { get; set; }
 
     /// <summary>
-    /// Size of the structure (house, building, bridge, etc,).
+    /// Size of the structure (house, building, bridge, etc,)
     /// </summary>
     [Column("STRUCTURE_SIZE")]
     [StringLength(2000)]
     public string StructureSize { get; set; }
 
     /// <summary>
-    /// Addresses affected.
+    /// Addresses affected
     /// </summary>
     [Column("ADDRESS")]
     [StringLength(2000)]

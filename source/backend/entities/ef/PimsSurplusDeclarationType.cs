@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,7 +13,7 @@ namespace Pims.Dal.Entities;
 public partial class PimsSurplusDeclarationType
 {
     /// <summary>
-    /// Code value of the surplus property type.
+    /// Code value of the surplus property type
     /// </summary>
     [Key]
     [Column("SURPLUS_DECLARATION_TYPE_CODE")]
@@ -21,7 +21,7 @@ public partial class PimsSurplusDeclarationType
     public string SurplusDeclarationTypeCode { get; set; }
 
     /// <summary>
-    /// Code description of the surplus property type.
+    /// Code description of the surplus property type
     /// </summary>
     [Required]
     [Column("DESCRIPTION")]
@@ -29,7 +29,7 @@ public partial class PimsSurplusDeclarationType
     public string Description { get; set; }
 
     /// <summary>
-    /// Indicates that the code value is disabled.
+    /// Indicates that the code value is disabled
     /// </summary>
     [Column("IS_DISABLED")]
     public bool IsDisabled { get; set; }

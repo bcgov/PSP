@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -38,13 +38,13 @@ public partial class PimsPropertyContact
     public long? OrganizationId { get; set; }
 
     /// <summary>
-    /// Primary contact for the organization.
+    /// Primary contact for the organization
     /// </summary>
     [Column("PRIMARY_CONTACT_ID")]
     public long? PrimaryContactId { get; set; }
 
     /// <summary>
-    /// Purpose of property contact.
+    /// Purpose of property contact
     /// </summary>
     [Required]
     [Column("PURPOSE")]

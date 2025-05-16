@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -31,7 +31,7 @@ namespace Pims.Dal.Entities;
 public partial class PimsProperty
 {
     /// <summary>
-    /// Generated surrogate primary key.
+    /// Generated surrogate primary key
     /// </summary>
     [Key]
     [Column("PROPERTY_ID")]
@@ -124,19 +124,19 @@ public partial class PimsProperty
     public string TaxResponsibilityTypeCode { get; set; }
 
     /// <summary>
-    /// Date the property was officially registered.
+    /// Date the property was officially registered
     /// </summary>
     [Column("PROPERTY_DATA_SOURCE_EFFECTIVE_DATE")]
     public DateOnly PropertyDataSourceEffectiveDate { get; set; }
 
     /// <summary>
-    /// Property ID.
+    /// Property ID
     /// </summary>
     [Column("PID")]
     public int? Pid { get; set; }
 
     /// <summary>
-    /// Property number.
+    /// Property number
     /// </summary>
     [Column("PIN")]
     public int? Pin { get; set; }
@@ -155,26 +155,26 @@ public partial class PimsProperty
     public string FileNumberSuffix { get; set; }
 
     /// <summary>
-    /// Area occupied by property.
+    /// Area occupied by property
     /// </summary>
     [Column("LAND_AREA")]
     public float? LandArea { get; set; }
 
     /// <summary>
-    /// Legal description of property.
+    /// Legal description of property
     /// </summary>
     [Column("LAND_LEGAL_DESCRIPTION")]
     [StringLength(2000)]
     public string LandLegalDescription { get; set; }
 
     /// <summary>
-    /// Spatial bundary of land.
+    /// Spatial bundary of land
     /// </summary>
     [Column("BOUNDARY", TypeName = "geometry")]
     public Geometry Boundary { get; set; }
 
     /// <summary>
-    /// Geospatial location (pin) of property.
+    /// Geospatial location (pin) of property
     /// </summary>
     [Column("LOCATION", TypeName = "geometry")]
     public Geometry Location { get; set; }
@@ -187,27 +187,27 @@ public partial class PimsProperty
     public string GeneralLocation { get; set; }
 
     /// <summary>
-    /// Property/Land Parcel survey plan number.
+    /// Property/Land Parcel survey plan number
     /// </summary>
     [Column("SURVEY_PLAN_NUMBER")]
     [StringLength(250)]
     public string SurveyPlanNumber { get; set; }
 
     /// <summary>
-    /// Comment regarding the surplus declaration.
+    /// Comment regarding the surplus declaration
     /// </summary>
     [Column("SURPLUS_DECLARATION_COMMENT")]
     [StringLength(2000)]
     public string SurplusDeclarationComment { get; set; }
 
     /// <summary>
-    /// Date the property was declared surplus.
+    /// Date the property was declared surplus
     /// </summary>
     [Column("SURPLUS_DECLARATION_DATE", TypeName = "datetime")]
     public DateTime? SurplusDeclarationDate { get; set; }
 
     /// <summary>
-    /// Notes about the property.
+    /// Notes about the property
     /// </summary>
     [Column("NOTES")]
     [StringLength(4000)]
@@ -221,7 +221,7 @@ public partial class PimsProperty
     public string MunicipalZoning { get; set; }
 
     /// <summary>
-    /// Is there a volumetric measurement for this parcel?.
+    /// Is there a volumetric measurement for this parcel?
     /// </summary>
     [Column("IS_VOLUMETRIC_PARCEL")]
     public bool? IsVolumetricParcel { get; set; }
@@ -233,7 +233,7 @@ public partial class PimsProperty
     public float? VolumetricMeasurement { get; set; }
 
     /// <summary>
-    /// Is the property currently owned?.
+    /// Is the property currently owned?
     /// </summary>
     [Column("IS_OWNED")]
     public bool IsOwned { get; set; }
@@ -303,7 +303,7 @@ public partial class PimsProperty
     public string ReserveName { get; set; }
 
     /// <summary>
-    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o.
+    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
     /// </summary>
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }

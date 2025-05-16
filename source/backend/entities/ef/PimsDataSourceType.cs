@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -29,13 +29,13 @@ public partial class PimsDataSourceType
     public string Description { get; set; }
 
     /// <summary>
-    /// Indicates if the code is still in use.
+    /// Indicates if the code is still in use
     /// </summary>
     [Column("IS_DISABLED")]
     public bool IsDisabled { get; set; }
 
     /// <summary>
-    /// Defines the default display order of the descriptions.
+    /// Defines the default display order of the descriptions
     /// </summary>
     [Column("DISPLAY_ORDER")]
     public int? DisplayOrder { get; set; }

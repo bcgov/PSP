@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -130,13 +130,13 @@ public partial class PimsAcquisitionFile
     public int FileNo { get; set; }
 
     /// <summary>
-    /// Acquisition file number suffix.
+    /// Acquisition file number suffix
     /// </summary>
     [Column("FILE_NO_SUFFIX")]
     public short FileNoSuffix { get; set; }
 
     /// <summary>
-    /// Legacy formatted file number assigned to the acquisition file.  Format follows YY-XXXXXX-ZZ where YY = MoTI region number, XXXXXX = generated integer sequence number,  and ZZ = file suffix number (defaulting to &apos;01&apos;).   Required due to some files having t.
+    /// Legacy formatted file number assigned to the acquisition file.  Format follows YY-XXXXXX-ZZ where YY = MoTI region number, XXXXXX = generated integer sequence number,  and ZZ = file suffix number (defaulting to &apos;01&apos;).   Required due to some files having t
     /// </summary>
     [Column("LEGACY_FILE_NUMBER")]
     [StringLength(18)]
@@ -181,7 +181,7 @@ public partial class PimsAcquisitionFile
     public decimal? TotalAllowableCompensation { get; set; }
 
     /// <summary>
-    /// If the user selects ?Other? then they will need to provide a subfile type description, which will be displayed as &apos;Other - &lt;description&gt;.
+    /// If the user selects ?Other? then they will need to provide a subfile type description, which will be displayed as &apos;Other - &lt;description&gt;
     /// </summary>
     [Column("OTHER_SUBFILE_INTEREST_TYPE")]
     [StringLength(200)]
@@ -207,7 +207,7 @@ public partial class PimsAcquisitionFile
     public string PhysicalFileDetails { get; set; }
 
     /// <summary>
-    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o.
+    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
     /// </summary>
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }

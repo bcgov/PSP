@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -40,19 +40,19 @@ public partial class PimsPropertyResearchFile
     public int? DisplayOrder { get; set; }
 
     /// <summary>
-    /// Indicates whether a legal opinion is required (0 = No, 1 = Yes, null = Unknown).
+    /// Indicates whether a legal opinion is required (0 = No, 1 = Yes, null = Unknown)
     /// </summary>
     [Column("IS_LEGAL_OPINION_REQUIRED")]
     public bool? IsLegalOpinionRequired { get; set; }
 
     /// <summary>
-    /// Indicates whether a legal opinion was obtained (0 = No, 1 = Yes, null = Unknown).
+    /// Indicates whether a legal opinion was obtained (0 = No, 1 = Yes, null = Unknown)
     /// </summary>
     [Column("IS_LEGAL_OPINION_OBTAINED")]
     public bool? IsLegalOpinionObtained { get; set; }
 
     /// <summary>
-    /// URL / reference to a LAN Drive.
+    /// URL / reference to a LAN Drive
     /// </summary>
     [Column("DOCUMENT_REFERENCE")]
     [StringLength(2000)]
@@ -66,7 +66,7 @@ public partial class PimsPropertyResearchFile
     public string ResearchSummary { get; set; }
 
     /// <summary>
-    /// Geospatial location (pin) of property.
+    /// Geospatial location (pin) of property
     /// </summary>
     [Column("LOCATION", TypeName = "geometry")]
     public Geometry Location { get; set; }

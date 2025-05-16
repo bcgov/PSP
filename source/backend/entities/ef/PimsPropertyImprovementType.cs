@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -29,7 +29,7 @@ public partial class PimsPropertyImprovementType
     public string Description { get; set; }
 
     /// <summary>
-    /// Indicates if the code is disabled.
+    /// Indicates if the code is disabled
     /// </summary>
     [Column("IS_DISABLED")]
     public bool IsDisabled { get; set; }

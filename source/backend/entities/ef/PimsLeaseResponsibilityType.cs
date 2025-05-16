@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,13 +7,13 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Describes which organization is responsible for this lease.
+/// Describes which organization is responsible for this lease
 /// </summary>
 [Table("PIMS_LEASE_RESPONSIBILITY_TYPE")]
 public partial class PimsLeaseResponsibilityType
 {
     /// <summary>
-    /// Code value of the organization responsible for this lease.
+    /// Code value of the organization responsible for this lease
     /// </summary>
     [Key]
     [Column("LEASE_RESPONSIBILITY_TYPE_CODE")]
@@ -21,7 +21,7 @@ public partial class PimsLeaseResponsibilityType
     public string LeaseResponsibilityTypeCode { get; set; }
 
     /// <summary>
-    /// Description of the organization responsible for this lease.
+    /// Description of the organization responsible for this lease
     /// </summary>
     [Required]
     [Column("DESCRIPTION")]

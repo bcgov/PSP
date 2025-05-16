@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,13 +7,13 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Describes the initiator of the lease.
+/// Describes the initiator of the lease
 /// </summary>
 [Table("PIMS_LEASE_INITIATOR_TYPE")]
 public partial class PimsLeaseInitiatorType
 {
     /// <summary>
-    /// Code value of the initiator of the lease.
+    /// Code value of the initiator of the lease
     /// </summary>
     [Key]
     [Column("LEASE_INITIATOR_TYPE_CODE")]
@@ -21,7 +21,7 @@ public partial class PimsLeaseInitiatorType
     public string LeaseInitiatorTypeCode { get; set; }
 
     /// <summary>
-    /// Description of the initiator of the lease.
+    /// Description of the initiator of the lease
     /// </summary>
     [Required]
     [Column("DESCRIPTION")]

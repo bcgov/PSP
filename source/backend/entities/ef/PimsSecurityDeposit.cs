@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -34,7 +34,7 @@ public partial class PimsSecurityDeposit
     public string OtherDepositTypeDesc { get; set; }
 
     /// <summary>
-    /// Descirption of this security deposit.
+    /// Descirption of this security deposit
     /// </summary>
     [Required]
     [Column("DESCRIPTION")]
@@ -42,13 +42,13 @@ public partial class PimsSecurityDeposit
     public string Description { get; set; }
 
     /// <summary>
-    /// Amount paid of this security deposit.
+    /// Amount paid of this security deposit
     /// </summary>
     [Column("AMOUNT_PAID", TypeName = "money")]
     public decimal AmountPaid { get; set; }
 
     /// <summary>
-    /// Date of this security deposit.
+    /// Date of this security deposit
     /// </summary>
     [Column("DEPOSIT_DATE")]
     public DateOnly DepositDate { get; set; }

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -28,7 +28,7 @@ public partial class PimsUser
     public string UserTypeCode { get; set; }
 
     /// <summary>
-    /// Accepted identifier of a user (e.g. IDIR).
+    /// Accepted identifier of a user (e.g. IDIR)
     /// </summary>
     [Required]
     [Column("BUSINESS_IDENTIFIER_VALUE")]
@@ -69,7 +69,7 @@ public partial class PimsUser
     public string ApprovedById { get; set; }
 
     /// <summary>
-    /// Date/time that this user was identified as a PIMS user,.
+    /// Date/time that this user was identified as a PIMS user,
     /// </summary>
     [Column("ISSUE_DATE", TypeName = "datetime")]
     public DateTime IssueDate { get; set; }

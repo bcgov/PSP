@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -21,7 +21,7 @@ public partial class PimsPropertyActivityInvoice
     public long PimsPropertyActivityId { get; set; }
 
     /// <summary>
-    /// Date of the invoice.
+    /// Date of the invoice
     /// </summary>
     [Column("INVOICE_DT")]
     public DateOnly InvoiceDt { get; set; }
@@ -41,7 +41,7 @@ public partial class PimsPropertyActivityInvoice
     public string Description { get; set; }
 
     /// <summary>
-    /// Subtotal of the invoice,.
+    /// Subtotal of the invoice,
     /// </summary>
     [Column("PRETAX_AMT", TypeName = "money")]
     public decimal PretaxAmt { get; set; }

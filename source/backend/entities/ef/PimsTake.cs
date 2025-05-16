@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -61,7 +61,7 @@ public partial class PimsTake
     public DateOnly? CompletionDt { get; set; }
 
     /// <summary>
-    /// Is there a new right of way? (default = FALSE).
+    /// Is there a new right of way? (default = FALSE)
     /// </summary>
     [Column("IS_NEW_HIGHWAY_DEDICATION")]
     public bool IsNewHighwayDedication { get; set; }
@@ -73,13 +73,13 @@ public partial class PimsTake
     public float? NewHighwayDedicationArea { get; set; }
 
     /// <summary>
-    /// Is this being acquired for inventory? (default = TRUE).
+    /// Is this being acquired for inventory? (default = TRUE)
     /// </summary>
     [Column("IS_ACQUIRED_FOR_INVENTORY")]
     public bool IsAcquiredForInventory { get; set; }
 
     /// <summary>
-    /// Is there a statutory right of way? (default = FALSE).
+    /// Is there a statutory right of way? (default = FALSE)
     /// </summary>
     [Column("IS_NEW_INTEREST_IN_SRW")]
     public bool IsNewInterestInSrw { get; set; }
@@ -97,7 +97,7 @@ public partial class PimsTake
     public DateOnly? SrwEndDt { get; set; }
 
     /// <summary>
-    /// Is there a license to construct? (default = FALSE).
+    /// Is there a license to construct? (default = FALSE)
     /// </summary>
     [Column("IS_NEW_LICENSE_TO_CONSTRUCT")]
     public bool IsNewLicenseToConstruct { get; set; }
@@ -115,7 +115,7 @@ public partial class PimsTake
     public DateOnly? LtcEndDt { get; set; }
 
     /// <summary>
-    /// Is there a Section 16? (default = FALSE).
+    /// Is there a Section 16? (default = FALSE)
     /// </summary>
     [Column("IS_NEW_LAND_ACT")]
     public bool IsNewLandAct { get; set; }
@@ -133,7 +133,7 @@ public partial class PimsTake
     public DateOnly? LandActEndDt { get; set; }
 
     /// <summary>
-    /// Is there a surplus or severance? (default = FALSE).
+    /// Is there a surplus or severance? (default = FALSE)
     /// </summary>
     [Column("IS_THERE_SURPLUS")]
     public bool IsThereSurplus { get; set; }
@@ -145,7 +145,7 @@ public partial class PimsTake
     public float? SurplusArea { get; set; }
 
     /// <summary>
-    /// Is there an active lease associated with the take?.
+    /// Is there an active lease associated with the take?
     /// </summary>
     [Column("IS_ACTIVE_LEASE")]
     public bool IsActiveLease { get; set; }

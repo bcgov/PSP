@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -12,7 +12,7 @@ namespace Pims.Dal.Entities;
 public partial class PimsInsurance
 {
     /// <summary>
-    /// Generated surrogate primary key.
+    /// Generated surrogate primary key
     /// </summary>
     [Key]
     [Column("INSURANCE_ID")]
@@ -33,21 +33,21 @@ public partial class PimsInsurance
     public string InsuranceTypeCode { get; set; }
 
     /// <summary>
-    /// Description of the non-standard insurance coverage type.
+    /// Description of the non-standard insurance coverage type
     /// </summary>
     [Column("OTHER_INSURANCE_TYPE")]
     [StringLength(200)]
     public string OtherInsuranceType { get; set; }
 
     /// <summary>
-    /// Description of the insurance coverage.
+    /// Description of the insurance coverage
     /// </summary>
     [Column("COVERAGE_DESCRIPTION")]
     [StringLength(2000)]
     public string CoverageDescription { get; set; }
 
     /// <summary>
-    /// Monetary limit of the insurance coverage.
+    /// Monetary limit of the insurance coverage
     /// </summary>
     [Column("COVERAGE_LIMIT", TypeName = "money")]
     public decimal? CoverageLimit { get; set; }
@@ -59,13 +59,13 @@ public partial class PimsInsurance
     public bool? IsInsuranceInPlace { get; set; }
 
     /// <summary>
-    /// Date the insurance expires.
+    /// Date the insurance expires
     /// </summary>
     [Column("EXPIRY_DATE")]
     public DateOnly? ExpiryDate { get; set; }
 
     /// <summary>
-    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o.
+    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
     /// </summary>
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -10,14 +10,14 @@ namespace Pims.Dal.Entities;
 public partial class PmbcBctfaPid
 {
     /// <summary>
-    /// Property identifier and primary key.
+    /// Property identifier and primary key
     /// </summary>
     [Key]
     [Column("PID")]
     public int Pid { get; set; }
 
     /// <summary>
-    /// Indicates if the property is owned by BCTFA.
+    /// Indicates if the property is owned by BCTFA
     /// </summary>
     [Column("IS_BCTFA_OWNED")]
     public bool? IsBctfaOwned { get; set; }

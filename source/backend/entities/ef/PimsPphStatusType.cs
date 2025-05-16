@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -13,7 +13,7 @@ namespace Pims.Dal.Entities;
 public partial class PimsPphStatusType
 {
     /// <summary>
-    /// Code indicating the Provincial Public Highway status.
+    /// Code indicating the Provincial Public Highway status
     /// </summary>
     [Key]
     [Column("PPH_STATUS_TYPE_CODE")]
@@ -21,7 +21,7 @@ public partial class PimsPphStatusType
     public string PphStatusTypeCode { get; set; }
 
     /// <summary>
-    /// Description of the code indicating the purpose of the property research.
+    /// Description of the code indicating the purpose of the property research
     /// </summary>
     [Required]
     [Column("DESCRIPTION")]

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,13 +7,13 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Code table to describe the purpose ot the property research.
+/// Code table to describe the purpose ot the property research
 /// </summary>
 [Table("PIMS_PROP_RESEARCH_PURPOSE_TYPE")]
 public partial class PimsPropResearchPurposeType
 {
     /// <summary>
-    /// Code indicating the purpose of the property research.
+    /// Code indicating the purpose of the property research
     /// </summary>
     [Key]
     [Column("PROP_RESEARCH_PURPOSE_TYPE_CODE")]
@@ -21,7 +21,7 @@ public partial class PimsPropResearchPurposeType
     public string PropResearchPurposeTypeCode { get; set; }
 
     /// <summary>
-    /// Description of the code indicating the purpose of the property research.
+    /// Description of the code indicating the purpose of the property research
     /// </summary>
     [Required]
     [Column("DESCRIPTION")]

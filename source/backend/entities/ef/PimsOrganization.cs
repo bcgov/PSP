@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -52,7 +52,7 @@ public partial class PimsOrganization
     public string OrganizationAlias { get; set; }
 
     /// <summary>
-    /// Incorporation number of the orgnization.
+    /// Incorporation number of the orgnization
     /// </summary>
     [Column("INCORPORATION_NUMBER")]
     [StringLength(50)]

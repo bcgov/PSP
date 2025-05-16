@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Property research file.
+/// Property research file
 /// </summary>
 [Table("PIMS_RESEARCH_FILE")]
 [Index("RequestorName", Name = "RESRCH_REQUESTOR_NAME_IDX")]
@@ -50,7 +50,7 @@ public partial class PimsResearchFile
     public string Name { get; set; }
 
     /// <summary>
-    /// R-File number assigned to the research file, formatted value from PIMS_RFILE_NUMBER_SEQ sequence generator.
+    /// R-File number assigned to the research file, formatted value from PIMS_RFILE_NUMBER_SEQ sequence generator
     /// </summary>
     [Required]
     [Column("RFILE_NUMBER")]
@@ -96,7 +96,7 @@ public partial class PimsResearchFile
     public string ResearchResult { get; set; }
 
     /// <summary>
-    /// Is this an expropriation?.
+    /// Is this an expropriation?
     /// </summary>
     [Column("IS_EXPROPRIATION")]
     public bool? IsExpropriation { get; set; }

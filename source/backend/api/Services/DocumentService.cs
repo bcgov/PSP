@@ -133,13 +133,11 @@ namespace Pims.Api.Services
                     break;
                 case DocumentRelationType.ManagementActivities:
                 case DocumentRelationType.ManagementFiles:
+                case DocumentRelationType.Properties:
                     categoryType = "MANAGEMENT";
                     break;
                 case DocumentRelationType.DispositionFiles:
                     categoryType = "DISPOSE";
-                    break;
-                case DocumentRelationType.Properties:
-                    categoryType = "PROPERTY";
                     break;
                 default:
                     throw new InvalidDataException("The requested category relationship does not exist");
