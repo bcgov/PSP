@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { LinkButton } from '@/components/common/buttons';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
-import { formatApiAddress } from '@/utils';
+import { formatApiAddress, pidFormatter } from '@/utils';
 
 export interface IExpandableFilePropertiesProps {
   fileProperties?: ApiGen_Concepts_FileProperty[];
@@ -34,7 +34,8 @@ const ExpandableFileProperties: React.FunctionComponent<IExpandableFilePropertie
         {property.property?.pid && (
           <Col md="auto">
             <div>
-              <strong className="pr-2">PID:</strong> {property.property.pid}
+              <strong className="pr-2">PID:</strong>{' '}
+              {pidFormatter(property.property?.pid?.toString())}
             </div>
           </Col>
         )}

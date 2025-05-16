@@ -12,7 +12,13 @@ import { useApiManagementActivities } from '../pims-api/useApiManagementActiviti
  * hook that interacts with the Management File Activity API.
  */
 export const useManagementActivityRepository = () => {
-  const { getActivitySubtypesApi, postActivityApi } = useApiManagementActivities();
+  const {
+    getActivitySubtypesApi,
+    postActivityApi,
+    getActivityApi,
+    getActivitiesApi,
+    deleteActivityApi,
+  } = useApiManagementActivities();
 
   const getActivitySubtypes = useApiRequestWrapper<
     () => Promise<AxiosResponse<ApiGen_Concepts_PropertyActivitySubtype[], any>>
@@ -42,11 +48,63 @@ export const useManagementActivityRepository = () => {
     onError: useAxiosErrorHandler('Failed to create a management file activity.'),
   });
 
+  const getManagementActivity = useApiRequestWrapper<
+    (
+      managementFileId: number,
+      propertyActivityId: number,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_PropertyActivity, any>>
+  >({
+    requestFunction: useCallback(
+      async (managementFileId: number, propertyActivityId: number) =>
+        await getActivityApi(managementFileId, propertyActivityId),
+      [getActivityApi],
+    ),
+    requestName: 'GetManagementActivity',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler('Failed to retrieve a management file activity.'),
+  });
+
+  const getManagementActivities = useApiRequestWrapper<
+    (managementFileId: number) => Promise<AxiosResponse<ApiGen_Concepts_PropertyActivity[], any>>
+  >({
+    requestFunction: useCallback(
+      async (managementFileId: number) => await getActivitiesApi(managementFileId),
+      [getActivitiesApi],
+    ),
+    requestName: 'getManagementActivities',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler('Failed to load property management activities list.'),
+  });
+
+  const deleteManagementActivity = useApiRequestWrapper<
+    (managementFileId: number, propertyActivityId: number) => Promise<AxiosResponse<boolean, any>>
+  >({
+    requestFunction: useCallback(
+      async (managementFileId: number, propertyActivityId: number) =>
+        await deleteActivityApi(managementFileId, propertyActivityId),
+      [deleteActivityApi],
+    ),
+    requestName: 'deleteManagementActivity',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler(
+      'Failed to delete management file activity. Refresh the page to try again.',
+    ),
+  });
+
   return useMemo(
     () => ({
       getActivitySubtypes,
       addManagementActivity,
+      getManagementActivity,
+      getManagementActivities,
+      deleteManagementActivity,
     }),
-    [getActivitySubtypes, addManagementActivity],
+    [
+      getActivitySubtypes,
+      addManagementActivity,
+      getManagementActivity,
+      getManagementActivities,
+      deleteManagementActivity,
+    ],
   );
 };

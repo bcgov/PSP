@@ -3,11 +3,11 @@ import { useState } from 'react';
 import FormGuideView from './FormGuideView';
 
 export interface FormGuideContainerProps {
-  tittle: string;
+  title: string;
   guideBody: React.ReactNode;
 }
 
-const FormGuideContainer: React.FC<FormGuideContainerProps> = ({ tittle, guideBody }) => {
+const FormGuideContainer: React.FC<FormGuideContainerProps> = ({ title, guideBody }) => {
   const [isCollapsed, setIsCollapsed] = useState<boolean>(true);
 
   const handleCollapse = () => {
@@ -16,7 +16,7 @@ const FormGuideContainer: React.FC<FormGuideContainerProps> = ({ tittle, guideBo
 
   return (
     <FormGuideView
-      title={tittle}
+      title={title}
       isCollapsed={isCollapsed}
       toggleCollapse={handleCollapse}
       guideBody={guideBody}
