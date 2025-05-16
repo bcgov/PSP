@@ -20,6 +20,8 @@ namespace Pims.Dal.Repositories
 
         IEnumerable<PimsNote> GetAllManagementNotesById(long managementId);
 
+        IEnumerable<PimsNote> GetAllPropertyNotesById(long propertyId);
+
         bool DeleteAcquisitionFileNotes(long noteId);
 
         bool DeleteDispositionFileNotes(long noteId);
@@ -31,5 +33,7 @@ namespace Pims.Dal.Repositories
         bool DeleteResearchNotes(long noteId);
 
         bool DeleteManagementFileNotes(long noteId);
+
+        bool DeletePropertyNotes(long noteId);
     }
 }

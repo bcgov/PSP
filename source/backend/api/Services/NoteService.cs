@@ -106,6 +106,14 @@ namespace Pims.Api.Services
 
                     result = _mapper.Map<EntityNoteModel>(createdManagementNote);
                     break;
+                case NoteType.Property:
+                    var propertyNoteEntity = _mapper.Map<PimsPropertyNote>(model);
+
+                    var createdPropertyNote = _entityNoteRepository.Add<PimsPropertyNote>(propertyNoteEntity);
+                    _entityNoteRepository.CommitTransaction();
+
+                    result = _mapper.Map<EntityNoteModel>(createdPropertyNote);
+                    break;
                 default:
                     throw new BadRequestException("Relationship type not valid.");
             }
@@ -150,6 +158,7 @@ namespace Pims.Api.Services
                 NoteType.Lease_File => _entityNoteRepository.DeleteLeaseFileNotes(noteId),
                 NoteType.Research_File => _entityNoteRepository.DeleteResearchNotes(noteId),
                 NoteType.Management_File => _entityNoteRepository.DeleteManagementFileNotes(noteId),
+                NoteType.Property => _entityNoteRepository.DeletePropertyNotes(noteId),
                 _ => deleted
             };
 
@@ -180,6 +189,7 @@ namespace Pims.Api.Services
                 NoteType.Lease_File => _entityNoteRepository.GetAllLeaseNotesById(entityId).ToList(),
                 NoteType.Research_File => _entityNoteRepository.GetAllResearchNotesById(entityId).ToList(),
                 NoteType.Management_File => _entityNoteRepository.GetAllManagementNotesById(entityId).ToList(),
+                NoteType.Property => _entityNoteRepository.GetAllPropertyNotesById(entityId).ToList(),
                 _ => new List<PimsNote>()
             };
 

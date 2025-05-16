@@ -80,6 +80,12 @@ namespace Pims.Dal.Repositories
                 .Where(x => x.ManagementFileId == managementId).AsNoTracking().Select(x => x.Note).ToList();
         }
 
+        public IEnumerable<PimsNote> GetAllPropertyNotesById(long propertyId)
+        {
+            return Context.PimsPropertyNotes
+                .Where(x => x.PropertyId == propertyId).AsNoTracking().Select(x => x.Note).ToList();
+        }
+
         public bool DeleteAcquisitionFileNotes(long noteId)
         {
             var acquisitionFileNotes = Context.PimsAcquisitionFileNotes
@@ -182,6 +188,24 @@ namespace Pims.Dal.Repositories
                 {
                     Context.PimsManagementFileNotes.Remove(managementFileNote);
                     Context.PimsNotes.Remove(managementFileNote.Note);
+                }
+                return true;
+            }
+            return false;
+        }
+
+        public bool DeletePropertyNotes(long noteId)
+        {
+            var propertyNotes = Context.PimsPropertyNotes
+                .Include(an => an.Note)
+                .Where(x => x.NoteId == noteId).ToList();
+
+            if (propertyNotes.Count != 0)
+            {
+                foreach (var propertyNote in propertyNotes)
+                {
+                    Context.PimsPropertyNotes.Remove(propertyNote);
+                    Context.PimsNotes.Remove(propertyNote.Note);
                 }
                 return true;
             }
