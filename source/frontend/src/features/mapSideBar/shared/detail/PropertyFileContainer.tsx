@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { Claims } from '@/constants';
+import { Claims, NoteTypes } from '@/constants';
 import { usePropertyDetails } from '@/features/mapSideBar/hooks/usePropertyDetails';
 import {
   IInventoryTabsProps,
@@ -15,6 +15,7 @@ import PropertyAssociationTabView from '@/features/mapSideBar/property/tabs/prop
 import { PropertyDetailsTabView } from '@/features/mapSideBar/property/tabs/propertyDetails/detail/PropertyDetailsTabView';
 import TakesDetailContainer from '@/features/mapSideBar/property/tabs/takes/detail/TakesDetailContainer';
 import TakesDetailView from '@/features/mapSideBar/property/tabs/takes/detail/TakesDetailView';
+import NoteListView from '@/features/notes/list/NoteListView';
 import { PROPERTY_TYPES, useComposedProperties } from '@/hooks/repositories/useComposedProperties';
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
@@ -233,6 +234,20 @@ export const PropertyFileContainer: React.FunctionComponent<
     });
   }
 
+  if (exists(composedProperties?.apiWrapper?.response) && hasClaim(Claims.NOTE_VIEW)) {
+    tabViews.push({
+      content: (
+        <NoteListView
+          type={NoteTypes.Property}
+          entityId={composedProperties.apiWrapper.response.id}
+          onSuccess={props.onChildSuccess}
+        />
+      ),
+      key: InventoryTabNames.notes,
+      name: 'Notes',
+    });
+  }
+
   const InventoryTabsView = props.View;
 
   const params = useParams<{ tab?: string }>();
@@ -240,7 +255,7 @@ export const PropertyFileContainer: React.FunctionComponent<
     Object.values(InventoryTabNames).find(t => t === params.tab) ?? props.defaultTab;
 
   useEffect(() => {
-    if (activeTab === InventoryTabNames.document) {
+    if (activeTab === InventoryTabNames.document || InventoryTabNames.notes) {
       setFullWidthSideBar(true);
     } else {
       setFullWidthSideBar(false);
