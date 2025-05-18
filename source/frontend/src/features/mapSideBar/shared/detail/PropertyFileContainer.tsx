@@ -255,7 +255,7 @@ export const PropertyFileContainer: React.FunctionComponent<
     Object.values(InventoryTabNames).find(t => t === params.tab) ?? props.defaultTab;
 
   useEffect(() => {
-    if (activeTab === InventoryTabNames.document || InventoryTabNames.notes) {
+    if (activeTab === InventoryTabNames.document || activeTab === InventoryTabNames.notes) {
       setFullWidthSideBar(true);
     } else {
       setFullWidthSideBar(false);
