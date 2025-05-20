@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +17,13 @@ namespace Pims.Api.Services
     public class NoteService : BaseService, INoteService
     {
         private readonly INoteRepository _noteRepository;
-        private readonly IEntityNoteRepository _entityNoteRepository;
+        private readonly INoteRelationshipRepository<PimsAcquisitionFileNote> _acquisitionFileNoteRepository;
+        private readonly INoteRelationshipRepository<PimsDispositionFileNote> _dispositionFileNoteRepository;
+        private readonly INoteRelationshipRepository<PimsLeaseNote> _leaseNoteRepository;
+        private readonly INoteRelationshipRepository<PimsManagementFileNote> _managementFileNoteRepository;
+        private readonly INoteRelationshipRepository<PimsProjectNote> _projectNoteRepository;
+        private readonly INoteRelationshipRepository<PimsPropertyNote> _propertyNoteRepository;
+        private readonly INoteRelationshipRepository<PimsResearchFileNote> _researchFileNoteRepository;
         private readonly IMapper _mapper;
 
         /// <summary>
@@ -28,13 +33,36 @@ namespace Pims.Api.Services
         /// <param name="logger"></param>
         /// <param name="mapper"></param>
         /// <param name="noteRepository"></param>
-        /// <param name="entityNoteRepository"></param>
-        public NoteService(ClaimsPrincipal user, ILogger<NoteService> logger, IMapper mapper, INoteRepository noteRepository, IEntityNoteRepository entityNoteRepository)
+        /// <param name="acquisitionFileNoteRepository"></param>
+        /// <param name="dispositionFileNoteRepository"></param>
+        /// <param name="leaseNoteRepository"></param>
+        /// <param name="managementFileNoteRepository"></param>
+        /// <param name="projectNoteRepository"></param>
+        /// <param name="propertyNoteRepository"></param>
+        /// <param name="researchFileNoteRepository"></param>
+        public NoteService(
+            ClaimsPrincipal user,
+            ILogger<NoteService> logger,
+            IMapper mapper,
+            INoteRepository noteRepository,
+            INoteRelationshipRepository<PimsAcquisitionFileNote> acquisitionFileNoteRepository,
+            INoteRelationshipRepository<PimsDispositionFileNote> dispositionFileNoteRepository,
+            INoteRelationshipRepository<PimsLeaseNote> leaseNoteRepository,
+            INoteRelationshipRepository<PimsManagementFileNote> managementFileNoteRepository,
+            INoteRelationshipRepository<PimsProjectNote> projectNoteRepository,
+            INoteRelationshipRepository<PimsPropertyNote> propertyNoteRepository,
+            INoteRelationshipRepository<PimsResearchFileNote> researchFileNoteRepository)
             : base(user, logger)
         {
             _mapper = mapper;
             _noteRepository = noteRepository;
-            _entityNoteRepository = entityNoteRepository;
+            _acquisitionFileNoteRepository = acquisitionFileNoteRepository;
+            _dispositionFileNoteRepository = dispositionFileNoteRepository;
+            _leaseNoteRepository = leaseNoteRepository;
+            _managementFileNoteRepository = managementFileNoteRepository;
+            _projectNoteRepository = projectNoteRepository;
+            _propertyNoteRepository = propertyNoteRepository;
+            _researchFileNoteRepository = researchFileNoteRepository;
         }
 
         public NoteModel GetById(long id)
@@ -61,56 +89,56 @@ namespace Pims.Api.Services
                 case NoteType.Acquisition_File:
                     PimsAcquisitionFileNote acqNoteEntity = _mapper.Map<PimsAcquisitionFileNote>(model);
 
-                    PimsAcquisitionFileNote createdAcqEntity = _entityNoteRepository.Add<PimsAcquisitionFileNote>(acqNoteEntity);
-                    _entityNoteRepository.CommitTransaction();
+                    PimsAcquisitionFileNote createdAcqEntity = _acquisitionFileNoteRepository.AddNoteRelationship(acqNoteEntity);
+                    _acquisitionFileNoteRepository.CommitTransaction();
 
                     result = _mapper.Map<EntityNoteModel>(createdAcqEntity);
                     break;
                 case NoteType.Disposition_File:
                     PimsDispositionFileNote dispositionNoteEntity = _mapper.Map<PimsDispositionFileNote>(model);
 
-                    PimsDispositionFileNote createdDispositionEntity = _entityNoteRepository.Add<PimsDispositionFileNote>(dispositionNoteEntity);
-                    _entityNoteRepository.CommitTransaction();
+                    PimsDispositionFileNote createdDispositionEntity = _dispositionFileNoteRepository.AddNoteRelationship(dispositionNoteEntity);
+                    _dispositionFileNoteRepository.CommitTransaction();
 
                     result = _mapper.Map<EntityNoteModel>(createdDispositionEntity);
                     break;
                 case NoteType.Lease_File:
                     PimsLeaseNote leaseNoteEntity = _mapper.Map<PimsLeaseNote>(model);
 
-                    PimsLeaseNote createdLeaseEntity = _entityNoteRepository.Add<PimsLeaseNote>(leaseNoteEntity);
-                    _entityNoteRepository.CommitTransaction();
+                    PimsLeaseNote createdLeaseEntity = _leaseNoteRepository.AddNoteRelationship(leaseNoteEntity);
+                    _leaseNoteRepository.CommitTransaction();
 
                     result = _mapper.Map<EntityNoteModel>(createdLeaseEntity);
                     break;
                 case NoteType.Project:
                     var projectNote = _mapper.Map<PimsProjectNote>(model);
 
-                    var createdNote = _entityNoteRepository.Add<PimsProjectNote>(projectNote);
-                    _entityNoteRepository.CommitTransaction();
+                    var createdNote = _projectNoteRepository.AddNoteRelationship(projectNote);
+                    _projectNoteRepository.CommitTransaction();
 
                     result = _mapper.Map<EntityNoteModel>(createdNote);
                     break;
                 case NoteType.Research_File:
                     PimsResearchFileNote researchNoteEntity = _mapper.Map<PimsResearchFileNote>(model);
 
-                    PimsResearchFileNote createdResesearchEntity = _entityNoteRepository.Add<PimsResearchFileNote>(researchNoteEntity);
-                    _entityNoteRepository.CommitTransaction();
+                    PimsResearchFileNote createdResesearchEntity = _researchFileNoteRepository.AddNoteRelationship(researchNoteEntity);
+                    _researchFileNoteRepository.CommitTransaction();
 
                     result = _mapper.Map<EntityNoteModel>(createdResesearchEntity);
                     break;
                 case NoteType.Management_File:
                     PimsManagementFileNote managementNoteEntity = _mapper.Map<PimsManagementFileNote>(model);
 
-                    PimsManagementFileNote createdManagementNote = _entityNoteRepository.Add<PimsManagementFileNote>(managementNoteEntity);
-                    _entityNoteRepository.CommitTransaction();
+                    PimsManagementFileNote createdManagementNote = _managementFileNoteRepository.AddNoteRelationship(managementNoteEntity);
+                    _managementFileNoteRepository.CommitTransaction();
 
                     result = _mapper.Map<EntityNoteModel>(createdManagementNote);
                     break;
                 case NoteType.Property:
                     var propertyNoteEntity = _mapper.Map<PimsPropertyNote>(model);
 
-                    var createdPropertyNote = _entityNoteRepository.Add<PimsPropertyNote>(propertyNoteEntity);
-                    _entityNoteRepository.CommitTransaction();
+                    var createdPropertyNote = _propertyNoteRepository.AddNoteRelationship(propertyNoteEntity);
+                    _propertyNoteRepository.CommitTransaction();
 
                     result = _mapper.Map<EntityNoteModel>(createdPropertyNote);
                     break;
@@ -152,19 +180,19 @@ namespace Pims.Api.Services
 
             deleted = type switch
             {
-                NoteType.Acquisition_File => _entityNoteRepository.DeleteAcquisitionFileNotes(noteId),
-                NoteType.Disposition_File => _entityNoteRepository.DeleteDispositionFileNotes(noteId),
-                NoteType.Project => _entityNoteRepository.DeleteProjectNotes(noteId),
-                NoteType.Lease_File => _entityNoteRepository.DeleteLeaseFileNotes(noteId),
-                NoteType.Research_File => _entityNoteRepository.DeleteResearchNotes(noteId),
-                NoteType.Management_File => _entityNoteRepository.DeleteManagementFileNotes(noteId),
-                NoteType.Property => _entityNoteRepository.DeletePropertyNotes(noteId),
+                NoteType.Acquisition_File => _acquisitionFileNoteRepository.DeleteNoteRelationship(noteId),
+                NoteType.Disposition_File => _dispositionFileNoteRepository.DeleteNoteRelationship(noteId),
+                NoteType.Project => _projectNoteRepository.DeleteNoteRelationship(noteId),
+                NoteType.Lease_File => _leaseNoteRepository.DeleteNoteRelationship(noteId),
+                NoteType.Research_File => _researchFileNoteRepository.DeleteNoteRelationship(noteId),
+                NoteType.Management_File => _managementFileNoteRepository.DeleteNoteRelationship(noteId),
+                NoteType.Property => _propertyNoteRepository.DeleteNoteRelationship(noteId),
                 _ => deleted
             };
 
             if (commitTransaction)
             {
-                _entityNoteRepository.CommitTransaction();
+                _noteRepository.CommitTransaction();
             }
 
             return deleted;
@@ -181,15 +209,15 @@ namespace Pims.Api.Services
             Logger.LogInformation("Getting all notes with type {Type} and parent id {EntityId}", type, entityId);
             User.ThrowIfNotAuthorized(Permissions.NoteView);
 
-            List<PimsNote> notes = type switch
+            IList<PimsNote> notes = type switch
             {
-                NoteType.Acquisition_File => _entityNoteRepository.GetAllAcquisitionNotesById(entityId).ToList(),
-                NoteType.Disposition_File => _entityNoteRepository.GetAllDispositionNotesById(entityId).ToList(),
-                NoteType.Project => _entityNoteRepository.GetAllProjectNotesById(entityId).ToList(),
-                NoteType.Lease_File => _entityNoteRepository.GetAllLeaseNotesById(entityId).ToList(),
-                NoteType.Research_File => _entityNoteRepository.GetAllResearchNotesById(entityId).ToList(),
-                NoteType.Management_File => _entityNoteRepository.GetAllManagementNotesById(entityId).ToList(),
-                NoteType.Property => _entityNoteRepository.GetAllPropertyNotesById(entityId).ToList(),
+                NoteType.Acquisition_File => _acquisitionFileNoteRepository.GetAllByParentId(entityId),
+                NoteType.Disposition_File => _dispositionFileNoteRepository.GetAllByParentId(entityId),
+                NoteType.Project => _projectNoteRepository.GetAllByParentId(entityId),
+                NoteType.Lease_File => _leaseNoteRepository.GetAllByParentId(entityId),
+                NoteType.Research_File => _researchFileNoteRepository.GetAllByParentId(entityId),
+                NoteType.Management_File => _managementFileNoteRepository.GetAllByParentId(entityId),
+                NoteType.Property => _propertyNoteRepository.GetAllByParentId(entityId),
                 _ => new List<PimsNote>()
             };
 
