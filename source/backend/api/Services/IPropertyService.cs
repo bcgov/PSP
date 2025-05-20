@@ -39,7 +39,7 @@ namespace Pims.Api.Services
 
         PimsPropertyActivity GetActivity(long propertyId, long activityId);
 
-        PimsPropertyActivity GetFileActivity(long managementFileId, long activityId);
+        PimsPropertyActivity GetFileActivity(long activityId);
 
         PimsPropertyActivity CreateActivity(PimsPropertyActivity propertyActivity);
 

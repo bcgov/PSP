@@ -95,7 +95,12 @@ namespace Pims.Api.Areas.Management.Controllers
                 User.GetUsername(),
                 DateTime.Now);
 
-            var activity = _propertyService.GetFileActivity(managementFileId, propertyActivityId);
+            var activity = _propertyService.GetFileActivity(propertyActivityId);
+
+            if (activity.ManagementFileId != managementFileId)
+            {
+                throw new BadRequestException("Activity with the given id does not match the management file id");
+            }
 
             return new JsonResult(_mapper.Map<PropertyActivityModel>(activity));
         }

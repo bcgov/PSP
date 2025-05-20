@@ -165,19 +165,21 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="activityId"></param>
         /// <returns>Boolean of deletion sucess.</returns>
-        public bool TryDeleteFile(long activityId, long managementFileId)
+        public bool TryDeleteByFile(long activityId, long managementFileId)
         {
+            var propertyActivity = Context.PimsPropertyActivities.FirstOrDefault(x => x.PimsPropertyActivityId == activityId && x.ManagementFileId == managementFileId);
+
+            if (propertyActivity is null)
+            {
+                return false;
+            }
+
             // There may be zero to many of these relationships.
-            Context.PimsPropPropActivities.ForEach(pp =>
+            propertyActivity.PimsPropPropActivities.ForEach(pp =>
             {
                 Context.PimsPropPropActivities.Remove(pp);
             });
 
-            var propertyActivity = Context.PimsPropertyActivities.FirstOrDefault(x => x.PimsPropertyActivityId == activityId && x.ManagementFileId == managementFileId);
-            if(propertyActivity is null)
-            {
-                return false;
-            }
             Context.PimsPropertyActivities.Remove(propertyActivity);
 
             return true;

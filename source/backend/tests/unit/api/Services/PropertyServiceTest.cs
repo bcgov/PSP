@@ -919,7 +919,7 @@ namespace Pims.Api.Test.Services
         public void Delete_PropertyManagementActivity_BadRequest_Activity_Status_IsNot_NotStarted()
         {
             // Arrange
-            var service = this.CreatePropertyServiceWithPermissions(Permissions.ManagementDelete);
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.ManagementDelete, Permissions.PropertyEdit);
             var repository = this._helper.GetService<Mock<IPropertyActivityRepository>>();
 
             var propertyManagementActivity = EntityHelper.CreatePropertyActivity(10, activityStatusTypeCode: "STARTED");
@@ -938,7 +938,7 @@ namespace Pims.Api.Test.Services
         public void Delete_PropertyManagementActivity_Success()
         {
             // Arrange
-            var service = this.CreatePropertyServiceWithPermissions(Permissions.ManagementDelete);
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.ManagementDelete, Permissions.PropertyEdit);
             var repository = this._helper.GetService<Mock<IPropertyActivityRepository>>();
 
             var propertyManagementActivity = EntityHelper.CreatePropertyActivity(1);

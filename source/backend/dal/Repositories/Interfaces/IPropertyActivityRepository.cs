@@ -20,6 +20,6 @@ namespace Pims.Dal.Repositories
 
         bool TryDelete(long activityId);
 
-        bool TryDeleteFile(long activityId, long managementFileId);
+        bool TryDeleteByFile(long activityId, long managementFileId);
     }
 }

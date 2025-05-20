@@ -69,8 +69,8 @@ export const ManagementFileActivityRouter: React.FunctionComponent<
         )}
         claim={[Claims.PROPERTY_VIEW, Claims.MANAGEMENT_VIEW]}
         exact
-        key={'activity_new'}
-        title={'Activity New'}
+        key={'activity_view'}
+        title={'Activity View'}
       />
     </Switch>
   );

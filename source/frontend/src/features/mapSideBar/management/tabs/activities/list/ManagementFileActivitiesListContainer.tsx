@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import { IManagementActivitiesListViewProps } from '@/features/mapSideBar/property/tabs/propertyDetailsManagement/activity/list/ManagementActivitiesListView';
 import { PropertyActivityRow } from '@/features/mapSideBar/property/tabs/propertyDetailsManagement/activity/list/models/PropertyActivityRow';
+import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator';
 import { useManagementActivityRepository } from '@/hooks/repositories/useManagementActivityRepository';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import useIsMounted from '@/hooks/util/useIsMounted';
@@ -21,6 +22,8 @@ const ManagementFileActivitiesListContainer: React.FunctionComponent<
   const { setModalContent, setDisplayModal } = useModalContext();
   const [propertyActivities, setPropertyActivities] = useState<PropertyActivityRow[]>([]);
   const { staleLastUpdatedBy } = useContext(SideBarContext);
+
+  const pathGenerator = usePathGenerator();
 
   const {
     getManagementActivities: { execute: getActivities, loading },
@@ -51,11 +54,11 @@ const ManagementFileActivitiesListContainer: React.FunctionComponent<
   //TODO: remove staleLastUpdatedBy when side bar context is refactored.
 
   const onCreate = () => {
-    history.push(`/mapview/sidebar/management/${managementFileId}/activities/new`);
+    pathGenerator.addDetail('management', managementFileId, 'activities');
   };
 
   const onView = (activityId: number) => {
-    history.push(`/mapview/sidebar/management/${managementFileId}/activities/${activityId}`);
+    pathGenerator.showDetail('management', managementFileId, 'activities', activityId, false);
   };
 
   return (
