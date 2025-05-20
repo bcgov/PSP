@@ -1,7 +1,6 @@
 import clsx from 'classnames';
 import React from 'react';
 import { Col } from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
 import ReactVisibilitySensor from 'react-visibility-sensor';
 
 import EditButton from '@/components/common/buttons/EditButton';
@@ -15,6 +14,7 @@ import DocumentListContainer from '@/features/documents/list/DocumentListContain
 import ActivityDetailInvoiceTotalsView from '@/features/mapSideBar/property/tabs/propertyDetailsManagement/activity/detail/ActivityDetailInvoiceTotalsView';
 import PropertyActivityDetailsSubView from '@/features/mapSideBar/property/tabs/propertyDetailsManagement/activity/detail/ActivityDetailSubView';
 import { InvoiceView } from '@/features/mapSideBar/property/tabs/propertyDetailsManagement/activity/detail/InvoiceView';
+import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator';
 import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
@@ -39,7 +39,8 @@ export const FileActivityDetailView: React.FunctionComponent<
   };
 
   const { hasClaim } = useKeycloakWrapper();
-  const history = useHistory();
+
+  const pathGenerator = usePathGenerator();
 
   const activityAsFileProperties = props.activity?.activityProperties?.map(ap => ({
     id: ap.id,
@@ -82,8 +83,11 @@ export const FileActivityDetailView: React.FunctionComponent<
                     <EditButton
                       title="Edit File Property Activity"
                       onClick={() => {
-                        history.push(
-                          `/mapview/sidebar/management/${props.managementId}/activities/${props.activity?.id}/edit`,
+                        pathGenerator.editDetail(
+                          'management',
+                          props.managementId,
+                          'activities',
+                          props.activity?.id,
                         );
                       }}
                       style={{ float: 'right' }}

@@ -167,7 +167,8 @@ namespace Pims.Dal.Repositories
         /// <returns>Boolean of deletion sucess.</returns>
         public bool TryDeleteByFile(long activityId, long managementFileId)
         {
-            var propertyActivity = Context.PimsPropertyActivities.FirstOrDefault(x => x.PimsPropertyActivityId == activityId && x.ManagementFileId == managementFileId);
+            var propertyActivity = Context.PimsPropertyActivities
+                .Include(pa => pa.PimsPropPropActivities).FirstOrDefault(x => x.PimsPropertyActivityId == activityId && x.ManagementFileId == managementFileId);
 
             if (propertyActivity is null)
             {

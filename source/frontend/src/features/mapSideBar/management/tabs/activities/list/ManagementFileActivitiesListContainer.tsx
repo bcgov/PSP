@@ -1,5 +1,4 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import { IManagementActivitiesListViewProps } from '@/features/mapSideBar/property/tabs/propertyDetailsManagement/activity/list/ManagementActivitiesListView';
@@ -17,7 +16,6 @@ export interface IPropertyManagementActivitiesListContainerProps {
 const ManagementFileActivitiesListContainer: React.FunctionComponent<
   IPropertyManagementActivitiesListContainerProps
 > = ({ managementFileId, View }) => {
-  const history = useHistory();
   const isMounted = useIsMounted();
   const { setModalContent, setDisplayModal } = useModalContext();
   const [propertyActivities, setPropertyActivities] = useState<PropertyActivityRow[]>([]);
@@ -42,10 +40,10 @@ const ManagementFileActivitiesListContainer: React.FunctionComponent<
       const result = await deleteActivity(managementFileId, activityId);
       if (result === true) {
         fetchPropertyActivities();
-        history.push(`/mapview/sidebar/management/${managementFileId}/activities`);
+        pathGenerator.showDetails('management', managementFileId, 'activities', true);
       }
     },
-    [deleteActivity, fetchPropertyActivities, history, managementFileId],
+    [deleteActivity, fetchPropertyActivities, managementFileId, pathGenerator],
   );
 
   useEffect(() => {
