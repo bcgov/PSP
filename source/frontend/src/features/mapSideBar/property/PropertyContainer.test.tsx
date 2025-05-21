@@ -14,6 +14,7 @@ import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { useApiPropertyOperation } from '@/hooks/pims-api/useApiPropertyOperation';
 import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
+import { noop } from 'lodash';
 
 // mock keycloak auth library
 const getApiLeaseFn = vi.fn();
@@ -52,7 +53,7 @@ describe('PropertyContainer component', () => {
 
   const setup = (renderOptions: RenderOptions & IPropertyContainerProps) => {
     // render component under test
-    const utils = render(<PropertyContainer {...renderOptions} />, {
+    const utils = render(<PropertyContainer {...renderOptions}  />, {
       ...renderOptions,
       history,
       store: { ...renderOptions.store, ...storeState },
@@ -74,6 +75,7 @@ describe('PropertyContainer component', () => {
     const { queryByText } = setup({
       claims: [],
       composedPropertyState: { apiWrapper: { response: {} }, id: 1 } as any,
+      onChildSuccess: noop
     });
 
     expect(queryByText('Management')).toBeNull();
@@ -83,6 +85,7 @@ describe('PropertyContainer component', () => {
     const { getByText } = setup({
       claims: [Claims.MANAGEMENT_VIEW],
       composedPropertyState: { apiWrapper: { response: {} }, id: 1 } as any,
+      onChildSuccess: noop
     });
 
     expect(getByText('Management')).toBeVisible();
@@ -114,6 +117,7 @@ describe('PropertyContainer component', () => {
         },
         id: 1,
       } as any,
+      onChildSuccess: noop
     });
     await waitForEffects();
 
@@ -146,6 +150,7 @@ describe('PropertyContainer component', () => {
         },
         id: 1,
       } as any,
+      onChildSuccess: noop
     });
     await waitForEffects();
 

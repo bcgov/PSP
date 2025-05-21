@@ -17,7 +17,9 @@ namespace Pims.Dal.Entities
         #endregion
 
         #region Constructors
-        public PimsDspFlTeamProfileType() { }
+        public PimsDspFlTeamProfileType()
+        {
+        }
 
         /// <summary>
         /// Create a new instance of a PimsDspFlTeamProfileType class.

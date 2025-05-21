@@ -4,12 +4,11 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Pims.Core.Extensions;
 using Pims.Core.Http.Configuration;
+using Pims.Core.Security;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
-using Pims.Dal.Helpers.Extensions;
-using Pims.Core.Security;
-using Pims.Core.Extensions;
 
 namespace Pims.Dal.Repositories
 {

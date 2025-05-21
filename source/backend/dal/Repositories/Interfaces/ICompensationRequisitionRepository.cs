@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Pims.Api.Models.Concepts.CompensationRequisition;
 using Pims.Dal.Entities;
 
 namespace Pims.Dal.Repositories

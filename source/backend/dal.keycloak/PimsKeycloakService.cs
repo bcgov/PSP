@@ -3,10 +3,10 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Pims.Core.Extensions;
+using Pims.Core.Security;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
-using Pims.Core.Security;
 using Pims.Keycloak;
 using Pims.Keycloak.Models;
 using Entity = Pims.Dal.Entities;
@@ -180,7 +180,6 @@ namespace Pims.Dal.Keycloak
                 var rolesToRemove = keycloakUserGroups.Where(r => roles.All(crr => crr.Name != r.Name));
                 var addOperations = newRolesToAdd.Select(nr => new UserRoleOperation() { Operation = "add", RoleName = nr.Name, Username = update.GetIdirUsername() });
                 var removeOperations = rolesToRemove.Select(rr => new UserRoleOperation() { Operation = "del", RoleName = rr.Name, Username = update.GetIdirUsername() });
-
 
                 await _keycloakRepository.ModifyUserRoleMappings(addOperations.Concat(removeOperations));
             }

@@ -1,6 +1,7 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { Claims } from '@/constants';
 import { usePropertyDetails } from '@/features/mapSideBar/hooks/usePropertyDetails';
 import {
@@ -18,6 +19,7 @@ import { PROPERTY_TYPES, useComposedProperties } from '@/hooks/repositories/useC
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
@@ -28,6 +30,7 @@ import CrownDetailsTabView from '../../property/tabs/crown/CrownDetailsTabView';
 import { PropertyManagementTabView } from '../../property/tabs/propertyDetailsManagement/detail/PropertyManagementTabView';
 import PropertyResearchTabView from '../../property/tabs/propertyResearch/detail/PropertyResearchTabView';
 import ResearchStatusUpdateSolver from '../../research/tabs/fileDetails/ResearchStatusUpdateSolver';
+import DocumentsTab from '../tabs/DocumentsTab';
 
 export interface IPropertyFileContainerProps {
   fileProperty: ApiGen_Concepts_FileProperty;
@@ -37,6 +40,7 @@ export interface IPropertyFileContainerProps {
   defaultTab: InventoryTabNames;
   fileContext?: ApiGen_CodeTypes_FileTypes;
   statusSolver?: ResearchStatusUpdateSolver;
+  onChildSuccess: () => void;
 }
 
 export const PropertyFileContainer: React.FunctionComponent<
@@ -47,6 +51,8 @@ export const PropertyFileContainer: React.FunctionComponent<
   const location = props.fileProperty?.property?.location ?? undefined;
   const latLng = useMemo(() => getLatLng(location) ?? undefined, [location]);
   const { hasClaim } = useKeycloakWrapper();
+
+  const { setFullWidthSideBar } = useMapStateMachine();
 
   const composedProperties = useComposedProperties({
     pid,
@@ -212,11 +218,35 @@ export const PropertyFileContainer: React.FunctionComponent<
     });
   }
 
+  if (exists(composedProperties.apiWrapper?.response) && hasClaim(Claims.DOCUMENT_VIEW)) {
+    tabViews.push({
+      content: (
+        <DocumentsTab
+          fileId={composedProperties.apiWrapper.response.id}
+          relationshipType={ApiGen_CodeTypes_DocumentRelationType.Properties}
+          onSuccess={props.onChildSuccess}
+          title={'Property Documents'}
+        />
+      ),
+      key: InventoryTabNames.document,
+      name: 'Property Documents',
+    });
+  }
+
   const InventoryTabsView = props.View;
 
   const params = useParams<{ tab?: string }>();
   const activeTab =
     Object.values(InventoryTabNames).find(t => t === params.tab) ?? props.defaultTab;
+
+  useEffect(() => {
+    if (activeTab === InventoryTabNames.document) {
+      setFullWidthSideBar(true);
+    } else {
+      setFullWidthSideBar(false);
+    }
+    return () => setFullWidthSideBar(false);
+  }, [activeTab, setFullWidthSideBar]);
 
   return (
     <InventoryTabsView
