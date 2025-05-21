@@ -37,6 +37,7 @@ describe('Activities list view', () => {
         onCreate={onCreate}
         onDelete={onDelete}
         onView={onView}
+        isEmbedded={renderOptions?.isEmbedded ?? false}
       />,
       {
         ...renderOptions,
