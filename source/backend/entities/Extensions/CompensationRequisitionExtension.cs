@@ -9,7 +9,7 @@ namespace Pims.Dal.Entities.Extensions
         {
             ArgumentNullException.ThrowIfNull(compReq);
 
-            if(compReq.AcquisitionFileId is null && compReq.LeaseId is null)
+            if (compReq.AcquisitionFileId is null && compReq.LeaseId is null)
             {
                 throw new BusinessRuleViolationException("Compensation requisition missing AcquisitionFileId or LeaseId");
             }

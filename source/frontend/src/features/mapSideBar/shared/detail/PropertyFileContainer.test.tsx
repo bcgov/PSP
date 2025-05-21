@@ -39,6 +39,7 @@ const DEFAULT_PROPS: IPropertyFileContainerProps = {
   setEditing: noop,
   customTabs: [],
   defaultTab: InventoryTabNames.property,
+  onChildSuccess: noop
 };
 
 describe('PropertyFileContainer component', () => {

@@ -1,6 +1,6 @@
+using System;
 using Mapster;
 using Pims.Api.Models.Base;
-using System;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts.Deposit

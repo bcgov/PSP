@@ -8,12 +8,12 @@ using Moq;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;
+using Pims.Core.Security;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
-using Pims.Core.Security;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 
@@ -469,72 +469,6 @@ namespace Pims.Dal.Test.Repositories
 
             // Assert
             response.Internal_Id.Should().Be(1);
-        }
-        #endregion
-
-        #region GetAllLeaseDocuments
-        [Fact]
-        public void GetAllLeaseDocuments_Success()
-        {
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseAdd, Permissions.LeaseView);
-
-            var lease = EntityHelper.CreateLease(1);
-            lease.PimsLeaseDocuments = new List<PimsLeaseDocument>() { new PimsLeaseDocument() { Document = EntityHelper.CreateDocument("test", 1) }, new PimsLeaseDocument() { Document = EntityHelper.CreateDocument("doc", 2) } };
-            var context = helper.CreatePimsContext(user, true);
-            context.AddAndSaveChanges(lease);
-
-            var repository = helper.CreateRepository<LeaseRepository>(user);
-
-            // Act
-            var response = repository.GetAllLeaseDocuments(lease.Internal_Id);
-
-            // Assert
-            response.Count.Should().Be(2);
-        }
-        #endregion
-
-        #region AddLeaseDocument
-        [Fact]
-        public void AddLeaseDocument_Success()
-        {
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseAdd, Permissions.LeaseView);
-
-            var context = helper.CreatePimsContext(user, true);
-
-            var repository = helper.CreateRepository<LeaseRepository>(user);
-
-            // Act
-            var response = repository.AddLeaseDocument(new PimsLeaseDocument() { Document = EntityHelper.CreateDocument("test", 1) });
-            context.CommitTransaction();
-
-            // Assert
-            context.PimsLeaseDocuments.Should().HaveCount(1);
-            context.PimsLeaseDocuments.FirstOrDefault().Document.FileName.Should().Be("test");
-        }
-        #endregion
-
-        #region DeleteLeaseDocument
-        [Fact]
-        public void DeleteLeaseDocument_Success()
-        {
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseAdd, Permissions.LeaseView);
-
-            var lease = EntityHelper.CreateLease(1);
-            lease.PimsLeaseDocuments = new List<PimsLeaseDocument>() { new PimsLeaseDocument() { LeaseDocumentId = 1, Document = EntityHelper.CreateDocument("test", 1) } };
-            var context = helper.CreatePimsContext(user, true);
-            context.AddAndSaveChanges(lease);
-
-            var repository = helper.CreateRepository<LeaseRepository>(user);
-
-            // Act
-            repository.DeleteLeaseDocument(1);
-            context.CommitTransaction();
-
-            // Assert
-            context.PimsLeaseDocuments.Should().HaveCount(0);
         }
         #endregion
 

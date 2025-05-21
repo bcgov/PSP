@@ -35,7 +35,9 @@ namespace Pims.Dal.Entities
 
         #region Constructors
 
-        public PimsOrganization() { }
+        public PimsOrganization()
+        {
+        }
 
         /// <summary>
         /// Create a new instance of a Organization class.

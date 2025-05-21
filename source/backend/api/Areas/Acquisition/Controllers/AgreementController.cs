@@ -111,7 +111,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [Produces("application/json")]
         [ProducesResponseType(typeof(AgreementModel), 200)]
         [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
-        public IActionResult GetAcquisitionFileAgreementById([FromRoute]long id, [FromRoute]long agreementId)
+        public IActionResult GetAcquisitionFileAgreementById([FromRoute] long id, [FromRoute] long agreementId)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
