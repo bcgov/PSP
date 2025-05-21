@@ -1116,6 +1116,64 @@ namespace Pims.Api.Test.Services
             var ex = act.Should().Throw<BusinessRuleViolationException>();
             ex.WithMessage("Retired property can not be selected.");
         }
+
+        [Fact]
+        public void UpdateProperties_WithManagementPropertyActivity_Should_Fail()
+        {
+            // Arrange
+            var service = this.CreateManagementServiceWithPermissions(Permissions.ManagementEdit, Permissions.PropertyAdd, Permissions.PropertyView);
+
+            var managementFile = EntityHelper.CreateManagementFile();
+            managementFile.ConcurrencyControlNumber = 1;
+
+            PimsProperty property = new PimsProperty()
+            {
+                PropertyId = 100,
+                Pid = 1000,
+                IsRetired = false,
+            };
+
+            PimsPropertyActivity propertyActivity = new PimsPropertyActivity()
+            {
+                ManagementFileId = managementFile.Internal_Id,
+                ManagementFile = managementFile,
+                PimsPropPropActivities = new List<PimsPropPropActivity>()
+                {
+                    new PimsPropPropActivity()
+                    {
+                        
+                        Property = property,
+                    }
+                }
+            };
+
+            var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(managementFile);
+
+            var filePropertyRepository = this._helper.GetService<Mock<IManagementFilePropertyRepository>>();
+            filePropertyRepository.Setup(x => x.GetPropertiesByManagementFileId(It.IsAny<long>())).Returns(new List<PimsManagementFileProperty>() { new PimsManagementFileProperty() { Property = property } });
+
+            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(property);
+
+            var propertyActivityRepository = this._helper.GetService<Mock<IPropertyActivityRepository>>();
+            propertyActivityRepository.Setup(x => x.GetActivitiesByManagementFile(It.IsAny<long>())).Returns(new List<PimsPropertyActivity>() { propertyActivity });
+
+            var propertyOperationsService = this._helper.GetService<Mock<IPropertyOperationService>>();
+            propertyOperationsService.Setup(x => x.GetOperationsForProperty(It.IsAny<long>())).Returns(new List<PimsPropertyOperation>());
+
+            var statusMock = this._helper.GetService<Mock<IManagementStatusSolver>>();
+            statusMock.Setup(x => x.GetCurrentManagementStatus(It.IsAny<string>())).Returns(ManagementFileStatusTypes.ACTIVE);
+            statusMock.Setup(x => x.CanEditProperties(It.IsAny<ManagementFileStatusTypes>())).Returns(true);
+
+            // Act
+            Action act = () => service.UpdateProperties(managementFile, new List<UserOverrideCode>());
+
+            // Assert
+            var ex = act.Should().Throw<BusinessRuleViolationException>();
+            ex.WithMessage("This property cannot be deleted as it is part of an activity in this file");
+        }
         #endregion
 
         #region GetTeamMembers
