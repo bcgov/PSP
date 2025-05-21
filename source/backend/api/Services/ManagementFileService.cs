@@ -222,7 +222,7 @@ namespace Pims.Api.Services
 
             IEnumerable<PimsPropPropActivity> fileActivityProperties = _propertyActivityRepository.GetActivitiesByManagementFile(managementFile.Internal_Id).SelectMany(pa => pa.PimsPropPropActivities);
             // The ones not on the new set should be deleted
-            List <PimsManagementFileProperty> differenceSet = currentFileProperties.Where(x => !managementFile.PimsManagementFileProperties.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
+            List<PimsManagementFileProperty> differenceSet = currentFileProperties.Where(x => !managementFile.PimsManagementFileProperties.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
             foreach (var deletedProperty in differenceSet)
             {
                 if (_propertyOperationService.GetOperationsForProperty(deletedProperty.PropertyId).Count > 0)
