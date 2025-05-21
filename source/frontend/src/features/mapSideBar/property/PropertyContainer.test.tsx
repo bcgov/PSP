@@ -2,14 +2,14 @@ import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
 import { Claims } from '@/constants';
-import { mockLookups } from '@/mocks/lookups.mock';
-import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { cleanup, render, RenderOptions, waitForEffects } from '@/utils/test-utils';
-
 import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
 import { useApiPropertyOperation } from '@/hooks/pims-api/useApiPropertyOperation';
 import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
+import { mockLookups } from '@/mocks/lookups.mock';
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { cleanup, render, RenderOptions, waitForEffects } from '@/utils/test-utils';
+
 import PropertyContainer, { IPropertyContainerProps } from './PropertyContainer';
 
 // mock keycloak auth library
@@ -49,7 +49,7 @@ describe('PropertyContainer component', () => {
 
   const setup = (renderOptions: RenderOptions & IPropertyContainerProps) => {
     // render component under test
-    const utils = render(<PropertyContainer {...renderOptions}  />, {
+    const utils = render(<PropertyContainer {...renderOptions} />, {
       ...renderOptions,
       history,
       store: { ...renderOptions.store, ...storeState },

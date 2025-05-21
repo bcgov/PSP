@@ -4,6 +4,7 @@ import noop from 'lodash/noop';
 import { toast } from 'react-toastify';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import Claims from '@/constants/claims';
 import {
   IInventoryTabsProps,
   InventoryTabNames,
@@ -12,12 +13,11 @@ import { getMockCrownTenuresLayerResponse } from '@/mocks/crownTenuresLayerRespo
 import { getMockPimsLocationViewLayerResponse, mockLtsaResponse } from '@/mocks/index.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockResearchFile } from '@/mocks/researchFile.mock';
+import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 import { getEmptyProperty } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions, waitForEffects } from '@/utils/test-utils';
 
-import Claims from '@/constants/claims';
-import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 import PropertyFileContainer, { IPropertyFileContainerProps } from './PropertyFileContainer';
 
 const mockAxios = new MockAdapter(axios);
