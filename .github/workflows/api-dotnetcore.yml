@@ -69,8 +69,8 @@ jobs:
         working-directory: ${{env.working-directory}}
 
       - name: Test
-        if: ${{ env.solution-name == 'PimsTest.sln' }}
-        run: dotnet test PimsTest.sln --no-restore --verbosity normal
+        if: ${{ env.solution-name == 'PimsUnitTest.sln' }}
+        run: dotnet test PimsUnitTest.sln --no-restore --verbosity normal
         working-directory: ${{env.working-directory}}
 
         # For future reference, if we have N test projects the flow of events would be:
@@ -97,7 +97,7 @@ jobs:
         #
         # The final `coverage.opencover.xml` is the one we want
       - name: Generate code coverage
-        if: ${{ env.solution-name == 'PimsTest.sln' }}
+        if: ${{ env.solution-name == 'PimsUnitTest.sln' }}
         working-directory: ${{env.working-directory}}/../tests/unit
         run: |
           pwd
@@ -124,14 +124,14 @@ jobs:
           head TestResults/coverage.opencover.xml
 
       - name: Save PR number and scan results
-        if: ${{ env.solution-name == 'PimsTest.sln' }}
+        if: ${{ env.solution-name == 'PimsUnitTest.sln' }}
         run: |
           mkdir -p ./pr
           echo ${{ github.event.pull_request.number }} > ./pr/NR
           cp ${{env.working-directory}}/../tests/unit/TestResults/coverage.opencover.xml ./pr
 
       - uses: actions/upload-artifact@v4
-        if: ${{ env.solution-name == 'PimsTest.sln' }}
+        if: ${{ env.solution-name == 'PimsUnitTest.sln' }}
         with:
           name: pr-codecov
           path: pr/
