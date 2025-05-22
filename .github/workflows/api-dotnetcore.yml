@@ -112,26 +112,23 @@ jobs:
           rm -rf mockdal/TestResults
           rm -rf mockdal/SchedulerResults
           cd api
-          dotnet test --collect:"XPlat Code Coverage" --settings coverlet.runsettings --no-restore > out.txt
-          ls
-          cat out.txt
+          dotnet test --collect:"XPlat Code Coverage" --settings coverlet.runsettings --no-restore
           mv TestResults/*/* ../TestResults/
           cd ..
           cd dal
           dotnet test --collect:"XPlat Code Coverage" --settings coverlet.runsettings --no-restore
-          ls
           mv TestResults/*/* ../TestResults/
           cd ..
           cd mockdal
           dotnet test --collect:"XPlat Code Coverage" --settings coverlet.runsettings --no-restore
-          ls
           mv TestResults/*/* ../TestResults/
           cd ..
           cd scheduler
-          dotnet test --collect:"XPlat Code Coverage" --settings coverlet.runsettings --no-restore > out.txt
-          ls
-          cat out.txt
+          dotnet test --collect:"XPlat Code Coverage" --settings coverlet.runsettings --no-restore
           mv TestResults/*/* ../TestResults/
+          cd ..
+          echo "TestResults folder"
+          ls TestResults
           head TestResults/coverage.opencover.xml
 
       - name: Save PR number and scan results
