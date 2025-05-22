@@ -31,11 +31,15 @@ jobs:
         services:
           [
             { directory: ./source/backend/api, solution: "Pims.Api.csproj" },
-            { directory: ./source/backend/proxy, solution: "Pims.Proxy.csproj" },
+            {
+              directory: ./source/backend/proxy,
+              solution: "Pims.Proxy.csproj",
+            },
             {
               directory: ./source/backend/scheduler,
               solution: "Pims.Scheduler.csproj",
             },
+            { directory: ./source/backend/tests, solution: "PimsUnitTest.sln" },
           ]
     env:
       working-directory: ${{ matrix.services.directory }}
@@ -65,6 +69,7 @@ jobs:
         working-directory: ${{env.working-directory}}
 
       - name: Install coverlet for code coverage
+        if: ${{ env.solution-name == 'PimsUnitTest.sln' }}
         run: dotnet tool install -g coverlet.console --version 1.7.2
         working-directory: ${{env.working-directory}}
 
@@ -98,13 +103,14 @@ jobs:
         # The final `coverage.opencover.xml` is the one we want
       - name: Generate code coverage
         if: ${{ env.solution-name == 'PimsUnitTest.sln' }}
-        working-directory: ${{env.working-directory}}/../tests/unit
+        working-directory: ${{env.working-directory}}
         run: |
           pwd
           mkdir -p TestResults
           rm -rf api/TestResults
           rm -rf dal/TestResults
           rm -rf mockdal/TestResults
+          rm -rf mockdal/SchedulerResults
           cd api
           dotnet test --collect:"XPlat Code Coverage" --settings coverlet.runsettings --no-restore > out.txt
           ls
@@ -121,6 +127,11 @@ jobs:
           ls
           mv TestResults/*/* ../TestResults/
           cd ..
+          cd scheduler
+          dotnet test --collect:"XPlat Code Coverage" --settings coverlet.runsettings --no-restore > out.txt
+          ls
+          cat out.txt
+          mv TestResults/*/* ../TestResults/
           head TestResults/coverage.opencover.xml
 
       - name: Save PR number and scan results
@@ -128,7 +139,7 @@ jobs:
         run: |
           mkdir -p ./pr
           echo ${{ github.event.pull_request.number }} > ./pr/NR
-          cp ${{env.working-directory}}/../tests/unit/TestResults/coverage.opencover.xml ./pr
+          cp ${{env.working-directory}}/TestResults/coverage.opencover.xml ./pr
 
       - uses: actions/upload-artifact@v4
         if: ${{ env.solution-name == 'PimsUnitTest.sln' }}
