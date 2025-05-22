@@ -32,6 +32,10 @@ export const useApiManagementActivities = () => {
         api.get<ApiGen_Concepts_PropertyActivity[]>(
           `/managementfiles/${managementFileId}/management-activities/`,
         ),
+      getFileActivitiesApi: (managementFileId: number) =>
+        api.get<ApiGen_Concepts_PropertyActivity[]>(
+          `/managementfiles/${managementFileId}/properties/management-activities/`,
+        ),
       deleteActivityApi: (managementFileId: number, propertyActivityId: number) =>
         api.delete<boolean>(
           `/managementfiles/${managementFileId}/management-activities/${propertyActivityId}`,

@@ -5,13 +5,15 @@ import { StyledSummarySection } from '@/components/common/Section/SectionStyles'
 import { SimpleSectionHeader } from '@/components/common/SimpleSectionHeader';
 import { StyledSectionAddButton } from '@/components/common/styles';
 import { Claims } from '@/constants';
-import ManagementActivitiesListView from '@/features/mapSideBar/property/tabs/propertyDetailsManagement/activity/list/ManagementActivitiesListView';
 import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { isValidId } from '@/utils';
 
+import AdHocFileActivitiesSummaryContainer from './list/AdHocFileActivitiesSummaryContainer';
+import AdHocSummaryActivitiesView from './list/AdHocSummaryActivitiesListView';
 import ManagementFileActivitiesListContainer from './list/ManagementFileActivitiesListContainer';
+import ManagementFileActivitiesListView from './list/ManagementFileActivitiesListView';
 
 export interface IActivitiesTabProps {
   managementFile: ApiGen_Concepts_ManagementFile;
@@ -46,10 +48,14 @@ export const ActivitiesTab: React.FunctionComponent<IActivitiesTabProps> = ({ ma
           activity. Create, then edit and attach a file if needed.
         </p>
         <ManagementFileActivitiesListContainer
-          View={ManagementActivitiesListView}
+          View={ManagementFileActivitiesListView}
           managementFileId={managementFile.id}
         ></ManagementFileActivitiesListContainer>
       </Section>
+      <AdHocFileActivitiesSummaryContainer
+        View={AdHocSummaryActivitiesView}
+        managementFileId={managementFile.id}
+      ></AdHocFileActivitiesSummaryContainer>
     </StyledSummarySection>
   );
 };

@@ -1,6 +1,6 @@
 import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
 import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
-import { isValidIsoDateTime } from '@/utils';
+import { firstOrNull, getApiPropertyName, isValidIsoDateTime } from '@/utils';
 
 export class PropertyActivityRow {
   activityType: ApiGen_Base_CodeType<string> | null = null;
@@ -9,6 +9,8 @@ export class PropertyActivityRow {
   requestedAddedDate: string | null = null;
   displayOrder: number | null = null;
   managementFileId: number | null = null;
+  adHocPropertyId: number | null = null;
+  adHocPropertyName: string | null = null;
 
   constructor(
     readonly id: number | null,
@@ -25,6 +27,10 @@ export class PropertyActivityRow {
       ? model.requestAddedDateOnly
       : null;
     row.managementFileId = model.managementFileId;
+    row.adHocPropertyId = firstOrNull(model.activityProperties)?.propertyId; // This is based on the assumption that ad-hoc activities are related to one property.
+    row.adHocPropertyName = getApiPropertyName(
+      firstOrNull(model.activityProperties)?.property,
+    ).value;
 
     return row;
   }

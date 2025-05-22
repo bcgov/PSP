@@ -7,6 +7,7 @@ import { isValidId } from '@/utils';
 
 import PropertyManagementActivitiesListContainer from '../activity/list/ManagementActivitiesListContainer';
 import ManagementActivitiesListView from '../activity/list/ManagementActivitiesListView';
+import ManagementSummaryActivitiesListView from '../activity/list/ManagementSummaryActivitiesListView';
 import { PropertyContactListContainer } from './PropertyContactListContainer';
 import { PropertyContactListView } from './PropertyContactListView';
 import { PropertyManagementDetailContainer } from './summary/PropertyManagementDetailContainer';
@@ -41,10 +42,9 @@ export const PropertyManagementTabView: React.FunctionComponent<IPropertyManagem
           isAdHoc={true}
         ></PropertyManagementActivitiesListContainer>
         <PropertyManagementActivitiesListContainer
-          View={ManagementActivitiesListView}
+          View={ManagementSummaryActivitiesListView}
           propertyId={property.id}
           isAdHoc={false}
-          isReadOnly={true}
         ></PropertyManagementActivitiesListContainer>
       </StyledSummarySection>
     );
