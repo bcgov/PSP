@@ -405,8 +405,8 @@ export const MapRouter: React.FunctionComponent = memo(() => {
           />
         )}
         claim={Claims.DISPOSITION_ADD}
-        key={'NewDisposition'}
-        title={'Create Disposition File'}
+        key={'NewManagement'}
+        title={'Create Management File'}
       />
       <AppRoute
         path={`/mapview/sidebar/management/:id`}
