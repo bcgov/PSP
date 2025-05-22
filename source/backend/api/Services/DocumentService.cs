@@ -97,6 +97,12 @@ namespace Pims.Api.Services
             configuration.Bind(MayanConfigSectionKey, _config);
         }
 
+        public static bool IsValidDocumentExtension(string fileName)
+        {
+            var fileNameExtension = Path.GetExtension(fileName).Replace(".", string.Empty).ToLower();
+            return ValidExtensions.Contains(fileNameExtension);
+        }
+
         public IList<PimsDocumentTyp> GetPimsDocumentTypes()
         {
             this.Logger.LogInformation("Retrieving PIMS document types");
@@ -127,6 +133,7 @@ namespace Pims.Api.Services
                     break;
                 case DocumentRelationType.ManagementActivities:
                 case DocumentRelationType.ManagementFiles:
+                case DocumentRelationType.Properties:
                     categoryType = "MANAGEMENT";
                     break;
                 case DocumentRelationType.DispositionFiles:
@@ -609,12 +616,6 @@ namespace Pims.Api.Services
                 throw GetMayanResponseError(await result.Content.ReadAsStringAsync());
             }
             return result;
-        }
-
-        public static bool IsValidDocumentExtension(string fileName)
-        {
-            var fileNameExtension = Path.GetExtension(fileName).Replace(".", string.Empty).ToLower();
-            return ValidExtensions.Contains(fileNameExtension);
         }
 
         private async Task PrecacheDocumentPreviews(long documentId, long documentFileId)

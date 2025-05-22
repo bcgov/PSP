@@ -19,7 +19,9 @@ namespace Pims.Dal.Entities
 
         #region Constructors
 
-        public PimsManagementFileStatusType() { }
+        public PimsManagementFileStatusType()
+        {
+        }
 
         /// <summary>
         /// Create a new instance of a PimsManagementFileStatusType class.

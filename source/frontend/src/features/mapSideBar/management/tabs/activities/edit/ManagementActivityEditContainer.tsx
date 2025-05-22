@@ -33,10 +33,6 @@ export const ManagementActivityEditContainer: React.FunctionComponent<
 
   const { file, fileLoading, setStaleLastUpdatedBy } = useContext(SideBarContext);
 
-  if (!isValidId(file?.id) && fileLoading === false) {
-    throw new Error('Unable to determine id of current file.');
-  }
-
   const castedFile = file as unknown as ApiGen_Concepts_ManagementFile;
 
   // Load the subtypes
@@ -52,6 +48,10 @@ export const ManagementActivityEditContainer: React.FunctionComponent<
   useEffect(() => {
     fetchSubtypes();
   }, [fetchSubtypes]);
+
+  if (!isValidId(file?.id) && fileLoading === false) {
+    return null;
+  }
 
   const gstConstant = getSystemConstant(SystemConstants.GST);
   const pstConstant = getSystemConstant(SystemConstants.PST);

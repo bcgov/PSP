@@ -22,7 +22,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<AcquisitionFileDocumentRepository>(user);
 
             // Act
-            var result = repository.AddAcquisition(acquisitionFileDocument);
+            var result = repository.AddDocument(acquisitionFileDocument);
 
             // Assert
             result.AcquisitionFileDocumentId.Should().Be(1);
@@ -40,7 +40,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<AcquisitionFileDocumentRepository>(user);
 
             // Act
-            var result = repository.DeleteAcquisition(acquisitionFileDocument);
+            var result = repository.DeleteDocument(acquisitionFileDocument);
 
             // Assert
             result.Should().BeTrue();
@@ -56,7 +56,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<AcquisitionFileDocumentRepository>(user);
 
             // Act
-            Action act = () => repository.DeleteAcquisition(null);
+            Action act = () => repository.DeleteDocument(null);
 
             // Assert
             act.Should().Throw<ArgumentNullException>();

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -73,6 +74,83 @@ namespace Pims.Api.Areas.Management.Controllers
             var createdActivity = _propertyService.CreateActivity(activityEntity);
 
             return new JsonResult(_mapper.Map<PropertyActivityModel>(createdActivity));
+        }
+
+        /// <summary>
+        /// Get the specified management file activity.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{managementFileId:long}/management-activities/{propertyActivityId:long}")]
+        [HasPermission(Permissions.ManagementView, Permissions.ActivityView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(PropertyActivityModel), 200)]
+        [SwaggerOperation(Tags = new[] { "property" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetManagementActivity(long managementFileId, long propertyActivityId)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(ManagementActivityController),
+                nameof(GetManagementActivity),
+                User.GetUsername(),
+                DateTime.Now);
+
+            var activity = _propertyService.GetFileActivity(propertyActivityId);
+
+            if (activity.ManagementFileId != managementFileId)
+            {
+                throw new BadRequestException("Activity with the given id does not match the management file id");
+            }
+
+            return new JsonResult(_mapper.Map<PropertyActivityModel>(activity));
+        }
+
+        /// <summary>
+        /// Get the specified management file's activities.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{managementFileId:long}/management-activities")]
+        [HasPermission(Permissions.ManagementView, Permissions.ActivityView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(PropertyActivityModel), 200)]
+        [SwaggerOperation(Tags = new[] { "property" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetManagementActivities(long managementFileId)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(ManagementActivityController),
+                nameof(GetManagementActivities),
+                User.GetUsername(),
+                DateTime.Now);
+
+            var activities = _propertyService.GetFileActivities(managementFileId);
+
+            return new JsonResult(_mapper.Map<IEnumerable<PropertyActivityModel>>(activities));
+        }
+
+        /// <summary>
+        /// Delete the specified management file activity.
+        /// </summary>
+        /// <returns></returns>
+        [HttpDelete("{managementFileId:long}/management-activities/{propertyActivityId:long}")]
+        [HasPermission(Permissions.ManagementEdit, Permissions.ActivityEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(PropertyActivityModel), 200)]
+        [SwaggerOperation(Tags = new[] { "property" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult DeleteManagementActivity(long managementFileId, long propertyActivityId)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(ManagementActivityController),
+                nameof(DeleteManagementActivity),
+                User.GetUsername(),
+                DateTime.Now);
+
+            var deleted = _propertyService.DeleteFileActivity(managementFileId, propertyActivityId);
+
+            return new JsonResult(deleted);
         }
     }
 }

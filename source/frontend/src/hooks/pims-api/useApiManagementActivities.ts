@@ -33,6 +33,17 @@ export const useApiManagementActivities = () => {
       getManagementActivitiesPagedApi: (params: IPaginateManagementActivities | null) =>
         api.get<ApiGen_Base_Page<ApiGen_Concepts_PropertyActivity>>(
           `/management-activities/search?${params ? queryString.stringify(params) : ''}`,
+      getActivityApi: (managementFileId: number, propertyActivityId: number) =>
+        api.get<ApiGen_Concepts_PropertyActivity>(
+          `/managementfiles/${managementFileId}/management-activities/${propertyActivityId}`,
+        ),
+      getActivitiesApi: (managementFileId: number) =>
+        api.get<ApiGen_Concepts_PropertyActivity[]>(
+          `/managementfiles/${managementFileId}/management-activities/`,
+        ),
+      deleteActivityApi: (managementFileId: number, propertyActivityId: number) =>
+        api.delete<boolean>(
+          `/managementfiles/${managementFileId}/management-activities/${propertyActivityId}`,
         ),
     }),
     [api],

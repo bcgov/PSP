@@ -784,26 +784,6 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get All Documents by Lease Id.
-        /// </summary>
-        /// <param name="leaseId"></param>
-        /// <returns></returns>
-        public IList<PimsLeaseDocument> GetAllLeaseDocuments(long leaseId)
-        {
-            return Context.PimsLeaseDocuments
-                .Include(ad => ad.Document)
-                    .ThenInclude(d => d.DocumentStatusTypeCodeNavigation)
-                .Include(ad => ad.Document)
-                    .ThenInclude(d => d.DocumentType)
-                .Include(x => x.Document)
-                    .ThenInclude(q => q.PimsDocumentQueues)
-                        .ThenInclude(s => s.DocumentQueueStatusTypeCodeNavigation)
-                .Where(x => x.LeaseId == leaseId)
-                .AsNoTracking()
-                .ToList();
-        }
-
-        /// <summary>
         /// Add the passed lease to the database assuming the user has the require claims.
         /// </summary>
         /// <param name="lease"></param>
@@ -827,42 +807,6 @@ namespace Pims.Dal.Repositories
             Context.PimsLeases.Add(lease);
             Context.CommitTransaction();
             return Get(lease.LeaseId);
-        }
-
-        /// <summary>
-        /// Add new LeaseDocument.
-        /// </summary>
-        /// <param name="leaseDocument"></param>
-        /// <returns></returns>
-        /// <exception cref="InvalidOperationException">Check for EntityState.</exception>
-        public PimsLeaseDocument AddLeaseDocument(PimsLeaseDocument leaseDocument)
-        {
-            leaseDocument.ThrowIfNull(nameof(leaseDocument));
-
-            var newEntry = Context.PimsLeaseDocuments.Add(leaseDocument);
-            if (newEntry.State == EntityState.Added)
-            {
-                return newEntry.Entity;
-            }
-            else
-            {
-                throw new InvalidOperationException("Could not create document");
-            }
-        }
-
-        /// <summary>
-        /// Deletes the Laease Document by DocumentId.
-        /// </summary>
-        /// <param name="leaseDocumentId"></param>
-        public void DeleteLeaseDocument(long leaseDocumentId)
-        {
-            var entity = Context.PimsLeaseDocuments.FirstOrDefault(d => d.LeaseDocumentId == leaseDocumentId);
-            if (entity is not null)
-            {
-                Context.PimsLeaseDocuments.Remove(entity);
-            }
-
-            return;
         }
 
         /// <summary>
@@ -1054,7 +998,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Gets all stakeholder types
+        /// Gets all stakeholder types.
         /// </summary>
         /// <returns>all stakeholder types.</returns>
         public IEnumerable<PimsLeaseStakeholderType> GetAllLeaseStakeholderTypes()

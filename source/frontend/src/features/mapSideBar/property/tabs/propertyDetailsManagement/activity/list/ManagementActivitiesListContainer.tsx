@@ -61,6 +61,7 @@ const PropertyManagementActivitiesListContainer: React.FunctionComponent<
 
   return (
     <View
+      isEmbedded={false}
       isLoading={loading || deletingActivity}
       propertyActivities={propertyActivities}
       onCreate={onCreate}

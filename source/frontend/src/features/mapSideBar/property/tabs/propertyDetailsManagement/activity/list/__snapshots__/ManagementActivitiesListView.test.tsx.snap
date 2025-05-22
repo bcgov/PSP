@@ -363,7 +363,11 @@ exports[`Activities list view > renders as expected 1`] = `
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  width: 80%;
+}
+
+.c8 > * {
+  margin: 0.5rem;
+  padding: 0 !important;
 }
 
 <div
@@ -432,7 +436,7 @@ exports[`Activities list view > renders as expected 1`] = `
           <div
             class="tr"
             role="row"
-            style="display: flex; flex: 1 0 auto; min-width: 195px;"
+            style="display: flex; flex: 1 0 auto; min-width: 200px;"
           >
             <div
               class="th"
@@ -576,12 +580,12 @@ exports[`Activities list view > renders as expected 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 40 0 auto; min-width: 40px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 45 0 auto; min-width: 45px; width: 45px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
               >
-                Request added date
+                Commencement
                 <div
                   class="c4"
                   data-testid="sort-column-requestedAddedDate"
@@ -642,7 +646,7 @@ exports[`Activities list view > renders as expected 1`] = `
             <div
               class="tr"
               role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 195px;"
+              style="display: flex; flex: 1 0 auto; min-width: 200px;"
             >
               <div
                 class="td"
@@ -671,7 +675,7 @@ exports[`Activities list view > renders as expected 1`] = `
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 40 0 auto; min-width: 40px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 45 0 auto; min-width: 45px; width: 45px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               />
               <div
@@ -731,7 +735,7 @@ exports[`Activities list view > renders as expected 1`] = `
             <div
               class="tr"
               role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 195px;"
+              style="display: flex; flex: 1 0 auto; min-width: 200px;"
             >
               <div
                 class="td"
@@ -760,7 +764,7 @@ exports[`Activities list view > renders as expected 1`] = `
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 40 0 auto; min-width: 40px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 45 0 auto; min-width: 45px; width: 45px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               />
               <div

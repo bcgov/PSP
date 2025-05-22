@@ -67,7 +67,7 @@ namespace Pims.Dal.Repositories
         /// <summary>
         /// Retrieves the management file with the specified name.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="name"></param>
         /// <returns></returns>
         public PimsManagementFile GetByName(string name)
         {

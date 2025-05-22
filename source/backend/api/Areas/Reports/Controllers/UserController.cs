@@ -4,13 +4,13 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Helpers.Constants;
-using Pims.Core.Api.Exceptions;
 using Pims.Api.Helpers.Extensions;
 using Pims.Api.Helpers.Reporting;
 using Pims.Api.Models.Base;
+using Pims.Core.Api.Exceptions;
 using Pims.Core.Api.Policies;
-using Pims.Dal.Repositories;
 using Pims.Core.Security;
+using Pims.Dal.Repositories;
 using Swashbuckle.AspNetCore.Annotations;
 using EModel = Pims.Dal.Entities.Models;
 
