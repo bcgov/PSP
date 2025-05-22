@@ -53,7 +53,7 @@ describe('PropertyContainer component', () => {
 
   const setup = (renderOptions: RenderOptions & IPropertyContainerProps) => {
     // render component under test
-    const utils = render(<PropertyContainer {...renderOptions}  />, {
+    const utils = render(<PropertyContainer {...renderOptions} />, {
       ...renderOptions,
       history,
       store: { ...renderOptions.store, ...storeState },
@@ -75,7 +75,7 @@ describe('PropertyContainer component', () => {
     const { queryByText } = setup({
       claims: [],
       composedPropertyState: { apiWrapper: { response: {} }, id: 1 } as any,
-      onChildSuccess: noop
+      onChildSuccess: noop,
     });
 
     expect(queryByText('Management')).toBeNull();
@@ -85,7 +85,7 @@ describe('PropertyContainer component', () => {
     const { getByText } = setup({
       claims: [Claims.MANAGEMENT_VIEW],
       composedPropertyState: { apiWrapper: { response: {} }, id: 1 } as any,
-      onChildSuccess: noop
+      onChildSuccess: noop,
     });
 
     expect(getByText('Management')).toBeVisible();
@@ -117,7 +117,7 @@ describe('PropertyContainer component', () => {
         },
         id: 1,
       } as any,
-      onChildSuccess: noop
+      onChildSuccess: noop,
     });
     await waitForEffects();
 
@@ -150,7 +150,7 @@ describe('PropertyContainer component', () => {
         },
         id: 1,
       } as any,
-      onChildSuccess: noop
+      onChildSuccess: noop,
     });
     await waitForEffects();
 
