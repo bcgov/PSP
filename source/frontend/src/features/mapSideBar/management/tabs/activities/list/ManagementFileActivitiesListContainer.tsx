@@ -1,49 +1,49 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
-import { usePropertyActivityRepository } from '@/hooks/repositories/usePropertyActivityRepository';
+import { IManagementActivitiesListViewProps } from '@/features/mapSideBar/property/tabs/propertyDetailsManagement/activity/list/ManagementActivitiesListView';
+import { PropertyActivityRow } from '@/features/mapSideBar/property/tabs/propertyDetailsManagement/activity/list/models/PropertyActivityRow';
+import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator';
+import { useManagementActivityRepository } from '@/hooks/repositories/useManagementActivityRepository';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import useIsMounted from '@/hooks/util/useIsMounted';
 
-import { IManagementActivitiesListViewProps } from './ManagementActivitiesListView';
-import { PropertyActivityRow } from './models/PropertyActivityRow';
-
 export interface IPropertyManagementActivitiesListContainerProps {
-  propertyId: number;
+  managementFileId: number;
   View: React.FC<IManagementActivitiesListViewProps>;
 }
 
-const PropertyManagementActivitiesListContainer: React.FunctionComponent<
+const ManagementFileActivitiesListContainer: React.FunctionComponent<
   IPropertyManagementActivitiesListContainerProps
-> = ({ propertyId, View }) => {
-  const history = useHistory();
+> = ({ managementFileId, View }) => {
   const isMounted = useIsMounted();
   const { setModalContent, setDisplayModal } = useModalContext();
   const [propertyActivities, setPropertyActivities] = useState<PropertyActivityRow[]>([]);
   const { staleLastUpdatedBy } = useContext(SideBarContext);
 
+  const pathGenerator = usePathGenerator();
+
   const {
-    getActivities: { execute: getActivities, loading },
-    deleteActivity: { execute: deleteActivity, loading: deletingActivity },
-  } = usePropertyActivityRepository();
+    getManagementActivities: { execute: getActivities, loading },
+    deleteManagementActivity: { execute: deleteActivity, loading: deletingActivity },
+  } = useManagementActivityRepository();
 
   const fetchPropertyActivities = useCallback(async () => {
-    const response = await getActivities(propertyId);
+    const response = await getActivities(managementFileId);
     if (response && isMounted()) {
       setPropertyActivities([...response.map(x => PropertyActivityRow.fromApi(x))]);
     }
-  }, [getActivities, isMounted, propertyId]);
+  }, [getActivities, isMounted, managementFileId]);
 
   const onDelete = useCallback(
     async (activityId: number) => {
-      const result = await deleteActivity(propertyId, activityId);
+      const result = await deleteActivity(managementFileId, activityId);
       if (result === true) {
         fetchPropertyActivities();
-        history.push(`/mapview/sidebar/property/${propertyId}/management`);
+        pathGenerator.showDetails('management', managementFileId, 'activities', true);
       }
     },
-    [deleteActivity, fetchPropertyActivities, history, propertyId],
+    [deleteActivity, fetchPropertyActivities, managementFileId, pathGenerator],
   );
 
   useEffect(() => {
@@ -52,16 +52,16 @@ const PropertyManagementActivitiesListContainer: React.FunctionComponent<
   //TODO: remove staleLastUpdatedBy when side bar context is refactored.
 
   const onCreate = () => {
-    history.push(`/mapview/sidebar/property/${propertyId}/management/activity/new`);
+    pathGenerator.addDetail('management', managementFileId, 'activities');
   };
 
   const onView = (activityId: number) => {
-    history.push(`/mapview/sidebar/property/${propertyId}/management/activity/${activityId}`);
+    pathGenerator.showDetail('management', managementFileId, 'activities', activityId, false);
   };
 
   return (
     <View
-      isEmbedded={false}
+      isEmbedded={true}
       isLoading={loading || deletingActivity}
       propertyActivities={propertyActivities}
       onCreate={onCreate}
@@ -83,4 +83,4 @@ const PropertyManagementActivitiesListContainer: React.FunctionComponent<
   );
 };
 
-export default PropertyManagementActivitiesListContainer;
+export default ManagementFileActivitiesListContainer;

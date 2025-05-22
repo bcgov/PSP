@@ -5,7 +5,14 @@ export const sidebarBasePath = '/mapview/sidebar';
 export interface IPathGeneratorMethods {
   newFile: (fileType: string) => void;
   showFile: (fileType: string, fileId: number) => void;
-  showDetail: (fileType: string, fileId: number, detailType: string, replace: boolean) => void;
+  showDetails: (fileType: string, fileId: number, detailType: string, replace: boolean) => void;
+  showDetail: (
+    fileType: string,
+    fileId: number,
+    detailType: string,
+    detailId: number,
+    replace: boolean,
+  ) => void;
   editDetails: (fileType: string, fileId: number, detailType: string) => void;
   editDetail: (fileType: string, fileId: number, detailType: string, detailId: number) => void;
   addDetail: (fileType: string, fileId: number, detailType: string) => void;
@@ -26,9 +33,9 @@ const usePathGenerator: IPathGenerator = () => {
   const history = useHistory();
 
   const newFile = (fileType: string) => {
-    const a = `${sidebarBasePath}/new/:fileType`;
+    const a = `${sidebarBasePath}/:fileType/new`;
     const path = generatePath(a, {
-      fileType: fileType,
+      fileType,
     });
 
     history.push(path);
@@ -37,19 +44,41 @@ const usePathGenerator: IPathGenerator = () => {
   const showFile = (fileType: string, fileId: number) => {
     const a = `${sidebarBasePath}/:fileType/:fileId`;
     const path = generatePath(a, {
-      fileType: fileType,
-      fileId: fileId,
+      fileType,
+      fileId,
     });
 
     history.push(path);
   };
 
-  const showDetail = (fileType: string, fileId: number, detailType: string, replace: boolean) => {
-    const a = `${sidebarBasePath}/:fileType/:fileId/file/:detailType`;
+  const showDetails = (fileType: string, fileId: number, detailType: string, replace: boolean) => {
+    const a = `${sidebarBasePath}/:fileType/:fileId/:detailType`;
     const path = generatePath(a, {
-      fileType: fileType,
-      fileId: fileId,
-      detailType: detailType,
+      fileType,
+      fileId,
+      detailType,
+    });
+
+    if (replace) {
+      history.replace(path);
+    } else {
+      history.push(path);
+    }
+  };
+
+  const showDetail = (
+    fileType: string,
+    fileId: number,
+    detailType: string,
+    detailId: number,
+    replace: boolean,
+  ) => {
+    const a = `${sidebarBasePath}/:fileType/:fileId/:detailType/:detailId`;
+    const path = generatePath(a, {
+      fileType,
+      fileId,
+      detailType,
+      detailId,
     });
 
     if (replace) {
@@ -60,34 +89,34 @@ const usePathGenerator: IPathGenerator = () => {
   };
 
   const editDetails = (fileType: string, fileId: number, detailType: string) => {
-    const a = `${sidebarBasePath}/:fileType/:fileId/edit/:detailType`;
+    const a = `${sidebarBasePath}/:fileType/:fileId/:detailType/edit`;
     const path = generatePath(a, {
-      fileType: fileType,
-      fileId: fileId,
-      detailType: detailType,
+      fileType,
+      fileId,
+      detailType,
     });
 
     history.push(path);
   };
 
   const editDetail = (fileType: string, fileId: number, detailType: string, detailId: number) => {
-    const a = `${sidebarBasePath}/:fileType/:fileId/edit/:detailType/:detailId`;
+    const a = `${sidebarBasePath}/:fileType/:fileId/:detailType/:detailId/edit`;
     const path = generatePath(a, {
-      fileType: fileType,
-      fileId: fileId,
-      detailType: detailType,
-      detailId: detailId,
+      fileType,
+      fileId,
+      detailType,
+      detailId,
     });
 
     history.push(path);
   };
 
   const addDetail = (fileType: string, fileId: number, detailType: string) => {
-    const a = `${sidebarBasePath}/:fileType/:fileId/edit/:detailType`;
+    const a = `${sidebarBasePath}/:fileType/:fileId/:detailType/new`;
     const path = generatePath(a, {
-      fileType: fileType,
-      fileId: fileId,
-      detailType: detailType,
+      fileType,
+      fileId,
+      detailType,
     });
 
     history.push(path);
@@ -96,8 +125,8 @@ const usePathGenerator: IPathGenerator = () => {
   const editProperties = (fileType: string, fileId: number) => {
     const a = `${sidebarBasePath}/:fileType/:fileId/property/selector`;
     const path = generatePath(a, {
-      fileType: fileType,
-      fileId: fileId,
+      fileType,
+      fileId,
     });
 
     history.push(path);
@@ -106,9 +135,9 @@ const usePathGenerator: IPathGenerator = () => {
   const showFilePropertyIndex = (fileType: string, fileId: number, menuIndex: number) => {
     const a = `${sidebarBasePath}/:fileType/:fileId/property/:menuIndex`;
     const path = generatePath(a, {
-      fileType: fileType,
-      fileId: fileId,
-      menuIndex: menuIndex,
+      fileType,
+      fileId,
+      menuIndex,
     });
 
     history.push(path);
@@ -123,10 +152,10 @@ const usePathGenerator: IPathGenerator = () => {
   ) => {
     const a = `${sidebarBasePath}/:fileType/:fileId/file_property/:filePropertyId/:detailType`;
     const path = generatePath(a, {
-      fileType: fileType,
-      fileId: fileId,
-      filePropertyId: filePropertyId,
-      detailType: detailType,
+      fileType,
+      fileId,
+      filePropertyId,
+      detailType,
     });
 
     if (replace) {
@@ -140,6 +169,7 @@ const usePathGenerator: IPathGenerator = () => {
     newFile,
     showFile,
     showDetail,
+    showDetails,
     editDetail,
     editDetails,
     addDetail,

@@ -164,6 +164,23 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait(5000);
         }
 
+        //TO-DO
+        public void SelectPropertyByLongLant(string longitude, string latitude)
+        {
+            //Wait();
+            //ChooseSpecificSelectOption(searchBySelect, "Legal Description");
+
+            //WaitUntilVisible(searchByLegalDescriptionInput);
+            //if (webDriver.FindElement(searchByLegalDescriptionInput).GetDomProperty("value") != "")
+            //{
+            //    ClearInput(searchByLegalDescriptionInput);
+            //}
+            //webDriver.FindElement(searchByLegalDescriptionInput).SendKeys(legalDescription);
+
+            //FocusAndClick(searchByButton);
+            //Wait(5000);
+        }
+
         public void AddNameSelectedProperty(string name, int index)
         {
             WaitUntilVisible(By.Id("input-properties." + index + ".name"));
