@@ -146,6 +146,8 @@ namespace Pims.Dal.Repositories
                 .Include(l => l.LeaseStatusTypeCodeNavigation)
                 .Include(l => l.PimsLeaseStakeholders)
                     .ThenInclude(t => t.Person)
+                .Include(l => l.PimsLeaseStakeholders)
+                    .ThenInclude(t => t.Organization)
                 .Include(t => t.PimsPropertyImprovements)
                 .Include(l => l.PimsInsurances)
                 .Include(l => l.PimsSecurityDeposits)
