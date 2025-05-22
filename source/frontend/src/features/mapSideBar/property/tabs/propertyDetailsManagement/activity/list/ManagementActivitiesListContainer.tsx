@@ -5,18 +5,21 @@ import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import { usePropertyActivityRepository } from '@/hooks/repositories/usePropertyActivityRepository';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import useIsMounted from '@/hooks/util/useIsMounted';
+import { isValidId } from '@/utils';
 
 import { IManagementActivitiesListViewProps } from './ManagementActivitiesListView';
 import { PropertyActivityRow } from './models/PropertyActivityRow';
 
 export interface IPropertyManagementActivitiesListContainerProps {
   propertyId: number;
+  isAdHoc?: boolean;
+  isReadOnly?: boolean;
   View: React.FC<IManagementActivitiesListViewProps>;
 }
 
 const PropertyManagementActivitiesListContainer: React.FunctionComponent<
   IPropertyManagementActivitiesListContainerProps
-> = ({ propertyId, View }) => {
+> = ({ propertyId, isAdHoc, isReadOnly, View }) => {
   const history = useHistory();
   const isMounted = useIsMounted();
   const { setModalContent, setDisplayModal } = useModalContext();
@@ -63,7 +66,11 @@ const PropertyManagementActivitiesListContainer: React.FunctionComponent<
     <View
       isEmbedded={false}
       isLoading={loading || deletingActivity}
-      propertyActivities={propertyActivities}
+      propertyActivities={
+        isAdHoc
+          ? propertyActivities.filter(pa => !isValidId(pa.managementFileId))
+          : propertyActivities.filter(pa => isValidId(pa.managementFileId))
+      }
       onCreate={onCreate}
       onView={onView}
       onDelete={async (activityId: number) => {

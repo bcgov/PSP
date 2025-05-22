@@ -38,6 +38,13 @@ export const PropertyManagementTabView: React.FunctionComponent<IPropertyManagem
         <PropertyManagementActivitiesListContainer
           View={ManagementActivitiesListView}
           propertyId={property.id}
+          isAdHoc={true}
+        ></PropertyManagementActivitiesListContainer>
+        <PropertyManagementActivitiesListContainer
+          View={ManagementActivitiesListView}
+          propertyId={property.id}
+          isAdHoc={false}
+          isReadOnly={true}
         ></PropertyManagementActivitiesListContainer>
       </StyledSummarySection>
     );

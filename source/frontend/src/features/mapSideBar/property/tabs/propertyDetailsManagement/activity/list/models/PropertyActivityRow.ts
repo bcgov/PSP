@@ -8,6 +8,7 @@ export class PropertyActivityRow {
   activityStatusType: ApiGen_Base_CodeType<string> | null = null;
   requestedAddedDate: string | null = null;
   displayOrder: number | null = null;
+  managementFileId: number | null = null;
 
   constructor(
     readonly id: number | null,
@@ -23,6 +24,7 @@ export class PropertyActivityRow {
     row.requestedAddedDate = isValidIsoDateTime(model.requestAddedDateOnly)
       ? model.requestAddedDateOnly
       : null;
+    row.managementFileId = model.managementFileId;
 
     return row;
   }
