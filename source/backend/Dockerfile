@@ -6,7 +6,6 @@ EXPOSE 5001 5000
 # Copy csproj and restore as distinct layers
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY api/*.sln api/
 COPY Directory.Build.props .
 COPY api/*.csproj api/
 COPY apimodels/*.csproj apimodels/

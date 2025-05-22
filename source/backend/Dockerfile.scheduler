@@ -15,7 +15,7 @@ COPY core.api core.api/
 COPY keycloak keycloak/
 COPY scheduler/*.csproj scheduler/
 
-RUN dotnet restore scheduler/Scheduler.sln
+RUN dotnet restore scheduler/Pims.Scheduler.csproj
 ENV PATH="$PATH:/root/.dotnet/tools"
 # Copy everything else and build
 WORKDIR /src/scheduler
