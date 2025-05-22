@@ -10,7 +10,7 @@ import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { isValidId } from '@/utils';
 
-import AdHocFileActivitiesSummaryContainer from './list/AdHocFileActivitiesSummaryContainer';
+import AdHocFileActivitiesSummaryContainer from './list/AdHocSummaryActivitiesContainer';
 import AdHocSummaryActivitiesView from './list/AdHocSummaryActivitiesListView';
 import ManagementFileActivitiesListContainer from './list/ManagementFileActivitiesListContainer';
 import ManagementFileActivitiesListView from './list/ManagementFileActivitiesListView';
