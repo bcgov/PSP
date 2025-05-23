@@ -1,11 +1,15 @@
-import React from 'react';
+import { isEmpty } from 'lodash';
+import { useCallback, useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
+import { FaFileAlt, FaFileExcel } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
 import ManagementFileIcon from '@/assets/images/management-icon.svg?react';
+import { StyledIconButton } from '@/components/common/buttons/IconButton';
 import * as CommonStyled from '@/components/common/styles';
 import { PaddedScrollable } from '@/components/common/styles';
+import TooltipWrapper from '@/components/common/TooltipWrapper';
 import {
   PROP_MGMT_ACTIVITY_STATUS_TYPES,
   PROP_MGMT_ACTIVITY_SUBTYPES_TYPES,
@@ -16,8 +20,10 @@ import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { useSearch } from '@/hooks/useSearch';
 import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
 import { Api_ManagementActivityFilter } from '@/models/api/ManagementActivityFilter';
-import { mapLookupCode } from '@/utils';
+import { generateMultiSortCriteria, mapLookupCode } from '@/utils';
+import { toFilteredApiPaginateParams } from '@/utils/CommonFunctions';
 
+import { useManagementActivityExport } from '../../hooks/useManagementActivityExport';
 import { ManagementActivityFilterModel } from '../models/ManagementActivityFilterModel';
 import { ManagementActivitySearchResultModel } from '../models/ManagementActivitySearchResultModel';
 import ActivitiesFilter from './filter/ActivitiesFilter';
@@ -44,6 +50,24 @@ export const ManagementActivitiesListView: React.FC<unknown> = () => {
     .getByType(PROP_MGMT_ACTIVITY_SUBTYPES_TYPES)
     .map(c => mapLookupCode(c));
 
+  const { exportManagementActivities } = useManagementActivityExport();
+
+  /**
+   * @param {'csv' | 'excel'} accept Whether the fetch is for type of CSV or EXCEL
+   * @param {boolean} getAllFields Enable this field to generate report with additional fields. For SRES only.
+   */
+  const fetch = (accept: 'csv' | 'excel') => {
+    // Call API with appropriate search parameters
+    const query = toFilteredApiPaginateParams<Api_ManagementActivityFilter>(
+      currentPage,
+      pageSize,
+      sort && !isEmpty(sort) ? generateMultiSortCriteria(sort) : undefined,
+      filter,
+    );
+
+    exportManagementActivities(query, accept);
+  };
+
   const {
     results,
     filter,
@@ -64,14 +88,14 @@ export const ManagementActivitiesListView: React.FC<unknown> = () => {
     'No matching results can be found. Try widening your search criteria.',
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (error) {
       toast.error(error?.message);
     }
   }, [error]);
 
   // update internal state whenever the filter bar changes
-  const changeFilter = React.useCallback(
+  const changeFilter = useCallback(
     (filter: Api_ManagementActivityFilter) => {
       setFilter(filter);
       setCurrentPage(0);
@@ -100,6 +124,20 @@ export const ManagementActivitiesListView: React.FC<unknown> = () => {
                 activityTypesOptions={activityTypesOptions}
                 activitySubTypesOptions={activitySubTypesOptions}
               />
+            </Col>
+            <Col md="auto" className="px-0">
+              <TooltipWrapper tooltipId="export-to-excel" tooltip="Export to Excel">
+                <StyledIconButton onClick={() => fetch('excel')}>
+                  <FaFileExcel data-testid="excel-icon" size={36} />
+                </StyledIconButton>
+              </TooltipWrapper>
+            </Col>
+            <Col md="auto" className="px-0">
+              <TooltipWrapper tooltipId="export-to-excel" tooltip="Export to CSV">
+                <StyledIconButton onClick={() => fetch('csv')}>
+                  <FaFileAlt data-testid="csv-icon" size={36} />
+                </StyledIconButton>
+              </TooltipWrapper>
             </Col>
           </Row>
         </CommonStyled.PageToolbar>

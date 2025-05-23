@@ -5,6 +5,8 @@ namespace Pims.Dal.Repositories
 {
     public interface IManagementActivityRepository : IRepository
     {
+        int Count();
+
         Paged<PimsPropertyActivity> GetPageDeep(ManagementActivityFilter filter);
     }
 }

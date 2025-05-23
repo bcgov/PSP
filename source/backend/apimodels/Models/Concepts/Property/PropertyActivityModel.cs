@@ -15,7 +15,7 @@ namespace Pims.Api.Models.Concepts.Property
 
         public long? ManagementFileId { get; set; }
 
-        public ManagementFileModel  ManagementFile { get; set; }
+        public ManagementFileModel ManagementFile { get; set; }
 
         public CodeTypeModel<string> ActivityTypeCode { get; set; }
 

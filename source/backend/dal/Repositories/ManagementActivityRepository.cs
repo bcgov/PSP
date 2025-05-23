@@ -18,6 +18,15 @@ namespace Pims.Dal.Repositories
         {
         }
 
+        /// <summary>
+        /// Returns the total number of Management Actities in the database.
+        /// </summary>
+        /// <returns></returns>
+        public int Count()
+        {
+            return Context.PimsPropertyActivities.Count();
+        }
+
         public Paged<PimsPropertyActivity> GetPageDeep(ManagementActivityFilter filter)
         {
             using var scope = Logger.QueryScope();
@@ -107,6 +116,37 @@ namespace Pims.Dal.Repositories
                             .ThenInclude(a => a.Address)
 
                 .Where(predicate);
+
+            if (filter.Sort?.Any() == true)
+            {
+                var field = filter.Sort.FirstOrDefault()?.Split(" ")?.FirstOrDefault();
+                var direction = filter.Sort.FirstOrDefault()?.Split(" ")?.LastOrDefault();
+
+                if (field == "ActivityStatus")
+                {
+                    query = direction == "asc" ? query.OrderBy(c => c.PropMgmtActivityStatusTypeCodeNavigation.Description) : query.OrderByDescending(c => c.PropMgmtActivityStatusTypeCodeNavigation.Description);
+                }
+                else if (field == "ActivityType")
+                {
+                    query = direction == "asc" ? query.OrderBy(c => c.PropMgmtActivityStatusTypeCodeNavigation.Description) : query.OrderByDescending(c => c.PropMgmtActivityStatusTypeCodeNavigation.Description);
+                }
+                else if (field == "ActivitySubType")
+                {
+                    query = direction == "asc" ? query.OrderBy(c => c.PropMgmtActivitySubtypeCodeNavigation.Description) : query.OrderByDescending(c => c.PropMgmtActivitySubtypeCodeNavigation.Description);
+                }
+                else if (field == "FileName")
+                {
+                    query = direction == "asc" ? query.OrderBy(c => c.ManagementFile.FileName) : query.OrderByDescending(c => c.ManagementFile.FileName);
+                }
+                else if (field == "LegacyFileNum")
+                {
+                    query = direction == "asc" ? query.OrderBy(c => c.ManagementFile.LegacyFileNum) : query.OrderByDescending(c => c.ManagementFile.LegacyFileNum);
+                }
+            }
+            else
+            {
+                query = query.OrderBy(x => x.PimsPropertyActivityId);
+            }
 
             return query;
         }

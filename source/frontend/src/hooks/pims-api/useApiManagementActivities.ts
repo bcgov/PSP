@@ -33,6 +33,23 @@ export const useApiManagementActivities = () => {
       getManagementActivitiesPagedApi: (params: IPaginateManagementActivities | null) =>
         api.get<ApiGen_Base_Page<ApiGen_Concepts_PropertyActivity>>(
           `/management-activities/search?${params ? queryString.stringify(params) : ''}`,
+        ),
+
+      exportManagementActivitiesApi: (
+        filter: IPaginateManagementActivities,
+        outputFormat: 'csv' | 'excel' = 'excel',
+      ) =>
+        api.get<Blob>(
+          `/reports/management-activities?${
+            filter ? queryString.stringify({ ...filter, all: true }) : ''
+          }`,
+          {
+            responseType: 'blob',
+            headers: {
+              Accept: outputFormat === 'csv' ? 'text/csv' : 'application/vnd.ms-excel',
+            },
+          },
+        ),
       getActivityApi: (managementFileId: number, propertyActivityId: number) =>
         api.get<ApiGen_Concepts_PropertyActivity>(
           `/managementfiles/${managementFileId}/management-activities/${propertyActivityId}`,

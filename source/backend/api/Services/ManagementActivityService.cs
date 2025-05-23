@@ -21,11 +21,14 @@ namespace Pims.Api.Services
             _managementActivityRepository = managementActivityRepository;
         }
 
-        public Paged<PimsPropertyActivity> GetPage(ManagementActivityFilter filter)
+        public Paged<PimsPropertyActivity> GetPage(ManagementActivityFilter filter, bool? all = false)
         {
             _logger.LogInformation("Searching for management files...");
             _logger.LogDebug("Management file search with filter: {filter}", filter);
             _user.ThrowIfNotAuthorized(Permissions.ManagementView);
+
+            filter.Page = all.HasValue && all.Value ? 1 : filter.Page;
+            filter.Quantity = all.HasValue && all.Value ? _managementActivityRepository.Count() : filter.Quantity;
 
             return _managementActivityRepository.GetPageDeep(filter);
         }

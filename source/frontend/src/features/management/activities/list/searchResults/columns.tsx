@@ -6,26 +6,6 @@ import { ColumnWithProps } from '@/components/Table';
 import { ManagementActivitySearchResultModel } from '../../models/ManagementActivitySearchResultModel';
 
 export const columns: ColumnWithProps<ManagementActivitySearchResultModel>[] = [
-  // {
-  //   Header: 'Management file #',
-  //   accessor: 'managementFileId',
-  //   align: 'center',
-  //   clickable: true,
-  //   sortable: true,
-  //   width: 10,
-  //   maxWidth: 20,
-  //   Cell: (props: CellProps<ManagementActivitySearchResultModel>) => {
-  //     const { hasClaim } = useKeycloakWrapper();
-  //     if (hasClaim(Claims.MANAGEMENT_VIEW)) {
-  //       return (
-  //         <Link to={`/mapview/sidebar/management/${props.row.original.managementFileId}`}>
-  //           M-{props.row.original.managementFileId.toString()}
-  //         </Link>
-  //       );
-  //     }
-  //     return stringToFragment(props.row.original.managementFileId.toString());
-  //   },
-  // },
   {
     Header: 'File name',
     accessor: 'fileName',
