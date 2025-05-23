@@ -25,7 +25,7 @@ namespace Pims.Api.Services
         private readonly IPropertyRepository _propertyRepository;
         private readonly IPropertyService _propertyService;
         private readonly ILookupRepository _lookupRepository;
-        private readonly IEntityNoteRepository _entityNoteRepository;
+        private readonly INoteRelationshipRepository<PimsManagementFileNote> _entityNoteRepository;
         private readonly IManagementStatusSolver _managementStatusSolver;
         private readonly IPropertyOperationService _propertyOperationService;
         private readonly IPropertyActivityRepository _propertyActivityRepository;
@@ -35,11 +35,10 @@ namespace Pims.Api.Services
             ILogger<ManagementFileService> logger,
             IManagementFileRepository managementFileRepository,
             IManagementFilePropertyRepository managementFilePropertyRepository,
-            ICoordinateTransformService coordinateService,
             IPropertyRepository propertyRepository,
             IPropertyService propertyService,
             ILookupRepository lookupRepository,
-            IEntityNoteRepository entityNoteRepository,
+            INoteRelationshipRepository<PimsManagementFileNote> entityNoteRepository,
             IManagementStatusSolver managementStatusSolver,
             IPropertyOperationService propertyOperationService,
             IPropertyActivityRepository propertyActivityRepository)
@@ -320,7 +319,7 @@ namespace Pims.Api.Services
                 },
             };
 
-            _entityNoteRepository.Add(fileNoteInstance);
+            _entityNoteRepository.AddNoteRelationship(fileNoteInstance);
         }
 
         private void MatchProperties(PimsManagementFile managementFile, IEnumerable<UserOverrideCode> overrideCodes)

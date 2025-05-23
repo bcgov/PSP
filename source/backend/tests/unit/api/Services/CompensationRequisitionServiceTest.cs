@@ -8,16 +8,16 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
 using Pims.Api.Constants;
-using Pims.Core.Api.Exceptions;
 using Pims.Api.Models.Cdogs;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Services;
+using Pims.Core.Api.Exceptions;
 using Pims.Core.Exceptions;
+using Pims.Core.Security;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
-using Pims.Core.Security;
 using Sprache;
 using Xunit;
 using FileTypes = Pims.Api.Models.CodeTypes.FileTypes;
@@ -490,7 +490,7 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
-            var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            var noteRepository = this._helper.GetService<Mock<INoteRelationshipRepository<PimsAcquisitionFileNote>>>();
             var compensationRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
 
             var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
@@ -537,7 +537,7 @@ namespace Pims.Api.Test.Services
             result.Should().NotBeNull();
             result.FinalizedDate.Should().NotBeNull();
             compensationRepository.Verify(x => x.Update(It.IsAny<PimsCompensationRequisition>()), Times.Once);
-            noteRepository.Verify(x => x.Add(It.Is<PimsAcquisitionFileNote>(x => x.AcquisitionFileId == 7
+            noteRepository.Verify(x => x.AddNoteRelationship(It.Is<PimsAcquisitionFileNote>(x => x.AcquisitionFileId == 7
                 && x.Note.NoteTxt.Equals("Compensation Requisition with # 1, changed status from 'Draft' to 'Final'"))), Times.Once);
         }
 
@@ -546,7 +546,7 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
-            var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            var noteRepository = this._helper.GetService<Mock<INoteRelationshipRepository<PimsAcquisitionFileNote>>>();
             var repository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
 
             var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
@@ -578,7 +578,7 @@ namespace Pims.Api.Test.Services
             result.Should().NotBeNull();
             result.FinalizedDate.Should().BeNull();
             repository.Verify(x => x.Update(It.IsAny<PimsCompensationRequisition>()), Times.Once);
-            noteRepository.Verify(x => x.Add(It.Is<PimsAcquisitionFileNote>(x => x.AcquisitionFileId == 1
+            noteRepository.Verify(x => x.AddNoteRelationship(It.Is<PimsAcquisitionFileNote>(x => x.AcquisitionFileId == 1
                 && x.Note.NoteTxt.Equals("Compensation Requisition with # 1, changed status from 'Draft' to 'Final'"))), Times.Never);
         }
 
@@ -587,7 +587,7 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
-            var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            var noteRepository = this._helper.GetService<Mock<INoteRelationshipRepository<PimsAcquisitionFileNote>>>();
 
             var compRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
             compRepository.Setup(x => x.GetById(It.IsAny<long>()))
@@ -621,7 +621,7 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
-            var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            var noteRepository = this._helper.GetService<Mock<INoteRelationshipRepository<PimsAcquisitionFileNote>>>();
             var compRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
 
             compRepository.Setup(x => x.GetById(It.IsAny<long>()))
@@ -655,7 +655,7 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit, Permissions.SystemAdmin);
-            var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            var noteRepository = this._helper.GetService<Mock<INoteRelationshipRepository<PimsAcquisitionFileNote>>>();
             var repository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
 
             var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
@@ -687,7 +687,7 @@ namespace Pims.Api.Test.Services
             result.Should().NotBeNull();
             result.FinalizedDate.Should().BeNull();
             repository.Verify(x => x.Update(It.IsAny<PimsCompensationRequisition>()), Times.Once);
-            noteRepository.Verify(x => x.Add(It.Is<PimsAcquisitionFileNote>(x => x.AcquisitionFileId == 1
+            noteRepository.Verify(x => x.AddNoteRelationship(It.Is<PimsAcquisitionFileNote>(x => x.AcquisitionFileId == 1
                 && x.Note.NoteTxt.Equals("Compensation Requisition with # 1, changed status from 'Final' to 'Draft'"))), Times.Once);
         }
 
@@ -696,7 +696,7 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit, Permissions.SystemAdmin);
-            var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            var noteRepository = this._helper.GetService<Mock<INoteRelationshipRepository<PimsAcquisitionFileNote>>>();
             var repository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
 
             var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
@@ -728,7 +728,7 @@ namespace Pims.Api.Test.Services
             result.Should().NotBeNull();
             result.FinalizedDate.Should().BeNull();
             repository.Verify(x => x.Update(It.IsAny<PimsCompensationRequisition>()), Times.Once);
-            noteRepository.Verify(x => x.Add(It.Is<PimsAcquisitionFileNote>(x => x.AcquisitionFileId == 1
+            noteRepository.Verify(x => x.AddNoteRelationship(It.Is<PimsAcquisitionFileNote>(x => x.AcquisitionFileId == 1
                 && x.Note.NoteTxt.Equals("Compensation Requisition with # 1, changed status from 'Final' to 'No Status'"))), Times.Once);
         }
 
@@ -737,7 +737,7 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
-            var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            var noteRepository = this._helper.GetService<Mock<INoteRelationshipRepository<PimsAcquisitionFileNote>>>();
             var compRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
 
             var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
@@ -768,7 +768,7 @@ namespace Pims.Api.Test.Services
             result.Should().NotBeNull();
             result.FinalizedDate.Should().BeNull();
             compRepository.Verify(x => x.Update(It.IsAny<PimsCompensationRequisition>()), Times.Once);
-            noteRepository.Verify(x => x.Add(It.Is<PimsAcquisitionFileNote>(x => x.AcquisitionFileId == 1
+            noteRepository.Verify(x => x.AddNoteRelationship(It.Is<PimsAcquisitionFileNote>(x => x.AcquisitionFileId == 1
                 && x.Note.NoteTxt.Equals("Compensation Requisition with # 1, changed status from 'No Status' to 'Draft'"))), Times.Once);
         }
 
@@ -778,7 +778,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
             var compReqH120Service = this._helper.GetService<Mock<ICompReqFinancialService>>();
-            var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            var noteRepository = this._helper.GetService<Mock<INoteRelationshipRepository<PimsAcquisitionFileNote>>>();
             var compRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
             var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
 
@@ -820,7 +820,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
             var compReqH120Service = this._helper.GetService<Mock<ICompReqFinancialService>>();
-            var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            var noteRepository = this._helper.GetService<Mock<INoteRelationshipRepository<PimsAcquisitionFileNote>>>();
             var compRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
             var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
 
@@ -864,7 +864,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
             var compReqH120Service = this._helper.GetService<Mock<ICompReqFinancialService>>();
-            var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            var noteRepository = this._helper.GetService<Mock<INoteRelationshipRepository<PimsAcquisitionFileNote>>>();
             var compRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
             var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
 
@@ -906,7 +906,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
             var compReqH120Service = this._helper.GetService<Mock<ICompReqFinancialService>>();
-            var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            var noteRepository = this._helper.GetService<Mock<INoteRelationshipRepository<PimsAcquisitionFileNote>>>();
             var compRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
             var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
 
@@ -948,7 +948,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
             var compReqH120Service = this._helper.GetService<Mock<ICompReqFinancialService>>();
-            var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            var noteRepository = this._helper.GetService<Mock<INoteRelationshipRepository<PimsAcquisitionFileNote>>>();
             var compRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
             var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
 
@@ -1145,7 +1145,7 @@ namespace Pims.Api.Test.Services
             leaseFileRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(
               new PimsLease()
               {
-                 LeaseStatusTypeCode = LeaseStatusTypes.ACTIVE.ToString()
+                  LeaseStatusTypeCode = LeaseStatusTypes.ACTIVE.ToString()
               });
 
             var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
