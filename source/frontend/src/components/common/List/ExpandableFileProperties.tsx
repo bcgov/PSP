@@ -3,21 +3,21 @@ import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
 import { LinkButton } from '@/components/common/buttons';
-import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { formatApiAddress, pidFormatter } from '@/utils';
 
 export interface IExpandableFilePropertiesProps {
-  fileProperties?: ApiGen_Concepts_FileProperty[];
+  properties: ApiGen_Concepts_Property[] | null;
   maxDisplayCount: number;
 }
 
 const ExpandableFileProperties: React.FunctionComponent<IExpandableFilePropertiesProps> = props => {
   const [isExpanded, setExpanded] = useState(false);
 
-  const fileProperties = props.fileProperties || [];
+  const fileProperties = props.properties ?? [];
   const maxDisplayCount = props.maxDisplayCount;
 
-  let displayProperties: ApiGen_Concepts_FileProperty[] = [];
+  let displayProperties: ApiGen_Concepts_Property[] = [];
   if (!isExpanded) {
     displayProperties = fileProperties.slice(0, maxDisplayCount);
   } else {
@@ -29,20 +29,19 @@ const ExpandableFileProperties: React.FunctionComponent<IExpandableFilePropertie
       <PropertyRow key={index} className="mx-0 my-2 border border-secondary">
         <Col md="12">
           <strong className="pr-2">Address:</strong>
-          {formatApiAddress(property.property?.address)}
+          {formatApiAddress(property?.address)}
         </Col>
-        {property.property?.pid && (
+        {property?.pid && (
           <Col md="auto">
             <div>
-              <strong className="pr-2">PID:</strong>{' '}
-              {pidFormatter(property.property?.pid?.toString())}
+              <strong className="pr-2">PID:</strong> {pidFormatter(property?.pid?.toString())}
             </div>
           </Col>
         )}
-        {property.property?.pin && (
+        {property?.pin && (
           <Col md="auto">
             <div>
-              <strong className="pr-2">PIN:</strong> {property.property.pin}
+              <strong className="pr-2">PIN:</strong> {property.pin}
             </div>
           </Col>
         )}

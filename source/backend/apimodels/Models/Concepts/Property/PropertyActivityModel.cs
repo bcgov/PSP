@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Pims.Api.Models.Base;
+using Pims.Api.Models.Concepts.ManagementFile;
 using Pims.Api.Models.Concepts.Organization;
 using Pims.Api.Models.Concepts.Person;
 
@@ -13,6 +14,8 @@ namespace Pims.Api.Models.Concepts.Property
         public long Id { get; set; }
 
         public long? ManagementFileId { get; set; }
+
+        public ManagementFileModel ManagementFile { get; set; }
 
         public CodeTypeModel<string> ActivityTypeCode { get; set; }
 

@@ -5,6 +5,7 @@ import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 const emptyActivity: ApiGen_Concepts_PropertyActivity = {
   id: 0,
   managementFileId: null,
+  managementFile: null,
   activityTypeCode: {
     id: 'ACTIVITY-TYPE',
     description: 'Activity Type Description',
