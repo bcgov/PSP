@@ -4,31 +4,26 @@ import { TableSort } from '@/components/Table/TableSort';
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import { IManagementActivitiesListViewProps } from '@/features/mapSideBar/property/tabs/propertyDetailsManagement/activity/list/ManagementActivitiesListView';
 import { PropertyActivityRow } from '@/features/mapSideBar/property/tabs/propertyDetailsManagement/activity/list/models/PropertyActivityRow';
-import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator';
 import { useManagementActivityRepository } from '@/hooks/repositories/useManagementActivityRepository';
-import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import useIsMounted from '@/hooks/util/useIsMounted';
 import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
+import { isValidId } from '@/utils/utils';
 
 export interface IPropertyManagementActivitiesListContainerProps {
   managementFileId: number;
   View: React.FC<IManagementActivitiesListViewProps>;
 }
 
-const ManagementFileActivitiesListContainer: React.FunctionComponent<
+const AdHocFileActivitiesSummaryContainer: React.FunctionComponent<
   IPropertyManagementActivitiesListContainerProps
 > = ({ managementFileId, View }) => {
   const isMounted = useIsMounted();
-  const { setModalContent, setDisplayModal } = useModalContext();
   const [propertyActivities, setPropertyActivities] = useState<PropertyActivityRow[]>([]);
   const { staleLastUpdatedBy } = useContext(SideBarContext);
   const [sort, setSort] = useState<TableSort<ApiGen_Concepts_PropertyActivity>>({});
 
-  const pathGenerator = usePathGenerator();
-
   const {
-    getManagementActivities: { execute: getActivities, loading },
-    deleteManagementActivity: { execute: deleteActivity, loading: deletingActivity },
+    getManagementFileActivities: { execute: getActivities, loading },
   } = useManagementActivityRepository();
 
   const fetchPropertyActivities = useCallback(async () => {
@@ -38,53 +33,23 @@ const ManagementFileActivitiesListContainer: React.FunctionComponent<
     }
   }, [getActivities, isMounted, managementFileId]);
 
-  const onDelete = useCallback(
-    async (activityId: number) => {
-      const result = await deleteActivity(managementFileId, activityId);
-      if (result === true) {
-        fetchPropertyActivities();
-        pathGenerator.showDetails('management', managementFileId, 'activities', true);
-      }
-    },
-    [deleteActivity, fetchPropertyActivities, managementFileId, pathGenerator],
-  );
-
   useEffect(() => {
     fetchPropertyActivities();
   }, [fetchPropertyActivities, staleLastUpdatedBy]);
   //TODO: remove staleLastUpdatedBy when side bar context is refactored.
 
-  const onCreate = () => {
-    pathGenerator.addDetail('management', managementFileId, 'activities');
-  };
-
-  const onView = (activityId: number) => {
-    pathGenerator.showDetail('management', managementFileId, 'activities', activityId, false);
-  };
-
   return (
     <View
-      isLoading={loading || deletingActivity}
-      propertyActivities={propertyActivities}
+      isLoading={loading}
+      propertyActivities={propertyActivities.filter(pa => !isValidId(pa.managementFileId))}
       setSort={setSort}
       sort={sort}
-      onCreate={onCreate}
-      onView={onView}
-      onDelete={async (activityId: number) => {
-        setModalContent({
-          ...getDeleteModalProps(),
-          handleOk: async () => {
-            await onDelete(activityId);
-            setDisplayModal(false);
-          },
-          handleCancel: () => {
-            setDisplayModal(false);
-          },
-        });
-        setDisplayModal(true);
-      }}
+      getNavigationUrl={(row: PropertyActivityRow) => ({
+        url: `/mapview/sidebar/property/${row.adHocPropertyId}/management/activity/${row.activityId}`,
+        title: row.adHocPropertyName,
+      })}
     />
   );
 };
 
-export default ManagementFileActivitiesListContainer;
+export default AdHocFileActivitiesSummaryContainer;

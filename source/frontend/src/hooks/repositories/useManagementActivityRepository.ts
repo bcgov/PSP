@@ -17,6 +17,7 @@ export const useManagementActivityRepository = () => {
     postActivityApi,
     getActivityApi,
     getActivitiesApi,
+    getFileActivitiesApi,
     deleteActivityApi,
   } = useApiManagementActivities();
 
@@ -76,6 +77,18 @@ export const useManagementActivityRepository = () => {
     onError: useAxiosErrorHandler('Failed to load property management activities list.'),
   });
 
+  const getManagementFileActivities = useApiRequestWrapper<
+    (managementFileId: number) => Promise<AxiosResponse<ApiGen_Concepts_PropertyActivity[], any>>
+  >({
+    requestFunction: useCallback(
+      async (managementFileId: number) => await getFileActivitiesApi(managementFileId),
+      [getFileActivitiesApi],
+    ),
+    requestName: 'getManagementFileActivities',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler('Failed to load property management file activities list.'),
+  });
+
   const deleteManagementActivity = useApiRequestWrapper<
     (managementFileId: number, propertyActivityId: number) => Promise<AxiosResponse<boolean, any>>
   >({
@@ -97,6 +110,7 @@ export const useManagementActivityRepository = () => {
       addManagementActivity,
       getManagementActivity,
       getManagementActivities,
+      getManagementFileActivities,
       deleteManagementActivity,
     }),
     [
@@ -104,6 +118,7 @@ export const useManagementActivityRepository = () => {
       addManagementActivity,
       getManagementActivity,
       getManagementActivities,
+      getManagementFileActivities,
       deleteManagementActivity,
     ],
   );

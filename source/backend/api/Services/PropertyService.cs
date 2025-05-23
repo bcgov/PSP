@@ -261,10 +261,20 @@ namespace Pims.Api.Services
 
         public PimsPropertyActivity GetFileActivity(long activityId)
         {
-            _logger.LogInformation("Retrieving single property Activity...");
+            _logger.LogInformation("Retrieving file property Activity...");
             _user.ThrowIfNotAllAuthorized(Permissions.ManagementView, Permissions.PropertyView);
 
             return _propertyActivityRepository.GetActivity(activityId);
+        }
+
+        public IEnumerable<PimsPropertyActivity> GetActivitiesByPropertyIds(IEnumerable<long> propertyIds)
+        {
+            _logger.LogInformation("Retrieving multiple property Activities... {propertyIds}", propertyIds);
+            _user.ThrowIfNotAllAuthorized(Permissions.ManagementView, Permissions.PropertyView);
+
+            var managementFilePropertyIds = _propertyActivityRepository.GetActivitiesByPropertyIds(propertyIds);
+
+            return managementFilePropertyIds;
         }
 
         public PimsPropertyActivity CreateActivity(PimsPropertyActivity propertyActivity)
