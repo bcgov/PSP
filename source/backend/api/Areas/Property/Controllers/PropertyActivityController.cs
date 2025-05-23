@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -94,8 +95,14 @@ namespace Pims.Api.Areas.Property.Controllers
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetPropertyActivity(long propertyId, long activityId)
         {
-            var activity = _propertyService.GetActivity(propertyId, activityId);
-            return new JsonResult(_mapper.Map<PropertyActivityModel>(activity));
+            var propertyActivity = _propertyService.GetActivity(activityId);
+
+            if (propertyActivity.PimsPropPropActivities.Any(x => x.PropertyId == propertyId))
+            {
+                return new JsonResult(_mapper.Map<PropertyActivityModel>(propertyActivity));
+            }
+
+            throw new BadRequestException("Activity with the given id does not match the property id");
         }
 
         /// <summary>
@@ -132,8 +139,14 @@ namespace Pims.Api.Areas.Property.Controllers
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult UpdatePropertyActivity(long propertyId, long activityId, [FromBody] PropertyActivityModel activityModel)
         {
-            var activityEntity = _mapper.Map<PimsPropertyActivity>(activityModel);
-            var updatedProperty = _propertyService.UpdateActivity(propertyId, activityId, activityEntity);
+            var propertyActivity = _mapper.Map<PimsPropertyActivity>(activityModel);
+            if (!propertyActivity.PimsPropPropActivities.Any(x => x.PropertyId == propertyId && x.PimsPropertyActivityId == activityId)
+                || propertyActivity.PimsPropertyActivityId != activityId)
+            {
+                throw new BadRequestException("Invalid activity identifiers.");
+            }
+
+            var updatedProperty = _propertyService.UpdateActivity(propertyActivity);
 
             return new JsonResult(_mapper.Map<PropertyActivityModel>(updatedProperty));
         }
