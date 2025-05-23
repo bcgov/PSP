@@ -15,6 +15,9 @@ import PropertyAssociationTabView from '@/features/mapSideBar/property/tabs/prop
 import { PropertyDetailsTabView } from '@/features/mapSideBar/property/tabs/propertyDetails/detail/PropertyDetailsTabView';
 import TakesDetailContainer from '@/features/mapSideBar/property/tabs/takes/detail/TakesDetailContainer';
 import TakesDetailView from '@/features/mapSideBar/property/tabs/takes/detail/TakesDetailView';
+import NoteSummaryContainer from '@/features/notes/list/ManagementNoteSummaryContainer';
+import NoteSummaryView from '@/features/notes/list/ManagementNoteSummaryView';
+import NoteListContainer from '@/features/notes/list/NoteListContainer';
 import NoteListView from '@/features/notes/list/NoteListView';
 import { PROPERTY_TYPES, useComposedProperties } from '@/hooks/repositories/useComposedProperties';
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
@@ -237,11 +240,20 @@ export const PropertyFileContainer: React.FunctionComponent<
   if (exists(composedProperties?.apiWrapper?.response) && hasClaim(Claims.NOTE_VIEW)) {
     tabViews.push({
       content: (
-        <NoteListView
-          type={NoteTypes.Property}
-          entityId={composedProperties.apiWrapper.response.id}
-          onSuccess={props.onChildSuccess}
-        />
+        <>
+          <NoteListContainer
+            type={NoteTypes.Property}
+            entityId={composedProperties.apiWrapper.response.id}
+            onSuccess={props.onChildSuccess}
+            NoteListView={NoteListView}
+          />
+          <NoteSummaryContainer
+            associationType={NoteTypes.Management_File}
+            entityId={composedProperties.apiWrapper.response.id}
+            onSuccess={props.onChildSuccess}
+            NoteListView={NoteSummaryView}
+          />
+        </>
       ),
       key: InventoryTabNames.notes,
       name: 'Notes',
