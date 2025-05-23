@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { Claims } from '@/constants';
+import { Claims, NoteTypes } from '@/constants';
 import { usePropertyDetails } from '@/features/mapSideBar/hooks/usePropertyDetails';
 import {
   InventoryTabNames,
@@ -13,6 +13,7 @@ import BcAssessmentTabView from '@/features/mapSideBar/property/tabs/bcAssessmen
 import LtsaTabView from '@/features/mapSideBar/property/tabs/ltsa/LtsaTabView';
 import PropertyAssociationTabView from '@/features/mapSideBar/property/tabs/propertyAssociations/PropertyAssociationTabView';
 import { PropertyDetailsTabView } from '@/features/mapSideBar/property/tabs/propertyDetails/detail/PropertyDetailsTabView';
+import NoteListView from '@/features/notes/list/NoteListView';
 import ComposedPropertyState from '@/hooks/repositories/useComposedProperties';
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
@@ -204,7 +205,7 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
   }
 
   if (
-    composedPropertyState.apiWrapper?.response !== undefined &&
+    exists(composedPropertyState.apiWrapper?.response) &&
     showPropertyInfoTab &&
     hasClaim(Claims.MANAGEMENT_VIEW)
   ) {
@@ -238,11 +239,25 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
     });
   }
 
+  if (exists(composedPropertyState?.apiWrapper?.response) && hasClaim(Claims.NOTE_VIEW)) {
+    tabViews.push({
+      content: (
+        <NoteListView
+          type={NoteTypes.Property}
+          entityId={composedPropertyState.apiWrapper.response.id}
+          onSuccess={onChildSuccess}
+        />
+      ),
+      key: InventoryTabNames.notes,
+      name: 'Notes',
+    });
+  }
+
   const params = useParams<{ tab?: string }>();
   const activeTab = Object.values(InventoryTabNames).find(t => t === params.tab) ?? defaultTab;
 
   useEffect(() => {
-    if (activeTab === InventoryTabNames.document) {
+    if (activeTab === InventoryTabNames.document || activeTab === InventoryTabNames.notes) {
       setFullWidthSideBar(true);
     } else {
       setFullWidthSideBar(false);

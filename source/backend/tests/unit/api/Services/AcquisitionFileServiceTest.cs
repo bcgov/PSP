@@ -6,16 +6,16 @@ using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using NetTopologySuite.Geometries;
-using Pims.Core.Api.Exceptions;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Services;
+using Pims.Core.Api.Exceptions;
 using Pims.Core.Exceptions;
+using Pims.Core.Security;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
-using Pims.Core.Security;
 using Xunit;
 
 namespace Pims.Api.Test.Services
@@ -859,7 +859,7 @@ namespace Pims.Api.Test.Services
             acqFile.AppCreateUserid = "TESTER";
 
             var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
-            var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            var noteRepository = this._helper.GetService<Mock<INoteRelationshipRepository<PimsAcquisitionFileNote>>>();
             var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
 
             var compReqRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
@@ -892,7 +892,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Once);
-            noteRepository.Verify(x => x.Add(It.Is<PimsAcquisitionFileNote>(x => x.AcquisitionFileId == 1
+            noteRepository.Verify(x => x.AddNoteRelationship(It.Is<PimsAcquisitionFileNote>(x => x.AcquisitionFileId == 1
                     && x.Note.NoteTxt == "Acquisition File status changed from Closed to Active")), Times.Once);
         }
 

@@ -19,7 +19,8 @@ namespace Pims.Api.Services
         private readonly ClaimsPrincipal _user;
         private readonly ILogger _logger;
         private readonly ICompensationRequisitionRepository _compensationRequisitionRepository;
-        private readonly IEntityNoteRepository _entityNoteRepository;
+        private readonly INoteRelationshipRepository<PimsAcquisitionFileNote> _acquisitionNoteRepository;
+        private readonly INoteRelationshipRepository<PimsLeaseNote> _leaseNoteRepository;
         private readonly IUserRepository _userRepository;
         private readonly IAcquisitionFileRepository _acqFileRepository;
         private readonly ICompReqFinancialService _compReqFinancialService;
@@ -34,7 +35,8 @@ namespace Pims.Api.Services
             ClaimsPrincipal user,
             ILogger<CompensationRequisitionService> logger,
             ICompensationRequisitionRepository compensationRequisitionRepository,
-            IEntityNoteRepository entityNoteRepository,
+            INoteRelationshipRepository<PimsAcquisitionFileNote> acquisitionNoteRepository,
+            INoteRelationshipRepository<PimsLeaseNote> leaseNoteRepository,
             IUserRepository userRepository,
             IAcquisitionFileRepository acqFileRepository,
             ICompReqFinancialService compReqFinancialService,
@@ -48,7 +50,8 @@ namespace Pims.Api.Services
             _user = user;
             _logger = logger;
             _compensationRequisitionRepository = compensationRequisitionRepository;
-            _entityNoteRepository = entityNoteRepository;
+            _acquisitionNoteRepository = acquisitionNoteRepository;
+            _leaseNoteRepository = leaseNoteRepository;
             _userRepository = userRepository;
             _acqFileRepository = acqFileRepository;
             _compReqFinancialService = compReqFinancialService;
@@ -471,7 +474,7 @@ namespace Pims.Api.Services
                 },
             };
 
-            _entityNoteRepository.Add(fileNoteInstance);
+            _acquisitionNoteRepository.AddNoteRelationship(fileNoteInstance);
         }
 
         private void AddLeaseNoteIfStatusChanged(long compensationRequisitionId, long leaseId, bool? currentStatus, bool? newStatus)
@@ -498,7 +501,7 @@ namespace Pims.Api.Services
                 },
             };
 
-            _entityNoteRepository.Add(fileNoteInstance);
+            _leaseNoteRepository.AddNoteRelationship(fileNoteInstance);
         }
 
         private void CheckTotalAllowableCompensation(PimsAcquisitionFile currentAcquisitionFile, PimsCompensationRequisition newCompensation)

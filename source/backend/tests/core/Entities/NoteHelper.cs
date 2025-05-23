@@ -165,6 +165,32 @@ namespace Pims.Core.Test
         }
 
         /// <summary>
+        /// Create a new instance of PimsPropertyNote.
+        /// </summary>
+        /// <param name="property"></param>
+        /// <param name="note"></param>
+        /// <returns></returns>
+        public static Entity.PimsPropertyNote CreatePropertyNote(Entity.PimsProperty property = null, Entity.PimsNote note = null)
+        {
+            note ??= EntityHelper.CreateNote("Test Note");
+            property ??= EntityHelper.CreateProperty(1);
+
+            return new Entity.PimsPropertyNote()
+            {
+                Note = note,
+                Property = property,
+                AppCreateTimestamp = DateTime.Now,
+                AppCreateUserid = "admin",
+                AppCreateUserDirectory = string.Empty,
+                AppLastUpdateUserDirectory = string.Empty,
+                AppLastUpdateUserid = string.Empty,
+                DbCreateUserid = string.Empty,
+                DbLastUpdateUserid = string.Empty,
+                ConcurrencyControlNumber = 1,
+            };
+        }
+
+        /// <summary>
         /// Create a new instance of a Note.
         /// </summary>
         /// <param name="id"></param>
