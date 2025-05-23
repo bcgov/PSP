@@ -28,7 +28,6 @@ namespace Pims.Api.Areas.Management.Controllers
     public class ManagementActivityController : ControllerBase
     {
         #region Variables
-        private readonly IManagementFileService _managementService;
         private readonly IPropertyService _propertyService;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
@@ -37,39 +36,14 @@ namespace Pims.Api.Areas.Management.Controllers
         /// <summary>
         /// Creates a new instance of a ManagementActivityController class, initializes it with the specified arguments.
         /// </summary>
-        /// <param name="managementService"></param>
         /// <param name="propertyService"></param>
         /// <param name="mapper"></param>
         /// <param name="logger"></param>
-        public ManagementActivityController(IManagementFileService managementService, IPropertyService propertyService, IMapper mapper, ILogger<ManagementActivityController> logger)
+        public ManagementActivityController(IPropertyService propertyService, IMapper mapper, ILogger<ManagementActivityController> logger)
         {
-            _managementService = managementService;
             _propertyService = propertyService;
             _mapper = mapper;
             _logger = logger;
-        }
-
-        /// <summary>
-        /// Get the management file activity with the given identifiers.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("{managementFileId:long}/management-activities/{activityId}")]
-        [HasPermission(Permissions.ManagementView)]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(PropertyActivityModel), 200)]
-        [SwaggerOperation(Tags = new[] { "property" })]
-        [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult GetManagementActivity(long managementFileId, long activityId)
-        {
-            _logger.LogInformation(
-                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
-                nameof(ManagementActivityController),
-                nameof(GetManagementActivity),
-                User.GetUsername(),
-                DateTime.Now);
-
-            var activity = _managementService.GetActivity(managementFileId, activityId);
-            return new JsonResult(_mapper.Map<PropertyActivityModel>(activity));
         }
 
         /// <summary>
@@ -121,8 +95,13 @@ namespace Pims.Api.Areas.Management.Controllers
                 User.GetUsername(),
                 DateTime.Now);
 
-            var activityEntity = _mapper.Map<PimsPropertyActivity>(activityModel);
-            var updatedProperty = _managementService.UpdateActivity(managementFileId, activityId, activityEntity);
+            var propertyActivity = _mapper.Map<PimsPropertyActivity>(activityModel);
+            if (!propertyActivity.ManagementFileId.HasValue || propertyActivity.ManagementFileId != managementFileId || propertyActivity.Internal_Id != activityId)
+            {
+                throw new BadRequestException("Invalid activity identifiers.");
+            }
+
+            var updatedProperty = _propertyService.UpdateActivity(propertyActivity);
 
             return new JsonResult(_mapper.Map<PropertyActivityModel>(updatedProperty));
         }
@@ -146,7 +125,7 @@ namespace Pims.Api.Areas.Management.Controllers
                 User.GetUsername(),
                 DateTime.Now);
 
-            var activity = _propertyService.GetFileActivity(propertyActivityId);
+            var activity = _propertyService.GetActivity(propertyActivityId);
 
             if (activity.ManagementFileId != managementFileId)
             {
