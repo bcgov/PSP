@@ -12,14 +12,13 @@ import { useApiManagementActivities } from '../pims-api/useApiManagementActiviti
  * hook that interacts with the Management File Activity API.
  */
 export const useManagementActivityRepository = () => {
-  const { getActivitySubtypesApi, getActivityApi, postActivityApi, putActivityApi } =
-    useApiManagementActivities();
   const {
     getActivitySubtypesApi,
     postActivityApi,
     getActivityApi,
     getActivitiesApi,
     deleteActivityApi,
+    putActivityApi,
   } = useApiManagementActivities();
 
   const getActivitySubtypes = useApiRequestWrapper<
@@ -32,22 +31,6 @@ export const useManagementActivityRepository = () => {
     requestName: 'RetrieveActivitySubtypes',
     onSuccess: useAxiosSuccessHandler(),
     onError: useAxiosErrorHandler('Failed to retrieve management activity subtypes.'),
-  });
-
-  const getManagementActivity = useApiRequestWrapper<
-    (
-      managementFileId: number,
-      activityId: number,
-    ) => Promise<AxiosResponse<ApiGen_Concepts_PropertyActivity, any>>
-  >({
-    requestFunction: useCallback(
-      async (managementFileId: number, activityId: number) =>
-        await getActivityApi(managementFileId, activityId),
-      [getActivityApi],
-    ),
-    requestName: 'GetManagementActivity',
-    onSuccess: useAxiosSuccessHandler(),
-    onError: useAxiosErrorHandler('Failed to retrieve a management file activity.'),
   });
 
   const addManagementActivity = useApiRequestWrapper<
@@ -128,17 +111,16 @@ export const useManagementActivityRepository = () => {
   return useMemo(
     () => ({
       getActivitySubtypes,
-      getManagementActivity,
       addManagementActivity,
       updateManagementActivity,
       getManagementActivity,
       getManagementActivities,
       deleteManagementActivity,
     }),
-    [getActivitySubtypes, getManagementActivity, addManagementActivity, updateManagementActivity],
     [
       getActivitySubtypes,
       addManagementActivity,
+      updateManagementActivity,
       getManagementActivity,
       getManagementActivities,
       deleteManagementActivity,

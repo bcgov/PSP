@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { generatePath, matchPath, Switch, useHistory, useLocation } from 'react-router';
+import { matchPath, Switch, useLocation } from 'react-router';
 
 import { Claims } from '@/constants';
 import { exists } from '@/utils';
@@ -9,6 +9,7 @@ import { FileActivityDetailContainer } from '../management/tabs/activities/detai
 import { FileActivityDetailView } from '../management/tabs/activities/detail/FileActivityDetailView';
 import { ManagementActivityEditContainer } from '../management/tabs/activities/edit/ManagementActivityEditContainer';
 import { ManagementActivityEditForm } from '../management/tabs/activities/edit/ManagementActivityEditForm';
+import usePathGenerator from '../shared/sidebarPathGenerator';
 
 interface IManagementFileActivityRouterProps {
   setShowActionBar: (show: boolean) => void;
@@ -18,7 +19,7 @@ export const ManagementFileActivityRouter: React.FunctionComponent<
   React.PropsWithChildren<IManagementFileActivityRouterProps>
 > = React.memo(({ setShowActionBar }) => {
   const location = useLocation();
-  const history = useHistory();
+  const pathGenerator = usePathGenerator();
 
   const matched = matchPath(location.pathname, {
     path: '/mapview/sidebar/management/*/activities/*',
@@ -42,11 +43,12 @@ export const ManagementFileActivityRouter: React.FunctionComponent<
           <ManagementActivityEditContainer
             managementFileId={Number(match.params.managementFileId)}
             onClose={() => {
-              const parentPath = generatePath(
-                '/mapview/sidebar/management/:managementFileId/activities',
-                { managementFileId: match.params.managementFileId },
+              pathGenerator.showDetails(
+                'management',
+                match.params.managementFileId,
+                'activities',
+                true,
               );
-              history.push(parentPath);
             }}
             View={ManagementActivityEditForm}
           />
@@ -63,11 +65,12 @@ export const ManagementFileActivityRouter: React.FunctionComponent<
             managementFileId={Number(match.params.managementFileId)}
             activityId={Number(match.params.activityId)}
             onClose={() => {
-              const parentPath = generatePath(
-                '/mapview/sidebar/management/:managementFileId/activities',
-                { managementFileId: match.params.managementFileId },
+              pathGenerator.showDetails(
+                'management',
+                match.params.managementFileId,
+                'activities',
+                true,
               );
-              history.push(parentPath);
             }}
             View={ManagementActivityEditForm}
           />
@@ -84,8 +87,12 @@ export const ManagementFileActivityRouter: React.FunctionComponent<
             managementFileId={match.params.managementFileId}
             propertyActivityId={match.params.activityId}
             onClose={() => {
-              const parentPath = match?.url.substring(0, match?.url.lastIndexOf('/')) || '/';
-              history.push(parentPath);
+              pathGenerator.showDetails(
+                'management',
+                match.params.managementFileId,
+                'activities',
+                true,
+              );
             }}
             viewEnabled
             View={FileActivityDetailView}

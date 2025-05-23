@@ -1,8 +1,8 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import useActivityContactRetriever from '@/features/mapSideBar/property/tabs/propertyDetailsManagement/activity/hooks';
+import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator';
 import { useManagementActivityRepository } from '@/hooks/repositories/useManagementActivityRepository';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
@@ -23,7 +23,7 @@ export const ManagementActivityEditContainer: React.FunctionComponent<
   IManagementActivityEditContainerProps
 > = ({ managementFileId, activityId, onClose, View }) => {
   const { getSystemConstant } = useSystemConstants();
-  const history = useHistory();
+  const pathGenerator = usePathGenerator();
   const [show, setShow] = useState(true);
   const [subtypes, setSubtypes] = useState<ApiGen_Concepts_PropertyActivitySubtype[]>([]);
   const [loadedActivity, setLoadedActivity] = useState<
@@ -61,10 +61,6 @@ export const ManagementActivityEditContainer: React.FunctionComponent<
   useEffect(() => {
     fetchSubtypes();
   }, [fetchSubtypes]);
-
-  if (!isValidId(file?.id) && fileLoading === false) {
-    return null;
-  }
 
   // Load the activity
   const fetchActivity = useCallback(
@@ -112,17 +108,21 @@ export const ManagementActivityEditContainer: React.FunctionComponent<
 
     if (exists(result) && isValidId(managementFileId)) {
       setStaleLastUpdatedBy(true);
-      history.push(`/mapview/sidebar/management/${managementFileId}/activities/${result.id}`);
+      pathGenerator.showDetail('management', managementFileId, 'activities', result.id, false);
     }
   };
 
   const onCancelClick = () => {
     if (isValidId(managementFileId) && isValidId(activityId)) {
-      history.push(`/mapview/sidebar/management/${managementFileId}/activities/${activityId}`);
+      pathGenerator.showDetail('management', managementFileId, 'activities', activityId, false);
     } else {
       onClose();
     }
   };
+
+  if (!isValidId(file?.id) && fileLoading === false) {
+    return null;
+  }
 
   return exists(castedFile) && isValidId(castedFile?.id) ? (
     <View
