@@ -18,6 +18,7 @@ export const useManagementActivityRepository = () => {
     getActivityApi,
     getActivitiesApi,
     deleteActivityApi,
+    putActivityApi,
   } = useApiManagementActivities();
 
   const getActivitySubtypes = useApiRequestWrapper<
@@ -46,6 +47,22 @@ export const useManagementActivityRepository = () => {
     requestName: 'AddManagementActivity',
     onSuccess: useAxiosSuccessHandler(),
     onError: useAxiosErrorHandler('Failed to create a management file activity.'),
+  });
+
+  const updateManagementActivity = useApiRequestWrapper<
+    (
+      managementFileId: number,
+      activity: ApiGen_Concepts_PropertyActivity,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_PropertyActivity, any>>
+  >({
+    requestFunction: useCallback(
+      async (managementFileId: number, activity: ApiGen_Concepts_PropertyActivity) =>
+        await putActivityApi(managementFileId, activity),
+      [putActivityApi],
+    ),
+    requestName: 'UpdateManagementActivity',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler('Failed to update a management file activity.'),
   });
 
   const getManagementActivity = useApiRequestWrapper<
@@ -95,6 +112,7 @@ export const useManagementActivityRepository = () => {
     () => ({
       getActivitySubtypes,
       addManagementActivity,
+      updateManagementActivity,
       getManagementActivity,
       getManagementActivities,
       deleteManagementActivity,
@@ -102,6 +120,7 @@ export const useManagementActivityRepository = () => {
     [
       getActivitySubtypes,
       addManagementActivity,
+      updateManagementActivity,
       getManagementActivity,
       getManagementActivities,
       deleteManagementActivity,

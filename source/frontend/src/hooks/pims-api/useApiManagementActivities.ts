@@ -24,14 +24,23 @@ export const useApiManagementActivities = () => {
           `/managementfiles/${managementFileId}/management-activities`,
           activity,
         ),
+
+      putActivityApi: (managementFileId: number, activity: ApiGen_Concepts_PropertyActivity) =>
+        api.put<ApiGen_Concepts_PropertyActivity>(
+          `/managementfiles/${managementFileId}/management-activities/${activity.id}`,
+          activity,
+        ),
+
       getActivityApi: (managementFileId: number, propertyActivityId: number) =>
         api.get<ApiGen_Concepts_PropertyActivity>(
           `/managementfiles/${managementFileId}/management-activities/${propertyActivityId}`,
         ),
+
       getActivitiesApi: (managementFileId: number) =>
         api.get<ApiGen_Concepts_PropertyActivity[]>(
           `/managementfiles/${managementFileId}/management-activities/`,
         ),
+
       deleteActivityApi: (managementFileId: number, propertyActivityId: number) =>
         api.delete<boolean>(
           `/managementfiles/${managementFileId}/management-activities/${propertyActivityId}`,

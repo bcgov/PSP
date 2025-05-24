@@ -123,6 +123,9 @@ export const ManagementActivityEditForm: React.FunctionComponent<
   const onActivityTypeChange = async (changeEvent: ChangeEvent<HTMLInputElement>) => {
     const typeCode = changeEvent.target.value;
     setActivityType(typeCode ?? null);
+    if (exists(formikRef.current)) {
+      formikRef.current.setFieldValue('activitySubtypeCode', '');
+    }
   };
 
   const isEditMode = exists(activity);
