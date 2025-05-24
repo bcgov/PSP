@@ -1401,6 +1401,9 @@ exports[`ManagementActivityEditForm component > renders as expected 1`] = `
           <div
             class="c18"
           >
+            <div
+              class="pr-3 col-auto"
+            />
             <button
               class="c14 Button btn btn-secondary"
               type="button"

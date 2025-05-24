@@ -8,7 +8,15 @@ import { mockManagementFileResponse } from '@/mocks/managementFiles.mock';
 import { getMockApiPropertyFiles } from '@/mocks/properties.mock';
 import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, getByName, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
+import {
+  act,
+  getByName,
+  render,
+  RenderOptions,
+  screen,
+  userEvent,
+  within,
+} from '@/utils/test-utils';
 
 import {
   IManagementActivityEditFormProps,
@@ -122,10 +130,15 @@ describe('ManagementActivityEditForm component', () => {
   });
 
   it('validates that completion date is after commencement date', async () => {
+    vi.spyOn(console, 'error').mockImplementation(() => {});
     setup();
 
-    await act(async () => userEvent.paste(getByName('requestedDate'), '2024-10-10'));
-    await act(async () => userEvent.paste(getByName('completionDate'), '2005-03-15'));
+    await act(async () => {
+      userEvent.type(getByName('requestedDate'), '2024-10-10', { delay: 100 });
+    });
+    await act(async () => {
+      userEvent.type(getByName('completionDate'), '2005-03-15', { delay: 100 });
+    });
 
     const save = screen.getByText('Save');
     await act(async () => userEvent.click(save));
@@ -133,6 +146,40 @@ describe('ManagementActivityEditForm component', () => {
     expect(
       await screen.findByText(/Completion date must be after Commencement date/i),
     ).toBeVisible();
+  });
+
+  it(`clears the activity sub-type when the main type is changed`, async () => {
+    setup({ props: { activity: initialValues } });
+
+    const activityType = getByName('activityTypeCode') as HTMLSelectElement;
+    expect(
+      (
+        within(activityType).getByRole('option', {
+          name: 'Applications/Permits',
+        }) as HTMLOptionElement
+      ).selected,
+    ).toBe(true);
+
+    const activitySubtype = getByName('activitySubtypeCode') as HTMLSelectElement;
+    expect(
+      (
+        within(activitySubtype).getByRole('option', {
+          name: 'Access',
+        }) as HTMLOptionElement
+      ).selected,
+    ).toBe(true);
+
+    await act(async () => {
+      userEvent.selectOptions(getByName('activityTypeCode'), 'PROPERTYMTC');
+    });
+
+    expect(
+      (
+        within(activitySubtype).getByRole('option', {
+          name: 'Select subtype',
+        }) as HTMLOptionElement
+      ).selected,
+    ).toBe(true);
   });
 
   it(`submits the form when Save button is clicked`, async () => {
