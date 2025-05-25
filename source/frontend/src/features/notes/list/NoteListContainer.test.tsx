@@ -13,7 +13,8 @@ import {
   within,
 } from '@/utils/test-utils';
 
-import { INoteListViewProps, NoteListView } from './NoteListView';
+import NoteListContainer, { INoteListContainerProps } from './NoteListContainer';
+import { NoteListView } from './NoteListView';
 import NoteListContainer, { INoteListContainerProps } from './NoteListContainer';
 
 vi.mock('@/hooks/repositories/useNoteRepository');
