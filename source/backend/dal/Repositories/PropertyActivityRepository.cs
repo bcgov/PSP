@@ -61,6 +61,7 @@ namespace Pims.Dal.Repositories
                     .Include(pa => pa.PropMgmtActivityStatusTypeCodeNavigation)
                     .Include(pa => pa.PimsPropPropActivities)
                     .Where(pa => pa.ManagementFileId == managementFileId)
+                    .OrderByDescending(x => x.RequestAddedDt)
                     .ToList();
 
             return activities;
@@ -79,6 +80,7 @@ namespace Pims.Dal.Repositories
                     .Include(pa => pa.PimsPropPropActivities)
                     .ThenInclude(ppa => ppa.Property)
                     .Where(pa => pa.PimsPropPropActivities.Any(ppa => propertyIds.Contains(ppa.PropertyId)))
+                    .OrderByDescending(x => x.RequestAddedDt)
                     .ToList();
 
             return activities;
