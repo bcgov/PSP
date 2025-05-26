@@ -8,22 +8,26 @@ import { Claims } from '@/constants';
 import ManagementActivitiesListView from '@/features/mapSideBar/property/tabs/propertyDetailsManagement/activity/list/ManagementActivitiesListView';
 import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { isValidId } from '@/utils';
 
+import ManagementStatusUpdateSolver from '../fileDetails/detail/ManagementStatusUpdateSolver';
 import ManagementFileActivitiesListContainer from './list/ManagementFileActivitiesListContainer';
 
 export interface IActivitiesTabProps {
-  managementFile: ApiGen_Concepts_ManagementFile;
+  managementFileId: number;
+  statusSolver: ManagementStatusUpdateSolver;
 }
 
-export const ActivitiesTab: React.FunctionComponent<IActivitiesTabProps> = ({ managementFile }) => {
+export const ActivitiesTab: React.FunctionComponent<IActivitiesTabProps> = ({
+  managementFileId,
+  statusSolver,
+}) => {
   const { hasClaim } = useKeycloakWrapper();
   const pathGenerator = usePathGenerator();
 
   const onAdd = () => {
-    if (isValidId(managementFile?.id)) {
-      pathGenerator.addDetail('management', managementFile.id, 'activities');
+    if (isValidId(managementFileId)) {
+      pathGenerator.addDetail('management', managementFileId, 'activities');
     }
   };
 
@@ -32,7 +36,7 @@ export const ActivitiesTab: React.FunctionComponent<IActivitiesTabProps> = ({ ma
       <Section
         header={
           <SimpleSectionHeader title="Activity List">
-            {hasClaim(Claims.MANAGEMENT_EDIT) && (
+            {hasClaim(Claims.MANAGEMENT_EDIT) && statusSolver.canEditActivities() && (
               <StyledSectionAddButton onClick={onAdd}>
                 <FaPlus size="2rem" className="mr-2" />
                 Add Activity
@@ -47,7 +51,8 @@ export const ActivitiesTab: React.FunctionComponent<IActivitiesTabProps> = ({ ma
         </p>
         <ManagementFileActivitiesListContainer
           View={ManagementActivitiesListView}
-          managementFileId={managementFile.id}
+          managementFileId={managementFileId}
+          statusSolver={statusSolver}
         ></ManagementFileActivitiesListContainer>
       </Section>
     </StyledSummarySection>

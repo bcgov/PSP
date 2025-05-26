@@ -14,6 +14,7 @@ import { isValidId } from '@/utils';
 
 import { SideBarContext } from '../../context/sidebarContext';
 import ActivitiesTab from './activities/ActivitiesTab';
+import ManagementStatusUpdateSolver from './fileDetails/detail/ManagementStatusUpdateSolver';
 import ManagementSummaryView from './fileDetails/detail/ManagementSummaryView';
 
 export interface IManagementFileTabsProps {
@@ -35,6 +36,7 @@ export const ManagementFileTabs: React.FC<IManagementFileTabsProps> = ({
   const history = useHistory();
   const { tab } = useParams<{ tab?: string }>();
   const activeTab = Object.values(FileTabType).find(value => value === tab) ?? defaultTab;
+  const managementFileStatusSolver = new ManagementStatusUpdateSolver(managementFile);
 
   const setActiveTab = (tab: FileTabType) => {
     if (activeTab !== tab) {
@@ -46,17 +48,22 @@ export const ManagementFileTabs: React.FC<IManagementFileTabsProps> = ({
     setStaleLastUpdatedBy(true);
   };
 
-  tabViews.push({
-    content: (
-      <ManagementSummaryView managementFile={managementFile} onEdit={() => setIsEditing(true)} />
-    ),
-    key: FileTabType.FILE_DETAILS,
-    name: 'File Details',
-  });
-
   if (isValidId(managementFile?.id)) {
     tabViews.push({
-      content: <ActivitiesTab managementFile={managementFile} />,
+      content: (
+        <ManagementSummaryView managementFile={managementFile} onEdit={() => setIsEditing(true)} />
+      ),
+      key: FileTabType.FILE_DETAILS,
+      name: 'File Details',
+    });
+
+    tabViews.push({
+      content: (
+        <ActivitiesTab
+          managementFileId={managementFile?.id}
+          statusSolver={managementFileStatusSolver}
+        />
+      ),
       key: FileTabType.ACTIVITIES,
       name: 'Activities',
     });
@@ -68,6 +75,7 @@ export const ManagementFileTabs: React.FC<IManagementFileTabsProps> = ({
         <DocumentsTab
           fileId={managementFile.id}
           relationshipType={ApiGen_CodeTypes_DocumentRelationType.ManagementFiles}
+          statusSolver={managementFileStatusSolver}
           onSuccess={onChildSuccess}
         />
       ),

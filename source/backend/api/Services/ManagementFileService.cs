@@ -26,7 +26,7 @@ namespace Pims.Api.Services
         private readonly IPropertyService _propertyService;
         private readonly ILookupRepository _lookupRepository;
         private readonly INoteRelationshipRepository<PimsManagementFileNote> _entityNoteRepository;
-        private readonly IManagementStatusSolver _managementStatusSolver;
+        private readonly IManagementFileStatusSolver _managementStatusSolver;
         private readonly IPropertyOperationService _propertyOperationService;
         private readonly IPropertyActivityRepository _propertyActivityRepository;
 
@@ -39,7 +39,7 @@ namespace Pims.Api.Services
             IPropertyService propertyService,
             ILookupRepository lookupRepository,
             INoteRelationshipRepository<PimsManagementFileNote> entityNoteRepository,
-            IManagementStatusSolver managementStatusSolver,
+            IManagementFileStatusSolver managementStatusSolver,
             IPropertyOperationService propertyOperationService,
             IPropertyActivityRepository propertyActivityRepository)
         {
@@ -418,5 +418,7 @@ namespace Pims.Api.Services
 
             return currentManagementFileStatus;
         }
+
+
     }
 }

@@ -565,7 +565,7 @@ namespace Pims.Api
             services.AddScoped<IBctfaOwnershipService, BctfaOwnershipService>();
             services.AddScoped<IExpropriationEventService, ExpropriationEventService>();
             services.AddScoped<IManagementFileService, ManagementFileService>();
-            services.AddScoped<IManagementStatusSolver, ManagementStatusSolver>();
+            services.AddScoped<IManagementFileStatusSolver, ManagementFileStatusSolver>();
         }
 
         /// <summary>

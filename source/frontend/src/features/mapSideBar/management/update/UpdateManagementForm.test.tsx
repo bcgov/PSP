@@ -40,6 +40,7 @@ describe('UpdateManagementForm component', () => {
         initialValues={props.initialValues}
         onSubmit={props.onSubmit}
         loading={props.loading}
+        canEditDetails={props.canEditDetails}
       />,
       {
         ...renderOptions,
@@ -82,12 +83,12 @@ describe('UpdateManagementForm component', () => {
   });
 
   it('renders as expected', async () => {
-    const { asFragment } = await setup({ initialValues, loading: false, formikRef: ref, onSubmit });
+    const { asFragment } = await setup({ initialValues, loading: false, formikRef: ref, canEditDetails: true, onSubmit });
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders loading spinner', async () => {
-    const { getByTestId } = await setup({ initialValues, loading: true, formikRef: ref, onSubmit });
+    const { getByTestId } = await setup({ initialValues, loading: true, formikRef: ref, canEditDetails: true, onSubmit });
     expect(getByTestId('filter-backdrop-loading')).toBeVisible();
   });
 
@@ -96,6 +97,7 @@ describe('UpdateManagementForm component', () => {
       initialValues,
       loading: false,
       formikRef: ref,
+      canEditDetails: true,
       onSubmit,
     });
 
@@ -124,6 +126,7 @@ describe('UpdateManagementForm component', () => {
       initialValues,
       loading: false,
       formikRef: ref,
+      canEditDetails: true,
       onSubmit,
     });
 

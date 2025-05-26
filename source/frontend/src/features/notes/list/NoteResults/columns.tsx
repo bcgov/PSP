@@ -10,9 +10,12 @@ import { Claims } from '@/constants/index';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_Note } from '@/models/api/generated/ApiGen_Concepts_Note';
 
+import { IUpdateNotesStrategy } from '../../models/IUpdateNotesStrategy';
+
 export function createTableColumns(
   onShowDetails: (note: ApiGen_Concepts_Note) => void,
   onDelete: (note: ApiGen_Concepts_Note) => void,
+  statusSolver?: IUpdateNotesStrategy,
 ) {
   const columns: ColumnWithProps<ApiGen_Concepts_Note>[] = [
     {
@@ -61,12 +64,14 @@ export function createTableColumns(
               )}
             </Col>
             <Col xs={1} className="p-0">
-              {hasClaim(Claims.NOTE_DELETE) && !cellProps.row.original.isSystemGenerated && (
-                <RemoveIconButton
-                  title="Delete Note"
-                  onRemove={() => onDelete(cellProps.row.original)}
-                />
-              )}
+              {hasClaim(Claims.NOTE_DELETE) &&
+                !cellProps.row.original.isSystemGenerated &&
+                (!statusSolver || (statusSolver && statusSolver.canEditNotes())) && (
+                  <RemoveIconButton
+                    title="Delete Note"
+                    onRemove={() => onDelete(cellProps.row.original)}
+                  />
+                )}
             </Col>
           </StyledDiv>
         );

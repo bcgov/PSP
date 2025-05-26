@@ -17,13 +17,17 @@ import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/Api
 import { ApiGen_Concepts_DocumentType } from '@/models/api/generated/ApiGen_Concepts_DocumentType';
 import { prettyFormatUTCDate, stringToFragment } from '@/utils';
 
+import { IUpdateDocumentsStrategy } from '../../models/IUpdateDocumentsStrategy';
+
 export interface IDocumentColumnProps {
+  statusSolver?: IUpdateDocumentsStrategy;
   onViewDetails: (values: ApiGen_Concepts_DocumentRelationship) => void;
   onDelete: (values: ApiGen_Concepts_DocumentRelationship) => void;
   onPreview: (values: ApiGen_Concepts_DocumentRelationship) => void;
 }
 
 export const getDocumentColumns = ({
+  statusSolver,
   onViewDetails,
   onDelete,
   onPreview,
@@ -66,7 +70,7 @@ export const getDocumentColumns = ({
       Header: 'Actions',
       width: 10,
       maxWidth: 10,
-      Cell: renderActions(onViewDetails, onDelete),
+      Cell: renderActions(onViewDetails, onDelete, statusSolver),
     },
   ];
 };
@@ -133,6 +137,7 @@ function renderUploaded(cell: CellProps<DocumentRow, string | undefined>) {
 const renderActions = (
   onViewDetails: (values: ApiGen_Concepts_DocumentRelationship) => void,
   onDelete: (values: ApiGen_Concepts_DocumentRelationship) => void,
+  statusSolver?: IUpdateDocumentsStrategy,
 ) => {
   return function ({ row: { original, index } }: CellProps<DocumentRow, string>) {
     const { hasClaim } = useKeycloakWrapper();
@@ -149,8 +154,6 @@ const renderActions = (
       (original.mayanDocumentId && original.queueStatusTypeCode === null) ||
       (original.queueStatusTypeCode?.id === ApiGen_CodeTypes_DocumentQueueStatusTypes.SUCCESS &&
         original.mayanDocumentId);
-
-    const canDeleteDocument = documentInError || !documentProcessing;
 
     if (documentProcessing) {
       return (
@@ -196,13 +199,14 @@ const renderActions = (
           ></ViewButton>
         )}
 
-        {hasClaim(Claims.DOCUMENT_DELETE) && canDeleteDocument && (
-          <StyledRemoveLinkButton
-            data-testid="document-delete-button"
-            icon={<FaTrash size={21} id={`document-delete-${index}`} title="document delete" />}
-            onClick={() => original?.id && onDelete(DocumentRow.toApi(original))}
-          ></StyledRemoveLinkButton>
-        )}
+        {hasClaim(Claims.DOCUMENT_DELETE) &&
+          (!statusSolver || (statusSolver && statusSolver.canEditDocuments())) && (
+            <StyledRemoveLinkButton
+              data-testid="document-delete-button"
+              icon={<FaTrash size={21} id={`document-delete-${index}`} title="document delete" />}
+              onClick={() => original?.id && onDelete(DocumentRow.toApi(original))}
+            ></StyledRemoveLinkButton>
+          )}
       </DocumentsActionsDiv>
     );
   };

@@ -11,6 +11,7 @@ import { ColumnWithProps, Table } from '@/components/Table';
 import { TableSort } from '@/components/Table/TableSort';
 import Claims from '@/constants/claims';
 import { PropertyManagementActivityStatusTypes } from '@/constants/propertyMgmtActivityStatusTypes';
+import ManagementStatusUpdateSolver from '@/features/mapSideBar/management/tabs/fileDetails/detail/ManagementStatusUpdateSolver';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
 import { stringToFragment } from '@/utils/columnUtils';
@@ -21,6 +22,7 @@ import { PropertyActivityRow } from './models/PropertyActivityRow';
 export interface IManagementActivitiesListProps {
   loading: boolean;
   propertyActivities: PropertyActivityRow[];
+  statusSolver?: ManagementStatusUpdateSolver;
   handleView: (activityId: number) => void;
   handleDelete: (activityId: number) => void;
   sort: TableSort<ApiGen_Concepts_PropertyActivity>;
@@ -28,6 +30,7 @@ export interface IManagementActivitiesListProps {
 }
 
 export function createTableColumns(
+  statusSolver: ManagementStatusUpdateSolver,
   onView: (activityId: number) => void,
   onDelete: (activityId: number) => void,
 ) {
@@ -96,6 +99,7 @@ export function createTableColumns(
               />
             )}
             {hasClaim(Claims.MANAGEMENT_DELETE) &&
+            (!statusSolver || (statusSolver && statusSolver.canEditActivities())) &&
             activityRow?.activityStatusType?.id ===
               PropertyManagementActivityStatusTypes.NOTSTARTED ? (
               <RemoveIconButton
@@ -112,6 +116,16 @@ export function createTableColumns(
                 <FaInfoCircle className="tooltip-icon h-24" size="2rem" />
               </TooltipWrapper>
             )}
+            {hasClaim(Claims.MANAGEMENT_DELETE) &&
+              statusSolver &&
+              !statusSolver.canEditActivities() && (
+                <TooltipWrapper
+                  tooltipId={`activity-file-tooltip-${activityRow.id}`}
+                  tooltip="File is not in active status."
+                >
+                  <FaInfoCircle className="tooltip-icon h-24" size="2rem" />
+                </TooltipWrapper>
+              )}
           </StyledDiv>
         );
       },
@@ -124,6 +138,7 @@ export function createTableColumns(
 const ManagementActivitiesList: React.FunctionComponent<IManagementActivitiesListProps> = ({
   loading,
   propertyActivities,
+  statusSolver,
   handleView,
   handleDelete,
   sort,
@@ -136,7 +151,7 @@ const ManagementActivitiesList: React.FunctionComponent<IManagementActivitiesLis
       name="PropertyManagementActivitiesTable"
       manualSortBy={true}
       totalItems={propertyActivities.length}
-      columns={createTableColumns(handleView, handleDelete)}
+      columns={createTableColumns(statusSolver, handleView, handleDelete)}
       externalSort={{ sort, setSort }}
       data={propertyActivities ?? []}
       noRowsMessage="No property management activities found"

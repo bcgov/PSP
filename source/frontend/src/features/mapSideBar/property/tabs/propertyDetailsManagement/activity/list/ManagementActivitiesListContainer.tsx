@@ -2,6 +2,7 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
+import ManagementStatusUpdateSolver from '@/features/mapSideBar/management/tabs/fileDetails/detail/ManagementStatusUpdateSolver';
 import { usePropertyActivityRepository } from '@/hooks/repositories/usePropertyActivityRepository';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import useIsMounted from '@/hooks/util/useIsMounted';
@@ -10,13 +11,14 @@ import { IManagementActivitiesListViewProps } from './ManagementActivitiesListVi
 import { PropertyActivityRow } from './models/PropertyActivityRow';
 
 export interface IPropertyManagementActivitiesListContainerProps {
+  statusSolver?: ManagementStatusUpdateSolver;
   propertyId: number;
   View: React.FC<IManagementActivitiesListViewProps>;
 }
 
 const PropertyManagementActivitiesListContainer: React.FunctionComponent<
   IPropertyManagementActivitiesListContainerProps
-> = ({ propertyId, View }) => {
+> = ({ propertyId, statusSolver, View }) => {
   const history = useHistory();
   const isMounted = useIsMounted();
   const { setModalContent, setDisplayModal } = useModalContext();
@@ -64,6 +66,7 @@ const PropertyManagementActivitiesListContainer: React.FunctionComponent<
       isEmbedded={false}
       isLoading={loading || deletingActivity}
       propertyActivities={propertyActivities}
+      statusSolver={statusSolver}
       onCreate={onCreate}
       onView={onView}
       onDelete={async (activityId: number) => {

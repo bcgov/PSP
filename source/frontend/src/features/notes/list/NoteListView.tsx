@@ -8,18 +8,21 @@ import { TableSort } from '@/components/Table/TableSort';
 import { Claims } from '@/constants/claims';
 import { NoteTypes } from '@/constants/noteTypes';
 import { useNoteRepository } from '@/hooks/repositories/useNoteRepository';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import { useModalManagement } from '@/hooks/useModalManagement';
 import { ApiGen_Concepts_Note } from '@/models/api/generated/ApiGen_Concepts_Note';
 import { exists, isValidId } from '@/utils';
 
 import { AddNotesContainer } from '../add/AddNotesContainer';
+import { IUpdateNotesStrategy } from '../models/IUpdateNotesStrategy';
 import { NoteContainer } from '../NoteContainer';
 import { NoteResults } from './NoteResults/NoteResults';
 
 export interface INoteListViewProps {
   type: NoteTypes;
   entityId: number;
+  statusSolver?: IUpdateNotesStrategy;
   onSuccess?: () => void;
 }
 
@@ -29,6 +32,8 @@ export interface INoteListViewProps {
 export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INoteListViewProps>> = (
   props: INoteListViewProps,
 ) => {
+  const { hasClaim } = useKeycloakWrapper();
+
   const { type, entityId, onSuccess } = props;
   const { setModalContent, setDisplayModal } = useModalContext();
   const {
@@ -72,9 +77,13 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
   // UI components
   const loading = loadingNotes || loadingDeleteNote;
 
-  return (
-    <Section
-      header={
+  const getHeader = (): React.ReactNode => {
+    const enableAddNotes =
+      (hasClaim([Claims.DOCUMENT_ADD]) && !props.statusSolver) ||
+      (hasClaim([Claims.DOCUMENT_ADD]) && props.statusSolver && props.statusSolver.canEditNotes());
+
+    if (enableAddNotes) {
+      return (
         <SectionListHeader
           claims={[Claims.NOTE_ADD]}
           title="Notes"
@@ -82,11 +91,14 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
           addButtonIcon={<FaPlus size={'2rem'} />}
           onAdd={openAddNotes}
         />
-      }
-      title="notes"
-      isCollapsable
-      initiallyExpanded
-    >
+      );
+    } else {
+      return 'Notes';
+    }
+  };
+
+  return (
+    <Section header={getHeader()} title="notes" isCollapsable initiallyExpanded>
       <NoteResults
         results={sortedNoteList}
         loading={loading}

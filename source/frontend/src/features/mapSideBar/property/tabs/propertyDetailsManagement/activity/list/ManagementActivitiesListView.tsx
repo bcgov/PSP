@@ -6,6 +6,7 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionListHeader } from '@/components/common/SectionListHeader';
 import { TableSort } from '@/components/Table/TableSort';
 import Claims from '@/constants/claims';
+import ManagementStatusUpdateSolver from '@/features/mapSideBar/management/tabs/fileDetails/detail/ManagementStatusUpdateSolver';
 import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
 
 import ManagementActivitiesList from './ManagementActivitiesList';
@@ -15,6 +16,7 @@ export interface IManagementActivitiesListViewProps {
   isLoading: boolean;
   propertyActivities: PropertyActivityRow[];
   isEmbedded: boolean;
+  statusSolver?: ManagementStatusUpdateSolver;
   onCreate: () => void;
   onView: (activityId: number) => void;
   onDelete: (activityId: number) => void;
@@ -24,6 +26,7 @@ const ManagementActivitiesListView: React.FunctionComponent<IManagementActivitie
   isLoading,
   propertyActivities,
   isEmbedded,
+  statusSolver,
   onCreate,
   onView,
   onDelete,
@@ -60,22 +63,30 @@ const ManagementActivitiesListView: React.FunctionComponent<IManagementActivitie
     return [];
   }, [propertyActivities, sort]);
 
+  const canEditActivities = !statusSolver || (statusSolver && statusSolver.canEditActivities());
+
   return !isEmbedded ? (
     <Section
       isCollapsable
       initiallyExpanded
       header={
-        <SectionListHeader
-          claims={[Claims.MANAGEMENT_EDIT]}
-          title="Activities List"
-          addButtonText="Add an Activity"
-          addButtonIcon={<BiListPlus size={'2.5rem'} />}
-          onAdd={onCreate}
-        />
+        canEditActivities ? (
+          <SectionListHeader
+            claims={[Claims.MANAGEMENT_EDIT]}
+            title="Activities List"
+            addButtonText="Add an Activity"
+            addButtonIcon={<BiListPlus size={'2.5rem'} />}
+            onAdd={onCreate}
+            isAddEnabled={statusSolver.canEditActivities()}
+          />
+        ) : (
+          'Activities List'
+        )
       }
     >
       <ManagementActivitiesList
         propertyActivities={sortedActivities}
+        statusSolver={statusSolver}
         handleView={onView}
         handleDelete={onDelete}
         sort={sort}
@@ -86,6 +97,7 @@ const ManagementActivitiesListView: React.FunctionComponent<IManagementActivitie
   ) : (
     <ManagementActivitiesList
       propertyActivities={sortedActivities}
+      statusSolver={statusSolver}
       handleView={onView}
       handleDelete={onDelete}
       sort={sort}
