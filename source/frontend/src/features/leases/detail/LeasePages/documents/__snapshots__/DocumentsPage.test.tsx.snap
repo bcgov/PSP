@@ -235,7 +235,7 @@ exports[`Lease Documents Page > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c9 {
+.c8 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -254,12 +254,12 @@ exports[`Lease Documents Page > renders as expected 1`] = `
   margin-left: 0.5rem;
 }
 
-.c11 {
+.c10 {
   width: 1.6rem;
   height: 1.6rem;
 }
 
-.c10 {
+.c9 {
   width: 1.6rem;
   height: 1.6rem;
 }
@@ -272,11 +272,6 @@ exports[`Lease Documents Page > renders as expected 1`] = `
   -webkit-flex-wrap: nowrap;
   -ms-flex-wrap: nowrap;
   flex-wrap: nowrap;
-}
-
-.c8 {
-  border-left: 0.2rem solid white;
-  min-width: 2.5rem;
 }
 
 .c7 {
@@ -408,17 +403,17 @@ exports[`Lease Documents Page > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col-lg-auto"
+            class="col-1"
           >
             <label>
               Filter by:
             </label>
           </div>
           <div
-            class="px-3 col"
+            class="col"
           >
             <div
-              class="row"
+              class="pl-1 row"
             >
               <div
                 class="col"
@@ -484,10 +479,10 @@ exports[`Lease Documents Page > renders as expected 1`] = `
             class="col-lg-auto"
           >
             <div
-              class="c8 no-gutters pl-2 col"
+              class="no-gutters pl-2 row"
             >
               <div
-                class="col"
+                class="pr-1 col"
               >
                 <button
                   class="c5 Button Button--icon-only primary btn btn-primary"
@@ -572,11 +567,11 @@ exports[`Lease Documents Page > renders as expected 1`] = `
               >
                 Document type
                 <div
-                  class="c9"
+                  class="c8"
                   data-testid="sort-column-documentType"
                 >
                   <svg
-                    class="c10"
+                    class="c9"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -591,7 +586,7 @@ exports[`Lease Documents Page > renders as expected 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c11"
+                    class="c10"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -618,11 +613,11 @@ exports[`Lease Documents Page > renders as expected 1`] = `
               >
                 File name
                 <div
-                  class="c9"
+                  class="c8"
                   data-testid="sort-column-fileName"
                 >
                   <svg
-                    class="c10"
+                    class="c9"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -637,7 +632,7 @@ exports[`Lease Documents Page > renders as expected 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c11"
+                    class="c10"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -664,11 +659,11 @@ exports[`Lease Documents Page > renders as expected 1`] = `
               >
                 Uploaded
                 <div
-                  class="c9"
+                  class="c8"
                   data-testid="sort-column-appCreateTimestamp"
                 >
                   <svg
-                    class="c10"
+                    class="c9"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -683,7 +678,7 @@ exports[`Lease Documents Page > renders as expected 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c11"
+                    class="c10"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -710,11 +705,11 @@ exports[`Lease Documents Page > renders as expected 1`] = `
               >
                 Status
                 <div
-                  class="c9"
+                  class="c8"
                   data-testid="sort-column-statusTypeCode"
                 >
                   <svg
-                    class="c10"
+                    class="c9"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -729,7 +724,7 @@ exports[`Lease Documents Page > renders as expected 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c11"
+                    class="c10"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
