@@ -13,22 +13,47 @@ import { Claims } from '@/constants/index';
 import { DocumentRow } from '@/features/documents/ComposedDocument';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_DocumentQueueStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_DocumentQueueStatusTypes';
+import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
 import { ApiGen_Concepts_DocumentType } from '@/models/api/generated/ApiGen_Concepts_DocumentType';
 import { prettyFormatUTCDate, stringToFragment } from '@/utils';
 
 export interface IDocumentColumnProps {
+  showParentInformation: boolean;
   onViewDetails: (values: ApiGen_Concepts_DocumentRelationship) => void;
+  onViewParent: (relationshipType: ApiGen_CodeTypes_DocumentRelationType, parentId: number) => void;
   onDelete: (values: ApiGen_Concepts_DocumentRelationship) => void;
   onPreview: (values: ApiGen_Concepts_DocumentRelationship) => void;
 }
 
 export const getDocumentColumns = ({
+  showParentInformation,
   onViewDetails,
+  onViewParent,
   onDelete,
   onPreview,
 }: IDocumentColumnProps): ColumnWithProps<DocumentRow>[] => {
-  return [
+  const parentColumns: ColumnWithProps<DocumentRow>[] = [
+    {
+      Header: 'Relation ID',
+      accessor: 'parentName',
+      align: 'left',
+      sortable: true,
+      width: 20,
+      maxWidth: 20,
+      Cell: renderParentName(onViewParent),
+    },
+    {
+      Header: 'Relation Type',
+      accessor: 'relationshipType',
+      align: 'left',
+      sortable: true,
+      width: 25,
+      maxWidth: 25,
+      Cell: renderRelantionshipType,
+    },
+  ];
+  const documentColumns: ColumnWithProps<DocumentRow>[] = [
     {
       Header: 'Document type',
       accessor: 'documentType',
@@ -69,7 +94,44 @@ export const getDocumentColumns = ({
       Cell: renderActions(onViewDetails, onDelete),
     },
   ];
+  if (showParentInformation) {
+    return parentColumns.concat(documentColumns);
+  } else {
+    return documentColumns;
+  }
 };
+
+const renderParentName = (
+  onViewParent: (relationshipType: ApiGen_CodeTypes_DocumentRelationType, parentId: number) => void,
+) => {
+  return function (cell: CellProps<DocumentRow, string | undefined>) {
+    const documentRow = cell.row.original;
+    return (
+      <StyledCellOverflow>
+        {
+          <Button
+            id={`document-parent-filenumber-link-${documentRow?.id}`}
+            data-testid={`document-parent-filenumber-link-${documentRow?.id}`}
+            onClick={() =>
+              documentRow?.id &&
+              onViewParent(documentRow.relationshipType, Number(documentRow.parentId))
+            }
+            variant="link"
+            title={documentRow.parentName}
+          >
+            {documentRow.parentName}
+          </Button>
+        }
+      </StyledCellOverflow>
+    );
+  };
+};
+
+function renderRelantionshipType({
+  value,
+}: CellProps<DocumentRow, ApiGen_CodeTypes_DocumentRelationType | undefined>) {
+  return stringToFragment(value ?? '');
+}
 
 function renderDocumentType({
   value,

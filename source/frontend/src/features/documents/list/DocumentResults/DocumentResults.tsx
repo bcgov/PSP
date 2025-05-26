@@ -3,6 +3,7 @@ import { useMemo } from 'react';
 import { Table } from '@/components/Table';
 import { TableSort } from '@/components/Table/TableSort';
 import { DocumentRow } from '@/features/documents/ComposedDocument';
+import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_Concepts_Document } from '@/models/api/generated/ApiGen_Concepts_Document';
 import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
 
@@ -14,16 +15,35 @@ export interface IDocumentResultProps {
   sort: TableSort<ApiGen_Concepts_Document>;
   setSort: (value: TableSort<ApiGen_Concepts_Document>) => void;
   onViewDetails: (values: ApiGen_Concepts_DocumentRelationship) => void;
+  onViewParent: (relationshipType: ApiGen_CodeTypes_DocumentRelationType, parentId: number) => void;
   onPreview: (values: ApiGen_Concepts_DocumentRelationship) => void;
   onDelete: (values: ApiGen_Concepts_DocumentRelationship) => void;
+  showParentInformation: boolean;
 }
 
 export const DocumentResults: React.FunctionComponent<
   React.PropsWithChildren<IDocumentResultProps>
-> = ({ results, setSort, sort, onViewDetails, onDelete, onPreview, ...rest }) => {
+> = ({
+  results,
+  setSort,
+  sort,
+  onViewDetails,
+  onViewParent,
+  onDelete,
+  onPreview,
+  showParentInformation,
+  ...rest
+}) => {
   const columns = useMemo(
-    () => getDocumentColumns({ onViewDetails, onDelete, onPreview }),
-    [onViewDetails, onDelete, onPreview],
+    () =>
+      getDocumentColumns({
+        onViewDetails,
+        onViewParent,
+        onDelete,
+        onPreview,
+        showParentInformation,
+      }),
+    [onViewDetails, onViewParent, onDelete, onPreview, showParentInformation],
   );
 
   return (

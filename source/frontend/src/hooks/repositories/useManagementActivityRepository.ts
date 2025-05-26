@@ -15,6 +15,7 @@ export const useManagementActivityRepository = () => {
   const {
     getActivitySubtypesApi,
     postActivityApi,
+    getPropertyActivityApi,
     getActivityApi,
     getActivitiesApi,
     deleteActivityApi,
@@ -46,6 +47,18 @@ export const useManagementActivityRepository = () => {
     requestName: 'AddManagementActivity',
     onSuccess: useAxiosSuccessHandler(),
     onError: useAxiosErrorHandler('Failed to create a management file activity.'),
+  });
+
+  const getPropertyManagementActivity = useApiRequestWrapper<
+    (propertyActivityId: number) => Promise<AxiosResponse<ApiGen_Concepts_PropertyActivity, any>>
+  >({
+    requestFunction: useCallback(
+      async (propertyActivityId: number) => await getPropertyActivityApi(propertyActivityId),
+      [getPropertyActivityApi],
+    ),
+    requestName: 'GetManagementActivity',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler('Failed to retrieve a management file activity.'),
   });
 
   const getManagementActivity = useApiRequestWrapper<
@@ -94,6 +107,7 @@ export const useManagementActivityRepository = () => {
   return useMemo(
     () => ({
       getActivitySubtypes,
+      getPropertyManagementActivity,
       addManagementActivity,
       getManagementActivity,
       getManagementActivities,
@@ -101,6 +115,7 @@ export const useManagementActivityRepository = () => {
     }),
     [
       getActivitySubtypes,
+      getPropertyManagementActivity,
       addManagementActivity,
       getManagementActivity,
       getManagementActivities,

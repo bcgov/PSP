@@ -5,14 +5,13 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import { Claims } from '@/constants/claims';
 import { NoteTypes } from '@/constants/noteTypes';
 import { FileTabs, FileTabType, TabFileView } from '@/features/mapSideBar/shared/detail/FileTabs';
-import DocumentsTab from '@/features/mapSideBar/shared/tabs/DocumentsTab';
 import NoteListView from '@/features/notes/list/NoteListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { isValidId } from '@/utils';
 
 import { SideBarContext } from '../../context/sidebarContext';
+import ManagementDocumentsTab from '../../shared/tabs/ManagementDocumentsTab';
 import ActivitiesTab from './activities/ActivitiesTab';
 import ManagementSummaryView from './fileDetails/detail/ManagementSummaryView';
 
@@ -64,13 +63,7 @@ export const ManagementFileTabs: React.FC<IManagementFileTabsProps> = ({
 
   if (isValidId(managementFile?.id) && hasClaim(Claims.DOCUMENT_VIEW)) {
     tabViews.push({
-      content: (
-        <DocumentsTab
-          fileId={managementFile.id}
-          relationshipType={ApiGen_CodeTypes_DocumentRelationType.ManagementFiles}
-          onSuccess={onChildSuccess}
-        />
-      ),
+      content: <ManagementDocumentsTab fileId={managementFile.id} onSuccess={onChildSuccess} />,
       key: FileTabType.DOCUMENTS,
       name: 'Documents',
     });
