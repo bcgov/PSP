@@ -441,7 +441,7 @@ namespace Pims.Api.Test.Services
             project.AppCreateUserid = "TESTER";
 
             var projectRepository = this._helper.GetService<Mock<IProjectRepository>>();
-            var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            var noteRepository = this._helper.GetService<Mock<INoteRelationshipRepository<PimsProjectNote>>>();
             var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
 
             projectRepository.Setup(x => x.Update(It.IsAny<PimsProject>())).Returns(project);
@@ -460,7 +460,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             projectRepository.Verify(x => x.Update(It.IsAny<PimsProject>()), Times.Once);
-            noteRepository.Verify(x => x.Add(It.Is<PimsProjectNote>(x => x.ProjectId == 1
+            noteRepository.Verify(x => x.AddNoteRelationship(It.Is<PimsProjectNote>(x => x.ProjectId == 1
                     && x.Note.NoteTxt == "Project status changed from Active to 'No Status'")), Times.Once);
         }
     }

@@ -7,6 +7,9 @@
 .Toastify__toast {
   word-break: break-word;
   filter: drop-shadow(0.2rem 0.2rem 0.4rem black);
+  svg {
+    min-width: 1.5rem;
+  }
 }
 
 .Toastify__toast.Toastify__toast--dark {
