@@ -33,7 +33,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = CreateWithPermissions(Permissions.DocumentAdd, Permissions.DispositionEdit);
 
             // Act
-            var result = repository.AddDispositionDocument(new PimsDispositionFileDocument());
+            var result = repository.AddDocument(new PimsDispositionFileDocument());
 
             // Assert
             result.DispositionFileDocumentId.Should().Be(1);
@@ -51,7 +51,7 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(pimsDispositionFile);
 
             // Act
-            var result = repository.GetAllByDispositionFile(dispositionFileDocument.DispositionFileId);
+            var result = repository.GetAllByParentId(dispositionFileDocument.DispositionFileId);
 
             // Assert
             result.FirstOrDefault().Internal_Id.Should().Be(1);
@@ -64,7 +64,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = CreateWithPermissions(Permissions.DocumentDelete, Permissions.DispositionEdit);
 
             // Act
-            var result = repository.DeleteDispositionDocument(new PimsDispositionFileDocument());
+            var result = repository.DeleteDocument(new PimsDispositionFileDocument());
 
             // Assert
             result.Should().BeTrue();
@@ -77,7 +77,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = CreateWithPermissions(Permissions.DocumentDelete, Permissions.DispositionEdit);
 
             // Act
-            Action act = () => repository.DeleteDispositionDocument(null);
+            Action act = () => repository.DeleteDocument(null);
 
             // Assert
             act.Should().Throw<ArgumentNullException>();

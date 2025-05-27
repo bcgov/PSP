@@ -18,7 +18,9 @@ namespace Pims.Dal.Entities
 
         #region Constructors
 
-        public PimsDispositionStatusType() { }
+        public PimsDispositionStatusType()
+        {
+        }
 
         /// <summary>
         /// Create a new instance of a PimsDispositionStatusType class.

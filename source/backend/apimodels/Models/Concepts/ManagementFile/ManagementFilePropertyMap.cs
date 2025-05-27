@@ -13,6 +13,7 @@ namespace Pims.Api.Models.Concepts.ManagementFile
                 .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.ManagementFilePropertyId)
                 .Map(dest => dest.FileId, src => src.ManagementFileId)
+                .Map(dest => dest.PropertyName, src => src.PropertyName)
                 .Map(dest => dest.PropertyId, src => src.PropertyId)
                 .Map(dest => dest.Property, src => src.Property)
                 .Inherits<Entity.IBaseEntity, BaseConcurrentModel>();
@@ -22,6 +23,7 @@ namespace Pims.Api.Models.Concepts.ManagementFile
                 .PreserveReference(true)
                 .Map(dest => dest.ManagementFilePropertyId, src => src.Id)
                 .Map(dest => dest.ManagementFileId, src => src.FileId)
+                .Map(dest => dest.PropertyName, src => src.PropertyName)
                 .Map(dest => dest.PropertyId, src => src.PropertyId)
                 .Map(dest => dest.Property, src => src.Property)
                 .Inherits<BaseConcurrentModel, Entity.IBaseEntity>();

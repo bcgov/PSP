@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
-using DocumentFormat.OpenXml.Office2010.Excel;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -51,7 +50,7 @@ namespace Pims.Dal.Repositories
                 .Include(d => d.Project)
                 .Include(d => d.Product)
                 .Include(d => d.AcquisitionFundingTypeCodeNavigation)
-                //.Include(d => d.ManagementFileProgramTypeCodeNavigation)  // TODO: DB104
+                .Include(d => d.ManagementFilePurposeTypeCodeNavigation)
                 .Include(d => d.ManagementFileStatusTypeCodeNavigation)
                 .Include(d => d.PimsManagementFileProperties)
                 .Include(d => d.PimsManagementFileTeams)
@@ -68,7 +67,7 @@ namespace Pims.Dal.Repositories
         /// <summary>
         /// Retrieves the management file with the specified name.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="name"></param>
         /// <returns></returns>
         public PimsManagementFile GetByName(string name)
         {
@@ -79,7 +78,7 @@ namespace Pims.Dal.Repositories
                 .Include(d => d.Project)
                 .Include(d => d.Product)
                 .Include(d => d.AcquisitionFundingTypeCodeNavigation)
-                //.Include(d => d.ManagementFileProgramTypeCodeNavigation) // TODO: DB104
+                .Include(d => d.ManagementFilePurposeTypeCodeNavigation)
                 .Include(d => d.ManagementFileStatusTypeCodeNavigation)
                 .Include(d => d.PimsManagementFileProperties)
                 .Include(d => d.PimsManagementFileTeams)
@@ -385,7 +384,7 @@ namespace Pims.Dal.Repositories
 
             if (!string.IsNullOrWhiteSpace(filter.ManagementFilePurposeCode))
             {
-                //predicate = predicate.And(disp => disp.ManagementFileProgramTypeCode == filter.ManagementFilePurposeCode); // TODO: DB104
+                predicate = predicate.And(disp => disp.ManagementFilePurposeTypeCode == filter.ManagementFilePurposeCode);
             }
 
             if (!string.IsNullOrWhiteSpace(filter.ProjectNameOrNumber))
@@ -409,7 +408,7 @@ namespace Pims.Dal.Repositories
                 .Include(d => d.Project)
                 .Include(d => d.Product)
                 .Include(d => d.AcquisitionFundingTypeCodeNavigation)
-                //.Include(d => d.ManagementFileProgramTypeCodeNavigation) // TODO: DB104
+                .Include(d => d.ManagementFilePurposeTypeCodeNavigation)
                 .Include(d => d.ManagementFileStatusTypeCodeNavigation)
                 .Include(d => d.PimsManagementFileProperties)
                 .Include(d => d.PimsManagementFileTeams)

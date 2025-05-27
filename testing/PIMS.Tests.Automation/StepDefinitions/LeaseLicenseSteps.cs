@@ -1063,6 +1063,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
             lease.ConsultationOther = ExcelDataContext.ReadData(rowNumber, "ConsultationOther");
             lease.ConsultationOtherDetails = ExcelDataContext.ReadData(rowNumber, "ConsultationOtherDetails");
 
+            lease.LeaseTeamStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "LeaseTeamStartRow"));
+            lease.LeaseTeamCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "LeaseTeamCount"));
+            if (lease.LeaseTeamStartRow != 0 && lease.LeaseTeamCount != 0)
+                PopulateTeamsCollection(lease.LeaseTeamStartRow, lease.LeaseTeamCount);
+
             lease.FeeDeterminationPublicBenefit = ExcelDataContext.ReadData(rowNumber, "FeeDeterminationPublicBenefit");
             lease.FeeDeterminationFinancialGain = ExcelDataContext.ReadData(rowNumber, "FeeDeterminationFinancialGain");
             lease.FeeDeterminationSuggestedFee = ExcelDataContext.ReadData(rowNumber, "FeeDeterminationSuggestedFee");
@@ -1245,6 +1250,23 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 };
 
                 lease.LeaseRenewals.Add(renewal);
+            }
+        }
+
+        private void PopulateTeamsCollection(int startRow, int rowsCount)
+        {
+            System.Data.DataTable teamsSheet = ExcelDataContext.GetInstance().Sheets["TeamMembers"]!;
+            ExcelDataContext.PopulateInCollection(teamsSheet);
+
+            for (int i = startRow; i < startRow + rowsCount; i++)
+            {
+                TeamMember teamMember = new TeamMember();
+                teamMember.TeamMemberRole = ExcelDataContext.ReadData(i, "TeamMemberRole");
+                teamMember.TeamMemberContactName = ExcelDataContext.ReadData(i, "TeamMemberContactName");
+                teamMember.TeamMemberContactType = ExcelDataContext.ReadData(i, "TeamMemberContactType");
+                teamMember.TeamMemberPrimaryContact = ExcelDataContext.ReadData(i, "TeamMemberPrimaryContact");
+
+                lease.LeaseTeam.Add(teamMember);
             }
         }
 

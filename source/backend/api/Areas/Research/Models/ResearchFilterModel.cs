@@ -101,7 +101,7 @@ namespace Pims.Api.Areas.Research.Models.Search
             Name = filter.GetStringValue(nameof(Name));
             RoadOrAlias = filter.GetStringValue(nameof(RoadOrAlias));
             RFileNumber = filter.GetStringValue(nameof(RFileNumber));
-            AppCreateUserid = filter.GetStringValue(nameof( AppCreateUserid));
+            AppCreateUserid = filter.GetStringValue(nameof(AppCreateUserid));
             CreatedOnStartDate = filter.GetDateTimeNullValue(nameof(CreatedOnStartDate));
             CreatedOnEndDate = filter.GetDateTimeNullValue(nameof(CreatedOnEndDate));
             AppLastUpdateUserid = filter.GetStringValue(nameof(AppLastUpdateUserid));

@@ -1,5 +1,6 @@
 import React from 'react';
 import { FaInfoCircle } from 'react-icons/fa';
+import { matchPath, useLocation } from 'react-router-dom';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
 
@@ -66,12 +67,12 @@ export function createTableColumns(
       },
     },
     {
-      Header: 'Request added date',
+      Header: 'Commencement',
       accessor: 'requestedAddedDate',
       align: 'left',
       sortable: true,
-      minWidth: 40,
-      maxWidth: 40,
+      minWidth: 45,
+      maxWidth: 45,
       Cell: (cellProps: CellProps<PropertyActivityRow>) => {
         return stringToFragment(prettyFormatDate(cellProps.row.original?.requestedAddedDate));
       },
@@ -130,6 +131,18 @@ const ManagementActivitiesList: React.FunctionComponent<IManagementActivitiesLis
   setSort,
   ...rest
 }) => {
+  const location = useLocation();
+
+  const isActiveRow = (entityId: number): boolean => {
+    const matched = matchPath(location.pathname, {
+      path: [`/mapview/sidebar/management/*/activities/${entityId}`],
+      exact: true,
+      strict: true,
+    });
+
+    return matched?.isExact ?? false;
+  };
+
   return (
     <Table<PropertyActivityRow>
       loading={loading}
@@ -142,6 +155,7 @@ const ManagementActivitiesList: React.FunctionComponent<IManagementActivitiesLis
       noRowsMessage="No property management activities found"
       pageSize={10}
       manualPagination={false}
+      isRowActive={isActiveRow}
       {...rest}
     />
   );
@@ -151,5 +165,8 @@ export default ManagementActivitiesList;
 
 const StyledDiv = styled(InlineFlexDiv)`
   justify-content: center;
-  width: 80%;
+  > * {
+    margin: 0.5rem;
+    padding: 0 !important;
+  }
 `;
