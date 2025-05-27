@@ -7,6 +7,7 @@ export const mockManagementFileResponse = (
   name = 'Test Management File',
   rowVersion = 1,
 ): ApiGen_Concepts_ManagementFile => ({
+  id: id,
   totalAllowableCompensation: null,
   projectId: 1,
   project: {
@@ -121,7 +122,6 @@ export const mockManagementFileResponse = (
       rowVersion: 1,
     },
   ],
-  id: id,
   fileName: name ?? 'FILE_NAME B8233BF E8C7408',
   filePurpose: 'TEST PURPOSE',
   additionalDetails: 'ADDITIONAL DETAILS',

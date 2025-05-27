@@ -33,14 +33,17 @@ export const columns: ColumnWithProps<ManagementSearchResultModel>[] = [
     maxWidth: 20,
     Cell: (props: CellProps<ManagementSearchResultModel>) => {
       const { hasClaim } = useKeycloakWrapper();
+      const fileNumberString = `M-${props.row.original.id}`;
+
       if (hasClaim(Claims.MANAGEMENT_VIEW)) {
         return (
-          <Link to={`/mapview/sidebar/management/${props.row.original.managementFileId}`}>
-            M-{props.row.original.managementFileId.toString()}
+          <Link to={`/mapview/sidebar/management/${props.row.original.id}`}>
+            {fileNumberString}
           </Link>
         );
       }
-      return stringToFragment(props.row.original.managementFileId.toString());
+
+      return stringToFragment(fileNumberString);
     },
   },
   {
