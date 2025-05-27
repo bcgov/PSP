@@ -30,7 +30,7 @@ import ActivitiesFilter from './filter/ActivitiesFilter';
 import ManagementActivitySearchResults from './searchResults/ManagementActivitiesSearchResults';
 
 /**
- * Page that displays Management files information.
+ * Page that displays Management Activities information.
  */
 export const ManagementActivitiesListView: React.FC<unknown> = () => {
   const { getManagementActivitiesPagedApi } = useApiManagementActivities();

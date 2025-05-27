@@ -24,7 +24,7 @@ export const Management = ({ onLinkClick }: ISideTrayPageProps) => {
             to="/management-activities/list"
             className="nav-item pl-9 pb-3"
           >
-            Manage Management Activites
+            Manage Management Activities
           </Link>
         </>
       )}

@@ -22,7 +22,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace Pims.Api.Areas.Reports.Controllers
 {
     /// <summary>
-    /// LeaseController class, provides endpoints for generating reports.
+    /// ManagementActivityController class, provides endpoints for generating reports.
     /// </summary>
     [Authorize]
     [ApiController]
@@ -96,8 +96,8 @@ namespace Pims.Api.Areas.Reports.Controllers
                 throw new BadRequestException($"Invalid HTTP request header 'Accept:{acceptHeader}'.");
             }
 
-            var allManagementActities = _managementActivityService.GetPage((ManagementActivityFilter)filter, all);
-            var flatActivities = _mapper.Map<IEnumerable<ManagementActivityReportModel>>(allManagementActities);
+            var allManagementActivities = _managementActivityService.GetPage((ManagementActivityFilter)filter, all);
+            var flatActivities = _mapper.Map<IEnumerable<ManagementActivityReportModel>>(allManagementActivities);
 
             return acceptHeader.ToString() switch
             {

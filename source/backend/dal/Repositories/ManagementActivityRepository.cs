@@ -128,7 +128,7 @@ namespace Pims.Dal.Repositories
                 }
                 else if (field == "ActivityType")
                 {
-                    query = direction == "asc" ? query.OrderBy(c => c.PropMgmtActivityStatusTypeCodeNavigation.Description) : query.OrderByDescending(c => c.PropMgmtActivityStatusTypeCodeNavigation.Description);
+                    query = direction == "asc" ? query.OrderBy(c => c.PropMgmtActivityTypeCodeNavigation.Description) : query.OrderByDescending(c => c.PropMgmtActivityTypeCodeNavigation.Description);
                 }
                 else if (field == "ActivitySubType")
                 {
@@ -145,7 +145,7 @@ namespace Pims.Dal.Repositories
             }
             else
             {
-                query = query.OrderBy(x => x.PimsPropertyActivityId);
+                query = query.OrderByDescending(x => x.RequestAddedDt);
             }
 
             return query;
