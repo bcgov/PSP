@@ -1,11 +1,39 @@
+import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 
 import ExpandableFileProperties from '@/components/common/List/ExpandableFileProperties';
 import { ColumnWithProps } from '@/components/Table';
+import { Claims } from '@/constants/claims';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { stringToFragment } from '@/utils';
 
 import { ManagementActivitySearchResultModel } from '../../models/ManagementActivitySearchResultModel';
 
 export const columns: ColumnWithProps<ManagementActivitySearchResultModel>[] = [
+  {
+    Header: 'Description',
+    accessor: 'description',
+    align: 'center',
+    clickable: true,
+    sortable: true,
+    width: 20,
+    maxWidth: 40,
+    Cell: (props: CellProps<ManagementActivitySearchResultModel>) => {
+      const { hasClaim } = useKeycloakWrapper();
+
+      if (hasClaim(Claims.MANAGEMENT_VIEW) && props.row.original.managementFileId) {
+        return (
+          <Link
+            to={`/mapview/sidebar/management/${props.row.original.managementFileId}/activities/${props.row.original.id}`}
+          >
+            {props.row.original.description}
+          </Link>
+        );
+      }
+
+      return stringToFragment(props.row.original.description);
+    },
+  },
   {
     Header: 'File name',
     accessor: 'fileName',
@@ -28,6 +56,7 @@ export const columns: ColumnWithProps<ManagementActivitySearchResultModel>[] = [
     Header: 'Civic Address / PID / PIN',
     accessor: 'properties',
     align: 'left',
+    maxWidth: 40,
     Cell: (props: CellProps<ManagementActivitySearchResultModel>) => {
       return (
         <ExpandableFileProperties

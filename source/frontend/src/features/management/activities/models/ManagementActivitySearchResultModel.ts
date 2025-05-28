@@ -11,12 +11,13 @@ export class ManagementActivitySearchResultModel {
   activityStatus = '';
   activityType = '';
   activitySubType = '';
+  description = '';
   properties: ApiGen_Concepts_Property[] = [];
 
   static fromApi(base: ApiGen_Concepts_PropertyActivity): ManagementActivitySearchResultModel {
     const newModel = new ManagementActivitySearchResultModel();
     newModel.id = base.id ?? null;
-    newModel.managementFileId = base.id ?? null;
+    newModel.managementFileId = base.managementFileId ?? null;
     newModel.fileName = base.managementFile?.fileName ?? '';
     newModel.legacyFileNum = base.managementFile?.legacyFileNum ?? '';
     newModel.project = base.managementFile?.project ?? null;
@@ -26,6 +27,7 @@ export class ManagementActivitySearchResultModel {
     newModel.activityType = base.activityTypeCode?.description ?? '';
     newModel.activitySubType = base.activitySubtypeCode?.description ?? '';
     newModel.activityStatus = base.activityStatusTypeCode?.description ?? '';
+    newModel.description = base.description ?? '';
 
     return newModel;
   }
