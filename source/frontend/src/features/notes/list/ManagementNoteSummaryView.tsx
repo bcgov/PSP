@@ -33,7 +33,7 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
   getNoteNavigationUrlTitle,
 }: INoteListViewProps) => {
   const columns = [
-    createNoteLinkColumn(getNoteNavigationUrlTitle),
+    createNoteLinkColumn('File Name', getNoteNavigationUrlTitle),
     ...createNoteTableColumns(),
     createNoteActionsColumn((note: ApiGen_Concepts_Note) => {
       setCurrentNote(note);

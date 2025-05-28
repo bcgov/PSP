@@ -15,7 +15,6 @@ import {
 
 import NoteListContainer, { INoteListContainerProps } from './NoteListContainer';
 import { NoteListView } from './NoteListView';
-import NoteListContainer, { INoteListContainerProps } from './NoteListContainer';
 
 vi.mock('@/hooks/repositories/useNoteRepository');
 const mockGetAllNotesApi = getMockRepositoryObj([]);
