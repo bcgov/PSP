@@ -25,20 +25,6 @@ export const columns: ColumnWithProps<ManagementActivitySearchResultModel>[] = [
     maxWidth: 20,
   },
   {
-    Header: 'Project',
-    accessor: 'project',
-    align: 'left',
-    clickable: true,
-    sortable: false,
-    width: 20,
-    maxWidth: 40,
-    Cell: (props: CellProps<ManagementActivitySearchResultModel>) => {
-      const project = props.row.original.project;
-
-      return <>{[project?.code, project?.description].filter(Boolean).join(' ')}</>;
-    },
-  },
-  {
     Header: 'Civic Address / PID / PIN',
     accessor: 'properties',
     align: 'left',
