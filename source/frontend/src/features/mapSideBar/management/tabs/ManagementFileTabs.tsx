@@ -2,8 +2,8 @@ import React, { useContext, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import { NoteTypes } from '@/constants';
 import { Claims } from '@/constants/claims';
-import { NoteTypes } from '@/constants/noteTypes';
 import { FileTabs, FileTabType, TabFileView } from '@/features/mapSideBar/shared/detail/FileTabs';
 import DocumentsTab from '@/features/mapSideBar/shared/tabs/DocumentsTab';
 import NoteListContainer from '@/features/notes/list/NoteListContainer';

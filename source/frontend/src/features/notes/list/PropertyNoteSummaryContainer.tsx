@@ -4,6 +4,7 @@ import { TableSort } from '@/components/Table/TableSort';
 import { NoteTypes } from '@/constants/noteTypes';
 import { useNoteRepository } from '@/hooks/repositories/useNoteRepository';
 import { useModalManagement } from '@/hooks/useModalManagement';
+import useIsMounted from '@/hooks/util/useIsMounted';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Note } from '@/models/api/generated/ApiGen_Concepts_Note';
 import { exists, getFilePropertyName } from '@/utils';
@@ -34,6 +35,8 @@ export const PropertyNoteSummaryContainer: React.FunctionComponent<
     getAllNotes: { execute: getNotes },
   } = useNoteRepository();
 
+  const isMounted = useIsMounted();
+
   const [propertyNotes, setPropertyNotes] = useState<FilePropertyNote[]>([]);
   const [loadingNotes, setLoadingNotes] = useState(false);
 
@@ -53,10 +56,13 @@ export const PropertyNoteSummaryContainer: React.FunctionComponent<
       );
 
       await Promise.all(notesPromises);
-      setPropertyNotes(propertyNotes);
-      setLoadingNotes(false);
+
+      if (isMounted()) {
+        setPropertyNotes(propertyNotes);
+        setLoadingNotes(false);
+      }
     },
-    [getNotes],
+    [getNotes, isMounted],
   );
 
   const [currentNote, setCurrentNote] = useState<ApiGen_Concepts_Note>();
@@ -69,13 +75,13 @@ export const PropertyNoteSummaryContainer: React.FunctionComponent<
   const [isViewNotesOpened, openViewNotes, closeViewNotes] = useModalManagement();
 
   useEffect(() => {
-    if (exists(fileProperties)) {
+    if (exists(fileProperties) && fileProperties.length > 0) {
       getAllPropertyNotes(fileProperties);
     }
   }, [fileProperties, getAllPropertyNotes]);
 
   const onChildSuccess = async () => {
-    if (exists(fileProperties)) {
+    if (exists(fileProperties) && fileProperties.length > 0) {
       await getAllPropertyNotes(fileProperties);
     }
     onSuccess?.();
