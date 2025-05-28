@@ -2,6 +2,7 @@ import orderBy from 'lodash/orderBy';
 import React from 'react';
 import { FaExternalLinkAlt, FaInfoCircle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { matchPath, useLocation } from 'react-router-dom';
 import { CellProps, Column } from 'react-table';
 import styled from 'styled-components';
 
@@ -170,6 +171,18 @@ const ManagementActivitiesList: React.FunctionComponent<IManagementActivitiesLis
   setSort,
   ...rest
 }) => {
+  const location = useLocation();
+
+  const isActiveRow = (entityId: number): boolean => {
+    const matched = matchPath(location.pathname, {
+      path: [`/mapview/sidebar/management/*/activities/${entityId}`],
+      exact: true,
+      strict: true,
+    });
+
+    return matched?.isExact ?? false;
+  };
+
   return (
     <Table<PropertyActivityRow>
       loading={loading}
@@ -182,6 +195,7 @@ const ManagementActivitiesList: React.FunctionComponent<IManagementActivitiesLis
       noRowsMessage="No property management activities found"
       pageSize={10}
       manualPagination={false}
+      isRowActive={isActiveRow}
       {...rest}
     />
   );
