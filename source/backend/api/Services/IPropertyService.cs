@@ -39,6 +39,8 @@ namespace Pims.Api.Services
 
         PimsPropertyActivity GetActivity(long activityId);
 
+        IEnumerable<PimsPropertyActivity> GetActivitiesByPropertyIds(IEnumerable<long> propertyIds);
+
         PimsPropertyActivity CreateActivity(PimsPropertyActivity propertyActivity);
 
         PimsPropertyActivity UpdateActivity(PimsPropertyActivity propertyActivity);

@@ -68,6 +68,25 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
+        /// Return a list of all activities that are associated to any of the listed properties.
+        /// </summary>
+        /// <param name="propertyIds"></param>
+        /// <returns>List of Property's management activities.</returns>
+        public IList<PimsPropertyActivity> GetActivitiesByPropertyIds(IEnumerable<long> propertyIds)
+        {
+            var activities = Context.PimsPropertyActivities.AsNoTracking().Include(pa => pa.PropMgmtActivityTypeCodeNavigation)
+                    .Include(pa => pa.PropMgmtActivitySubtypeCodeNavigation)
+                    .Include(pa => pa.PropMgmtActivityStatusTypeCodeNavigation)
+                    .Include(pa => pa.PimsPropPropActivities)
+                    .ThenInclude(ppa => ppa.Property)
+                    .Where(pa => pa.PimsPropPropActivities.Any(ppa => propertyIds.Contains(ppa.PropertyId)))
+                    .OrderByDescending(x => x.RequestAddedDt)
+                    .ToList();
+
+            return activities;
+        }
+
+        /// <summary>
         /// Get the property activity for the specified activity with 'activityId' value.
         /// </summary>
         /// <param name="activityId"></param>
