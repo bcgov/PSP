@@ -2,12 +2,14 @@ import React, { useContext, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import { NoteTypes } from '@/constants';
 import { Claims } from '@/constants/claims';
-import { NoteTypes } from '@/constants/noteTypes';
 import { FileTabs, FileTabType, TabFileView } from '@/features/mapSideBar/shared/detail/FileTabs';
 import DocumentsTab from '@/features/mapSideBar/shared/tabs/DocumentsTab';
 import NoteListContainer from '@/features/notes/list/NoteListContainer';
 import NoteListView from '@/features/notes/list/NoteListView';
+import { PropertyNoteSummaryContainer } from '@/features/notes/list/PropertyNoteSummaryContainer';
+import { PropertyNoteSummaryView } from '@/features/notes/list/PropertyNoteSummaryView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
@@ -80,12 +82,19 @@ export const ManagementFileTabs: React.FC<IManagementFileTabsProps> = ({
   if (isValidId(managementFile?.id) && hasClaim(Claims.NOTE_VIEW)) {
     tabViews.push({
       content: (
-        <NoteListContainer
-          type={NoteTypes.Management_File}
-          entityId={managementFile?.id}
-          onSuccess={onChildSuccess}
-          NoteListView={NoteListView}
-        />
+        <>
+          <NoteListContainer
+            type={NoteTypes.Management_File}
+            entityId={managementFile?.id}
+            onSuccess={onChildSuccess}
+            NoteListView={NoteListView}
+          />
+          <PropertyNoteSummaryContainer
+            fileProperties={managementFile?.fileProperties ?? []}
+            onSuccess={onChildSuccess}
+            View={PropertyNoteSummaryView}
+          />
+        </>
       ),
       key: FileTabType.NOTES,
       name: 'Notes',

@@ -75,10 +75,11 @@ export const createNoteActionsColumn = (
 });
 
 export function createNoteLinkColumn(
+  headerText: string,
   getNavigationUrlTitle: (row: ApiGen_Concepts_Note) => { url: string; title: string },
 ) {
   return {
-    Header: 'File Name',
+    Header: headerText,
     align: 'left',
     sortable: false,
     width: 60,

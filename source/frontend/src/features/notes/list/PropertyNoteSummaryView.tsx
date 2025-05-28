@@ -16,10 +16,12 @@ import {
 } from './NoteResults/columns';
 import { NoteResults } from './NoteResults/NoteResults';
 
+export type IPropertyNotesSummaryViewProps = Omit<INoteListViewProps, 'entityId'>;
+
 /**
  * Page that displays a summary of notes from a management file.
  */
-export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INoteListViewProps>> = ({
+export const PropertyNoteSummaryView: React.FunctionComponent<IPropertyNotesSummaryViewProps> = ({
   notes,
   loading,
   sort,
@@ -33,7 +35,7 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
   getNoteNavigationUrlTitle,
 }: INoteListViewProps) => {
   const columns = [
-    createNoteLinkColumn('File Name', getNoteNavigationUrlTitle),
+    createNoteLinkColumn('Property Name', getNoteNavigationUrlTitle),
     ...createNoteTableColumns(),
     createNoteActionsColumn((note: ApiGen_Concepts_Note) => {
       setCurrentNote(note);
@@ -45,14 +47,10 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
     <Section
       header={
         <div className="d-flex">
-          <SectionListHeader
-            claims={[Claims.NOTE_VIEW]}
-            title="Management File Notes"
-            className="mr-2"
-          />
+          <SectionListHeader claims={[Claims.NOTE_VIEW]} title="Property Notes" className="mr-2" />
           <TooltipIcon
             toolTipId="property-note-summary"
-            toolTip="These are all of the notes associated to any management file that contains this property."
+            toolTip="These are all the notes that are associated directly with any property on the file."
             className="align-self-end"
           />
         </div>
@@ -82,4 +80,4 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
   );
 };
 
-export default NoteListView;
+export default PropertyNoteSummaryView;

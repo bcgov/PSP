@@ -132,6 +132,15 @@ exports[`ManagementFileTabs component > matches snapshot 1`] = `
       >
         Documents
       </a>
+      <a
+        aria-selected="false"
+        class="nav-item nav-link"
+        data-rb-event-key="notes"
+        href="#"
+        role="tab"
+      >
+        Notes
+      </a>
     </nav>
     <div
       class="tab-content"
