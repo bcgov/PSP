@@ -13,7 +13,8 @@ import {
   within,
 } from '@/utils/test-utils';
 
-import { INoteListViewProps, NoteListView } from './NoteListView';
+import NoteListContainer, { INoteListContainerProps } from './NoteListContainer';
+import { NoteListView } from './NoteListView';
 
 vi.mock('@/hooks/repositories/useNoteRepository');
 const mockGetAllNotesApi = getMockRepositoryObj([]);
@@ -26,14 +27,15 @@ vi.mock('@/hooks/pims-api/useApiUsers');
 
 const onSuccess = vi.fn();
 
-describe('Note List View', () => {
-  const setup = async (renderOptions?: RenderOptions & INoteListViewProps) => {
+describe('Note List Container', () => {
+  const setup = async (renderOptions?: RenderOptions & Partial<INoteListContainerProps>) => {
     // render component under test
     const rendered = render(
-      <NoteListView
+      <NoteListContainer
         type={renderOptions?.type ?? NoteTypes.Acquisition_File}
         entityId={renderOptions?.entityId ?? 1}
         onSuccess={renderOptions?.onSuccess ?? onSuccess}
+        NoteListView={NoteListView}
       />,
       {
         ...renderOptions,

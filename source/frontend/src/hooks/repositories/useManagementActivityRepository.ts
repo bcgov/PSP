@@ -17,7 +17,9 @@ export const useManagementActivityRepository = () => {
     postActivityApi,
     getActivityApi,
     getActivitiesApi,
+    getFileActivitiesApi,
     deleteActivityApi,
+    putActivityApi,
   } = useApiManagementActivities();
 
   const getActivitySubtypes = useApiRequestWrapper<
@@ -48,6 +50,22 @@ export const useManagementActivityRepository = () => {
     onError: useAxiosErrorHandler('Failed to create a management file activity.'),
   });
 
+  const updateManagementActivity = useApiRequestWrapper<
+    (
+      managementFileId: number,
+      activity: ApiGen_Concepts_PropertyActivity,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_PropertyActivity, any>>
+  >({
+    requestFunction: useCallback(
+      async (managementFileId: number, activity: ApiGen_Concepts_PropertyActivity) =>
+        await putActivityApi(managementFileId, activity),
+      [putActivityApi],
+    ),
+    requestName: 'UpdateManagementActivity',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler('Failed to update a management file activity.'),
+  });
+
   const getManagementActivity = useApiRequestWrapper<
     (
       managementFileId: number,
@@ -76,6 +94,18 @@ export const useManagementActivityRepository = () => {
     onError: useAxiosErrorHandler('Failed to load property management activities list.'),
   });
 
+  const getManagementFileActivities = useApiRequestWrapper<
+    (managementFileId: number) => Promise<AxiosResponse<ApiGen_Concepts_PropertyActivity[], any>>
+  >({
+    requestFunction: useCallback(
+      async (managementFileId: number) => await getFileActivitiesApi(managementFileId),
+      [getFileActivitiesApi],
+    ),
+    requestName: 'getManagementFileActivities',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler('Failed to load property management file activities list.'),
+  });
+
   const deleteManagementActivity = useApiRequestWrapper<
     (managementFileId: number, propertyActivityId: number) => Promise<AxiosResponse<boolean, any>>
   >({
@@ -95,15 +125,19 @@ export const useManagementActivityRepository = () => {
     () => ({
       getActivitySubtypes,
       addManagementActivity,
+      updateManagementActivity,
       getManagementActivity,
       getManagementActivities,
+      getManagementFileActivities,
       deleteManagementActivity,
     }),
     [
       getActivitySubtypes,
       addManagementActivity,
+      updateManagementActivity,
       getManagementActivity,
       getManagementActivities,
+      getManagementFileActivities,
       deleteManagementActivity,
     ],
   );

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +30,7 @@ namespace Pims.Api.Areas.Management.Controllers
     {
         #region Variables
         private readonly IPropertyService _propertyService;
+        private readonly IManagementFileService _managementFileService;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
         #endregion
@@ -39,9 +41,10 @@ namespace Pims.Api.Areas.Management.Controllers
         /// <param name="propertyService"></param>
         /// <param name="mapper"></param>
         /// <param name="logger"></param>
-        public ManagementActivityController(IPropertyService propertyService, IMapper mapper, ILogger<ManagementActivityController> logger)
+        public ManagementActivityController(IPropertyService propertyService, IManagementFileService managementFileService, IMapper mapper, ILogger<ManagementActivityController> logger)
         {
             _propertyService = propertyService;
+            _managementFileService = managementFileService;
             _mapper = mapper;
             _logger = logger;
         }
@@ -50,13 +53,13 @@ namespace Pims.Api.Areas.Management.Controllers
         /// Create the specified management file activity.
         /// </summary>
         /// <returns></returns>
-        [HttpPost("{id:long}/management-activities")]
+        [HttpPost("{managementFileId:long}/management-activities")]
         [HasPermission(Permissions.ManagementAdd)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(PropertyActivityModel), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult CreateManagementActivity(long id, [FromBody] PropertyActivityModel activityModel)
+        public IActionResult CreateManagementActivity(long managementFileId, [FromBody] PropertyActivityModel activityModel)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -66,7 +69,7 @@ namespace Pims.Api.Areas.Management.Controllers
                 DateTime.Now);
 
             // Management file activities need to populate the managementFileId field.
-            if (!activityModel.ManagementFileId.HasValue || activityModel.ManagementFileId.Value != id)
+            if (!activityModel.ManagementFileId.HasValue || activityModel.ManagementFileId.Value != managementFileId)
             {
                 throw new BadRequestException("Invalid management file id.");
             }
@@ -74,6 +77,36 @@ namespace Pims.Api.Areas.Management.Controllers
             var createdActivity = _propertyService.CreateActivity(activityEntity);
 
             return new JsonResult(_mapper.Map<PropertyActivityModel>(createdActivity));
+        }
+
+        /// <summary>
+        /// Update the specified management file activity.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut("{managementFileId:long}/management-activities/{activityId}")]
+        [HasPermission(Permissions.ManagementEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(PropertyActivityModel), 200)]
+        [SwaggerOperation(Tags = new[] { "property" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult UpdateManagementActivity(long managementFileId, long activityId, [FromBody] PropertyActivityModel activityModel)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(ManagementActivityController),
+                nameof(UpdateManagementActivity),
+                User.GetUsername(),
+                DateTime.Now);
+
+            var propertyActivity = _mapper.Map<PimsPropertyActivity>(activityModel);
+            if (!propertyActivity.ManagementFileId.HasValue || propertyActivity.ManagementFileId != managementFileId || propertyActivity.Internal_Id != activityId)
+            {
+                throw new BadRequestException("Invalid activity identifiers.");
+            }
+
+            var updatedProperty = _propertyService.UpdateActivity(propertyActivity);
+
+            return new JsonResult(_mapper.Map<PropertyActivityModel>(updatedProperty));
         }
 
         /// <summary>
@@ -95,7 +128,7 @@ namespace Pims.Api.Areas.Management.Controllers
                 User.GetUsername(),
                 DateTime.Now);
 
-            var activity = _propertyService.GetFileActivity(propertyActivityId);
+            var activity = _propertyService.GetActivity(propertyActivityId);
 
             if (activity.ManagementFileId != managementFileId)
             {
@@ -127,6 +160,31 @@ namespace Pims.Api.Areas.Management.Controllers
             var activities = _propertyService.GetFileActivities(managementFileId);
 
             return new JsonResult(_mapper.Map<IEnumerable<PropertyActivityModel>>(activities));
+        }
+
+        /// <summary>
+        /// Get all of the activities related to an property on the specified management file.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{managementFileId:long}/properties/management-activities")]
+        [HasPermission(Permissions.ManagementView, Permissions.ActivityView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(PropertyActivityModel), 200)]
+        [SwaggerOperation(Tags = new[] { "property" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetManagementPropertyActivities(long managementFileId)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(ManagementActivityController),
+                nameof(GetManagementPropertyActivities),
+                User.GetUsername(),
+                DateTime.Now);
+
+            var propertyIds = _managementFileService.GetProperties(managementFileId).Select(mp => mp.PropertyId);
+            var activities = _propertyService.GetActivitiesByPropertyIds(propertyIds);
+
+            return new JsonResult(_mapper.Map< IEnumerable<PropertyActivityModel>>(activities));
         }
 
         /// <summary>

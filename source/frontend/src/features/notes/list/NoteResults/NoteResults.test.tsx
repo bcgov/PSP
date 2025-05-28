@@ -3,6 +3,7 @@ import { getMockApiNote, mockNotesResponse } from '@/mocks/noteResponses.mock';
 import { act, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
 import { INoteResultProps, NoteResults } from './NoteResults';
+import { createNoteActionsColumn, createNoteTableColumns } from './columns';
 
 const setSort = vi.fn();
 const onShowDetails = vi.fn();
@@ -18,8 +19,7 @@ const setup = (renderOptions: RenderOptions & Partial<INoteResultProps> = { resu
       sort={{}}
       results={results ?? []}
       setSort={setSort}
-      onDelete={onDelete}
-      onShowDetails={onShowDetails}
+      columns={[...createNoteTableColumns(), createNoteActionsColumn(onShowDetails, onDelete)]}
     />,
     {
       ...rest,
