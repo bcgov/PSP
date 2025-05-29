@@ -1125,7 +1125,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
                   <div
                     class="multiselect-container multiSelectContainer  "
                     id="multiselect-payees"
-                    style="width: auto; color: black; background: yellow;"
+                    style="width: auto; color: black;"
                   >
                     <div
                       class="search-wrapper searchWrapper "

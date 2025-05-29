@@ -788,7 +788,7 @@ exports[`FilterContentForm component > renders as expected 1`] = `
                 <div
                   class="multiselect-container multiSelectContainer  "
                   id="multiselect-tenureStatuses"
-                  style="width: auto; color: black; background: yellow;"
+                  style="width: auto; color: black;"
                 >
                   <div
                     class="search-wrapper searchWrapper "
@@ -991,7 +991,7 @@ exports[`FilterContentForm component > renders as expected 1`] = `
                 <div
                   class="multiselect-container multiSelectContainer  "
                   id="multiselect-tenureRoadTypes"
-                  style="width: auto; color: black; background: yellow;"
+                  style="width: auto; color: black;"
                 >
                   <div
                     class="search-wrapper searchWrapper "
@@ -1342,7 +1342,7 @@ exports[`FilterContentForm component > renders as expected 1`] = `
                 <div
                   class="multiselect-container multiSelectContainer  "
                   id="multiselect-leaseTypes"
-                  style="width: auto; color: black; background: yellow;"
+                  style="width: auto; color: black;"
                 >
                   <div
                     class="search-wrapper searchWrapper "
@@ -1463,7 +1463,7 @@ exports[`FilterContentForm component > renders as expected 1`] = `
                 <div
                   class="multiselect-container multiSelectContainer  "
                   id="multiselect-leasePurposes"
-                  style="width: auto; color: black; background: yellow;"
+                  style="width: auto; color: black;"
                 >
                   <div
                     class="search-wrapper searchWrapper "
@@ -1799,7 +1799,7 @@ exports[`FilterContentForm component > renders as expected 1`] = `
                 <div
                   class="multiselect-container multiSelectContainer  "
                   id="multiselect-anomalies"
-                  style="width: auto; color: black; background: yellow;"
+                  style="width: auto; color: black;"
                 >
                   <div
                     class="search-wrapper searchWrapper "

@@ -858,7 +858,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
                 <div
                   class="multiselect-container multiSelectContainer  "
                   id="multiselect-progressStatuses"
-                  style="width: auto; color: black; background: yellow;"
+                  style="width: auto; color: black;"
                 >
                   <div
                     class="search-wrapper searchWrapper "
@@ -1131,7 +1131,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
                 <div
                   class="multiselect-container multiSelectContainer  "
                   id="multiselect-takingStatuses"
-                  style="width: auto; color: black; background: yellow;"
+                  style="width: auto; color: black;"
                 >
                   <div
                     class="search-wrapper searchWrapper "

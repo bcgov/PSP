@@ -694,7 +694,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                 <div
                   class="multiselect-container multiSelectContainer  "
                   id="multiselect-progressStatuses"
-                  style="width: auto; color: black; background: yellow;"
+                  style="width: auto; color: black;"
                 >
                   <div
                     class="search-wrapper searchWrapper "
@@ -967,7 +967,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                 <div
                   class="multiselect-container multiSelectContainer  "
                   id="multiselect-takingStatuses"
-                  style="width: auto; color: black; background: yellow;"
+                  style="width: auto; color: black;"
                 >
                   <div
                     class="search-wrapper searchWrapper "
@@ -3348,7 +3348,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
                 <div
                   class="multiselect-container multiSelectContainer  "
                   id="multiselect-progressStatuses"
-                  style="width: auto; color: black; background: yellow;"
+                  style="width: auto; color: black;"
                 >
                   <div
                     class="search-wrapper searchWrapper "
@@ -3621,7 +3621,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
                 <div
                   class="multiselect-container multiSelectContainer  "
                   id="multiselect-takingStatuses"
-                  style="width: auto; color: black; background: yellow;"
+                  style="width: auto; color: black;"
                 >
                   <div
                     class="search-wrapper searchWrapper "

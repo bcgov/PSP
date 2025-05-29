@@ -1677,7 +1677,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
                   <div
                     class="multiselect-container multiSelectContainer  "
                     id="multiselect-anomalies"
-                    style="width: auto; color: black; background: yellow;"
+                    style="width: auto; color: black;"
                   >
                     <div
                       class="search-wrapper searchWrapper "
@@ -1852,7 +1852,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
                   <div
                     class="multiselect-container multiSelectContainer  "
                     id="multiselect-tenures"
-                    style="width: auto; color: black; background: yellow;"
+                    style="width: auto; color: black;"
                   >
                     <div
                       class="search-wrapper searchWrapper "
@@ -2118,7 +2118,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
                   <div
                     class="multiselect-container multiSelectContainer  "
                     id="multiselect-roadTypes"
-                    style="width: auto; color: black; background: yellow;"
+                    style="width: auto; color: black;"
                   >
                     <div
                       class="search-wrapper searchWrapper "

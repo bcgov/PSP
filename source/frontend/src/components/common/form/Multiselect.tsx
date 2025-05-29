@@ -95,7 +95,7 @@ export function MultiselectInner<T, U>(
   // merge internal styles with the ones passed in props
   const mergedStyle = { ...defaultStyle, ...style };
 
-  // Allow external consumers to handle onSelect, onRemove events via callbacksoptionContainer
+  // Allow external consumers to handle onSelect, onRemove events via callbacks
   const onChange = (selectedList: T[], func?: (selectedList: T[], selectedItem?: T) => void) => {
     setFieldValue(field, selectedList);
     setFieldTouched(field, true);
@@ -164,9 +164,7 @@ const defaultStyle = {
   multiselectContainer: {
     width: 'auto',
     color: 'black',
-    background: 'yellow',
   },
-
   searchBox: {
     background: 'white',
     border: '1px solid #606060',

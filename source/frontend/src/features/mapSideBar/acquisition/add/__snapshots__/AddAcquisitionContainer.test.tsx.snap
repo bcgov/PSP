@@ -940,7 +940,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                         <div
                           class="multiselect-container multiSelectContainer  "
                           id="multiselect-progressStatuses"
-                          style="width: auto; color: black; background: yellow;"
+                          style="width: auto; color: black;"
                         >
                           <div
                             class="search-wrapper searchWrapper "
@@ -1213,7 +1213,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                         <div
                           class="multiselect-container multiSelectContainer  "
                           id="multiselect-takingStatuses"
-                          style="width: auto; color: black; background: yellow;"
+                          style="width: auto; color: black;"
                         >
                           <div
                             class="search-wrapper searchWrapper "
@@ -3894,7 +3894,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                         <div
                           class="multiselect-container multiSelectContainer  "
                           id="multiselect-progressStatuses"
-                          style="width: auto; color: black; background: yellow;"
+                          style="width: auto; color: black;"
                         >
                           <div
                             class="search-wrapper searchWrapper "
@@ -4167,7 +4167,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                         <div
                           class="multiselect-container multiSelectContainer  "
                           id="multiselect-takingStatuses"
-                          style="width: auto; color: black; background: yellow;"
+                          style="width: auto; color: black;"
                         >
                           <div
                             class="search-wrapper searchWrapper "
