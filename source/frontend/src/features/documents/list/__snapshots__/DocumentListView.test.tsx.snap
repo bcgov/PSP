@@ -749,7 +749,7 @@ exports[`Document List View > renders as expected 1`] = `
               <div
                 class="sortable-column"
               >
-                File name
+                Document name
                 <div
                   class="c8"
                   data-testid="sort-column-fileName"
