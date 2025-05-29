@@ -18,8 +18,11 @@ import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/Api
 import { ApiGen_Concepts_DocumentType } from '@/models/api/generated/ApiGen_Concepts_DocumentType';
 import { prettyFormatUTCDate, stringToFragment } from '@/utils';
 
+import { ParentInformationDisplay } from '../DocumentListView';
+
 export interface IDocumentColumnProps {
   showParentInformation: boolean;
+  relationshipDisplay?: ParentInformationDisplay;
   onViewDetails: (values: ApiGen_Concepts_DocumentRelationship) => void;
   onViewParent: (relationshipType: ApiGen_CodeTypes_DocumentRelationType, parentId: number) => void;
   onDelete: (values: ApiGen_Concepts_DocumentRelationship) => void;
@@ -28,6 +31,7 @@ export interface IDocumentColumnProps {
 
 export const getDocumentColumns = ({
   showParentInformation,
+  relationshipDisplay,
   onViewDetails,
   onViewParent,
   onDelete,
@@ -35,7 +39,7 @@ export const getDocumentColumns = ({
 }: IDocumentColumnProps): ColumnWithProps<DocumentRow>[] => {
   const parentColumns: ColumnWithProps<DocumentRow>[] = [
     {
-      Header: 'Relation ID',
+      Header: relationshipDisplay?.relationshipIdLabel ?? 'Relationship Id',
       accessor: 'parentName',
       align: 'left',
       sortable: true,
@@ -44,7 +48,7 @@ export const getDocumentColumns = ({
       Cell: renderParentName(onViewParent),
     },
     {
-      Header: 'Relation Type',
+      Header: relationshipDisplay?.relationshipTypeLabel ?? 'Relationship Type',
       accessor: 'relationshipType',
       align: 'left',
       sortable: true,
@@ -64,7 +68,7 @@ export const getDocumentColumns = ({
       Cell: renderDocumentType,
     },
     {
-      Header: 'File name',
+      Header: 'Document name',
       accessor: 'fileName',
       width: 40,
       maxWidth: 40,

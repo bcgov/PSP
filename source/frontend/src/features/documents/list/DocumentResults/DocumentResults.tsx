@@ -7,6 +7,7 @@ import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/Ap
 import { ApiGen_Concepts_Document } from '@/models/api/generated/ApiGen_Concepts_Document';
 import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
 
+import { ParentInformationDisplay } from '../DocumentListView';
 import { getDocumentColumns } from './DocumentResultsColumns';
 
 export interface IDocumentResultProps {
@@ -19,6 +20,7 @@ export interface IDocumentResultProps {
   onPreview: (values: ApiGen_Concepts_DocumentRelationship) => void;
   onDelete: (values: ApiGen_Concepts_DocumentRelationship) => void;
   showParentInformation: boolean;
+  relationshipDisplay?: ParentInformationDisplay;
 }
 
 export const DocumentResults: React.FunctionComponent<
@@ -32,6 +34,7 @@ export const DocumentResults: React.FunctionComponent<
   onDelete,
   onPreview,
   showParentInformation,
+  relationshipDisplay,
   ...rest
 }) => {
   const columns = useMemo(
@@ -42,8 +45,9 @@ export const DocumentResults: React.FunctionComponent<
         onDelete,
         onPreview,
         showParentInformation,
+        relationshipDisplay,
       }),
-    [onViewDetails, onViewParent, onDelete, onPreview, showParentInformation],
+    [onViewDetails, onViewParent, onDelete, onPreview, showParentInformation, relationshipDisplay],
   );
 
   return (

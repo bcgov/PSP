@@ -133,6 +133,12 @@ const DocumentFileListContainer: React.FunctionComponent<IDocumentListContainerP
       disableAdd={props.disableAdd}
       title={props.title}
       showParentInformation={true}
+      relationshipDisplay={{
+        relationshipIdLabel: 'File #',
+        relationshipTypeLabel: 'File Type',
+        searchParentIdLabel: 'File Number',
+        searchParentTypeLabel: 'File Type',
+      }}
     />
   );
 };

@@ -27,6 +27,13 @@ import { useDocumentProvider } from '../hooks/useDocumentProvider';
 import { DocumentFilterForm } from './DocumentFilter/DocumentFilterForm';
 import { DocumentResults } from './DocumentResults/DocumentResults';
 
+export interface ParentInformationDisplay {
+  relationshipIdLabel: string;
+  relationshipTypeLabel: string;
+  searchParentIdLabel: string;
+  searchParentTypeLabel: string;
+}
+
 export interface IDocumentListViewProps {
   parentId: string;
   relationshipType: ApiGen_CodeTypes_DocumentRelationType;
@@ -39,6 +46,7 @@ export interface IDocumentListViewProps {
   disableAdd?: boolean;
   title?: string;
   showParentInformation: boolean;
+  relationshipDisplay?: ParentInformationDisplay;
   onDelete: (relationship: ApiGen_Concepts_DocumentRelationship) => Promise<boolean | undefined>;
   onSuccess: () => void;
   onRefresh: () => void;
@@ -239,6 +247,7 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
             documentTypes={documentTypes}
             showParentFilter={props.showParentInformation}
             relationshipTypes={props.relationshipTypes}
+            relationshipDisplay={props.relationshipDisplay}
           />
         )}
         <DocumentResults
@@ -251,6 +260,7 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
           onPreview={handlePreview}
           onDelete={handleDeleteClick}
           showParentInformation={props.showParentInformation}
+          relationshipDisplay={props.relationshipDisplay}
         />
       </Section>
       <DocumentDetailModal

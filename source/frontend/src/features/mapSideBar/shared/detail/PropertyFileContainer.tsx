@@ -20,7 +20,6 @@ import { PROPERTY_TYPES, useComposedProperties } from '@/hooks/repositories/useC
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
@@ -31,7 +30,7 @@ import CrownDetailsTabView from '../../property/tabs/crown/CrownDetailsTabView';
 import { PropertyManagementTabView } from '../../property/tabs/propertyDetailsManagement/detail/PropertyManagementTabView';
 import PropertyResearchTabView from '../../property/tabs/propertyResearch/detail/PropertyResearchTabView';
 import ResearchStatusUpdateSolver from '../../research/tabs/fileDetails/ResearchStatusUpdateSolver';
-import DocumentsTab from '../tabs/DocumentsTab';
+import PropertyDocumentsTab from '../tabs/PropertyDocumentsTab';
 
 export interface IPropertyFileContainerProps {
   fileProperty: ApiGen_Concepts_FileProperty;
@@ -222,11 +221,9 @@ export const PropertyFileContainer: React.FunctionComponent<
   if (exists(composedProperties.apiWrapper?.response) && hasClaim(Claims.DOCUMENT_VIEW)) {
     tabViews.push({
       content: (
-        <DocumentsTab
+        <PropertyDocumentsTab
           fileId={composedProperties.apiWrapper.response.id}
-          relationshipType={ApiGen_CodeTypes_DocumentRelationType.Properties}
           onSuccess={props.onChildSuccess}
-          title={'Property Documents'}
         />
       ),
       key: InventoryTabNames.document,

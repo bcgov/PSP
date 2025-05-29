@@ -11,10 +11,13 @@ import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/Ap
 import { ApiGen_Concepts_DocumentType } from '@/models/api/generated/ApiGen_Concepts_DocumentType';
 import { capitalizeFirstLetter, relationshipTypeToPathName } from '@/utils';
 
+import { ParentInformationDisplay } from '../DocumentListView';
+
 export interface IDocumentFilterFormProps {
   documentFilter?: IDocumentFilter;
   documentTypes: ApiGen_Concepts_DocumentType[];
   relationshipTypes: ApiGen_CodeTypes_DocumentRelationType[];
+  relationshipDisplay?: ParentInformationDisplay;
   showParentFilter: boolean;
   onSetFilter: (filterValues: IDocumentFilter) => void;
 }
@@ -99,19 +102,19 @@ export const DocumentFilterForm = (props: IDocumentFilterFormProps) => {
           </Row>
           {props.showParentFilter && (
             <Row>
-              <Col xs="1">Parent:</Col>
+              <Col xs="1"></Col>
               <Col xs="5">
                 <Input
                   field="parentName"
                   data-testid="document-parentname"
-                  placeholder="Parent name"
+                  placeholder={props.relationshipDisplay?.searchParentIdLabel ?? 'File Number'}
                 />
               </Col>
               <Col xs="3">
                 <Select
                   field="parentType"
                   data-testid="document-parenttype"
-                  placeholder="All Relationships"
+                  placeholder={props.relationshipDisplay?.searchParentTypeLabel ?? 'File Number'}
                   options={relationshipTypeOptions}
                 />
               </Col>
