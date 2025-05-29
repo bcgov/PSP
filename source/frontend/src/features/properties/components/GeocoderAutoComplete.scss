@@ -4,7 +4,7 @@
   position: relative;
 }
 
-.GeocoderAutoComplete form.Control {
+.GeocoderAutoComplete form.Control, .GeographicNameInput form.Control {
   width: 100%;
   height: 100%;
   border: none;
@@ -32,16 +32,16 @@
   left: -5rem;
 }
 
-.GeocoderAutoComplete option {
+.GeocoderAutoComplete option, .GeographicNameInput option {
   padding: 1rem 0.5rem;
   word-wrap: break-word;
   width: 40rem;
   overflow: hidden;
   cursor: pointer;
   color: var(--typography-color-secondary);
+}
 
-  &:hover {
-    background-color: $link-hover-color;
-    color: #fff;
-  }
+.GeocoderAutoComplete .suggestionList li:hover, .GeographicNameInput .suggestionList li:hover {
+  color: #ffffff !important;
+  background-color: #1967D2;
 }

@@ -1243,7 +1243,7 @@ exports[`UpdateLeaseForm component > renders as expected 1`] = `
                 <div
                   class="multiselect-container multiSelectContainer  "
                   id="multiselect-purposes"
-                  style="width: auto; color: black;"
+                  style="width: auto; color: black; background: yellow;"
                 >
                   <div
                     class="search-wrapper searchWrapper "

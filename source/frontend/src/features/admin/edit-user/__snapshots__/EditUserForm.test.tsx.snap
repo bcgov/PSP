@@ -555,7 +555,7 @@ exports[`EditUserForm component > renders as expected 1`] = `
             <div
               class="multiselect-container multiSelectContainer  "
               id="multiselect-roles"
-              style="width: auto; color: black;"
+              style="width: auto; color: black; background: yellow;"
             >
               <div
                 class="search-wrapper searchWrapper "
@@ -728,7 +728,7 @@ exports[`EditUserForm component > renders as expected 1`] = `
             <div
               class="multiselect-container multiSelectContainer  "
               id="multiselect-regions"
-              style="width: auto; color: black;"
+              style="width: auto; color: black; background: yellow;"
             >
               <div
                 class="search-wrapper searchWrapper "

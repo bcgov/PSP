@@ -19,7 +19,7 @@ exports[`Multiselect component > renders as expected 1`] = `
       <div
         class="multiselect-container multiSelectContainer  "
         id="multiselect-selectedOptions"
-        style="width: auto; color: black;"
+        style="width: auto; color: black; background: yellow;"
       >
         <div
           class="search-wrapper searchWrapper "
