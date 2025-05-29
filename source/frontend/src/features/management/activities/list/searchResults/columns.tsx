@@ -6,6 +6,7 @@ import ExpandableFileProperties from '@/components/common/List/ExpandableFilePro
 import { ColumnWithProps } from '@/components/Table';
 import { Claims } from '@/constants/claims';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { stringToFragment } from '@/utils';
 
 import { ManagementActivitySearchResultModel } from '../../models/ManagementActivitySearchResultModel';
 
@@ -29,7 +30,7 @@ export const columns: ColumnWithProps<ManagementActivitySearchResultModel>[] = [
             {props.row.original.description}
           </StyledLink>
         );
-      } else {
+      } else if (props.row.original.activivityProperty?.propertyId) {
         return (
           <StyledLink
             to={`/mapview/sidebar/property/${props.row.original.activivityProperty.propertyId}/management/activity/${props.row.original.id}`}
@@ -37,6 +38,8 @@ export const columns: ColumnWithProps<ManagementActivitySearchResultModel>[] = [
             {props.row.original.description}
           </StyledLink>
         );
+      } else {
+        return stringToFragment(props.row.original.description);
       }
     },
   },
