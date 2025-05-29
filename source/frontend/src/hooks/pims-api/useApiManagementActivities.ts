@@ -24,6 +24,9 @@ export const useApiManagementActivities = () => {
           `/properties/management-activities/subtypes`,
         ),
 
+      getPropertyActivityApi: (propertyActivityId: number) =>
+        api.get<ApiGen_Concepts_PropertyActivity>(`/management-activities/${propertyActivityId}`),
+
       postActivityApi: (managementFileId: number, activity: ApiGen_Concepts_PropertyActivity) =>
         api.post<ApiGen_Concepts_PropertyActivity>(
           `/managementfiles/${managementFileId}/management-activities`,
