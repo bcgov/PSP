@@ -29,6 +29,14 @@ export const columns: ColumnWithProps<ManagementActivitySearchResultModel>[] = [
             {props.row.original.description}
           </Link>
         );
+      } else {
+        return (
+          <Link
+            to={`/mapview/sidebar/property/${props.row.original.activivityProperty.propertyId}/management/activity/${props.row.original.id}`}
+          >
+            {props.row.original.description}
+          </Link>
+        );
       }
 
       return stringToFragment(props.row.original.description);
