@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { NoteTypes } from '@/constants';
@@ -14,6 +14,7 @@ import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Co
 import { isValidId } from '@/utils';
 
 import { SideBarContext } from '../../context/sidebarContext';
+import usePathGenerator from '../../shared/sidebarPathGenerator';
 import ManagementDocumentsTab from '../../shared/tabs/ManagementDocumentsTab';
 import ActivitiesTab from './activities/ActivitiesTab';
 import ManagementSummaryView from './fileDetails/detail/ManagementSummaryView';
@@ -34,13 +35,13 @@ export const ManagementFileTabs: React.FC<IManagementFileTabsProps> = ({
   const tabViews: TabFileView[] = [];
   const { hasClaim } = useKeycloakWrapper();
   const { setStaleLastUpdatedBy } = useContext(SideBarContext);
-  const history = useHistory();
-  const { tab } = useParams<{ tab?: string }>();
-  const activeTab = Object.values(FileTabType).find(value => value === tab) ?? defaultTab;
+  const { tab: paramsTab } = useParams<{ tab?: string }>();
+  const activeTab = Object.values(FileTabType).find(value => value === paramsTab) ?? defaultTab;
+  const pathGenerator = usePathGenerator();
 
   const setActiveTab = (tab: FileTabType) => {
     if (activeTab !== tab) {
-      history.push(`${tab}`);
+      pathGenerator.showDetails('management', managementFile.id, tab, false);
     }
   };
 
