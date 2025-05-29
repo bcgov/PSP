@@ -1,4 +1,3 @@
-import { noop } from 'lodash';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator';
@@ -146,8 +145,14 @@ const DocumentManagementListContainer: React.FunctionComponent<
     relationshipType: ApiGen_CodeTypes_DocumentRelationType,
     parentId: number,
   ) => {
-    const file = relationshipTypeToPathName(relationshipType);
-    pathGenerator.showFile(file, parentId);
+    if (relationshipType === ApiGen_CodeTypes_DocumentRelationType.ManagementActivities) {
+      const file = relationshipTypeToPathName(props.relationshipType);
+      const detail = relationshipTypeToPathName(relationshipType);
+      pathGenerator.showDetail(file, Number(props.parentId), detail, parentId, false);
+    } else {
+      const file = relationshipTypeToPathName(relationshipType);
+      pathGenerator.showFile(file, parentId);
+    }
   };
 
   const documentResults = useMemo(() => {
@@ -167,7 +172,7 @@ const DocumentManagementListContainer: React.FunctionComponent<
       isLoading={retrieveDocumentRelationshipLoading || activitiesLoading || propertiesLoading}
       documentResults={documentResults}
       onDelete={undefined}
-      onSuccess={noop}
+      onSuccess={undefined}
       onRefresh={handleDocumentsRefresh}
       onViewParent={handleViewParent}
       disableAdd={props.disableAdd}

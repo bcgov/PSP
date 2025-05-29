@@ -73,7 +73,7 @@ export class DocumentRow {
     row.relationshipId = undefined;
     row.relationshipType = null;
     row.parentId = undefined;
-    row.parentName = 'THIS IS IT';
+    row.parentName = '';
     return row;
   }
 

@@ -95,7 +95,7 @@ namespace Pims.Api.Areas.Management.Controllers
                 User.GetUsername(),
                 DateTime.Now);
 
-            var activity = _propertyService.GetFileActivity(propertyActivityId);
+            var activity = _propertyService.GetActivity(propertyActivityId);
 
             if (activity.ManagementFileId != managementFileId)
             {

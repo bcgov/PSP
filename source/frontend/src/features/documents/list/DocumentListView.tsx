@@ -267,9 +267,7 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
         display={isDetailsVisible}
         relationshipType={props.relationshipType}
         setDisplay={setIsDetailsVisible}
-        pimsDocument={
-          selectedDocument ? DocumentRow.fromApi(selectedDocument, 'asfasdfasd') : undefined
-        }
+        pimsDocument={selectedDocument ? DocumentRow.fromApi(selectedDocument, '') : undefined}
         onUpdateSuccess={onUpdateSuccess}
         onClose={handleModalDetailsClose}
       />

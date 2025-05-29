@@ -1,4 +1,3 @@
-import { noop } from 'lodash';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator';
@@ -38,7 +37,7 @@ const DocumentActivityListContainer: React.FunctionComponent<
   const { retrieveDocumentRelationship, retrieveDocumentRelationshipLoading } =
     useDocumentRelationshipProvider();
 
-  const retrieveActivities = useCallback(async () => {
+  const retrieveActivity = useCallback(async () => {
     const result = await getManagementActivity(Number(props.parentId));
     if (exists(result) && isMounted()) {
       const propertyResult = await getProperties(
@@ -84,8 +83,8 @@ const DocumentActivityListContainer: React.FunctionComponent<
   );
 
   useEffect(() => {
-    retrieveActivities();
-  }, [retrieveActivities]);
+    retrieveActivity();
+  }, [retrieveActivity]);
 
   useEffect(() => {
     retrieveActivitiesDocuments(activity);
@@ -116,7 +115,7 @@ const DocumentActivityListContainer: React.FunctionComponent<
       isLoading={retrieveDocumentRelationshipLoading || getActivityLoading || getPropertiesLoading}
       documentResults={documentResults}
       onDelete={undefined}
-      onSuccess={noop}
+      onSuccess={undefined}
       onRefresh={handleDocumentsRefresh}
       onViewParent={handleViewParent}
       disableAdd={props.disableAdd}

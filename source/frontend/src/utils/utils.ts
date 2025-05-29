@@ -253,10 +253,10 @@ export function relationshipTypeToPathName(
       return 'project';
 
     case ApiGen_CodeTypes_DocumentRelationType.ManagementActivities:
-      return 'management';
+      return 'activities';
 
     case ApiGen_CodeTypes_DocumentRelationType.ManagementFiles:
-      return 'template';
+      return 'management';
 
     case ApiGen_CodeTypes_DocumentRelationType.DispositionFiles:
       return 'disposition';

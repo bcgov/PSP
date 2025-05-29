@@ -54,7 +54,7 @@ export const getDocumentColumns = ({
       sortable: true,
       width: 25,
       maxWidth: 25,
-      Cell: renderRelantionshipType,
+      Cell: renderRelationshipType,
     },
   ];
   const documentColumns: ColumnWithProps<DocumentRow>[] = [
@@ -95,7 +95,7 @@ export const getDocumentColumns = ({
       Header: 'Actions',
       width: 10,
       maxWidth: 10,
-      Cell: renderActions(onViewDetails, onDelete),
+      Cell: renderActions(onViewDetails, onDelete, showParentInformation),
     },
   ];
   if (showParentInformation) {
@@ -131,7 +131,7 @@ const renderParentName = (
   };
 };
 
-function renderRelantionshipType({
+function renderRelationshipType({
   value,
 }: CellProps<DocumentRow, ApiGen_CodeTypes_DocumentRelationType | undefined>) {
   return stringToFragment(value ?? '');
@@ -199,6 +199,7 @@ function renderUploaded(cell: CellProps<DocumentRow, string | undefined>) {
 const renderActions = (
   onViewDetails: (values: ApiGen_Concepts_DocumentRelationship) => void,
   onDelete: (values: ApiGen_Concepts_DocumentRelationship) => void,
+  showParentInformation: boolean,
 ) => {
   return function ({ row: { original, index } }: CellProps<DocumentRow, string>) {
     const { hasClaim } = useKeycloakWrapper();
@@ -240,7 +241,7 @@ const renderActions = (
             title={original.queueStatusTypeCode.description}
           />
 
-          {hasClaim(Claims.DOCUMENT_DELETE) && (
+          {hasClaim(Claims.DOCUMENT_DELETE) && !showParentInformation && (
             <StyledRemoveLinkButton
               data-testid="document-delete-button"
               icon={<FaTrash id={`document-delete-${index}`} size={21} title="document delete" />}
@@ -262,7 +263,7 @@ const renderActions = (
           ></ViewButton>
         )}
 
-        {hasClaim(Claims.DOCUMENT_DELETE) && canDeleteDocument && (
+        {hasClaim(Claims.DOCUMENT_DELETE) && canDeleteDocument && !showParentInformation && (
           <StyledRemoveLinkButton
             data-testid="document-delete-button"
             icon={<FaTrash size={21} id={`document-delete-${index}`} title="document delete" />}
