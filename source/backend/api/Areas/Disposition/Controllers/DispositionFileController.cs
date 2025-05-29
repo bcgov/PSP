@@ -5,15 +5,15 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Pims.Core.Api.Exceptions;
 using Pims.Api.Models.Concepts.DispositionFile;
-using Pims.Core.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Api.Exceptions;
+using Pims.Core.Api.Policies;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Core.Json;
-using Pims.Dal.Exceptions;
 using Pims.Core.Security;
+using Pims.Dal.Exceptions;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Areas.Disposition.Controllers
@@ -389,7 +389,7 @@ namespace Pims.Api.Areas.Disposition.Controllers
         [ProducesResponseType(typeof(DispositionFileSaleModel), 200)]
         [SwaggerOperation(Tags = new[] { "dispositionfile" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult UpdateDispositionFileSale([FromRoute]long id, [FromRoute]long saleId, [FromBody] DispositionFileSaleModel dispositionFileSale)
+        public IActionResult UpdateDispositionFileSale([FromRoute] long id, [FromRoute] long saleId, [FromBody] DispositionFileSaleModel dispositionFileSale)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",

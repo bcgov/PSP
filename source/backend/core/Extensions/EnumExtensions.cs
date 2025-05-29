@@ -1,7 +1,7 @@
-using Pims.Core.Security;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using Pims.Core.Security;
 
 namespace Pims.Core.Extensions
 {
@@ -62,6 +62,6 @@ namespace Pims.Core.Extensions
             var attribute = (DisplayAttribute)enumValueMemberInfo.GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault();
             return attribute.Name;
         }
-    #endregion
-}
+        #endregion
+    }
 }

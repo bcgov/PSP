@@ -1,17 +1,21 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Pims.Api.Models.Concepts.Product;
 using Pims.Api.Models.Concepts.Project;
 using Pims.Api.Services;
 using Pims.Core.Api.Exceptions;
 using Pims.Core.Api.Policies;
 using Pims.Core.Exceptions;
+using Pims.Core.Extensions;
 using Pims.Core.Json;
 using Pims.Core.Security;
 using Pims.Dal.Exceptions;
+using Pims.Dal.Repositories;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Areas.Projects.Controllers
@@ -30,18 +34,23 @@ namespace Pims.Api.Areas.Projects.Controllers
         #region fields
         private readonly IProjectService _projectService;
         private readonly IMapper _mapper;
+        private readonly IProjectRepository _projectRepository;
+        private readonly ILogger<ProjectController> _logger;
         #endregion
 
         /// <summary>
         /// Creates a new instance of a ProjectController class, initializes it with the specified arguments.
         /// </summary>
         /// <param name="projectService"></param>
+        /// <param name="projectRepository"></param>
         /// <param name="mapper"></param>
-        ///
-        public ProjectController(IProjectService projectService, IMapper mapper)
+        /// <param name="logger"></param>
+        public ProjectController(IProjectService projectService, IProjectRepository projectRepository, IMapper mapper, ILogger<ProjectController> logger)
         {
             _projectService = projectService;
+            _projectRepository = projectRepository;
             _mapper = mapper;
+            _logger = logger;
         }
 
         /// <summary>
@@ -175,6 +184,25 @@ namespace Pims.Api.Areas.Projects.Controllers
             var products = _projectService.GetProducts(projectId);
 
             return new JsonResult(_mapper.Map<IList<ProductModel>>(products));
+        }
+
+        [HttpGet("{id:long}/historical")]
+        [Produces("application/json")]
+        [HasPermission(Permissions.ProjectView)]
+        [ProducesResponseType(typeof(ProjectModel), 200)]
+        [SwaggerOperation(Tags = new[] { "project" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetProjectAtTime([FromRoute] long id, [FromQuery] DateTime time)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(ProductController),
+                nameof(GetProjectAtTime),
+                User.GetUsername(),
+                DateTime.Now);
+
+            var pimsProject = _projectRepository.GetProjectAtTime(id, time);
+            return new JsonResult(_mapper.Map<ProjectModel>(pimsProject));
         }
     }
 }

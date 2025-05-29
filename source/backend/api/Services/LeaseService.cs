@@ -30,7 +30,7 @@ namespace Pims.Api.Services
         private readonly IPropertyImprovementRepository _propertyImprovementRepository;
         private readonly IPropertyRepository _propertyRepository;
         private readonly IPropertyLeaseRepository _propertyLeaseRepository;
-        private readonly IEntityNoteRepository _entityNoteRepository;
+        private readonly INoteRelationshipRepository<PimsLeaseNote> _entityNoteRepository;
         private readonly IInsuranceRepository _insuranceRepository;
         private readonly ILeaseStakeholderRepository _stakeholderRepository;
         private readonly ICompensationRequisitionRepository _compensationRequisitionRepository;
@@ -50,7 +50,7 @@ namespace Pims.Api.Services
             IPropertyRepository propertyRepository,
             IPropertyLeaseRepository propertyLeaseRepository,
             IPropertyImprovementRepository propertyImprovementRepository,
-            IEntityNoteRepository entityNoteRepository,
+            INoteRelationshipRepository<PimsLeaseNote> entityNoteRepository,
             IInsuranceRepository insuranceRepository,
             ILeaseStakeholderRepository stakeholderRepository,
             ICompensationRequisitionRepository compensationRequisitionRepository,
@@ -275,7 +275,7 @@ namespace Pims.Api.Services
             {
                 PimsLeaseNote newLeaseNote = GeneratePimsLeaseNote(currentLease, lease);
 
-                _entityNoteRepository.Add(newLeaseNote);
+                _entityNoteRepository.AddNoteRelationship(newLeaseNote);
             }
 
             ValidateRenewalDates(lease, currentLease, userOverrides);
@@ -509,6 +509,27 @@ namespace Pims.Api.Services
             _consultationRepository.CommitTransaction();
 
             return deleteResult;
+        }
+
+        public IEnumerable<PimsLeaseLicenseTeam> GetTeamMembers()
+        {
+            _logger.LogInformation("Getting lease team members");
+            _user.ThrowIfNotAuthorized(Permissions.LeaseView);
+
+            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
+            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
+
+            var teamMembers = _leaseRepository.GetTeamMembers(userRegions, contractorPersonId);
+
+            var persons = teamMembers.Where(x => x.Person != null).GroupBy(x => x.PersonId).Select(x => x.First()).ToList();
+            var organizations = teamMembers.Where(x => x.Organization != null).GroupBy(x => x.OrganizationId).Select(x => x.First()).ToList();
+
+            List<PimsLeaseLicenseTeam> teamFilterOptions = new();
+            teamFilterOptions.AddRange(persons);
+            teamFilterOptions.AddRange(organizations);
+
+            return teamFilterOptions;
         }
 
         private static void ValidateRenewalDates(PimsLease lease, PimsLease currentLease, IEnumerable<UserOverrideCode> userOverrides)
@@ -810,27 +831,6 @@ namespace Pims.Api.Services
                     }
                 }
             }
-        }
-
-        public IEnumerable<PimsLeaseLicenseTeam> GetTeamMembers()
-        {
-            _logger.LogInformation("Getting lease team members");
-            _user.ThrowIfNotAuthorized(Permissions.LeaseView);
-
-            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
-            var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
-            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
-
-            var teamMembers = _leaseRepository.GetTeamMembers(userRegions, contractorPersonId);
-
-            var persons = teamMembers.Where(x => x.Person != null).GroupBy(x => x.PersonId).Select(x => x.First()).ToList();
-            var organizations = teamMembers.Where(x => x.Organization != null).GroupBy(x => x.OrganizationId).Select(x => x.First()).ToList();
-
-            List<PimsLeaseLicenseTeam> teamFilterOptions = new();
-            teamFilterOptions.AddRange(persons);
-            teamFilterOptions.AddRange(organizations);
-
-            return teamFilterOptions;
         }
     }
 }

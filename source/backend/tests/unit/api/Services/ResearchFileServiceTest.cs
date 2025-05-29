@@ -8,14 +8,14 @@ using Moq;
 using NetTopologySuite.Geometries;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Services;
+using Pims.Core.Exceptions;
+using Pims.Core.Security;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
-using Pims.Core.Security;
 using Xunit;
-using Pims.Core.Exceptions;
 
 namespace Pims.Api.Test.Services
 {
@@ -724,7 +724,7 @@ namespace Pims.Api.Test.Services
 
             var lookupRepositoryMock = this._helper.GetService<Mock<ILookupRepository>>();
             lookupRepositoryMock.Setup(x => x.GetAllResearchFileStatusTypes()).Returns(new List<PimsResearchFileStatusType>() { newStatusType, oldStatusType });
-            var noteEntityRepositoryMock = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            var noteEntityRepositoryMock = this._helper.GetService<Mock<INoteRelationshipRepository<PimsResearchFileNote>>>();
 
             var solver = this._helper.GetService<Mock<IResearchStatusSolver>>();
             solver.Setup(x => x.CanEditDetails(It.IsAny<ResearchFileStatusTypes?>())).Returns(true);
@@ -733,7 +733,7 @@ namespace Pims.Api.Test.Services
             var updatedResearchFile = service.Update(updatedResearchFileRequest);
 
             // Assert
-            noteEntityRepositoryMock.Verify(x => x.Add(It.IsAny<PimsResearchFileNote>()), Times.Once());
+            noteEntityRepositoryMock.Verify(x => x.AddNoteRelationship(It.IsAny<PimsResearchFileNote>()), Times.Once());
         }
 
         [Fact]
@@ -762,7 +762,7 @@ namespace Pims.Api.Test.Services
 
             var lookupRepositoryMock = this._helper.GetService<Mock<ILookupRepository>>();
             lookupRepositoryMock.Setup(x => x.GetAllResearchFileStatusTypes()).Returns(new List<PimsResearchFileStatusType>() { sameStatusType });
-            var noteEntityRepositoryMock = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            var noteEntityRepositoryMock = this._helper.GetService<Mock<INoteRelationshipRepository<PimsResearchFileNote>>>();
 
 
             var solver = this._helper.GetService<Mock<IResearchStatusSolver>>();
@@ -772,7 +772,7 @@ namespace Pims.Api.Test.Services
             var updatedResearchFile = service.Update(updatedResearchFileRequest);
 
             // Assert
-            noteEntityRepositoryMock.Verify(x => x.Add(It.IsAny<PimsResearchFileNote>()), Times.Never());
+            noteEntityRepositoryMock.Verify(x => x.AddNoteRelationship(It.IsAny<PimsResearchFileNote>()), Times.Never());
         }
         #endregion
 

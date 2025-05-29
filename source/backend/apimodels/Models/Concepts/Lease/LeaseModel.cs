@@ -4,7 +4,6 @@ using Pims.Api.Models.Base;
 using Pims.Api.Models.Concepts.File;
 using Pims.Api.Models.Concepts.Product;
 using Pims.Api.Models.Concepts.Project;
-using Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts.Lease
 {
@@ -168,6 +167,8 @@ namespace Pims.Api.Models.Concepts.Lease
         public string PrimaryArbitrationCity { get; set; }
 
         public bool IsExpired { get; set; }
+
+        public long? ProjectId { get; set; }
 
         /// <summary>
         /// get/set - The project associated with this lease.

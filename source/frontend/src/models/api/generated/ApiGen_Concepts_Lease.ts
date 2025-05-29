@@ -53,6 +53,7 @@ export interface ApiGen_Concepts_Lease extends ApiGen_Concepts_FileWithChecklist
   terminationReason: string | null;
   primaryArbitrationCity: string | null;
   isExpired: boolean;
+  projectId: number | null;
   project: ApiGen_Concepts_Project | null;
   productId: number | null;
   product: ApiGen_Concepts_Product | null;

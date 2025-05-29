@@ -18,7 +18,9 @@ namespace Pims.Dal.Entities
 
         #region Constructors
 
-        public PimsDispositionInitiatingDocType() { }
+        public PimsDispositionInitiatingDocType()
+        {
+        }
 
         /// <summary>
         /// Create a new instance of a PimsDispositionInitiatingDocType class.

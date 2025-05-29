@@ -12,6 +12,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using DotNetEnv;
 using HealthChecks.SqlServer;
 using HealthChecks.UI.Client;
 using Mapster;
@@ -56,8 +57,6 @@ using Pims.Geocoder;
 using Pims.Ltsa;
 using Polly;
 using Prometheus;
-using DotNetEnv;
-using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace Pims.Api
 {
@@ -565,6 +564,8 @@ namespace Pims.Api
             services.AddScoped<IResearchStatusSolver, ResearchStatusSolver>();
             services.AddScoped<IBctfaOwnershipService, BctfaOwnershipService>();
             services.AddScoped<IExpropriationEventService, ExpropriationEventService>();
+            services.AddScoped<IManagementFileService, ManagementFileService>();
+            services.AddScoped<IManagementStatusSolver, ManagementStatusSolver>();
         }
 
         /// <summary>

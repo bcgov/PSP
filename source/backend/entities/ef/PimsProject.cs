@@ -137,6 +137,9 @@ public partial class PimsProject
     public virtual ICollection<PimsLease> PimsLeases { get; set; } = new List<PimsLease>();
 
     [InverseProperty("Project")]
+    public virtual ICollection<PimsManagementFile> PimsManagementFiles { get; set; } = new List<PimsManagementFile>();
+
+    [InverseProperty("Project")]
     public virtual ICollection<PimsProjectDocument> PimsProjectDocuments { get; set; } = new List<PimsProjectDocument>();
 
     [InverseProperty("Project")]

@@ -61,4 +61,7 @@ public partial class PimsAcquisitionFundingType
 
     [InverseProperty("AcquisitionFundingTypeCodeNavigation")]
     public virtual ICollection<PimsAcquisitionFile> PimsAcquisitionFiles { get; set; } = new List<PimsAcquisitionFile>();
+
+    [InverseProperty("AcquisitionFundingTypeCodeNavigation")]
+    public virtual ICollection<PimsManagementFile> PimsManagementFiles { get; set; } = new List<PimsManagementFile>();
 }

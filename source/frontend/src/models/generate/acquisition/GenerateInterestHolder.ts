@@ -1,5 +1,5 @@
-import { getApiPersonOrOrgMailingAddress } from '@/features/contacts/contactUtils';
 import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
+import { getApiPersonOrOrgMailingAddress } from '@/utils/contactUtils';
 import { formatNames } from '@/utils/personUtils';
 
 import { Api_GenerateAddress } from '../GenerateAddress';

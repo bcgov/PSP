@@ -87,6 +87,33 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
                 .Map(dest => dest.PimsInterestHolders, src => src.AcquisitionFileInterestHolders)
                 .Map(dest => dest.PimsAcquisitionChecklistItems, src => src.FileChecklistItems)
                 .Inherits<BaseAuditModel, IBaseAppEntity>();
+
+            config.NewConfig<PimsAcquisitionFileHist, PimsAcquisitionFile>()
+                .Map(dest => dest.AcquisitionFileId, src => src.AcquisitionFileId)
+                .Map(dest => dest.PrntAcquisitionFileId, src => src.PrntAcquisitionFileId)
+                .Map(dest => dest.FileNo, src => src.FileNo)
+                .Map(dest => dest.FileNoSuffix, src => src.FileNoSuffix)
+                .Map(dest => dest.FileName, src => src.FileName)
+                .Map(dest => dest.LegacyFileNumber, src => src.LegacyFileNumber)
+                .Map(dest => dest.ProjectId, src => src.ProjectId)
+                .Map(dest => dest.ProductId, src => src.ProductId)
+                .Map(dest => dest.AcquisitionFundingTypeCode, src => src.AcquisitionFundingTypeCode)
+                .Map(dest => dest.FundingOther, src => src.FundingOther)
+                .Map(dest => dest.AssignedDate, src => src.AssignedDate)
+                .Map(dest => dest.DeliveryDate, src => src.DeliveryDate)
+                .Map(dest => dest.EstCompletionDt, src => src.EstCompletionDt)
+                .Map(dest => dest.PossessionDt, src => src.PossessionDt)
+                .Map(dest => dest.AcqFileAppraisalTypeCode, src => src.AcqFileAppraisalTypeCode)
+                .Map(dest => dest.AcqFileLglSrvyTypeCode, src => src.AcqFileLglSrvyTypeCode)
+                .Map(dest => dest.AcqFileExpropRiskTypeCode, src => src.AcqFileExpropRiskTypeCode)
+                .Map(dest => dest.TotalAllowableCompensation, src => src.TotalAllowableCompensation)
+                .Map(dest => dest.AcquisitionFileStatusTypeCode, src => src.AcquisitionFileStatusTypeCode)
+                .Map(dest => dest.AcqPhysFileStatusTypeCode, src => src.AcqPhysFileStatusTypeCode)
+                .Map(dest => dest.PhysicalFileDetails, src => src.PhysicalFileDetails)
+                .Map(dest => dest.AcquisitionTypeCode, src => src.AcquisitionTypeCode)
+                .Map(dest => dest.RegionCode, src => src.RegionCode)
+                .Map(dest => dest.SubfileInterestTypeCode, src => src.SubfileInterestTypeCode)
+                .Map(dest => dest.OtherSubfileInterestType, src => src.OtherSubfileInterestType);
         }
     }
 }

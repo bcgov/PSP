@@ -31,6 +31,14 @@ namespace Pims.Api.Models.Concepts.Lease
                 .Map(dest => dest.Location, src => src.Location)
                 .Map(dest => dest.Internal_Id, src => src.Id)
                 .Inherits<BaseConcurrentModel, IBaseEntity>();
+
+            config.NewConfig<PimsPropertyLeaseHist, PimsPropertyLease>()
+                .Map(dest => dest.PropertyLeaseId, src => src.PropertyLeaseId)
+                .Map(dest => dest.PropertyId, src => src.PropertyId)
+                .Map(dest => dest.LeaseId, src => src.LeaseId)
+                .Map(dest => dest.AreaUnitTypeCode, src => src.AreaUnitTypeCode)
+                .Map(dest => dest.LeaseArea, src => src.LeaseArea)
+                .Map(dest => dest.Name, src => src.Name);
         }
     }
 }

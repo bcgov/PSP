@@ -83,7 +83,8 @@ export const CompensationRequisitionDetailContainer: React.FunctionComponent<
       loading={
         loading || loadingCompReqProperties || loadingCompReqAcqPayees || loadingCompReqLeasePayees
       }
-      file={file}
+      fileProduct={file?.product}
+      fileProject={file?.project}
       compensation={compensation}
       compensationProperties={compensationRequisitionProperties}
       compensationAcqPayees={compReqAcqPayees}
@@ -92,6 +93,6 @@ export const CompensationRequisitionDetailContainer: React.FunctionComponent<
       clientConstant={clientConstant}
       onGenerate={onGenerate}
       isFileFinalStatus={!statusSolver?.canEditOrDeleteCompensation()}
-    ></View>
+    />
   ) : null;
 };

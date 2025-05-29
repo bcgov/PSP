@@ -8,6 +8,8 @@ export enum ApiGen_CodeTypes_DocumentRelationType {
   AcquisitionFiles = 'AcquisitionFiles',
   Leases = 'Leases',
   Projects = 'Projects',
+  ManagementActivities = 'ManagementActivities',
   ManagementFiles = 'ManagementFiles',
   DispositionFiles = 'DispositionFiles',
+  Properties = 'Properties',
 }

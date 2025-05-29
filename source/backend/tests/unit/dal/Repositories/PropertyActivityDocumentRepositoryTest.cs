@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
+using Pims.Core.Security;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Repositories;
-using Pims.Core.Security;
 using Xunit;
 
 namespace Pims.Dal.Test.Repositories
@@ -24,7 +24,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<PropertyActivityDocumentRepository>(user);
 
             // Act
-            var result = repository.AddPropertyActivityDocument(propertyActivityFileDocument);
+            var result = repository.AddDocument(propertyActivityFileDocument);
 
             // Assert
             result.PropertyActivityDocumentId.Should().Be(1);
@@ -39,7 +39,9 @@ namespace Pims.Dal.Test.Repositories
 
             var document = new PimsDocument() { DocumentStatusTypeCodeNavigation = new PimsDocumentStatusType() { DocumentStatusTypeCode = "test", Description = "Active", DbCreateUserid = "test", DbLastUpdateUserid = "test" }, DocumentType = new PimsDocumentTyp() { DocumentType = "IMAGE", DocumentTypeDescription = "Image", DbCreateUserid = "test", DbLastUpdateUserid = "test" }, FileName = "test.txt" };
             var propertyActivityFileDocument = new PimsPropertyActivityDocument() { Document = document };
-            PimsPropertyActivity pimsPropertyActivity = new PimsPropertyActivity() { PimsPropertyActivityDocuments = new List<PimsPropertyActivityDocument>() { propertyActivityFileDocument },
+            PimsPropertyActivity pimsPropertyActivity = new PimsPropertyActivity()
+            {
+                PimsPropertyActivityDocuments = new List<PimsPropertyActivityDocument>() { propertyActivityFileDocument },
                 PropMgmtActivityStatusTypeCode = "ACTIVE",
                 PropMgmtActivitySubtypeCode = "ACTIVE",
                 PropMgmtActivityTypeCode = "test"
@@ -49,7 +51,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<PropertyActivityDocumentRepository>(user);
 
             // Act
-            var result = repository.GetAllByPropertyActivity(propertyActivityFileDocument.PimsPropertyActivityId);
+            var result = repository.GetAllByParentId(propertyActivityFileDocument.PimsPropertyActivityId);
 
             // Assert
             result.FirstOrDefault().Internal_Id.Should().Be(1);
@@ -67,7 +69,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<PropertyActivityDocumentRepository>(user);
 
             // Act
-            var result = repository.DeletePropertyActivityDocument(propertyActivityFileDocument);
+            var result = repository.DeleteDocument(propertyActivityFileDocument);
 
             // Assert
             result.Should().BeTrue();
@@ -83,7 +85,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<PropertyActivityDocumentRepository>(user);
 
             // Act
-            Action act = () => repository.DeletePropertyActivityDocument(null);
+            Action act = () => repository.DeleteDocument(null);
 
             // Assert
             act.Should().Throw<ArgumentNullException>();

@@ -27,6 +27,7 @@ export enum FileTabType {
   STAKEHOLDERS = 'stakeholders',
   EXPROPRIATION = 'expropriation',
   SUB_FILES = 'subFiles',
+  ACTIVITIES = 'activities',
 }
 /**
  * Tab wrapper, provides styling and nests form components within their corresponding tabs.

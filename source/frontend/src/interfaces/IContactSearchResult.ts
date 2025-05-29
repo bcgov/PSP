@@ -2,6 +2,7 @@ import { ApiGen_Concepts_Contact } from '@/models/api/generated/ApiGen_Concepts_
 import { ApiGen_Concepts_ContactSummary } from '@/models/api/generated/ApiGen_Concepts_ContactSummary';
 import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
 import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
+import { exists } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 interface PersonContactSummary
@@ -143,6 +144,18 @@ export function fromApiOrganization(baseModel: ApiGen_Concepts_Organization): IC
     municipalityName: '',
     provinceState: '',
   };
+}
+
+export function fromApiPersonOrApiOrganization(
+  person: ApiGen_Concepts_Person | null,
+  organization: ApiGen_Concepts_Organization | null,
+): IContactSearchResult | null {
+  if (exists(person)) {
+    return fromApiPerson(person);
+  } else if (exists(organization)) {
+    return fromApiOrganization(organization);
+  }
+  return null;
 }
 
 export function toContact(baseModel: IContactSearchResult): ApiGen_Concepts_Contact {

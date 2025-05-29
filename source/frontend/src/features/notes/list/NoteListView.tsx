@@ -1,93 +1,104 @@
-import orderBy from 'lodash/orderBy';
-import React, { useCallback } from 'react';
+import React from 'react';
 import { FaPlus } from 'react-icons/fa';
 
-import GenericModal from '@/components/common/GenericModal';
 import { Section } from '@/components/common/Section/Section';
 import { SectionListHeader } from '@/components/common/SectionListHeader';
 import { TableSort } from '@/components/Table/TableSort';
 import { Claims } from '@/constants/claims';
 import { NoteTypes } from '@/constants/noteTypes';
-import { useApiNotes } from '@/hooks/pims-api/useApiNotes';
-import { useModalManagement } from '@/hooks/useModalManagement';
-import useIsMounted from '@/hooks/util/useIsMounted';
+import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
+import { ApiGen_Concepts_EntityNote } from '@/models/api/generated/ApiGen_Concepts_EntityNote';
 import { ApiGen_Concepts_Note } from '@/models/api/generated/ApiGen_Concepts_Note';
+import { exists, isValidId } from '@/utils';
 
 import { AddNotesContainer } from '../add/AddNotesContainer';
 import { NoteContainer } from '../NoteContainer';
+import { createNoteActionsColumn, createNoteTableColumns } from './NoteResults/columns';
 import { NoteResults } from './NoteResults/NoteResults';
 
 export interface INoteListViewProps {
   type: NoteTypes;
   entityId: number;
-  onSuccess?: () => void;
+  isAddNotesOpened?: boolean;
+  isViewNotesOpened?: boolean;
+  currentNote?: ApiGen_Concepts_Note;
+  loading?: boolean;
+  notes: ApiGen_Concepts_Note[];
+  entityNotes?: ApiGen_Concepts_EntityNote[];
+  sort: TableSort<ApiGen_Concepts_Note>;
+  openAddNotes?: () => void;
+  closeAddNotes?: () => void;
+  deleteNote?: (type: NoteTypes, noteId: number) => Promise<boolean>;
+  onChildSuccess?: () => void;
+  setSort?: (value: TableSort<ApiGen_Concepts_Note>) => void;
+  setCurrentNote?: (note: ApiGen_Concepts_Note) => void;
+  openViewNotes?: () => void;
+  closeViewNotes?: () => void;
+  getNoteNavigationUrlTitle?: (row: ApiGen_Concepts_Note) => {
+    url: string;
+    title: string;
+  };
 }
+
 /**
  * Page that displays notes information.
  */
-export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INoteListViewProps>> = (
-  props: INoteListViewProps,
-) => {
-  const { type, entityId, onSuccess } = props;
-  const isMounted = useIsMounted();
-  const { getNotes, deleteNote } = useApiNotes();
+export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INoteListViewProps>> = ({
+  notes,
+  loading,
+  type,
+  entityId,
+  sort,
+  isViewNotesOpened,
+  currentNote,
+  isAddNotesOpened,
+  openAddNotes,
+  setSort,
+  setCurrentNote,
+  deleteNote,
+  openViewNotes,
+  onChildSuccess,
+  closeAddNotes,
+  closeViewNotes,
+}: INoteListViewProps) => {
+  const { setModalContent, setDisplayModal } = useModalContext();
+  const columns = [
+    ...createNoteTableColumns(),
+    createNoteActionsColumn(
+      (note: ApiGen_Concepts_Note) => {
+        setCurrentNote(note);
+        openViewNotes();
+      },
+      (note: ApiGen_Concepts_Note) => {
+        // show confirmation popup before actually removing the note
+        setModalContent({
+          ...getDeleteModalProps(),
+          variant: 'error',
+          title: 'Delete Note',
+          message: `Are you sure you want to delete this note?`,
+          okButtonText: 'Yes',
+          cancelButtonText: 'No',
+          handleOk: async () => {
+            if (isValidId(note?.id)) {
+              const result = await deleteNote(type, note.id);
+              if (result === false) {
+                console.error('Unable to delete note');
+              }
+              onChildSuccess();
+            } else {
+              console.error('Invalid note');
+            }
+            setDisplayModal(false);
+          },
+          handleCancel: () => {
+            setDisplayModal(false);
+          },
+        });
 
-  const [showDeleteConfirm, setShowDeleteConfirm] = React.useState<boolean>(false);
-  const [currentNote, setCurrentNote] = React.useState<ApiGen_Concepts_Note>();
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  // Notes should display by default in descending order of created date
-  const [sort, setSort] = React.useState<TableSort<ApiGen_Concepts_Note>>({
-    appCreateTimestamp: 'desc',
-  });
-  const [noteResult, setNoteResult] = React.useState<ApiGen_Concepts_Note[]>([]);
-
-  const [isAddNotesOpened, openAddNotes, closeAddNotes] = useModalManagement();
-  const [isViewNotesOpened, openViewNotes, closeViewNotes] = useModalManagement();
-
-  const fetchNotes = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const { data } = await getNotes(type, entityId);
-      if (data && isMounted()) {
-        setNoteResult(data);
-      }
-    } finally {
-      setIsLoading(false);
-    }
-  }, [getNotes, type, entityId, isMounted]);
-
-  React.useEffect(() => {
-    fetchNotes();
-  }, [fetchNotes]);
-
-  const sortedNoteList = React.useMemo(() => {
-    if (sort && noteResult?.length) {
-      const sortFields = Object.keys(sort);
-      if (sortFields?.length > 0) {
-        const keyName = (sort as any)[sortFields[0]];
-        return orderBy(noteResult, sortFields[0], keyName) as ApiGen_Concepts_Note[];
-      }
-      return noteResult;
-    }
-    return [];
-  }, [noteResult, sort]);
-
-  const onDeleteNoteConfirm = async () => {
-    setIsLoading(true);
-    try {
-      await deleteNote(type, currentNote?.id ?? 0);
-      setShowDeleteConfirm(false);
-      fetchNotes();
-      onSuccess?.();
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const onChildSuccess = () => {
-    fetchNotes();
-    onSuccess?.();
-  };
+        setDisplayModal(true);
+      },
+    ),
+  ];
 
   return (
     <Section
@@ -105,18 +116,11 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
       initiallyExpanded
     >
       <NoteResults
-        results={sortedNoteList}
-        loading={isLoading}
+        results={notes}
+        loading={loading}
         sort={sort}
         setSort={setSort}
-        onShowDetails={(note: ApiGen_Concepts_Note) => {
-          setCurrentNote(note);
-          openViewNotes();
-        }}
-        onDelete={(note: ApiGen_Concepts_Note) => {
-          setCurrentNote(note);
-          setShowDeleteConfirm(true);
-        }}
+        columns={columns}
       />
 
       <AddNotesContainer
@@ -128,27 +132,16 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
         onSuccess={onChildSuccess}
       />
 
-      {currentNote && (
+      {exists(currentNote) && (
         <NoteContainer
           type={type}
-          noteId={currentNote.id as number}
+          noteId={currentNote.id}
           isOpened={isViewNotesOpened}
           openModal={openViewNotes}
           closeModal={closeViewNotes}
           onSuccess={onChildSuccess}
         ></NoteContainer>
       )}
-
-      <GenericModal
-        variant="info"
-        display={showDeleteConfirm}
-        title="Delete Note"
-        message={`Are you sure you want to delete this note?`}
-        handleOk={onDeleteNoteConfirm}
-        okButtonText="OK"
-        cancelButtonText="Cancel"
-        setDisplay={setShowDeleteConfirm}
-      />
     </Section>
   );
 };

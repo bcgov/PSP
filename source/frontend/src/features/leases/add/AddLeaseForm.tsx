@@ -61,7 +61,7 @@ const AddLeaseForm: React.FunctionComponent<React.PropsWithChildren<IAddLeaseFor
             <LeaseDetailSubForm formikProps={formikProps}></LeaseDetailSubForm>
             <LeasePropertySelector formikProps={formikProps} />
             <AdministrationSubForm formikProps={formikProps}></AdministrationSubForm>
-            <Section header="Lease Team">
+            <Section header="Lease & Licence Team">
               <AddLeaseTeamSubForm />
               {formikProps.errors?.team && typeof formikProps.errors?.team === 'string' && (
                 <div className="invalid-feedback" data-testid="team-profile-dup-error">

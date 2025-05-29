@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Pims.Dal.Entities;
@@ -22,12 +23,6 @@ namespace Pims.Dal.Repositories
 
         PimsProject Update(PimsProject project);
 
-        PimsProjectDocument AddProjectDocument(PimsProjectDocument projectDocument);
-
-        IList<PimsProjectDocument> GetAllProjectDocuments(long projectId);
-
-        IList<PimsProjectDocument> GetAllByDocument(long documentId);
-
-        void DeleteProjectDocument(long projectDocumentId);
+        PimsProject GetProjectAtTime(long projectId, DateTime time);
     }
 }

@@ -24,6 +24,8 @@ namespace Pims.Dal.Entities;
 [Index("RegionCode", Name = "PRPRTY_REGION_CODE_IDX")]
 [Index("SurplusDeclarationTypeCode", Name = "PRPRTY_SURPLUS_DECLARATION_TYPE_CODE_IDX")]
 [Index("SurveyPlanNumber", Name = "PRPRTY_SURVEY_PLAN_NUMBER_IDX")]
+[Index("TaxResponsibilityTypeCode", Name = "PRPRTY_TAX_RESPONSIBILITY_TYPE_CODE_IDX")]
+[Index("UtilityResponsibilityTypeCode", Name = "PRPRTY_UTILITY_RESPONSIBILITY_TYPE_CODE_IDX")]
 [Index("VolumetricTypeCode", Name = "PRPRTY_VOLUMETRIC_TYPE_CODE_IDX")]
 [Index("VolumeUnitTypeCode", Name = "PRPRTY_VOLUME_UNIT_TYPE_CODE_IDX")]
 public partial class PimsProperty
@@ -112,6 +114,14 @@ public partial class PimsProperty
     [Column("PPH_STATUS_TYPE_CODE")]
     [StringLength(20)]
     public string PphStatusTypeCode { get; set; }
+
+    [Column("UTILITY_RESPONSIBILITY_TYPE_CODE")]
+    [StringLength(20)]
+    public string UtilityResponsibilityTypeCode { get; set; }
+
+    [Column("TAX_RESPONSIBILITY_TYPE_CODE")]
+    [StringLength(20)]
+    public string TaxResponsibilityTypeCode { get; set; }
 
     /// <summary>
     /// Date the property was officially registered
@@ -397,6 +407,9 @@ public partial class PimsProperty
     public virtual ICollection<PimsHistoricalFileNumber> PimsHistoricalFileNumbers { get; set; } = new List<PimsHistoricalFileNumber>();
 
     [InverseProperty("Property")]
+    public virtual ICollection<PimsManagementFileProperty> PimsManagementFileProperties { get; set; } = new List<PimsManagementFileProperty>();
+
+    [InverseProperty("Property")]
     public virtual ICollection<PimsPropPropActivity> PimsPropPropActivities { get; set; } = new List<PimsPropPropActivity>();
 
     [InverseProperty("Property")]
@@ -418,7 +431,13 @@ public partial class PimsProperty
     public virtual ICollection<PimsPropertyContact> PimsPropertyContacts { get; set; } = new List<PimsPropertyContact>();
 
     [InverseProperty("Property")]
+    public virtual ICollection<PimsPropertyDocument> PimsPropertyDocuments { get; set; } = new List<PimsPropertyDocument>();
+
+    [InverseProperty("Property")]
     public virtual ICollection<PimsPropertyLease> PimsPropertyLeases { get; set; } = new List<PimsPropertyLease>();
+
+    [InverseProperty("Property")]
+    public virtual ICollection<PimsPropertyNote> PimsPropertyNotes { get; set; } = new List<PimsPropertyNote>();
 
     [InverseProperty("DestinationProperty")]
     public virtual ICollection<PimsPropertyOperation> PimsPropertyOperationDestinationProperties { get; set; } = new List<PimsPropertyOperation>();
@@ -459,6 +478,14 @@ public partial class PimsProperty
     [ForeignKey("SurplusDeclarationTypeCode")]
     [InverseProperty("PimsProperties")]
     public virtual PimsSurplusDeclarationType SurplusDeclarationTypeCodeNavigation { get; set; }
+
+    [ForeignKey("TaxResponsibilityTypeCode")]
+    [InverseProperty("PimsProperties")]
+    public virtual PimsTaxResponsibilityType TaxResponsibilityTypeCodeNavigation { get; set; }
+
+    [ForeignKey("UtilityResponsibilityTypeCode")]
+    [InverseProperty("PimsProperties")]
+    public virtual PimsUtilityResponsibilityType UtilityResponsibilityTypeCodeNavigation { get; set; }
 
     [ForeignKey("VolumeUnitTypeCode")]
     [InverseProperty("PimsProperties")]

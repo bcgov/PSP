@@ -6,16 +6,16 @@ using FluentAssertions;
 using Moq;
 using NetTopologySuite.Geometries;
 using Pims.Api.Constants;
-using Pims.Core.Api.Exceptions;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Services;
+using Pims.Core.Api.Exceptions;
 using Pims.Core.Exceptions;
+using Pims.Core.Security;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
-using Pims.Core.Security;
 using Xunit;
 
 namespace Pims.Api.Test.Services
@@ -876,7 +876,7 @@ namespace Pims.Api.Test.Services
             dspFile.PimsDispositionSales = new List<PimsDispositionSale>() { new PimsDispositionSale() { SaleFinalAmt = 1 } };
 
             var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
-            var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            var noteRepository = this._helper.GetService<Mock<INoteRelationshipRepository<PimsDispositionFileNote>>>();
             var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
 
             var statusMock = this._helper.GetService<Mock<IDispositionStatusSolver>>();
@@ -900,7 +900,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             repository.Verify(x => x.Update(It.IsAny<long>(), It.IsAny<PimsDispositionFile>()), Times.Once);
-            noteRepository.Verify(x => x.Add(It.Is<PimsDispositionFileNote>(x => x.DispositionFileId == 1
+            noteRepository.Verify(x => x.AddNoteRelationship(It.Is<PimsDispositionFileNote>(x => x.DispositionFileId == 1
                     && x.Note.NoteTxt == "Disposition File status changed from Closed to Active")), Times.Once);
         }
         #endregion
@@ -1098,9 +1098,6 @@ namespace Pims.Api.Test.Services
 
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Throws<KeyNotFoundException>();
-
-            var coordinateService = this._helper.GetService<Mock<ICoordinateTransformService>>();
-            coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>())).Returns(new Coordinate(924046.3314288399, 1088892.9140135897));
 
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             propertyService.Setup(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), It.IsAny<Boolean>(), It.IsAny<Boolean>())).Returns(new PimsProperty()
@@ -3091,7 +3088,7 @@ namespace Pims.Api.Test.Services
             });
 
             // Assert
-           act.Should().Throw<BusinessRuleViolationException>();
+            act.Should().Throw<BusinessRuleViolationException>();
         }
 
         [Fact]

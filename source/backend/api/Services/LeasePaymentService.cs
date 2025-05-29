@@ -26,6 +26,49 @@ namespace Pims.Api.Services
             _logger = logger;
         }
 
+        public static string GetPaymentStatus(PimsLeasePayment payment, PimsLeasePeriod parent)
+        {
+            if (!Enum.TryParse(payment.LeasePaymentCategoryTypeCode, out LeasePaymentCategoryTypes leasePaymentCategoryType))
+            {
+                payment.LeasePaymentCategoryTypeCode = LeasePaymentCategoryTypes.BASE.ToString();
+            }
+            decimal? expectedTotal;
+            switch (leasePaymentCategoryType)
+            {
+                case LeasePaymentCategoryTypes.VBL:
+                    expectedTotal = (parent?.VblRentAgreedPmt ?? 0) + (parent?.VblRentGstAmount ?? 0);
+                    break;
+                case LeasePaymentCategoryTypes.ADDL:
+                    expectedTotal = (parent?.AddlRentAgreedPmt ?? 0) + (parent?.AddlRentGstAmount ?? 0);
+                    break;
+                case LeasePaymentCategoryTypes.BASE:
+                    expectedTotal = (parent?.PaymentAmount ?? 0) + (parent?.GstAmount ?? 0);
+                    break;
+                default:
+                    throw new InvalidOperationException();
+            }
+            if (payment?.PaymentAmountTotal == 0)
+            {
+                return PimsLeasePaymentStatusTypes.UNPAID;
+            }
+            else if (payment?.PaymentAmountTotal < expectedTotal)
+            {
+                return PimsLeasePaymentStatusTypes.PARTIAL;
+            }
+            else if (payment?.PaymentAmountTotal == expectedTotal)
+            {
+                return PimsLeasePaymentStatusTypes.PAID;
+            }
+            else if (payment?.PaymentAmountTotal > expectedTotal)
+            {
+                return PimsLeasePaymentStatusTypes.OVERPAID;
+            }
+            else
+            {
+                throw new InvalidOperationException("Invalid payment value provided");
+            }
+        }
+
         public IEnumerable<PimsLeasePayment> GetAllByDateRange(DateTime startDate, DateTime endDate)
         {
             return _leasePaymentRepository.GetAllTracking(startDate, endDate);
@@ -83,49 +126,6 @@ namespace Pims.Api.Services
             _leasePaymentRepository.CommitTransaction();
 
             return updatedPayment;
-        }
-
-        public static string GetPaymentStatus(PimsLeasePayment payment, PimsLeasePeriod parent)
-        {
-            if (!Enum.TryParse(payment.LeasePaymentCategoryTypeCode, out LeasePaymentCategoryTypes leasePaymentCategoryType))
-            {
-                payment.LeasePaymentCategoryTypeCode = LeasePaymentCategoryTypes.BASE.ToString();
-            }
-            decimal? expectedTotal;
-            switch (leasePaymentCategoryType)
-            {
-                case LeasePaymentCategoryTypes.VBL:
-                    expectedTotal = (parent?.VblRentAgreedPmt ?? 0) + (parent?.VblRentGstAmount ?? 0);
-                    break;
-                case LeasePaymentCategoryTypes.ADDL:
-                    expectedTotal = (parent?.AddlRentAgreedPmt ?? 0) + (parent?.AddlRentGstAmount ?? 0);
-                    break;
-                case LeasePaymentCategoryTypes.BASE:
-                    expectedTotal = (parent?.PaymentAmount ?? 0) + (parent?.GstAmount ?? 0);
-                    break;
-                default:
-                    throw new InvalidOperationException();
-            }
-            if (payment?.PaymentAmountTotal == 0)
-            {
-                return PimsLeasePaymentStatusTypes.UNPAID;
-            }
-            else if (payment?.PaymentAmountTotal < expectedTotal)
-            {
-                return PimsLeasePaymentStatusTypes.PARTIAL;
-            }
-            else if (payment?.PaymentAmountTotal == expectedTotal)
-            {
-                return PimsLeasePaymentStatusTypes.PAID;
-            }
-            else if (payment?.PaymentAmountTotal > expectedTotal)
-            {
-                return PimsLeasePaymentStatusTypes.OVERPAID;
-            }
-            else
-            {
-                throw new InvalidOperationException("Invalid payment value provided");
-            }
         }
 
         /// <summary>

@@ -68,6 +68,14 @@ public partial class PimsPropertyHist
     [StringLength(20)]
     public string PphStatusTypeCode { get; set; }
 
+    [Column("UTILITY_RESPONSIBILITY_TYPE_CODE")]
+    [StringLength(20)]
+    public string UtilityResponsibilityTypeCode { get; set; }
+
+    [Column("TAX_RESPONSIBILITY_TYPE_CODE")]
+    [StringLength(20)]
+    public string TaxResponsibilityTypeCode { get; set; }
+
     [Column("PROPERTY_DATA_SOURCE_EFFECTIVE_DATE")]
     public DateOnly PropertyDataSourceEffectiveDate { get; set; }
 

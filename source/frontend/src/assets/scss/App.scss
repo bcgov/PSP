@@ -1,10 +1,5 @@
 @import './styles.scss';
 
-.Toastify__toast.Toastify__toast--dark {
-  color: #fff;
-  background-color: var(--surface-color-background-dark-blue);
-}
-
 .Toastify__toast .Toastify__toast-body {
   word-break: break-word;
 }
@@ -12,16 +7,32 @@
 .Toastify__toast {
   word-break: break-word;
   filter: drop-shadow(0.2rem 0.2rem 0.4rem black);
+  svg {
+    min-width: 1.5rem;
+  }
+}
+
+.Toastify__toast.Toastify__toast--dark {
+  color: #fff;
+  background-color: var(--surface-color-background-dark-blue);
+}
+
+.Toastify__toast.Toastify__toast--info {
+  color: #494949;
+  border-left: 10px solid #1a5a96 !important;
+  background-color: #d9eaf7;
 }
 
 .Toastify__toast.Toastify__toast--warning {
   color: var(--typography-color-secondary);
+  border-left: 10px solid #6c4a00 !important;
   background-color: var(--support-surface-color-warning);
 }
 
 .Toastify__toast.Toastify__toast--error {
-  color: #fff;
-  background-color: var(--surface-color-primary-danger-button-default);
+  color: #494949;
+  border-left: 10px solid var(--surface-color-primary-danger-button-hover) !important;
+  background-color: #fae1e7;
 }
 
 .tooltip {

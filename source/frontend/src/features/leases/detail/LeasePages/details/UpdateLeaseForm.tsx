@@ -71,7 +71,7 @@ export const UpdateLeaseForm: React.FunctionComponent<IUpdateLeaseFormProps> = (
             <LeaseDetailSubForm formikProps={formikProps} />
             <RenewalSubForm formikProps={formikProps} />
             <AdministrationSubForm formikProps={formikProps} />
-            <Section header="Lease Team">
+            <Section header="Lease & Licence Team">
               <AddLeaseTeamSubForm />
               {formikProps.errors?.team && typeof formikProps.errors?.team === 'string' && (
                 <div className="invalid-feedback" data-testid="team-profile-dup-error">

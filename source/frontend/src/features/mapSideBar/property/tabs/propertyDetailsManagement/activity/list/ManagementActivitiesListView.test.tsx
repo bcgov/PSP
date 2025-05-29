@@ -24,6 +24,7 @@ const history = createMemoryHistory();
 const onCreate = vi.fn();
 const onView = vi.fn();
 const onDelete = vi.fn();
+const setSort = vi.fn();
 
 describe('Activities list view', () => {
   const setup = async (
@@ -37,6 +38,8 @@ describe('Activities list view', () => {
         onCreate={onCreate}
         onDelete={onDelete}
         onView={onView}
+        setSort={setSort}
+        sort={undefined}
       />,
       {
         ...renderOptions,

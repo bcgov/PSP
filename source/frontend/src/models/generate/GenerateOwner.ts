@@ -1,5 +1,5 @@
-import { getApiPersonOrOrgMailingAddress } from '@/features/contacts/contactUtils';
 import { exists, isValidString } from '@/utils';
+import { getApiPersonOrOrgMailingAddress } from '@/utils/contactUtils';
 import { phoneFormatter } from '@/utils/formUtils';
 
 import { ApiGen_Concepts_AcquisitionFileOwner } from '../api/generated/ApiGen_Concepts_AcquisitionFileOwner';
