@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
+import styled from 'styled-components';
 
 import ExpandableFileProperties from '@/components/common/List/ExpandableFileProperties';
 import { ColumnWithProps } from '@/components/Table';
 import { Claims } from '@/constants/claims';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { stringToFragment } from '@/utils';
 
 import { ManagementActivitySearchResultModel } from '../../models/ManagementActivitySearchResultModel';
 
@@ -23,23 +23,21 @@ export const columns: ColumnWithProps<ManagementActivitySearchResultModel>[] = [
 
       if (hasClaim(Claims.MANAGEMENT_VIEW) && props.row.original.managementFileId) {
         return (
-          <Link
+          <StyledLink
             to={`/mapview/sidebar/management/${props.row.original.managementFileId}/activities/${props.row.original.id}`}
           >
             {props.row.original.description}
-          </Link>
+          </StyledLink>
         );
       } else {
         return (
-          <Link
+          <StyledLink
             to={`/mapview/sidebar/property/${props.row.original.activivityProperty.propertyId}/management/activity/${props.row.original.id}`}
           >
             {props.row.original.description}
-          </Link>
+          </StyledLink>
         );
       }
-
-      return stringToFragment(props.row.original.description);
     },
   },
   {
@@ -102,3 +100,12 @@ export const columns: ColumnWithProps<ManagementActivitySearchResultModel>[] = [
     maxWidth: 20,
   },
 ];
+
+const StyledLink = styled(Link)`
+  text-overflow: ellipsis;
+  overflow: hidden;
+  display: -webkit-box;
+  line-clamp: 1;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+`;
