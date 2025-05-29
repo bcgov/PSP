@@ -10,6 +10,7 @@ import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Sec
 import * as Styled from '@/components/common/styles';
 import FilePropertiesTable from '@/components/filePropertiesTable/FilePropertiesTable';
 import { Claims } from '@/constants/index';
+import DocumentActivityListContainer from '@/features/documents/list/DocumentActivityListContainer';
 import DocumentListContainer from '@/features/documents/list/DocumentListContainer';
 import ActivityDetailInvoiceTotalsView from '@/features/mapSideBar/property/tabs/propertyDetailsManagement/activity/detail/ActivityDetailInvoiceTotalsView';
 import PropertyActivityDetailsSubView from '@/features/mapSideBar/property/tabs/propertyDetailsManagement/activity/detail/ActivityDetailSubView';
@@ -121,6 +122,12 @@ export const FileActivityDetailView: React.FunctionComponent<
               parentId={props.activity?.id.toString() ?? ''}
               addButtonText="Add a Management Document"
               relationshipType={ApiGen_CodeTypes_DocumentRelationType.ManagementActivities}
+            />
+            <DocumentActivityListContainer
+              title={'Related Documents'}
+              parentId={props.activity?.id.toString() ?? ''}
+              relationshipType={ApiGen_CodeTypes_DocumentRelationType.ManagementActivities}
+              disableAdd={true}
             />
           </Styled.TrayContent>
         </Styled.PopupTray>

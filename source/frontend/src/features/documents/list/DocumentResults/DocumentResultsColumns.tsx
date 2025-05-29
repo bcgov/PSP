@@ -13,22 +13,51 @@ import { Claims } from '@/constants/index';
 import { DocumentRow } from '@/features/documents/ComposedDocument';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_DocumentQueueStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_DocumentQueueStatusTypes';
+import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
 import { ApiGen_Concepts_DocumentType } from '@/models/api/generated/ApiGen_Concepts_DocumentType';
 import { prettyFormatUTCDate, stringToFragment } from '@/utils';
 
+import { ParentInformationDisplay } from '../DocumentListView';
+
 export interface IDocumentColumnProps {
+  showParentInformation: boolean;
+  relationshipDisplay?: ParentInformationDisplay;
   onViewDetails: (values: ApiGen_Concepts_DocumentRelationship) => void;
+  onViewParent: (relationshipType: ApiGen_CodeTypes_DocumentRelationType, parentId: number) => void;
   onDelete: (values: ApiGen_Concepts_DocumentRelationship) => void;
   onPreview: (values: ApiGen_Concepts_DocumentRelationship) => void;
 }
 
 export const getDocumentColumns = ({
+  showParentInformation,
+  relationshipDisplay,
   onViewDetails,
+  onViewParent,
   onDelete,
   onPreview,
 }: IDocumentColumnProps): ColumnWithProps<DocumentRow>[] => {
-  return [
+  const parentColumns: ColumnWithProps<DocumentRow>[] = [
+    {
+      Header: relationshipDisplay?.relationshipIdLabel ?? 'Relationship Id',
+      accessor: 'parentName',
+      align: 'left',
+      sortable: true,
+      width: 20,
+      maxWidth: 20,
+      Cell: renderParentName(onViewParent),
+    },
+    {
+      Header: relationshipDisplay?.relationshipTypeLabel ?? 'Relationship Type',
+      accessor: 'relationshipType',
+      align: 'left',
+      sortable: true,
+      width: 25,
+      maxWidth: 25,
+      Cell: renderRelationshipType,
+    },
+  ];
+  const documentColumns: ColumnWithProps<DocumentRow>[] = [
     {
       Header: 'Document type',
       accessor: 'documentType',
@@ -39,7 +68,7 @@ export const getDocumentColumns = ({
       Cell: renderDocumentType,
     },
     {
-      Header: 'File name',
+      Header: 'Document name',
       accessor: 'fileName',
       width: 40,
       maxWidth: 40,
@@ -66,10 +95,47 @@ export const getDocumentColumns = ({
       Header: 'Actions',
       width: 10,
       maxWidth: 10,
-      Cell: renderActions(onViewDetails, onDelete),
+      Cell: renderActions(onViewDetails, onDelete, showParentInformation),
     },
   ];
+  if (showParentInformation) {
+    return parentColumns.concat(documentColumns);
+  } else {
+    return documentColumns;
+  }
 };
+
+const renderParentName = (
+  onViewParent: (relationshipType: ApiGen_CodeTypes_DocumentRelationType, parentId: number) => void,
+) => {
+  return function (cell: CellProps<DocumentRow, string | undefined>) {
+    const documentRow = cell.row.original;
+    return (
+      <StyledCellOverflow>
+        {
+          <Button
+            id={`document-parent-filenumber-link-${documentRow?.id}`}
+            data-testid={`document-parent-filenumber-link-${documentRow?.id}`}
+            onClick={() =>
+              documentRow?.id &&
+              onViewParent(documentRow.relationshipType, Number(documentRow.parentId))
+            }
+            variant="link"
+            title={documentRow.parentName}
+          >
+            {documentRow.parentName}
+          </Button>
+        }
+      </StyledCellOverflow>
+    );
+  };
+};
+
+function renderRelationshipType({
+  value,
+}: CellProps<DocumentRow, ApiGen_CodeTypes_DocumentRelationType | undefined>) {
+  return stringToFragment(value ?? '');
+}
 
 function renderDocumentType({
   value,
@@ -133,6 +199,7 @@ function renderUploaded(cell: CellProps<DocumentRow, string | undefined>) {
 const renderActions = (
   onViewDetails: (values: ApiGen_Concepts_DocumentRelationship) => void,
   onDelete: (values: ApiGen_Concepts_DocumentRelationship) => void,
+  showParentInformation: boolean,
 ) => {
   return function ({ row: { original, index } }: CellProps<DocumentRow, string>) {
     const { hasClaim } = useKeycloakWrapper();
@@ -174,7 +241,7 @@ const renderActions = (
             title={original.queueStatusTypeCode.description}
           />
 
-          {hasClaim(Claims.DOCUMENT_DELETE) && (
+          {hasClaim(Claims.DOCUMENT_DELETE) && !showParentInformation && (
             <StyledRemoveLinkButton
               data-testid="document-delete-button"
               icon={<FaTrash id={`document-delete-${index}`} size={21} title="document delete" />}
@@ -196,7 +263,7 @@ const renderActions = (
           ></ViewButton>
         )}
 
-        {hasClaim(Claims.DOCUMENT_DELETE) && canDeleteDocument && (
+        {hasClaim(Claims.DOCUMENT_DELETE) && canDeleteDocument && !showParentInformation && (
           <StyledRemoveLinkButton
             data-testid="document-delete-button"
             icon={<FaTrash size={21} id={`document-delete-${index}`} title="document delete" />}
