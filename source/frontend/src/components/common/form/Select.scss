@@ -19,12 +19,12 @@
   background-position-x: calc(100% - 0.8rem);
   background-position-y: 6px;
 
-  margin-right: 2rem;
-  min-width: fit-content;
-
   .option {
     padding: 0.5rem;
   }
+
+  padding-right: 3.5rem;
+  min-width: fit-content;
 }
 
 .form-select:not(.is-invalid),

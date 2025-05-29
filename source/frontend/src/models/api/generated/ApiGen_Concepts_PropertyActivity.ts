@@ -6,6 +6,7 @@ import { UtcIsoDate } from '@/models/api/UtcIsoDateTime';
 
 import { ApiGen_Base_BaseAudit } from './ApiGen_Base_BaseAudit';
 import { ApiGen_Base_CodeType } from './ApiGen_Base_CodeType';
+import { ApiGen_Concepts_ManagementFile } from './ApiGen_Concepts_ManagementFile';
 import { ApiGen_Concepts_Organization } from './ApiGen_Concepts_Organization';
 import { ApiGen_Concepts_Person } from './ApiGen_Concepts_Person';
 import { ApiGen_Concepts_PropertyActivityInvoice } from './ApiGen_Concepts_PropertyActivityInvoice';
@@ -17,6 +18,7 @@ import { ApiGen_Concepts_PropertyMinistryContact } from './ApiGen_Concepts_Prope
 export interface ApiGen_Concepts_PropertyActivity extends ApiGen_Base_BaseAudit {
   id: number;
   managementFileId: number | null;
+  managementFile: ApiGen_Concepts_ManagementFile | null;
   activityTypeCode: ApiGen_Base_CodeType<string> | null;
   activitySubtypeCode: ApiGen_Base_CodeType<string> | null;
   activityStatusTypeCode: ApiGen_Base_CodeType<string> | null;

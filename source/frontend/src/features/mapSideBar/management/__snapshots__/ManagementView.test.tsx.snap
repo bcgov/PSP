@@ -762,7 +762,7 @@ exports[`ManagementView component > renders as expected 1`] = `
           class="c11 no-gutters row"
         >
           <div
-            class="c12 col-7"
+            class="c12 col-xl-8 col-12"
           >
             <div
               class="row"
@@ -841,7 +841,7 @@ exports[`ManagementView component > renders as expected 1`] = `
               class="row"
             >
               <div
-                class="pr-0 text-left col-3"
+                class="pr-0 text-left col-4"
               >
                 <label
                   class="c13"
@@ -850,12 +850,12 @@ exports[`ManagementView component > renders as expected 1`] = `
                 </label>
               </div>
               <div
-                class="pl-1 text-left col-9"
+                class="pl-1 text-left col-8"
               />
             </div>
           </div>
           <div
-            class="col-5"
+            class="col"
           >
             <div
               class="c14"

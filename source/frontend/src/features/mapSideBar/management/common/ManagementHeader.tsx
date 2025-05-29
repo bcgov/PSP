@@ -30,7 +30,7 @@ export const ManagementHeader: React.FunctionComponent<
 
   return (
     <StyledRow className="no-gutters">
-      <StyledLeftHeaderPane xs={7}>
+      <StyledLeftHeaderPane xl="8" xs="12">
         <HeaderField
           label="File #:"
           labelWidth={{ xs: leftColumnLabel }}
@@ -67,9 +67,14 @@ export const ManagementHeader: React.FunctionComponent<
             </>
           )}
         </HeaderField>
-        <HistoricalNumbersContainer propertyIds={propertyIds} View={HistoricalNumberSectionView} />
+        <HistoricalNumbersContainer
+          propertyIds={propertyIds}
+          View={HistoricalNumberSectionView}
+          labelWidth={{ xs: leftColumnLabel }}
+          contentWidth={{ xs: leftColumnWidth }}
+        />
       </StyledLeftHeaderPane>
-      <Col xs="5">
+      <Col>
         <StyledFiller>
           <AuditSection lastUpdatedBy={lastUpdatedBy} baseAudit={managementFile} />
           {exists(managementFile?.fileStatusTypeCode) && (
