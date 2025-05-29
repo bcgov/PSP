@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Models.Concepts.AccessRequest;
 using Pims.Core.Api.Policies;
 using Pims.Core.Json;
-using Pims.Dal.Keycloak;
 using Pims.Core.Security;
+using Pims.Dal.Keycloak;
 using Swashbuckle.AspNetCore.Annotations;
 using Entity = Pims.Dal.Entities;
 

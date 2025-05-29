@@ -9,7 +9,7 @@ Scenario: 01._Acquisition_File_Details
 	And I update the File details from an existing Acquisition File from row number 2
 	Then A new Acquisition file is created successfully
 
-Scenario: 02._Acquisition_File_Details
+Scenario: 02._Acquisition_File_Properties
 	Given I create a new Acquisition File from row number 3
 	When I add Properties to the Acquisition File
 	And I update an Acquisition File's Properties from row number 4

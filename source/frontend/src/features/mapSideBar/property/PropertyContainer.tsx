@@ -1,7 +1,8 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { Claims } from '@/constants';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import { Claims, NoteTypes } from '@/constants';
 import { usePropertyDetails } from '@/features/mapSideBar/hooks/usePropertyDetails';
 import {
   InventoryTabNames,
@@ -12,6 +13,10 @@ import BcAssessmentTabView from '@/features/mapSideBar/property/tabs/bcAssessmen
 import LtsaTabView from '@/features/mapSideBar/property/tabs/ltsa/LtsaTabView';
 import PropertyAssociationTabView from '@/features/mapSideBar/property/tabs/propertyAssociations/PropertyAssociationTabView';
 import { PropertyDetailsTabView } from '@/features/mapSideBar/property/tabs/propertyDetails/detail/PropertyDetailsTabView';
+import NoteSummaryContainer from '@/features/notes/list/ManagementNoteSummaryContainer';
+import NoteSummaryView from '@/features/notes/list/ManagementNoteSummaryView';
+import NoteListContainer from '@/features/notes/list/NoteListContainer';
+import NoteListView from '@/features/notes/list/NoteListView';
 import ComposedPropertyState from '@/hooks/repositories/useComposedProperties';
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
@@ -22,11 +27,13 @@ import { ApiGen_Concepts_LeaseRenewal } from '@/models/api/generated/ApiGen_Conc
 import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
 import { exists, isValidId } from '@/utils';
 
+import PropertyDocumentsTab from '../shared/tabs/PropertyDocumentsTab';
 import CrownDetailsTabView from './tabs/crown/CrownDetailsTabView';
 import { PropertyManagementTabView } from './tabs/propertyDetailsManagement/detail/PropertyManagementTabView';
 
 export interface IPropertyContainerProps {
   composedPropertyState: ComposedPropertyState;
+  onChildSuccess: () => void;
 }
 
 export interface LeaseAssociationInfo {
@@ -71,7 +78,10 @@ export const getLeaseInfo = async (
  */
 export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps> = ({
   composedPropertyState,
+  onChildSuccess,
 }) => {
+  const { setFullWidthSideBar } = useMapStateMachine();
+
   const showPropertyInfoTab = isValidId(composedPropertyState?.id);
   const { hasClaim } = useKeycloakWrapper();
   const { getLease } = useLeaseRepository();
@@ -197,7 +207,7 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
   }
 
   if (
-    composedPropertyState.apiWrapper?.response !== undefined &&
+    exists(composedPropertyState.apiWrapper?.response) &&
     showPropertyInfoTab &&
     hasClaim(Claims.MANAGEMENT_VIEW)
   ) {
@@ -216,8 +226,54 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
     defaultTab = InventoryTabNames.management;
   }
 
+  if (exists(composedPropertyState.apiWrapper?.response) && hasClaim(Claims.DOCUMENT_VIEW)) {
+    tabViews.push({
+      content: (
+        <PropertyDocumentsTab
+          fileId={composedPropertyState.apiWrapper.response.id}
+          onSuccess={onChildSuccess}
+        />
+      ),
+      key: InventoryTabNames.document,
+      name: 'Documents',
+    });
+  }
+
+  if (exists(composedPropertyState?.apiWrapper?.response) && hasClaim(Claims.NOTE_VIEW)) {
+    tabViews.push({
+      content: (
+        <>
+          <NoteListContainer
+            type={NoteTypes.Property}
+            entityId={composedPropertyState.apiWrapper.response.id}
+            onSuccess={onChildSuccess}
+            NoteListView={NoteListView}
+          />
+          <NoteSummaryContainer
+            associationType={NoteTypes.Management_File}
+            entityId={composedPropertyState.apiWrapper.response.id}
+            onSuccess={onChildSuccess}
+            NoteListView={NoteSummaryView}
+          />
+        </>
+      ),
+      key: InventoryTabNames.notes,
+      name: 'Notes',
+    });
+  }
+
   const params = useParams<{ tab?: string }>();
   const activeTab = Object.values(InventoryTabNames).find(t => t === params.tab) ?? defaultTab;
+
+  useEffect(() => {
+    if (activeTab === InventoryTabNames.document || activeTab === InventoryTabNames.notes) {
+      setFullWidthSideBar(true);
+    } else {
+      setFullWidthSideBar(false);
+    }
+    return () => setFullWidthSideBar(false);
+  }, [activeTab, setFullWidthSideBar]);
+
   return (
     <InventoryTabs
       loading={composedPropertyState.composedLoading ?? LeaseAssociationInfo.loading ?? false}

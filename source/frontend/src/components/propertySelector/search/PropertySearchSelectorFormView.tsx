@@ -1,9 +1,11 @@
+import { useMemo } from 'react';
+
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { Section } from '@/components/common/Section/Section';
 import { Table } from '@/components/Table';
 import { IGeocoderResponse } from '@/hooks/pims-api/interfaces/IGeocoder';
 import { featuresetToMapProperty, getPropertyName } from '@/utils/mapPropertyUtils';
-import { isStrataLot } from '@/utils/propertyUtils';
+import { isStrataCommonProperty } from '@/utils/propertyUtils';
 
 import { ILayerSearchCriteria, IMapProperty } from '../models';
 import LayerFilter from './LayerFilter';
@@ -42,18 +44,22 @@ export const PropertySearchSelectorFormView: React.FunctionComponent<
     return { ...x, id: generatePropertyId(featuresetToMapProperty(x)) };
   });
 
-  const identifiedSearchResults = searchResults
-    .map<IIdentifiedSelectedFeatureDataset>(x => {
-      return { ...x, id: generatePropertyId(featuresetToMapProperty(x)) };
-    })
-    .sort((a, b) => {
-      const aIsStrataLot = isStrataLot(a?.parcelFeature);
-      const bIsStrataLot = isStrataLot(b?.parcelFeature);
-      if (aIsStrataLot === bIsStrataLot) return 0;
-      if (aIsStrataLot) return -1;
-      if (bIsStrataLot) return 1;
-      return 0;
-    });
+  const identifiedSearchResults = useMemo(
+    () =>
+      searchResults
+        .map<IIdentifiedSelectedFeatureDataset>(x => {
+          return { ...x, id: generatePropertyId(featuresetToMapProperty(x)) };
+        })
+        .sort((a, b) => {
+          const aIsStrataLot = isStrataCommonProperty(a?.parcelFeature);
+          const bIsStrataLot = isStrataCommonProperty(b?.parcelFeature);
+          if (aIsStrataLot === bIsStrataLot) return 0;
+          if (aIsStrataLot) return -1;
+          if (bIsStrataLot) return 1;
+          return 0;
+        }) ?? [],
+    [searchResults],
+  );
 
   function generatePropertyId(mapProperty: IMapProperty): string {
     const propertyName = getPropertyName(mapProperty);

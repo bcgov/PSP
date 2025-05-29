@@ -15,7 +15,7 @@ export const LeaseTeamView: React.FunctionComponent<React.PropsWithChildren<ILea
   lease,
 }: ILeaseTeamProps) => {
   return (
-    <Section header="Lease Team">
+    <Section header="Lease & Licence Team">
       {lease.leaseTeam.map((teamMember, index) => (
         <React.Fragment key={`lease-team-${teamMember?.id ?? index}`}>
           <SectionField label={teamMember?.teamProfileType.description || ''}>

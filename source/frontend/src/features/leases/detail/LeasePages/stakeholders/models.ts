@@ -1,8 +1,4 @@
 import { ContactMethodTypes } from '@/constants/contactMethodType';
-import {
-  getApiPersonOrOrgMailingAddress,
-  getDefaultContact,
-} from '@/features/contacts/contactUtils';
 import { IContactSearchResult } from '@/interfaces';
 import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
 import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
@@ -11,6 +7,7 @@ import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_P
 import { ApiGen_Concepts_PersonOrganization } from '@/models/api/generated/ApiGen_Concepts_PersonOrganization';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { getPreferredContactMethodValue } from '@/utils/contactMethodUtil';
+import { getApiPersonOrOrgMailingAddress, getDefaultContact } from '@/utils/contactUtils';
 import { fromTypeCode, toTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 import { exists, isValidId } from '@/utils/utils';

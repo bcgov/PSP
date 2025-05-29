@@ -172,6 +172,9 @@ public partial class PimsOrganization
     public virtual ICollection<PimsLeaseStakeholder> PimsLeaseStakeholders { get; set; } = new List<PimsLeaseStakeholder>();
 
     [InverseProperty("Organization")]
+    public virtual ICollection<PimsManagementFileTeam> PimsManagementFileTeams { get; set; } = new List<PimsManagementFileTeam>();
+
+    [InverseProperty("Organization")]
     public virtual ICollection<PimsOrganizationAddress> PimsOrganizationAddresses { get; set; } = new List<PimsOrganizationAddress>();
 
     [InverseProperty("Organization")]

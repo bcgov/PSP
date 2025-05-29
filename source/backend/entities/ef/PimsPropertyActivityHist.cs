@@ -44,6 +44,9 @@ public partial class PimsPropertyActivityHist
     [Column("SERVICE_PROVIDER_ORG_ID")]
     public long? ServiceProviderOrgId { get; set; }
 
+    [Column("MANAGEMENT_FILE_ID")]
+    public long? ManagementFileId { get; set; }
+
     [Column("REQUEST_ADDED_DT")]
     public DateOnly RequestAddedDt { get; set; }
 

@@ -16,6 +16,13 @@ namespace Pims.Api.Models.Concepts.FinancialCode
                 .Map(dest => dest.ExpiryDate, src => src.ExpiryDate)
                 .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
 
+            config.NewConfig<Entity.IFinancialCodeEntityHist, Entity.IFinancialCodeEntity>()
+                .Map(dest => dest.Code, src => src.Code)
+                .Map(dest => dest.Description, src => src.Description)
+                .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
+                .Map(dest => dest.EffectiveDate, src => src.EffectiveDate)
+                .Map(dest => dest.ExpiryDate, src => src.ExpiryDate);
+
             config.NewConfig<Entity.PimsBusinessFunctionCode, FinancialCodeModel>()
                 .Map(dest => dest.Id, src => src.Id)
                 .Map(dest => dest.Type, src => FinancialCodeTypes.BusinessFunction)

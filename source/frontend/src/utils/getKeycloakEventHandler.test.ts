@@ -1,8 +1,10 @@
+import { AuthClientError } from '@react-keycloak/core/lib/index';
+import Keycloak from 'keycloak-js';
+
 import { clearJwt, saveJwt } from '@/store/slices/jwt/JwtSlice';
 import { setKeycloakReady } from '@/store/slices/keycloakReady/keycloakReadySlice';
 import { store } from '@/store/store';
 
-import Keycloak from 'keycloak-js';
 import getKeycloakEventHandler from './getKeycloakEventHandler';
 
 vi.mock('@/store/slices/jwt/JwtSlice', () => ({
@@ -28,7 +30,15 @@ const keycloak: Partial<Keycloak> = {
   tokenParsed: {
     display_name: 'Chester Tester',
     idir_username: 'CHESTER',
+    exp: 1745444220000,
   },
+  refreshToken: '123456789',
+  refreshTokenParsed: {
+    display_name: 'Chester Tester',
+    idir_username: 'CHESTER',
+    exp: 1745445720000,
+  },
+  isTokenExpired: vi.fn().mockReturnValue(false),
 };
 
 const keyclockEventHandler = getKeycloakEventHandler(keycloak as Keycloak, onRefresh);
@@ -58,10 +68,17 @@ describe('KeycloakEventHandler ', () => {
     expect(setKeycloakReady).toHaveBeenCalledWith(true);
   });
   it('does nothing when an unexpected event is fired', () => {
-    keyclockEventHandler('onInitError');
+    const spy = vi.spyOn(console, 'debug').mockImplementationOnce(() => {});
+    const error: AuthClientError = {
+      error: 'auth_error',
+      error_description: 'authentication failed!',
+    };
+
+    keyclockEventHandler('onInitError', error);
     expect(store.dispatch).not.toHaveBeenCalled();
     expect(saveJwt).not.toHaveBeenCalled();
     expect(clearJwt).not.toHaveBeenCalled();
     expect(setKeycloakReady).not.toHaveBeenCalled();
+    expect(spy).toHaveBeenCalledWith(`keycloak event: onInitError error ${JSON.stringify(error)}`);
   });
 });

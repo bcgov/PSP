@@ -1,3 +1,4 @@
+using System;
 using Pims.Dal.Entities;
 
 namespace Pims.Dal.Repositories
@@ -14,5 +15,7 @@ namespace Pims.Dal.Repositories
         PimsOrganization Add(PimsOrganization organization, bool userOverride);
 
         PimsOrganization Update(PimsOrganization organization);
+
+        PimsOrganization GetOrganizationAtTime(long organizationId, DateTime time);
     }
 }

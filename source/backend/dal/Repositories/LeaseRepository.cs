@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using LinqKit;
+using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Exceptions;
@@ -21,6 +22,7 @@ namespace Pims.Dal.Repositories
     public class LeaseRepository : BaseRepository<PimsLease>, ILeaseRepository
     {
         private readonly ISequenceRepository _sequenceRepository;
+        private readonly IMapper _mapper;
         #region Constructors
 
         /// <summary>
@@ -29,10 +31,11 @@ namespace Pims.Dal.Repositories
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public LeaseRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<LeaseRepository> logger, ISequenceRepository sequenceRepository)
+        public LeaseRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<LeaseRepository> logger, ISequenceRepository sequenceRepository, IMapper mapper)
             : base(dbContext, user, logger)
         {
             _sequenceRepository = sequenceRepository;
+            _mapper = mapper;
         }
         #endregion
 
@@ -143,6 +146,8 @@ namespace Pims.Dal.Repositories
                 .Include(l => l.LeaseStatusTypeCodeNavigation)
                 .Include(l => l.PimsLeaseStakeholders)
                     .ThenInclude(t => t.Person)
+                .Include(l => l.PimsLeaseStakeholders)
+                    .ThenInclude(t => t.Organization)
                 .Include(t => t.PimsPropertyImprovements)
                 .Include(l => l.PimsInsurances)
                 .Include(l => l.PimsSecurityDeposits)
@@ -781,26 +786,6 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get All Documents by Lease Id.
-        /// </summary>
-        /// <param name="leaseId"></param>
-        /// <returns></returns>
-        public IList<PimsLeaseDocument> GetAllLeaseDocuments(long leaseId)
-        {
-            return Context.PimsLeaseDocuments
-                .Include(ad => ad.Document)
-                    .ThenInclude(d => d.DocumentStatusTypeCodeNavigation)
-                .Include(ad => ad.Document)
-                    .ThenInclude(d => d.DocumentType)
-                .Include(x => x.Document)
-                    .ThenInclude(q => q.PimsDocumentQueues)
-                        .ThenInclude(s => s.DocumentQueueStatusTypeCodeNavigation)
-                .Where(x => x.LeaseId == leaseId)
-                .AsNoTracking()
-                .ToList();
-        }
-
-        /// <summary>
         /// Add the passed lease to the database assuming the user has the require claims.
         /// </summary>
         /// <param name="lease"></param>
@@ -824,42 +809,6 @@ namespace Pims.Dal.Repositories
             Context.PimsLeases.Add(lease);
             Context.CommitTransaction();
             return Get(lease.LeaseId);
-        }
-
-        /// <summary>
-        /// Add new LeaseDocument.
-        /// </summary>
-        /// <param name="leaseDocument"></param>
-        /// <returns></returns>
-        /// <exception cref="InvalidOperationException">Check for EntityState.</exception>
-        public PimsLeaseDocument AddLeaseDocument(PimsLeaseDocument leaseDocument)
-        {
-            leaseDocument.ThrowIfNull(nameof(leaseDocument));
-
-            var newEntry = Context.PimsLeaseDocuments.Add(leaseDocument);
-            if (newEntry.State == EntityState.Added)
-            {
-                return newEntry.Entity;
-            }
-            else
-            {
-                throw new InvalidOperationException("Could not create document");
-            }
-        }
-
-        /// <summary>
-        /// Deletes the Laease Document by DocumentId.
-        /// </summary>
-        /// <param name="leaseDocumentId"></param>
-        public void DeleteLeaseDocument(long leaseDocumentId)
-        {
-            var entity = Context.PimsLeaseDocuments.FirstOrDefault(d => d.LeaseDocumentId == leaseDocumentId);
-            if (entity is not null)
-            {
-                Context.PimsLeaseDocuments.Remove(entity);
-            }
-
-            return;
         }
 
         /// <summary>
@@ -1051,7 +1000,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Gets all stakeholder types
+        /// Gets all stakeholder types.
         /// </summary>
         /// <returns>all stakeholder types.</returns>
         public IEnumerable<PimsLeaseStakeholderType> GetAllLeaseStakeholderTypes()
@@ -1079,6 +1028,20 @@ namespace Pims.Dal.Repositories
                 .Include(x => x.Organization)
                 .Where(predicate)
                 .ToList();
+        }
+
+        public PimsLease GetLeaseAtTime(long leaseId, DateTime time)
+        {
+            var leaseHist = Context
+                .PimsLeaseHists.AsNoTracking()
+                .Where(pacr => pacr.LeaseId == leaseId)
+                .Where(pacr => pacr.EffectiveDateHist <= time
+                    && (pacr.EndDateHist == null || pacr.EndDateHist > time))
+                .GroupBy(pacr => pacr.LeaseId)
+                .Select(gpacr => gpacr.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault())
+                .FirstOrDefault();
+
+            return _mapper.Map<PimsLease>(leaseHist);
         }
 
         /// <summary>

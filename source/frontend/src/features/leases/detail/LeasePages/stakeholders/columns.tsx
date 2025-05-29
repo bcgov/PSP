@@ -1,5 +1,4 @@
-import { FaRegBuilding, FaRegUser } from 'react-icons/fa';
-import { FaCircle } from 'react-icons/fa';
+import { FaCircle, FaRegBuilding, FaRegUser } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
@@ -7,8 +6,8 @@ import styled from 'styled-components';
 import { Select, SelectOption } from '@/components/common/form';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { ColumnWithProps } from '@/components/Table';
-import { getPrimaryContact } from '@/features/contacts/contactUtils';
 import { isValidId } from '@/utils';
+import { getPrimaryContact } from '@/utils/contactUtils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { FormStakeholder } from './models';

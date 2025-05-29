@@ -97,6 +97,12 @@ namespace Pims.Api.Services
             configuration.Bind(MayanConfigSectionKey, _config);
         }
 
+        public static bool IsValidDocumentExtension(string fileName)
+        {
+            var fileNameExtension = Path.GetExtension(fileName).Replace(".", string.Empty).ToLower();
+            return ValidExtensions.Contains(fileNameExtension);
+        }
+
         public IList<PimsDocumentTyp> GetPimsDocumentTypes()
         {
             this.Logger.LogInformation("Retrieving PIMS document types");
@@ -107,8 +113,8 @@ namespace Pims.Api.Services
 
         public IList<PimsDocumentTyp> GetPimsDocumentTypes(DocumentRelationType relationshipType)
         {
-            this.Logger.LogInformation("Retrieving PIMS document types for relationship type {relationshipType}", relationshipType);
-            this.User.ThrowIfNotAuthorized(Permissions.DocumentView);
+            Logger.LogInformation("Retrieving PIMS document types for relationship type {RelationshipType}", relationshipType);
+            User.ThrowIfNotAuthorized(Permissions.DocumentView);
 
             string categoryType;
             switch (relationshipType)
@@ -125,7 +131,9 @@ namespace Pims.Api.Services
                 case DocumentRelationType.Projects:
                     categoryType = "PROJECT";
                     break;
+                case DocumentRelationType.ManagementActivities:
                 case DocumentRelationType.ManagementFiles:
+                case DocumentRelationType.Properties:
                     categoryType = "MANAGEMENT";
                     break;
                 case DocumentRelationType.DispositionFiles:
@@ -406,7 +414,7 @@ namespace Pims.Api.Services
             User.ThrowIfNotAuthorized(Permissions.DocumentDelete);
 
             ExternalResponse<string> result = await documentStorageRepository.TryDeleteDocument(mayanDocumentId);
-            if(result.Status == ExternalResponseStatus.Error && result.HttpStatusCode == HttpStatusCode.NotFound)
+            if (result.Status == ExternalResponseStatus.Error && result.HttpStatusCode == HttpStatusCode.NotFound)
             {
                 return result;
             }
@@ -608,12 +616,6 @@ namespace Pims.Api.Services
                 throw GetMayanResponseError(await result.Content.ReadAsStringAsync());
             }
             return result;
-        }
-
-        public static bool IsValidDocumentExtension(string fileName)
-        {
-            var fileNameExtension = Path.GetExtension(fileName).Replace(".", string.Empty).ToLower();
-            return ValidExtensions.Contains(fileNameExtension);
         }
 
         private async Task PrecacheDocumentPreviews(long documentId, long documentFileId)

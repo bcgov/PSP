@@ -2,11 +2,12 @@ using System.Diagnostics.CodeAnalysis;
 using MapsterMapper;
 using Moq;
 using Pims.Api.Areas.Notes.Controllers;
-using Pims.Api.Models.Concepts.Note;
 using Pims.Api.Constants;
+using Pims.Api.Models.Concepts.Note;
 using Pims.Api.Services;
-using Pims.Core.Test;
 using Pims.Core.Security;
+using Pims.Core.Test;
+using Pims.Dal.Entities;
 using Xunit;
 
 namespace Pims.Api.Test.Controllers.Note
@@ -42,16 +43,16 @@ namespace Pims.Api.Test.Controllers.Note
         public void AddNote_Success()
         {
             // Arrange
-            var note = EntityHelper.CreateProjectNote();
-            var noteModel = this._mapper.Map<EntityNoteModel>(note);
+            var projectNote = EntityHelper.CreateProjectNote();
+            var noteModel = this._mapper.Map<EntityNoteModel>(projectNote);
 
-            this._service.Setup(m => m.Add(It.IsAny<NoteType>(), It.IsAny<EntityNoteModel>())).Returns(noteModel);
+            this._service.Setup(m => m.AddProjectNote(It.IsAny<PimsProjectNote>())).Returns(projectNote);
 
             // Act
             var result = this._controller.AddNote(Constants.NoteType.Project, noteModel);
 
             // Assert
-            this._service.Verify(m => m.Add(It.IsAny<NoteType>(), It.IsAny<EntityNoteModel>()), Times.Once());
+            this._service.Verify(m => m.AddProjectNote(It.IsAny<PimsProjectNote>()), Times.Once());
         }
 
         /// <summary>
@@ -80,9 +81,7 @@ namespace Pims.Api.Test.Controllers.Note
         {
             // Arrange
             var note = EntityHelper.CreateNote("Note 1");
-            var noteModel = this._mapper.Map<NoteModel>(note);
-
-            this._service.Setup(m => m.GetById(It.IsAny<long>())).Returns(noteModel);
+            this._service.Setup(m => m.GetById(It.IsAny<long>())).Returns(note);
 
             // Act
             var result = this._controller.GetNoteById(1);
@@ -101,13 +100,13 @@ namespace Pims.Api.Test.Controllers.Note
             var note = EntityHelper.CreateNote("Note 1");
             var noteModel = this._mapper.Map<NoteModel>(note);
 
-            this._service.Setup(m => m.Update(It.IsAny<NoteModel>())).Returns(noteModel);
+            this._service.Setup(m => m.Update(It.IsAny<PimsNote>())).Returns(note);
 
             // Act
             var result = this._controller.UpdateNote(1, noteModel);
 
             // Assert
-            this._service.Verify(m => m.Update(It.IsAny<NoteModel>()), Times.Once());
+            this._service.Verify(m => m.Update(It.IsAny<PimsNote>()), Times.Once());
         }
 
         [Fact]

@@ -27,6 +27,7 @@ export const useLeaseRepository = () => {
     getLeaseRenewals,
     getLeaseStakeholderTypes,
     getAllLeaseFileTeamMembers,
+    getLeaseAtTime,
   } = useApiLeases();
 
   const getLastUpdatedBy = useApiRequestWrapper<
@@ -125,7 +126,19 @@ export const useLeaseRepository = () => {
     ),
     requestName: 'getAllLeaseFileTeamMembers',
     onSuccess: useAxiosSuccessHandler(),
-    onError: useAxiosErrorHandler('Failed to retrieve Lease Team Members.'),
+    onError: useAxiosErrorHandler('Failed to retrieve Lease & Licence Team Members.'),
+  });
+
+  const getLeaseAtTimeApi = useApiRequestWrapper<
+    (leaseId: number, time: string) => Promise<AxiosResponse<ApiGen_Concepts_Lease, any>>
+  >({
+    requestFunction: useCallback(
+      async (leaseId: number, time: string) => await getLeaseAtTime(leaseId, time),
+      [getLeaseAtTime],
+    ),
+    requestName: 'getLeaseAtTime',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler('Failed to retrieve Lease historical information'),
   });
 
   return useMemo(
@@ -138,6 +151,7 @@ export const useLeaseRepository = () => {
       putLeaseChecklist: updateLeaseChecklistApi,
       getLeaseStakeholderTypes: getLeaseStakeholderTypesApi,
       getAllLeaseTeamMembers: getAllLeaseTeamApi,
+      getLeaseAtTime: getLeaseAtTimeApi,
     }),
     [
       getLastUpdatedBy,
@@ -148,6 +162,7 @@ export const useLeaseRepository = () => {
       updateLeaseChecklistApi,
       getLeaseStakeholderTypesApi,
       getAllLeaseTeamApi,
+      getLeaseAtTimeApi,
     ],
   );
 };

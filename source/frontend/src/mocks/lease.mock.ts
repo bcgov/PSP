@@ -50,6 +50,7 @@ const emptyLease: ApiGen_Concepts_Lease = {
   hasDigitalLicense: null,
   isExpired: false,
   project: null,
+  projectId: null,
   productId: null,
   product: null,
   cancellationReason: null,

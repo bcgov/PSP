@@ -7,6 +7,7 @@ import { isValidId } from '@/utils';
 
 import PropertyManagementActivitiesListContainer from '../activity/list/ManagementActivitiesListContainer';
 import ManagementActivitiesListView from '../activity/list/ManagementActivitiesListView';
+import ManagementSummaryActivitiesListView from '../activity/list/ManagementSummaryActivitiesListView';
 import { PropertyContactListContainer } from './PropertyContactListContainer';
 import { PropertyContactListView } from './PropertyContactListView';
 import { PropertyManagementDetailContainer } from './summary/PropertyManagementDetailContainer';
@@ -25,7 +26,7 @@ export const PropertyManagementTabView: React.FunctionComponent<IPropertyManagem
   property,
   loading,
 }) => {
-  if (isValidId(property.id)) {
+  if (isValidId(property?.id)) {
     return (
       <StyledSummarySection>
         <LoadingBackdrop show={loading} parentScreen={true} />
@@ -38,6 +39,12 @@ export const PropertyManagementTabView: React.FunctionComponent<IPropertyManagem
         <PropertyManagementActivitiesListContainer
           View={ManagementActivitiesListView}
           propertyId={property.id}
+          isAdHoc={true}
+        ></PropertyManagementActivitiesListContainer>
+        <PropertyManagementActivitiesListContainer
+          View={ManagementSummaryActivitiesListView}
+          propertyId={property.id}
+          isAdHoc={false}
         ></PropertyManagementActivitiesListContainer>
       </StyledSummarySection>
     );
