@@ -197,7 +197,7 @@ describe('ManagementFileTabs component', () => {
   });
 
   it('notes tab can be changed to', async () => {
-    const { getByRole, baseElement, findByRole } = await setup(
+    const { getByRole } = await setup(
       {
         managementFile: mockManagementFileResponse(),
         defaultTab: FileTabType.FILE_DETAILS,
