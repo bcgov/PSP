@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
@@ -35,9 +35,13 @@ export const ManagementFileTabs: React.FC<IManagementFileTabsProps> = ({
   const tabViews: TabFileView[] = [];
   const { hasClaim } = useKeycloakWrapper();
   const { setStaleLastUpdatedBy } = useContext(SideBarContext);
-  const { tab: paramsTab } = useParams<{ tab?: string }>();
-  const activeTab = Object.values(FileTabType).find(value => value === paramsTab) ?? defaultTab;
+  const params = useParams();
   const pathGenerator = usePathGenerator();
+
+  const activeTab = useMemo(
+    () => Object.values(FileTabType).find(value => value === params['detailType']) ?? defaultTab,
+    [defaultTab, params],
+  );
 
   const setActiveTab = (tab: FileTabType) => {
     if (activeTab !== tab) {

@@ -9,6 +9,7 @@ import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/Api
 import { DocumentRow } from '../ComposedDocument';
 import { useDocumentRelationshipProvider } from '../hooks/useDocumentRelationshipProvider';
 import DocumentListView from './DocumentListView';
+import { exists } from '@/utils';
 
 export interface IDocumentListContainerProps {
   parentId: string;
@@ -34,7 +35,7 @@ const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps
 
   const retrieveDocuments = useCallback(async () => {
     const documents = await retrieveDocumentRelationship(props.relationshipType, props.parentId);
-    if (documents !== undefined && isMounted()) {
+    if (exists(documents) && isMounted()) {
       setDocumentResults([
         ...documents
           .filter((x): x is ApiGen_Concepts_DocumentRelationship => !!x?.document)
