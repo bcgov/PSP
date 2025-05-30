@@ -13,19 +13,21 @@ import BcAssessmentTabView from '@/features/mapSideBar/property/tabs/bcAssessmen
 import LtsaTabView from '@/features/mapSideBar/property/tabs/ltsa/LtsaTabView';
 import PropertyAssociationTabView from '@/features/mapSideBar/property/tabs/propertyAssociations/PropertyAssociationTabView';
 import { PropertyDetailsTabView } from '@/features/mapSideBar/property/tabs/propertyDetails/detail/PropertyDetailsTabView';
+import NoteSummaryContainer from '@/features/notes/list/ManagementNoteSummaryContainer';
+import NoteSummaryView from '@/features/notes/list/ManagementNoteSummaryView';
+import NoteListContainer from '@/features/notes/list/NoteListContainer';
 import NoteListView from '@/features/notes/list/NoteListView';
 import ComposedPropertyState from '@/hooks/repositories/useComposedProperties';
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_Concepts_Association } from '@/models/api/generated/ApiGen_Concepts_Association';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_LeaseRenewal } from '@/models/api/generated/ApiGen_Concepts_LeaseRenewal';
 import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
 import { exists, isValidId } from '@/utils';
 
-import DocumentsTab from '../shared/tabs/DocumentsTab';
+import PropertyDocumentsTab from '../shared/tabs/PropertyDocumentsTab';
 import CrownDetailsTabView from './tabs/crown/CrownDetailsTabView';
 import { PropertyManagementTabView } from './tabs/propertyDetailsManagement/detail/PropertyManagementTabView';
 
@@ -227,11 +229,9 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
   if (exists(composedPropertyState.apiWrapper?.response) && hasClaim(Claims.DOCUMENT_VIEW)) {
     tabViews.push({
       content: (
-        <DocumentsTab
+        <PropertyDocumentsTab
           fileId={composedPropertyState.apiWrapper.response.id}
-          relationshipType={ApiGen_CodeTypes_DocumentRelationType.Properties}
           onSuccess={onChildSuccess}
-          title={'Property Documents'}
         />
       ),
       key: InventoryTabNames.document,
@@ -242,11 +242,20 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
   if (exists(composedPropertyState?.apiWrapper?.response) && hasClaim(Claims.NOTE_VIEW)) {
     tabViews.push({
       content: (
-        <NoteListView
-          type={NoteTypes.Property}
-          entityId={composedPropertyState.apiWrapper.response.id}
-          onSuccess={onChildSuccess}
-        />
+        <>
+          <NoteListContainer
+            type={NoteTypes.Property}
+            entityId={composedPropertyState.apiWrapper.response.id}
+            onSuccess={onChildSuccess}
+            NoteListView={NoteListView}
+          />
+          <NoteSummaryContainer
+            associationType={NoteTypes.Management_File}
+            entityId={composedPropertyState.apiWrapper.response.id}
+            onSuccess={onChildSuccess}
+            NoteListView={NoteSummaryView}
+          />
+        </>
       ),
       key: InventoryTabNames.notes,
       name: 'Notes',

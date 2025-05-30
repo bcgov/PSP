@@ -167,9 +167,11 @@ export const columns: ColumnWithProps<AcquisitionSearchResultModel>[] = [
     accessor: 'fileProperties',
     align: 'left',
     Cell: (props: CellProps<AcquisitionSearchResultModel>) => {
+      const properties = props.row.original.fileProperties?.map(x => x.property) ?? [];
+
       return (
         <ExpandableFileProperties
-          fileProperties={props.row.original.fileProperties}
+          properties={properties}
           maxDisplayCount={2}
         ></ExpandableFileProperties>
       );

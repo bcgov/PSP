@@ -244,27 +244,22 @@ namespace Pims.Api.Services
             return _propertyActivityRepository.GetActivitiesByManagementFile(managementFileId);
         }
 
-        public PimsPropertyActivity GetActivity(long propertyId, long activityId)
+        public PimsPropertyActivity GetActivity(long activityId)
         {
-            _logger.LogInformation("Retrieving single property Activity...");
-            _user.ThrowIfNotAllAuthorized(Permissions.ManagementView, Permissions.PropertyView);
-
-            var propertyActivity = _propertyActivityRepository.GetActivity(activityId);
-
-            if (propertyActivity.PimsPropPropActivities.Any(x => x.PropertyId == propertyId))
-            {
-                return propertyActivity;
-            }
-
-            throw new BadRequestException("Activity with the given id does not match the property id");
-        }
-
-        public PimsPropertyActivity GetFileActivity(long activityId)
-        {
-            _logger.LogInformation("Retrieving single property Activity...");
+            _logger.LogInformation("Retrieving property Activity with Id: {ActivityId}", activityId);
             _user.ThrowIfNotAllAuthorized(Permissions.ManagementView, Permissions.PropertyView);
 
             return _propertyActivityRepository.GetActivity(activityId);
+        }
+
+        public IEnumerable<PimsPropertyActivity> GetActivitiesByPropertyIds(IEnumerable<long> propertyIds)
+        {
+            _logger.LogInformation("Retrieving multiple property Activities... {propertyIds}", propertyIds);
+            _user.ThrowIfNotAllAuthorized(Permissions.ManagementView, Permissions.PropertyView);
+
+            var managementFilePropertyIds = _propertyActivityRepository.GetActivitiesByPropertyIds(propertyIds);
+
+            return managementFilePropertyIds;
         }
 
         public PimsPropertyActivity CreateActivity(PimsPropertyActivity propertyActivity)
@@ -283,16 +278,11 @@ namespace Pims.Api.Services
             return propertyActivityResult;
         }
 
-        public PimsPropertyActivity UpdateActivity(long propertyId, long activityId, PimsPropertyActivity propertyActivity)
+        public PimsPropertyActivity UpdateActivity(PimsPropertyActivity propertyActivity)
         {
-            _logger.LogInformation("Updating property Activity...");
+            propertyActivity.ThrowIfNull(nameof(propertyActivity));
+            _logger.LogInformation("Updating property Activity with Id: {ActivityId}", propertyActivity.Internal_Id);
             _user.ThrowIfNotAllAuthorized(Permissions.ManagementEdit, Permissions.PropertyEdit);
-
-            if (!propertyActivity.PimsPropPropActivities.Any(x => x.PropertyId == propertyId && x.PimsPropertyActivityId == activityId)
-                || propertyActivity.PimsPropertyActivityId != activityId)
-            {
-                throw new BadRequestException("Invalid activity identifiers.");
-            }
 
             var propertyActivityResult = _propertyActivityRepository.Update(propertyActivity);
             _propertyActivityRepository.CommitTransaction();
@@ -307,7 +297,7 @@ namespace Pims.Api.Services
 
             var propertyManagementActivity = _propertyActivityRepository.GetActivity(activityId);
 
-            if(propertyManagementActivity.ManagementFileId != managementFileId)
+            if (propertyManagementActivity.ManagementFileId != managementFileId)
             {
                 throw new BadRequestException("Activity with the given id does not match the management file id");
             }
