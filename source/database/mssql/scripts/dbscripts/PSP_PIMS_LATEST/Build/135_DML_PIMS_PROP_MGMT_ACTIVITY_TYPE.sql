@@ -25,7 +25,8 @@ VALUES
   (N'UTILITYBILL',   N'Utility bills'),
   (N'TAXESLEVIES',   N'Taxes and Levies'),
   (N'CONSULTATION',  N'Consultation (other)'),
-  (N'TRAILMTC',      N'Trail Maintenance');
+  (N'TRAILMTC',      N'Trail Maintenance'),
+  (N'CORRESPOND',    N'Correspondence');
 GO
 
 -- --------------------------------------------------------------
