@@ -5,11 +5,11 @@ import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator'
 import useIsMounted from '@/hooks/util/useIsMounted';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
+import { exists } from '@/utils';
 
 import { DocumentRow } from '../ComposedDocument';
 import { useDocumentRelationshipProvider } from '../hooks/useDocumentRelationshipProvider';
 import DocumentListView from './DocumentListView';
-import { exists } from '@/utils';
 
 export interface IDocumentListContainerProps {
   parentId: string;
