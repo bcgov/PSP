@@ -14,6 +14,8 @@ namespace Pims.Dal.Repositories
 
         IList<PimsPropertyActivity> GetActivitiesByManagementFile(long managementFileId);
 
+        IList<PimsPropertyActivity> GetActivitiesByPropertyIds(IEnumerable<long> propertyIds);
+
         PimsPropertyActivity Create(PimsPropertyActivity propertyActivity);
 
         PimsPropertyActivity Update(PimsPropertyActivity propertyActivity);

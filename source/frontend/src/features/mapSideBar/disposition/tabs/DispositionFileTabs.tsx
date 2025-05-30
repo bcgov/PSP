@@ -7,6 +7,7 @@ import { Claims } from '@/constants/claims';
 import { NoteTypes } from '@/constants/noteTypes';
 import { FileTabs, FileTabType, TabFileView } from '@/features/mapSideBar/shared/detail/FileTabs';
 import DocumentsTab from '@/features/mapSideBar/shared/tabs/DocumentsTab';
+import NoteListContainer from '@/features/notes/list/NoteListContainer';
 import NoteListView from '@/features/notes/list/NoteListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
@@ -106,10 +107,11 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
   if (dispositionFile?.id && hasClaim(Claims.NOTE_VIEW)) {
     tabViews.push({
       content: (
-        <NoteListView
+        <NoteListContainer
           type={NoteTypes.Disposition_File}
           entityId={dispositionFile?.id}
           onSuccess={onChildSuccess}
+          NoteListView={NoteListView}
         />
       ),
       key: FileTabType.NOTES,

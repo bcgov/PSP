@@ -15,6 +15,8 @@ export interface INotesDetailContainerProps {
   editMode?: boolean;
   /** Whether to show the notes modal. Default: false */
   isOpened: boolean;
+  /** Whether to show the edit icon */
+  isReadOnly?: boolean;
   /** set the value of the externally tracked 'isOpened' prop above. */
   openModal: () => void;
   /** set the value of the externally tracked 'isOpened' prop above. */
@@ -66,7 +68,7 @@ export const NoteContainer: React.FC<
         note={response}
         isOpened={isOpened}
         onCloseClick={close}
-        onEdit={() => setEditMode(true)}
+        onEdit={props.isReadOnly === true ? undefined : () => setEditMode(true)}
       ></NoteDetailsFormModal>
     );
   }
