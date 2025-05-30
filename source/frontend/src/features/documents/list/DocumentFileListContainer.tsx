@@ -100,7 +100,7 @@ const DocumentFileListContainer: React.FunctionComponent<IDocumentListContainerP
           docRelation.relationType,
           docRelation.id.toString(),
         );
-        if (exists(documents) && isMounted()) {
+        if (exists(documents)) {
           documentRows = documentRows.concat(
             documents
               .filter((x): x is ApiGen_Concepts_DocumentRelationship => exists(x?.document))
@@ -108,7 +108,9 @@ const DocumentFileListContainer: React.FunctionComponent<IDocumentListContainerP
           );
         }
       }
-      setFileDocuments([...documentRows]);
+      if (isMounted()) {
+        setFileDocuments([...documentRows]);
+      }
     },
     [retrieveDocumentRelationship, isMounted],
   );
@@ -131,7 +133,7 @@ const DocumentFileListContainer: React.FunctionComponent<IDocumentListContainerP
           docRelation.relationType,
           docRelation.id.toString(),
         );
-        if (documents !== undefined && isMounted()) {
+        if (exists(documents)) {
           documentRows = documentRows.concat(
             documents
               .filter((x): x is ApiGen_Concepts_DocumentRelationship => !!x?.document)
@@ -139,7 +141,9 @@ const DocumentFileListContainer: React.FunctionComponent<IDocumentListContainerP
           );
         }
       }
-      setActivityDocuments([...documentRows]);
+      if (isMounted()) {
+        setActivityDocuments([...documentRows]);
+      }
     },
     [retrieveDocumentRelationship, isMounted],
   );
