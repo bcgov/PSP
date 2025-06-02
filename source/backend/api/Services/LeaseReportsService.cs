@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using Pims.Core.Extensions;
-using Pims.Dal.Entities;
-using Pims.Dal.Helpers.Extensions;
-using Pims.Dal.Repositories;
 using Pims.Core.Security;
+using Pims.Dal.Entities;
+using Pims.Dal.Repositories;
 using static Pims.Dal.Entities.PimsLeaseStatusType;
 
 namespace Pims.Api.Services

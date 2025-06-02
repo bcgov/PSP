@@ -1,27 +1,31 @@
 import { FaPlus } from 'react-icons/fa';
-import { useHistory, useRouteMatch } from 'react-router-dom';
 
 import { Section } from '@/components/common/Section/Section';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import { SimpleSectionHeader } from '@/components/common/SimpleSectionHeader';
 import { StyledSectionAddButton } from '@/components/common/styles';
 import { Claims } from '@/constants';
+import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { isValidId } from '@/utils';
+
+import AdHocFileActivitiesSummaryContainer from './list/AdHocSummaryActivitiesContainer';
+import AdHocSummaryActivitiesView from './list/AdHocSummaryActivitiesListView';
+import ManagementFileActivitiesListContainer from './list/ManagementFileActivitiesListContainer';
+import ManagementFileActivitiesListView from './list/ManagementFileActivitiesListView';
 
 export interface IActivitiesTabProps {
   managementFile: ApiGen_Concepts_ManagementFile;
 }
 
 export const ActivitiesTab: React.FunctionComponent<IActivitiesTabProps> = ({ managementFile }) => {
-  const history = useHistory();
-  const match = useRouteMatch();
   const { hasClaim } = useKeycloakWrapper();
+  const pathGenerator = usePathGenerator();
 
   const onAdd = () => {
     if (isValidId(managementFile?.id)) {
-      history.push(`${match.url}/new`);
+      pathGenerator.addDetail('management', managementFile.id, 'activities');
     }
   };
 
@@ -43,7 +47,15 @@ export const ActivitiesTab: React.FunctionComponent<IActivitiesTabProps> = ({ ma
           <strong>Activity documentation:</strong> You can attach a document after creating the
           activity. Create, then edit and attach a file if needed.
         </p>
+        <ManagementFileActivitiesListContainer
+          View={ManagementFileActivitiesListView}
+          managementFileId={managementFile.id}
+        ></ManagementFileActivitiesListContainer>
       </Section>
+      <AdHocFileActivitiesSummaryContainer
+        View={AdHocSummaryActivitiesView}
+        managementFileId={managementFile.id}
+      ></AdHocFileActivitiesSummaryContainer>
     </StyledSummarySection>
   );
 };

@@ -5,11 +5,16 @@ export const ManagementActivityEditFormYupSchema = Yup.object().shape({
   activityTypeCode: Yup.string().required('Activity type is required'),
   activitySubtypeCode: Yup.string().required('Sub-type is required'),
   activityStatusCode: Yup.string().required('Status is required'),
-  requestedDate: Yup.string().required('Commencement date is required'),
+  requestedDate: Yup.date().required('Commencement date is required'),
 
-  completionDate: Yup.string().when('activityStatusCode', {
+  completionDate: Yup.date().when('activityStatusCode', {
     is: (activityStatusCode: string) => activityStatusCode === 'COMPLETED',
-    then: Yup.string().required('Completion date is required'),
+    then: Yup.date()
+      .min(Yup.ref('requestedDate'), 'Completion date must be after Commencement date')
+      .required('Completion date is required'),
+    otherwise: Yup.date()
+      .min(Yup.ref('requestedDate'), 'Completion date must be after Commencement date')
+      .nullable(),
   }),
   description: Yup.string()
     .required('Description is required')

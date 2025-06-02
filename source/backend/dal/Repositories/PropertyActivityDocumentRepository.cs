@@ -12,7 +12,7 @@ namespace Pims.Dal.Repositories
     /// <summary>
     /// PropertyActivityDocumentRepository class, provides a service layer to interact with document activity files within the datasource.
     /// </summary>
-    public class PropertyActivityDocumentRepository : BaseRepository<PimsPropertyActivityDocument>, IPropertyActivityDocumentRepository
+    public class PropertyActivityDocumentRepository : BaseRepository<PimsPropertyActivityDocument>, IDocumentRelationshipRepository<PimsPropertyActivityDocument>
     {
         #region Constructors
 
@@ -34,7 +34,7 @@ namespace Pims.Dal.Repositories
         /// Get a list of all the document file relationships for a a given property activity.
         /// </summary>
         /// <returns></returns>
-        public IList<PimsPropertyActivityDocument> GetAllByPropertyActivity(long propertyActivityId)
+        public IList<PimsPropertyActivityDocument> GetAllByParentId(long parentId)
         {
             return this.Context.PimsPropertyActivityDocuments
                 .Include(ad => ad.Document)
@@ -44,7 +44,7 @@ namespace Pims.Dal.Repositories
                 .Include(x => x.Document)
                     .ThenInclude(q => q.PimsDocumentQueues)
                         .ThenInclude(s => s.DocumentQueueStatusTypeCodeNavigation)
-                .Where(ad => ad.PimsPropertyActivityId == propertyActivityId)
+                .Where(ad => ad.PimsPropertyActivityId == parentId)
                 .AsNoTracking()
                 .ToList();
         }
@@ -54,7 +54,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="propertyActivityDocument"></param>
         /// <returns></returns>
-        public PimsPropertyActivityDocument AddPropertyActivityDocument(PimsPropertyActivityDocument propertyActivityDocument)
+        public PimsPropertyActivityDocument AddDocument(PimsPropertyActivityDocument propertyActivityDocument)
         {
             propertyActivityDocument.ThrowIfNull(nameof(propertyActivityDocument));
 
@@ -74,7 +74,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="propertyActivityDocument"></param>
         /// <returns></returns>
-        public bool DeletePropertyActivityDocument(PimsPropertyActivityDocument propertyActivityDocument)
+        public bool DeleteDocument(PimsPropertyActivityDocument propertyActivityDocument)
         {
             if (propertyActivityDocument == null)
             {

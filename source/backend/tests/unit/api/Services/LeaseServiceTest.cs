@@ -497,7 +497,7 @@ namespace Pims.Api.Test.Services
             leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
             userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
-            var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            var noteRepository = this._helper.GetService<Mock<INoteRelationshipRepository<PimsLeaseNote>>>();
 
             var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
             solver.Setup(x => x.GetCurrentLeaseStatus(It.IsAny<string>())).Returns(LeaseStatusTypes.ACTIVE);
@@ -508,7 +508,7 @@ namespace Pims.Api.Test.Services
             var result = service.Update(leaseEntity, new List<UserOverrideCode>());
 
             // Assert
-            noteRepository.Verify(x => x.Add(It.IsAny<PimsLeaseNote>()), Times.Never);
+            noteRepository.Verify(x => x.AddNoteRelationship(It.IsAny<PimsLeaseNote>()), Times.Never);
         }
 
         [Fact]
@@ -549,7 +549,7 @@ namespace Pims.Api.Test.Services
                 },
             });
 
-            var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
+            var noteRepository = this._helper.GetService<Mock<INoteRelationshipRepository<PimsLeaseNote>>>();
 
             var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
             solver.Setup(x => x.GetCurrentLeaseStatus(It.IsAny<string>())).Returns(LeaseStatusTypes.ACTIVE);
@@ -560,7 +560,7 @@ namespace Pims.Api.Test.Services
             var result = service.Update(leaseEntity, new List<UserOverrideCode>());
 
             // Assert
-            noteRepository.Verify(x => x.Add(It.IsAny<PimsLeaseNote>()), Times.Once);
+            noteRepository.Verify(x => x.AddNoteRelationship(It.IsAny<PimsLeaseNote>()), Times.Once);
         }
 
         [Fact]

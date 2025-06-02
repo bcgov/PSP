@@ -12,10 +12,16 @@ namespace Pims.Dal.Repositories
 
         PimsPropertyActivity GetActivity(long activityId);
 
+        IList<PimsPropertyActivity> GetActivitiesByManagementFile(long managementFileId);
+
+        IList<PimsPropertyActivity> GetActivitiesByPropertyIds(IEnumerable<long> propertyIds);
+
         PimsPropertyActivity Create(PimsPropertyActivity propertyActivity);
 
         PimsPropertyActivity Update(PimsPropertyActivity propertyActivity);
 
         bool TryDelete(long activityId);
+
+        bool TryDeleteByFile(long activityId, long managementFileId);
     }
 }

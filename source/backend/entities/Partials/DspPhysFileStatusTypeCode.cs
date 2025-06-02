@@ -17,7 +17,9 @@ namespace Pims.Dal.Entities
         #endregion
 
         #region Constructors
-        public PimsDspPhysFileStatusType() { }
+        public PimsDspPhysFileStatusType()
+        {
+        }
 
         /// <summary>
         /// Create a new instance of a PimsDspPhysFileStatusType class.

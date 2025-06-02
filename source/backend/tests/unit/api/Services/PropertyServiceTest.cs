@@ -4,17 +4,17 @@ using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Moq;
 using NetTopologySuite.Geometries;
-using Pims.Core.Api.Exceptions;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Services;
+using Pims.Core.Api.Exceptions;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
+using Pims.Core.Security;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Helpers;
 using Pims.Dal.Repositories;
-using Pims.Core.Security;
 using Xunit;
 
 namespace Pims.Api.Test.Services
@@ -759,6 +759,40 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void Get_PropertyManagement_Activity_Success()
+        {
+            // Arrange
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.ManagementView, Permissions.PropertyView);
+            var repository = this._helper.GetService<Mock<IPropertyActivityRepository>>();
+            repository.Setup(x => x.GetActivity(It.IsAny<long>())).Returns(new PimsPropertyActivity() { Internal_Id = 100, ManagementFileId = 1, Description = "test description" });
+
+            // Act
+            var result = service.GetActivity(100);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<PimsPropertyActivity>();
+            result.Internal_Id.Should().Be(100);
+            result.Description.Should().Be("test description");
+            repository.Verify(x => x.GetActivity(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void Get_PropertyManagement_Activity_NoPermission()
+        {
+            // Arrange
+            var service = this.CreatePropertyServiceWithPermissions();
+            var repository = this._helper.GetService<Mock<IPropertyActivityRepository>>();
+
+            // Act
+            Action act = () => service.GetActivity(1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+            repository.Verify(x => x.GetActivity(It.IsAny<long>()), Times.Never);
+        }
+
+        [Fact]
         public void Update_PropertyManagement_Activity_NoPermission()
         {
             // Arrange
@@ -766,103 +800,10 @@ namespace Pims.Api.Test.Services
             var repository = this._helper.GetService<Mock<IPropertyActivityRepository>>();
 
             // Act
-            Action act = () => service.UpdateActivity(1, 100, new PimsPropertyActivity());
+            Action act = () => service.UpdateActivity(new PimsPropertyActivity());
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
-            repository.Verify(x => x.Update(It.IsAny<PimsPropertyActivity>()), Times.Never);
-        }
-
-        [Fact]
-        public void Update_PropertyManagement_Activity_InvalidIdentifiers_Wrong_PropertyId()
-        {
-            // Arrange
-            var service = this.CreatePropertyServiceWithPermissions(Permissions.ManagementEdit, Permissions.PropertyEdit);
-            var repository = this._helper.GetService<Mock<IPropertyActivityRepository>>();
-
-            // Act
-            Action act = () => service.UpdateActivity(1, 10, new PimsPropertyActivity()
-            {
-                PimsPropertyActivityId = 10,
-                PimsPropPropActivities = new List<PimsPropPropActivity>()
-                {
-                    new PimsPropPropActivity()
-                    {
-                        PropPropActivityId = 100,
-                        PropertyId = 2,
-                        PimsPropertyActivityId = 10,
-                    },
-                    new PimsPropPropActivity()
-                    {
-                        PropPropActivityId = 101,
-                        PropertyId = 2,
-                        PimsPropertyActivityId = 11,
-                    }
-                }
-            }); ;
-
-            // Assert
-            act.Should().Throw<BadRequestException>();
-            repository.Verify(x => x.Update(It.IsAny<PimsPropertyActivity>()), Times.Never);
-        }
-
-        [Fact]
-        public void Update_PropertyManagement_Activity_InvalidIdentifiers_Wrong_ActivityId()
-        {
-            // Arrange
-            var service = this.CreatePropertyServiceWithPermissions(Permissions.ManagementEdit, Permissions.PropertyEdit);
-            var repository = this._helper.GetService<Mock<IPropertyActivityRepository>>();
-
-            // Act
-            Action act = () => service.UpdateActivity(1, 20, new PimsPropertyActivity()
-            {
-                PimsPropertyActivityId = 10,
-                PimsPropPropActivities = new List<PimsPropPropActivity>()
-                {
-                    new PimsPropPropActivity()
-                    {
-                        PropPropActivityId = 100,
-                        PropertyId = 1,
-                        PimsPropertyActivityId = 10,
-                    },
-                    new PimsPropPropActivity()
-                    {
-                        PropPropActivityId = 101,
-                        PropertyId = 1,
-                        PimsPropertyActivityId = 30,
-                    }
-                }
-            }); ;
-
-            // Assert
-            act.Should().Throw<BadRequestException>();
-            repository.Verify(x => x.Update(It.IsAny<PimsPropertyActivity>()), Times.Never);
-        }
-
-        [Fact]
-        public void Update_PropertyManagement_Activity_InvalidIdentifiers_Wrong_Model_ActivityId()
-        {
-            // Arrange
-            var service = this.CreatePropertyServiceWithPermissions(Permissions.ManagementEdit, Permissions.PropertyEdit);
-            var repository = this._helper.GetService<Mock<IPropertyActivityRepository>>();
-
-            // Act
-            Action act = () => service.UpdateActivity(1, 20, new PimsPropertyActivity()
-            {
-                PimsPropertyActivityId = 500,
-                PimsPropPropActivities = new List<PimsPropPropActivity>()
-                {
-                    new PimsPropPropActivity()
-                    {
-                        PropPropActivityId = 100,
-                        PropertyId = 1,
-                        PimsPropertyActivityId = 20,
-                    }
-                }
-            }); ;
-
-            // Assert
-            act.Should().Throw<BadRequestException>();
             repository.Verify(x => x.Update(It.IsAny<PimsPropertyActivity>()), Times.Never);
         }
 
@@ -875,7 +816,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.Update(It.IsAny<PimsPropertyActivity>())).Returns(new PimsPropertyActivity());
 
             // Act
-            var result = service.UpdateActivity(1, 10, new PimsPropertyActivity()
+            var result = service.UpdateActivity(new PimsPropertyActivity()
             {
                 PimsPropertyActivityId = 10,
                 PimsPropPropActivities = new List<PimsPropPropActivity>()
@@ -896,7 +837,8 @@ namespace Pims.Api.Test.Services
             });
 
             // Assert
-            Assert.NotNull(result);
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<PimsPropertyActivity>();
             repository.Verify(x => x.Update(It.IsAny<PimsPropertyActivity>()), Times.Once);
         }
 
@@ -919,7 +861,7 @@ namespace Pims.Api.Test.Services
         public void Delete_PropertyManagementActivity_BadRequest_Activity_Status_IsNot_NotStarted()
         {
             // Arrange
-            var service = this.CreatePropertyServiceWithPermissions(Permissions.ManagementDelete);
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.ManagementDelete, Permissions.PropertyEdit);
             var repository = this._helper.GetService<Mock<IPropertyActivityRepository>>();
 
             var propertyManagementActivity = EntityHelper.CreatePropertyActivity(10, activityStatusTypeCode: "STARTED");
@@ -938,7 +880,7 @@ namespace Pims.Api.Test.Services
         public void Delete_PropertyManagementActivity_Success()
         {
             // Arrange
-            var service = this.CreatePropertyServiceWithPermissions(Permissions.ManagementDelete);
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.ManagementDelete, Permissions.PropertyEdit);
             var repository = this._helper.GetService<Mock<IPropertyActivityRepository>>();
 
             var propertyManagementActivity = EntityHelper.CreatePropertyActivity(1);

@@ -33,12 +33,12 @@ namespace Pims.Dal.Test.Repositories
             var acquisitionFile = EntityHelper.CreateAcquisitionFile(1);
 
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(acquisitionFile);
-            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+            var repository = helper.CreateRepository<AcquisitionFileNoteRepository>(user);
 
-            var activityNote = EntityHelper.CreateAcquisitionFileNote(acquisitionFile);
+            var acquisitionFileNote = EntityHelper.CreateAcquisitionFileNote(acquisitionFile);
 
             // Act
-            var result = repository.Add(activityNote);
+            var result = repository.AddNoteRelationship(acquisitionFileNote);
 
             // Assert
             result.Should().NotBeNull();
@@ -54,10 +54,10 @@ namespace Pims.Dal.Test.Repositories
             var user = PrincipalHelper.CreateForPermission(Permissions.NoteAdd);
             helper.CreatePimsContext(user, true);
 
-            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+            var repository = helper.CreateRepository<AcquisitionFileNoteRepository>(user);
 
             // Act
-            Action act = () => repository.Add<PimsProject>(null);
+            Action act = () => repository.AddNoteRelationship(null);
 
             // Assert
             act.Should().Throw<ArgumentNullException>();
@@ -119,10 +119,10 @@ namespace Pims.Dal.Test.Repositories
 
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(activity);
 
-            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+            var repository = helper.CreateRepository<AcquisitionFileNoteRepository>(user);
 
             // Act
-            var result = repository.GetAllAcquisitionNotesById(1);
+            var result = repository.GetAllByParentId(1);
 
             // Assert
             result.Should().NotBeNull();
@@ -138,10 +138,10 @@ namespace Pims.Dal.Test.Repositories
             var user = PrincipalHelper.CreateForPermission(Permissions.NoteView);
 
             var context = helper.CreatePimsContext(user, true);
-            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+            var repository = helper.CreateRepository<AcquisitionFileNoteRepository>(user);
 
             // Act
-            var result = repository.GetAllAcquisitionNotesById(1);
+            var result = repository.GetAllByParentId(1);
 
             // Assert
             result.Should().NotBeNull();
@@ -162,10 +162,10 @@ namespace Pims.Dal.Test.Repositories
 
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(activity);
 
-            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+            var repository = helper.CreateRepository<DispositionFileNoteRepository>(user);
 
             // Act
-            var result = repository.GetAllDispositionNotesById(1);
+            var result = repository.GetAllByParentId(1);
 
             // Assert
             result.Should().NotBeNull();
@@ -181,10 +181,10 @@ namespace Pims.Dal.Test.Repositories
             var user = PrincipalHelper.CreateForPermission(Permissions.NoteView);
 
             var context = helper.CreatePimsContext(user, true);
-            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+            var repository = helper.CreateRepository<DispositionFileNoteRepository>(user);
 
             // Act
-            var result = repository.GetAllDispositionNotesById(1);
+            var result = repository.GetAllByParentId(1);
 
             // Assert
             result.Should().NotBeNull();
@@ -205,10 +205,10 @@ namespace Pims.Dal.Test.Repositories
 
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(activity);
 
-            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+            var repository = helper.CreateRepository<LeaseNoteRepository>(user);
 
             // Act
-            var result = repository.GetAllLeaseNotesById(1);
+            var result = repository.GetAllByParentId(1);
 
             // Assert
             result.Should().NotBeNull();
@@ -224,10 +224,10 @@ namespace Pims.Dal.Test.Repositories
             var user = PrincipalHelper.CreateForPermission(Permissions.NoteView);
 
             var context = helper.CreatePimsContext(user, true);
-            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+            var repository = helper.CreateRepository<LeaseNoteRepository>(user);
 
             // Act
-            var result = repository.GetAllLeaseNotesById(1);
+            var result = repository.GetAllByParentId(1);
 
             // Assert
             result.Should().NotBeNull();
@@ -249,10 +249,10 @@ namespace Pims.Dal.Test.Repositories
 
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(project);
 
-            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+            var repository = helper.CreateRepository<ProjectNoteRepository>(user);
 
             // Act
-            var result = repository.GetAllProjectNotesById(1);
+            var result = repository.GetAllByParentId(1);
 
             // Assert
             result.Should().NotBeNull();
@@ -268,10 +268,10 @@ namespace Pims.Dal.Test.Repositories
             var user = PrincipalHelper.CreateForPermission(Permissions.NoteView);
 
             var context = helper.CreatePimsContext(user, true);
-            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+            var repository = helper.CreateRepository<ProjectNoteRepository>(user);
 
             // Act
-            var result = repository.GetAllProjectNotesById(1);
+            var result = repository.GetAllByParentId(1);
 
             // Assert
             result.Should().NotBeNull();
@@ -292,10 +292,10 @@ namespace Pims.Dal.Test.Repositories
 
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(activity);
 
-            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+            var repository = helper.CreateRepository<ResearchFileNoteRepository>(user);
 
             // Act
-            var result = repository.GetAllResearchNotesById(1);
+            var result = repository.GetAllByParentId(1);
 
             // Assert
             result.Should().NotBeNull();
@@ -311,10 +311,10 @@ namespace Pims.Dal.Test.Repositories
             var user = PrincipalHelper.CreateForPermission(Permissions.NoteView);
 
             var context = helper.CreatePimsContext(user, true);
-            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+            var repository = helper.CreateRepository<ResearchFileNoteRepository>(user);
 
             // Act
-            var result = repository.GetAllResearchNotesById(1);
+            var result = repository.GetAllByParentId(1);
 
             // Assert
             result.Should().NotBeNull();
@@ -335,10 +335,10 @@ namespace Pims.Dal.Test.Repositories
 
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(fileNote);
 
-            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+            var repository = helper.CreateRepository<ManagementFileNoteRepository>(user);
 
             // Act
-            var result = repository.GetAllManagementNotesById(1);
+            var result = repository.GetAllByParentId(1);
 
             // Assert
             result.Should().NotBeNull();
@@ -354,10 +354,53 @@ namespace Pims.Dal.Test.Repositories
             var user = PrincipalHelper.CreateForPermission(Permissions.NoteView);
 
             var context = helper.CreatePimsContext(user, true);
-            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+            var repository = helper.CreateRepository<ManagementFileNoteRepository>(user);
 
             // Act
-            var result = repository.GetAllManagementNotesById(1);
+            var result = repository.GetAllByParentId(1);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<IEnumerable<PimsNote>>();
+            result.Should().HaveCount(0);
+        }
+
+        [Fact]
+        public void GetPropertyNotes_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.NoteView);
+
+            var note1 = EntityHelper.CreateNote("Test Note 1", id: 1);
+            var property = EntityHelper.CreateProperty(1);
+            var propertyNote = EntityHelper.CreatePropertyNote(property, note1);
+
+            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(propertyNote);
+
+            var repository = helper.CreateRepository<PropertyNoteRepository>(user);
+
+            // Act
+            var result = repository.GetAllByParentId(1);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<IEnumerable<PimsNote>>();
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void GetPropertyNotes_NotFound()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.NoteView);
+
+            var context = helper.CreatePimsContext(user, true);
+            var repository = helper.CreateRepository<PropertyNoteRepository>(user);
+
+            // Act
+            var result = repository.GetAllByParentId(1);
 
             // Assert
             result.Should().NotBeNull();
@@ -438,10 +481,10 @@ namespace Pims.Dal.Test.Repositories
             fileNote.AcquisitionFileId = 2;
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(fileNote);
 
-            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+            var repository = helper.CreateRepository<AcquisitionFileNoteRepository>(user);
 
             // Act
-            var deleted = repository.DeleteAcquisitionFileNotes(1);
+            var deleted = repository.DeleteNoteRelationship(1);
 
             // Assert
             deleted.Should().BeTrue();
@@ -458,10 +501,10 @@ namespace Pims.Dal.Test.Repositories
             fileNote.AcquisitionFileId = 2;
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(fileNote);
 
-            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+            var repository = helper.CreateRepository<AcquisitionFileNoteRepository>(user);
 
             // Act
-            var deleted = repository.DeleteAcquisitionFileNotes(2);
+            var deleted = repository.DeleteNoteRelationship(2);
 
             // Assert
             deleted.Should().BeFalse();
@@ -476,10 +519,10 @@ namespace Pims.Dal.Test.Repositories
 
             var context = helper.CreatePimsContext(user, true);
 
-            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+            var repository = helper.CreateRepository<AcquisitionFileNoteRepository>(user);
 
             // Act
-            var deleted = repository.DeleteAcquisitionFileNotes(1);
+            var deleted = repository.DeleteNoteRelationship(1);
 
             // Assert
             deleted.Should().BeFalse();
@@ -496,10 +539,10 @@ namespace Pims.Dal.Test.Repositories
             fileNote.DispositionFileId = 2;
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(fileNote);
 
-            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+            var repository = helper.CreateRepository<DispositionFileNoteRepository>(user);
 
             // Act
-            var deleted = repository.DeleteDispositionFileNotes(1);
+            var deleted = repository.DeleteNoteRelationship(1);
 
             // Assert
             deleted.Should().BeTrue();
@@ -516,10 +559,10 @@ namespace Pims.Dal.Test.Repositories
             fileNote.DispositionFileId = 2;
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(fileNote);
 
-            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+            var repository = helper.CreateRepository<DispositionFileNoteRepository>(user);
 
             // Act
-            var deleted = repository.DeleteDispositionFileNotes(2);
+            var deleted = repository.DeleteNoteRelationship(2);
 
             // Assert
             deleted.Should().BeFalse();
@@ -534,10 +577,10 @@ namespace Pims.Dal.Test.Repositories
 
             var context = helper.CreatePimsContext(user, true);
 
-            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+            var repository = helper.CreateRepository<DispositionFileNoteRepository>(user);
 
             // Act
-            var deleted = repository.DeleteDispositionFileNotes(1);
+            var deleted = repository.DeleteNoteRelationship(1);
 
             // Assert
             deleted.Should().BeFalse();
@@ -554,10 +597,10 @@ namespace Pims.Dal.Test.Repositories
             fileNote.LeaseId = 2;
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(fileNote);
 
-            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+            var repository = helper.CreateRepository<LeaseNoteRepository>(user);
 
             // Act
-            var deleted = repository.DeleteLeaseFileNotes(1);
+            var deleted = repository.DeleteNoteRelationship(1);
 
             // Assert
             deleted.Should().BeTrue();
@@ -574,10 +617,10 @@ namespace Pims.Dal.Test.Repositories
             fileNote.LeaseId = 2;
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(fileNote);
 
-            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+            var repository = helper.CreateRepository<LeaseNoteRepository>(user);
 
             // Act
-            var deleted = repository.DeleteLeaseFileNotes(2);
+            var deleted = repository.DeleteNoteRelationship(2);
 
             // Assert
             deleted.Should().BeFalse();
@@ -592,10 +635,10 @@ namespace Pims.Dal.Test.Repositories
 
             var context = helper.CreatePimsContext(user, true);
 
-            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+            var repository = helper.CreateRepository<LeaseNoteRepository>(user);
 
             // Act
-            var deleted = repository.DeleteLeaseFileNotes(1);
+            var deleted = repository.DeleteNoteRelationship(1);
 
             // Assert
             deleted.Should().BeFalse();
@@ -612,10 +655,10 @@ namespace Pims.Dal.Test.Repositories
             fileNote.ProjectId = 2;
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(fileNote);
 
-            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+            var repository = helper.CreateRepository<ProjectNoteRepository>(user);
 
             // Act
-            var deleted = repository.DeleteProjectNotes(1);
+            var deleted = repository.DeleteNoteRelationship(1);
 
             // Assert
             deleted.Should().BeTrue();
@@ -632,10 +675,10 @@ namespace Pims.Dal.Test.Repositories
             fileNote.ProjectId = 2;
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(fileNote);
 
-            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+            var repository = helper.CreateRepository<ProjectNoteRepository>(user);
 
             // Act
-            var deleted = repository.DeleteProjectNotes(2);
+            var deleted = repository.DeleteNoteRelationship(2);
 
             // Assert
             deleted.Should().BeFalse();
@@ -650,10 +693,10 @@ namespace Pims.Dal.Test.Repositories
 
             var context = helper.CreatePimsContext(user, true);
 
-            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+            var repository = helper.CreateRepository<ProjectNoteRepository>(user);
 
             // Act
-            var deleted = repository.DeleteProjectNotes(1);
+            var deleted = repository.DeleteNoteRelationship(1);
 
             // Assert
             deleted.Should().BeFalse();
@@ -670,10 +713,10 @@ namespace Pims.Dal.Test.Repositories
             fileNote.ResearchFileId = 2;
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(fileNote);
 
-            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+            var repository = helper.CreateRepository<ResearchFileNoteRepository>(user);
 
             // Act
-            var deleted = repository.DeleteResearchNotes(1);
+            var deleted = repository.DeleteNoteRelationship(1);
 
             // Assert
             deleted.Should().BeTrue();
@@ -690,10 +733,10 @@ namespace Pims.Dal.Test.Repositories
             fileNote.ResearchFileId = 2;
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(fileNote);
 
-            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+            var repository = helper.CreateRepository<ResearchFileNoteRepository>(user);
 
             // Act
-            var deleted = repository.DeleteResearchNotes(2);
+            var deleted = repository.DeleteNoteRelationship(2);
 
             // Assert
             deleted.Should().BeFalse();
@@ -708,10 +751,10 @@ namespace Pims.Dal.Test.Repositories
 
             var context = helper.CreatePimsContext(user, true);
 
-            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+            var repository = helper.CreateRepository<ResearchFileNoteRepository>(user);
 
             // Act
-            var deleted = repository.DeleteResearchNotes(1);
+            var deleted = repository.DeleteNoteRelationship(1);
 
             // Assert
             deleted.Should().BeFalse();
@@ -728,10 +771,10 @@ namespace Pims.Dal.Test.Repositories
             fileNote.ManagementFileId = 2;
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(fileNote);
 
-            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+            var repository = helper.CreateRepository<ManagementFileNoteRepository>(user);
 
             // Act
-            var deleted = repository.DeleteManagementFileNotes(1);
+            var deleted = repository.DeleteNoteRelationship(1);
 
             // Assert
             deleted.Should().BeTrue();
@@ -748,10 +791,10 @@ namespace Pims.Dal.Test.Repositories
             fileNote.ManagementFileId = 2;
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(fileNote);
 
-            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+            var repository = helper.CreateRepository<ManagementFileNoteRepository>(user);
 
             // Act
-            var deleted = repository.DeleteManagementFileNotes(2);
+            var deleted = repository.DeleteNoteRelationship(2);
 
             // Assert
             deleted.Should().BeFalse();
@@ -766,10 +809,10 @@ namespace Pims.Dal.Test.Repositories
 
             var context = helper.CreatePimsContext(user, true);
 
-            var repository = helper.CreateRepository<EntityNoteRepository>(user);
+            var repository = helper.CreateRepository<ManagementFileNoteRepository>(user);
 
             // Act
-            var deleted = repository.DeleteManagementFileNotes(1);
+            var deleted = repository.DeleteNoteRelationship(1);
 
             // Assert
             deleted.Should().BeFalse();
