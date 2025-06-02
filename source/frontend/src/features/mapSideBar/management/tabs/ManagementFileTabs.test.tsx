@@ -51,7 +51,7 @@ const mockGetManagementActivitiesApi = {
   response: undefined,
   execute: vi.fn(),
   loading: false,
-}
+};
 
 vi.mocked(useNoteRepository, { partial: true }).mockImplementation(() => ({
   getAllNotes: getMockRepositoryObj([]),
@@ -72,7 +72,7 @@ vi.mock('@/features/documents/hooks/useDocumentRelationshipProvider', () => ({
   },
 }));
 
-const mockGetDocumentRelationshipTypes =  vi.fn();
+const mockGetDocumentRelationshipTypes = vi.fn();
 vi.mock('@/features/documents/hooks/useDocumentProvider', () => ({
   useDocumentProvider: () => {
     return {
@@ -107,7 +107,7 @@ vi.mock('@/hooks/repositories/useManagementActivityRepository', () => ({
 const history = createMemoryHistory();
 const setIsEditing = vi.fn();
 
-const basePath = 'mapview/sidebar/management'
+const basePath = 'mapview/sidebar/management';
 
 describe('ManagementFileTabs component', () => {
   // render component under test
@@ -131,7 +131,7 @@ describe('ManagementFileTabs component', () => {
     );
 
     // wait for effects
-    await act(async () => { });
+    await act(async () => {});
     return { ...utils };
   };
 
