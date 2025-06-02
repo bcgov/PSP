@@ -585,6 +585,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             property.Address.AddressLine2 = ExcelDataContext.ReadData(rowNumber, "PropertyAddressLine2");
             property.Address.AddressLine3 = ExcelDataContext.ReadData(rowNumber, "PropertyAddressLine3");
             property.Address.City = ExcelDataContext.ReadData(rowNumber, "PropertyCity");
+            property.Address.Province = ExcelDataContext.ReadData(rowNumber, "PropertyProvince");
             property.Address.PostalCode = ExcelDataContext.ReadData(rowNumber, "PropertyPostalCode");
             property.GeneralLocation = ExcelDataContext.ReadData(rowNumber, "PropertyGeneralLocation");
 
