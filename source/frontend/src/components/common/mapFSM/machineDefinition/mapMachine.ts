@@ -385,7 +385,7 @@ const sideBarStates = {
         SET_FILE_PROPERTY_LOCATIONS: {
           actions: [
             assign({
-              filePropertyLocations: (_: MachineContext, event: any) => event.locations || [],
+              filePropertyLocations: (_: MachineContext, event: any) => event.locations ?? [],
             }),
             raise('REQUEST_FIT_FILE_BOUNDS'),
           ],
