@@ -287,7 +287,9 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
         ></InventoryLayer>
 
         {/* Client-side "layer" to highlight file property boundaries (when in the context of a file) */}
-        <FilePropertiesLayer />
+        <Pane name="fileProperties" style={{ zIndex: 600 }}>
+          <FilePropertiesLayer />
+        </Pane>
       </LeafletMapContainer>
     </Styled.MapContainer>
   );
