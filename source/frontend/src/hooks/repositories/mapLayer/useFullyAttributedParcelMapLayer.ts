@@ -5,8 +5,10 @@ import { toast } from 'react-toastify';
 
 import { useLayerQuery } from '@/hooks/layer-api/useLayerQuery';
 import { useWfsLayer } from '@/hooks/layer-api/useWfsLayer';
+import { wfsAxios2 } from '@/hooks/layer-api/wfsAxios';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { useTenant } from '@/tenants';
+import { isValidString } from '@/utils';
 
 /**
  * API wrapper to centralize all AJAX requests to WFS endpoints on the Fully Attributed ParcelMapBC layer.
@@ -15,7 +17,11 @@ import { useTenant } from '@/tenants';
  */
 
 export const useFullyAttributedParcelMapLayer = () => {
-  const { parcelMapFullyAttributed, fullyAttributedParcelsLayerUrl } = useTenant();
+  const {
+    parcelMapFullyAttributed,
+    fullyAttributedParcelsLayerUrl,
+    internalFullyAttributedParcelsLayerUrl,
+  } = useTenant();
 
   const getAllFeaturesWrapper = useWfsLayer(parcelMapFullyAttributed.url, {
     name: parcelMapFullyAttributed.name,
@@ -150,6 +156,45 @@ export const useFullyAttributedParcelMapLayer = () => {
     [findMultipleWhereContainsWrapped, handleError],
   );
 
+  const findBySectionTownshipRange = useCallback(
+    async (
+      section?: number | string,
+      township?: number | string,
+      range?: number | string,
+    ): Promise<FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties>> => {
+      let sectionQuery = '';
+      let townshipQuery = '';
+      let rangeQuery = '';
+      if (isValidString(section?.toString())) {
+        sectionQuery = `(LEGAL_DESCRIPTION ilike '%SECTION ${section}%' OR (LEGAL_DESCRIPTION ilike '%SECTIONS%' AND LEGAL_DESCRIPTION ilike '%${section}%'))`;
+      }
+      if (isValidString(township?.toString())) {
+        townshipQuery = `LEGAL_DESCRIPTION ilike '%TOWNSHIP ${township}%'`;
+      }
+      if (isValidString(range?.toString())) {
+        rangeQuery = `LEGAL_DESCRIPTION ilike '%TOWNSHIP ${range}%'`;
+      }
+
+      debugger;
+      const query = [sectionQuery, townshipQuery, rangeQuery]
+        .filter(x => isValidString(x))
+        .join(' AND ');
+
+      const searchParams = new URLSearchParams();
+
+      searchParams.set('request', 'GetFeature');
+      if (isValidString(query)) {
+        searchParams.set('cql_filter', query);
+      }
+
+      const response = await wfsAxios2({ authenticated: true }).get<
+        FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties>
+      >(`${internalFullyAttributedParcelsLayerUrl}&${searchParams.toString()}`);
+      return response?.data;
+    },
+    [internalFullyAttributedParcelsLayerUrl],
+  );
+
   return {
     findByLegalDescription,
     findByPid,
@@ -160,5 +205,6 @@ export const useFullyAttributedParcelMapLayer = () => {
     findOne,
     findMany,
     findManyLoading: findMultipleWhereContainsWrapped.loading,
+    findBySectionTownshipRange,
   };
 };

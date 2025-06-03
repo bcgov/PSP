@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { Feature, GeoJsonProperties, Geometry } from 'geojson';
 import {
   geoJSON,
   LatLng,
@@ -147,20 +146,10 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
         // File marker repositioning is active - highlight the property and the corresponding boundary when user triggers the relocate action.
         activeFeatureLayer?.addData(pimsFeature);
       }
-    } else {
-      // Not repositioning - highlight parcels on map click as usual workflow
-      if (mapLocationFeatureDataset !== null) {
-        const location = mapLocationFeatureDataset.location;
-
-        let activeFeature: Feature<Geometry, GeoJsonProperties> = {
-          geometry: { coordinates: [location.lng, location.lat], type: 'Point' },
-          type: 'Feature',
-          properties: {},
-        };
-        if (firstOrNull(mapLocationFeatureDataset.parcelFeatures) !== null) {
-          activeFeature = mapLocationFeatureDataset.parcelFeatures[0];
-          activeFeatureLayer?.addData(activeFeature);
-        }
+    } else if (exists(mapLocationFeatureDataset)) {
+      if (firstOrNull(mapLocationFeatureDataset.parcelFeatures) !== null) {
+        const activeFeature = mapLocationFeatureDataset.parcelFeatures[0];
+        activeFeatureLayer?.addData(activeFeature);
       }
     }
   }, [activeFeatureLayer, isRepositioning, mapLocationFeatureDataset, repositioningFeatureDataset]);
@@ -182,11 +171,11 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
   }, [isMapReady, hasPendingFlyTo, requestedFlyTo, mapMachineProcessFlyTo]);
 
   useEffect(() => {
-    if (hasPendingCenterTo && isMapReady && requestedCenterTo.location) {
+    if (hasPendingCenterTo && isMapReady && exists(requestedCenterTo?.location)) {
       mapRef.current?.setView(requestedCenterTo.location);
     }
-    mapMachineProcessCenterTo();
-  }, [hasPendingCenterTo, isMapReady, mapMachineProcessCenterTo, requestedCenterTo.location]);
+    mapMachineProcessCenterTo && mapMachineProcessCenterTo();
+  }, [hasPendingCenterTo, isMapReady, mapMachineProcessCenterTo, requestedCenterTo?.location]);
 
   useEffect(() => {
     mapRef.current?.invalidateSize();

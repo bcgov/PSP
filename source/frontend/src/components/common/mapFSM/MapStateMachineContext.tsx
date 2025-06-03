@@ -13,7 +13,7 @@ import {
   defaultPropertyFilter,
   IPropertyFilter,
 } from '@/features/properties/filter/IPropertyFilter';
-import { exists, firstOrNull } from '@/utils';
+import { exists, firstOrNull, isValidString } from '@/utils';
 import { pidParser, pinParser } from '@/utils/propertyUtils';
 
 import { mapMachine } from './machineDefinition/mapMachine';
@@ -198,12 +198,13 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
           geoFilter.forceExactMatch = false;
           return mapSearch.searchByHistorical(geoFilter);
         } else if (
-          exists(geoFilter?.SECTION) ||
-          exists(geoFilter?.RANGE) ||
-          exists(geoFilter?.TOWNSHIP)
+          isValidString(geoFilter?.SECTION.toString()) ||
+          isValidString(geoFilter?.RANGE.toString()) ||
+          isValidString(geoFilter?.TOWNSHIP.toString())
         ) {
           geoFilter.forceExactMatch = false;
-          return mapSearch.searchBySurveyParcel(geoFilter);
+          const response = mapSearch.searchBySurveyParcel(geoFilter);
+          return response;
         } else {
           return mapSearch.loadMapProperties();
         }

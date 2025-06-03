@@ -225,6 +225,8 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                 <Row noGutters>
                   <Col>
                     <NumberInput
+                      innerClassName="rounded-0"
+                      placeholder="Section"
                       field="section"
                       onFocus={e => e.target.select()}
                       displayErrorTooltips
@@ -232,6 +234,8 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                   </Col>
                   <Col>
                     <NumberInput
+                      innerClassName="rounded-0"
+                      placeholder="Township"
                       field="township"
                       onFocus={e => e.target.select()}
                       displayErrorTooltips
@@ -239,6 +243,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                   </Col>
                   <Col>
                     <NumberInput
+                      placeholder="Range"
                       field="range"
                       onFocus={e => e.target.select()}
                       displayErrorTooltips
@@ -302,11 +307,12 @@ const StyledSelect = styled(Select)`
 const NoRightPaddingColumn = styled(Col)`
   padding-right: 0 !important;
   border-right: 0 !important;
+  min-width: 17rem;
 `;
 
 const StyledCol = styled(Col)`
   padding-left: 0 !important;
-  .form-control {
+  input:first-child {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
   }

@@ -33,8 +33,8 @@ const CROWN_LAND_INVENTORY_LAYER_URL =
 const CROWN_LAND_INCLUSIONS_LAYER_URL =
   'https://openmaps.gov.bc.ca/geo/pub/WHSE_TANTALIS.TA_CROWN_INCLUSIONS_SVW/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_TANTALIS.TA_CROWN_INCLUSIONS_SVW';
 
-const PARCEL_MAP_QUERY_URL =
-  'https://parcelmapbc.ltsa.ca/pmsspub/proxy.jsp?https://portal:6443/arcgis/rest/services/sharedservices/Crown_Features_v3_0_WebMercator/MapServer/0/query?';
+const INTERNAL_FULLY_ATTRIBUTED_PARCELS_LAYER_URL =
+  '/ogs-internal/ows?service=wfs&request=GetFeature&typeName=PMBC_PARCEL_POLYGON_FABRIC&outputformat=json&version=2.0.0&srsName=EPSG:4326';
 /**
  * Default tenant configuration.
  */
@@ -67,6 +67,7 @@ export const defaultTenant: ITenantConfig2 = {
   electoralLayerUrl: ELECTORAL_LAYER_URL,
   municipalLayerUrl: MUNICIPALITY_LAYER_URL,
   fullyAttributedParcelsLayerUrl: PARCELS_LAYER_URL,
+  internalFullyAttributedParcelsLayerUrl: INTERNAL_FULLY_ATTRIBUTED_PARCELS_LAYER_URL,
   regionalLayerUrl: REGIONAL_LAYER_URL,
   motiRegionLayerUrl: MOTI_REGION_LAYER_URL,
   hwyDistrictLayerUrl: HWY_DISTRICT_LAYER_URL,
@@ -79,7 +80,6 @@ export const defaultTenant: ITenantConfig2 = {
   crownLandLeasesUrl: CROWN_LAND_LEASES_LAYER_URL,
   crownLandInventoryUrl: CROWN_LAND_INVENTORY_LAYER_URL,
   crownLandInclusionsUrl: CROWN_LAND_INCLUSIONS_LAYER_URL,
-  parcelMapQueryUrl: PARCEL_MAP_QUERY_URL,
   bcAssessment: {
     url: 'https://delivery.apps.gov.bc.ca/ext/sgw/geo.bca',
     names: {

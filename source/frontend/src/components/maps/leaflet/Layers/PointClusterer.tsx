@@ -90,7 +90,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
   >({});
 
   const draftPoints = useMemo<LatLngLiteral[]>(() => {
-    return mapMachine.filePropertyLocations.map(x => {
+    return mapMachine.filePropertyLocations?.map(x => {
       // The values on the feature are rounded to the 4th decimal. Do the same to the draft points.
       return {
         lat: x.lat,
@@ -416,7 +416,7 @@ export const getFeatureLatLng = <P,>(feature: Feature<Geometry, P>) => {
 const featureCollectionResponseToPointFeature = <P,>(
   response: FeatureCollection<Geometry, P> | undefined,
 ): PointFeature<P>[] => {
-  const validFeatures = response?.features.filter(feature => !!feature?.geometry) ?? [];
+  const validFeatures = response?.features?.filter(feature => !!feature?.geometry) ?? [];
   const data: PointFeature<P>[] = validFeatures.map(feature => {
     return featureResponseToPointFeature(feature);
   });
