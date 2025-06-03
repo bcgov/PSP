@@ -1,7 +1,7 @@
 import './PointClusterer.scss';
 
 import { BBox, Feature, FeatureCollection, Geometry, MultiPolygon, Polygon } from 'geojson';
-import L, { geoJSON, LatLngLiteral } from 'leaflet';
+import L, { geoJSON } from 'leaflet';
 import polylabel from 'polylabel';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FeatureGroup, Marker, Polyline, useMap } from 'react-leaflet';
@@ -60,7 +60,6 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
       >
     >();
   const featureGroupRef = useRef<L.FeatureGroup>(null);
-  const draftFeatureGroupRef = useRef<L.FeatureGroup>(null);
   const filterState = useFilterContext();
 
   // TODO: Figure out if the currentCluster is needed
@@ -87,16 +86,6 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
       | PMBC_FullyAttributed_Feature_Properties
     >
   >({});
-
-  const draftPoints = useMemo<LatLngLiteral[]>(() => {
-    return mapMachine.filePropertyLocations.map(x => {
-      // The values on the feature are rounded to the 4th decimal. Do the same to the draft points.
-      return {
-        lat: x.lat,
-        lng: x.lng,
-      };
-    });
-  }, [mapMachine.filePropertyLocations]);
 
   const pimsLocationFeatures: FeatureCollection<Geometry, PIMS_Property_Location_View> =
     useMemo(() => {
