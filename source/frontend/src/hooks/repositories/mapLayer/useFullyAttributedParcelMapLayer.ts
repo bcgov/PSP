@@ -175,7 +175,6 @@ export const useFullyAttributedParcelMapLayer = () => {
         rangeQuery = `LEGAL_DESCRIPTION ilike '%TOWNSHIP ${range}%'`;
       }
 
-      debugger;
       const query = [sectionQuery, townshipQuery, rangeQuery]
         .filter(x => isValidString(x))
         .join(' AND ');
