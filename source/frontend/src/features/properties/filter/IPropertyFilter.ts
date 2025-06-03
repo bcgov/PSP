@@ -31,6 +31,12 @@ export interface IPropertyFilter {
   coordinates: DmsCoordinates | null;
   /** The geographic name of the property */
   name: string;
+  /** Section */
+  section: string;
+  /** Township */
+  township: string;
+  /** Range */
+  range: string;
 }
 
 export const defaultPropertyFilter: IPropertyFilter = {
@@ -47,4 +53,7 @@ export const defaultPropertyFilter: IPropertyFilter = {
   quantity: undefined,
   ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
   name: '',
+  section: '',
+  township: '',
+  range: '',
 };

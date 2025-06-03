@@ -59,6 +59,7 @@ export interface ITenantConfig2 {
   crownLandLeasesUrl: string;
   crownLandInventoryUrl: string;
   crownLandInclusionsUrl: string;
+  parcelMapQueryUrl: string;
   // the amount of time it takes to time out the idle prompt (in minutes)
   idlePromptTimeout: number;
   // the amount of time it takes to display the idle prompt (in minutes)

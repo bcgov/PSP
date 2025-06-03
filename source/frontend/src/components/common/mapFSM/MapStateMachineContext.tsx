@@ -197,6 +197,13 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         } else if (geoFilter?.HISTORICAL_FILE_NUMBER_STR) {
           geoFilter.forceExactMatch = false;
           return mapSearch.searchByHistorical(geoFilter);
+        } else if (
+          exists(geoFilter?.SECTION) ||
+          exists(geoFilter?.RANGE) ||
+          exists(geoFilter?.TOWNSHIP)
+        ) {
+          geoFilter.forceExactMatch = false;
+          return mapSearch.searchBySurveyParcel(geoFilter);
         } else {
           return mapSearch.loadMapProperties();
         }
@@ -539,6 +546,9 @@ const getQueryParams = (filter: IPropertyFilter): IGeoSearchParams => {
     STREET_ADDRESS_1: filter.address,
     SURVEY_PLAN_NUMBER: filter.planNumber,
     HISTORICAL_FILE_NUMBER_STR: filter.historical,
+    SECTION: filter.section,
+    TOWNSHIP: filter.township,
+    RANGE: filter.range,
     latitude: filter.latitude,
     longitude: filter.longitude,
     forceExactMatch: pidValue?.length === 9,

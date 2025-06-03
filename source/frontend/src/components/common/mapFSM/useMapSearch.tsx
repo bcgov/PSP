@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { IGeoSearchParams } from '@/constants/API';
 import { useFullyAttributedParcelMapLayer } from '@/hooks/repositories/mapLayer/useFullyAttributedParcelMapLayer';
 import { usePimsPropertyLayer } from '@/hooks/repositories/mapLayer/usePimsPropertyLayer';
+import { useParcelMapRepository } from '@/hooks/repositories/useParcelMapRepository';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { useModalContext } from '@/hooks/useModalContext';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
@@ -22,6 +23,7 @@ import {
 export const useMapSearch = () => {
   const fullyAttributedService = useFullyAttributedParcelMapLayer();
   const pimsPropertyLayerService = usePimsPropertyLayer();
+  const { queryParcelMapWrapper } = useParcelMapRepository();
 
   const { setModalContent, setDisplayModal } = useModalContext();
   const keycloak = useKeycloakWrapper();
@@ -248,6 +250,39 @@ export const useMapSearch = () => {
     [loadPimsProperties, setModalContent, setDisplayModal, logout],
   );
 
+  const searchBySurveyParcel = useCallback(
+    async (filter?: IGeoSearchParams) => {
+      let result: MapFeatureData = emptyFeatureData;
+      try {
+        const example =
+          'f=geoJson&where=parcellegaldescription%20LIKE%20%27%25SECTION%206%2C%25%27%20AND%20parcellegaldescription%20like%20%27%25TOWNSHIP%2026%2C%25%27&returnGeometry=true&spatialRel=esriSpatialRelIntersects&outFields=*&outSR=102100';
+        const response = await queryParcelMapWrapper.execute(example);
+
+        if (exists(response)) {
+          result = {
+            pimsLocationFeatures: emptyPimsLocationFeatureCollection,
+            pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
+            fullyAttributedFeatures: {
+              features: response.features as any,
+              type: 'FeatureCollection',
+            },
+          };
+
+          if (response?.features.length === 0) {
+            toast.info('No search results found');
+          } else {
+            toast.info(`${response?.features.length} properties found`);
+          }
+        }
+      } catch (error) {
+        toast.error((error as Error).message, { autoClose: 7000 });
+      }
+
+      return result;
+    },
+    [queryParcelMapWrapper],
+  );
+
   const searchMany = useCallback(
     async (filter?: IGeoSearchParams) => {
       let result: MapFeatureData = emptyFeatureData;
@@ -428,6 +463,7 @@ export const useMapSearch = () => {
     searchMany,
     loadMapProperties,
     searchByHistorical,
+    searchBySurveyParcel,
     loadingPimsProperties: pimsPropertyLayerService.loadPropertyLayer,
     loadingPimsPropertiesResponse: pimsPropertyLayerService.loadPropertyLayer.response,
   };

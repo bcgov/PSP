@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
 import { ResetButton, SearchButton } from '@/components/common/buttons';
-import { Form, Input, Select } from '@/components/common/form';
+import { Form, Input, NumberInput, Select } from '@/components/common/form';
 import { getFeatureLatLng } from '@/components/maps/leaflet/Layers/PointClusterer';
 import { TableSort } from '@/components/Table/TableSort';
 import { IGeographicNamesProperties } from '@/hooks/pims-api/interfaces/IGeographicNamesProperties';
@@ -99,6 +99,10 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
       label: 'Lat/Long',
       value: 'coordinates',
     });
+    searchOptions.push({
+      label: 'Survey Parcel',
+      value: 'surveyParcel',
+    });
   }
 
   return (
@@ -131,6 +135,9 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                   setFieldValue('planNumber', null);
                   setFieldValue('historical', null);
                   setFieldValue('name', null);
+                  setFieldValue('section', null);
+                  setFieldValue('township', null);
+                  setFieldValue('range', null);
                   if (e.target.value === 'coordinates') {
                     setFieldValue('coordinates', new DmsCoordinates());
                   } else {
@@ -214,6 +221,31 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                   innerClassName="flex-nowrap"
                 ></CoordinateSearchForm>
               )}
+              {values.searchBy === 'surveyParcel' && (
+                <Row noGutters>
+                  <Col>
+                    <NumberInput
+                      field="section"
+                      onFocus={e => e.target.select()}
+                      displayErrorTooltips
+                    ></NumberInput>
+                  </Col>
+                  <Col>
+                    <NumberInput
+                      field="township"
+                      onFocus={e => e.target.select()}
+                      displayErrorTooltips
+                    ></NumberInput>
+                  </Col>
+                  <Col>
+                    <NumberInput
+                      field="range"
+                      onFocus={e => e.target.select()}
+                      displayErrorTooltips
+                    ></NumberInput>
+                  </Col>
+                </Row>
+              )}
             </StyledCol>
             <Col xs="auto">
               <SearchButton
@@ -227,6 +259,9 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                     values.planNumber ||
                     values.address ||
                     values.historical ||
+                    values.township ||
+                    values.section ||
+                    values.range ||
                     (values.searchBy === 'coordinates' && isValid)
                   )
                 }
