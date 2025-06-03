@@ -5,13 +5,15 @@ import { StyledSummarySection } from '@/components/common/Section/SectionStyles'
 import { SimpleSectionHeader } from '@/components/common/SimpleSectionHeader';
 import { StyledSectionAddButton } from '@/components/common/styles';
 import { Claims } from '@/constants';
-import ManagementActivitiesListView from '@/features/mapSideBar/property/tabs/propertyDetailsManagement/activity/list/ManagementActivitiesListView';
 import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { isValidId } from '@/utils';
 
 import ManagementStatusUpdateSolver from '../fileDetails/detail/ManagementStatusUpdateSolver';
+import AdHocFileActivitiesSummaryContainer from './list/AdHocSummaryActivitiesContainer';
+import AdHocSummaryActivitiesView from './list/AdHocSummaryActivitiesListView';
 import ManagementFileActivitiesListContainer from './list/ManagementFileActivitiesListContainer';
+import ManagementFileActivitiesListView from './list/ManagementFileActivitiesListView';
 
 export interface IActivitiesTabProps {
   managementFileId: number;
@@ -50,11 +52,16 @@ export const ActivitiesTab: React.FunctionComponent<IActivitiesTabProps> = ({
           activity. Create, then edit and attach a file if needed.
         </p>
         <ManagementFileActivitiesListContainer
-          View={ManagementActivitiesListView}
+          View={ManagementFileActivitiesListView}
           managementFileId={managementFileId}
           statusSolver={statusSolver}
         ></ManagementFileActivitiesListContainer>
       </Section>
+      <AdHocFileActivitiesSummaryContainer
+        View={AdHocSummaryActivitiesView}
+        managementFileId={managementFileId}
+        statusSolver={statusSolver}
+      ></AdHocFileActivitiesSummaryContainer>
     </StyledSummarySection>
   );
 };

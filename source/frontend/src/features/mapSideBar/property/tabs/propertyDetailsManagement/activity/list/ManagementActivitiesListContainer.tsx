@@ -1,11 +1,14 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
+import { TableSort } from '@/components/Table/TableSort';
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import ManagementStatusUpdateSolver from '@/features/mapSideBar/management/tabs/fileDetails/detail/ManagementStatusUpdateSolver';
 import { usePropertyActivityRepository } from '@/hooks/repositories/usePropertyActivityRepository';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import useIsMounted from '@/hooks/util/useIsMounted';
+import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
+import { isValidId } from '@/utils';
 
 import { IManagementActivitiesListViewProps } from './ManagementActivitiesListView';
 import { PropertyActivityRow } from './models/PropertyActivityRow';
@@ -13,17 +16,19 @@ import { PropertyActivityRow } from './models/PropertyActivityRow';
 export interface IPropertyManagementActivitiesListContainerProps {
   statusSolver?: ManagementStatusUpdateSolver;
   propertyId: number;
+  isAdHoc?: boolean;
   View: React.FC<IManagementActivitiesListViewProps>;
 }
 
 const PropertyManagementActivitiesListContainer: React.FunctionComponent<
   IPropertyManagementActivitiesListContainerProps
-> = ({ propertyId, statusSolver, View }) => {
+> = ({ statusSolver, propertyId, isAdHoc, View }) => {
   const history = useHistory();
   const isMounted = useIsMounted();
   const { setModalContent, setDisplayModal } = useModalContext();
   const [propertyActivities, setPropertyActivities] = useState<PropertyActivityRow[]>([]);
   const { staleLastUpdatedBy } = useContext(SideBarContext);
+  const [sort, setSort] = useState<TableSort<ApiGen_Concepts_PropertyActivity>>({});
 
   const {
     getActivities: { execute: getActivities, loading },
@@ -63,9 +68,14 @@ const PropertyManagementActivitiesListContainer: React.FunctionComponent<
 
   return (
     <View
-      isEmbedded={false}
+      sort={sort}
+      setSort={setSort}
       isLoading={loading || deletingActivity}
-      propertyActivities={propertyActivities}
+      propertyActivities={
+        isAdHoc
+          ? propertyActivities.filter(pa => !isValidId(pa.managementFileId))
+          : propertyActivities.filter(pa => isValidId(pa.managementFileId))
+      }
       statusSolver={statusSolver}
       onCreate={onCreate}
       onView={onView}
@@ -82,6 +92,10 @@ const PropertyManagementActivitiesListContainer: React.FunctionComponent<
         });
         setDisplayModal(true);
       }}
+      getNavigationUrl={(row: PropertyActivityRow) => ({
+        url: `/mapview/sidebar/management/${row.managementFileId}/activities/${row.activityId}`,
+        title: `M-${row.managementFileId}`,
+      })}
     />
   );
 };

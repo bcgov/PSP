@@ -1,5 +1,6 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 
+import { TableSort } from '@/components/Table/TableSort';
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import { IManagementActivitiesListViewProps } from '@/features/mapSideBar/property/tabs/propertyDetailsManagement/activity/list/ManagementActivitiesListView';
 import { PropertyActivityRow } from '@/features/mapSideBar/property/tabs/propertyDetailsManagement/activity/list/models/PropertyActivityRow';
@@ -7,6 +8,7 @@ import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator'
 import { useManagementActivityRepository } from '@/hooks/repositories/useManagementActivityRepository';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import useIsMounted from '@/hooks/util/useIsMounted';
+import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
 
 import ManagementStatusUpdateSolver from '../../fileDetails/detail/ManagementStatusUpdateSolver';
 
@@ -23,6 +25,7 @@ const ManagementFileActivitiesListContainer: React.FunctionComponent<
   const { setModalContent, setDisplayModal } = useModalContext();
   const [propertyActivities, setPropertyActivities] = useState<PropertyActivityRow[]>([]);
   const { staleLastUpdatedBy } = useContext(SideBarContext);
+  const [sort, setSort] = useState<TableSort<ApiGen_Concepts_PropertyActivity>>({});
 
   const pathGenerator = usePathGenerator();
 
@@ -64,10 +67,10 @@ const ManagementFileActivitiesListContainer: React.FunctionComponent<
 
   return (
     <View
-      isEmbedded={true}
       isLoading={loading || deletingActivity}
       propertyActivities={propertyActivities}
-      statusSolver={statusSolver}
+      setSort={setSort}
+      sort={sort}
       onCreate={onCreate}
       onView={onView}
       onDelete={async (activityId: number) => {
@@ -83,6 +86,7 @@ const ManagementFileActivitiesListContainer: React.FunctionComponent<
         });
         setDisplayModal(true);
       }}
+      statusSolver={statusSolver}
     />
   );
 };

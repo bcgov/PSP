@@ -1,4 +1,3 @@
-import orderBy from 'lodash/orderBy';
 import React from 'react';
 import { BiListPlus } from 'react-icons/bi';
 
@@ -9,63 +8,37 @@ import Claims from '@/constants/claims';
 import ManagementStatusUpdateSolver from '@/features/mapSideBar/management/tabs/fileDetails/detail/ManagementStatusUpdateSolver';
 import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
 
-import ManagementActivitiesList from './ManagementActivitiesList';
+import ManagementActivitiesList, {
+  activityActionColumn,
+  createActivityTableColumns,
+} from './ManagementActivitiesList';
 import { PropertyActivityRow } from './models/PropertyActivityRow';
 
 export interface IManagementActivitiesListViewProps {
   isLoading: boolean;
   propertyActivities: PropertyActivityRow[];
-  isEmbedded: boolean;
-  statusSolver?: ManagementStatusUpdateSolver;
-  onCreate: () => void;
-  onView: (activityId: number) => void;
-  onDelete: (activityId: number) => void;
+  sort: TableSort<ApiGen_Concepts_PropertyActivity>;
+  statusSolver: ManagementStatusUpdateSolver;
+  getNavigationUrl?: (row: PropertyActivityRow) => { title: string; url: string };
+  setSort: React.Dispatch<React.SetStateAction<TableSort<ApiGen_Concepts_PropertyActivity>>>;
+  onCreate?: () => void;
+  onView?: (activityId: number) => void;
+  onDelete?: (activityId: number) => void;
 }
 
 const ManagementActivitiesListView: React.FunctionComponent<IManagementActivitiesListViewProps> = ({
   isLoading,
   propertyActivities,
-  isEmbedded,
+  sort,
   statusSolver,
+  setSort,
   onCreate,
   onView,
   onDelete,
 }) => {
-  const [sort, setSort] = React.useState<TableSort<ApiGen_Concepts_PropertyActivity>>({});
-
-  const mapSortField = (sortField: string) => {
-    if (sortField === 'activityType') {
-      return 'activityType.description';
-    } else if (sortField === 'activitySubType') {
-      return 'activitySubType.description';
-    } else if (sortField === 'activityStatusType') {
-      return 'activityStatusType.description';
-    }
-
-    return sortField;
-  };
-
-  const sortedActivities = React.useMemo(() => {
-    if (propertyActivities?.length > 0) {
-      let items: PropertyActivityRow[] = [...propertyActivities];
-
-      if (sort) {
-        const sortFields = Object.keys(sort);
-        if (sortFields?.length > 0) {
-          const keyName = (sort as any)[sortFields[0]];
-          return orderBy(items, mapSortField(sortFields[0]), keyName);
-        } else {
-          items = orderBy(items, ['activityType'], ['asc']);
-        }
-      }
-      return items;
-    }
-    return [];
-  }, [propertyActivities, sort]);
-
   const canEditActivities = !statusSolver || (statusSolver && statusSolver.canEditActivities());
 
-  return !isEmbedded ? (
+  return (
     <Section
       isCollapsable
       initiallyExpanded
@@ -85,25 +58,13 @@ const ManagementActivitiesListView: React.FunctionComponent<IManagementActivitie
       }
     >
       <ManagementActivitiesList
-        propertyActivities={sortedActivities}
-        statusSolver={statusSolver}
-        handleView={onView}
-        handleDelete={onDelete}
+        propertyActivities={propertyActivities}
         sort={sort}
         setSort={setSort}
         loading={isLoading}
+        columns={[...createActivityTableColumns(), activityActionColumn(onView, onDelete)]}
       ></ManagementActivitiesList>
     </Section>
-  ) : (
-    <ManagementActivitiesList
-      propertyActivities={sortedActivities}
-      statusSolver={statusSolver}
-      handleView={onView}
-      handleDelete={onDelete}
-      sort={sort}
-      setSort={setSort}
-      loading={isLoading}
-    ></ManagementActivitiesList>
   );
 };
 

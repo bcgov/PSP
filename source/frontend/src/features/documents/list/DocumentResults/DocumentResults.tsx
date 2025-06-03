@@ -3,10 +3,12 @@ import { useMemo } from 'react';
 import { Table } from '@/components/Table';
 import { TableSort } from '@/components/Table/TableSort';
 import { DocumentRow } from '@/features/documents/ComposedDocument';
+import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_Concepts_Document } from '@/models/api/generated/ApiGen_Concepts_Document';
 import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
 
 import { IUpdateDocumentsStrategy } from '../../models/IUpdateDocumentsStrategy';
+import { ParentInformationDisplay } from '../DocumentListView';
 import { getDocumentColumns } from './DocumentResultsColumns';
 
 export interface IDocumentResultProps {
@@ -16,16 +18,48 @@ export interface IDocumentResultProps {
   statusSolver?: IUpdateDocumentsStrategy;
   setSort: (value: TableSort<ApiGen_Concepts_Document>) => void;
   onViewDetails: (values: ApiGen_Concepts_DocumentRelationship) => void;
+  onViewParent: (relationshipType: ApiGen_CodeTypes_DocumentRelationType, parentId: number) => void;
   onPreview: (values: ApiGen_Concepts_DocumentRelationship) => void;
   onDelete: (values: ApiGen_Concepts_DocumentRelationship) => void;
+  showParentInformation: boolean;
+  relationshipDisplay?: ParentInformationDisplay;
 }
 
 export const DocumentResults: React.FunctionComponent<
   React.PropsWithChildren<IDocumentResultProps>
-> = ({ results, statusSolver, setSort, sort, onViewDetails, onDelete, onPreview, ...rest }) => {
+> = ({
+  results,
+  setSort,
+  sort,
+  onViewDetails,
+  onViewParent,
+  onDelete,
+  onPreview,
+  showParentInformation,
+  relationshipDisplay,
+  statusSolver,
+  ...rest
+}) => {
   const columns = useMemo(
-    () => getDocumentColumns({ statusSolver, onViewDetails, onDelete, onPreview }),
-    [statusSolver, onViewDetails, onDelete, onPreview],
+    () =>
+      getDocumentColumns({
+        onViewDetails,
+        onViewParent,
+        onDelete,
+        onPreview,
+        showParentInformation,
+        relationshipDisplay,
+        statusSolver,
+      }),
+    [
+      onViewDetails,
+      onViewParent,
+      onDelete,
+      onPreview,
+      showParentInformation,
+      relationshipDisplay,
+      statusSolver,
+    ],
   );
 
   return (

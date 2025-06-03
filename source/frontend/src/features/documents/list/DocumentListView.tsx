@@ -17,6 +17,7 @@ import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/Ap
 import { ApiGen_Concepts_Document } from '@/models/api/generated/ApiGen_Concepts_Document';
 import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
 import { ApiGen_Concepts_DocumentType } from '@/models/api/generated/ApiGen_Concepts_DocumentType';
+import { exists } from '@/utils';
 
 import { DocumentRow } from '../ComposedDocument';
 import { DocumentViewerContext } from '../context/DocumentViewerContext';
@@ -27,9 +28,17 @@ import { IUpdateDocumentsStrategy } from '../models/IUpdateDocumentsStrategy';
 import { DocumentFilterForm } from './DocumentFilter/DocumentFilterForm';
 import { DocumentResults } from './DocumentResults/DocumentResults';
 
+export interface ParentInformationDisplay {
+  relationshipIdLabel: string;
+  relationshipTypeLabel: string;
+  searchParentIdLabel: string;
+  searchParentTypeLabel: string;
+}
+
 export interface IDocumentListViewProps {
   parentId: string;
   relationshipType: ApiGen_CodeTypes_DocumentRelationType;
+  relationshipTypes: ApiGen_CodeTypes_DocumentRelationType[];
   isLoading: boolean;
   documentResults: DocumentRow[];
   hideFilters?: boolean;
@@ -38,9 +47,12 @@ export interface IDocumentListViewProps {
   disableAdd?: boolean;
   title?: string;
   statusSolver?: IUpdateDocumentsStrategy;
+  showParentInformation: boolean;
+  relationshipDisplay?: ParentInformationDisplay;
   onDelete: (relationship: ApiGen_Concepts_DocumentRelationship) => Promise<boolean | undefined>;
   onSuccess: () => void;
   onRefresh: () => void;
+  onViewParent: (relationshipType: ApiGen_CodeTypes_DocumentRelationType, parentId: number) => void;
 }
 /**
  * Page that displays document information as a list.
@@ -106,7 +118,22 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
               ? filename.indexOf(filters.filename.toLowerCase() || '') > -1
               : true;
 
-          return matchesDocumentType && matchesStatus && matchesFilename;
+          const matchesParentName =
+            filters.parentName !== ''
+              ? document.parentName.toLowerCase().indexOf(filters.parentName.toLowerCase() || '') >
+                -1
+              : true;
+
+          const matchesParentType =
+            !filters.parentType || document?.relationshipType === filters.parentType;
+
+          return (
+            matchesDocumentType &&
+            matchesStatus &&
+            matchesFilename &&
+            matchesParentName &&
+            matchesParentType
+          );
         });
       }
       if (sort) {
@@ -176,9 +203,7 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
   };
 
   const getHeader = (): React.ReactNode => {
-    if (props.disableAdd === true) {
-      return title ?? 'Documents';
-    }
+    const disableAdd = exists(props.disableAdd);
 
     const enableAddDocuments =
       (hasClaim([Claims.DOCUMENT_ADD]) && !props.statusSolver) ||
@@ -187,32 +212,30 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
         props.statusSolver.canEditDocuments());
 
     return (
-      <>
-        <StyledRow className="no-gutters">
-          <Col xs="auto">
-            <span>{title ?? 'Documents'}</span>
-          </Col>
-          <Col xs="auto" className="my-1">
-            <ListHeaderActionsDiv>
-              {enableAddDocuments && (
-                <StyledSectionAddButton
-                  onClick={() => setIsUploadVisible && setIsUploadVisible(true)}
-                  data-testid={props['data-testId']}
-                >
-                  <FaPlus size={'2rem'} />
-                  &nbsp;{'Add Document'}
-                </StyledSectionAddButton>
-              )}
-              <RefreshButton
-                onClick={() => props.onRefresh && props.onRefresh()}
-                type="button"
-                toolText="Refresh"
-                toolId="btn-refresh-tooltip"
-              ></RefreshButton>
-            </ListHeaderActionsDiv>
-          </Col>
-        </StyledRow>
-      </>
+      <StyledRow className="no-gutters">
+        <Col xs="auto">
+          <span>{title ?? 'Documents'}</span>
+        </Col>
+        <Col xs="auto" className="my-1">
+          <ListHeaderActionsDiv>
+            {enableAddDocuments && !disableAdd && (
+              <StyledSectionAddButton
+                onClick={() => setIsUploadVisible && setIsUploadVisible(true)}
+                data-testid={props['data-testId']}
+              >
+                <FaPlus size={'2rem'} />
+                &nbsp;{'Add Document'}
+              </StyledSectionAddButton>
+            )}
+            <RefreshButton
+              onClick={() => props.onRefresh && props.onRefresh()}
+              type="button"
+              toolText="Refresh"
+              toolId="btn-refresh-tooltip"
+            ></RefreshButton>
+          </ListHeaderActionsDiv>
+        </Col>
+      </StyledRow>
     );
   };
 
@@ -224,6 +247,9 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
             onSetFilter={setFilters}
             documentFilter={filters}
             documentTypes={documentTypes}
+            showParentFilter={props.showParentInformation}
+            relationshipTypes={props.relationshipTypes}
+            relationshipDisplay={props.relationshipDisplay}
           />
         )}
         <DocumentResults
@@ -233,8 +259,11 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
           statusSolver={statusSolver}
           setSort={setSort}
           onViewDetails={handleViewDetails}
+          onViewParent={props.onViewParent}
           onPreview={handlePreview}
           onDelete={handleDeleteClick}
+          showParentInformation={props.showParentInformation}
+          relationshipDisplay={props.relationshipDisplay}
         />
       </Section>
       <DocumentDetailModal
@@ -242,7 +271,7 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
         relationshipType={props.relationshipType}
         canEditDocument={!statusSolver || (statusSolver && statusSolver.canEditDocuments())}
         setDisplay={setIsDetailsVisible}
-        pimsDocument={selectedDocument ? DocumentRow.fromApi(selectedDocument) : undefined}
+        pimsDocument={selectedDocument ? DocumentRow.fromApi(selectedDocument, '') : undefined}
         onUpdateSuccess={onUpdateSuccess}
         onClose={handleModalDetailsClose}
       />

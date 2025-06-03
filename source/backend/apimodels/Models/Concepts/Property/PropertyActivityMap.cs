@@ -11,6 +11,7 @@ namespace Pims.Api.Models.Concepts.Property
             config.NewConfig<Entity.PimsPropertyActivity, PropertyActivityModel>()
                 .Map(dest => dest.Id, src => src.PimsPropertyActivityId)
                 .Map(dest => dest.ManagementFileId, src => src.ManagementFileId)
+                .Map(dest => dest.ManagementFile, src => src.ManagementFile)
                 .Map(dest => dest.ActivityTypeCode, src => src.PropMgmtActivityTypeCodeNavigation)
                 .Map(dest => dest.ActivitySubtypeCode, src => src.PropMgmtActivitySubtypeCodeNavigation)
                 .Map(dest => dest.ActivityStatusTypeCode, src => src.PropMgmtActivityStatusTypeCodeNavigation)
