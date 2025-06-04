@@ -115,20 +115,20 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
       );
 
       return {
-        type: mapMachine.mapFeatureData.pimsLocationFeatures.type,
+        type: mapMachine.mapFeatureData?.pimsLocationFeatures?.type,
         features: displayableFeatures,
       };
     }, [
       mapMachine.activePimsPropertyIds,
-      mapMachine.mapFeatureData.pimsLocationFeatures.features,
-      mapMachine.mapFeatureData.pimsLocationFeatures.type,
+      mapMachine.mapFeatureData?.pimsLocationFeatures?.features,
+      mapMachine.mapFeatureData?.pimsLocationFeatures?.type,
       mapMachine.showDisposed,
       mapMachine.showRetired,
     ]);
 
-  const pimsBoundaryFeatures = mapMachine.mapFeatureData.pimsBoundaryFeatures;
+  const pimsBoundaryFeatures = mapMachine.mapFeatureData?.pimsBoundaryFeatures;
 
-  const pmbcFeatures = mapMachine.mapFeatureData.fullyAttributedFeatures;
+  const pmbcFeatures = mapMachine.mapFeatureData?.fullyAttributedFeatures;
 
   const featurePoints: Supercluster.PointFeature<
     | PIMS_Property_Location_View
