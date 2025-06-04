@@ -49,6 +49,7 @@ const ManagementTeamSubForm: React.FunctionComponent<IManagementTeamSubFormProps
                     onChange={() => {
                       setFieldTouched(`team.${index}.contact`);
                     }}
+                    disabled={!canEditDetails}
                   />
                 </Col>
 
@@ -57,6 +58,7 @@ const ManagementTeamSubForm: React.FunctionComponent<IManagementTeamSubFormProps
                     field={`team.${index}.contact`}
                     View={ContactInputView}
                     displayErrorAsTooltip={false}
+                    canEditDetails={canEditDetails}
                   ></ContactInputContainer>
                 </Col>
 
@@ -92,6 +94,7 @@ const ManagementTeamSubForm: React.FunctionComponent<IManagementTeamSubFormProps
                     <PrimaryContactSelector
                       field={`team.${index}.primaryContactId`}
                       contactInfo={teamMember?.contact}
+                      canEditDetails={canEditDetails}
                     ></PrimaryContactSelector>
                   </SectionField>
                 )}

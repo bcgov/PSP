@@ -108,8 +108,8 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
 
   const getHeader = (): React.ReactNode => {
     const enableAddNotes =
-      (hasClaim([Claims.DOCUMENT_ADD]) && !statusSolver) ||
-      (hasClaim([Claims.DOCUMENT_ADD]) && statusSolver && statusSolver.canEditNotes());
+      (hasClaim([Claims.NOTE_ADD]) && !statusSolver) ||
+      (hasClaim([Claims.NOTE_ADD]) && statusSolver && statusSolver.canEditNotes());
 
     if (enableAddNotes) {
       return (
