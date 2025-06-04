@@ -5,7 +5,7 @@
 /* Project name:          PIMS S105.00                                    */
 /* Author:                Doug Filteau                                    */
 /* Script type:           Database drop script                            */
-/* Created on:            2025-05-26 10:32                                */
+/* Created on:            2025-05-30 12:40                                */
 /* ---------------------------------------------------------------------- */
 
 
@@ -274,6 +274,10 @@ ALTER TABLE [dbo].[PIMS_PROPERTY_ACTIVITY] DROP CONSTRAINT [PIM_MGMTFL_PIM_PRPAC
 GO
 
 
+ALTER TABLE [dbo].[PIMS_PROPERTY_ACTIVITY] DROP CONSTRAINT [PIM_PRACTY_PIM_PRPACT_FK]
+GO
+
+
 ALTER TABLE [dbo].[PIMS_PROP_MGMT_ACTIVITY_SUBTYPE] DROP CONSTRAINT [PIM_PRACTY_PIM_PRACST_FK]
 GO
 
@@ -491,10 +495,6 @@ GO
 
 
 ALTER TABLE [dbo].[PIMS_PROP_ACQ_FL_COMP_REQ] DROP CONSTRAINT [PIM_CMPREQ_PIM_PACMRQ_FK]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_PROP_ACTIVITY_MGMT_ACTIVITY] DROP CONSTRAINT [PIM_PRACTY_PIM_PACMAC_FK]
 GO
 
 
@@ -7179,10 +7179,6 @@ EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'
 GO
 
 
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_PROP_ACTIVITY_MGMT_ACTIVITY', 'COLUMN', N'PROP_MGMT_ACTIVITY_TYPE_CODE'
-GO
-
-
 EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_PROP_ACTIVITY_MGMT_ACTIVITY', 'COLUMN', N'PROP_MGMT_ACTIVITY_SUBTYPE_CODE'
 GO
 
@@ -8119,7 +8115,7 @@ ALTER TABLE [dbo].[PIMS_PROPERTY_ACTIVITY] DROP CONSTRAINT [PRPACT_APP_LAST_UPDA
 GO
 
 
-ALTER TABLE [dbo].[PIMS_PROPERTY_ACTIVITY] DROP CONSTRAINT [DF__PIMS_PROP__APP_L__21E0EDE6]
+ALTER TABLE [dbo].[PIMS_PROPERTY_ACTIVITY] DROP CONSTRAINT [PRPACT_APP_LAST_UPDATE_USERID_DEF]
 GO
 
 
@@ -8163,6 +8159,10 @@ EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'
 GO
 
 
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_PROPERTY_ACTIVITY', 'COLUMN', N'PROP_MGMT_ACTIVITY_TYPE_CODE'
+GO
+
+
 EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_PROPERTY_ACTIVITY', 'COLUMN', N'REQUEST_ADDED_DT'
 GO
 
@@ -8180,6 +8180,58 @@ GO
 
 
 EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_PROPERTY_ACTIVITY', 'COLUMN', N'IS_DISABLED'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_PROPERTY_ACTIVITY', 'COLUMN', N'CONCURRENCY_CONTROL_NUMBER'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_PROPERTY_ACTIVITY', 'COLUMN', N'APP_CREATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_PROPERTY_ACTIVITY', 'COLUMN', N'APP_CREATE_USERID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_PROPERTY_ACTIVITY', 'COLUMN', N'APP_CREATE_USER_GUID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_PROPERTY_ACTIVITY', 'COLUMN', N'APP_CREATE_USER_DIRECTORY'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_PROPERTY_ACTIVITY', 'COLUMN', N'APP_LAST_UPDATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_PROPERTY_ACTIVITY', 'COLUMN', N'APP_LAST_UPDATE_USERID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_PROPERTY_ACTIVITY', 'COLUMN', N'APP_LAST_UPDATE_USER_GUID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_PROPERTY_ACTIVITY', 'COLUMN', N'APP_LAST_UPDATE_USER_DIRECTORY'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_PROPERTY_ACTIVITY', 'COLUMN', N'DB_CREATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_PROPERTY_ACTIVITY', 'COLUMN', N'DB_CREATE_USERID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_PROPERTY_ACTIVITY', 'COLUMN', N'DB_LAST_UPDATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_PROPERTY_ACTIVITY', 'COLUMN', N'DB_LAST_UPDATE_USERID'
 GO
 
 
