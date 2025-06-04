@@ -2,11 +2,12 @@ import { feature, featureCollection } from '@turf/turf';
 import { FeatureCollection } from 'geojson';
 import L, { LatLng, LatLngLiteral } from 'leaflet';
 import find from 'lodash/find';
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { FeatureGroup, GeoJSON, Marker } from 'react-leaflet';
 import { v4 as uuidv4 } from 'uuid';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import { usePrevious } from '@/hooks/usePrevious';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import { exists } from '@/utils';
 
@@ -34,6 +35,18 @@ export const FilePropertiesLayer: React.FunctionComponent = () => {
 
     return featureCollection(validBoundaries);
   }, [filePropertyLocations]);
+
+  const geojsonKeyRef = useRef<string>(uuidv4());
+  const previousBoundaries = usePrevious(draftBoundaryFeatures);
+
+  // We need to regenerate an unique `key` on the `<GeoJSON>` element when the underlying data changes.
+  // This is to force React to re-render the GeoJSON component with the updated property boundaries.
+  // https://github.com/PaulLeCam/react-leaflet/issues/332
+  useEffect(() => {
+    if (previousBoundaries !== draftBoundaryFeatures) {
+      geojsonKeyRef.current = uuidv4();
+    }
+  }, [draftBoundaryFeatures, previousBoundaries]);
 
   /**
    * Cleanup draft layers.
@@ -95,13 +108,13 @@ export const FilePropertiesLayer: React.FunctionComponent = () => {
         </FeatureGroup>
         {draftBoundaryFeatures?.features?.length > 0 && (
           <GeoJSON
-            key={uuidv4()}
+            key={geojsonKeyRef.current}
             data={draftBoundaryFeatures}
             pathOptions={{ color: '#2A81CB', fill: false, dashArray: [12] }}
           ></GeoJSON>
         )}
       </>
     ),
-    [draftBoundaryFeatures, draftPoints, mapMarkerClickFn],
+    [draftBoundaryFeatures, draftPoints, geojsonKeyRef, mapMarkerClickFn],
   );
 };
