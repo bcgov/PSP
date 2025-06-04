@@ -47,6 +47,8 @@ namespace Pims.Dal.Repositories
                 .Include(rp => rp.Property)
                     .ThenInclude(rp => rp.Address)
                     .ThenInclude(a => a.ProvinceState)
+                .Include(rp => rp.Property)
+                    .ThenInclude(h => h.PimsHistoricalFileNumbers)
                 .AsNoTracking()
                 .ToList();
         }
