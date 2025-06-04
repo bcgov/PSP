@@ -1,10 +1,14 @@
+import { feature, featureCollection } from '@turf/turf';
+import { FeatureCollection } from 'geojson';
 import L, { LatLng, LatLngLiteral } from 'leaflet';
 import find from 'lodash/find';
 import { useMemo, useRef } from 'react';
-import { FeatureGroup, Marker } from 'react-leaflet';
+import { FeatureGroup, GeoJSON, Marker } from 'react-leaflet';
+import { v4 as uuidv4 } from 'uuid';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
+import { exists } from '@/utils';
 
 import { useFilterContext } from '../../providers/FilterProvider';
 import { getDraftIcon } from './util';
@@ -18,7 +22,17 @@ export const FilePropertiesLayer: React.FunctionComponent = () => {
   const filePropertyLocations = mapMachine.filePropertyLocations;
 
   const draftPoints = useMemo<LatLngLiteral[]>(() => {
-    return filePropertyLocations;
+    return (filePropertyLocations ?? []).map(pl => pl.location).filter(exists);
+  }, [filePropertyLocations]);
+
+  const draftBoundaryFeatures = useMemo<FeatureCollection>(() => {
+    // ignore properties without a valid boundary
+    const validBoundaries = (filePropertyLocations ?? [])
+      .map(pl => pl.boundary)
+      .filter(exists)
+      .map(boundary => feature(boundary));
+
+    return featureCollection(validBoundaries);
   }, [filePropertyLocations]);
 
   /**
@@ -33,7 +47,7 @@ export const FilePropertiesLayer: React.FunctionComponent = () => {
       //react-leaflet is not displaying removed drafts but the layer is still present, this
       //causes the fitbounds calculation to be off. Fixed by manually cleaning up layers referencing removed drafts.
       group.getLayers().forEach((l: any) => {
-        if (!find(draftPoints, vl => (l._latlng as LatLng).equals(vl))) {
+        if (!find(draftPoints, vl => (l._latlng as LatLng)?.equals(vl))) {
           group.removeLayer(l);
         }
       });
@@ -51,35 +65,43 @@ export const FilePropertiesLayer: React.FunctionComponent = () => {
    **/
   return useMemo(
     () => (
-      <FeatureGroup ref={draftFeatureGroupRef}>
-        {draftPoints.map((draftPoint, index) => {
-          console.log(draftPoint);
-          return (
-            <Marker
-              key={index}
-              position={draftPoint}
-              icon={getDraftIcon((index + 1).toString())}
-              zIndexOffset={500}
-              eventHandlers={{
-                click: e => {
-                  // stop propagation of 'click' event to the underlying leaflet map
-                  e.originalEvent.preventDefault();
-                  e.originalEvent.stopPropagation();
+      <>
+        <FeatureGroup ref={draftFeatureGroupRef}>
+          {draftPoints.map((draftPoint, index) => {
+            return (
+              <Marker
+                key={uuidv4()}
+                position={draftPoint}
+                icon={getDraftIcon((index + 1).toString())}
+                zIndexOffset={500}
+                eventHandlers={{
+                  click: e => {
+                    // stop propagation of 'click' event to the underlying leaflet map
+                    e.originalEvent.preventDefault();
+                    e.originalEvent.stopPropagation();
 
-                  mapMarkerClickFn({
-                    clusterId: 'NO_ID',
-                    latlng: draftPoint,
-                    pimsLocationFeature: null,
-                    pimsBoundaryFeature: null,
-                    fullyAttributedFeature: null,
-                  });
-                },
-              }}
-            ></Marker>
-          );
-        })}
-      </FeatureGroup>
+                    mapMarkerClickFn({
+                      clusterId: 'NO_ID',
+                      latlng: draftPoint,
+                      pimsLocationFeature: null,
+                      pimsBoundaryFeature: null,
+                      fullyAttributedFeature: null,
+                    });
+                  },
+                }}
+              ></Marker>
+            );
+          })}
+        </FeatureGroup>
+        {draftBoundaryFeatures?.features?.length > 0 && (
+          <GeoJSON
+            key={uuidv4()}
+            data={draftBoundaryFeatures}
+            pathOptions={{ color: '#2A81CB', fill: false, dashArray: [12] }}
+          ></GeoJSON>
+        )}
+      </>
     ),
-    [draftPoints, mapMarkerClickFn],
+    [draftBoundaryFeatures, draftPoints, mapMarkerClickFn],
   );
 };
