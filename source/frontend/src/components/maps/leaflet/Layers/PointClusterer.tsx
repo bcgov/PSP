@@ -222,8 +222,6 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
     }
   }, [featureGroupRef, mapInstance, clusters, selectedMarker, tilesLoaded]);
 
-  const mapMarkerClickFn = mapMachine.mapMarkerClick;
-
   const renderedPoints = useMemo(() => {
     return (
       <FeatureGroup ref={featureGroupRef}>
