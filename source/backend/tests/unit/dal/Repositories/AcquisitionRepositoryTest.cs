@@ -685,7 +685,11 @@ namespace Pims.Dal.Test.Repositories
             var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileView);
 
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.PimsAcquisitionFileTeams = new List<PimsAcquisitionFileTeam>() { new PimsAcquisitionFileTeam() { } };
+            acqFile.PimsAcquisitionFileTeams = new List<PimsAcquisitionFileTeam>() { new PimsAcquisitionFileTeam()
+                {
+                    AcqFlTeamProfileTypeCode = "EXPRAGENT",
+                }
+            };
 
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(acqFile);
             var repository = helper.CreateRepository<AcquisitionFileRepository>(user);

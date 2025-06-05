@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-[Table("PIMS_MANAGEMENT_FILE_TEAM_HIST")]
-[Index("ManagementFileTeamHistId", "EndDateHist", Name = "PIMS_MGMFTM_H_UK", IsUnique = true)]
-public partial class PimsManagementFileTeamHist
+[Table("PIMS_PROP_TENURE_CLEANUP_HIST")]
+[Index("PropTenureCleanupHistId", "EndDateHist", Name = "PIMS_PRTNCL_H_UK", IsUnique = true)]
+public partial class PimsPropTenureCleanupHist
 {
     [Key]
-    [Column("_MANAGEMENT_FILE_TEAM_HIST_ID")]
-    public long ManagementFileTeamHistId { get; set; }
+    [Column("_PROP_TENURE_CLEANUP_HIST_ID")]
+    public long PropTenureCleanupHistId { get; set; }
 
     [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
     public DateTime EffectiveDateHist { get; set; }
@@ -20,25 +20,16 @@ public partial class PimsManagementFileTeamHist
     [Column("END_DATE_HIST", TypeName = "datetime")]
     public DateTime? EndDateHist { get; set; }
 
-    [Column("PIMS_MANAGEMENT_FILE_TEAM_ID")]
-    public long PimsManagementFileTeamId { get; set; }
+    [Column("PROP_TENURE_CLEANUP_ID")]
+    public long PropTenureCleanupId { get; set; }
 
-    [Column("MANAGEMENT_FILE_ID")]
-    public long ManagementFileId { get; set; }
-
-    [Column("PERSON_ID")]
-    public long? PersonId { get; set; }
-
-    [Column("ORGANIZATION_ID")]
-    public long? OrganizationId { get; set; }
-
-    [Column("PRIMARY_CONTACT_ID")]
-    public long? PrimaryContactId { get; set; }
+    [Column("PROPERTY_ID")]
+    public long PropertyId { get; set; }
 
     [Required]
-    [Column("MANAGEMENT_FILE_PROFILE_TYPE_CODE")]
+    [Column("TENURE_CLEANUP_TYPE_CODE")]
     [StringLength(20)]
-    public string ManagementFileProfileTypeCode { get; set; }
+    public string TenureCleanupTypeCode { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }

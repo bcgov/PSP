@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-[Table("PIMS_MANAGEMENT_FILE_TEAM_HIST")]
-[Index("ManagementFileTeamHistId", "EndDateHist", Name = "PIMS_MGMFTM_H_UK", IsUnique = true)]
-public partial class PimsManagementFileTeamHist
+[Table("PIMS_PROP_ACTIVITY_MGMT_ACTIVITY_HIST")]
+[Index("PropActivityMgmtActivityHistId", "EndDateHist", Name = "PIMS_PACMAC_H_UK", IsUnique = true)]
+public partial class PimsPropActivityMgmtActivityHist
 {
     [Key]
-    [Column("_MANAGEMENT_FILE_TEAM_HIST_ID")]
-    public long ManagementFileTeamHistId { get; set; }
+    [Column("_PROP_ACTIVITY_MGMT_ACTIVITY_HIST_ID")]
+    public long PropActivityMgmtActivityHistId { get; set; }
 
     [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
     public DateTime EffectiveDateHist { get; set; }
@@ -20,25 +20,16 @@ public partial class PimsManagementFileTeamHist
     [Column("END_DATE_HIST", TypeName = "datetime")]
     public DateTime? EndDateHist { get; set; }
 
-    [Column("PIMS_MANAGEMENT_FILE_TEAM_ID")]
-    public long PimsManagementFileTeamId { get; set; }
+    [Column("PROP_ACTVTY_MGMT_ACTVTY_TYP_ID")]
+    public long PropActvtyMgmtActvtyTypId { get; set; }
 
-    [Column("MANAGEMENT_FILE_ID")]
-    public long ManagementFileId { get; set; }
-
-    [Column("PERSON_ID")]
-    public long? PersonId { get; set; }
-
-    [Column("ORGANIZATION_ID")]
-    public long? OrganizationId { get; set; }
-
-    [Column("PRIMARY_CONTACT_ID")]
-    public long? PrimaryContactId { get; set; }
+    [Column("PIMS_PROPERTY_ACTIVITY_ID")]
+    public long PimsPropertyActivityId { get; set; }
 
     [Required]
-    [Column("MANAGEMENT_FILE_PROFILE_TYPE_CODE")]
+    [Column("PROP_MGMT_ACTIVITY_SUBTYPE_CODE")]
     [StringLength(20)]
-    public string ManagementFileProfileTypeCode { get; set; }
+    public string PropMgmtActivitySubtypeCode { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
