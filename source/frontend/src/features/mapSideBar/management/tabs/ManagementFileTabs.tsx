@@ -2,23 +2,17 @@ import React, { useContext, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { NoteTypes } from '@/constants';
 import { Claims } from '@/constants/claims';
 import { FileTabs, FileTabType, TabFileView } from '@/features/mapSideBar/shared/detail/FileTabs';
-import NoteListContainer from '@/features/notes/list/NoteListContainer';
-import NoteListView from '@/features/notes/list/NoteListView';
-import { PropertyNoteSummaryContainer } from '@/features/notes/list/PropertyNoteSummaryContainer';
-import { PropertyNoteSummaryView } from '@/features/notes/list/PropertyNoteSummaryView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { isValidId } from '@/utils';
 
 import { SideBarContext } from '../../context/sidebarContext';
-import DocumentsTab from '../../shared/tabs/DocumentsTab';
+import ManagementDocumentsTab from '../../shared/tabs/ManagementDocumentsTab';
 import ActivitiesTab from './activities/ActivitiesTab';
-import ManagementStatusUpdateSolver from './fileDetails/detail/ManagementStatusUpdateSolver';
 import ManagementSummaryView from './fileDetails/detail/ManagementSummaryView';
+import ManagementFileNotesTab from './notes/ManagementFileNotesTab';
 
 export interface IManagementFileTabsProps {
   managementFile?: ApiGen_Concepts_ManagementFile;
@@ -39,7 +33,6 @@ export const ManagementFileTabs: React.FC<IManagementFileTabsProps> = ({
   const history = useHistory();
   const { tab } = useParams<{ tab?: string }>();
   const activeTab = Object.values(FileTabType).find(value => value === tab) ?? defaultTab;
-  const managementFileStatusSolver = new ManagementStatusUpdateSolver(managementFile);
 
   const setActiveTab = (tab: FileTabType) => {
     if (activeTab !== tab) {
@@ -51,22 +44,17 @@ export const ManagementFileTabs: React.FC<IManagementFileTabsProps> = ({
     setStaleLastUpdatedBy(true);
   };
 
+  tabViews.push({
+    content: (
+      <ManagementSummaryView managementFile={managementFile} onEdit={() => setIsEditing(true)} />
+    ),
+    key: FileTabType.FILE_DETAILS,
+    name: 'File Details',
+  });
+
   if (isValidId(managementFile?.id)) {
     tabViews.push({
-      content: (
-        <ManagementSummaryView managementFile={managementFile} onEdit={() => setIsEditing(true)} />
-      ),
-      key: FileTabType.FILE_DETAILS,
-      name: 'File Details',
-    });
-
-    tabViews.push({
-      content: (
-        <ActivitiesTab
-          managementFileId={managementFile?.id}
-          statusSolver={managementFileStatusSolver}
-        />
-      ),
+      content: <ActivitiesTab managementFile={managementFile} />,
       key: FileTabType.ACTIVITIES,
       name: 'Activities',
     });
@@ -75,12 +63,7 @@ export const ManagementFileTabs: React.FC<IManagementFileTabsProps> = ({
   if (isValidId(managementFile?.id) && hasClaim(Claims.DOCUMENT_VIEW)) {
     tabViews.push({
       content: (
-        <DocumentsTab
-          fileId={managementFile.id}
-          relationshipType={ApiGen_CodeTypes_DocumentRelationType.ManagementFiles}
-          statusSolver={managementFileStatusSolver}
-          onSuccess={onChildSuccess}
-        />
+        <ManagementDocumentsTab managementFile={managementFile} onSuccess={onChildSuccess} />
       ),
       key: FileTabType.DOCUMENTS,
       name: 'Documents',
@@ -90,19 +73,7 @@ export const ManagementFileTabs: React.FC<IManagementFileTabsProps> = ({
   if (isValidId(managementFile?.id) && hasClaim(Claims.NOTE_VIEW)) {
     tabViews.push({
       content: (
-        <>
-          <NoteListContainer
-            type={NoteTypes.Management_File}
-            entityId={managementFile?.id}
-            onSuccess={onChildSuccess}
-            NoteListView={NoteListView}
-          />
-          <PropertyNoteSummaryContainer
-            fileProperties={managementFile?.fileProperties ?? []}
-            onSuccess={onChildSuccess}
-            View={PropertyNoteSummaryView}
-          />
-        </>
+        <ManagementFileNotesTab managementFile={managementFile} onSuccess={onChildSuccess} />
       ),
       key: FileTabType.NOTES,
       name: 'Notes',

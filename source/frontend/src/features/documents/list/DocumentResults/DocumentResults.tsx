@@ -7,7 +7,6 @@ import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/Ap
 import { ApiGen_Concepts_Document } from '@/models/api/generated/ApiGen_Concepts_Document';
 import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
 
-import { IUpdateDocumentsStrategy } from '../../models/IUpdateDocumentsStrategy';
 import { ParentInformationDisplay } from '../DocumentListView';
 import { getDocumentColumns } from './DocumentResultsColumns';
 
@@ -15,7 +14,7 @@ export interface IDocumentResultProps {
   results: DocumentRow[];
   loading?: boolean;
   sort: TableSort<ApiGen_Concepts_Document>;
-  statusSolver?: IUpdateDocumentsStrategy;
+  canEditDocuments: boolean;
   setSort: (value: TableSort<ApiGen_Concepts_Document>) => void;
   onViewDetails: (values: ApiGen_Concepts_DocumentRelationship) => void;
   onViewParent: (relationshipType: ApiGen_CodeTypes_DocumentRelationType, parentId: number) => void;
@@ -37,7 +36,7 @@ export const DocumentResults: React.FunctionComponent<
   onPreview,
   showParentInformation,
   relationshipDisplay,
-  statusSolver,
+  canEditDocuments,
   ...rest
 }) => {
   const columns = useMemo(
@@ -49,7 +48,7 @@ export const DocumentResults: React.FunctionComponent<
         onPreview,
         showParentInformation,
         relationshipDisplay,
-        statusSolver,
+        canEditDocuments,
       }),
     [
       onViewDetails,
@@ -58,7 +57,7 @@ export const DocumentResults: React.FunctionComponent<
       onPreview,
       showParentInformation,
       relationshipDisplay,
-      statusSolver,
+      canEditDocuments,
     ],
   );
 

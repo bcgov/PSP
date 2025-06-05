@@ -98,6 +98,7 @@ export const PropertyNoteSummaryContainer: React.FunctionComponent<
       sort={sort}
       isViewNotesOpened={isViewNotesOpened}
       currentNote={currentNote}
+      canEditNotes={true}
       setSort={setSort}
       setCurrentNote={setCurrentNote}
       openViewNotes={openViewNotes}

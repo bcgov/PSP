@@ -18,13 +18,12 @@ import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/Api
 import { ApiGen_Concepts_DocumentType } from '@/models/api/generated/ApiGen_Concepts_DocumentType';
 import { prettyFormatUTCDate, stringToFragment } from '@/utils';
 
-import { IUpdateDocumentsStrategy } from '../../models/IUpdateDocumentsStrategy';
 import { ParentInformationDisplay } from '../DocumentListView';
 
 export interface IDocumentColumnProps {
   showParentInformation: boolean;
   relationshipDisplay?: ParentInformationDisplay;
-  statusSolver?: IUpdateDocumentsStrategy;
+  canEditDocuments: boolean;
   onViewDetails: (values: ApiGen_Concepts_DocumentRelationship) => void;
   onViewParent: (relationshipType: ApiGen_CodeTypes_DocumentRelationType, parentId: number) => void;
   onDelete: (values: ApiGen_Concepts_DocumentRelationship) => void;
@@ -34,7 +33,7 @@ export interface IDocumentColumnProps {
 export const getDocumentColumns = ({
   showParentInformation,
   relationshipDisplay,
-  statusSolver,
+  canEditDocuments,
   onViewDetails,
   onViewParent,
   onDelete,
@@ -98,7 +97,7 @@ export const getDocumentColumns = ({
       Header: 'Actions',
       width: 10,
       maxWidth: 10,
-      Cell: renderActions(onViewDetails, onDelete, showParentInformation, statusSolver),
+      Cell: renderActions(canEditDocuments, onViewDetails, onDelete, showParentInformation),
     },
   ];
   if (showParentInformation) {
@@ -200,10 +199,10 @@ function renderUploaded(cell: CellProps<DocumentRow, string | undefined>) {
 }
 
 const renderActions = (
+  canEditDocuments: boolean,
   onViewDetails: (values: ApiGen_Concepts_DocumentRelationship) => void,
   onDelete: (values: ApiGen_Concepts_DocumentRelationship) => void,
   showParentInformation: boolean,
-  statusSolver?: IUpdateDocumentsStrategy,
 ) => {
   return function ({ row: { original, index } }: CellProps<DocumentRow, string>) {
     const { hasClaim } = useKeycloakWrapper();
@@ -265,15 +264,13 @@ const renderActions = (
           ></ViewButton>
         )}
 
-        {hasClaim(Claims.DOCUMENT_DELETE) &&
-          !showParentInformation &&
-          (!statusSolver || (statusSolver && statusSolver.canEditDocuments())) && (
-            <StyledRemoveLinkButton
-              data-testid="document-delete-button"
-              icon={<FaTrash size={21} id={`document-delete-${index}`} title="document delete" />}
-              onClick={() => original?.id && onDelete(DocumentRow.toApi(original))}
-            ></StyledRemoveLinkButton>
-          )}
+        {hasClaim(Claims.DOCUMENT_DELETE) && !showParentInformation && canEditDocuments && (
+          <StyledRemoveLinkButton
+            data-testid="document-delete-button"
+            icon={<FaTrash size={21} id={`document-delete-${index}`} title="document delete" />}
+            onClick={() => original?.id && onDelete(DocumentRow.toApi(original))}
+          ></StyledRemoveLinkButton>
+        )}
       </DocumentsActionsDiv>
     );
   };

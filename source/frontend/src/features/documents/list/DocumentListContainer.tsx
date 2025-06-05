@@ -90,6 +90,9 @@ const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps
     pathGenerator.showFile(relationshipType, parentId);
   };
 
+  const editDocumentsEnabled =
+    !props.statusSolver || (props.statusSolver && props.statusSolver.canEditDocuments());
+
   return (
     <DocumentListView
       parentId={props.parentId}
@@ -97,7 +100,7 @@ const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps
       addButtonText={props.addButtonText}
       isLoading={retrieveDocumentRelationshipLoading}
       documentResults={documentResults}
-      statusSolver={props.statusSolver}
+      canEditDocuments={editDocumentsEnabled}
       onDelete={onDelete}
       onSuccess={onSuccess}
       onRefresh={handleDocumentsRefresh}

@@ -7,6 +7,7 @@ import { StyledSectionAddButton } from '@/components/common/styles';
 import { Claims } from '@/constants';
 import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { isValidId } from '@/utils';
 
 import ManagementStatusUpdateSolver from '../fileDetails/detail/ManagementStatusUpdateSolver';
@@ -16,29 +17,27 @@ import ManagementFileActivitiesListContainer from './list/ManagementFileActiviti
 import ManagementFileActivitiesListView from './list/ManagementFileActivitiesListView';
 
 export interface IActivitiesTabProps {
-  managementFileId: number;
-  statusSolver: ManagementStatusUpdateSolver;
+  managementFile: ApiGen_Concepts_ManagementFile;
 }
 
-export const ActivitiesTab: React.FunctionComponent<IActivitiesTabProps> = ({
-  managementFileId,
-  statusSolver,
-}) => {
+export const ActivitiesTab: React.FunctionComponent<IActivitiesTabProps> = ({ managementFile }) => {
   const { hasClaim } = useKeycloakWrapper();
   const pathGenerator = usePathGenerator();
 
   const onAdd = () => {
-    if (isValidId(managementFileId)) {
-      pathGenerator.addDetail('management', managementFileId, 'activities');
+    if (isValidId(managementFile.id)) {
+      pathGenerator.addDetail('management', managementFile.id, 'activities');
     }
   };
+
+  const statusSolver = new ManagementStatusUpdateSolver(managementFile);
 
   return (
     <StyledSummarySection>
       <Section
         header={
           <SimpleSectionHeader title="Activity List">
-            {hasClaim(Claims.MANAGEMENT_EDIT) && statusSolver.canEditActivities() && (
+            {hasClaim(Claims.MANAGEMENT_EDIT) && statusSolver.canEditDetails() && (
               <StyledSectionAddButton onClick={onAdd}>
                 <FaPlus size="2rem" className="mr-2" />
                 Add Activity
@@ -53,13 +52,13 @@ export const ActivitiesTab: React.FunctionComponent<IActivitiesTabProps> = ({
         </p>
         <ManagementFileActivitiesListContainer
           View={ManagementFileActivitiesListView}
-          managementFileId={managementFileId}
+          managementFileId={managementFile.id}
           statusSolver={statusSolver}
         ></ManagementFileActivitiesListContainer>
       </Section>
       <AdHocFileActivitiesSummaryContainer
         View={AdHocSummaryActivitiesView}
-        managementFileId={managementFileId}
+        managementFileId={managementFile.id}
         statusSolver={statusSolver}
       ></AdHocFileActivitiesSummaryContainer>
     </StyledSummarySection>

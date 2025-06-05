@@ -13,7 +13,6 @@ import { ApiGen_Concepts_Note } from '@/models/api/generated/ApiGen_Concepts_Not
 import { exists, isValidId } from '@/utils';
 
 import { AddNotesContainer } from '../add/AddNotesContainer';
-import { IUpdateNotesStrategy } from '../models/IUpdateNotesStrategy';
 import { NoteContainer } from '../NoteContainer';
 import { createNoteActionsColumn, createNoteTableColumns } from './NoteResults/columns';
 import { NoteResults } from './NoteResults/NoteResults';
@@ -28,7 +27,7 @@ export interface INoteListViewProps {
   notes: ApiGen_Concepts_Note[];
   entityNotes?: ApiGen_Concepts_EntityNote[];
   sort: TableSort<ApiGen_Concepts_Note>;
-  statusSolver?: IUpdateNotesStrategy;
+  canEditNotes: boolean;
   openAddNotes?: () => void;
   closeAddNotes?: () => void;
   deleteNote?: (type: NoteTypes, noteId: number) => Promise<boolean>;
@@ -55,7 +54,7 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
   isViewNotesOpened,
   currentNote,
   isAddNotesOpened,
-  statusSolver,
+  canEditNotes,
   openAddNotes,
   setSort,
   setCurrentNote,
@@ -71,6 +70,7 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
   const columns = [
     ...createNoteTableColumns(),
     createNoteActionsColumn(
+      canEditNotes,
       (note: ApiGen_Concepts_Note) => {
         setCurrentNote(note);
         openViewNotes();
@@ -107,11 +107,7 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
   ];
 
   const getHeader = (): React.ReactNode => {
-    const enableAddNotes =
-      (hasClaim([Claims.NOTE_ADD]) && !statusSolver) ||
-      (hasClaim([Claims.NOTE_ADD]) && statusSolver && statusSolver.canEditNotes());
-
-    if (enableAddNotes) {
+    if (hasClaim([Claims.NOTE_ADD]) && canEditNotes) {
       return (
         <SectionListHeader
           claims={[Claims.NOTE_ADD]}
