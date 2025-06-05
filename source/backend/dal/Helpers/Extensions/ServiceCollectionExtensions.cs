@@ -45,7 +45,6 @@ namespace Pims.Dal
             repositories.AddScoped<Repositories.IResearchFilePropertyRepository, Repositories.ResearchFilePropertyRepository>();
             repositories.AddScoped<Repositories.IDocumentTypeRepository, Repositories.DocumentTypeRepository>();
             repositories.AddScoped<Repositories.INoteRepository, Repositories.NoteRepository>();
-            repositories.AddScoped<Repositories.IEntityNoteRepository, Repositories.EntityNoteRepository>();
             repositories.AddScoped<Repositories.IDocumentRepository, Repositories.DocumentRepository>();
             repositories.AddScoped<Repositories.IAcquisitionFileRepository, Repositories.AcquisitionFileRepository>();
             repositories.AddScoped<Repositories.IAcquisitionFilePropertyRepository, Repositories.AcquisitionFilePropertyRepository>();
@@ -94,6 +93,15 @@ namespace Pims.Dal
             repositories.AddScoped<Repositories.IExpropriationEventRepository, Repositories.ExpropriationEventRepository>();
             repositories.AddScoped<Repositories.IManagementFilePropertyRepository, Repositories.ManagementFilePropertyRepository>();
             repositories.AddScoped<Repositories.IManagementFileRepository, Repositories.ManagementFileRepository>();
+            repositories.AddScoped<Repositories.IManagementActivityRepository, Repositories.ManagementActivityRepository>();
+            repositories.AddScoped<Repositories.INoteRelationshipRepository<PimsAcquisitionFileNote>, Repositories.AcquisitionFileNoteRepository>();
+            repositories.AddScoped<Repositories.INoteRelationshipRepository<PimsDispositionFileNote>, Repositories.DispositionFileNoteRepository>();
+            repositories.AddScoped<Repositories.INoteRelationshipRepository<PimsLeaseNote>, Repositories.LeaseNoteRepository>();
+            repositories.AddScoped<Repositories.INoteRelationshipRepository<PimsManagementFileNote>, Repositories.ManagementFileNoteRepository>();
+            repositories.AddScoped<Repositories.INoteRelationshipRepository<PimsProjectNote>, Repositories.ProjectNoteRepository>();
+            repositories.AddScoped<Repositories.INoteRelationshipRepository<PimsPropertyNote>, Repositories.PropertyNoteRepository>();
+            repositories.AddScoped<Repositories.INoteRelationshipRepository<PimsResearchFileNote>, Repositories.ResearchFileNoteRepository>();
+            
             return repositories;
         }
 

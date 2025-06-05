@@ -1,6 +1,9 @@
+import orderBy from 'lodash/orderBy';
 import React from 'react';
-import { FaInfoCircle } from 'react-icons/fa';
-import { CellProps } from 'react-table';
+import { FaExternalLinkAlt, FaInfoCircle } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
+import { matchPath, useLocation } from 'react-router-dom';
+import { CellProps, Column } from 'react-table';
 import styled from 'styled-components';
 
 import { RemoveIconButton } from '@/components/common/buttons/RemoveButton';
@@ -15,30 +18,27 @@ import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
 import { stringToFragment } from '@/utils/columnUtils';
 import { prettyFormatDate } from '@/utils/dateUtils';
+import { exists } from '@/utils/utils';
 
 import { PropertyActivityRow } from './models/PropertyActivityRow';
 
 export interface IManagementActivitiesListProps {
   loading: boolean;
   propertyActivities: PropertyActivityRow[];
-  handleView: (activityId: number) => void;
-  handleDelete: (activityId: number) => void;
+  columns: Column<PropertyActivityRow>[];
   sort: TableSort<ApiGen_Concepts_PropertyActivity>;
   setSort: (value: TableSort<ApiGen_Concepts_PropertyActivity>) => void;
 }
 
-export function createTableColumns(
-  onView: (activityId: number) => void,
-  onDelete: (activityId: number) => void,
-) {
+export function createActivityTableColumns() {
   const columns: ColumnWithProps<PropertyActivityRow>[] = [
     {
       Header: 'Activity type',
       accessor: 'activityType',
       align: 'left',
       sortable: true,
-      minWidth: 45,
-      maxWidth: 45,
+      minWidth: 35,
+      maxWidth: 35,
       Cell: (cellProps: CellProps<PropertyActivityRow>) => {
         return stringToFragment(cellProps.row.original?.activityType?.description || '');
       },
@@ -48,8 +48,8 @@ export function createTableColumns(
       accessor: 'activitySubType',
       align: 'left',
       sortable: true,
-      minWidth: 45,
-      maxWidth: 45,
+      minWidth: 35,
+      maxWidth: 35,
       Cell: (cellProps: CellProps<PropertyActivityRow>) => {
         return stringToFragment(cellProps.row.original?.activitySubType?.description || '');
       },
@@ -70,50 +70,10 @@ export function createTableColumns(
       accessor: 'requestedAddedDate',
       align: 'left',
       sortable: true,
-      minWidth: 45,
-      maxWidth: 45,
+      minWidth: 50,
+      maxWidth: 50,
       Cell: (cellProps: CellProps<PropertyActivityRow>) => {
         return stringToFragment(prettyFormatDate(cellProps.row.original?.requestedAddedDate));
-      },
-    },
-    {
-      Header: 'Actions',
-      align: 'center',
-      sortable: false,
-      width: 20,
-      maxWidth: 20,
-      Cell: (cellProps: CellProps<PropertyActivityRow>) => {
-        const { hasClaim } = useKeycloakWrapper();
-        const activityRow = cellProps.row.original;
-        return (
-          <StyledDiv>
-            {hasClaim(Claims.MANAGEMENT_VIEW) && (
-              <ViewButton
-                data-testId={`activity-view-${activityRow.id}`}
-                onClick={() => activityRow?.id && onView(activityRow.activityId)}
-                id={`activity-view-${cellProps.row.id}`}
-                title="property-activity view details"
-              />
-            )}
-            {hasClaim(Claims.MANAGEMENT_DELETE) &&
-            activityRow?.activityStatusType?.id ===
-              PropertyManagementActivityStatusTypes.NOTSTARTED ? (
-              <RemoveIconButton
-                id={`activity-delete-${cellProps.row.id}`}
-                data-testId={`activity-delete-${activityRow.id}`}
-                onRemove={() => activityRow.id && onDelete(activityRow.id)}
-                title="Delete"
-              />
-            ) : (
-              <TooltipWrapper
-                tooltipId={`activity-delete-tooltip-${activityRow.id}`}
-                tooltip="Only activity that is not started can be deleted"
-              >
-                <FaInfoCircle className="tooltip-icon h-24" size="2rem" />
-              </TooltipWrapper>
-            )}
-          </StyledDiv>
-        );
       },
     },
   ];
@@ -121,30 +81,157 @@ export function createTableColumns(
   return columns;
 }
 
+export function activityActionColumn(
+  onView: (activityId: number) => void,
+  onDelete: (activityId: number) => void,
+) {
+  return {
+    Header: 'Actions',
+    align: 'center',
+    sortable: false,
+    width: 20,
+    maxWidth: 20,
+    Cell: (cellProps: CellProps<PropertyActivityRow>) => {
+      const { hasClaim } = useKeycloakWrapper();
+      const activityRow = cellProps.row.original;
+      const renderDelete = () => {
+        if (hasClaim(Claims.MANAGEMENT_DELETE) && exists(onDelete)) {
+          if (
+            activityRow?.activityStatusType?.id === PropertyManagementActivityStatusTypes.NOTSTARTED
+          ) {
+            return (
+              <RemoveIconButton
+                id={`activity-delete-${cellProps.row.id}`}
+                data-testId={`activity-delete-${activityRow.id}`}
+                onRemove={() => activityRow.id && onDelete(activityRow.id)}
+                title="Delete"
+              />
+            );
+          } else {
+            return (
+              <TooltipWrapper
+                tooltipId={`activity-delete-tooltip-${activityRow.id}`}
+                tooltip="Only activity that is not started can be deleted"
+              >
+                <FaInfoCircle className="tooltip-icon h-24" size="2rem" />
+              </TooltipWrapper>
+            );
+          }
+        } else {
+          return null;
+        }
+      };
+      return (
+        <StyledDiv>
+          {hasClaim(Claims.MANAGEMENT_VIEW) && (
+            <ViewButton
+              data-testId={`activity-view-${activityRow.id}`}
+              onClick={() => activityRow?.id && onView(activityRow.activityId)}
+              id={`activity-view-${cellProps.row.id}`}
+              title="property-activity view details"
+            />
+          )}
+          {renderDelete()}
+        </StyledDiv>
+      );
+    },
+  };
+}
+
+export function activityNavigationColumn(
+  getNavigationUrlTitle: (row: PropertyActivityRow) => { url: string; title: string },
+) {
+  return {
+    Header: 'Navigation',
+    align: 'center',
+    sortable: false,
+    width: 35,
+    maxWidth: 35,
+    Cell: (cellProps: CellProps<PropertyActivityRow>) => {
+      const activityRow = cellProps.row.original;
+      if (!exists(getNavigationUrlTitle)) {
+        return null;
+      }
+      const urlAndTitle = getNavigationUrlTitle(activityRow);
+      return (
+        <StyledLink target="_blank" rel="noopener noreferrer" to={urlAndTitle.url}>
+          <span>{urlAndTitle.title}</span>
+          <FaExternalLinkAlt className="ml-2" size="1rem" />
+        </StyledLink>
+      );
+    },
+  };
+}
+
 const ManagementActivitiesList: React.FunctionComponent<IManagementActivitiesListProps> = ({
   loading,
   propertyActivities,
-  handleView,
-  handleDelete,
+  columns,
   sort,
   setSort,
   ...rest
 }) => {
+  const location = useLocation();
+
+  const isActiveRow = (entityId: number): boolean => {
+    const matched = matchPath(location.pathname, {
+      path: [`/mapview/sidebar/management/*/activities/${entityId}`],
+      exact: true,
+      strict: true,
+    });
+
+    return matched?.isExact ?? false;
+  };
+
   return (
     <Table<PropertyActivityRow>
       loading={loading}
       name="PropertyManagementActivitiesTable"
       manualSortBy={true}
       totalItems={propertyActivities.length}
-      columns={createTableColumns(handleView, handleDelete)}
+      columns={columns}
       externalSort={{ sort, setSort }}
-      data={propertyActivities ?? []}
+      data={sortedActivities(propertyActivities, sort) ?? []}
       noRowsMessage="No property management activities found"
       pageSize={10}
       manualPagination={false}
+      isRowActive={isActiveRow}
       {...rest}
     />
   );
+};
+
+const sortedActivities = (
+  propertyActivities: PropertyActivityRow[],
+  sort: TableSort<ApiGen_Concepts_PropertyActivity>,
+) => {
+  if (propertyActivities?.length > 0) {
+    let items: PropertyActivityRow[] = [...propertyActivities];
+
+    if (sort) {
+      const sortFields = Object.keys(sort);
+      if (sortFields?.length > 0) {
+        const keyName = (sort as any)[sortFields[0]];
+        return orderBy(items, mapSortField(sortFields[0]), keyName);
+      } else {
+        items = orderBy(items, ['activityType'], ['asc']);
+      }
+    }
+    return items;
+  }
+  return [];
+};
+
+export const mapSortField = (sortField: string) => {
+  if (sortField === 'activityType') {
+    return 'activityType.description';
+  } else if (sortField === 'activitySubType') {
+    return 'activitySubType.description';
+  } else if (sortField === 'activityStatusType') {
+    return 'activityStatusType.description';
+  }
+
+  return sortField;
 };
 
 export default ManagementActivitiesList;
@@ -154,5 +241,13 @@ const StyledDiv = styled(InlineFlexDiv)`
   > * {
     margin: 0.5rem;
     padding: 0 !important;
+  }
+`;
+
+const StyledLink = styled(Link)`
+  display: flex;
+  align-items: center;
+  svg {
+    min-width: 2rem;
   }
 `;

@@ -30,7 +30,7 @@ namespace Pims.Api.Services
         private readonly IPropertyImprovementRepository _propertyImprovementRepository;
         private readonly IPropertyRepository _propertyRepository;
         private readonly IPropertyLeaseRepository _propertyLeaseRepository;
-        private readonly IEntityNoteRepository _entityNoteRepository;
+        private readonly INoteRelationshipRepository<PimsLeaseNote> _entityNoteRepository;
         private readonly IInsuranceRepository _insuranceRepository;
         private readonly ILeaseStakeholderRepository _stakeholderRepository;
         private readonly ICompensationRequisitionRepository _compensationRequisitionRepository;
@@ -50,7 +50,7 @@ namespace Pims.Api.Services
             IPropertyRepository propertyRepository,
             IPropertyLeaseRepository propertyLeaseRepository,
             IPropertyImprovementRepository propertyImprovementRepository,
-            IEntityNoteRepository entityNoteRepository,
+            INoteRelationshipRepository<PimsLeaseNote> entityNoteRepository,
             IInsuranceRepository insuranceRepository,
             ILeaseStakeholderRepository stakeholderRepository,
             ICompensationRequisitionRepository compensationRequisitionRepository,
@@ -275,7 +275,7 @@ namespace Pims.Api.Services
             {
                 PimsLeaseNote newLeaseNote = GeneratePimsLeaseNote(currentLease, lease);
 
-                _entityNoteRepository.Add(newLeaseNote);
+                _entityNoteRepository.AddNoteRelationship(newLeaseNote);
             }
 
             ValidateRenewalDates(lease, currentLease, userOverrides);

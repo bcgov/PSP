@@ -4,21 +4,21 @@ import noop from 'lodash/noop';
 import { toast } from 'react-toastify';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import Claims from '@/constants/claims';
 import {
   IInventoryTabsProps,
   InventoryTabNames,
 } from '@/features/mapSideBar/property/InventoryTabs';
 import { getMockCrownTenuresLayerResponse } from '@/mocks/crownTenuresLayerResponse.mock';
-import { mockLtsaResponse, getMockPimsLocationViewLayerResponse } from '@/mocks/index.mock';
+import { getMockPimsLocationViewLayerResponse, mockLtsaResponse } from '@/mocks/index.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockResearchFile } from '@/mocks/researchFile.mock';
+import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 import { getEmptyProperty } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions, waitForEffects } from '@/utils/test-utils';
 
 import PropertyFileContainer, { IPropertyFileContainerProps } from './PropertyFileContainer';
-import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
-import Claims from '@/constants/claims';
 
 const mockAxios = new MockAdapter(axios);
 
@@ -39,7 +39,7 @@ const DEFAULT_PROPS: IPropertyFileContainerProps = {
   setEditing: noop,
   customTabs: [],
   defaultTab: InventoryTabNames.property,
-  onChildSuccess: noop
+  onChildSuccess: noop,
 };
 
 describe('PropertyFileContainer component', () => {

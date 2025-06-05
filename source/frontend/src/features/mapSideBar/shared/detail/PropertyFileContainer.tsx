@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { Claims } from '@/constants';
+import { Claims, NoteTypes } from '@/constants';
 import { usePropertyDetails } from '@/features/mapSideBar/hooks/usePropertyDetails';
 import {
   IInventoryTabsProps,
@@ -15,11 +15,14 @@ import PropertyAssociationTabView from '@/features/mapSideBar/property/tabs/prop
 import { PropertyDetailsTabView } from '@/features/mapSideBar/property/tabs/propertyDetails/detail/PropertyDetailsTabView';
 import TakesDetailContainer from '@/features/mapSideBar/property/tabs/takes/detail/TakesDetailContainer';
 import TakesDetailView from '@/features/mapSideBar/property/tabs/takes/detail/TakesDetailView';
+import NoteSummaryContainer from '@/features/notes/list/ManagementNoteSummaryContainer';
+import NoteSummaryView from '@/features/notes/list/ManagementNoteSummaryView';
+import NoteListContainer from '@/features/notes/list/NoteListContainer';
+import NoteListView from '@/features/notes/list/NoteListView';
 import { PROPERTY_TYPES, useComposedProperties } from '@/hooks/repositories/useComposedProperties';
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
@@ -30,7 +33,7 @@ import CrownDetailsTabView from '../../property/tabs/crown/CrownDetailsTabView';
 import { PropertyManagementTabView } from '../../property/tabs/propertyDetailsManagement/detail/PropertyManagementTabView';
 import PropertyResearchTabView from '../../property/tabs/propertyResearch/detail/PropertyResearchTabView';
 import ResearchStatusUpdateSolver from '../../research/tabs/fileDetails/ResearchStatusUpdateSolver';
-import DocumentsTab from '../tabs/DocumentsTab';
+import PropertyDocumentsTab from '../tabs/PropertyDocumentsTab';
 
 export interface IPropertyFileContainerProps {
   fileProperty: ApiGen_Concepts_FileProperty;
@@ -221,15 +224,36 @@ export const PropertyFileContainer: React.FunctionComponent<
   if (exists(composedProperties.apiWrapper?.response) && hasClaim(Claims.DOCUMENT_VIEW)) {
     tabViews.push({
       content: (
-        <DocumentsTab
+        <PropertyDocumentsTab
           fileId={composedProperties.apiWrapper.response.id}
-          relationshipType={ApiGen_CodeTypes_DocumentRelationType.Properties}
           onSuccess={props.onChildSuccess}
-          title={'Property Documents'}
         />
       ),
       key: InventoryTabNames.document,
       name: 'Property Documents',
+    });
+  }
+
+  if (exists(composedProperties?.apiWrapper?.response) && hasClaim(Claims.NOTE_VIEW)) {
+    tabViews.push({
+      content: (
+        <>
+          <NoteListContainer
+            type={NoteTypes.Property}
+            entityId={composedProperties.apiWrapper.response.id}
+            onSuccess={props.onChildSuccess}
+            NoteListView={NoteListView}
+          />
+          <NoteSummaryContainer
+            associationType={NoteTypes.Management_File}
+            entityId={composedProperties.apiWrapper.response.id}
+            onSuccess={props.onChildSuccess}
+            NoteListView={NoteSummaryView}
+          />
+        </>
+      ),
+      key: InventoryTabNames.notes,
+      name: 'Notes',
     });
   }
 
@@ -240,7 +264,7 @@ export const PropertyFileContainer: React.FunctionComponent<
     Object.values(InventoryTabNames).find(t => t === params.tab) ?? props.defaultTab;
 
   useEffect(() => {
-    if (activeTab === InventoryTabNames.document) {
+    if (activeTab === InventoryTabNames.document || activeTab === InventoryTabNames.notes) {
       setFullWidthSideBar(true);
     } else {
       setFullWidthSideBar(false);
