@@ -219,7 +219,7 @@ namespace Pims.Dal.Test.Repositories
         {
             // Arrange
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.PimsAcquisitionFileTeams = new List<PimsAcquisitionFileTeam>() { new PimsAcquisitionFileTeam() { PersonId = 1 } };
+            acqFile.PimsAcquisitionFileTeams = new List<PimsAcquisitionFileTeam>() { new PimsAcquisitionFileTeam() { PersonId = 1, AcqFlTeamProfileTypeCode = "EXPRAGENT", } };
             var financial = new PimsCompReqFinancial
             {
                 FinancialActivityCode = new PimsFinancialActivityCode { Code = "test", Description = "" },
@@ -247,7 +247,7 @@ namespace Pims.Dal.Test.Repositories
         {
             // Arrange
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.PimsAcquisitionFileTeams = new List<PimsAcquisitionFileTeam>() { new PimsAcquisitionFileTeam() { OrganizationId = 100 } };
+            acqFile.PimsAcquisitionFileTeams = new List<PimsAcquisitionFileTeam>() { new PimsAcquisitionFileTeam() { OrganizationId = 100, AcqFlTeamProfileTypeCode = "EXPRAGENT", } };
             var financial = new PimsCompReqFinancial
             {
                 FinancialActivityCode = new PimsFinancialActivityCode { Code = "test", Description = "" },
