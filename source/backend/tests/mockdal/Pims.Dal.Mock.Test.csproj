@@ -2,7 +2,6 @@
 
   <PropertyGroup>
     <IsPackable>false</IsPackable>
-    <ProjectGuid>412BF533-2759-4FBE-B4C6-B89DB44FB6B5</ProjectGuid>
     <RunAnalyzersDuringBuild>false</RunAnalyzersDuringBuild>
     <RunAnalyzers>false</RunAnalyzers>
     <TargetFramework>net8.0</TargetFramework>
@@ -15,9 +14,9 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer.NetTopologySuite" Version="8.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
     <PackageReference Include="Moq" Version="4.20.70" />
+    <PackageReference Include="Moq.EntityFrameworkCore" Version="7.0.0.2" />
     <PackageReference Include="NetTopologySuite" Version="2.5.0" />
-    <PackageReference Include="NExpect" Version="2.0.55" />
-    <PackageReference Include="ProjNet" Version="2.0.0" />
+    <PackageReference Include="NExpect" Version="1.0.212" />
     <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
     <PackageReference Include="xunit" Version="2.6.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.5.4">
@@ -30,11 +29,11 @@
     </PackageReference>
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\dal\Pims.Dal.csproj" />
-    <ProjectReference Include="..\..\..\geocoder\Pims.Geocoder.csproj" />
-    <ProjectReference Include="..\..\..\keycloak\Pims.Keycloak.csproj" />
-    <ProjectReference Include="..\..\core\Pims.Core.Test.csproj" />
-  </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\dal\Pims.Dal.csproj" />
+    <ProjectReference Include="..\..\geocoder\Pims.Geocoder.csproj" />
+    <ProjectReference Include="..\..\keycloak\Pims.Keycloak.csproj" />
+    <ProjectReference Include="..\core\Pims.Core.Test.csproj" />
+  </ItemGroup>
 </Project>
