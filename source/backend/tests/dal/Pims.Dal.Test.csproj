@@ -32,6 +32,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\dal\Pims.Dal.csproj" />
+    <ProjectReference Include="..\..\entities\Pims.Dal.Entities.csproj" />
     <ProjectReference Include="..\..\geocoder\Pims.Geocoder.csproj" />
     <ProjectReference Include="..\..\keycloak\Pims.Keycloak.csproj" />
     <ProjectReference Include="..\core\Pims.Core.Test.csproj" />
