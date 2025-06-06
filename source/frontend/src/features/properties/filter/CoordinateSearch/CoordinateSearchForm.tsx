@@ -13,7 +13,6 @@ export interface ICoordinateSearchProps {
 
 export const CoordinateSearchForm: React.FunctionComponent<ICoordinateSearchProps> = ({
   field,
-  innerClassName,
 }) => {
   return (
     <>
