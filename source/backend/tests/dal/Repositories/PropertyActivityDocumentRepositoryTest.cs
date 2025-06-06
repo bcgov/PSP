@@ -43,7 +43,13 @@ namespace Pims.Dal.Test.Repositories
             {
                 PimsPropertyActivityDocuments = new List<PimsPropertyActivityDocument>() { propertyActivityFileDocument },
                 PropMgmtActivityStatusTypeCode = "ACTIVE",
-                PropMgmtActivitySubtypeCode = "ACTIVE",
+                PimsPropActivityMgmtActivities = new List<PimsPropActivityMgmtActivity>()
+                {
+                    new ()
+                    {
+                        PropMgmtActivitySubtypeCode = "ACCESS",
+                    }
+                },
                 PropMgmtActivityTypeCode = "test"
             };
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(pimsPropertyActivity);
