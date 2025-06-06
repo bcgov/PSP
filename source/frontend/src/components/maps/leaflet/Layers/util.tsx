@@ -20,6 +20,7 @@ import { DraftCircleNumber } from '@/components/propertySelector/selectedPropert
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import {
   PIMS_Property_Boundary_View,
+  PIMS_Property_Location_Lite_View,
   PIMS_Property_Location_View,
 } from '@/models/layers/pimsPropertyLocationView';
 
@@ -133,7 +134,7 @@ export const notOwnedPropertyIconSelect = L.icon({
 });
 
 type MarkerFeature =
-  | PIMS_Property_Location_View
+  | PIMS_Property_Location_Lite_View
   | PIMS_Property_Boundary_View
   | PMBC_FullyAttributed_Feature_Properties;
 
@@ -170,8 +171,8 @@ export function pointToLayer<P extends MarkerFeature, C extends Supercluster.Clu
  */
 export function getMarkerIcon(
   feature:
-    | Supercluster.PointFeature<PIMS_Property_Location_View | PIMS_Property_Boundary_View>
-    | Feature<Geometry, PIMS_Property_Location_View>,
+    | Supercluster.PointFeature<PIMS_Property_Location_Lite_View | PIMS_Property_Boundary_View>
+    | Feature<Geometry, PIMS_Property_Location_Lite_View>,
   selected: boolean,
   showDisposed = false,
   showRetired = false,
@@ -257,14 +258,16 @@ export const createSingleMarker = <P extends MarkerFeature>(
 export const isPimsFeature = (
   feature: Supercluster.PointFeature<MarkerFeature>,
 ): feature is Supercluster.PointFeature<
-  PIMS_Property_Location_View | PIMS_Property_Boundary_View
+  PIMS_Property_Location_View | PIMS_Property_Location_Lite_View | PIMS_Property_Boundary_View
 > => {
   return isPimsLocation(feature) || isPimsBoundary(feature);
 };
 
 export const isPimsLocation = (
   feature: Supercluster.PointFeature<MarkerFeature>,
-): feature is Supercluster.PointFeature<PIMS_Property_Location_View> => {
+): feature is Supercluster.PointFeature<
+  PIMS_Property_Location_View | PIMS_Property_Location_Lite_View
+> => {
   return feature.id?.toString().startsWith('PIMS_PROPERTY_LOCATION_') ?? false;
 };
 

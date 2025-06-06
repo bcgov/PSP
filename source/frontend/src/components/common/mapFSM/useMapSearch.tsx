@@ -8,6 +8,7 @@ import { usePimsPropertyLayer } from '@/hooks/repositories/mapLayer/usePimsPrope
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { useModalContext } from '@/hooks/useModalContext';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
+import { PIMS_Property_Location_Lite_View } from '@/models/layers/pimsPropertyLocationLiteView';
 import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
 import { exists } from '@/utils';
 
@@ -15,6 +16,7 @@ import {
   emptyFeatureData,
   emptyPimsBoundaryFeatureCollection,
   emptyPimsLocationFeatureCollection,
+  emptyPimsLocationLiteFeatureCollection,
   emptyPmbcFeatureCollection,
   MapFeatureData,
 } from './models';
@@ -159,6 +161,7 @@ export const useMapSearch = () => {
                 features: validFeatures,
               }
             : emptyPimsLocationFeatureCollection,
+          pimsLocationLiteFeatures: emptyPimsLocationLiteFeatureCollection,
           pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
           fullyAttributedFeatures: exists(validPmbcFeatures)
             ? {
@@ -229,6 +232,7 @@ export const useMapSearch = () => {
               bbox: historicalNumberInventoryData.bbox,
               features: validFeatures,
             },
+            pimsLocationLiteFeatures: emptyPimsLocationLiteFeatureCollection,
             pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
             fullyAttributedFeatures: emptyPmbcFeatureCollection,
           };
@@ -330,6 +334,7 @@ export const useMapSearch = () => {
                 features: validPimsFeatures,
               }
             : emptyPimsLocationFeatureCollection,
+          pimsLocationLiteFeatures: emptyPimsLocationLiteFeatureCollection,
           pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
           fullyAttributedFeatures: validPmbcFeatures
             ? {
@@ -366,7 +371,9 @@ export const useMapSearch = () => {
     try {
       const loadPropertiesTask = loadPimsPropertiesMinimal();
 
-      let pidPinInventoryData: FeatureCollection<Geometry, PIMS_Property_Location_View> | undefined;
+      let pidPinInventoryData:
+        | FeatureCollection<Geometry, PIMS_Property_Location_Lite_View>
+        | undefined;
       try {
         pidPinInventoryData = await loadPropertiesTask;
       } catch {
@@ -392,11 +399,12 @@ export const useMapSearch = () => {
         const validFeatures = pidPinInventoryData.features.filter(feature => !!feature?.geometry);
 
         result = {
-          pimsLocationFeatures: {
+          pimsLocationLiteFeatures: {
             type: pidPinInventoryData.type,
             bbox: pidPinInventoryData.bbox,
             features: validFeatures,
           },
+          pimsLocationFeatures: emptyPimsLocationFeatureCollection,
           pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
           fullyAttributedFeatures: emptyPmbcFeatureCollection,
         };
@@ -409,6 +417,7 @@ export const useMapSearch = () => {
       } else {
         result = {
           pimsLocationFeatures: emptyPimsLocationFeatureCollection,
+          pimsLocationLiteFeatures: emptyPimsLocationFeatureCollection,
           pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
           fullyAttributedFeatures: emptyPmbcFeatureCollection,
         };

@@ -2,6 +2,7 @@ import { FeatureCollection, Geometry } from 'geojson';
 import { LatLngBounds, LatLngLiteral } from 'leaflet';
 
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
+import { PIMS_Property_Location_Lite_View } from '@/models/layers/pimsPropertyLocationLiteView';
 import {
   PIMS_Property_Boundary_View,
   PIMS_Property_Location_View,
@@ -17,6 +18,7 @@ export interface MarkerSelected {
 
 export interface MapFeatureData {
   readonly pimsLocationFeatures: FeatureCollection<Geometry, PIMS_Property_Location_View>;
+  readonly pimsLocationLiteFeatures: FeatureCollection<Geometry, PIMS_Property_Location_Lite_View>;
   readonly pimsBoundaryFeatures: FeatureCollection<Geometry, PIMS_Property_Boundary_View>;
   readonly fullyAttributedFeatures: FeatureCollection<
     Geometry,
@@ -41,6 +43,14 @@ export const emptyPimsLocationFeatureCollection: FeatureCollection<
   features: [],
 };
 
+export const emptyPimsLocationLiteFeatureCollection: FeatureCollection<
+  Geometry,
+  PIMS_Property_Location_Lite_View
+> = {
+  type: 'FeatureCollection',
+  features: [],
+};
+
 export const emptyPimsBoundaryFeatureCollection: FeatureCollection<
   Geometry,
   PIMS_Property_Boundary_View
@@ -59,6 +69,7 @@ export const emptyPmbcFeatureCollection: FeatureCollection<
 
 export const emptyFeatureData: MapFeatureData = {
   pimsLocationFeatures: emptyPimsLocationFeatureCollection,
+  pimsLocationLiteFeatures: emptyPimsLocationLiteFeatureCollection,
   pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
   fullyAttributedFeatures: emptyPmbcFeatureCollection,
 };

@@ -9,6 +9,8 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import { FilterContentContainer } from '@/components/maps/leaflet/Control/AdvancedFilter/FilterContentContainer';
 import { FilterContentForm } from '@/components/maps/leaflet/Control/AdvancedFilter/FilterContentForm';
 import { LayersMenu } from '@/components/maps/leaflet/Control/LayersControl/LayersMenu';
+import { SearchContainer } from '@/components/maps/leaflet/Control/Search/SearchContainer';
+import { SearchView } from '@/components/maps/leaflet/Control/Search/SearchView';
 import MapView from '@/components/maps/MapView';
 import { FilterProvider } from '@/components/maps/providers/FilterProvider';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
@@ -32,9 +34,11 @@ const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = () =>
     isSelecting,
     isShowingMapFilter,
     isShowingMapLayers,
+    isShowingMapSearch,
     isRepositioning,
     toggleMapFilterDisplay,
     toggleMapLayerControl,
+    toggleMapSearchControl,
     setVisiblePimsProperties,
     advancedSearchCriteria,
     isMapVisible,
@@ -98,6 +102,15 @@ const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = () =>
         toggle={toggleMapLayerControl}
       >
         <LayersMenu />
+      </RightSideLayout>
+      <RightSideLayout
+        title="Search by"
+        closeTooltipText="Close search"
+        data-testId="search-sidebar"
+        isOpen={isShowingMapSearch}
+        toggle={toggleMapSearchControl}
+      >
+        <SearchContainer View={SearchView} />
       </RightSideLayout>
     </StyleMapView>
   );

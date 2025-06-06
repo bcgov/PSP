@@ -3,9 +3,7 @@ import { Feature, Geometry } from 'geojson';
 import React, { useMemo } from 'react';
 import { Row } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
-import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
-import styled from 'styled-components';
 
 import { ResetButton, SearchButton } from '@/components/common/buttons';
 import { Form, Input, Select } from '@/components/common/form';
@@ -21,7 +19,7 @@ import { CoordinateSearchForm } from './CoordinateSearch/CoordinateSearchForm';
 import { DmsCoordinates } from './CoordinateSearch/models';
 import { GeographicNameInput } from './GeographicNameInput';
 import { defaultPropertyFilter, IPropertyFilter } from './IPropertyFilter';
-import PropertySearchToggle, { SearchToggleOption } from './PropertySearchToggle';
+import { SearchToggleOption } from './PropertySearchToggle';
 import { PropertyFilterValidationSchema } from './validation';
 
 /**
@@ -57,7 +55,6 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
 }) => {
   const { getSitePids } = useGeocoderRepository();
 
-  const history = useHistory();
   const initialValues = useMemo(() => {
     const values = { ...defaultFilter, ...propertyFilter };
     return values;
@@ -69,14 +66,6 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
 
   const resetFilter = () => {
     changeFilter(defaultPropertyFilter);
-  };
-
-  const handlePageToggle = (option: SearchToggleOption) => {
-    if (option === SearchToggleOption.Map) {
-      history.push('/mapview');
-    } else if (option === SearchToggleOption.List) {
-      history.push('/properties/list');
-    }
   };
 
   const searchOptions = [
@@ -114,12 +103,9 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
     >
       {({ isSubmitting, setFieldValue, values, resetForm, isValid }) => (
         <Form>
-          <Row className="map-filter-bar pb-4">
-            <Col xs="auto">
-              <span>Search:</span>
-            </Col>
-            <NoRightPaddingColumn xs="1" md="1" lg="1" xl="1">
-              <StyledSelect
+          <Row noGutters>
+            <Col xs="5">
+              <Select
                 field="searchBy"
                 options={searchOptions}
                 className="idir-input-group"
@@ -138,11 +124,8 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                   }
                 }}
               />
-            </NoRightPaddingColumn>
-            <StyledCol
-              xs={values.searchBy === 'coordinates' ? 'auto' : 4}
-              xl={values.searchBy === 'coordinates' ? 'auto' : 3}
-            >
+            </Col>
+            <Col>
               {values.searchBy === 'pid' && (
                 <Input field="pid" placeholder="Enter a PID" displayErrorTooltips></Input>
               )}
@@ -208,14 +191,15 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                   }}
                 />
               )}
-              {values.searchBy === 'coordinates' && (
-                <CoordinateSearchForm
-                  field="coordinates"
-                  innerClassName="flex-nowrap"
-                ></CoordinateSearchForm>
-              )}
-            </StyledCol>
-            <Col xs="auto">
+            </Col>
+            {values.searchBy === 'coordinates' && (
+              <Col xs="12">
+                <CoordinateSearchForm field="coordinates" innerClassName="flex-nowrap" />
+              </Col>
+            )}
+          </Row>
+          <Row>
+            <Col>
               <SearchButton
                 disabled={
                   isSubmitting ||
@@ -230,49 +214,25 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                     (values.searchBy === 'coordinates' && isValid)
                   )
                 }
-              />
+              >
+                Search
+              </SearchButton>
             </Col>
-            <Col xs="auto">
+            <Col>
               <ResetButton
                 disabled={isSubmitting}
                 onClick={() => {
                   resetForm();
                   resetFilter();
                 }}
-              />
-            </Col>
-            <Col xs="auto" className="bar-item">
-              <PropertySearchToggle
-                onPageToggle={option => {
-                  handlePageToggle(option);
-                }}
-                toolId={'toggle'}
-                toggle={toggle}
-              />
+              >
+                Clear
+              </ResetButton>
             </Col>
           </Row>
+          <Row></Row>
         </Form>
       )}
     </Formik>
   );
 };
-const StyledSelect = styled(Select)`
-  padding-right: 0 !important;
-  min-width: 15rem;
-  .form-control {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-`;
-const NoRightPaddingColumn = styled(Col)`
-  padding-right: 0 !important;
-  border-right: 0 !important;
-`;
-
-const StyledCol = styled(Col)`
-  padding-left: 0 !important;
-  .form-control {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-  }
-`;

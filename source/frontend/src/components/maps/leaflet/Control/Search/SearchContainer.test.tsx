@@ -1,4 +1,3 @@
-import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
@@ -11,8 +10,10 @@ import {
   userEvent,
 } from '@/utils/test-utils';
 
-import MapSearch from './MapSearch';
 import { useGeographicNamesRepository } from '@/hooks/useGeographicNamesRepository';
+import { SearchContainer } from './SearchContainer';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { SearchView } from './SearchView';
 
 vi.mock('@/hooks/useGeographicNamesRepository');
 
@@ -32,7 +33,7 @@ describe('MapSearch component', () => {
   afterEach(cleanup);
 
   const setup = async (renderOptions: RenderOptions = {}) => {
-    const utils = render(<MapSearch />, {
+    const utils = render(<SearchContainer View={SearchView} />, {
       store: {
         [lookupCodesSlice.name]: { lookupCodes: mockLookups },
       },

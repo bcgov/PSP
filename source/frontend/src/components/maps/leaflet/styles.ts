@@ -63,10 +63,8 @@ export const MapGrid = styled.div`
   grid-template-areas:
     'filter filter'
     'map map';
-  &.hideSearchBar {
-    grid-template-rows: 0 1fr;
-    transition: 1s;
-  }
+  grid-template-rows: 0 1fr;
+  transition: 1s;
 
   transition: margin 1s, width 1s;
   position: relative;

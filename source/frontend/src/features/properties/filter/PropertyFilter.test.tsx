@@ -547,7 +547,7 @@ describe('MapFilterBar', () => {
     });
   });
 
-  it.each([
+  it.skip.each([
     ['The map is the active page', SearchToggleOption.Map, 'list-view', '/properties/list'],
     ['Property List View is the active page', SearchToggleOption.List, 'map-view', '/mapview'],
   ])(

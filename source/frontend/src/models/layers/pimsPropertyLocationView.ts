@@ -85,6 +85,19 @@ export const EmptyPropertyLocation: PIMS_Property_Location_View = {
 };
 
 // Source : Pims Geoserverview
+// name: PIMS_PROPERTY_LOCATION_LITE_VW
+export interface PIMS_Property_Location_Lite_View {
+  readonly PROPERTY_ID: number | null;
+  //GEOMETRY/1
+  readonly IS_OWNED: boolean | null;
+  readonly IS_RETIRED: boolean | null;
+  readonly IS_DISPOSED: boolean | null;
+  readonly IS_OTHER_INTEREST: boolean | null;
+  readonly HAS_ACTIVE_ACQUISITION_FILE: boolean | null;
+  readonly HAS_ACTIVE_RESEARCH_FILE: boolean | null;
+}
+
+// Source : Pims Geoserverview
 // name: PIMS_PROPERTY_BOUNDARY_VW
 export interface PIMS_Property_Boundary_View {
   readonly PROPERTY_ID: number | null;
