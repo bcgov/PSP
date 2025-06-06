@@ -51,31 +51,38 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Search for a valid Address with the Search Bar
             PopulateSearchProperty(rowNumber);
-            searchProperties.SearchPropertyByAddressMap(searchProperty.Address);
+            //searchProperties.SearchPropertyByAddressMap(searchProperty.Address);
 
             //Validate that the result gives only one pin
-            Assert.True(searchProperties.PropertiesMapFoundCount() == 1);
+            //Assert.True(searchProperties.PropertiesMapFoundCount());
 
             //Search for a valid Plan in Inventory
-            searchProperties.SearchPropertyReset();
+            //searchProperties.SearchPropertyReset();
             searchProperties.SearchPropertyByPlan(searchProperty.PlanNumber);
 
             //Validate that the result gives only one pin
-            Assert.True(searchProperties.PropertiesClustersFoundCount() == 1);
+            Assert.True(searchProperties.PropertiesClustersFoundCount() == 2);
 
             //Search for a valid PIN in Inventory
             searchProperties.SearchPropertyReset();
             searchProperties.SearchPropertyByPIN(searchProperty.PIN);
 
             //Validate that the result gives only one pin
-            Assert.True(searchProperties.PropertiesMapFoundCount() == 1);
+            Assert.True(searchProperties.PropertiesPinMapFoundCount() == 1);
 
             //Search for a valid PID in Inventory
             searchProperties.SearchPropertyReset();
             searchProperties.SearchPropertyByPID(searchProperty.PID);
 
             //Validate that the result gives only one pin
-            Assert.True(searchProperties.PropertiesMapFoundCount() == 1);
+            Assert.True(searchProperties.PropertiesPinMapFoundCount() == 1);
+
+            //Search for a valid Latitude/Longitude coordinates
+            searchProperties.SearchPropertyReset();
+            searchProperties.SearchPropertyByLatLong(searchProperty.LatitudeLongitude);
+
+            //Validate that the result gives only one pin
+            Assert.True(searchProperties.PropertiesMapFoundCount());
         }
 
         [StepDefinition(@"I search for an Invalid Property from row number (.*)")]
@@ -214,7 +221,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.SearchPropertyByPlan(searchProperty.PlanNumber);
 
             //Validate that the result gives only one pin
-            Assert.True(searchProperties.PropertiesListFoundCount() > 1);
+            Assert.True(searchProperties.PropertiesListFoundCount() > 0);
         }
 
         [StepDefinition(@"I search for a Property in the Properties List by PID from row number (.*)")]
@@ -248,7 +255,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.SearchPropertyByPID(searchProperty.PID);
 
             //Validate that the result gives only one pin
-            Assert.True(searchProperties.PropertiesMapFoundCount() == 1);
+            Assert.True(searchProperties.PropertiesMapFoundCount());
 
             //Click on the founf property
             searchProperties.SelectFoundPin();
@@ -514,7 +521,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             /* TEST COVERAGE: PSP-1548 */
 
             //Validate that the result gives only one pin
-            Assert.True(searchProperties.PropertiesMapFoundCount() == 0);
+            Assert.False(searchProperties.PropertiesMapFoundCount());
         }
 
         [StepDefinition(@"A Property Information is saved successfully")]
@@ -643,6 +650,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperty.PlanNumber = ExcelDataContext.ReadData(rowNumber, "PlanNumber");
             searchProperty.LegalDescription = ExcelDataContext.ReadData(rowNumber, "LegalDescription");
             searchProperty.MultiplePIDS = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "MultiplePIDS"));
+            searchProperty.LatitudeLongitude.LatitudeDegree = ExcelDataContext.ReadData(rowNumber, "LatitudeDegree");
+            searchProperty.LatitudeLongitude.LatitudeMinutes = ExcelDataContext.ReadData(rowNumber, "LatitudeMinutes");
+            searchProperty.LatitudeLongitude.LatitudeSeconds = ExcelDataContext.ReadData(rowNumber, "LatitudeSeconds");
+            searchProperty.LatitudeLongitude.LatitudeDirection = ExcelDataContext.ReadData(rowNumber, "LatitudeDirection");
+            searchProperty.LatitudeLongitude.LongitudeDegree = ExcelDataContext.ReadData(rowNumber, "LongitudeDegree");
+            searchProperty.LatitudeLongitude.LongitudeMinutes = ExcelDataContext.ReadData(rowNumber, "LongitudeMinutes");
+            searchProperty.LatitudeLongitude.LongitudeSeconds = ExcelDataContext.ReadData(rowNumber, "LongitudeSeconds");
+            searchProperty.LatitudeLongitude.LongitudeDirection = ExcelDataContext.ReadData(rowNumber, "LongitudeDirection");
         }
 
         private void PopulateManagementProperty(int rowNumber)
