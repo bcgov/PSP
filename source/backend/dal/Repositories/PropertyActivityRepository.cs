@@ -39,7 +39,8 @@ namespace Pims.Dal.Repositories
         {
             List<PimsPropertyActivity> activities = Context.PimsPropertyActivities.AsNoTracking()
                     .Include(pa => pa.PropMgmtActivityTypeCodeNavigation)
-                    .Include(pa => pa.PropMgmtActivitySubtypeCodeNavigation)
+                    .Include(pa => pa.PimsPropActivityMgmtActivities)
+                        .ThenInclude(st => st.PropMgmtActivitySubtypeCodeNavigation)
                     .Include(pa => pa.PropMgmtActivityStatusTypeCodeNavigation)
                     .Include(pa => pa.PimsPropPropActivities)
                     .Where(pa => pa.PimsPropPropActivities.Any(x => x.PropertyId == propertyId))
@@ -57,7 +58,8 @@ namespace Pims.Dal.Repositories
         {
             List<PimsPropertyActivity> activities = Context.PimsPropertyActivities.AsNoTracking()
                     .Include(pa => pa.PropMgmtActivityTypeCodeNavigation)
-                    .Include(pa => pa.PropMgmtActivitySubtypeCodeNavigation)
+                    .Include(pa => pa.PimsPropActivityMgmtActivities)
+                        .ThenInclude(st => st.PropMgmtActivitySubtypeCodeNavigation)
                     .Include(pa => pa.PropMgmtActivityStatusTypeCodeNavigation)
                     .Include(pa => pa.PimsPropPropActivities)
                     .Where(pa => pa.ManagementFileId == managementFileId)
@@ -74,8 +76,10 @@ namespace Pims.Dal.Repositories
         /// <returns>List of Property's management activities.</returns>
         public IList<PimsPropertyActivity> GetActivitiesByPropertyIds(IEnumerable<long> propertyIds)
         {
-            var activities = Context.PimsPropertyActivities.AsNoTracking().Include(pa => pa.PropMgmtActivityTypeCodeNavigation)
-                    .Include(pa => pa.PropMgmtActivitySubtypeCodeNavigation)
+            var activities = Context.PimsPropertyActivities.AsNoTracking()
+                    .Include(pa => pa.PropMgmtActivityTypeCodeNavigation)
+                    .Include(pa => pa.PimsPropActivityMgmtActivities)
+                        .ThenInclude(st => st.PropMgmtActivitySubtypeCodeNavigation)
                     .Include(pa => pa.PropMgmtActivityStatusTypeCodeNavigation)
                     .Include(pa => pa.PimsPropPropActivities)
                     .ThenInclude(ppa => ppa.Property)
@@ -97,7 +101,8 @@ namespace Pims.Dal.Repositories
                 .Include(a => a.PimsPropPropActivities)
                 .Include(a => a.PimsPropertyActivityInvoices)
                 .Include(a => a.PropMgmtActivityTypeCodeNavigation)
-                .Include(a => a.PropMgmtActivitySubtypeCodeNavigation)
+                .Include(pa => pa.PimsPropActivityMgmtActivities)
+                    .ThenInclude(st => st.PropMgmtActivitySubtypeCodeNavigation)
                 .Include(a => a.PropMgmtActivityStatusTypeCodeNavigation)
                 .Include(a => a.PimsPropActMinContacts)
                 .Include(a => a.PimsPropActInvolvedParties)

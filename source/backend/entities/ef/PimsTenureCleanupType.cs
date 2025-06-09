@@ -7,30 +7,21 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Code table to describe the subtype of property management.
+/// Code table to describe the type of property cleanup.
 /// </summary>
-[Table("PIMS_PROP_MGMT_ACTIVITY_SUBTYPE")]
-[Index("PropMgmtActivityTypeCode", Name = "PRACST_PROP_MGMT_ACTIVITY_TYPE_CODE_IDX")]
-public partial class PimsPropMgmtActivitySubtype
+[Table("PIMS_TENURE_CLEANUP_TYPE")]
+public partial class PimsTenureCleanupType
 {
     /// <summary>
-    /// Code representing the subtype of property management.
+    /// Code representing the type of property cleanup.
     /// </summary>
     [Key]
-    [Column("PROP_MGMT_ACTIVITY_SUBTYPE_CODE")]
+    [Column("TENURE_CLEANUP_TYPE_CODE")]
     [StringLength(20)]
-    public string PropMgmtActivitySubtypeCode { get; set; }
+    public string TenureCleanupTypeCode { get; set; }
 
     /// <summary>
-    /// Code representing the type of property management.
-    /// </summary>
-    [Required]
-    [Column("PROP_MGMT_ACTIVITY_TYPE_CODE")]
-    [StringLength(20)]
-    public string PropMgmtActivityTypeCode { get; set; }
-
-    /// <summary>
-    /// Description of the subtype of property management.
+    /// Description of the type of property cleanup.
     /// </summary>
     [Required]
     [Column("DESCRIPTION")]
@@ -68,10 +59,6 @@ public partial class PimsPropMgmtActivitySubtype
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    [InverseProperty("PropMgmtActivitySubtypeCodeNavigation")]
-    public virtual ICollection<PimsPropActivityMgmtActivity> PimsPropActivityMgmtActivities { get; set; } = new List<PimsPropActivityMgmtActivity>();
-
-    [ForeignKey("PropMgmtActivityTypeCode")]
-    [InverseProperty("PimsPropMgmtActivitySubtypes")]
-    public virtual PimsPropMgmtActivityType PropMgmtActivityTypeCodeNavigation { get; set; }
+    [InverseProperty("TenureCleanupTypeCodeNavigation")]
+    public virtual ICollection<PimsPropTenureCleanup> PimsPropTenureCleanups { get; set; } = new List<PimsPropTenureCleanup>();
 }
