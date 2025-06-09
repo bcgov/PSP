@@ -90,7 +90,7 @@ namespace Pims.Dal.Repositories
 
             if (!string.IsNullOrWhiteSpace(filter.ActivitySubTypeCode))
             {
-                predicate = predicate.And(x => x.PropMgmtActivitySubtypeCode == filter.ActivitySubTypeCode);
+                predicate = predicate.And(x => x.PimsPropActivityMgmtActivities.Any(y => y.PropMgmtActivitySubtypeCode == filter.ActivitySubTypeCode));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.ActivityStatusCode))
@@ -106,7 +106,8 @@ namespace Pims.Dal.Repositories
             var query = Context.PimsPropertyActivities.AsNoTracking()
                 .Include(s => s.PropMgmtActivityStatusTypeCodeNavigation)
                 .Include(t => t.PropMgmtActivityTypeCodeNavigation)
-                .Include(st => st.PropMgmtActivitySubtypeCodeNavigation)
+                .Include(st => st.PimsPropActivityMgmtActivities)
+                    .ThenInclude(x => x.PropMgmtActivitySubtypeCodeNavigation)
                 .Include(pp => pp.PimsPropPropActivities)
                     .ThenInclude(p => p.Property)
                         .ThenInclude(a => a.Address)
@@ -132,7 +133,8 @@ namespace Pims.Dal.Repositories
                 }
                 else if (field == "ActivitySubType")
                 {
-                    query = direction == "asc" ? query.OrderBy(c => c.PropMgmtActivitySubtypeCodeNavigation.Description) : query.OrderByDescending(c => c.PropMgmtActivitySubtypeCodeNavigation.Description);
+                    // TODO : DB105
+                    // query = direction == "asc" ? query.OrderBy(c => c.PropMgmtActivitySubtypeCodeNavigation.Description) : query.OrderByDescending(c => c.PropMgmtActivitySubtypeCodeNavigation.Description); 
                 }
                 else if (field == "FileName")
                 {

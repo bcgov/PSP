@@ -55,6 +55,7 @@ public partial class PimsManagementFile
     /// <summary>
     /// Foreign key to the PIMS_MANAGEMENT_FILE_PURPOSE_TYPE table.
     /// </summary>
+    [Required]
     [Column("MANAGEMENT_FILE_PURPOSE_TYPE_CODE")]
     [StringLength(20)]
     public string ManagementFilePurposeTypeCode { get; set; }
