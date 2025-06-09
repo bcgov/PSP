@@ -25,7 +25,7 @@ import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTy
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { exists, isValidId, stripTrailingSlash } from '@/utils';
+import { exists, isValidId, sortFileProperties, stripTrailingSlash } from '@/utils';
 
 import { SideBarContext } from '../context/sidebarContext';
 import { FileTabType } from '../shared/detail/FileTabs';
@@ -142,10 +142,12 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
       // retrieve related entities (ie properties, checklist items) in parallel
       const acquisitionPropertiesTask = retrieveAcquisitionFileProperties(acquisitionFileId);
       const acquisitionChecklistTask = retrieveAcquisitionFileChecklist(acquisitionFileId);
-      const acquisitionProperties = await acquisitionPropertiesTask;
-      const acquisitionChecklist = await acquisitionChecklistTask;
+      const [acquisitionProperties, acquisitionChecklist] = await Promise.all([
+        acquisitionPropertiesTask,
+        acquisitionChecklistTask,
+      ]);
 
-      retrieved.fileProperties = acquisitionProperties ?? null;
+      retrieved.fileProperties = sortFileProperties(acquisitionProperties) ?? null;
       retrieved.fileChecklistItems = acquisitionChecklist ?? [];
       setFile({ ...retrieved, fileType: ApiGen_CodeTypes_FileTypes.Acquisition });
       setStaleFile(false);

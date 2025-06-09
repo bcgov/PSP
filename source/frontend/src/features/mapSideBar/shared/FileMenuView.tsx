@@ -10,7 +10,7 @@ import { EditPropertiesIcon } from '@/components/common/buttons/EditPropertiesBu
 import { LinkButton } from '@/components/common/buttons/LinkButton';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
-import { exists, getFilePropertyName } from '@/utils';
+import { exists, getFilePropertyName, sortFileProperties } from '@/utils';
 
 export interface IFileMenuProps {
   properties: ApiGen_Concepts_FileProperty[];
@@ -44,6 +44,8 @@ const FileMenu: React.FunctionComponent<React.PropsWithChildren<IFileMenuProps>>
     return null;
   }, [location.pathname]);
 
+  // respect the order of properties as set by the user creating the file
+  const sortedProperties = sortFileProperties(properties);
   const isSummary = useMemo(() => !exists(currentPropertyIndex), [currentPropertyIndex]);
 
   return (
@@ -77,7 +79,7 @@ const FileMenu: React.FunctionComponent<React.PropsWithChildren<IFileMenuProps>>
       </StyledMenuHeaderWrapper>
       <div className={'p-1'} />
       <StyledMenuBodyWrapper>
-        {properties.map((property: ApiGen_Concepts_FileProperty, index: number) => {
+        {sortedProperties.map((property: ApiGen_Concepts_FileProperty, index: number) => {
           const propertyName = getFilePropertyName(property);
           return (
             <StyledRow

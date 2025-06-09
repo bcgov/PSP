@@ -15,7 +15,7 @@ import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTy
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { exists, isValidId, stripTrailingSlash } from '@/utils';
+import { exists, isValidId, sortFileProperties, stripTrailingSlash } from '@/utils';
 
 import { SideBarContext } from '../context/sidebarContext';
 import { PropertyForm } from '../shared/models';
@@ -81,7 +81,7 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
     const retrieved = await getResearchFile(props.researchFileId);
     if (exists(retrieved)) {
       const researchProperties = await getResearchFileProperties(props.researchFileId);
-      retrieved.fileProperties = researchProperties ?? null;
+      retrieved.fileProperties = sortFileProperties(researchProperties) ?? null;
       setFile({ ...retrieved, fileType: ApiGen_CodeTypes_FileTypes.Research });
       setStaleFile(false);
     } else {

@@ -15,7 +15,7 @@ import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTy
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { exists, isValidId, stripTrailingSlash } from '@/utils';
+import { exists, isValidId, sortFileProperties, stripTrailingSlash } from '@/utils';
 
 import { SideBarContext } from '../context/sidebarContext';
 import { PropertyForm } from '../shared/models';
@@ -90,7 +90,7 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
       // retrieve related entities (ie properties items) in parallel
       const fileProperties = await retrieveManagementFileProperties(managementFileId);
 
-      retrieved.fileProperties = fileProperties ?? null;
+      retrieved.fileProperties = sortFileProperties(fileProperties) ?? null;
       setFile({ ...retrieved, fileType: ApiGen_CodeTypes_FileTypes.Management });
     } else {
       setFile(undefined);
@@ -296,7 +296,7 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
           managementFile?.id === managementFileId
             ? {
                 ...managementFile,
-                fileProperties: managementFileProperties ?? null,
+                fileProperties: sortFileProperties(managementFileProperties) ?? null,
               }
             : undefined
         }

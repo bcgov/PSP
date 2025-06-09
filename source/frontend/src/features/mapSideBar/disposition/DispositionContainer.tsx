@@ -15,7 +15,7 @@ import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTy
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { exists, isValidId, stripTrailingSlash } from '@/utils';
+import { exists, isValidId, sortFileProperties, stripTrailingSlash } from '@/utils';
 
 import { SideBarContext } from '../context/sidebarContext';
 import { PropertyForm } from '../shared/models';
@@ -100,7 +100,7 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
         dispositionChecklistTask,
       ]);
 
-      retrieved.fileProperties = fileProperties ?? null;
+      retrieved.fileProperties = sortFileProperties(fileProperties) ?? null;
       retrieved.fileChecklistItems = dispositionChecklist ?? [];
       setFile({ ...retrieved, fileType: ApiGen_CodeTypes_FileTypes.Disposition });
     } else {
@@ -330,7 +330,7 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
           dispositionFile?.id === dispositionFileId
             ? {
                 ...dispositionFile,
-                fileProperties: dispositionFileProperties ?? null,
+                fileProperties: sortFileProperties(dispositionFileProperties) ?? null,
                 fileChecklistItems: dispositionFileChecklist ?? [],
               }
             : undefined
