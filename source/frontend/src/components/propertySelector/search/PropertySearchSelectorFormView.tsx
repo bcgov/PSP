@@ -1,10 +1,11 @@
+import { useMemo } from 'react';
+
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { Section } from '@/components/common/Section/Section';
-import * as Styled from '@/components/common/styles';
 import { Table } from '@/components/Table';
 import { IGeocoderResponse } from '@/hooks/pims-api/interfaces/IGeocoder';
 import { featuresetToMapProperty, getPropertyName } from '@/utils/mapPropertyUtils';
-import { isStrataLot } from '@/utils/propertyUtils';
+import { isStrataCommonProperty } from '@/utils/propertyUtils';
 
 import { ILayerSearchCriteria, IMapProperty } from '../models';
 import LayerFilter from './LayerFilter';
@@ -43,18 +44,22 @@ export const PropertySearchSelectorFormView: React.FunctionComponent<
     return { ...x, id: generatePropertyId(featuresetToMapProperty(x)) };
   });
 
-  const identifiedSearchResults = searchResults
-    .map<IIdentifiedSelectedFeatureDataset>(x => {
-      return { ...x, id: generatePropertyId(featuresetToMapProperty(x)) };
-    })
-    .sort((a, b) => {
-      const aIsStrataLot = isStrataLot(a?.parcelFeature);
-      const bIsStrataLot = isStrataLot(b?.parcelFeature);
-      if (aIsStrataLot === bIsStrataLot) return 0;
-      if (aIsStrataLot) return -1;
-      if (bIsStrataLot) return 1;
-      return 0;
-    });
+  const identifiedSearchResults = useMemo(
+    () =>
+      searchResults
+        .map<IIdentifiedSelectedFeatureDataset>(x => {
+          return { ...x, id: generatePropertyId(featuresetToMapProperty(x)) };
+        })
+        .sort((a, b) => {
+          const aIsStrataLot = isStrataCommonProperty(a?.parcelFeature);
+          const bIsStrataLot = isStrataCommonProperty(b?.parcelFeature);
+          if (aIsStrataLot === bIsStrataLot) return 0;
+          if (aIsStrataLot) return -1;
+          if (bIsStrataLot) return 1;
+          return 0;
+        }) ?? [],
+    [searchResults],
+  );
 
   function generatePropertyId(mapProperty: IMapProperty): string {
     const propertyName = getPropertyName(mapProperty);
@@ -62,34 +67,29 @@ export const PropertySearchSelectorFormView: React.FunctionComponent<
   }
 
   return (
-    <>
-      <Section header={undefined}>
-        <Styled.H3>Search for a property</Styled.H3>
-        <LayerFilter
-          onSearch={onSearch}
-          filter={search}
-          addressResults={addressResults}
-          onAddressChange={onAddressChange}
-          onAddressSelect={onAddressSelect}
-          loading={loading}
-        />
-      </Section>
-      <Section header={undefined}>
-        <Table<IIdentifiedSelectedFeatureDataset>
-          manualPagination={false}
-          name="map-properties"
-          columns={mapPropertyColumns}
-          data={identifiedSearchResults}
-          setSelectedRows={onSelectedProperties}
-          selectedRows={selectedData}
-          loading={loading}
-          lockPageSize={true}
-          showSelectedRowCount={true}
-          noRowsMessage={'No results found for your search criteria.'}
-          pageSize={5}
-        />
-      </Section>
-    </>
+    <Section header="Search for a property">
+      <LayerFilter
+        onSearch={onSearch}
+        filter={search}
+        addressResults={addressResults}
+        onAddressChange={onAddressChange}
+        onAddressSelect={onAddressSelect}
+        loading={loading}
+      />
+      <Table<IIdentifiedSelectedFeatureDataset>
+        manualPagination={false}
+        name="map-properties"
+        columns={mapPropertyColumns}
+        data={identifiedSearchResults}
+        setSelectedRows={onSelectedProperties}
+        selectedRows={selectedData}
+        loading={loading}
+        lockPageSize={true}
+        showSelectedRowCount={true}
+        noRowsMessage={'No results found for your search criteria.'}
+        pageSize={5}
+      />
+    </Section>
   );
 };
 

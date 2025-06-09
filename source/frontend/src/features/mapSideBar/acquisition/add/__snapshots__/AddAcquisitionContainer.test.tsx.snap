@@ -1863,14 +1863,22 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                           <div
                             class="c13 form-section"
                           >
+                            <h2
+                              class="c14"
+                            >
+                              <div
+                                class="no-gutters row"
+                              >
+                                <div
+                                  class="align-content-end col"
+                                >
+                                  Search for a property
+                                </div>
+                              </div>
+                            </h2>
                             <div
                               class="collapse show"
                             >
-                              <h3
-                                class="c22"
-                              >
-                                Search for a property
-                              </h3>
                               <form
                                 class="c26 p-3"
                                 novalidate=""
@@ -2032,14 +2040,6 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                                   </div>
                                 </div>
                               </form>
-                            </div>
-                          </div>
-                          <div
-                            class="c13 form-section"
-                          >
-                            <div
-                              class="collapse show"
-                            >
                               <div
                                 class="table"
                                 data-testid="map-properties"
@@ -4817,14 +4817,22 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                           <div
                             class="c13 form-section"
                           >
+                            <h2
+                              class="c14"
+                            >
+                              <div
+                                class="no-gutters row"
+                              >
+                                <div
+                                  class="align-content-end col"
+                                >
+                                  Search for a property
+                                </div>
+                              </div>
+                            </h2>
                             <div
                               class="collapse show"
                             >
-                              <h3
-                                class="c23"
-                              >
-                                Search for a property
-                              </h3>
                               <form
                                 class="c27 p-3"
                                 novalidate=""
@@ -4986,14 +4994,6 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                                   </div>
                                 </div>
                               </form>
-                            </div>
-                          </div>
-                          <div
-                            class="c13 form-section"
-                          >
-                            <div
-                              class="collapse show"
-                            >
                               <div
                                 class="table"
                                 data-testid="map-properties"

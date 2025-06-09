@@ -12,7 +12,7 @@ namespace Pims.Dal.Repositories
     /// <summary>
     /// DispositionFileDocumentRepository class, provides functions to interact with document disposition files within the datasource.
     /// </summary>
-    public class DispositionFileDocumentRepository : BaseRepository<PimsDispositionFileDocument>, IDispositionFileDocumentRepository
+    public class DispositionFileDocumentRepository : BaseRepository<PimsDispositionFileDocument>, IDocumentRelationshipRepository<PimsDispositionFileDocument>
     {
         #region Constructors
 
@@ -33,9 +33,9 @@ namespace Pims.Dal.Repositories
         /// <summary>
         /// Get a list of all the document file relationships for a a given disposition file.
         /// </summary>
-        /// <param name="fileId">The disposition file ID.</param>
+        /// <param name="parentId">The disposition file ID.</param>
         /// <returns></returns>
-        public IList<PimsDispositionFileDocument> GetAllByDispositionFile(long fileId)
+        public IList<PimsDispositionFileDocument> GetAllByParentId(long parentId)
         {
             return Context.PimsDispositionFileDocuments
                 .Include(fd => fd.Document)
@@ -45,7 +45,7 @@ namespace Pims.Dal.Repositories
                 .Include(x => x.Document)
                     .ThenInclude(q => q.PimsDocumentQueues)
                         .ThenInclude(s => s.DocumentQueueStatusTypeCodeNavigation)
-                .Where(fd => fd.DispositionFileId == fileId)
+                .Where(fd => fd.DispositionFileId == parentId)
                 .AsNoTracking()
                 .ToList();
         }
@@ -55,7 +55,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="dispositionDocument"></param>
         /// <returns></returns>
-        public PimsDispositionFileDocument AddDispositionDocument(PimsDispositionFileDocument dispositionDocument)
+        public PimsDispositionFileDocument AddDocument(PimsDispositionFileDocument dispositionDocument)
         {
             dispositionDocument.ThrowIfNull(nameof(dispositionDocument));
 
@@ -75,7 +75,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="dispositionDocument"></param>
         /// <returns></returns>
-        public bool DeleteDispositionDocument(PimsDispositionFileDocument dispositionDocument)
+        public bool DeleteDocument(PimsDispositionFileDocument dispositionDocument)
         {
             if (dispositionDocument == null)
             {

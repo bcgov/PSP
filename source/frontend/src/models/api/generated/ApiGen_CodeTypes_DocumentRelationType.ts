@@ -11,4 +11,5 @@ export enum ApiGen_CodeTypes_DocumentRelationType {
   ManagementActivities = 'ManagementActivities',
   ManagementFiles = 'ManagementFiles',
   DispositionFiles = 'DispositionFiles',
+  Properties = 'Properties',
 }

@@ -31,6 +31,7 @@ import LayersControl from './leaflet/Control/LayersControl/LayersControl';
 import { LegendControl } from './leaflet/Control/Legend/LegendControl';
 import { ZoomOutButton } from './leaflet/Control/ZoomOut/ZoomOutButton';
 import { LocationPopupContainer } from './leaflet/LayerPopup/LocationPopupContainer';
+import { FilePropertiesLayer } from './leaflet/Layers/FilePropertiesLayer';
 import { InventoryLayer } from './leaflet/Layers/InventoryLayer';
 import { LeafletLayerListener } from './leaflet/Layers/LeafletLayerListener';
 import { useConfiguredMapLayers } from './leaflet/Layers/useConfiguredMapLayers';
@@ -222,7 +223,7 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
 
   return (
     <Styled.MapContainer>
-      {baseLayers?.length > 0 && (
+      {baseLayers?.length > 0 && !mapMachine.mapSideBarViewState.isFullWidth && (
         <BasemapToggle baseLayers={baseLayers} onToggle={handleBasemapToggle} />
       )}
 
@@ -284,6 +285,11 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
           maxZoom={MAP_MAX_ZOOM}
           bounds={mapMachine.currentMapBounds ?? defaultBounds}
         ></InventoryLayer>
+
+        {/* Client-side "layer" to highlight file property boundaries (when in the context of a file) */}
+        <Pane name="fileProperties" style={{ zIndex: 600 }}>
+          <FilePropertiesLayer />
+        </Pane>
       </LeafletMapContainer>
     </Styled.MapContainer>
   );

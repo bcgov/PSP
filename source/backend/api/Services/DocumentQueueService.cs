@@ -98,7 +98,7 @@ namespace Pims.Api.Services
                         documentsBelowMaxFileSize.Add(currentDocument);
                     }
                 });
-                if(documentsBelowMaxFileSize.Count == 0 && queuedDocuments.Any())
+                if (documentsBelowMaxFileSize.Count == 0 && queuedDocuments.Any())
                 {
                     documentsBelowMaxFileSize.Add(queuedDocuments.FirstOrDefault());
                 }

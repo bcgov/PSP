@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
+using NetTopologySuite.Geometries;
 
 namespace Pims.Dal.Entities;
 
@@ -32,6 +33,31 @@ public partial class PimsManagementFileProperty
     /// </summary>
     [Column("PROPERTY_ID")]
     public long PropertyId { get; set; }
+
+    /// <summary>
+    /// Descriptive reference for the property being researched.
+    /// </summary>
+    [Column("PROPERTY_NAME")]
+    [StringLength(500)]
+    public string PropertyName { get; set; }
+
+    /// <summary>
+    /// Geospatial location (pin) of property
+    /// </summary>
+    [Column("LOCATION", TypeName = "geometry")]
+    public Geometry Location { get; set; }
+
+    /// <summary>
+    /// Indicates if the record is disabled.
+    /// </summary>
+    [Column("IS_ACTIVE")]
+    public bool IsActive { get; set; }
+
+    /// <summary>
+    /// Specifies the display order of the property (PSP-10521).
+    /// </summary>
+    [Column("DISPLAY_ORDER")]
+    public int? DisplayOrder { get; set; }
 
     /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o

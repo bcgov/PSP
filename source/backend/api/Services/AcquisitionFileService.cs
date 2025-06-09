@@ -28,7 +28,7 @@ namespace Pims.Api.Services
         private readonly IUserRepository _userRepository;
         private readonly IPropertyRepository _propertyRepository;
         private readonly ILookupRepository _lookupRepository;
-        private readonly IEntityNoteRepository _entityNoteRepository;
+        private readonly INoteRelationshipRepository<PimsAcquisitionFileNote> _entityNoteRepository;
         private readonly IAcquisitionFileChecklistRepository _checklistRepository;
         private readonly IAgreementRepository _agreementRepository;
         private readonly ICompensationRequisitionRepository _compensationRequisitionRepository;
@@ -49,7 +49,7 @@ namespace Pims.Api.Services
             IUserRepository userRepository,
             IPropertyRepository propertyRepository,
             ILookupRepository lookupRepository,
-            IEntityNoteRepository entityNoteRepository,
+            INoteRelationshipRepository<PimsAcquisitionFileNote> entityNoteRepository,
             IAcquisitionFileChecklistRepository checklistRepository,
             IAgreementRepository agreementRepository,
             ICompensationRequisitionRepository compensationRequisitionRepository,
@@ -263,7 +263,7 @@ namespace Pims.Api.Services
                 ValidateDraftsOnComplete(acquisitionFile);
             }
 
-            if(currentAcquisitionStatus != AcquisitionStatusTypes.CANCEL && acquisitionFile.AcquisitionFileStatusTypeCode == AcquisitionStatusTypes.CANCEL.ToString())
+            if (currentAcquisitionStatus != AcquisitionStatusTypes.CANCEL && acquisitionFile.AcquisitionFileStatusTypeCode == AcquisitionStatusTypes.CANCEL.ToString())
             {
                 ValidateDraftsOnCancelled(acquisitionFile);
             }
@@ -690,6 +690,27 @@ namespace Pims.Api.Services
                         acquisitionProperty.Property = _propertyService.PopulateNewProperty(acquisitionProperty.Property);
                     }
                 }
+                else if (!string.IsNullOrWhiteSpace(acquisitionProperty.Property.SurveyPlanNumber))
+                {
+                    var plan = acquisitionProperty.Property.SurveyPlanNumber;
+                    try
+                    {
+                        var foundProperty = _propertyRepository.GetWithOnlyPlan(plan);
+                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value)
+                        {
+                            throw new BusinessRuleViolationException("Retired property can not be selected.");
+                        }
+
+                        acquisitionProperty.PropertyId = foundProperty.Internal_Id;
+                        _propertyService.UpdateLocation(acquisitionProperty.Property, ref foundProperty, userOverrideCodes);
+                        acquisitionProperty.Property = foundProperty;
+                    }
+                    catch (KeyNotFoundException)
+                    {
+                        _logger.LogDebug("Adding new property with no pid or pin. plan:{plan}", plan);
+                        acquisitionProperty.Property = _propertyService.PopulateNewProperty(acquisitionProperty.Property);
+                    }
+                }
                 else
                 {
                     _logger.LogDebug("Adding new property without a pid");
@@ -809,7 +830,7 @@ namespace Pims.Api.Services
                 },
             };
 
-            _entityNoteRepository.Add(fileNoteInstance);
+            _entityNoteRepository.AddNoteRelationship(fileNoteInstance);
         }
 
         private void PopulateAcquisitionChecklist(PimsAcquisitionFile acquisitionFile)

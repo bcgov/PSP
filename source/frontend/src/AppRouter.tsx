@@ -16,6 +16,7 @@ import AppRoute from '@/utils/AppRoute';
 import componentLoader from '@/utils/utils';
 
 import Login from './features/account/Login';
+import ManagementActivitiesListView from './features/management/activities/list/ManagementActivitiesListView';
 import ManagementListView from './features/management/list/ManagementListView';
 import AccessDenied from './pages/401/AccessDenied';
 
@@ -77,7 +78,10 @@ const UpdateFinancialCodeForm = lazy(() =>
   componentLoader(import('@/features/admin/financial-codes/update/UpdateFinancialCodeForm'), 2),
 );
 
-const ContactListPage = lazy(() => componentLoader(import('@/features/contacts'), 2));
+const ContactListPage = lazy(() =>
+  componentLoader(import('@/features/contacts/list/ContactListPage'), 2),
+);
+
 const CreateContactContainer = lazy(() =>
   componentLoader(import('@/features/contacts/contact/create/CreateContactContainer'), 2),
 );
@@ -338,6 +342,15 @@ const AppRouter: FC<PropsWithChildren<unknown>> = () => {
             layout={AuthLayout}
             claim={Claims.MANAGEMENT_VIEW}
             title={getTitle('View Management Files')}
+          />
+          <AppRoute
+            protected
+            exact
+            path="/management-activities/list"
+            customComponent={ManagementActivitiesListView}
+            layout={AuthLayout}
+            claim={Claims.MANAGEMENT_VIEW}
+            title={getTitle('View Management Activities')}
           />
           <AppRoute
             protected

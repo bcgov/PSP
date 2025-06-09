@@ -6,12 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Areas.Lease.Controllers;
 using Pims.Api.Models.Concepts.Lease;
-using Pims.Core.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Api.Policies;
 using Pims.Core.Extensions;
 using Pims.Core.Json;
-using Pims.Dal.Entities;
 using Pims.Core.Security;
+using Pims.Dal.Entities;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Areas.Leases.Controllers

@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { SectionField } from '@/components/common/Section/SectionField';
-import { getPrimaryContact } from '@/features/contacts/contactUtils';
 import { LeaseFormModel } from '@/features/leases/models';
+import { getPrimaryContact } from '@/utils/contactUtils';
 import { withNameSpace } from '@/utils/formUtils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 

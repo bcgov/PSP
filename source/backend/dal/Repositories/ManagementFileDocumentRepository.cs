@@ -12,7 +12,7 @@ namespace Pims.Dal.Repositories
     /// <summary>
     /// ManagementFileDocumentRepository class, provides a service layer to interact with document management files within the datasource.
     /// </summary>
-    public class ManagementFileDocumentRepository : BaseRepository<PimsManagementFileDocument>, IManagementFileDocumentRepository
+    public class ManagementFileDocumentRepository : BaseRepository<PimsManagementFileDocument>, IDocumentRelationshipRepository<PimsManagementFileDocument>
     {
         #region Constructors
 
@@ -33,9 +33,9 @@ namespace Pims.Dal.Repositories
         /// <summary>
         /// Get a list of all the document file relationships for a given management file.
         /// </summary>
-        /// <param name="fileId">The management file ID.</param>
+        /// <param name="parentId">The management file ID.</param>
         /// <returns></returns>
-        public IList<PimsManagementFileDocument> GetAllByManagementFile(long fileId)
+        public IList<PimsManagementFileDocument> GetAllByParentId(long parentId)
         {
             return Context.PimsManagementFileDocuments
                 .Include(fd => fd.Document)
@@ -45,7 +45,7 @@ namespace Pims.Dal.Repositories
                 .Include(x => x.Document)
                     .ThenInclude(q => q.PimsDocumentQueues)
                         .ThenInclude(s => s.DocumentQueueStatusTypeCodeNavigation)
-                .Where(fd => fd.ManagementFileId == fileId)
+                .Where(fd => fd.ManagementFileId == parentId)
                 .AsNoTracking()
                 .ToList();
         }
@@ -55,7 +55,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="managementDocument"></param>
         /// <returns></returns>
-        public PimsManagementFileDocument AddManagementFileDocument(PimsManagementFileDocument managementDocument)
+        public PimsManagementFileDocument AddDocument(PimsManagementFileDocument managementDocument)
         {
             managementDocument.ThrowIfNull(nameof(managementDocument));
 
@@ -75,7 +75,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="managementDocument"></param>
         /// <returns></returns>
-        public bool DeleteManagementFileDocument(PimsManagementFileDocument managementDocument)
+        public bool DeleteDocument(PimsManagementFileDocument managementDocument)
         {
             if (managementDocument == null)
             {

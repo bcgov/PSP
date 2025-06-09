@@ -90,7 +90,6 @@ namespace Pims.Dal.Repositories
                 .Select(gpacr => gpacr.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault())
                 .FirstOrDefault();
 
-
             return _mapper.Map<PimsProduct>(productHist);
         }
     }

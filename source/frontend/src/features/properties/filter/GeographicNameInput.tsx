@@ -1,3 +1,5 @@
+import '../components/GeocoderAutoComplete.scss';
+
 import { useFormikContext } from 'formik';
 import { Feature, Geometry } from 'geojson';
 import { sortBy } from 'lodash';
@@ -6,7 +8,6 @@ import { useEffect, useRef, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import { FormControlProps } from 'react-bootstrap/FormControl';
 import ClickAwayListener from 'react-click-away-listener';
-import styled from 'styled-components';
 
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import { IGeographicNamesProperties } from '@/hooks/pims-api/interfaces/IGeographicNamesProperties';
@@ -84,16 +85,14 @@ export const GeographicNameInput: React.FC<React.PropsWithChildren<IGeographicNa
     return (
       <ul className="suggestionList">
         {options.map((x: Feature<Geometry, IGeographicNamesProperties>, index: number) => (
-          <li key={x.id ?? index}>
-            <StyledButton onClick={() => suggestionSelected(x)} type="button">
-              {[
-                x?.properties?.name,
-                x?.properties?.featureType,
-                x?.properties?.featureCategoryDescription,
-              ]
-                .filter(exists)
-                .join(' - ')}
-            </StyledButton>
+          <li key={x.id ?? index} onClick={() => suggestionSelected(x)}>
+            {[
+              x?.properties?.name,
+              x?.properties?.featureType,
+              x?.properties?.featureCategoryDescription,
+            ]
+              .filter(exists)
+              .join(' - ')}
           </li>
         ))}
       </ul>
@@ -101,31 +100,33 @@ export const GeographicNameInput: React.FC<React.PropsWithChildren<IGeographicNa
   };
 
   return (
-    <ClickAwayListener onClickAway={() => setOptions([])}>
-      <Form.Group controlId={`input-${field}`}>
-        <TooltipWrapper
-          tooltipId={`${field}-input-tooltip`}
-          tooltip={
-            textValue?.length > 1 && textValue?.length < MIN_SEARCH_LENGTH
-              ? 'Type at least 3 characters to see results'
-              : 'Type the name of a landmark or geographic feature. Select a result and search to jump to that location'
-          }
-        >
-          <InputControl
-            autoComplete="off"
-            data-testid="geographic-name-input"
-            field={field}
-            value={textValue}
-            onTextChange={onTextChanged}
-            placeholder={placeholder}
-            disabled={disabled}
-            onBlur={handleBlur}
-            {...rest}
-          />
-        </TooltipWrapper>
-        {renderSuggestions()}
-      </Form.Group>
-    </ClickAwayListener>
+    <div className="GeographicNameInput">
+      <ClickAwayListener onClickAway={() => setOptions([])}>
+        <Form.Group controlId={`input-${field}`}>
+          <TooltipWrapper
+            tooltipId={`${field}-input-tooltip`}
+            tooltip={
+              textValue?.length > 1 && textValue?.length < MIN_SEARCH_LENGTH
+                ? 'Type at least 3 characters to see results'
+                : 'Type the name of a landmark or geographic feature. Select a result and search to jump to that location'
+            }
+          >
+            <InputControl
+              autoComplete="off"
+              data-testid="geographic-name-input"
+              field={field}
+              value={textValue}
+              onTextChange={onTextChanged}
+              placeholder={placeholder}
+              disabled={disabled}
+              onBlur={handleBlur}
+              {...rest}
+            />
+          </TooltipWrapper>
+          {renderSuggestions()}
+        </Form.Group>
+      </ClickAwayListener>
+    </div>
   );
 };
 
@@ -166,10 +167,3 @@ const InputControl: React.FC<React.PropsWithChildren<IDebounceInputProps>> = ({
     />
   );
 };
-
-const StyledButton = styled.button`
-  border: 0;
-  padding: 0;
-  background-color: transparent;
-  text-align: left;
-`;

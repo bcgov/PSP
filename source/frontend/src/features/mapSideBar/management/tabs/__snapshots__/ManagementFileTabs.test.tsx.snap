@@ -82,6 +82,11 @@ exports[`ManagementFileTabs component > matches snapshot 1`] = `
   border-radius: 0.5rem;
 }
 
+.c8 {
+  padding: 0 0.4rem;
+  display: block;
+}
+
 .c6.required::before {
   content: '*';
   position: absolute;
@@ -91,11 +96,6 @@ exports[`ManagementFileTabs component > matches snapshot 1`] = `
 
 .c5 {
   font-weight: bold;
-}
-
-.c8 {
-  padding: 0 0.4rem;
-  display: block;
 }
 
 <div
@@ -117,11 +117,29 @@ exports[`ManagementFileTabs component > matches snapshot 1`] = `
       <a
         aria-selected="false"
         class="nav-item nav-link"
+        data-rb-event-key="activities"
+        href="#"
+        role="tab"
+      >
+        Activities
+      </a>
+      <a
+        aria-selected="false"
+        class="nav-item nav-link"
         data-rb-event-key="documents"
         href="#"
         role="tab"
       >
         Documents
+      </a>
+      <a
+        aria-selected="false"
+        class="nav-item nav-link"
+        data-rb-event-key="notes"
+        href="#"
+        role="tab"
+      >
+        Notes
       </a>
     </nav>
     <div
@@ -309,7 +327,7 @@ exports[`ManagementFileTabs component > matches snapshot 1`] = `
                 <div
                   class="c6 text-left col"
                 >
-                  Utilities
+                  Engineering
                 </div>
               </div>
               <div

@@ -9,7 +9,7 @@ import ManagementFileIcon from '@/assets/images/management-icon.svg?react';
 import * as CommonStyled from '@/components/common/styles';
 import { PaddedScrollable, StyledAddButton } from '@/components/common/styles';
 import { Claims } from '@/constants';
-import { MANAGEMENT_FILE_PROGRAM_TYPES, MANAGEMENT_FILE_STATUS_TYPES } from '@/constants/API';
+import { MANAGEMENT_FILE_PURPOSE_TYPES, MANAGEMENT_FILE_STATUS_TYPES } from '@/constants/API';
 import { useApiManagementFile } from '@/hooks/pims-api/useApiManagementFile';
 import { useManagementProvider } from '@/hooks/repositories/useManagementProvider';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
@@ -42,7 +42,7 @@ export const ManagementListView: React.FC<unknown> = () => {
     .map(c => mapLookupCode(c));
 
   const managementPurposeOptions = lookupCodes
-    .getByType(MANAGEMENT_FILE_PROGRAM_TYPES)
+    .getByType(MANAGEMENT_FILE_PURPOSE_TYPES)
     .map(c => mapLookupCode(c));
 
   const {
@@ -143,5 +143,8 @@ const FlexDiv = styled.div`
 
   svg {
     vertical-align: baseline;
+  }
+  svg g path {
+    fill: currentColor;
   }
 `;

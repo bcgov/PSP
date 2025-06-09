@@ -124,6 +124,7 @@ export const FilePropertyRouter: React.FC<IFilePropertyRouterProps> = props => {
             View={InventoryTabs}
             fileContext={props.fileType}
             statusSolver={statusSolver}
+            onChildSuccess={props.onSuccess}
           />
         </Route>
         <Redirect

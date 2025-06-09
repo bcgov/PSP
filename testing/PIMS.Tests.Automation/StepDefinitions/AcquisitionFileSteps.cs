@@ -11,6 +11,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly GenericSteps genericSteps;
         private readonly AcquisitionDetails acquisitionFilesDetails;
         private readonly SearchAcquisitionFiles searchAcquisitionFiles;
+        private readonly SharedTeamMembers sharedTeamMembers;
         private readonly SharedFileProperties sharedFileProperties;
         private readonly SharedPagination sharedPagination;
         private readonly SearchProperties searchProperties;
@@ -37,6 +38,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFilesDetails = new AcquisitionDetails(driver);
             searchAcquisitionFiles = new SearchAcquisitionFiles(driver);
             sharedFileProperties = new SharedFileProperties(driver);
+            sharedTeamMembers = new SharedTeamMembers(driver);
             sharedPagination = new SharedPagination(driver);
             searchProperties = new SearchProperties(driver);
             acquisitionTakes = new AcquisitionTakes(driver);
@@ -714,7 +716,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFilesDetails.EditAcquisitionFileBttn();
 
             //Delete the MoTI Solicitor that is associated to a compensation requisition
-            acquisitionFilesDetails.DeleteFirstStaffMember();
+            sharedTeamMembers.DeleteFirstStaffMember();
 
             //Save Acquisition File Details changes
             acquisitionFilesDetails.SaveAcquisitionFileDetailsWithExpectedErrors();

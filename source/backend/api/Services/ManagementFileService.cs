@@ -25,22 +25,23 @@ namespace Pims.Api.Services
         private readonly IPropertyRepository _propertyRepository;
         private readonly IPropertyService _propertyService;
         private readonly ILookupRepository _lookupRepository;
-        private readonly IEntityNoteRepository _entityNoteRepository;
+        private readonly INoteRelationshipRepository<PimsManagementFileNote> _entityNoteRepository;
         private readonly IManagementStatusSolver _managementStatusSolver;
         private readonly IPropertyOperationService _propertyOperationService;
+        private readonly IPropertyActivityRepository _propertyActivityRepository;
 
         public ManagementFileService(
             ClaimsPrincipal user,
             ILogger<ManagementFileService> logger,
             IManagementFileRepository managementFileRepository,
             IManagementFilePropertyRepository managementFilePropertyRepository,
-            ICoordinateTransformService coordinateService,
             IPropertyRepository propertyRepository,
             IPropertyService propertyService,
             ILookupRepository lookupRepository,
-            IEntityNoteRepository entityNoteRepository,
+            INoteRelationshipRepository<PimsManagementFileNote> entityNoteRepository,
             IManagementStatusSolver managementStatusSolver,
-            IPropertyOperationService propertyOperationService)
+            IPropertyOperationService propertyOperationService,
+            IPropertyActivityRepository propertyActivityRepository)
         {
             _user = user;
             _logger = logger;
@@ -52,6 +53,7 @@ namespace Pims.Api.Services
             _entityNoteRepository = entityNoteRepository;
             _managementStatusSolver = managementStatusSolver;
             _propertyOperationService = propertyOperationService;
+            _propertyActivityRepository = propertyActivityRepository;
         }
 
         public PimsManagementFile Add(PimsManagementFile managementFile, IEnumerable<UserOverrideCode> userOverrides)
@@ -217,6 +219,7 @@ namespace Pims.Api.Services
                 }
             }
 
+            IEnumerable<PimsPropPropActivity> fileActivityProperties = _propertyActivityRepository.GetActivitiesByManagementFile(managementFile.Internal_Id).SelectMany(pa => pa.PimsPropPropActivities);
             // The ones not on the new set should be deleted
             List<PimsManagementFileProperty> differenceSet = currentFileProperties.Where(x => !managementFile.PimsManagementFileProperties.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
             foreach (var deletedProperty in differenceSet)
@@ -224,6 +227,11 @@ namespace Pims.Api.Services
                 if (_propertyOperationService.GetOperationsForProperty(deletedProperty.PropertyId).Count > 0)
                 {
                     throw new BusinessRuleViolationException("This property cannot be deleted because it is part of a subdivision or consolidation");
+                }
+
+                if (fileActivityProperties.Any(ppa => ppa.PropertyId == deletedProperty.PropertyId))
+                {
+                    throw new BusinessRuleViolationException("This property cannot be deleted as it is part of an activity in this file");
                 }
 
                 _managementFilePropertyRepository.Delete(deletedProperty);
@@ -311,7 +319,7 @@ namespace Pims.Api.Services
                 },
             };
 
-            _entityNoteRepository.Add(fileNoteInstance);
+            _entityNoteRepository.AddNoteRelationship(fileNoteInstance);
         }
 
         private void MatchProperties(PimsManagementFile managementFile, IEnumerable<UserOverrideCode> overrideCodes)
