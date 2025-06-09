@@ -70,7 +70,8 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(p => p.Address)
                     .ThenInclude(p => p.ProvinceState)
                 .Include(l => l.Lease)
-                .Where(p => p.LeaseId == leaseId);
+                .Where(p => p.LeaseId == leaseId)
+                .OrderBy(pl => pl.DisplayOrder);
         }
 
         /// <summary>
