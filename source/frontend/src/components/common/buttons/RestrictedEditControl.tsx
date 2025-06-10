@@ -5,7 +5,7 @@ import { cannotEditMessage } from '@/features/mapSideBar/acquisition/common/cons
 import TooltipIcon from '../TooltipIcon';
 import EditButton from './EditButton';
 
-type RestrictedEditControlProps = {
+export interface IRestrictedEditControlProps {
   /**
    * Whether the current user has permission to edit this section.
    */
@@ -33,7 +33,7 @@ type RestrictedEditControlProps = {
   'data-testId'?: string;
   style?: CSSProperties | null;
   toolTipId?: string;
-};
+}
 
 /**
  * `RestrictedEditControl` renders an Edit button or a tooltip based on access control logic.
@@ -44,7 +44,7 @@ type RestrictedEditControlProps = {
  *
  * This component is designed for admin panels or similar environments where conditional edit access is common.
  */
-export const RestrictedEditControl: React.FC<RestrictedEditControlProps> = ({
+export const RestrictedEditControl: React.FC<IRestrictedEditControlProps> = ({
   canEdit,
   isInNonEditableState,
   editRestrictionMessage = cannotEditMessage,
