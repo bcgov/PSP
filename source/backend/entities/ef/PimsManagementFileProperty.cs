@@ -48,6 +48,18 @@ public partial class PimsManagementFileProperty
     public Geometry Location { get; set; }
 
     /// <summary>
+    /// Indicates if the record is disabled.
+    /// </summary>
+    [Column("IS_ACTIVE")]
+    public bool IsActive { get; set; }
+
+    /// <summary>
+    /// Specifies the display order of the property (PSP-10521).
+    /// </summary>
+    [Column("DISPLAY_ORDER")]
+    public int? DisplayOrder { get; set; }
+
+    /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
     /// </summary>
     [Column("CONCURRENCY_CONTROL_NUMBER")]

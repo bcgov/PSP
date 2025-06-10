@@ -51,6 +51,7 @@ public partial class PimsManagementFileTeam
     /// <summary>
     /// Foreign key to the PIMS_MANAGEMENT_FILE_PROFILE_TYPE table.
     /// </summary>
+    [Required]
     [Column("MANAGEMENT_FILE_PROFILE_TYPE_CODE")]
     [StringLength(20)]
     public string ManagementFileProfileTypeCode { get; set; }

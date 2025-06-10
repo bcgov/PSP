@@ -19,8 +19,6 @@ namespace Pims.Api.Models.Concepts.Property
 
         public CodeTypeModel<string> ActivityTypeCode { get; set; }
 
-        public CodeTypeModel<string> ActivitySubtypeCode { get; set; }
-
         public CodeTypeModel<string> ActivityStatusTypeCode { get; set; }
 
         public DateOnly RequestAddedDateOnly { get; set; }
