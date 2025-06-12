@@ -35,6 +35,10 @@ exports[`Management search results table > matches snapshot 1`] = `
   height: 1.6rem;
 }
 
+.c3 {
+  border-radius: 0.4rem;
+}
+
 <div
     class="table"
     data-testid="managementFilesTable"
@@ -386,7 +390,34 @@ exports[`Management search results table > matches snapshot 1`] = `
           >
             <div
               class="w-100"
-            />
+            >
+              <div
+                class="c3 mx-0 my-2 border border-secondary row"
+              >
+                <div
+                  class="col-md-12"
+                >
+                  <strong
+                    class="pr-2"
+                  >
+                    Address:
+                  </strong>
+                  45 - 904 Hollywood Crescent Living in a van Down by the River Hollywood North BC, V6Z 5G7
+                </div>
+                <div
+                  class="col-md-auto"
+                >
+                  <div>
+                    <strong
+                      class="pr-2"
+                    >
+                      PID:
+                    </strong>
+                     014-073-871
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div
             class="td clickable"

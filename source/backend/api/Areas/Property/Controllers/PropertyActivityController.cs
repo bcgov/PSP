@@ -52,22 +52,6 @@ namespace Pims.Api.Areas.Property.Controllers
         #region Endpoints
 
         /// <summary>
-        /// Get the activity subtypes.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("management-activities/subtypes")]
-        [HasPermission(Permissions.ManagementView)]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(List<PropertyActivitySubtypeModel>), 200)]
-        [SwaggerOperation(Tags = new[] { "property" })]
-        [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult GetPropertyActivitySubtypes()
-        {
-            var subTypes = _lookupRepository.GetAllPropMgmtActivitySubtypes();
-            return new JsonResult(_mapper.Map<List<PropertyActivitySubtypeModel>>(subTypes));
-        }
-
-        /// <summary>
         /// Get the property management activities for the property with 'propertyId'.
         /// </summary>
         /// <returns>Collection of Property management activities.</returns>

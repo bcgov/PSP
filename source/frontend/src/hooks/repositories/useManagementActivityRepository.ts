@@ -3,7 +3,6 @@ import { useCallback, useMemo } from 'react';
 
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
-import { ApiGen_Concepts_PropertyActivitySubtype } from '@/models/api/generated/ApiGen_Concepts_PropertyActivitySubtype';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 import { useApiManagementActivities } from '../pims-api/useApiManagementActivities';
@@ -13,7 +12,6 @@ import { useApiManagementActivities } from '../pims-api/useApiManagementActiviti
  */
 export const useManagementActivityRepository = () => {
   const {
-    getActivitySubtypesApi,
     postActivityApi,
     getPropertyActivityApi,
     getActivityApi,
@@ -22,18 +20,6 @@ export const useManagementActivityRepository = () => {
     deleteActivityApi,
     putActivityApi,
   } = useApiManagementActivities();
-
-  const getActivitySubtypes = useApiRequestWrapper<
-    () => Promise<AxiosResponse<ApiGen_Concepts_PropertyActivitySubtype[], any>>
-  >({
-    requestFunction: useCallback(
-      async () => await getActivitySubtypesApi(),
-      [getActivitySubtypesApi],
-    ),
-    requestName: 'RetrieveActivitySubtypes',
-    onSuccess: useAxiosSuccessHandler(),
-    onError: useAxiosErrorHandler('Failed to retrieve management activity subtypes.'),
-  });
 
   const addManagementActivity = useApiRequestWrapper<
     (
@@ -136,7 +122,6 @@ export const useManagementActivityRepository = () => {
 
   return useMemo(
     () => ({
-      getActivitySubtypes,
       getPropertyManagementActivity,
       addManagementActivity,
       updateManagementActivity,
@@ -146,7 +131,6 @@ export const useManagementActivityRepository = () => {
       deleteManagementActivity,
     }),
     [
-      getActivitySubtypes,
       getPropertyManagementActivity,
       addManagementActivity,
       updateManagementActivity,

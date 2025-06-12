@@ -714,7 +714,7 @@ exports[`UpdateManagementForm component > renders as expected 1`] = `
             <label
               class="c2"
             >
-              Purpose:
+              Purpose(s):
             </label>
           </div>
           <div

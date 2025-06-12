@@ -33,11 +33,6 @@ namespace Pims.Dal.Entities.Models
         public string ActivityTypeCode { get; set; }
 
         /// <summary>
-        /// get/set - The Activity Sub Type.
-        /// </summary>
-        public string ActivitySubTypeCode { get; set; }
-
-        /// <summary>
         /// get/set - The Activity Status Code.
         /// </summary>
         public string ActivityStatusCode { get; set; }

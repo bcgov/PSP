@@ -271,11 +271,11 @@ exports[`Management List View > matches snapshot 1`] = `
   height: 1.6rem;
 }
 
-.c15 {
+.c16 {
   margin-top: 0.3rem;
 }
 
-.c16 {
+.c17 {
   min-width: 5rem;
   max-width: 5rem;
   margin-left: 1rem;
@@ -284,11 +284,11 @@ exports[`Management List View > matches snapshot 1`] = `
   padding: 0;
 }
 
-.c16:-moz-read-only {
+.c17:-moz-read-only {
   background: white;
 }
 
-.c16:read-only {
+.c17:read-only {
   background: white;
 }
 
@@ -361,6 +361,10 @@ exports[`Management List View > matches snapshot 1`] = `
   width: 100%;
   gap: 2.5rem;
   padding: 0;
+}
+
+.c15 {
+  border-radius: 0.4rem;
 }
 
 .c4 {
@@ -1162,7 +1166,34 @@ exports[`Management List View > matches snapshot 1`] = `
               >
                 <div
                   class="w-100"
-                />
+                >
+                  <div
+                    class="c15 mx-0 my-2 border border-secondary row"
+                  >
+                    <div
+                      class="col-md-12"
+                    >
+                      <strong
+                        class="pr-2"
+                      >
+                        Address:
+                      </strong>
+                      45 - 904 Hollywood Crescent Living in a van Down by the River Hollywood North BC, V6Z 5G7
+                    </div>
+                    <div
+                      class="col-md-auto"
+                    >
+                      <div>
+                        <strong
+                          class="pr-2"
+                        >
+                          PID:
+                        </strong>
+                         014-073-871
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div
                 class="td clickable"
@@ -1202,19 +1233,19 @@ exports[`Management List View > matches snapshot 1`] = `
                 class="d-flex"
               >
                 <span
-                  class="c15"
+                  class="c16"
                 >
                   Show
                 </span>
                 <input
-                  class="c16 form-control"
+                  class="c17 form-control"
                   data-testid="input-page-size"
                   readonly=""
                   type="number"
                   value="10"
                 />
                 <span
-                  class="c15"
+                  class="c16"
                 >
                   Entries
                 </span>

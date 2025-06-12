@@ -6,11 +6,14 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Models.Concepts.ManagementFile;
+using Pims.Api.Models.Concepts.Property;
 using Pims.Api.Services;
+using Pims.Core.Api.Exceptions;
 using Pims.Core.Api.Policies;
 using Pims.Core.Extensions;
 using Pims.Core.Json;
 using Pims.Core.Security;
+using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -31,6 +34,8 @@ namespace Pims.Api.Areas.Management.Controllers
         private readonly IManagementFileService _managementService;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
+        private readonly IPropertyService _propertyService;
+
         #endregion
 
         #region Constructors
@@ -42,8 +47,9 @@ namespace Pims.Api.Areas.Management.Controllers
         /// <param name="mapper"></param>
         /// <param name="logger"></param>
         ///
-        public ManagementFileController(IManagementFileService managementService, IMapper mapper, ILogger<ManagementFileController> logger)
+        public ManagementFileController(IPropertyService propertyService, IManagementFileService managementService, IMapper mapper, ILogger<ManagementFileController> logger)
         {
+            _propertyService = propertyService;
             _managementService = managementService;
             _mapper = mapper;
             _logger = logger;
@@ -215,6 +221,36 @@ namespace Pims.Api.Areas.Management.Controllers
             var managementFileEntity = _mapper.Map<Dal.Entities.PimsManagementFile>(managementFileModel);
             var managementFile = _managementService.UpdateProperties(managementFileEntity, userOverrideCodes.Select(oc => UserOverrideCode.Parse(oc)));
             return new JsonResult(_mapper.Map<ManagementFileModel>(managementFile));
+        }
+
+        /// <summary>
+        /// Update the specified management file activity.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut("{managementFileId:long}/management-activities/{activityId}")]
+        [HasPermission(Permissions.ManagementEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(PropertyActivityModel), 200)]
+        [SwaggerOperation(Tags = new[] { "managementfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult UpdateManagementActivity(long managementFileId, long activityId, [FromBody] PropertyActivityModel activityModel)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(ManagementActivityController),
+                nameof(UpdateManagementActivity),
+                User.GetUsername(),
+                DateTime.Now);
+
+            var propertyActivity = _mapper.Map<PimsPropertyActivity>(activityModel);
+            if (!propertyActivity.ManagementFileId.HasValue || propertyActivity.ManagementFileId != managementFileId || propertyActivity.Internal_Id != activityId)
+            {
+                throw new BadRequestException("Invalid activity identifiers.");
+            }
+
+            var updatedProperty = _propertyService.UpdateActivity(propertyActivity);
+
+            return new JsonResult(_mapper.Map<PropertyActivityModel>(updatedProperty));
         }
 
         #endregion

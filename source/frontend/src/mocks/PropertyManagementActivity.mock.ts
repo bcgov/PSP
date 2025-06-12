@@ -13,12 +13,7 @@ const emptyActivity: ApiGen_Concepts_PropertyActivity = {
     isDisabled: false,
     displayOrder: 100,
   },
-  activitySubtypeCode: {
-    id: 'ACTIVITY-SUB-TYPE',
-    description: 'Activity Type Description',
-    isDisabled: false,
-    displayOrder: 100,
-  },
+  activitySubTypeCodes: [],
   activityStatusTypeCode: {
     id: 'ACTIVITY-STATUS-TYPE',
     description: 'Activity Type Description',
@@ -53,12 +48,19 @@ export const getMockPropertyManagementActivity = (
     isDisabled: false,
     displayOrder: 1,
   },
-  activitySubtypeCode: {
-    id: 'ACCESS',
-    description: 'Access',
-    isDisabled: false,
-    displayOrder: 1,
-  },
+  activitySubTypeCodes: [
+    {
+      id: 100,
+      managementActivityId: 1,
+      managementActivitySubtypeCode: {
+        id: 'ACCESS',
+        description: 'Access',
+        isDisabled: false,
+        displayOrder: 1,
+      },
+      ...getEmptyBaseAudit(1),
+    },
+  ],
   activityStatusTypeCode: {
     id: 'NOTSTARTED',
     description: 'Not started',
@@ -66,11 +68,12 @@ export const getMockPropertyManagementActivity = (
     displayOrder: 100,
   },
   requestAddedDateOnly: '2023-10-17T00:00:00',
+  completionDateOnly: null,
   rowVersion: 1,
   activityProperties: [
     {
       id: 15,
-      propertyActivityId: 200,
+      propertyActivityId: 1,
       propertyActivity: null,
       propertyId: propertyId,
       property: null,
@@ -91,12 +94,7 @@ export const mockGetPropertyManagementActivityNotStarted = (
     isDisabled: false,
     displayOrder: 1,
   },
-  activitySubtypeCode: {
-    id: 'ACCESS',
-    description: 'Access',
-    isDisabled: false,
-    displayOrder: 1,
-  },
+  activitySubTypeCodes: [],
   activityStatusTypeCode: {
     id: 'NOTSTARTED',
     description: 'Not started',

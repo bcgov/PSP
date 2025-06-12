@@ -80,36 +80,6 @@ namespace Pims.Api.Areas.Management.Controllers
         }
 
         /// <summary>
-        /// Update the specified management file activity.
-        /// </summary>
-        /// <returns></returns>
-        [HttpPut("{managementFileId:long}/management-activities/{activityId}")]
-        [HasPermission(Permissions.ManagementEdit)]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(PropertyActivityModel), 200)]
-        [SwaggerOperation(Tags = new[] { "property" })]
-        [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult UpdateManagementActivity(long managementFileId, long activityId, [FromBody] PropertyActivityModel activityModel)
-        {
-            _logger.LogInformation(
-                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
-                nameof(ManagementActivityController),
-                nameof(UpdateManagementActivity),
-                User.GetUsername(),
-                DateTime.Now);
-
-            var propertyActivity = _mapper.Map<PimsPropertyActivity>(activityModel);
-            if (!propertyActivity.ManagementFileId.HasValue || propertyActivity.ManagementFileId != managementFileId || propertyActivity.Internal_Id != activityId)
-            {
-                throw new BadRequestException("Invalid activity identifiers.");
-            }
-
-            var updatedProperty = _propertyService.UpdateActivity(propertyActivity);
-
-            return new JsonResult(_mapper.Map<PropertyActivityModel>(updatedProperty));
-        }
-
-        /// <summary>
         /// Get the specified management file activity.
         /// </summary>
         /// <returns></returns>

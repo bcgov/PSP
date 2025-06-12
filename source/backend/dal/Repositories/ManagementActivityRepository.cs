@@ -88,11 +88,6 @@ namespace Pims.Dal.Repositories
                 predicate = predicate.And(x => x.PropMgmtActivityTypeCode == filter.ActivityTypeCode);
             }
 
-            if (!string.IsNullOrWhiteSpace(filter.ActivitySubTypeCode))
-            {
-                predicate = predicate.And(x => x.PimsPropActivityMgmtActivities.Any(y => y.PropMgmtActivitySubtypeCode == filter.ActivitySubTypeCode));
-            }
-
             if (!string.IsNullOrWhiteSpace(filter.ActivityStatusCode))
             {
                 predicate = predicate.And(x => x.PropMgmtActivityStatusTypeCode == filter.ActivityStatusCode);
@@ -130,11 +125,6 @@ namespace Pims.Dal.Repositories
                 else if (field == "ActivityType")
                 {
                     query = direction == "asc" ? query.OrderBy(c => c.PropMgmtActivityTypeCodeNavigation.Description) : query.OrderByDescending(c => c.PropMgmtActivityTypeCodeNavigation.Description);
-                }
-                else if (field == "ActivitySubType")
-                {
-                    // TODO : DB105
-                    // query = direction == "asc" ? query.OrderBy(c => c.PropMgmtActivitySubtypeCodeNavigation.Description) : query.OrderByDescending(c => c.PropMgmtActivitySubtypeCodeNavigation.Description); 
                 }
                 else if (field == "FileName")
                 {

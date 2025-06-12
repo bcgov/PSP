@@ -15,6 +15,7 @@ import {
   PropertyActivityEditContainer,
 } from './PropertyActivityEditContainer';
 import { IPropertyActivityEditFormProps } from './PropertyActivityEditForm';
+import { PropertyActivityFormModel } from './models';
 
 const history = createMemoryHistory();
 
@@ -128,7 +129,6 @@ describe('PropertyActivityEditContainer component', () => {
     await setup();
 
     expect(await screen.findByText(/Content Rendered/i)).toBeVisible();
-    expect(mockPropertyActivityApi.getActivitySubtypes.execute).toHaveBeenCalled();
     expect(mockPropertyActivityApi.getActivity.execute).toHaveBeenCalledWith(1, 1);
   });
 
@@ -142,7 +142,25 @@ describe('PropertyActivityEditContainer component', () => {
     expect(await screen.findByText(/Content Rendered/i)).toBeVisible();
     expect(viewProps.propertyId).toBe(1);
     expect(viewProps.loading).toBe(false);
-    expect(viewProps.activity).toStrictEqual(getMockPropertyManagementActivity(1));
+    expect(viewProps.initialValues).toEqual(
+      expect.objectContaining({
+        id: 1,
+        activityTypeCode: 'APPLICPERMIT',
+        activityStatusCode: 'NOTSTARTED',
+        activitySubtypeCodes: [
+          {
+            id: 100,
+            managementActivityId: 1,
+            rowVersion: 1,
+            subTypeCode: 'ACCESS',
+            subTypeCodeDescription: 'Access',
+          },
+        ],
+        requestedDate: '2023-10-17T00:00:00',
+        completionDate: '',
+        rowNumber: 1,
+      } as PropertyActivityFormModel),
+    );
   });
 
   it('loads related contact information for person and organizations', async () => {

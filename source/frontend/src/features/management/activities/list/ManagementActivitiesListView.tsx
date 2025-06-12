@@ -10,11 +10,7 @@ import { StyledIconButton } from '@/components/common/buttons/IconButton';
 import * as CommonStyled from '@/components/common/styles';
 import { PaddedScrollable } from '@/components/common/styles';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
-import {
-  PROP_MGMT_ACTIVITY_STATUS_TYPES,
-  PROP_MGMT_ACTIVITY_SUBTYPES_TYPES,
-  PROP_MGMT_ACTIVITY_TYPES,
-} from '@/constants/API';
+import { PROP_MGMT_ACTIVITY_STATUS_TYPES, PROP_MGMT_ACTIVITY_TYPES } from '@/constants/API';
 import { useApiManagementActivities } from '@/hooks/pims-api/useApiManagementActivities';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { useSearch } from '@/hooks/useSearch';
@@ -44,10 +40,6 @@ export const ManagementActivitiesListView: React.FC<unknown> = () => {
 
   const activityTypesOptions = lookupCodes
     .getByType(PROP_MGMT_ACTIVITY_TYPES)
-    .map(c => mapLookupCode(c));
-
-  const activitySubTypesOptions = lookupCodes
-    .getByType(PROP_MGMT_ACTIVITY_SUBTYPES_TYPES)
     .map(c => mapLookupCode(c));
 
   const { exportManagementActivities } = useManagementActivityExport();
@@ -122,7 +114,6 @@ export const ManagementActivitiesListView: React.FC<unknown> = () => {
                 setFilter={changeFilter}
                 activityStatusOptions={activityStatusOptions}
                 activityTypesOptions={activityTypesOptions}
-                activitySubTypesOptions={activitySubTypesOptions}
               />
             </Col>
             <Col md="auto" className="px-0">

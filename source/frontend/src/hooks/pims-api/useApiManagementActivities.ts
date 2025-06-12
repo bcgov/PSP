@@ -3,7 +3,6 @@ import React from 'react';
 
 import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
-import { ApiGen_Concepts_PropertyActivitySubtype } from '@/models/api/generated/ApiGen_Concepts_PropertyActivitySubtype';
 
 import { IPaginateRequest } from './interfaces/IPaginateRequest';
 import useAxiosApi from './useApi';
@@ -19,11 +18,6 @@ export const useApiManagementActivities = () => {
 
   return React.useMemo(
     () => ({
-      getActivitySubtypesApi: () =>
-        api.get<ApiGen_Concepts_PropertyActivitySubtype[]>(
-          `/properties/management-activities/subtypes`,
-        ),
-
       getPropertyActivityApi: (propertyActivityId: number) =>
         api.get<ApiGen_Concepts_PropertyActivity>(`/management-activities/${propertyActivityId}`),
 

@@ -8,7 +8,6 @@ export class ManagementActivityFilterModel {
   fileNameOrNumberOrReference = '';
   activityStatusCode = '';
   activityTypeCode = '';
-  activitySubTypeCode = '';
   projectNameOrNumber = '';
 
   toApi(): Api_ManagementActivityFilter {
@@ -20,7 +19,6 @@ export class ManagementActivityFilterModel {
       fileNameOrNumberOrReference: this.fileNameOrNumberOrReference,
       activityStatusCode: this.activityStatusCode,
       activityTypeCode: this.activityTypeCode,
-      activitySubTypeCode: this.activitySubTypeCode,
       projectNameOrNumber: this.projectNameOrNumber,
     };
   }
@@ -34,7 +32,6 @@ export class ManagementActivityFilterModel {
     newModel.fileNameOrNumberOrReference = base.fileNameOrNumberOrReference ?? '';
     newModel.activityStatusCode = base.activityStatusCode ?? '';
     newModel.activityTypeCode = base.activityTypeCode ?? '';
-    newModel.activitySubTypeCode = base.activitySubTypeCode ?? '';
     newModel.projectNameOrNumber = base.projectNameOrNumber ?? '';
 
     return newModel;

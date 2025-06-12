@@ -3,10 +3,9 @@ import * as Yup from 'yup';
 
 export const ManagementActivityEditFormYupSchema = Yup.object().shape({
   activityTypeCode: Yup.string().required('Activity type is required'),
-  activitySubtypeCode: Yup.string().required('Sub-type is required'),
+  activitySubtypeCodes: Yup.array().min(1, 'Sub-type is required'),
   activityStatusCode: Yup.string().required('Status is required'),
   requestedDate: Yup.date().required('Commencement date is required'),
-
   completionDate: Yup.date().when('activityStatusCode', {
     is: (activityStatusCode: string) => activityStatusCode === 'COMPLETED',
     then: Yup.date()

@@ -45,13 +45,16 @@ export function createActivityTableColumns() {
     },
     {
       Header: 'Activity sub-type',
-      accessor: 'activitySubType',
+      accessor: 'activitySubTypes',
       align: 'left',
       sortable: true,
       minWidth: 35,
       maxWidth: 35,
       Cell: (cellProps: CellProps<PropertyActivityRow>) => {
-        return stringToFragment(cellProps.row.original?.activitySubType?.description || '');
+        return stringToFragment(
+          cellProps.row.original?.activitySubTypes[0]?.managementActivitySubtypeCode.description ||
+            '',
+        );
       },
     },
     {

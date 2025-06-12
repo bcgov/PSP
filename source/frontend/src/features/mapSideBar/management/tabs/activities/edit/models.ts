@@ -1,3 +1,4 @@
+import { ManagementActivitySubTypeModel } from '@/features/mapSideBar/property/tabs/propertyDetailsManagement/activity/models/ManagementActivitySubType';
 import { fromApiPersonOrApiOrganization, IContactSearchResult } from '@/interfaces';
 import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
 import { ApiGen_Concepts_PropertyActivityInvoice } from '@/models/api/generated/ApiGen_Concepts_PropertyActivityInvoice';
@@ -10,7 +11,7 @@ import { emptyStringtoNullable, toTypeCodeNullable } from '@/utils/formUtils';
 
 export class ManagementActivityFormModel {
   activityTypeCode = '';
-  activitySubtypeCode = '';
+  activitySubtypeCodes: ManagementActivitySubTypeModel[] = [];
   activityStatusCode = '';
   requestedDate = '';
   completionDate = '';
@@ -42,7 +43,7 @@ export class ManagementActivityFormModel {
       managementFileId: this.managementFileId,
       managementFile: null,
       activityTypeCode: toTypeCodeNullable(this.activityTypeCode),
-      activitySubtypeCode: toTypeCodeNullable(this.activitySubtypeCode),
+      activitySubTypeCodes: this.activitySubtypeCodes?.map(x => x.toApi(this.id)) ?? [],
       activityStatusTypeCode: toTypeCodeNullable(this.activityStatusCode),
       requestAddedDateOnly: this.requestedDate,
       completionDateOnly: emptyStringtoNullable(this.completionDate),
@@ -98,7 +99,8 @@ export class ManagementActivityFormModel {
       model.rowVersion,
     );
     formModel.activityTypeCode = model.activityTypeCode?.id || '';
-    formModel.activitySubtypeCode = model.activitySubtypeCode?.id || '';
+    formModel.activitySubtypeCodes =
+      model.activitySubTypeCodes?.map(x => ManagementActivitySubTypeModel.fromApi(x)) ?? [];
     formModel.activityStatusCode = model.activityStatusTypeCode?.id || '';
     formModel.requestedDate = isValidIsoDateTime(model.requestAddedDateOnly)
       ? model.requestAddedDateOnly

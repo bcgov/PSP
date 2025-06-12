@@ -8,6 +8,7 @@ import {
   IPropertyActivityEditFormProps,
   PropertyActivityEditForm,
 } from './PropertyActivityEditForm';
+import { PropertyActivityFormModel } from './models';
 
 // Need to mock this library for unit tests
 vi.mock('react-visibility-sensor', () => {
@@ -30,6 +31,11 @@ const onSave = vi.fn();
 const setShow = vi.fn();
 const onClose = vi.fn();
 
+const mockManagementActivityFormValues: PropertyActivityFormModel =
+  PropertyActivityFormModel.fromApi({
+    ...getMockPropertyManagementActivity(1),
+  });
+
 describe('PropertyActivityEditForm component', () => {
   const setup = (
     renderOptions: RenderOptions & {
@@ -39,8 +45,6 @@ describe('PropertyActivityEditForm component', () => {
     const result = render(
       <PropertyActivityEditForm
         propertyId={renderOptions?.props?.propertyId ?? 1}
-        activity={renderOptions?.props?.activity ?? getMockPropertyManagementActivity(1)}
-        subtypes={renderOptions?.props?.subtypes ?? []}
         gstConstant={renderOptions?.props?.gstConstant ?? 0}
         pstConstant={renderOptions?.props?.pstConstant ?? 0}
         onCancel={renderOptions?.props?.onCancel ?? onCancel}
@@ -49,6 +53,7 @@ describe('PropertyActivityEditForm component', () => {
         setShow={renderOptions?.props?.setShow ?? setShow}
         onSave={renderOptions?.props?.onSave ?? onSave}
         onClose={renderOptions?.props?.onClose ?? onClose}
+        initialValues={renderOptions?.props?.initialValues ?? mockManagementActivityFormValues}
       />,
       {
         store: storeState,
