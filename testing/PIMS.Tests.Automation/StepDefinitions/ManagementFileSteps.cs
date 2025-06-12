@@ -11,9 +11,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly GenericSteps genericSteps = new GenericSteps(driver);
 
         private readonly ManagementDetails managementFilesDetails = new ManagementDetails(driver);
+        private readonly ManagementActivities managementActivities = new ManagementActivities(driver);
         private readonly SearchManagement searchManagementFiles = new SearchManagement(driver);
         private readonly SharedFileProperties sharedFileProperties = new SharedFileProperties(driver);
         private readonly SharedPagination sharedPagination = new SharedPagination(driver);
+        private readonly SharedActivities sharedActivities = new SharedActivities(driver);
         private readonly Notes notes = new Notes(driver);
 
         private readonly string userName = "TRANPSP1";
@@ -196,7 +198,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Search for an existing Management File
             searchManagementFiles.NavigateToSearchManagement();
-            searchManagementFiles.FilterManagementFiles("", "", "", managementFileCode, "", "", "", "");
+            searchManagementFiles.FilterManagementFiles(mgmtfile: managementFileCode);
             searchManagementFiles.SelectFirstOption();
 
             //Navigate to Edit Management File's Properties
@@ -220,95 +222,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Select 1st Property
             sharedFileProperties.SelectFirstPropertyOptionFromFile();
         }
-
-        //[StepDefinition(@"I create an Management File from a pin on map from row number (.*)")]
-        //public void CreateManagementFileFromPin(int rowNumber)
-        //{
-        //    //Login to PIMS
-        //    loginSteps.Idir(userName);
-
-        //    //Search for a property
-        //    PopulateAcquisitionFile(rowNumber);
-        //    searchProperties.SearchPropertyByPID(acquisitionFile.AcquisitionSearchProperties.PID);
-
-        //    //Select Found Pin on map
-        //    searchProperties.SelectFoundPin();
-
-        //    //Close Left Side Forms
-        //    propertyInformation.HideLeftSideForms();
-
-        //    //Open elipsis option
-        //    propertyInformation.OpenMoreOptionsPopUp();
-        //    propertyInformation.ChooseCreationOptionFromPin("Acquisition File");
-
-        //    //Open Left Side Forms
-        //    propertyInformation.ShowLeftSideForms();
-
-        //    //Validate Acquisition File Details Create Form
-        //    acquisitionFilesDetails.VerifyAcquisitionFileCreate("Main");
-
-        //    //Cancel empty acquisition file
-        //    acquisitionFilesDetails.CancelAcquisitionFile();
-
-        //    //Verify Form is no longer visible
-        //    Assert.Equal(0, acquisitionFilesDetails.IsCreateAcquisitionFileFormVisible());
-
-        //    //Search for a property
-        //    searchProperties.SearchPropertyByPID(acquisitionFile.AcquisitionSearchProperties.PID);
-
-        //    //Select Found Pin on map
-        //    searchProperties.SelectFoundPin();
-
-        //    //Close Property Information Modal
-        //    propertyInformation.HideLeftSideForms();
-
-        //    //Open elipsis option
-        //    propertyInformation.OpenMoreOptionsPopUp();
-        //    propertyInformation.ChooseCreationOptionFromPin("Acquisition File");
-
-        //    //Open Left Side Forms
-        //    propertyInformation.ShowLeftSideForms();
-
-        //    //Fill basic Acquisition File information
-        //    acquisitionFilesDetails.CreateMinimumAcquisitionFile(acquisitionFile);
-
-        //    //Cancel Creation
-        //    acquisitionFilesDetails.CancelAcquisitionFile();
-
-        //    //Search for a property
-        //    searchProperties.SearchPropertyByPID(acquisitionFile.AcquisitionSearchProperties.PID);
-
-        //    //Select Found Pin on map
-        //    searchProperties.SelectFoundPin();
-
-        //    //Close Property Information Modal
-        //    propertyInformation.HideLeftSideForms();
-
-        //    //Open elipsis option
-        //    propertyInformation.OpenMoreOptionsPopUp();
-        //    propertyInformation.ChooseCreationOptionFromPin("Acquisition File");
-
-        //    //Open Left Side Forms
-        //    propertyInformation.ShowLeftSideForms();
-
-        //    //Fill basic Acquisition File information
-        //    acquisitionFilesDetails.CreateMinimumAcquisitionFile(acquisitionFile);
-
-        //    //Save Acquisition File
-        //    acquisitionFilesDetails.SaveAcquisitionFileDetails();
-
-        //    //Get Acquisition File code
-        //    acquisitionFileCode = acquisitionFilesDetails.GetAcquisitionFileCode();
-
-        //    //Edit Acquisition File
-        //    acquisitionFilesDetails.EditAcquisitionFileBttn();
-
-        //    //Add additional information
-        //    acquisitionFilesDetails.UpdateAcquisitionFile(acquisitionFile, "Main");
-
-        //    //Save Acquisition File
-        //    acquisitionFilesDetails.SaveAcquisitionFileDetails();
-        //}
 
         [StepDefinition(@"I search for an existing Management File from row number (.*)")]
         public void SearchExistingManagementFile(int rowNumber)
@@ -392,7 +305,42 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchManagementFiles.FilterManagementFiles("", "", "", managementFile.ManagementName, "", managementFile.ManagementStatus, "");
         }
 
-        [StepDefinition(@"A new Management file is created successfully")]
+        [StepDefinition(@"I insert activities to the Management Activities Tab")]
+        public void InsertActivityTab()
+        {
+            //Go to the Management Activity Tab
+            managementActivities.NavigateActivitiesTab();
+            managementActivities.VerifyActivitiesInitListsView();
+
+            //Insert Activities
+            for (int j = 0; j < managementFile.ManagementPropertyActivities.Count; j++)
+            {
+                managementActivities.AddActivityBttn();
+                sharedActivities.VerifyCreateActivityInitForm();
+                sharedActivities.InsertNewPropertyActivity(managementFile.ManagementPropertyActivities[j]);
+                managementActivities.SaveActivity();
+                sharedActivities.VerifyInsertedActivity(managementFile.ManagementPropertyActivities[j], "Management File");
+                managementActivities.ViewLastActivityFromList();
+                managementActivities.VerifyLastInsertedActivityTable(managementFile.ManagementPropertyActivities[j]);
+            }
+
+        }
+
+        [StepDefinition(@"I update an activity from the Activities Tab")]
+        public void UpdateManagementPropertyTab()
+        {
+            //Update an activity
+            managementActivities.ViewLastActivityFromList();
+            managementActivities.ViewLastActivityButton();
+            sharedActivities.UpdateSelectedActivityBttn();
+            sharedActivities.InsertNewPropertyActivity(managementFile.ManagementPropertyActivities[0]);
+            sharedActivities.SaveManagementActivity();
+            sharedActivities.VerifyInsertedActivity(managementFile.ManagementPropertyActivities[0], "Management File");
+            managementActivities.ViewLastActivityFromList();
+            managementActivities.VerifyLastInsertedActivityTable(managementFile.ManagementPropertyActivities[0]);
+        }
+
+        [StepDefinition(@"A new Management file is created or updated successfully")]
         public void NewManagementFileCreated()
         {
             searchManagementFiles.NavigateToSearchManagement();
@@ -453,6 +401,13 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 managementFile.ManagementSearchProperties.LegalDescription = ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "LegalDescription");
                 managementFile.ManagementSearchProperties.MultiplePIDS = genericSteps.PopulateLists(ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "MultiplePIDS"));
             }
+
+            //Management Activities
+            managementFile.ManagementActivityStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "ManagementActivityStartRow"));
+            managementFile.ManagementActivityCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "ManagementActivityCount"));
+
+            if (managementFile.ManagementActivityStartRow != 0 && managementFile.ManagementActivityCount != 0)
+                PopulateManagementActivitiesCollection(managementFile.ManagementActivityStartRow, managementFile.ManagementActivityCount);
         }
 
         private void PopulateTeamsCollection(int startRow, int rowsCount)
@@ -469,6 +424,62 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 teamMember.TeamMemberPrimaryContact = ExcelDataContext.ReadData(i, "TeamMemberPrimaryContact");
 
                 managementFile.ManagementTeam.Add(teamMember);
+            }
+        }
+
+        private void PopulateManagementActivitiesCollection(int startRow, int rowsCount)
+        {
+            System.Data.DataTable managementActivitesSheet = ExcelDataContext.GetInstance().Sheets["PropertyManagementActivity"]!;
+            ExcelDataContext.PopulateInCollection(managementActivitesSheet);
+
+            for (int i = startRow; i < startRow + rowsCount; i++)
+            {
+                PropertyActivity propertyActivity = new PropertyActivity();
+
+                propertyActivity.PropertyActivityType = ExcelDataContext.ReadData(i, "PropertyActivityType");
+                propertyActivity.PropertyActivitySubType = ExcelDataContext.ReadData(i, "PropertyActivitySubType");
+                propertyActivity.PropertyActivityStatus = ExcelDataContext.ReadData(i, "PropertyActivityStatus");
+                propertyActivity.PropertyActivityRequestedCommenceDate = ExcelDataContext.ReadData(i, "PropertyActivityRequestedCommenceDate");
+                propertyActivity.PropertyActivityDescription = ExcelDataContext.ReadData(i, "PropertyActivityDescription");
+                propertyActivity.PropertyActivityMinistryContact = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "PropertyActivityMinistryContact"));
+                propertyActivity.PropertyActivityRequestorContactMgnr = ExcelDataContext.ReadData(i, "PropertyActivityRequestorContactMgnr");
+                propertyActivity.PropertyActivityInvolvedPartiesExtContacts = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "PropertyActivityInvolvedPartiesExtContacts"));
+                propertyActivity.PropertyActivityServiceProvider = ExcelDataContext.ReadData(i, "PropertyActivityServiceProvider");
+                propertyActivity.ManagementPropertyActivityInvoicesStartRow = int.Parse(ExcelDataContext.ReadData(i, "ManagementPropertyActivityInvoicesStartRow"));
+                propertyActivity.ManagementPropertyActivityInvoicesCount = int.Parse(ExcelDataContext.ReadData(i, "ManagementPropertyActivityInvoicesCount"));
+                propertyActivity.ManagementPropertyActivityTotalPreTax = ExcelDataContext.ReadData(i, "ManagementPropertyActivityTotalPreTax");
+                propertyActivity.ManagementPropertyActivityTotalGST = ExcelDataContext.ReadData(i, "ManagementPropertyActivityTotalGST");
+                propertyActivity.ManagementPropertyActivityTotalPST = ExcelDataContext.ReadData(i, "ManagementPropertyActivityTotalPST");
+                propertyActivity.ManagementPropertyActivityGrandTotal = ExcelDataContext.ReadData(i, "ManagementPropertyActivityGrandTotal");
+
+                if (propertyActivity.ManagementPropertyActivityInvoicesStartRow != 0 && propertyActivity.ManagementPropertyActivityInvoicesCount != 0)
+                    PopulateManagementActivitiesInvoiceCollection(propertyActivity.ManagementPropertyActivityInvoicesStartRow, propertyActivity.ManagementPropertyActivityInvoicesCount, propertyActivity.ManagementPropertyActivityInvoices);
+                else
+                    propertyActivity.ManagementPropertyActivityInvoices = new List<ManagementPropertyActivityInvoice>();
+
+                managementFile.ManagementPropertyActivities.Add(propertyActivity);
+            }
+        }
+
+        private void PopulateManagementActivitiesInvoiceCollection(int startRow, int rowsCount, List<ManagementPropertyActivityInvoice> invoices)
+        {
+            System.Data.DataTable invoicesSheet = ExcelDataContext.GetInstance().Sheets["ManagementPropActivityInvoice"]!;
+            ExcelDataContext.PopulateInCollection(invoicesSheet);
+
+            for (int i = startRow; i < startRow + rowsCount; i++)
+            {
+                ManagementPropertyActivityInvoice invoice = new ManagementPropertyActivityInvoice();
+
+                invoice.PropertyActivityInvoiceNumber = ExcelDataContext.ReadData(i, "PropertyActivityInvoiceNumber");
+                invoice.PropertyActivityInvoiceDate = ExcelDataContext.ReadData(i, "PropertyActivityInvoiceDate");
+                invoice.PropertyActivityInvoiceDescription = ExcelDataContext.ReadData(i, "PropertyActivityInvoiceDescription");
+                invoice.PropertyActivityInvoicePretaxAmount = ExcelDataContext.ReadData(i, "PropertyActivityInvoicePretaxAmount");
+                invoice.PropertyActivityInvoiceGSTAmount = ExcelDataContext.ReadData(i, "PropertyActivityInvoiceGSTAmount");
+                invoice.PropertyActivityInvoicePSTApplicable = ExcelDataContext.ReadData(i, "PropertyActivityInvoicePSTApplicable");
+                invoice.PropertyActivityInvoicePSTAmount = ExcelDataContext.ReadData(i, "PropertyActivityInvoicePSTAmount");
+                invoice.PropertyActivityInvoiceTotalAmount = ExcelDataContext.ReadData(i, "PropertyActivityInvoiceTotalAmount");
+
+                invoices.Add(invoice);
             }
         }
     }

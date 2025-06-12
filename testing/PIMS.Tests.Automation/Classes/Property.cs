@@ -98,12 +98,12 @@
         public string PropertyActivityType { get; set; } = null!;
         public string PropertyActivitySubType { get; set; } = null!;
         public string PropertyActivityStatus { get; set; } = null!;
-        public string PropertyActivityRequestedDate { get; set; } = null!;
+        public string PropertyActivityRequestedCommenceDate { get; set; } = null!;
         public string PropertyActivityCompletionDate { get; set; } = null!;
         public string PropertyActivityDescription { get; set; } = null!;
         public List<string> PropertyActivityMinistryContact { get; set; } = new List<string>();
-        public string PropertyActivityRequestedSource { get; set; } = null!;
-        public List<string> PropertyActivityInvolvedParties { get; set; } = new List<string>();
+        public string PropertyActivityRequestorContactMgnr { get; set; } = null!;
+        public List<string> PropertyActivityInvolvedPartiesExtContacts { get; set; } = new List<string>();
         public string PropertyActivityServiceProvider { get; set; } = null!;
         public int ManagementPropertyActivityInvoicesStartRow { get; set; } = 0;
         public int ManagementPropertyActivityInvoicesCount { get; set; } = 0;
