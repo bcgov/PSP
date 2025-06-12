@@ -15,11 +15,7 @@ import { useTenant } from '@/tenants';
  */
 
 export const useFullyAttributedParcelMapLayer = () => {
-  const {
-    parcelMapFullyAttributed,
-    fullyAttributedParcelsLayerUrl,
-    internalFullyAttributedParcelsLayerUrl,
-  } = useTenant();
+  const { parcelMapFullyAttributed, fullyAttributedParcelsLayerUrl } = useTenant();
 
   const getAllFeaturesWrapper = useWfsLayer(parcelMapFullyAttributed.url, {
     name: parcelMapFullyAttributed.name,
