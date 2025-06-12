@@ -201,6 +201,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 sharedFileProperties.SelectFirstOptionFromSearch();
             }
 
+            //Search for a property by Latitude and Longitude
+            if (dispositionFile.DispositionSearchProperties.LatitudeLongitude.LatitudeDegree != "")
+            {
+                sharedFileProperties.SelectPropertyByLongLant(dispositionFile.DispositionSearchProperties.LatitudeLongitude);
+                sharedFileProperties.SelectFirstOptionFromSearch();
+                sharedFileProperties.ResetSearch();
+            }
+
             //Search for a duplicate property
             if (dispositionFile.DispositionSearchProperties.PID != "")
             {
