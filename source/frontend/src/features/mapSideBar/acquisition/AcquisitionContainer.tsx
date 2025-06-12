@@ -30,6 +30,7 @@ import { exists, isValidId, sortFileProperties, stripTrailingSlash } from '@/uti
 import { SideBarContext } from '../context/sidebarContext';
 import { FileTabType } from '../shared/detail/FileTabs';
 import { PropertyForm } from '../shared/models';
+import usePathGenerator from '../shared/sidebarPathGenerator';
 import { IAcquisitionViewProps } from './AcquisitionView';
 
 export interface IAcquisitionContainerProps {
@@ -204,23 +205,49 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
 
   const close = useCallback(() => onClose && onClose(), [onClose]);
 
-  const navigateToMenuRoute = (selectedIndex: number) => {
-    const route = selectedIndex === 0 ? '' : `/property/${selectedIndex}`;
-    history.push(`${stripTrailingSlash(match.url)}${route}`);
-  };
+  const pathGenerator = usePathGenerator();
 
-  const onMenuChange = (selectedIndex: number) => {
+  const onSelectFileSummary = () => {
+    if (!exists(acquisitionFile)) {
+      return;
+    }
+
     if (isEditing) {
       if (formikRef?.current?.dirty) {
-        handleCancelClick(() => navigateToMenuRoute(selectedIndex));
+        handleCancelClick(() => pathGenerator.showFile('acquisition', acquisitionFile.id));
         return;
       }
     }
-    navigateToMenuRoute(selectedIndex);
+    pathGenerator.showFile('acquisition', acquisitionFile.id);
   };
 
-  const onShowPropertySelector = () => {
-    history.push(`${stripTrailingSlash(match.url)}/property/selector`);
+  const onSelectProperty = (filePropertyId: number) => {
+    if (!exists(acquisitionFile)) {
+      return;
+    }
+
+    const fileProperties = acquisitionFile.fileProperties ?? [];
+    const menuIndex = fileProperties.findIndex(fp => fp.id === filePropertyId);
+    if (menuIndex < 0) {
+      return;
+    }
+
+    if (isEditing) {
+      if (formikRef?.current?.dirty) {
+        handleCancelClick(() =>
+          pathGenerator.showFilePropertyIndex('acquisition', acquisitionFile.id, menuIndex + 1),
+        );
+        return;
+      }
+    }
+    // The index needs to be offset to match the menu index
+    pathGenerator.showFilePropertyIndex('acquisition', acquisitionFile.id, menuIndex + 1);
+  };
+
+  const onEditProperties = () => {
+    if (exists(acquisitionFile)) {
+      pathGenerator.editProperties('acquisition', acquisitionFile.id);
+    }
   };
 
   const handleSaveClick = async () => {
@@ -351,8 +378,9 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
       onClose={close}
       onCancel={handleCancelClick}
       onSave={handleSaveClick}
-      onMenuChange={onMenuChange}
-      onShowPropertySelector={onShowPropertySelector}
+      onSelectFileSummary={onSelectFileSummary}
+      onSelectProperty={onSelectProperty}
+      onEditProperties={onEditProperties}
       onCancelConfirm={handleCancelConfirm}
       onUpdateProperties={onUpdateProperties}
       onSuccess={onSuccess}

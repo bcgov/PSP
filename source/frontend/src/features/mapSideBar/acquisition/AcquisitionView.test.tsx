@@ -11,19 +11,19 @@ import { mockApiPerson } from '@/mocks/filterData.mock';
 import { getMockApiInterestHolders } from '@/mocks/interestHolders.mock';
 import { mockLastUpdatedBy } from '@/mocks/lastUpdatedBy.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { server } from '@/mocks/msw/server';
 import { mockNotesResponse } from '@/mocks/noteResponses.mock';
+import { getMockApiTakes } from '@/mocks/takes.mock';
 import { getUserMock } from '@/mocks/user.mock';
+import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { prettyFormatUTCDate } from '@/utils';
-import { RenderOptions, act, render, screen, userEvent, waitFor } from '@/utils/test-utils';
-import { server } from '@/mocks/msw/server';
-import { getMockApiTakes } from '@/mocks/takes.mock';
+import { act, render, RenderOptions, screen, userEvent, waitFor } from '@/utils/test-utils';
 import { http, HttpResponse } from 'msw';
 import { createRef } from 'react';
 import { SideBarContextProvider } from '../context/sidebarContext';
 import { FileTabType } from '../shared/detail/FileTabs';
 import AcquisitionView, { IAcquisitionViewProps } from './AcquisitionView';
-import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 
 // mock auth library
 
@@ -42,7 +42,8 @@ vi.mock('@/features/mapSideBar/hooks/usePropertyDetails', () => {
 const onClose = vi.fn();
 const onSave = vi.fn();
 const onCancel = vi.fn();
-const onMenuChange = vi.fn();
+const onSelectFileSummary = vi.fn();
+const onSelectProperty = vi.fn();
 const onSuccess = vi.fn();
 const onCancelConfirm = vi.fn();
 const onUpdateProperties = vi.fn();
@@ -50,7 +51,7 @@ const canRemove = vi.fn();
 const confirmBeforeAdd = vi.fn();
 const setContainerState = vi.fn();
 const setIsEditing = vi.fn();
-const onEditFileProperties = vi.fn();
+const onEditProperties = vi.fn();
 
 // Need to mock this library for unit tests
 vi.mock('react-visibility-sensor', () => {
@@ -68,7 +69,8 @@ const DEFAULT_PROPS: IAcquisitionViewProps = {
   onClose,
   onSave,
   onCancel,
-  onMenuChange,
+  onSelectFileSummary,
+  onSelectProperty,
   onSuccess,
   onCancelConfirm,
   onUpdateProperties,
@@ -76,7 +78,7 @@ const DEFAULT_PROPS: IAcquisitionViewProps = {
   canRemove,
   isEditing: false,
   setIsEditing,
-  onShowPropertySelector: onEditFileProperties,
+  onEditProperties,
   setContainerState,
   containerState: {
     isEditing: false,
