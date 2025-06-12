@@ -381,7 +381,6 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
       onSelectFileSummary={onSelectFileSummary}
       onSelectProperty={onSelectProperty}
       onEditProperties={onEditProperties}
-      onCancelConfirm={handleCancelConfirm}
       onUpdateProperties={onUpdateProperties}
       onSuccess={onSuccess}
       confirmBeforeAdd={confirmBeforeAdd}

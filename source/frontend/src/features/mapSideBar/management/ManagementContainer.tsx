@@ -19,6 +19,7 @@ import { exists, isValidId, sortFileProperties, stripTrailingSlash } from '@/uti
 
 import { SideBarContext } from '../context/sidebarContext';
 import { PropertyForm } from '../shared/models';
+import usePathGenerator from '../shared/sidebarPathGenerator';
 import { IManagementViewProps } from './ManagementView';
 
 export interface IManagementContainerProps {
@@ -134,23 +135,49 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
 
   const close = useCallback(() => onClose && onClose(), [onClose]);
 
-  const navigateToMenuRoute = (selectedIndex: number) => {
-    const route = selectedIndex === 0 ? '' : `/property/${selectedIndex}`;
-    history.push(`${stripTrailingSlash(match.url)}${route}`);
-  };
+  const pathGenerator = usePathGenerator();
 
-  const onMenuChange = (selectedIndex: number) => {
+  const onSelectFileSummary = () => {
+    if (!exists(managementFile)) {
+      return;
+    }
+
     if (isEditing) {
       if (formikRef?.current?.dirty) {
-        handleCancelClick(() => navigateToMenuRoute(selectedIndex));
+        handleCancelClick(() => pathGenerator.showFile('management', managementFile.id));
         return;
       }
     }
-    navigateToMenuRoute(selectedIndex);
+    pathGenerator.showFile('management', managementFile.id);
   };
 
-  const onShowPropertySelector = () => {
-    history.push(`${stripTrailingSlash(match.url)}/property/selector`);
+  const onSelectProperty = (filePropertyId: number) => {
+    if (!exists(managementFile)) {
+      return;
+    }
+
+    const fileProperties = managementFile.fileProperties ?? [];
+    const menuIndex = fileProperties.findIndex(fp => fp.id === filePropertyId);
+    if (menuIndex < 0) {
+      return;
+    }
+
+    if (isEditing) {
+      if (formikRef?.current?.dirty) {
+        handleCancelClick(() =>
+          pathGenerator.showFilePropertyIndex('management', managementFile.id, menuIndex + 1),
+        );
+        return;
+      }
+    }
+    // The index needs to be offset to match the menu index
+    pathGenerator.showFilePropertyIndex('management', managementFile.id, menuIndex + 1);
+  };
+
+  const onEditProperties = () => {
+    if (exists(managementFile)) {
+      pathGenerator.editProperties('management', managementFile.id);
+    }
   };
 
   const handleSaveClick = async () => {
@@ -283,8 +310,9 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
         onClose={close}
         onCancel={handleCancelClick}
         onSave={handleSaveClick}
-        onMenuChange={onMenuChange}
-        onShowPropertySelector={onShowPropertySelector}
+        onSelectFileSummary={onSelectFileSummary}
+        onSelectProperty={onSelectProperty}
+        onEditProperties={onEditProperties}
         onUpdateProperties={onUpdateProperties}
         onSuccess={onSuccess}
         confirmBeforeAdd={confirmBeforeAdd}

@@ -48,7 +48,6 @@ export interface IAcquisitionViewProps {
   onSelectProperty: (propertyId: number) => void;
   onEditProperties: () => void;
   onSuccess: () => void;
-  onCancelConfirm: () => void;
   onUpdateProperties: (file: ApiGen_Concepts_File) => Promise<ApiGen_Concepts_File | undefined>;
   confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
   canRemove: (propertyId: number) => Promise<boolean>;
