@@ -366,6 +366,10 @@ describe('MapFilterBar', () => {
       coordinates: null,
       ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
       name: '',
+      section: '',
+      township: '',
+      range: '',
+      district: '',
     });
   });
 
@@ -398,6 +402,10 @@ describe('MapFilterBar', () => {
       coordinates: null,
       ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
       name: '',
+      section: '',
+      township: '',
+      range: '',
+      district: '',
     });
   });
 
@@ -430,6 +438,10 @@ describe('MapFilterBar', () => {
       coordinates: null,
       ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
       name: '',
+      section: '',
+      township: '',
+      range: '',
+      district: '',
     });
   });
 
@@ -481,6 +493,10 @@ describe('MapFilterBar', () => {
       }),
       ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
       name: '',
+      section: '',
+      township: '',
+      range: '',
+      district: '',
     });
   });
 
@@ -544,6 +560,10 @@ describe('MapFilterBar', () => {
       planNumber: '',
       quantity: undefined,
       searchBy: 'name',
+      section: '',
+      township: '',
+      range: '',
+      district: '',
     });
   });
 

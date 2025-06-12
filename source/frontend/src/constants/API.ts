@@ -34,6 +34,7 @@ export interface IGeoSearchParams {
   SECTION?: number | string;
   TOWNSHIP?: number | string;
   RANGE?: number | string;
+  DISTRICT?: string;
   latitude?: number | string;
   longitude?: number | string;
 

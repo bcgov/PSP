@@ -14,6 +14,7 @@ import { TableSort } from '@/components/Table/TableSort';
 import { IGeographicNamesProperties } from '@/hooks/pims-api/interfaces/IGeographicNamesProperties';
 import { useGeocoderRepository } from '@/hooks/useGeocoderRepository';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import { useTenant } from '@/tenants';
 import { exists, pidFormatter } from '@/utils';
 
 import { GeocoderAutoComplete } from '../components/GeocoderAutoComplete';
@@ -56,6 +57,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
   useGeocoder,
 }) => {
   const { getSitePids } = useGeocoderRepository();
+  const { LandTitleDistricts } = useTenant();
 
   const history = useHistory();
   const initialValues = useMemo(() => {
@@ -138,6 +140,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                   setFieldValue('section', null);
                   setFieldValue('township', null);
                   setFieldValue('range', null);
+                  setFieldValue('district', null);
                   if (e.target.value === 'coordinates') {
                     setFieldValue('coordinates', new DmsCoordinates());
                   } else {
@@ -224,6 +227,16 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
               {values.searchBy === 'surveyParcel' && (
                 <Row noGutters>
                   <Col>
+                    <Select
+                      innerClassName="rounded-0"
+                      field="district"
+                      options={LandTitleDistricts.map(ltd => ({
+                        value: ltd,
+                        label: ltd,
+                      }))}
+                    />
+                  </Col>
+                  <Col>
                     <NumberInput
                       innerClassName="rounded-0"
                       placeholder="Section"
@@ -267,6 +280,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                     values.township ||
                     values.section ||
                     values.range ||
+                    values.district ||
                     (values.searchBy === 'coordinates' && isValid)
                   )
                 }

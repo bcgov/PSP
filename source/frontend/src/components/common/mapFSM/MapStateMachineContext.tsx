@@ -198,9 +198,10 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
           geoFilter.forceExactMatch = false;
           return mapSearch.searchByHistorical(geoFilter);
         } else if (
-          isValidString(geoFilter?.SECTION.toString()) ||
-          isValidString(geoFilter?.RANGE.toString()) ||
-          isValidString(geoFilter?.TOWNSHIP.toString())
+          isValidString(geoFilter?.SECTION?.toString()) ||
+          isValidString(geoFilter?.RANGE?.toString()) ||
+          isValidString(geoFilter?.TOWNSHIP?.toString()) ||
+          isValidString(geoFilter?.DISTRICT?.toString())
         ) {
           geoFilter.forceExactMatch = false;
           const response = mapSearch.searchBySurveyParcel(geoFilter);
@@ -550,6 +551,7 @@ const getQueryParams = (filter: IPropertyFilter): IGeoSearchParams => {
     SECTION: filter.section,
     TOWNSHIP: filter.township,
     RANGE: filter.range,
+    DISTRICT: filter.district,
     latitude: filter.latitude,
     longitude: filter.longitude,
     forceExactMatch: pidValue?.length === 9,

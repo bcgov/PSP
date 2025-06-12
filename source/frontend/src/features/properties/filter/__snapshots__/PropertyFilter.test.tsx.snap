@@ -282,13 +282,14 @@ exports[`MapFilterBar > renders correctly 1`] = `
 .c0 {
   padding-right: 0 !important;
   border-right: 0 !important;
+  min-width: 17rem;
 }
 
 .c2 {
   padding-left: 0 !important;
 }
 
-.c2 .form-control {
+.c2 input:first-child {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
@@ -366,6 +367,13 @@ exports[`MapFilterBar > renders correctly 1`] = `
               value="coordinates"
             >
               Lat/Long
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-surveyParcel"
+              value="surveyParcel"
+            >
+              Survey Parcel
             </option>
           </select>
         </div>

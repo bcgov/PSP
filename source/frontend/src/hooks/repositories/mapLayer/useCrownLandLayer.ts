@@ -9,8 +9,10 @@ import {
   TANTALIS_CrownLandLeases_Feature_Properties,
   TANTALIS_CrownLandLicenses_Feature_Properties,
   TANTALIS_CrownLandTenures_Feature_Properties,
+  TANTALIS_CrownSurveyParcels_Feature_Properties,
 } from '@/models/layers/crownLand';
 import { useTenant } from '@/tenants';
+import { isValidString } from '@/utils/utils';
 
 /**
  * API wrapper to centralize all AJAX requests to WFS endpoints on the set of Crown Land related layers.
@@ -24,6 +26,7 @@ export const useCrownLandLayer = () => {
     crownLandTenuresUrl,
     crownLandInventoryUrl,
     crownLandInclusionsUrl,
+    crownLandSurveyedParcelsUrl,
   } = useTenant();
 
   const {
@@ -186,6 +189,68 @@ export const useCrownLandLayer = () => {
     [findMultipleWhereContainsCrownLandInclusionsExecute],
   );
 
+  const {
+    findMultipleRawWrapped: {
+      execute: findMultipleWhereContainsCrownLandSurveyedExecute,
+      loading: findMultipleWhereContainsCrownLandSurveyedLoading,
+    },
+  } = useLayerQuery(crownLandSurveyedParcelsUrl);
+
+  const findMultipleSectionTownshipRange = useCallback(
+    async (
+      section?: number | string,
+      township?: number | string,
+      range?: number | string,
+      district?: string,
+    ): Promise<FeatureCollection<Geometry, TANTALIS_CrownSurveyParcels_Feature_Properties>> => {
+      let sectionQuery = '';
+      let townshipQuery = '';
+      let rangeQuery = '';
+      let districtQuery = '';
+      if (isValidString(section?.toString())) {
+        if (isValidString(range?.toString())) {
+          sectionQuery = `(PARCEL_LEGAL_DESCRIPTION ilike '%SECTION ${section},%' OR (PARCEL_LEGAL_DESCRIPTION ilike '%SECTIONS%' AND PARCEL_LEGAL_DESCRIPTION ilike '%${section},%'))`;
+        } else {
+          sectionQuery = `PARCEL_LEGAL_DESCRIPTION ilike '%SECTION ${section},%'`;
+        }
+      }
+      if (isValidString(township?.toString())) {
+        townshipQuery = `PARCEL_LEGAL_DESCRIPTION ilike '%TOWNSHIP ${township},%'`;
+      }
+      if (isValidString(range?.toString())) {
+        rangeQuery = `PARCEL_LEGAL_DESCRIPTION ilike '%TOWNSHIP ${range},%'`;
+      }
+      if (isValidString(district)) {
+        const districtSearchString = district.replace('DISTRICT', 'DIST');
+        districtQuery = `PARCEL_LEGAL_DESCRIPTION ilike '%${districtSearchString}%'`;
+      }
+
+      const query = [sectionQuery, townshipQuery, rangeQuery, districtQuery]
+        .filter(x => isValidString(x))
+        .join(' AND ');
+
+      const searchParams = new URLSearchParams();
+
+      searchParams.set('request', 'GetFeature');
+      if (isValidString(query)) {
+        searchParams.set('cql_filter', query);
+      }
+
+      const featureCollection = await findMultipleWhereContainsCrownLandSurveyedExecute(
+        searchParams,
+      );
+
+      // TODO: Enhance useLayerQuery to allow generics to match the Property types
+      const forceCasted = featureCollection as FeatureCollection<
+        Geometry,
+        TANTALIS_CrownSurveyParcels_Feature_Properties
+      >;
+
+      return forceCasted;
+    },
+    [findMultipleWhereContainsCrownLandSurveyedExecute],
+  );
+
   return {
     findMultipleCrownLandLease,
     findMultipleCrownLandLeaseLoading: findMultipleWhereContainsCrownLandLeasesLoading,
@@ -197,5 +262,8 @@ export const useCrownLandLayer = () => {
     findMultipleCrownLandInventoryLoading: findMultipleWhereContainsCrownLandInventoryLoading,
     findMultipleCrownLandInclusion: findMultipleCrownLandInclusion,
     findMultipleCrownLandInclusionsLoading: findMultipleWhereContainsCrownLandInclusionsLoading,
+    findMultipleSurveyParcel: findMultipleSectionTownshipRange,
+    findMultipleWhereContainsCrownLandSurveyedLoading:
+      findMultipleWhereContainsCrownLandSurveyedLoading,
   };
 };

@@ -31,12 +31,14 @@ export interface IPropertyFilter {
   coordinates: DmsCoordinates | null;
   /** The geographic name of the property */
   name: string;
-  /** Section */
+  /** Survey Parcel Section */
   section: string;
-  /** Township */
+  /** Survey Parcel Township */
   township: string;
-  /** Range */
+  /** Survey Parcel Range */
   range: string;
+  /** Survey Parcel District */
+  district: string;
 }
 
 export const defaultPropertyFilter: IPropertyFilter = {
@@ -56,4 +58,5 @@ export const defaultPropertyFilter: IPropertyFilter = {
   section: '',
   township: '',
   range: '',
+  district: '',
 };

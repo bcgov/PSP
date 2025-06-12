@@ -1,6 +1,7 @@
 import { FeatureCollection, Geometry } from 'geojson';
 import { LatLngBounds, LatLngLiteral } from 'leaflet';
 
+import { TANTALIS_CrownSurveyParcels_Feature_Properties } from '@/models/layers/crownLand';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import {
   PIMS_Property_Boundary_View,
@@ -21,6 +22,10 @@ export interface MapFeatureData {
   readonly fullyAttributedFeatures: FeatureCollection<
     Geometry,
     PMBC_FullyAttributed_Feature_Properties
+  >;
+  readonly surveyedParcelsFeatures: FeatureCollection<
+    Geometry,
+    TANTALIS_CrownSurveyParcels_Feature_Properties
   >;
 }
 
@@ -57,8 +62,17 @@ export const emptyPmbcFeatureCollection: FeatureCollection<
   features: [],
 };
 
+export const emptySurveyedParcelsFeatures: FeatureCollection<
+  Geometry,
+  TANTALIS_CrownSurveyParcels_Feature_Properties
+> = {
+  type: 'FeatureCollection',
+  features: [],
+};
+
 export const emptyFeatureData: MapFeatureData = {
   pimsLocationFeatures: emptyPimsLocationFeatureCollection,
   pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
   fullyAttributedFeatures: emptyPmbcFeatureCollection,
+  surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
 };

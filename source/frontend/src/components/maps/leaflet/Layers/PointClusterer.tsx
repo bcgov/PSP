@@ -13,6 +13,7 @@ import useSupercluster from '@/components/maps/hooks/useSupercluster';
 import { useFilterContext } from '@/components/maps/providers/FilterProvider';
 import { ICluster } from '@/components/maps/types';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
+import { TANTALIS_CrownSurveyParcels_Feature_Properties } from '@/models/layers/crownLand';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import {
   PIMS_Property_Boundary_View,
@@ -58,6 +59,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
         | PIMS_Property_Location_View
         | PIMS_Property_Boundary_View
         | PMBC_FullyAttributed_Feature_Properties
+        | TANTALIS_CrownSurveyParcels_Feature_Properties
       >
     >();
   const featureGroupRef = useRef<L.FeatureGroup>(null);
@@ -86,6 +88,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
       | PIMS_Property_Location_View
       | PIMS_Property_Boundary_View
       | PMBC_FullyAttributed_Feature_Properties
+      | TANTALIS_CrownSurveyParcels_Feature_Properties
     >
   >({});
 
@@ -101,7 +104,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
 
   const pimsLocationFeatures: FeatureCollection<Geometry, PIMS_Property_Location_View> =
     useMemo(() => {
-      let filteredFeatures = mapMachine.mapFeatureData.pimsLocationFeatures.features.filter(x =>
+      let filteredFeatures = mapMachine.mapFeatureData?.pimsLocationFeatures?.features.filter(x =>
         mapMachine.activePimsPropertyIds.includes(Number(x.properties.PROPERTY_ID)),
       );
 
@@ -130,10 +133,13 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
 
   const pmbcFeatures = mapMachine.mapFeatureData?.fullyAttributedFeatures;
 
+  const surveyedParcelsFeatures = mapMachine.mapFeatureData?.surveyedParcelsFeatures;
+
   const featurePoints: Supercluster.PointFeature<
     | PIMS_Property_Location_View
     | PIMS_Property_Boundary_View
     | PMBC_FullyAttributed_Feature_Properties
+    | TANTALIS_CrownSurveyParcels_Feature_Properties
   >[] = useMemo(() => {
     const pimsLocationPoints =
       featureCollectionResponseToPointFeature<PIMS_Property_Location_View>(pimsLocationFeatures);
@@ -143,8 +149,12 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
       featureCollectionResponseToPointFeature<PMBC_FullyAttributed_Feature_Properties>(
         pmbcFeatures,
       );
-    return [...pimsLocationPoints, ...pimsBoundaryPoints, ...pmbcPoints];
-  }, [pimsLocationFeatures, pimsBoundaryFeatures, pmbcFeatures]);
+    const crownPoints =
+      featureCollectionResponseToPointFeature<TANTALIS_CrownSurveyParcels_Feature_Properties>(
+        surveyedParcelsFeatures,
+      );
+    return [...pimsLocationPoints, ...pimsBoundaryPoints, ...pmbcPoints, ...crownPoints];
+  }, [pimsLocationFeatures, pimsBoundaryFeatures, pmbcFeatures, surveyedParcelsFeatures]);
 
   // get clusters
   // clusters are an array of GeoJSON Feature objects, but some of them
@@ -303,6 +313,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
                 | PIMS_Property_Location_View
                 | PIMS_Property_Boundary_View
                 | PMBC_FullyAttributed_Feature_Properties
+                | TANTALIS_CrownSurveyParcels_Feature_Properties
               >;
 
               const isSelected =
