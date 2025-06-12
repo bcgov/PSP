@@ -35,6 +35,7 @@ describe('Activities list view', () => {
       <ManagementActivitiesListView
         isLoading={renderOptions?.isLoading ?? false}
         propertyActivities={renderOptions?.propertyActivities ?? []}
+        statusSolver={renderOptions?.statusSolver ?? null}
         onCreate={onCreate}
         onDelete={onDelete}
         onView={onView}

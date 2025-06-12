@@ -120,6 +120,8 @@ describe('Note List Container', () => {
     expect(getTableCell(3, 0)).toHaveTextContent('Note 1');
   });
 
+  
+
   it('shows the modal when onAdd is triggered', async () => {
     await setup();
 

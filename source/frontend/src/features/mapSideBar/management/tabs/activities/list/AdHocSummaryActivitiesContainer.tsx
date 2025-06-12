@@ -9,8 +9,11 @@ import useIsMounted from '@/hooks/util/useIsMounted';
 import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
 import { isValidId } from '@/utils/utils';
 
+import ManagementStatusUpdateSolver from '../../fileDetails/detail/ManagementStatusUpdateSolver';
+
 export interface IPropertyManagementActivitiesListContainerProps {
   managementFileId: number;
+  statusSolver: ManagementStatusUpdateSolver;
   View: React.FC<IManagementActivitiesListViewProps>;
 }
 
@@ -48,6 +51,7 @@ const AdHocFileActivitiesSummaryContainer: React.FunctionComponent<
         url: `/mapview/sidebar/property/${row.adHocPropertyId}/management/activity/${row.activityId}`,
         title: row.adHocPropertyName,
       })}
+      statusSolver={undefined}
     />
   );
 };

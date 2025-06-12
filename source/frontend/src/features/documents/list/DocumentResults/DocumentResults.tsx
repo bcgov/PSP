@@ -14,6 +14,7 @@ export interface IDocumentResultProps {
   results: DocumentRow[];
   loading?: boolean;
   sort: TableSort<ApiGen_Concepts_Document>;
+  canEditDocuments: boolean;
   setSort: (value: TableSort<ApiGen_Concepts_Document>) => void;
   onViewDetails: (values: ApiGen_Concepts_DocumentRelationship) => void;
   onViewParent: (relationshipType: ApiGen_CodeTypes_DocumentRelationType, parentId: number) => void;
@@ -35,6 +36,7 @@ export const DocumentResults: React.FunctionComponent<
   onPreview,
   showParentInformation,
   relationshipDisplay,
+  canEditDocuments,
   ...rest
 }) => {
   const columns = useMemo(
@@ -46,8 +48,17 @@ export const DocumentResults: React.FunctionComponent<
         onPreview,
         showParentInformation,
         relationshipDisplay,
+        canEditDocuments,
       }),
-    [onViewDetails, onViewParent, onDelete, onPreview, showParentInformation, relationshipDisplay],
+    [
+      onViewDetails,
+      onViewParent,
+      onDelete,
+      onPreview,
+      showParentInformation,
+      relationshipDisplay,
+      canEditDocuments,
+    ],
   );
 
   return (

@@ -28,7 +28,7 @@ export const ManagementSummaryView: React.FunctionComponent<IManagementSummaryVi
   const keycloak = useKeycloakWrapper();
   const statusSolver = new ManagementStatusUpdateSolver(managementFile);
   const canEditDetails = () => {
-    if (keycloak.hasRole(Roles.SYSTEM_ADMINISTRATOR) || statusSolver.canEditProperties()) {
+    if (keycloak.hasRole(Roles.SYSTEM_ADMINISTRATOR) || !statusSolver.isAdminProtected()) {
       return true;
     }
     return false;
@@ -45,14 +45,10 @@ export const ManagementSummaryView: React.FunctionComponent<IManagementSummaryVi
   return (
     <StyledSummarySection>
       <StyledEditWrapper className="mr-3 my-1">
-        {keycloak.hasClaim(Claims.MANAGEMENT_EDIT) &&
-        managementFile !== undefined &&
-        canEditDetails() ? (
+        {keycloak.hasClaim(Claims.MANAGEMENT_EDIT) && managementFile && canEditDetails() ? (
           <EditButton title="Edit management file" onClick={onEdit} style={{ float: 'right' }} />
         ) : null}
-        {keycloak.hasClaim(Claims.MANAGEMENT_EDIT) &&
-        managementFile !== undefined &&
-        !canEditDetails() ? (
+        {keycloak.hasClaim(Claims.MANAGEMENT_EDIT) && managementFile && !canEditDetails() ? (
           <TooltipIcon
             toolTipId={`${managementFile?.id || 0}-summary-cannot-edit-tooltip`}
             toolTip={cannotEditMessage}

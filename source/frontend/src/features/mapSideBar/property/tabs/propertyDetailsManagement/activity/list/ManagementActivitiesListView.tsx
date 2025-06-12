@@ -5,6 +5,7 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionListHeader } from '@/components/common/SectionListHeader';
 import { TableSort } from '@/components/Table/TableSort';
 import Claims from '@/constants/claims';
+import ManagementStatusUpdateSolver from '@/features/mapSideBar/management/tabs/fileDetails/detail/ManagementStatusUpdateSolver';
 import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
 
 import ManagementActivitiesList, {
@@ -17,6 +18,7 @@ export interface IManagementActivitiesListViewProps {
   isLoading: boolean;
   propertyActivities: PropertyActivityRow[];
   sort: TableSort<ApiGen_Concepts_PropertyActivity>;
+  statusSolver: ManagementStatusUpdateSolver;
   getNavigationUrl?: (row: PropertyActivityRow) => { title: string; url: string };
   setSort: React.Dispatch<React.SetStateAction<TableSort<ApiGen_Concepts_PropertyActivity>>>;
   onCreate?: () => void;
@@ -28,23 +30,31 @@ const ManagementActivitiesListView: React.FunctionComponent<IManagementActivitie
   isLoading,
   propertyActivities,
   sort,
+  statusSolver,
   setSort,
   onCreate,
   onView,
   onDelete,
 }) => {
+  const canEditActivities = !statusSolver || (statusSolver && statusSolver.canEditActivities());
+
   return (
     <Section
       isCollapsable
       initiallyExpanded
       header={
-        <SectionListHeader
-          claims={[Claims.MANAGEMENT_EDIT]}
-          title="Activities List"
-          addButtonText="Add an Activity"
-          addButtonIcon={<BiListPlus size={'2.5rem'} />}
-          onAdd={onCreate}
-        />
+        canEditActivities ? (
+          <SectionListHeader
+            claims={[Claims.MANAGEMENT_EDIT]}
+            title="Activities List"
+            addButtonText="Add an Activity"
+            addButtonIcon={<BiListPlus size={'2.5rem'} />}
+            onAdd={onCreate}
+            isAddEnabled={statusSolver.canEditActivities()}
+          />
+        ) : (
+          'Activities List'
+        )
       }
     >
       <ManagementActivitiesList

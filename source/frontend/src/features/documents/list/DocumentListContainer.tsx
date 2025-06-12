@@ -8,6 +8,7 @@ import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/Api
 
 import { DocumentRow } from '../ComposedDocument';
 import { useDocumentRelationshipProvider } from '../hooks/useDocumentRelationshipProvider';
+import { IUpdateDocumentsStrategy } from '../models/IUpdateDocumentsStrategy';
 import DocumentListView from './DocumentListView';
 
 export interface IDocumentListContainerProps {
@@ -16,6 +17,7 @@ export interface IDocumentListContainerProps {
   disableAdd?: boolean;
   addButtonText?: string;
   title?: string;
+  statusSolver?: IUpdateDocumentsStrategy | null;
   onSuccess?: () => void;
 }
 
@@ -88,6 +90,9 @@ const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps
     pathGenerator.showFile(relationshipType, parentId);
   };
 
+  const editDocumentsEnabled =
+    !props.statusSolver || (props.statusSolver && props.statusSolver.canEditDocuments());
+
   return (
     <DocumentListView
       parentId={props.parentId}
@@ -95,6 +100,7 @@ const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps
       addButtonText={props.addButtonText}
       isLoading={retrieveDocumentRelationshipLoading}
       documentResults={documentResults}
+      canEditDocuments={editDocumentsEnabled}
       onDelete={onDelete}
       onSuccess={onSuccess}
       onRefresh={handleDocumentsRefresh}

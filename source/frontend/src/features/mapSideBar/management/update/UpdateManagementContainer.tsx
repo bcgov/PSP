@@ -33,6 +33,8 @@ export const UpdateManagementContainer = React.forwardRef<
 
   const dispositionStatusTypes = getByType(API.DISPOSITION_FILE_STATUS_TYPES);
 
+  const statusSolver = new ManagementStatusUpdateSolver(managementFile);
+
   const {
     putManagementFile: { execute: updateManagementFile, loading },
   } = useManagementProvider();
@@ -93,6 +95,7 @@ export const UpdateManagementContainer = React.forwardRef<
     <View
       formikRef={formikRef}
       initialValues={ManagementFormModel.fromApi(managementFile)}
+      canEditDetails={statusSolver.canEditDetails()}
       onSubmit={async (
         values: ManagementFormModel,
         formikHelpers: FormikHelpers<ManagementFormModel>,

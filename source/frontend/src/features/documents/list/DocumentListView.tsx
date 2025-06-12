@@ -47,6 +47,7 @@ export interface IDocumentListViewProps {
   title?: string;
   showParentInformation: boolean;
   relationshipDisplay?: ParentInformationDisplay;
+  canEditDocuments: boolean;
   onDelete: (relationship: ApiGen_Concepts_DocumentRelationship) => Promise<boolean | undefined>;
   onSuccess: () => void;
   onRefresh: () => void;
@@ -60,20 +61,15 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
 ) => {
   const { hasClaim } = useKeycloakWrapper();
 
-  const { documentResults, isLoading, defaultFilters, hideFilters, title } = props;
+  const { documentResults, isLoading, defaultFilters, hideFilters, title, canEditDocuments } =
+    props;
 
   const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState<boolean>(false);
-
   const [documentTypes, setDocumentTypes] = useState<ApiGen_Concepts_DocumentType[]>([]);
-
-  const [sort, setSort] = React.useState<TableSort<ApiGen_Concepts_Document>>({});
-
-  const [filters, setFilters] = React.useState<IDocumentFilter>(
-    defaultFilters ?? defaultDocumentFilter,
-  );
+  const [sort, setSort] = useState<TableSort<ApiGen_Concepts_Document>>({});
+  const [filters, setFilters] = useState<IDocumentFilter>(defaultFilters ?? defaultDocumentFilter);
 
   const { getDocumentRelationshipTypes, getDocumentTypes } = useDocumentProvider();
-
   const { setPreviewDocumentId, setShowDocumentPreview } = useContext(DocumentViewerContext);
 
   useEffect(() => {
@@ -216,7 +212,7 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
         </Col>
         <Col xs="auto" className="my-1">
           <ListHeaderActionsDiv>
-            {hasClaim([Claims.DOCUMENT_ADD]) && !disableAdd && (
+            {hasClaim([Claims.DOCUMENT_ADD]) && canEditDocuments && !disableAdd && (
               <StyledSectionAddButton
                 onClick={() => setIsUploadVisible && setIsUploadVisible(true)}
                 data-testid={props['data-testId']}
@@ -254,6 +250,7 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
           results={sortedFilteredDocuments}
           loading={isLoading}
           sort={sort}
+          canEditDocuments={canEditDocuments}
           setSort={setSort}
           onViewDetails={handleViewDetails}
           onViewParent={props.onViewParent}
@@ -266,6 +263,7 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
       <DocumentDetailModal
         display={isDetailsVisible}
         relationshipType={props.relationshipType}
+        canEditDocument={canEditDocuments}
         setDisplay={setIsDetailsVisible}
         pimsDocument={selectedDocument ? DocumentRow.fromApi(selectedDocument, '') : undefined}
         onUpdateSuccess={onUpdateSuccess}

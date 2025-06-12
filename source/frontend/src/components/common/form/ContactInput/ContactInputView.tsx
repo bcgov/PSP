@@ -29,6 +29,7 @@ export type OptionalAttributes = {
   required?: boolean;
   displayErrorTooltips?: boolean;
   placeholder?: string;
+  canEditDetails: boolean;
 };
 
 export type IContactInputViewProps = FormControlProps & OptionalAttributes & RequiredAttributes;
@@ -41,6 +42,7 @@ const ContactInputView: React.FunctionComponent<IContactInputViewProps> = ({
   setShowContactManager,
   contactManagerProps,
   placeholder,
+  canEditDetails,
 }) => {
   const { errors, touched, values } = useFormikContext<any>();
   const error = getIn(errors, field);
@@ -72,7 +74,7 @@ const ContactInputView: React.FunctionComponent<IContactInputViewProps> = ({
                 }}
               >
                 {text}
-                {isValidString(contactInfo?.id) && (
+                {isValidString(contactInfo?.id) && canEditDetails && (
                   <StyledRemoveLinkButton
                     onClick={() => {
                       onClear();
@@ -88,6 +90,7 @@ const ContactInputView: React.FunctionComponent<IContactInputViewProps> = ({
                 placeholder="Select from Contacts"
                 className="d-none"
                 defaultValue=""
+                disabled={!canEditDetails}
               ></Input>
             </Col>
             <Col xs="auto" className="pl-0">
@@ -98,6 +101,7 @@ const ContactInputView: React.FunctionComponent<IContactInputViewProps> = ({
                 onClick={() => {
                   setShowContactManager(true);
                 }}
+                disabled={!canEditDetails}
               ></Button>
             </Col>
           </Row>

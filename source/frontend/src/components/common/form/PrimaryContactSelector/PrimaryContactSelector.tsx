@@ -11,11 +11,13 @@ import { Select, SelectOption } from '../Select';
 export interface IPrimaryContactSelectorProps {
   field: string;
   contactInfo?: IContactSearchResult;
+  canEditDetails?: boolean;
 }
 
 export const PrimaryContactSelector: React.FC<IPrimaryContactSelectorProps> = ({
   field,
   contactInfo,
+  canEditDetails,
 }) => {
   const { setFieldValue } = useFormikContext<any>();
   const {
@@ -47,9 +49,16 @@ export const PrimaryContactSelector: React.FC<IPrimaryContactSelectorProps> = ({
       };
     }) ?? [];
 
+  const editEnabled = canEditDetails ?? true;
+
   if (contactInfo?.organizationId && !contactInfo?.personId) {
     return primaryContacts.length > 1 ? (
-      <Select options={primaryContacts} field={field} placeholder="Select a primary contact" />
+      <Select
+        options={primaryContacts}
+        field={field}
+        placeholder="Select a primary contact"
+        disabled={!editEnabled}
+      />
     ) : primaryContacts.length > 0 ? (
       <span>{primaryContacts[0].label}</span>
     ) : (

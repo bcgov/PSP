@@ -10,14 +10,17 @@ import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import useIsMounted from '@/hooks/util/useIsMounted';
 import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
 
+import ManagementStatusUpdateSolver from '../../fileDetails/detail/ManagementStatusUpdateSolver';
+
 export interface IPropertyManagementActivitiesListContainerProps {
   managementFileId: number;
+  statusSolver: ManagementStatusUpdateSolver;
   View: React.FC<IManagementActivitiesListViewProps>;
 }
 
 const ManagementFileActivitiesListContainer: React.FunctionComponent<
   IPropertyManagementActivitiesListContainerProps
-> = ({ managementFileId, View }) => {
+> = ({ managementFileId, statusSolver, View }) => {
   const isMounted = useIsMounted();
   const { setModalContent, setDisplayModal } = useModalContext();
   const [propertyActivities, setPropertyActivities] = useState<PropertyActivityRow[]>([]);
@@ -83,6 +86,7 @@ const ManagementFileActivitiesListContainer: React.FunctionComponent<
         });
         setDisplayModal(true);
       }}
+      statusSolver={statusSolver}
     />
   );
 };

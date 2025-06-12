@@ -8,13 +8,15 @@ import { useModalManagement } from '@/hooks/useModalManagement';
 import { ApiGen_Concepts_Note } from '@/models/api/generated/ApiGen_Concepts_Note';
 import { exists, isValidId } from '@/utils';
 
+import { IUpdateNotesStrategy } from '../models/IUpdateNotesStrategy';
 import { INoteListViewProps } from './NoteListView';
 
 export interface INoteListContainerProps {
   type: NoteTypes;
   entityId: number;
-  onSuccess?: () => void;
   NoteListView: React.FunctionComponent<React.PropsWithChildren<INoteListViewProps>>;
+  statusSolver?: IUpdateNotesStrategy | null;
+  onSuccess?: () => void;
 }
 
 /**
@@ -22,7 +24,7 @@ export interface INoteListContainerProps {
  */
 export const NoteListContainer: React.FunctionComponent<
   React.PropsWithChildren<INoteListContainerProps>
-> = ({ type, entityId, onSuccess, NoteListView }: INoteListContainerProps) => {
+> = ({ type, entityId, onSuccess, NoteListView, statusSolver }: INoteListContainerProps) => {
   const {
     getAllNotes: { execute: getAllNotes, loading: loadingNotes, response: notesResponse },
     deleteNote: { execute: deleteNote, loading: loadingDeleteNote },
@@ -52,6 +54,8 @@ export const NoteListContainer: React.FunctionComponent<
   // UI components
   const loading = loadingNotes || loadingDeleteNote;
 
+  const editNotesEnabled = !statusSolver || (statusSolver && statusSolver.canEditNotes());
+
   return (
     <NoteListView
       loading={loading}
@@ -62,6 +66,7 @@ export const NoteListContainer: React.FunctionComponent<
       isAddNotesOpened={isAddNotesOpened}
       isViewNotesOpened={isViewNotesOpened}
       currentNote={currentNote}
+      canEditNotes={editNotesEnabled}
       setSort={setSort}
       openAddNotes={openAddNotes}
       closeAddNotes={closeAddNotes}
