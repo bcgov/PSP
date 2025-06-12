@@ -19,6 +19,7 @@ import { exists, isValidId, sortFileProperties, stripTrailingSlash } from '@/uti
 
 import { SideBarContext } from '../context/sidebarContext';
 import { PropertyForm } from '../shared/models';
+import usePathGenerator from '../shared/sidebarPathGenerator';
 import { IDispositionViewProps } from './DispositionView';
 
 export interface IDispositionContainerProps {
@@ -151,23 +152,49 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
 
   const close = useCallback(() => onClose && onClose(), [onClose]);
 
-  const navigateToMenuRoute = (selectedIndex: number) => {
-    const route = selectedIndex === 0 ? '' : `/property/${selectedIndex}`;
-    history.push(`${stripTrailingSlash(match.url)}${route}`);
-  };
+  const pathGenerator = usePathGenerator();
 
-  const onMenuChange = (selectedIndex: number) => {
+  const onSelectFileSummary = () => {
+    if (!exists(dispositionFile)) {
+      return;
+    }
+
     if (isEditing) {
       if (formikRef?.current?.dirty) {
-        handleCancelClick(() => navigateToMenuRoute(selectedIndex));
+        handleCancelClick(() => pathGenerator.showFile('disposition', dispositionFile.id));
         return;
       }
     }
-    navigateToMenuRoute(selectedIndex);
+    pathGenerator.showFile('disposition', dispositionFile.id);
   };
 
-  const onShowPropertySelector = () => {
-    history.push(`${stripTrailingSlash(match.url)}/property/selector`);
+  const onSelectProperty = (filePropertyId: number) => {
+    if (!exists(dispositionFile)) {
+      return;
+    }
+
+    const fileProperties = dispositionFile?.fileProperties ?? [];
+    const menuIndex = fileProperties.findIndex(fp => fp.id === filePropertyId);
+    if (menuIndex < 0) {
+      return;
+    }
+
+    if (isEditing) {
+      if (formikRef?.current?.dirty) {
+        handleCancelClick(() =>
+          pathGenerator.showFilePropertyIndex('disposition', dispositionFile.id, menuIndex + 1),
+        );
+        return;
+      }
+    }
+    // The index needs to be offset to match the menu index
+    pathGenerator.showFilePropertyIndex('disposition', dispositionFile.id, menuIndex + 1);
+  };
+
+  const onEditProperties = () => {
+    if (exists(dispositionFile)) {
+      pathGenerator.editProperties('disposition', dispositionFile.id);
+    }
   };
 
   const handleSaveClick = async () => {
@@ -317,8 +344,9 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
         onClose={close}
         onCancel={handleCancelClick}
         onSave={handleSaveClick}
-        onMenuChange={onMenuChange}
-        onShowPropertySelector={onShowPropertySelector}
+        onSelectFileSummary={onSelectFileSummary}
+        onSelectProperty={onSelectProperty}
+        onEditProperties={onEditProperties}
         onUpdateProperties={onUpdateProperties}
         onSuccess={onSuccess}
         confirmBeforeAdd={confirmBeforeAdd}
