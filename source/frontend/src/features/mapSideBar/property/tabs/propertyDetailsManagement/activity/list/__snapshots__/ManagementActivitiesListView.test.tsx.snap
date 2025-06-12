@@ -496,7 +496,7 @@ exports[`Activities list view > renders as expected 1`] = `
                 Activity sub-type
                 <div
                   class="c4"
-                  data-testid="sort-column-activitySubType"
+                  data-testid="sort-column-activitySubTypes"
                 >
                   <svg
                     class="c5"
@@ -661,9 +661,7 @@ exports[`Activities list view > renders as expected 1`] = `
                 role="cell"
                 style="box-sizing: border-box; flex: 35 0 auto; min-width: 35px; width: 35px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
-              >
-                Activity Type Description
-              </div>
+              />
               <div
                 class="td"
                 role="cell"
@@ -736,9 +734,7 @@ exports[`Activities list view > renders as expected 1`] = `
                 role="cell"
                 style="box-sizing: border-box; flex: 35 0 auto; min-width: 35px; width: 35px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
-              >
-                Activity Type Description
-              </div>
+              />
               <div
                 class="td"
                 role="cell"

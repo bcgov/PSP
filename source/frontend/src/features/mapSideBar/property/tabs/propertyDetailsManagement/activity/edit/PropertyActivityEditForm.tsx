@@ -1,11 +1,11 @@
 import clsx from 'classnames';
 import { Formik, FormikProps } from 'formik';
-import React, { ChangeEvent, useMemo, useRef, useState } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { Col } from 'react-bootstrap';
 import ReactVisibilitySensor from 'react-visibility-sensor';
 
 import { CancelConfirmationModal } from '@/components/common/CancelConfirmationModal';
-import { FastDatePicker, Input, Select, SelectOption } from '@/components/common/form';
+import { FastDatePicker, Input, Multiselect, Select } from '@/components/common/form';
 import { ContactInputContainer } from '@/components/common/form/ContactInput/ContactInputContainer';
 import ContactInputView from '@/components/common/form/ContactInput/ContactInputView';
 import { TextArea } from '@/components/common/form/TextArea';
@@ -16,16 +16,21 @@ import { StyledSummarySection } from '@/components/common/Section/SectionStyles'
 import * as Styled from '@/components/common/styles';
 import { TrayHeaderContent } from '@/components/common/styles';
 import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
-import { PROP_MGMT_ACTIVITY_STATUS_TYPES, PROP_MGMT_ACTIVITY_TYPES } from '@/constants/API';
+import {
+  PROP_MGMT_ACTIVITY_STATUS_TYPES,
+  PROP_MGMT_ACTIVITY_SUBTYPES_TYPES,
+  PROP_MGMT_ACTIVITY_TYPES,
+} from '@/constants/API';
 import SaveCancelButtons from '@/features/leases/SaveCancelButtons';
 import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { useModalManagement } from '@/hooks/useModalManagement';
 import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
-import { ApiGen_Concepts_PropertyActivitySubtype } from '@/models/api/generated/ApiGen_Concepts_PropertyActivitySubtype';
-import { exists } from '@/utils';
+import { ILookupCode } from '@/store/slices/lookupCodes';
+import { exists, isValidId } from '@/utils';
 import { mapLookupCode } from '@/utils/mapLookupCode';
 
+import { ManagementActivitySubTypeModel } from '../models/ManagementActivitySubType';
 import { ContactListForm } from './ContactListForm';
 import { InvoiceListForm } from './InvoiceListForm';
 import { PropertyActivityFormModel } from './models';
@@ -33,14 +38,13 @@ import { PropertyActivityEditFormYupSchema } from './validation';
 
 export interface IPropertyActivityEditFormProps {
   propertyId: number;
-  activity?: ApiGen_Concepts_PropertyActivity;
-  subtypes: ApiGen_Concepts_PropertyActivitySubtype[];
+  initialValues: PropertyActivityFormModel;
   gstConstant: number;
   pstConstant: number;
-  onCancel: () => void;
-  onClose: () => void;
   loading: boolean;
   show: boolean;
+  onCancel: () => void;
+  onClose: () => void;
   setShow: (show: boolean) => void;
   onSave: (model: ApiGen_Concepts_PropertyActivity) => Promise<void>;
 }
@@ -49,61 +53,56 @@ export const PropertyActivityEditForm: React.FunctionComponent<
   React.PropsWithChildren<IPropertyActivityEditFormProps>
 > = props => {
   const formikRef = useRef<FormikProps<PropertyActivityFormModel>>(null);
-
   const [showConfirmModal, openConfirmModal, closeConfirmModal] = useModalManagement();
 
-  const [activityType, setActivityType] = useState<string | null>(null);
-
-  const initialForm = useMemo(() => {
-    const initialModel = PropertyActivityFormModel.fromApi(props.activity);
-    if (props.activity === undefined) {
-      initialModel.activityStatusCode = 'NOTSTARTED';
-    }
-    setActivityType(initialModel.activityTypeCode);
-    return initialModel;
-  }, [props.activity]);
+  const [activitySubTypeOptions, setActivitySubTypeOptions] =
+    useState<ManagementActivitySubTypeModel[]>(null);
 
   const lookupCodes = useLookupCodeHelpers();
-
   const activityTypeOptions = lookupCodes
     .getByType(PROP_MGMT_ACTIVITY_TYPES)
     .map(c => mapLookupCode(c));
-
-  const activitySubtypeOptions: SelectOption[] = useMemo(() => {
-    return props.subtypes
-      .filter(ast => ast.parentTypeCode === activityType)
-      .map<SelectOption>(ast => {
-        return {
-          label: ast.description ?? '',
-          value: ast.typeCode ?? '',
-          code: ast.typeCode ?? undefined,
-          parentId: ast.parentTypeCode ?? undefined,
-        };
-      });
-  }, [activityType, props.subtypes]);
-
+  const activitySubTypeCodes: ILookupCode[] = lookupCodes.getByType(
+    PROP_MGMT_ACTIVITY_SUBTYPES_TYPES,
+  );
   const activityStatusOptions = lookupCodes
     .getByType(PROP_MGMT_ACTIVITY_STATUS_TYPES)
     .map(c => mapLookupCode(c));
 
-  const saveActivity = async (values: PropertyActivityFormModel) => {
-    await props.onSave(values.toApi(props.propertyId));
-    if (exists(formikRef.current)) {
-      formikRef.current.isSubmitting = false;
-    }
-  };
-
   const onActivityTypeChange = async (changeEvent: ChangeEvent<HTMLInputElement>) => {
     const typeCode = changeEvent.target.value;
-    setActivityType(typeCode ?? null);
-  };
+    if (
+      typeCode &&
+      formikRef.current?.values.activityTypeCode &&
+      typeCode !== formikRef.current?.values.activityTypeCode
+    ) {
+      if (exists(formikRef.current)) {
+        formikRef.current?.setFieldValue('activitySubtypeCodes', []);
+      }
+    }
 
-  const isEditMode = exists(props.activity);
-
-  const onCloseClick = () => {
-    props.setShow(false);
-    props.onClose();
+    setManagementActivitySubTypeOptions(typeCode);
   };
+  const setManagementActivitySubTypeOptions = useCallback(
+    async (activityTypeCode: string) => {
+      const subTypeOptions: ManagementActivitySubTypeModel[] = activitySubTypeCodes
+        .filter(x => x.parentId === activityTypeCode)
+        .map(x => ManagementActivitySubTypeModel.fromLookup(null, x));
+
+      setActivitySubTypeOptions(subTypeOptions);
+    },
+    [activitySubTypeCodes],
+  );
+
+  useEffect(() => {
+    if (activitySubTypeOptions === null) {
+      setManagementActivitySubTypeOptions(props.initialValues.activityTypeCode);
+    }
+  }, [
+    activitySubTypeOptions,
+    props.initialValues.activityTypeCode,
+    setManagementActivitySubTypeOptions,
+  ]);
 
   return (
     <ReactVisibilitySensor
@@ -113,12 +112,17 @@ export const PropertyActivityEditForm: React.FunctionComponent<
     >
       <Styled.PopupTray className={clsx({ show: props.show })}>
         <TrayHeaderContent>
-          <Styled.TrayHeader>{isEditMode ? 'Edit ' : 'New '}Property Activity</Styled.TrayHeader>
+          <Styled.TrayHeader>
+            {isValidId(props.initialValues?.id) ? 'Edit ' : 'New '}Property Activity
+          </Styled.TrayHeader>
           <Col xs="auto" className="text-right">
             <Styled.CloseIcon
               id="close-tray"
               title="close"
-              onClick={onCloseClick}
+              onClick={() => {
+                props.setShow(false);
+                props.onClose();
+              }}
             ></Styled.CloseIcon>
           </Col>
         </TrayHeaderContent>
@@ -126,13 +130,18 @@ export const PropertyActivityEditForm: React.FunctionComponent<
           <StyledFormWrapper>
             <StyledSummarySection>
               <LoadingBackdrop show={props.loading} />
-              {exists(initialForm) && (
+              {exists(props.initialValues) && (
                 <Formik<PropertyActivityFormModel>
                   enableReinitialize
                   innerRef={formikRef}
                   validationSchema={PropertyActivityEditFormYupSchema}
-                  initialValues={initialForm}
-                  onSubmit={saveActivity}
+                  initialValues={props.initialValues}
+                  onSubmit={async (values, formikHelpers) => {
+                    await props.onSave(values.toApi(props.propertyId));
+                    if (exists(formikRef.current)) {
+                      formikHelpers.setSubmitting(false);
+                    }
+                  }}
                 >
                   {formikProps => (
                     <>
@@ -145,18 +154,19 @@ export const PropertyActivityEditForm: React.FunctionComponent<
                             onChange={onActivityTypeChange}
                           />
                         </SectionField>
-                        <SectionField label="Sub-type" contentWidth={{ xs: 7 }} required>
-                          <Select
-                            field="activitySubtypeCode"
-                            options={activitySubtypeOptions}
-                            placeholder="Select subtype"
+                        <SectionField label="Sub-type(s)" contentWidth={{ xs: 7 }} required>
+                          <Multiselect
+                            field="activitySubtypeCodes"
+                            displayValue="subTypeCodeDescription"
+                            options={activitySubTypeOptions ?? []}
+                            placeholder=""
                           />
                         </SectionField>
                         <SectionField label="Activity status" contentWidth={{ xs: 7 }} required>
                           <Select
                             field="activityStatusCode"
                             options={activityStatusOptions}
-                            placeholder="Select status"
+                            placeholder=""
                           />
                         </SectionField>
                         <SectionField
