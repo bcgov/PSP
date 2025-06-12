@@ -125,7 +125,7 @@ describe('ManagementActivityEditContainer component', () => {
         activityProperties: [
           {
             id: 15,
-            propertyActivityId: 200,
+            propertyActivityId: 1,
             propertyId: 1,
             rowVersion: 1,
           },
