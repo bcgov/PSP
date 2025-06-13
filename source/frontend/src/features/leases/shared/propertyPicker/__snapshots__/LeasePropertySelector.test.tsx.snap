@@ -764,14 +764,22 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
                 <div
                   class="c0 form-section"
                 >
+                  <h2
+                    class="c1"
+                  >
+                    <div
+                      class="no-gutters row"
+                    >
+                      <div
+                        class="align-content-end col"
+                      >
+                        Search for a property
+                      </div>
+                    </div>
+                  </h2>
                   <div
                     class="collapse show"
                   >
-                    <h3
-                      class="c5"
-                    >
-                      Search for a property
-                    </h3>
                     <form
                       class="c11 p-3"
                       novalidate=""
@@ -933,14 +941,6 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
                         </div>
                       </div>
                     </form>
-                  </div>
-                </div>
-                <div
-                  class="c0 form-section"
-                >
-                  <div
-                    class="collapse show"
-                  >
                     <div
                       class="table"
                       data-testid="map-properties"

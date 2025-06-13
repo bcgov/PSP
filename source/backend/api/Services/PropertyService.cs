@@ -216,51 +216,6 @@ namespace Pims.Api.Services
             return propertyManagement;
         }
 
-        private static void PropertyHasActiveLease(IEnumerable<PimsPropertyLease> propertyLeases, out bool hasActiveLease, out bool hasActiveExpiryDate)
-        {
-            hasActiveLease = false;
-            hasActiveExpiryDate = false;
-
-            List<PimsLease> activeLeaseList = propertyLeases.Select(x => x.Lease).Where(y => y.LeaseStatusTypeCode == LeaseStatusTypes.ACTIVE.ToString()).ToList();
-            foreach (var agreement in activeLeaseList)
-            {
-                if (!agreement.TerminationDate.HasValue)
-                {
-                    var latestRenewal = agreement.PimsLeaseRenewals.Where(x => x.IsExercised == true).OrderByDescending(x => x.CommencementDt).FirstOrDefault();
-                    if (latestRenewal is null) // No Renewal - Check only Lease dates.
-                    {
-                        if (agreement.OrigExpiryDate.HasValue && agreement.OrigExpiryDate.Value.Date >= DateTime.Now.Date)
-                        {
-                            hasActiveLease = hasActiveExpiryDate = true;
-                        }
-                        else if (!agreement.OrigExpiryDate.HasValue)
-                        {
-                            hasActiveLease = true;
-                        }
-                    }
-                    else
-                    {
-                        if (agreement.OrigExpiryDate.HasValue && latestRenewal.ExpiryDt.HasValue)
-                        {
-                            hasActiveLease = hasActiveExpiryDate = agreement.OrigExpiryDate.Value.Date >= DateTime.Now.Date || latestRenewal.ExpiryDt.Value.Date >= DateTime.Now.Date;
-                        }
-                        else if (agreement.OrigExpiryDate.HasValue && !latestRenewal.ExpiryDt.HasValue)
-                        {
-                            hasActiveLease = true;
-                        }
-                        else if (!agreement.OrigExpiryDate.HasValue && latestRenewal.ExpiryDt.HasValue)
-                        {
-                            hasActiveLease = latestRenewal.ExpiryDt.Value.Date >= DateTime.Now.Date;
-                        }
-                        else
-                        {
-                            hasActiveLease = true;
-                        }
-                    }
-                }
-            }
-        }
-
         public PropertyManagementModel UpdatePropertyManagement(PimsProperty property)
         {
             _logger.LogInformation("Updating property management information...");
@@ -276,30 +231,41 @@ namespace Pims.Api.Services
         public IList<PimsPropertyActivity> GetActivities(long propertyId)
         {
             _logger.LogInformation("Getting property management activities for property with id {propertyId}", propertyId);
-            _user.ThrowIfNotAuthorized(Permissions.ManagementView, Permissions.PropertyView);
+            _user.ThrowIfNotAllAuthorized(Permissions.ManagementView, Permissions.PropertyView);
 
             return _propertyActivityRepository.GetActivitiesByProperty(propertyId);
         }
 
-        public PimsPropertyActivity GetActivity(long propertyId, long activityId)
+        public IList<PimsPropertyActivity> GetFileActivities(long managementFileId)
         {
-            _logger.LogInformation("Retrieving single property Activity...");
-            _user.ThrowIfNotAuthorized(Permissions.ManagementView, Permissions.PropertyView);
+            _logger.LogInformation("Getting property management activities for management file with id {managementFileId}", managementFileId);
+            _user.ThrowIfNotAllAuthorized(Permissions.ManagementView, Permissions.PropertyView);
 
-            var propertyActivity = _propertyActivityRepository.GetActivity(activityId);
+            return _propertyActivityRepository.GetActivitiesByManagementFile(managementFileId);
+        }
 
-            if (propertyActivity.PimsPropPropActivities.Any(x => x.PropertyId == propertyId))
-            {
-                return propertyActivity;
-            }
+        public PimsPropertyActivity GetActivity(long activityId)
+        {
+            _logger.LogInformation("Retrieving property Activity with Id: {ActivityId}", activityId);
+            _user.ThrowIfNotAllAuthorized(Permissions.ManagementView, Permissions.PropertyView);
 
-            throw new BadRequestException("Activity with the given id does not match the property id");
+            return _propertyActivityRepository.GetActivity(activityId);
+        }
+
+        public IEnumerable<PimsPropertyActivity> GetActivitiesByPropertyIds(IEnumerable<long> propertyIds)
+        {
+            _logger.LogInformation("Retrieving multiple property Activities... {propertyIds}", propertyIds);
+            _user.ThrowIfNotAllAuthorized(Permissions.ManagementView, Permissions.PropertyView);
+
+            var managementFilePropertyIds = _propertyActivityRepository.GetActivitiesByPropertyIds(propertyIds);
+
+            return managementFilePropertyIds;
         }
 
         public PimsPropertyActivity CreateActivity(PimsPropertyActivity propertyActivity)
         {
             _logger.LogInformation("Creating property Activity...");
-            _user.ThrowIfNotAuthorized(Permissions.ManagementAdd, Permissions.PropertyEdit);
+            _user.ThrowIfNotAllAuthorized(Permissions.ManagementAdd, Permissions.PropertyEdit);
 
             if (propertyActivity.PropMgmtActivityStatusTypeCode == null)
             {
@@ -312,16 +278,11 @@ namespace Pims.Api.Services
             return propertyActivityResult;
         }
 
-        public PimsPropertyActivity UpdateActivity(long propertyId, long activityId, PimsPropertyActivity propertyActivity)
+        public PimsPropertyActivity UpdateActivity(PimsPropertyActivity propertyActivity)
         {
-            _logger.LogInformation("Updating property Activity...");
-            _user.ThrowIfNotAuthorized(Permissions.ManagementEdit, Permissions.PropertyEdit);
-
-            if (!propertyActivity.PimsPropPropActivities.Any(x => x.PropertyId == propertyId && x.PimsPropertyActivityId == activityId)
-                || propertyActivity.PimsPropertyActivityId != activityId)
-            {
-                throw new BadRequestException("Invalid activity identifiers.");
-            }
+            propertyActivity.ThrowIfNull(nameof(propertyActivity));
+            _logger.LogInformation("Updating property Activity with Id: {ActivityId}", propertyActivity.Internal_Id);
+            _user.ThrowIfNotAllAuthorized(Permissions.ManagementEdit, Permissions.PropertyEdit);
 
             var propertyActivityResult = _propertyActivityRepository.Update(propertyActivity);
             _propertyActivityRepository.CommitTransaction();
@@ -329,10 +290,33 @@ namespace Pims.Api.Services
             return propertyActivityResult;
         }
 
+        public bool DeleteFileActivity(long managementFileId, long activityId)
+        {
+            _logger.LogInformation("Deleting Management Activity with id {activityId}", activityId);
+            _user.ThrowIfNotAllAuthorized(Permissions.ManagementDelete, Permissions.PropertyEdit);
+
+            var propertyManagementActivity = _propertyActivityRepository.GetActivity(activityId);
+
+            if (propertyManagementActivity.ManagementFileId != managementFileId)
+            {
+                throw new BadRequestException("Activity with the given id does not match the management file id");
+            }
+
+            if (!propertyManagementActivity.PropMgmtActivityStatusTypeCode.Equals(PropertyActivityStatusTypeCode.NOTSTARTED.ToString()))
+            {
+                throw new BadRequestException($"PropertyManagementActivity can not be deleted since it has already started");
+            }
+
+            var success = _propertyActivityRepository.TryDeleteByFile(activityId, managementFileId);
+            _propertyRepository.CommitTransaction();
+
+            return success;
+        }
+
         public bool DeleteActivity(long activityId)
         {
             _logger.LogInformation("Deleting Management Activity with id {activityId}", activityId);
-            _user.ThrowIfNotAuthorized(Permissions.ManagementDelete, Permissions.PropertyEdit);
+            _user.ThrowIfNotAllAuthorized(Permissions.ManagementDelete, Permissions.PropertyEdit);
 
             var propertyManagementActivity = _propertyActivityRepository.GetActivity(activityId);
 
@@ -518,6 +502,51 @@ namespace Pims.Api.Services
             }
 
             return property;
+        }
+
+        private static void PropertyHasActiveLease(IEnumerable<PimsPropertyLease> propertyLeases, out bool hasActiveLease, out bool hasActiveExpiryDate)
+        {
+            hasActiveLease = false;
+            hasActiveExpiryDate = false;
+
+            List<PimsLease> activeLeaseList = propertyLeases.Select(x => x.Lease).Where(y => y.LeaseStatusTypeCode == LeaseStatusTypes.ACTIVE.ToString()).ToList();
+            foreach (var agreement in activeLeaseList)
+            {
+                if (!agreement.TerminationDate.HasValue)
+                {
+                    var latestRenewal = agreement.PimsLeaseRenewals.Where(x => x.IsExercised == true).OrderByDescending(x => x.CommencementDt).FirstOrDefault();
+                    if (latestRenewal is null) // No Renewal - Check only Lease dates.
+                    {
+                        if (agreement.OrigExpiryDate.HasValue && agreement.OrigExpiryDate.Value.Date >= DateTime.Now.Date)
+                        {
+                            hasActiveLease = hasActiveExpiryDate = true;
+                        }
+                        else if (!agreement.OrigExpiryDate.HasValue)
+                        {
+                            hasActiveLease = true;
+                        }
+                    }
+                    else
+                    {
+                        if (agreement.OrigExpiryDate.HasValue && latestRenewal.ExpiryDt.HasValue)
+                        {
+                            hasActiveLease = hasActiveExpiryDate = agreement.OrigExpiryDate.Value.Date >= DateTime.Now.Date || latestRenewal.ExpiryDt.Value.Date >= DateTime.Now.Date;
+                        }
+                        else if (agreement.OrigExpiryDate.HasValue && !latestRenewal.ExpiryDt.HasValue)
+                        {
+                            hasActiveLease = true;
+                        }
+                        else if (!agreement.OrigExpiryDate.HasValue && latestRenewal.ExpiryDt.HasValue)
+                        {
+                            hasActiveLease = latestRenewal.ExpiryDt.Value.Date >= DateTime.Now.Date;
+                        }
+                        else
+                        {
+                            hasActiveLease = true;
+                        }
+                    }
+                }
+            }
         }
 
         private Point TransformCoordinates(Geometry location)

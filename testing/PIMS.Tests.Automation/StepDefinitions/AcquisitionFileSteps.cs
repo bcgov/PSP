@@ -11,6 +11,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly GenericSteps genericSteps;
         private readonly AcquisitionDetails acquisitionFilesDetails;
         private readonly SearchAcquisitionFiles searchAcquisitionFiles;
+        private readonly SharedTeamMembers sharedTeamMembers;
         private readonly SharedFileProperties sharedFileProperties;
         private readonly SharedPagination sharedPagination;
         private readonly SearchProperties searchProperties;
@@ -37,6 +38,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFilesDetails = new AcquisitionDetails(driver);
             searchAcquisitionFiles = new SearchAcquisitionFiles(driver);
             sharedFileProperties = new SharedFileProperties(driver);
+            sharedTeamMembers = new SharedTeamMembers(driver);
             sharedPagination = new SharedPagination(driver);
             searchProperties = new SearchProperties(driver);
             acquisitionTakes = new AcquisitionTakes(driver);
@@ -233,6 +235,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
             if (acquisitionFile.AcquisitionSearchProperties.LegalDescription != "")
             {
                 sharedFileProperties.SelectPropertyByLegalDescription(acquisitionFile.AcquisitionSearchProperties.LegalDescription);
+                sharedFileProperties.SelectFirstOptionFromSearch();
+                sharedFileProperties.ResetSearch();
+            }
+
+            //Search for a property by Latitude and Longitude
+            if (acquisitionFile.AcquisitionSearchProperties.LatitudeLongitude.LatitudeDegree != "")
+            {
+                sharedFileProperties.SelectPropertyByLongLant(acquisitionFile.AcquisitionSearchProperties.LatitudeLongitude);
                 sharedFileProperties.SelectFirstOptionFromSearch();
                 sharedFileProperties.ResetSearch();
             }
@@ -714,7 +724,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFilesDetails.EditAcquisitionFileBttn();
 
             //Delete the MoTI Solicitor that is associated to a compensation requisition
-            acquisitionFilesDetails.DeleteFirstStaffMember();
+            sharedTeamMembers.DeleteFirstStaffMember();
 
             //Save Acquisition File Details changes
             acquisitionFilesDetails.SaveAcquisitionFileDetailsWithExpectedErrors();
@@ -766,7 +776,29 @@ namespace PIMS.Tests.Automation.StepDefinitions
             else
                 expropriation.VerifySection6InitExpropriationTab();
 
-            //Create Compensation Requisition Forms
+            //Create Compensation Requisition Date Histories
+            if (acquisitionFile.AcquisitionExpropriationDateHistories.Count > 0)
+            {
+                for (int i = 0; i < acquisitionFile.AcquisitionExpropriationDateHistories.Count; i++)
+                {
+                    //Click on Add new Expropriation Date History
+                    expropriation.AddExpropriationDateHistoryButton();
+
+                    //Verify Initial Create Form
+                    expropriation.VerifyExpropriationDateHistoryModalForm();
+
+                    //Add Details to the Expropriation Date History
+                    expropriation.CreateUpdateExpropriationDateHistory(acquisitionFile.AcquisitionExpropriationDateHistories[i]);
+
+                    //Save the Date History
+                    expropriation.SaveExpropriation();
+
+                    //Verify Created Date History table
+                    expropriation.VerifyCreatedExpropriationDateHistory(acquisitionFile.AcquisitionExpropriationDateHistories[i], i);
+                }
+            }
+
+            //Create Compensation Requisition Form 8s
             if (acquisitionFile.AcquisitionExpropriationForm8s.Count > 0)
             {
                 for (int i = 0; i < acquisitionFile.AcquisitionExpropriationForm8s.Count; i++)
@@ -814,7 +846,29 @@ namespace PIMS.Tests.Automation.StepDefinitions
             else
                 expropriation.VerifySection6InitExpropriationTab();
 
-            //Edit Expropriation button
+            //Edit Expropriation Date History button
+            expropriation.EditNthHistoryDateButton(0);
+
+            //Make changes on created Expropriation Date History
+            expropriation.CreateUpdateExpropriationDateHistory(acquisitionFile.AcquisitionExpropriationDateHistories[0]);
+
+            //Cancel changes
+            expropriation.CancelExpropriationHistoryDate();
+
+            //Edit Expropriation Date History button
+            expropriation.EditNthHistoryDateButton(0);
+            expropriation.CreateUpdateExpropriationDateHistory(acquisitionFile.AcquisitionExpropriationDateHistories[0]);
+
+            //Save changes
+            expropriation.SaveExpropriation();
+
+            //Verify Created Date History
+            expropriation.VerifyCreatedExpropriationDateHistory(acquisitionFile.AcquisitionExpropriationDateHistories[0], 0);
+
+            //Delete Expropriation Date History
+            expropriation.DeleteNthHistoryDate(0);
+
+            //Edit Expropriation Form 8 button
             expropriation.EditNthForm8Button(0);
 
             //Make changes on created Expropriation Form 8
@@ -1037,11 +1091,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
             sharedPagination.ResetSearch();
 
             //Filter Acquisition Files
-            searchAcquisitionFiles.FilterAcquisitionFiles("003-549-551", "", "", "Acquisition from Jonathan Doe", "", "Cancelled", "");
+            searchAcquisitionFiles.FilterAcquisitionFiles(pid: "003-549-551", name: "Acquisition from Jonathan Doe", status: "Cancelled");
             Assert.False(searchAcquisitionFiles.SearchFoundResults());
 
             //Look for the last created Acquisition File
-            searchAcquisitionFiles.FilterAcquisitionFiles("", "", "", acquisitionFile.AcquisitionFileName, "", acquisitionFile.AcquisitionStatus, "");
+            searchAcquisitionFiles.FilterAcquisitionFiles(name: acquisitionFile.AcquisitionFileName, status: acquisitionFile.AcquisitionStatus);
         }
 
         [StepDefinition(@"A new Acquisition file is created successfully")]
@@ -1167,6 +1221,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFile.AcquisitionFileName = ExcelDataContext.ReadData(rowNumber, "AcquisitionFileName");
             acquisitionFile.HistoricalFileNumber = ExcelDataContext.ReadData(rowNumber, "HistoricalFileNumber");
             acquisitionFile.PhysicalFileStatus = ExcelDataContext.ReadData(rowNumber, "PhysicalFileStatus");
+            acquisitionFile.PhysicalFileDetails = ExcelDataContext.ReadData(rowNumber, "PhysicalFileDetails");
             acquisitionFile.AcquisitionType = ExcelDataContext.ReadData(rowNumber, "AcquisitionType");
             acquisitionFile.AcquisitionSubfileInterest = ExcelDataContext.ReadData(rowNumber, "AcquisitionSubfileInterest");
             acquisitionFile.AcquisitionSubfileInterestOther = ExcelDataContext.ReadData(rowNumber, "AcquisitionSubfileInterestOther");
@@ -1294,11 +1349,17 @@ namespace PIMS.Tests.Automation.StepDefinitions
             if (acquisitionFile.AcquisitionCompensationStartRow != 0 && acquisitionFile.AcquisitionCompensationCount != 0)
                 PopulateCompensationsCollection(acquisitionFile.AcquisitionCompensationStartRow, acquisitionFile.AcquisitionCompensationCount);
 
-            //Acquisition Expropriation
-            acquisitionFile.ExpropriationStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "ExpropriationStartRow"));
-            acquisitionFile.ExpropriationCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "ExpropriationCount"));
-            if (acquisitionFile.ExpropriationStartRow != 0 && acquisitionFile.ExpropriationCount != 0)
-                PopulateExpropriationCollection(acquisitionFile.ExpropriationStartRow, acquisitionFile.ExpropriationCount);
+            //Acquisition Expropriation Date History
+            acquisitionFile.ExpropriationDateHistoryStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "ExpropriationDateHistoryStartRow"));
+            acquisitionFile.ExpropriationDateHistoryCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "ExpropriationDateHistoryCount"));
+            if (acquisitionFile.ExpropriationDateHistoryStartRow != 0 && acquisitionFile.ExpropriationDateHistoryCount != 0)
+                PopulateExprDateHistoryCollection(acquisitionFile.ExpropriationDateHistoryStartRow, acquisitionFile.ExpropriationDateHistoryCount);
+
+            //Acquisition Expropriation Form 8
+            acquisitionFile.ExpropriationForm8StartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "ExpropriationForm8StartRow"));
+            acquisitionFile.ExpropriationForm8Count = int.Parse(ExcelDataContext.ReadData(rowNumber, "ExpropriationForm8Count"));
+            if (acquisitionFile.ExpropriationForm8StartRow != 0 && acquisitionFile.ExpropriationForm8Count != 0)
+                PopulateExpropriationForm8Collection(acquisitionFile.ExpropriationForm8StartRow, acquisitionFile.ExpropriationForm8Count);
         }
 
         private void PopulateTeamsCollection(int startRow, int rowsCount)
@@ -1499,7 +1560,25 @@ namespace PIMS.Tests.Automation.StepDefinitions
             }
         }
 
-        private void PopulateExpropriationCollection(int startRow, int rowsCount)
+        private void PopulateExprDateHistoryCollection(int startRow, int rowsCount)
+        {
+            System.Data.DataTable expropriationSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionExprDateHistory"]!;
+            ExcelDataContext.PopulateInCollection(expropriationSheet);
+
+            for (int i = startRow; i < startRow + rowsCount; i++)
+            {
+                AcquisitionExpropriationDateHistory expropriation = new AcquisitionExpropriationDateHistory();
+
+                expropriation.ExpropriationDateHistoryOwner = ExcelDataContext.ReadData(i, "ExpropriationDateHistoryOwner");
+                expropriation.ExpropriationDateHistoryOwnerDisplay = ExcelDataContext.ReadData(i, "ExpropriationDateHistoryOwnerDisplay");
+                expropriation.ExpropriationDateHistoryEvent = ExcelDataContext.ReadData(i, "ExpropriationDateHistoryEvent");
+                expropriation.ExpropriationDateHistoryDate = ExcelDataContext.ReadData(i, "ExpropriationDateHistoryDate");
+
+                acquisitionFile.AcquisitionExpropriationDateHistories.Add(expropriation);
+            }
+        }
+
+        private void PopulateExpropriationForm8Collection(int startRow, int rowsCount)
         {
             System.Data.DataTable expropriationSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionExpropriationForm8"]!;
             ExcelDataContext.PopulateInCollection(expropriationSheet);

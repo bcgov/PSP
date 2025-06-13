@@ -31,7 +31,9 @@ namespace Pims.Dal.Entities
 
         #region Constructors
 
-        public PimsProperty() { }
+        public PimsProperty()
+        {
+        }
 
         /// <summary>
         /// Create a new instance of a Property class.

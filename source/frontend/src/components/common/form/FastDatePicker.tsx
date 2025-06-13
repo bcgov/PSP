@@ -7,7 +7,7 @@ import { Form, FormControlProps } from 'react-bootstrap';
 import DatePicker, { ReactDatePickerProps } from 'react-datepicker';
 import styled from 'styled-components';
 
-import { formikFieldMemo } from '@/utils';
+import { exists, formikFieldMemo } from '@/utils';
 
 import TooltipIcon from '../TooltipIcon';
 
@@ -38,6 +38,8 @@ type OptionalAttributes = {
   /** optional popper modifiers to pass to the datepicker */
   popperModifiers?: Popper.Modifiers | undefined;
   'data-testId'?: string;
+  /** optional popper placement to pass to the datepicker */
+  popperPlacement?: Popper.Placement | undefined;
 };
 
 export type FastDatePickerProps = FormControlProps &
@@ -59,6 +61,7 @@ const FormikDatePicker: FunctionComponent<React.PropsWithChildren<FastDatePicker
   label,
   required,
   popperModifiers,
+  popperPlacement,
   formikProps: {
     values,
     errors,
@@ -130,6 +133,7 @@ const FormikDatePicker: FunctionComponent<React.PropsWithChildren<FastDatePicker
         maxDate={maxDate}
         {...rest}
         popperModifiers={popperModifiers}
+        popperPlacement={exists(popperPlacement) ? popperPlacement : 'top-end'}
         onBlur={() => {
           setFieldTouched(field);
         }}

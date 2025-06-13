@@ -281,7 +281,7 @@ namespace Pims.Api.Controllers
         public async Task<IActionResult> GetDocumentFilePageList(long mayanDocumentId, long documentFileId)
         {
             var result = await _documentService.GetDocumentFilePageListAsync(mayanDocumentId, documentFileId);
-            if(result.HttpStatusCode != System.Net.HttpStatusCode.OK)
+            if (result.HttpStatusCode != System.Net.HttpStatusCode.OK)
             {
                 throw new HttpClientRequestException(result.Message, result.HttpStatusCode);
             }

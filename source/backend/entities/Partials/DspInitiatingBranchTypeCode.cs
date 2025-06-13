@@ -17,7 +17,9 @@ namespace Pims.Dal.Entities
         #endregion
 
         #region Constructors
-        public PimsDspInitiatingBranchType() { }
+        public PimsDspInitiatingBranchType()
+        {
+        }
 
         /// <summary>
         /// Create a new instance of a PimsDspInitiatingBranchType class.

@@ -6,5 +6,8 @@ namespace Pims.Dal.Entities
     {
         [NotMapped]
         public abstract long FileId { get; set; }
+
+        [NotMapped]
+        public abstract long? InternalDocumentId { get; set; }
     }
 }

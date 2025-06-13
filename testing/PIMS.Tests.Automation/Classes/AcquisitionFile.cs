@@ -21,6 +21,7 @@
         public string AcquisitionFileName { get; set; } = null!;
         public string HistoricalFileNumber { get; set; } = null!;
         public string PhysicalFileStatus { get; set; } = null!;
+        public string PhysicalFileDetails { get; set; } = null!;
         public string AcquisitionType { get; set; } = null!;
         public string AcquisitionSubfileInterest { get; set; } = null!;
         public string AcquisitionSubfileInterestOther { get; set; } = null!;
@@ -54,8 +55,11 @@
         public string AcquisitionCompensationSubfilesMainFileTotal { get; set; } = null!;
         public string AcquisitionCompensationDraftTotal { get; set; } = null!;
         public List<Compensation> AcquisitionCompensations { get; set; } = new List<Compensation>() { };
-        public int ExpropriationStartRow { get; set; } = 0;
-        public int ExpropriationCount { get; set; } = 0;
+        public int ExpropriationDateHistoryStartRow { get; set; } = 0;
+        public int ExpropriationDateHistoryCount { get; set; } = 0;
+        public List<AcquisitionExpropriationDateHistory> AcquisitionExpropriationDateHistories { get; set; } = new List<AcquisitionExpropriationDateHistory>() { };
+        public int ExpropriationForm8StartRow { get; set; } = 0;
+        public int ExpropriationForm8Count { get; set; } = 0;
         public List<AcquisitionExpropriationForm8> AcquisitionExpropriationForm8s { get; set; } = new List<AcquisitionExpropriationForm8>() { };
     }
 
@@ -227,6 +231,14 @@
         public string IsSurplusArea { get; set; } = null!;
         public int FromProperty { get; set; } = 0;
         public int TakeCounter { get; set; } = 0;
+    }
+
+    public class AcquisitionExpropriationDateHistory
+    {
+        public string ExpropriationDateHistoryOwner { get; set; } = null!;
+        public string ExpropriationDateHistoryOwnerDisplay { get; set; } = null!;
+        public string ExpropriationDateHistoryEvent { get; set; } = null!;
+        public string ExpropriationDateHistoryDate { get; set; } = null!;
     }
 
     public class AcquisitionExpropriationForm8

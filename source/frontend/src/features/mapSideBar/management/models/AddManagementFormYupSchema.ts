@@ -21,7 +21,7 @@ export const AddManagementFormYupSchema = yup
       .string()
       .max(2000, 'Management file name must be at most ${max} characters'),
     legacyFileNum: yup.string().max(100, 'Legacy file number must be at most ${max} characters'),
-    programTypeCode: yup.string().nullable().required('Purpose is required'),
+    purposeTypeCode: yup.string().nullable().required('Purpose is required'),
     properties: yup.array().of(
       yup.object().shape({
         isRetired: yup

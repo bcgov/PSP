@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
+import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator';
 import useIsMounted from '@/hooks/util/useIsMounted';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
@@ -9,7 +10,7 @@ import { DocumentRow } from '../ComposedDocument';
 import { useDocumentRelationshipProvider } from '../hooks/useDocumentRelationshipProvider';
 import DocumentListView from './DocumentListView';
 
-interface IDocumentListContainerProps {
+export interface IDocumentListContainerProps {
   parentId: string;
   relationshipType: ApiGen_CodeTypes_DocumentRelationType;
   disableAdd?: boolean;
@@ -19,6 +20,8 @@ interface IDocumentListContainerProps {
 }
 
 const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps> = props => {
+  const pathGenerator = usePathGenerator();
+
   const isMounted = useIsMounted();
 
   const [documentResults, setDocumentResults] = useState<DocumentRow[]>([]);
@@ -35,7 +38,7 @@ const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps
       setDocumentResults([
         ...documents
           .filter((x): x is ApiGen_Concepts_DocumentRelationship => !!x?.document)
-          .map(x => DocumentRow.fromApi(x)),
+          .map(x => DocumentRow.fromApi(x, 'self')),
       ]);
     }
   }, [isMounted, retrieveDocumentRelationship, props.relationshipType, props.parentId]);
@@ -78,6 +81,13 @@ const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps
     retrieveDocuments();
   };
 
+  const handleViewParent = async (
+    relationshipType: ApiGen_CodeTypes_DocumentRelationType,
+    parentId: number,
+  ) => {
+    pathGenerator.showFile(relationshipType, parentId);
+  };
+
   return (
     <DocumentListView
       parentId={props.parentId}
@@ -88,8 +98,11 @@ const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps
       onDelete={onDelete}
       onSuccess={onSuccess}
       onRefresh={handleDocumentsRefresh}
+      onViewParent={handleViewParent}
       disableAdd={props.disableAdd}
       title={props.title}
+      showParentInformation={false}
+      relationshipTypes={[]}
     />
   );
 };

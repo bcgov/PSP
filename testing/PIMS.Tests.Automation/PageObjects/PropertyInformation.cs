@@ -772,8 +772,10 @@ namespace PIMS.Tests.Automation.PageObjects
                     AssertTrueContentEquals(propertyDetailsCityContent, property.Address.City);
 
                 AssertTrueIsDisplayed(propertyDetailsProvinceLabel);
-                if(property.Address.Province != null)
+                if(property.Address.Province == "")
                     AssertTrueContentEquals(propertyDetailsProvinceContent, "British Columbia");
+                else
+                    AssertTrueContentEquals(propertyDetailsProvinceContent, property.Address.Province);
 
                 AssertTrueIsDisplayed(propertyDetailsPostalCodeLabel);
                 if(property.Address.PostalCode != "")

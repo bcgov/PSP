@@ -5,6 +5,7 @@ import { Claims, NoteTypes } from '@/constants';
 import DocumentListContainer from '@/features/documents/list/DocumentListContainer';
 import { LeaseFormModel } from '@/features/leases/models';
 import { LeaseStatusUpdateSolver } from '@/features/leases/models/LeaseStatusUpdateSolver';
+import NoteListContainer from '@/features/notes/list/NoteListContainer';
 import NoteListView from '@/features/notes/list/NoteListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
@@ -225,7 +226,12 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
   if (lease?.id && hasClaim(Claims.NOTE_VIEW)) {
     tabViews.push({
       content: (
-        <NoteListView type={NoteTypes.Lease_File} entityId={lease?.id} onSuccess={onSuccess} />
+        <NoteListContainer
+          type={NoteTypes.Lease_File}
+          entityId={lease?.id}
+          onSuccess={onSuccess}
+          NoteListView={NoteListView}
+        />
       ),
       key: LeaseFileTabNames.notes,
       name: 'Notes',

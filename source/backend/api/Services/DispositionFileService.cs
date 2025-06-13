@@ -32,7 +32,7 @@ namespace Pims.Api.Services
         private readonly IPropertyService _propertyService;
         private readonly ILookupRepository _lookupRepository;
         private readonly IDispositionFileChecklistRepository _checklistRepository;
-        private readonly IEntityNoteRepository _entityNoteRepository;
+        private readonly INoteRelationshipRepository<PimsDispositionFileNote> _entityNoteRepository;
         private readonly IDispositionStatusSolver _dispositionStatusSolver;
         private readonly IPropertyOperationService _propertyOperationService;
 
@@ -41,12 +41,11 @@ namespace Pims.Api.Services
             ILogger<DispositionFileService> logger,
             IDispositionFileRepository dispositionFileRepository,
             IDispositionFilePropertyRepository dispositionFilePropertyRepository,
-            ICoordinateTransformService coordinateService,
             IPropertyRepository propertyRepository,
             IPropertyService propertyService,
             ILookupRepository lookupRepository,
             IDispositionFileChecklistRepository checklistRepository,
-            IEntityNoteRepository entityNoteRepository,
+            INoteRelationshipRepository<PimsDispositionFileNote> entityNoteRepository,
             IUserRepository userRepository,
             IDispositionStatusSolver dispositionStatusSolver,
             IPropertyOperationService propertyOperationService)
@@ -706,7 +705,7 @@ namespace Pims.Api.Services
                 },
             };
 
-            _entityNoteRepository.Add(fileNoteInstance);
+            _entityNoteRepository.AddNoteRelationship(fileNoteInstance);
         }
 
         private void ValidateMinistryRegion(long dispositionFileId, short updatedRegion)

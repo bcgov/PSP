@@ -15,9 +15,18 @@ export const Management = ({ onLinkClick }: ISideTrayPageProps) => {
   return (
     <HalfHeightDiv>
       {hasClaim(Claims.MANAGEMENT_VIEW) && (
-        <Link onClick={onLinkClick} to="/management/list" className="nav-item pl-9 pb-3">
-          Manage Management Files
-        </Link>
+        <>
+          <Link onClick={onLinkClick} to="/management/list" className="nav-item pl-9 pb-3">
+            Manage Management Files
+          </Link>
+          <Link
+            onClick={onLinkClick}
+            to="/management-activities/list"
+            className="nav-item pl-9 pb-3"
+          >
+            Manage Management Activities
+          </Link>
+        </>
       )}
       {hasClaim(Claims.MANAGEMENT_ADD) && (
         <Link

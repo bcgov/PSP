@@ -1,8 +1,8 @@
-import { LatLngLiteral } from 'leaflet';
 import debounce from 'lodash/debounce';
 import { useCallback, useRef } from 'react';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import { LocationBoundaryDataset } from '@/components/common/mapFSM/models';
 import { IMapProperty } from '@/components/propertySelector/models';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import useIsMounted from '@/hooks/util/useIsMounted';
@@ -13,8 +13,13 @@ import { latLngFromMapProperty } from '@/utils';
  * As long as a parcel/building has both a lat and a lng it will be returned by this method.
  * @param modifiedProperties the current form values to extract lat/lngs from.
  */
-const getFilePropertyLocations = (modifiedProperties: IMapProperty[]): LatLngLiteral[] => {
-  return modifiedProperties.map((property: IMapProperty) => latLngFromMapProperty(property));
+const getFilePropertyLocations = (
+  modifiedProperties: IMapProperty[],
+): LocationBoundaryDataset[] => {
+  return modifiedProperties.map((property: IMapProperty) => ({
+    location: latLngFromMapProperty(property),
+    boundary: property?.polygon ?? null,
+  }));
 };
 
 /**

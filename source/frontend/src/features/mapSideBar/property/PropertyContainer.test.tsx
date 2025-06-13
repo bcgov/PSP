@@ -1,19 +1,16 @@
 import { createMemoryHistory } from 'history';
+import { noop } from 'lodash';
 
 import { Claims } from '@/constants';
+import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
+import { useApiPropertyOperation } from '@/hooks/pims-api/useApiPropertyOperation';
+import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { cleanup, render, RenderOptions, waitForEffects } from '@/utils/test-utils';
 
 import PropertyContainer, { IPropertyContainerProps } from './PropertyContainer';
-import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
-import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
-import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
-import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
-import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
-import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
-import { useApiPropertyOperation } from '@/hooks/pims-api/useApiPropertyOperation';
-import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
 
 // mock keycloak auth library
 const getApiLeaseFn = vi.fn();
@@ -74,6 +71,7 @@ describe('PropertyContainer component', () => {
     const { queryByText } = setup({
       claims: [],
       composedPropertyState: { apiWrapper: { response: {} }, id: 1 } as any,
+      onChildSuccess: noop,
     });
 
     expect(queryByText('Management')).toBeNull();
@@ -83,6 +81,7 @@ describe('PropertyContainer component', () => {
     const { getByText } = setup({
       claims: [Claims.MANAGEMENT_VIEW],
       composedPropertyState: { apiWrapper: { response: {} }, id: 1 } as any,
+      onChildSuccess: noop,
     });
 
     expect(getByText('Management')).toBeVisible();
@@ -114,6 +113,7 @@ describe('PropertyContainer component', () => {
         },
         id: 1,
       } as any,
+      onChildSuccess: noop,
     });
     await waitForEffects();
 
@@ -146,6 +146,7 @@ describe('PropertyContainer component', () => {
         },
         id: 1,
       } as any,
+      onChildSuccess: noop,
     });
     await waitForEffects();
 

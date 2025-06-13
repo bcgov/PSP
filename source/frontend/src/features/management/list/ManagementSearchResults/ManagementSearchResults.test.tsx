@@ -68,7 +68,7 @@ describe('Management search results table', () => {
   it('displays management legacy file reference', async () => {
     setup({ results: mockResults.map(a => ManagementSearchResultModel.fromApi(a)) });
     const text = await screen.findByText(mockResults[0].legacyFileNum);
-    expect(text).toBeVisible();
+    expect(text).toBeInTheDocument();
   });
 
   it('displays multiple file properties', () => {

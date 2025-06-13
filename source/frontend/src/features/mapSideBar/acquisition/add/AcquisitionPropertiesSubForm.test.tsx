@@ -6,9 +6,10 @@ import thunk from 'redux-thunk';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
+import { LocationBoundaryDataset } from '@/components/common/mapFSM/models';
+import { PropertyForm } from '../../shared/models';
 import { AcquisitionPropertiesSubForm } from './AcquisitionPropertiesSubForm';
 import { AcquisitionForm } from './models';
-import { PropertyForm } from '../../shared/models';
 
 const mockStore = configureMockStore([thunk]);
 
@@ -74,9 +75,9 @@ describe('AcquisitionProperties component', () => {
     const { getByText } = setup({ initialForm: testForm });
 
     await waitFor(() => {
-      expect(customSetFilePropertyLocations).toHaveBeenCalledWith([
-        { lat: 0, lng: 0 },
-        { lat: 0, lng: 0 },
+      expect(customSetFilePropertyLocations).toHaveBeenCalledWith<LocationBoundaryDataset[][]>([
+        { location: { lat: 0, lng: 0 }, boundary: null },
+        { location: { lat: 0, lng: 0 }, boundary: null },
       ]);
     });
 
@@ -90,7 +91,9 @@ describe('AcquisitionProperties component', () => {
     await act(async () => userEvent.click(pidRow));
 
     await waitFor(() => {
-      expect(customSetFilePropertyLocations).toHaveBeenCalledWith([{ lat: 0, lng: 0 }]);
+      expect(customSetFilePropertyLocations).toHaveBeenCalledWith<LocationBoundaryDataset[][]>([
+        { location: { lat: 0, lng: 0 }, boundary: null },
+      ]);
     });
 
     expect(queryByText('PID: 123-456-789')).toBeNull();
@@ -100,9 +103,9 @@ describe('AcquisitionProperties component', () => {
     const { getByTitle } = setup({ initialForm: testForm });
 
     await waitFor(() => {
-      expect(customSetFilePropertyLocations).toHaveBeenCalledWith([
-        { lat: 0, lng: 0 },
-        { lat: 0, lng: 0 },
+      expect(customSetFilePropertyLocations).toHaveBeenCalledWith<LocationBoundaryDataset[][]>([
+        { location: { lat: 0, lng: 0 }, boundary: null },
+        { location: { lat: 0, lng: 0 }, boundary: null },
       ]);
     });
 
@@ -117,9 +120,9 @@ describe('AcquisitionProperties component', () => {
     setup({ initialForm: formWithProperties });
 
     await waitFor(() => {
-      expect(customSetFilePropertyLocations).toHaveBeenCalledWith([
-        { lat: 1, lng: 2 },
-        { lat: 0, lng: 0 },
+      expect(customSetFilePropertyLocations).toHaveBeenCalledWith<LocationBoundaryDataset[][]>([
+        { location: { lat: 1, lng: 2 }, boundary: null },
+        { location: { lat: 0, lng: 0 }, boundary: null },
       ]);
     });
   });
@@ -134,9 +137,9 @@ describe('AcquisitionProperties component', () => {
     setup({ initialForm: formWithProperties });
 
     await waitFor(() => {
-      expect(customSetFilePropertyLocations).toHaveBeenCalledWith([
-        { lat: 1, lng: 2 },
-        { lat: 3, lng: 4 },
+      expect(customSetFilePropertyLocations).toHaveBeenCalledWith<LocationBoundaryDataset[][]>([
+        { location: { lat: 1, lng: 2 }, boundary: null },
+        { location: { lat: 3, lng: 4 }, boundary: null },
       ]);
     });
   });

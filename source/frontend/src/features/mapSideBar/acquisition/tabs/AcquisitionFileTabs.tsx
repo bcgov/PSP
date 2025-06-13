@@ -7,6 +7,7 @@ import * as API from '@/constants/API';
 import { Claims } from '@/constants/claims';
 import { NoteTypes } from '@/constants/noteTypes';
 import { FileTabs, FileTabType, TabFileView } from '@/features/mapSideBar/shared/detail/FileTabs';
+import NoteListContainer from '@/features/notes/list/NoteListContainer';
 import NoteListView from '@/features/notes/list/NoteListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
@@ -173,10 +174,11 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
   if (acquisitionFile?.id && hasClaim(Claims.NOTE_VIEW)) {
     tabViews.push({
       content: (
-        <NoteListView
+        <NoteListContainer
           type={NoteTypes.Acquisition_File}
           entityId={acquisitionFile?.id}
           onSuccess={onChildSuccess}
+          NoteListView={NoteListView}
         />
       ),
       key: FileTabType.NOTES,

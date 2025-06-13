@@ -75,7 +75,7 @@ const App = () => {
               pauseOnFocusLoss={false}
               draggable
               pauseOnHover
-              closeButton={<FaWindowClose />}
+              closeButton={({ closeToast }) => <FaWindowClose onClick={closeToast} />}
             />
             <RoleMismatchModal display={showRoleModal} setDisplay={setShowRoleModal} />
             <ModalContainer />

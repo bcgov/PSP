@@ -5,63 +5,65 @@ namespace PIMS.Tests.Automation.PageObjects
 {
     public class SearchResearchFiles : PageObjectBase
     {
-        private By menuResearchButton = By.CssSelector("div[data-testid='nav-tooltip-research'] a");
-        private By searchResearchButton = By.XPath("//a[contains(text(),'Manage Research File')]");
+        private readonly By menuResearchButton = By.CssSelector("div[data-testid='nav-tooltip-research'] a");
+        private readonly By searchResearchButton = By.XPath("//a[contains(text(),'Manage Research File')]");
 
         //Search Research File Elements
-        private By searchResearchRegionInput = By.Id("input-regionCode");
-        private By searchResearchBySelect = By.Id("input-researchSearchBy");
-        private By searchResearchByPID = By.Id("input-pid");
-        private By searchResearchNameInput = By.Id("input-name");
-        private By searchResearchFileNbrInput = By.Id("input-rfileNumber");
-        private By searchResearchStatusSelect = By.Id("input-researchFileStatusTypeCode");
-        private By searchResearchRoadInput = By.Id("input-roadOrAlias");
-        private By searchResearchCreateUpdateDateSelect = By.Id("input-createOrUpdateRange");
-        private By searchResearchFromDateInput = By.Id("datepicker-updatedOnStartDate");
-        private By searchResearchToDateInput = By.Id("datepicker-updatedOnEndDate");
-        private By searchResearchCreateUpdateBySelect = By.Id("input-createOrUpdateBy");
-        private By searchResearchUserUpdatedIdirInput = By.Id("input-appLastUpdateUserid");
-        private By searchResearchFileUserCreatedIdirInput = By.Id("input-appCreateUserid");
-        private By searchResearchFileButton = By.Id("search-button");
-        private By searchResearchFileResetButton = By.Id("reset-button");
-        private By searchResearchCreateNewBttn = By.XPath("//div[contains(text(),'Create a Research File')]/parent::button");
+        private readonly By searchResearchRegionInput = By.Id("input-regionCode");
+        private readonly By searchResearchBySelect = By.Id("input-researchSearchBy");
+        private readonly By searchResearchByPID = By.Id("input-pid");
+        private readonly By searchResearchByPIN = By.Id("input-pin");
+        private readonly By searchResearchNameInput = By.Id("input-name");
+        private readonly By searchResearchFileNbrInput = By.Id("input-rfileNumber");
+        private readonly By searchResearchStatusSelect = By.Id("input-researchFileStatusTypeCode");
+        private readonly By searchResearchRoadInput = By.Id("input-roadOrAlias");
+        private readonly By searchResearchCreateUpdateDateSelect = By.Id("input-createOrUpdateRange");
+        private readonly By searchResearchCreateDateInput = By.Id("datepicker-createdOnStartDate");
+        private readonly By searchResearchUpdateDateInput = By.Id("datepicker-updatedOnStartDate");
+        private readonly By searchResearchToDateInput = By.Id("datepicker-updatedOnEndDate");
+        private readonly By searchResearchCreateUpdateBySelect = By.Id("input-createOrUpdateBy");
+        private readonly By searchResearchUserUpdatedIdirInput = By.Id("input-appLastUpdateUserid");
+        private readonly By searchResearchFileUserCreatedIdirInput = By.Id("input-appCreateUserid");
+        private readonly By searchResearchFileButton = By.Id("search-button");
+        private readonly By searchResearchFileResetButton = By.Id("reset-button");
+        private readonly By searchResearchCreateNewBttn = By.XPath("//div[contains(text(),'Create a Research File')]/parent::button");
 
         //Search Research File List Elements
-        private By searchResearchFileNbrLabel = By.XPath("//div[contains(text(),'File #')]");
-        private By searchResearchFileNameLabel = By.XPath("//div[contains(text(),'File name')]");
-        private By searchResearchFileRegionLabel = By.XPath("//div[contains(text(),'MOTI Region')]");
-        private By searchResearchFileCreatedByLabel = By.XPath("//div[contains(text(),'Created by')]");
-        private By searchResearchFileCreatedDateLabel = By.XPath("//div[contains(text(),'Created date')]");
-        private By searchResearchFileUpdatedByLabel = By.XPath("//div[contains(text(),'Last updated by')]");
-        private By searchResearchFileUpdatedDateLabel = By.XPath("//div[contains(text(),'Last updated date')]");
-        private By searchResearchFileStatusLabel = By.XPath("//div[contains(text(),'Status')]");
-        private By searchResearchFileSortByRFileBttn = By.CssSelector("div[data-testid='sort-column-rfileNumber']");
+        private readonly By searchResearchFileNbrLabel = By.XPath("//div[contains(text(),'File #')]");
+        private readonly By searchResearchFileNameLabel = By.XPath("//div[contains(text(),'File name')]");
+        private readonly By searchResearchFileRegionLabel = By.XPath("//div[contains(text(),'MOTI Region')]");
+        private readonly By searchResearchFileCreatedByLabel = By.XPath("//div[contains(text(),'Created by')]");
+        private readonly By searchResearchFileCreatedDateLabel = By.XPath("//div[contains(text(),'Created date')]");
+        private readonly By searchResearchFileUpdatedByLabel = By.XPath("//div[contains(text(),'Last updated by')]");
+        private readonly By searchResearchFileUpdatedDateLabel = By.XPath("//div[contains(text(),'Last updated date')]");
+        private readonly By searchResearchFileStatusLabel = By.XPath("//div[contains(text(),'Status')]");
+        private readonly By searchResearchFileSortByRFileBttn = By.CssSelector("div[data-testid='sort-column-rfileNumber']");
 
         //Search Research Files 1st Result Elements
-        private By searchResearchFile1stResult = By.CssSelector("div[data-testid='researchFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1)");
-        private By searchResearchFile1stResultLink = By.CssSelector("div[data-testid='researchFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable'] a");
-        private By searchResearchFileOrderFileNumberBttn = By.CssSelector("div[data-testid='sort-column-rfileNumber']");
-        private By searchResearchFile1stResultFileName = By.CssSelector("div[data-testid='researchFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(2)");
-        private By searchResearchFileOrderFileNameBttn = By.CssSelector("div[data-testid='sort-column-name']");
-        private By searchResearchFile1stResultRegion = By.CssSelector("div[data-testid='researchFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(3)");
-        private By searchResearchFile1stResultCreator = By.CssSelector("div[data-testid='researchFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(4)");
-        private By searchResearchFileOrderCreatorNameBttn = By.CssSelector("div[data-testid='sort-column-appCreateUserid']");
-        private By searchResearchFile1stResultCreateDate = By.CssSelector("div[data-testid='researchFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(5)");
-        private By searchResearchFileOrderCreateDateBttn = By.CssSelector("div[data-testid='sort-column-appCreateTimestamp']");
-        private By searchResearchFile1stResultUpdatedBy = By.CssSelector("div[data-testid='researchFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(6)");
-        private By searchResearchFileOrderLastUpdatedByBttn = By.CssSelector("div[data-testid='sort-column-appLastUpdateUserid']");
-        private By searchResearchFile1stResultUpdateDate = By.CssSelector("div[data-testid='researchFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(7)");
-        private By searchResearchFileOrderUpdatedDateBttn = By.CssSelector("div[data-testid='sort-column-appLastUpdateTimestamp']");
-        private By searchResearchFile1stResultStatus = By.CssSelector("div[data-testid='researchFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(8)");
-        private By searchResearchFileStatusNameBttn = By.CssSelector("div[data-testid='sort-column-researchFileStatusTypeCode']");
+        private readonly By searchResearchFile1stResult = By.CssSelector("div[data-testid='researchFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1)");
+        private readonly By searchResearchFile1stResultLink = By.CssSelector("div[data-testid='researchFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable'] a");
+        private readonly By searchResearchFileOrderFileNumberBttn = By.CssSelector("div[data-testid='sort-column-rfileNumber']");
+        private readonly By searchResearchFile1stResultFileName = By.CssSelector("div[data-testid='researchFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(2)");
+        private readonly By searchResearchFileOrderFileNameBttn = By.CssSelector("div[data-testid='sort-column-name']");
+        private readonly By searchResearchFile1stResultRegion = By.CssSelector("div[data-testid='researchFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(3)");
+        private readonly By searchResearchFile1stResultCreator = By.CssSelector("div[data-testid='researchFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(4)");
+        private readonly By searchResearchFileOrderCreatorNameBttn = By.CssSelector("div[data-testid='sort-column-appCreateUserid']");
+        private readonly By searchResearchFile1stResultCreateDate = By.CssSelector("div[data-testid='researchFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(5)");
+        private readonly By searchResearchFileOrderCreateDateBttn = By.CssSelector("div[data-testid='sort-column-appCreateTimestamp']");
+        private readonly By searchResearchFile1stResultUpdatedBy = By.CssSelector("div[data-testid='researchFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(6)");
+        private readonly By searchResearchFileOrderLastUpdatedByBttn = By.CssSelector("div[data-testid='sort-column-appLastUpdateUserid']");
+        private readonly By searchResearchFile1stResultUpdateDate = By.CssSelector("div[data-testid='researchFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(7)");
+        private readonly By searchResearchFileOrderUpdatedDateBttn = By.CssSelector("div[data-testid='sort-column-appLastUpdateTimestamp']");
+        private readonly By searchResearchFile1stResultStatus = By.CssSelector("div[data-testid='researchFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(8)");
+        private readonly By searchResearchFileStatusNameBttn = By.CssSelector("div[data-testid='sort-column-researchFileStatusTypeCode']");
 
-        private By searchResearchFileTableContent = By.CssSelector("div[data-testid='researchFilesTable'] div[class='tbody'] div[class='tr-wrapper']");
+        private readonly By searchResearchFileTableContent = By.CssSelector("div[data-testid='researchFilesTable'] div[class='tbody'] div[class='tr-wrapper']");
 
         //Search Research File Pagination
-        private By searchResearchFilePaginationMenu = By.CssSelector("div[class='Menu-root']");
-        private By searchResearchPaginationList = By.CssSelector("ul[class='pagination']");
+        private readonly By searchResearchFilePaginationMenu = By.CssSelector("div[class='Menu-root']");
+        private readonly By searchResearchPaginationList = By.CssSelector("ul[class='pagination']");
 
-        private By researchFileHeaderCode = By.XPath("//strong[contains(text(),'R-')]");
+        private readonly By researchFileHeaderCode = By.XPath("//strong[contains(text(),'R-')]");
 
         public SearchResearchFiles(IWebDriver webDriver) : base(webDriver)
         {}
@@ -235,19 +237,63 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueContentEquals(searchResearchFile1stResultStatus, researchFile.Status);
         }
 
-        public void FilterResearchFiles(string name, string status, string roadName, string idir)
+        public void FilterResearchFiles(string region = "", string status  = "", string pid = "", string pin = "", string name = "", string fileNumber = "", string roadName = "",
+            string createdDate = "", string updatedDate = "", string createdBy = "", string updatedBy = "")
         {
             WaitUntilClickable(searchResearchFileResetButton);
             webDriver.FindElement(searchResearchFileResetButton).Click();
 
-            WaitUntilVisible(searchResearchByPID);
+            if(region != "")
+                ChooseSpecificSelectOption(searchResearchRegionInput, region);
 
-            ChooseSpecificSelectOption(searchResearchBySelect, "Research file name");
-            webDriver.FindElement(searchResearchNameInput).SendKeys(name);
-            ChooseSpecificSelectOption(searchResearchStatusSelect, status);
-            webDriver.FindElement(searchResearchRoadInput).SendKeys(roadName);
-            ChooseSpecificSelectOption(searchResearchCreateUpdateBySelect, "Created by");
-            webDriver.FindElement(searchResearchFileUserCreatedIdirInput).SendKeys(idir);
+            if(status != "")
+                ChooseSpecificSelectOption(searchResearchStatusSelect, status);
+
+            if (pid != "")
+            {
+                ChooseSpecificSelectOption(searchResearchBySelect, "PID");
+                webDriver.FindElement(searchResearchByPID).SendKeys(pid);
+            }
+            else if (pin != "")
+            {
+                ChooseSpecificSelectOption(searchResearchBySelect, "PIN");
+                webDriver.FindElement(searchResearchByPIN).SendKeys(pin);
+            }
+            else if (name != "")
+            {
+                ChooseSpecificSelectOption(searchResearchBySelect, "Research file name");
+                webDriver.FindElement(searchResearchNameInput).SendKeys(name);
+            }
+            else if (fileNumber != "")
+            {
+                ChooseSpecificSelectOption(searchResearchBySelect, "Research file #");
+                webDriver.FindElement(searchResearchFileNbrInput).SendKeys(fileNumber);
+            }
+            if (roadName != "")
+            {
+                webDriver.FindElement(searchResearchRoadInput).SendKeys(roadName);
+            }
+            if (createdDate != "")
+            {
+                ChooseSpecificSelectOption(searchResearchCreateUpdateDateSelect, "Created date");
+                webDriver.FindElement(searchResearchCreateDateInput).SendKeys(createdDate);
+            }
+            else if (updatedDate != "")
+            {
+                ChooseSpecificSelectOption(searchResearchCreateUpdateDateSelect, "Updated date");
+                webDriver.FindElement(searchResearchUpdateDateInput).SendKeys(updatedDate);
+            }
+
+            if (createdBy != "")
+            {
+                ChooseSpecificSelectOption(searchResearchCreateUpdateBySelect, "Created by");
+                webDriver.FindElement(searchResearchFileUserCreatedIdirInput).SendKeys(createdBy);
+            }
+            else if (updatedBy != "")
+            {
+                ChooseSpecificSelectOption(searchResearchCreateUpdateBySelect, "Updated by");
+                webDriver.FindElement(searchResearchUserUpdatedIdirInput).SendKeys(createdBy);
+            }
 
             webDriver.FindElement(searchResearchFileButton).Click();
         }

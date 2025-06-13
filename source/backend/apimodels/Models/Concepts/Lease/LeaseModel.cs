@@ -4,7 +4,6 @@ using Pims.Api.Models.Base;
 using Pims.Api.Models.Concepts.File;
 using Pims.Api.Models.Concepts.Product;
 using Pims.Api.Models.Concepts.Project;
-using Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts.Lease
 {

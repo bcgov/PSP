@@ -1,3 +1,5 @@
+import './Multiselect.scss';
+
 import cx from 'classnames';
 import { getIn, useFormikContext } from 'formik';
 import MultiselectBase from 'multiselect-react-dropdown';

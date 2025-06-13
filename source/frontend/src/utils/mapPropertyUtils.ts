@@ -12,6 +12,7 @@ import { compact, isNumber } from 'lodash';
 import polylabel from 'polylabel';
 import { toast } from 'react-toastify';
 
+import { LocationBoundaryDataset } from '@/components/common/mapFSM/models';
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { ONE_HUNDRED_METER_PRECISION } from '@/components/maps/constants';
 import { IMapProperty } from '@/components/propertySelector/models';
@@ -308,6 +309,14 @@ export function latLngFromMapProperty(
     lat: Number(mapProperty?.fileLocation?.lat ?? mapProperty?.latitude ?? 0),
     lng: Number(mapProperty?.fileLocation?.lng ?? mapProperty?.longitude ?? 0),
   };
+}
+
+export function filePropertyToLocationBoundaryDataset(
+  fileProperty: ApiGen_Concepts_FileProperty | undefined | null,
+): LocationBoundaryDataset | null {
+  const geom = locationFromFileProperty(fileProperty);
+  const location = getLatLng(geom);
+  return exists(location) ? { location, boundary: fileProperty?.property?.boundary ?? null } : null;
 }
 
 /**
