@@ -4,7 +4,8 @@ import { AnyEventObject, assign, createMachine, raise, send } from 'xstate';
 
 import { defaultBounds } from '@/components/maps/constants';
 import { PropertyFilterFormModel } from '@/components/maps/leaflet/Control/AdvancedFilter/models';
-import { PIMS_PROPERTY_BOUNDARY_KEY } from '@/components/maps/leaflet/Control/LayersControl/DefaultLayers';
+import { pimsBoundaryLayers } from '@/components/maps/leaflet/Control/LayersControl/LayerDefinitions';
+import { initialEnabledLayers } from '@/components/maps/leaflet/Control/LayersControl/LayersMenyLayout';
 import { defaultPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
 import { exists } from '@/utils';
 
@@ -115,7 +116,7 @@ const featureDataLoaderStates = {
                 isLoading: () => false,
                 mapFeatureData: (_, event: any) => event.data,
                 fitToResultsAfterLoading: () => false,
-                mapLayersToRefresh: () => [{ key: PIMS_PROPERTY_BOUNDARY_KEY }],
+                mapLayersToRefresh: () => pimsBoundaryLayers,
               }),
             ],
             target: 'idle',
@@ -126,7 +127,7 @@ const featureDataLoaderStates = {
                 isLoading: () => false,
                 mapFeatureData: (_, event: any) => event.data,
                 fitToResultsAfterLoading: () => false,
-                mapLayersToRefresh: () => [{ key: PIMS_PROPERTY_BOUNDARY_KEY }],
+                mapLayersToRefresh: () => pimsBoundaryLayers,
               }),
             ],
             target: 'idle',
@@ -533,8 +534,8 @@ export const mapMachine = createMachine<MachineContext>({
     isFiltering: false,
     showDisposed: false,
     showRetired: false,
-    activeLayers: [],
-    mapLayersToRefresh: [],
+    activeLayers: initialEnabledLayers,
+    mapLayersToRefresh: new Set(),
     currentMapBounds: null,
   },
 

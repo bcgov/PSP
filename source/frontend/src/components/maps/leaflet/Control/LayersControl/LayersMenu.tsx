@@ -1,171 +1,30 @@
 import 'react-simple-tree-menu/dist/main.css';
 
-import { Form as FormikForm, Formik, getIn, useFormikContext } from 'formik';
-import noop from 'lodash/noop';
-import React, { useEffect, useRef } from 'react';
+import { Formik, useFormikContext } from 'formik';
+import { noop } from 'lodash';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { Col, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
-import ListGroup from 'react-bootstrap/ListGroup';
 import { MdArrowDropDown, MdArrowRight } from 'react-icons/md';
-import TreeMenu, { TreeMenuItem, TreeNode, TreeNodeInArray } from 'react-simple-tree-menu';
 import styled from 'styled-components';
 
 import variables from '@/assets/scss/_variables.module.scss';
-import { FormSection } from '@/components/common/form/styles';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import { Section } from '@/components/common/Section/Section';
+import { exists } from '@/utils';
 
-import { ILayerItem } from './types';
+import { layersMenuTree } from './LayersMenyLayout';
+import {
+  getNestedLayerId,
+  isLayerItem,
+  LayerMenuEntry,
+  LayerMenuGroup,
+  LayerMenuItem,
+} from './types';
 
 interface LayersFormModel {
-  layers: ILayerItem[];
+  layers: Set<string>;
 }
-
-const ParentNode = styled(ListGroup.Item)`
-  display: flex;
-  align-items: center;
-  padding-left: 0rem;
-  border: none;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-  .form-group {
-    .form-check {
-      label {
-        font-weight: bold;
-        color: ${variables.textColor};
-        font-size: 1.6rem;
-      }
-    }
-  }
-`;
-
-const LayerNode = styled(ListGroup.Item)`
-  display: flex;
-  font-size: 1.4rem;
-  text-align: left;
-  padding-left: 5rem;
-  border: none;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
-`;
-
-const OpenedIcon = styled(MdArrowDropDown)`
-  margin-right: 1rem;
-  font-size: 2.4rem;
-`;
-
-const ClosedIcon = styled(MdArrowRight)`
-  margin-right: 1rem;
-  font-size: 2.4rem;
-`;
-
-const FormGroup = styled(Form.Group)`
-  margin-bottom: 0rem;
-  .form-check {
-    display: flex;
-    align-items: center;
-    input {
-      margin-top: 0rem;
-    }
-
-    label {
-      display: flex;
-      align-items: center;
-    }
-  }
-`;
-
-const LayerColor = styled.div<{ color: string }>`
-  width: 1.4rem;
-  height: 1.4rem;
-  background-color: ${({ color }) => color};
-  margin-right: 0.5rem;
-  padding-right: 1.4rem;
-`;
-
-/**
- * Component to display Group Node as a formik field
- */
-const ParentCheckbox: React.FC<
-  React.PropsWithChildren<{ name: string; label: string; index: number }>
-> = ({ name, label, index }) => {
-  const { values, setFieldValue } = useFormikContext<LayersFormModel>();
-
-  const onChange = () => {
-    const nextValue = !getIn(values, name);
-    // Toggle children nodes if parent is selected/deselected
-    const nodes = getIn(values, `layers[${index}].nodes`) || [];
-    nodes.forEach((_: TreeNodeInArray, childIndex: number) =>
-      setFieldValue(`layers[${index}].nodes[${childIndex}].on`, nextValue),
-    );
-  };
-
-  // Calculate the state of the parent check based on all the children.
-  useEffect(() => {
-    const parentLayer = values.layers[index];
-    const activeChildren = parentLayer?.nodes?.filter(x => x?.on === true);
-    let isActive = false;
-    let isPartialActive = false;
-
-    if (activeChildren?.length > 0) {
-      isActive = true;
-      if (parentLayer?.nodes?.length !== activeChildren?.length) {
-        isPartialActive = true;
-      } else {
-        isPartialActive = false;
-      }
-    } else {
-      isActive = false;
-      isPartialActive = false;
-    }
-
-    setFieldValue(`layers[${index}].on`, isActive);
-
-    if (parentChekRef.current) {
-      parentChekRef.current.indeterminate = isPartialActive;
-    }
-  }, [index, setFieldValue, values]);
-
-  const parentChekRef = useRef<HTMLInputElement>();
-
-  return (
-    <FormGroup>
-      <Form.Check
-        ref={parentChekRef}
-        type="checkbox"
-        checked={getIn(values, name)}
-        onChange={onChange}
-        label={label}
-      />
-    </FormGroup>
-  );
-};
-
-/**
- * Component to display Layer Node as a formik field
- */
-const LayerNodeCheckbox: React.FC<
-  React.PropsWithChildren<{ name: string; label: string; color: string }>
-> = ({ name, label, color }) => {
-  const { values, setFieldValue } = useFormikContext();
-
-  const onChange = () => {
-    setFieldValue(name, !getIn(values, name));
-  };
-
-  return (
-    <FormGroup>
-      <Form.Check
-        type="checkbox"
-        checked={getIn(values, name)}
-        onChange={onChange}
-        label={
-          <>
-            {!!color && <LayerColor color={color} />} {label}
-          </>
-        }
-      />
-    </FormGroup>
-  );
-};
 
 const MapLayerSynchronizer: React.FC<unknown> = () => {
   const { values } = useFormikContext<LayersFormModel>();
@@ -173,88 +32,151 @@ const MapLayerSynchronizer: React.FC<unknown> = () => {
 
   useEffect(() => {
     if (isShowingMapLayers) {
-      setMapLayers(values.layers ?? []);
+      setMapLayers(new Set([...values.layers]));
     }
   }, [isShowingMapLayers, setMapLayers, values.layers]);
 
   return null;
 };
 
-/**
- * This component displays the nested groups of layers
- */
-const LayersTree: React.FC<React.PropsWithChildren<{ items: TreeMenuItem[] }>> = ({ items }) => {
-  const { values } = useFormikContext<LayersFormModel>();
+const MenuEntry: React.FC<React.PropsWithChildren<{ entry: LayerMenuEntry; level: number }>> = ({
+  entry,
+  level,
+}) => {
+  return (
+    <>
+      {isLayerItem(entry) ? (
+        <MenuItem entry={entry} level={level} />
+      ) : (
+        <MenuGroup entry={entry} level={level} />
+      )}
+    </>
+  );
+};
 
-  const getParentIndex = (key: string, mapLayers: ILayerItem[]) => {
-    return mapLayers.findIndex(node => node.key === key);
+const MenuGroup: React.FC<React.PropsWithChildren<{ entry: LayerMenuGroup; level: number }>> = ({
+  entry,
+  level,
+}) => {
+  const { values, setFieldValue } = useFormikContext<LayersFormModel>();
+  const [isOpen, setIsOpen] = useState(false);
+  const groupCheckRef = useRef<HTMLInputElement>();
+
+  const nestedIdentifiers = useMemo(() => new Set(getNestedLayerId(entry)), [entry]);
+
+  const toggle = () => {
+    setIsOpen(!isOpen);
   };
 
-  const getLayerNodeIndex = (nodeKey: string, parentKey: string, mapLayers: ILayerItem[]) => {
-    const parent = mapLayers.find(node => node.key === parentKey);
+  const onChange = () => {
+    const activeLayers = [...values.layers];
+    const intersection = new Set(activeLayers.filter(layer => nestedIdentifiers.has(layer)));
 
-    return parent
-      ? (parent.nodes ?? ([] as any)).findIndex((node: TreeNode) => node.key === nodeKey)
-      : undefined;
+    const activeLayerSet = new Set([...values.layers]);
+    if (intersection.size !== nestedIdentifiers.size) {
+      // add all missing layers
+      nestedIdentifiers.forEach(layerId => activeLayerSet.add(layerId));
+    } else {
+      // remove all nested
+      intersection.forEach(layerId => activeLayerSet.delete(layerId));
+    }
+
+    setFieldValue('layers', activeLayerSet);
   };
+
+  // Calculate the state of the parent check based on all the children.
+  useEffect(() => {
+    const intersection = [...values.layers].filter(i => nestedIdentifiers.has(i));
+
+    let isActive = false;
+    let isPartialActive = false;
+
+    if (intersection.length > 0) {
+      isActive = true;
+
+      if (intersection.length !== nestedIdentifiers.size) {
+        isPartialActive = true;
+      }
+    }
+
+    if (groupCheckRef.current) {
+      groupCheckRef.current.checked = isActive;
+      groupCheckRef.current.indeterminate = isPartialActive;
+    }
+  }, [nestedIdentifiers, entry, values]);
 
   return (
-    <ListGroup>
-      {items.map(node => {
-        if (node.level === 0 || node.hasNodes) {
-          if (!node.hasNodes) {
-            return null;
-          }
-          return (
-            <ParentNode key={node.key} id={node.key} className={`ml-${8 * node.level}`}>
-              {node.isOpen ? (
-                <OpenedIcon
-                  onClick={(event: React.MouseEvent<SVGElement>) => {
-                    if (node?.toggleNode) {
-                      node.toggleNode();
-                    }
+    <StyledParentNode level={level}>
+      <Row noGutters>
+        <Col xs="1">
+          {isOpen ? (
+            <StyledOpenedIcon
+              onClick={(event: React.MouseEvent<SVGElement>) => {
+                toggle();
+                event.stopPropagation();
+              }}
+            />
+          ) : (
+            <StyledClosedIcon
+              onClick={(event: any) => {
+                toggle();
+                event.stopPropagation();
+              }}
+            />
+          )}
+        </Col>
+        <Col>
+          <Form.Check
+            ref={groupCheckRef}
+            type="checkbox"
+            id={entry.key}
+            onChange={onChange}
+            label={entry.label}
+          />
+        </Col>
+      </Row>
+      {isOpen ? entry.nodes.map(x => <MenuEntry key={x.key} entry={x} level={level + 1} />) : null}
+    </StyledParentNode>
+  );
+};
 
-                    event.stopPropagation();
-                  }}
-                />
-              ) : (
-                <ClosedIcon
-                  onClick={(event: any) => {
-                    if (node?.toggleNode) {
-                      node.toggleNode();
-                    }
+const MenuItem: React.FC<React.PropsWithChildren<{ entry: LayerMenuItem; level: number }>> = ({
+  entry,
+  level,
+}) => {
+  const { values, setFieldValue } = useFormikContext<LayersFormModel>();
 
-                    event.stopPropagation();
-                  }}
-                />
-              )}
-              <ParentCheckbox
-                index={node.index}
-                name={`layers[${node.index}].on`}
-                label={node.label}
-              />
-            </ParentNode>
-          );
-        } else {
-          return (
-            <LayerNode key={node.key} id={node.key} className={`ml-${8 * (node.level - 1)}`}>
-              <LayerNodeCheckbox
-                label={node.label}
-                name={`layers[${getParentIndex(
-                  node.parent,
-                  values.layers,
-                )}].nodes[${getLayerNodeIndex(
-                  node.key.split('/')[1],
-                  node.parent,
-                  values.layers,
-                )}].on`}
-                color={node.color}
-              />
-            </LayerNode>
-          );
+  const onChange = () => {
+    if (values.layers.has(entry.layerDefinitionId)) {
+      values.layers.delete(entry.layerDefinitionId);
+      setFieldValue('layers', new Set(values.layers));
+    } else {
+      setFieldValue('layers', new Set(values.layers.add(entry.layerDefinitionId)));
+    }
+  };
+
+  const color = entry.color;
+  const label = entry.label;
+
+  const isChecked = useMemo(
+    () => values.layers.has(entry.layerDefinitionId),
+    [entry.layerDefinitionId, values.layers],
+  );
+
+  return (
+    <StyledLayerNode level={level}>
+      <Form.Check
+        type="checkbox"
+        id={entry.key}
+        checked={isChecked}
+        onChange={onChange}
+        label={
+          <>
+            {exists(color) && <StyledLayerColor color={color} />} {label}
+          </>
         }
-      })}
-    </ListGroup>
+      />
+    </StyledLayerNode>
   );
 };
 
@@ -264,22 +186,98 @@ const LayersTree: React.FC<React.PropsWithChildren<{ items: TreeMenuItem[] }>> =
 export const LayersMenu: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { activeLayers: layers } = useMapStateMachine();
 
+  const pimsLayers = layersMenuTree.nodes.find(x => x.key === 'pims_layers');
+  const externalLayers = layersMenuTree.nodes.find(x => x.key === 'external_layers');
+
+  const initialValues = useMemo<LayersFormModel>(
+    () => ({
+      layers: new Set([...layers]),
+    }),
+    [layers],
+  );
+
   return (
-    <Formik<LayersFormModel> initialValues={{ layers }} onSubmit={noop} enableReinitialize>
-      {({ values }) => (
-        <FormikForm>
-          <MapLayerSynchronizer />
-          <TreeMenu hasSearch={false} data={values.layers}>
-            {({ items }) => {
-              return (
-                <FormSection className="bg-white p-3">
-                  <LayersTree items={items} />
-                </FormSection>
-              );
-            }}
-          </TreeMenu>
-        </FormikForm>
-      )}
+    <Formik<LayersFormModel> initialValues={initialValues} onSubmit={noop} enableReinitialize>
+      <Form>
+        <MapLayerSynchronizer />
+        <StyledFormGroup>
+          <Section header="PIMS">
+            {pimsLayers.nodes.map(menuEntry => (
+              <MenuEntry key={menuEntry.key} entry={menuEntry} level={0} />
+            ))}
+          </Section>
+          <Section header="External">
+            {externalLayers.nodes.map(menuEntry => (
+              <MenuEntry key={menuEntry.key} entry={menuEntry} level={0} />
+            ))}
+          </Section>
+        </StyledFormGroup>
+      </Form>
     </Formik>
   );
 };
+
+const StyledParentNode = styled.div<{ level: number }>`
+  padding-left: ${p => p.level * 1.4}rem;
+  padding-bottom: 0.5rem;
+
+  .form-check {
+    input {
+      margin-left: -0.3rem;
+    }
+    label {
+      font-weight: bold;
+      color: ${variables.textColor};
+    }
+`;
+
+const StyledLayerNode = styled.div<{ level: number }>`
+  padding-left: ${p => p.level * 4}rem;
+  padding-bottom: 0.5rem;
+
+  .form-check {
+    input {
+      margin-left: 0rem;
+    }
+    label {
+      font-weight: normal;
+    }
+`;
+
+const StyledOpenedIcon = styled(MdArrowDropDown)`
+  font-size: 2.4rem;
+  margin: -0.5rem;
+`;
+
+const StyledClosedIcon = styled(MdArrowRight)`
+  font-size: 2.4rem;
+  margin: -0.5rem;
+`;
+
+const StyledFormGroup = styled(Form.Group)`
+  font-size: 1.4rem;
+  .form-check {
+    display: flex;
+    align-items: center;
+    padding-left: 0rem;
+    input {
+      padding-left: 0rem;
+      margin-top: 0rem;
+    }
+
+    label {
+      display: flex;
+      align-items: center;
+      padding-left: 1.8rem;
+      margin-left: 0rem;
+    }
+  }
+`;
+
+const StyledLayerColor = styled.div<{ color: string }>`
+  width: 1.4rem;
+  height: 1.4rem;
+  background-color: ${({ color }) => color};
+  margin-right: 0.5rem;
+  padding-right: 1.4rem;
+`;

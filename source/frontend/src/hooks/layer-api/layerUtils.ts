@@ -1,3 +1,5 @@
+import { layerDefinitions } from '@/components/maps/leaflet/Control/LayersControl/LayerDefinitions';
+
 import { IWfsCqlFlags } from './useWfsLayer';
 
 /*
@@ -39,4 +41,8 @@ export const toCqlFilterValue = (object: Record<string, string>, flags?: IWfsCql
   });
 
   return cql.length > 0 ? (flags?.useCqlOr ? cql.join(' OR ') : cql.join(' AND ')) : '';
+};
+
+export const getLayersWithLayerName = (layerName: string) => {
+  return layerDefinitions.filter(x => x.layers?.includes(layerName));
 };
