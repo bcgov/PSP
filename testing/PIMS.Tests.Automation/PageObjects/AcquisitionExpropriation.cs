@@ -6,70 +6,95 @@ namespace PIMS.Tests.Automation.PageObjects
     public class AcquisitionExpropriation : PageObjectBase
     {
         //Acquisition Files Tab Element
-        private By expropriationTab = By.CssSelector("a[data-rb-event-key='expropriation']");
+        private readonly By expropriationTab = By.CssSelector("a[data-rb-event-key='expropriation']");
+
+        //Expropriation Date History
+        private readonly By expropriationDateHistoryTitle = By.XPath("//div[contains(text(),'Expropriation Date History')]");
+        private readonly By expropropiationDateHistoryBttn = By.CssSelector("button[data-testid='add-expropriation-event']");
+        private readonly By expropriationDateHistoryOpenTable = By.XPath("//div[contains(text(),'Expropriation Date History')]/parent::div/parent::div/following-sibling::div");
+        private readonly By expropriationDateHistoryTable = By.CssSelector("div[data-testid='expropriationHistoryTable']");
+        private readonly By expropriationDateHistoryColumn = By.XPath("//div[@data-testid='expropriationHistoryTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Date')]");
+        private readonly By expropriationDateHistoryColumnSort = By.XPath("//div[@data-testid='sort-column-eventDate']");
+        private readonly By expropriationDateHistoryOwnerColumn = By.XPath("//div[@data-testid='expropriationHistoryTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Owner')]");
+        private readonly By expropriationDateHistoryOwnerColumnSort = By.XPath("//div[@data-testid='sort-column-ownerOrInterestHolder']");
+        private readonly By expropriationDateHistoryEventColumn = By.XPath("//div[@data-testid='expropriationHistoryTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Event')]");
+        private readonly By expropriationDateHistoryEventColumnSort = By.XPath("//div[@data-testid='sort-column-eventDescription']");
+        private readonly By expropriationDateHistoryActionsColumn = By.XPath("//div[@data-testid='expropriationHistoryTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Actions')]");
+
+        //Expropriation History Add Event Modal Elements
+        private readonly By expropriationHistoryAddEventModal = By.CssSelector("div[class='modal-content']");
+        private readonly By expropriationHistoryAddEventModalHeader = By.XPath("//div[@class='modal-header']/div[contains(text(),'Expropriation Date History')]");
+        private readonly By expropriationHistoryAddEventModalOwnerLabel = By.XPath("//div[@class='modal-body']/div/div/label[contains(text(),'Owner')]");
+        private readonly By expropriationHistoryAddEventModalOwnerSelect = By.Id("input-payeeKey");
+        private readonly By expropriationHistoryAddEventModalEventLabel = By.XPath("//div[@class='modal-body']/div/div/label[contains(text(),'Event')]");
+        private readonly By expropriationHistoryAddEventModalEventSelect = By.Id("input-eventTypeCode");
+        private readonly By expropriationHistoryAddEventModalDateLabel = By.XPath("//div[@class='modal-body']/div/div/label[contains(text(),'Date')]");
+        private readonly By expropriationHistoryAddEventModalDateInput = By.Id("datepicker-eventDate");
+        private readonly By expropriationHistoryAddEventModalCancelBttn = By.CssSelector("button[data-testid='cancel-modal-button']");
+        private readonly By expropriationHistoryAddEventModalSaveBttn = By.CssSelector("button[data-testid='ok-modal-button']");
 
         //Form 1 Elements
-        private By form1Title = By.XPath("//div[@data-testid='form-1-section']/h2/div/div[contains(text(),'Form 1 - Notice of Expropriation')]");
-        private By form1ExpandBttn = By.XPath("//div[@data-testid='form-1-section']/h2/div/div[2]");
-        private By form1ExpAuthorityLabel = By.XPath("//div[@data-testid='form-1-section']/div/div/div/label[contains(text(),'Expropriation authority')]");
-        private By form1ExpAuthorityInput = By.XPath("//div[@data-testid='form-1-section']/div/div/div/div/div/div/div/input[@id='input-expropriationAuthority.contact.id']/parent::div/parent::div");
-        private By form1SelectContactBttn = By.XPath("//div[@data-testid='form-1-section']/div/div/div/div/div/div/button[@title='Select Contact']");
-        private By form1ImpactPropertiesLabel = By.XPath("//div[@data-testid='form-1-section']/div/div/div/label[contains(text(),'Impacted properties')]");
-        private By form1ImpactPropertiesTable = By.XPath("//div[@data-testid='form-1-section']/div/div/div/div/div[@data-testid='selectableFileProperties']");
-        private By form1NatureInterestLabel = By.XPath("//div[@data-testid='form-1-section']/div/div/div/label[contains(text(),'Nature of interest')]");
-        private By form1NatureInterestInput = By.Id("input-landInterest");
-        private By form1PurposeExpropLabel = By.XPath("//div[@data-testid='form-1-section']/div/div/div/label[contains(text(),'Purpose of expropriation')]");
-        private By form1PurposeExpropInput = By.Id("input-purpose");
-        private By form1CancelBttn = By.XPath("//div[@data-testid='form-1-section']/div/div/div/button/div[contains(text(),'Cancel')]");
-        private By form1GenerateBttn = By.XPath("//div[@data-testid='form-1-section']/div/div/div/button/div[contains(text(),'Generate')]");
+        private readonly By form1Title = By.XPath("//div[@data-testid='form-1-section']/h2/div/div[contains(text(),'Form 1 - Notice of Expropriation')]");
+        private readonly By form1ExpandBttn = By.XPath("//div[@data-testid='form-1-section']/h2/div/div[2]");
+        private readonly By form1ExpAuthorityLabel = By.XPath("//div[@data-testid='form-1-section']/div/div/div/label[contains(text(),'Expropriation authority')]");
+        private readonly By form1ExpAuthorityInput = By.XPath("//div[@data-testid='form-1-section']/div/div/div/div/div/div/div/input[@id='input-expropriationAuthority.contact.id']/parent::div/parent::div");
+        private readonly By form1SelectContactBttn = By.XPath("//div[@data-testid='form-1-section']/div/div/div/div/div/div/button[@title='Select Contact']");
+        private readonly By form1ImpactPropertiesLabel = By.XPath("//div[@data-testid='form-1-section']/div/div/div/label[contains(text(),'Impacted properties')]");
+        private readonly By form1ImpactPropertiesTable = By.XPath("//div[@data-testid='form-1-section']/div/div/div/div/div[@data-testid='selectableFileProperties']");
+        private readonly By form1NatureInterestLabel = By.XPath("//div[@data-testid='form-1-section']/div/div/div/label[contains(text(),'Nature of interest')]");
+        private readonly By form1NatureInterestInput = By.Id("input-landInterest");
+        private readonly By form1PurposeExpropLabel = By.XPath("//div[@data-testid='form-1-section']/div/div/div/label[contains(text(),'Purpose of expropriation')]");
+        private readonly By form1PurposeExpropInput = By.Id("input-purpose");
+        private readonly By form1CancelBttn = By.XPath("//div[@data-testid='form-1-section']/div/div/div/button/div[contains(text(),'Cancel')]");
+        private readonly By form1GenerateBttn = By.XPath("//div[@data-testid='form-1-section']/div/div/div/button/div[contains(text(),'Generate')]");
 
         //Form 5 Elements
-        private By form5Title = By.XPath("//div[@data-testid='form-5-section']/h2/div/div[contains(text(),'Form 5 - Certificate of Approval of Expropriation')]");
-        private By form5ExpandBttn = By.XPath("//div[@data-testid='form-5-section']/h2/div/div[2]/*");
-        private By form5ExpAuthorityLabel = By.XPath("//div[@data-testid='form-5-section']/div/div/div/label[contains(text(),'Expropriation authority')]");
-        private By form5ExpAuthorityInput = By.XPath("//div[@data-testid='form-5-section']/div/div/div/div/div/div/div/input[@id='input-expropriationAuthority.contact.id']/parent::div/parent::div");
-        private By form5SelectContactBttn = By.XPath("//div[@data-testid='form-5-section']/div/div/div/div/div/div/button[@title='Select Contact']");
-        private By form5ImpactPropertiesLabel = By.XPath("//div[@data-testid='form-5-section']/div/div/div/label[contains(text(),'Impacted properties')]");
-        private By form5ImpactPropertiesTable = By.XPath("//div[@data-testid='form-5-section']/div/div/div/div/div[@data-testid='selectableFileProperties']");
-        private By form5CancelBttn = By.XPath("//div[@data-testid='form-5-section']/div/div/div/button/div[contains(text(),'Cancel')]");
-        private By form5GenerateBttn = By.XPath("//div[@data-testid='form-5-section']/div/div/div/button/div[contains(text(),'Generate')]");
+        private readonly By form5Title = By.XPath("//div[@data-testid='form-5-section']/h2/div/div[contains(text(),'Form 5 - Certificate of Approval of Expropriation')]");
+        private readonly By form5ExpandBttn = By.XPath("//div[@data-testid='form-5-section']/h2/div/div[2]/*");
+        private readonly By form5ExpAuthorityLabel = By.XPath("//div[@data-testid='form-5-section']/div/div/div/label[contains(text(),'Expropriation authority')]");
+        private readonly By form5ExpAuthorityInput = By.XPath("//div[@data-testid='form-5-section']/div/div/div/div/div/div/div/input[@id='input-expropriationAuthority.contact.id']/parent::div/parent::div");
+        private readonly By form5SelectContactBttn = By.XPath("//div[@data-testid='form-5-section']/div/div/div/div/div/div/button[@title='Select Contact']");
+        private readonly By form5ImpactPropertiesLabel = By.XPath("//div[@data-testid='form-5-section']/div/div/div/label[contains(text(),'Impacted properties')]");
+        private readonly By form5ImpactPropertiesTable = By.XPath("//div[@data-testid='form-5-section']/div/div/div/div/div[@data-testid='selectableFileProperties']");
+        private readonly By form5CancelBttn = By.XPath("//div[@data-testid='form-5-section']/div/div/div/button/div[contains(text(),'Cancel')]");
+        private readonly By form5GenerateBttn = By.XPath("//div[@data-testid='form-5-section']/div/div/div/button/div[contains(text(),'Generate')]");
 
         //Form 8 Elements
-        private By form8Title = By.XPath("//div[@data-testid='form-8-section']/h2/div/div/div/div[contains(text(),'Form 8 - Notice of Advance Payment')]");
-        private By form8AddBttn = By.XPath("//div[@data-testid='form-8-section']/h2/div/div/div/div/button");
+        private readonly By form8Title = By.XPath("//div[@data-testid='form-8-section']/h2/div/div/div/div[contains(text(),'Form 8 - Notice of Advance Payment')]");
+        private readonly By form8AddBttn = By.XPath("//div[@data-testid='form-8-section']/h2/div/div/div/div/button");
 
-        private By form8CreateTitle = By.XPath("//div[contains(text(),'Form 8 Notice of Advance Payment')]");
-        private By form8PayeeLabel = By.XPath("//label[contains(text(),'Payee')]");
-        private By form8PayeeSelect = By.Id("input-payeeKey");
-        private By form8ExpAuthorityLabel = By.XPath("//label[contains(text(),'Expropriation authority')]");
-        private By form8ExpAuthorityInput = By.XPath("//input[@id='input-expropriationAuthority.contact.id']/parent::div/parent::div");
-        private By form8ExpAuthorityContactBttn = By.CssSelector("button[title='Select Contact']");
-        private By form8DescriptionLabel = By.XPath("//label[contains(text(),'Description')]");
-        private By form8DescriptionTextarea = By.Id("input-description");
+        private readonly By form8CreateTitle = By.XPath("//div[contains(text(),'Form 8 Notice of Advance Payment')]");
+        private readonly By form8PayeeLabel = By.XPath("//label[contains(text(),'Payee')]");
+        private readonly By form8PayeeSelect = By.Id("input-payeeKey");
+        private readonly By form8ExpAuthorityLabel = By.XPath("//label[contains(text(),'Expropriation authority')]");
+        private readonly By form8ExpAuthorityInput = By.XPath("//input[@id='input-expropriationAuthority.contact.id']/parent::div/parent::div");
+        private readonly By form8ExpAuthorityContactBttn = By.CssSelector("button[title='Select Contact']");
+        private readonly By form8DescriptionLabel = By.XPath("//label[contains(text(),'Description')]");
+        private readonly By form8DescriptionTextarea = By.Id("input-description");
 
-        private By form8PaymentDetailsTitle = By.XPath("//div[contains(text(),'Payment details')]");
-        private By form8PaymentAddBttn = By.CssSelector("button[data-testid='add-payment-item']");
-        private By form8DeletePaymentsTotal = By.CssSelector("button[title='Delete Payment Item']");
+        private readonly By form8PaymentDetailsTitle = By.XPath("//div[contains(text(),'Payment details')]");
+        private readonly By form8PaymentAddBttn = By.CssSelector("button[data-testid='add-payment-item']");
+        private readonly By form8DeletePaymentsTotal = By.CssSelector("button[title='Delete Payment Item']");
 
-        private By form8TotalCount = By.XPath("//div[contains(text(),'Form 8 - Notice of Advance Payment')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div");
-        private By form8PaymentsTotal = By.CssSelector("div[data-testid='paymentItems'] div[class='tbody'] div[class='tr-wrapper']");
+        private readonly By form8TotalCount = By.XPath("//div[contains(text(),'Form 8 - Notice of Advance Payment')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div");
+        private readonly By form8PaymentsTotal = By.CssSelector("div[data-testid='paymentItems'] div[class='tbody'] div[class='tr-wrapper']");
 
         //Form 9 Elements
-        private By form9Title = By.XPath("//div[@data-testid='form-9-section']/h2/div/div[contains(text(),'Form 9 - Vesting Notice')]");
-        private By form9ExpandBttn = By.XPath("//div[@data-testid='form-9-section']/h2/div/div[2]/*");
-        private By form9ExpAuthorityLabel = By.XPath("//div[@data-testid='form-9-section']/div/div/div/label[contains(text(),'Expropriation authority')]");
-        private By form9ExpAuthorityInput = By.XPath("//div[@data-testid='form-9-section']/div/div/div/div/div/div/div/input[@id='input-expropriationAuthority.contact.id']/parent::div/parent::div");
-        private By form9SelectContactBttn = By.XPath("//div[@data-testid='form-9-section']/div/div/div/div/div/div/button[@title='Select Contact']");
-        private By form9ImpactPropertiesLabel = By.XPath("//div[@data-testid='form-9-section']/div/div/div/label[contains(text(),'Impacted properties')]");
-        private By form9ImpactPropertiesTable = By.XPath("//div[@data-testid='form-9-section']/div/div/div/div/div[@data-testid='selectableFileProperties']");
-        private By form9ShownPlanLabel = By.XPath("//div[@data-testid='form-9-section']/div/div/div/label[contains(text(),'Shown on plan(s)')]");
-        private By form9ShownPlanInput = By.Id("input-registeredPlanNumbers");
-        private By form9CancelBttn = By.XPath("//div[@data-testid='form-9-section']/div/div/div/button/div[contains(text(),'Cancel')]");
-        private By form9GenerateBttn = By.XPath("//div[@data-testid='form-9-section']/div/div/div/button/div[contains(text(),'Generate')]");
+        private readonly By form9Title = By.XPath("//div[@data-testid='form-9-section']/h2/div/div[contains(text(),'Form 9 - Vesting Notice')]");
+        private readonly By form9ExpandBttn = By.XPath("//div[@data-testid='form-9-section']/h2/div/div[2]/*");
+        private readonly By form9ExpAuthorityLabel = By.XPath("//div[@data-testid='form-9-section']/div/div/div/label[contains(text(),'Expropriation authority')]");
+        private readonly By form9ExpAuthorityInput = By.XPath("//div[@data-testid='form-9-section']/div/div/div/div/div/div/div/input[@id='input-expropriationAuthority.contact.id']/parent::div/parent::div");
+        private readonly By form9SelectContactBttn = By.XPath("//div[@data-testid='form-9-section']/div/div/div/div/div/div/button[@title='Select Contact']");
+        private readonly By form9ImpactPropertiesLabel = By.XPath("//div[@data-testid='form-9-section']/div/div/div/label[contains(text(),'Impacted properties')]");
+        private readonly By form9ImpactPropertiesTable = By.XPath("//div[@data-testid='form-9-section']/div/div/div/div/div[@data-testid='selectableFileProperties']");
+        private readonly By form9ShownPlanLabel = By.XPath("//div[@data-testid='form-9-section']/div/div/div/label[contains(text(),'Shown on plan(s)')]");
+        private readonly By form9ShownPlanInput = By.Id("input-registeredPlanNumbers");
+        private readonly By form9CancelBttn = By.XPath("//div[@data-testid='form-9-section']/div/div/div/button/div[contains(text(),'Cancel')]");
+        private readonly By form9GenerateBttn = By.XPath("//div[@data-testid='form-9-section']/div/div/div/button/div[contains(text(),'Generate')]");
 
 
         //Acquisition File Confirmation Modal Elements
-        private By acquisitionFileConfirmationModal = By.CssSelector("div[class='modal-content']");
+        private readonly By acquisitionFileConfirmationModal = By.CssSelector("div[class='modal-content']");
 
         private SharedSelectContact sharedSelectContact;
         private SharedModals sharedModals;
@@ -86,12 +111,43 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(expropriationTab).Click();
         }
 
+        public void AddExpropriationDateHistoryButton()
+        {
+            WaitUntilClickable(expropropiationDateHistoryBttn);
+            webDriver.FindElement(expropropiationDateHistoryBttn).Click();
+        }
+
         public void AddForm8Button()
         {
             WaitUntilClickable(form8AddBttn);
             webDriver.FindElement(form8AddBttn).Click();
 
             WaitUntilSpinnerDisappear();
+        }
+
+        public void EditNthHistoryDateButton(int index)
+        {
+            WaitUntilSpinnerDisappear();
+
+            WaitUntilClickable(By.XPath("//div[@data-testid='expropriationHistoryTable']/div[@class='tbody']/div[1]/div/div[4]/div/button[@data-testid='edit-expropriation-event-"+ index +"']"));
+            webDriver.FindElement(By.XPath("//div[@data-testid='expropriationHistoryTable']/div[@class='tbody']/div[1]/div/div[4]/div/button[@data-testid='edit-expropriation-event-"+ index +"']")).Click();
+        }
+
+        public void DeleteNthHistoryDate(int index)
+        {
+            var elementIdx = index + 1;
+            WaitUntilSpinnerDisappear();
+
+            WaitUntilClickable(By.XPath("//div[@data-testid='expropriationHistoryTable']/div[@class='tbody']/div["+ elementIdx +"]/div/div[4]/div/button[@data-testid='delete-expropriation-event-"+ index +"']"));
+            webDriver.FindElement(By.XPath("//div[@data-testid='expropriationHistoryTable']/div[@class='tbody']/div["+ elementIdx +"]/div/div[4]/div/button[@data-testid='delete-expropriation-event-"+ index +"']")).Click();
+
+            if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
+            {
+                Assert.Equal("Delete Expropriation Event", sharedModals.ModalHeader());
+                Assert.Contains("You have selected to delete this Event from the history.", sharedModals.ModalContent());
+                Assert.Contains("Do you want to proceed?", sharedModals.ModalContent());
+                sharedModals.ModalClickOKBttn();
+            }
         }
 
         public void EditNthForm8Button(int index)
@@ -143,6 +199,26 @@ namespace PIMS.Tests.Automation.PageObjects
             ButtonElement("Cancel");
 
             sharedModals.CancelActionModal();
+        }
+
+        public void CancelExpropriationHistoryDate()
+        {
+            Wait();
+            webDriver.FindElement(expropriationHistoryAddEventModalCancelBttn).Click();
+        }
+
+        public void CreateUpdateExpropriationDateHistory(AcquisitionExpropriationDateHistory history)
+        {
+            Wait();
+            ChooseSpecificSelectOption(expropriationHistoryAddEventModalOwnerSelect, history.ExpropriationDateHistoryOwner);
+            ChooseSpecificSelectOption(expropriationHistoryAddEventModalEventSelect, history.ExpropriationDateHistoryEvent);
+
+            if (history.ExpropriationDateHistoryDate != "")
+            {
+                ClearInput(expropriationHistoryAddEventModalDateInput);
+                webDriver.FindElement(expropriationHistoryAddEventModalDateInput).SendKeys(history.ExpropriationDateHistoryDate);
+                webDriver.FindElement(expropriationHistoryAddEventModalDateInput).SendKeys(Keys.Enter);
+            }
         }
 
         public void CreateForm8(AcquisitionExpropriationForm8 expropriation)
@@ -206,9 +282,55 @@ namespace PIMS.Tests.Automation.PageObjects
             return webDriver.FindElements(form8TotalCount).Count();
         }
 
+        public void VerifyExpropriationDateHistoryModalForm()
+        {
+            Wait();
+            AssertTrueIsDisplayed(expropriationHistoryAddEventModalHeader);
+
+            AssertTrueIsDisplayed(expropriationHistoryAddEventModalOwnerLabel);
+            AssertTrueIsDisplayed(expropriationHistoryAddEventModalOwnerSelect);
+
+            AssertTrueIsDisplayed(expropriationHistoryAddEventModalEventLabel);
+            AssertTrueIsDisplayed(expropriationHistoryAddEventModalEventSelect);
+
+            AssertTrueIsDisplayed(expropriationHistoryAddEventModalDateLabel);
+            AssertTrueIsDisplayed(expropriationHistoryAddEventModalDateInput);
+            AssertTrueIsDisplayed(expropriationHistoryAddEventModalCancelBttn);
+            AssertTrueIsDisplayed(expropriationHistoryAddEventModalSaveBttn);
+        }
+
+        public void VerifyCreatedExpropriationDateHistory(AcquisitionExpropriationDateHistory history, int index)
+        {
+            WaitUntilSpinnerDisappear();
+
+            var elementIdx = index + 1;
+
+            if(history.ExpropriationDateHistoryDate != "")
+                AssertTrueContentEquals(By.XPath("//div[@data-testid='expropriationHistoryTable']/div[@class='tbody']/div["+ elementIdx +"]/div/div[1]"), TransformDateFormat(history.ExpropriationDateHistoryDate));
+
+            AssertTrueContentEquals(By.XPath("//div[@data-testid='expropriationHistoryTable']/div[@class='tbody']/div["+ elementIdx +"]/div/div[2]"), history.ExpropriationDateHistoryOwnerDisplay);
+            AssertTrueContentEquals(By.XPath("//div[@data-testid='expropriationHistoryTable']/div[@class='tbody']/div["+ elementIdx +"]/div/div[3]"), history.ExpropriationDateHistoryEvent);
+            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='expropriationHistoryTable']/div[@class='tbody']/div["+ elementIdx +"]/div/div[4]/div/button[@data-testid='edit-expropriation-event-"+ index +"']"));
+            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='expropriationHistoryTable']/div[@class='tbody']/div["+ elementIdx +"]/div/div[4]/div/button[@data-testid='delete-expropriation-event-"+ index +"']"));
+        }
+
         public void VerifySection3InitExpropriationTab()
         {
             Wait();
+
+            //Expropriation Date History
+            webDriver.FindElement(expropriationDateHistoryOpenTable).Click();
+
+            AssertTrueIsDisplayed(expropriationDateHistoryTitle);
+            AssertTrueIsDisplayed(expropropiationDateHistoryBttn);
+            AssertTrueIsDisplayed(expropriationDateHistoryTable);
+            AssertTrueIsDisplayed(expropriationDateHistoryColumn);
+            AssertTrueIsDisplayed(expropriationDateHistoryColumnSort);
+            AssertTrueIsDisplayed(expropriationDateHistoryOwnerColumn);
+            AssertTrueIsDisplayed(expropriationDateHistoryOwnerColumnSort);
+            AssertTrueIsDisplayed(expropriationDateHistoryEventColumn);
+            AssertTrueIsDisplayed(expropriationDateHistoryEventColumnSort);
+            AssertTrueIsDisplayed(expropriationDateHistoryActionsColumn);
 
             //Form 8
             AssertTrueIsDisplayed(form8Title);
@@ -218,6 +340,20 @@ namespace PIMS.Tests.Automation.PageObjects
         public void VerifySection6InitExpropriationTab()
         {
             Wait();
+
+            //Expropriation Date History
+            webDriver.FindElement(expropriationDateHistoryOpenTable).Click();
+
+            AssertTrueIsDisplayed(expropriationDateHistoryTitle);
+            AssertTrueIsDisplayed(expropropiationDateHistoryBttn);
+            AssertTrueIsDisplayed(expropriationDateHistoryTable);
+            AssertTrueIsDisplayed(expropriationDateHistoryColumn);
+            AssertTrueIsDisplayed(expropriationDateHistoryColumnSort);
+            AssertTrueIsDisplayed(expropriationDateHistoryOwnerColumn);
+            AssertTrueIsDisplayed(expropriationDateHistoryOwnerColumnSort);
+            AssertTrueIsDisplayed(expropriationDateHistoryEventColumn);
+            AssertTrueIsDisplayed(expropriationDateHistoryEventColumnSort);
+            AssertTrueIsDisplayed(expropriationDateHistoryActionsColumn);
 
             //Form 1
             AssertTrueIsDisplayed(form1Title);
