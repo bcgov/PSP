@@ -1,6 +1,7 @@
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
+import { applyDisplayOrder } from '@/utils';
 
 import { PropertyForm } from '../../shared/models';
 import { ResearchFileProjectFormModel } from '../common/models';
@@ -19,10 +20,12 @@ export class ResearchForm {
   }
 
   public toApi(): ApiGen_Concepts_ResearchFile {
+    const fileProperties = this.properties.map(x => this.toPropertyApi(x));
+    const sortedProperties = applyDisplayOrder(fileProperties);
     return {
       id: this.id ?? 0,
       fileName: this.name,
-      fileProperties: this.properties.map(x => this.toPropertyApi(x)),
+      fileProperties: sortedProperties,
       researchFileProjects: ResearchFileProjectFormModel.toApiList(this.researchFileProjects),
       ...getEmptyBaseAudit(this.rowVersion),
       expropriationNotes: null,

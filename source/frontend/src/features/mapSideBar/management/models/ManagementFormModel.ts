@@ -2,6 +2,7 @@ import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { ApiGen_Concepts_ManagementFileProperty } from '@/models/api/generated/ApiGen_Concepts_ManagementFileProperty';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
+import { applyDisplayOrder } from '@/utils';
 import { fromTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
 import { exists } from '@/utils/utils';
 
@@ -33,6 +34,8 @@ export class ManagementFormModel implements WithManagementTeam {
   }
 
   toApi(): ApiGen_Concepts_ManagementFile {
+    const fileProperties = this.fileProperties.map(x => this.toPropertyApi(x));
+    const sortedProperties = applyDisplayOrder(fileProperties);
     return {
       id: this.id ?? 0,
       fileName: this.fileName ?? null,
@@ -52,7 +55,7 @@ export class ManagementFormModel implements WithManagementTeam {
         .filter(x => !!x.contact && !!x.teamProfileTypeCode)
         .map(x => x.toApi(this.id || 0))
         .filter(exists),
-      fileProperties: this.fileProperties.map(x => this.toPropertyApi(x)),
+      fileProperties: sortedProperties ?? [],
       ...getEmptyBaseAudit(this.rowVersion),
     };
   }

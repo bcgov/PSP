@@ -8,7 +8,7 @@ import {
   Polygon,
 } from 'geojson';
 import { geoJSON, LatLngLiteral } from 'leaflet';
-import { compact, isNumber } from 'lodash';
+import { compact, isNumber, orderBy } from 'lodash';
 import polylabel from 'polylabel';
 import { toast } from 'react-toastify';
 
@@ -337,4 +337,30 @@ export function isLatLngInFeatureSetBoundary(
     | MultiPolygon;
 
   return exists(boundary) && booleanPointInPolygon(location, boundary);
+}
+
+/**
+ * Preserves the order of the properties within a file
+ * @param fileProperties The file properties
+ */
+export function applyDisplayOrder<T extends ApiGen_Concepts_FileProperty>(fileProperties: T[]) {
+  return fileProperties.map((fp, index) => {
+    fp.displayOrder = index;
+    return fp;
+  });
+}
+
+/**
+ * Sorts file properties based on their `displayOrder`
+ * @param fileProperties The file properties to sort
+ * @returns The sorted set of file properties
+ */
+export function sortFileProperties<T extends ApiGen_Concepts_FileProperty>(
+  fileProperties: T[] | null,
+): T[] | null {
+  if (exists(fileProperties)) {
+    const sortedProperties = orderBy(fileProperties, fp => fp.displayOrder ?? Infinity, 'asc');
+    return sortedProperties;
+  }
+  return null;
 }

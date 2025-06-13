@@ -86,7 +86,7 @@ const StatusField: React.FunctionComponent<React.PropsWithChildren<IStatusFieldP
           </StyledSmallText>
           <RetiredWarning $variant={statusFound.colorVariant}>
             <statusFound.icon size={16} />
-            {statusCodeType?.description.toUpperCase()}
+            {statusCodeType?.description?.toUpperCase()}
           </RetiredWarning>
         </Col>
       </Row>

@@ -49,6 +49,7 @@ import FileMenuView from '../shared/FileMenuView';
 import SidebarFooter from '../shared/SidebarFooter';
 import usePathGenerator from '../shared/sidebarPathGenerator';
 import { StyledFormWrapper } from '../shared/styles';
+import { usePropertyIndexFromUrl } from '../shared/usePropertyIndexFromUrl';
 import LeaseHeader from './common/LeaseHeader';
 import { LeaseFileTabNames } from './detail/LeaseFileTabs';
 import LeaseGenerateContainer from './LeaseGenerateFormContainer';
@@ -386,6 +387,10 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
     refresh();
   };
 
+  // Extract the zero-based property index from the current URL path.
+  // It will be null if route is not matched
+  const currentPropertyIndex: number | null = usePropertyIndexFromUrl();
+
   return (
     <Switch>
       <Route path={`${stripTrailingSlash(match.path)}/property/selector`}>
@@ -412,8 +417,10 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
           <FileLayout
             leftComponent={
               <FileMenuView
-                properties={leaseProperties}
+                file={lease}
+                currentPropertyIndex={currentPropertyIndex}
                 canEdit={hasRole(Roles.SYSTEM_ADMINISTRATOR) || hasClaim(Claims.LEASE_EDIT)}
+                isInNonEditableState={false}
                 onSelectFileSummary={onSelectFileSummary}
                 onSelectProperty={onSelectProperty}
                 onEditProperties={onEditProperties}

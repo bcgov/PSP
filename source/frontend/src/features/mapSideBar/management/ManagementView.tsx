@@ -12,33 +12,37 @@ import {
 } from 'react-router-dom';
 
 import ManagementIcon from '@/assets/images/management-grey-icon.svg?react';
+import { Claims } from '@/constants';
 import FileLayout from '@/features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { stripTrailingSlash } from '@/utils';
-import { getFilePropertyName } from '@/utils/mapPropertyUtils';
 
 import { SideBarContext } from '../context/sidebarContext';
 import { InventoryTabNames } from '../property/InventoryTabs';
 import FilePropertyRouter from '../router/FilePropertyRouter';
 import { FileTabType } from '../shared/detail/FileTabs';
+import FileMenuView from '../shared/FileMenuView';
 import { PropertyForm } from '../shared/models';
 import SidebarFooter from '../shared/SidebarFooter';
 import { StyledFormWrapper } from '../shared/styles';
 import UpdateProperties from '../shared/update/properties/UpdateProperties';
+import { usePropertyIndexFromUrl } from '../shared/usePropertyIndexFromUrl';
 import ManagementHeader from './common/ManagementHeader';
-import ManagementMenu from './common/ManagementMenu';
 import ManagementRouter from './router/ManagementRouter';
+import ManagementStatusUpdateSolver from './tabs/fileDetails/detail/ManagementStatusUpdateSolver';
 
 export interface IManagementViewProps {
   onClose: (() => void) | undefined;
   onSave: () => Promise<void>;
   onCancel: () => void;
-  onMenuChange: (selectedIndex: number) => void;
-  onShowPropertySelector: () => void;
+  onSelectFileSummary: () => void;
+  onSelectProperty: (propertyId: number) => void;
+  onEditProperties: () => void;
   onSuccess: (updateProperties?: boolean, updateFile?: boolean) => void;
   onUpdateProperties: (file: ApiGen_Concepts_File) => Promise<ApiGen_Concepts_File | undefined>;
   confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
@@ -55,8 +59,9 @@ export const ManagementView: React.FunctionComponent<IManagementViewProps> = ({
   onClose,
   onSave,
   onCancel,
-  onMenuChange,
-  onShowPropertySelector,
+  onSelectFileSummary,
+  onSelectProperty,
+  onEditProperties,
   onSuccess,
   onUpdateProperties,
   confirmBeforeAdd,
@@ -72,6 +77,7 @@ export const ManagementView: React.FunctionComponent<IManagementViewProps> = ({
   const location = useLocation();
   const history = useHistory();
   const match = useRouteMatch();
+  const { hasClaim } = useKeycloakWrapper();
   const { lastUpdatedBy } = useContext(SideBarContext);
 
   // match for property menu routes - eg /property/1/ltsa
@@ -85,19 +91,19 @@ export const ManagementView: React.FunctionComponent<IManagementViewProps> = ({
     `${stripTrailingSlash(match.path)}/property/:menuIndex/:tab`,
   );
 
-  const selectedMenuIndex = propertiesMatch !== null ? Number(propertiesMatch.params.menuIndex) : 0;
-
   const formTitle = isEditing
     ? getEditTitle(fileMatch, propertySelectorMatch, propertiesMatch)
     : 'Management File';
-
-  const menuItems = managementFile?.fileProperties?.map(x => getFilePropertyName(x).value) || [];
-  menuItems.unshift('File Summary');
 
   const closePropertySelector = () => {
     setIsEditing(false);
     history.push(`${match.url}`);
   };
+
+  // Extract the zero-based property index from the current URL path.
+  // It will be null if route is not matched
+  const currentPropertyIndex: number | null = usePropertyIndexFromUrl();
+  const statusSolver = new ManagementStatusUpdateSolver(managementFile);
 
   return (
     <Switch>
@@ -142,12 +148,14 @@ export const ManagementView: React.FunctionComponent<IManagementViewProps> = ({
         >
           <FileLayout
             leftComponent={
-              <ManagementMenu
-                managementFile={managementFile}
-                items={menuItems}
-                selectedIndex={selectedMenuIndex}
-                onChange={onMenuChange}
-                onShowPropertySelector={onShowPropertySelector}
+              <FileMenuView
+                file={managementFile}
+                currentPropertyIndex={currentPropertyIndex}
+                canEdit={hasClaim(Claims.MANAGEMENT_EDIT)}
+                isInNonEditableState={!statusSolver.canEditProperties()}
+                onSelectFileSummary={onSelectFileSummary}
+                onSelectProperty={onSelectProperty}
+                onEditProperties={onEditProperties}
               />
             }
             bodyComponent={

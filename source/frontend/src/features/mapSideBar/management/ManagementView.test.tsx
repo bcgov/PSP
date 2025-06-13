@@ -20,9 +20,18 @@ import { getUserMock } from '@/mocks/user.mock';
 import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { prettyFormatUTCDate } from '@/utils';
-import { act, cleanup, render, RenderOptions, userEvent } from '@/utils/test-utils';
+import { firstOrNull, prettyFormatUTCDate } from '@/utils';
+import {
+  act,
+  cleanup,
+  getMockRepositoryObj,
+  render,
+  RenderOptions,
+  userEvent,
+} from '@/utils/test-utils';
 
+import { ApiGen_CodeTypes_ManagementFileStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_ManagementFileStatusTypes';
+import { toTypeCode } from '@/utils/formUtils';
 import ManagementView, { IManagementViewProps } from './ManagementView';
 
 // mock auth library
@@ -34,13 +43,14 @@ const getNotes = vi.fn().mockResolvedValue([]);
 const onClose = vi.fn();
 const onSave = vi.fn();
 const onCancel = vi.fn();
-const onMenuChange = vi.fn();
 const onSuccess = vi.fn();
 const onUpdateProperties = vi.fn();
 const confirmBeforeAdd = vi.fn();
 const canRemove = vi.fn();
 const setIsEditing = vi.fn();
-const onEditFileProperties = vi.fn();
+const onSelectFileSummary = vi.fn();
+const onSelectProperty = vi.fn();
+const onEditProperties = vi.fn();
 
 // Need to mock this library for unit tests
 vi.mock('react-visibility-sensor', () => {
@@ -77,17 +87,12 @@ vi.mocked(useApiProperties).mockReturnValue({
 });
 
 vi.mock('@/hooks/useLtsa');
-vi.mocked(useLtsa).mockImplementation(
-  () =>
-    ({
-      execute: vi.fn(),
-    } as unknown as ReturnType<typeof useLtsa>),
-);
+vi.mocked(useLtsa).mockReturnValue(getMockRepositoryObj());
 
 vi.mock('@/hooks/repositories/useProjectProvider');
-vi.mocked(useProjectProvider).mockReturnValue({
+vi.mocked(useProjectProvider, { partial: true }).mockReturnValue({
   retrieveProjectProducts: vi.fn(),
-} as unknown as ReturnType<typeof useProjectProvider>);
+});
 
 vi.mock('@/hooks/repositories/useHistoricalNumberRepository');
 
@@ -95,14 +100,15 @@ const DEFAULT_PROPS: IManagementViewProps = {
   onClose,
   onSave,
   onCancel,
-  onMenuChange,
+  onSelectFileSummary,
+  onSelectProperty,
+  onEditProperties,
   onSuccess,
   onUpdateProperties,
   confirmBeforeAdd,
   canRemove,
   isEditing: false,
   setIsEditing,
-  onShowPropertySelector: onEditFileProperties,
   formikRef: createRef(),
   isFormValid: true,
   error: undefined,
@@ -121,9 +127,9 @@ describe('ManagementView component', () => {
         <ManagementView
           {...{
             ...props,
-            managementFile: {
+            managementFile: props.managementFile ?? {
               ...mockManagementFileResponse(),
-              fileProperties: mockManagementFilePropertiesResponse() as any,
+              fileProperties: mockManagementFilePropertiesResponse(),
             },
           }}
         />
@@ -152,36 +158,19 @@ describe('ManagementView component', () => {
       http.get('/api/users/info/*', () => HttpResponse.json(getUserMock(), { status: 200 })),
     );
 
-    vi.mocked(useNoteRepository).mockImplementation(
-      () =>
-        ({
-          addNote: { execute: vi.fn() },
-          getNote: { execute: vi.fn() },
-          updateNote: { execute: vi.fn() },
-        } as unknown as ReturnType<typeof useNoteRepository>),
-    );
-    vi.mocked(useApiNotes).mockImplementation(
-      () =>
-        ({
-          getNotes,
-        } as unknown as ReturnType<typeof useApiNotes>),
-    );
+    vi.mocked(useNoteRepository, { partial: true }).mockReturnValue({
+      addNote: getMockRepositoryObj(),
+      getNote: getMockRepositoryObj(),
+      updateNote: getMockRepositoryObj(),
+    });
+
+    vi.mocked(useApiNotes, { partial: true }).mockReturnValue({
+      getNotes,
+    });
 
     vi.mocked(useHistoricalNumberRepository).mockReturnValue({
-      getPropertyHistoricalNumbers: {
-        error: null,
-        response: [],
-        execute: vi.fn().mockResolvedValue([]),
-        loading: false,
-        status: 200,
-      },
-      updatePropertyHistoricalNumbers: {
-        error: null,
-        response: [],
-        execute: vi.fn().mockResolvedValue([]),
-        loading: false,
-        status: 200,
-      },
+      getPropertyHistoricalNumbers: getMockRepositoryObj([]),
+      updatePropertyHistoricalNumbers: getMockRepositoryObj([]),
     });
 
     history.replace(`/mapview/sidebar/management/1`);
@@ -202,7 +191,6 @@ describe('ManagementView component', () => {
     const testManagementFile = mockManagementFileResponse();
 
     expect(getByText('Management File')).toBeVisible();
-
     expect(getAllByText(testManagementFile.fileName, { exact: false })[0]).toBeVisible();
     expect(
       getByText(new RegExp(prettyFormatUTCDate(testManagementFile.appCreateTimestamp))),
@@ -212,6 +200,20 @@ describe('ManagementView component', () => {
   it('should display the Edit Properties button if the user has permissions', async () => {
     const { getByTitle } = await setup(undefined, { claims: [Claims.MANAGEMENT_EDIT] });
     expect(getByTitle(/Change properties/)).toBeVisible();
+  });
+
+  it('renders the warning icon instead of the edit button when file in final/archived state', async () => {
+    const { getAllByTestId } = await setup(
+      {
+        ...DEFAULT_PROPS,
+        managementFile: {
+          ...mockManagementFileResponse(),
+          fileStatusTypeCode: toTypeCode(ApiGen_CodeTypes_ManagementFileStatusTypes.ARCHIVED),
+        },
+      },
+      { claims: [Claims.MANAGEMENT_EDIT] },
+    );
+    expect(firstOrNull(getAllByTestId('tooltip-icon-1-summary-cannot-edit-tooltip'))).toBeVisible();
   });
 
   it('should not display the Edit Properties button if the user does not have permissions', async () => {
@@ -305,10 +307,8 @@ describe('ManagementView component', () => {
 
   it('should close the form when Close button is clicked', async () => {
     const { getCloseButton, getByText } = await setup();
-
     expect(getByText('Management File')).toBeVisible();
     await act(async () => userEvent.click(getCloseButton()));
-
-    expect(onClose).toBeCalled();
+    expect(onClose).toHaveBeenCalled();
   });
 });

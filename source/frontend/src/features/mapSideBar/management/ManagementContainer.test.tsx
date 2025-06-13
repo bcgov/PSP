@@ -13,7 +13,6 @@ import {
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
-  fireEvent,
   render,
   RenderOptions,
   screen,
@@ -22,7 +21,12 @@ import {
   waitForElementToBeRemoved,
 } from '@/utils/test-utils';
 
+import {
+  getMockApiAssociation,
+  getMockPropertyAssociations,
+} from '@/mocks/propertyAssociations.mock';
 import { SideBarContextProvider } from '../context/sidebarContext';
+import { PropertyForm } from '../shared/models';
 import ManagementContainer, { IManagementContainerProps } from './ManagementContainer';
 import { IManagementViewProps } from './ManagementView';
 
@@ -89,6 +93,8 @@ describe('ManagementContainer component', () => {
   };
 
   beforeEach(() => {
+    history.replace('/mapview/sidebar/management/1');
+
     mockAxios.onGet(new RegExp('users/info/*')).reply(200, {});
     mockAxios
       .onGet(new RegExp('managementfiles/1/properties'))
@@ -98,6 +104,10 @@ describe('ManagementContainer component', () => {
       .reply(200, mockManagementFilePropertiesResponse());
     mockAxios.onGet(new RegExp('managementfiles/1/updateInfo')).reply(200, mockLastUpdatedBy(1));
     mockAxios.onGet(new RegExp('managementfiles/1')).reply(200, mockManagementFileApi);
+    mockAxios.onGet(new RegExp('properties/1/associations')).reply(200, {
+      ...getMockPropertyAssociations(),
+      managementAssociations: [getMockApiAssociation(1), getMockApiAssociation(2)],
+    });
   });
 
   afterEach(() => {
@@ -130,7 +140,7 @@ describe('ManagementContainer component', () => {
     await waitForElementToBeRemoved(spinner);
 
     mockAxios.onGet(new RegExp('managementfiles/1/properties')).timeout();
-    await act(async () => viewProps.onShowPropertySelector());
+    await act(async () => viewProps.onEditProperties());
     await act(async () => {
       viewProps.canRemove(1);
     });
@@ -150,6 +160,21 @@ describe('ManagementContainer component', () => {
     expect(
       mockAxios.history.put.filter(x => x.url === '/managementfiles/1/properties?'),
     ).toHaveLength(1);
+  });
+
+  it('should retrieve property associations when confirmBeforeAdd function is called', async () => {
+    const { getByTestId } = setup(undefined, { claims: [] });
+
+    const spinner = getByTestId('filter-backdrop-loading');
+    await waitForElementToBeRemoved(spinner);
+    expect(spinner).not.toBeVisible();
+
+    await act(async () => {
+      await viewProps.confirmBeforeAdd(new PropertyForm({ apiId: 1 }));
+    });
+    expect(mockAxios.history.get.filter(x => x.url === '/properties/1/associations')).toHaveLength(
+      1,
+    );
   });
 
   it('should show error popup when user adds a property outside of the user account regions', async () => {
@@ -173,67 +198,95 @@ describe('ManagementContainer component', () => {
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
 
-    await act(async () => viewProps.onMenuChange(1));
-    expect(history.location.pathname).toBe('/property/1');
+    await act(async () => viewProps.onSelectProperty(1));
+    expect(history.location.pathname).toBe('/mapview/sidebar/management/1/property/1');
+  });
+
+  it('should go back to file summary when not editing', async () => {
+    const { getByTestId } = setup(undefined, { claims: [] });
+
+    const spinner = getByTestId('filter-backdrop-loading');
+    await waitForElementToBeRemoved(spinner);
+
+    await act(async () => viewProps.onSelectProperty(1));
+    expect(history.location.pathname).toBe('/mapview/sidebar/management/1/property/1');
+
+    await act(async () => viewProps.onSelectFileSummary());
+    expect(history.location.pathname).toBe('/mapview/sidebar/management/1');
   });
 
   it('displays a warning if form is dirty and menu index changes', async () => {
-    const { getByTestId, getByText } = setup(undefined, { claims: [] });
-    vi.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
+    const { getByTestId } = setup(undefined, { claims: [] });
 
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
 
     await act(async () => viewProps.setIsEditing(true));
     await act(async () => (viewProps.formikRef.current as any).setFieldValue('value', 1));
-    await screen.findByText('1');
-    await act(async () => viewProps.onMenuChange(1));
+    expect(await screen.findByText('1')).toBeVisible();
+    await act(async () => viewProps.onSelectProperty(1));
 
-    await waitFor(() => {
-      const warning = getByText(/Confirm Changes/i);
-      expect(warning).toBeVisible();
-    });
+    const warning = await screen.findByText(/Confirm Changes/i);
+    expect(warning).toBeVisible();
   });
 
-  it('Cancels edit if user confirms modal', async () => {
-    const { getByTestId, getByText } = setup(undefined, { claims: [] });
-    vi.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
+  it('cancels edit if user confirms modal', async () => {
+    const { getByTestId } = setup(undefined, { claims: [] });
 
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
 
     await act(async () => viewProps.setIsEditing(true));
     await act(async () => (viewProps.formikRef.current as any).setFieldValue('value', 1));
-    await screen.findByText('1');
-    await act(async () => viewProps.onMenuChange(1));
+    expect(await screen.findByText('1')).toBeVisible();
+    await act(async () => viewProps.onSelectProperty(1));
 
-    expect(history.location.pathname).toBe('/property/1');
+    expect(history.location.pathname).toBe('/mapview/sidebar/management/1');
 
-    const yesButton = getByText('Yes');
+    const yesButton = await screen.findByTitle('ok-modal');
     await act(async () => {
-      fireEvent.click(yesButton);
+      userEvent.click(yesButton);
     });
+
     const params = new URLSearchParams(history.location.search);
-    await waitFor(async () => expect(params.has('edit')).toBe(false));
+    expect(history.location.pathname).toBe('/mapview/sidebar/management/1/property/1');
+    expect(params.has('edit')).toBe(false);
   });
 
   it('cancels edit if form is not dirty and menu index changes', async () => {
     const { getByTestId } = setup(undefined, { claims: [] });
-    vi.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
 
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
 
     await act(async () => viewProps.setIsEditing(true));
-    await act(async () => viewProps.onMenuChange(1));
+    await act(async () => viewProps.onSelectProperty(1));
 
     const params = new URLSearchParams(history.location.search);
     expect(params.has('edit')).toBe(false);
   });
 
+  it('displays a warning if form is dirty and user clicks to go back to file summary', async () => {
+    const { getByTestId } = setup(undefined, { claims: [] });
+
+    const spinner = getByTestId('filter-backdrop-loading');
+    await waitForElementToBeRemoved(spinner);
+
+    // go to property, then edit it
+    await act(async () => viewProps.onSelectProperty(1));
+    await act(async () => viewProps.setIsEditing(true));
+    await act(async () => (viewProps.formikRef.current as any).setFieldValue('value', 1));
+    expect(await screen.findByText('1')).toBeVisible();
+
+    // go back to file summary
+    await act(async () => viewProps.onSelectFileSummary());
+
+    const warning = await screen.findByText(/Confirm Changes/i);
+    expect(warning).toBeVisible();
+  });
+
   it('on success function refetches management file', async () => {
     const { getByTestId } = setup(undefined, { claims: [] });
-    vi.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
 
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
@@ -245,7 +298,6 @@ describe('ManagementContainer component', () => {
 
   it('on success function cancels edit', async () => {
     const { getByTestId } = setup(undefined, { claims: [] });
-    vi.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
 
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
@@ -259,7 +311,6 @@ describe('ManagementContainer component', () => {
 
   it('on save function submits the form', async () => {
     const { getByTestId } = setup(undefined, { claims: [] });
-    vi.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
 
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
