@@ -43,7 +43,7 @@ export interface ITenantConfig2 {
   // the url that should be used to display PSP properties on the map.
   minimalPropertiesUrl: string;
   // configuration pertaining the Fully Attributed Parcel Map layer
-  parcelMapFullyAttributed: LayerDefinition;
+  parcelMapFullyAttributed: Partial<LayerDefinition>;
   electoralLayerUrl: string;
   municipalLayerUrl: string;
   fullyAttributedParcelsLayerUrl: string;

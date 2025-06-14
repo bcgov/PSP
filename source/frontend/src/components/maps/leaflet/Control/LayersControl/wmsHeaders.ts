@@ -2,7 +2,7 @@ import L from 'leaflet';
 
 import CustomAxios from '@/customAxios';
 
-import { ILayerItem } from './types';
+import { LayerDefinition } from './types';
 
 /**
  * Override the base leaflet WMS functionality to handle adding an auth token to the requests.
@@ -22,9 +22,9 @@ class WmsHeaders extends L.TileLayer.WMS {
   }
 }
 /**
- * Only override the base WMS functionality if the url targets the PSP backend.
+ * only override the base wms functionality if the url targets the PSP backend.
  * @param url the target WMS url
  * @param options {L.TileLayerOptions}
  */
-export const wmsHeaders = (url: string, options: ILayerItem): L.TileLayer.WMS =>
+export const wmsHeaders = (url: string, options: LayerDefinition): L.TileLayer.WMS =>
   options.authenticated ? new WmsHeaders(url, options) : new L.TileLayer.WMS(url, options);
