@@ -158,6 +158,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 sharedFileProperties.ResetSearch();
             }
 
+            //Search for a property by Latitude and Longitude
+            if (managementFile.ManagementSearchProperties.LatitudeLongitude.LatitudeDegree != "")
+            {
+                sharedFileProperties.SelectPropertyByLongLant(managementFile.ManagementSearchProperties.LatitudeLongitude);
+                sharedFileProperties.SelectFirstOptionFromSearch();
+                sharedFileProperties.ResetSearch();
+            }
+
             //Search for Multiple PIDs
             if (managementFile.ManagementSearchProperties.MultiplePIDS.First() != "")
             {
