@@ -1,5 +1,4 @@
 import { MAP_MAX_NATIVE_ZOOM, MAP_MAX_ZOOM, PIMS_PROPERTY_BOUNDARY_KEY } from '@/constants/strings';
-import { getLayersWithLayerName } from '@/hooks/layer-api/layerUtils';
 
 import { LayerDefinition } from './types';
 
@@ -420,5 +419,5 @@ export const layerDefinitions: LayerDefinition[] = [
 ];
 
 export const pimsBoundaryLayers = new Set(
-  getLayersWithLayerName(PIMS_PROPERTY_BOUNDARY_KEY).map(x => x.layerIdentifier),
+  layerDefinitions.filter(x => x.layers?.includes(PIMS_PROPERTY_BOUNDARY_KEY)),
 );
