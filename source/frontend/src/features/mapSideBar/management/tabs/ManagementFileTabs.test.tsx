@@ -46,6 +46,13 @@ const mockGetManagementPropertiesApi = {
   loading: false,
 };
 
+const mockGetManagementActivitiesApi = {
+  error: undefined,
+  response: undefined,
+  execute: vi.fn(),
+  loading: false,
+};
+
 vi.mocked(useNoteRepository, { partial: true }).mockImplementation(() => ({
   getAllNotes: getMockRepositoryObj([]),
   addNote: getMockRepositoryObj(),
@@ -54,19 +61,22 @@ vi.mocked(useNoteRepository, { partial: true }).mockImplementation(() => ({
   deleteNote: getMockRepositoryObj(),
 }));
 
+const mockRetrieveDocumentRelationship = vi.fn();
+
 vi.mock('@/features/documents/hooks/useDocumentRelationshipProvider', () => ({
   useDocumentRelationshipProvider: () => {
     return {
-      retrieveDocumentRelationship: vi.fn(),
+      retrieveDocumentRelationship: mockRetrieveDocumentRelationship,
       retrieveDocumentRelationshipLoading: false,
     };
   },
 }));
 
+const mockGetDocumentRelationshipTypes = vi.fn();
 vi.mock('@/features/documents/hooks/useDocumentProvider', () => ({
   useDocumentProvider: () => {
     return {
-      getDocumentRelationshipTypes: vi.fn(),
+      getDocumentRelationshipTypes: mockGetDocumentRelationshipTypes,
       getDocumentRelationshipTypesLoading: false,
       getDocumentTypes: vi.fn(),
       getDocumentTypesLoading: false,
@@ -86,8 +96,18 @@ vi.mock('@/hooks/repositories/useManagementProvider', () => ({
   },
 }));
 
+vi.mock('@/hooks/repositories/useManagementActivityRepository', () => ({
+  useManagementActivityRepository: () => {
+    return {
+      getManagementActivities: mockGetManagementActivitiesApi,
+    };
+  },
+}));
+
 const history = createMemoryHistory();
 const setIsEditing = vi.fn();
+
+const basePath = 'mapview/sidebar/management';
 
 describe('ManagementFileTabs component', () => {
   // render component under test
@@ -96,7 +116,7 @@ describe('ManagementFileTabs component', () => {
     renderOptions: RenderOptions = {},
   ) => {
     const utils = render(
-      <Route path="/blah/:tab">
+      <Route path={`/${basePath}/:fileId/:detailType`}>
         <ManagementFileTabs
           managementFile={props.managementFile}
           defaultTab={props.defaultTab}
@@ -116,7 +136,7 @@ describe('ManagementFileTabs component', () => {
   };
 
   beforeEach(() => {
-    history.replace(`/blah/${FileTabType.FILE_DETAILS}`);
+    history.replace(`/${basePath}/1/${FileTabType.FILE_DETAILS}`);
   });
 
   afterEach(() => {
@@ -135,7 +155,7 @@ describe('ManagementFileTabs component', () => {
   });
 
   it('has a documents tab', async () => {
-    const { getByText } = await setup(
+    const { getByRole } = await setup(
       {
         managementFile: mockManagementFileResponse(),
         defaultTab: FileTabType.FILE_DETAILS,
@@ -143,12 +163,12 @@ describe('ManagementFileTabs component', () => {
       { claims: [Claims.DOCUMENT_VIEW] },
     );
 
-    const tab = getByText('Documents');
+    const tab = getByRole('tab', { name: 'Documents' });
     expect(tab).toBeVisible();
   });
 
-  it.skip('documents tab can be changed to', async () => {
-    const { getByText } = await setup(
+  it('documents tab can be changed to', async () => {
+    const { getByRole } = await setup(
       {
         managementFile: mockManagementFileResponse(),
         defaultTab: FileTabType.FILE_DETAILS,
@@ -156,11 +176,11 @@ describe('ManagementFileTabs component', () => {
       { claims: [Claims.DOCUMENT_VIEW] },
     );
 
-    const tab = getByText('Documents');
+    const tab = getByRole('tab', { name: 'Documents' });
     await act(async () => userEvent.click(tab));
 
-    expect(getByText('Documents')).toHaveClass('active');
-    expect(history.location.pathname).toBe(`/blah/${FileTabType.DOCUMENTS}`);
+    expect(history.location.pathname).toBe(`/${basePath}/1/${FileTabType.DOCUMENTS}`);
+    expect(tab).toHaveClass('active');
   });
 
   it('has a notes tab', async () => {
@@ -188,7 +208,7 @@ describe('ManagementFileTabs component', () => {
     const tab = getByRole('tab', { name: 'Notes' });
     await act(async () => userEvent.click(tab));
 
+    expect(history.location.pathname).toBe(`/${basePath}/1/${FileTabType.NOTES}`);
     expect(tab).toHaveClass('active');
-    expect(history.location.pathname).toBe(`/blah/${FileTabType.NOTES}`);
   });
 });
