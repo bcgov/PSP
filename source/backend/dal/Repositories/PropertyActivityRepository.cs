@@ -142,12 +142,12 @@ namespace Pims.Dal.Repositories
                 o => o.PimsPropActMinContacts, existingPropertyActivity.PimsPropertyActivityId, propertyActivity.PimsPropActMinContacts.ToArray());
             Context.UpdateChild<PimsPropertyActivity, long, PimsPropActInvolvedParty, long>(
                 o => o.PimsPropActInvolvedParties, existingPropertyActivity.PimsPropertyActivityId, propertyActivity.PimsPropActInvolvedParties.ToArray());
-
             Context.UpdateChild<PimsPropertyActivity, long, PimsPropertyActivityInvoice, long>(
                 o => o.PimsPropertyActivityInvoices, existingPropertyActivity.PimsPropertyActivityId, propertyActivity.PimsPropertyActivityInvoices.ToArray());
-
             Context.UpdateChild<PimsPropertyActivity, long, PimsPropPropActivity, long>(
                 o => o.PimsPropPropActivities, existingPropertyActivity.PimsPropertyActivityId, propertyActivity.PimsPropPropActivities.ToArray());
+            Context.UpdateChild<PimsPropertyActivity, long, PimsPropActivityMgmtActivity, long>(
+                o => o.PimsPropActivityMgmtActivities, existingPropertyActivity.PimsPropertyActivityId, propertyActivity.PimsPropActivityMgmtActivities.ToArray());
 
             // update main entity - PimsPropertyActivity
             Context.Entry(existingPropertyActivity).CurrentValues.SetValues(propertyActivity);

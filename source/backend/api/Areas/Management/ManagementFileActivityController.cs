@@ -209,7 +209,7 @@ namespace Pims.Api.Areas.Management.Controllers
             var propertyIds = _managementFileService.GetProperties(managementFileId).Select(mp => mp.PropertyId);
             var activities = _propertyService.GetActivitiesByPropertyIds(propertyIds);
 
-            return new JsonResult(_mapper.Map< IEnumerable<PropertyActivityModel>>(activities));
+            return new JsonResult(_mapper.Map<IEnumerable<PropertyActivityModel>>(activities));
         }
     }
 }
