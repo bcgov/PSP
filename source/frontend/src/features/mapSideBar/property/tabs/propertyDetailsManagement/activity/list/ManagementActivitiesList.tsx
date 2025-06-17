@@ -8,6 +8,7 @@ import styled from 'styled-components';
 
 import { RemoveIconButton } from '@/components/common/buttons/RemoveButton';
 import ViewButton from '@/components/common/buttons/ViewButton';
+import ExpandableTextList from '@/components/common/ExpandableTextList';
 import { InlineFlexDiv } from '@/components/common/styles';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import { ColumnWithProps, Table } from '@/components/Table';
@@ -15,6 +16,7 @@ import { TableSort } from '@/components/Table/TableSort';
 import Claims from '@/constants/claims';
 import { PropertyManagementActivityStatusTypes } from '@/constants/propertyMgmtActivityStatusTypes';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { ApiGen_Concepts_ManagementActivitySubType } from '@/models/api/generated/ApiGen_Concepts_ManagementActivitySubType';
 import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
 import { stringToFragment } from '@/utils/columnUtils';
 import { prettyFormatDate } from '@/utils/dateUtils';
@@ -50,10 +52,19 @@ export function createActivityTableColumns() {
       sortable: true,
       minWidth: 35,
       maxWidth: 35,
-      Cell: (cellProps: CellProps<PropertyActivityRow>) => {
-        return stringToFragment(
-          cellProps.row.original?.activitySubTypes[0]?.managementActivitySubtypeCode.description ||
-            '',
+      Cell: (props: CellProps<PropertyActivityRow>) => {
+        return (
+          <GroupWrapper>
+            <ExpandableTextList<ApiGen_Concepts_ManagementActivitySubType>
+              items={props.row.original.activitySubTypes}
+              keyFunction={p => `activity-subtype-${p.id}`}
+              renderFunction={p => <>{p.managementActivitySubtypeCode.description}</>}
+              delimiter={'; '}
+              maxCollapsedLength={3}
+              maxExpandedLength={10}
+              className="d-flex flex-wrap"
+            />
+          </GroupWrapper>
         );
       },
     },
@@ -253,4 +264,11 @@ const StyledLink = styled(Link)`
   svg {
     min-width: 2rem;
   }
+`;
+
+export const GroupWrapper = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  align-items: baseline;
+  flex-wrap: wrap;
 `;

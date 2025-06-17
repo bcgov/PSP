@@ -6,7 +6,7 @@ exports[`Activities list view > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c9.btn {
+  .c10.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,19 +35,19 @@ exports[`Activities list view > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c9.btn .Button__value {
+.c10.btn .Button__value {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
-.c9.btn:hover {
+.c10.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c9.btn:focus {
+.c10.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -55,31 +55,31 @@ exports[`Activities list view > renders as expected 1`] = `
   box-shadow: none;
 }
 
-.c9.btn.btn-primary {
+.c10.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c9.btn.btn-primary:hover,
-.c9.btn.btn-primary:active,
-.c9.btn.btn-primary:focus {
+.c10.btn.btn-primary:hover,
+.c10.btn.btn-primary:active,
+.c10.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c9.btn.btn-secondary {
+.c10.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c9.btn.btn-secondary:hover,
-.c9.btn.btn-secondary:active,
-.c9.btn.btn-secondary:focus {
+.c10.btn.btn-secondary:hover,
+.c10.btn.btn-secondary:active,
+.c10.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c9.btn.btn-info {
+.c10.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -87,66 +87,66 @@ exports[`Activities list view > renders as expected 1`] = `
   padding-right: 0.6rem;
 }
 
-.c9.btn.btn-info:hover,
-.c9.btn.btn-info:active,
-.c9.btn.btn-info:focus {
+.c10.btn.btn-info:hover,
+.c10.btn.btn-info:active,
+.c10.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c9.btn.btn-light {
+.c10.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c9.btn.btn-light:hover,
-.c9.btn.btn-light:active,
-.c9.btn.btn-light:focus {
+.c10.btn.btn-light:hover,
+.c10.btn.btn-light:active,
+.c10.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c9.btn.btn-dark {
+.c10.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c9.btn.btn-dark:hover,
-.c9.btn.btn-dark:active,
-.c9.btn.btn-dark:focus {
+.c10.btn.btn-dark:hover,
+.c10.btn.btn-dark:active,
+.c10.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c9.btn.btn-danger {
+.c10.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c9.btn.btn-danger:hover,
-.c9.btn.btn-danger:active,
-.c9.btn.btn-danger:focus {
+.c10.btn.btn-danger:hover,
+.c10.btn.btn-danger:active,
+.c10.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c9.btn.btn-warning {
+.c10.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c9.btn.btn-warning:hover,
-.c9.btn.btn-warning:active,
-.c9.btn.btn-warning:focus {
+.c10.btn.btn-warning:hover,
+.c10.btn.btn-warning:active,
+.c10.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c9.btn.btn-link {
+.c10.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -170,9 +170,9 @@ exports[`Activities list view > renders as expected 1`] = `
   text-decoration: underline;
 }
 
-.c9.btn.btn-link:hover,
-.c9.btn.btn-link:active,
-.c9.btn.btn-link:focus {
+.c10.btn.btn-link:hover,
+.c10.btn.btn-link:active,
+.c10.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -182,15 +182,15 @@ exports[`Activities list view > renders as expected 1`] = `
   outline: none;
 }
 
-.c9.btn.btn-link:disabled,
-.c9.btn.btn-link.disabled {
+.c10.btn.btn-link:disabled,
+.c10.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c9.btn:disabled,
-.c9.btn:disabled:hover {
+.c10.btn:disabled,
+.c10.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -202,62 +202,62 @@ exports[`Activities list view > renders as expected 1`] = `
   cursor: not-allowed;
 }
 
-.c9.Button .Button__icon {
+.c10.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c9.Button--icon-only:focus {
+.c10.Button--icon-only:focus {
   outline: none;
 }
 
-.c9.Button--icon-only .Button__icon {
+.c10.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c10.c10.btn {
+.c11.c11.btn {
   background-color: unset;
   border: none;
 }
 
-.c10.c10.btn:hover,
-.c10.c10.btn:focus,
-.c10.c10.btn:active {
+.c11.c11.btn:hover,
+.c11.c11.btn:focus,
+.c11.c11.btn:active {
   background-color: unset;
   outline: none;
   box-shadow: none;
 }
 
-.c10.c10.btn svg {
+.c11.c11.btn svg {
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
 
-.c10.c10.btn svg:hover {
+.c11.c11.btn svg:hover {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
 }
 
-.c10.c10.btn.btn-primary svg {
+.c11.c11.btn.btn-primary svg {
   color: #013366;
 }
 
-.c10.c10.btn.btn-primary svg:hover {
+.c11.c11.btn.btn-primary svg:hover {
   color: #013366;
 }
 
-.c10.c10.btn.btn-light svg {
+.c11.c11.btn.btn-light svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c10.c10.btn.btn-light svg:hover {
+.c11.c11.btn.btn-light svg:hover {
   color: #CE3E39;
 }
 
-.c10.c10.btn.btn-info svg {
+.c11.c11.btn.btn-info svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c10.c10.btn.btn-info svg:hover {
+.c11.c11.btn.btn-info svg:hover {
   color: var(--surface-color-primary-button-hover);
 }
 
@@ -311,11 +311,11 @@ exports[`Activities list view > renders as expected 1`] = `
   height: 1.6rem;
 }
 
-.c11 {
+.c12 {
   margin-top: 0.3rem;
 }
 
-.c12 {
+.c13 {
   min-width: 5rem;
   max-width: 5rem;
   margin-left: 1rem;
@@ -324,15 +324,15 @@ exports[`Activities list view > renders as expected 1`] = `
   padding: 0;
 }
 
-.c12:-moz-read-only {
+.c13:-moz-read-only {
   background: white;
 }
 
-.c12:read-only {
+.c13:read-only {
   background: white;
 }
 
-.c7 {
+.c8 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -358,16 +358,31 @@ exports[`Activities list view > renders as expected 1`] = `
   margin: 0;
 }
 
-.c8 {
+.c9 {
   -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
 }
 
-.c8 > * {
+.c9 > * {
   margin: 0.5rem;
   padding: 0 !important;
+}
+
+.c7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 0.5rem;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 
 <div
@@ -661,7 +676,11 @@ exports[`Activities list view > renders as expected 1`] = `
                 role="cell"
                 style="box-sizing: border-box; flex: 35 0 auto; min-width: 35px; width: 35px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
-              />
+              >
+                <div
+                  class="c7"
+                />
+              </div>
               <div
                 class="td"
                 role="cell"
@@ -683,10 +702,10 @@ exports[`Activities list view > renders as expected 1`] = `
                 title=""
               >
                 <div
-                  class="c7 c8"
+                  class="c8 c9"
                 >
                   <button
-                    class="c9 Button c10 btn btn-primary"
+                    class="c10 Button c11 btn btn-primary"
                     data-testid="activity-view-1"
                     title="property-activity view details"
                     type="button"
@@ -734,7 +753,11 @@ exports[`Activities list view > renders as expected 1`] = `
                 role="cell"
                 style="box-sizing: border-box; flex: 35 0 auto; min-width: 35px; width: 35px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
-              />
+              >
+                <div
+                  class="c7"
+                />
+              </div>
               <div
                 class="td"
                 role="cell"
@@ -756,10 +779,10 @@ exports[`Activities list view > renders as expected 1`] = `
                 title=""
               >
                 <div
-                  class="c7 c8"
+                  class="c8 c9"
                 >
                   <button
-                    class="c9 Button c10 btn btn-primary"
+                    class="c10 Button c11 btn btn-primary"
                     data-testid="activity-view-2"
                     title="property-activity view details"
                     type="button"
@@ -814,19 +837,19 @@ exports[`Activities list view > renders as expected 1`] = `
                 class="d-flex"
               >
                 <span
-                  class="c11"
+                  class="c12"
                 >
                   Show
                 </span>
                 <input
-                  class="c12 form-control"
+                  class="c13 form-control"
                   data-testid="input-page-size"
                   readonly=""
                   type="number"
                   value="10"
                 />
                 <span
-                  class="c11"
+                  class="c12"
                 >
                   Entries
                 </span>

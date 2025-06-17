@@ -131,7 +131,7 @@ const UpdateManagementForm: React.FC<IUpdateManagementFormProps> = ({
                 <SectionField label="Historical file number">
                   <Input field="legacyFileNum" />
                 </SectionField>
-                <SectionField label="Purpose(s)" required>
+                <SectionField label="Purpose" required>
                   <Select
                     field="purposeTypeCode"
                     options={managementPurposeTypesOptions}
