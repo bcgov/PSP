@@ -2,48 +2,41 @@ import cx from 'classnames';
 import { useMemo } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaCaretRight } from 'react-icons/fa';
-import { matchPath, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
-import EditButton from '@/components/common/buttons/EditButton';
+import { RestrictedEditControl } from '@/components/common/buttons';
 import { EditPropertiesIcon } from '@/components/common/buttons/EditPropertiesButton';
 import { LinkButton } from '@/components/common/buttons/LinkButton';
-import TooltipIcon from '@/components/common/TooltipIcon';
+import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
-import { exists, getFilePropertyName } from '@/utils';
+import { exists, getFilePropertyName, sortFileProperties } from '@/utils';
+
+import { cannotEditMessage } from '../acquisition/common/constants';
 
 export interface IFileMenuProps {
-  properties: ApiGen_Concepts_FileProperty[];
+  file: ApiGen_Concepts_File;
+  currentPropertyIndex: number | null;
   canEdit: boolean;
+  isInNonEditableState: boolean;
+  editRestrictionMessage?: string;
   onSelectFileSummary: () => void;
   onSelectProperty: (propertyId: number) => void;
   onEditProperties: () => void;
 }
 
-const FileMenu: React.FunctionComponent<React.PropsWithChildren<IFileMenuProps>> = ({
-  properties,
+const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuProps>> = ({
+  file,
+  currentPropertyIndex,
   canEdit,
+  isInNonEditableState,
+  editRestrictionMessage = cannotEditMessage,
   onSelectFileSummary,
   onSelectProperty,
   onEditProperties,
   children,
 }) => {
-  const location = useLocation();
-
-  const currentPropertyIndex = useMemo(() => {
-    const match = matchPath(location.pathname, {
-      path: '*/property/:menuIndex/',
-      exact: false,
-      strict: false,
-    });
-    if (exists(match)) {
-      const propertyIndex = Number(match.params['menuIndex']);
-      // the index on the url starts at 1, so remove one to make it match the index on the JS side.
-      return propertyIndex - 1;
-    }
-    return null;
-  }, [location.pathname]);
-
+  // respect the order of properties as set by the user creating the file
+  const sortedProperties = sortFileProperties(file?.fileProperties ?? []);
   const isSummary = useMemo(() => !exists(currentPropertyIndex), [currentPropertyIndex]);
 
   return (
@@ -61,23 +54,19 @@ const FileMenu: React.FunctionComponent<React.PropsWithChildren<IFileMenuProps>>
       </StyledRow>
       <StyledMenuHeaderWrapper>
         <StyledMenuHeader>Properties</StyledMenuHeader>
-        {canEdit && (
-          <EditButton
-            title="Change properties"
-            icon={<EditPropertiesIcon />}
-            onClick={onEditProperties}
-          />
-        )}
-        {!canEdit && (
-          <TooltipIcon
-            toolTipId="summary-cannot-edit-tooltip"
-            toolTip={'You cannot edit this, sorry'}
-          />
-        )}
+        <RestrictedEditControl
+          canEdit={canEdit}
+          isInNonEditableState={isInNonEditableState}
+          icon={<EditPropertiesIcon />}
+          title="Change properties"
+          toolTipId={`${file?.id ?? 0}-summary-cannot-edit-tooltip`}
+          editRestrictionMessage={editRestrictionMessage}
+          onEdit={onEditProperties}
+        />
       </StyledMenuHeaderWrapper>
       <div className={'p-1'} />
       <StyledMenuBodyWrapper>
-        {properties.map((property: ApiGen_Concepts_FileProperty, index: number) => {
+        {sortedProperties.map((property: ApiGen_Concepts_FileProperty, index: number) => {
           const propertyName = getFilePropertyName(property);
           return (
             <StyledRow
@@ -112,7 +101,7 @@ const FileMenu: React.FunctionComponent<React.PropsWithChildren<IFileMenuProps>>
   );
 };
 
-export default FileMenu;
+export default FileMenuView;
 
 export const StyledMenuWrapper = styled.div`
   flex: 1;

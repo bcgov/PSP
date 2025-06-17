@@ -12,37 +12,42 @@ import {
 } from 'react-router-dom';
 
 import AcquisitionFileIcon from '@/assets/images/acquisition-icon.svg?react';
+import { Claims } from '@/constants';
 import FileLayout from '@/features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { stripTrailingSlash } from '@/utils';
-import { getFilePropertyName } from '@/utils/mapPropertyUtils';
 
 import { SideBarContext } from '../context/sidebarContext';
 import { InventoryTabNames } from '../property/InventoryTabs';
 import FilePropertyRouter from '../router/FilePropertyRouter';
 import { FileTabType } from '../shared/detail/FileTabs';
+import FileMenuView from '../shared/FileMenuView';
 import { PropertyForm } from '../shared/models';
 import SidebarFooter from '../shared/SidebarFooter';
 import { StyledFormWrapper } from '../shared/styles';
 import UpdateProperties from '../shared/update/properties/UpdateProperties';
+import { usePropertyIndexFromUrl } from '../shared/usePropertyIndexFromUrl';
 import { AcquisitionContainerState } from './AcquisitionContainer';
 import { isAcquisitionFile } from './add/models';
 import AcquisitionHeader from './common/AcquisitionHeader';
-import AcquisitionMenu from './common/AcquisitionMenu';
+import GenerateFormContainer from './common/GenerateForm/GenerateFormContainer';
+import GenerateFormView from './common/GenerateForm/GenerateFormView';
 import { AcquisitionRouter } from './router/AcquisitionRouter';
+import AcquisitionFileStatusUpdateSolver from './tabs/fileDetails/detail/AcquisitionFileStatusUpdateSolver';
 
 export interface IAcquisitionViewProps {
   onClose: (() => void) | undefined;
   onSave: () => Promise<void>;
   onCancel: () => void;
-  onMenuChange: (selectedIndex: number) => void;
-  onShowPropertySelector: () => void;
+  onSelectFileSummary: () => void;
+  onSelectProperty: (propertyId: number) => void;
+  onEditProperties: () => void;
   onSuccess: () => void;
-  onCancelConfirm: () => void;
   onUpdateProperties: (file: ApiGen_Concepts_File) => Promise<ApiGen_Concepts_File | undefined>;
   confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
   canRemove: (propertyId: number) => Promise<boolean>;
@@ -59,8 +64,9 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
   onClose,
   onSave,
   onCancel,
-  onMenuChange,
-  onShowPropertySelector,
+  onSelectFileSummary,
+  onSelectProperty,
+  onEditProperties,
   onSuccess,
   onUpdateProperties,
   confirmBeforeAdd,
@@ -76,6 +82,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
   const location = useLocation();
   const history = useHistory();
   const match = useRouteMatch();
+  const { hasClaim } = useKeycloakWrapper();
   const { file, lastUpdatedBy } = useContext(SideBarContext);
   const acquisitionFile: ApiGen_Concepts_AcquisitionFile = {
     ...file,
@@ -92,19 +99,19 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
     `${stripTrailingSlash(match.path)}/property/:menuIndex/:tab`,
   );
 
-  const selectedMenuIndex = propertiesMatch !== null ? Number(propertiesMatch.params.menuIndex) : 0;
-
   const formTitle = isEditing
     ? getEditTitle(fileMatch, propertySelectorMatch, propertiesMatch)
     : 'Acquisition File';
-
-  const menuItems = file?.fileProperties?.map(x => getFilePropertyName(x).value) || [];
-  menuItems.unshift('File Summary');
 
   const closePropertySelector = () => {
     setIsEditing(false);
     history.push(`${match.url}`);
   };
+
+  // Extract the zero-based property index from the current URL path.
+  // It will be null if route is not matched
+  const currentPropertyIndex: number | null = usePropertyIndexFromUrl();
+  const statusSolver = new AcquisitionFileStatusUpdateSolver(acquisitionFile.fileStatusTypeCode);
 
   return (
     <Switch>
@@ -158,13 +165,17 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
             leftComponent={
               <>
                 {isAcquisitionFile(file) && (
-                  <AcquisitionMenu
-                    acquisitionFile={file}
-                    items={menuItems}
-                    selectedIndex={selectedMenuIndex}
-                    onChange={onMenuChange}
-                    onShowPropertySelector={onShowPropertySelector}
-                  />
+                  <FileMenuView
+                    file={file}
+                    currentPropertyIndex={currentPropertyIndex}
+                    canEdit={hasClaim(Claims.ACQUISITION_EDIT)}
+                    isInNonEditableState={!statusSolver.canEditProperties()}
+                    onSelectFileSummary={onSelectFileSummary}
+                    onSelectProperty={onSelectProperty}
+                    onEditProperties={onEditProperties}
+                  >
+                    <GenerateFormContainer acquisitionFileId={file.id} View={GenerateFormView} />
+                  </FileMenuView>
                 )}
               </>
             }
