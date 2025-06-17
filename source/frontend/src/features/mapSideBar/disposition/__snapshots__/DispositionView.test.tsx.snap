@@ -478,6 +478,98 @@ exports[`DispositionView component > renders as expected 1`] = `
   display: block;
 }
 
+.c23 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  text-align: left;
+  padding: 0px;
+  margin: 0px;
+  width: 100%;
+  color: var(--surface-color-primary-button-default);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c24 {
+  width: 100%;
+  font-size: 1.4rem;
+  font-weight: normal;
+  cursor: pointer;
+  padding-bottom: 0.5rem;
+}
+
+.c24.selected {
+  font-weight: bold;
+  cursor: default;
+}
+
+.c24 div.Button__value {
+  font-size: 1.4rem;
+}
+
+.c28 {
+  background-color: #fcba19;
+  font-size: 1.5rem;
+  border-radius: 50%;
+  opacity: 0.8;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 1rem;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c28.selected {
+  background-color: #FCBA19;
+}
+
+.c25 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: flex-end;
+  -webkit-box-align: flex-end;
+  -ms-flex-align: flex-end;
+  align-items: flex-end;
+  width: 100%;
+  border-bottom: 1px solid #606060;
+}
+
+.c26 {
+  font-weight: bold;
+  font-size: 1.6rem;
+  color: #474543;
+  line-height: 2.2rem;
+}
+
+.c27 {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+}
+
 .c16 {
   font-size: 0.87em;
   line-height: 1.9;
@@ -538,95 +630,6 @@ exports[`DispositionView component > renders as expected 1`] = `
 
 .c12 {
   max-width: 60rem;
-}
-
-.c23 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  text-align: left;
-  padding: 0px;
-  margin: 0px;
-  width: 100%;
-  color: var(--surface-color-primary-button-default);
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-}
-
-.c25 {
-  min-height: 2.5rem;
-  line-height: 3rem;
-}
-
-.c24 {
-  font-size: 1.4rem;
-  font-weight: normal;
-  cursor: pointer;
-  padding-bottom: 0.5rem;
-}
-
-.c24.selected {
-  font-weight: bold;
-  cursor: default;
-}
-
-.c24 div.Button__value {
-  font-size: 1.4rem;
-}
-
-.c28 {
-  background-color: #fcba19;
-  font-size: 1.5rem;
-  border-radius: 50%;
-  opacity: 0.8;
-  width: 2.5rem;
-  height: 2.5rem;
-  padding: 1rem;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-.c28.selected {
-  background-color: #FCBA19;
-}
-
-.c26 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-align-items: flex-end;
-  -webkit-box-align: flex-end;
-  -ms-flex-align: flex-end;
-  align-items: flex-end;
-  width: 100%;
-  border-bottom: 1px solid #606060;
-}
-
-.c27 {
-  font-weight: bold;
-  font-size: 1.6rem;
-  color: #474543;
-  line-height: 2.2rem;
 }
 
 @media only screen and (max-width:1199px) {
@@ -908,11 +911,11 @@ exports[`DispositionView component > renders as expected 1`] = `
               class="c23"
             >
               <div
-                class="c24 no-gutters selected row"
-                data-testid="menu-item-row-0"
+                class="c24 selected row"
+                data-testid="menu-item-summary"
               >
                 <div
-                  class="c25 col"
+                  class="col"
                 >
                   <span
                     title="File Details"
@@ -920,46 +923,53 @@ exports[`DispositionView component > renders as expected 1`] = `
                     File Summary
                   </span>
                 </div>
-                <div
-                  class="c26"
-                >
-                  <span
-                    class="c27"
-                  >
-                    Properties
-                  </span>
-                </div>
               </div>
               <div
-                class="c24 no-gutters row"
-                data-testid="menu-item-row-1"
+                class="c25"
+              >
+                <span
+                  class="c26"
+                >
+                  Properties
+                </span>
+              </div>
+              <div
+                class="p-1"
+              />
+              <div
+                class="c27"
               >
                 <div
-                  class="col-1"
-                />
-                <div
-                  class="pr-2 col-auto"
+                  class="c24 no-gutters row"
+                  data-testid="menu-item-row-0"
                 >
                   <div
-                    class="c28"
-                  >
-                    1
-                  </div>
-                </div>
-                <div
-                  class="col"
-                >
-                  <button
-                    class="c4 Button btn btn-link"
-                    title="View"
-                    type="button"
+                    class="col-1"
+                  />
+                  <div
+                    class="pr-2 col-auto"
                   >
                     <div
-                      class="Button__value"
+                      class="c28"
                     >
-                      013-852-752
+                      1
                     </div>
-                  </button>
+                  </div>
+                  <div
+                    class="col"
+                  >
+                    <button
+                      class="c4 Button btn btn-link"
+                      title="View"
+                      type="button"
+                    >
+                      <div
+                        class="Button__value"
+                      >
+                        013-852-752
+                      </div>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
