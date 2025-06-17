@@ -28,6 +28,7 @@ import { ManagementActivitySubTypeModel } from '@/features/mapSideBar/property/t
 import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { useModalManagement } from '@/hooks/useModalManagement';
+import useIsMounted from '@/hooks/util/useIsMounted';
 import { ApiGen_CodeTypes_ManagementActivityStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_ManagementActivityStatusTypes';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
@@ -69,6 +70,7 @@ export const ManagementActivityEditForm: React.FunctionComponent<
   onSave,
 }) => {
   const formikRef = useRef<FormikProps<ManagementActivityFormModel>>(null);
+  const isMounted = useIsMounted();
 
   const [activitySubTypeOptions, setActivitySubTypeOptions] =
     useState<ManagementActivitySubTypeModel[]>(null);
@@ -126,10 +128,15 @@ export const ManagementActivityEditForm: React.FunctionComponent<
   };
 
   useEffect(() => {
-    if (activitySubTypeOptions === null) {
+    if (activitySubTypeOptions === null && isMounted) {
       setManagementActivitySubTypeOptions(initialValues.activityTypeCode);
     }
-  }, [activitySubTypeOptions, initialValues.activityTypeCode, setManagementActivitySubTypeOptions]);
+  }, [
+    activitySubTypeOptions,
+    initialValues.activityTypeCode,
+    isMounted,
+    setManagementActivitySubTypeOptions,
+  ]);
 
   return (
     <ReactVisibilitySensor

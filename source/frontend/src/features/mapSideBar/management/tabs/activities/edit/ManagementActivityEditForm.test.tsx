@@ -2,10 +2,10 @@ import { Claims } from '@/constants';
 import { getMockPropertyManagementActivity } from '@/mocks/PropertyManagementActivity.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mockManagementFileResponse } from '@/mocks/managementFiles.mock';
-import { getMockApiPropertyFiles } from '@/mocks/properties.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
+  cleanup,
   getByName,
   render,
   RenderOptions,
@@ -13,7 +13,6 @@ import {
   selectOptions,
   userEvent,
   waitForEffects,
-  within,
 } from '@/utils/test-utils';
 
 import {
@@ -101,6 +100,7 @@ describe('ManagementActivityEditForm component', () => {
 
   afterEach(() => {
     vi.clearAllMocks();
+    cleanup();
   });
 
   afterAll(() => {
@@ -177,7 +177,6 @@ describe('ManagementActivityEditForm component', () => {
       userEvent.click(multiSelectSubTypes);
 
       const firstOption = container.querySelector(`div ul li.option`);
-      console.log(firstOption);
       userEvent.click(firstOption);
     });
     await waitForEffects();
@@ -210,7 +209,6 @@ describe('ManagementActivityEditForm component', () => {
       userEvent.click(multiSelectSubTypes);
 
       const firstOption = container.querySelector(`div ul li.option`);
-      console.log(firstOption);
       userEvent.click(firstOption);
     });
     await waitForEffects();
