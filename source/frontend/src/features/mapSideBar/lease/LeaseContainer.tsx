@@ -30,12 +30,13 @@ import { PeriodPaymentsYupSchema } from '@/features/leases/detail/LeasePages/pay
 import PeriodPaymentsView from '@/features/leases/detail/LeasePages/payment/table/periods/PaymentPeriodsView';
 import LeaseStakeholderContainer from '@/features/leases/detail/LeasePages/stakeholders/LeaseStakeholderContainer';
 import Surplus from '@/features/leases/detail/LeasePages/surplus/Surplus';
-import { LeaseFormModel } from '@/features/leases/models';
+import { isLeaseFile, LeaseFormModel } from '@/features/leases/models';
 import LeaseUpdatePropertySelector from '@/features/leases/shared/propertyPicker/LeaseUpdatePropertySelector';
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 import { useQuery } from '@/hooks/use-query';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { exists, filePropertyToLocationBoundaryDataset, stripTrailingSlash } from '@/utils';
 
 import GenerateFormView from '../acquisition/common/GenerateForm/GenerateFormView';
@@ -217,9 +218,9 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
 
   const close = useCallback(() => onClose && onClose(), [onClose]);
   const match = useRouteMatch();
-  const { lease, setLease, refresh, loading } = useLeaseDetail(leaseId);
+  const { setLease, getCompleteLease, refresh, loading } = useLeaseDetail(leaseId);
   const {
-    setStaleFile,
+    file,
     staleFile,
     setStaleLastUpdatedBy,
     setLastUpdatedBy,
@@ -244,6 +245,8 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
   } = useLeaseRepository();
 
   const { setFilePropertyLocations } = useMapStateMachine();
+
+  const lease: ApiGen_Concepts_Lease | null = isLeaseFile(file) ? file : null;
 
   const locations: LocationBoundaryDataset[] = useMemo(() => {
     if (exists(lease?.fileProperties)) {
@@ -325,15 +328,10 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
   }, [activeTab, setFullWidthSideBar]);
 
   useEffect(() => {
-    const refreshLease = async () => {
-      await refresh();
-    };
-
-    if (staleFile) {
-      refreshLease();
-      setStaleFile(false);
+    if (!exists(lease) || leaseId !== lease.id || staleFile) {
+      getCompleteLease();
     }
-  }, [staleFile, refresh, setStaleFile]);
+  }, [staleFile, leaseId, lease, getCompleteLease]);
 
   useEffect(() => {
     if (lastUpdatedBy === undefined || leaseId !== lastUpdatedBy?.parentId || staleLastUpdatedBy) {
@@ -348,18 +346,18 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
   const leaseProperties = useMemo(() => lease?.fileProperties ?? [], [lease?.fileProperties]);
 
   const onSelectFileSummary = () => {
-    pathSolver.showFile('lease', lease.id);
+    pathSolver.showFile('lease', lease?.id ?? 0);
   };
 
   const onSelectProperty = (propertyId: number) => {
     const menuIndex = leaseProperties.findIndex(x => x.id === propertyId);
 
     // The index needs to be offset to match the menu index
-    pathSolver.showFilePropertyIndex('lease', lease.id, menuIndex + 1);
+    pathSolver.showFilePropertyIndex('lease', lease?.id ?? 0, menuIndex + 1);
   };
 
   const onEditProperties = () => {
-    pathSolver.editProperties('lease', lease.id);
+    pathSolver.editProperties('lease', lease?.id ?? 0);
   };
 
   const setIsPropertyEditing = useCallback(

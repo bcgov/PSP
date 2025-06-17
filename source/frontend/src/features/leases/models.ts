@@ -454,3 +454,6 @@ export const getDefaultFormLease: () => LeaseFormModel = () =>
     totalAllowableCompensation: null,
     leaseTeam: [],
   });
+
+export const isLeaseFile = (file: object): file is ApiGen_Concepts_Lease =>
+  exists(file) && Object.hasOwn(file, 'paymentReceivableType');
