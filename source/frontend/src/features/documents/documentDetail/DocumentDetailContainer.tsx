@@ -22,6 +22,7 @@ import { DocumentDetailView } from './DocumentDetailView';
 export interface IDocumentDetailContainerProps {
   relationshipType: ApiGen_CodeTypes_DocumentRelationType;
   pimsDocument: DocumentRow;
+  canEdit: boolean;
   onUpdateSuccess: () => void;
 }
 
@@ -244,6 +245,7 @@ export const DocumentDetailContainer: React.FunctionComponent<
         isLoading={
           retrieveDocumentMetadataLoading || updateDocumentLoading || retrieveDocumentDetailLoading
         }
+        canEdit={props.canEdit}
         setIsEditable={setIsEditable}
       />
     );
