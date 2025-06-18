@@ -16,7 +16,6 @@ import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelM
 import {
   PIMS_Property_Boundary_View,
   PIMS_Property_Location_Lite_View,
-  PIMS_Property_Location_View,
 } from '@/models/layers/pimsPropertyLocationView';
 import { exists } from '@/utils';
 
@@ -87,16 +86,6 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
       | PMBC_FullyAttributed_Feature_Properties
     >
   >({});
-
-  const draftPoints = useMemo<LatLngLiteral[]>(() => {
-    return mapMachine.filePropertyLocations.map(x => {
-      // The values on the feature are rounded to the 4th decimal. Do the same to the draft points.
-      return {
-        lat: x.lat,
-        lng: x.lng,
-      };
-    });
-  }, [mapMachine.filePropertyLocations]);
 
   const pimsLocationFeatures: FeatureCollection<Geometry, PIMS_Property_Location_Lite_View> =
     useMemo(() => {
@@ -273,7 +262,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
             );
           } else {
             const clusterFeature = cluster as PointFeature<
-              | PIMS_Property_Location_View
+              | PIMS_Property_Location_Lite_View
               | PIMS_Property_Boundary_View
               | PMBC_FullyAttributed_Feature_Properties
             >;
@@ -298,7 +287,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
          */}
         {spider.markers?.map((m, index: number) => {
           const clusterFeature = m as PointFeature<
-            | PIMS_Property_Location_View
+            | PIMS_Property_Location_Lite_View
             | PIMS_Property_Boundary_View
             | PMBC_FullyAttributed_Feature_Properties
           >;
