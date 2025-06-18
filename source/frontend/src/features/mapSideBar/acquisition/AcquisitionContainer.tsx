@@ -25,11 +25,12 @@ import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTy
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { exists, isValidId, stripTrailingSlash } from '@/utils';
+import { exists, isValidId, sortFileProperties, stripTrailingSlash } from '@/utils';
 
 import { SideBarContext } from '../context/sidebarContext';
 import { FileTabType } from '../shared/detail/FileTabs';
 import { PropertyForm } from '../shared/models';
+import usePathGenerator from '../shared/sidebarPathGenerator';
 import { IAcquisitionViewProps } from './AcquisitionView';
 
 export interface IAcquisitionContainerProps {
@@ -142,10 +143,12 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
       // retrieve related entities (ie properties, checklist items) in parallel
       const acquisitionPropertiesTask = retrieveAcquisitionFileProperties(acquisitionFileId);
       const acquisitionChecklistTask = retrieveAcquisitionFileChecklist(acquisitionFileId);
-      const acquisitionProperties = await acquisitionPropertiesTask;
-      const acquisitionChecklist = await acquisitionChecklistTask;
+      const [acquisitionProperties, acquisitionChecklist] = await Promise.all([
+        acquisitionPropertiesTask,
+        acquisitionChecklistTask,
+      ]);
 
-      retrieved.fileProperties = acquisitionProperties ?? null;
+      retrieved.fileProperties = sortFileProperties(acquisitionProperties) ?? null;
       retrieved.fileChecklistItems = acquisitionChecklist ?? [];
       setFile({ ...retrieved, fileType: ApiGen_CodeTypes_FileTypes.Acquisition });
       setStaleFile(false);
@@ -202,23 +205,49 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
 
   const close = useCallback(() => onClose && onClose(), [onClose]);
 
-  const navigateToMenuRoute = (selectedIndex: number) => {
-    const route = selectedIndex === 0 ? '' : `/property/${selectedIndex}`;
-    history.push(`${stripTrailingSlash(match.url)}${route}`);
-  };
+  const pathGenerator = usePathGenerator();
 
-  const onMenuChange = (selectedIndex: number) => {
+  const onSelectFileSummary = () => {
+    if (!exists(acquisitionFile)) {
+      return;
+    }
+
     if (isEditing) {
       if (formikRef?.current?.dirty) {
-        handleCancelClick(() => navigateToMenuRoute(selectedIndex));
+        handleCancelClick(() => pathGenerator.showFile('acquisition', acquisitionFile.id));
         return;
       }
     }
-    navigateToMenuRoute(selectedIndex);
+    pathGenerator.showFile('acquisition', acquisitionFile.id);
   };
 
-  const onShowPropertySelector = () => {
-    history.push(`${stripTrailingSlash(match.url)}/property/selector`);
+  const onSelectProperty = (filePropertyId: number) => {
+    if (!exists(acquisitionFile)) {
+      return;
+    }
+
+    const fileProperties = acquisitionFile.fileProperties ?? [];
+    const menuIndex = fileProperties.findIndex(fp => fp.id === filePropertyId);
+    if (menuIndex < 0) {
+      return;
+    }
+
+    if (isEditing) {
+      if (formikRef?.current?.dirty) {
+        handleCancelClick(() =>
+          pathGenerator.showFilePropertyIndex('acquisition', acquisitionFile.id, menuIndex + 1),
+        );
+        return;
+      }
+    }
+    // The index needs to be offset to match the menu index
+    pathGenerator.showFilePropertyIndex('acquisition', acquisitionFile.id, menuIndex + 1);
+  };
+
+  const onEditProperties = () => {
+    if (exists(acquisitionFile)) {
+      pathGenerator.editProperties('acquisition', acquisitionFile.id);
+    }
   };
 
   const handleSaveClick = async () => {
@@ -349,9 +378,9 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
       onClose={close}
       onCancel={handleCancelClick}
       onSave={handleSaveClick}
-      onMenuChange={onMenuChange}
-      onShowPropertySelector={onShowPropertySelector}
-      onCancelConfirm={handleCancelConfirm}
+      onSelectFileSummary={onSelectFileSummary}
+      onSelectProperty={onSelectProperty}
+      onEditProperties={onEditProperties}
       onUpdateProperties={onUpdateProperties}
       onSuccess={onSuccess}
       confirmBeforeAdd={confirmBeforeAdd}
