@@ -16,7 +16,6 @@ export interface IActivitiesFilterProps {
   setFilter: (filter: Api_ManagementActivityFilter) => void;
   activityStatusOptions: SelectOption[];
   activityTypesOptions: SelectOption[];
-  activitySubTypesOptions: SelectOption[];
 }
 
 export const ActivitiesFilter: React.FC<IActivitiesFilterProps> = ({
@@ -24,7 +23,6 @@ export const ActivitiesFilter: React.FC<IActivitiesFilterProps> = ({
   setFilter,
   activityStatusOptions,
   activityTypesOptions,
-  activitySubTypesOptions,
 }) => {
   const onSearchSubmit = async (
     values: ManagementActivityFilterModel,
@@ -106,13 +104,6 @@ export const ActivitiesFilter: React.FC<IActivitiesFilterProps> = ({
                     options={activityTypesOptions}
                     field="activityTypeCode"
                     placeholder="Select activity type..."
-                  />
-                </Col>
-                <Col xl="6">
-                  <Select
-                    options={activitySubTypesOptions}
-                    field="activitySubTypeCode"
-                    placeholder="Select activity sub-type..."
                   />
                 </Col>
                 <Col xl="6">

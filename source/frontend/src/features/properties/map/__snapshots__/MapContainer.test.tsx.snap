@@ -755,6 +755,10 @@ exports[`MapContainer > Renders the map 1`] = `
                 </div>
               </div>
             </div>
+            <div
+              class="leaflet-pane leaflet-fileProperties-pane"
+              style="z-index: 600;"
+            />
           </div>
           <div
             class="leaflet-control-container"

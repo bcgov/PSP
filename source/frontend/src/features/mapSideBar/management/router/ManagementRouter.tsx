@@ -58,7 +58,7 @@ export const ManagementRouter: React.FC<IManagementRouterProps> = props => {
         <Route path={`${stripTrailingSlash(path)}/property`}>
           <></>
         </Route>
-        <Route path={`${stripTrailingSlash(path)}/:tab`}>
+        <Route path={`${stripTrailingSlash(path)}/:detailType`}>
           <ManagementFileTabs
             managementFile={props.managementFile}
             defaultTab={props.defaultFileTab}

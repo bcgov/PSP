@@ -18,7 +18,13 @@ import { pidParser, pinParser } from '@/utils/propertyUtils';
 
 import { mapMachine } from './machineDefinition/mapMachine';
 import { MachineContext, SideBarType } from './machineDefinition/types';
-import { MapFeatureData, MarkerSelected, RequestedCenterTo, RequestedFlyTo } from './models';
+import {
+  LocationBoundaryDataset,
+  MapFeatureData,
+  MarkerSelected,
+  RequestedCenterTo,
+  RequestedFlyTo,
+} from './models';
 import useLocationFeatureLoader, {
   LocationFeatureDataset,
   SelectedFeatureDataset,
@@ -42,7 +48,7 @@ export interface IMapStateMachineContext {
   isLoading: boolean;
   mapSearchCriteria: IPropertyFilter | null;
   mapFeatureData: MapFeatureData;
-  filePropertyLocations: LatLngLiteral[];
+  filePropertyLocations: LocationBoundaryDataset[];
   pendingFitBounds: boolean;
   requestedFitBounds: LatLngBounds;
   isSelecting: boolean;
@@ -89,7 +95,7 @@ export interface IMapStateMachineContext {
   toggleMapFilterDisplay: () => void;
   toggleMapLayerControl: () => void;
   toggleMapSearchControl: () => void;
-  setFilePropertyLocations: (locations: LatLngLiteral[]) => void;
+  setFilePropertyLocations: (locations: LocationBoundaryDataset[]) => void;
   setMapLayers: (layers: ILayerItem[]) => void;
   setMapLayersToRefresh: (layers: ILayerItem[]) => void;
   setDefaultMapLayers: (layers: ILayerItem[]) => void;
@@ -354,7 +360,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
   }, [serviceSend]);
 
   const setFilePropertyLocations = useCallback(
-    (locations: LatLngLiteral[]) => {
+    (locations: LocationBoundaryDataset[]) => {
       serviceSend({ type: 'SET_FILE_PROPERTY_LOCATIONS', locations });
     },
     [serviceSend],

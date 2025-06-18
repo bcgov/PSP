@@ -1,5 +1,4 @@
 import { FormikProps } from 'formik';
-import { LatLngLiteral } from 'leaflet';
 import React, {
   useCallback,
   useContext,
@@ -9,14 +8,14 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { Route, Switch, useHistory } from 'react-router-dom';
-import { useRouteMatch } from 'react-router-dom';
+import { Route, Switch, useHistory, useRouteMatch } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import LeaseIcon from '@/assets/images/lease-icon.svg?react';
 import GenericModal from '@/components/common/GenericModal';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import { LocationBoundaryDataset } from '@/components/common/mapFSM/models';
 import { Claims, Roles } from '@/constants';
 import { useLeaseDetail } from '@/features/leases';
 import { AddLeaseYupSchema } from '@/features/leases/add/AddLeaseYupSchema';
@@ -37,7 +36,7 @@ import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 import { useQuery } from '@/hooks/use-query';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
-import { exists, getLatLng, locationFromFileProperty, stripTrailingSlash } from '@/utils';
+import { exists, filePropertyToLocationBoundaryDataset, stripTrailingSlash } from '@/utils';
 
 import GenerateFormView from '../acquisition/common/GenerateForm/GenerateFormView';
 import { SideBarContext } from '../context/sidebarContext';
@@ -50,6 +49,7 @@ import FileMenuView from '../shared/FileMenuView';
 import SidebarFooter from '../shared/SidebarFooter';
 import usePathGenerator from '../shared/sidebarPathGenerator';
 import { StyledFormWrapper } from '../shared/styles';
+import { usePropertyIndexFromUrl } from '../shared/usePropertyIndexFromUrl';
 import LeaseHeader from './common/LeaseHeader';
 import { LeaseFileTabNames } from './detail/LeaseFileTabs';
 import LeaseGenerateContainer from './LeaseGenerateFormContainer';
@@ -245,11 +245,10 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
 
   const { setFilePropertyLocations } = useMapStateMachine();
 
-  const locations: LatLngLiteral[] = useMemo(() => {
+  const locations: LocationBoundaryDataset[] = useMemo(() => {
     if (exists(lease?.fileProperties)) {
       return lease?.fileProperties
-        .map(leaseProp => locationFromFileProperty(leaseProp))
-        .map(geom => getLatLng(geom))
+        .map(leaseProp => filePropertyToLocationBoundaryDataset(leaseProp))
         .filter(exists);
     } else {
       return [];
@@ -388,6 +387,10 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
     refresh();
   };
 
+  // Extract the zero-based property index from the current URL path.
+  // It will be null if route is not matched
+  const currentPropertyIndex: number | null = usePropertyIndexFromUrl();
+
   return (
     <Switch>
       <Route path={`${stripTrailingSlash(match.path)}/property/selector`}>
@@ -414,8 +417,10 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
           <FileLayout
             leftComponent={
               <FileMenuView
-                properties={leaseProperties}
+                file={lease}
+                currentPropertyIndex={currentPropertyIndex}
                 canEdit={hasRole(Roles.SYSTEM_ADMINISTRATOR) || hasClaim(Claims.LEASE_EDIT)}
+                isInNonEditableState={false}
                 onSelectFileSummary={onSelectFileSummary}
                 onSelectProperty={onSelectProperty}
                 onEditProperties={onEditProperties}
