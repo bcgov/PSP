@@ -11,6 +11,8 @@ import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { exists, isValidIsoDateTime } from '@/utils';
 import { emptyStringtoNullable, toTypeCodeNullable } from '@/utils/formUtils';
 
+import { ManagementActivitySubTypeModel } from '../models/ManagementActivitySubType';
+
 export class ActivityPropertyFormModel {
   id = 0;
   propertyActivityId = 0;
@@ -108,7 +110,7 @@ export class ActivityInvoiceFormModel {
 export class PropertyActivityFormModel {
   id = 0;
   activityTypeCode = '';
-  activitySubtypeCode = '';
+  activitySubtypeCodes: ManagementActivitySubTypeModel[] = [];
   activityStatusCode = '';
   requestedDate = '';
   completionDate = '';
@@ -134,7 +136,7 @@ export class PropertyActivityFormModel {
       managementFileId: null,
       managementFile: null,
       activityTypeCode: toTypeCodeNullable(this.activityTypeCode),
-      activitySubtypeCode: toTypeCodeNullable(this.activitySubtypeCode),
+      activitySubTypeCodes: this.activitySubtypeCodes?.map(x => x.toApi(this.id)) ?? [],
       activityStatusTypeCode: toTypeCodeNullable(this.activityStatusCode),
       requestAddedDateOnly: this.requestedDate,
       completionDateOnly: emptyStringtoNullable(this.completionDate),
@@ -193,12 +195,15 @@ export class PropertyActivityFormModel {
     return apiActivity;
   }
 
-  static fromApi(model: ApiGen_Concepts_PropertyActivity | undefined): PropertyActivityFormModel {
+  static fromApi(
+    model: ApiGen_Concepts_PropertyActivity | null | undefined,
+  ): PropertyActivityFormModel {
     const formModel = new PropertyActivityFormModel();
     if (exists(model)) {
       formModel.id = model.id;
       formModel.activityTypeCode = model.activityTypeCode?.id || '';
-      formModel.activitySubtypeCode = model.activitySubtypeCode?.id || '';
+      formModel.activitySubtypeCodes =
+        model.activitySubTypeCodes?.map(x => ManagementActivitySubTypeModel.fromApi(x)) ?? [];
       formModel.activityStatusCode = model.activityStatusTypeCode?.id || '';
       formModel.requestedDate = isValidIsoDateTime(model.requestAddedDateOnly)
         ? model.requestAddedDateOnly

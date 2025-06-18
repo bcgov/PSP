@@ -6,7 +6,7 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c14.btn {
+  .c15.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,19 +35,19 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c14.btn .Button__value {
+.c15.btn .Button__value {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
-.c14.btn:hover {
+.c15.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c14.btn:focus {
+.c15.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -55,31 +55,31 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
   box-shadow: none;
 }
 
-.c14.btn.btn-primary {
+.c15.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c14.btn.btn-primary:hover,
-.c14.btn.btn-primary:active,
-.c14.btn.btn-primary:focus {
+.c15.btn.btn-primary:hover,
+.c15.btn.btn-primary:active,
+.c15.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c14.btn.btn-secondary {
+.c15.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c14.btn.btn-secondary:hover,
-.c14.btn.btn-secondary:active,
-.c14.btn.btn-secondary:focus {
+.c15.btn.btn-secondary:hover,
+.c15.btn.btn-secondary:active,
+.c15.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c14.btn.btn-info {
+.c15.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -87,66 +87,66 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
   padding-right: 0.6rem;
 }
 
-.c14.btn.btn-info:hover,
-.c14.btn.btn-info:active,
-.c14.btn.btn-info:focus {
+.c15.btn.btn-info:hover,
+.c15.btn.btn-info:active,
+.c15.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c14.btn.btn-light {
+.c15.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c14.btn.btn-light:hover,
-.c14.btn.btn-light:active,
-.c14.btn.btn-light:focus {
+.c15.btn.btn-light:hover,
+.c15.btn.btn-light:active,
+.c15.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c14.btn.btn-dark {
+.c15.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c14.btn.btn-dark:hover,
-.c14.btn.btn-dark:active,
-.c14.btn.btn-dark:focus {
+.c15.btn.btn-dark:hover,
+.c15.btn.btn-dark:active,
+.c15.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c14.btn.btn-danger {
+.c15.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c14.btn.btn-danger:hover,
-.c14.btn.btn-danger:active,
-.c14.btn.btn-danger:focus {
+.c15.btn.btn-danger:hover,
+.c15.btn.btn-danger:active,
+.c15.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c14.btn.btn-warning {
+.c15.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c14.btn.btn-warning:hover,
-.c14.btn.btn-warning:active,
-.c14.btn.btn-warning:focus {
+.c15.btn.btn-warning:hover,
+.c15.btn.btn-warning:active,
+.c15.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c14.btn.btn-link {
+.c15.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -170,9 +170,9 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
   text-decoration: underline;
 }
 
-.c14.btn.btn-link:hover,
-.c14.btn.btn-link:active,
-.c14.btn.btn-link:focus {
+.c15.btn.btn-link:hover,
+.c15.btn.btn-link:active,
+.c15.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -182,15 +182,15 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
   outline: none;
 }
 
-.c14.btn.btn-link:disabled,
-.c14.btn.btn-link.disabled {
+.c15.btn.btn-link:disabled,
+.c15.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c14.btn:disabled,
-.c14.btn:disabled:hover {
+.c15.btn:disabled,
+.c15.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -202,19 +202,19 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
   cursor: not-allowed;
 }
 
-.c14.Button .Button__icon {
+.c15.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c14.Button--icon-only:focus {
+.c15.Button--icon-only:focus {
   outline: none;
 }
 
-.c14.Button--icon-only .Button__icon {
+.c15.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c11 .react-datepicker__calendar-icon {
+.c12 .react-datepicker__calendar-icon {
   width: 2.4rem;
   height: 3rem;
   margin-top: 0.5rem;
@@ -224,16 +224,26 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
   pointer-events: none;
 }
 
-.c11 .react-datepicker__view-calendar-icon input {
+.c12 .react-datepicker__view-calendar-icon input {
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c12.c12.form-control.is-valid {
+.c13.c13.form-control.is-valid {
   background-image: none;
 }
 
-.c12.c12.form-control.is-invalid {
+.c13.c13.form-control.is-invalid {
   border-color: #d8292f !important;
+}
+
+.c11 {
+  margin-left: 0.5rem;
+  cursor: pointer;
+  fill: #474543;
+}
+
+.c11:hover {
+  fill: #CE3E39;
 }
 
 .c2 {
@@ -246,18 +256,18 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
   margin-bottom: 2.4rem;
 }
 
-.c16.btn.btn-primary,
-.c16.btn.btn-primary:active {
+.c17.btn.btn-primary,
+.c17.btn.btn-primary:active {
   background-color: #42814A;
 }
 
-.c16.btn.btn-primary:hover,
-.c16.btn.btn-primary:focus {
+.c17.btn.btn-primary:hover,
+.c17.btn.btn-primary:focus {
   background-color: #2e8540;
   outline-color: #2e8540;
 }
 
-.c17.c17 {
+.c18.c18 {
   display: inline-block;
   margin-left: 1.5rem;
   margin-bottom: 0.5rem;
@@ -303,7 +313,7 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c13 {
+.c14 {
   position: relative;
   border-radius: 0.4rem;
   padding-top: 0.8rem;
@@ -317,7 +327,7 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c13.is-invalid {
+.c14.is-invalid {
   border: #CE3E39 solid 0.1rem;
 }
 
@@ -352,7 +362,7 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c18 {
+.c19 {
   z-index: 100;
   width: 100%;
   padding: 0.5rem 0;
@@ -371,7 +381,7 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
   background-color: white;
 }
 
-.c18 .btn {
+.c19 .btn {
   min-height: 3rem;
 }
 
@@ -392,7 +402,7 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
   overflow-y: auto;
 }
 
-.c15 {
+.c16 {
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
@@ -404,7 +414,7 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
   min-height: 4.5rem;
 }
 
-.c15 .btn {
+.c16 .btn {
   margin: 0;
 }
 
@@ -507,6 +517,13 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
                       </option>
                       <option
                         class="option"
+                        data-testid="select-option-CONSULTATION"
+                        value="CONSULTATION"
+                      >
+                        Consultation (other)
+                      </option>
+                      <option
+                        class="option"
                         data-testid="select-option-1STNTNCONSULT"
                         value="1STNTNCONSULT"
                       >
@@ -588,7 +605,7 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
                   <label
                     class="c9"
                   >
-                    Sub-type:
+                    Sub-type(s):
                   </label>
                 </div>
                 <div
@@ -597,17 +614,85 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
                   <div
                     class="form-group"
                   >
-                    <select
-                      class="form-select form-control"
-                      id="input-activitySubtypeCode"
-                      name="activitySubtypeCode"
-                    >
-                      <option
-                        value=""
+                    <div>
+                      <div
+                        class="multiselect-container multiSelectContainer  "
+                        id="multiselect-activitySubtypeCodes"
+                        style="width: auto; color: black;"
                       >
-                        Select subtype
-                      </option>
-                    </select>
+                        <div
+                          class="search-wrapper searchWrapper "
+                          style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
+                        >
+                          <span
+                            class="chip  false false"
+                            style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em; white-space: normal;"
+                          >
+                            Access
+                            <i
+                              class="custom-close"
+                            >
+                              <svg
+                                class="c11"
+                                fill="currentColor"
+                                height="16"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 512 512"
+                                width="16"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
+                                />
+                              </svg>
+                            </i>
+                          </span>
+                          <input
+                            autocomplete="off"
+                            class="searchBox "
+                            id="multiselect-activitySubtypeCodes_input"
+                            name="search_name_input"
+                            placeholder=""
+                            type="text"
+                            value=""
+                          />
+                        </div>
+                        <div
+                          class="optionListContainer displayNone"
+                        >
+                          <ul
+                            class="optionContainer"
+                          >
+                            <li
+                              class="option  highlightOption highlight  "
+                            >
+                              Agricultural Land Reserves (ALR)
+                            </li>
+                            <li
+                              class="option    "
+                            >
+                              Development
+                            </li>
+                            <li
+                              class="option    "
+                            >
+                              Permits
+                            </li>
+                            <li
+                              class="option    "
+                            >
+                              Sub-Division
+                            </li>
+                            <li
+                              class="option    "
+                            >
+                              Zoning
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -634,11 +719,6 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
                       id="input-activityStatusCode"
                       name="activityStatusCode"
                     >
-                      <option
-                        value=""
-                      >
-                        Select status
-                      </option>
                       <option
                         class="option"
                         data-testid="select-option-CANCELLED"
@@ -694,7 +774,7 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
                   class="c10 required text-left col-7"
                 >
                   <div
-                    class="c11 form-group"
+                    class="c12 form-group"
                   >
                     <div
                       class="react-datepicker-wrapper d-block"
@@ -713,7 +793,7 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
                         </svg>
                         <input
                           autocomplete="off"
-                          class="c12 form-control date-picker"
+                          class="c13 form-control date-picker"
                           id="datepicker-requestedDate"
                           name="requestedDate"
                           placeholder="MMM DD, YYYY"
@@ -741,7 +821,7 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
                   class="c10 text-left col-7"
                 >
                   <div
-                    class="c11 form-group"
+                    class="c12 form-group"
                   >
                     <div
                       class="react-datepicker-wrapper d-block"
@@ -760,7 +840,7 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
                         </svg>
                         <input
                           autocomplete="off"
-                          class="c12 form-control date-picker"
+                          class="c13 form-control date-picker"
                           id="datepicker-completionDate"
                           name="completionDate"
                           placeholder="MMM DD, YYYY"
@@ -831,7 +911,7 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
                             class="col"
                           >
                             <div
-                              class="c13"
+                              class="c14"
                             >
                               Select from contacts
                             </div>
@@ -852,7 +932,7 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
                             class="pl-0 col-auto"
                           >
                             <button
-                              class="c14 Button Button--icon-only px-2 btn btn-primary"
+                              class="c15 Button Button--icon-only px-2 btn btn-primary"
                               title="Select Contact"
                               type="button"
                             >
@@ -881,7 +961,7 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
                     </div>
                   </div>
                   <button
-                    class="c14 Button btn btn-link"
+                    class="c15 Button btn btn-link"
                     type="button"
                   >
                     <div
@@ -974,7 +1054,7 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
                             class="col"
                           >
                             <div
-                              class="c13"
+                              class="c14"
                             >
                               Select from contacts
                             </div>
@@ -995,7 +1075,7 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
                             class="pl-0 col-auto"
                           >
                             <button
-                              class="c14 Button Button--icon-only px-2 btn btn-primary"
+                              class="c15 Button Button--icon-only px-2 btn btn-primary"
                               title="Select Contact"
                               type="button"
                             >
@@ -1024,7 +1104,7 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
                     </div>
                   </div>
                   <button
-                    class="c14 Button btn btn-link"
+                    class="c15 Button btn btn-link"
                     type="button"
                   >
                     <div
@@ -1060,7 +1140,7 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
                         class="col"
                       >
                         <div
-                          class="c13"
+                          class="c14"
                         >
                           Select from contacts
                         </div>
@@ -1081,7 +1161,7 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
                         class="pl-0 col-auto"
                       >
                         <button
-                          class="c14 Button Button--icon-only px-2 btn btn-primary"
+                          class="c15 Button Button--icon-only px-2 btn btn-primary"
                           title="Select Contact"
                           type="button"
                         >
@@ -1124,7 +1204,7 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
                   class="align-content-end col"
                 >
                   <div
-                    class="c15 no-gutters row"
+                    class="c16 no-gutters row"
                   >
                     <div
                       class="d-flex justify-content-start align-items-end col-auto"
@@ -1135,7 +1215,7 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
                       class="d-flex justify-content-end my-1 col-auto"
                     >
                       <button
-                        class="c14 Button c16 c17 btn btn-primary"
+                        class="c15 Button c17 c18 btn btn-primary"
                         type="button"
                       >
                         <div
@@ -1308,13 +1388,13 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="c18"
+            class="c19"
           >
             <div
               class="pr-3 col-auto"
             />
             <button
-              class="c14 Button btn btn-secondary"
+              class="c15 Button btn btn-secondary"
               type="button"
             >
               <div
@@ -1324,7 +1404,7 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
               </div>
             </button>
             <button
-              class="c14 Button Button--disabled btn btn-primary"
+              class="c15 Button Button--disabled btn btn-primary"
               disabled=""
               type="button"
             >
