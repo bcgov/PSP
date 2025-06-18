@@ -334,18 +334,45 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
   const leaseProperties = useMemo(() => lease?.fileProperties ?? [], [lease?.fileProperties]);
 
   const onSelectFileSummary = () => {
+    if (!exists(lease)) {
+      return;
+    }
+
+    if (containerState.isEditing) {
+      if (formikRef?.current?.dirty) {
+        handleCancelClick(() => pathSolver.showFile('lease', lease?.id ?? 0));
+      }
+    }
     pathSolver.showFile('lease', lease?.id ?? 0);
   };
 
   const onSelectProperty = (propertyId: number) => {
+    if (!exists(lease)) {
+      return;
+    }
+
     const menuIndex = leaseProperties.findIndex(x => x.id === propertyId);
+    if (menuIndex < 0) {
+      return;
+    }
+
+    if (containerState.isEditing) {
+      if (formikRef?.current?.dirty) {
+        handleCancelClick(() =>
+          pathSolver.showFilePropertyIndex('lease', lease?.id ?? 0, menuIndex + 1),
+        );
+        return;
+      }
+    }
 
     // The index needs to be offset to match the menu index
     pathSolver.showFilePropertyIndex('lease', lease?.id ?? 0, menuIndex + 1);
   };
 
   const onEditProperties = () => {
-    pathSolver.editProperties('lease', lease?.id ?? 0);
+    if (exists(lease)) {
+      pathSolver.editProperties('lease', lease.id ?? 0);
+    }
   };
 
   const setIsPropertyEditing = useCallback(
