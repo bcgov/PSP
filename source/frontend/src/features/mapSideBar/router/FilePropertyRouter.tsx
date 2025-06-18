@@ -50,6 +50,7 @@ export const FilePropertyRouter: React.FC<IFilePropertyRouterProps> = props => {
     return null;
   }
 
+  console.log(props.selectedMenuIndex);
   const fileProperty = getFileProperty(props.file, props.selectedMenuIndex);
   if (fileProperty == null) {
     toast.warn('Could not find property in the file, showing file details instead', {

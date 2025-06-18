@@ -388,11 +388,11 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
     );
   }, [
     clusters,
-    draftPoints,
-    selectedMarker,
-    spider.lines,
     spider.markers,
+    spider.lines,
+    mapMachine.filePropertyLocations,
     zoomOrSpiderfy,
+    selectedMarker,
     mapMarkerClickFn,
   ]);
   return renderedPoints;

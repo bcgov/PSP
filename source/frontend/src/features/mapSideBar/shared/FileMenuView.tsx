@@ -104,8 +104,8 @@ const FileMenu: React.FunctionComponent<React.PropsWithChildren<IFileMenuProps>>
         {inactiveProperties.map((property: ApiGen_Concepts_FileProperty, index: number) => {
           return (
             <FileMenuRow
-              key={`menu-item-row-parent-${property?.id ?? index}`}
-              index={index}
+              key={`menu-item-row-parent-${property?.id ?? activeProperties.length + index}`}
+              index={activeProperties.length + index}
               currentPropertyIndex={currentPropertyIndex}
               property={property}
               onSelectProperty={onSelectProperty}

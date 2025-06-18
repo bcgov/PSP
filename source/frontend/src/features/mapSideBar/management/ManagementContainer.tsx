@@ -134,9 +134,10 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
 
   const close = useCallback(() => onClose && onClose(), [onClose]);
 
-  const navigateToMenuRoute = (selectedIndex: number) => {
-    const route = selectedIndex === 0 ? '' : `/property/${selectedIndex}`;
-    history.push(`${stripTrailingSlash(match.url)}${route}`);
+  const navigateToMenuRoute = (propertyId: number) => {
+    const menuIndex = managementFile.fileProperties.findIndex(x => x.id === propertyId);
+
+    history.push(`${stripTrailingSlash(match.url)}/property/${menuIndex + 1}`);
   };
 
   const onMenuChange = (selectedIndex: number) => {

@@ -89,8 +89,6 @@ export const ManagementView: React.FunctionComponent<IManagementViewProps> = ({
     `${stripTrailingSlash(match.path)}/property/:menuIndex/:tab`,
   );
 
-  const selectedMenuIndex = propertiesMatch !== null ? Number(propertiesMatch.params.menuIndex) : 0;
-
   const formTitle = isEditing
     ? getEditTitle(fileMatch, propertySelectorMatch, propertiesMatch)
     : 'Management File';
@@ -177,7 +175,9 @@ export const ManagementView: React.FunctionComponent<IManagementViewProps> = ({
                   render={({ match }) => (
                     <FilePropertyRouter
                       formikRef={formikRef}
-                      selectedMenuIndex={Number(match.params.menuIndex)}
+                      selectedMenuIndex={
+                        match.params.menuIndex ? Number(match.params.menuIndex) : 0
+                      }
                       file={managementFile}
                       fileType={ApiGen_CodeTypes_FileTypes.Management}
                       isEditing={isEditing}
