@@ -113,7 +113,7 @@ export const PropertyActivityEditContainer: React.FunctionComponent<
     }
   };
 
-  return (
+  return isValidId(propertyId) && exists(initialValues) ? (
     <View
       propertyId={propertyId}
       initialValues={initialValues}
@@ -128,5 +128,5 @@ export const PropertyActivityEditContainer: React.FunctionComponent<
       onSave={handleSave}
       onClose={onClose}
     />
-  );
+  ) : null;
 };
