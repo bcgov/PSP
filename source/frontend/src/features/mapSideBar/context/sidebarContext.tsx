@@ -7,7 +7,7 @@ import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTy
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
 import { exists } from '@/utils';
-import { getLatLng, locationFromFileProperty } from '@/utils/mapPropertyUtils';
+import { apiToMapProperty } from '@/utils/mapPropertyUtils';
 
 export interface TypedFile extends ApiGen_Concepts_File {
   fileType: ApiGen_CodeTypes_FileTypes;
@@ -119,10 +119,7 @@ export const SideBarContextProvider = (props: {
 
   const resetFilePropertyLocations = useCallback(() => {
     if (exists(fileProperties)) {
-      const propertyLocations = fileProperties
-        .map(x => locationFromFileProperty(x))
-        .map(y => getLatLng(y))
-        .filter(exists);
+      const propertyLocations = fileProperties.map(x => apiToMapProperty(x)).filter(exists);
 
       setFilePropertyLocations && setFilePropertyLocations(propertyLocations);
     } else {

@@ -18,12 +18,18 @@ import {
   PIMS_Property_Boundary_View,
   PIMS_Property_Location_View,
 } from '@/models/layers/pimsPropertyLocationView';
-import { exists } from '@/utils';
+import { exists, latLngFromMapProperty } from '@/utils';
 
 import { ONE_HUNDRED_METER_PRECISION } from '../../constants';
 import SinglePropertyMarker from '../Markers/SingleMarker';
 import { Spiderfier, SpiderSet } from './Spiderfier';
-import { getDraftIcon, getMarkerIcon, pointToLayer, zoomToCluster } from './util';
+import {
+  getDisabledDraftIcon,
+  getDraftIcon,
+  getMarkerIcon,
+  pointToLayer,
+  zoomToCluster,
+} from './util';
 
 export type PointClustererProps = {
   bounds?: BBox;
@@ -92,10 +98,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
   const draftPoints = useMemo<LatLngLiteral[]>(() => {
     return mapMachine.filePropertyLocations.map(x => {
       // The values on the feature are rounded to the 4th decimal. Do the same to the draft points.
-      return {
-        lat: x.lat,
-        lng: x.lng,
-      };
+      return latLngFromMapProperty(x);
     });
   }, [mapMachine.filePropertyLocations]);
 
@@ -350,12 +353,17 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
          * Render all of the unclustered DRAFT MARKERS.
          **/}
         <FeatureGroup ref={draftFeatureGroupRef}>
-          {draftPoints.map((draftPoint, index) => {
+          {mapMachine.filePropertyLocations.map((draftPoint, index) => {
+            const latLng = latLngFromMapProperty(draftPoint);
             return (
               <Marker
                 key={index}
-                position={draftPoint}
-                icon={getDraftIcon((index + 1).toString())}
+                position={latLng}
+                icon={
+                  draftPoint.isActive === false
+                    ? getDisabledDraftIcon((index + 1).toString())
+                    : getDraftIcon((index + 1).toString())
+                }
                 zIndexOffset={500}
                 eventHandlers={{
                   click: e => {
@@ -365,7 +373,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
 
                     mapMarkerClickFn({
                       clusterId: 'NO_ID',
-                      latlng: draftPoint,
+                      latlng: latLng,
                       pimsLocationFeature: null,
                       pimsBoundaryFeature: null,
                       fullyAttributedFeature: null,

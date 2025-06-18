@@ -7,6 +7,7 @@ import { AnyEventObject } from 'xstate';
 
 import { PropertyFilterFormModel } from '@/components/maps/leaflet/Control/AdvancedFilter/models';
 import { ILayerItem } from '@/components/maps/leaflet/Control/LayersControl/types';
+import { IMapProperty } from '@/components/propertySelector/models';
 import { IGeoSearchParams } from '@/constants/API';
 import { IMapSideBarViewState } from '@/features/mapSideBar/MapSideBar';
 import {
@@ -42,7 +43,7 @@ export interface IMapStateMachineContext {
   isLoading: boolean;
   mapSearchCriteria: IPropertyFilter | null;
   mapFeatureData: MapFeatureData;
-  filePropertyLocations: LatLngLiteral[];
+  filePropertyLocations: IMapProperty[];
   pendingFitBounds: boolean;
   requestedFitBounds: LatLngBounds;
   isSelecting: boolean;
@@ -87,7 +88,7 @@ export interface IMapStateMachineContext {
   finishReposition: () => void;
   toggleMapFilterDisplay: () => void;
   toggleMapLayerControl: () => void;
-  setFilePropertyLocations: (locations: LatLngLiteral[]) => void;
+  setFilePropertyLocations: (locations: IMapProperty[]) => void;
   setMapLayers: (layers: ILayerItem[]) => void;
   setMapLayersToRefresh: (layers: ILayerItem[]) => void;
   setDefaultMapLayers: (layers: ILayerItem[]) => void;
@@ -351,8 +352,8 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     serviceSend({ type: 'FINISH_REPOSITION' });
   }, [serviceSend]);
 
-  const setFilePropertyLocations = useCallback(
-    (locations: LatLngLiteral[]) => {
+  const setFileProperties = useCallback(
+    (locations: IMapProperty[]) => {
       serviceSend({ type: 'SET_FILE_PROPERTY_LOCATIONS', locations });
     },
     [serviceSend],
@@ -510,7 +511,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         toggleMapFilterDisplay,
         toggleMapLayerControl,
         toggleSidebarDisplay,
-        setFilePropertyLocations,
+        setFilePropertyLocations: setFileProperties,
         setVisiblePimsProperties,
         setShowDisposed,
         setShowRetired,

@@ -1675,6 +1675,7 @@ export const getMockLeaseStakeholders = (leaseId = 1): ApiGen_Concepts_LeaseStak
 export const getMockLeaseProperties = (leaseId = 1): ApiGen_Concepts_PropertyLease[] => [
   {
     file: null,
+    isActive: null,
     leaseArea: 0,
     areaUnitType: null,
     id: 387,

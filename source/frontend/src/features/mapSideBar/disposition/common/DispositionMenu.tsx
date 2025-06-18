@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import EditButton from '@/components/common/buttons/EditButton';
 import { EditPropertiesIcon } from '@/components/common/buttons/EditPropertiesButton';
 import { LinkButton } from '@/components/common/buttons/LinkButton';
+import { StyledIconWrapper } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { Claims } from '@/constants/index';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
@@ -132,23 +133,6 @@ const StyledRow = styled(Row)`
   div.Button__value {
     font-size: 1.4rem;
   }
-`;
-
-const StyledIconWrapper = styled.div`
-  &.selected {
-    background-color: ${props => props.theme.bcTokens.themeGold100};
-  }
-
-  background-color: ${props => props.theme.css.numberBackgroundColor};
-  font-size: 1.5rem;
-  border-radius: 50%;
-  opacity: 0.8;
-  width: 2.5rem;
-  height: 2.5rem;
-  padding: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 const StyledMenuHeaderWrapper = styled.div`

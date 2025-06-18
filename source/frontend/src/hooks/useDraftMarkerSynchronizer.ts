@@ -1,4 +1,3 @@
-import { LatLngLiteral } from 'leaflet';
 import debounce from 'lodash/debounce';
 import { useCallback, useRef } from 'react';
 
@@ -6,16 +5,6 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import { IMapProperty } from '@/components/propertySelector/models';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import useIsMounted from '@/hooks/util/useIsMounted';
-import { latLngFromMapProperty } from '@/utils';
-
-/**
- * Get a list of file property markers from the current form values.
- * As long as a parcel/building has both a lat and a lng it will be returned by this method.
- * @param modifiedProperties the current form values to extract lat/lngs from.
- */
-const getFilePropertyLocations = (modifiedProperties: IMapProperty[]): LatLngLiteral[] => {
-  return modifiedProperties.map((property: IMapProperty) => latLngFromMapProperty(property));
-};
 
 /**
  * A hook that automatically syncs any updates to the lat/lngs of the parcel form with the map.
@@ -33,9 +22,8 @@ const useDraftMarkerSynchronizer = (modifiedProperties: IMapProperty[]) => {
   const synchronizeMarkers = useCallback(
     (modifiedProperties: IMapProperty[]) => {
       if (isMounted()) {
-        const filePropertyLocations = getFilePropertyLocations(modifiedProperties);
-        if (filePropertyLocations.length > 0) {
-          setFilePropertyLocations(filePropertyLocations);
+        if (modifiedProperties.length > 0) {
+          setFilePropertyLocations(modifiedProperties);
         } else {
           setFilePropertyLocations([]);
         }
@@ -53,8 +41,6 @@ const useDraftMarkerSynchronizer = (modifiedProperties: IMapProperty[]) => {
   useDeepCompareEffect(() => {
     synchronize(modifiedProperties);
   }, [modifiedProperties, synchronize]);
-
-  return;
 };
 
 export default useDraftMarkerSynchronizer;

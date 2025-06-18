@@ -93,6 +93,7 @@ export class PropertyForm {
   public areaUnit?: AreaUnitTypes;
   public isRetired?: boolean;
   public isDisposed?: boolean;
+  public isActive?: string;
 
   public constructor(baseModel?: Partial<PropertyForm>) {
     Object.assign(this, baseModel);
@@ -116,6 +117,7 @@ export class PropertyForm {
       formattedAddress: model.address,
       landArea: model.landArea,
       areaUnit: model.areaUnit,
+      isActive: model.isActive !== false ? 'true' : 'false',
     });
   }
 
@@ -160,6 +162,7 @@ export class PropertyForm {
         pimsFeature?.properties?.LAND_LEGAL_DESCRIPTION ??
         parcelFeature?.properties?.LEGAL_DESCRIPTION ??
         '',
+      isActive: model.isActive !== false ? 'true' : 'false',
     });
   }
 
@@ -178,6 +181,7 @@ export class PropertyForm {
       districtName: this.districtName,
       legalDescription: this.legalDescription,
       address: this.address ? formatApiAddress(this.address.toApi()) : this.formattedAddress,
+      isActive: this.isActive !== 'false',
     };
   }
 
@@ -237,6 +241,7 @@ export class PropertyForm {
         geometry: null,
       },
       municipalityFeature: null,
+      isActive: this.isActive !== 'false',
     };
   }
 
@@ -269,6 +274,7 @@ export class PropertyForm {
       : undefined;
     newForm.legalDescription = model.property?.landLegalDescription ?? undefined;
     newForm.isRetired = model.property?.isRetired ?? undefined;
+    newForm.isActive = model.isActive !== false ? 'true' : 'false';
 
     return newForm;
   }
@@ -308,6 +314,7 @@ export class PropertyForm {
       propertyName: this.name ?? null,
       location: latLngToApiLocation(this.fileLocation?.lat, this.fileLocation?.lng),
       displayOrder: this.displayOrder ?? null,
+      isActive: this.isActive !== 'false',
       rowVersion: this.rowVersion ?? null,
     };
   }

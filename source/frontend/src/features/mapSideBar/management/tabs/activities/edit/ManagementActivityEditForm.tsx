@@ -81,11 +81,13 @@ export const ManagementActivityEditForm: React.FunctionComponent<
       activityForm.activityStatusCode = 'NOTSTARTED';
       activityForm.requestedDate = getCurrentIsoDate();
       // By default, all properties are selected but user can unselect all or some
-      activityForm.activityProperties = (managementFile.fileProperties ?? []).map(fp => {
-        const newActivityProperty = new ActivityPropertyFormModel();
-        newActivityProperty.propertyId = fp.propertyId;
-        return newActivityProperty;
-      });
+      activityForm.activityProperties = (managementFile.fileProperties ?? [])
+        .filter(fp => fp.isActive !== false)
+        .map(fp => {
+          const newActivityProperty = new ActivityPropertyFormModel();
+          newActivityProperty.propertyId = fp.propertyId;
+          return newActivityProperty;
+        });
     }
 
     setActivityType(activityForm.activityTypeCode);

@@ -12,8 +12,11 @@ import {
 } from 'react-router-dom';
 
 import ManagementIcon from '@/assets/images/management-grey-icon.svg?react';
+import Claims from '@/constants/claims';
+import Roles from '@/constants/roles';
 import FileLayout from '@/features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
@@ -25,12 +28,12 @@ import { SideBarContext } from '../context/sidebarContext';
 import { InventoryTabNames } from '../property/InventoryTabs';
 import FilePropertyRouter from '../router/FilePropertyRouter';
 import { FileTabType } from '../shared/detail/FileTabs';
+import FileMenuView from '../shared/FileMenuView';
 import { PropertyForm } from '../shared/models';
 import SidebarFooter from '../shared/SidebarFooter';
 import { StyledFormWrapper } from '../shared/styles';
 import UpdateProperties from '../shared/update/properties/UpdateProperties';
 import ManagementHeader from './common/ManagementHeader';
-import ManagementMenu from './common/ManagementMenu';
 import ManagementRouter from './router/ManagementRouter';
 
 export interface IManagementViewProps {
@@ -73,6 +76,7 @@ export const ManagementView: React.FunctionComponent<IManagementViewProps> = ({
   const history = useHistory();
   const match = useRouteMatch();
   const { lastUpdatedBy } = useContext(SideBarContext);
+  const { hasClaim, hasRole } = useKeycloakWrapper();
 
   // match for property menu routes - eg /property/1/ltsa
   const fileMatch = matchPath<Record<string, string>>(location.pathname, `${match.path}/:tab`);
@@ -111,6 +115,7 @@ export const ManagementView: React.FunctionComponent<IManagementViewProps> = ({
             confirmBeforeAdd={confirmBeforeAdd}
             canRemove={canRemove}
             formikRef={formikRef}
+            disableProperties
             confirmBeforeAddMessage={
               <>
                 <p>This property has already been added to one or more management files.</p>
@@ -142,13 +147,13 @@ export const ManagementView: React.FunctionComponent<IManagementViewProps> = ({
         >
           <FileLayout
             leftComponent={
-              <ManagementMenu
-                managementFile={managementFile}
-                items={menuItems}
-                selectedIndex={selectedMenuIndex}
-                onChange={onMenuChange}
-                onShowPropertySelector={onShowPropertySelector}
-              />
+              <FileMenuView
+                properties={managementFile?.fileProperties ?? []}
+                canEdit={hasRole(Roles.SYSTEM_ADMINISTRATOR) || hasClaim(Claims.LEASE_EDIT)}
+                onSelectFileSummary={() => onMenuChange(0)}
+                onSelectProperty={onMenuChange}
+                onEditProperties={onShowPropertySelector}
+              ></FileMenuView>
             }
             bodyComponent={
               <StyledFormWrapper>

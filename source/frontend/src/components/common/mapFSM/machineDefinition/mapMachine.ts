@@ -6,6 +6,7 @@ import { defaultBounds } from '@/components/maps/constants';
 import { PropertyFilterFormModel } from '@/components/maps/leaflet/Control/AdvancedFilter/models';
 import { PIMS_PROPERTY_BOUNDARY_KEY } from '@/components/maps/leaflet/Control/LayersControl/DefaultLayers';
 import { defaultPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
+import { latLngFromMapProperty } from '@/utils/mapPropertyUtils';
 
 import { emptyFeatureData } from '../models';
 import { MachineContext, SideBarType } from './types';
@@ -210,7 +211,9 @@ const mapRequestStates = {
               // business logic, if there are file properties, use those, otherwise, zoom to a single feature if there is only one, or all features if there are more than one.
 
               if (context.filePropertyLocations.length > 0) {
-                return latLngBounds(context.filePropertyLocations);
+                return latLngBounds(
+                  context.filePropertyLocations.map(fp => latLngFromMapProperty(fp)),
+                );
               }
             },
           }),

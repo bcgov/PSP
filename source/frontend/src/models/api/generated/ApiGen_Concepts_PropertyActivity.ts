@@ -20,7 +20,6 @@ export interface ApiGen_Concepts_PropertyActivity extends ApiGen_Base_BaseAudit 
   managementFileId: number | null;
   managementFile: ApiGen_Concepts_ManagementFile | null;
   activityTypeCode: ApiGen_Base_CodeType<string> | null;
-  activitySubtypeCode: ApiGen_Base_CodeType<string> | null;
   activityStatusTypeCode: ApiGen_Base_CodeType<string> | null;
   requestAddedDateOnly: UtcIsoDate;
   completionDateOnly: UtcIsoDate | null;

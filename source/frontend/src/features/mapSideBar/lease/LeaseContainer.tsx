@@ -1,5 +1,4 @@
 import { FormikProps } from 'formik';
-import { LatLngLiteral } from 'leaflet';
 import React, {
   useCallback,
   useContext,
@@ -17,6 +16,7 @@ import LeaseIcon from '@/assets/images/lease-icon.svg?react';
 import GenericModal from '@/components/common/GenericModal';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import { IMapProperty } from '@/components/propertySelector/models';
 import { Claims, Roles } from '@/constants';
 import { useLeaseDetail } from '@/features/leases';
 import { AddLeaseYupSchema } from '@/features/leases/add/AddLeaseYupSchema';
@@ -37,7 +37,7 @@ import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 import { useQuery } from '@/hooks/use-query';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
-import { exists, getLatLng, locationFromFileProperty, stripTrailingSlash } from '@/utils';
+import { apiToMapProperty, exists, stripTrailingSlash } from '@/utils';
 
 import GenerateFormView from '../acquisition/common/GenerateForm/GenerateFormView';
 import { SideBarContext } from '../context/sidebarContext';
@@ -245,12 +245,9 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
 
   const { setFilePropertyLocations } = useMapStateMachine();
 
-  const locations: LatLngLiteral[] = useMemo(() => {
+  const locations: IMapProperty[] = useMemo(() => {
     if (exists(lease?.fileProperties)) {
-      return lease?.fileProperties
-        .map(leaseProp => locationFromFileProperty(leaseProp))
-        .map(geom => getLatLng(geom))
-        .filter(exists);
+      return lease?.fileProperties.map(leaseProp => apiToMapProperty(leaseProp)).filter(exists);
     } else {
       return [];
     }

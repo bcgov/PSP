@@ -1,7 +1,6 @@
 import cx from 'classnames';
 import { useMemo } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaCaretRight } from 'react-icons/fa';
 import { matchPath, useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -10,7 +9,9 @@ import { EditPropertiesIcon } from '@/components/common/buttons/EditPropertiesBu
 import { LinkButton } from '@/components/common/buttons/LinkButton';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
-import { exists, getFilePropertyName } from '@/utils';
+import { exists } from '@/utils';
+
+import FileMenuRow from './FileMenuRow';
 
 export interface IFileMenuProps {
   properties: ApiGen_Concepts_FileProperty[];
@@ -46,6 +47,16 @@ const FileMenu: React.FunctionComponent<React.PropsWithChildren<IFileMenuProps>>
 
   const isSummary = useMemo(() => !exists(currentPropertyIndex), [currentPropertyIndex]);
 
+  const activeProperties = [];
+  const inactiveProperties = [];
+  properties.forEach(p => {
+    if (p.isActive !== false) {
+      activeProperties.push(p);
+    } else {
+      inactiveProperties.push(p);
+    }
+  });
+
   return (
     <StyledMenuWrapper>
       <StyledRow data-testid="menu-item-summary" className={cx({ selected: isSummary })}>
@@ -77,33 +88,28 @@ const FileMenu: React.FunctionComponent<React.PropsWithChildren<IFileMenuProps>>
       </StyledMenuHeaderWrapper>
       <div className={'p-1'} />
       <StyledMenuBodyWrapper>
-        {properties.map((property: ApiGen_Concepts_FileProperty, index: number) => {
-          const propertyName = getFilePropertyName(property);
+        <h4>Active</h4>
+        {activeProperties.map((property: ApiGen_Concepts_FileProperty, index: number) => {
           return (
-            <StyledRow
-              key={`menu-item-row-${index}`}
-              data-testid={`menu-item-row-${index}`}
-              className={cx('no-gutters', { selected: currentPropertyIndex === index })}
-              onClick={() => {
-                if (currentPropertyIndex !== index) {
-                  onSelectProperty(property.id);
-                }
-              }}
-            >
-              <Col xs="1">{currentPropertyIndex === index && <FaCaretRight />}</Col>
-              <Col xs="auto" className="pr-2">
-                <StyledIconWrapper className={cx({ selected: currentPropertyIndex === index })}>
-                  {index + 1}
-                </StyledIconWrapper>
-              </Col>
-              <Col>
-                {currentPropertyIndex === index ? (
-                  <span title="View">{propertyName.value}</span>
-                ) : (
-                  <LinkButton title="View">{propertyName.value}</LinkButton>
-                )}
-              </Col>
-            </StyledRow>
+            <FileMenuRow
+              key={`menu-item-row-parent-${property?.id ?? index}`}
+              index={index}
+              currentPropertyIndex={currentPropertyIndex}
+              property={property}
+              onSelectProperty={onSelectProperty}
+            />
+          );
+        })}
+        <h4>Inactive</h4>
+        {inactiveProperties.map((property: ApiGen_Concepts_FileProperty, index: number) => {
+          return (
+            <FileMenuRow
+              key={`menu-item-row-parent-${property?.id ?? index}`}
+              index={index}
+              currentPropertyIndex={currentPropertyIndex}
+              property={property}
+              onSelectProperty={onSelectProperty}
+            />
           );
         })}
       </StyledMenuBodyWrapper>
@@ -126,41 +132,6 @@ export const StyledMenuWrapper = styled.div`
   flex-direction: column;
 `;
 
-const StyledRow = styled(Row)`
-  width: 100%;
-
-  &.selected {
-    font-weight: bold;
-    cursor: default;
-  }
-
-  font-size: 1.4rem;
-  font-weight: normal;
-  cursor: pointer;
-  padding-bottom: 0.5rem;
-
-  div.Button__value {
-    font-size: 1.4rem;
-  }
-`;
-
-const StyledIconWrapper = styled.div`
-  &.selected {
-    background-color: ${props => props.theme.bcTokens.themeGold100};
-  }
-
-  background-color: ${props => props.theme.css.numberBackgroundColor};
-  font-size: 1.5rem;
-  border-radius: 50%;
-  opacity: 0.8;
-  width: 2.5rem;
-  height: 2.5rem;
-  padding: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 const StyledMenuHeaderWrapper = styled.div`
   display: flex;
   justify-content: space-between;
@@ -178,4 +149,22 @@ const StyledMenuHeader = styled.span`
 
 const StyledMenuBodyWrapper = styled.div`
   flex-grow: 1;
+`;
+
+export const StyledRow = styled(Row)`
+  width: 100%;
+
+  &.selected {
+    font-weight: bold;
+    cursor: default;
+  }
+
+  font-size: 1.4rem;
+  font-weight: normal;
+  cursor: pointer;
+  padding-bottom: 0.5rem;
+
+  div.Button__value {
+    font-size: 1.4rem;
+  }
 `;
