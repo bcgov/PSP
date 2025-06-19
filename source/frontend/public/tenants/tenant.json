@@ -14,29 +14,7 @@
     "body": "By signing in you acknowledge that not all data included within has been vetted for completeness and accuracy. Please exercise caution by verifying information prior to relying on it.",
     "backgroundImage": "/tenants/MOTI/background-image.jpg"
   },
-  "layers": {
-    "gazettedHighway": {
-      "layers": "psp_dev:ISS_PSP_GAZETTED_HIGHWAY"
-    },
-    "closedHighway": {
-      "layers": "psp_dev:ISS_PSP_CLOSED_HIGHWAY"
-    },
-    "parentParcelAcquisition": {
-      "layers": "psp_dev:ISS_PSP_PARENT_PARCEL"
-    },
-    "section107Plan": {
-      "layers": "psp_dev:ISS_PSP_SECTION_107_PLAN"
-    },
-    "motiPlan": {
-      "layers": "psp_dev:ISS_PSP_MOTI_PLAN"
-    },
-    "motiPlanFootprint": {
-      "layers": "psp_dev:plan_footprint"
-    },
-    "plans": {
-      "layers": "psp_dev:plans"
-    }
-  },
+  "layers": {},
   "propertiesUrl": "ogs-internal/ows?service=wfs&request=GetFeature&typeName=PIMS_PROPERTY_LOCATION_VW&outputformat=json&srsName=EPSG:4326&version=2.0.0&",
   "parcelMapFullyAttributed": {
     "url": "https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows",
