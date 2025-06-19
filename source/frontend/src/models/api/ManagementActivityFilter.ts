@@ -6,6 +6,5 @@ export interface Api_ManagementActivityFilter {
   fileNameOrNumberOrReference: string;
   projectNameOrNumber: string;
   activityTypeCode: string;
-  activitySubTypeCode: string;
   activityStatusCode: string;
 }

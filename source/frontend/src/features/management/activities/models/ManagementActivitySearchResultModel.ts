@@ -1,3 +1,4 @@
+import { ApiGen_Concepts_ManagementActivitySubType } from '@/models/api/generated/ApiGen_Concepts_ManagementActivitySubType';
 import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
@@ -11,7 +12,7 @@ export class ManagementActivitySearchResultModel {
   legacyFileNum = '';
   activityStatus = '';
   activityType = '';
-  activitySubType = '';
+  activitySubTypes: ApiGen_Concepts_ManagementActivitySubType[] | null = [];
   description = '';
   properties: ApiGen_Concepts_Property[] = [];
   activivityProperty: ApiGen_Concepts_PropertyActivityProperty | null;
@@ -27,7 +28,7 @@ export class ManagementActivitySearchResultModel {
       ? base.managementFile.fileProperties?.map(x => x.property) ?? []
       : base.activityProperties?.map(x => x.property) ?? [];
     newModel.activityType = base.activityTypeCode?.description ?? '';
-    newModel.activitySubType = base.activitySubtypeCode?.description ?? '';
+    newModel.activitySubTypes = base.activitySubTypeCodes;
     newModel.activityStatus = base.activityStatusTypeCode?.description ?? '';
     newModel.description = base.description ?? '';
     newModel.activivityProperty = base.activityProperties ? base.activityProperties[0] : null;

@@ -33,11 +33,6 @@ namespace Pims.Api.Areas.Management.Models
         public string ActivityTypeCode { get; set; }
 
         /// <summary>
-        /// get/set - The Activity Sub Type.
-        /// </summary>
-        public string ActivitySubTypeCode { get; set; }
-
-        /// <summary>
         /// get/set - The Activity Status Code.
         /// </summary>
         public string ActivityStatusCode { get; set; }
@@ -61,7 +56,6 @@ namespace Pims.Api.Areas.Management.Models
             Address = filter.GetStringValue(nameof(Address));
             FileNameOrNumberOrReference = filter.GetStringValue(nameof(FileNameOrNumberOrReference));
             ActivityTypeCode = filter.GetStringValue(nameof(ActivityTypeCode));
-            ActivitySubTypeCode = filter.GetStringValue(nameof(ActivitySubTypeCode));
             ActivityStatusCode = filter.GetStringValue(nameof(ActivityStatusCode));
             ProjectNameOrNumber = filter.GetStringValue(nameof(ProjectNameOrNumber));
         }
@@ -82,7 +76,6 @@ namespace Pims.Api.Areas.Management.Models
                 Address = model.Address,
                 FileNameOrNumberOrReference = model.FileNameOrNumberOrReference,
                 ActivityTypeCode = model.ActivityTypeCode,
-                ActivitySubTypeCode = model.ActivitySubTypeCode,
                 ActivityStatusCode = model.ActivityStatusCode,
                 ProjectNameOrNumber = model.ProjectNameOrNumber,
 

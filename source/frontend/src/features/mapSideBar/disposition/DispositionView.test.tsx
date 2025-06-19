@@ -3,7 +3,11 @@ import { Route } from 'react-router-dom';
 
 import { Claims } from '@/constants/claims';
 import { useApiNotes } from '@/hooks/pims-api/useApiNotes';
+import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
+import { useHistoricalNumberRepository } from '@/hooks/repositories/useHistoricalNumberRepository';
 import { useNoteRepository } from '@/hooks/repositories/useNoteRepository';
+import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
+import { useLtsa } from '@/hooks/useLtsa';
 import {
   mockDispositionFilePropertyResponse,
   mockDispositionFileResponse,
@@ -11,15 +15,11 @@ import {
 import { mockLookups } from '@/mocks/lookups.mock';
 import { server } from '@/mocks/msw/server';
 import { getUserMock } from '@/mocks/user.mock';
-import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { prettyFormatUTCDate } from '@/utils';
-import { RenderOptions, act, cleanup, render, userEvent } from '@/utils/test-utils';
-import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
-import { useHistoricalNumberRepository } from '@/hooks/repositories/useHistoricalNumberRepository';
-import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
-import { useLtsa } from '@/hooks/useLtsa';
 import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { prettyFormatUTCDate } from '@/utils';
+import { act, cleanup, render, RenderOptions, userEvent } from '@/utils/test-utils';
 import { http, HttpResponse } from 'msw';
 import { createRef } from 'react';
 import DispositionView, { IDispositionViewProps } from './DispositionView';
@@ -33,13 +33,14 @@ const getNotes = vi.fn().mockResolvedValue([]);
 const onClose = vi.fn();
 const onSave = vi.fn();
 const onCancel = vi.fn();
-const onMenuChange = vi.fn();
 const onSuccess = vi.fn();
 const onUpdateProperties = vi.fn();
 const confirmBeforeAdd = vi.fn();
 const canRemove = vi.fn();
 const setIsEditing = vi.fn();
-const onEditFileProperties = vi.fn();
+const onSelectFileSummary = vi.fn();
+const onSelectProperty = vi.fn();
+const onEditProperties = vi.fn();
 
 // Need to mock this library for unit tests
 vi.mock('react-visibility-sensor', () => {
@@ -94,14 +95,15 @@ const DEFAULT_PROPS: IDispositionViewProps = {
   onClose,
   onSave,
   onCancel,
-  onMenuChange,
   onSuccess,
   onUpdateProperties,
   confirmBeforeAdd,
   canRemove,
   isEditing: false,
   setIsEditing,
-  onShowPropertySelector: onEditFileProperties,
+  onSelectFileSummary,
+  onSelectProperty,
+  onEditProperties,
   formikRef: createRef(),
   isFormValid: true,
   error: undefined,
@@ -308,6 +310,6 @@ describe('DispositionView component', () => {
     expect(getByText('Disposition File')).toBeVisible();
     await act(async () => userEvent.click(getCloseButton()));
 
-    expect(onClose).toBeCalled();
+    expect(onClose).toHaveBeenCalled();
   });
 });
