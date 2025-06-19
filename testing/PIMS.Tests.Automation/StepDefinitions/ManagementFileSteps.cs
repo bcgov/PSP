@@ -316,7 +316,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             for (int j = 0; j < managementFile.ManagementPropertyActivities.Count; j++)
             {
                 managementActivities.AddActivityBttn();
-                sharedActivities.VerifyCreateActivityInitForm();
+                sharedActivities.VerifyCreateActivityInitForm("Management File", managementFile.ManagementPropertyActivities[j].PropertyActivityPropsCount);
                 sharedActivities.InsertNewPropertyActivity(managementFile.ManagementPropertyActivities[j]);
                 managementActivities.SaveActivity();
                 sharedActivities.VerifyInsertedActivity(managementFile.ManagementPropertyActivities[j], "Management File");
@@ -400,6 +400,15 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 managementFile.ManagementSearchProperties.PlanNumber = ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "PlanNumber");
                 managementFile.ManagementSearchProperties.LegalDescription = ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "LegalDescription");
                 managementFile.ManagementSearchProperties.MultiplePIDS = genericSteps.PopulateLists(ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "MultiplePIDS"));
+                managementFile.ManagementSearchProperties.LatitudeLongitude.LatitudeDegree = ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "LatitudeDegree");
+                managementFile.ManagementSearchProperties.LatitudeLongitude.LatitudeMinutes = ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "LatitudeMinutes");
+                managementFile.ManagementSearchProperties.LatitudeLongitude.LatitudeSeconds = ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "LatitudeSeconds");
+                managementFile.ManagementSearchProperties.LatitudeLongitude.LatitudeDirection = ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "LatitudeDirection");
+                managementFile.ManagementSearchProperties.LatitudeLongitude.LongitudeDegree = ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "LongitudeDegree");
+                managementFile.ManagementSearchProperties.LatitudeLongitude.LongitudeMinutes = ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "LongitudeMinutes");
+                managementFile.ManagementSearchProperties.LatitudeLongitude.LongitudeSeconds = ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "LongitudeSeconds");
+                managementFile.ManagementSearchProperties.LatitudeLongitude.LongitudeDirection = ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "LongitudeDirection");
+
             }
 
             //Management Activities
@@ -436,13 +445,15 @@ namespace PIMS.Tests.Automation.StepDefinitions
             {
                 PropertyActivity propertyActivity = new PropertyActivity();
 
+                propertyActivity.PropertyActivityPropsCount = int.Parse(ExcelDataContext.ReadData(i, "PropertyActivityPropsCount"));
                 propertyActivity.PropertyActivityType = ExcelDataContext.ReadData(i, "PropertyActivityType");
                 propertyActivity.PropertyActivitySubType = ExcelDataContext.ReadData(i, "PropertyActivitySubType");
                 propertyActivity.PropertyActivityStatus = ExcelDataContext.ReadData(i, "PropertyActivityStatus");
                 propertyActivity.PropertyActivityRequestedCommenceDate = ExcelDataContext.ReadData(i, "PropertyActivityRequestedCommenceDate");
+                propertyActivity.PropertyActivityCompletionDate = ExcelDataContext.ReadData(i, "PropertyActivityCompletionDate");
                 propertyActivity.PropertyActivityDescription = ExcelDataContext.ReadData(i, "PropertyActivityDescription");
                 propertyActivity.PropertyActivityMinistryContact = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "PropertyActivityMinistryContact"));
-                propertyActivity.PropertyActivityRequestorContactMgnr = ExcelDataContext.ReadData(i, "PropertyActivityRequestorContactMgnr");
+                propertyActivity.PropertyActivityRequestorContactMngr = ExcelDataContext.ReadData(i, "PropertyActivityRequestorContactMngr");
                 propertyActivity.PropertyActivityInvolvedPartiesExtContacts = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "PropertyActivityInvolvedPartiesExtContacts"));
                 propertyActivity.PropertyActivityServiceProvider = ExcelDataContext.ReadData(i, "PropertyActivityServiceProvider");
                 propertyActivity.ManagementPropertyActivityInvoicesStartRow = int.Parse(ExcelDataContext.ReadData(i, "ManagementPropertyActivityInvoicesStartRow"));

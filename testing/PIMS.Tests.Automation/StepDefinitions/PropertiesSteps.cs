@@ -1,7 +1,6 @@
 ﻿using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
-using PIMS.Tests.Automation.PageObjects;
 
 namespace PIMS.Tests.Automation.StepDefinitions
 {
@@ -53,17 +52,16 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Search for a valid Address with the Search Bar
             PopulateSearchProperty(rowNumber);
-            //searchProperties.SearchPropertyByAddressMap(searchProperty.Address);
+            searchProperties.SearchPropertyByAddressMap(searchProperty.Address);
 
             //Validate that the result gives only one pin
-            //Assert.True(searchProperties.PropertiesMapFoundCount());
+            Assert.True(searchProperties.PropertiesMapFoundCount());
 
             //Search for a valid Plan in Inventory
-            //searchProperties.SearchPropertyReset();
             searchProperties.SearchPropertyByPlan(searchProperty.PlanNumber);
 
             //Validate that the result gives only one pin
-            Assert.True(searchProperties.PropertiesClustersFoundCount() == 2);
+            Assert.True(searchProperties.PropertiesClustersFoundCount() == 1);
 
             //Search for a valid PIN in Inventory
             searchProperties.SearchPropertyReset();
@@ -257,7 +255,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.SearchPropertyByPID(searchProperty.PID);
 
             //Validate that the result gives only one pin
-            Assert.True(searchProperties.PropertiesMapFoundCount());
+            Assert.True(searchProperties.PropertiesPinMapFoundCount() == 1);
 
             //Click on the founf property
             searchProperties.SelectFoundPin();
@@ -714,9 +712,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 propertyActivity.PropertyActivitySubType = ExcelDataContext.ReadData(i, "PropertyActivitySubType");
                 propertyActivity.PropertyActivityStatus = ExcelDataContext.ReadData(i, "PropertyActivityStatus");
                 propertyActivity.PropertyActivityRequestedCommenceDate = ExcelDataContext.ReadData(i, "PropertyActivityRequestedCommenceDate");
+                propertyActivity.PropertyActivityCompletionDate = ExcelDataContext.ReadData(i, "PropertyActivityCompletionDate");
                 propertyActivity.PropertyActivityDescription = ExcelDataContext.ReadData(i, "PropertyActivityDescription");
                 propertyActivity.PropertyActivityMinistryContact = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "PropertyActivityMinistryContact"));
-                propertyActivity.PropertyActivityRequestorContactMgnr = ExcelDataContext.ReadData(i, "PropertyActivityRequestorContactMgnr");
+                propertyActivity.PropertyActivityRequestorContactMngr = ExcelDataContext.ReadData(i, "PropertyActivityRequestorContactMngr");
                 propertyActivity.PropertyActivityInvolvedPartiesExtContacts = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "PropertyActivityInvolvedPartiesExtContacts"));
                 propertyActivity.PropertyActivityServiceProvider = ExcelDataContext.ReadData(i, "PropertyActivityServiceProvider");
                 propertyActivity.ManagementPropertyActivityInvoicesStartRow = int.Parse(ExcelDataContext.ReadData(i, "ManagementPropertyActivityInvoicesStartRow"));

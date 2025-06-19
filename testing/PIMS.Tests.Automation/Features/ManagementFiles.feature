@@ -33,6 +33,7 @@ Scenario: 05._Management_Files_List_View
 
 Scenario: 06._Management_Activities_Tab
 	Given I create a new Management File from row number 8
+	When I add Properties to the Management File
 	And I insert activities to the Management Activities Tab
 	And I update information in the Property Management Tab from row number 9
 	Then A new Management file is created or updated successfully

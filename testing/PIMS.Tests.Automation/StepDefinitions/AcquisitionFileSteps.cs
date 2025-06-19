@@ -947,15 +947,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Select Found Pin on map
             searchProperties.SelectFoundPin();
 
-            //Close Property Information Modal
-            propertyInformation.HideLeftSideForms();
-
             //Open elipsis option
             propertyInformation.OpenMoreOptionsPopUp();
             propertyInformation.ChooseCreationOptionFromPin("Acquisition File");
-
-            //Open Left Side Forms
-            propertyInformation.ShowLeftSideForms();
 
             //Fill basic Acquisition File information
             acquisitionFilesDetails.CreateMinimumAcquisitionFile(acquisitionFile);
@@ -969,15 +963,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Select Found Pin on map
             searchProperties.SelectFoundPin();
 
-            //Close Property Information Modal
-            propertyInformation.HideLeftSideForms();
-
             //Open elipsis option
             propertyInformation.OpenMoreOptionsPopUp();
             propertyInformation.ChooseCreationOptionFromPin("Acquisition File");
-
-            //Open Left Side Forms
-            propertyInformation.ShowLeftSideForms();
 
             //Fill basic Acquisition File information
             acquisitionFilesDetails.CreateMinimumAcquisitionFile(acquisitionFile);
@@ -1258,6 +1246,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 acquisitionFile.AcquisitionSearchProperties.PlanNumber = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "PlanNumber");
                 acquisitionFile.AcquisitionSearchProperties.LegalDescription = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "LegalDescription");
                 acquisitionFile.AcquisitionSearchProperties.MultiplePIDS = genericSteps.PopulateLists(ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "MultiplePIDS"));
+                acquisitionFile.AcquisitionSearchProperties.LatitudeLongitude.LatitudeDegree = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "LatitudeDegree");
+                acquisitionFile.AcquisitionSearchProperties.LatitudeLongitude.LatitudeMinutes = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "LatitudeMinutes");
+                acquisitionFile.AcquisitionSearchProperties.LatitudeLongitude.LatitudeSeconds = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "LatitudeSeconds");
+                acquisitionFile.AcquisitionSearchProperties.LatitudeLongitude.LatitudeDirection = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "LatitudeDirection");
+                acquisitionFile.AcquisitionSearchProperties.LatitudeLongitude.LongitudeDegree = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "LongitudeDegree");
+                acquisitionFile.AcquisitionSearchProperties.LatitudeLongitude.LongitudeMinutes = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "LongitudeMinutes");
+                acquisitionFile.AcquisitionSearchProperties.LatitudeLongitude.LongitudeSeconds = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "LongitudeSeconds");
+                acquisitionFile.AcquisitionSearchProperties.LatitudeLongitude.LongitudeDirection = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "LongitudeDirection");
             }
 
             //Acquisition's Properties' Takes

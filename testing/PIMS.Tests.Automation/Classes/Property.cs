@@ -95,6 +95,7 @@
 
     public class PropertyActivity
     {
+        public int PropertyActivityPropsCount { get; set; } = 0;
         public string PropertyActivityType { get; set; } = null!;
         public string PropertyActivitySubType { get; set; } = null!;
         public string PropertyActivityStatus { get; set; } = null!;
@@ -102,7 +103,7 @@
         public string PropertyActivityCompletionDate { get; set; } = null!;
         public string PropertyActivityDescription { get; set; } = null!;
         public List<string> PropertyActivityMinistryContact { get; set; } = new List<string>();
-        public string PropertyActivityRequestorContactMgnr { get; set; } = null!;
+        public string PropertyActivityRequestorContactMngr { get; set; } = null!;
         public List<string> PropertyActivityInvolvedPartiesExtContacts { get; set; } = new List<string>();
         public string PropertyActivityServiceProvider { get; set; } = null!;
         public int ManagementPropertyActivityInvoicesStartRow { get; set; } = 0;
