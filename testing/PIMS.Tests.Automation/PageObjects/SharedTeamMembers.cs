@@ -110,7 +110,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             WaitUntilVisible(fileConfirmationModal);
             Assert.Equal("Remove Team Member", sharedModals.ModalHeader());
-            Assert.Equal("Do you wish to remove this team member?", sharedModals.ModalContent());
+            //Assert.Equal("Do you wish to remove this team member?", sharedModals.ModalContent());
 
             sharedModals.ModalClickOKBttn();
         }

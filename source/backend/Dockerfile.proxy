@@ -14,7 +14,7 @@ COPY core.api core.api/
 COPY keycloak keycloak/
 COPY proxy/*.csproj proxy/
 
-RUN dotnet restore proxy/Proxy.sln
+RUN dotnet restore proxy/Pims.Proxy.csproj
 ENV PATH="$PATH:/root/.dotnet/tools"
 # Copy everything else and build
 WORKDIR /src/proxy

@@ -1,10 +1,13 @@
+import Multiselect from 'multiselect-react-dropdown';
 import * as React from 'react';
 
 import ContactLink from '@/components/common/ContactLink';
+import { readOnlyMultiSelectStyle } from '@/components/common/form';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
+import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
 import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
-import { prettyFormatDate } from '@/utils';
+import { exists, prettyFormatDate } from '@/utils';
 
 interface IPropertyActivityDetailsSubViewProps {
   activity: ApiGen_Concepts_PropertyActivity | null;
@@ -13,13 +16,25 @@ interface IPropertyActivityDetailsSubViewProps {
 const PropertyActivityDetailsSubView: React.FunctionComponent<
   IPropertyActivityDetailsSubViewProps
 > = props => {
+  const selectedSubTypes: ApiGen_Base_CodeType<string>[] =
+    props.activity?.activitySubTypeCodes.map(x => x.managementActivitySubtypeCode).filter(exists) ??
+    [];
+
   return (
     <Section header="Activity Details">
       <SectionField label="Activity type" contentWidth={{ xs: 7 }}>
         {props.activity.activityTypeCode?.description}
       </SectionField>
-      <SectionField label="Sub-type" contentWidth={{ xs: 7 }}>
-        {props.activity.activitySubtypeCode?.description}
+      <SectionField label="Sub-type(s)" contentWidth={{ xs: 7 }}>
+        <Multiselect
+          disable
+          disablePreSelectedValues
+          hidePlaceholder
+          placeholder=""
+          selectedValues={selectedSubTypes}
+          displayValue="description"
+          style={readOnlyMultiSelectStyle}
+        />
       </SectionField>
       <SectionField label="Activity status" contentWidth={{ xs: 7 }}>
         {props.activity.activityStatusTypeCode?.description}

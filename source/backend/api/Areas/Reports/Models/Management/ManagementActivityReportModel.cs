@@ -18,9 +18,9 @@ namespace Pims.Api.Areas.Reports.Models.Management
         [CsvHelper.Configuration.Attributes.Name("Type")]
         public string ActivityType { get; set; }
 
-        [DisplayName("Sub-Type")]
-        [CsvHelper.Configuration.Attributes.Name("Sub-Type")]
-        public string ActivitySubType { get; set; }
+        [DisplayName("Sub-Types")]
+        [CsvHelper.Configuration.Attributes.Name("Sub-Types")]
+        public string ActivitySubTypes { get; set; }
 
         [DisplayName("Status")]
         [CsvHelper.Configuration.Attributes.Name("Status")]

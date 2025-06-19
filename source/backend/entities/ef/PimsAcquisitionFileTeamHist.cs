@@ -35,6 +35,7 @@ public partial class PimsAcquisitionFileTeamHist
     [Column("PRIMARY_CONTACT_ID")]
     public long? PrimaryContactId { get; set; }
 
+    [Required]
     [Column("ACQ_FL_TEAM_PROFILE_TYPE_CODE")]
     [StringLength(20)]
     public string AcqFlTeamProfileTypeCode { get; set; }

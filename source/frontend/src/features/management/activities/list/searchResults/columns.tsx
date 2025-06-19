@@ -2,10 +2,12 @@ import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
 
+import ExpandableTextList from '@/components/common/ExpandableTextList';
 import ExpandableFileProperties from '@/components/common/List/ExpandableFileProperties';
 import { ColumnWithProps } from '@/components/Table';
 import { Claims } from '@/constants/claims';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { ApiGen_Concepts_ManagementActivitySubType } from '@/models/api/generated/ApiGen_Concepts_ManagementActivitySubType';
 import { stringToFragment } from '@/utils';
 
 import { ManagementActivitySearchResultModel } from '../../models/ManagementActivitySearchResultModel';
@@ -86,12 +88,27 @@ export const columns: ColumnWithProps<ManagementActivitySearchResultModel>[] = [
   },
   {
     Header: 'Sub-type',
-    accessor: 'activitySubType',
+    accessor: 'activitySubTypes',
     align: 'left',
     clickable: true,
-    sortable: true,
+    sortable: false,
     width: 10,
     maxWidth: 20,
+    Cell: (props: CellProps<ManagementActivitySearchResultModel>) => {
+      return (
+        <GroupWrapper>
+          <ExpandableTextList<ApiGen_Concepts_ManagementActivitySubType>
+            items={props.row.original.activitySubTypes}
+            keyFunction={p => `activity-subtype-${p.id}`}
+            renderFunction={p => <>{p.managementActivitySubtypeCode.description}</>}
+            delimiter={'; '}
+            maxCollapsedLength={3}
+            maxExpandedLength={10}
+            className="d-flex flex-wrap"
+          />
+        </GroupWrapper>
+      );
+    },
   },
   {
     Header: 'Status',
@@ -111,4 +128,11 @@ const StyledLink = styled(Link)`
   line-clamp: 1;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
+`;
+
+export const GroupWrapper = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  align-items: baseline;
+  flex-wrap: wrap;
 `;
