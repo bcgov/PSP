@@ -45,7 +45,8 @@ namespace Pims.Dal.Repositories
                 .Include(rp => rp.Property)
                     .ThenInclude(rp => rp.Address)
                     .ThenInclude(a => a.ProvinceState)
-                .Where(x => x.ManagementFileId == managementFileId)
+                .Where(mp => mp.ManagementFileId == managementFileId)
+                .OrderBy(mp => mp.DisplayOrder)
                 .ToList();
         }
 

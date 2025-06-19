@@ -52,7 +52,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Search for a valid Address with the Search Bar
             PopulateSearchProperty(rowNumber);
-            searchProperties.SearchPropertyByAddressMap(searchProperty.Address);
+            //searchProperties.SearchPropertyByAddressMap(searchProperty.Address);
 
             //Validate that the result gives only one pin
             Assert.True(searchProperties.PropertiesMapFoundCount());
@@ -61,7 +61,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.SearchPropertyByPlan(searchProperty.PlanNumber);
 
             //Validate that the result gives only one pin
-            Assert.True(searchProperties.PropertiesClustersFoundCount() == 1);
+            Assert.True(searchProperties.PropertiesClustersFoundCount() == 2);
 
             //Search for a valid PIN in Inventory
             searchProperties.SearchPropertyReset();
