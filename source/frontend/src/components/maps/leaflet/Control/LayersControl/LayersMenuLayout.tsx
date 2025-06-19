@@ -135,6 +135,42 @@ export const layersMenuTree: LayerMenuEntry = {
           label: 'Legal Highway Research',
           nodes: [
             {
+              layerDefinitionId: 'gazettedHighway',
+              key: 'gazettedHighway',
+              label: 'Gazetted Highway',
+              color: '#FF0000',
+            },
+            {
+              layerDefinitionId: 'closedHighway',
+              key: 'closedHighway',
+              label: 'Closed Highway',
+              color: '#00FF04',
+            },
+            {
+              layerDefinitionId: 'parentParcelAcquisition',
+              key: 'parentParcelAcquisition',
+              label: 'Parent Parcel Acquisition',
+              color: '#FFB237',
+            },
+            {
+              layerDefinitionId: 'section107Plan',
+              key: 'section107Plan',
+              label: 'S. 107 Plan',
+              color: '#1818FF',
+            },
+            {
+              layerDefinitionId: 'motiPlan',
+              key: 'motiPlan',
+              label: 'MoTI Plan',
+              color: '#101010',
+            },
+            {
+              layerDefinitionId: 'motiPlanFootprint',
+              key: 'motiPlanFootprint',
+              label: 'MoTI Plan Footprint',
+              color: '#FF88DF',
+            },
+            {
               layerDefinitionId: 'plans',
               key: 'plans',
               label: 'Plans',
@@ -213,6 +249,12 @@ export const layersMenuTree: LayerMenuEntry = {
               key: 'parcelBoundaries',
               label: 'Parcel Boundaries',
               color: '#E9AD34',
+            },
+            {
+              layerDefinitionId: 'parcelLayerStyled',
+              key: 'parcelLayerStyled',
+              label: 'Parcel Boundaries Styled',
+              color: '#ff9800',
             },
             {
               layerDefinitionId: 'srwInterestParcels',

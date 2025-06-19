@@ -7,15 +7,15 @@ import { layerDefinitions } from '../Control/LayersControl/LayerDefinitions';
 import { LayerDefinition } from '../Control/LayersControl/types';
 
 export const useConfiguredMapLayers = () => {
-  const {
-    tenant: { layers: layerConfiguration },
-  } = useContext(TenantContext);
+  const { tenant } = useContext(TenantContext);
+
+  const layerConfiguration = tenant.layers;
 
   const layers = useMemo<LayerDefinition[]>(() => {
-    return layerDefinitions.map(ld => {
+    return layerDefinitions.map<LayerDefinition>(ld => {
       const customConfig = layerConfiguration[ld.layerIdentifier];
       if (exists(customConfig)) {
-        return { ...ld, a: customConfig };
+        return { ...ld, ...customConfig };
       }
       return { ...ld };
     });

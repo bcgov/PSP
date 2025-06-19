@@ -13,9 +13,9 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import { Section } from '@/components/common/Section/Section';
 import { exists } from '@/utils';
 
-import { layersMenuTree } from './LayersMenyLayout';
+import { layersMenuTree } from './LayersMenuLayout';
 import {
-  getNestedLayerId,
+  getChildrenIds,
   isLayerItem,
   LayerMenuEntry,
   LayerMenuGroup,
@@ -62,7 +62,7 @@ const MenuGroup: React.FC<React.PropsWithChildren<{ entry: LayerMenuGroup; level
   const [isOpen, setIsOpen] = useState(false);
   const groupCheckRef = useRef<HTMLInputElement>();
 
-  const nestedIdentifiers = useMemo(() => new Set(getNestedLayerId(entry)), [entry]);
+  const nestedIdentifiers = useMemo(() => new Set(getChildrenIds(entry)), [entry]);
 
   const toggle = () => {
     setIsOpen(!isOpen);

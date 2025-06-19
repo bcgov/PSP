@@ -35,13 +35,13 @@ export function isLayerGroup(layerEntry?: LayerMenuEntry): layerEntry is LayerMe
   return layerEntry?.nodes !== undefined;
 }
 
-export function getNestedLayerId(rootEntry: LayerMenuGroup): string[] {
+export function getChildrenIds(rootEntry: LayerMenuGroup): string[] {
   let keys: string[] = [];
   rootEntry.nodes.forEach(n => {
     if (isLayerItem(n)) {
       keys.push(n.layerDefinitionId);
     } else {
-      keys = keys.concat(getNestedLayerId(n));
+      keys = keys.concat(getChildrenIds(n));
     }
   });
 

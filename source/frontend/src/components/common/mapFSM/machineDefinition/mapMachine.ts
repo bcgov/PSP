@@ -5,7 +5,7 @@ import { AnyEventObject, assign, createMachine, raise, send } from 'xstate';
 import { defaultBounds } from '@/components/maps/constants';
 import { PropertyFilterFormModel } from '@/components/maps/leaflet/Control/AdvancedFilter/models';
 import { pimsBoundaryLayers } from '@/components/maps/leaflet/Control/LayersControl/LayerDefinitions';
-import { initialEnabledLayers } from '@/components/maps/leaflet/Control/LayersControl/LayersMenyLayout';
+import { initialEnabledLayers } from '@/components/maps/leaflet/Control/LayersControl/LayersMenuLayout';
 import { defaultPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
 import { exists } from '@/utils';
 
