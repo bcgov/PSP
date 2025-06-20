@@ -23,7 +23,7 @@ export const layersMenuTree: LayerMenuEntry = {
           color: '#42814A',
         },
         {
-          layerDefinitionId: 'pims_lease_files',
+          layerDefinitionId: 'pims_management_files',
           key: 'management',
           label: 'Management',
           color: '#FC802D',
@@ -57,7 +57,7 @@ export const layersMenuTree: LayerMenuEntry = {
           label: 'Interests',
           nodes: [
             {
-              layerDefinitionId: 'license_to_construct_take',
+              layerDefinitionId: 'pims_license_to_construct_take',
               key: 'license_to_construct_take',
               label: 'Licence to Construct Take',
               color: '#fa9fb5',
