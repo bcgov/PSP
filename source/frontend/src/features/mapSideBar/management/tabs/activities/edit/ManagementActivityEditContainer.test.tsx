@@ -17,6 +17,7 @@ import {
 } from './ManagementActivityEditContainer';
 import { IManagementActivityEditFormProps } from './ManagementActivityEditForm';
 import { ManagementActivityFormModel } from './models';
+import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 
 const history = createMemoryHistory();
 
@@ -129,6 +130,15 @@ describe('ManagementActivityEditContainer component', () => {
             propertyId: 1,
             rowVersion: 1,
           },
+        ],
+        selectedProperties: [
+          {
+            fileId: null,
+            id: 0,
+            property: null,
+            propertyId: 1,
+            rowVersion: 0,
+          } as ApiGen_Concepts_FileProperty,
         ],
         rowVersion: 1,
       } as ManagementActivityFormModel),

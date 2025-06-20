@@ -4,6 +4,7 @@ import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import useActivityContactRetriever from '@/features/mapSideBar/property/tabs/propertyDetailsManagement/activity/hooks';
 import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator';
 import { useManagementActivityRepository } from '@/hooks/repositories/useManagementActivityRepository';
+import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
@@ -61,17 +62,31 @@ export const ManagementActivityEditContainer: React.FunctionComponent<
         }
         await fetchProviderContact(retrieved);
 
-        setInitialValues(ManagementActivityFormModel.fromApi(retrieved));
+        setInitialValues(ManagementActivityFormModel.fromApi(retrieved, castedFile.fileProperties));
       }
     } else {
       // Create activity flow
       const defaultModel = new ManagementActivityFormModel(null, managementFileId);
       defaultModel.activityStatusCode = 'NOTSTARTED';
       defaultModel.requestedDate = getCurrentIsoDate();
+      defaultModel.selectedProperties = castedFile.fileProperties.map(x => {
+        return {
+          id: x.id,
+          fileId: castedFile.id,
+          propertyName: x.propertyName,
+          location: x.location,
+          displayOrder: x.displayOrder,
+          property: x.property,
+          propertyId: x.propertyId,
+        } as ApiGen_Concepts_FileProperty;
+      });
+
       setInitialValues(defaultModel);
     }
   }, [
     activityId,
+    castedFile.fileProperties,
+    castedFile.id,
     fetchMinistryContacts,
     fetchPartiesContact,
     fetchProviderContact,
