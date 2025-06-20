@@ -268,6 +268,16 @@ export const layersMenuTree: LayerMenuEntry = {
               label: 'BCTFA Ownership',
               color: '#42814A',
             },
+            {
+              layerDefinitionId: 'pmbc_parcel_by_class',
+              key: 'pmbc_parcel_by_class',
+              label: 'Parcels By Class (multiple colors)',
+            },
+            {
+              layerDefinitionId: 'pmbc_parcel_by_owner',
+              key: 'pmbc_parcel_by_owner',
+              label: 'Parcels By Owner Type (multiple colors)',
+            },
           ],
         },
         {

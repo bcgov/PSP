@@ -346,6 +346,30 @@ export const layerDefinitions: LayerDefinition[] = [
     maxZoom: MAP_MAX_ZOOM,
   },
   {
+    layerIdentifier: 'pmbc_parcel_by_class',
+    url: 'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows?',
+    layers:
+      'pub:WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW,pub:WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW',
+    transparent: true,
+    format: 'image/png',
+    zIndex: 21,
+    styles: '7834,7943',
+    maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+    maxZoom: MAP_MAX_ZOOM,
+  },
+  {
+    layerIdentifier: 'pmbc_parcel_by_owner',
+    url: 'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows?',
+    layers:
+      'pub:WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW,pub:WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW',
+    transparent: true,
+    format: 'image/png',
+    zIndex: 20,
+    styles: '7834,6616',
+    maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+    maxZoom: MAP_MAX_ZOOM,
+  },
+  {
     layerIdentifier: 'bctfa_property',
     layers: 'psp:PMBC_BCTFA_PARCEL_POLYGON_FABRIC',
     url: '/ogs-internal/ows?',
