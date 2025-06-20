@@ -247,9 +247,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyInformation.OpenMoreOptionsPopUp();
             propertyInformation.ChooseCreationOptionFromPin("Research File");
 
-            //Open Left Side Forms
-            propertyInformation.ShowLeftSideForms();
-
             //Fill basic Research File information
             researchFiles.CreateResearchFile(researchFile);
 
@@ -438,6 +435,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 researchFile.SearchProperties.Address = ExcelDataContext.ReadData(researchFile.SearchPropertiesIndex, "Address");
                 researchFile.SearchProperties.PlanNumber = ExcelDataContext.ReadData(researchFile.SearchPropertiesIndex, "PlanNumber");
                 researchFile.SearchProperties.LegalDescription = ExcelDataContext.ReadData(researchFile.SearchPropertiesIndex, "LegalDescription");
+                researchFile.SearchProperties.LatitudeLongitude.LatitudeDegree = ExcelDataContext.ReadData(researchFile.SearchPropertiesIndex, "LatitudeDegree");
+                researchFile.SearchProperties.LatitudeLongitude.LatitudeMinutes = ExcelDataContext.ReadData(researchFile.SearchPropertiesIndex, "LatitudeMinutes");
+                researchFile.SearchProperties.LatitudeLongitude.LatitudeSeconds = ExcelDataContext.ReadData(researchFile.SearchPropertiesIndex, "LatitudeSeconds");
+                researchFile.SearchProperties.LatitudeLongitude.LatitudeDirection = ExcelDataContext.ReadData(researchFile.SearchPropertiesIndex, "LatitudeDirection");
+                researchFile.SearchProperties.LatitudeLongitude.LongitudeDegree = ExcelDataContext.ReadData(researchFile.SearchPropertiesIndex, "LongitudeDegree");
+                researchFile.SearchProperties.LatitudeLongitude.LongitudeMinutes = ExcelDataContext.ReadData(researchFile.SearchPropertiesIndex, "LongitudeMinutes");
+                researchFile.SearchProperties.LatitudeLongitude.LongitudeSeconds = ExcelDataContext.ReadData(researchFile.SearchPropertiesIndex, "LongitudeSeconds");
+                researchFile.SearchProperties.LatitudeLongitude.LongitudeDirection = ExcelDataContext.ReadData(researchFile.SearchPropertiesIndex, "LongitudeDirection");
             }
             if (researchFile.PropertyResearchRowCount != 0 && researchFile.PropertyResearchRowStart != 0)
             {

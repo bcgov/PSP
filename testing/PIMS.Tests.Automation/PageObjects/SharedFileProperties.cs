@@ -422,7 +422,12 @@ namespace PIMS.Tests.Automation.PageObjects
                 if (sharedModals.SecondaryModalContent().Contains("You have added one or more properties to the disposition file that are not in the MOTI Inventory"))
                 {
                     Assert.Equal("User Override Required", sharedModals.SecondaryModalHeader());
-                    Assert.Contains("You have added one or more properties to the disposition file that are not in the MOTI Inventory. Do you want to proceed?", sharedModals.SecondaryModalContent());
+                    Assert.Equal("You have added one or more properties to the disposition file that are not in the MOTI Inventory. Do you want to proceed?", sharedModals.SecondaryModalContent());
+                }
+                else if (sharedModals.SecondaryModalContent().Contains("You have added one or more properties to the management file that are not in the MOTI Inventory"))
+                {
+                    Assert.Equal("User Override Required", sharedModals.SecondaryModalHeader());
+                    Assert.Equal("You have added one or more properties to the management file that are not in the MOTI Inventory. To acquire these properties, add them to an acquisition file. Do you want to proceed?", sharedModals.SecondaryModalContent());
                 }
                 else
                 {
