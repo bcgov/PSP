@@ -1,14 +1,14 @@
 <featureType>
-  <id>FeatureTypeInfoImpl--1e825f94:1965e7e02f5:-3831</id>
-  <name>PIMS_PROPERTY_BOUNDARY_VW</name>
-  <nativeName>PIMS_PROPERTY_BOUNDARY_VW</nativeName>
+  <id>FeatureTypeInfoImpl--fae8ad5:197899ee0c7:-2361</id>
+  <name>PIMS_PROPERTY_BOUNDARY_MANAGEMENT_VW</name>
+  <nativeName>PIMS_PROPERTY_BOUNDARY_MANAGEMENT_VW</nativeName>
   <namespace>
     <id>NamespaceInfoImpl-7e0faa3c:17c208de014:-7ff5</id>
   </namespace>
-  <title>PIMS_PROPERTY_BOUNDARY_VW</title>
+  <title>PIMS_PROPERTY_BOUNDARY_MANAGEMENT_VW</title>
   <keywords>
     <string>features</string>
-    <string>PIMS_PROPERTY_BOUNDARY_VW</string>
+    <string>PIMS_PROPERTY_BOUNDARY_MANAGEMENT_VW</string>
   </keywords>
   <nativeCRS class="projected">PROJCS[&quot;NAD83 / BC Albers&quot;, 
   GEOGCS[&quot;NAD83&quot;, 
@@ -34,21 +34,24 @@
   AUTHORITY[&quot;EPSG&quot;,&quot;3005&quot;]]</nativeCRS>
   <srs>EPSG:3005</srs>
   <nativeBoundingBox>
-    <minx>593889.6322000003</minx>
-    <maxx>1677986.4269999983</maxx>
-    <miny>380496.0472000018</miny>
-    <maxy>1348189.361399998</maxy>
+    <minx>895336.2103999994</minx>
+    <maxx>1196340.2687782769</maxx>
+    <miny>383280.4726978196</miny>
+    <maxy>633301.6818000004</maxy>
     <crs class="projected">EPSG:3005</crs>
   </nativeBoundingBox>
   <latLonBoundingBox>
-    <minx>-132.69541374734993</minx>
-    <maxx>-114.88114479844512</maxx>
-    <miny>48.04717646023849</miny>
-    <maxy>57.121249736228975</maxy>
+    <minx>-127.48285086411613</minx>
+    <maxx>-123.21932336520632</maxx>
+    <miny>48.43227795861126</miny>
+    <maxy>50.71455378179933</maxy>
     <crs>EPSG:4326</crs>
   </latLonBoundingBox>
   <projectionPolicy>FORCE_DECLARED</projectionPolicy>
   <enabled>true</enabled>
+  <metadata>
+    <entry key="cachingEnabled">false</entry>
+  </metadata>
   <store class="dataStore">
     <id>DataStoreInfoImpl--47c96824:17c20b17224:-7ff6</id>
   </store>

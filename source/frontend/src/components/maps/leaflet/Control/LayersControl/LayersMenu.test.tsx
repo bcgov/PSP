@@ -2,7 +2,7 @@ import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { act, cleanup, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
 import { LayersMenu } from './LayersMenu';
-import { layersTree } from './DefaultLayers';
+import { initialEnabledLayers } from './LayersMenuLayout';
 
 describe('LayersMenu View', () => {
   afterEach(cleanup);
@@ -36,7 +36,7 @@ describe('LayersMenu View', () => {
     await setup({
       mockMapMachine: {
         ...mapMachineBaseMock,
-        activeLayers: layersTree,
+        activeLayers: initialEnabledLayers,
         isShowingMapLayers: false,
       },
     });
@@ -48,7 +48,7 @@ describe('LayersMenu View', () => {
     await setup({
       mockMapMachine: {
         ...mapMachineBaseMock,
-        activeLayers: layersTree,
+        activeLayers: initialEnabledLayers,
         isShowingMapLayers: true,
       },
     });
@@ -60,7 +60,7 @@ describe('LayersMenu View', () => {
     await setup({
       mockMapMachine: {
         ...mapMachineBaseMock,
-        activeLayers: layersTree,
+        activeLayers: initialEnabledLayers,
         isShowingMapLayers: true,
       },
     });
@@ -70,6 +70,6 @@ describe('LayersMenu View', () => {
 
     await act(async () => userEvent.click(allCheckboxes[0]));
 
-    expect(mapMachineBaseMock.setMapLayers).toHaveBeenCalledWith(layersTree);
+    expect(mapMachineBaseMock.setMapLayers).toHaveBeenCalledWith(initialEnabledLayers);
   });
 });
