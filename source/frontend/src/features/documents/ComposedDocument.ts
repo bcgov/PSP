@@ -35,8 +35,12 @@ export class DocumentRow {
   relationshipId: number | undefined;
   relationshipType: ApiGen_CodeTypes_DocumentRelationType | null = null;
   parentId: string | undefined;
+  parentName: string | undefined;
 
-  public static fromApi(relationship: ApiGen_Concepts_DocumentRelationship): DocumentRow {
+  public static fromApi(
+    relationship: ApiGen_Concepts_DocumentRelationship,
+    parentName: string,
+  ): DocumentRow {
     const row: DocumentRow = new DocumentRow();
     row.id = relationship.document?.id;
     row.documentType = relationship.document?.documentType ?? undefined;
@@ -50,6 +54,7 @@ export class DocumentRow {
     row.relationshipId = relationship.id;
     row.relationshipType = relationship.relationshipType ?? null;
     row.parentId = relationship.parentId ?? undefined;
+    row.parentName = parentName;
     return row;
   }
 
@@ -68,6 +73,7 @@ export class DocumentRow {
     row.relationshipId = undefined;
     row.relationshipType = null;
     row.parentId = undefined;
+    row.parentName = '';
     return row;
   }
 

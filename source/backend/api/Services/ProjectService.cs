@@ -24,7 +24,7 @@ namespace Pims.Api.Services
         private readonly IAcquisitionFileRepository _acquisitionFileRepository;
         private readonly IUserRepository _userRepository;
         private readonly ILookupRepository _lookupRepository;
-        private readonly IEntityNoteRepository _entityNoteRepository;
+        private readonly INoteRelationshipRepository<PimsProjectNote> _entityNoteRepository;
         private readonly ClaimsPrincipal _user;
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace Pims.Api.Services
             IAcquisitionFileRepository acquisitionFileRepository,
             IUserRepository userRepository,
             ILookupRepository lookupRepository,
-            IEntityNoteRepository entityNoteRepository)
+            INoteRelationshipRepository<PimsProjectNote> entityNoteRepository)
             : base(user, logger)
         {
             _logger = logger;
@@ -286,7 +286,7 @@ namespace Pims.Api.Services
                 },
             };
 
-            _entityNoteRepository.Add(projectNoteInstance);
+            _entityNoteRepository.AddNoteRelationship(projectNoteInstance);
         }
 
         private string GetUpdatedNoteText(string oldStatusCode, string newStatusCode)

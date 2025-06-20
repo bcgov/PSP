@@ -9,5 +9,8 @@ namespace Pims.Dal.Entities
 
         [NotMapped]
         public override long FileId { get => this.ResearchFileId; set => this.ResearchFileId = value; }
+
+        [NotMapped]
+        public override long? InternalDocumentId { get => this.DocumentId; set => this.DocumentId = value.GetValueOrDefault(); }
     }
 }

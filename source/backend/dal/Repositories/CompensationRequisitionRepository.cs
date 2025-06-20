@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.IO.Packaging;
 using System.Linq;
 using System.Security.Claims;
-using LinqKit;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -31,8 +29,7 @@ namespace Pims.Dal.Repositories
             PimsContext dbContext,
             ClaimsPrincipal user,
             ILogger<BaseRepository> logger,
-            IMapper mapper
-        )
+            IMapper mapper)
             : base(dbContext, user, logger)
         {
             _mapper = mapper;
@@ -91,22 +88,18 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(z => z.Property)
                     .AsNoTracking()
                     .FirstOrDefault(x =>
-                        x.CompensationRequisitionId.Equals(compensationRequisitionId)
-                    ) ?? throw new KeyNotFoundException();
+                        x.CompensationRequisitionId.Equals(compensationRequisitionId)) ?? throw new KeyNotFoundException();
 
             return entity;
         }
 
         public PimsCompensationRequisition Update(
-            PimsCompensationRequisition compensationRequisition
-        )
+            PimsCompensationRequisition compensationRequisition)
         {
             var existingCompensationRequisition =
                 Context.PimsCompensationRequisitions.FirstOrDefault(x =>
                     x.CompensationRequisitionId.Equals(
-                        compensationRequisition.CompensationRequisitionId
-                    )
-                ) ?? throw new KeyNotFoundException();
+                        compensationRequisition.CompensationRequisitionId)) ?? throw new KeyNotFoundException();
 
             Context
                 .Entry(existingCompensationRequisition)
@@ -115,32 +108,27 @@ namespace Pims.Dal.Repositories
                 a => a.PimsCompReqFinancials,
                 compensationRequisition.CompensationRequisitionId,
                 compensationRequisition.PimsCompReqFinancials.ToArray(),
-                true
-            );
+                true);
             Context.UpdateChild<PimsCompensationRequisition, long, PimsPropAcqFlCompReq, long>(
                 a => a.PimsPropAcqFlCompReqs,
                 compensationRequisition.CompensationRequisitionId,
                 compensationRequisition.PimsPropAcqFlCompReqs.ToArray(),
-                true
-            );
+                true);
             Context.UpdateChild<PimsCompensationRequisition, long, PimsPropLeaseCompReq, long>(
                 a => a.PimsPropLeaseCompReqs,
                 compensationRequisition.CompensationRequisitionId,
                 compensationRequisition.PimsPropLeaseCompReqs.ToArray(),
-                true
-            );
+                true);
             Context.UpdateChild<PimsCompensationRequisition, long, PimsCompReqLeasePayee, long>(
                 a => a.PimsCompReqLeasePayees,
                 compensationRequisition.CompensationRequisitionId,
                 compensationRequisition.PimsCompReqLeasePayees.ToArray(),
-                true
-            );
+                true);
             Context.UpdateChild<PimsCompensationRequisition, long, PimsCompReqAcqPayee, long>(
                 a => a.PimsCompReqAcqPayees,
                 compensationRequisition.CompensationRequisitionId,
                 compensationRequisition.PimsCompReqAcqPayees.ToArray(),
-                true
-            );
+                true);
 
             return compensationRequisition;
         }
@@ -164,8 +152,7 @@ namespace Pims.Dal.Repositories
                         new PimsCompReqFinancial()
                         {
                             CompReqFinancialId = financial.CompReqFinancialId,
-                        }
-                    );
+                        });
                 }
 
                 foreach (var propAcqFile in deletedEntity.PimsPropAcqFlCompReqs)
@@ -174,8 +161,7 @@ namespace Pims.Dal.Repositories
                         new PimsPropAcqFlCompReq()
                         {
                             PropAcqFlCompReqId = propAcqFile.PropAcqFlCompReqId,
-                        }
-                    );
+                        });
                 }
 
                 foreach (var propLeaseFile in deletedEntity.PimsPropLeaseCompReqs)
@@ -184,8 +170,7 @@ namespace Pims.Dal.Repositories
                         new PimsPropLeaseCompReq()
                         {
                             PropLeaseCompReqId = propLeaseFile.PropLeaseCompReqId,
-                        }
-                    );
+                        });
                 }
 
                 foreach (var compReqLeaseStakeholder in deletedEntity.PimsCompReqLeasePayees)
@@ -194,15 +179,13 @@ namespace Pims.Dal.Repositories
                         new PimsCompReqLeasePayee()
                         {
                             CompReqLeasePayeeId = compReqLeaseStakeholder.CompReqLeasePayeeId,
-                        }
-                    );
+                        });
                 }
 
                 foreach (var compReqAcqPayee in deletedEntity.PimsCompReqAcqPayees)
                 {
                     Context.PimsCompReqAcqPayees.Remove(
-                        new() { CompReqAcqPayeeId = compReqAcqPayee.CompReqAcqPayeeId }
-                    );
+                        new() { CompReqAcqPayeeId = compReqAcqPayee.CompReqAcqPayeeId });
                 }
 
                 Context.CommitTransaction(); // TODO: required to enforce delete order. Can be removed when cascade deletes are implemented.
@@ -211,21 +194,18 @@ namespace Pims.Dal.Repositories
                     new PimsCompensationRequisition()
                     {
                         CompensationRequisitionId = deletedEntity.CompensationRequisitionId,
-                    }
-                );
+                    });
                 return true;
             }
             return false;
         }
 
         public List<PimsPropertyAcquisitionFile> GetAcquisitionCompReqPropertiesById(
-            long compensationRequisitionId
-        )
+            long compensationRequisitionId)
         {
             return Context
                 .PimsPropAcqFlCompReqs.Where(x =>
-                    x.CompensationRequisitionId == compensationRequisitionId
-                )
+                    x.CompensationRequisitionId == compensationRequisitionId)
                 .Include(pa => pa.PropertyAcquisitionFile)
                 .ThenInclude(p => p.Property)
                 .ThenInclude(rp => rp.RegionCodeNavigation)
@@ -249,8 +229,7 @@ namespace Pims.Dal.Repositories
         {
             return Context
                 .PimsPropLeaseCompReqs.Where(x =>
-                    x.CompensationRequisitionId == compensationRequisitionId
-                )
+                    x.CompensationRequisitionId == compensationRequisitionId)
                 .Include(l => l.PropertyLease)
                 .ThenInclude(p => p.Property)
                 .ThenInclude(rp => rp.RegionCodeNavigation)
@@ -271,8 +250,7 @@ namespace Pims.Dal.Repositories
         }
 
         public IEnumerable<PimsCompReqFinancial> GetCompensationRequisitionFinancials(
-            long compReqId
-        )
+            long compReqId)
         {
             return Context
                 .PimsCompReqFinancials.AsNoTracking()
@@ -282,8 +260,7 @@ namespace Pims.Dal.Repositories
         }
 
         public IEnumerable<PimsCompReqAcqPayee> GetCompensationRequisitionAcquisitionPayees(
-            long compReqId
-        )
+            long compReqId)
         {
             return Context
                 .PimsCompReqAcqPayees.AsNoTracking()
@@ -303,8 +280,7 @@ namespace Pims.Dal.Repositories
         }
 
         public IEnumerable<PimsCompReqLeasePayee> GetCompensationRequisitionLeasePayees(
-            long compReqId
-        )
+            long compReqId)
         {
             return Context
                 .PimsCompReqLeasePayees.AsNoTracking()
@@ -322,10 +298,9 @@ namespace Pims.Dal.Repositories
 
         public PimsCompensationRequisition GetCompensationRequisitionAtTime(
             long compReqId,
-            DateTime time
-        )
+            DateTime time)
         {
-            //TODO:
+            // TODO:
             Console.WriteLine("Here we are");
             Console.WriteLine($"compReqId: {compReqId} time:{time}");
 
@@ -357,8 +332,7 @@ namespace Pims.Dal.Repositories
 
         public IEnumerable<PimsPropertyAcquisitionFile> GetCompensationRequisitionAcqPropertiesAtTime(
             long compReqId,
-            DateTime time
-        )
+            DateTime time)
         {
             var acqCompReqPropHist = Context
                 .PimsPropAcqFlCompReqHists.AsNoTracking()
@@ -401,8 +375,7 @@ namespace Pims.Dal.Repositories
 
         public IEnumerable<PimsPropertyLease> GetCompensationRequisitionLeasePropertiesAtTime(
             long compReqId,
-            DateTime time
-        )
+            DateTime time)
         {
             var leaseCompReqPropHist = Context
                 .PimsPropLeaseCompReqHists.AsNoTracking()
@@ -445,16 +418,14 @@ namespace Pims.Dal.Repositories
 
         public IEnumerable<PimsCompReqAcqPayee> GetCompensationRequisitionAcquisitionPayeesAtTime(
             long compReqId,
-            DateTime time
-        )
+            DateTime time)
         {
             var acqPayeeHist = Context
                 .PimsCompReqAcqPayeeHists.AsNoTracking()
                 .Where(pacr => pacr.CompensationRequisitionId == compReqId)
                 .Where(pacr =>
                     pacr.EffectiveDateHist <= time
-                    && (pacr.EndDateHist == null || pacr.EndDateHist > time)
-                )
+                    && (pacr.EndDateHist == null || pacr.EndDateHist > time))
                 .GroupBy(pacr => pacr.CompReqAcqPayeeId)
                 .Select(gpacr => gpacr.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault())
                 .ToList();
@@ -471,8 +442,7 @@ namespace Pims.Dal.Repositories
                         .Where(aoh => aoh.EffectiveDateHist <= time)
                         .GroupBy(aoh => aoh.AcquisitionOwnerId)
                         .Select(gaoh =>
-                            gaoh.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault()
-                        )
+                            gaoh.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault())
                         .FirstOrDefault();
 
                     payee.AcquisitionOwner = _mapper.Map<PimsAcquisitionOwner>(acqOwnerHist);
@@ -486,8 +456,7 @@ namespace Pims.Dal.Repositories
                         .Where(ihh => ihh.EffectiveDateHist <= time)
                         .GroupBy(ihh => ihh.InterestHolderId)
                         .Select(gihh =>
-                            gihh.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault()
-                        )
+                            gihh.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault())
                         .FirstOrDefault();
 
                     var interestHolder = _mapper.Map<PimsInterestHolder>(interestHolderHist);
@@ -502,8 +471,7 @@ namespace Pims.Dal.Repositories
                         .Where(ihh => ihh.EffectiveDateHist <= time)
                         .GroupBy(ihh => ihh.AcquisitionFileTeamId)
                         .Select(gihh =>
-                            gihh.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault()
-                        )
+                            gihh.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault())
                         .FirstOrDefault();
 
                     var acqTeam = _mapper.Map<PimsAcquisitionFileTeam>(acqTeamHist);
@@ -516,16 +484,14 @@ namespace Pims.Dal.Repositories
 
         public IEnumerable<PimsCompReqLeasePayee> GetCompensationRequisitionLeasePayeesAtTime(
             long compReqId,
-            DateTime time
-        )
+            DateTime time)
         {
             var leasePayeeHist = Context
                 .PimsCompReqLeasePayeeHists.AsNoTracking()
                 .Where(pacr => pacr.CompensationRequisitionId == compReqId)
                 .Where(pacr =>
                     pacr.EffectiveDateHist <= time
-                    && (pacr.EndDateHist == null || pacr.EndDateHist > time)
-                )
+                    && (pacr.EndDateHist == null || pacr.EndDateHist > time))
                 .GroupBy(pacr => pacr.CompReqLeasePayeeId)
                 .Select(gpacr => gpacr.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault())
                 .ToList();
@@ -542,8 +508,7 @@ namespace Pims.Dal.Repositories
                         .Where(aoh => aoh.EffectiveDateHist <= time)
                         .GroupBy(aoh => aoh.LeaseStakeholderId)
                         .Select(gaoh =>
-                            gaoh.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault()
-                        )
+                            gaoh.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault())
                         .FirstOrDefault();
 
                     payee.LeaseStakeholder = _mapper.Map<PimsLeaseStakeholder>(leaseStakeholderHist);
@@ -557,8 +522,7 @@ namespace Pims.Dal.Repositories
                         .Where(ihh => ihh.EffectiveDateHist <= time)
                         .GroupBy(ihh => ihh.LeaseLicenseTeamId)
                         .Select(gihh =>
-                            gihh.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault()
-                        )
+                            gihh.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault())
                         .FirstOrDefault();
 
                     var leaseTeam = _mapper.Map<PimsLeaseLicenseTeam>(leaseTeamHist);

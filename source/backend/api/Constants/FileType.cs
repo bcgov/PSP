@@ -19,6 +19,8 @@ namespace Pims.Api.Constants
         [EnumMember(Value = "managementFile")]
         ManagementFile,
         [EnumMember(Value = "disposition")]
+        Property,
+        [EnumMember(Value = "property")]
         Disposition,
         [EnumMember(Value = "unknown")] // Used in tests/logic only. This does not correspond to a valid file type in the db.
         Unknown,

@@ -4,6 +4,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { Claims } from '@/constants/claims';
 import { NoteTypes } from '@/constants/noteTypes';
+import NoteListContainer from '@/features/notes/list/NoteListContainer';
 import NoteListView from '@/features/notes/list/NoteListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
@@ -77,10 +78,11 @@ export const ResearchTabsContainer: React.FunctionComponent<
   if (researchFile?.id && hasClaim(Claims.NOTE_VIEW)) {
     tabViews.push({
       content: (
-        <NoteListView
+        <NoteListContainer
           type={NoteTypes.Research_File}
           entityId={researchFile?.id}
           onSuccess={onChildEntityUpdate}
+          NoteListView={NoteListView}
         />
       ),
       key: FileTabType.NOTES,

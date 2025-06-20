@@ -214,14 +214,57 @@ exports[`MapContainer > Renders the map 1`] = `
   margin-right: 0;
 }
 
-.c15 {
-  border-radius: 1rem;
-  width: 100%;
-  padding: 2.5rem;
-  background-color: #f2f2f2;
+.c17 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c16 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c23 {
+  padding-left: 0rem;
+  padding-bottom: 0.5rem;
+}
+
+.c23 .form-check input {
+  margin-left: -0.3rem;
+}
+
+.c23 .form-check label {
+  font-weight: bold;
+}
+
+.c18 {
+  padding-left: 0rem;
+  padding-bottom: 0.5rem;
+}
+
+.c18 .form-check input {
+  margin-left: 0rem;
+}
+
+.c18 .form-check label {
+  font-weight: normal;
+}
+
+.c24 {
+  font-size: 2.4rem;
+  margin: -0.5rem;
+}
+
+.c15 {
+  font-size: 1.4rem;
+}
+
+.c15 .form-check {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -231,41 +274,14 @@ exports[`MapContainer > Renders the map 1`] = `
   -ms-flex-align: center;
   align-items: center;
   padding-left: 0rem;
-  border: none;
-  padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
 }
 
-.c16 .form-group .form-check label {
-  font-weight: bold;
-  font-size: 1.6rem;
-}
-
-.c17 {
-  margin-right: 1rem;
-  font-size: 2.4rem;
-}
-
-.c18 {
-  margin-bottom: 0rem;
-}
-
-.c18 .form-check {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-.c18 .form-check input {
+.c15 .form-check input {
+  padding-left: 0rem;
   margin-top: 0rem;
 }
 
-.c18 .form-check label {
+.c15 .form-check label {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -274,6 +290,40 @@ exports[`MapContainer > Renders the map 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  padding-left: 1.8rem;
+  margin-left: 0rem;
+}
+
+.c19 {
+  width: 1.4rem;
+  height: 1.4rem;
+  background-color: #3388ff;
+  margin-right: 0.5rem;
+  padding-right: 1.4rem;
+}
+
+.c20 {
+  width: 1.4rem;
+  height: 1.4rem;
+  background-color: #42814A;
+  margin-right: 0.5rem;
+  padding-right: 1.4rem;
+}
+
+.c21 {
+  width: 1.4rem;
+  height: 1.4rem;
+  background-color: #FC802D;
+  margin-right: 0.5rem;
+  padding-right: 1.4rem;
+}
+
+.c22 {
+  width: 1.4rem;
+  height: 1.4rem;
+  background-color: #555555;
+  margin-right: 0.5rem;
+  padding-right: 1.4rem;
 }
 
 .c3 {
@@ -659,7 +709,7 @@ exports[`MapContainer > Renders the map 1`] = `
                   <img
                     alt=""
                     class="leaflet-tile"
-                    src="https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows?&service=WMS&request=GetMap&layers=pub%3AWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&styles=&format=image%2Fpng&transparent=true&version=1.1.1&key=parcelBoundaries&label=Parcel%20Boundaries&on=true&url=https%3A%2F%2Fopenmaps.gov.bc.ca%2Fgeo%2Fpub%2FWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW%2Fows%3F&id=parcelLayer&color=%23E9AD34&width=256&height=256&srs=EPSG%3A3857&bbox=-14401959.121379772,6887893.492833805,-13775786.985667607,7514065.628545967"
+                    src="https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows?&service=WMS&request=GetMap&layers=pub%3AWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&styles=&format=image%2Fpng&transparent=true&version=1.1.1&layerIdentifier=parcelLayer&url=https%3A%2F%2Fopenmaps.gov.bc.ca%2Fgeo%2Fpub%2FWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW%2Fows%3F&width=256&height=256&srs=EPSG%3A3857&bbox=-14401959.121379772,6887893.492833805,-13775786.985667607,7514065.628545967"
                     style="width: 256px; height: 256px; left: -214px; top: -231px;"
                   />
                 </div>
@@ -679,6 +729,10 @@ exports[`MapContainer > Renders the map 1`] = `
                 </div>
               </div>
             </div>
+            <div
+              class="leaflet-pane leaflet-fileProperties-pane"
+              style="z-index: 600;"
+            />
           </div>
           <div
             class="leaflet-control-container"
@@ -950,342 +1004,594 @@ exports[`MapContainer > Renders the map 1`] = `
         class="c14"
       >
         <form
-          action="#"
+          class=""
         >
           <div
-            tabindex="0"
+            class="c15 form-group"
           >
             <div
-              class="c15 bg-white p-3"
+              class="c16 form-section"
             >
-              <div
-                class="list-group"
+              <h2
+                class="c17"
               >
                 <div
-                  class="c16 list-group-item"
-                  id="Administrative Boundaries"
+                  class="no-gutters row"
                 >
-                  <svg
-                    class="c17"
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="m10 17 5-5-5-5v10z"
-                    />
-                    <path
-                      d="M0 24V0h24v24H0z"
-                      fill="none"
-                    />
-                  </svg>
                   <div
-                    class="c18 form-group"
+                    class="align-content-end col"
+                  >
+                    PIMS
+                  </div>
+                </div>
+              </h2>
+              <div
+                class="collapse show"
+              >
+                <div
+                  class="c18"
+                >
+                  <div
+                    class="form-check"
+                  >
+                    <input
+                      class="form-check-input"
+                      id="research"
+                      type="checkbox"
+                    />
+                    <label
+                      class="form-check-label"
+                      for="research"
+                      title=""
+                    >
+                      <div
+                        class="c19"
+                        color="#3388ff"
+                      />
+                       Research
+                    </label>
+                  </div>
+                </div>
+                <div
+                  class="c18"
+                >
+                  <div
+                    class="form-check"
+                  >
+                    <input
+                      class="form-check-input"
+                      id="acquisition"
+                      type="checkbox"
+                    />
+                    <label
+                      class="form-check-label"
+                      for="acquisition"
+                      title=""
+                    >
+                      <div
+                        class="c20"
+                        color="#42814A"
+                      />
+                       Acquisition
+                    </label>
+                  </div>
+                </div>
+                <div
+                  class="c18"
+                >
+                  <div
+                    class="form-check"
+                  >
+                    <input
+                      class="form-check-input"
+                      id="management"
+                      type="checkbox"
+                    />
+                    <label
+                      class="form-check-label"
+                      for="management"
+                      title=""
+                    >
+                      <div
+                        class="c21"
+                        color="#FC802D"
+                      />
+                       Management
+                    </label>
+                  </div>
+                </div>
+                <div
+                  class="c18"
+                >
+                  <div
+                    class="form-check"
+                  >
+                    <input
+                      class="form-check-input"
+                      id="disposition"
+                      type="checkbox"
+                    />
+                    <label
+                      class="form-check-label"
+                      for="disposition"
+                      title=""
+                    >
+                      <div
+                        class="c22"
+                        color="#555555"
+                      />
+                       Disposition
+                    </label>
+                  </div>
+                </div>
+                <div
+                  class="c23"
+                >
+                  <div
+                    class="row no-gutters"
                   >
                     <div
-                      class="form-check"
+                      class="col-1"
                     >
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                      />
-                      <label
-                        class="form-check-label"
-                        title=""
+                      <svg
+                        class="c24"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
                       >
-                        Administrative Boundaries
-                      </label>
+                        <path
+                          d="m10 17 5-5-5-5v10z"
+                        />
+                        <path
+                          d="M0 24V0h24v24H0z"
+                          fill="none"
+                        />
+                      </svg>
+                    </div>
+                    <div
+                      class="col"
+                    >
+                      <div
+                        class="form-check"
+                      >
+                        <input
+                          class="form-check-input"
+                          id="LeaseLayers"
+                          type="checkbox"
+                        />
+                        <label
+                          class="form-check-label"
+                          for="LeaseLayers"
+                          title=""
+                        >
+                          Lease
+                        </label>
+                      </div>
                     </div>
                   </div>
                 </div>
                 <div
-                  class="c16 list-group-item"
-                  id="legalHighwayResearch"
+                  class="c23"
                 >
-                  <svg
-                    class="c17"
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="m10 17 5-5-5-5v10z"
-                    />
-                    <path
-                      d="M0 24V0h24v24H0z"
-                      fill="none"
-                    />
-                  </svg>
                   <div
-                    class="c18 form-group"
+                    class="row no-gutters"
                   >
                     <div
-                      class="form-check"
+                      class="col-1"
                     >
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                      />
-                      <label
-                        class="form-check-label"
-                        title=""
+                      <svg
+                        class="c24"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
                       >
-                        Legal Highway Research
-                      </label>
+                        <path
+                          d="m10 17 5-5-5-5v10z"
+                        />
+                        <path
+                          d="M0 24V0h24v24H0z"
+                          fill="none"
+                        />
+                      </svg>
+                    </div>
+                    <div
+                      class="col"
+                    >
+                      <div
+                        class="form-check"
+                      >
+                        <input
+                          class="form-check-input"
+                          id="InterestLayers"
+                          type="checkbox"
+                        />
+                        <label
+                          class="form-check-label"
+                          for="InterestLayers"
+                          title=""
+                        >
+                          Interests
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="c16 form-section"
+            >
+              <h2
+                class="c17"
+              >
+                <div
+                  class="no-gutters row"
+                >
+                  <div
+                    class="align-content-end col"
+                  >
+                    External
+                  </div>
+                </div>
+              </h2>
+              <div
+                class="collapse show"
+              >
+                <div
+                  class="c23"
+                >
+                  <div
+                    class="row no-gutters"
+                  >
+                    <div
+                      class="col-1"
+                    >
+                      <svg
+                        class="c24"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="m10 17 5-5-5-5v10z"
+                        />
+                        <path
+                          d="M0 24V0h24v24H0z"
+                          fill="none"
+                        />
+                      </svg>
+                    </div>
+                    <div
+                      class="col"
+                    >
+                      <div
+                        class="form-check"
+                      >
+                        <input
+                          class="form-check-input"
+                          id="administrative_group"
+                          type="checkbox"
+                        />
+                        <label
+                          class="form-check-label"
+                          for="administrative_group"
+                          title=""
+                        >
+                          Administrative Boundaries
+                        </label>
+                      </div>
                     </div>
                   </div>
                 </div>
                 <div
-                  class="c16 list-group-item"
-                  id="firstNations"
+                  class="c23"
                 >
-                  <svg
-                    class="c17"
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="m10 17 5-5-5-5v10z"
-                    />
-                    <path
-                      d="M0 24V0h24v24H0z"
-                      fill="none"
-                    />
-                  </svg>
                   <div
-                    class="c18 form-group"
+                    class="row no-gutters"
                   >
                     <div
-                      class="form-check"
+                      class="col-1"
                     >
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                      />
-                      <label
-                        class="form-check-label"
-                        title=""
+                      <svg
+                        class="c24"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
                       >
-                        First Nations
-                      </label>
+                        <path
+                          d="m10 17 5-5-5-5v10z"
+                        />
+                        <path
+                          d="M0 24V0h24v24H0z"
+                          fill="none"
+                        />
+                      </svg>
+                    </div>
+                    <div
+                      class="col"
+                    >
+                      <div
+                        class="form-check"
+                      >
+                        <input
+                          class="form-check-input"
+                          id="legalHighwayResearch"
+                          type="checkbox"
+                        />
+                        <label
+                          class="form-check-label"
+                          for="legalHighwayResearch"
+                          title=""
+                        >
+                          Legal Highway Research
+                        </label>
+                      </div>
                     </div>
                   </div>
                 </div>
                 <div
-                  class="c16 list-group-item"
-                  id="landOwnership"
+                  class="c23"
                 >
-                  <svg
-                    class="c17"
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="m10 17 5-5-5-5v10z"
-                    />
-                    <path
-                      d="M0 24V0h24v24H0z"
-                      fill="none"
-                    />
-                  </svg>
                   <div
-                    class="c18 form-group"
+                    class="row no-gutters"
                   >
                     <div
-                      class="form-check"
+                      class="col-1"
                     >
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                      />
-                      <label
-                        class="form-check-label"
-                        title=""
+                      <svg
+                        class="c24"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
                       >
-                        Land Ownership
-                      </label>
+                        <path
+                          d="m10 17 5-5-5-5v10z"
+                        />
+                        <path
+                          d="M0 24V0h24v24H0z"
+                          fill="none"
+                        />
+                      </svg>
+                    </div>
+                    <div
+                      class="col"
+                    >
+                      <div
+                        class="form-check"
+                      >
+                        <input
+                          class="form-check-input"
+                          id="firstNations"
+                          type="checkbox"
+                        />
+                        <label
+                          class="form-check-label"
+                          for="firstNations"
+                          title=""
+                        >
+                          First Nations
+                        </label>
+                      </div>
                     </div>
                   </div>
                 </div>
                 <div
-                  class="c16 list-group-item"
-                  id="zoning"
+                  class="c23"
                 >
-                  <svg
-                    class="c17"
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="m10 17 5-5-5-5v10z"
-                    />
-                    <path
-                      d="M0 24V0h24v24H0z"
-                      fill="none"
-                    />
-                  </svg>
                   <div
-                    class="c18 form-group"
+                    class="row no-gutters"
                   >
                     <div
-                      class="form-check"
+                      class="col-1"
                     >
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                      />
-                      <label
-                        class="form-check-label"
-                        title=""
+                      <svg
+                        class="c24"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
                       >
-                        Zoning
-                      </label>
+                        <path
+                          d="m10 17 5-5-5-5v10z"
+                        />
+                        <path
+                          d="M0 24V0h24v24H0z"
+                          fill="none"
+                        />
+                      </svg>
+                    </div>
+                    <div
+                      class="col"
+                    >
+                      <div
+                        class="form-check"
+                      >
+                        <input
+                          class="form-check-input"
+                          id="landOwnership"
+                          type="checkbox"
+                        />
+                        <label
+                          class="form-check-label"
+                          for="landOwnership"
+                          title=""
+                        >
+                          Land Ownership
+                        </label>
+                      </div>
                     </div>
                   </div>
                 </div>
                 <div
-                  class="c16 list-group-item"
-                  id="electoral"
+                  class="c23"
                 >
-                  <svg
-                    class="c17"
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="m10 17 5-5-5-5v10z"
-                    />
-                    <path
-                      d="M0 24V0h24v24H0z"
-                      fill="none"
-                    />
-                  </svg>
                   <div
-                    class="c18 form-group"
+                    class="row no-gutters"
                   >
                     <div
-                      class="form-check"
+                      class="col-1"
                     >
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                      />
-                      <label
-                        class="form-check-label"
-                        title=""
+                      <svg
+                        class="c24"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
                       >
-                        Electoral
-                      </label>
+                        <path
+                          d="m10 17 5-5-5-5v10z"
+                        />
+                        <path
+                          d="M0 24V0h24v24H0z"
+                          fill="none"
+                        />
+                      </svg>
+                    </div>
+                    <div
+                      class="col"
+                    >
+                      <div
+                        class="form-check"
+                      >
+                        <input
+                          class="form-check-input"
+                          id="zoning"
+                          type="checkbox"
+                        />
+                        <label
+                          class="form-check-label"
+                          for="zoning"
+                          title=""
+                        >
+                          Zoning
+                        </label>
+                      </div>
                     </div>
                   </div>
                 </div>
                 <div
-                  class="c16 list-group-item"
-                  id="federal_bc_parks"
+                  class="c23"
                 >
-                  <svg
-                    class="c17"
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="m10 17 5-5-5-5v10z"
-                    />
-                    <path
-                      d="M0 24V0h24v24H0z"
-                      fill="none"
-                    />
-                  </svg>
                   <div
-                    class="c18 form-group"
+                    class="row no-gutters"
                   >
                     <div
-                      class="form-check"
+                      class="col-1"
                     >
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                      />
-                      <label
-                        class="form-check-label"
-                        title=""
+                      <svg
+                        class="c24"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
                       >
-                        Federal/BC Parks
-                      </label>
+                        <path
+                          d="m10 17 5-5-5-5v10z"
+                        />
+                        <path
+                          d="M0 24V0h24v24H0z"
+                          fill="none"
+                        />
+                      </svg>
+                    </div>
+                    <div
+                      class="col"
+                    >
+                      <div
+                        class="form-check"
+                      >
+                        <input
+                          class="form-check-input"
+                          id="electoral"
+                          type="checkbox"
+                        />
+                        <label
+                          class="form-check-label"
+                          for="electoral"
+                          title=""
+                        >
+                          Electoral
+                        </label>
+                      </div>
                     </div>
                   </div>
                 </div>
                 <div
-                  class="c16 list-group-item"
-                  id="pims_property_boundary"
+                  class="c23"
                 >
-                  <svg
-                    class="c17"
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="m10 17 5-5-5-5v10z"
-                    />
-                    <path
-                      d="M0 24V0h24v24H0z"
-                      fill="none"
-                    />
-                  </svg>
                   <div
-                    class="c18 form-group"
+                    class="row no-gutters"
                   >
                     <div
-                      class="form-check"
+                      class="col-1"
                     >
-                      <input
-                        class="form-check-input"
-                        type="checkbox"
-                      />
-                      <label
-                        class="form-check-label"
-                        title=""
+                      <svg
+                        class="c24"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
                       >
-                        Pims
-                      </label>
+                        <path
+                          d="m10 17 5-5-5-5v10z"
+                        />
+                        <path
+                          d="M0 24V0h24v24H0z"
+                          fill="none"
+                        />
+                      </svg>
+                    </div>
+                    <div
+                      class="col"
+                    >
+                      <div
+                        class="form-check"
+                      >
+                        <input
+                          class="form-check-input"
+                          id="federal_bc_parks"
+                          type="checkbox"
+                        />
+                        <label
+                          class="form-check-label"
+                          for="federal_bc_parks"
+                          title=""
+                        >
+                          Federal/BC Parks
+                        </label>
+                      </div>
                     </div>
                   </div>
                 </div>

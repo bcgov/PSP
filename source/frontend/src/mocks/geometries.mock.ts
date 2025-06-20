@@ -1,4 +1,5 @@
 import { MultiPolygon, Polygon } from 'geojson';
+import { LatLngLiteral } from 'leaflet';
 
 import { ApiGen_Concepts_Geometry } from '@/models/api/generated/ApiGen_Concepts_Geometry';
 
@@ -6,6 +7,10 @@ export function getMockLocation(lat = 48, lng = -123): ApiGen_Concepts_Geometry 
   return {
     coordinate: { x: lng, y: lat },
   };
+}
+
+export function getMockLatLng(lat = 48, lng = -123): LatLngLiteral {
+  return { lat, lng };
 }
 
 export function getMockPolygon(): Polygon {

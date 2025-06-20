@@ -1,6 +1,7 @@
 import AcquisitionIcon from '@/assets/images/acquisition-grey-icon.svg?react';
 import DispositionIcon from '@/assets/images/disposition-grey-icon.svg?react';
 import LeaseIcon from '@/assets/images/lease-grey-icon.svg?react';
+import ManagementIcon from '@/assets/images/management-grey-icon.svg?react';
 import ResearchIcon from '@/assets/images/research-grey-icon.svg?react';
 import { Section } from '@/components/common/Section/Section';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
@@ -96,6 +97,23 @@ const PropertyAssociationTabView: React.FunctionComponent<
           renewals={props.associatedLeaseRenewals}
           leases={props.associatedLeases}
           disable={!hasClaim(Claims.LEASE_VIEW)}
+        />
+      </Section>
+      <Section
+        header={
+          <AssociationHeader
+            icon={<ManagementIcon title="Management-Files" />}
+            title="Management"
+            count={props.associations?.managementAssociations?.length}
+          />
+        }
+        isCollapsable
+      >
+        <AssociationContent
+          associationName="management"
+          associations={props.associations?.managementAssociations ?? undefined}
+          linkUrlMask="/mapview/sidebar/management/|id|"
+          disable={!hasClaim(Claims.MANAGEMENT_VIEW)}
         />
       </Section>
       <Section

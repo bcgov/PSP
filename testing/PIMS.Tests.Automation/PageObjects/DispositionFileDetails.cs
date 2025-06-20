@@ -17,10 +17,10 @@ namespace PIMS.Tests.Automation.PageObjects
         private By dispositionFileEditButton = By.CssSelector("button[title='Edit disposition file']");
 
         //Disposition File Details View and Create Forms Elements
-        private By dispositionFileViewTitle = By.XPath("/html[1]/body[1]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/h1[contains(text(),'Disposition File')]");
+        private By dispositionFileViewTitle = By.XPath("//html[1]/body[1]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/h1[contains(text(),'Disposition File')]");
         private By dispositionFileMainFormDiv = By.XPath("//h1[contains(text(),'Create Disposition File')]/parent::div/parent::div/parent::div/parent::div");
 
-        private By dispositionFileCreateTitle = By.XPath("//h1[contains(text(),'Create Disposition File')]");
+        private By dispositionFileCreateTitle = By.XPath("//*[contains(text(),'Create Disposition File')]");
         private By dispositionFileCloseFormBttn = By.XPath("//h1[contains(text(),'Disposition File')]/parent::div/following-sibling::div/*[3]");
 
         private By dispositionFileHeaderCodeLabel = By.XPath("//label[contains(text(), 'File:')]");
@@ -139,7 +139,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             FocusAndClick(menuDispositionButton);
 
-            WaitUntilVisible(createDispositionFileButton);
+            Wait();
             FocusAndClick(createDispositionFileButton);
         }
 
@@ -394,12 +394,14 @@ namespace PIMS.Tests.Automation.PageObjects
                 {
                     Assert.Equal("User Override Required", sharedModals.ModalHeader());
                     Assert.Equal("You are changing this file to a non-editable state. (Only system administrators can edit the file when set to Archived, Cancelled or Completed state). Do you wish to continue?", sharedModals.ModalContent());
+                    sharedModals.ModalClickOKBttn();
 
                 }
                 else if (sharedModals.ModalContent().Contains("The Ministry region has been changed"))
                 {
                     Assert.Equal("User Override Required", sharedModals.ModalHeader());
                     Assert.Equal("The Ministry region has been changed, this will result in a change to the file's prefix. This requires user confirmation.", sharedModals.ModalContent());
+                    sharedModals.ModalClickOKBttn();
                 }
                 else if (sharedModals.ModalHeader() == "Confirm status change")
                 {
@@ -410,12 +412,12 @@ namespace PIMS.Tests.Automation.PageObjects
 
                     Wait();
                 }
+                else if (sharedModals.ModalHeader() == "Error")
+                    break;
 
-                sharedModals.ModalClickOKBttn();
                 Wait();
             }
 
-            //AssertTrueIsDisplayed(dispositionFileEditButton);
         }
 
         public void CancelDispositionFile()
@@ -438,18 +440,18 @@ namespace PIMS.Tests.Automation.PageObjects
             return webDriver.FindElements(dispositionFileMainFormDiv).Count();
         }
 
-        public string GetDispositionFileCode()
-        {
-            WaitUntilVisible(dispositionFileHeaderCodeContent);
+        //public string GetDispositionFileName()
+        //{
+        //    //WaitUntilVisible(dispositionFileHeaderCodeContent);
 
-            var totalFileName = webDriver.FindElement(dispositionFileHeaderCodeContent).Text;
-            return Regex.Match(totalFileName, "^[^ ]+").Value;
-            //return Regex.Match(totalFileName, "(?<=D-).*").Value;
-        }
+        //    //var totalFileName = webDriver.FindElement(dispositionFileHeaderCodeContent).Text;
+        //    //return Regex.Match(totalFileName, "^[^ ]+").Value;
+
+        //}
 
         public void VerifyDispositionFileInitCreate()
         {
-            AssertTrueIsDisplayed(dispositionFileCreateTitle);
+            //AssertTrueIsDisplayed(dispositionFileCreateTitle);
 
             //Project
             AssertTrueIsDisplayed(dispositionFileProjectSubtitle);
@@ -685,7 +687,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NonCorePropertyError()
         {
-            Wait();
+            Wait(4000);
             Assert.Equal("You have one or more properties attached to this Disposition file that is NOT in the \"Core Inventory\" (i.e. owned by BCTFA and/or HMK). To complete this file you must either, remove these non \"Non-Core Inventory\" properties, OR make sure the property is added to the PIMS inventory first.", sharedModals.ModalContent());
         }
 

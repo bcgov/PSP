@@ -33,6 +33,8 @@ describe('DocumentFilterForm component', () => {
           onSetFilter={onSetFilter}
           documentFilter={defaultDocumentFilter}
           documentTypes={mockDocumentTypesResponse()}
+          relationshipTypes={[]}
+          showParentFilter={false}
         />
       </Formik>,
       {

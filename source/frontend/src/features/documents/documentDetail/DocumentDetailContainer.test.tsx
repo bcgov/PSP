@@ -65,13 +65,15 @@ describe('DocumentDetailContainer component', () => {
     const utils = render(
       <DocumentDetailContainer
         pimsDocument={
-          renderOptions?.props?.pimsDocument ?? DocumentRow.fromApi(mockDocumentResponse())
+          renderOptions?.props?.pimsDocument ??
+          DocumentRow.fromApi(mockDocumentResponse(), ApiGen_CodeTypes_DocumentRelationType.Leases)
         }
         relationshipType={
           renderOptions?.props?.relationshipType ??
           ApiGen_CodeTypes_DocumentRelationType.AcquisitionFiles
         }
         onUpdateSuccess={renderOptions?.props?.onUpdateSuccess ?? onUpdateSuccess}
+        canEdit={true}
       />,
       {
         ...renderOptions,

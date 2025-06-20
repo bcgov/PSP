@@ -24,16 +24,6 @@ public partial class PimsPropertyActivityHist
     public long PimsPropertyActivityId { get; set; }
 
     [Required]
-    [Column("PROP_MGMT_ACTIVITY_TYPE_CODE")]
-    [StringLength(20)]
-    public string PropMgmtActivityTypeCode { get; set; }
-
-    [Required]
-    [Column("PROP_MGMT_ACTIVITY_SUBTYPE_CODE")]
-    [StringLength(20)]
-    public string PropMgmtActivitySubtypeCode { get; set; }
-
-    [Required]
     [Column("PROP_MGMT_ACTIVITY_STATUS_TYPE_CODE")]
     [StringLength(20)]
     public string PropMgmtActivityStatusTypeCode { get; set; }
@@ -46,6 +36,10 @@ public partial class PimsPropertyActivityHist
 
     [Column("MANAGEMENT_FILE_ID")]
     public long? ManagementFileId { get; set; }
+
+    [Column("PROP_MGMT_ACTIVITY_TYPE_CODE")]
+    [StringLength(20)]
+    public string PropMgmtActivityTypeCode { get; set; }
 
     [Column("REQUEST_ADDED_DT")]
     public DateOnly RequestAddedDt { get; set; }

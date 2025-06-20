@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Pims.Dal.Entities;
 
 namespace Pims.Core.Test
@@ -14,14 +15,21 @@ namespace Pims.Core.Test
         /// <param name="activityTypeCode"></param>
         /// <param name="activitySubTypeCode"></param>
         /// <param name="activityStatusTypeCode"></param>
-        /// <returns></returns>
+        /// <returns>New Instance of PimsPropertyActivity.</returns>
         public static PimsPropertyActivity CreatePropertyActivity(long id, string activityTypeCode = "PROPERTYMTC", string activitySubTypeCode = "LANDSCAPING", string activityStatusTypeCode = "NOTSTARTED")
         {
             PimsPropertyActivity propertyActivity = new PimsPropertyActivity()
             {
                 Internal_Id = id,
                 PropMgmtActivityTypeCode = activityTypeCode,
-                PropMgmtActivitySubtypeCode = activitySubTypeCode,
+                PimsPropActivityMgmtActivities = new List<PimsPropActivityMgmtActivity>()
+                {
+                    new ()
+                    {
+                        PimsPropertyActivityId = id,
+                        PropMgmtActivitySubtypeCode = activitySubTypeCode,
+                    },
+                },
                 PropMgmtActivityStatusTypeCode = activityStatusTypeCode,
             };
 

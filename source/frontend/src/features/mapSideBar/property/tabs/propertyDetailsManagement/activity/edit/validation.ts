@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 
 export const PropertyActivityEditFormYupSchema = Yup.object().shape({
   activityTypeCode: Yup.string().required('Activity type is required'),
-  activitySubtypeCode: Yup.string().required('Sub-type is required'),
+  activitySubtypeCodes: Yup.array().min(1, 'Sub-type is required'),
   activityStatusCode: Yup.string().required('Status is required'),
   requestedDate: Yup.string().required('Requested added date is required'),
 

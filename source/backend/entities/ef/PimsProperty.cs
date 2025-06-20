@@ -425,6 +425,9 @@ public partial class PimsProperty
     public virtual ICollection<PimsPropPropTenureTyp> PimsPropPropTenureTyps { get; set; } = new List<PimsPropPropTenureTyp>();
 
     [InverseProperty("Property")]
+    public virtual ICollection<PimsPropTenureCleanup> PimsPropTenureCleanups { get; set; } = new List<PimsPropTenureCleanup>();
+
+    [InverseProperty("Property")]
     public virtual ICollection<PimsPropertyAcquisitionFile> PimsPropertyAcquisitionFiles { get; set; } = new List<PimsPropertyAcquisitionFile>();
 
     [InverseProperty("Property")]

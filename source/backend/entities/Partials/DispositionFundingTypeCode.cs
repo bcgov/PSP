@@ -18,7 +18,9 @@ namespace Pims.Dal.Entities
 
         #region Constructors
 
-        public PimsDispositionFundingType() { }
+        public PimsDispositionFundingType()
+        {
+        }
 
         /// <summary>
         /// Create a new instance of a PimsDispositionFundingType class.

@@ -11,7 +11,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
   >
     Select one or more properties that you want to include in this disposition. You can choose a location from the map, or search by other criteria.
   </div>
-  .c13.btn {
+  .c14.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -40,19 +40,19 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c13.btn .Button__value {
+.c14.btn .Button__value {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
-.c13.btn:hover {
+.c14.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c13.btn:focus {
+.c14.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -60,31 +60,31 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
   box-shadow: none;
 }
 
-.c13.btn.btn-primary {
+.c14.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c13.btn.btn-primary:hover,
-.c13.btn.btn-primary:active,
-.c13.btn.btn-primary:focus {
+.c14.btn.btn-primary:hover,
+.c14.btn.btn-primary:active,
+.c14.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c13.btn.btn-secondary {
+.c14.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c13.btn.btn-secondary:hover,
-.c13.btn.btn-secondary:active,
-.c13.btn.btn-secondary:focus {
+.c14.btn.btn-secondary:hover,
+.c14.btn.btn-secondary:active,
+.c14.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c13.btn.btn-info {
+.c14.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -92,66 +92,66 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
   padding-right: 0.6rem;
 }
 
-.c13.btn.btn-info:hover,
-.c13.btn.btn-info:active,
-.c13.btn.btn-info:focus {
+.c14.btn.btn-info:hover,
+.c14.btn.btn-info:active,
+.c14.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c13.btn.btn-light {
+.c14.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c13.btn.btn-light:hover,
-.c13.btn.btn-light:active,
-.c13.btn.btn-light:focus {
+.c14.btn.btn-light:hover,
+.c14.btn.btn-light:active,
+.c14.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c13.btn.btn-dark {
+.c14.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c13.btn.btn-dark:hover,
-.c13.btn.btn-dark:active,
-.c13.btn.btn-dark:focus {
+.c14.btn.btn-dark:hover,
+.c14.btn.btn-dark:active,
+.c14.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c13.btn.btn-danger {
+.c14.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c13.btn.btn-danger:hover,
-.c13.btn.btn-danger:active,
-.c13.btn.btn-danger:focus {
+.c14.btn.btn-danger:hover,
+.c14.btn.btn-danger:active,
+.c14.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c13.btn.btn-warning {
+.c14.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c13.btn.btn-warning:hover,
-.c13.btn.btn-warning:active,
-.c13.btn.btn-warning:focus {
+.c14.btn.btn-warning:hover,
+.c14.btn.btn-warning:active,
+.c14.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c13.btn.btn-link {
+.c14.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -175,9 +175,9 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
   text-decoration: underline;
 }
 
-.c13.btn.btn-link:hover,
-.c13.btn.btn-link:active,
-.c13.btn.btn-link:focus {
+.c14.btn.btn-link:hover,
+.c14.btn.btn-link:active,
+.c14.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -187,15 +187,15 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
   outline: none;
 }
 
-.c13.btn.btn-link:disabled,
-.c13.btn.btn-link.disabled {
+.c14.btn.btn-link:disabled,
+.c14.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c13.btn:disabled,
-.c13.btn:disabled:hover {
+.c14.btn:disabled,
+.c14.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -207,38 +207,38 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
   cursor: not-allowed;
 }
 
-.c13.Button .Button__icon {
+.c14.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c13.Button--icon-only:focus {
+.c14.Button--icon-only:focus {
   outline: none;
 }
 
-.c13.Button--icon-only .Button__icon {
+.c14.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c11 {
+.c12 {
   padding-right: 0;
 }
 
-.c11 .form-control {
+.c12 .form-control {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.c12:not(:first-child) {
+.c13:not(:first-child) {
   padding-left: 0;
   padding-right: 0;
 }
 
-.c12:not(:first-child) .form-control {
+.c13:not(:first-child) .form-control {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
 
-.c14 {
+.c15 {
   font-size: 1.4rem;
   color: #42814A;
 }
@@ -251,6 +251,13 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
   width: 100%;
   text-align: left;
   margin-bottom: 1.6rem;
+}
+
+.c10 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c3 {
@@ -358,7 +365,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
   height: auto;
 }
 
-.c10 {
+.c11 {
   background-color: #d9eaf7;
   border-radius: 0.5rem;
 }
@@ -595,16 +602,24 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
             <div
               class="c3 form-section"
             >
+              <h2
+                class="c10"
+              >
+                <div
+                  class="no-gutters row"
+                >
+                  <div
+                    class="align-content-end col"
+                  >
+                    Search for a property
+                  </div>
+                </div>
+              </h2>
               <div
                 class="collapse show"
               >
-                <h3
-                  class="c4"
-                >
-                  Search for a property
-                </h3>
                 <form
-                  class="c10 p-3"
+                  class="c11 p-3"
                   novalidate=""
                 >
                   <div
@@ -617,7 +632,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
                         class="flex-nowrap input-group row no-gutters"
                       >
                         <div
-                          class="c11 col-auto"
+                          class="c12 col-auto"
                         >
                           <div
                             class="input-group-prepend"
@@ -677,7 +692,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
                           </div>
                         </div>
                         <div
-                          class="c12 col"
+                          class="c13 col"
                         >
                           <div
                             class="input form-group"
@@ -706,7 +721,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
                           class="pr-0 col"
                         >
                           <button
-                            class="c13 Button Button--icon-only primary btn btn-primary"
+                            class="c14 Button Button--icon-only primary btn btn-primary"
                             data-testid="search"
                             id="search-button"
                             title="search"
@@ -735,7 +750,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
                           class="pl-0 col"
                         >
                           <button
-                            class="c13 Button Button--icon-only btn btn-info"
+                            class="c14 Button Button--icon-only btn btn-info"
                             data-testid="reset-button"
                             id="reset-button"
                             title="reset-button"
@@ -764,14 +779,6 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
                     </div>
                   </div>
                 </form>
-              </div>
-            </div>
-            <div
-              class="c3 form-section"
-            >
-              <div
-                class="collapse show"
-              >
                 <div
                   class="table"
                   data-testid="map-properties"
@@ -871,7 +878,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
                     class="ml-auto align-self-center col-auto"
                   >
                     <p
-                      class="c14"
+                      class="c15"
                     >
                       0 selected
                     </p>

@@ -12,7 +12,7 @@ export const useRefreshSiteminder = () => {
   const refresh = useCallback(async () => {
     const response = await axios.get(
       parcelMapFullyAttributed.url +
-        `?outputFormat=application%2Fjson&request=GetFeature&maxFeatures=0&typeName=${parcelMapFullyAttributed.name}&service=WFS&version=1.0.0`,
+        `?outputFormat=application%2Fjson&request=GetFeature&maxFeatures=0&typeName=${parcelMapFullyAttributed.layers}&service=WFS&version=1.0.0`,
       { withCredentials: true },
     );
     if (response.status !== 200) {

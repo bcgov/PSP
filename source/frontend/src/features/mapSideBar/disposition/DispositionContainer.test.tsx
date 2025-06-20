@@ -130,7 +130,7 @@ describe('DispositionContainer component', () => {
     await waitForElementToBeRemoved(spinner);
 
     mockAxios.onGet(new RegExp('dispositionfiles/1/properties')).timeout();
-    await act(async () => viewProps.onShowPropertySelector());
+    await act(async () => viewProps.onEditProperties());
     await act(async () => {
       viewProps.canRemove(1);
     });
@@ -175,8 +175,8 @@ describe('DispositionContainer component', () => {
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
 
-    await act(async () => viewProps.onMenuChange(1));
-    expect(history.location.pathname).toBe('/property/1');
+    await act(async () => viewProps.onSelectProperty(1));
+    expect(history.location.pathname).toBe('/mapview/sidebar/disposition/1/property/1');
   });
 
   it('displays a warning if form is dirty and menu index changes', async () => {
@@ -189,7 +189,7 @@ describe('DispositionContainer component', () => {
     await act(async () => viewProps.setIsEditing(true));
     await act(async () => (viewProps.formikRef.current as any).setFieldValue('value', 1));
     await screen.findByText('1');
-    await act(async () => viewProps.onMenuChange(1));
+    await act(async () => viewProps.onSelectProperty(1));
 
     await waitFor(() => {
       const warning = getByText(/Confirm Changes/i);
@@ -207,9 +207,9 @@ describe('DispositionContainer component', () => {
     await act(async () => viewProps.setIsEditing(true));
     await act(async () => (viewProps.formikRef.current as any).setFieldValue('value', 1));
     await screen.findByText('1');
-    await act(async () => viewProps.onMenuChange(1));
+    await act(async () => viewProps.onSelectProperty(1));
 
-    expect(history.location.pathname).toBe('/property/1');
+    expect(history.location.pathname).toBe('/mapview/sidebar/disposition/1/property/1');
 
     const yesButton = getByText('Yes');
     await act(async () => {
@@ -227,7 +227,7 @@ describe('DispositionContainer component', () => {
     await waitForElementToBeRemoved(spinner);
 
     await act(async () => viewProps.setIsEditing(true));
-    await act(async () => viewProps.onMenuChange(1));
+    await act(async () => viewProps.onSelectProperty(1));
 
     const params = new URLSearchParams(history.location.search);
     expect(params.has('edit')).toBe(false);

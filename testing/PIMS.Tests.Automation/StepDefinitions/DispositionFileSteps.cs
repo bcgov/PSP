@@ -21,7 +21,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly SharedPagination sharedPagination;
 
         private readonly string userName = "TRANPSP1";
-        private string dispositionFileCode = "";
+        private string dispositionFileName = "";
         private DispositionFile dispositionFile;
 
         public DispositionFileSteps(IWebDriver driver)
@@ -61,8 +61,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Save Disposition File
             dispositionFileDetails.SaveDispositionFileDetails();
 
-            //Get Disposition File code
-            dispositionFileCode = dispositionFileDetails.GetDispositionFileCode();
+            //Get Disposition File name
+            dispositionFileName = dispositionFile.DispositionFileName;
         }
 
         [StepDefinition(@"I add additional information to the Disposition File Details")]
@@ -123,8 +123,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Search for an existing Disposition File
             searchDispositionFiles.NavigateToSearchDispositionFile();
-            searchDispositionFiles.SearchDispositionFileByDFile(dispositionFileCode);
-            searchDispositionFiles.SelectFirstOption();
+            searchDispositionFiles.FilterDispositionFiles(name: dispositionFileName);
+            searchDispositionFiles.SelectLastOption();
 
             //Update existing Disposition File
             dispositionFileDetails.EditDispositionFileBttn();
@@ -141,7 +141,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             dispositionFileDetails.SaveDispositionFileDetails();
 
             //Get Disposition File code
-            dispositionFileCode = dispositionFileDetails.GetDispositionFileCode();
+            //dispositionFileCode = dispositionFileDetails.GetDispositionFileName();
 
             //Validate View File Details View Mode
             dispositionFileDetails.VerifyDispositionFileView(dispositionFile);
@@ -201,6 +201,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 sharedFileProperties.SelectFirstOptionFromSearch();
             }
 
+            //Search for a property by Latitude and Longitude
+            if (dispositionFile.DispositionSearchProperties.LatitudeLongitude.LatitudeDegree != "")
+            {
+                sharedFileProperties.SelectPropertyByLongLant(dispositionFile.DispositionSearchProperties.LatitudeLongitude);
+                sharedFileProperties.SelectFirstOptionFromSearch();
+                sharedFileProperties.ResetSearch();
+            }
+
             //Search for a duplicate property
             if (dispositionFile.DispositionSearchProperties.PID != "")
             {
@@ -221,8 +229,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Search for an existing Disposition File
             searchDispositionFiles.NavigateToSearchDispositionFile();
-            searchDispositionFiles.SearchDispositionFileByDFile(dispositionFileCode);
-            searchDispositionFiles.SelectFirstOption();
+            searchDispositionFiles.FilterDispositionFiles(name: dispositionFileName);
+            searchDispositionFiles.SelectLastOption();
 
             //Navigate to Edit Disposition File's Properties
             sharedFileProperties.NavigateToAddPropertiesToFile();
@@ -321,8 +329,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Search for an existing Disposition File
             searchDispositionFiles.NavigateToSearchDispositionFile();
-            searchDispositionFiles.SearchDispositionFileByDFile(dispositionFileCode);
-            searchDispositionFiles.SelectFirstOption();
+            searchDispositionFiles.FilterDispositionFiles(name: dispositionFileName);
+            searchDispositionFiles.SelectLastOption();
 
             //Navigate to Offers and sale Tab
             offerSale.NavigateoffersAndSaleTab();
@@ -419,15 +427,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Select Found Pin on map
             searchProperties.SelectFoundPin();
 
-            //Close Property Information Modal
-            propertyInformation.HideLeftSideForms();
-
             //Open elipsis option
             propertyInformation.OpenMoreOptionsPopUp();
             propertyInformation.ChooseCreationOptionFromPin("Disposition File");
 
             //Open Left Side Forms
-            propertyInformation.ShowLeftSideForms();
+            //propertyInformation.ShowLeftSideForms();
 
             //Fill basic Acquisition File information
             dispositionFileDetails.CreateMinimumDispositionFile(dispositionFile);
@@ -441,32 +446,26 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Select Found Pin on map
             searchProperties.SelectFoundPin();
 
-            //Close Property Information Modal
-            propertyInformation.HideLeftSideForms();
-
             //Open elipsis option
             propertyInformation.OpenMoreOptionsPopUp();
             propertyInformation.ChooseCreationOptionFromPin("Disposition File");
 
-            //Open Left Side Forms
-            propertyInformation.ShowLeftSideForms();
-
-            //Fill basic Acquisition File information
+            //Fill basic Disposition File information
             dispositionFileDetails.CreateMinimumDispositionFile(dispositionFile);
 
-            //Save Acquisition File
+            //Save Disposition File
             dispositionFileDetails.SaveDispositionFileDetails();
 
-            //Get Research File code
-            dispositionFileCode = dispositionFileDetails.GetDispositionFileCode();
+            //Get Disposition File code
+            dispositionFileName = dispositionFile.DispositionFileName;
 
-            //Edit Acquisition File
+            //Edit Disposition File
             dispositionFileDetails.EditDispositionFileBttn();
 
             //Add additional information
             dispositionFileDetails.AddAdditionalInformation(dispositionFile);
 
-            //Save Acquisition File
+            //Save Disposition File
             dispositionFileDetails.SaveDispositionFileDetails();
         }
 
@@ -577,7 +576,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public void NewDispositionFileCreated()
         {
             searchDispositionFiles.NavigateToSearchDispositionFile();
-            searchDispositionFiles.SearchDispositionFileByDFile(dispositionFileCode);
+            searchDispositionFiles.FilterDispositionFiles(name: dispositionFile.DispositionFileName);
 
             Assert.True(searchDispositionFiles.SearchFoundResults());
         }
@@ -687,6 +686,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 dispositionFile.DispositionSearchProperties.Address = ExcelDataContext.ReadData(dispositionFile.DispositionSearchPropertiesIndex, "Address");
                 dispositionFile.DispositionSearchProperties.PlanNumber = ExcelDataContext.ReadData(dispositionFile.DispositionSearchPropertiesIndex, "PlanNumber");
                 dispositionFile.DispositionSearchProperties.LegalDescription = ExcelDataContext.ReadData(dispositionFile.DispositionSearchPropertiesIndex, "LegalDescription");
+                dispositionFile.DispositionSearchProperties.LatitudeLongitude.LatitudeDegree = ExcelDataContext.ReadData(dispositionFile.DispositionSearchPropertiesIndex, "LatitudeDegree");
+                dispositionFile.DispositionSearchProperties.LatitudeLongitude.LatitudeMinutes = ExcelDataContext.ReadData(dispositionFile.DispositionSearchPropertiesIndex, "LatitudeMinutes");
+                dispositionFile.DispositionSearchProperties.LatitudeLongitude.LatitudeSeconds = ExcelDataContext.ReadData(dispositionFile.DispositionSearchPropertiesIndex, "LatitudeSeconds");
+                dispositionFile.DispositionSearchProperties.LatitudeLongitude.LatitudeDirection = ExcelDataContext.ReadData(dispositionFile.DispositionSearchPropertiesIndex, "LatitudeDirection");
+                dispositionFile.DispositionSearchProperties.LatitudeLongitude.LongitudeDegree = ExcelDataContext.ReadData(dispositionFile.DispositionSearchPropertiesIndex, "LongitudeDegree");
+                dispositionFile.DispositionSearchProperties.LatitudeLongitude.LongitudeMinutes = ExcelDataContext.ReadData(dispositionFile.DispositionSearchPropertiesIndex, "LongitudeMinutes");
+                dispositionFile.DispositionSearchProperties.LatitudeLongitude.LongitudeSeconds = ExcelDataContext.ReadData(dispositionFile.DispositionSearchPropertiesIndex, "LongitudeSeconds");
+                dispositionFile.DispositionSearchProperties.LatitudeLongitude.LongitudeDirection = ExcelDataContext.ReadData(dispositionFile.DispositionSearchPropertiesIndex, "LongitudeDirection");
             }
 
             //Disposition File Checklist

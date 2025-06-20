@@ -291,21 +291,21 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   line-height: 2rem;
 }
 
-.c21 {
+.c22 {
   padding-right: 0;
 }
 
-.c21 .form-control {
+.c22 .form-control {
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
 }
 
-.c22:not(:first-child) {
+.c23:not(:first-child) {
   padding-left: 0;
   padding-right: 0;
 }
 
-.c22:not(:first-child) .form-control {
+.c23:not(:first-child) .form-control {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
@@ -328,7 +328,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   flex-shrink: 0;
 }
 
-.c23 {
+.c24 {
   font-size: 1.4rem;
   color: #42814A;
 }
@@ -365,7 +365,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   border-bottom: solid 0.5rem #3470B1;
 }
 
-.c24 {
+.c20 {
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
@@ -477,7 +477,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   height: auto;
 }
 
-.c20 {
+.c21 {
   background-color: #d9eaf7;
   border-radius: 0.5rem;
 }
@@ -927,16 +927,24 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                     <div
                       class="c13 form-section"
                     >
+                      <h2
+                        class="c20"
+                      >
+                        <div
+                          class="no-gutters row"
+                        >
+                          <div
+                            class="align-content-end col"
+                          >
+                            Search for a property
+                          </div>
+                        </div>
+                      </h2>
                       <div
                         class="collapse show"
                       >
-                        <h3
-                          class="c14"
-                        >
-                          Search for a property
-                        </h3>
                         <form
-                          class="c20 p-3"
+                          class="c21 p-3"
                           novalidate=""
                         >
                           <div
@@ -949,7 +957,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                                 class="flex-nowrap input-group row no-gutters"
                               >
                                 <div
-                                  class="c21 col-auto"
+                                  class="c22 col-auto"
                                 >
                                   <div
                                     class="input-group-prepend"
@@ -1009,7 +1017,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                                   </div>
                                 </div>
                                 <div
-                                  class="c22 col"
+                                  class="c23 col"
                                 >
                                   <div
                                     class="input form-group"
@@ -1096,14 +1104,6 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                             </div>
                           </div>
                         </form>
-                      </div>
-                    </div>
-                    <div
-                      class="c13 form-section"
-                    >
-                      <div
-                        class="collapse show"
-                      >
                         <div
                           class="table"
                           data-testid="map-properties"
@@ -1203,7 +1203,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                             class="ml-auto align-self-center col-auto"
                           >
                             <p
-                              class="c23"
+                              class="c24"
                             >
                               0
                                selected
@@ -1224,7 +1224,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
             class="c13 form-section"
           >
             <h2
-              class="c24"
+              class="c20"
             >
               <div
                 class="no-gutters row"

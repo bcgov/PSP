@@ -6,7 +6,7 @@ import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mockManagementFileResponse } from '@/mocks/managementFiles.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
+import { act, render, RenderOptions, userEvent, waitForEffects } from '@/utils/test-utils';
 
 import { ManagementFormModel } from '../models/ManagementFormModel';
 import UpdateManagementForm, { IUpdateManagementFormProps } from './UpdateManagementForm';
@@ -131,7 +131,7 @@ describe('UpdateManagementForm component', () => {
 
     initialValues.productId = '';
     initialValues.fileName = 'test';
-    initialValues.programTypeCode = 'UTILITIES';
+    initialValues.purposeTypeCode = 'ENGINEER';
     initialValues.project = '' as unknown as IAutocompletePrediction;
 
     expect(getProductDropDownList()).toBeNull();
@@ -139,6 +139,7 @@ describe('UpdateManagementForm component', () => {
     await act(async () => {
       userEvent.selectOptions(getTeamMemberProfileDropDownList(0), 'MINSTAFF');
     });
+    await waitForEffects();
 
     await act(async () => getFormikRef().current?.submitForm());
 

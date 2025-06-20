@@ -3,12 +3,13 @@ import { useHistory } from 'react-router-dom';
 
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import { usePropertyActivityRepository } from '@/hooks/repositories/usePropertyActivityRepository';
+import { ApiGen_CodeTypes_ManagementActivityStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_ManagementActivityStatusTypes';
 import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
-import { ApiGen_Concepts_PropertyActivitySubtype } from '@/models/api/generated/ApiGen_Concepts_PropertyActivitySubtype';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
 import { exists, isValidId } from '@/utils/utils';
 
 import useActivityContactRetriever from '../hooks';
+import { PropertyActivityFormModel } from './models';
 import { IPropertyActivityEditFormProps } from './PropertyActivityEditForm';
 
 export interface IPropertyActivityEditContainerProps {
@@ -29,16 +30,11 @@ export const PropertyActivityEditContainer: React.FunctionComponent<
   const { getSystemConstant } = useSystemConstants();
 
   const history = useHistory();
+  const [initialValues, setInitialValues] = useState<PropertyActivityFormModel | null>(null);
 
   const { setStaleLastUpdatedBy } = useContext(SideBarContext);
 
   const [show, setShow] = useState(true);
-
-  const [loadedActivity, setLoadedActivity] = useState<
-    ApiGen_Concepts_PropertyActivity | undefined
-  >();
-
-  const [subtypes, setSubtypes] = useState<ApiGen_Concepts_PropertyActivitySubtype[]>([]);
 
   const {
     fetchMinistryContacts,
@@ -48,29 +44,15 @@ export const PropertyActivityEditContainer: React.FunctionComponent<
   } = useActivityContactRetriever();
 
   const {
-    getActivitySubtypes: { execute: getSubtypes, loading: getSubtypesLoading },
     getActivity: { execute: getActivity, loading: getActivityLoading },
     createActivity: { execute: createActivity, loading: createActivityLoading },
     updateActivity: { execute: updateActivity, loading: updateActivityLoading },
   } = usePropertyActivityRepository();
 
-  // Load the subtypes
-  const fetchSubtypes = useCallback(async () => {
-    const retrieved = await getSubtypes();
-    if (retrieved !== undefined) {
-      setSubtypes(retrieved);
-    } else {
-      setSubtypes([]);
-    }
-  }, [getSubtypes]);
-
-  useEffect(() => {
-    fetchSubtypes();
-  }, [fetchSubtypes]);
-
   // Load the activity
   const fetchActivity = useCallback(
     async (propertyId: number, activityId: number) => {
+      let formInitialValues: PropertyActivityFormModel;
       const retrieved = await getActivity(propertyId, activityId);
       if (exists(retrieved)) {
         if (exists(retrieved.ministryContacts)) {
@@ -85,26 +67,29 @@ export const PropertyActivityEditContainer: React.FunctionComponent<
         }
         await fetchProviderContact(retrieved);
 
-        setLoadedActivity(retrieved);
+        formInitialValues = PropertyActivityFormModel.fromApi(retrieved);
       } else {
-        setLoadedActivity(undefined);
+        formInitialValues = new PropertyActivityFormModel();
+        formInitialValues.activityStatusCode =
+          ApiGen_CodeTypes_ManagementActivityStatusTypes.NOTSTARTED;
       }
+      setInitialValues(formInitialValues);
     },
     [fetchMinistryContacts, fetchPartiesContact, fetchProviderContact, getActivity],
   );
 
   useEffect(() => {
-    if (isValidId(propertyId) && isValidId(propertyActivityId)) {
+    if (isValidId(propertyId) && initialValues === null) {
       fetchActivity(propertyId, propertyActivityId);
     }
-  }, [propertyId, propertyActivityId, fetchActivity]);
+  }, [propertyId, propertyActivityId, fetchActivity, initialValues]);
 
   const gstConstant = getSystemConstant(SystemConstants.GST);
   const pstConstant = getSystemConstant(SystemConstants.PST);
   const gstDecimal = gstConstant !== undefined ? parseFloat(gstConstant.value) * 0.01 : 0;
   const pstDecimal = pstConstant !== undefined ? parseFloat(pstConstant.value) * 0.01 : 0;
 
-  const onSave = async (model: ApiGen_Concepts_PropertyActivity) => {
+  const handleSave = async (model: ApiGen_Concepts_PropertyActivity) => {
     let result = undefined;
     if (isValidId(model.id)) {
       result = await updateActivity(propertyId, model);
@@ -128,25 +113,20 @@ export const PropertyActivityEditContainer: React.FunctionComponent<
     }
   };
 
-  return (
+  return isValidId(propertyId) && exists(initialValues) ? (
     <View
       propertyId={propertyId}
-      activity={loadedActivity}
-      subtypes={subtypes}
+      initialValues={initialValues}
       gstConstant={gstDecimal}
       pstConstant={pstDecimal}
       onCancel={onCancelClick}
       loading={
-        getSubtypesLoading ||
-        getActivityLoading ||
-        createActivityLoading ||
-        updateActivityLoading ||
-        isContactLoading
+        getActivityLoading || createActivityLoading || updateActivityLoading || isContactLoading
       }
       show={show && viewEnabled}
       setShow={setShow}
-      onSave={onSave}
+      onSave={handleSave}
       onClose={onClose}
     />
-  );
+  ) : null;
 };

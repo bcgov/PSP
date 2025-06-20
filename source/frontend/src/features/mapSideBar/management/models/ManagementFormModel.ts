@@ -2,6 +2,7 @@ import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { ApiGen_Concepts_ManagementFileProperty } from '@/models/api/generated/ApiGen_Concepts_ManagementFileProperty';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
+import { applyDisplayOrder } from '@/utils';
 import { fromTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
 import { exists } from '@/utils/utils';
 
@@ -17,7 +18,7 @@ export class ManagementFormModel implements WithManagementTeam {
   project: IAutocompletePrediction | null = null;
   productId: string | null = null;
   fundingTypeCode: string | null = null;
-  programTypeCode: string | null = null;
+  purposeTypeCode: string | null = null;
   fileProperties: PropertyForm[] = [];
   team: ManagementTeamSubFormModel[] = [];
 
@@ -33,6 +34,8 @@ export class ManagementFormModel implements WithManagementTeam {
   }
 
   toApi(): ApiGen_Concepts_ManagementFile {
+    const fileProperties = this.fileProperties.map(x => this.toPropertyApi(x));
+    const sortedProperties = applyDisplayOrder(fileProperties);
     return {
       id: this.id ?? 0,
       fileName: this.fileName ?? null,
@@ -47,12 +50,12 @@ export class ManagementFormModel implements WithManagementTeam {
       product: null,
       productId: this.productId ? Number(this.productId) : null,
       fundingTypeCode: toTypeCodeNullable(this.fundingTypeCode),
-      programTypeCode: toTypeCodeNullable(this.programTypeCode),
+      purposeTypeCode: toTypeCodeNullable(this.purposeTypeCode),
       managementTeam: this.team
         .filter(x => !!x.contact && !!x.teamProfileTypeCode)
         .map(x => x.toApi(this.id || 0))
         .filter(exists),
-      fileProperties: this.fileProperties.map(x => this.toPropertyApi(x)),
+      fileProperties: sortedProperties ?? [],
       ...getEmptyBaseAudit(this.rowVersion),
     };
   }
@@ -80,11 +83,11 @@ export class ManagementFormModel implements WithManagementTeam {
       : null;
     managementForm.productId = model.product?.id?.toString() ?? '';
     managementForm.fundingTypeCode = fromTypeCode(model.fundingTypeCode) ?? '';
+    managementForm.purposeTypeCode = fromTypeCode(model.purposeTypeCode) ?? '';
     managementForm.fileName = model.fileName ?? '';
     managementForm.team =
       model.managementTeam?.map(x => ManagementTeamSubFormModel.fromApi(x)) || [];
     managementForm.fileProperties = model.fileProperties?.map(x => PropertyForm.fromApi(x)) || [];
-    managementForm.programTypeCode = fromTypeCode(model.programTypeCode) ?? '';
 
     return managementForm;
   }

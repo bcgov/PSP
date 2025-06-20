@@ -169,6 +169,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void DeleteLastAgreement()
         {
+            Wait();
             var lastAgreement = webDriver.FindElements(agreementsTotalCount).Count();
 
             webDriver.FindElement(By.CssSelector("button[data-testid='agreements["+ lastAgreement +"].delete-btn']")).Click();

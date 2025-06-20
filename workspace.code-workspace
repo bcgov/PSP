@@ -21,10 +21,13 @@
     },
     {
       "path": "."
-    },    
+    },
+    {
+      "path": "source\\backend\\scheduler"
+    }
   ],
   "settings": {
-    "dotnet.defaultSolution": "backend/Pims.sln",
+    "dotnet.defaultSolution": "backend/PimsBackend.sln",
     "typescript.tsdk": "frontend\\node_modules\\typescript\\lib"
   }
 }

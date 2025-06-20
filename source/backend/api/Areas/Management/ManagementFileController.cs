@@ -31,6 +31,8 @@ namespace Pims.Api.Areas.Management.Controllers
         private readonly IManagementFileService _managementService;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
+        private readonly IPropertyService _propertyService;
+
         #endregion
 
         #region Constructors
@@ -42,8 +44,9 @@ namespace Pims.Api.Areas.Management.Controllers
         /// <param name="mapper"></param>
         /// <param name="logger"></param>
         ///
-        public ManagementFileController(IManagementFileService managementService, IMapper mapper, ILogger<ManagementFileController> logger)
+        public ManagementFileController(IPropertyService propertyService, IManagementFileService managementService, IMapper mapper, ILogger<ManagementFileController> logger)
         {
+            _propertyService = propertyService;
             _managementService = managementService;
             _mapper = mapper;
             _logger = logger;
@@ -216,7 +219,6 @@ namespace Pims.Api.Areas.Management.Controllers
             var managementFile = _managementService.UpdateProperties(managementFileEntity, userOverrideCodes.Select(oc => UserOverrideCode.Parse(oc)));
             return new JsonResult(_mapper.Map<ManagementFileModel>(managementFile));
         }
-
         #endregion
     }
 }

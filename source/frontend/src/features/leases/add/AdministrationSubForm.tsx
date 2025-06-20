@@ -114,7 +114,7 @@ const AdministrationSubForm: React.FunctionComponent<
   return (
     <Section header="Administration">
       <FormGuideContainer
-        tittle="Help with choosing the agreement Program, Type and Purpose"
+        title="Help with choosing the agreement Program, Type and Purpose"
         guideBody={guideBodyContent()}
       ></FormGuideContainer>
       <SectionField label="MOTI contact" labelWidth={{ xs: 3 }} contentWidth={{ xs: 6 }}>

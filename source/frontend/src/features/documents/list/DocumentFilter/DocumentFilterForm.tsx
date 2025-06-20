@@ -4,15 +4,21 @@ import styled from 'styled-components';
 
 import { ResetButton, SearchButton } from '@/components/common/buttons';
 import { Form, Input, Select, SelectOption } from '@/components/common/form';
-import { ColButtons } from '@/components/common/styles';
 import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { defaultDocumentFilter, IDocumentFilter } from '@/interfaces/IDocumentResults';
+import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_Concepts_DocumentType } from '@/models/api/generated/ApiGen_Concepts_DocumentType';
+import { capitalizeFirstLetter, relationshipTypeToPathName } from '@/utils';
+
+import { ParentInformationDisplay } from '../DocumentListView';
 
 export interface IDocumentFilterFormProps {
   documentFilter?: IDocumentFilter;
   documentTypes: ApiGen_Concepts_DocumentType[];
+  relationshipTypes: ApiGen_CodeTypes_DocumentRelationType[];
+  relationshipDisplay?: ParentInformationDisplay;
+  showParentFilter: boolean;
   onSetFilter: (filterValues: IDocumentFilter) => void;
 }
 
@@ -27,6 +33,14 @@ export const DocumentFilterForm = (props: IDocumentFilterFormProps) => {
     };
   });
 
+  const relationshipTypeOptions: SelectOption[] =
+    props.relationshipTypes?.map(ctr => {
+      return {
+        label: capitalizeFirstLetter(relationshipTypeToPathName(ctr)) || '',
+        value: ctr || '',
+      };
+    }) ?? [];
+
   return (
     <Formik<IDocumentFilter>
       enableReinitialize
@@ -39,11 +53,11 @@ export const DocumentFilterForm = (props: IDocumentFilterFormProps) => {
       {formikProps => (
         <FilterBoxForm className="p-3">
           <Row className="no-gutters">
-            <Col lg="auto">
+            <Col xs="1">
               <label>Filter by:</label>
             </Col>
-            <Col className="px-3">
-              <Row>
+            <Col>
+              <Row className="pl-1">
                 <Col>
                   <Select
                     data-testid="document-type"
@@ -66,8 +80,8 @@ export const DocumentFilterForm = (props: IDocumentFilterFormProps) => {
               </Row>
             </Col>
             <Col lg="auto">
-              <ColButtons className="no-gutters pl-2">
-                <Col>
+              <Row className="no-gutters pl-2">
+                <Col className="pr-1">
                   <SearchButton
                     onClick={() => formikProps.handleSubmit()}
                     type="button"
@@ -83,9 +97,29 @@ export const DocumentFilterForm = (props: IDocumentFilterFormProps) => {
                     }}
                   />
                 </Col>
-              </ColButtons>
+              </Row>
             </Col>
           </Row>
+          {props.showParentFilter && (
+            <Row>
+              <Col xs="1"></Col>
+              <Col xs="5">
+                <Input
+                  field="parentName"
+                  data-testid="document-parentname"
+                  placeholder={props.relationshipDisplay?.searchParentIdLabel ?? 'File Number'}
+                />
+              </Col>
+              <Col xs="3">
+                <Select
+                  field="parentType"
+                  data-testid="document-parenttype"
+                  placeholder={props.relationshipDisplay?.searchParentTypeLabel ?? 'File Number'}
+                  options={relationshipTypeOptions}
+                />
+              </Col>
+            </Row>
+          )}
         </FilterBoxForm>
       )}
     </Formik>

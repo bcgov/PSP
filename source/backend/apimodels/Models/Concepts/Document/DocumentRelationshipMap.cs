@@ -113,6 +113,19 @@ namespace Pims.Api.Models.Concepts.Document.Document
                 .Map(dest => dest.FileId, src => src.ParentId)
                 .Map(dest => dest.DocumentId, src => src.Document.Id)
                 .Map(dest => dest.Document, src => src.Document);
+
+            config.NewConfig<Entity.PimsPropertyDocument, DocumentRelationshipModel>()
+                .Map(dest => dest.Id, src => src.Internal_Id)
+                .Map(dest => dest.ParentId, src => src.FileId)
+                .Map(dest => dest.Document, src => src.Document)
+                .Map(dest => dest.RelationshipType, src => DocumentRelationType.Properties)
+                .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
+
+            config.NewConfig<DocumentRelationshipModel, Entity.PimsPropertyDocument>()
+                .Map(dest => dest.Internal_Id, src => src.Id)
+                .Map(dest => dest.FileId, src => src.ParentId)
+                .Map(dest => dest.DocumentId, src => src.Document.Id)
+                .Map(dest => dest.Document, src => src.Document);
         }
     }
 }

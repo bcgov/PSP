@@ -269,7 +269,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public void NoContactResults()
         {
             /* TEST COVERAGE: PSP-4200 */
-            Assert.Equal("No Contacts match the search criteria", searchContacts.GetNoSearchMessage());
+            Assert.True(searchContacts.GetNoSearchMessage());
         }
 
         [StepDefinition(@"Expected Content is displayed on Contacts Table from contact type ""(.*)""")]

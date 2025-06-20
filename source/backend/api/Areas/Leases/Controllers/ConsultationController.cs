@@ -1,14 +1,13 @@
-
 using System;
 using System.Collections.Generic;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Pims.Core.Api.Exceptions;
 using Pims.Api.Models.Concepts.Lease;
-using Pims.Core.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Api.Exceptions;
+using Pims.Core.Api.Policies;
 using Pims.Core.Extensions;
 using Pims.Core.Json;
 using Pims.Core.Security;
@@ -69,7 +68,6 @@ namespace Pims.Api.Areas.Lease.Controllers
                 nameof(GetLeaseConsultations),
                 User.GetUsername(),
                 DateTime.Now);
-
 
             var consultation = _leaseService.GetConsultations(id);
             return new JsonResult(_mapper.Map<IEnumerable<ConsultationLeaseModel>>(consultation));

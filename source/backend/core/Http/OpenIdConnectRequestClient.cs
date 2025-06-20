@@ -105,24 +105,22 @@ namespace Pims.Core.Http
         /// <returns></returns>
         public async Task<string> RequestAccessToken()
         {
-            HttpResponseMessage response;
-            if (_accessToken == null || string.IsNullOrWhiteSpace(_accessToken.AccessToken) || (!string.IsNullOrWhiteSpace(_accessToken.RefreshToken) && _tokenHandler.ReadJwtToken(_accessToken.RefreshToken).ValidTo <= DateTime.UtcNow))
+            if (IsValidToken())
             {
-                // If there is no access token, or the refresh token has expired.
-                response = await RequestToken();
+                // We have a valid token, keep on using it.
+                return $"Bearer {_accessToken.AccessToken}";
             }
-            else if (!string.IsNullOrWhiteSpace(_accessToken.AccessToken)
-                && _tokenHandler.ReadJwtToken(_accessToken.AccessToken).ValidTo <= DateTime.UtcNow
-                && !string.IsNullOrWhiteSpace(_accessToken.RefreshToken)
-                && _tokenHandler.ReadJwtToken(_accessToken.RefreshToken).ValidTo > DateTime.UtcNow)
+
+            HttpResponseMessage response;
+            if (IsValidRefreshToken())
             {
                 // If the access token has expired, but not the refresh token has not expired.
                 response = await RefreshToken(_accessToken.RefreshToken);
             }
             else
             {
-                // We have a valid token, keep on using it.
-                return $"Bearer {_accessToken.AccessToken}"; // NOSONAR
+                // If there is no access token, or the refresh token has expired.
+                response = await RequestToken();
             }
 
             // Extract the JWT token to use when making the request.
@@ -304,6 +302,26 @@ namespace Pims.Core.Http
                 headers.Add("Authorization", token.ToString());
             }
             return headers;
+        }
+
+        private bool IsValidToken()
+        {
+            if (_accessToken == null || string.IsNullOrEmpty(_accessToken.AccessToken))
+            {
+                return false;
+            }
+
+            return DateTime.UtcNow < _tokenHandler.ReadJwtToken(_accessToken.AccessToken).ValidTo;
+        }
+
+        private bool IsValidRefreshToken()
+        {
+            if (_accessToken == null || string.IsNullOrEmpty(_accessToken.RefreshToken))
+            {
+                return false;
+            }
+
+            return DateTime.UtcNow < _tokenHandler.ReadJwtToken(_accessToken.RefreshToken).ValidTo;
         }
 
         #endregion

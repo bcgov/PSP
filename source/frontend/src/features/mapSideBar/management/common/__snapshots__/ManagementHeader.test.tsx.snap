@@ -61,7 +61,7 @@ exports[`ManagementHeader component > renders as expected when no data is provid
     class="c0 no-gutters row"
   >
     <div
-      class="c1 col-7"
+      class="c1 col-xl-8 col-12"
     >
       <div
         class="row"
@@ -134,7 +134,7 @@ exports[`ManagementHeader component > renders as expected when no data is provid
         class="row"
       >
         <div
-          class="pr-0 text-left col-3"
+          class="pr-0 text-left col-4"
         >
           <label
             class="c2"
@@ -143,12 +143,12 @@ exports[`ManagementHeader component > renders as expected when no data is provid
           </label>
         </div>
         <div
-          class="pl-1 text-left col-9"
+          class="pl-1 text-left col-8"
         />
       </div>
     </div>
     <div
-      class="col-5"
+      class="col"
     >
       <div
         class="c3"

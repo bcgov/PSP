@@ -450,7 +450,7 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
               class="row"
             >
               <div
-                class="pr-0 text-left col-7"
+                class="pr-0 text-left col-4"
               >
                 <label
                   class="c2"
@@ -459,7 +459,7 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
                 </label>
               </div>
               <div
-                class="pl-1 text-left col-5"
+                class="pl-1 text-left col-8"
               />
             </div>
           </div>

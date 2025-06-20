@@ -11,6 +11,7 @@ export interface IDocumentDetailModalProps {
   relationshipType: ApiGen_CodeTypes_DocumentRelationType;
   setDisplay?: (display: boolean) => void;
   pimsDocument?: DocumentRow;
+  canEdit: boolean;
   onUpdateSuccess: () => void;
   onClose: () => void;
 }
@@ -35,6 +36,7 @@ export const DocumentDetailModal: React.FunctionComponent<
             relationshipType={props.relationshipType}
             pimsDocument={props.pimsDocument}
             onUpdateSuccess={props.onUpdateSuccess}
+            canEdit={props.canEdit}
           />
         )
       }

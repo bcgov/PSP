@@ -15,10 +15,11 @@ import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTy
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { exists, isValidId, stripTrailingSlash } from '@/utils';
+import { exists, isValidId, sortFileProperties, stripTrailingSlash } from '@/utils';
 
 import { SideBarContext } from '../context/sidebarContext';
 import { PropertyForm } from '../shared/models';
+import usePathGenerator from '../shared/sidebarPathGenerator';
 import { IManagementViewProps } from './ManagementView';
 
 export interface IManagementContainerProps {
@@ -90,7 +91,7 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
       // retrieve related entities (ie properties items) in parallel
       const fileProperties = await retrieveManagementFileProperties(managementFileId);
 
-      retrieved.fileProperties = fileProperties ?? null;
+      retrieved.fileProperties = sortFileProperties(fileProperties) ?? null;
       setFile({ ...retrieved, fileType: ApiGen_CodeTypes_FileTypes.Management });
     } else {
       setFile(undefined);
@@ -134,23 +135,49 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
 
   const close = useCallback(() => onClose && onClose(), [onClose]);
 
-  const navigateToMenuRoute = (selectedIndex: number) => {
-    const route = selectedIndex === 0 ? '' : `/property/${selectedIndex}`;
-    history.push(`${stripTrailingSlash(match.url)}${route}`);
-  };
+  const pathGenerator = usePathGenerator();
 
-  const onMenuChange = (selectedIndex: number) => {
+  const onSelectFileSummary = () => {
+    if (!exists(managementFile)) {
+      return;
+    }
+
     if (isEditing) {
       if (formikRef?.current?.dirty) {
-        handleCancelClick(() => navigateToMenuRoute(selectedIndex));
+        handleCancelClick(() => pathGenerator.showFile('management', managementFile.id));
         return;
       }
     }
-    navigateToMenuRoute(selectedIndex);
+    pathGenerator.showFile('management', managementFile.id);
   };
 
-  const onShowPropertySelector = () => {
-    history.push(`${stripTrailingSlash(match.url)}/property/selector`);
+  const onSelectProperty = (filePropertyId: number) => {
+    if (!exists(managementFile)) {
+      return;
+    }
+
+    const fileProperties = managementFile.fileProperties ?? [];
+    const menuIndex = fileProperties.findIndex(fp => fp.id === filePropertyId);
+    if (menuIndex < 0) {
+      return;
+    }
+
+    if (isEditing) {
+      if (formikRef?.current?.dirty) {
+        handleCancelClick(() =>
+          pathGenerator.showFilePropertyIndex('management', managementFile.id, menuIndex + 1),
+        );
+        return;
+      }
+    }
+    // The index needs to be offset to match the menu index
+    pathGenerator.showFilePropertyIndex('management', managementFile.id, menuIndex + 1);
+  };
+
+  const onEditProperties = () => {
+    if (exists(managementFile)) {
+      pathGenerator.editProperties('management', managementFile.id);
+    }
   };
 
   const handleSaveClick = async () => {
@@ -283,8 +310,9 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
         onClose={close}
         onCancel={handleCancelClick}
         onSave={handleSaveClick}
-        onMenuChange={onMenuChange}
-        onShowPropertySelector={onShowPropertySelector}
+        onSelectFileSummary={onSelectFileSummary}
+        onSelectProperty={onSelectProperty}
+        onEditProperties={onEditProperties}
         onUpdateProperties={onUpdateProperties}
         onSuccess={onSuccess}
         confirmBeforeAdd={confirmBeforeAdd}
@@ -296,7 +324,7 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
           managementFile?.id === managementFileId
             ? {
                 ...managementFile,
-                fileProperties: managementFileProperties ?? null,
+                fileProperties: sortFileProperties(managementFileProperties) ?? null,
               }
             : undefined
         }

@@ -1,20 +1,31 @@
 using System.Collections.Generic;
 using Pims.Api.Constants;
-using Pims.Api.Models.Concepts.Note;
 using Pims.Dal.Entities;
 
 namespace Pims.Api.Services
 {
     public interface INoteService
     {
-        NoteModel GetById(long id);
+        PimsNote GetById(long id);
 
-        EntityNoteModel Add(NoteType type, EntityNoteModel model);
+        PimsAcquisitionFileNote AddAcquisitionFileNote(PimsAcquisitionFileNote acquisitionFileNote);
 
-        NoteModel Update(NoteModel model);
+        PimsDispositionFileNote AddDispositionFileNote(PimsDispositionFileNote dispositionFileNote);
+
+        PimsLeaseNote AddLeaseNote(PimsLeaseNote leaseNote);
+
+        PimsManagementFileNote AddManagementFileNote(PimsManagementFileNote managementFileNote);
+
+        PimsProjectNote AddProjectNote(PimsProjectNote projectNote);
+
+        PimsPropertyNote AddPropertyNote(PimsPropertyNote propertyNote);
+
+        PimsResearchFileNote AddResearchFileNote(PimsResearchFileNote researchFileNote);
+
+        PimsNote Update(PimsNote note);
 
         bool DeleteNote(NoteType type, long noteId, bool commitTransaction = true);
 
-        IEnumerable<PimsNote> GetNotes(NoteType type, long entityId);
+        IEnumerable<PimsNote> GetNotes(NoteType type, long parentId);
     }
 }

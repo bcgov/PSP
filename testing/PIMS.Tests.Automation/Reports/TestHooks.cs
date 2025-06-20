@@ -145,13 +145,20 @@ namespace PIMS.Tests.Automation.Reports
         private IWebDriver CreateChromeWebDriver()
         {
             ChromeOptions options = new ChromeOptions();
-            options.AddArgument("start-maximized");
+            
             options.AddExcludedArgument("enable-automation");
             options.AddArgument("--incognito");
+            options.AddArgument("start-maximized");
             options.AddArgument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Firefox/91.0 Safari/537.36");
 
             if (runAutomationHeadless)
+            {
+                //options.AddArgument("window-size=1014,768");
                 options.AddArgument("--headless=new");
+            }
+            else
+                options.AddArgument("start-maximized");
+
 
             var chromeDriver = new ChromeDriver(ChromeDriverService.CreateDefaultService(), options, TimeSpan.FromMinutes(2));
             chromeDriver.Url = Configuration.GetValue<string>("Base_url");

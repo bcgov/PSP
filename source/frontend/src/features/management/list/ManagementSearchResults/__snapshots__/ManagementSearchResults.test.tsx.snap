@@ -35,6 +35,10 @@ exports[`Management search results table > matches snapshot 1`] = `
   height: 1.6rem;
 }
 
+.c3 {
+  border-radius: 0.4rem;
+}
+
 <div
     class="table"
     data-testid="managementFilesTable"
@@ -210,7 +214,7 @@ exports[`Management search results table > matches snapshot 1`] = `
             Purpose
             <div
               class="c0"
-              data-testid="sort-column-managementFileProgramTypeCode"
+              data-testid="sort-column-managementFilePurposeTypeCode"
             >
               <svg
                 class="c1"
@@ -334,11 +338,7 @@ exports[`Management search results table > matches snapshot 1`] = `
             style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
-            <a
-              href="/mapview/sidebar/management/1"
-            >
-              M-1
-            </a>
+            M-1
           </div>
           <div
             class="td clickable"
@@ -370,7 +370,7 @@ exports[`Management search results table > matches snapshot 1`] = `
             style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
-            Utilities
+            Engineering
           </div>
           <div
             class="td clickable"
@@ -390,7 +390,34 @@ exports[`Management search results table > matches snapshot 1`] = `
           >
             <div
               class="w-100"
-            />
+            >
+              <div
+                class="c3 mx-0 my-2 border border-secondary row"
+              >
+                <div
+                  class="col-md-12"
+                >
+                  <strong
+                    class="pr-2"
+                  >
+                    Address:
+                  </strong>
+                  45 - 904 Hollywood Crescent Living in a van Down by the River Hollywood North BC, V6Z 5G7
+                </div>
+                <div
+                  class="col-md-auto"
+                >
+                  <div>
+                    <strong
+                      class="pr-2"
+                    >
+                      PID:
+                    </strong>
+                     014-073-871
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div
             class="td clickable"

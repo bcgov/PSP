@@ -66,7 +66,7 @@ Scenario: 11._Disposition_File_Not_Sold_Status_Error
 	Then Disposition File without SOLD Status error appears
 
 Scenario: 12._Disposition_File_Non-Core_Inventory_Error
-	Given I create a new Disposition File from row number 14
+	Given I create a new Disposition File from row number 15
 	When I add Properties to the Disposition File
 	And I create Appraisal, Assessment, Offers and Sales Details within a Disposition File
 	And I change status of the Disposition File
