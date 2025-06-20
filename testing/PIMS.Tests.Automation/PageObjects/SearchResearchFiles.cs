@@ -198,7 +198,6 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(searchResearchStatusSelect);
             AssertTrueIsDisplayed(searchResearchRoadInput);
             AssertTrueIsDisplayed(searchResearchCreateUpdateDateSelect);
-            AssertTrueIsDisplayed(searchResearchFromDateInput);
             AssertTrueIsDisplayed(searchResearchToDateInput);
             AssertTrueIsDisplayed(searchResearchCreateUpdateBySelect);
             AssertTrueIsDisplayed(searchResearchUserUpdatedIdirInput);

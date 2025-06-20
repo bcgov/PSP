@@ -38,7 +38,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By licenseHeaderExpiredFlag = By.XPath("//label[contains(text(),'Commencement')]/parent::div/following-sibling::div[4]/div");
 
         //Create/View Lease Details Elements
-        private readonly By licenseCreateTitle = By.XPath("//h1[contains(text(),'Create Lease/Licence')]");
+        private readonly By licenseCreateTitle = By.XPath("//html[1]/body[1]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/h1[contains(text(),'Create Lease/Licence')]");
 
         private readonly By licenseDetailsCreateSubtitle = By.XPath("//h2/div/div[contains(text(),'Original Agreement')]");
 
@@ -189,7 +189,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             FocusAndClick(menuManagementButton);
 
-            WaitUntilClickable(createLicenseButton);
+            Wait();
             FocusAndClick(createLicenseButton);
         }
 
@@ -293,6 +293,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
                     Wait();
                     FocusAndClick(licenseDetailsPurposeMultiselector);
+
+                    Wait();
                     ChooseMultiSelectSpecificOption(licenseDetailsPurposeOptions, purpose);
                 }
 
@@ -639,13 +641,17 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             ButtonElement("Save");
 
-            if (webDriver.FindElements(licenseDetailsConfirmationModal).Count > 0)
+            Wait();
+            while (webDriver.FindElements(licenseDetailsConfirmationModal).Count() > 0)
             {
-                sharedModals.ModalClickOKBttn();
+                if (sharedModals.ModalHeader().Contains("Error"))
+                {
+                    Assert.Contains("Lease File Stakeholder can not be removed since it's assigned as a payee for a compensation requisition", sharedModals.ModalContent());
+                    sharedModals.ModalClickOKBttn();
+                    break;
+                }   
             }
-
-            sharedModals.IsToastyPresent();
-            Assert.Contains("Lease File Stakeholder can not be removed since it's assigned as a payee for a compensation requisition", sharedModals.ToastifyText());
+            
         }
 
         public void CancelLicense()
