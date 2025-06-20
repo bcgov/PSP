@@ -69,7 +69,7 @@ const DocumentActivityListContainer: React.FunctionComponent<
           docRelation.relationType,
           docRelation.id.toString(),
         );
-        if (documents !== undefined && isMounted()) {
+        if (exists(documents)) {
           documentRows = documentRows.concat(
             documents
               .filter((x): x is ApiGen_Concepts_DocumentRelationship => !!x?.document)
@@ -77,7 +77,10 @@ const DocumentActivityListContainer: React.FunctionComponent<
           );
         }
       }
-      setDocumentResults([...documentRows]);
+
+      if (isMounted()) {
+        setDocumentResults([...documentRows]);
+      }
     },
     [retrieveDocumentRelationship, isMounted],
   );
@@ -121,6 +124,7 @@ const DocumentActivityListContainer: React.FunctionComponent<
       disableAdd={props.disableAdd}
       title={props.title}
       showParentInformation={true}
+      canEditDocuments={true}
     />
   );
 };

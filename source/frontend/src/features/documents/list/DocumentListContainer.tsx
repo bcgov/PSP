@@ -5,6 +5,7 @@ import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator'
 import useIsMounted from '@/hooks/util/useIsMounted';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
+import { exists } from '@/utils';
 
 import { DocumentRow } from '../ComposedDocument';
 import { useDocumentRelationshipProvider } from '../hooks/useDocumentRelationshipProvider';
@@ -36,7 +37,7 @@ const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps
 
   const retrieveDocuments = useCallback(async () => {
     const documents = await retrieveDocumentRelationship(props.relationshipType, props.parentId);
-    if (documents !== undefined && isMounted()) {
+    if (exists(documents) && isMounted()) {
       setDocumentResults([
         ...documents
           .filter((x): x is ApiGen_Concepts_DocumentRelationship => !!x?.document)

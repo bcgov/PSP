@@ -71,12 +71,14 @@ export const SideBarContext = createContext<ISideBarContext>({
   },
 });
 
-export const SideBarContextProvider = (props: {
+export interface ISideBarContextProviderProps {
   children: React.ReactChild | React.ReactChild[] | React.ReactNode;
   file?: TypedFile;
   project?: ApiGen_Concepts_Project;
   lastUpdatedBy?: Api_LastUpdatedBy;
-}) => {
+}
+
+export const SideBarContextProvider = (props: ISideBarContextProviderProps) => {
   const [file, setFile] = useState<TypedFile | undefined>(props.file);
   const [project, setProject] = useState<ApiGen_Concepts_Project | undefined>(props.project);
   const [staleFile, setStaleFile] = useState<boolean>(false);

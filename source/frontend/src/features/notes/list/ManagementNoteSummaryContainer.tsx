@@ -110,6 +110,7 @@ export const NoteSummaryContainer: React.FunctionComponent<
           title: `M-${noteAssociation?.association.fileName}`,
         };
       }}
+      canEditNotes={true}
     />
   );
 };

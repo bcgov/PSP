@@ -263,11 +263,11 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
       <DocumentDetailModal
         display={isDetailsVisible}
         relationshipType={props.relationshipType}
-        canEditDocument={canEditDocuments}
         setDisplay={setIsDetailsVisible}
         pimsDocument={selectedDocument ? DocumentRow.fromApi(selectedDocument, '') : undefined}
         onUpdateSuccess={onUpdateSuccess}
         onClose={handleModalDetailsClose}
+        canEdit={!props.showParentInformation}
       />
       <DocumentUploadModal
         parentId={props.parentId}

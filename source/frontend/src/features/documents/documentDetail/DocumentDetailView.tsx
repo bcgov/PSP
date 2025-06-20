@@ -18,7 +18,7 @@ import DocumentDetailHeader from './DocumentDetailHeader';
 export interface IDocumentDetailsViewProps {
   document: ComposedDocument;
   isLoading: boolean;
-  canEditDocuments: boolean;
+  canEdit: boolean;
   setIsEditable: (isEditable: boolean) => void;
 }
 
@@ -55,7 +55,7 @@ export const DocumentDetailView: React.FunctionComponent<
               </>
             }
           >
-            {hasClaim(Claims.DOCUMENT_EDIT) && props.canEditDocuments && (
+            {hasClaim(Claims.DOCUMENT_EDIT) && props.canEdit && (
               <RightFlexDiv>
                 <LinkButton
                   className="d-inline-block"

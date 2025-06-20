@@ -35,10 +35,14 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
   const columns = [
     createNoteLinkColumn('File Name', getNoteNavigationUrlTitle),
     ...createNoteTableColumns(),
-    createNoteActionsColumn((note: ApiGen_Concepts_Note) => {
-      setCurrentNote(note);
-      openViewNotes();
-    }, null),
+    createNoteActionsColumn(
+      true,
+      (note: ApiGen_Concepts_Note) => {
+        setCurrentNote(note);
+        openViewNotes();
+      },
+      null,
+    ),
   ];
 
   return (

@@ -77,7 +77,7 @@ const DocumentManagementListContainer: React.FunctionComponent<
           docRelation.relationType,
           docRelation.id.toString(),
         );
-        if (documents !== undefined && isMounted()) {
+        if (exists(documents)) {
           documentRows = documentRows.concat(
             documents
               .filter((x): x is ApiGen_Concepts_DocumentRelationship => !!x?.document)
@@ -85,7 +85,9 @@ const DocumentManagementListContainer: React.FunctionComponent<
           );
         }
       }
-      setActivityDocuments([...documentRows]);
+      if (isMounted()) {
+        setActivityDocuments([...documentRows]);
+      }
     },
     [retrieveDocumentRelationship, isMounted],
   );
@@ -111,7 +113,7 @@ const DocumentManagementListContainer: React.FunctionComponent<
           docRelation.relationType,
           docRelation.id.toString(),
         );
-        if (documents !== undefined && isMounted()) {
+        if (exists(documents)) {
           documentRows = documentRows.concat(
             documents
               .filter((x): x is ApiGen_Concepts_DocumentRelationship => !!x?.document)
@@ -119,7 +121,10 @@ const DocumentManagementListContainer: React.FunctionComponent<
           );
         }
       }
-      setPropertyDocuments([...documentRows]);
+
+      if (isMounted()) {
+        setPropertyDocuments([...documentRows]);
+      }
     },
     [retrieveDocumentRelationship, isMounted],
   );
@@ -184,6 +189,7 @@ const DocumentManagementListContainer: React.FunctionComponent<
         searchParentIdLabel: 'Association Name',
         searchParentTypeLabel: 'Association Type',
       }}
+      canEditDocuments={true}
     />
   );
 };

@@ -4,6 +4,7 @@ import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_C
 import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 import { ApiGen_Concepts_AcquisitionFileProperty } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileProperty';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
+import { applyDisplayOrder } from '@/utils';
 import {
   fromTypeCode,
   fromTypeCodeNullable,
@@ -72,6 +73,9 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
   physicalFileDetails?: string = '';
 
   toApi(): ApiGen_Concepts_AcquisitionFile {
+    const fileProperties = this.properties.map(x => this.toPropertyApi(x));
+    const sortedProperties = applyDisplayOrder(fileProperties);
+
     return {
       id: this.id ?? 0,
       parentAcquisitionFileId: isValidId(this.parentAcquisitionFileId)
@@ -105,7 +109,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
       subfileInterestTypeCode: toTypeCodeNullable(this.subfileInterestTypeCode),
       otherSubfileInterestType: this.otherSubfileInterestType,
       // ACQ file properties
-      fileProperties: this.properties.map(x => this.toPropertyApi(x)),
+      fileProperties: sortedProperties ?? [],
       acquisitionFileOwners: this.owners
         .filter(x => !x.isEmpty())
         .map<ApiGen_Concepts_AcquisitionFileOwner>(x => x.toApi()),

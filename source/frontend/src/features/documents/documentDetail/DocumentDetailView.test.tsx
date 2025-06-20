@@ -127,8 +127,8 @@ describe('DocumentDetailView component', () => {
       <DocumentDetailView
         document={renderOptions?.document ?? mockDocument}
         isLoading={renderOptions?.isLoading ?? false}
-        canEditDocuments={renderOptions?.canEditDocuments ?? true}
         setIsEditable={vi.fn()}
+        canEdit={renderOptions?.canEdit ?? true }
       />,
       {
         ...renderOptions,
