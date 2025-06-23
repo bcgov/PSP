@@ -115,7 +115,7 @@ export const defaultTenant: ITenantConfig2 = {
     CDOGS:
       'The DevExchange Document Generation Service is experiencing service degradation, you will be unable to generate form documents (ie. H120, H1005) until resolved.',
   },
-  LandTitleDistricts: [
+  landTitleDistricts: [
     'ALL',
     'ALBERNI DISTRICT',
     'BARCLAY DISTRICT',

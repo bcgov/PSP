@@ -57,7 +57,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
   useGeocoder,
 }) => {
   const { getSitePids } = useGeocoderRepository();
-  const { LandTitleDistricts } = useTenant();
+  const { landTitleDistricts } = useTenant();
 
   const history = useHistory();
   const initialValues = useMemo(() => {
@@ -230,7 +230,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                     <Select
                       innerClassName="rounded-0"
                       field="district"
-                      options={LandTitleDistricts.map(ltd => ({
+                      options={landTitleDistricts.map(ltd => ({
                         value: ltd,
                         label: ltd,
                       }))}

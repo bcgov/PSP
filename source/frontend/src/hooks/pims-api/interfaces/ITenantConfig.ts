@@ -74,7 +74,7 @@ export interface ITenantConfig2 {
   geographicNamesUrl: string;
   // the number of results to display when searching for geographic names
   geographicNamesResultLimit: number;
-  LandTitleDistricts: string[];
+  landTitleDistricts: string[];
 }
 
 export interface ITenantLoginConfig {
