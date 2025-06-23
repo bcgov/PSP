@@ -14,6 +14,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchDispositionFileSearchBySelect = By.Id("input-searchBy");
         private By searchDispositionFileSearchByAddressInput = By.Id("input-address");
         private By searchDispositionFileSearchByPIDInput = By.Id("input-pid");
+        private By searchDispositionFileSearchByPINInput = By.Id("input-pin");
         private By searchDispositionFileNameInput = By.Id("input-fileNameOrNumberOrReference");
         private By searchDispositionFileTeamMemberSelect = By.Id("typeahead-select-dispositionTeamMember");
         private By searchDispositionTeamMemberOptions = By.CssSelector("div[data-testid='typeahead-select-dispositionTeamMember'] div[aria-label='menu-options']");
@@ -75,16 +76,6 @@ namespace PIMS.Tests.Automation.PageObjects
             FocusAndClick(searcDispositionButton);
         }
 
-        public void SearchDispositionFileByDFile(string DFile)
-        {
-            WaitUntilTableSpinnerDisappear();
-
-            WaitUntilVisible(searchDispositionFileNameInput);
-            webDriver.FindElement(searchDispositionFileNameInput).SendKeys(DFile);
-
-            FocusAndClick(searchDispositionFileSearchButton);
-        }
-
         public void SearchLastDispositionFile()
         {
             Wait(2000);
@@ -103,52 +94,76 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void OrderByDispositionFileNumber()
         {
+            Wait(2000);
             WaitUntilClickable(searchDispositionOrderFileNumberBttn);
             webDriver.FindElement(searchDispositionOrderFileNumberBttn).Click();
         }
 
         public void OrderByDispositionFileReferenceNumber()
         {
+            Wait(2000);
             WaitUntilClickable(searchDispositionOrderReferenceBttn);
             webDriver.FindElement(searchDispositionOrderReferenceBttn).Click();
         }
 
         public void OrderByDispositionFileName()
         {
+            Wait(2000);
             WaitUntilClickable(searchDispositionOrderFileNameBttn);
             webDriver.FindElement(searchDispositionOrderFileNameBttn).Click();
         }
 
         public void OrderByDispositionFileType()
         {
+            Wait(2000);
             WaitUntilClickable(searchDispositionFileOrderTypeBttn);
             webDriver.FindElement(searchDispositionFileOrderTypeBttn).Click();
         }
 
         public void OrderByDispositionStatus()
         {
+            Wait(2000);
             WaitUntilClickable(searchDispositionFileOrderDispositionStatusBttn);
             FocusAndClick(searchDispositionFileOrderDispositionStatusBttn);
         }
 
         public void OrderByDispositionFileStatus()
         {
+            Wait(2000);
             WaitUntilClickable(searchDispositionFileOrderStatusBttn);
             webDriver.FindElement(searchDispositionFileOrderStatusBttn).Click();
         }
 
         public void SelectFirstOption()
         {
+            Wait(2000);
             WaitUntilClickable(searchDispositionFile1stResultLink);
             webDriver.FindElement(searchDispositionFile1stResultLink).Click();
 
-            WaitUntilClickable(searchDispositionFileHeaderCode);
+            Wait();
             AssertTrueIsDisplayed(searchDispositionFileHeaderCode);
         }
 
-        public void FilterDispositionFiles(string pid = "", string name = "", string teamMember = "", string status = "", string dispStatus = "", string type = "")
+        public void SelectLastOption()
         {
-            Wait(10000);
+            Wait(2000);
+            WaitUntilClickable(searchDispositionOrderFileNumberBttn);
+            webDriver.FindElement(searchDispositionOrderFileNumberBttn).Click();
+
+            Wait(2000);
+            webDriver.FindElement(searchDispositionOrderFileNumberBttn).Click();
+
+            Wait(2000);
+            webDriver.FindElement(searchDispositionFile1stResultLink).Click();
+
+            Wait();
+            AssertTrueIsDisplayed(searchDispositionFileHeaderCode);
+        }
+
+        public void FilterDispositionFiles(string pid = "", string pin = "", string address = "", string name = "", string teamMember = "",
+            string status = "", string dispStatus = "", string type = "")
+        {
+            Wait();
             webDriver.FindElement(searchDispositionFileResetButton).Click();
 
             Wait();
@@ -158,7 +173,19 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(searchDispositionFileSearchByPIDInput).SendKeys(pid);
             }
 
-            if(name != "")
+            if (pin != "")
+            {
+                ChooseSpecificSelectOption(searchDispositionFileSearchBySelect, "PIN");
+                webDriver.FindElement(searchDispositionFileSearchByPINInput).SendKeys(pin);
+            }
+
+            if (address != "")
+            {
+                ChooseSpecificSelectOption(searchDispositionFileSearchBySelect, "Address");
+                webDriver.FindElement(searchDispositionFileSearchByAddressInput).SendKeys(address);
+            }
+
+            if (name != "")
                 webDriver.FindElement(searchDispositionFileNameInput).SendKeys(name);
 
             if (teamMember != "")
