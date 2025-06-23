@@ -112,7 +112,7 @@ export const ManagementActivityEditContainer: React.FunctionComponent<
     }
   }, [managementFileId, fetchActivity, initialValues]);
 
-  return exists(castedFile) && isValidId(castedFile?.id) && initialValues ? (
+  return exists(castedFile) && isValidId(castedFile?.id) && exists(initialValues) ? (
     <View
       managementFile={castedFile}
       initialValues={initialValues}

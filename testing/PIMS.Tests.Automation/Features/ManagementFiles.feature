@@ -27,10 +27,19 @@ Scenario: 04._Management_File_Notes
 	And  I edit a Note on the Notes Tab from row number 12
 	Then A new Management file is created successfully
 
-#Scenario: 05._Acquisition_File_from_Pin
-#	Given I create an Acquisition File from a pin on map from row number 5
-#	Then A new Acquisition file is created successfully
-
-Scenario: 06._Management_Files_List_View
+Scenario: 05._Management_Files_List_View
 	Given I search for an existing Management File from row number 2
 	Then Expected Management File Content is displayed on Management File Table
+
+Scenario: 06._Management_Activities_Tab
+	Given I create a new Management File from row number 8
+	When I add Properties to the Management File
+	And I insert activities to the Management Activities Tab
+	And I update information in the Property Management Tab from row number 9
+	Then A new Management file is created or updated successfully
+
+Scenario: 07._Management_Activity_Digital_Documents
+	Given I create a new Management File from row number 10
+	When I insert activities to the Management Activities Tab
+	And I create Digital Documents for a Management Activity from row number 11
+	Then A new Management file is created or updated successfully
