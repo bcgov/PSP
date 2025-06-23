@@ -88,16 +88,6 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
     >
   >({});
 
-  const draftPoints = useMemo<LatLngLiteral[]>(() => {
-    return mapMachine.filePropertyLocations.map(x => {
-      // The values on the feature are rounded to the 4th decimal. Do the same to the draft points.
-      return {
-        lat: x.lat,
-        lng: x.lng,
-      };
-    });
-  }, [mapMachine.filePropertyLocations]);
-
   const pimsLocationFeatures: FeatureCollection<Geometry, PIMS_Property_Location_Lite_View> =
     useMemo(() => {
       let filteredFeatures = mapMachine.mapFeatureData.pimsLocationLiteFeatures.features.filter(x =>

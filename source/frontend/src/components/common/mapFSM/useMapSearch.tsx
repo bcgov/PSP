@@ -8,8 +8,10 @@ import { usePimsPropertyLayer } from '@/hooks/repositories/mapLayer/usePimsPrope
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { useModalContext } from '@/hooks/useModalContext';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
-import { PIMS_Property_Location_Lite_View } from '@/models/layers/pimsPropertyLocationLiteView';
-import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
+import {
+  PIMS_Property_Location_Lite_View,
+  PIMS_Property_Location_View,
+} from '@/models/layers/pimsPropertyLocationView';
 import { exists } from '@/utils';
 
 import {

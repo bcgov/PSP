@@ -3,6 +3,7 @@ import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMach
 import {
   emptyPimsBoundaryFeatureCollection,
   emptyPimsLocationFeatureCollection,
+  emptyPimsLocationLiteFeatureCollection,
   emptyPmbcFeatureCollection,
 } from '@/components/common/mapFSM/models';
 import { defaultBounds } from '@/components/maps/constants';
@@ -13,6 +14,7 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   requestFlyToBounds: vi.fn(),
   mapFeatureData: {
     pimsLocationFeatures: emptyPimsLocationFeatureCollection,
+    pimsLocationLiteFeatures: emptyPimsLocationLiteFeatureCollection,
     pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
     fullyAttributedFeatures: emptyPmbcFeatureCollection,
   },
