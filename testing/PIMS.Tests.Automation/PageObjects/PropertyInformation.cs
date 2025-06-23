@@ -18,7 +18,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By propertyLeafletEllipsisBttn = By.CssSelector("button[data-testid='fly-out-ellipsis']");
 
         private readonly By propertyHideWindowBttn = By.XPath("//div[@class='col']/h1/parent::div/following-sibling::div/span/button");
-        private readonly By propertyShowWindowBttn = By.XPath("//div/div/div/div/div/div/span/button");
+        private readonly By propertyShowWindowBttn = By.XPath("//div/div/div/div/div/div/span/button[@title='expand']");
         private readonly By propertyMoreOptionsMenu = By.CssSelector("div[class='list-group list-group-flush']");
         private readonly By propertyViewInfoBttn = By.XPath("//div[contains(text(),'View Property Info')]/parent::button");
         private readonly By propertyNewResearchFileBttn = By.XPath("//div[contains(text(),'Research File')]/parent::button");
@@ -258,7 +258,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilSpinnerDisappear();
 
-            WaitUntilVisible(propertyHideWindowBttn);
+            Wait();
             webDriver.FindElement(propertyHideWindowBttn).Click();
         }
 
@@ -266,7 +266,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilSpinnerDisappear();
 
-            WaitUntilVisible(propertyShowWindowBttn);
+            Wait();
             webDriver.FindElement(propertyShowWindowBttn).Click();
         }
 
@@ -772,8 +772,10 @@ namespace PIMS.Tests.Automation.PageObjects
                     AssertTrueContentEquals(propertyDetailsCityContent, property.Address.City);
 
                 AssertTrueIsDisplayed(propertyDetailsProvinceLabel);
-                if(property.Address.Province != null)
+                if(property.Address.Province == "")
                     AssertTrueContentEquals(propertyDetailsProvinceContent, "British Columbia");
+                else
+                    AssertTrueContentEquals(propertyDetailsProvinceContent, property.Address.Province);
 
                 AssertTrueIsDisplayed(propertyDetailsPostalCodeLabel);
                 if(property.Address.PostalCode != "")

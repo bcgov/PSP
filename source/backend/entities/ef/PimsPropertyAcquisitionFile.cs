@@ -49,7 +49,7 @@ public partial class PimsPropertyAcquisitionFile
     public Geometry Location { get; set; }
 
     /// <summary>
-    /// Force the display order of the codes.
+    /// Specifies the display order of the property (PSP-10521).
     /// </summary>
     [Column("DISPLAY_ORDER")]
     public int? DisplayOrder { get; set; }

@@ -6,7 +6,6 @@ import { useHistory } from 'react-router-dom';
 import { AnyEventObject } from 'xstate';
 
 import { PropertyFilterFormModel } from '@/components/maps/leaflet/Control/AdvancedFilter/models';
-import { ILayerItem } from '@/components/maps/leaflet/Control/LayersControl/types';
 import { IGeoSearchParams } from '@/constants/API';
 import { IMapSideBarViewState } from '@/features/mapSideBar/MapSideBar';
 import {
@@ -18,7 +17,13 @@ import { pidParser, pinParser } from '@/utils/propertyUtils';
 
 import { mapMachine } from './machineDefinition/mapMachine';
 import { MachineContext, SideBarType } from './machineDefinition/types';
-import { MapFeatureData, MarkerSelected, RequestedCenterTo, RequestedFlyTo } from './models';
+import {
+  LocationBoundaryDataset,
+  MapFeatureData,
+  MarkerSelected,
+  RequestedCenterTo,
+  RequestedFlyTo,
+} from './models';
 import useLocationFeatureLoader, {
   LocationFeatureDataset,
   SelectedFeatureDataset,
@@ -42,7 +47,7 @@ export interface IMapStateMachineContext {
   isLoading: boolean;
   mapSearchCriteria: IPropertyFilter | null;
   mapFeatureData: MapFeatureData;
-  filePropertyLocations: LatLngLiteral[];
+  filePropertyLocations: LocationBoundaryDataset[];
   pendingFitBounds: boolean;
   requestedFitBounds: LatLngBounds;
   isSelecting: boolean;
@@ -54,8 +59,8 @@ export interface IMapStateMachineContext {
   activePimsPropertyIds: number[];
   showDisposed: boolean;
   showRetired: boolean;
-  activeLayers: ILayerItem[];
-  mapLayersToRefresh: ILayerItem[];
+  activeLayers: Set<string>;
+  mapLayersToRefresh: Set<string>;
   advancedSearchCriteria: PropertyFilterFormModel;
   isMapVisible: boolean;
   currentMapBounds: LatLngBounds;
@@ -87,10 +92,10 @@ export interface IMapStateMachineContext {
   finishReposition: () => void;
   toggleMapFilterDisplay: () => void;
   toggleMapLayerControl: () => void;
-  setFilePropertyLocations: (locations: LatLngLiteral[]) => void;
-  setMapLayers: (layers: ILayerItem[]) => void;
-  setMapLayersToRefresh: (layers: ILayerItem[]) => void;
-  setDefaultMapLayers: (layers: ILayerItem[]) => void;
+  setFilePropertyLocations: (locations: LocationBoundaryDataset[]) => void;
+  setMapLayers: (layers: Set<string>) => void;
+  setMapLayersToRefresh: (layers: Set<string>) => void;
+  setDefaultMapLayers: (layers: Set<string>) => void;
 
   setVisiblePimsProperties: (propertyIds: number[]) => void;
   setShowDisposed: (show: boolean) => void;
@@ -361,28 +366,28 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
   }, [serviceSend]);
 
   const setFilePropertyLocations = useCallback(
-    (locations: LatLngLiteral[]) => {
+    (locations: LocationBoundaryDataset[]) => {
       serviceSend({ type: 'SET_FILE_PROPERTY_LOCATIONS', locations });
     },
     [serviceSend],
   );
 
   const setMapLayers = useCallback(
-    (activeLayers: ILayerItem[]) => {
+    (activeLayers: Set<string>) => {
       serviceSend({ type: 'SET_MAP_LAYERS', activeLayers });
     },
     [serviceSend],
   );
 
   const setMapLayersToRefresh = useCallback(
-    (refreshLayers: ILayerItem[]) => {
+    (refreshLayers: Set<string>) => {
       serviceSend({ type: 'SET_REFRESH_MAP_LAYERS', refreshLayers });
     },
     [serviceSend],
   );
 
   const setDefaultMapLayers = useCallback(
-    (activeLayers: ILayerItem[]) => {
+    (activeLayers: Set<string>) => {
       serviceSend({ type: 'DEFAULT_MAP_LAYERS', activeLayers });
     },
     [serviceSend],

@@ -34,7 +34,7 @@ namespace Pims.Dal.Repositories
         public List<PimsPropertyAcquisitionFile> GetPropertiesByAcquisitionFileId(long acquisitionFileId)
         {
             return Context.PimsPropertyAcquisitionFiles
-                .Where(x => x.AcquisitionFileId == acquisitionFileId)
+                .AsNoTracking()
                 .Include(rp => rp.PimsTakes)
                 .Include(ap => ap.PimsInthldrPropInterests)
                 .Include(rp => rp.Property)
@@ -47,7 +47,10 @@ namespace Pims.Dal.Repositories
                 .Include(rp => rp.Property)
                     .ThenInclude(rp => rp.Address)
                     .ThenInclude(a => a.ProvinceState)
-                .AsNoTracking()
+                .Include(rp => rp.Property)
+                    .ThenInclude(h => h.PimsHistoricalFileNumbers)
+                .Where(x => x.AcquisitionFileId == acquisitionFileId)
+                .OrderBy(pa => pa.DisplayOrder)
                 .ToList();
         }
 

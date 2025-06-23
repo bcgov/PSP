@@ -17,7 +17,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Acquisition File Details View Form Elements
         private readonly By acquisitionFileViewTitle = By.XPath("//html[1]/body[1]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/h1[contains(text(),'Acquisition File')]");
         
-        private readonly By acquisitionFileCreateTitle = By.XPath("//h1[contains(text(),'Create Acquisition File')]");
+        private readonly By acquisitionFileCreateTitle = By.XPath("//html[1]/body[1]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/h1[contains(text(),'Create Acquisition File')]");
         private readonly By acquisitionFileHeaderCodeLabel = By.XPath("//label[contains(text(), 'File:')]");
         private readonly By acquisitionFileHeaderCodeContent = By.XPath("//label[contains(text(), 'File:')]/parent::div/following-sibling::div[1]");
 
@@ -76,6 +76,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By acquisitionFileHistoricalNumberContent = By.XPath("//label[contains(text(),'Historical file number')]/parent::div/following-sibling::div");
         private readonly By acquisitionFileDetailsPhysicalFileLabel = By.XPath("//label[contains(text(),'Physical file status')]");
         private readonly By acquisitionFileDetailsPhysicalFileContent = By.XPath("//label[contains(text(),'Physical file status')]/parent::div/following-sibling::div");
+        private readonly By acquisitionFileDetailsPhysicalFileDetailsLabel = By.XPath("//label[contains(text(),'Physical file details')]");
+        private readonly By acquisitionFileDetailsPhysicalFileDetailsContent = By.XPath("//label[contains(text(),'Physical file details')]/parent::div/following-sibling::div");
         private readonly By acquisitionFileDetailsTypeLabel = By.XPath("//label[contains(text(),'Acquisition type')]");
         private readonly By acquisitionFileDetailsTypeContent = By.XPath("//label[contains(text(),'Acquisition type')]/parent::div/following-sibling::div");
         private readonly By acquisitionFileDetailsSubfileInterestLabel = By.XPath("//label[contains(text(),'Sub-file interest')]");
@@ -122,6 +124,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By acquisitionFileHistoricalNumberInput = By.Id("input-legacyFileNumber");
         private readonly By acquisitionFileHistoricalInvalidMessage = By.XPath("//div[contains(text(),'Legacy file number must be at most 18 characters')]");
         private readonly By acquisitionFilePhysicalStatusSelect = By.Id("input-acquisitionPhysFileStatusType");
+        private readonly By acquisitionFilePhysicalDetailsInput = By.Id("input-physicalFileDetails");
         private readonly By acquisitionFileDetailsTypeSelect = By.Id("input-acquisitionType");
         private readonly By acquisitionFileDetailsSubfileInterestSelect = By.Id("input-subfileInterestTypeCode");
         private readonly By acquisitionSubfileInterestOtherInput = By.Id("input-otherSubfileInterestType");
@@ -194,7 +197,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             FocusAndClick(menuAcquisitionButton);
 
-            WaitUntilVisible(createAcquisitionFileButton);
+            Wait();
             FocusAndClick(createAcquisitionFileButton);
         }
 
@@ -402,6 +405,12 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (acquisition.PhysicalFileStatus != "")
                 ChooseSpecificSelectOption(acquisitionFilePhysicalStatusSelect, acquisition.PhysicalFileStatus);
+
+            if (acquisition.PhysicalFileDetails != "")
+            {
+                ClearInput(acquisitionFilePhysicalDetailsInput);
+                webDriver.FindElement(acquisitionFilePhysicalDetailsInput).SendKeys(acquisition.PhysicalFileDetails);
+            }
             
             if (acquisition.AcquisitionType != "")
             {
@@ -678,6 +687,11 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if(acquisition.PhysicalFileStatus != "")
                 AssertTrueContentEquals(acquisitionFileDetailsPhysicalFileContent, acquisition.PhysicalFileStatus);
+
+            AssertTrueIsDisplayed(acquisitionFileDetailsPhysicalFileDetailsLabel);
+
+            if (acquisition.PhysicalFileDetails != "")
+                AssertTrueContentEquals(acquisitionFileDetailsPhysicalFileDetailsContent, acquisition.PhysicalFileDetails);
 
             AssertTrueIsDisplayed(acquisitionFileDetailsTypeLabel);
 

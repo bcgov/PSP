@@ -6,9 +6,10 @@ import thunk from 'redux-thunk';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
+import { LocationBoundaryDataset } from '@/components/common/mapFSM/models';
+import { PropertyForm } from '../../shared/models';
 import { DispositionFormModel } from '../models/DispositionFormModel';
 import DispositionPropertiesSubForm from './DispositionPropertiesSubForm';
-import { PropertyForm } from '../../shared/models';
 
 const mockStore = configureMockStore([thunk]);
 
@@ -73,9 +74,9 @@ describe('DispositionPropertiesSubForm component', () => {
     const { getByText } = await setup({ initialForm: testForm });
 
     await waitFor(() => {
-      expect(customSetFilePropertyLocations).toHaveBeenCalledWith([
-        { lat: 0, lng: 0 },
-        { lat: 0, lng: 0 },
+      expect(customSetFilePropertyLocations).toHaveBeenCalledWith<LocationBoundaryDataset[][]>([
+        { location: { lat: 0, lng: 0 }, boundary: null },
+        { location: { lat: 0, lng: 0 }, boundary: null },
       ]);
     });
 
@@ -89,7 +90,9 @@ describe('DispositionPropertiesSubForm component', () => {
     await act(async () => userEvent.click(pidRow));
 
     await waitFor(() => {
-      expect(customSetFilePropertyLocations).toHaveBeenCalledWith([{ lat: 0, lng: 0 }]);
+      expect(customSetFilePropertyLocations).toHaveBeenCalledWith<LocationBoundaryDataset[][]>([
+        { location: { lat: 0, lng: 0 }, boundary: null },
+      ]);
     });
 
     expect(queryByText('PID: 123-456-789')).toBeNull();
@@ -99,9 +102,9 @@ describe('DispositionPropertiesSubForm component', () => {
     const { getByTitle } = await setup({ initialForm: testForm });
 
     await waitFor(() => {
-      expect(customSetFilePropertyLocations).toHaveBeenCalledWith([
-        { lat: 0, lng: 0 },
-        { lat: 0, lng: 0 },
+      expect(customSetFilePropertyLocations).toHaveBeenCalledWith<LocationBoundaryDataset[][]>([
+        { location: { lat: 0, lng: 0 }, boundary: null },
+        { location: { lat: 0, lng: 0 }, boundary: null },
       ]);
     });
 
@@ -116,9 +119,9 @@ describe('DispositionPropertiesSubForm component', () => {
     await setup({ initialForm: formWithProperties });
 
     await waitFor(() => {
-      expect(customSetFilePropertyLocations).toHaveBeenCalledWith([
-        { lat: 1, lng: 2 },
-        { lat: 0, lng: 0 },
+      expect(customSetFilePropertyLocations).toHaveBeenCalledWith<LocationBoundaryDataset[][]>([
+        { location: { lat: 1, lng: 2 }, boundary: null },
+        { location: { lat: 0, lng: 0 }, boundary: null },
       ]);
     });
   });
@@ -133,9 +136,9 @@ describe('DispositionPropertiesSubForm component', () => {
     await setup({ initialForm: formWithProperties });
 
     await waitFor(() => {
-      expect(customSetFilePropertyLocations).toHaveBeenCalledWith([
-        { lat: 1, lng: 2 },
-        { lat: 3, lng: 4 },
+      expect(customSetFilePropertyLocations).toHaveBeenCalledWith<LocationBoundaryDataset[][]>([
+        { location: { lat: 1, lng: 2 }, boundary: null },
+        { location: { lat: 3, lng: 4 }, boundary: null },
       ]);
     });
   });

@@ -39,7 +39,8 @@ namespace Pims.Dal.Repositories
         {
             List<PimsPropertyActivity> activities = Context.PimsPropertyActivities.AsNoTracking()
                     .Include(pa => pa.PropMgmtActivityTypeCodeNavigation)
-                    .Include(pa => pa.PropMgmtActivitySubtypeCodeNavigation)
+                    .Include(pa => pa.PimsPropActivityMgmtActivities)
+                        .ThenInclude(st => st.PropMgmtActivitySubtypeCodeNavigation)
                     .Include(pa => pa.PropMgmtActivityStatusTypeCodeNavigation)
                     .Include(pa => pa.PimsPropPropActivities)
                     .Where(pa => pa.PimsPropPropActivities.Any(x => x.PropertyId == propertyId))
@@ -57,7 +58,8 @@ namespace Pims.Dal.Repositories
         {
             List<PimsPropertyActivity> activities = Context.PimsPropertyActivities.AsNoTracking()
                     .Include(pa => pa.PropMgmtActivityTypeCodeNavigation)
-                    .Include(pa => pa.PropMgmtActivitySubtypeCodeNavigation)
+                    .Include(pa => pa.PimsPropActivityMgmtActivities)
+                        .ThenInclude(st => st.PropMgmtActivitySubtypeCodeNavigation)
                     .Include(pa => pa.PropMgmtActivityStatusTypeCodeNavigation)
                     .Include(pa => pa.PimsPropPropActivities)
                     .Where(pa => pa.ManagementFileId == managementFileId)
@@ -74,8 +76,10 @@ namespace Pims.Dal.Repositories
         /// <returns>List of Property's management activities.</returns>
         public IList<PimsPropertyActivity> GetActivitiesByPropertyIds(IEnumerable<long> propertyIds)
         {
-            var activities = Context.PimsPropertyActivities.AsNoTracking().Include(pa => pa.PropMgmtActivityTypeCodeNavigation)
-                    .Include(pa => pa.PropMgmtActivitySubtypeCodeNavigation)
+            var activities = Context.PimsPropertyActivities.AsNoTracking()
+                    .Include(pa => pa.PropMgmtActivityTypeCodeNavigation)
+                    .Include(pa => pa.PimsPropActivityMgmtActivities)
+                        .ThenInclude(st => st.PropMgmtActivitySubtypeCodeNavigation)
                     .Include(pa => pa.PropMgmtActivityStatusTypeCodeNavigation)
                     .Include(pa => pa.PimsPropPropActivities)
                     .ThenInclude(ppa => ppa.Property)
@@ -97,7 +101,8 @@ namespace Pims.Dal.Repositories
                 .Include(a => a.PimsPropPropActivities)
                 .Include(a => a.PimsPropertyActivityInvoices)
                 .Include(a => a.PropMgmtActivityTypeCodeNavigation)
-                .Include(a => a.PropMgmtActivitySubtypeCodeNavigation)
+                .Include(pa => pa.PimsPropActivityMgmtActivities)
+                    .ThenInclude(st => st.PropMgmtActivitySubtypeCodeNavigation)
                 .Include(a => a.PropMgmtActivityStatusTypeCodeNavigation)
                 .Include(a => a.PimsPropActMinContacts)
                 .Include(a => a.PimsPropActInvolvedParties)
@@ -137,12 +142,12 @@ namespace Pims.Dal.Repositories
                 o => o.PimsPropActMinContacts, existingPropertyActivity.PimsPropertyActivityId, propertyActivity.PimsPropActMinContacts.ToArray());
             Context.UpdateChild<PimsPropertyActivity, long, PimsPropActInvolvedParty, long>(
                 o => o.PimsPropActInvolvedParties, existingPropertyActivity.PimsPropertyActivityId, propertyActivity.PimsPropActInvolvedParties.ToArray());
-
             Context.UpdateChild<PimsPropertyActivity, long, PimsPropertyActivityInvoice, long>(
                 o => o.PimsPropertyActivityInvoices, existingPropertyActivity.PimsPropertyActivityId, propertyActivity.PimsPropertyActivityInvoices.ToArray());
-
             Context.UpdateChild<PimsPropertyActivity, long, PimsPropPropActivity, long>(
                 o => o.PimsPropPropActivities, existingPropertyActivity.PimsPropertyActivityId, propertyActivity.PimsPropPropActivities.ToArray());
+            Context.UpdateChild<PimsPropertyActivity, long, PimsPropActivityMgmtActivity, long>(
+                o => o.PimsPropActivityMgmtActivities, existingPropertyActivity.PimsPropertyActivityId, propertyActivity.PimsPropActivityMgmtActivities.ToArray());
 
             // update main entity - PimsPropertyActivity
             Context.Entry(existingPropertyActivity).CurrentValues.SetValues(propertyActivity);
@@ -191,18 +196,17 @@ namespace Pims.Dal.Repositories
         public bool TryDeleteByFile(long activityId, long managementFileId)
         {
             var propertyActivity = Context.PimsPropertyActivities
-                .Include(pa => pa.PimsPropPropActivities).FirstOrDefault(x => x.PimsPropertyActivityId == activityId && x.ManagementFileId == managementFileId);
+                .Include(pa => pa.PimsPropPropActivities)
+                .Include(st => st.PimsPropActivityMgmtActivities)
+                .FirstOrDefault(x => x.PimsPropertyActivityId == activityId && x.ManagementFileId == managementFileId);
 
             if (propertyActivity is null)
             {
-                return false;
+                return true;
             }
 
-            // There may be zero to many of these relationships.
-            propertyActivity.PimsPropPropActivities.ForEach(pp =>
-            {
-                Context.PimsPropPropActivities.Remove(pp);
-            });
+            Context.PimsPropPropActivities.RemoveRange(propertyActivity.PimsPropPropActivities);
+            Context.PimsPropActivityMgmtActivities.RemoveRange(propertyActivity.PimsPropActivityMgmtActivities);
 
             Context.PimsPropertyActivities.Remove(propertyActivity);
 

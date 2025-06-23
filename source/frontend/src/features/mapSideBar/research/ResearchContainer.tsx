@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 import { FormikProps } from 'formik';
-import { useCallback, useContext, useEffect, useRef, useState } from 'react';
-import { useHistory, useRouteMatch } from 'react-router-dom';
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { matchPath, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
@@ -15,10 +15,11 @@ import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTy
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { exists, isValidId, stripTrailingSlash } from '@/utils';
+import { exists, isValidId, sortFileProperties, stripTrailingSlash } from '@/utils';
 
 import { SideBarContext } from '../context/sidebarContext';
 import { PropertyForm } from '../shared/models';
+import usePathGenerator from '../shared/sidebarPathGenerator';
 import { useGetResearch } from './hooks/useGetResearch';
 import { useUpdateResearchProperties } from './hooks/useUpdateResearchProperties';
 import { IResearchViewProps } from './ResearchView';
@@ -59,10 +60,10 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
   } = useContext(SideBarContext);
 
   const [isValid, setIsValid] = useState<boolean>(true);
-  const [isShowingPropertySelector, setIsShowingPropertySelector] = useState<boolean>(false);
   const { setModalContent, setDisplayModal } = useModalContext();
 
   const formikRef = useRef<FormikProps<any>>(null);
+  const location = useLocation();
   const history = useHistory();
   const match = useRouteMatch();
   const { updateResearchFileProperties } = useUpdateResearchProperties();
@@ -70,6 +71,15 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
   const withUserOverride = useApiUserOverride<
     (userOverrideCodes: UserOverrideCode[]) => Promise<ApiGen_Concepts_ResearchFile | undefined>
   >('Failed to update Research File');
+
+  const isPropertySelector = useMemo(
+    () =>
+      matchPath<Record<string, string>>(
+        location.pathname,
+        `${stripTrailingSlash(match.path)}/property/selector`,
+      ),
+    [location.pathname, match.path],
+  );
 
   useEffect(
     () =>
@@ -81,7 +91,7 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
     const retrieved = await getResearchFile(props.researchFileId);
     if (exists(retrieved)) {
       const researchProperties = await getResearchFileProperties(props.researchFileId);
-      retrieved.fileProperties = researchProperties ?? null;
+      retrieved.fileProperties = sortFileProperties(researchProperties) ?? null;
       setFile({ ...retrieved, fileType: ApiGen_CodeTypes_FileTypes.Research });
       setStaleFile(false);
     } else {
@@ -138,26 +148,48 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
 
   const isEditing = query.get('edit') === 'true';
 
-  const navigateToMenuRoute = (selectedIndex: number) => {
-    const route = selectedIndex === 0 ? '' : `/property/${selectedIndex}`;
-    history.push(`${stripTrailingSlash(match.url)}${route}`);
-  };
+  const pathGenerator = usePathGenerator();
 
-  const onMenuChange = (selectedIndex: number) => {
+  const onSelectFileSummary = () => {
+    if (!exists(researchFile)) {
+      return;
+    }
+
     if (isEditing) {
       if (formikRef?.current?.dirty) {
-        if (
-          window.confirm('You have made changes on this form. Do you wish to leave without saving?')
-        ) {
-          handleCancelClick();
-          navigateToMenuRoute(selectedIndex);
-        }
-      } else {
-        handleCancelClick();
-        navigateToMenuRoute(selectedIndex);
+        handleCancelClick(() => pathGenerator.showFile('research', researchFile.id));
+        return;
       }
-    } else {
-      navigateToMenuRoute(selectedIndex);
+    }
+    pathGenerator.showFile('research', researchFile.id);
+  };
+
+  const onSelectProperty = (filePropertyId: number) => {
+    if (!exists(researchFile)) {
+      return;
+    }
+
+    const fileProperties = researchFile.fileProperties ?? [];
+    const menuIndex = fileProperties.findIndex(fp => fp.id === filePropertyId);
+    if (menuIndex < 0) {
+      return;
+    }
+
+    if (isEditing) {
+      if (formikRef?.current?.dirty) {
+        handleCancelClick(() =>
+          pathGenerator.showFilePropertyIndex('research', researchFile.id, menuIndex + 1),
+        );
+        return;
+      }
+    }
+    // The index needs to be offset to match the menu index
+    pathGenerator.showFilePropertyIndex('research', researchFile.id, menuIndex + 1);
+  };
+
+  const onEditProperties = () => {
+    if (exists(researchFile)) {
+      pathGenerator.editProperties('research', researchFile.id);
     }
   };
 
@@ -175,7 +207,7 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
     }
   };
 
-  const handleCancelClick = () => {
+  const handleCancelClick = (onCancelConfirm?: () => void) => {
     if (formikRef !== undefined) {
       if (formikRef.current?.dirty) {
         setModalContent({
@@ -183,6 +215,7 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
           handleOk: () => {
             handleCancelConfirm();
             setDisplayModal(false);
+            onCancelConfirm && onCancelConfirm();
           },
           handleCancel: () => setDisplayModal(false),
         });
@@ -233,7 +266,6 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
           userOverrideCodes,
         ).then(response => {
           onSuccess();
-          setIsShowingPropertySelector(false);
           return response;
         });
       },
@@ -254,9 +286,10 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
     );
   };
 
+  // UI components
   if (
     loadingResearchFile ||
-    (loadingResearchFileProperties && !isShowingPropertySelector) ||
+    (loadingResearchFileProperties && !isPropertySelector) ||
     researchFile?.fileType !== ApiGen_CodeTypes_FileTypes.Research ||
     researchFile?.id !== researchFileId
   ) {
@@ -269,12 +302,12 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
       formikRef={formikRef}
       isEditing={isEditing}
       setEditMode={setIsEditing}
-      isShowingPropertySelector={isShowingPropertySelector}
-      setIsShowingPropertySelector={setIsShowingPropertySelector}
       onClose={onClose}
       onSave={handleSaveClick}
       onCancel={handleCancelClick}
-      onMenuChange={onMenuChange}
+      onSelectFileSummary={onSelectFileSummary}
+      onSelectProperty={onSelectProperty}
+      onEditProperties={onEditProperties}
       onUpdateProperties={onUpdateProperties}
       confirmBeforeAdd={confirmBeforeAdd}
       canRemove={canRemove}
