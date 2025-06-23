@@ -29,6 +29,7 @@ import { BaseLayer, isVectorBasemap } from './leaflet/Control/BaseMapToggle/type
 import LayersControl from './leaflet/Control/LayersControl/LayersControl';
 import { initialEnabledLayers } from './leaflet/Control/LayersControl/LayersMenuLayout';
 import { LegendControl } from './leaflet/Control/Legend/LegendControl';
+import SearchControl from './leaflet/Control/SearchControl/SearchControl';
 import { ZoomOutButton } from './leaflet/Control/ZoomOut/ZoomOutButton';
 import { LocationPopupContainer } from './leaflet/LayerPopup/LocationPopupContainer';
 import { FilePropertiesLayer } from './leaflet/Layers/FilePropertiesLayer';
@@ -269,6 +270,7 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
           active={mapMachine.isFiltering}
         />
         <LayersControl onToggle={mapMachine.toggleMapLayerControl} />
+        <SearchControl onToggle={mapMachine.toggleMapSearchControl} />
         <InventoryLayer
           zoom={zoom}
           maxZoom={MAP_MAX_ZOOM}

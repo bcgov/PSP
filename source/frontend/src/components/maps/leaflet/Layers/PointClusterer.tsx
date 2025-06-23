@@ -16,6 +16,7 @@ import { TANTALIS_CrownSurveyParcels_Feature_Properties } from '@/models/layers/
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import {
   PIMS_Property_Boundary_View,
+  PIMS_Property_Location_Lite_View,
   PIMS_Property_Location_View,
 } from '@/models/layers/pimsPropertyLocationView';
 import { exists } from '@/utils';
@@ -55,7 +56,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
   const spiderfierRef =
     useRef<
       Spiderfier<
-        | PIMS_Property_Location_View
+        | PIMS_Property_Location_Lite_View
         | PIMS_Property_Boundary_View
         | PMBC_FullyAttributed_Feature_Properties
         | TANTALIS_CrownSurveyParcels_Feature_Properties
@@ -83,16 +84,16 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
 
   const [spider, setSpider] = useState<
     SpiderSet<
-      | PIMS_Property_Location_View
+      | PIMS_Property_Location_Lite_View
       | PIMS_Property_Boundary_View
       | PMBC_FullyAttributed_Feature_Properties
       | TANTALIS_CrownSurveyParcels_Feature_Properties
     >
   >({});
 
-  const pimsLocationFeatures: FeatureCollection<Geometry, PIMS_Property_Location_View> =
+  const pimsLocationFeatures: FeatureCollection<Geometry, PIMS_Property_Location_Lite_View> =
     useMemo(() => {
-      let filteredFeatures = mapMachine.mapFeatureData?.pimsLocationFeatures?.features.filter(x =>
+      let filteredFeatures = mapMachine.mapFeatureData?.pimsLocationLiteFeatures?.features?.filter(x =>
         mapMachine.activePimsPropertyIds.includes(Number(x.properties.PROPERTY_ID)),
       );
 
@@ -106,13 +107,13 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
       );
 
       return {
-        type: mapMachine.mapFeatureData?.pimsLocationFeatures?.type,
+        type: mapMachine.mapFeatureData.pimsLocationLiteFeatures.type,
         features: displayableFeatures,
       };
     }, [
       mapMachine.activePimsPropertyIds,
-      mapMachine.mapFeatureData?.pimsLocationFeatures?.features,
-      mapMachine.mapFeatureData?.pimsLocationFeatures?.type,
+      mapMachine.mapFeatureData?.pimsLocationLiteFeatures?.type,
+      mapMachine.mapFeatureData?.pimsLocationLiteFeatures?.features,
       mapMachine.showDisposed,
       mapMachine.showRetired,
     ]);
@@ -124,13 +125,15 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
   const surveyedParcelsFeatures = mapMachine.mapFeatureData?.surveyedParcelsFeatures;
 
   const featurePoints: Supercluster.PointFeature<
-    | PIMS_Property_Location_View
+    | PIMS_Property_Location_Lite_View
     | PIMS_Property_Boundary_View
     | PMBC_FullyAttributed_Feature_Properties
     | TANTALIS_CrownSurveyParcels_Feature_Properties
   >[] = useMemo(() => {
     const pimsLocationPoints =
-      featureCollectionResponseToPointFeature<PIMS_Property_Location_View>(pimsLocationFeatures);
+      featureCollectionResponseToPointFeature<PIMS_Property_Location_Lite_View>(
+        pimsLocationFeatures,
+      );
     const pimsBoundaryPoints =
       featureCollectionResponseToPointFeature<PIMS_Property_Boundary_View>(pimsBoundaryFeatures);
     const pmbcPoints =

@@ -10,6 +10,7 @@ import {
   MarkerSelected,
   emptyPimsBoundaryFeatureCollection,
   emptyPimsLocationFeatureCollection,
+  emptyPimsLocationLiteFeatureCollection,
   emptyPmbcFeatureCollection,
   emptySurveyedParcelsFeatures,
 } from '@/components/common/mapFSM/models';
@@ -183,6 +184,7 @@ describe('MapContainer', () => {
       activePimsPropertyIds: activePimsPropertyIds,
       mapFeatureData: {
         pimsLocationFeatures: createPimsFeatures(mockParcels),
+        pimsLocationLiteFeatures: createPimsFeatures(mockParcels),
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
         fullyAttributedFeatures: emptyPmbcFeatureCollection,
         surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
@@ -290,6 +292,7 @@ describe('MapContainer', () => {
         ...mapMachineBaseMock,
         mapFeatureData: {
           pimsLocationFeatures: createPimsFeatures(smallMockParcels),
+          pimsLocationLiteFeatures: emptyPimsLocationLiteFeatureCollection,
           pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
           fullyAttributedFeatures: emptyPmbcFeatureCollection,
           surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
@@ -313,6 +316,7 @@ describe('MapContainer', () => {
         ...mapMachineBaseMock,
         mapFeatureData: {
           pimsLocationFeatures: emptyPimsLocationFeatureCollection,
+          pimsLocationLiteFeatures: emptyPimsLocationLiteFeatureCollection,
           pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
           fullyAttributedFeatures: emptyPmbcFeatureCollection,
           surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
@@ -370,6 +374,7 @@ describe('MapContainer', () => {
         ...mapMachineBaseMock,
         mapFeatureData: {
           pimsLocationFeatures: createPimsFeatures(largeMockParcels),
+          pimsLocationLiteFeatures: emptyPimsLocationLiteFeatureCollection,
           pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
           fullyAttributedFeatures: emptyPmbcFeatureCollection,
           surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
@@ -403,6 +408,7 @@ describe('MapContainer', () => {
       ...mapMachineBaseMock,
       mapFeatureData: {
         pimsLocationFeatures: pimsFeatures,
+        pimsLocationLiteFeatures: pimsFeatures,
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
         fullyAttributedFeatures: emptyPmbcFeatureCollection,
         surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
@@ -442,6 +448,7 @@ describe('MapContainer', () => {
       ...mapMachineBaseMock,
       mapFeatureData: {
         pimsLocationFeatures: pimsFeatures,
+        pimsLocationLiteFeatures: pimsFeatures,
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
         fullyAttributedFeatures: emptyPmbcFeatureCollection,
         surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
@@ -487,6 +494,7 @@ describe('MapContainer', () => {
       ...mapMachineBaseMock,
       mapFeatureData: {
         pimsLocationFeatures: pimsFeatures,
+        pimsLocationLiteFeatures: pimsFeatures,
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
         fullyAttributedFeatures: emptyPmbcFeatureCollection,
         surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
@@ -523,6 +531,7 @@ describe('MapContainer', () => {
       ...mapMachineBaseMock,
       mapFeatureData: {
         pimsLocationFeatures: pimsFeatures,
+        pimsLocationLiteFeatures: pimsFeatures,
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
         fullyAttributedFeatures: emptyPmbcFeatureCollection,
         surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
@@ -570,6 +579,7 @@ describe('MapContainer', () => {
       ...mapMachineBaseMock,
       mapFeatureData: {
         pimsLocationFeatures: pimsFeatures,
+        pimsLocationLiteFeatures: pimsFeatures,
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
         fullyAttributedFeatures: emptyPmbcFeatureCollection,
         surveyedParcelsFeatures: emptySurveyedParcelsFeatures,

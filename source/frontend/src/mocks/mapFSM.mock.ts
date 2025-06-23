@@ -3,6 +3,7 @@ import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMach
 import {
   emptyPimsBoundaryFeatureCollection,
   emptyPimsLocationFeatureCollection,
+  emptyPimsLocationLiteFeatureCollection,
   emptyPmbcFeatureCollection,
   emptySurveyedParcelsFeatures,
 } from '@/components/common/mapFSM/models';
@@ -14,6 +15,7 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   requestFlyToBounds: vi.fn(),
   mapFeatureData: {
     pimsLocationFeatures: emptyPimsLocationFeatureCollection,
+    pimsLocationLiteFeatures: emptyPimsLocationLiteFeatureCollection,
     pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
     fullyAttributedFeatures: emptyPmbcFeatureCollection,
     surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
@@ -55,6 +57,7 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   isFiltering: false,
   isShowingMapFilter: false,
   isShowingMapLayers: false,
+  isShowingMapSearch: false,
   showDisposed: false,
   showRetired: false,
   mapLayersToRefresh: new Set(),
@@ -83,6 +86,7 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   setVisiblePimsProperties: vi.fn(),
   toggleMapFilterDisplay: vi.fn(),
   toggleMapLayerControl: vi.fn(),
+  toggleMapSearchControl: vi.fn(),
   setShowDisposed: vi.fn(),
   setShowRetired: vi.fn(),
   setMapLayers: vi.fn(),
