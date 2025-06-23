@@ -20,8 +20,11 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By managementActTypeInput = By.Id("input-activityTypeCode");
         private readonly By managementActTypeContent = By.XPath("//label[contains(text(),'Activity type')]/parent::div/following-sibling::div");
         private readonly By managementActSubTypeLabel = By.XPath("//label[contains(text(),'Sub-type')]");
-        private readonly By managementActSubTypeInput = By.Id("input-activitySubtypeCode");
-        private readonly By managementActSubTypeContent = By.XPath("//label[contains(text(),'Sub-type')]/parent::div/following-sibling::div");
+        private readonly By managementActSubTypeSelect = By.Id("multiselect-activitySubtypeCodes");
+        private readonly By managementActSubTypeSelectOptions = By.CssSelector("div[id='multiselect-activitySubtypeCodes'] div[class='optionListContainer displayNone']");
+        private readonly By managementActSubTypeSelect1stOption = By.CssSelector("div[id='multiselect-activitySubtypeCodes'] div[class='optionListContainer displayNone'] ul li:first-child");
+        private readonly By managementActSubTypeDeleteBttns = By.CssSelector("div[id='multiselect-activitySubtypeCodes'] i[class='custom-close']");
+        private readonly By managementActSubTypeContents = By.CssSelector("div[id='multiselectContainerReact']");
         private readonly By managementActStatusLabel = By.XPath("//label[contains(text(),'Activity status')]");
         private readonly By managementActStatusInput = By.Id("input-activityStatusCode");
         private readonly By managementActStatusContent = By.XPath("//label[contains(text(),'Activity status')]/parent::div/following-sibling::div");
@@ -118,7 +121,22 @@ namespace PIMS.Tests.Automation.PageObjects
             ChooseSpecificSelectOption(managementActTypeInput, activity.PropertyActivityType);
 
             Wait();
-            ChooseSpecificSelectOption(managementActSubTypeInput, activity.PropertyActivitySubType);
+            if (webDriver.FindElements(managementActSubTypeDeleteBttns).Count > 0)
+            {
+                while (webDriver.FindElements(managementActSubTypeDeleteBttns).Count > 0)
+                    webDriver.FindElements(managementActSubTypeDeleteBttns)[0].Click();
+            }
+
+            if (activity.PropertyActivitySubType.First() != "")
+            {
+                foreach (string subtype in activity.PropertyActivitySubType)
+                {
+                    webDriver.FindElement(managementActSubTypeSelect).Click();
+
+                    WaitUntilVisible(managementActSubTypeSelectOptions);
+                    ChooseMultiSelectSpecificOption(managementActSubTypeSelectOptions, subtype);
+                }
+            }
 
             ChooseSpecificSelectOption(managementActStatusInput, activity.PropertyActivityStatus);
 
@@ -233,7 +251,11 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueContentEquals(managementActTypeContent, activity.PropertyActivityType);
 
             AssertTrueIsDisplayed(managementActSubTypeLabel);
-            //AssertTrueContentEquals(managementActSubTypeContent, activity.PropertyActivitySubType); -- TODO
+            if (activity.PropertyActivitySubType.First() != "")
+            {
+                var subTypesUI = GetViewFieldListContent(managementActSubTypeContents);
+                Assert.True(Enumerable.SequenceEqual(subTypesUI, activity.PropertyActivitySubType));
+            }
 
             AssertTrueIsDisplayed(managementActStatusLabel);
             AssertTrueContentEquals(managementActStatusContent, activity.PropertyActivityStatus);
@@ -321,14 +343,14 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 AssertTrueIsDisplayed(managementActFilePropertiesTitle);
                 AssertTrueIsDisplayed(managementActFileSelectedPropsLabel);
-                Assert.Equal(webDriver.FindElements(managementActFilePropertiesCount).Count,propsCount);
+                Assert.Equal(propsCount, webDriver.FindElements(managementActFilePropertiesCount).Count);
             }
             //Activity Details
             AssertTrueIsDisplayed(managementActivityDetailsTitle);
             AssertTrueIsDisplayed(managementActTypeLabel);
             AssertTrueIsDisplayed(managementActTypeInput);
             AssertTrueIsDisplayed(managementActSubTypeLabel);
-            AssertTrueIsDisplayed(managementActSubTypeInput);
+            AssertTrueIsDisplayed(managementActSubTypeSelect);
             AssertTrueIsDisplayed(managementActStatusLabel);
             AssertTrueIsDisplayed(managementActStatusInput);
 

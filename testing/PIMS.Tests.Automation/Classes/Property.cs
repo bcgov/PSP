@@ -97,7 +97,7 @@
     {
         public int PropertyActivityPropsCount { get; set; } = 0;
         public string PropertyActivityType { get; set; } = null!;
-        public string PropertyActivitySubType { get; set; } = null!;
+        public List<string> PropertyActivitySubType { get; set; } = new List<string>();
         public string PropertyActivityStatus { get; set; } = null!;
         public string PropertyActivityRequestedCommenceDate { get; set; } = null!;
         public string PropertyActivityCompletionDate { get; set; } = null!;
