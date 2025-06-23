@@ -348,7 +348,7 @@ export const getFeatureLatLng = <P,>(feature: Feature<Geometry, P>) => {
 const featureCollectionResponseToPointFeature = <P,>(
   response: FeatureCollection<Geometry, P> | undefined,
 ): PointFeature<P>[] => {
-  const validFeatures = response?.features?.filter(feature => !!feature?.geometry) ?? [];
+  const validFeatures = response?.features?.filter(feature => exists(feature?.geometry)) ?? [];
   const data: PointFeature<P>[] = validFeatures.map(feature => {
     return featureResponseToPointFeature(feature);
   });

@@ -218,7 +218,7 @@ export const useCrownLandLayer = () => {
         townshipQuery = `PARCEL_LEGAL_DESCRIPTION ilike '%TOWNSHIP ${township},%'`;
       }
       if (isValidString(range?.toString())) {
-        rangeQuery = `PARCEL_LEGAL_DESCRIPTION ilike '%TOWNSHIP ${range},%'`;
+        rangeQuery = `PARCEL_LEGAL_DESCRIPTION ilike '%RANGE ${range},%'`;
       }
       if (isValidString(district)) {
         const districtSearchString = district.replace('DISTRICT', 'DIST');

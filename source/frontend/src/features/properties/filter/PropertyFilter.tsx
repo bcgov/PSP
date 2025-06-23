@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
 import { ResetButton, SearchButton } from '@/components/common/buttons';
-import { Form, Input, NumberInput, Select } from '@/components/common/form';
+import { Form, Input, Select } from '@/components/common/form';
 import { getFeatureLatLng } from '@/components/maps/leaflet/Layers/PointClusterer';
 import { TableSort } from '@/components/Table/TableSort';
 import { IGeographicNamesProperties } from '@/hooks/pims-api/interfaces/IGeographicNamesProperties';
@@ -237,30 +237,23 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                     />
                   </Col>
                   <Col>
-                    <NumberInput
+                    <Input
                       innerClassName="rounded-0"
                       placeholder="Section"
                       field="section"
-                      onFocus={e => e.target.select()}
                       displayErrorTooltips
-                    ></NumberInput>
+                    ></Input>
                   </Col>
                   <Col>
-                    <NumberInput
+                    <Input
                       innerClassName="rounded-0"
                       placeholder="Township"
                       field="township"
-                      onFocus={e => e.target.select()}
                       displayErrorTooltips
-                    ></NumberInput>
+                    ></Input>
                   </Col>
                   <Col>
-                    <NumberInput
-                      placeholder="Range"
-                      field="range"
-                      onFocus={e => e.target.select()}
-                      displayErrorTooltips
-                    ></NumberInput>
+                    <Input placeholder="Range" field="range" displayErrorTooltips></Input>
                   </Col>
                 </Row>
               )}

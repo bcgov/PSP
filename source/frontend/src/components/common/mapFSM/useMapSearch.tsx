@@ -264,7 +264,9 @@ export const useMapSearch = () => {
           filter?.DISTRICT,
         );
 
-        const validCrownSurveyFeatures = response?.features?.filter(feature => !!feature?.geometry);
+        const validCrownSurveyFeatures = response?.features?.filter(feature =>
+          exists(feature?.geometry),
+        );
 
         result = {
           pimsLocationFeatures: emptyPimsLocationFeatureCollection,
@@ -272,7 +274,7 @@ export const useMapSearch = () => {
           fullyAttributedFeatures: emptyPmbcFeatureCollection,
           surveyedParcelsFeatures: exists(validCrownSurveyFeatures)
             ? {
-                type: response.type,
+                type: response?.type,
                 bbox: response.bbox,
                 features: validCrownSurveyFeatures,
               }
