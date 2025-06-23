@@ -82,6 +82,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void OrderByAcquisitionFileNumber()
         {
+            Wait();
             WaitUntilClickable(searchAcquisitionOrderFileNumberBttn);
             webDriver.FindElement(searchAcquisitionOrderFileNumberBttn).Click();
         }

@@ -17,7 +17,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Acquisition File Details View Form Elements
         private readonly By acquisitionFileViewTitle = By.XPath("//html[1]/body[1]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/h1[contains(text(),'Acquisition File')]");
         
-        private readonly By acquisitionFileCreateTitle = By.XPath("//h1[contains(text(),'Create Acquisition File')]");
+        private readonly By acquisitionFileCreateTitle = By.XPath("//html[1]/body[1]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/h1[contains(text(),'Create Acquisition File')]");
         private readonly By acquisitionFileHeaderCodeLabel = By.XPath("//label[contains(text(), 'File:')]");
         private readonly By acquisitionFileHeaderCodeContent = By.XPath("//label[contains(text(), 'File:')]/parent::div/following-sibling::div[1]");
 
@@ -197,7 +197,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             FocusAndClick(menuAcquisitionButton);
 
-            WaitUntilVisible(createAcquisitionFileButton);
+            Wait();
             FocusAndClick(createAcquisitionFileButton);
         }
 

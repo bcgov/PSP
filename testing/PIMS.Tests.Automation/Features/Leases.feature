@@ -91,3 +91,8 @@ Scenario: 13._Lease_and_License_from_Inventory_Property_Pin
 Scenario: 14._Lease_and_License_List_View
 	Given I search for an existing Lease or License from row number 2
 	Then Expected Lease File Content is displayed on Leases Table
+
+#Scenario: 15._Lease_and_Licence_Error_Message_H120_In-Progress
+#	Given I create a new minimum Lease from row number 8
+#	When  I add additional Information to the Lease Details
+#	Then Lease cannot be completed due to Draft items
