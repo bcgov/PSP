@@ -56,7 +56,7 @@ describe('useCrownLandLayer - findMultipleSurveyParcel', () => {
     expect(params.get('request')).toBe('GetFeature');
     expect(params.get('cql_filter')).toContain('SECTION 1');
     expect(params.get('cql_filter')).toContain('TOWNSHIP 2');
-    expect(params.get('cql_filter')).toContain('TOWNSHIP 3');
+    expect(params.get('cql_filter')).toContain('RANGE 3');
     expect(params.get('cql_filter')).toContain('KAMLOOPS DIST');
   });
 
