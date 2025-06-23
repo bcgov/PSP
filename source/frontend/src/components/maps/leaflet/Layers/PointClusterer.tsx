@@ -273,7 +273,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
               | PIMS_Property_Location_View
               | PIMS_Property_Boundary_View
               | PMBC_FullyAttributed_Feature_Properties
-                | TANTALIS_CrownSurveyParcels_Feature_Properties
+              | TANTALIS_CrownSurveyParcels_Feature_Properties
             >;
 
             const isSelected =
