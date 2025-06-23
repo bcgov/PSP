@@ -86,8 +86,7 @@ export class ManagementActivityFormModel {
           };
         }),
       activityProperties: this.selectedProperties.map(x => {
-        const matched =
-          this.activityProperties.filter(y => y.propertyId === x.propertyId)[0] ?? null;
+        const matched = this.activityProperties.find(y => y.propertyId === x.propertyId) ?? null;
 
         return {
           id: matched ? matched.id : 0,
@@ -145,9 +144,9 @@ export class ManagementActivityFormModel {
 
     formModel.selectedProperties = model.activityProperties.map(x => {
       const matchProperty =
-        fileProperties.filter(
+        fileProperties.find(
           y => y.fileId === formModel.managementFileId && y.propertyId === x.propertyId,
-        )[0] ?? null;
+        ) ?? null;
 
       return {
         id: matchProperty ? matchProperty.id : 0,

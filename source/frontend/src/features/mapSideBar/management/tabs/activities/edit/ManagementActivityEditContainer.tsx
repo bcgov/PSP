@@ -69,7 +69,7 @@ export const ManagementActivityEditContainer: React.FunctionComponent<
       const defaultModel = new ManagementActivityFormModel(null, managementFileId);
       defaultModel.activityStatusCode = 'NOTSTARTED';
       defaultModel.requestedDate = getCurrentIsoDate();
-      defaultModel.selectedProperties = castedFile.fileProperties.map(x => {
+      defaultModel.selectedProperties = (castedFile?.fileProperties ?? []).map(x => {
         return {
           id: x.id,
           fileId: castedFile.id,
