@@ -57,67 +57,76 @@ export const ExpropriationForm1: React.FC<IExpropriationForm1Props> = ({
   };
 
   return (
-    <Formik<ExpropriationForm1Model>
-      enableReinitialize
-      initialValues={new ExpropriationForm1Model()}
-      validationSchema={ExpropriationForm1YupSchema}
-      onSubmit={onSubmit}
-    >
-      {formikProps => (
-        <Fragment>
-          <SectionField label="Expropriation authority" required>
-            <ContactInputContainer
-              field="expropriationAuthority.contact"
-              View={ContactInputView}
-              restrictContactType={RestrictContactType.ONLY_ORGANIZATIONS}
-              displayErrorAsTooltip={false}
-            ></ContactInputContainer>
-          </SectionField>
-          <SectionField
-            label="Impacted properties"
-            required
-            tooltip="For the selected properties - corresponding property and interest details will be captured on the form"
-          >
-            <FormItem field="impactedProperties">
-              <FilePropertiesTable
-                disabledSelection={false}
-                fileProperties={acquisitionFile.fileProperties ?? []}
-                selectedFileProperties={formikProps.values.impactedProperties}
-                setSelectedFileProperties={(fileProperties: ApiGen_Concepts_FileProperty[]) => {
-                  formikProps.setFieldValue('impactedProperties', fileProperties);
-                }}
-              ></FilePropertiesTable>
-            </FormItem>
-          </SectionField>
-          <SectionField label="Nature of interest">
-            <Input field="landInterest" />
-          </SectionField>
-          <SectionField label="Purpose of expropriation">
-            <Input field="purpose" />
-          </SectionField>
+    <StyledForm1Border>
+      <Formik<ExpropriationForm1Model>
+        enableReinitialize
+        initialValues={new ExpropriationForm1Model()}
+        validationSchema={ExpropriationForm1YupSchema}
+        onSubmit={onSubmit}
+      >
+        {formikProps => (
+          <Fragment>
+            <SectionField label="Expropriation authority" required>
+              <ContactInputContainer
+                field="expropriationAuthority.contact"
+                View={ContactInputView}
+                restrictContactType={RestrictContactType.ONLY_ORGANIZATIONS}
+                displayErrorAsTooltip={false}
+              ></ContactInputContainer>
+            </SectionField>
+            <SectionField
+              label="Impacted properties"
+              required
+              tooltip="For the selected properties - corresponding property and interest details will be captured on the form"
+            >
+              <FormItem field="impactedProperties">
+                <FilePropertiesTable
+                  disabledSelection={false}
+                  fileProperties={acquisitionFile.fileProperties ?? []}
+                  selectedFileProperties={formikProps.values.impactedProperties}
+                  setSelectedFileProperties={(fileProperties: ApiGen_Concepts_FileProperty[]) => {
+                    formikProps.setFieldValue('impactedProperties', fileProperties);
+                  }}
+                ></FilePropertiesTable>
+              </FormItem>
+            </SectionField>
+            <SectionField label="Nature of interest">
+              <Input field="landInterest" />
+            </SectionField>
+            <SectionField label="Purpose of expropriation">
+              <Input field="purpose" />
+            </SectionField>
 
-          <RightFlexRow>
-            <Col xs="auto" className="pr-4">
-              <Button variant="secondary" onClick={() => onCancelClick(formikProps)}>
-                Cancel
-              </Button>
-            </Col>
-            <Col xs="auto">
-              <StyledAddButton title="Download File" onClick={() => onGenerateClick(formikProps)}>
-                <FaFileContract size={28} className="mr-2" />
-                Generate Form 1
-              </StyledAddButton>
-            </Col>
-          </RightFlexRow>
-        </Fragment>
-      )}
-    </Formik>
+            <RightFlexRow>
+              <Col xs="auto" className="pr-4">
+                <Button variant="secondary" onClick={() => onCancelClick(formikProps)}>
+                  Clear Form
+                </Button>
+              </Col>
+              <Col xs="auto">
+                <StyledAddButton title="Download File" onClick={() => onGenerateClick(formikProps)}>
+                  <FaFileContract size={28} className="mr-2" />
+                  Generate Form 1
+                </StyledAddButton>
+              </Col>
+            </RightFlexRow>
+          </Fragment>
+        )}
+      </Formik>
+    </StyledForm1Border>
   );
 };
 
 const RightFlexRow = styled(Row)`
   justify-content: end;
   align-items: center;
+`;
+
+const StyledForm1Border = styled.div`
+  border: solid 0.2rem ${props => props.theme.css.iconBlueHover};
+  margin-bottom: 0.5rem;
+  border-radius: 0.5rem;
+  padding: 3.2rem;
 `;
 
 export default ExpropriationForm1;
