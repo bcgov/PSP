@@ -68,6 +68,7 @@
         public string PlanNumber { get; set; } = null!;
         public string LegalDescription { get; set; } = null!;
         public List<string> MultiplePIDS { get; set; } = new List<string>();
+        public PropertyLatitudeLongitude LatitudeLongitude { get; set; } = new PropertyLatitudeLongitude();
     }
 
     public class PropertyManagement
@@ -94,15 +95,16 @@
 
     public class PropertyActivity
     {
+        public int PropertyActivityPropsCount { get; set; } = 0;
         public string PropertyActivityType { get; set; } = null!;
         public string PropertyActivitySubType { get; set; } = null!;
         public string PropertyActivityStatus { get; set; } = null!;
-        public string PropertyActivityRequestedDate { get; set; } = null!;
+        public string PropertyActivityRequestedCommenceDate { get; set; } = null!;
         public string PropertyActivityCompletionDate { get; set; } = null!;
         public string PropertyActivityDescription { get; set; } = null!;
         public List<string> PropertyActivityMinistryContact { get; set; } = new List<string>();
-        public string PropertyActivityRequestedSource { get; set; } = null!;
-        public List<string> PropertyActivityInvolvedParties { get; set; } = new List<string>();
+        public string PropertyActivityRequestorContactMngr { get; set; } = null!;
+        public List<string> PropertyActivityInvolvedPartiesExtContacts { get; set; } = new List<string>();
         public string PropertyActivityServiceProvider { get; set; } = null!;
         public int ManagementPropertyActivityInvoicesStartRow { get; set; } = 0;
         public int ManagementPropertyActivityInvoicesCount { get; set; } = 0;
@@ -115,7 +117,7 @@
 
     public class ManagementPropertyActivityInvoice
     {
-        public string PropertyActivityInvoiceNumber{ get; set; } = null!;
+        public string PropertyActivityInvoiceNumber { get; set; } = null!;
         public string PropertyActivityInvoiceDate { get; set; } = null!;
         public string PropertyActivityInvoiceDescription { get; set; } = null!;
         public string PropertyActivityInvoicePretaxAmount { get; set; } = null!;
@@ -143,5 +145,17 @@
     {
         public List<PropertyHistory> ConsolidationSource { get; set; } = new List<PropertyHistory>();
         public PropertyHistory ConsolidationDestination { get; set; } = new PropertyHistory();
+    }
+
+    public class PropertyLatitudeLongitude
+    {
+        public string LatitudeDegree { get; set; } = null!;
+        public string LatitudeMinutes { get; set; } = null!;
+        public string LatitudeSeconds { get; set; } = null!;
+        public string LatitudeDirection { get; set; } = null!;
+        public string LongitudeDegree { get; set; } = null!;
+        public string LongitudeMinutes { get; set; } = null!;
+        public string LongitudeSeconds { get; set; } = null!;
+        public string LongitudeDirection { get; set; } = null!;
     }
 }

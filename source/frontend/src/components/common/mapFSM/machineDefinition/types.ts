@@ -1,12 +1,16 @@
 import { LatLngBounds, LatLngLiteral } from 'leaflet';
 
 import { PropertyFilterFormModel } from '@/components/maps/leaflet/Control/AdvancedFilter/models';
-import { ILayerItem } from '@/components/maps/leaflet/Control/LayersControl/types';
-import { IFilePropertyLocation } from '@/components/maps/types';
 import { IMapSideBarViewState as IMapSideBarState } from '@/features/mapSideBar/MapSideBar';
 import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
 
-import { MapFeatureData, MarkerSelected, RequestedCenterTo, RequestedFlyTo } from '../models';
+import {
+  LocationBoundaryDataset,
+  MapFeatureData,
+  MarkerSelected,
+  RequestedCenterTo,
+  RequestedFlyTo,
+} from '../models';
 import { LocationFeatureDataset, SelectedFeatureDataset } from '../useLocationFeatureLoader';
 
 export enum SideBarType {
@@ -44,10 +48,10 @@ export type MachineContext = {
   requestedFitBounds: LatLngBounds;
   requestedFlyTo: RequestedFlyTo;
   requestedCenterTo: RequestedCenterTo;
-  filePropertyLocations: IFilePropertyLocation[];
+  filePropertyLocations: LocationBoundaryDataset[];
   activePimsPropertyIds: number[];
-  activeLayers: ILayerItem[];
-  mapLayersToRefresh: ILayerItem[];
+  activeLayers: Set<string>;
+  mapLayersToRefresh: Set<string>;
   isFiltering: boolean;
   showDisposed: boolean;
   showRetired: boolean;

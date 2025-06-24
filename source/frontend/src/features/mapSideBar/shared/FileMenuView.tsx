@@ -1,61 +1,57 @@
 import cx from 'classnames';
 import { useMemo } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { matchPath, useLocation } from 'react-router-dom';
+import { FaCaretRight } from 'react-icons/fa';
 import styled from 'styled-components';
 
-import EditButton from '@/components/common/buttons/EditButton';
+import { RestrictedEditControl } from '@/components/common/buttons';
 import { EditPropertiesIcon } from '@/components/common/buttons/EditPropertiesButton';
 import { LinkButton } from '@/components/common/buttons/LinkButton';
-import TooltipIcon from '@/components/common/TooltipIcon';
+import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
-import { exists } from '@/utils';
+import { exists, getFilePropertyName, sortFileProperties } from '@/utils';
 
-import FileMenuRow from './FileMenuRow';
+import { cannotEditMessage } from '../acquisition/common/constants';
 
 export interface IFileMenuProps {
-  properties: ApiGen_Concepts_FileProperty[];
+  file: ApiGen_Concepts_File;
+  currentFilePropertyId: number | null;
   canEdit: boolean;
+  isInNonEditableState: boolean;
+  editRestrictionMessage?: string;
   onSelectFileSummary: () => void;
   onSelectProperty: (propertyId: number) => void;
   onEditProperties: () => void;
 }
 
-const FileMenu: React.FunctionComponent<React.PropsWithChildren<IFileMenuProps>> = ({
-  properties,
+const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuProps>> = ({
+  file,
+  currentFilePropertyId,
   canEdit,
+  isInNonEditableState,
+  editRestrictionMessage = cannotEditMessage,
   onSelectFileSummary,
   onSelectProperty,
   onEditProperties,
   children,
 }) => {
-  const location = useLocation();
-
-  const currentPropertyIndex = useMemo(() => {
-    const match = matchPath(location.pathname, {
-      path: '*/property/:menuIndex/',
-      exact: false,
-      strict: false,
-    });
-    if (exists(match)) {
-      const propertyIndex = Number(match.params['menuIndex']);
-      // the index on the url starts at 1, so remove one to make it match the index on the JS side.
-      return propertyIndex - 1;
-    }
-    return null;
-  }, [location.pathname]);
-
-  const isSummary = useMemo(() => !exists(currentPropertyIndex), [currentPropertyIndex]);
+  // respect the order of properties as set by the user creating the file
+  const sortedProperties = sortFileProperties(file?.fileProperties ?? []);
+  const isSummary = useMemo(() => !exists(currentFilePropertyId), [currentFilePropertyId]);
 
   const activeProperties = [];
   const inactiveProperties = [];
-  properties.forEach(p => {
+  sortedProperties.forEach(p => {
     if (p.isActive !== false) {
       activeProperties.push(p);
     } else {
       inactiveProperties.push(p);
     }
   });
+  const labelledProperties: { label: string; properties: ApiGen_Concepts_FileProperty[] }[] = [
+    { label: 'Active', properties: activeProperties },
+    { label: 'Inactive', properties: inactiveProperties },
+  ];
 
   return (
     <StyledMenuWrapper>
@@ -72,53 +68,99 @@ const FileMenu: React.FunctionComponent<React.PropsWithChildren<IFileMenuProps>>
       </StyledRow>
       <StyledMenuHeaderWrapper>
         <StyledMenuHeader>Properties</StyledMenuHeader>
-        {canEdit && (
-          <EditButton
-            title="Change properties"
-            icon={<EditPropertiesIcon />}
-            onClick={onEditProperties}
-          />
-        )}
-        {!canEdit && (
-          <TooltipIcon
-            toolTipId="summary-cannot-edit-tooltip"
-            toolTip={'You cannot edit this, sorry'}
-          />
-        )}
+        <RestrictedEditControl
+          canEdit={canEdit}
+          isInNonEditableState={isInNonEditableState}
+          icon={<EditPropertiesIcon />}
+          title="Change properties"
+          toolTipId={`${file?.id ?? 0}-summary-cannot-edit-tooltip`}
+          editRestrictionMessage={editRestrictionMessage}
+          onEdit={onEditProperties}
+        />
       </StyledMenuHeaderWrapper>
       <div className={'p-1'} />
       <StyledMenuBodyWrapper>
-        <h4>Active</h4>
-        {activeProperties.map((property: ApiGen_Concepts_FileProperty, index: number) => {
-          return (
-            <FileMenuRow
-              key={`menu-item-row-parent-${property?.id ?? index}`}
-              index={index}
-              currentPropertyIndex={currentPropertyIndex}
-              property={property}
-              onSelectProperty={onSelectProperty}
-            />
-          );
-        })}
-        <h4>Inactive</h4>
-        {inactiveProperties.map((property: ApiGen_Concepts_FileProperty, index: number) => {
-          return (
-            <FileMenuRow
-              key={`menu-item-row-parent-${property?.id ?? activeProperties.length + index}`}
-              index={activeProperties.length + index}
-              currentPropertyIndex={currentPropertyIndex}
-              property={property}
-              onSelectProperty={onSelectProperty}
-            />
-          );
-        })}
+        {labelledProperties
+          .filter(lp => lp.properties?.length > 0)
+          .map(
+            (labelledProperties: { label: string; properties: ApiGen_Concepts_FileProperty[] }) => {
+              return (
+                <>
+                  {labelledProperties.label}
+                  {labelledProperties.properties.map(
+                    (fileProperty: ApiGen_Concepts_FileProperty, index: number) => {
+                      const propertyName = getFilePropertyName(fileProperty);
+                      return (
+                        <StyledRow
+                          key={`menu-item-row-${fileProperty?.id ?? index}`}
+                          data-testid={`menu-item-row-${fileProperty?.id ?? index}`}
+                          className={cx('no-gutters', {
+                            selected: currentFilePropertyId === fileProperty?.id,
+                          })}
+                          onClick={() => {
+                            if (currentFilePropertyId !== fileProperty?.id) {
+                              onSelectProperty(fileProperty.id);
+                            }
+                          }}
+                        >
+                          <Col xs="1">
+                            {currentFilePropertyId === fileProperty?.id && <FaCaretRight />}
+                          </Col>
+                          <Col xs="auto" className="pr-2">
+                            {fileProperty?.isActive !== false ? (
+                              <StyledIconWrapper
+                                className={cx({
+                                  selected: currentFilePropertyId === fileProperty?.id,
+                                })}
+                              >
+                                {sortedProperties.indexOf(fileProperty) + 1}
+                              </StyledIconWrapper>
+                            ) : (
+                              <StyledDisabledIconWrapper>
+                                {sortedProperties.indexOf(fileProperty) + 1}
+                              </StyledDisabledIconWrapper>
+                            )}
+                          </Col>
+                          <Col>
+                            {currentFilePropertyId === fileProperty?.id ? (
+                              <span title="View">{propertyName.value}</span>
+                            ) : (
+                              <LinkButton title="View">{propertyName.value}</LinkButton>
+                            )}
+                          </Col>
+                        </StyledRow>
+                      );
+                    },
+                  )}
+                </>
+              );
+            },
+          )}
       </StyledMenuBodyWrapper>
       <>{children}</>
     </StyledMenuWrapper>
   );
 };
 
-export default FileMenu;
+export default FileMenuView;
+
+const StyledDisabledIconWrapper = styled.div`
+  &.selected {
+    border-color: ${props => props.theme.bcTokens.themeGray110};
+  }
+  border: solid 0.3rem;
+  border-color: ${props => props.theme.bcTokens.themeGray100};
+  font-size: 1.5rem;
+  border-radius: 20%;
+  width: 3.25rem;
+  height: 3.25rem;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  font-family: 'BCSans-Bold';
+`;
 
 export const StyledMenuWrapper = styled.div`
   flex: 1;
@@ -130,6 +172,41 @@ export const StyledMenuWrapper = styled.div`
 
   display: flex;
   flex-direction: column;
+`;
+
+const StyledRow = styled(Row)`
+  width: 100%;
+
+  &.selected {
+    font-weight: bold;
+    cursor: default;
+  }
+
+  font-size: 1.4rem;
+  font-weight: normal;
+  cursor: pointer;
+  padding-bottom: 0.5rem;
+
+  div.Button__value {
+    font-size: 1.4rem;
+  }
+`;
+
+const StyledIconWrapper = styled.div`
+  &.selected {
+    background-color: ${props => props.theme.bcTokens.themeGold100};
+  }
+
+  background-color: ${props => props.theme.css.numberBackgroundColor};
+  font-size: 1.5rem;
+  border-radius: 50%;
+  opacity: 0.8;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const StyledMenuHeaderWrapper = styled.div`
@@ -149,22 +226,4 @@ const StyledMenuHeader = styled.span`
 
 const StyledMenuBodyWrapper = styled.div`
   flex-grow: 1;
-`;
-
-export const StyledRow = styled(Row)`
-  width: 100%;
-
-  &.selected {
-    font-weight: bold;
-    cursor: default;
-  }
-
-  font-size: 1.4rem;
-  font-weight: normal;
-  cursor: pointer;
-  padding-bottom: 0.5rem;
-
-  div.Button__value {
-    font-size: 1.4rem;
-  }
 `;

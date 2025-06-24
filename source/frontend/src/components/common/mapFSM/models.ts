@@ -33,6 +33,12 @@ export interface RequestedCenterTo {
   readonly location: LatLngLiteral | null;
 }
 
+export interface LocationBoundaryDataset {
+  readonly location: LatLngLiteral;
+  readonly boundary: Geometry | null;
+  readonly isActive?: boolean;
+}
+
 export const emptyPimsLocationFeatureCollection: FeatureCollection<
   Geometry,
   PIMS_Property_Location_View

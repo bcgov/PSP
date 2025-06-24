@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using PIMS.Tests.Automation.Classes;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -27,7 +28,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Search Tab Elements
         private readonly By searchByTab = By.XPath("//a[contains(text(),'Search')]");
-        private readonly By searchBySubtitle = By.XPath("//h3[contains(text(), 'Search for a property')]");
+        private readonly By searchBySubtitle = By.XPath("//h2/div/div[contains(text(), 'Search for a property')]");
         private readonly By searchBySelect = By.Id("input-searchBy");
         private readonly By searchByPIDInput = By.Id("input-pid");
         private readonly By searchByPINInput = By.Id("input-pin");
@@ -36,6 +37,14 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By searchByAddressSuggestion1stOption = By.CssSelector("div[class='suggestionList'] option:nth-child(1)");
         private readonly By searchByPlanInput = By.Id("input-planNumber");
         private readonly By searchByLegalDescriptionInput = By.Id("input-legalDescription");
+        private readonly By searchByLatDegreesInput = By.Id("number-input-coordinates.latitude.degrees");
+        private readonly By searchByLatMinsInput = By.Id("number-input-coordinates.latitude.minutes");
+        private readonly By searchByLatSecsInput = By.Id("number-input-coordinates.latitude.seconds");
+        private readonly By searchByLatDirectionSelect = By.Id("input-coordinates.latitude.direction");
+        private readonly By searchByLongDegreesInput = By.Id("number-input-coordinates.longitude.degrees");
+        private readonly By searchByLongMinsInput = By.Id("number-input-coordinates.longitude.minutes");
+        private readonly By searchByLongSecsInput = By.Id("number-input-coordinates.longitude.seconds");
+        private readonly By searchByLongDirectionSelect = By.Id("input-coordinates.longitude.direction");
         private readonly By searchByButton = By.Id("search-button");
         private readonly By searchResetButton = By.Id("reset-button");
 
@@ -155,30 +164,51 @@ namespace PIMS.Tests.Automation.PageObjects
 
             WaitUntilVisible(searchByLegalDescriptionInput);
             if (webDriver.FindElement(searchByLegalDescriptionInput).GetDomProperty("value") != "")
-            {
                 ClearInput(searchByLegalDescriptionInput);
-            }
+
             webDriver.FindElement(searchByLegalDescriptionInput).SendKeys(legalDescription);
 
             FocusAndClick(searchByButton);
             Wait(5000);
         }
 
-        //TO-DO
-        public void SelectPropertyByLongLant(string longitude, string latitude)
+        public void SelectPropertyByLongLant(PropertyLatitudeLongitude coordinates)
         {
-            //Wait();
-            //ChooseSpecificSelectOption(searchBySelect, "Legal Description");
+            Wait();
+            ChooseSpecificSelectOption(searchBySelect, "Lat/Long");
 
-            //WaitUntilVisible(searchByLegalDescriptionInput);
-            //if (webDriver.FindElement(searchByLegalDescriptionInput).GetDomProperty("value") != "")
-            //{
-            //    ClearInput(searchByLegalDescriptionInput);
-            //}
-            //webDriver.FindElement(searchByLegalDescriptionInput).SendKeys(legalDescription);
+            WaitUntilVisible(searchByLatDegreesInput);
 
-            //FocusAndClick(searchByButton);
-            //Wait(5000);
+            if (webDriver.FindElement(searchByLatDegreesInput).GetDomProperty("value") != "")
+                ClearInput(searchByLatDegreesInput);
+
+            if (webDriver.FindElement(searchByLatMinsInput).GetDomProperty("value") != "")
+                ClearInput(searchByLatMinsInput);
+
+            if (webDriver.FindElement(searchByLatSecsInput).GetDomProperty("value") != "")
+                ClearInput(searchByLatSecsInput);
+
+            if (webDriver.FindElement(searchByLongDegreesInput).GetDomProperty("value") != "")
+                ClearInput(searchByLongDegreesInput);
+
+            if (webDriver.FindElement(searchByLongMinsInput).GetDomProperty("value") != "")
+                ClearInput(searchByLongMinsInput);
+
+            if (webDriver.FindElement(searchByLongSecsInput).GetDomProperty("value") != "")
+                ClearInput(searchByLongSecsInput);
+
+            webDriver.FindElement(searchByLatDegreesInput).SendKeys(coordinates.LatitudeDegree);
+            webDriver.FindElement(searchByLatMinsInput).SendKeys(coordinates.LatitudeMinutes);
+            webDriver.FindElement(searchByLatSecsInput).SendKeys(coordinates.LatitudeSeconds);
+            webDriver.FindElement(searchByLatDirectionSelect).SendKeys(coordinates.LatitudeDirection);
+
+            webDriver.FindElement(searchByLongDegreesInput).SendKeys(coordinates.LongitudeDegree);
+            webDriver.FindElement(searchByLongMinsInput).SendKeys(coordinates.LongitudeMinutes);
+            webDriver.FindElement(searchByLongSecsInput).SendKeys(coordinates.LongitudeSeconds);
+            webDriver.FindElement(searchByLongDirectionSelect).SendKeys(coordinates.LongitudeDirection);
+
+            FocusAndClick(searchByButton);
+            Wait(5000);
         }
 
         public void AddNameSelectedProperty(string name, int index)
@@ -392,7 +422,12 @@ namespace PIMS.Tests.Automation.PageObjects
                 if (sharedModals.SecondaryModalContent().Contains("You have added one or more properties to the disposition file that are not in the MOTI Inventory"))
                 {
                     Assert.Equal("User Override Required", sharedModals.SecondaryModalHeader());
-                    Assert.Contains("You have added one or more properties to the disposition file that are not in the MOTI Inventory. Do you want to proceed?", sharedModals.SecondaryModalContent());
+                    Assert.Equal("You have added one or more properties to the disposition file that are not in the MOTI Inventory. Do you want to proceed?", sharedModals.SecondaryModalContent());
+                }
+                else if (sharedModals.SecondaryModalContent().Contains("You have added one or more properties to the management file that are not in the MOTI Inventory"))
+                {
+                    Assert.Equal("User Override Required", sharedModals.SecondaryModalHeader());
+                    Assert.Equal("You have added one or more properties to the management file that are not in the MOTI Inventory. To acquire these properties, add them to an acquisition file. Do you want to proceed?", sharedModals.SecondaryModalContent());
                 }
                 else
                 {

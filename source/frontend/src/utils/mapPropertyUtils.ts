@@ -8,10 +8,11 @@ import {
   Polygon,
 } from 'geojson';
 import { geoJSON, LatLngLiteral } from 'leaflet';
-import { compact, isNumber } from 'lodash';
+import { chain, compact, isNumber } from 'lodash';
 import polylabel from 'polylabel';
 import { toast } from 'react-toastify';
 
+import { LocationBoundaryDataset } from '@/components/common/mapFSM/models';
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { ONE_HUNDRED_METER_PRECISION } from '@/components/maps/constants';
 import { IMapProperty } from '@/components/propertySelector/models';
@@ -24,8 +25,6 @@ import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Conc
 import { ApiGen_Concepts_Geometry } from '@/models/api/generated/ApiGen_Concepts_Geometry';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { enumFromValue, exists, formatApiAddress, pidFormatter } from '@/utils';
-
-import { IFilePropertyLocation } from './../components/maps/types';
 
 export enum NameSourceType {
   PID = 'PID',
@@ -197,20 +196,6 @@ export function apiToMapProperty(fileProperty: ApiGen_Concepts_FileProperty): IM
   };
 }
 
-export function apiToFileProperty(
-  fileProperty: ApiGen_Concepts_FileProperty,
-): IFilePropertyLocation {
-  return {
-    latitude: fileProperty.property?.location?.coordinate.y,
-    longitude: fileProperty.property?.location?.coordinate.x,
-    fileLocation: {
-      lat: fileProperty.property?.location?.coordinate.y,
-      lng: fileProperty.property?.location?.coordinate.x,
-    },
-    isActive: fileProperty?.isActive,
-  };
-}
-
 function toMapProperty(
   feature: Feature<Geometry, GeoJsonProperties>,
   address?: string,
@@ -311,6 +296,17 @@ export function featuresetToMapProperty(
   }
 }
 
+export const featuresetToLocationBoundaryDataset = (
+  featureSet: SelectedFeatureDataset,
+): LocationBoundaryDataset => {
+  return {
+    location: featureSet?.fileLocation ?? featureSet?.location,
+    boundary: featureSet?.pimsFeature?.geometry ?? featureSet?.parcelFeature?.geometry,
+    isActive: featureSet.isActive,
+    displayOrder: featureSet.displayOrder,
+  };
+};
+
 export function pidFromFeatureSet(featureset: SelectedFeatureDataset): string | null {
   if (exists(featureset.pimsFeature?.properties)) {
     return exists(featureset.pimsFeature?.properties?.PID)
@@ -350,13 +346,18 @@ export function latLngFromMapProperty(
   };
 }
 
-export function latLngFromFileProperty(
-  fileProperty: IFilePropertyLocation | undefined | null,
-): LatLngLiteral | null {
-  return {
-    lat: Number(fileProperty?.fileLocation?.lat ?? fileProperty?.latitude ?? 0),
-    lng: Number(fileProperty?.fileLocation?.lng ?? fileProperty?.longitude ?? 0),
-  };
+export function filePropertyToLocationBoundaryDataset(
+  fileProperty: ApiGen_Concepts_FileProperty | undefined | null,
+): LocationBoundaryDataset | null {
+  const geom = locationFromFileProperty(fileProperty);
+  const location = getLatLng(geom);
+  return exists(location)
+    ? {
+        location,
+        boundary: fileProperty?.property?.boundary ?? null,
+        isActive: fileProperty.isActive ?? true,
+      }
+    : null;
 }
 
 /**
@@ -377,4 +378,31 @@ export function isLatLngInFeatureSetBoundary(
     | MultiPolygon;
 
   return exists(boundary) && booleanPointInPolygon(location, boundary);
+}
+
+/**
+ * Preserves the order of the properties within a file
+ * @param fileProperties The file properties
+ */
+export function applyDisplayOrder<T extends ApiGen_Concepts_FileProperty>(fileProperties: T[]) {
+  return fileProperties.map((fp, index) => {
+    fp.displayOrder = index;
+    return fp;
+  });
+}
+
+/**
+ * Sorts file properties based on their `displayOrder`
+ * @param fileProperties The file properties to sort
+ * @returns The sorted set of file properties
+ */
+export function sortFileProperties<T extends ApiGen_Concepts_FileProperty>(
+  fileProperties: T[] | null,
+): T[] | null {
+  if (exists(fileProperties)) {
+    return chain(fileProperties)
+      .orderBy([fp => fp.isActive !== false, fp => fp.displayOrder ?? Infinity, 'asc'])
+      .value();
+  }
+  return null;
 }

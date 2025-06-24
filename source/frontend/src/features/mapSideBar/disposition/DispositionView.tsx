@@ -12,33 +12,37 @@ import {
   useRouteMatch,
 } from 'react-router-dom';
 
+import { Claims } from '@/constants';
 import FileLayout from '@/features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { stripTrailingSlash } from '@/utils';
-import { getFilePropertyName } from '@/utils/mapPropertyUtils';
 
 import { SideBarContext } from '../context/sidebarContext';
 import { InventoryTabNames } from '../property/InventoryTabs';
 import FilePropertyRouter from '../router/FilePropertyRouter';
 import { FileTabType } from '../shared/detail/FileTabs';
+import FileMenuView from '../shared/FileMenuView';
 import { PropertyForm } from '../shared/models';
 import SidebarFooter from '../shared/SidebarFooter';
 import { StyledFormWrapper } from '../shared/styles';
 import UpdateProperties from '../shared/update/properties/UpdateProperties';
+import { useFilePropertyIdFromUrl } from '../shared/usePropertyIndexFromUrl';
 import { DispositionHeader } from './common/DispositionHeader';
-import DispositionMenu from './common/DispositionMenu';
 import DispositionRouter from './router/DispositionRouter';
+import DispositionStatusUpdateSolver from './tabs/fileDetails/detail/DispositionStatusUpdateSolver';
 
 export interface IDispositionViewProps {
   onClose: (() => void) | undefined;
   onSave: () => Promise<void>;
   onCancel: () => void;
-  onMenuChange: (selectedIndex: number) => void;
-  onShowPropertySelector: () => void;
+  onSelectFileSummary: () => void;
+  onSelectProperty: (propertyId: number) => void;
+  onEditProperties: () => void;
   onSuccess: (updateProperties?: boolean, updateFile?: boolean) => void;
   onUpdateProperties: (file: ApiGen_Concepts_File) => Promise<ApiGen_Concepts_File | undefined>;
   confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
@@ -55,8 +59,9 @@ export const DispositionView: React.FunctionComponent<IDispositionViewProps> = (
   onClose,
   onSave,
   onCancel,
-  onMenuChange,
-  onShowPropertySelector,
+  onSelectFileSummary,
+  onSelectProperty,
+  onEditProperties,
   onSuccess,
   onUpdateProperties,
   confirmBeforeAdd,
@@ -72,6 +77,7 @@ export const DispositionView: React.FunctionComponent<IDispositionViewProps> = (
   const location = useLocation();
   const history = useHistory();
   const match = useRouteMatch();
+  const { hasClaim } = useKeycloakWrapper();
   const { lastUpdatedBy } = useContext(SideBarContext);
 
   // match for property menu routes - eg /property/1/ltsa
@@ -85,19 +91,19 @@ export const DispositionView: React.FunctionComponent<IDispositionViewProps> = (
     `${stripTrailingSlash(match.path)}/property/:menuIndex/:tab`,
   );
 
-  const selectedMenuIndex = propertiesMatch !== null ? Number(propertiesMatch.params.menuIndex) : 0;
-
   const formTitle = isEditing
     ? getEditTitle(fileMatch, propertySelectorMatch, propertiesMatch)
     : 'Disposition File';
-
-  const menuItems = dispositionFile?.fileProperties?.map(x => getFilePropertyName(x).value) || [];
-  menuItems.unshift('File Summary');
 
   const closePropertySelector = () => {
     setIsEditing(false);
     history.push(`${match.url}`);
   };
+
+  // Extract the zero-based property index from the current URL path.
+  // It will be null if route is not matched
+  const currentPropertyId: number | null = useFilePropertyIdFromUrl();
+  const statusSolver = new DispositionStatusUpdateSolver(dispositionFile);
 
   return (
     <Switch>
@@ -142,15 +148,15 @@ export const DispositionView: React.FunctionComponent<IDispositionViewProps> = (
         >
           <FileLayout
             leftComponent={
-              <>
-                <DispositionMenu
-                  dispositionFile={dispositionFile}
-                  items={menuItems}
-                  selectedIndex={selectedMenuIndex}
-                  onChange={onMenuChange}
-                  onShowPropertySelector={onShowPropertySelector}
-                />
-              </>
+              <FileMenuView
+                file={dispositionFile}
+                currentFilePropertyId={currentPropertyId}
+                canEdit={hasClaim(Claims.DISPOSITION_EDIT)}
+                isInNonEditableState={!statusSolver.canEditProperties()}
+                onSelectFileSummary={onSelectFileSummary}
+                onSelectProperty={onSelectProperty}
+                onEditProperties={onEditProperties}
+              />
             }
             bodyComponent={
               <StyledFormWrapper>
@@ -170,16 +176,15 @@ export const DispositionView: React.FunctionComponent<IDispositionViewProps> = (
                   onSuccess={onSuccess}
                 />
                 <Route
-                  path={`${stripTrailingSlash(match.path)}/property/:menuIndex`}
+                  path={`${stripTrailingSlash(match.path)}/property/:filePropertyId`}
                   render={({ match }) => (
                     <FilePropertyRouter
                       formikRef={formikRef}
-                      selectedMenuIndex={Number(match.params.menuIndex)}
+                      selectedFilePropertyId={Number(match.params.filePropertyId)}
                       file={dispositionFile}
                       fileType={ApiGen_CodeTypes_FileTypes.Disposition}
                       isEditing={isEditing}
                       setIsEditing={setIsEditing}
-                      defaultFileTab={FileTabType.FILE_DETAILS}
                       defaultPropertyTab={InventoryTabNames.property}
                       onSuccess={onSuccess}
                     />

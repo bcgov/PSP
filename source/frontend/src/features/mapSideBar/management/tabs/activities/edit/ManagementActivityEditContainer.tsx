@@ -4,13 +4,15 @@ import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import useActivityContactRetriever from '@/features/mapSideBar/property/tabs/propertyDetailsManagement/activity/hooks';
 import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator';
 import { useManagementActivityRepository } from '@/hooks/repositories/useManagementActivityRepository';
+import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
-import { ApiGen_Concepts_PropertyActivitySubtype } from '@/models/api/generated/ApiGen_Concepts_PropertyActivitySubtype';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
+import { getCurrentIsoDate } from '@/utils/dateUtils';
 import { exists, isValidId } from '@/utils/utils';
 
 import { IManagementActivityEditFormProps } from './ManagementActivityEditForm';
+import { ManagementActivityFormModel } from './models';
 
 export interface IManagementActivityEditContainerProps {
   managementFileId: number;
@@ -25,11 +27,7 @@ export const ManagementActivityEditContainer: React.FunctionComponent<
   const { getSystemConstant } = useSystemConstants();
   const pathGenerator = usePathGenerator();
   const [show, setShow] = useState(true);
-  const [subtypes, setSubtypes] = useState<ApiGen_Concepts_PropertyActivitySubtype[]>([]);
-  const [loadedActivity, setLoadedActivity] = useState<
-    ApiGen_Concepts_PropertyActivity | undefined
-  >();
-
+  const [initialValues, setInitialValues] = useState<ManagementActivityFormModel | null>(null);
   const {
     fetchMinistryContacts,
     fetchPartiesContact,
@@ -38,7 +36,6 @@ export const ManagementActivityEditContainer: React.FunctionComponent<
   } = useActivityContactRetriever();
 
   const {
-    getActivitySubtypes: { execute: getSubtypes, loading: getSubtypesLoading },
     getManagementActivity: { execute: getManagementActivity, loading: getActivityLoading },
     addManagementActivity: { execute: addManagementActivity, loading: addActivityLoading },
     updateManagementActivity: { execute: updateManagementActivity, loading: updateActivityLoading },
@@ -48,23 +45,9 @@ export const ManagementActivityEditContainer: React.FunctionComponent<
 
   const castedFile = file as unknown as ApiGen_Concepts_ManagementFile;
 
-  // Load the subtypes
-  const fetchSubtypes = useCallback(async () => {
-    const retrieved = await getSubtypes();
-    if (exists(retrieved)) {
-      setSubtypes(retrieved);
-    } else {
-      setSubtypes([]);
-    }
-  }, [getSubtypes]);
-
-  useEffect(() => {
-    fetchSubtypes();
-  }, [fetchSubtypes]);
-
   // Load the activity
-  const fetchActivity = useCallback(
-    async (managementFileId: number, activityId: number) => {
+  const fetchActivity = useCallback(async () => {
+    if (isValidId(activityId)) {
       const retrieved = await getManagementActivity(managementFileId, activityId);
       if (exists(retrieved)) {
         if (exists(retrieved.ministryContacts)) {
@@ -79,19 +62,37 @@ export const ManagementActivityEditContainer: React.FunctionComponent<
         }
         await fetchProviderContact(retrieved);
 
-        setLoadedActivity(retrieved);
-      } else {
-        setLoadedActivity(undefined);
+        setInitialValues(ManagementActivityFormModel.fromApi(retrieved, castedFile.fileProperties));
       }
-    },
-    [fetchMinistryContacts, fetchPartiesContact, fetchProviderContact, getManagementActivity],
-  );
+    } else {
+      // Create activity flow
+      const defaultModel = new ManagementActivityFormModel(null, managementFileId);
+      defaultModel.activityStatusCode = 'NOTSTARTED';
+      defaultModel.requestedDate = getCurrentIsoDate();
+      defaultModel.selectedProperties = (castedFile?.fileProperties ?? []).map(x => {
+        return {
+          id: x.id,
+          fileId: castedFile.id,
+          propertyName: x.propertyName,
+          location: x.location,
+          displayOrder: x.displayOrder,
+          property: x.property,
+          propertyId: x.propertyId,
+        } as ApiGen_Concepts_FileProperty;
+      });
 
-  useEffect(() => {
-    if (isValidId(managementFileId) && isValidId(activityId)) {
-      fetchActivity(managementFileId, activityId);
+      setInitialValues(defaultModel);
     }
-  }, [managementFileId, activityId, fetchActivity]);
+  }, [
+    activityId,
+    castedFile.fileProperties,
+    castedFile.id,
+    fetchMinistryContacts,
+    fetchPartiesContact,
+    fetchProviderContact,
+    getManagementActivity,
+    managementFileId,
+  ]);
 
   const gstConstant = getSystemConstant(SystemConstants.GST);
   const pstConstant = getSystemConstant(SystemConstants.PST);
@@ -120,20 +121,21 @@ export const ManagementActivityEditContainer: React.FunctionComponent<
     }
   };
 
-  if (!isValidId(file?.id) && fileLoading === false) {
-    return null;
-  }
+  useEffect(() => {
+    if (isValidId(managementFileId) && initialValues === null) {
+      fetchActivity();
+    }
+  }, [managementFileId, fetchActivity, initialValues]);
 
-  return exists(castedFile) && isValidId(castedFile?.id) ? (
+  return exists(castedFile) && isValidId(castedFile?.id) && exists(initialValues) ? (
     <View
       managementFile={castedFile}
-      activity={loadedActivity}
-      subtypes={subtypes}
+      initialValues={initialValues}
       gstConstant={gstDecimal}
       pstConstant={pstDecimal}
       onCancel={onCancelClick}
       loading={
-        getSubtypesLoading ||
+        fileLoading ||
         addActivityLoading ||
         getActivityLoading ||
         updateActivityLoading ||

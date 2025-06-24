@@ -1,11 +1,11 @@
 import clsx from 'classnames';
 import { Formik, FormikProps } from 'formik';
-import React, { ChangeEvent, useMemo, useRef, useState } from 'react';
+import React, { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { Col } from 'react-bootstrap';
 import ReactVisibilitySensor from 'react-visibility-sensor';
 
 import { CancelConfirmationModal } from '@/components/common/CancelConfirmationModal';
-import { FastDatePicker, Input, Select, SelectOption } from '@/components/common/form';
+import { FastDatePicker, Input, Multiselect, Select } from '@/components/common/form';
 import { ContactInputContainer } from '@/components/common/form/ContactInput/ContactInputContainer';
 import ContactInputView from '@/components/common/form/ContactInput/ContactInputView';
 import { TextArea } from '@/components/common/form/TextArea';
@@ -17,17 +17,23 @@ import * as Styled from '@/components/common/styles';
 import { TrayHeaderContent } from '@/components/common/styles';
 import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
 import FilePropertiesTable from '@/components/filePropertiesTable/FilePropertiesTable';
-import { PROP_MGMT_ACTIVITY_STATUS_TYPES, PROP_MGMT_ACTIVITY_TYPES } from '@/constants/API';
+import {
+  PROP_MGMT_ACTIVITY_STATUS_TYPES,
+  PROP_MGMT_ACTIVITY_SUBTYPES_TYPES,
+  PROP_MGMT_ACTIVITY_TYPES,
+} from '@/constants/API';
 import SaveCancelButtons from '@/features/leases/SaveCancelButtons';
-import { ActivityPropertyFormModel } from '@/features/mapSideBar/property/tabs/propertyDetailsManagement/activity/edit/models';
+import { ManagementActivitySubTypeModel } from '@/features/mapSideBar/property/tabs/propertyDetailsManagement/activity/models/ManagementActivitySubType';
 import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { useModalManagement } from '@/hooks/useModalManagement';
+import useIsMounted from '@/hooks/util/useIsMounted';
+import { ApiGen_CodeTypes_ManagementActivityStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_ManagementActivityStatusTypes';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
-import { ApiGen_Concepts_PropertyActivitySubtype } from '@/models/api/generated/ApiGen_Concepts_PropertyActivitySubtype';
-import { exists, getCurrentIsoDate, isValidId } from '@/utils';
+import { ILookupCode } from '@/store/slices/lookupCodes';
+import { exists, isValidId } from '@/utils';
 import { mapLookupCode } from '@/utils/mapLookupCode';
 
 import { ContactListForm } from './ContactListForm';
@@ -37,8 +43,7 @@ import { ManagementActivityFormModel } from './models';
 
 export interface IManagementActivityEditFormProps {
   managementFile: ApiGen_Concepts_ManagementFile;
-  activity?: ApiGen_Concepts_PropertyActivity;
-  subtypes: ApiGen_Concepts_PropertyActivitySubtype[];
+  initialValues: ManagementActivityFormModel;
   gstConstant: number;
   pstConstant: number;
   onCancel: () => void;
@@ -53,8 +58,7 @@ export const ManagementActivityEditForm: React.FunctionComponent<
   React.PropsWithChildren<IManagementActivityEditFormProps>
 > = ({
   managementFile,
-  activity,
-  subtypes,
+  initialValues,
   gstConstant,
   pstConstant,
   loading,
@@ -65,77 +69,61 @@ export const ManagementActivityEditForm: React.FunctionComponent<
   onSave,
 }) => {
   const formikRef = useRef<FormikProps<ManagementActivityFormModel>>(null);
-  const [activityType, setActivityType] = useState<string | null>(null);
+  const isMounted = useIsMounted();
+
+  const [activitySubTypeOptions, setActivitySubTypeOptions] =
+    useState<ManagementActivitySubTypeModel[]>(null);
   const [showConfirmModal, openConfirmModal, closeConfirmModal] = useModalManagement();
   const lookupCodes = useLookupCodeHelpers();
-
-  const initialForm = useMemo(() => {
-    let activityForm: ManagementActivityFormModel;
-
-    // Update activity flow
-    if (exists(activity)) {
-      activityForm = ManagementActivityFormModel.fromApi(activity);
-    } else {
-      // Create activity flow
-      activityForm = new ManagementActivityFormModel(null, managementFile.id);
-      activityForm.activityStatusCode = 'NOTSTARTED';
-      activityForm.requestedDate = getCurrentIsoDate();
-      // By default, all properties are selected but user can unselect all or some
-      activityForm.activityProperties = (managementFile.fileProperties ?? [])
-        .filter(fp => fp.isActive !== false)
-        .map(fp => {
-          const newActivityProperty = new ActivityPropertyFormModel();
-          newActivityProperty.propertyId = fp.propertyId;
-          return newActivityProperty;
-        });
-    }
-
-    setActivityType(activityForm.activityTypeCode);
-    return activityForm;
-  }, [activity, managementFile.fileProperties, managementFile.id]);
 
   const activityTypeOptions = lookupCodes
     .getByType(PROP_MGMT_ACTIVITY_TYPES)
     .map(c => mapLookupCode(c));
 
-  const activitySubtypeOptions: SelectOption[] = useMemo(() => {
-    return subtypes
-      .filter(ast => ast.parentTypeCode === activityType)
-      .map<SelectOption>(ast => {
-        return {
-          label: ast.description ?? '',
-          value: ast.typeCode ?? '',
-          code: ast.typeCode ?? undefined,
-          parentId: ast.parentTypeCode ?? undefined,
-        };
-      });
-  }, [activityType, subtypes]);
+  const activitySubTypeCodes: ILookupCode[] = lookupCodes.getByType(
+    PROP_MGMT_ACTIVITY_SUBTYPES_TYPES,
+  );
 
   const activityStatusOptions = lookupCodes
     .getByType(PROP_MGMT_ACTIVITY_STATUS_TYPES)
     .map(c => mapLookupCode(c));
 
-  const saveActivity = async (values: ManagementActivityFormModel) => {
-    await onSave(values.toApi());
-    if (exists(formikRef.current)) {
-      formikRef.current.setSubmitting(false);
-    }
-  };
-
   const onActivityTypeChange = async (changeEvent: ChangeEvent<HTMLInputElement>) => {
     const typeCode = changeEvent.target.value;
-    setActivityType(typeCode ?? null);
-    if (exists(formikRef.current)) {
-      formikRef.current.setFieldValue('activitySubtypeCode', '');
+    if (
+      typeCode &&
+      formikRef.current?.values.activityTypeCode &&
+      typeCode !== formikRef.current?.values.activityTypeCode
+    ) {
+      if (exists(formikRef.current)) {
+        formikRef.current?.setFieldValue('activitySubtypeCodes', []);
+      }
     }
+
+    setManagementActivitySubTypeOptions(typeCode);
   };
 
-  const isEditMode = exists(activity);
+  const setManagementActivitySubTypeOptions = useCallback(
+    async (activityTypeCode: string) => {
+      const subTypeOptions: ManagementActivitySubTypeModel[] = activitySubTypeCodes
+        .filter(x => x.parentId === activityTypeCode)
+        .map(x => ManagementActivitySubTypeModel.fromLookup(null, x));
 
-  const onCloseClick = () => {
-    setShow(false);
-    onClose();
-  };
+      setActivitySubTypeOptions(subTypeOptions);
+    },
+    [activitySubTypeCodes],
+  );
+
+  useEffect(() => {
+    if (activitySubTypeOptions === null && isMounted) {
+      setManagementActivitySubTypeOptions(initialValues.activityTypeCode);
+    }
+  }, [
+    activitySubTypeOptions,
+    initialValues.activityTypeCode,
+    isMounted,
+    setManagementActivitySubTypeOptions,
+  ]);
 
   return (
     <ReactVisibilitySensor
@@ -145,12 +133,17 @@ export const ManagementActivityEditForm: React.FunctionComponent<
     >
       <Styled.PopupTray className={clsx({ show })}>
         <TrayHeaderContent>
-          <Styled.TrayHeader>{isEditMode ? 'Edit ' : 'New '}Property Activity</Styled.TrayHeader>
+          <Styled.TrayHeader>
+            {isValidId(initialValues?.id) ? 'Edit ' : 'New '}Property Activity
+          </Styled.TrayHeader>
           <Col xs="auto" className="text-right">
             <Styled.CloseIcon
               id="close-tray"
               title="close"
-              onClick={onCloseClick}
+              onClick={() => {
+                setShow(false);
+                onClose();
+              }}
             ></Styled.CloseIcon>
           </Col>
         </TrayHeaderContent>
@@ -158,13 +151,19 @@ export const ManagementActivityEditForm: React.FunctionComponent<
           <StyledFormWrapper>
             <StyledSummarySection>
               <LoadingBackdrop show={loading} />
-              {exists(initialForm) && (
+              {exists(initialValues) && (
                 <Formik<ManagementActivityFormModel>
                   enableReinitialize
                   innerRef={formikRef}
                   validationSchema={ManagementActivityEditFormYupSchema}
-                  initialValues={initialForm}
-                  onSubmit={saveActivity}
+                  initialValues={initialValues}
+                  validateOnChange={true}
+                  onSubmit={async (values, formikHelpers) => {
+                    await onSave(values.toApi());
+                    if (exists(formikRef.current)) {
+                      formikHelpers.setSubmitting(false);
+                    }
+                  }}
                 >
                   {formikProps => (
                     <>
@@ -173,39 +172,11 @@ export const ManagementActivityEditForm: React.FunctionComponent<
                           <FilePropertiesTable
                             disabledSelection={false}
                             fileProperties={managementFile.fileProperties ?? []}
-                            selectedFileProperties={
-                              formikProps.values.activityProperties
-                                .map(ap =>
-                                  managementFile.fileProperties?.find(
-                                    fp => fp.propertyId === ap.propertyId,
-                                  ),
-                                )
-                                .filter(exists) ?? []
-                            }
+                            selectedFileProperties={formikProps.values.selectedProperties}
                             setSelectedFileProperties={(
                               fileProperties: ApiGen_Concepts_FileProperty[],
                             ) => {
-                              const activityProperties: ActivityPropertyFormModel[] =
-                                fileProperties.map(fileProperty => {
-                                  const matchingProperty =
-                                    formikProps.values.activityProperties.find(
-                                      ap => ap.propertyId === fileProperty.propertyId,
-                                    );
-
-                                  if (exists(matchingProperty)) {
-                                    return matchingProperty;
-                                  } else {
-                                    const newActivityProperty = new ActivityPropertyFormModel();
-                                    newActivityProperty.propertyId = fileProperty.propertyId;
-                                    newActivityProperty.propertyActivityId = isValidId(activity?.id)
-                                      ? activity?.id
-                                      : 0;
-
-                                    return newActivityProperty;
-                                  }
-                                });
-
-                              formikProps.setFieldValue('activityProperties', activityProperties);
+                              formikProps.setFieldValue('selectedProperties', fileProperties);
                             }}
                           ></FilePropertiesTable>
                         </SectionField>
@@ -219,11 +190,12 @@ export const ManagementActivityEditForm: React.FunctionComponent<
                             onChange={onActivityTypeChange}
                           />
                         </SectionField>
-                        <SectionField label="Sub-type" contentWidth={{ xs: 7 }} required>
-                          <Select
-                            field="activitySubtypeCode"
-                            options={activitySubtypeOptions}
-                            placeholder="Select subtype"
+                        <SectionField label="Sub-type(s)" contentWidth={{ xs: 7 }} required>
+                          <Multiselect
+                            field="activitySubtypeCodes"
+                            displayValue="subTypeCodeDescription"
+                            options={activitySubTypeOptions ?? []}
+                            placeholder=""
                           />
                         </SectionField>
                         <SectionField label="Activity status" contentWidth={{ xs: 7 }} required>
@@ -239,7 +211,10 @@ export const ManagementActivityEditForm: React.FunctionComponent<
                         <SectionField
                           label="Completion"
                           contentWidth={{ xs: 7 }}
-                          required={formikProps.values.activityStatusCode === 'COMPLETED'}
+                          required={
+                            formikProps.values.activityStatusCode ===
+                            ApiGen_CodeTypes_ManagementActivityStatusTypes.COMPLETED
+                          }
                         >
                           <FastDatePicker field="completionDate" formikProps={formikProps} />
                         </SectionField>

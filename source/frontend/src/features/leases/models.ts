@@ -19,7 +19,7 @@ import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Con
 import { EpochIsoDateTime, UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
-import { exists, isValidId, isValidIsoDateTime } from '@/utils';
+import { applyDisplayOrder, exists, isValidId, isValidIsoDateTime } from '@/utils';
 import {
   emptyStringToNull,
   fromTypeCode,
@@ -186,6 +186,10 @@ export class LeaseFormModel implements WithLeaseTeam {
   }
 
   public static toApi(formLease: LeaseFormModel): ApiGen_Concepts_Lease {
+    const fileProperties =
+      formLease.properties?.map(p => FormLeaseProperty.toApi(p)).filter(x => exists(x)) ?? [];
+    const sortedProperties = applyDisplayOrder(fileProperties);
+
     return {
       id: formLease.id ?? 0,
       lFileNo: stringToNull(formLease.lFileNo),
@@ -214,8 +218,7 @@ export class LeaseFormModel implements WithLeaseTeam {
       motiName: formLease.motiName,
       hasDigitalLicense: formLease.hasDigitalLicense ?? null,
       hasPhysicalLicense: formLease.hasPhysicalLicense ?? null,
-      fileProperties:
-        formLease.properties?.map(p => FormLeaseProperty.toApi(p)).filter(x => exists(x)) ?? [],
+      fileProperties: sortedProperties ?? [],
       isResidential: formLease.isResidential,
       isCommercialBuilding: formLease.isCommercialBuilding,
       isOtherImprovement: formLease.isOtherImprovement,
@@ -267,6 +270,7 @@ export class FormLeaseProperty {
   name?: string;
   landArea: number;
   areaUnitTypeCode: string;
+  displayOrder: number | null;
 
   private constructor(leaseId?: number | null) {
     this.leaseId = leaseId ?? null;
@@ -287,6 +291,7 @@ export class FormLeaseProperty {
     model.name = apiPropertyLease.propertyName ?? undefined;
     model.landArea = apiPropertyLease.leaseArea ?? 0;
     model.areaUnitTypeCode = apiPropertyLease.areaUnitType?.id || AreaUnitTypes.SquareMeters;
+    model.displayOrder = apiPropertyLease.displayOrder;
     return model;
   }
 
@@ -449,3 +454,6 @@ export const getDefaultFormLease: () => LeaseFormModel = () =>
     totalAllowableCompensation: null,
     leaseTeam: [],
   });
+
+export const isLeaseFile = (file: object): file is ApiGen_Concepts_Lease =>
+  exists(file) && Object.hasOwn(file, 'paymentReceivableType');

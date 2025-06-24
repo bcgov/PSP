@@ -1,14 +1,15 @@
 import { FeatureCollection, Geometry } from 'geojson';
 import { geoJSON, latLngBounds } from 'leaflet';
-import { assign, createMachine, raise, send } from 'xstate';
+import { AnyEventObject, assign, createMachine, raise, send } from 'xstate';
 
 import { defaultBounds } from '@/components/maps/constants';
 import { PropertyFilterFormModel } from '@/components/maps/leaflet/Control/AdvancedFilter/models';
-import { PIMS_PROPERTY_BOUNDARY_KEY } from '@/components/maps/leaflet/Control/LayersControl/DefaultLayers';
+import { pimsBoundaryLayers } from '@/components/maps/leaflet/Control/LayersControl/LayerDefinitions';
+import { initialEnabledLayers } from '@/components/maps/leaflet/Control/LayersControl/LayersMenuLayout';
 import { defaultPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
-import { latLngFromMapProperty } from '@/utils/mapPropertyUtils';
+import { exists } from '@/utils';
 
-import { emptyFeatureData } from '../models';
+import { emptyFeatureData, LocationBoundaryDataset } from '../models';
 import { MachineContext, SideBarType } from './types';
 
 const featureViewStates = {
@@ -42,7 +43,12 @@ const featureViewStates = {
         },
         SET_FILE_PROPERTY_LOCATIONS: {
           actions: [
-            assign({ filePropertyLocations: (_, event: any) => event.locations }),
+            assign({
+              filePropertyLocations: (
+                _,
+                event: AnyEventObject & { locations: LocationBoundaryDataset[] },
+              ) => event.locations ?? [],
+            }),
             raise('REQUEST_FIT_FILE_BOUNDS'),
           ],
         },
@@ -62,7 +68,12 @@ const featureViewStates = {
         },
         SET_FILE_PROPERTY_LOCATIONS: {
           actions: [
-            assign({ filePropertyLocations: (_, event: any) => event.locations }),
+            assign({
+              filePropertyLocations: (
+                _,
+                event: AnyEventObject & { locations: LocationBoundaryDataset[] },
+              ) => event.locations ?? [],
+            }),
             raise('REQUEST_FIT_FILE_BOUNDS'),
           ],
         },
@@ -105,7 +116,7 @@ const featureDataLoaderStates = {
                 isLoading: () => false,
                 mapFeatureData: (_, event: any) => event.data,
                 fitToResultsAfterLoading: () => false,
-                mapLayersToRefresh: () => [{ key: PIMS_PROPERTY_BOUNDARY_KEY }],
+                mapLayersToRefresh: () => pimsBoundaryLayers,
               }),
             ],
             target: 'idle',
@@ -116,7 +127,7 @@ const featureDataLoaderStates = {
                 isLoading: () => false,
                 mapFeatureData: (_, event: any) => event.data,
                 fitToResultsAfterLoading: () => false,
-                mapLayersToRefresh: () => [{ key: PIMS_PROPERTY_BOUNDARY_KEY }],
+                mapLayersToRefresh: () => pimsBoundaryLayers,
               }),
             ],
             target: 'idle',
@@ -208,12 +219,12 @@ const mapRequestStates = {
         REQUEST_FIT_FILE_BOUNDS: {
           actions: assign({
             requestedFitBounds: (context: MachineContext) => {
-              // business logic, if there are file properties, use those, otherwise, zoom to a single feature if there is only one, or all features if there are more than one.
-
+              // zoom to the bounds that include all file properties
               if (context.filePropertyLocations.length > 0) {
-                return latLngBounds(
-                  context.filePropertyLocations.map(fp => latLngFromMapProperty(fp)),
-                );
+                const locations = (context.filePropertyLocations ?? [])
+                  .map(pl => pl.location)
+                  .filter(exists);
+                return latLngBounds(locations);
               }
             },
           }),
@@ -388,7 +399,10 @@ const sideBarStates = {
         SET_FILE_PROPERTY_LOCATIONS: {
           actions: [
             assign({
-              filePropertyLocations: (_: MachineContext, event: any) => event.locations || [],
+              filePropertyLocations: (
+                _,
+                event: AnyEventObject & { locations: LocationBoundaryDataset[] },
+              ) => event.locations ?? [],
             }),
             raise('REQUEST_FIT_FILE_BOUNDS'),
           ],
@@ -520,8 +534,8 @@ export const mapMachine = createMachine<MachineContext>({
     isFiltering: false,
     showDisposed: false,
     showRetired: false,
-    activeLayers: [],
-    mapLayersToRefresh: [],
+    activeLayers: initialEnabledLayers,
+    mapLayersToRefresh: new Set(),
     currentMapBounds: null,
   },
 

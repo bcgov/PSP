@@ -1,27 +1,26 @@
 import { Claims } from '@/constants';
-import {
-  getMockApiManagementActivitySubTypes,
-  getMockPropertyManagementActivity,
-} from '@/mocks/PropertyManagementActivity.mock';
+import { getMockPropertyManagementActivity } from '@/mocks/PropertyManagementActivity.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mockManagementFileResponse } from '@/mocks/managementFiles.mock';
-import { getMockApiPropertyFiles } from '@/mocks/properties.mock';
-import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
+  cleanup,
   getByName,
   render,
   RenderOptions,
   screen,
+  selectOptions,
   userEvent,
-  within,
+  waitForEffects,
 } from '@/utils/test-utils';
 
 import {
   IManagementActivityEditFormProps,
   ManagementActivityEditForm,
 } from './ManagementActivityEditForm';
+import { ManagementActivityFormModel } from './models';
+import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 
 // Need to mock this library for unit tests
 vi.mock('react-visibility-sensor', () => {
@@ -39,22 +38,30 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
+const mockManagementActivityFormValues: ManagementActivityFormModel =
+  ManagementActivityFormModel.fromApi(
+    {
+      ...getMockPropertyManagementActivity(1),
+      activityProperties: [],
+    },
+    mockManagementFileResponse().fileProperties,
+  );
+
 const onCancel = vi.fn();
 const onSave = vi.fn();
 const setShow = vi.fn();
 const onClose = vi.fn();
 
 describe('ManagementActivityEditForm component', () => {
-  const setup = (
+  const setup = async (
     renderOptions: RenderOptions & {
       props?: Partial<IManagementActivityEditFormProps>;
     } = {},
   ) => {
-    const rendered = render(
+    const utils = render(
       <ManagementActivityEditForm
         managementFile={renderOptions?.props?.managementFile ?? mockManagementFileResponse()}
-        activity={renderOptions?.props?.activity}
-        subtypes={renderOptions?.props?.subtypes ?? getMockApiManagementActivitySubTypes()}
+        initialValues={renderOptions?.props?.initialValues ?? mockManagementActivityFormValues}
         gstConstant={renderOptions?.props?.gstConstant ?? 0}
         pstConstant={renderOptions?.props?.pstConstant ?? 0}
         loading={renderOptions?.props?.loading ?? false}
@@ -76,10 +83,14 @@ describe('ManagementActivityEditForm component', () => {
       },
     );
 
-    return { ...rendered };
+    return {
+      ...utils,
+      getSubTypesMultiSelect: () =>
+        utils.container.querySelector(`#multiselect-activitySubtypeCodes_input`) as HTMLElement,
+    };
   };
 
-  let initialValues: ApiGen_Concepts_PropertyActivity;
+  let initialValues: ManagementActivityFormModel;
 
   beforeAll(() => {
     // Lock the current datetime as our snapshot has date-dependent fields
@@ -88,12 +99,15 @@ describe('ManagementActivityEditForm component', () => {
   });
 
   beforeEach(() => {
-    initialValues = getMockPropertyManagementActivity(1);
-    initialValues.managementFileId = 1;
+    initialValues = ManagementActivityFormModel.fromApi(
+      getMockPropertyManagementActivity(1),
+      mockManagementFileResponse().fileProperties,
+    );
   });
 
   afterEach(() => {
     vi.clearAllMocks();
+    cleanup();
   });
 
   afterAll(() => {
@@ -102,12 +116,13 @@ describe('ManagementActivityEditForm component', () => {
   });
 
   it('renders as expected', async () => {
-    const { asFragment } = setup();
+    const { asFragment } = await setup();
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('validates required fields before submitting the form', async () => {
-    setup();
+    await setup();
+    await waitForEffects();
 
     await act(async () => userEvent.paste(getByName('requestedSource'), 'Lorem Ipsum'));
     const save = screen.getByText('Save');
@@ -117,7 +132,8 @@ describe('ManagementActivityEditForm component', () => {
   });
 
   it('validates that completion date is required when status is set to COMPLETED', async () => {
-    setup();
+    await setup();
+    await waitForEffects();
 
     await act(async () => {
       userEvent.selectOptions(getByName('activityStatusCode'), 'COMPLETED');
@@ -131,7 +147,8 @@ describe('ManagementActivityEditForm component', () => {
 
   it('validates that completion date is after commencement date', async () => {
     vi.spyOn(console, 'error').mockImplementation(() => {});
-    setup();
+    await setup();
+    await waitForEffects();
 
     await act(async () => {
       userEvent.type(getByName('requestedDate'), '2024-10-10', { delay: 100 });
@@ -149,49 +166,59 @@ describe('ManagementActivityEditForm component', () => {
   });
 
   it(`clears the activity sub-type when the main type is changed`, async () => {
-    setup({ props: { activity: initialValues } });
+    const { getSubTypesMultiSelect, container } = await setup({
+      props: { initialValues: initialValues },
+    });
+    await waitForEffects();
 
-    const activityType = getByName('activityTypeCode') as HTMLSelectElement;
-    expect(
-      (
-        within(activityType).getByRole('option', {
-          name: 'Applications/Permits',
-        }) as HTMLOptionElement
-      ).selected,
-    ).toBe(true);
+    await act(async () => selectOptions('activityTypeCode', 'CONSULTATION'));
+    await waitForEffects();
 
-    const activitySubtype = getByName('activitySubtypeCode') as HTMLSelectElement;
-    expect(
-      (
-        within(activitySubtype).getByRole('option', {
-          name: 'Access',
-        }) as HTMLOptionElement
-      ).selected,
-    ).toBe(true);
+    // Select the Sub-Type
+    const multiSelectSubTypes = getSubTypesMultiSelect();
+    expect(multiSelectSubTypes).not.toBeNull();
 
+    await act(async () => {
+      userEvent.click(multiSelectSubTypes);
+      userEvent.type(multiSelectSubTypes, 'Internal');
+      userEvent.click(multiSelectSubTypes);
+
+      const firstOption = container.querySelector(`div ul li.option`);
+      userEvent.click(firstOption);
+    });
+    await waitForEffects();
+
+    // Change the Type
     await act(async () => {
       userEvent.selectOptions(getByName('activityTypeCode'), 'PROPERTYMTC');
     });
+    await waitForEffects();
 
-    expect(
-      (
-        within(activitySubtype).getByRole('option', {
-          name: 'Select subtype',
-        }) as HTMLOptionElement
-      ).selected,
-    ).toBe(true);
+    expect(multiSelectSubTypes).toHaveValue('');
   });
 
   it(`submits the form when Save button is clicked`, async () => {
-    setup();
+    const { getSubTypesMultiSelect, container } = await setup();
+    await waitForEffects();
 
     await act(async () => userEvent.paste(getByName('description'), 'some description goes here'));
+    await act(async () => selectOptions('activityTypeCode', 'CONSULTATION'));
+
+    await waitForEffects();
+
+    // Select the Sub-Type
+    const multiSelectSubTypes = getSubTypesMultiSelect();
+    expect(multiSelectSubTypes).not.toBeNull();
+
     await act(async () => {
-      userEvent.selectOptions(getByName('activityTypeCode'), 'APPLICPERMIT');
+      userEvent.click(multiSelectSubTypes);
+      userEvent.type(multiSelectSubTypes, 'Internal');
+      userEvent.click(multiSelectSubTypes);
+
+      const firstOption = container.querySelector(`div ul li.option`);
+      userEvent.click(firstOption);
     });
-    await act(async () => {
-      userEvent.selectOptions(getByName('activitySubtypeCode'), 'ACCESS');
-    });
+    await waitForEffects();
     const save = screen.getByText('Save');
     await act(async () => userEvent.click(save));
 
@@ -199,7 +226,8 @@ describe('ManagementActivityEditForm component', () => {
   });
 
   it('triggers a confirmation popup when cancelling the form', async () => {
-    setup();
+    await setup();
+    await waitForEffects();
 
     await act(async () => userEvent.paste(getByName('description'), 'some description goes here'));
     const cancel = screen.getByText('Cancel');
@@ -211,7 +239,8 @@ describe('ManagementActivityEditForm component', () => {
   });
 
   it('calls onCancel when acknowledging the confirmation popup', async () => {
-    setup();
+    await setup();
+    await waitForEffects();
 
     await act(async () => userEvent.paste(getByName('description'), 'some description goes here'));
     const cancel = screen.getByText('Cancel');
@@ -228,7 +257,8 @@ describe('ManagementActivityEditForm component', () => {
   });
 
   it('calls onClose when the form is closed', async () => {
-    setup();
+    await setup();
+    await waitForEffects();
 
     const closeBtn = screen.getByTitle('close');
     await act(async () => userEvent.click(closeBtn));
@@ -237,30 +267,57 @@ describe('ManagementActivityEditForm component', () => {
   });
 
   it('shows all properties selected by default when creating management activity', async () => {
-    setup({
+    const mockDefaultValues = new ManagementActivityFormModel(null, 1);
+    mockDefaultValues.selectedProperties = mockManagementFileResponse().fileProperties.map(x => {
+        return {
+          id: x.id,
+          fileId: mockManagementFileResponse().id,
+          propertyName: x.propertyName,
+          location: x.location,
+          displayOrder: x.displayOrder,
+          property: x.property,
+          propertyId: x.propertyId,
+        } as ApiGen_Concepts_FileProperty;
+    });
+
+    await setup({
       props: {
+        initialValues: mockDefaultValues,
         managementFile: {
           ...mockManagementFileResponse(),
-          fileProperties: getMockApiPropertyFiles() as any,
         },
       },
     });
+    await waitForEffects();
 
-    expect(screen.getByTestId('selectrow-1')).toBeChecked();
-    expect(screen.getByTestId('selectrow-2')).toBeChecked();
+    expect(screen.getByTestId('selectrow-10')).toBeChecked();
   });
 
-  it('can select management file properties', async () => {
-    setup({
+  it('can de-select management file properties', async () => {
+    const mockDefaultValues = new ManagementActivityFormModel(null, 1);
+    mockDefaultValues.selectedProperties = mockManagementFileResponse().fileProperties.map(x => {
+        return {
+          id: x.id,
+          fileId: mockManagementFileResponse().id,
+          propertyName: x.propertyName,
+          location: x.location,
+          displayOrder: x.displayOrder,
+          property: x.property,
+          propertyId: x.propertyId,
+        } as ApiGen_Concepts_FileProperty;
+    });
+
+    await setup({
       props: {
+        initialValues: mockDefaultValues,
         managementFile: {
           ...mockManagementFileResponse(),
-          fileProperties: getMockApiPropertyFiles() as any,
         },
       },
     });
+    await waitForEffects();
 
-    await act(async () => userEvent.click(screen.getByTestId('selectrow-1')));
-    expect(screen.getByTestId('selectrow-1')).not.toBeChecked();
+    await act(async () => userEvent.click(screen.getByTestId('selectrow-10')));
+    expect(screen.getByTestId('selectrow-10')).not.toBeChecked();
   });
 });

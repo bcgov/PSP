@@ -2,31 +2,27 @@ import { polygon } from '@turf/turf';
 import { Feature, FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
 import { LatLngLiteral } from 'leaflet';
 
-import {
-  LocationFeatureDataset,
-  SelectedFeatureDataset,
-} from '@/components/common/mapFSM/useLocationFeatureLoader';
+import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { IMapProperty } from '@/components/propertySelector/models';
 import { AreaUnitTypes } from '@/constants';
 import {
   mockFAParcelLayerResponse,
   mockFAParcelLayerResponseMultiPolygon,
 } from '@/mocks/faParcelLayerResponse.mock';
-import {
-  getMockLocationFeatureDataset,
-  getMockSelectedFeatureDataset,
-} from '@/mocks/featureset.mock';
+import { getMockSelectedFeatureDataset } from '@/mocks/featureset.mock';
 import { getEmptyFileProperty } from '@/mocks/fileProperty.mock';
-import { getMockLocation } from '@/mocks/geometries.mock';
+import { getMockLatLng, getMockLocation, getMockPolygon } from '@/mocks/geometries.mock';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Geometry } from '@/models/api/generated/ApiGen_Concepts_Geometry';
 import { getEmptyProperty } from '@/models/defaultInitializers';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
 
+import { LocationBoundaryDataset } from '@/components/common/mapFSM/models';
 import {
   featuresetToMapProperty,
   featuresToIdentifiedMapProperty,
+  filePropertyToLocationBoundaryDataset,
   getFilePropertyName,
   getLatLng,
   getPrettyLatLng,
@@ -364,6 +360,35 @@ describe('mapPropertyUtils', () => {
     ) => {
       const location = locationFromFileProperty(fileProperty);
       expect(location).toEqual(expectedValue);
+    },
+  );
+
+  it.each([
+    [
+      { ...getEmptyFileProperty(), location: getMockLocation() },
+      { location: getMockLatLng(), boundary: null },
+    ],
+    [
+      {
+        ...getEmptyFileProperty(),
+        location: null,
+        property: {
+          ...getEmptyProperty(),
+          location: getMockLocation(),
+          boundary: getMockPolygon(),
+        },
+      },
+      { location: getMockLatLng(), boundary: getMockPolygon() },
+    ],
+    [{ ...getEmptyFileProperty(), location: null }, null],
+  ])(
+    'filePropertyToLocationBoundaryDataset test with file property %o - expected %o',
+    (
+      fileProperty: ApiGen_Concepts_FileProperty | undefined | null,
+      expectedValue: LocationBoundaryDataset | null,
+    ) => {
+      const dataset = filePropertyToLocationBoundaryDataset(fileProperty);
+      expect(dataset).toEqual(expectedValue);
     },
   );
 

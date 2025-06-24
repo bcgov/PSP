@@ -163,6 +163,7 @@ export class PropertyForm {
         parcelFeature?.properties?.LEGAL_DESCRIPTION ??
         '',
       isActive: model.isActive !== false ? 'true' : 'false',
+      displayOrder: model.displayOrder,
     });
   }
 

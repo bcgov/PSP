@@ -6,8 +6,7 @@ import { Api_LastUpdatedBy } from '@/models/api/File';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
-import { exists } from '@/utils';
-import { apiToFileProperty } from '@/utils/mapPropertyUtils';
+import { exists, filePropertyToLocationBoundaryDataset } from '@/utils';
 
 export interface TypedFile extends ApiGen_Concepts_File {
   fileType: ApiGen_CodeTypes_FileTypes;
@@ -71,12 +70,14 @@ export const SideBarContext = createContext<ISideBarContext>({
   },
 });
 
-export const SideBarContextProvider = (props: {
+export interface ISideBarContextProviderProps {
   children: React.ReactChild | React.ReactChild[] | React.ReactNode;
   file?: TypedFile;
   project?: ApiGen_Concepts_Project;
   lastUpdatedBy?: Api_LastUpdatedBy;
-}) => {
+}
+
+export const SideBarContextProvider = (props: ISideBarContextProviderProps) => {
   const [file, setFile] = useState<TypedFile | undefined>(props.file);
   const [project, setProject] = useState<ApiGen_Concepts_Project | undefined>(props.project);
   const [staleFile, setStaleFile] = useState<boolean>(false);
@@ -119,11 +120,13 @@ export const SideBarContextProvider = (props: {
 
   const resetFilePropertyLocations = useCallback(() => {
     if (exists(fileProperties)) {
-      const propertyLocations = fileProperties.map(x => apiToFileProperty(x)).filter(exists);
+      const propertyLocations = fileProperties
+        .map(x => filePropertyToLocationBoundaryDataset(x))
+        .filter(exists);
 
-      setFilePropertyLocations && setFilePropertyLocations(propertyLocations);
+      exists(setFilePropertyLocations) && setFilePropertyLocations(propertyLocations);
     } else {
-      setFilePropertyLocations && setFilePropertyLocations([]);
+      exists(setFilePropertyLocations) && setFilePropertyLocations([]);
     }
   }, [fileProperties, setFilePropertyLocations]);
 

@@ -4,7 +4,6 @@ import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { InventoryTabNames, InventoryTabs } from '@/features/mapSideBar/property/InventoryTabs';
-import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
@@ -28,8 +27,7 @@ export interface IFilePropertyRouterProps {
   fileType: ApiGen_CodeTypes_FileTypes;
   isEditing: boolean;
   setIsEditing: (value: boolean) => void;
-  selectedMenuIndex: number;
-  defaultFileTab: FileTabType;
+  selectedFilePropertyId: number;
   defaultPropertyTab: InventoryTabNames;
   onSuccess: () => void;
 }
@@ -50,9 +48,8 @@ export const FilePropertyRouter: React.FC<IFilePropertyRouterProps> = props => {
     return null;
   }
 
-  console.log(props.selectedMenuIndex);
-  const fileProperty = getFileProperty(props.file, props.selectedMenuIndex);
-  if (fileProperty == null) {
+  const fileProperty = getFileProperty(props.file, props.selectedFilePropertyId);
+  if (!exists(fileProperty)) {
     toast.warn('Could not find property in the file, showing file details instead', {
       autoClose: 15000,
     });
@@ -70,7 +67,7 @@ export const FilePropertyRouter: React.FC<IFilePropertyRouterProps> = props => {
             }
             return (
               <UpdatePropertyDetailsContainer
-                id={fileProperty!.property!.id}
+                id={fileProperty.property.id}
                 onSuccess={props.onSuccess}
                 ref={props.formikRef}
               />
@@ -137,19 +134,10 @@ export const FilePropertyRouter: React.FC<IFilePropertyRouterProps> = props => {
   }
 };
 
-const getFileProperty = (file: ApiGen_Concepts_File, selectedMenuIndex: number) => {
+const getFileProperty = (file: ApiGen_Concepts_File, selectedFilePropertyId: number) => {
   const properties = file?.fileProperties || [];
-  const selectedPropertyIndex = selectedMenuIndex - 1;
 
-  if (selectedPropertyIndex < 0 || selectedPropertyIndex >= properties.length) {
-    return null;
-  }
-
-  const fileProperty = properties[selectedPropertyIndex];
-  if (exists(fileProperty)) {
-    fileProperty.file = file;
-  }
-  return fileProperty;
+  return properties.find(p => p.id === selectedFilePropertyId);
 };
 
 export default FilePropertyRouter;

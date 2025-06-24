@@ -15,10 +15,11 @@ import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTy
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { exists, isValidId, stripTrailingSlash } from '@/utils';
+import { exists, isValidId, sortFileProperties, stripTrailingSlash } from '@/utils';
 
 import { SideBarContext } from '../context/sidebarContext';
 import { PropertyForm } from '../shared/models';
+import usePathGenerator from '../shared/sidebarPathGenerator';
 import { IDispositionViewProps } from './DispositionView';
 
 export interface IDispositionContainerProps {
@@ -100,7 +101,7 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
         dispositionChecklistTask,
       ]);
 
-      retrieved.fileProperties = fileProperties ?? null;
+      retrieved.fileProperties = sortFileProperties(fileProperties) ?? null;
       retrieved.fileChecklistItems = dispositionChecklist ?? [];
       setFile({ ...retrieved, fileType: ApiGen_CodeTypes_FileTypes.Disposition });
     } else {
@@ -151,23 +152,43 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
 
   const close = useCallback(() => onClose && onClose(), [onClose]);
 
-  const navigateToMenuRoute = (selectedIndex: number) => {
-    const route = selectedIndex === 0 ? '' : `/property/${selectedIndex}`;
-    history.push(`${stripTrailingSlash(match.url)}${route}`);
-  };
+  const pathGenerator = usePathGenerator();
 
-  const onMenuChange = (selectedIndex: number) => {
+  const onSelectFileSummary = () => {
+    if (!exists(dispositionFile)) {
+      return;
+    }
+
     if (isEditing) {
       if (formikRef?.current?.dirty) {
-        handleCancelClick(() => navigateToMenuRoute(selectedIndex));
+        handleCancelClick(() => pathGenerator.showFile('disposition', dispositionFile.id));
         return;
       }
     }
-    navigateToMenuRoute(selectedIndex);
+    pathGenerator.showFile('disposition', dispositionFile.id);
   };
 
-  const onShowPropertySelector = () => {
-    history.push(`${stripTrailingSlash(match.url)}/property/selector`);
+  const onSelectProperty = (filePropertyId: number) => {
+    if (!exists(dispositionFile)) {
+      return;
+    }
+
+    if (isEditing) {
+      if (formikRef?.current?.dirty) {
+        handleCancelClick(() =>
+          pathGenerator.showFilePropertyId('disposition', dispositionFile.id, filePropertyId),
+        );
+        return;
+      }
+    }
+    // The index needs to be offset to match the menu index
+    pathGenerator.showFilePropertyId('disposition', dispositionFile.id, filePropertyId);
+  };
+
+  const onEditProperties = () => {
+    if (exists(dispositionFile)) {
+      pathGenerator.editProperties('disposition', dispositionFile.id);
+    }
   };
 
   const handleSaveClick = async () => {
@@ -317,8 +338,9 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
         onClose={close}
         onCancel={handleCancelClick}
         onSave={handleSaveClick}
-        onMenuChange={onMenuChange}
-        onShowPropertySelector={onShowPropertySelector}
+        onSelectFileSummary={onSelectFileSummary}
+        onSelectProperty={onSelectProperty}
+        onEditProperties={onEditProperties}
         onUpdateProperties={onUpdateProperties}
         onSuccess={onSuccess}
         confirmBeforeAdd={confirmBeforeAdd}
@@ -330,7 +352,7 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
           dispositionFile?.id === dispositionFileId
             ? {
                 ...dispositionFile,
-                fileProperties: dispositionFileProperties ?? null,
+                fileProperties: sortFileProperties(dispositionFileProperties) ?? null,
                 fileChecklistItems: dispositionFileChecklist ?? [],
               }
             : undefined

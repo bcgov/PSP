@@ -52,7 +52,6 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
       propertyIdentifier = `${propertyName.value}`;
       break;
     default:
-      propertyIdentifier = '';
       break;
   }
   return (

@@ -16,6 +16,8 @@ import {
   ManagementActivityEditContainer,
 } from './ManagementActivityEditContainer';
 import { IManagementActivityEditFormProps } from './ManagementActivityEditForm';
+import { ManagementActivityFormModel } from './models';
+import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 
 const history = createMemoryHistory();
 
@@ -30,7 +32,6 @@ const mockContactApi: ReturnType<typeof useActivityContactRetriever> = {
 };
 
 vi.mock('@/hooks/repositories/useManagementActivityRepository');
-const mockGetActivitySubtypes = getMockRepositoryObj([]);
 const mockGetManagementActivity = getMockRepositoryObj(getMockPropertyManagementActivity(1));
 const mockAddManagementActivity = getMockRepositoryObj(getMockPropertyManagementActivity(1));
 const mockUpdateManagementActivity = getMockRepositoryObj(getMockPropertyManagementActivity(1));
@@ -80,7 +81,6 @@ describe('ManagementActivityEditContainer component', () => {
   beforeEach(() => {
     viewProps = undefined;
     vi.mocked(useManagementActivityRepository, { partial: true }).mockReturnValue({
-      getActivitySubtypes: mockGetActivitySubtypes,
       getManagementActivity: mockGetManagementActivity,
       addManagementActivity: mockAddManagementActivity,
       updateManagementActivity: mockUpdateManagementActivity,
@@ -96,7 +96,6 @@ describe('ManagementActivityEditContainer component', () => {
     await setup();
 
     expect(await screen.findByText(/Content Rendered/i)).toBeVisible();
-    expect(mockGetActivitySubtypes.execute).toHaveBeenCalled();
     expect(mockGetManagementActivity.execute).toHaveBeenCalledWith(1, 1);
   });
 
@@ -105,10 +104,45 @@ describe('ManagementActivityEditContainer component', () => {
 
     expect(await screen.findByText(/Content Rendered/i)).toBeVisible();
     expect(viewProps.loading).toBe(false);
-    expect(viewProps.managementFile).toStrictEqual(
-      expect.objectContaining(mockManagementFileResponse()),
+    expect(viewProps.managementFile).toEqual(
+      expect.objectContaining(mockManagementFileResponse(1)),
     );
-    expect(viewProps.activity).toStrictEqual(getMockPropertyManagementActivity(1));
+
+    expect(viewProps.initialValues).toEqual(
+      expect.objectContaining({
+        activityTypeCode: 'APPLICPERMIT',
+        activityStatusCode: 'NOTSTARTED',
+        activitySubtypeCodes: [
+          {
+            id: 100,
+            managementActivityId: 1,
+            rowVersion: 1,
+            subTypeCode: 'ACCESS',
+            subTypeCodeDescription: 'Access',
+          },
+        ],
+        requestedDate: '2023-10-17T00:00:00',
+        completionDate: '',
+        activityProperties: [
+          {
+            id: 15,
+            propertyActivityId: 1,
+            propertyId: 1,
+            rowVersion: 1,
+          },
+        ],
+        selectedProperties: [
+          {
+            fileId: null,
+            id: 0,
+            property: null,
+            propertyId: 1,
+            rowVersion: 0,
+          } as ApiGen_Concepts_FileProperty,
+        ],
+        rowVersion: 1,
+      } as ManagementActivityFormModel),
+    );
   });
 
   it('loads related contact information for person and organizations', async () => {
