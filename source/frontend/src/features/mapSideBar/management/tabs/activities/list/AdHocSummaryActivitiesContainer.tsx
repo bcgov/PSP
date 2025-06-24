@@ -19,7 +19,7 @@ export interface IPropertyManagementActivitiesListContainerProps {
 
 const AdHocFileActivitiesSummaryContainer: React.FunctionComponent<
   IPropertyManagementActivitiesListContainerProps
-> = ({ managementFileId, View }) => {
+> = ({ managementFileId, statusSolver, View }) => {
   const isMounted = useIsMounted();
   const [propertyActivities, setPropertyActivities] = useState<PropertyActivityRow[]>([]);
   const { staleLastUpdatedBy } = useContext(SideBarContext);
@@ -51,7 +51,7 @@ const AdHocFileActivitiesSummaryContainer: React.FunctionComponent<
         url: `/mapview/sidebar/property/${row.adHocPropertyId}/management/activity/${row.activityId}`,
         title: row.adHocPropertyName,
       })}
-      statusSolver={undefined}
+      statusSolver={statusSolver}
     />
   );
 };

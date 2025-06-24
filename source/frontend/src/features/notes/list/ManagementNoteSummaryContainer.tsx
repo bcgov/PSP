@@ -9,12 +9,14 @@ import { ApiGen_Concepts_Association } from '@/models/api/generated/ApiGen_Conce
 import { ApiGen_Concepts_Note } from '@/models/api/generated/ApiGen_Concepts_Note';
 import { isValidId } from '@/utils';
 
+import { IUpdateNotesStrategy } from '../models/IUpdateNotesStrategy';
 import { sortNotes } from './NoteListContainer';
 import { INoteListViewProps } from './NoteListView';
 
 export interface INoteSummaryContainerProps {
   associationType: NoteTypes;
   entityId: number;
+  statusSolver?: IUpdateNotesStrategy;
   onSuccess?: () => void;
   NoteListView: React.FunctionComponent<React.PropsWithChildren<INoteListViewProps>>;
 }
@@ -23,13 +25,20 @@ export interface INoteSummaryContainerProps {
  * Container that retrieved a summary of notes from a management file, related to a property.
  * It retrieves the notes from the management file and displays them in a list.
  * @param entityId The ID of the entity to retrieve notes for.
+ * @param statusSolver The Status solver to determine if notes are editable.
  * @param onSuccess Callback function to be called when the notes are successfully retrieved.
  * @param NoteListView The component to display the list of notes.
  * @returns A React component that displays a summary of notes from a management file.
  */
 export const NoteSummaryContainer: React.FunctionComponent<
   React.PropsWithChildren<INoteSummaryContainerProps>
-> = ({ associationType, entityId, onSuccess, NoteListView }: INoteSummaryContainerProps) => {
+> = ({
+  associationType,
+  entityId,
+  statusSolver,
+  onSuccess,
+  NoteListView,
+}: INoteSummaryContainerProps) => {
   const { execute: getAllPropertyAssociations, loading: loadingAssociations } =
     usePropertyAssociations();
   const {
@@ -84,6 +93,8 @@ export const NoteSummaryContainer: React.FunctionComponent<
 
   const loading = loadingNotes || loadingAssociations;
 
+  const editNotesEnabled = !statusSolver || (statusSolver && statusSolver.canEditNotes());
+
   return (
     <NoteListView
       loading={loading}
@@ -110,7 +121,7 @@ export const NoteSummaryContainer: React.FunctionComponent<
           title: `M-${noteAssociation?.association.fileName}`,
         };
       }}
-      canEditNotes={true}
+      canEditNotes={editNotesEnabled}
     />
   );
 };

@@ -14,7 +14,7 @@ import { INoteListViewProps } from './NoteListView';
 export interface INoteListContainerProps {
   type: NoteTypes;
   entityId: number;
-  NoteListView: React.FunctionComponent<React.PropsWithChildren<INoteListViewProps>>;
+  View: React.FunctionComponent<React.PropsWithChildren<INoteListViewProps>>;
   statusSolver?: IUpdateNotesStrategy | null;
   onSuccess?: () => void;
 }
@@ -24,7 +24,7 @@ export interface INoteListContainerProps {
  */
 export const NoteListContainer: React.FunctionComponent<
   React.PropsWithChildren<INoteListContainerProps>
-> = ({ type, entityId, onSuccess, NoteListView, statusSolver }: INoteListContainerProps) => {
+> = ({ type, entityId, onSuccess, View, statusSolver }: INoteListContainerProps) => {
   const {
     getAllNotes: { execute: getAllNotes, loading: loadingNotes, response: notesResponse },
     deleteNote: { execute: deleteNote, loading: loadingDeleteNote },
@@ -57,7 +57,7 @@ export const NoteListContainer: React.FunctionComponent<
   const editNotesEnabled = !statusSolver || (statusSolver && statusSolver.canEditNotes());
 
   return (
-    <NoteListView
+    <View
       loading={loading}
       notes={sortNotes(sort, notesResponse)}
       type={type}

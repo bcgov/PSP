@@ -71,7 +71,7 @@ const ProjectTabsContainer: React.FC<IProjectTabsContainerProps> = ({
         <NoteListContainer
           type={NoteTypes.Project}
           entityId={project?.id}
-          NoteListView={NoteListView}
+          View={NoteListView}
         />
       ),
       key: ProjectTabNames.notes,

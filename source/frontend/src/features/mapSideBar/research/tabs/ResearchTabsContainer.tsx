@@ -82,7 +82,7 @@ export const ResearchTabsContainer: React.FunctionComponent<
           type={NoteTypes.Research_File}
           entityId={researchFile?.id}
           onSuccess={onChildEntityUpdate}
-          NoteListView={NoteListView}
+          View={NoteListView}
         />
       ),
       key: FileTabType.NOTES,

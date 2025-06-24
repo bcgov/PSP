@@ -25,7 +25,7 @@ const ManagementFileNotesTab: React.FunctionComponent<IManagementFileNotesTabPro
         entityId={managementFile?.id}
         onSuccess={onSuccess}
         statusSolver={statusSolver}
-        NoteListView={NoteListView}
+        View={NoteListView}
       />
       <PropertyNoteSummaryContainer
         fileProperties={managementFile?.fileProperties ?? []}

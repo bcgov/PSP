@@ -37,7 +37,7 @@ describe('Note List Container', () => {
         type={renderOptions?.type ?? NoteTypes.Acquisition_File}
         entityId={renderOptions?.entityId ?? 1}
         onSuccess={renderOptions?.onSuccess ?? onSuccess}
-        NoteListView={NoteListView}
+        View={NoteListView}
       />,
       {
         ...renderOptions,

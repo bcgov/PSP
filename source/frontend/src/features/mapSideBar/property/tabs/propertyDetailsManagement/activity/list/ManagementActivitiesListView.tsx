@@ -18,7 +18,7 @@ export interface IManagementActivitiesListViewProps {
   isLoading: boolean;
   propertyActivities: PropertyActivityRow[];
   sort: TableSort<ApiGen_Concepts_PropertyActivity>;
-  statusSolver: ManagementStatusUpdateSolver;
+  statusSolver?: ManagementStatusUpdateSolver;
   getNavigationUrl?: (row: PropertyActivityRow) => { title: string; url: string };
   setSort: React.Dispatch<React.SetStateAction<TableSort<ApiGen_Concepts_PropertyActivity>>>;
   onCreate?: () => void;
@@ -50,7 +50,7 @@ const ManagementActivitiesListView: React.FunctionComponent<IManagementActivitie
             addButtonText="Add an Activity"
             addButtonIcon={<BiListPlus size={'2.5rem'} />}
             onAdd={onCreate}
-            isAddEnabled={statusSolver.canEditActivities()}
+            isAddEnabled={canEditActivities}
           />
         ) : (
           'Activities List'
@@ -62,7 +62,10 @@ const ManagementActivitiesListView: React.FunctionComponent<IManagementActivitie
         sort={sort}
         setSort={setSort}
         loading={isLoading}
-        columns={[...createActivityTableColumns(), activityActionColumn(onView, onDelete)]}
+        columns={[
+          ...createActivityTableColumns(),
+          activityActionColumn(canEditActivities, onView, onDelete),
+        ]}
       ></ManagementActivitiesList>
     </Section>
   );
