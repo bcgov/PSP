@@ -38,7 +38,7 @@ class ManagementStatusUpdateSolver implements IUpdateDocumentsStrategy, IUpdateN
     if (!this.managementFile) {
       return false;
     }
-    let canEdit = false;
+    let canEdit: boolean;
 
     switch (this.statusCode) {
       case ApiGen_CodeTypes_ManagementFileStatusTypes.ACTIVE:
@@ -64,7 +64,7 @@ class ManagementStatusUpdateSolver implements IUpdateDocumentsStrategy, IUpdateN
     if (this.managementFile === null) {
       return false;
     }
-    let canEdit = false;
+    let canEdit: boolean;
 
     switch (this.statusCode) {
       case ApiGen_CodeTypes_ManagementFileStatusTypes.ACTIVE:
@@ -90,7 +90,7 @@ class ManagementStatusUpdateSolver implements IUpdateDocumentsStrategy, IUpdateN
     if (this.managementFile === null) {
       return false;
     }
-    let canEditNotes = false;
+    let canEditNotes: boolean;
 
     switch (this.statusCode) {
       case ApiGen_CodeTypes_ManagementFileStatusTypes.ACTIVE:
@@ -116,7 +116,7 @@ class ManagementStatusUpdateSolver implements IUpdateDocumentsStrategy, IUpdateN
     if (!this.managementFile) {
       return false;
     }
-    let canEdit = false;
+    let canEdit: boolean;
 
     switch (this.statusCode) {
       case ApiGen_CodeTypes_ManagementFileStatusTypes.ACTIVE:
@@ -142,7 +142,7 @@ class ManagementStatusUpdateSolver implements IUpdateDocumentsStrategy, IUpdateN
     if (!this.managementFile) {
       return false;
     }
-    let canEdit = false;
+    let canEdit: boolean;
 
     switch (this.statusCode) {
       case ApiGen_CodeTypes_ManagementFileStatusTypes.ACTIVE:

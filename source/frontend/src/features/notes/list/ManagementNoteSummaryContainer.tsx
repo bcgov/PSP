@@ -93,7 +93,7 @@ export const NoteSummaryContainer: React.FunctionComponent<
 
   const loading = loadingNotes || loadingAssociations;
 
-  const editNotesEnabled = !statusSolver || (statusSolver && statusSolver.canEditNotes());
+  const editNotesEnabled = !statusSolver || statusSolver?.canEditNotes();
 
   return (
     <NoteListView

@@ -54,7 +54,7 @@ export const NoteListContainer: React.FunctionComponent<
   // UI components
   const loading = loadingNotes || loadingDeleteNote;
 
-  const editNotesEnabled = !statusSolver || (statusSolver && statusSolver.canEditNotes());
+  const editNotesEnabled = !statusSolver || statusSolver?.canEditNotes();
 
   return (
     <View

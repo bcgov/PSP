@@ -65,7 +65,7 @@ const ManagementFileActivitiesListContainer: React.FunctionComponent<
     pathGenerator.showDetail('management', managementFileId, 'activities', activityId, false);
   };
 
-  const canEditActivities: boolean = statusSolver && statusSolver.canEditActivities();
+  const canEditActivities: boolean = statusSolver?.canEditActivities();
 
   return (
     <View
