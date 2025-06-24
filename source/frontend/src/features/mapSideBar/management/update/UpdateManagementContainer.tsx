@@ -64,6 +64,7 @@ export const UpdateManagementContainer = React.forwardRef<
             ApiGen_CodeTypes_ManagementFileStatusTypes.DRAFT.toString(),
             ApiGen_CodeTypes_ManagementFileStatusTypes.HOLD.toString(),
           ];
+
           //refresh the map properties if this disposition file was set to a final state.
           onSuccess(
             !!managementFile.fileStatusTypeCode?.id &&

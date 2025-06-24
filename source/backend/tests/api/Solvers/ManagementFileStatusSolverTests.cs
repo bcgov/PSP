@@ -22,8 +22,21 @@ namespace Pims.Api.Test.Solvers
                         new object[] { ManagementFileStatusTypes.ARCHIVED, false},
                         new object[] { ManagementFileStatusTypes.CANCELLED, false},
                         new object[] { ManagementFileStatusTypes.COMPLETE, false},
-                        new object[] { ManagementFileStatusTypes.HOLD, true},
+                        new object[] { ManagementFileStatusTypes.HOLD, false},
             };
+
+        public static IEnumerable<object[]> IsAdminProtected =>
+    new List<object[]>
+    {
+                        new object[] {null, false},
+                        new object[] { ManagementFileStatusTypes.ACTIVE, false},
+                        new object[] { ManagementFileStatusTypes.DRAFT, false},
+                        new object[] { ManagementFileStatusTypes.THIRDRDPARTY, false},
+                        new object[] { ManagementFileStatusTypes.CANCELLED, false},
+                        new object[] { ManagementFileStatusTypes.HOLD, false},
+                        new object[] { ManagementFileStatusTypes.ARCHIVED, true},
+                        new object[] { ManagementFileStatusTypes.COMPLETE, true},
+    };
 
         [Theory]
         [MemberData(nameof(CanEditDetailsParameters))]
@@ -34,6 +47,20 @@ namespace Pims.Api.Test.Solvers
 
             // Act
             var result = solver.CanEditDetails(status);
+
+            // Assert
+            Assert.Equal(expectedResult, result);
+        }
+
+        [Theory]
+        [MemberData(nameof(IsAdminProtected))]
+        public void IsAdminProtected_Parametrized(ManagementFileStatusTypes? status, bool expectedResult)
+        {
+            // Arrange
+            var solver = new ManagementFileStatusSolver();
+
+            // Act
+            var result = solver.IsAdminProtected(status);
 
             // Assert
             Assert.Equal(expectedResult, result);

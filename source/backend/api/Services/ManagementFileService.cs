@@ -110,6 +110,11 @@ namespace Pims.Api.Services
                 throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
 
+            if(!_user.HasPermission(Permissions.SystemAdmin) && _managementStatusSolver.IsAdminProtected(currentManagementStatus))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active, only an Administrator may update this file to an Active status.");
+            }
+
             ValidateVersion(id, managementFile.ConcurrencyControlNumber);
 
             // validate management file state before proceeding with any database updates

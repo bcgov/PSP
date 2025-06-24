@@ -15,6 +15,8 @@ import {
 
 import NoteListContainer, { INoteListContainerProps } from './NoteListContainer';
 import { NoteListView } from './NoteListView';
+import ManagementStatusUpdateSolver from '@/features/mapSideBar/management/tabs/fileDetails/detail/ManagementStatusUpdateSolver';
+import { IUpdateNotesStrategy } from '../models/IUpdateNotesStrategy';
 
 vi.mock('@/hooks/repositories/useNoteRepository');
 const mockGetAllNotesApi = getMockRepositoryObj([]);
@@ -119,8 +121,6 @@ describe('Note List Container', () => {
     expect(getTableCell(2, 0)).toHaveTextContent('Note 2');
     expect(getTableCell(3, 0)).toHaveTextContent('Note 1');
   });
-
-  
 
   it('shows the modal when onAdd is triggered', async () => {
     await setup();

@@ -37,7 +37,7 @@ export const ActivitiesTab: React.FunctionComponent<IActivitiesTabProps> = ({ ma
       <Section
         header={
           <SimpleSectionHeader title="Activity List">
-            {hasClaim(Claims.MANAGEMENT_EDIT) && statusSolver.canEditDetails() && (
+            {hasClaim(Claims.MANAGEMENT_EDIT) && statusSolver.canEditActivities() && (
               <StyledSectionAddButton onClick={onAdd}>
                 <FaPlus size="2rem" className="mr-2" />
                 Add Activity

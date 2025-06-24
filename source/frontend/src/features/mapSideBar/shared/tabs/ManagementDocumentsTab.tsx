@@ -23,6 +23,7 @@ const ManagementDocumentsTab: React.FunctionComponent<IManagementDocumentsTabPro
         relationshipType={ApiGen_CodeTypes_DocumentRelationType.ManagementFiles}
         onSuccess={onSuccess}
         disableAdd={!statusSolver.canEditDocuments()}
+        statusSolver={statusSolver}
       />
       <DocumentManagementListContainer
         title={'Related Documents'}

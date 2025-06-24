@@ -101,12 +101,12 @@ const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps
       addButtonText={props.addButtonText}
       isLoading={retrieveDocumentRelationshipLoading}
       documentResults={documentResults}
+      disableAdd={props.disableAdd}
       canEditDocuments={editDocumentsEnabled}
       onDelete={onDelete}
       onSuccess={onSuccess}
       onRefresh={handleDocumentsRefresh}
       onViewParent={handleViewParent}
-      disableAdd={props.disableAdd}
       title={props.title}
       showParentInformation={false}
       relationshipTypes={[]}
