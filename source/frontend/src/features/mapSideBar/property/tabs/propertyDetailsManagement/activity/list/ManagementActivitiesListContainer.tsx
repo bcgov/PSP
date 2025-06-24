@@ -66,6 +66,8 @@ const PropertyManagementActivitiesListContainer: React.FunctionComponent<
     history.push(`/mapview/sidebar/property/${propertyId}/management/activity/${activityId}`);
   };
 
+  const canEditActivities = !statusSolver || statusSolver?.canEditActivities();
+
   return (
     <View
       sort={sort}
@@ -76,7 +78,6 @@ const PropertyManagementActivitiesListContainer: React.FunctionComponent<
           ? propertyActivities.filter(pa => !isValidId(pa.managementFileId))
           : propertyActivities.filter(pa => isValidId(pa.managementFileId))
       }
-      statusSolver={statusSolver}
       onCreate={onCreate}
       onView={onView}
       onDelete={async (activityId: number) => {
@@ -96,6 +97,7 @@ const PropertyManagementActivitiesListContainer: React.FunctionComponent<
         url: `/mapview/sidebar/management/${row.managementFileId}/activities/${row.activityId}`,
         title: `M-${row.managementFileId}`,
       })}
+      canEditActivities={canEditActivities}
     />
   );
 };
