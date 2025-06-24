@@ -1,15 +1,25 @@
 import cx from 'classnames';
-import { useMemo } from 'react';
+import { geoJSON, latLngBounds } from 'leaflet';
+import { useCallback, useMemo } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaCaretRight } from 'react-icons/fa';
+import { FaCaretRight, FaSearchPlus } from 'react-icons/fa';
+import { PiCornersOut } from 'react-icons/pi';
 import styled from 'styled-components';
 
 import { RestrictedEditControl } from '@/components/common/buttons';
 import { EditPropertiesIcon } from '@/components/common/buttons/EditPropertiesButton';
 import { LinkButton } from '@/components/common/buttons/LinkButton';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
-import { exists, getFilePropertyName, sortFileProperties } from '@/utils';
+import {
+  boundaryFromFileProperty,
+  exists,
+  getFilePropertyName,
+  getLatLng,
+  locationFromFileProperty,
+  sortFileProperties,
+} from '@/utils';
 
 import { cannotEditMessage } from '../acquisition/common/constants';
 
@@ -38,6 +48,39 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
   // respect the order of properties as set by the user creating the file
   const sortedProperties = sortFileProperties(file?.fileProperties ?? []);
   const isSummary = useMemo(() => !exists(currentPropertyIndex), [currentPropertyIndex]);
+  const mapMachine = useMapStateMachine();
+
+  const fitBoundaries = () => {
+    const fileProperties = file.fileProperties;
+
+    if (exists(fileProperties)) {
+      const locations = fileProperties
+        .map(fileProp => locationFromFileProperty(fileProp))
+        .map(geom => getLatLng(geom))
+        .filter(exists);
+      const a = latLngBounds(locations);
+
+      mapMachine.requestFlyToBounds(a);
+    }
+  };
+
+  const onPropertyClick = (index: number, propertyId: number) => {
+    if (currentPropertyIndex !== index) {
+      onSelectProperty(propertyId);
+    }
+  };
+
+  const onZoomToProperty = useCallback(
+    (property: ApiGen_Concepts_FileProperty) => {
+      const geom = boundaryFromFileProperty(property);
+      const bounds = geoJSON(geom).getBounds();
+
+      if (exists(bounds) && bounds.isValid()) {
+        mapMachine.requestFlyToBounds(bounds);
+      }
+    },
+    [mapMachine],
+  );
 
   return (
     <StyledMenuWrapper>
@@ -53,44 +96,56 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
         </Col>
       </StyledRow>
       <StyledMenuHeaderWrapper>
-        <StyledMenuHeader>Properties</StyledMenuHeader>
-        <RestrictedEditControl
-          canEdit={canEdit}
-          isInNonEditableState={isInNonEditableState}
-          icon={<EditPropertiesIcon />}
-          title="Change properties"
-          toolTipId={`${file?.id ?? 0}-summary-cannot-edit-tooltip`}
-          editRestrictionMessage={editRestrictionMessage}
-          onEdit={onEditProperties}
-        />
+        <Row noGutters className="w-100">
+          <Col>
+            <StyledMenuHeader>Properties</StyledMenuHeader>
+          </Col>
+          <Col xs="auto">
+            <RestrictedEditControl
+              canEdit={canEdit}
+              isInNonEditableState={isInNonEditableState}
+              icon={<EditPropertiesIcon />}
+              title="Change properties"
+              toolTipId={`${file?.id ?? 0}-summary-cannot-edit-tooltip`}
+              editRestrictionMessage={editRestrictionMessage}
+              onEdit={onEditProperties}
+            />
+          </Col>
+          <Col xs="auto">
+            <LinkButton title="Fit boundaries button" onClick={fitBoundaries}>
+              <PiCornersOut size={18} className="mr-2" />
+            </LinkButton>
+          </Col>
+        </Row>
       </StyledMenuHeaderWrapper>
       <div className={'p-1'} />
       <StyledMenuBodyWrapper>
         {sortedProperties.map((property: ApiGen_Concepts_FileProperty, index: number) => {
           const propertyName = getFilePropertyName(property);
+          const isCurrentProperty = currentPropertyIndex === index;
           return (
-            <StyledRow
-              key={`menu-item-row-${index}`}
-              data-testid={`menu-item-row-${index}`}
-              className={cx('no-gutters', { selected: currentPropertyIndex === index })}
-              onClick={() => {
-                if (currentPropertyIndex !== index) {
-                  onSelectProperty(property.id);
-                }
-              }}
-            >
-              <Col xs="1">{currentPropertyIndex === index && <FaCaretRight />}</Col>
+            <StyledRow key={`menu-item-row-${index}`} className="no-gutters">
+              <Col xs="1">{isCurrentProperty && <FaCaretRight />}</Col>
               <Col xs="auto" className="pr-2">
-                <StyledIconWrapper className={cx({ selected: currentPropertyIndex === index })}>
+                <StyledIconWrapper className={cx({ selected: isCurrentProperty })}>
                   {index + 1}
                 </StyledIconWrapper>
               </Col>
-              <Col>
-                {currentPropertyIndex === index ? (
+              <StyledCol
+                onClick={() => onPropertyClick(index, property.id)}
+                data-testid={`menu-item-row-${index}`}
+                className={cx({ selected: isCurrentProperty })}
+              >
+                {isCurrentProperty ? (
                   <span title="View">{propertyName.value}</span>
                 ) : (
                   <LinkButton title="View">{propertyName.value}</LinkButton>
                 )}
+              </StyledCol>
+              <Col xs="auto">
+                <LinkButton onClick={() => onZoomToProperty(property)}>
+                  <FaSearchPlus size={18} className="mr-2" />
+                </LinkButton>
               </Col>
             </StyledRow>
           );
@@ -118,11 +173,6 @@ export const StyledMenuWrapper = styled.div`
 const StyledRow = styled(Row)`
   width: 100%;
 
-  &.selected {
-    font-weight: bold;
-    cursor: default;
-  }
-
   font-size: 1.4rem;
   font-weight: normal;
   cursor: pointer;
@@ -133,8 +183,17 @@ const StyledRow = styled(Row)`
   }
 `;
 
+const StyledCol = styled(Col)`
+  &.selected {
+    font-weight: bold;
+    cursor: default;
+    line-height: 3rem;
+  }
+`;
+
 const StyledIconWrapper = styled.div`
   &.selected {
+    font-weight: bold;
     background-color: ${props => props.theme.bcTokens.themeGold100};
   }
 

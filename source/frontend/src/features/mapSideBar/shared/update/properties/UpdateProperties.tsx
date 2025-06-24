@@ -1,17 +1,20 @@
 import axios, { AxiosError } from 'axios';
 import { FieldArray, Formik, FormikProps } from 'formik';
-import { LatLngLiteral } from 'leaflet';
+import { geoJSON, LatLngLiteral } from 'leaflet';
 import isNumber from 'lodash/isNumber';
 import { useContext, useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
+import { PiCornersOut } from 'react-icons/pi';
 import { toast } from 'react-toastify';
 
+import { LinkButton } from '@/components/common/buttons/LinkButton';
 import GenericModal from '@/components/common/GenericModal';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { Section } from '@/components/common/Section/Section';
+import TooltipWrapper from '@/components/common/TooltipWrapper';
 import MapSelectorContainer from '@/components/propertySelector/MapSelectorContainer';
-import SelectedPropertyHeaderRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyHeaderRow';
 import SelectedPropertyRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyRow';
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
@@ -19,7 +22,7 @@ import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { isLatLngInFeatureSetBoundary, isValidId } from '@/utils';
+import { exists, isLatLngInFeatureSetBoundary, isValidId, latLngLiteralToGeometry } from '@/utils';
 
 import { AddressForm, FileForm, PropertyForm } from '../../models';
 import SidebarFooter from '../../SidebarFooter';
@@ -50,6 +53,20 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
   const { setModalContent, setDisplayModal } = useModalContext();
   const { resetFilePropertyLocations } = useContext(SideBarContext);
   const { getPrimaryAddressByPid, bcaLoading } = useBcaAddress();
+  const mapMachine = useMapStateMachine();
+
+  const fitBoundaries = () => {
+    const fileProperties = formFile.properties;
+
+    if (exists(fileProperties)) {
+      const locations = fileProperties.map(
+        p => p?.polygon ?? latLngLiteralToGeometry(p?.fileLocation),
+      );
+      const bounds = geoJSON(locations).getBounds();
+
+      mapMachine.requestFlyToBounds(bounds);
+    }
+  };
 
   const handleSaveClick = async () => {
     await formikRef?.current?.validateForm();
@@ -219,8 +236,23 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
                       />
                     </Col>
                   </Row>
-                  <Section header="Selected properties">
-                    <SelectedPropertyHeaderRow />
+                  <Section
+                    header={
+                      <Row>
+                        <Col xs="11">Selected Properties</Col>
+                        <Col>
+                          <TooltipWrapper
+                            tooltip="Fit map to the file properties"
+                            tooltipId="property-selector-tooltip"
+                          >
+                            <LinkButton title="Fit boundaries button" onClick={fitBoundaries}>
+                              <PiCornersOut size={18} className="mr-2" />
+                            </LinkButton>
+                          </TooltipWrapper>
+                        </Col>
+                      </Row>
+                    }
+                  >
                     {formikProps.values.properties.map((property, index) => (
                       <SelectedPropertyRow
                         key={`property.${property.latitude}-${property.longitude}-${property.pid}-${property.apiId}`}

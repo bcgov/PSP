@@ -246,7 +246,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c30 {
+.c31 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -273,7 +273,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   width: 22rem;
 }
 
-.c29 {
+.c30 {
   overflow: auto;
   height: 100%;
   width: 100%;
@@ -365,32 +365,32 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   align-items: end;
 }
 
-.c31 {
+.c32 {
   height: 100%;
 }
 
-.c31 .tab-content {
+.c32 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
   overflow-y: auto;
   background-color: #f2f2f2;
 }
 
-.c31 .tab-content .tab-pane {
+.c32 .tab-content .tab-pane {
   position: relative;
 }
 
-.c32 {
+.c33 {
   background-color: white;
   color: var(--surface-color-primary-button-default);
   font-size: 1.4rem;
   border-color: transparent;
 }
 
-.c32 .nav-tabs {
+.c33 .nav-tabs {
   height: auto;
 }
 
-.c32 .nav-item {
+.c33 .nav-item {
   color: var(--surface-color-primary-button-default);
   min-width: 5rem;
   padding: 0.1rem 1.3rem;
@@ -398,7 +398,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   margin-left: 0.1rem;
 }
 
-.c32 .nav-item:hover {
+.c33 .nav-item:hover {
   color: #f2f2f2;
   background-color: #1e5189;
   border-color: transparent;
@@ -408,7 +408,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   text-shadow: 0.1rem 0 0 currentColor;
 }
 
-.c32 .nav-item.active {
+.c33 .nav-item.active {
   border-radius: 0.4rem;
   color: #f2f2f2;
   background-color: #053662;
@@ -416,24 +416,24 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   text-shadow: 0.1rem 0 0 currentColor;
 }
 
-.c33 {
+.c34 {
   background-color: #f2f2f2;
   padding-top: 1rem;
 }
 
-.c34 {
+.c35 {
   text-align: right;
   overflow: hidden;
 }
 
-.c36 {
+.c37 {
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2.4rem;
 }
 
-.c35 {
+.c36 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
@@ -441,14 +441,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c38.required::before {
+.c39.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c37 {
+.c38 {
   font-weight: bold;
 }
 
@@ -478,13 +478,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   padding-bottom: 0.5rem;
 }
 
-.c24.selected {
-  font-weight: bold;
-  cursor: default;
-}
-
 .c24 div.Button__value {
   font-size: 1.4rem;
+}
+
+.c29.selected {
+  font-weight: bold;
+  cursor: default;
+  line-height: 3rem;
 }
 
 .c28 {
@@ -510,6 +511,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
 }
 
 .c28.selected {
+  font-weight: bold;
   background-color: #FCBA19;
 }
 
@@ -950,11 +952,50 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                 <div
                   class="c25"
                 >
-                  <span
-                    class="c26"
+                  <div
+                    class="w-100 row no-gutters"
                   >
-                    Properties
-                  </span>
+                    <div
+                      class="col"
+                    >
+                      <span
+                        class="c26"
+                      >
+                        Properties
+                      </span>
+                    </div>
+                    <div
+                      class="col-auto"
+                    />
+                    <div
+                      class="col-auto"
+                    >
+                      <button
+                        class="c4 Button btn btn-link"
+                        title="Fit boundaries button"
+                        type="button"
+                      >
+                        <div
+                          class="Button__value"
+                        >
+                          <svg
+                            class="mr-2"
+                            fill="currentColor"
+                            height="18"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 256 256"
+                            width="18"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M216,48V88a8,8,0,0,1-16,0V56H168a8,8,0,0,1,0-16h40A8,8,0,0,1,216,48ZM88,200H56V168a8,8,0,0,0-16,0v40a8,8,0,0,0,8,8H88a8,8,0,0,0,0-16Zm120-40a8,8,0,0,0-8,8v32H168a8,8,0,0,0,0,16h40a8,8,0,0,0,8-8V168A8,8,0,0,0,208,160ZM88,40H48a8,8,0,0,0-8,8V88a8,8,0,0,0,16,0V56H88a8,8,0,0,0,0-16Z"
+                            />
+                          </svg>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
                 </div>
                 <div
                   class="p-1"
@@ -964,7 +1005,6 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                 >
                   <div
                     class="c24 no-gutters row"
-                    data-testid="menu-item-row-0"
                   >
                     <div
                       class="col-1"
@@ -979,7 +1019,8 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                       </div>
                     </div>
                     <div
-                      class="col"
+                      class="c29 col"
+                      data-testid="menu-item-row-0"
                     >
                       <button
                         class="c4 Button btn btn-link"
@@ -993,21 +1034,48 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                         </div>
                       </button>
                     </div>
+                    <div
+                      class="col-auto"
+                    >
+                      <button
+                        class="c4 Button btn btn-link"
+                        type="button"
+                      >
+                        <div
+                          class="Button__value"
+                        >
+                          <svg
+                            class="mr-2"
+                            fill="currentColor"
+                            height="18"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 512 512"
+                            width="18"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M304 192v32c0 6.6-5.4 12-12 12h-56v56c0 6.6-5.4 12-12 12h-32c-6.6 0-12-5.4-12-12v-56h-56c-6.6 0-12-5.4-12-12v-32c0-6.6 5.4-12 12-12h56v-56c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v56h56c6.6 0 12 5.4 12 12zm201 284.7L476.7 505c-9.4 9.4-24.6 9.4-33.9 0L343 405.3c-4.5-4.5-7-10.6-7-17V372c-35.3 27.6-79.7 44-128 44C93.1 416 0 322.9 0 208S93.1 0 208 0s208 93.1 208 208c0 48.3-16.4 92.7-44 128h16.3c6.4 0 12.5 2.5 17 7l99.7 99.7c9.3 9.4 9.3 24.6 0 34zM344 208c0-75.2-60.8-136-136-136S72 132.8 72 208s60.8 136 136 136 136-60.8 136-136z"
+                            />
+                          </svg>
+                        </div>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
             <div
-              class="c29 col"
+              class="c30 col"
             >
               <div
-                class="c30"
+                class="c31"
               >
                 <div
-                  class="c31"
+                  class="c32"
                 >
                   <nav
-                    class="c32 nav nav-tabs"
+                    class="c33 nav nav-tabs"
                     role="tablist"
                   >
                     <a
@@ -1029,16 +1097,16 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                       role="tabpanel"
                     >
                       <div
-                        class="c33"
+                        class="c34"
                       >
                         <div
-                          class="c34 mr-3 my-1"
+                          class="c35 mr-3 my-1"
                         />
                         <div
-                          class="c35 form-section"
+                          class="c36 form-section"
                         >
                           <h2
-                            class="c36"
+                            class="c37"
                           >
                             <div
                               class="no-gutters row"
@@ -1060,14 +1128,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c37"
+                                  class="c38"
                                 >
                                   Ministry project
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c38 text-left col"
+                                class="c39 text-left col"
                               >
                                 <div>
                                   00048 CLAIMS
@@ -1077,10 +1145,10 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                           </div>
                         </div>
                         <div
-                          class="c35 form-section"
+                          class="c36 form-section"
                         >
                           <h2
-                            class="c36"
+                            class="c37"
                           >
                             <div
                               class="no-gutters row"
@@ -1102,14 +1170,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c37"
+                                  class="c38"
                                 >
                                   Road name
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c38 text-left col"
+                                class="c39 text-left col"
                               >
                                 Test road name
                               </div>
@@ -1121,14 +1189,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c37"
+                                  class="c38"
                                 >
                                   Road alias
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c38 text-left col"
+                                class="c39 text-left col"
                               >
                                 Test road alias
                               </div>
@@ -1136,10 +1204,10 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                           </div>
                         </div>
                         <div
-                          class="c35 form-section"
+                          class="c36 form-section"
                         >
                           <h2
-                            class="c36"
+                            class="c37"
                           >
                             <div
                               class="no-gutters row"
@@ -1161,14 +1229,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c37"
+                                  class="c38"
                                 >
                                   Research purpose
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c38 text-left col"
+                                class="c39 text-left col"
                               />
                             </div>
                             <div
@@ -1178,14 +1246,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c37"
+                                  class="c38"
                                 >
                                   Request date
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c38 text-left col"
+                                class="c39 text-left col"
                               >
                                  
                                 Apr 14, 2022
@@ -1198,14 +1266,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c37"
+                                  class="c38"
                                 >
                                   Source of request
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c38 text-left col"
+                                class="c39 text-left col"
                               >
                                 Headquarters (HQ)
                               </div>
@@ -1217,14 +1285,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c37"
+                                  class="c38"
                                 >
                                   Requester
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c38 text-left col"
+                                class="c39 text-left col"
                               >
                                 Dairy Queen Forever! Property Management
                               </div>
@@ -1236,24 +1304,24 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c37"
+                                  class="c38"
                                 >
                                   Description of request
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c38 text-left col"
+                                class="c39 text-left col"
                               />
                             </div>
                             a request description
                           </div>
                         </div>
                         <div
-                          class="c35 form-section"
+                          class="c36 form-section"
                         >
                           <h2
-                            class="c36"
+                            class="c37"
                           >
                             <div
                               class="no-gutters row"
@@ -1275,14 +1343,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c37"
+                                  class="c38"
                                 >
                                   Research completed on
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c38 text-left col"
+                                class="c39 text-left col"
                               >
                                 Mar 30, 2022
                               </div>
@@ -1294,24 +1362,24 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c37"
+                                  class="c38"
                                 >
                                   Result of request
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c38 text-left col"
+                                class="c39 text-left col"
                               />
                             </div>
                             A research result
                           </div>
                         </div>
                         <div
-                          class="c35 form-section"
+                          class="c36 form-section"
                         >
                           <h2
-                            class="c36"
+                            class="c37"
                           >
                             <div
                               class="no-gutters row"
@@ -1333,14 +1401,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c37"
+                                  class="c38"
                                 >
                                   Expropriation?
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c38 text-left col"
+                                class="c39 text-left col"
                               >
                                 No
                               </div>
@@ -1352,14 +1420,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c37"
+                                  class="c38"
                                 >
                                   Expropriation comments
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c38 text-left col"
+                                class="c39 text-left col"
                               />
                             </div>
                             An expropriation note

@@ -169,13 +169,13 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
   useEffect(() => {
     if (hasPendingFlyTo && isMapReady) {
       if (requestedFlyTo.bounds !== null) {
-        mapRef?.current?.flyToBounds(requestedFlyTo.bounds, { animate: false });
+        mapRef?.current?.flyToBounds(requestedFlyTo.bounds, { animate: true });
       }
       if (requestedFlyTo.location !== null) {
         mapRef?.current?.flyTo(requestedFlyTo.location, MAP_MAX_ZOOM, {
-          animate: false,
+          animate: true,
         });
-        mapRef?.current?.panTo(requestedFlyTo.location);
+        //mapRef?.current?.panTo(requestedFlyTo.location);
       }
 
       mapMachineProcessFlyTo();
