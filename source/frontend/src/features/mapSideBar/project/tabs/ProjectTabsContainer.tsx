@@ -68,11 +68,7 @@ const ProjectTabsContainer: React.FC<IProjectTabsContainerProps> = ({
   if (project?.id && hasClaim(Claims.NOTE_VIEW)) {
     tabViews.push({
       content: (
-        <NoteListContainer
-          type={NoteTypes.Project}
-          entityId={project?.id}
-          View={NoteListView}
-        />
+        <NoteListContainer type={NoteTypes.Project} entityId={project?.id} View={NoteListView} />
       ),
       key: ProjectTabNames.notes,
       name: 'Notes',

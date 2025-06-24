@@ -65,10 +65,13 @@ const ManagementFileActivitiesListContainer: React.FunctionComponent<
     pathGenerator.showDetail('management', managementFileId, 'activities', activityId, false);
   };
 
+  const canEditActivities: boolean = statusSolver && statusSolver.canEditActivities();
+
   return (
     <View
       isLoading={loading || deletingActivity}
       propertyActivities={propertyActivities}
+      canEditActivities={canEditActivities}
       setSort={setSort}
       sort={sort}
       onCreate={onCreate}
@@ -86,7 +89,6 @@ const ManagementFileActivitiesListContainer: React.FunctionComponent<
         });
         setDisplayModal(true);
       }}
-      statusSolver={statusSolver}
     />
   );
 };
