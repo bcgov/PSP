@@ -6,7 +6,7 @@ exports[`MapFilterBar > renders correctly 1`] = `
     class="Toastify"
   />
   <div />
-  .c3.btn {
+  .c0.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,19 +35,19 @@ exports[`MapFilterBar > renders correctly 1`] = `
   cursor: pointer;
 }
 
-.c3.btn .Button__value {
+.c0.btn .Button__value {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
-.c3.btn:hover {
+.c0.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c3.btn:focus {
+.c0.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -55,31 +55,31 @@ exports[`MapFilterBar > renders correctly 1`] = `
   box-shadow: none;
 }
 
-.c3.btn.btn-primary {
+.c0.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c3.btn.btn-primary:hover,
-.c3.btn.btn-primary:active,
-.c3.btn.btn-primary:focus {
+.c0.btn.btn-primary:hover,
+.c0.btn.btn-primary:active,
+.c0.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c3.btn.btn-secondary {
+.c0.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c3.btn.btn-secondary:hover,
-.c3.btn.btn-secondary:active,
-.c3.btn.btn-secondary:focus {
+.c0.btn.btn-secondary:hover,
+.c0.btn.btn-secondary:active,
+.c0.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c3.btn.btn-info {
+.c0.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -87,66 +87,66 @@ exports[`MapFilterBar > renders correctly 1`] = `
   padding-right: 0.6rem;
 }
 
-.c3.btn.btn-info:hover,
-.c3.btn.btn-info:active,
-.c3.btn.btn-info:focus {
+.c0.btn.btn-info:hover,
+.c0.btn.btn-info:active,
+.c0.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c3.btn.btn-light {
+.c0.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c3.btn.btn-light:hover,
-.c3.btn.btn-light:active,
-.c3.btn.btn-light:focus {
+.c0.btn.btn-light:hover,
+.c0.btn.btn-light:active,
+.c0.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c3.btn.btn-dark {
+.c0.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c3.btn.btn-dark:hover,
-.c3.btn.btn-dark:active,
-.c3.btn.btn-dark:focus {
+.c0.btn.btn-dark:hover,
+.c0.btn.btn-dark:active,
+.c0.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c3.btn.btn-danger {
+.c0.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c3.btn.btn-danger:hover,
-.c3.btn.btn-danger:active,
-.c3.btn.btn-danger:focus {
+.c0.btn.btn-danger:hover,
+.c0.btn.btn-danger:active,
+.c0.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c3.btn.btn-warning {
+.c0.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c3.btn.btn-warning:hover,
-.c3.btn.btn-warning:active,
-.c3.btn.btn-warning:focus {
+.c0.btn.btn-warning:hover,
+.c0.btn.btn-warning:active,
+.c0.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c3.btn.btn-link {
+.c0.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -170,9 +170,9 @@ exports[`MapFilterBar > renders correctly 1`] = `
   text-decoration: underline;
 }
 
-.c3.btn.btn-link:hover,
-.c3.btn.btn-link:active,
-.c3.btn.btn-link:focus {
+.c0.btn.btn-link:hover,
+.c0.btn.btn-link:active,
+.c0.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -182,15 +182,15 @@ exports[`MapFilterBar > renders correctly 1`] = `
   outline: none;
 }
 
-.c3.btn.btn-link:disabled,
-.c3.btn.btn-link.disabled {
+.c0.btn.btn-link:disabled,
+.c0.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c3.btn:disabled,
-.c3.btn:disabled:hover {
+.c0.btn:disabled,
+.c0.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -202,96 +202,16 @@ exports[`MapFilterBar > renders correctly 1`] = `
   cursor: not-allowed;
 }
 
-.c3.Button .Button__icon {
+.c0.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c3.Button--icon-only:focus {
+.c0.Button--icon-only:focus {
   outline: none;
 }
 
-.c3.Button--icon-only .Button__icon {
+.c0.Button--icon-only .Button__icon {
   margin-right: 0;
-}
-
-.c4 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-}
-
-.c4 div:nth-child(1) div:nth-child(1) div:nth-child(1) {
-  cursor: auto;
-}
-
-.c4 div:nth-child(1) div:nth-child(1) div:nth-child(1) svg {
-  fill: #909090;
-}
-
-.c4 div:nth-child(2) div:nth-child(1) div:nth-child(1) {
-  cursor: pointer;
-}
-
-.c4 div:nth-child(2) div:nth-child(1) div:nth-child(1) svg {
-  fill: #003366;
-}
-
-.c5 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  width: 100%;
-}
-
-.c6 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  padding-right: 1rem;
-  padding-top: 0.5rem;
-}
-
-.c6 svg {
-  min-width: -webkit-max-content;
-  min-width: -moz-max-content;
-  min-width: max-content;
-}
-
-.c1 {
-  padding-right: 0 !important;
-  min-width: 15rem;
-}
-
-.c1 .form-control {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-.c0 {
-  padding-right: 0 !important;
-  border-right: 0 !important;
-  min-width: 17rem;
-}
-
-.c2 {
-  padding-left: 0 !important;
-}
-
-.c2 input:first-child {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
 }
 
 <form
@@ -299,20 +219,13 @@ exports[`MapFilterBar > renders correctly 1`] = `
     novalidate=""
   >
     <div
-      class="map-filter-bar pb-4 row"
+      class="row no-gutters"
     >
       <div
-        class="col-auto"
-      >
-        <span>
-          Search:
-        </span>
-      </div>
-      <div
-        class="c0 col-xl-1 col-lg-1 col-md-1 col-1"
+        class="col-5"
       >
         <div
-          class="c1 idir-input-group form-group"
+          class="idir-input-group form-group"
         >
           <select
             class="form-select form-control"
@@ -379,7 +292,7 @@ exports[`MapFilterBar > renders correctly 1`] = `
         </div>
       </div>
       <div
-        class="c2 col-xl-3 col-4"
+        class="col"
       >
         <div
           class="input form-group"
@@ -395,11 +308,15 @@ exports[`MapFilterBar > renders correctly 1`] = `
           />
         </div>
       </div>
+    </div>
+    <div
+      class="row"
+    >
       <div
-        class="col-auto"
+        class="col"
       >
         <button
-          class="c3 Button Button--disabled Button--icon-only primary btn btn-primary"
+          class="c0 Button Button--disabled primary btn btn-primary"
           data-testid="search"
           disabled=""
           id="search-button"
@@ -423,13 +340,18 @@ exports[`MapFilterBar > renders correctly 1`] = `
               />
             </svg>
           </div>
+          <div
+            class="Button__value"
+          >
+            Search
+          </div>
         </button>
       </div>
       <div
-        class="col-auto"
+        class="col"
       >
         <button
-          class="c3 Button Button--icon-only btn btn-info"
+          class="c0 Button btn btn-info"
           data-testid="reset-button"
           id="reset-button"
           title="reset-button"
@@ -452,77 +374,12 @@ exports[`MapFilterBar > renders correctly 1`] = `
               />
             </svg>
           </div>
+          <div
+            class="Button__value"
+          >
+            Clear
+          </div>
         </button>
-      </div>
-      <div
-        class="bar-item col-auto"
-      >
-        <div
-          class="c4"
-        >
-          <div
-            class="c5"
-          >
-            <div
-              class="c6"
-            >
-              <button
-                class="c3 Button Button--icon-only btn btn-info"
-                title="map-view"
-                type="button"
-              >
-                <div
-                  class="Button__icon"
-                >
-                  <svg
-                    fill="currentColor"
-                    height="25"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 576 512"
-                    width="25"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M565.6 36.2C572.1 40.7 576 48.1 576 56V392c0 10-6.2 18.9-15.5 22.4l-168 64c-5.2 2-10.9 2.1-16.1 .3L192.5 417.5l-160 61c-7.4 2.8-15.7 1.8-22.2-2.7S0 463.9 0 456V120c0-10 6.1-18.9 15.5-22.4l168-64c5.2-2 10.9-2.1 16.1-.3L383.5 94.5l160-61c7.4-2.8 15.7-1.8 22.2 2.7zM48 136.5V421.2l120-45.7V90.8L48 136.5zM360 422.7V137.3l-144-48V374.7l144 48zm48-1.5l120-45.7V90.8L408 136.5V421.2z"
-                    />
-                  </svg>
-                </div>
-              </button>
-            </div>
-          </div>
-          <div
-            class="c5"
-          >
-            <div
-              class="c6"
-            >
-              <button
-                class="c3 Button Button--icon-only btn btn-info"
-                title="list-view"
-                type="button"
-              >
-                <div
-                  class="Button__icon"
-                >
-                  <svg
-                    fill="currentColor"
-                    height="21"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 512 512"
-                    width="21"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M48 48a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm0 160a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm0 160a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm448 16H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zm0-320H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16V80a16 16 0 0 0-16-16zm0 160H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16z"
-                    />
-                  </svg>
-                </div>
-              </button>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </form>

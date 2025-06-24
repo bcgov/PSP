@@ -295,6 +295,13 @@ exports[`MapSearch component > renders as expected 1`] = `
                 >
                   Lat/Long
                 </option>
+                <option
+                  class="option"
+                  data-testid="select-option-surveyParcel"
+                  value="surveyParcel"
+                >
+                  Survey Parcel
+                </option>
               </select>
             </div>
           </div>
@@ -389,9 +396,6 @@ exports[`MapSearch component > renders as expected 1`] = `
             </button>
           </div>
         </div>
-        <div
-          class="row"
-        />
       </form>
     </div>
   </div>

@@ -276,6 +276,7 @@ export const useMapSearch = () => {
 
         result = {
           pimsLocationFeatures: emptyPimsLocationFeatureCollection,
+          pimsLocationLiteFeatures: emptyPimsLocationLiteFeatureCollection,
           pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
           fullyAttributedFeatures: emptyPmbcFeatureCollection,
           surveyedParcelsFeatures: exists(validCrownSurveyFeatures)

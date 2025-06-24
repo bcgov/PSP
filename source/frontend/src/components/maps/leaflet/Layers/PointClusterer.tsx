@@ -93,8 +93,8 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
 
   const pimsLocationFeatures: FeatureCollection<Geometry, PIMS_Property_Location_Lite_View> =
     useMemo(() => {
-      let filteredFeatures = mapMachine.mapFeatureData?.pimsLocationLiteFeatures?.features?.filter(x =>
-        mapMachine.activePimsPropertyIds.includes(Number(x.properties.PROPERTY_ID)),
+      let filteredFeatures = mapMachine.mapFeatureData?.pimsLocationLiteFeatures?.features?.filter(
+        x => mapMachine.activePimsPropertyIds.includes(Number(x.properties.PROPERTY_ID)),
       );
 
       if (!mapMachine.showRetired) {

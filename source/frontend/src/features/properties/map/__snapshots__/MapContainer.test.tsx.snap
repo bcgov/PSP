@@ -1796,6 +1796,13 @@ exports[`MapContainer > Renders the map 1`] = `
                       >
                         Lat/Long
                       </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-surveyParcel"
+                        value="surveyParcel"
+                      >
+                        Survey Parcel
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -1890,9 +1897,6 @@ exports[`MapContainer > Renders the map 1`] = `
                   </button>
                 </div>
               </div>
-              <div
-                class="row"
-              />
             </form>
           </div>
         </div>

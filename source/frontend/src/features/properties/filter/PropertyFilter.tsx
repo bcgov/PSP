@@ -207,11 +207,11 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                 <CoordinateSearchForm field="coordinates" innerClassName="flex-nowrap" />
               </Col>
             )}
-              {values.searchBy === 'surveyParcel' && (
+            {values.searchBy === 'surveyParcel' && (
+              <>
                 <Row noGutters>
                   <Col>
                     <Select
-                      innerClassName="rounded-0"
                       field="district"
                       options={landTitleDistricts.map(ltd => ({
                         value: ltd,
@@ -219,27 +219,27 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                       }))}
                     />
                   </Col>
+                </Row>
+                <Row noGutters>
                   <Col>
-                    <Input
-                      innerClassName="rounded-0"
-                      placeholder="Section"
-                      field="section"
-                      displayErrorTooltips
-                    ></Input>
+                    <Input placeholder="Section" field="section" displayErrorTooltips></Input>
                   </Col>
+                </Row>
+                <Row noGutters>
                   <Col>
-                    <Input
-                      innerClassName="rounded-0"
-                      placeholder="Township"
-                      field="township"
-                      displayErrorTooltips
-                    ></Input>
+                    <Input placeholder="Township" field="township" displayErrorTooltips></Input>
                   </Col>
+                </Row>
+                <Row noGutters>
                   <Col>
                     <Input placeholder="Range" field="range" displayErrorTooltips></Input>
                   </Col>
                 </Row>
-              )}
+              </>
+            )}
+          </Row>
+          <Row>
+            <Col>
               <SearchButton
                 disabled={
                   isSubmitting ||
@@ -274,30 +274,8 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
               </ResetButton>
             </Col>
           </Row>
-          <Row></Row>
         </Form>
       )}
     </Formik>
   );
 };
-const StyledSelect = styled(Select)`
-  padding-right: 0 !important;
-  min-width: 15rem;
-  .form-control {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-  }
-`;
-const NoRightPaddingColumn = styled(Col)`
-  padding-right: 0 !important;
-  border-right: 0 !important;
-  min-width: 17rem;
-`;
-
-const StyledCol = styled(Col)`
-  padding-left: 0 !important;
-  input:first-child {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-  }
-`;
