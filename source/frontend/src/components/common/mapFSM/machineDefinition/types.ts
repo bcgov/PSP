@@ -2,7 +2,7 @@ import { LatLngBounds, LatLngLiteral } from 'leaflet';
 
 import { PropertyFilterFormModel } from '@/components/maps/leaflet/Control/AdvancedFilter/models';
 import { ILayerItem } from '@/components/maps/leaflet/Control/LayersControl/types';
-import { IMapProperty } from '@/components/propertySelector/models';
+import { IFilePropertyLocation } from '@/components/maps/types';
 import { IMapSideBarViewState as IMapSideBarState } from '@/features/mapSideBar/MapSideBar';
 import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
 
@@ -44,7 +44,7 @@ export type MachineContext = {
   requestedFitBounds: LatLngBounds;
   requestedFlyTo: RequestedFlyTo;
   requestedCenterTo: RequestedCenterTo;
-  filePropertyLocations: IMapProperty[];
+  filePropertyLocations: IFilePropertyLocation[];
   activePimsPropertyIds: number[];
   activeLayers: ILayerItem[];
   mapLayersToRefresh: ILayerItem[];

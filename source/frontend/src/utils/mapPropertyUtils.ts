@@ -25,6 +25,8 @@ import { ApiGen_Concepts_Geometry } from '@/models/api/generated/ApiGen_Concepts
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { enumFromValue, exists, formatApiAddress, pidFormatter } from '@/utils';
 
+import { IFilePropertyLocation } from './../components/maps/types';
+
 export enum NameSourceType {
   PID = 'PID',
   PIN = 'PIN',
@@ -195,6 +197,20 @@ export function apiToMapProperty(fileProperty: ApiGen_Concepts_FileProperty): IM
   };
 }
 
+export function apiToFileProperty(
+  fileProperty: ApiGen_Concepts_FileProperty,
+): IFilePropertyLocation {
+  return {
+    latitude: fileProperty.property?.location?.coordinate.y,
+    longitude: fileProperty.property?.location?.coordinate.x,
+    fileLocation: {
+      lat: fileProperty.property?.location?.coordinate.y,
+      lng: fileProperty.property?.location?.coordinate.x,
+    },
+    isActive: fileProperty?.isActive,
+  };
+}
+
 function toMapProperty(
   feature: Feature<Geometry, GeoJsonProperties>,
   address?: string,
@@ -331,6 +347,15 @@ export function latLngFromMapProperty(
   return {
     lat: Number(mapProperty?.fileLocation?.lat ?? mapProperty?.latitude ?? 0),
     lng: Number(mapProperty?.fileLocation?.lng ?? mapProperty?.longitude ?? 0),
+  };
+}
+
+export function latLngFromFileProperty(
+  fileProperty: IFilePropertyLocation | undefined | null,
+): LatLngLiteral | null {
+  return {
+    lat: Number(fileProperty?.fileLocation?.lat ?? fileProperty?.latitude ?? 0),
+    lng: Number(fileProperty?.fileLocation?.lng ?? fileProperty?.longitude ?? 0),
   };
 }
 

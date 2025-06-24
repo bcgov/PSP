@@ -1,4 +1,5 @@
 import { GeoJsonProperties } from 'geojson';
+import { LatLngLiteral } from 'leaflet';
 import Supercluster from 'supercluster';
 
 export type ICluster<
@@ -16,3 +17,10 @@ export type PointFeature = Supercluster.PointFeature<{
   organizationId?: number;
   name?: string;
 }>;
+
+export interface IFilePropertyLocation {
+  latitude?: number;
+  longitude?: number;
+  fileLocation?: LatLngLiteral;
+  isActive?: boolean;
+}

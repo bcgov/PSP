@@ -7,6 +7,7 @@ import { AnyEventObject } from 'xstate';
 
 import { PropertyFilterFormModel } from '@/components/maps/leaflet/Control/AdvancedFilter/models';
 import { ILayerItem } from '@/components/maps/leaflet/Control/LayersControl/types';
+import { IFilePropertyLocation } from '@/components/maps/types';
 import { IMapProperty } from '@/components/propertySelector/models';
 import { IGeoSearchParams } from '@/constants/API';
 import { IMapSideBarViewState } from '@/features/mapSideBar/MapSideBar';
@@ -43,7 +44,7 @@ export interface IMapStateMachineContext {
   isLoading: boolean;
   mapSearchCriteria: IPropertyFilter | null;
   mapFeatureData: MapFeatureData;
-  filePropertyLocations: IMapProperty[];
+  filePropertyLocations: IFilePropertyLocation[];
   pendingFitBounds: boolean;
   requestedFitBounds: LatLngBounds;
   isSelecting: boolean;
@@ -88,7 +89,7 @@ export interface IMapStateMachineContext {
   finishReposition: () => void;
   toggleMapFilterDisplay: () => void;
   toggleMapLayerControl: () => void;
-  setFilePropertyLocations: (locations: IMapProperty[]) => void;
+  setFilePropertyLocations: (locations: IFilePropertyLocation[]) => void;
   setMapLayers: (layers: ILayerItem[]) => void;
   setMapLayersToRefresh: (layers: ILayerItem[]) => void;
   setDefaultMapLayers: (layers: ILayerItem[]) => void;

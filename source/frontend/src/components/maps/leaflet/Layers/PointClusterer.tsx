@@ -18,7 +18,7 @@ import {
   PIMS_Property_Boundary_View,
   PIMS_Property_Location_View,
 } from '@/models/layers/pimsPropertyLocationView';
-import { exists, latLngFromMapProperty } from '@/utils';
+import { exists, latLngFromFileProperty } from '@/utils';
 
 import { ONE_HUNDRED_METER_PRECISION } from '../../constants';
 import SinglePropertyMarker from '../Markers/SingleMarker';
@@ -98,7 +98,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
   const draftPoints = useMemo<LatLngLiteral[]>(() => {
     return mapMachine.filePropertyLocations.map(x => {
       // The values on the feature are rounded to the 4th decimal. Do the same to the draft points.
-      return latLngFromMapProperty(x);
+      return latLngFromFileProperty(x);
     });
   }, [mapMachine.filePropertyLocations]);
 
@@ -354,7 +354,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
          **/}
         <FeatureGroup ref={draftFeatureGroupRef}>
           {mapMachine.filePropertyLocations.map((draftPoint, index) => {
-            const latLng = latLngFromMapProperty(draftPoint);
+            const latLng = latLngFromFileProperty(draftPoint);
             return (
               <Marker
                 key={index}
