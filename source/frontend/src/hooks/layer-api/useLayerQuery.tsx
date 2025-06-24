@@ -85,6 +85,11 @@ export interface IUserLayerQuery {
       sortBy?: string,
     ) => Promise<AxiosResponse<FeatureCollection<Geometry, GeoJsonProperties>>>
   >;
+  findMultipleRawWrapped: IResponseWrapper<
+    (
+      searchParams: URLSearchParams,
+    ) => Promise<AxiosResponse<FeatureCollection<Geometry, GeoJsonProperties>>>
+  >;
 }
 
 /**uselayerque
@@ -174,6 +179,22 @@ export const useLayerQuery = (
       [authenticated, withCredentials, baseUrl],
     ),
     requestName: `findOneWhereContainsWrapped-${baseUrl}`,
+  });
+
+  // NOTE: sortby is used here to ensure that if there are multiple features at a given location the non-retired feature will be returned first.
+  const findMultipleRawWrapped = useApiRequestWrapper({
+    requestFunction: useCallback(
+      async (
+        searchParams: URLSearchParams,
+      ): Promise<AxiosResponse<FeatureCollection<Geometry, GeoJsonProperties>>> => {
+        const data = await wfsAxios2({ authenticated, withCredentials }).get<
+          FeatureCollection<Geometry, GeoJsonProperties>
+        >(`${baseAllUrl}&${searchParams.toString()}`);
+        return data;
+      },
+      [authenticated, withCredentials, baseAllUrl],
+    ),
+    requestName: `findMultipleRawWrapped-${baseAllUrl}`,
   });
 
   // NOTE: sortby is used here to ensure that if there are multiple features at a given location the non-retired feature will be returned first.
@@ -290,5 +311,6 @@ export const useLayerQuery = (
     findOneWhereContainsWrapped,
     findMultipleWhereContainsWrapped,
     findOneWhereExactWrapped,
+    findMultipleRawWrapped,
   };
 };

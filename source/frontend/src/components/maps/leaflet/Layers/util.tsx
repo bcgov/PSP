@@ -17,6 +17,7 @@ import otherInterestHighlightImage from '@/assets/images/pins/other-interest-hig
 import retiredImage from '@/assets/images/pins/retired.png';
 import { ICluster } from '@/components/maps/types';
 import { DraftCircleNumber } from '@/components/propertySelector/selectedPropertyList/DraftCircleNumber';
+import { TANTALIS_CrownSurveyParcels_Feature_Properties } from '@/models/layers/crownLand';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import {
   PIMS_Property_Boundary_View,
@@ -136,7 +137,8 @@ export const notOwnedPropertyIconSelect = L.icon({
 type MarkerFeature =
   | PIMS_Property_Location_Lite_View
   | PIMS_Property_Boundary_View
-  | PMBC_FullyAttributed_Feature_Properties;
+  | PMBC_FullyAttributed_Feature_Properties
+  | TANTALIS_CrownSurveyParcels_Feature_Properties;
 
 /**
  * This function defines how GeoJSON points spawn Leaflet layers on the map.

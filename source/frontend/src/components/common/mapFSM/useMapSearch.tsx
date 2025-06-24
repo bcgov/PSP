@@ -3,6 +3,7 @@ import { useCallback } from 'react';
 import { toast } from 'react-toastify';
 
 import { IGeoSearchParams } from '@/constants/API';
+import { useCrownLandLayer } from '@/hooks/repositories/mapLayer/useCrownLandLayer';
 import { useFullyAttributedParcelMapLayer } from '@/hooks/repositories/mapLayer/useFullyAttributedParcelMapLayer';
 import { usePimsPropertyLayer } from '@/hooks/repositories/mapLayer/usePimsPropertyLayer';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
@@ -20,12 +21,14 @@ import {
   emptyPimsLocationFeatureCollection,
   emptyPimsLocationLiteFeatureCollection,
   emptyPmbcFeatureCollection,
+  emptySurveyedParcelsFeatures,
   MapFeatureData,
 } from './models';
 
 export const useMapSearch = () => {
   const fullyAttributedService = useFullyAttributedParcelMapLayer();
   const pimsPropertyLayerService = usePimsPropertyLayer();
+  const crownLandService = useCrownLandLayer();
 
   const { setModalContent, setDisplayModal } = useModalContext();
   const keycloak = useKeycloakWrapper();
@@ -172,6 +175,7 @@ export const useMapSearch = () => {
                 features: validPmbcFeatures,
               }
             : emptyPmbcFeatureCollection,
+          surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
         };
 
         if ((validFeatures?.length ?? 0) + (validPmbcFeatures?.length ?? 0) === 0) {
@@ -237,6 +241,7 @@ export const useMapSearch = () => {
             pimsLocationLiteFeatures: emptyPimsLocationLiteFeatureCollection,
             pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
             fullyAttributedFeatures: emptyPmbcFeatureCollection,
+            surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
           };
 
           if (validFeatures.length === 0) {
@@ -252,6 +257,48 @@ export const useMapSearch = () => {
       return result;
     },
     [loadPimsProperties, setModalContent, setDisplayModal, logout],
+  );
+
+  const searchBySurveyParcel = useCallback(
+    async (filter?: IGeoSearchParams) => {
+      let result: MapFeatureData = emptyFeatureData;
+      try {
+        const response = await crownLandService.findMultipleSurveyParcel(
+          filter?.SECTION,
+          filter?.TOWNSHIP,
+          filter?.RANGE,
+          filter?.DISTRICT,
+        );
+
+        const validCrownSurveyFeatures = response?.features?.filter(feature =>
+          exists(feature?.geometry),
+        );
+
+        result = {
+          pimsLocationFeatures: emptyPimsLocationFeatureCollection,
+          pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
+          fullyAttributedFeatures: emptyPmbcFeatureCollection,
+          surveyedParcelsFeatures: exists(validCrownSurveyFeatures)
+            ? {
+                type: response?.type,
+                bbox: response.bbox,
+                features: validCrownSurveyFeatures,
+              }
+            : emptySurveyedParcelsFeatures,
+        };
+
+        if (response?.features?.length === 0) {
+          toast.info('No search results found');
+        } else {
+          toast.info(`${response?.features.length ?? 0} properties found`);
+        }
+      } catch (error) {
+        toast.error((error as Error).message, { autoClose: 7000 });
+      }
+
+      return result;
+    },
+    [crownLandService],
   );
 
   const searchMany = useCallback(
@@ -345,6 +392,7 @@ export const useMapSearch = () => {
                 features: validPmbcFeatures,
               }
             : emptyPmbcFeatureCollection,
+          surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
         };
 
         if (validPmbcFeatures.length === 0 && validPimsFeatures.length === 0) {
@@ -409,6 +457,7 @@ export const useMapSearch = () => {
           pimsLocationFeatures: emptyPimsLocationFeatureCollection,
           pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
           fullyAttributedFeatures: emptyPmbcFeatureCollection,
+          surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
         };
 
         if (validFeatures.length === 0) {
@@ -422,6 +471,7 @@ export const useMapSearch = () => {
           pimsLocationLiteFeatures: emptyPimsLocationFeatureCollection,
           pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
           fullyAttributedFeatures: emptyPmbcFeatureCollection,
+          surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
         };
 
         toast.info('No search results found');
@@ -439,6 +489,7 @@ export const useMapSearch = () => {
     searchMany,
     loadMapProperties,
     searchByHistorical,
+    searchBySurveyParcel,
     loadingPimsProperties: pimsPropertyLayerService.loadPropertyLayer,
     loadingPimsPropertiesResponse: pimsPropertyLayerService.loadPropertyLayer.response,
   };

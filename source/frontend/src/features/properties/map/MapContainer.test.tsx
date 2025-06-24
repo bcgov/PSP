@@ -12,6 +12,7 @@ import {
   emptyPimsLocationFeatureCollection,
   emptyPimsLocationLiteFeatureCollection,
   emptyPmbcFeatureCollection,
+  emptySurveyedParcelsFeatures,
 } from '@/components/common/mapFSM/models';
 import { Claims } from '@/constants/index';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
@@ -186,6 +187,7 @@ describe('MapContainer', () => {
         pimsLocationLiteFeatures: createPimsFeatures(mockParcels),
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
         fullyAttributedFeatures: emptyPmbcFeatureCollection,
+        surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
       },
     };
     if (
@@ -293,6 +295,7 @@ describe('MapContainer', () => {
           pimsLocationLiteFeatures: emptyPimsLocationLiteFeatureCollection,
           pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
           fullyAttributedFeatures: emptyPmbcFeatureCollection,
+          surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
         },
       },
     });
@@ -316,6 +319,7 @@ describe('MapContainer', () => {
           pimsLocationLiteFeatures: emptyPimsLocationLiteFeatureCollection,
           pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
           fullyAttributedFeatures: emptyPmbcFeatureCollection,
+          surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
         },
       },
     });
@@ -373,6 +377,7 @@ describe('MapContainer', () => {
           pimsLocationLiteFeatures: emptyPimsLocationLiteFeatureCollection,
           pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
           fullyAttributedFeatures: emptyPmbcFeatureCollection,
+          surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
         },
       },
     });
@@ -406,6 +411,7 @@ describe('MapContainer', () => {
         pimsLocationLiteFeatures: pimsFeatures,
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
         fullyAttributedFeatures: emptyPmbcFeatureCollection,
+        surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
       },
     };
 
@@ -445,6 +451,7 @@ describe('MapContainer', () => {
         pimsLocationLiteFeatures: pimsFeatures,
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
         fullyAttributedFeatures: emptyPmbcFeatureCollection,
+        surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
       },
     };
 
@@ -490,6 +497,7 @@ describe('MapContainer', () => {
         pimsLocationLiteFeatures: pimsFeatures,
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
         fullyAttributedFeatures: emptyPmbcFeatureCollection,
+        surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
       },
       isFiltering: false,
     };
@@ -526,6 +534,7 @@ describe('MapContainer', () => {
         pimsLocationLiteFeatures: pimsFeatures,
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
         fullyAttributedFeatures: emptyPmbcFeatureCollection,
+        surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
       },
       activePimsPropertyIds: activeIds,
       isFiltering: true,
@@ -573,6 +582,7 @@ describe('MapContainer', () => {
         pimsLocationLiteFeatures: pimsFeatures,
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
         fullyAttributedFeatures: emptyPmbcFeatureCollection,
+        surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
       },
       activePimsPropertyIds: activeIds,
       isFiltering: true,

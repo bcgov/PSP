@@ -12,6 +12,7 @@ import { TableSort } from '@/components/Table/TableSort';
 import { IGeographicNamesProperties } from '@/hooks/pims-api/interfaces/IGeographicNamesProperties';
 import { useGeocoderRepository } from '@/hooks/useGeocoderRepository';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import { useTenant } from '@/tenants';
 import { exists, pidFormatter } from '@/utils';
 
 import { GeocoderAutoComplete } from '../components/GeocoderAutoComplete';
@@ -54,6 +55,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
   useGeocoder,
 }) => {
   const { getSitePids } = useGeocoderRepository();
+  const { landTitleDistricts } = useTenant();
 
   const initialValues = useMemo(() => {
     const values = { ...defaultFilter, ...propertyFilter };
@@ -88,6 +90,10 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
       label: 'Lat/Long',
       value: 'coordinates',
     });
+    searchOptions.push({
+      label: 'Survey Parcel',
+      value: 'surveyParcel',
+    });
   }
 
   return (
@@ -117,6 +123,10 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                   setFieldValue('planNumber', null);
                   setFieldValue('historical', null);
                   setFieldValue('name', null);
+                  setFieldValue('section', null);
+                  setFieldValue('township', null);
+                  setFieldValue('range', null);
+                  setFieldValue('district', null);
                   if (e.target.value === 'coordinates') {
                     setFieldValue('coordinates', new DmsCoordinates());
                   } else {
@@ -197,9 +207,39 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                 <CoordinateSearchForm field="coordinates" innerClassName="flex-nowrap" />
               </Col>
             )}
-          </Row>
-          <Row>
-            <Col>
+              {values.searchBy === 'surveyParcel' && (
+                <Row noGutters>
+                  <Col>
+                    <Select
+                      innerClassName="rounded-0"
+                      field="district"
+                      options={landTitleDistricts.map(ltd => ({
+                        value: ltd,
+                        label: ltd,
+                      }))}
+                    />
+                  </Col>
+                  <Col>
+                    <Input
+                      innerClassName="rounded-0"
+                      placeholder="Section"
+                      field="section"
+                      displayErrorTooltips
+                    ></Input>
+                  </Col>
+                  <Col>
+                    <Input
+                      innerClassName="rounded-0"
+                      placeholder="Township"
+                      field="township"
+                      displayErrorTooltips
+                    ></Input>
+                  </Col>
+                  <Col>
+                    <Input placeholder="Range" field="range" displayErrorTooltips></Input>
+                  </Col>
+                </Row>
+              )}
               <SearchButton
                 disabled={
                   isSubmitting ||
@@ -211,6 +251,10 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                     values.planNumber ||
                     values.address ||
                     values.historical ||
+                    values.township ||
+                    values.section ||
+                    values.range ||
+                    values.district ||
                     (values.searchBy === 'coordinates' && isValid)
                   )
                 }
@@ -236,3 +280,24 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
     </Formik>
   );
 };
+const StyledSelect = styled(Select)`
+  padding-right: 0 !important;
+  min-width: 15rem;
+  .form-control {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+`;
+const NoRightPaddingColumn = styled(Col)`
+  padding-right: 0 !important;
+  border-right: 0 !important;
+  min-width: 17rem;
+`;
+
+const StyledCol = styled(Col)`
+  padding-left: 0 !important;
+  input:first-child {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+`;

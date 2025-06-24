@@ -8,7 +8,7 @@ import Claims from '@/constants/claims';
 import { AddLeaseContainer } from '@/features/leases';
 import { LeaseContextProvider } from '@/features/leases/context/LeaseContext';
 import MotiInventoryContainer from '@/features/mapSideBar/property/MotiInventoryContainer';
-import { isValidId } from '@/utils';
+import { exists, isValidId } from '@/utils';
 import AppRoute from '@/utils/AppRoute';
 
 import AcquisitionContainer from '../acquisition/AcquisitionContainer';
@@ -158,7 +158,7 @@ export const MapRouter: React.FunctionComponent = memo(() => {
 
       openSidebar(sidebarType);
     } else {
-      closeSidebar();
+      exists(closeSidebar) && closeSidebar();
     }
   }, [
     isAcquisition,

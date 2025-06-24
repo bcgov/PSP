@@ -12,7 +12,7 @@ import {
   defaultPropertyFilter,
   IPropertyFilter,
 } from '@/features/properties/filter/IPropertyFilter';
-import { exists, firstOrNull } from '@/utils';
+import { exists, firstOrNull, isValidString } from '@/utils';
 import { pidParser, pinParser } from '@/utils/propertyUtils';
 
 import { mapMachine } from './machineDefinition/mapMachine';
@@ -204,6 +204,15 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         } else if (geoFilter?.HISTORICAL_FILE_NUMBER_STR) {
           geoFilter.forceExactMatch = false;
           return mapSearch.searchByHistorical(geoFilter);
+        } else if (
+          isValidString(geoFilter?.SECTION?.toString()) ||
+          isValidString(geoFilter?.RANGE?.toString()) ||
+          isValidString(geoFilter?.TOWNSHIP?.toString()) ||
+          isValidString(geoFilter?.DISTRICT?.toString())
+        ) {
+          geoFilter.forceExactMatch = false;
+          const response = mapSearch.searchBySurveyParcel(geoFilter);
+          return response;
         } else {
           return mapSearch.loadMapProperties();
         }
@@ -556,6 +565,10 @@ const getQueryParams = (filter: IPropertyFilter): IGeoSearchParams => {
     STREET_ADDRESS_1: filter.address,
     SURVEY_PLAN_NUMBER: filter.planNumber,
     HISTORICAL_FILE_NUMBER_STR: filter.historical,
+    SECTION: filter.section,
+    TOWNSHIP: filter.township,
+    RANGE: filter.range,
+    DISTRICT: filter.district,
     latitude: filter.latitude,
     longitude: filter.longitude,
     forceExactMatch: pidValue?.length === 9,

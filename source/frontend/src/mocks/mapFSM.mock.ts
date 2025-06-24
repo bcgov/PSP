@@ -5,6 +5,7 @@ import {
   emptyPimsLocationFeatureCollection,
   emptyPimsLocationLiteFeatureCollection,
   emptyPmbcFeatureCollection,
+  emptySurveyedParcelsFeatures,
 } from '@/components/common/mapFSM/models';
 import { defaultBounds } from '@/components/maps/constants';
 import { PropertyFilterFormModel } from '@/components/maps/leaflet/Control/AdvancedFilter/models';
@@ -17,6 +18,7 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
     pimsLocationLiteFeatures: emptyPimsLocationLiteFeatureCollection,
     pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
     fullyAttributedFeatures: emptyPmbcFeatureCollection,
+    surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
   },
   mapSideBarViewState: {
     isCollapsed: false,
