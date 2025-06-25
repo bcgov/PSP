@@ -894,7 +894,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
       </div>
     </div>
   </div>
-  .c7.btn {
+  .c2.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -923,19 +923,19 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c7.btn .Button__value {
+.c2.btn .Button__value {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
-.c7.btn:hover {
+.c2.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c7.btn:focus {
+.c2.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -943,31 +943,31 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
   box-shadow: none;
 }
 
-.c7.btn.btn-primary {
+.c2.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c7.btn.btn-primary:hover,
-.c7.btn.btn-primary:active,
-.c7.btn.btn-primary:focus {
+.c2.btn.btn-primary:hover,
+.c2.btn.btn-primary:active,
+.c2.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c7.btn.btn-secondary {
+.c2.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c7.btn.btn-secondary:hover,
-.c7.btn.btn-secondary:active,
-.c7.btn.btn-secondary:focus {
+.c2.btn.btn-secondary:hover,
+.c2.btn.btn-secondary:active,
+.c2.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c7.btn.btn-info {
+.c2.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -975,66 +975,66 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
   padding-right: 0.6rem;
 }
 
-.c7.btn.btn-info:hover,
-.c7.btn.btn-info:active,
-.c7.btn.btn-info:focus {
+.c2.btn.btn-info:hover,
+.c2.btn.btn-info:active,
+.c2.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c7.btn.btn-light {
+.c2.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c7.btn.btn-light:hover,
-.c7.btn.btn-light:active,
-.c7.btn.btn-light:focus {
+.c2.btn.btn-light:hover,
+.c2.btn.btn-light:active,
+.c2.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c7.btn.btn-dark {
+.c2.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c7.btn.btn-dark:hover,
-.c7.btn.btn-dark:active,
-.c7.btn.btn-dark:focus {
+.c2.btn.btn-dark:hover,
+.c2.btn.btn-dark:active,
+.c2.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c7.btn.btn-danger {
+.c2.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c7.btn.btn-danger:hover,
-.c7.btn.btn-danger:active,
-.c7.btn.btn-danger:focus {
+.c2.btn.btn-danger:hover,
+.c2.btn.btn-danger:active,
+.c2.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c7.btn.btn-warning {
+.c2.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c7.btn.btn-warning:hover,
-.c7.btn.btn-warning:active,
-.c7.btn.btn-warning:focus {
+.c2.btn.btn-warning:hover,
+.c2.btn.btn-warning:active,
+.c2.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c7.btn.btn-link {
+.c2.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -1058,9 +1058,9 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
   text-decoration: underline;
 }
 
-.c7.btn.btn-link:hover,
-.c7.btn.btn-link:active,
-.c7.btn.btn-link:focus {
+.c2.btn.btn-link:hover,
+.c2.btn.btn-link:active,
+.c2.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -1070,15 +1070,15 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
   outline: none;
 }
 
-.c7.btn.btn-link:disabled,
-.c7.btn.btn-link.disabled {
+.c2.btn.btn-link:disabled,
+.c2.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c7.btn:disabled,
-.c7.btn:disabled:hover {
+.c2.btn:disabled,
+.c2.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -1090,15 +1090,15 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
   cursor: not-allowed;
 }
 
-.c7.Button .Button__icon {
+.c2.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c7.Button--icon-only:focus {
+.c2.Button--icon-only:focus {
   outline: none;
 }
 
-.c7.Button--icon-only .Button__icon {
+.c2.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
@@ -1184,7 +1184,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
   line-height: 2rem;
 }
 
-.c6 {
+.c7 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1196,7 +1196,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
   gap: 0.8rem;
 }
 
-.c6 .form-label {
+.c7 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
@@ -1217,7 +1217,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c2 {
+.c3 {
   font-size: 1.6rem;
   color: #9F9D9C;
   border-bottom: 0.2rem solid #606060;
@@ -1226,18 +1226,18 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
   font-family: 'BcSans-Bold';
 }
 
-.c5 {
+.c6 {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.c3 {
+.c4 {
   min-width: 3rem;
   min-height: 4.5rem;
 }
 
-.c4 {
+.c5 {
   font-size: 1.2rem;
 }
 
@@ -1253,7 +1253,43 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
         <div
           class="align-content-end col"
         >
-          Selected properties
+          <div
+            class="row"
+          >
+            <div
+              class="col-11"
+            >
+              Selected properties
+            </div>
+            <div
+              class="col"
+            >
+              <button
+                class="c2 Button btn btn-link"
+                title="Fit boundaries button"
+                type="button"
+              >
+                <div
+                  class="Button__value"
+                >
+                  <svg
+                    class="mr-2"
+                    fill="currentColor"
+                    height="18"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 256 256"
+                    width="18"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M216,48V88a8,8,0,0,1-16,0V56H168a8,8,0,0,1,0-16h40A8,8,0,0,1,216,48ZM88,200H56V168a8,8,0,0,0-16,0v40a8,8,0,0,0,8,8H88a8,8,0,0,0,0-16Zm120-40a8,8,0,0,0-8,8v32H168a8,8,0,0,0,0,16h40a8,8,0,0,0,8-8V168A8,8,0,0,0,208,160ZM88,40H48a8,8,0,0,0-8,8V88a8,8,0,0,0,16,0V56H88a8,8,0,0,0,0-16Z"
+                    />
+                  </svg>
+                </div>
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </h2>
@@ -1261,7 +1297,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
       class="collapse show"
     >
       <div
-        class="c2 no-gutters row"
+        class="c3 no-gutters row"
       >
         <div
           class="col-md-3"
@@ -1304,7 +1340,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
             class="mb-0 d-flex align-items-center"
           >
             <svg
-              class="c3"
+              class="c4"
               height="45"
               id="Layer_2"
               viewBox="0 0 20 30"
@@ -1361,7 +1397,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
                   </g>
                 </g>
                 <text
-                  class="c4"
+                  class="c5"
                   textLength="1.25rem"
                   x="7"
                   y="15"
@@ -1374,7 +1410,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
               </title>
             </svg>
             <div
-              class="c5 pl-3"
+              class="c6 pl-3"
             >
               PID: 123-456-789
             </div>
@@ -1384,7 +1420,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
           class="col-md-5"
         >
           <div
-            class="c6 mb-0 w-100 input form-group"
+            class="c7 mb-0 w-100 input form-group"
           >
             <input
               class="form-control"
@@ -1396,10 +1432,37 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
           </div>
         </div>
         <div
+          class="col-auto"
+        >
+          <button
+            class="c2 Button btn btn-link"
+            type="button"
+          >
+            <div
+              class="Button__value"
+            >
+              <svg
+                class="ml-4"
+                fill="currentColor"
+                height="18"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="18"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M304 192v32c0 6.6-5.4 12-12 12h-56v56c0 6.6-5.4 12-12 12h-32c-6.6 0-12-5.4-12-12v-56h-56c-6.6 0-12-5.4-12-12v-32c0-6.6 5.4-12 12-12h56v-56c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v56h56c6.6 0 12 5.4 12 12zm201 284.7L476.7 505c-9.4 9.4-24.6 9.4-33.9 0L343 405.3c-4.5-4.5-7-10.6-7-17V372c-35.3 27.6-79.7 44-128 44C93.1 416 0 322.9 0 208S93.1 0 208 0s208 93.1 208 208c0 48.3-16.4 92.7-44 128h16.3c6.4 0 12.5 2.5 17 7l99.7 99.7c9.3 9.4 9.3 24.6 0 34zM344 208c0-75.2-60.8-136-136-136S72 132.8 72 208s60.8 136 136 136 136-60.8 136-136z"
+                />
+              </svg>
+            </div>
+          </button>
+        </div>
+        <div
           class="pl-3 col-md-1"
         >
           <button
-            class="c7 Button c8 btn btn-primary"
+            class="c2 Button c8 btn btn-primary"
             title="move-pin-location"
             type="button"
           >
@@ -1426,7 +1489,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
           class="col-md-2"
         >
           <button
-            class="c7 Button c9 btn btn-link"
+            class="c2 Button c9 btn btn-link"
             type="button"
           >
             <div
@@ -1473,7 +1536,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
             class="mb-0 d-flex align-items-center"
           >
             <svg
-              class="c3"
+              class="c4"
               height="45"
               id="Layer_2"
               viewBox="0 0 20 30"
@@ -1530,7 +1593,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
                   </g>
                 </g>
                 <text
-                  class="c4"
+                  class="c5"
                   textLength="1.25rem"
                   x="7"
                   y="15"
@@ -1543,7 +1606,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
               </title>
             </svg>
             <div
-              class="c5 pl-3"
+              class="c6 pl-3"
             >
               PIN: 1111222
             </div>
@@ -1553,7 +1616,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
           class="col-md-5"
         >
           <div
-            class="c6 mb-0 w-100 input form-group"
+            class="c7 mb-0 w-100 input form-group"
           >
             <input
               class="form-control"
@@ -1565,10 +1628,37 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
           </div>
         </div>
         <div
+          class="col-auto"
+        >
+          <button
+            class="c2 Button btn btn-link"
+            type="button"
+          >
+            <div
+              class="Button__value"
+            >
+              <svg
+                class="ml-4"
+                fill="currentColor"
+                height="18"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="18"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M304 192v32c0 6.6-5.4 12-12 12h-56v56c0 6.6-5.4 12-12 12h-32c-6.6 0-12-5.4-12-12v-56h-56c-6.6 0-12-5.4-12-12v-32c0-6.6 5.4-12 12-12h56v-56c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v56h56c6.6 0 12 5.4 12 12zm201 284.7L476.7 505c-9.4 9.4-24.6 9.4-33.9 0L343 405.3c-4.5-4.5-7-10.6-7-17V372c-35.3 27.6-79.7 44-128 44C93.1 416 0 322.9 0 208S93.1 0 208 0s208 93.1 208 208c0 48.3-16.4 92.7-44 128h16.3c6.4 0 12.5 2.5 17 7l99.7 99.7c9.3 9.4 9.3 24.6 0 34zM344 208c0-75.2-60.8-136-136-136S72 132.8 72 208s60.8 136 136 136 136-60.8 136-136z"
+                />
+              </svg>
+            </div>
+          </button>
+        </div>
+        <div
           class="pl-3 col-md-1"
         >
           <button
-            class="c7 Button c8 btn btn-primary"
+            class="c2 Button c8 btn btn-primary"
             title="move-pin-location"
             type="button"
           >
@@ -1595,7 +1685,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
           class="col-md-2"
         >
           <button
-            class="c7 Button c9 btn btn-link"
+            class="c2 Button c9 btn btn-link"
             type="button"
           >
             <div
