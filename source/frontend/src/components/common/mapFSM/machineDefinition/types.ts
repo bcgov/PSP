@@ -44,7 +44,6 @@ export type MachineContext = {
   advancedSearchCriteria: PropertyFilterFormModel | null;
 
   isLoading: boolean;
-  fitToResultsAfterLoading: boolean;
   requestedFitBounds: LatLngBounds;
   requestedFlyTo: RequestedFlyTo;
   requestedCenterTo: RequestedCenterTo;
