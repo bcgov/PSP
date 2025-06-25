@@ -95,6 +95,11 @@ export const layersMenuTree: LayerMenuEntry = {
       label: 'External',
       nodes: [
         {
+          layerDefinitionId: 'pmbc_parcel_pid',
+          key: 'pmbc_parcel_pid',
+          label: 'Parcels PID',
+        },
+        {
           key: 'administrative_group',
           label: 'Administrative Boundaries',
           nodes: [
@@ -249,12 +254,6 @@ export const layersMenuTree: LayerMenuEntry = {
               key: 'parcelBoundaries',
               label: 'Parcel Boundaries',
               color: '#E9AD34',
-            },
-            {
-              layerDefinitionId: 'parcelLayerStyled',
-              key: 'parcelLayerStyled',
-              label: 'Parcel Boundaries Styled',
-              color: '#ff9800',
             },
             {
               layerDefinitionId: 'srwInterestParcels',
