@@ -30,6 +30,12 @@ const LeaseProperties: React.FunctionComponent<
     displayProperties = properties;
   }
 
+  const formatPIDNumber = (pid: number): string => {
+    if (!pid) return '';
+    const paddedPID = pid.toString().padStart(9, '0');
+    return `${paddedPID.slice(0, 3)}-${paddedPID.slice(3, 6)}-${paddedPID.slice(6, 9)}`;
+  };
+
   const rowItems = displayProperties.map((property, index) => {
     return (
       <PropertyRow key={index + property.id} className="mx-0 my-2 border border-secondary">
@@ -40,7 +46,7 @@ const LeaseProperties: React.FunctionComponent<
         {property.pid && (
           <Col md="auto">
             <div>
-              <strong className="pr-2">PID:</strong> {property.pid}
+              <strong className="pr-2">PID:</strong> {formatPIDNumber(property.pid)}
             </div>
           </Col>
         )}
