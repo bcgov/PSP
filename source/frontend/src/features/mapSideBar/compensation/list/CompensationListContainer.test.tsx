@@ -298,6 +298,7 @@ describe('compensation list view container', () => {
           displayOrder: 0,
           property: undefined,
           propertyId: 0,
+          isActive: null,
           rowVersion: 0,
         },
         {
@@ -311,6 +312,7 @@ describe('compensation list view container', () => {
           displayOrder: 0,
           property: undefined,
           propertyId: 0,
+          isActive: null,
           rowVersion: 0,
         },
       ],

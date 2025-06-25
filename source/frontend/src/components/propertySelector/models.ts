@@ -21,6 +21,7 @@ export interface IMapProperty {
   districtName?: string;
   landArea?: number;
   areaUnit?: AreaUnitTypes;
+  isActive?: boolean;
 }
 
 export interface ILayerSearchCriteria {

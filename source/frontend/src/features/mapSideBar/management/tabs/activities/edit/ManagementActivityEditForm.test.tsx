@@ -269,15 +269,15 @@ describe('ManagementActivityEditForm component', () => {
   it('shows all properties selected by default when creating management activity', async () => {
     const mockDefaultValues = new ManagementActivityFormModel(null, 1);
     mockDefaultValues.selectedProperties = mockManagementFileResponse().fileProperties.map(x => {
-        return {
-          id: x.id,
-          fileId: mockManagementFileResponse().id,
-          propertyName: x.propertyName,
-          location: x.location,
-          displayOrder: x.displayOrder,
-          property: x.property,
-          propertyId: x.propertyId,
-        } as ApiGen_Concepts_FileProperty;
+      return {
+        id: x.id,
+        fileId: mockManagementFileResponse().id,
+        propertyName: x.propertyName,
+        location: x.location,
+        displayOrder: x.displayOrder,
+        property: x.property,
+        propertyId: x.propertyId,
+      } as ApiGen_Concepts_FileProperty;
     });
 
     await setup({
@@ -296,15 +296,15 @@ describe('ManagementActivityEditForm component', () => {
   it('can de-select management file properties', async () => {
     const mockDefaultValues = new ManagementActivityFormModel(null, 1);
     mockDefaultValues.selectedProperties = mockManagementFileResponse().fileProperties.map(x => {
-        return {
-          id: x.id,
-          fileId: mockManagementFileResponse().id,
-          propertyName: x.propertyName,
-          location: x.location,
-          displayOrder: x.displayOrder,
-          property: x.property,
-          propertyId: x.propertyId,
-        } as ApiGen_Concepts_FileProperty;
+      return {
+        id: x.id,
+        fileId: mockManagementFileResponse().id,
+        propertyName: x.propertyName,
+        location: x.location,
+        displayOrder: x.displayOrder,
+        property: x.property,
+        propertyId: x.propertyId,
+      } as ApiGen_Concepts_FileProperty;
     });
 
     await setup({

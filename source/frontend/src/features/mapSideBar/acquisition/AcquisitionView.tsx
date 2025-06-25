@@ -31,7 +31,7 @@ import { PropertyForm } from '../shared/models';
 import SidebarFooter from '../shared/SidebarFooter';
 import { StyledFormWrapper } from '../shared/styles';
 import UpdateProperties from '../shared/update/properties/UpdateProperties';
-import { usePropertyIndexFromUrl } from '../shared/usePropertyIndexFromUrl';
+import { useFilePropertyIdFromUrl } from '../shared/usePropertyIndexFromUrl';
 import { AcquisitionContainerState } from './AcquisitionContainer';
 import { isAcquisitionFile } from './add/models';
 import AcquisitionHeader from './common/AcquisitionHeader';
@@ -110,7 +110,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
 
   // Extract the zero-based property index from the current URL path.
   // It will be null if route is not matched
-  const currentPropertyIndex: number | null = usePropertyIndexFromUrl();
+  const currentFilePropertyId: number | null = useFilePropertyIdFromUrl();
   const statusSolver = new AcquisitionFileStatusUpdateSolver(acquisitionFile.fileStatusTypeCode);
 
   return (
@@ -167,7 +167,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
                 {isAcquisitionFile(file) && (
                   <FileMenuView
                     file={file}
-                    currentPropertyIndex={currentPropertyIndex}
+                    currentFilePropertyId={currentFilePropertyId}
                     canEdit={hasClaim(Claims.ACQUISITION_EDIT)}
                     isInNonEditableState={!statusSolver.canEditProperties()}
                     onSelectFileSummary={onSelectFileSummary}
@@ -197,16 +197,15 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
                   onSuccess={onSuccess}
                 />
                 <Route
-                  path={`${stripTrailingSlash(match.path)}/property/:menuIndex`}
+                  path={`${stripTrailingSlash(match.path)}/property/:filePropertyId`}
                   render={({ match }) => (
                     <FilePropertyRouter
                       formikRef={formikRef}
-                      selectedMenuIndex={Number(match.params.menuIndex)}
+                      selectedFilePropertyId={Number(match.params.filePropertyId)}
                       file={acquisitionFile}
                       fileType={ApiGen_CodeTypes_FileTypes.Acquisition}
                       isEditing={isEditing}
                       setIsEditing={setIsEditing}
-                      defaultFileTab={containerState.defaultFileTab}
                       defaultPropertyTab={containerState.defaultPropertyTab}
                       onSuccess={onSuccess}
                     />

@@ -90,6 +90,7 @@ describe('Disposition search results table', () => {
               file: null,
               propertyName: null,
               location: null,
+              isActive: null,
               rowVersion: null,
             },
             {
@@ -101,6 +102,7 @@ describe('Disposition search results table', () => {
               file: null,
               propertyName: null,
               location: null,
+              isActive: null,
               rowVersion: null,
             },
             {
@@ -112,6 +114,7 @@ describe('Disposition search results table', () => {
               file: null,
               propertyName: null,
               location: null,
+              isActive: null,
               rowVersion: null,
             },
           ],

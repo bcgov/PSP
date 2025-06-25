@@ -1065,6 +1065,48 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void UpdateProperties_DisableProperties_AddsNote()
+        {
+            // Arrange
+            var service = this.CreateManagementServiceWithPermissions(Permissions.ManagementEdit, Permissions.PropertyAdd, Permissions.PropertyView);
+
+            var managementFile = EntityHelper.CreateManagementFile();
+            managementFile.ConcurrencyControlNumber = 1;
+
+            var property = EntityHelper.CreateProperty(12345, regionCode: 1);
+            managementFile.PimsManagementFileProperties = new List<PimsManagementFileProperty>() { new PimsManagementFileProperty() { Property = property, Internal_Id = 1, IsActive = true } };
+
+            var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(managementFile);
+
+            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(property);
+            propertyRepository.Setup(x => x.GetPropertyRegion(It.IsAny<long>())).Returns(1);
+
+            var filePropertyRepository = this._helper.GetService<Mock<IManagementFilePropertyRepository>>();
+            filePropertyRepository.Setup(x => x.GetPropertiesByManagementFileId(It.IsAny<long>())).Returns(new List<PimsManagementFileProperty>() { new PimsManagementFileProperty() { Property = property, Internal_Id = 1, IsActive = false } });
+
+            var propertyActivityRepository = this._helper.GetService<Mock<IPropertyActivityRepository>>();
+            propertyActivityRepository.Setup(x => x.GetActivitiesByManagementFile(It.IsAny<long>())).Returns(new List<PimsPropertyActivity>());
+
+            var statusMock = this._helper.GetService<Mock<IManagementStatusSolver>>();
+            statusMock.Setup(x => x.GetCurrentManagementStatus(It.IsAny<string>())).Returns(ManagementFileStatusTypes.ACTIVE);
+            statusMock.Setup(x => x.CanEditProperties(It.IsAny<ManagementFileStatusTypes>())).Returns(true);
+
+            List<PimsManagementFileNote> note = new List<PimsManagementFileNote>();
+            var entityNoteRepository = this._helper.GetService<Mock<INoteRelationshipRepository<PimsManagementFileNote>>>();
+            entityNoteRepository.Setup(x => x.AddNoteRelationship(Capture.In<PimsManagementFileNote>(note))).Returns(new PimsManagementFileNote());
+
+            // Act
+            service.UpdateProperties(managementFile, new List<UserOverrideCode>());
+
+            // Assert
+            entityNoteRepository.Verify(x => x.AddNoteRelationship(It.IsAny<PimsManagementFileNote>()), Times.Once);
+            note.FirstOrDefault().Note.NoteTxt.Should().Be("Management File property 000-012-345 Enabled");
+        }
+
+        [Fact]
         public void UpdateProperties_FinalFile_Error()
         {
             // Arrange

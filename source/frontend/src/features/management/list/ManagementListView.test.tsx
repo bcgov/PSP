@@ -126,6 +126,7 @@ describe('Management List View', () => {
             displayOrder: null,
             file: null,
             propertyName: null,
+            isActive: null,
             location: null,
             rowVersion: null,
           },

@@ -6,7 +6,7 @@ import useDraftMarkerSynchronizer from '@/hooks/useDraftMarkerSynchronizer';
 import { usePrevious } from '@/hooks/usePrevious';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import { exists, firstOrNull, isValidId } from '@/utils';
-import { featuresetToMapProperty } from '@/utils/mapPropertyUtils';
+import { featuresetToLocationBoundaryDataset } from '@/utils/mapPropertyUtils';
 
 import { SelectedFeatureDataset } from '../common/mapFSM/useLocationFeatureLoader';
 
@@ -30,7 +30,9 @@ export const MapClickMonitor: React.FunctionComponent<IMapClickMonitorProps> = (
   const mapMachine = useMapStateMachine();
 
   const previous = usePrevious(mapMachine.mapLocationFeatureDataset);
-  const modifiedMapProperties = modifiedProperties.map(mp => featuresetToMapProperty(mp));
+  const modifiedMapProperties = modifiedProperties.map(mp =>
+    featuresetToLocationBoundaryDataset(mp),
+  );
   useDraftMarkerSynchronizer(selectedComponentId ? [] : modifiedMapProperties); // disable the draft marker synchronizer if the selecting component is set - the parent will need to control the draft markers.
 
   useDeepCompareEffect(() => {

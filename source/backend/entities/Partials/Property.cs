@@ -48,7 +48,7 @@ namespace Pims.Dal.Entities
         /// <param name="dataSourceEffectiveDate"></param>
         public PimsProperty(int pid, PimsPropertyType type, PimsAddress address, PimsPropPropTenureTyp tenure, PimsAreaUnitType areaUnit, PimsDataSourceType dataSource, DateTime dataSourceEffectiveDate, PimsPropertyStatusType status)
         {
-            this.Pid = pid;
+            this.Pid = pid > 0 ? pid : null;
             this.PropertyTypeCodeNavigation = type ?? throw new ArgumentNullException(nameof(type));
             this.PropertyTypeCode = type.Id;
             this.Address = address ?? throw new ArgumentNullException(nameof(address));

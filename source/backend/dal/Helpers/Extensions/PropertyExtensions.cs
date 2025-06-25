@@ -27,6 +27,37 @@ namespace Pims.Dal.Helpers.Extensions
             // Print item
             return string.Join("; ", groupedHistorical.Select(g => g.GetAsString()));
         }
+
+        public static string GetPropertyName(this IFilePropertyEntity fileProperty)
+        {
+            var property = fileProperty?.Property;
+            if(property == null)
+            {
+                return string.Empty;
+            }
+
+            if (property.Pid.HasValue && property?.Pid.Value.ToString().Length > 0 && property?.Pid != '0')
+            {
+                return $"{property.Pid:000-000-000}";
+            }
+            else if (property.Pin.HasValue && property?.Pin.Value.ToString()?.Length > 0 && property?.Pin != '0')
+            {
+                return property.Pin.ToString();
+            }
+            else if (property?.SurveyPlanNumber != null && property?.SurveyPlanNumber.Length > 0)
+            {
+                return property.SurveyPlanNumber;
+            }
+            else if (property?.Location != null)
+            {
+                return $"{property.Location.Coordinate.X}, {property.Location.Coordinate.Y}";
+            }
+            else if (property?.Address != null)
+            {
+                return property.Address.FormatAddress();
+            }
+            return string.Empty;
+        }
     }
 
     // Helper class to aggregate historical numbers by type.

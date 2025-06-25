@@ -16,11 +16,10 @@ import FileLayout from '../layout/FileLayout';
 import MapSideBarLayout from '../layout/MapSideBarLayout';
 import { InventoryTabNames } from '../property/InventoryTabs';
 import FilePropertyRouter from '../router/FilePropertyRouter';
-import { FileTabType } from '../shared/detail/FileTabs';
 import FileMenuView from '../shared/FileMenuView';
 import SidebarFooter from '../shared/SidebarFooter';
 import { StyledFormWrapper } from '../shared/styles';
-import { usePropertyIndexFromUrl } from '../shared/usePropertyIndexFromUrl';
+import { useFilePropertyIdFromUrl } from '../shared/usePropertyIndexFromUrl';
 import LeaseHeader from './common/LeaseHeader';
 import { LeaseContainerState } from './LeaseContainer';
 import LeaseGenerateContainer from './LeaseGenerateFormContainer';
@@ -70,7 +69,7 @@ export const LeaseView: React.FunctionComponent<ILeaseViewProps> = ({
 
   // Extract the zero-based property index from the current URL path.
   // It will be null if route is not matched
-  const currentPropertyIndex: number | null = usePropertyIndexFromUrl();
+  const currentFilePropertyId: number | null = useFilePropertyIdFromUrl();
 
   return (
     <Switch>
@@ -99,7 +98,7 @@ export const LeaseView: React.FunctionComponent<ILeaseViewProps> = ({
             leftComponent={
               <FileMenuView
                 file={lease}
-                currentPropertyIndex={currentPropertyIndex}
+                currentFilePropertyId={currentFilePropertyId}
                 canEdit={hasRole(Roles.SYSTEM_ADMINISTRATOR) || hasClaim(Claims.LEASE_EDIT)}
                 isInNonEditableState={false}
                 onSelectFileSummary={onSelectFileSummary}
@@ -113,16 +112,15 @@ export const LeaseView: React.FunctionComponent<ILeaseViewProps> = ({
               <StyledFormWrapper>
                 <Switch>
                   <Route
-                    path={`${stripTrailingSlash(currentRoute.path)}/property/:menuIndex`}
+                    path={`${stripTrailingSlash(currentRoute.path)}/property/:filePropertyId`}
                     render={({ match }) => (
                       <FilePropertyRouter
                         formikRef={formikRef}
-                        selectedMenuIndex={Number(match.params.menuIndex)}
+                        selectedFilePropertyId={Number(match.params.filePropertyId)}
                         file={lease}
                         fileType={ApiGen_CodeTypes_FileTypes.Lease}
                         isEditing={containerState.isEditing}
                         setIsEditing={setIsEditing}
-                        defaultFileTab={FileTabType.FILE_DETAILS}
                         defaultPropertyTab={InventoryTabNames.property}
                         onSuccess={onPropertyUpdateSuccess}
                       />

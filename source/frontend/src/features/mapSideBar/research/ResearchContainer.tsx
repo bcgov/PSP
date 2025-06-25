@@ -169,22 +169,16 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
       return;
     }
 
-    const fileProperties = researchFile.fileProperties ?? [];
-    const menuIndex = fileProperties.findIndex(fp => fp.id === filePropertyId);
-    if (menuIndex < 0) {
-      return;
-    }
-
     if (isEditing) {
       if (formikRef?.current?.dirty) {
         handleCancelClick(() =>
-          pathGenerator.showFilePropertyIndex('research', researchFile.id, menuIndex + 1),
+          pathGenerator.showFilePropertyId('research', researchFile.id, filePropertyId),
         );
         return;
       }
     }
     // The index needs to be offset to match the menu index
-    pathGenerator.showFilePropertyIndex('research', researchFile.id, menuIndex + 1);
+    pathGenerator.showFilePropertyId('research', researchFile.id, filePropertyId);
   };
 
   const onEditProperties = () => {

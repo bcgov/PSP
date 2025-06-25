@@ -31,7 +31,7 @@ import { PropertyForm } from '../shared/models';
 import SidebarFooter from '../shared/SidebarFooter';
 import { StyledFormWrapper } from '../shared/styles';
 import UpdateProperties from '../shared/update/properties/UpdateProperties';
-import { usePropertyIndexFromUrl } from '../shared/usePropertyIndexFromUrl';
+import { useFilePropertyIdFromUrl } from '../shared/usePropertyIndexFromUrl';
 import ManagementHeader from './common/ManagementHeader';
 import ManagementRouter from './router/ManagementRouter';
 import ManagementStatusUpdateSolver from './tabs/fileDetails/detail/ManagementStatusUpdateSolver';
@@ -77,8 +77,8 @@ export const ManagementView: React.FunctionComponent<IManagementViewProps> = ({
   const location = useLocation();
   const history = useHistory();
   const match = useRouteMatch();
-  const { hasClaim } = useKeycloakWrapper();
   const { lastUpdatedBy } = useContext(SideBarContext);
+  const { hasClaim } = useKeycloakWrapper();
 
   // match for property menu routes - eg /property/1/ltsa
   const fileMatch = matchPath<Record<string, string>>(location.pathname, `${match.path}/:tab`);
@@ -102,7 +102,7 @@ export const ManagementView: React.FunctionComponent<IManagementViewProps> = ({
 
   // Extract the zero-based property index from the current URL path.
   // It will be null if route is not matched
-  const currentPropertyIndex: number | null = usePropertyIndexFromUrl();
+  const currentFilePropertyId: number | null = useFilePropertyIdFromUrl();
   const statusSolver = new ManagementStatusUpdateSolver(managementFile);
 
   return (
@@ -117,6 +117,7 @@ export const ManagementView: React.FunctionComponent<IManagementViewProps> = ({
             confirmBeforeAdd={confirmBeforeAdd}
             canRemove={canRemove}
             formikRef={formikRef}
+            disableProperties
             confirmBeforeAddMessage={
               <>
                 <p>This property has already been added to one or more management files.</p>
@@ -150,7 +151,7 @@ export const ManagementView: React.FunctionComponent<IManagementViewProps> = ({
             leftComponent={
               <FileMenuView
                 file={managementFile}
-                currentPropertyIndex={currentPropertyIndex}
+                currentFilePropertyId={currentFilePropertyId}
                 canEdit={hasClaim(Claims.MANAGEMENT_EDIT)}
                 isInNonEditableState={!statusSolver.canEditProperties()}
                 onSelectFileSummary={onSelectFileSummary}
@@ -176,16 +177,17 @@ export const ManagementView: React.FunctionComponent<IManagementViewProps> = ({
                   onSuccess={onSuccess}
                 />
                 <Route
-                  path={`${stripTrailingSlash(match.path)}/property/:menuIndex`}
+                  path={`${stripTrailingSlash(match.path)}/property/:filePropertyId`}
                   render={({ match }) => (
                     <FilePropertyRouter
                       formikRef={formikRef}
-                      selectedMenuIndex={Number(match.params.menuIndex)}
+                      selectedFilePropertyId={
+                        match.params.filePropertyId ? Number(match.params.filePropertyId) : 0
+                      }
                       file={managementFile}
                       fileType={ApiGen_CodeTypes_FileTypes.Management}
                       isEditing={isEditing}
                       setIsEditing={setIsEditing}
-                      defaultFileTab={FileTabType.FILE_DETAILS}
                       defaultPropertyTab={InventoryTabNames.property}
                       onSuccess={onSuccess}
                     />

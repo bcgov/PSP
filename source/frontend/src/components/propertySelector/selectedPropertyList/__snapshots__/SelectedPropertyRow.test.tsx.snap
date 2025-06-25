@@ -6,7 +6,7 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c4.btn {
+  .c5.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,19 +35,19 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c4.btn .Button__value {
+.c5.btn .Button__value {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
-.c4.btn:hover {
+.c5.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c4.btn:focus {
+.c5.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -55,31 +55,31 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
   box-shadow: none;
 }
 
-.c4.btn.btn-primary {
+.c5.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c4.btn.btn-primary:hover,
-.c4.btn.btn-primary:active,
-.c4.btn.btn-primary:focus {
+.c5.btn.btn-primary:hover,
+.c5.btn.btn-primary:active,
+.c5.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c4.btn.btn-secondary {
+.c5.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c4.btn.btn-secondary:hover,
-.c4.btn.btn-secondary:active,
-.c4.btn.btn-secondary:focus {
+.c5.btn.btn-secondary:hover,
+.c5.btn.btn-secondary:active,
+.c5.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c4.btn.btn-info {
+.c5.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -87,66 +87,66 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
   padding-right: 0.6rem;
 }
 
-.c4.btn.btn-info:hover,
-.c4.btn.btn-info:active,
-.c4.btn.btn-info:focus {
+.c5.btn.btn-info:hover,
+.c5.btn.btn-info:active,
+.c5.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c4.btn.btn-light {
+.c5.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c4.btn.btn-light:hover,
-.c4.btn.btn-light:active,
-.c4.btn.btn-light:focus {
+.c5.btn.btn-light:hover,
+.c5.btn.btn-light:active,
+.c5.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c4.btn.btn-dark {
+.c5.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c4.btn.btn-dark:hover,
-.c4.btn.btn-dark:active,
-.c4.btn.btn-dark:focus {
+.c5.btn.btn-dark:hover,
+.c5.btn.btn-dark:active,
+.c5.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c4.btn.btn-danger {
+.c5.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c4.btn.btn-danger:hover,
-.c4.btn.btn-danger:active,
-.c4.btn.btn-danger:focus {
+.c5.btn.btn-danger:hover,
+.c5.btn.btn-danger:active,
+.c5.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c4.btn.btn-warning {
+.c5.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c4.btn.btn-warning:hover,
-.c4.btn.btn-warning:active,
-.c4.btn.btn-warning:focus {
+.c5.btn.btn-warning:hover,
+.c5.btn.btn-warning:active,
+.c5.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c4.btn.btn-link {
+.c5.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -170,9 +170,9 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
   text-decoration: underline;
 }
 
-.c4.btn.btn-link:hover,
-.c4.btn.btn-link:active,
-.c4.btn.btn-link:focus {
+.c5.btn.btn-link:hover,
+.c5.btn.btn-link:active,
+.c5.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -182,15 +182,15 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
   outline: none;
 }
 
-.c4.btn.btn-link:disabled,
-.c4.btn.btn-link.disabled {
+.c5.btn.btn-link:disabled,
+.c5.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c4.btn:disabled,
-.c4.btn:disabled:hover {
+.c5.btn:disabled,
+.c5.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -202,66 +202,66 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
   cursor: not-allowed;
 }
 
-.c4.Button .Button__icon {
+.c5.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c4.Button--icon-only:focus {
+.c5.Button--icon-only:focus {
   outline: none;
 }
 
-.c4.Button--icon-only .Button__icon {
+.c5.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c5.c5.btn {
+.c6.c6.btn {
   background-color: unset;
   border: none;
 }
 
-.c5.c5.btn:hover,
-.c5.c5.btn:focus,
-.c5.c5.btn:active {
+.c6.c6.btn:hover,
+.c6.c6.btn:focus,
+.c6.c6.btn:active {
   background-color: unset;
   outline: none;
   box-shadow: none;
 }
 
-.c5.c5.btn svg {
+.c6.c6.btn svg {
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
 
-.c5.c5.btn svg:hover {
+.c6.c6.btn svg:hover {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
 }
 
-.c5.c5.btn.btn-primary svg {
+.c6.c6.btn.btn-primary svg {
   color: #013366;
 }
 
-.c5.c5.btn.btn-primary svg:hover {
+.c6.c6.btn.btn-primary svg:hover {
   color: #013366;
 }
 
-.c5.c5.btn.btn-light svg {
+.c6.c6.btn.btn-light svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c5.c5.btn.btn-light svg:hover {
+.c6.c6.btn.btn-light svg:hover {
   color: #CE3E39;
 }
 
-.c5.c5.btn.btn-info svg {
+.c6.c6.btn.btn-info svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c5.c5.btn.btn-info svg:hover {
+.c6.c6.btn.btn-info svg:hover {
   color: var(--surface-color-primary-button-hover);
 }
 
-.c6.c6.btn {
+.c7.c7.btn {
   font-size: 1.4rem;
   color: #aaaaaa;
   -webkit-text-decoration: none;
@@ -269,13 +269,13 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
   line-height: unset;
 }
 
-.c6.c6.btn .text {
+.c7.c7.btn .text {
   display: none;
 }
 
-.c6.c6.btn:hover,
-.c6.c6.btn:active,
-.c6.c6.btn:focus {
+.c7.c7.btn:hover,
+.c7.c7.btn:active,
+.c7.c7.btn:focus {
   color: #d8292f;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -289,14 +289,14 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
   flex-direction: row;
 }
 
-.c6.c6.btn:hover .text,
-.c6.c6.btn:active .text,
-.c6.c6.btn:focus .text {
+.c7.c7.btn:hover .text,
+.c7.c7.btn:active .text,
+.c7.c7.btn:focus .text {
   display: inline;
   line-height: 2rem;
 }
 
-.c3 {
+.c4 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -308,29 +308,33 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
   gap: 0.8rem;
 }
 
-.c3 .form-label {
+.c4 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
 }
 
-.c2 {
+.c3 {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.c0 {
+.c1 {
   min-width: 3rem;
   min-height: 4.5rem;
 }
 
-.c1 {
+.c2 {
   font-size: 1.2rem;
 }
 
+.c0 {
+  min-height: 4.5rem;
+}
+
 <div
-    class="align-items-center mb-3 no-gutters row"
+    class="c0 align-items-center mb-3 no-gutters row"
   >
     <div
       class="col-md-3"
@@ -339,7 +343,7 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
         class="mb-0 d-flex align-items-center"
       >
         <svg
-          class="c0"
+          class="c1"
           height="45"
           id="Layer_2"
           viewBox="0 0 20 30"
@@ -396,7 +400,7 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
               </g>
             </g>
             <text
-              class="c1"
+              class="c2"
               textLength="1.25rem"
               x="7"
               y="15"
@@ -409,7 +413,7 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
           </title>
         </svg>
         <div
-          class="c2 pl-3"
+          class="c3 pl-3"
         />
       </div>
     </div>
@@ -417,12 +421,12 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
       class="col-md-5"
     >
       <div
-        class="c3 mb-0 w-100 input form-group"
+        class="c4 mb-0 w-100 input form-group"
       >
         <input
           class="form-control"
-          id="input-name"
-          name="name"
+          id="input-properties.0.name"
+          name="properties.0.name"
           style="word-break: break-all;"
           value=""
         />
@@ -432,7 +436,7 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
       class="pl-3 col-md-1"
     >
       <button
-        class="c4 Button c5 btn btn-primary"
+        class="c5 Button c6 btn btn-primary"
         title="move-pin-location"
         type="button"
       >
@@ -456,10 +460,10 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
       </button>
     </div>
     <div
-      class="col-md-2"
+      class="col-md-1"
     >
       <button
-        class="c4 Button c6 btn btn-link"
+        class="c5 Button c7 btn btn-link"
         type="button"
       >
         <div

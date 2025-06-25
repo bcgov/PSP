@@ -1,5 +1,6 @@
 import cx from 'classnames';
 import { useMemo } from 'react';
+import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaCaretRight } from 'react-icons/fa';
 import styled from 'styled-components';
@@ -15,7 +16,7 @@ import { cannotEditMessage } from '../acquisition/common/constants';
 
 export interface IFileMenuProps {
   file: ApiGen_Concepts_File;
-  currentPropertyIndex: number | null;
+  currentFilePropertyId: number | null;
   canEdit: boolean;
   isInNonEditableState: boolean;
   editRestrictionMessage?: string;
@@ -26,7 +27,7 @@ export interface IFileMenuProps {
 
 const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuProps>> = ({
   file,
-  currentPropertyIndex,
+  currentFilePropertyId,
   canEdit,
   isInNonEditableState,
   editRestrictionMessage = cannotEditMessage,
@@ -37,7 +38,21 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
 }) => {
   // respect the order of properties as set by the user creating the file
   const sortedProperties = sortFileProperties(file?.fileProperties ?? []);
-  const isSummary = useMemo(() => !exists(currentPropertyIndex), [currentPropertyIndex]);
+  const isSummary = useMemo(() => !exists(currentFilePropertyId), [currentFilePropertyId]);
+
+  const activeProperties = [];
+  const inactiveProperties = [];
+  sortedProperties.forEach(p => {
+    if (p.isActive !== false) {
+      activeProperties.push(p);
+    } else {
+      inactiveProperties.push(p);
+    }
+  });
+  const labelledProperties: { label: string; properties: ApiGen_Concepts_FileProperty[] }[] = [
+    { label: 'Active', properties: activeProperties },
+    { label: 'Inactive', properties: inactiveProperties },
+  ];
 
   return (
     <StyledMenuWrapper>
@@ -66,35 +81,62 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
       </StyledMenuHeaderWrapper>
       <div className={'p-1'} />
       <StyledMenuBodyWrapper>
-        {sortedProperties.map((property: ApiGen_Concepts_FileProperty, index: number) => {
-          const propertyName = getFilePropertyName(property);
-          return (
-            <StyledRow
-              key={`menu-item-row-${index}`}
-              data-testid={`menu-item-row-${index}`}
-              className={cx('no-gutters', { selected: currentPropertyIndex === index })}
-              onClick={() => {
-                if (currentPropertyIndex !== index) {
-                  onSelectProperty(property.id);
-                }
-              }}
-            >
-              <Col xs="1">{currentPropertyIndex === index && <FaCaretRight />}</Col>
-              <Col xs="auto" className="pr-2">
-                <StyledIconWrapper className={cx({ selected: currentPropertyIndex === index })}>
-                  {index + 1}
-                </StyledIconWrapper>
-              </Col>
-              <Col>
-                {currentPropertyIndex === index ? (
-                  <span title="View">{propertyName.value}</span>
-                ) : (
-                  <LinkButton title="View">{propertyName.value}</LinkButton>
-                )}
-              </Col>
-            </StyledRow>
-          );
-        })}
+        {labelledProperties
+          .filter(lp => lp.properties?.length > 0)
+          .map(
+            (labelledProperties: { label: string; properties: ApiGen_Concepts_FileProperty[] }) => {
+              return (
+                <React.Fragment key={`menu-label-${labelledProperties.label}`}>
+                  {labelledProperties.label}
+                  {labelledProperties.properties.map(
+                    (fileProperty: ApiGen_Concepts_FileProperty, index: number) => {
+                      const propertyName = getFilePropertyName(fileProperty);
+                      return (
+                        <StyledRow
+                          key={`menu-item-row-${fileProperty?.id ?? index}`}
+                          data-testid={`menu-item-row-${fileProperty?.id ?? index}`}
+                          className={cx('no-gutters', {
+                            selected: currentFilePropertyId === fileProperty?.id,
+                          })}
+                          onClick={() => {
+                            if (currentFilePropertyId !== fileProperty?.id) {
+                              onSelectProperty(fileProperty.id);
+                            }
+                          }}
+                        >
+                          <Col xs="1">
+                            {currentFilePropertyId === fileProperty?.id && <FaCaretRight />}
+                          </Col>
+                          <Col xs="auto" className="pr-2">
+                            {fileProperty?.isActive !== false ? (
+                              <StyledIconWrapper
+                                className={cx({
+                                  selected: currentFilePropertyId === fileProperty?.id,
+                                })}
+                              >
+                                {sortedProperties.indexOf(fileProperty) + 1}
+                              </StyledIconWrapper>
+                            ) : (
+                              <StyledDisabledIconWrapper>
+                                {sortedProperties.indexOf(fileProperty) + 1}
+                              </StyledDisabledIconWrapper>
+                            )}
+                          </Col>
+                          <Col>
+                            {currentFilePropertyId === fileProperty?.id ? (
+                              <span title="View">{propertyName.value}</span>
+                            ) : (
+                              <LinkButton title="View">{propertyName.value}</LinkButton>
+                            )}
+                          </Col>
+                        </StyledRow>
+                      );
+                    },
+                  )}
+                </React.Fragment>
+              );
+            },
+          )}
       </StyledMenuBodyWrapper>
       <>{children}</>
     </StyledMenuWrapper>
@@ -102,6 +144,24 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
 };
 
 export default FileMenuView;
+
+const StyledDisabledIconWrapper = styled.div`
+  &.selected {
+    border-color: ${props => props.theme.bcTokens.themeGray110};
+  }
+  border: solid 0.3rem;
+  border-color: ${props => props.theme.bcTokens.themeGray100};
+  font-size: 1.5rem;
+  border-radius: 20%;
+  width: 3.25rem;
+  height: 3.25rem;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  font-family: 'BCSans-Bold';
+`;
 
 export const StyledMenuWrapper = styled.div`
   flex: 1;

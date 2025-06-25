@@ -284,6 +284,7 @@ describe('useGenerateH0443 functions', () => {
           property: null,
           propertyName: null,
           location: null,
+          isActive: null,
           rowVersion: null,
         },
         {
@@ -295,6 +296,7 @@ describe('useGenerateH0443 functions', () => {
           property: null,
           propertyName: null,
           location: null,
+          isActive: null,
           rowVersion: null,
         },
       ],

@@ -18,10 +18,10 @@ interface UsePropertyIndexOptions {
  * @param options Optional config to customize the route pattern.
  * @returns {number | null} The zero-based index of the property, or null if not matched.
  */
-export function usePropertyIndexFromUrl(options: UsePropertyIndexOptions = {}): number | null {
+export function useFilePropertyIdFromUrl(options: UsePropertyIndexOptions = {}): number | null {
   const location = useLocation();
 
-  const { routePattern = '*/property/:menuIndex/' } = options;
+  const { routePattern = '*/property/:filePropertyId/' } = options;
 
   return useMemo(() => {
     const match = matchPath<Record<string, string>>(location.pathname, {
@@ -30,9 +30,9 @@ export function usePropertyIndexFromUrl(options: UsePropertyIndexOptions = {}): 
       strict: false,
     });
 
-    if (exists(match?.params?.menuIndex)) {
-      const propertyIndex = Number(match.params.menuIndex);
-      return isNaN(propertyIndex) ? null : propertyIndex - 1;
+    if (exists(match?.params?.filePropertyId)) {
+      const filePropertyId = Number(match.params.filePropertyId);
+      return isNaN(filePropertyId) ? null : filePropertyId;
     }
 
     return null;

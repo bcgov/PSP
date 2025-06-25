@@ -154,6 +154,7 @@ export const getMockApiCompensationWithProperty = (): ApiGen_Concepts_Compensati
       propertyAcquisitionFileId: 2,
       acquisitionFileProperty: {
         id: 1,
+        isActive: null,
         file: null,
         propertyName: '',
         displayOrder: 0,
@@ -177,6 +178,7 @@ export const getMockApiCompensationWithProperty = (): ApiGen_Concepts_Compensati
       propertyAcquisitionFileId: 2,
       acquisitionFileProperty: {
         id: 2,
+        isActive: null,
         file: null,
         propertyName: '',
         displayOrder: 0,
@@ -434,6 +436,7 @@ export const getMockCompensationPropertiesReq = (): ApiGen_Concepts_AcquisitionF
   {
     file: null,
     id: 1,
+    isActive: null,
     propertyName: 'Property Test Name 1',
     location: {
       coordinate: {
@@ -542,6 +545,7 @@ export const getMockCompensationPropertiesReq = (): ApiGen_Concepts_AcquisitionF
   {
     file: null,
     id: 26,
+    isActive: null,
     propertyName: 'Property Test Name 2',
     location: {
       coordinate: {

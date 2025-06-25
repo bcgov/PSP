@@ -1008,9 +1008,10 @@ exports[`LeaseView component > renders as expected 1`] = `
               <div
                 class="c26"
               >
+                Active
                 <div
                   class="c23 no-gutters row"
-                  data-testid="menu-item-row-0"
+                  data-testid="menu-item-row-387"
                 >
                   <div
                     class="col-1"

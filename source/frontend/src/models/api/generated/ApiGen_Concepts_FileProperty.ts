@@ -15,6 +15,7 @@ export interface ApiGen_Concepts_FileProperty extends ApiGen_Base_BaseConcurrent
   location: ApiGen_Concepts_Geometry | null;
   displayOrder: number | null;
   property: ApiGen_Concepts_Property | null;
+  isActive: boolean | null;
   propertyId: number;
   file: ApiGen_Concepts_File | null;
 }

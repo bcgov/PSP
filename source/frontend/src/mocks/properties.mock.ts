@@ -179,6 +179,7 @@ export const getMockApiPropertyFiles = (): ApiGen_Concepts_FileProperty[] => [
   {
     id: 1,
     fileId: 1,
+    isActive: null,
     file: mockAcquisitionFileResponse(),
     propertyName: 'test property name',
     propertyId: 1,
@@ -222,6 +223,7 @@ export const getMockApiPropertyFiles = (): ApiGen_Concepts_FileProperty[] => [
   },
   {
     id: 2,
+    isActive: null,
     propertyId: 2,
     fileId: 2,
     file: mockAcquisitionFileResponse(),
@@ -278,6 +280,7 @@ export const getEmptyPropertyLease = (): ApiGen_Concepts_PropertyLease => {
     property: null,
     propertyId: 0,
     location: null,
+    isActive: null,
     rowVersion: null,
   };
 };

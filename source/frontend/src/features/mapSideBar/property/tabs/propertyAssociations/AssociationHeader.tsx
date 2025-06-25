@@ -1,6 +1,8 @@
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
+import { StyledIconWrapper } from '@/components/common/styles';
+
 export interface IAssociationHeaderProps {
   icon: React.ReactNode;
   title: string;
@@ -29,21 +31,4 @@ export default AssociationHeader;
 
 const StyledAssociationHeaderWrapper = styled.div`
   color: ${props => props.theme.bcTokens.iconsColorSecondary};
-`;
-
-const StyledIconWrapper = styled.div`
-  color: white;
-  background-color: ${props => props.theme.css.activeActionColor};
-
-  font-size: 1.5rem;
-
-  border-radius: 50%;
-
-  width: 2.5rem;
-  height: 2.5rem;
-  padding: 1rem;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;

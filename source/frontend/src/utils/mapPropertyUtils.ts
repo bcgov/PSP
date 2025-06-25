@@ -8,7 +8,7 @@ import {
   Polygon,
 } from 'geojson';
 import { geoJSON, LatLngLiteral } from 'leaflet';
-import { compact, isNumber, orderBy } from 'lodash';
+import { chain, compact, isNumber } from 'lodash';
 import polylabel from 'polylabel';
 import { toast } from 'react-toastify';
 
@@ -172,6 +172,30 @@ export const getFeatureBoundedCenter = (feature: Feature<Geometry, GeoJsonProper
   }
 };
 
+export function apiToMapProperty(fileProperty: ApiGen_Concepts_FileProperty): IMapProperty {
+  return {
+    propertyId: fileProperty.propertyId,
+    pid: fileProperty.property?.pid?.toString(),
+    pin: fileProperty.property?.pin?.toString(),
+    latitude: fileProperty.property?.location?.coordinate.y,
+    longitude: fileProperty.property?.location?.coordinate.x,
+    fileLocation: {
+      lat: fileProperty.property?.location?.coordinate.y,
+      lng: fileProperty.property?.location?.coordinate.x,
+    },
+    planNumber: fileProperty?.property?.planNumber?.toString() ?? undefined,
+    address: formatApiAddress(fileProperty.property?.address),
+    legalDescription: fileProperty?.property?.landLegalDescription,
+    region: fileProperty.property?.region?.id,
+    regionName: fileProperty?.property?.region?.description,
+    district: fileProperty?.property?.district?.id,
+    districtName: fileProperty?.property?.district?.description,
+    landArea: fileProperty?.property?.landArea,
+    areaUnit: AreaUnitTypes.SquareMeters,
+    isActive: fileProperty?.isActive,
+  };
+}
+
 function toMapProperty(
   feature: Feature<Geometry, GeoJsonProperties>,
   address?: string,
@@ -272,6 +296,16 @@ export function featuresetToMapProperty(
   }
 }
 
+export const featuresetToLocationBoundaryDataset = (
+  featureSet: SelectedFeatureDataset,
+): LocationBoundaryDataset => {
+  return {
+    location: featureSet?.fileLocation ?? featureSet?.location,
+    boundary: featureSet?.pimsFeature?.geometry ?? featureSet?.parcelFeature?.geometry ?? null,
+    isActive: featureSet.isActive,
+  };
+};
+
 export function pidFromFeatureSet(featureset: SelectedFeatureDataset): string | null {
   if (exists(featureset.pimsFeature?.properties)) {
     return exists(featureset.pimsFeature?.properties?.PID)
@@ -316,7 +350,25 @@ export function filePropertyToLocationBoundaryDataset(
 ): LocationBoundaryDataset | null {
   const geom = locationFromFileProperty(fileProperty);
   const location = getLatLng(geom);
-  return exists(location) ? { location, boundary: fileProperty?.property?.boundary ?? null } : null;
+  return exists(location)
+    ? {
+        location,
+        boundary: fileProperty?.property?.boundary ?? null,
+        isActive: fileProperty.isActive,
+      }
+    : null;
+}
+
+export function propertyToLocationBoundaryDataset(
+  property: ApiGen_Concepts_Property | undefined | null,
+): LocationBoundaryDataset | null {
+  const location = getLatLng(property.location);
+  return exists(location)
+    ? {
+        location,
+        boundary: property?.boundary ?? null,
+      }
+    : null;
 }
 
 /**
@@ -359,8 +411,9 @@ export function sortFileProperties<T extends ApiGen_Concepts_FileProperty>(
   fileProperties: T[] | null,
 ): T[] | null {
   if (exists(fileProperties)) {
-    const sortedProperties = orderBy(fileProperties, fp => fp.displayOrder ?? Infinity, 'asc');
-    return sortedProperties;
+    return chain(fileProperties)
+      .orderBy([fp => fp.isActive !== false, fp => fp.displayOrder ?? Infinity, 'asc'])
+      .value();
   }
   return null;
 }

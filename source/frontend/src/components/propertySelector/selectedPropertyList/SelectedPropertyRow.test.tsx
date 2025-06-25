@@ -40,6 +40,8 @@ describe('SelectedPropertyRow component', () => {
             }
             index={renderOptions.index ?? 0}
             onRemove={onRemove}
+            showDisable={renderOptions?.showDisable}
+            nameSpace="properties.0"
           />
         )}
       </Formik>,
@@ -143,5 +145,39 @@ describe('SelectedPropertyRow component', () => {
     });
     await act(async () => {});
     expect(getByText('Address: a test address')).toBeVisible();
+  });
+
+  it('shows Inactive as selected when isActive is false', async () => {
+    const mapProperties: IMapProperty[] = [
+      {
+        pid: '111111111',
+        latitude: 4,
+        longitude: 5,
+        isActive: false,
+      },
+    ];
+    const { getByDisplayValue } = setup({
+      values: { properties: mapProperties },
+      showDisable: true,
+    });
+    await act(async () => {});
+    expect(getByDisplayValue('Inactive')).toBeInTheDocument();
+  });
+
+  it('shows Active as selected when isActive is true', async () => {
+    const mapProperties: IMapProperty[] = [
+      {
+        pid: '111111111',
+        latitude: 4,
+        longitude: 5,
+        isActive: true,
+      },
+    ];
+    const { getByDisplayValue } = setup({
+      values: { properties: mapProperties },
+      showDisable: true,
+    });
+    await act(async () => {});
+    expect(getByDisplayValue('Active')).toBeInTheDocument();
   });
 });

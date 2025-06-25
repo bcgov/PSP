@@ -1,6 +1,6 @@
 import useDraftMarkerSynchronizer from '@/hooks/useDraftMarkerSynchronizer';
+import { propertyToLocationBoundaryDataset } from '@/utils/mapPropertyUtils';
 
-import { PropertyForm } from '../shared/models';
 import { ConsolidationFormModel } from './AddConsolidationModel';
 
 interface IAddConsolidationMarkerSynchronizerProps {
@@ -11,9 +11,9 @@ const AddConsolidationMarkerSynchronizer: React.FunctionComponent<
   IAddConsolidationMarkerSynchronizerProps
 > = ({ values }) => {
   useDraftMarkerSynchronizer([
-    ...values.sourceProperties.map(dp => PropertyForm.fromPropertyApi(dp).toMapProperty()),
+    ...values.sourceProperties.map(dp => propertyToLocationBoundaryDataset(dp)),
     ...(values.destinationProperty
-      ? [PropertyForm.fromPropertyApi(values.destinationProperty).toMapProperty()]
+      ? [propertyToLocationBoundaryDataset(values.destinationProperty)]
       : []),
   ]);
   return null;

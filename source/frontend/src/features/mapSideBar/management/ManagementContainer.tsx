@@ -156,22 +156,16 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
       return;
     }
 
-    const fileProperties = managementFile.fileProperties ?? [];
-    const menuIndex = fileProperties.findIndex(fp => fp.id === filePropertyId);
-    if (menuIndex < 0) {
-      return;
-    }
-
     if (isEditing) {
       if (formikRef?.current?.dirty) {
         handleCancelClick(() =>
-          pathGenerator.showFilePropertyIndex('management', managementFile.id, menuIndex + 1),
+          pathGenerator.showFilePropertyId('management', managementFile.id, filePropertyId),
         );
         return;
       }
     }
     // The index needs to be offset to match the menu index
-    pathGenerator.showFilePropertyIndex('management', managementFile.id, menuIndex + 1);
+    pathGenerator.showFilePropertyId('management', managementFile.id, filePropertyId);
   };
 
   const onEditProperties = () => {
