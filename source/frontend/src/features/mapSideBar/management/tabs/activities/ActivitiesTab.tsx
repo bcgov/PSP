@@ -59,7 +59,6 @@ export const ActivitiesTab: React.FunctionComponent<IActivitiesTabProps> = ({ ma
       <AdHocFileActivitiesSummaryContainer
         View={AdHocSummaryActivitiesView}
         managementFileId={managementFile.id}
-        statusSolver={statusSolver}
       ></AdHocFileActivitiesSummaryContainer>
     </StyledSummarySection>
   );
