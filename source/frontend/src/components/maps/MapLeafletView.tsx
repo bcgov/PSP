@@ -175,7 +175,6 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
         mapRef?.current?.flyTo(requestedFlyTo.location, MAP_MAX_ZOOM, {
           animate: true,
         });
-        //mapRef?.current?.panTo(requestedFlyTo.location);
       }
 
       mapMachineProcessFlyTo();

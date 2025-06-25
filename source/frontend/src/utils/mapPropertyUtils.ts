@@ -306,7 +306,11 @@ export function locationFromFileProperty(
 export function boundaryFromFileProperty(
   fileProperty: ApiGen_Concepts_FileProperty | undefined | null,
 ): Geometry | null {
-  return fileProperty?.property?.boundary ?? null;
+  return (
+    fileProperty?.property?.boundary ??
+    pimsGeomeryToGeometry(fileProperty?.property?.location) ??
+    null
+  );
 }
 
 export function latLngFromMapProperty(

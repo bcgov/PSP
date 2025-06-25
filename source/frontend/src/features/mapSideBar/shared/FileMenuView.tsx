@@ -51,16 +51,16 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
   const mapMachine = useMapStateMachine();
 
   const fitBoundaries = () => {
-    const fileProperties = file.fileProperties;
+    const fileProperties = file?.fileProperties;
 
     if (exists(fileProperties)) {
       const locations = fileProperties
         .map(fileProp => locationFromFileProperty(fileProp))
         .map(geom => getLatLng(geom))
         .filter(exists);
-      const a = latLngBounds(locations);
+      const latLngBoudns = latLngBounds(locations);
 
-      mapMachine.requestFlyToBounds(a);
+      mapMachine.requestFlyToBounds(latLngBoudns);
     }
   };
 
@@ -112,7 +112,11 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
             />
           </Col>
           <Col xs="auto">
-            <LinkButton title="Fit boundaries button" onClick={fitBoundaries}>
+            <LinkButton
+              title="Fit boundaries button"
+              data-testid="fit-file-properties-boundaries"
+              onClick={fitBoundaries}
+            >
               <PiCornersOut size={18} className="mr-2" />
             </LinkButton>
           </Col>
@@ -124,26 +128,36 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
           const propertyName = getFilePropertyName(property);
           const isCurrentProperty = currentPropertyIndex === index;
           return (
-            <StyledRow key={`menu-item-row-${index}`} className="no-gutters">
+            <StyledRow
+              key={`menu-item-row-${index}`}
+              className={cx('no-gutters', { selected: isCurrentProperty })}
+              data-testid={`menu-item-row-${index}`}
+            >
               <Col xs="1">{isCurrentProperty && <FaCaretRight />}</Col>
               <Col xs="auto" className="pr-2">
                 <StyledIconWrapper className={cx({ selected: isCurrentProperty })}>
                   {index + 1}
                 </StyledIconWrapper>
               </Col>
-              <StyledCol
-                onClick={() => onPropertyClick(index, property.id)}
-                data-testid={`menu-item-row-${index}`}
-                className={cx({ selected: isCurrentProperty })}
-              >
+              <Col>
                 {isCurrentProperty ? (
-                  <span title="View">{propertyName.value}</span>
+                  <StyledSelectedName title="View">{propertyName.value}</StyledSelectedName>
                 ) : (
-                  <LinkButton title="View">{propertyName.value}</LinkButton>
+                  <LinkButton
+                    onClick={() => onPropertyClick(index, property.id)}
+                    data-testid={`menu-item-property-${index}`}
+                    title="View Property"
+                  >
+                    {propertyName.value}
+                  </LinkButton>
                 )}
-              </StyledCol>
+              </Col>
               <Col xs="auto">
-                <LinkButton onClick={() => onZoomToProperty(property)}>
+                <LinkButton
+                  onClick={() => onZoomToProperty(property)}
+                  data-testid={`menu-item-zoom-${index}`}
+                  title="Zoom to property"
+                >
                   <FaSearchPlus size={18} className="mr-2" />
                 </LinkButton>
               </Col>
@@ -181,19 +195,18 @@ const StyledRow = styled(Row)`
   div.Button__value {
     font-size: 1.4rem;
   }
+  &.selected {
+    cursor: default;
+    font-weight: bold;
+  }
 `;
 
-const StyledCol = styled(Col)`
-  &.selected {
-    font-weight: bold;
-    cursor: default;
-    line-height: 3rem;
-  }
+const StyledSelectedName = styled.span`
+  line-height: 3rem;
 `;
 
 const StyledIconWrapper = styled.div`
   &.selected {
-    font-weight: bold;
     background-color: ${props => props.theme.bcTokens.themeGold100};
   }
 

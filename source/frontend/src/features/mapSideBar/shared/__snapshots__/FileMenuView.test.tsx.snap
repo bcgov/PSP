@@ -244,9 +244,12 @@ exports[`FileMenuView component > matches snapshot 1`] = `
   font-size: 1.4rem;
 }
 
-.c7.selected {
-  font-weight: bold;
+.c1.selected {
   cursor: default;
+  font-weight: bold;
+}
+
+.c7 {
   line-height: 3rem;
 }
 
@@ -273,7 +276,6 @@ exports[`FileMenuView component > matches snapshot 1`] = `
 }
 
 .c6.selected {
-  font-weight: bold;
   background-color: #FCBA19;
 }
 
@@ -354,6 +356,7 @@ exports[`FileMenuView component > matches snapshot 1`] = `
         >
           <button
             class="c2 Button btn btn-link"
+            data-testid="fit-file-properties-boundaries"
             title="Fit boundaries button"
             type="button"
           >
@@ -386,7 +389,8 @@ exports[`FileMenuView component > matches snapshot 1`] = `
       class="c5"
     >
       <div
-        class="c1 no-gutters row"
+        class="c1 no-gutters selected row"
+        data-testid="menu-item-row-0"
       >
         <div
           class="col-1"
@@ -415,10 +419,10 @@ exports[`FileMenuView component > matches snapshot 1`] = `
           </div>
         </div>
         <div
-          class="c7 selected col"
-          data-testid="menu-item-row-0"
+          class="col"
         >
           <span
+            class="c7"
             title="View"
           >
             023-214-937
@@ -429,6 +433,8 @@ exports[`FileMenuView component > matches snapshot 1`] = `
         >
           <button
             class="c2 Button btn btn-link"
+            data-testid="menu-item-zoom-0"
+            title="Zoom to property"
             type="button"
           >
             <div
@@ -454,6 +460,7 @@ exports[`FileMenuView component > matches snapshot 1`] = `
       </div>
       <div
         class="c1 no-gutters row"
+        data-testid="menu-item-row-1"
       >
         <div
           class="col-1"
@@ -468,12 +475,12 @@ exports[`FileMenuView component > matches snapshot 1`] = `
           </div>
         </div>
         <div
-          class="c7 col"
-          data-testid="menu-item-row-1"
+          class="col"
         >
           <button
             class="c2 Button btn btn-link"
-            title="View"
+            data-testid="menu-item-property-1"
+            title="View Property"
             type="button"
           >
             <div
@@ -488,6 +495,8 @@ exports[`FileMenuView component > matches snapshot 1`] = `
         >
           <button
             class="c2 Button btn btn-link"
+            data-testid="menu-item-zoom-1"
+            title="Zoom to property"
             type="button"
           >
             <div
