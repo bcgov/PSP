@@ -1,5 +1,6 @@
 import cx from 'classnames';
 import { useMemo } from 'react';
+import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaCaretRight } from 'react-icons/fa';
 import styled from 'styled-components';
@@ -85,7 +86,7 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
           .map(
             (labelledProperties: { label: string; properties: ApiGen_Concepts_FileProperty[] }) => {
               return (
-                <>
+                <React.Fragment key={`menu-label-${labelledProperties.label}`}>
                   {labelledProperties.label}
                   {labelledProperties.properties.map(
                     (fileProperty: ApiGen_Concepts_FileProperty, index: number) => {
@@ -132,7 +133,7 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
                       );
                     },
                   )}
-                </>
+                </React.Fragment>
               );
             },
           )}

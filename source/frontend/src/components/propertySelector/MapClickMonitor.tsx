@@ -53,7 +53,6 @@ export const MapClickMonitor: React.FunctionComponent<IMapClickMonitorProps> = (
         municipalityFeature: firstOrNull(mapMachine.mapLocationFeatureDataset.municipalityFeatures),
         selectingComponentId: mapMachine.mapLocationFeatureDataset.selectingComponentId,
         fileLocation: mapMachine.mapLocationFeatureDataset.fileLocation,
-        isActive: true,
       };
       const parcelFeaturesNotInPims =
         mapMachine.mapLocationFeatureDataset.parcelFeatures?.filter(pf => {

@@ -301,9 +301,8 @@ export const featuresetToLocationBoundaryDataset = (
 ): LocationBoundaryDataset => {
   return {
     location: featureSet?.fileLocation ?? featureSet?.location,
-    boundary: featureSet?.pimsFeature?.geometry ?? featureSet?.parcelFeature?.geometry,
+    boundary: featureSet?.pimsFeature?.geometry ?? featureSet?.parcelFeature?.geometry ?? null,
     isActive: featureSet.isActive,
-    displayOrder: featureSet.displayOrder,
   };
 };
 
@@ -355,7 +354,19 @@ export function filePropertyToLocationBoundaryDataset(
     ? {
         location,
         boundary: fileProperty?.property?.boundary ?? null,
-        isActive: fileProperty.isActive ?? true,
+        isActive: fileProperty.isActive,
+      }
+    : null;
+}
+
+export function propertyToLocationBoundaryDataset(
+  property: ApiGen_Concepts_Property | undefined | null,
+): LocationBoundaryDataset | null {
+  const location = getLatLng(property.location);
+  return exists(location)
+    ? {
+        location,
+        boundary: property?.boundary ?? null,
       }
     : null;
 }

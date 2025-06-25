@@ -68,6 +68,7 @@ export const mockManagementFileResponse = (
       propertyName: null,
       location: null,
       displayOrder: null,
+      isActive: true,
       property: {
         id: 100,
         propertyType: null,

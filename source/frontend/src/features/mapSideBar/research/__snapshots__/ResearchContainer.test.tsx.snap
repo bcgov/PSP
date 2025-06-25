@@ -962,9 +962,10 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                 <div
                   class="c27"
                 >
+                  Active
                   <div
                     class="c24 no-gutters row"
-                    data-testid="menu-item-row-0"
+                    data-testid="menu-item-row-1"
                   >
                     <div
                       class="col-1"

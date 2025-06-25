@@ -344,32 +344,19 @@ exports[`FileMenuView component > matches snapshot 1`] = `
     <div
       class="c5"
     >
+      Active
       <div
-        class="c1 no-gutters selected row"
-        data-testid="menu-item-row-0"
+        class="c1 no-gutters row"
+        data-testid="menu-item-row-1"
       >
         <div
           class="col-1"
-        >
-          <svg
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="0"
-            viewBox="0 0 192 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"
-            />
-          </svg>
-        </div>
+        />
         <div
           class="pr-2 col-auto"
         >
           <div
-            class="c6 selected"
+            class="c6"
           >
             1
           </div>
@@ -377,16 +364,22 @@ exports[`FileMenuView component > matches snapshot 1`] = `
         <div
           class="col"
         >
-          <span
+          <button
+            class="c2 Button btn btn-link"
             title="View"
+            type="button"
           >
-            023-214-937
-          </span>
+            <div
+              class="Button__value"
+            >
+              023-214-937
+            </div>
+          </button>
         </div>
       </div>
       <div
         class="c1 no-gutters row"
-        data-testid="menu-item-row-1"
+        data-testid="menu-item-row-2"
       >
         <div
           class="col-1"

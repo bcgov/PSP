@@ -1003,9 +1003,10 @@ exports[`AcquisitionView component > renders as expected 1`] = `
               <div
                 class="c27"
               >
+                Active
                 <div
                   class="c24 no-gutters row"
-                  data-testid="menu-item-row-0"
+                  data-testid="menu-item-row-1"
                 >
                   <div
                     class="col-1"
@@ -1037,7 +1038,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                 </div>
                 <div
                   class="c24 no-gutters row"
-                  data-testid="menu-item-row-1"
+                  data-testid="menu-item-row-2"
                 >
                   <div
                     class="col-1"

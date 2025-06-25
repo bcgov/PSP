@@ -5,11 +5,10 @@ import { FaCaretRight } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import { LinkButton } from '@/components/common/buttons';
+import { StyledRow } from '@/components/common/HeaderField/styles';
 import { StyledIconWrapper } from '@/components/common/styles';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { getFilePropertyName } from '@/utils/mapPropertyUtils';
-
-import { StyledRow } from './FileMenuView';
 
 interface IFileMenuRowProps {
   index: number;
