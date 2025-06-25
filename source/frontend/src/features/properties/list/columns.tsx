@@ -15,7 +15,13 @@ import { HistoricalNumberFieldView } from '@/features/mapSideBar/shared/header/H
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_PropertyView } from '@/models/api/generated/ApiGen_Concepts_PropertyView';
 import { ILookupCode } from '@/store/slices/lookupCodes';
-import { convertArea, formatNumber, formatSplitAddress, mapLookupCode } from '@/utils';
+import {
+  convertArea,
+  formatNumber,
+  formatSplitAddress,
+  mapLookupCode,
+  pidFormatter,
+} from '@/utils';
 
 export const ColumnDiv = styled.div`
   display: flex;
@@ -38,7 +44,7 @@ export const columns = ({
     Cell: (props: CellProps<ApiGen_Concepts_PropertyView>) => {
       return (
         <>
-          {props.row.original.pid}
+          {pidFormatter(props?.row?.original?.pid?.toString())}
           <span style={{ width: '2rem' }}>
             {props.row.original.isRetired ? (
               <TooltipIcon
