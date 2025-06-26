@@ -17,7 +17,9 @@ namespace Pims.Dal.Entities
         #endregion
 
         #region Constructors
-        public PimsExpropOwnerHistoryType() { }
+        public PimsExpropOwnerHistoryType()
+        {
+        }
 
         /// <summary>
         /// Create a new instance of a PimsExpropOwnerHistoryType class.

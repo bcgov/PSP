@@ -50,6 +50,7 @@ const emptyLease: ApiGen_Concepts_Lease = {
   hasDigitalLicense: null,
   isExpired: false,
   project: null,
+  projectId: null,
   productId: null,
   product: null,
   cancellationReason: null,
@@ -69,9 +70,9 @@ const emptyLease: ApiGen_Concepts_Lease = {
   leaseTeam: [],
 };
 
-export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
+export const getMockApiLease: (id?: number) => ApiGen_Concepts_Lease = (id = 1) => ({
   ...emptyLease,
-  id: 1,
+  id,
   rowVersion: 2,
   lFileNo: 'L-0000001',
   periods: [],
@@ -393,8 +394,7 @@ export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
     },
   ],
   totalAllowableCompensation: null,
-  properties: [],
-  insurances: [],
+  fileProperties: [],
   leasePurposes: [
     {
       id: 10,

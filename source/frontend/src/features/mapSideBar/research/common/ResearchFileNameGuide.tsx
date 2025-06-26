@@ -32,7 +32,7 @@ export const ResearchFileNameGuide: FunctionComponent<PropsWithChildren<unknown>
 
   return (
     <FormGuideContainer
-      tittle="Help with choosing a name"
+      title="Help with choosing a name"
       guideBody={guideBodyContent()}
     ></FormGuideContainer>
   );

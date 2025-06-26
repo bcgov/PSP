@@ -1,15 +1,16 @@
 using System.Collections.Generic;
+using System.Linq;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Pims.Core.Api.Exceptions;
 using Pims.Api.Models.Concepts.Property;
-using Pims.Core.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Api.Exceptions;
+using Pims.Core.Api.Policies;
 using Pims.Core.Json;
+using Pims.Core.Security;
 using Pims.Dal.Entities;
 using Pims.Dal.Repositories;
-using Pims.Core.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Areas.Property.Controllers
@@ -51,22 +52,6 @@ namespace Pims.Api.Areas.Property.Controllers
         #region Endpoints
 
         /// <summary>
-        /// Get the activity subtypes.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("management-activities/subtypes")]
-        [HasPermission(Permissions.ManagementView)]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(List<PropertyActivitySubtypeModel>), 200)]
-        [SwaggerOperation(Tags = new[] { "property" })]
-        [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult GetPropertyActivitySubtypes()
-        {
-            var subTypes = _lookupRepository.GetAllPropMgmtActivitySubtypes();
-            return new JsonResult(_mapper.Map<List<PropertyActivitySubtypeModel>>(subTypes));
-        }
-
-        /// <summary>
         /// Get the property management activities for the property with 'propertyId'.
         /// </summary>
         /// <returns>Collection of Property management activities.</returns>
@@ -94,8 +79,14 @@ namespace Pims.Api.Areas.Property.Controllers
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetPropertyActivity(long propertyId, long activityId)
         {
-            var activity = _propertyService.GetActivity(propertyId, activityId);
-            return new JsonResult(_mapper.Map<PropertyActivityModel>(activity));
+            var propertyActivity = _propertyService.GetActivity(activityId);
+
+            if (propertyActivity.PimsPropPropActivities.Any(x => x.PropertyId == propertyId))
+            {
+                return new JsonResult(_mapper.Map<PropertyActivityModel>(propertyActivity));
+            }
+
+            throw new BadRequestException("Activity with the given id does not match the property id");
         }
 
         /// <summary>
@@ -132,8 +123,14 @@ namespace Pims.Api.Areas.Property.Controllers
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult UpdatePropertyActivity(long propertyId, long activityId, [FromBody] PropertyActivityModel activityModel)
         {
-            var activityEntity = _mapper.Map<PimsPropertyActivity>(activityModel);
-            var updatedProperty = _propertyService.UpdateActivity(propertyId, activityId, activityEntity);
+            var propertyActivity = _mapper.Map<PimsPropertyActivity>(activityModel);
+            if (!propertyActivity.PimsPropPropActivities.Any(x => x.PropertyId == propertyId && x.PimsPropertyActivityId == activityId)
+                || propertyActivity.PimsPropertyActivityId != activityId)
+            {
+                throw new BadRequestException("Invalid activity identifiers.");
+            }
+
+            var updatedProperty = _propertyService.UpdateActivity(propertyActivity);
 
             return new JsonResult(_mapper.Map<PropertyActivityModel>(updatedProperty));
         }

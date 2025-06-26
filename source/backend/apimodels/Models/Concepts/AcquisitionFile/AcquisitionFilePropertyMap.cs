@@ -30,6 +30,14 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
                 .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
                 .Map(dest => dest.Location, src => src.Location)
                 .Inherits<BaseConcurrentModel, Entity.IBaseEntity>();
+
+            config.NewConfig<Entity.PimsPropertyAcquisitionFileHist, Entity.PimsPropertyAcquisitionFile>()
+                .PreserveReference(true)
+                .Map(dest => dest.PropertyAcquisitionFileId, src => src.PropertyAcquisitionFileId)
+                .Map(dest => dest.PropertyId, src => src.PropertyId)
+                .Map(dest => dest.AcquisitionFileId, src => src.AcquisitionFileId)
+                .Map(dest => dest.PropertyName, src => src.PropertyName)
+                .Map(dest => dest.DisplayOrder, src => src.DisplayOrder);
         }
     }
 }

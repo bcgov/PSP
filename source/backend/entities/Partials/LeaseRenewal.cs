@@ -6,7 +6,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// Lease Renewal class, provides an entity for the datamodel to manage leases renewals.
     /// </summary>
-    public partial class PimsLeaseRenewal : StandardIdentityBaseAppEntity<long>, IEquatable<PimsLeaseRenewal>,  IBaseAppEntity
+    public partial class PimsLeaseRenewal : StandardIdentityBaseAppEntity<long>, IEquatable<PimsLeaseRenewal>, IBaseAppEntity
     {
         #region Properties
         [NotMapped]

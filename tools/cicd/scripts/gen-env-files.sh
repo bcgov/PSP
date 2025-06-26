@@ -105,7 +105,15 @@ else
 echo \
 "NODE_ENV=development
 API_URL=http://localhost:5000/
-CHOKIDAR_USEPOLLING=true" >> ./source/frontend/.env
+CHOKIDAR_USEPOLLING=true
+VITE_SITEMINDER_LOGOUT_URL=https://logontest.gov.bc.ca/clp-cgi/logoff.cgi
+VITE_TELEMERY_ENABLED=false
+VITE_TELEMERY_DEBUG=false
+VITE_TELEMERY_ENVIRONMENT=local
+VITE_TELEMERY_SERVICE_NAME=frontend
+VITE_TELEMERY_URL=http://localhost:4318
+VITE_TELEMERY_EXPORT_INTERVAL=10000
+VITE_TELEMERY_HISTOGRAM_BUCKETS=[0.005, 0.01, 0.025, 0.05, 0.075, 0.1, 0.25, 0.5, 0.75, 1, 2.5, 5, 7.5, 10]" >> ./source/frontend/.env
 fi
 
 # Keycloak sync tool

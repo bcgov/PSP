@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Text.RegularExpressions;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -317,6 +316,9 @@ namespace Pims.Dal.Repositories
                 .Include(p => p.PimsDispositionFileProperties)
                     .ThenInclude(pa => pa.DispositionFile)
                     .ThenInclude(a => a.DispositionFileStatusTypeCodeNavigation)
+                .Include(p => p.PimsManagementFileProperties)
+                    .ThenInclude(pa => pa.ManagementFile)
+                    .ThenInclude(a => a.ManagementFileStatusTypeCodeNavigation)
                 .FirstOrDefault(p => p.PropertyId == id);
 
             return property;
@@ -334,8 +336,9 @@ namespace Pims.Dal.Repositories
             var researchAssociationCount = propertyWithAssociations.PimsPropertyResearchFiles.Count;
             var acquisitionAssociationCount = propertyWithAssociations.PimsPropertyAcquisitionFiles.Count;
             var dispositionAssociationCount = propertyWithAssociations.PimsDispositionFileProperties.Count;
+            var managementAssociationCount = propertyWithAssociations.PimsManagementFileProperties.Count;
 
-            return leaseAssociationCount + researchAssociationCount + acquisitionAssociationCount + dispositionAssociationCount;
+            return leaseAssociationCount + researchAssociationCount + acquisitionAssociationCount + dispositionAssociationCount + managementAssociationCount;
         }
 
         /// <summary>
@@ -442,7 +445,15 @@ namespace Pims.Dal.Repositories
         /// <param name="property"></param>
         public void Delete(PimsProperty property)
         {
-            this.Context.Entry(new PimsProperty() { PropertyId = property.PropertyId }).State = EntityState.Deleted;
+            if(property.PimsHistoricalFileNumbers.Count > 0)
+            {
+                foreach(PimsHistoricalFileNumber number in property.PimsHistoricalFileNumbers)
+                {
+                    Context.Entry(new PimsHistoricalFileNumber() { HistoricalFileNumberId = number.HistoricalFileNumberId }).State = EntityState.Deleted;
+                }
+            }
+
+            Context.Entry(new PimsProperty() { PropertyId = property.PropertyId }).State = EntityState.Deleted;
         }
 
         /// <summary>

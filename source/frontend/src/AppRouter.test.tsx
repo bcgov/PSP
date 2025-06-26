@@ -128,6 +128,7 @@ vi.mocked(useApiLeases).mockReturnValue({
   getLeaseStakeholderTypes: vi.fn(),
   putLeaseProperties: vi.fn(),
   getAllLeaseFileTeamMembers: vi.fn(),
+  getLeaseAtTime: undefined,
 });
 
 vi.mock('./hooks/pims-api/useApiAcquisitionFile');
@@ -158,6 +159,7 @@ vi.mocked(useApiAcquisitionFile).mockReturnValue({
   getAcquisitionFileForm8s: vi.fn(),
   getAcquisitionSubFiles: vi.fn(),
   postFileForm8: vi.fn(),
+  getAcquisitionAtTime: vi.fn(),
 });
 
 vi.mock('./hooks/pims-api/useApiResearchFile');

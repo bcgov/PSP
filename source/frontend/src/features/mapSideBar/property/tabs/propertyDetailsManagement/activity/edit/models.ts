@@ -1,10 +1,7 @@
 import {
-  fromApiOrganization,
-  fromApiPerson,
+  fromApiPersonOrApiOrganization,
   IContactSearchResult,
 } from '@/interfaces/IContactSearchResult';
-import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
-import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
 import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
 import { ApiGen_Concepts_PropertyActivityInvoice } from '@/models/api/generated/ApiGen_Concepts_PropertyActivityInvoice';
 import { ApiGen_Concepts_PropertyActivityInvolvedParty } from '@/models/api/generated/ApiGen_Concepts_PropertyActivityInvolvedParty';
@@ -13,6 +10,8 @@ import { ApiGen_Concepts_PropertyMinistryContact } from '@/models/api/generated/
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { exists, isValidIsoDateTime } from '@/utils';
 import { emptyStringtoNullable, toTypeCodeNullable } from '@/utils/formUtils';
+
+import { ManagementActivitySubTypeModel } from '../models/ManagementActivitySubType';
 
 export class ActivityPropertyFormModel {
   id = 0;
@@ -111,7 +110,7 @@ export class ActivityInvoiceFormModel {
 export class PropertyActivityFormModel {
   id = 0;
   activityTypeCode = '';
-  activitySubtypeCode = '';
+  activitySubtypeCodes: ManagementActivitySubTypeModel[] = [];
   activityStatusCode = '';
   requestedDate = '';
   completionDate = '';
@@ -134,8 +133,10 @@ export class PropertyActivityFormModel {
   toApi(propertyId: number): ApiGen_Concepts_PropertyActivity {
     const apiActivity: ApiGen_Concepts_PropertyActivity = {
       id: this.id,
+      managementFileId: null,
+      managementFile: null,
       activityTypeCode: toTypeCodeNullable(this.activityTypeCode),
-      activitySubtypeCode: toTypeCodeNullable(this.activitySubtypeCode),
+      activitySubTypeCodes: this.activitySubtypeCodes?.map(x => x.toApi(this.id)) ?? [],
       activityStatusTypeCode: toTypeCodeNullable(this.activityStatusCode),
       requestAddedDateOnly: this.requestedDate,
       completionDateOnly: emptyStringtoNullable(this.completionDate),
@@ -194,12 +195,15 @@ export class PropertyActivityFormModel {
     return apiActivity;
   }
 
-  static fromApi(model: ApiGen_Concepts_PropertyActivity | undefined): PropertyActivityFormModel {
+  static fromApi(
+    model: ApiGen_Concepts_PropertyActivity | null | undefined,
+  ): PropertyActivityFormModel {
     const formModel = new PropertyActivityFormModel();
     if (exists(model)) {
       formModel.id = model.id;
       formModel.activityTypeCode = model.activityTypeCode?.id || '';
-      formModel.activitySubtypeCode = model.activitySubtypeCode?.id || '';
+      formModel.activitySubtypeCodes =
+        model.activitySubTypeCodes?.map(x => ManagementActivitySubTypeModel.fromApi(x)) ?? [];
       formModel.activityStatusCode = model.activityStatusTypeCode?.id || '';
       formModel.requestedDate = isValidIsoDateTime(model.requestAddedDateOnly)
         ? model.requestAddedDateOnly
@@ -230,16 +234,4 @@ export class PropertyActivityFormModel {
     }
     return formModel;
   }
-}
-
-function fromApiPersonOrApiOrganization(
-  person: ApiGen_Concepts_Person | null,
-  organization: ApiGen_Concepts_Organization | null,
-): IContactSearchResult | null {
-  if (person !== null) {
-    return fromApiPerson(person);
-  } else if (organization !== null) {
-    return fromApiOrganization(organization);
-  }
-  return null;
 }

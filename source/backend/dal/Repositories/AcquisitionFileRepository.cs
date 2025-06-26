@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using LinqKit;
+using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Exceptions;
@@ -19,6 +20,7 @@ namespace Pims.Dal.Repositories
     public class AcquisitionFileRepository : BaseRepository<PimsAcquisitionFile>, IAcquisitionFileRepository
     {
         private readonly ISequenceRepository _sequenceRepository;
+        private readonly IMapper _mapper;
         #region Constructors
 
         /// <summary>
@@ -27,10 +29,11 @@ namespace Pims.Dal.Repositories
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public AcquisitionFileRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<AcquisitionFileRepository> logger, ISequenceRepository sequenceRepository)
+        public AcquisitionFileRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<AcquisitionFileRepository> logger, ISequenceRepository sequenceRepository, IMapper mapper)
             : base(dbContext, user, logger)
         {
             _sequenceRepository = sequenceRepository;
+            _mapper = mapper;
         }
         #endregion
 
@@ -812,6 +815,20 @@ namespace Pims.Dal.Repositories
             return Context.PimsAcquisitionFiles.AsNoTracking()
                 .Include(s => s.AcquisitionFileStatusTypeCodeNavigation)
                 .Where(predicate).OrderBy(x => x.FileNoSuffix).ToList();
+        }
+
+        public PimsAcquisitionFile GetAcquisitionAtTime(long acquisitionFileId, DateTime time)
+        {
+            var acquisitionHist = Context
+                .PimsAcquisitionFileHists.AsNoTracking()
+                .Where(pacr => pacr.AcquisitionFileId == acquisitionFileId)
+                .Where(pacr => pacr.EffectiveDateHist <= time
+                    && (pacr.EndDateHist == null || pacr.EndDateHist > time))
+                .GroupBy(pacr => pacr.AcquisitionFileId)
+                .Select(gpacr => gpacr.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault())
+                .FirstOrDefault();
+
+            return _mapper.Map<PimsAcquisitionFile>(acquisitionHist);
         }
 
         /// <summary>

@@ -171,5 +171,11 @@ namespace Pims.Dal.Repositories
         IEnumerable<PimsLlTeamProfileType> GetAllLlTeamProfileTypes();
 
         IEnumerable<PimsExpropOwnerHistoryType> GetAllExpropriationEventTypes();
+
+        IEnumerable<PimsManagementFileStatusType> GetAllManagementFileStatusTypes();
+
+        IEnumerable<PimsManagementFilePurposeType> GetAllManagementFilePurposeTypes();
+
+        IEnumerable<PimsManagementFileProfileType> GetAllManagementFileProfileTypes();
     }
 }

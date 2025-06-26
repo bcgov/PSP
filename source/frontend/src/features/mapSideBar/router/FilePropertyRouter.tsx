@@ -12,6 +12,8 @@ import { exists, isValidId } from '@/utils';
 
 import { SideBarContext } from '../context/sidebarContext';
 import { UpdatePropertyDetailsContainer } from '../property/tabs/propertyDetails/update/UpdatePropertyDetailsContainer';
+import { PropertyManagementUpdateContainer } from '../property/tabs/propertyDetailsManagement/update/summary/PropertyManagementUpdateContainer';
+import { PropertyManagementUpdateForm } from '../property/tabs/propertyDetailsManagement/update/summary/PropertyManagementUpdateForm';
 import UpdatePropertyForm from '../property/tabs/propertyResearch/update/UpdatePropertyForm';
 import UpdatePropertyResearchContainer from '../property/tabs/propertyResearch/update/UpdatePropertyResearchContainer';
 import TakesAddContainer from '../property/tabs/takes/add/TakesAddContainer';
@@ -98,6 +100,14 @@ export const FilePropertyRouter: React.FC<IFilePropertyRouterProps> = props => {
             View={UpdatePropertyForm}
           />
         </Route>
+        <Route exact path={`${path}/${InventoryTabNames.management}`}>
+          <PropertyManagementUpdateContainer
+            onSuccess={onChildSuccess}
+            propertyId={fileProperty?.propertyId}
+            View={PropertyManagementUpdateForm}
+            ref={props.formikRef}
+          />
+        </Route>
         <Redirect from={`${path}`} to={`${url}/${InventoryTabNames.property}?edit=true`} />
       </Switch>
     );
@@ -114,6 +124,7 @@ export const FilePropertyRouter: React.FC<IFilePropertyRouterProps> = props => {
             View={InventoryTabs}
             fileContext={props.fileType}
             statusSolver={statusSolver}
+            onChildSuccess={props.onSuccess}
           />
         </Route>
         <Redirect

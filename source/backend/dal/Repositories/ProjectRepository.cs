@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
+using Pims.Core.Security;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
-using Pims.Core.Security;
 
 namespace Pims.Dal.Repositories
 {
@@ -18,15 +19,19 @@ namespace Pims.Dal.Repositories
     /// </summary>
     public class ProjectRepository : BaseRepository<PimsProject>, IProjectRepository
     {
+        private readonly IMapper _mapper;
+
         /// <summary>
         /// Creates a new instance of a ProjectRepository, and initializes it with the specified arguments.
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public ProjectRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<ProjectRepository> logger)
+        /// <param name="mapper"></param>
+        public ProjectRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<ProjectRepository> logger, IMapper mapper)
             : base(dbContext, user, logger)
         {
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -155,75 +160,49 @@ namespace Pims.Dal.Repositories
             return project;
         }
 
-        /// <summary>
-        /// Add Projectdocument.
-        /// </summary>
-        /// <param name="projectDocument"></param>
-        /// <returns></returns>
-        public PimsProjectDocument AddProjectDocument(PimsProjectDocument projectDocument)
+        public PimsProject GetProjectAtTime(long projectId, DateTime time)
         {
-            projectDocument.ThrowIfNull(nameof(projectDocument));
+            var projectHist = Context
+                .PimsProjectHists.AsNoTracking()
+                .Where(pacr => pacr.Id == projectId)
+                .Where(pacr => pacr.EffectiveDateHist <= time
+                    && (pacr.EndDateHist == null || pacr.EndDateHist > time))
+                .GroupBy(pacr => pacr.Id)
+                .Select(gpacr => gpacr.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault())
+                .FirstOrDefault();
 
-            var newEntry = Context.PimsProjectDocuments.Add(projectDocument);
-            if (newEntry.State == EntityState.Added)
-            {
-                return newEntry.Entity;
-            }
-            else
-            {
-                throw new InvalidOperationException("Could not create document");
-            }
-        }
+            var workActivityHist = Context
+                .PimsWorkActivityCodeHists.AsNoTracking()
+                .Where(pacr => pacr.Id == projectHist.WorkActivityCodeId)
+                .Where(pacr => pacr.EffectiveDateHist <= time
+                    && (pacr.EndDateHist == null || pacr.EndDateHist > time))
+                .GroupBy(pacr => pacr.Id)
+                .Select(gpacr => gpacr.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault())
+                .FirstOrDefault();
 
-        /// <summary>
-        /// Get All Document for Project by Id.
-        /// </summary>
-        /// <param name="projectId"></param>
-        /// <returns></returns>
-        public IList<PimsProjectDocument> GetAllProjectDocuments(long projectId)
-        {
-            return Context.PimsProjectDocuments
-                .Include(ad => ad.Document)
-                    .ThenInclude(d => d.DocumentStatusTypeCodeNavigation)
-                .Include(ad => ad.Document)
-                    .ThenInclude(d => d.DocumentType)
-                .Include(x => x.Document)
-                    .ThenInclude(q => q.PimsDocumentQueues)
-                        .ThenInclude(s => s.DocumentQueueStatusTypeCodeNavigation)
-                .Where(x => x.ProjectId == projectId)
-                .AsNoTracking()
-                .ToList();
-        }
+            var costTypeHist = Context
+                .PimsCostTypeCodeHists.AsNoTracking()
+                .Where(pacr => pacr.Id == projectHist.CostTypeCodeId)
+                .Where(pacr => pacr.EffectiveDateHist <= time
+                    && (pacr.EndDateHist == null || pacr.EndDateHist > time))
+                .GroupBy(pacr => pacr.Id)
+                .Select(gpacr => gpacr.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault())
+                .FirstOrDefault();
 
-        /// <summary>
-        /// Get all Project Documents by Document Id.
-        /// </summary>
-        /// <returns></returns>
-        public IList<PimsProjectDocument> GetAllByDocument(long documentId)
-        {
-            return this.Context.PimsProjectDocuments
-                .Include(ad => ad.Document)
-                    .ThenInclude(d => d.DocumentStatusTypeCodeNavigation)
-                .Include(ad => ad.Document)
-                    .ThenInclude(d => d.DocumentType)
-                .Where(ad => ad.DocumentId == documentId)
-                .AsNoTracking()
-                .ToList();
-        }
+            var businessFunctionHist = Context
+                .PimsBusinessFunctionCodeHists.AsNoTracking()
+                .Where(pacr => pacr.Id == projectHist.BusinessFunctionCodeId)
+                .Where(pacr => pacr.EffectiveDateHist <= time
+                    && (pacr.EndDateHist == null || pacr.EndDateHist > time))
+                .GroupBy(pacr => pacr.Id)
+                .Select(gpacr => gpacr.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault())
+                .FirstOrDefault();
 
-        /// <summary>
-        /// Deletes the passed Project Document in the database.
-        /// </summary>
-        /// <param name="projectDocumentId"></param>
-        public void DeleteProjectDocument(long projectDocumentId)
-        {
-            var entity = Context.PimsProjectDocuments.FirstOrDefault(d => d.ProjectDocumentId == projectDocumentId);
-            if (entity is not null)
-            {
-                Context.PimsProjectDocuments.Remove(entity);
-            }
-
-            return;
+            var project = _mapper.Map<PimsProject>(projectHist);
+            project.WorkActivityCode = _mapper.Map<PimsWorkActivityCode>(workActivityHist);
+            project.CostTypeCode = _mapper.Map<PimsCostTypeCode>(costTypeHist);
+            project.BusinessFunctionCode = _mapper.Map<PimsBusinessFunctionCode>(businessFunctionHist);
+            return project;
         }
 
         private async Task<Paged<PimsProject>> GetPage(ProjectFilter filter, IEnumerable<short> userRegions)

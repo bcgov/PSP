@@ -16,9 +16,13 @@ namespace Pims.Api.Models.CodeTypes
         Leases,
         [EnumMember(Value = "Projects")]
         Projects,
+        [EnumMember(Value = "ManagementActivities")]
+        ManagementActivities,
         [EnumMember(Value = "ManagementFiles")]
         ManagementFiles,
         [EnumMember(Value = "DispositionFiles")]
         DispositionFiles,
+        [EnumMember(Value = "Properties")]
+        Properties,
     }
 }

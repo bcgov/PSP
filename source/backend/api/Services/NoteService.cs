@@ -1,12 +1,8 @@
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Constants;
-using Pims.Api.Models.Concepts.Note;
-using Pims.Core.Api.Exceptions;
 using Pims.Core.Api.Services;
 using Pims.Core.Extensions;
 using Pims.Core.Security;
@@ -18,108 +14,134 @@ namespace Pims.Api.Services
     public class NoteService : BaseService, INoteService
     {
         private readonly INoteRepository _noteRepository;
-        private readonly IEntityNoteRepository _entityNoteRepository;
-        private readonly IMapper _mapper;
+        private readonly INoteRelationshipRepository<PimsAcquisitionFileNote> _acquisitionFileNoteRepository;
+        private readonly INoteRelationshipRepository<PimsDispositionFileNote> _dispositionFileNoteRepository;
+        private readonly INoteRelationshipRepository<PimsLeaseNote> _leaseNoteRepository;
+        private readonly INoteRelationshipRepository<PimsManagementFileNote> _managementFileNoteRepository;
+        private readonly INoteRelationshipRepository<PimsProjectNote> _projectNoteRepository;
+        private readonly INoteRelationshipRepository<PimsPropertyNote> _propertyNoteRepository;
+        private readonly INoteRelationshipRepository<PimsResearchFileNote> _researchFileNoteRepository;
 
         /// <summary>
         /// Creates a new instance of a NoteService, and initializes it with the specified arguments.
         /// </summary>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        /// <param name="mapper"></param>
         /// <param name="noteRepository"></param>
-        /// <param name="entityNoteRepository"></param>
-        public NoteService(ClaimsPrincipal user, ILogger<NoteService> logger, IMapper mapper, INoteRepository noteRepository, IEntityNoteRepository entityNoteRepository)
+        /// <param name="acquisitionFileNoteRepository"></param>
+        /// <param name="dispositionFileNoteRepository"></param>
+        /// <param name="leaseNoteRepository"></param>
+        /// <param name="managementFileNoteRepository"></param>
+        /// <param name="projectNoteRepository"></param>
+        /// <param name="propertyNoteRepository"></param>
+        /// <param name="researchFileNoteRepository"></param>
+        public NoteService(
+            ClaimsPrincipal user,
+            ILogger<NoteService> logger,
+            INoteRepository noteRepository,
+            INoteRelationshipRepository<PimsAcquisitionFileNote> acquisitionFileNoteRepository,
+            INoteRelationshipRepository<PimsDispositionFileNote> dispositionFileNoteRepository,
+            INoteRelationshipRepository<PimsLeaseNote> leaseNoteRepository,
+            INoteRelationshipRepository<PimsManagementFileNote> managementFileNoteRepository,
+            INoteRelationshipRepository<PimsProjectNote> projectNoteRepository,
+            INoteRelationshipRepository<PimsPropertyNote> propertyNoteRepository,
+            INoteRelationshipRepository<PimsResearchFileNote> researchFileNoteRepository)
             : base(user, logger)
         {
-            _mapper = mapper;
             _noteRepository = noteRepository;
-            _entityNoteRepository = entityNoteRepository;
+            _acquisitionFileNoteRepository = acquisitionFileNoteRepository;
+            _dispositionFileNoteRepository = dispositionFileNoteRepository;
+            _leaseNoteRepository = leaseNoteRepository;
+            _managementFileNoteRepository = managementFileNoteRepository;
+            _projectNoteRepository = projectNoteRepository;
+            _propertyNoteRepository = propertyNoteRepository;
+            _researchFileNoteRepository = researchFileNoteRepository;
         }
 
-        public NoteModel GetById(long id)
+        public PimsNote GetById(long id)
         {
-            this.Logger.LogInformation("Getting note with id {id}", id);
-            this.User.ThrowIfNotAuthorized(Permissions.NoteView);
+            Logger.LogInformation("Getting note with id {Id}", id);
+            User.ThrowIfNotAuthorized(Permissions.NoteView);
 
-            var pimsEntity = _noteRepository.GetById(id);
-            var noteModel = _mapper.Map<NoteModel>(pimsEntity);
-
-            return noteModel;
+            return _noteRepository.GetById(id);
         }
 
-        public EntityNoteModel Add(NoteType type, EntityNoteModel model)
+        public PimsAcquisitionFileNote AddAcquisitionFileNote(PimsAcquisitionFileNote acquisitionFileNote)
         {
-            this.Logger.LogInformation("Adding note with type {type} and model {model}", type, model);
-            model.ThrowIfNull(nameof(model));
-            this.User.ThrowIfNotAuthorized(Permissions.NoteAdd);
+            acquisitionFileNote.ThrowIfNull(nameof(acquisitionFileNote));
+            Logger.LogInformation("Adding note for acquisition file with Id: {Id}", acquisitionFileNote.ParentId);
+            User.ThrowIfNotAuthorized(Permissions.NoteAdd);
 
-            EntityNoteModel result;
-
-            switch (type)
-            {
-                case NoteType.Acquisition_File:
-                    PimsAcquisitionFileNote acqNoteEntity = _mapper.Map<PimsAcquisitionFileNote>(model);
-
-                    PimsAcquisitionFileNote createdAcqEntity = _entityNoteRepository.Add<PimsAcquisitionFileNote>(acqNoteEntity);
-                    _entityNoteRepository.CommitTransaction();
-
-                    result = _mapper.Map<EntityNoteModel>(createdAcqEntity);
-                    break;
-                case NoteType.Disposition_File:
-                    PimsDispositionFileNote dispositionNoteEntity = _mapper.Map<PimsDispositionFileNote>(model);
-
-                    PimsDispositionFileNote createdDispositionEntity = _entityNoteRepository.Add<PimsDispositionFileNote>(dispositionNoteEntity);
-                    _entityNoteRepository.CommitTransaction();
-
-                    result = _mapper.Map<EntityNoteModel>(createdDispositionEntity);
-                    break;
-                case NoteType.Lease_File:
-                    PimsLeaseNote leaseNoteEntity = _mapper.Map<PimsLeaseNote>(model);
-
-                    PimsLeaseNote createdLeaseEntity = _entityNoteRepository.Add<PimsLeaseNote>(leaseNoteEntity);
-                    _entityNoteRepository.CommitTransaction();
-
-                    result = _mapper.Map<EntityNoteModel>(createdLeaseEntity);
-                    break;
-                case NoteType.Project:
-                    var projectNote = _mapper.Map<PimsProjectNote>(model);
-
-                    var createdNote = _entityNoteRepository.Add<PimsProjectNote>(projectNote);
-                    _entityNoteRepository.CommitTransaction();
-
-                    result = _mapper.Map<EntityNoteModel>(createdNote);
-                    break;
-                case NoteType.Research_File:
-                    PimsResearchFileNote researchNoteEntity = _mapper.Map<PimsResearchFileNote>(model);
-
-                    PimsResearchFileNote createdResesearchEntity = _entityNoteRepository.Add<PimsResearchFileNote>(researchNoteEntity);
-                    _entityNoteRepository.CommitTransaction();
-
-                    result = _mapper.Map<EntityNoteModel>(createdResesearchEntity);
-                    break;
-                default:
-                    throw new BadRequestException("Relationship type not valid.");
-            }
-
-            return result;
+            return AddNoteRelationship(acquisitionFileNote, _acquisitionFileNoteRepository);
         }
 
-        public NoteModel Update(NoteModel model)
+        public PimsDispositionFileNote AddDispositionFileNote(PimsDispositionFileNote dispositionFileNote)
         {
-            model.ThrowIfNull(nameof(model));
+            dispositionFileNote.ThrowIfNull(nameof(dispositionFileNote));
+            Logger.LogInformation("Adding note for disposition file with Id: {Id}", dispositionFileNote.ParentId);
+            User.ThrowIfNotAuthorized(Permissions.NoteAdd);
 
-            this.Logger.LogInformation("Updating note with id {id}", model.Id);
-            this.User.ThrowIfNotAuthorized(Permissions.NoteEdit);
+            return AddNoteRelationship(dispositionFileNote, _dispositionFileNoteRepository);
+        }
 
-            ValidateVersion(model.Id, model.RowVersion);
+        public PimsLeaseNote AddLeaseNote(PimsLeaseNote leaseNote)
+        {
+            leaseNote.ThrowIfNull(nameof(leaseNote));
+            Logger.LogInformation("Adding note for lease with Id: {Id}", leaseNote.ParentId);
+            User.ThrowIfNotAuthorized(Permissions.NoteAdd);
 
-            var pimsEntity = _mapper.Map<PimsNote>(model);
-            var newNote = _noteRepository.Update(pimsEntity);
+            return AddNoteRelationship(leaseNote, _leaseNoteRepository);
+        }
+
+        public PimsManagementFileNote AddManagementFileNote(PimsManagementFileNote managementFileNote)
+        {
+            managementFileNote.ThrowIfNull(nameof(managementFileNote));
+            Logger.LogInformation("Adding note for management file with Id: {Id}", managementFileNote.ParentId);
+            User.ThrowIfNotAuthorized(Permissions.NoteAdd);
+
+            return AddNoteRelationship(managementFileNote, _managementFileNoteRepository);
+        }
+
+        public PimsProjectNote AddProjectNote(PimsProjectNote projectNote)
+        {
+            projectNote.ThrowIfNull(nameof(projectNote));
+            Logger.LogInformation("Adding note for project with Id: {Id}", projectNote.ParentId);
+            User.ThrowIfNotAuthorized(Permissions.NoteAdd);
+
+            return AddNoteRelationship(projectNote, _projectNoteRepository);
+        }
+
+        public PimsPropertyNote AddPropertyNote(PimsPropertyNote propertyNote)
+        {
+            propertyNote.ThrowIfNull(nameof(propertyNote));
+            Logger.LogInformation("Adding note for property with Id: {Id}", propertyNote.ParentId);
+            User.ThrowIfNotAuthorized(Permissions.NoteAdd);
+
+            return AddNoteRelationship(propertyNote, _propertyNoteRepository);
+        }
+
+        public PimsResearchFileNote AddResearchFileNote(PimsResearchFileNote researchFileNote)
+        {
+            researchFileNote.ThrowIfNull(nameof(researchFileNote));
+            Logger.LogInformation("Adding note for research file with Id: {Id}", researchFileNote.ParentId);
+            User.ThrowIfNotAuthorized(Permissions.NoteAdd);
+
+            return AddNoteRelationship(researchFileNote, _researchFileNoteRepository);
+        }
+
+        public PimsNote Update(PimsNote note)
+        {
+            note.ThrowIfNull(nameof(note));
+            Logger.LogInformation("Updating note with id {Id}", note.Internal_Id);
+            User.ThrowIfNotAuthorized(Permissions.NoteEdit);
+
+            ValidateVersion(note.Internal_Id, note.ConcurrencyControlNumber);
+
+            var updatedNote = _noteRepository.Update(note);
             _noteRepository.CommitTransaction();
 
-            this.Logger.LogInformation("Note with id {id} update successfully", model.Id);
-            return GetById(newNote.Internal_Id);
+            Logger.LogInformation("Note with id {Id} updated successfully", note.Internal_Id);
+            return GetById(updatedNote.Internal_Id);
         }
 
         /// <summary>
@@ -130,23 +152,25 @@ namespace Pims.Api.Services
         /// <param name="commitTransaction">Whether or not this transaction should be commited as part of this function.</param>
         public bool DeleteNote(NoteType type, long noteId, bool commitTransaction = true)
         {
-            this.Logger.LogInformation("Deleting note with type {type} and id {noteId}", type, noteId);
-            this.User.ThrowIfNotAuthorized(Permissions.NoteDelete);
+            Logger.LogInformation("Deleting note with type {Type} and id {NoteId}", type, noteId);
+            User.ThrowIfNotAuthorized(Permissions.NoteDelete);
             bool deleted = false;
 
             deleted = type switch
             {
-                NoteType.Acquisition_File => _entityNoteRepository.DeleteAcquisitionFileNotes(noteId),
-                NoteType.Disposition_File => _entityNoteRepository.DeleteDispositionFileNotes(noteId),
-                NoteType.Project => _entityNoteRepository.DeleteProjectNotes(noteId),
-                NoteType.Lease_File => _entityNoteRepository.DeleteLeaseFileNotes(noteId),
-                NoteType.Research_File => _entityNoteRepository.DeleteResearchNotes(noteId),
+                NoteType.Acquisition_File => _acquisitionFileNoteRepository.DeleteNoteRelationship(noteId),
+                NoteType.Disposition_File => _dispositionFileNoteRepository.DeleteNoteRelationship(noteId),
+                NoteType.Project => _projectNoteRepository.DeleteNoteRelationship(noteId),
+                NoteType.Lease_File => _leaseNoteRepository.DeleteNoteRelationship(noteId),
+                NoteType.Research_File => _researchFileNoteRepository.DeleteNoteRelationship(noteId),
+                NoteType.Management_File => _managementFileNoteRepository.DeleteNoteRelationship(noteId),
+                NoteType.Property => _propertyNoteRepository.DeleteNoteRelationship(noteId),
                 _ => deleted
             };
 
             if (commitTransaction)
             {
-                _entityNoteRepository.CommitTransaction();
+                _noteRepository.CommitTransaction();
             }
 
             return deleted;
@@ -156,24 +180,35 @@ namespace Pims.Api.Services
         /// Get notes by note type.
         /// </summary>
         /// <param name="type">Note type to determine the type of notes to return.</param>
-        /// <param name="entityId">Entity Id to determine the entity to which notes belongs to.</param>
+        /// <param name="parentId">Entity Id to determine the entity to which notes belongs to.</param>
         /// <returns></returns>
-        public IEnumerable<PimsNote> GetNotes(NoteType type, long entityId)
+        public IEnumerable<PimsNote> GetNotes(NoteType type, long parentId)
         {
-            this.Logger.LogInformation($"Getting all notes with type {type} and parent id {entityId}");
-            this.User.ThrowIfNotAuthorized(Permissions.NoteView);
+            Logger.LogInformation("Getting all notes with type {Type} and parent id {EntityId}", type, parentId);
+            User.ThrowIfNotAuthorized(Permissions.NoteView);
 
-            List<PimsNote> notes = type switch
+            IList<PimsNote> notes = type switch
             {
-                NoteType.Acquisition_File => _entityNoteRepository.GetAllAcquisitionNotesById(entityId).ToList(),
-                NoteType.Disposition_File => _entityNoteRepository.GetAllDispositionNotesById(entityId).ToList(),
-                NoteType.Project => _entityNoteRepository.GetAllProjectNotesById(entityId).ToList(),
-                NoteType.Lease_File => _entityNoteRepository.GetAllLeaseNotesById(entityId).ToList(),
-                NoteType.Research_File => _entityNoteRepository.GetAllResearchNotesById(entityId).ToList(),
+                NoteType.Acquisition_File => _acquisitionFileNoteRepository.GetAllByParentId(parentId),
+                NoteType.Disposition_File => _dispositionFileNoteRepository.GetAllByParentId(parentId),
+                NoteType.Project => _projectNoteRepository.GetAllByParentId(parentId),
+                NoteType.Lease_File => _leaseNoteRepository.GetAllByParentId(parentId),
+                NoteType.Research_File => _researchFileNoteRepository.GetAllByParentId(parentId),
+                NoteType.Management_File => _managementFileNoteRepository.GetAllByParentId(parentId),
+                NoteType.Property => _propertyNoteRepository.GetAllByParentId(parentId),
                 _ => new List<PimsNote>()
             };
 
             return notes;
+        }
+
+        private static T AddNoteRelationship<T>(T noteRelationship, INoteRelationshipRepository<T> noteRelationshipRepository)
+            where T : PimsNoteRelationship, new()
+        {
+            T newEntity = noteRelationshipRepository.AddNoteRelationship(noteRelationship);
+            noteRelationshipRepository.CommitTransaction();
+
+            return newEntity;
         }
 
         private void ValidateVersion(long noteId, long? noteVersion)

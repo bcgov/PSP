@@ -12,4 +12,5 @@ export interface ApiGen_Concepts_PropertyAssociations {
   researchAssociations: ApiGen_Concepts_Association[] | null;
   acquisitionAssociations: ApiGen_Concepts_Association[] | null;
   dispositionAssociations: ApiGen_Concepts_Association[] | null;
+  managementAssociations: ApiGen_Concepts_Association[] | null;
 }

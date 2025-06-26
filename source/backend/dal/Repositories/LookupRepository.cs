@@ -474,6 +474,21 @@ namespace Pims.Dal.Repositories
         {
             return Context.PimsExpropOwnerHistoryTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToList();
         }
+
+        public IEnumerable<PimsManagementFileStatusType> GetAllManagementFileStatusTypes()
+        {
+            return Context.PimsManagementFileStatusTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToList();
+        }
+
+        public IEnumerable<PimsManagementFileProfileType> GetAllManagementFileProfileTypes()
+        {
+            return Context.PimsManagementFileProfileTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToList();
+        }
+
+        public IEnumerable<PimsManagementFilePurposeType> GetAllManagementFilePurposeTypes()
+        {
+            return Context.PimsManagementFilePurposeTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToList();
+        }
         #endregion
     }
 }

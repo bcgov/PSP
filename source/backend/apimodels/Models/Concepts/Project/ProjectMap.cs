@@ -20,8 +20,6 @@ namespace Pims.Api.Models.Concepts.Project
                 .Map(dest => dest.Note, src => src.Note)
                 .Map(dest => dest.ProjectProducts, src => src.PimsProjectProducts)
                 .Map(dest => dest.ProjectPersons, src => src.PimsProjectPeople)
-                .Map(dest => dest.AppLastUpdateUserid, src => src.AppLastUpdateUserid)
-                .Map(dest => dest.AppLastUpdateTimestamp, src => src.AppLastUpdateTimestamp)
                 .Inherits<Entity.IBaseEntity, BaseConcurrentModel>();
 
             config.NewConfig<ProjectModel, Entity.PimsProject>()
@@ -37,6 +35,17 @@ namespace Pims.Api.Models.Concepts.Project
                 .Map(dest => dest.PimsProjectProducts, src => src.ProjectProducts)
                 .Map(dest => dest.PimsProjectPeople, src => src.ProjectPersons)
                 .Inherits<BaseConcurrentModel, Entity.IBaseEntity>();
+
+            config.NewConfig<Entity.PimsProjectHist, Entity.PimsProject>()
+                .Map(dest => dest.Internal_Id, src => src.Id)
+                .Map(dest => dest.ProjectStatusTypeCode, src => src.ProjectStatusTypeCode)
+                .Map(dest => dest.BusinessFunctionCodeId, src => src.BusinessFunctionCodeId)
+                .Map(dest => dest.CostTypeCodeId, src => src.CostTypeCodeId)
+                .Map(dest => dest.WorkActivityCodeId, src => src.WorkActivityCodeId)
+                .Map(dest => dest.RegionCode, src => src.RegionCode)
+                .Map(dest => dest.Code, src => src.Code)
+                .Map(dest => dest.Description, src => src.Description)
+                .Map(dest => dest.Note, src => src.Note);
         }
     }
 }

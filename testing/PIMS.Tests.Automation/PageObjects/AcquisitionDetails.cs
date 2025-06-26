@@ -76,6 +76,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By acquisitionFileHistoricalNumberContent = By.XPath("//label[contains(text(),'Historical file number')]/parent::div/following-sibling::div");
         private readonly By acquisitionFileDetailsPhysicalFileLabel = By.XPath("//label[contains(text(),'Physical file status')]");
         private readonly By acquisitionFileDetailsPhysicalFileContent = By.XPath("//label[contains(text(),'Physical file status')]/parent::div/following-sibling::div");
+        private readonly By acquisitionFileDetailsPhysicalFileDetailsLabel = By.XPath("//label[contains(text(),'Physical file details')]");
+        private readonly By acquisitionFileDetailsPhysicalFileDetailsContent = By.XPath("//label[contains(text(),'Physical file details')]/parent::div/following-sibling::div");
         private readonly By acquisitionFileDetailsTypeLabel = By.XPath("//label[contains(text(),'Acquisition type')]");
         private readonly By acquisitionFileDetailsTypeContent = By.XPath("//label[contains(text(),'Acquisition type')]/parent::div/following-sibling::div");
         private readonly By acquisitionFileDetailsSubfileInterestLabel = By.XPath("//label[contains(text(),'Sub-file interest')]");
@@ -84,6 +86,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By acquisitionFileDetailsMOTIRegionContent = By.XPath("//label[contains(text(),'Ministry region')]/parent::div/following-sibling::div");
 
         private readonly By acquisitionFileTeamSubtitle = By.XPath("//div[contains(text(),'Acquisition Team')]");
+        private readonly By acquisitionFileAddAnotherMemberLink = By.CssSelector("button[data-testid='add-team-member']");
 
         private readonly By acquisitionFileOwnerSubtitle = By.XPath("//div[contains(text(),'Owner Information')]");
         private readonly By acquisitionFileSubinterestSubtitle = By.XPath("//div[contains(text(),'Sub-Interest Information')]");
@@ -121,17 +124,14 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By acquisitionFileHistoricalNumberInput = By.Id("input-legacyFileNumber");
         private readonly By acquisitionFileHistoricalInvalidMessage = By.XPath("//div[contains(text(),'Legacy file number must be at most 18 characters')]");
         private readonly By acquisitionFilePhysicalStatusSelect = By.Id("input-acquisitionPhysFileStatusType");
+        private readonly By acquisitionFilePhysicalDetailsInput = By.Id("input-physicalFileDetails");
         private readonly By acquisitionFileDetailsTypeSelect = By.Id("input-acquisitionType");
         private readonly By acquisitionFileDetailsSubfileInterestSelect = By.Id("input-subfileInterestTypeCode");
         private readonly By acquisitionSubfileInterestOtherInput = By.Id("input-otherSubfileInterestType");
         private readonly By acquisitionFileDetailsRegionSelect = By.Id("input-region");
 
-        private readonly By acquisitionFileAddAnotherMemberLink = By.CssSelector("button[data-testid='add-team-member']");
         private readonly By acquisitionFileTeamMembersGroup = By.XPath("//div[contains(text(),'Acquisition Team')]/parent::div/parent::h2/following-sibling::div/div[@class='py-3 row']");
         private readonly By acquisitionFileViewTeamMembersGroup = By.XPath("//div[contains(text(),'Acquisition Team')]/parent::div/parent::h2/following-sibling::div/div");
-        private readonly By acquisitionFileTeamFirstMemberDeleteBttn = By.XPath("//div[contains(text(),'Acquisition Team')]/parent::div/parent::h2/following-sibling::div/div[@class='py-3 row'][1]/div[3]/button");
-        private readonly By acquisitionFileTeamInvalidTeamMemberMessage = By.XPath("//div[contains(text(),'Select a team member')]");
-        private readonly By acquisitionFileTeamInvalidProfileMessage = By.XPath("//div[contains(text(),'Select a profile')]");
 
         private readonly By acquisitionFileCreateOwnerSubtitle = By.XPath("//div[contains(text(),'Owners')]");
         private readonly By acquisitionFileOwnerInfo = By.XPath("//p[contains(text(),'Each property in this file should be owned by the owner(s) in this section')]");
@@ -179,15 +179,17 @@ namespace PIMS.Tests.Automation.PageObjects
         //Acquisition File Confirmation Modal Elements
         private readonly By acquisitionFileConfirmationModal = By.CssSelector("div[class='modal-content']");
 
-        private SharedSelectContact sharedSelectContact;
         private SharedModals sharedModals;
+        private SharedTeamMembers sharedTeams;
         private SharedFileProperties sharedSearchProperties;
+        private SharedSelectContact sharedSelectContact;
 
         public AcquisitionDetails(IWebDriver webDriver) : base(webDriver)
         {
-            sharedSelectContact = new SharedSelectContact(webDriver);
             sharedModals = new SharedModals(webDriver);
+            sharedTeams = new SharedTeamMembers(webDriver);
             sharedSearchProperties = new SharedFileProperties(webDriver);
+            sharedSelectContact = new SharedSelectContact(webDriver);
         }
 
         public void NavigateToCreateNewAcquisitionFile()
@@ -403,6 +405,12 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (acquisition.PhysicalFileStatus != "")
                 ChooseSpecificSelectOption(acquisitionFilePhysicalStatusSelect, acquisition.PhysicalFileStatus);
+
+            if (acquisition.PhysicalFileDetails != "")
+            {
+                ClearInput(acquisitionFilePhysicalDetailsInput);
+                webDriver.FindElement(acquisitionFilePhysicalDetailsInput).SendKeys(acquisition.PhysicalFileDetails);
+            }
             
             if (acquisition.AcquisitionType != "")
             {
@@ -429,10 +437,10 @@ namespace PIMS.Tests.Automation.PageObjects
             if (acquisition.AcquisitionTeam!.Count > 0)
             {
                 while (webDriver.FindElements(acquisitionFileTeamMembersGroup).Count > 0)
-                    DeleteFirstStaffMember();
+                    sharedTeams.DeleteFirstStaffMember();
 
                 for (var i = 0; i < acquisition.AcquisitionTeam.Count; i++)
-                    AddTeamMembers(acquisition.AcquisitionTeam[i]);
+                    sharedTeams.AddTeamMembers(acquisition.AcquisitionTeam[i]);
                 
             }
 
@@ -680,6 +688,11 @@ namespace PIMS.Tests.Automation.PageObjects
             if(acquisition.PhysicalFileStatus != "")
                 AssertTrueContentEquals(acquisitionFileDetailsPhysicalFileContent, acquisition.PhysicalFileStatus);
 
+            AssertTrueIsDisplayed(acquisitionFileDetailsPhysicalFileDetailsLabel);
+
+            if (acquisition.PhysicalFileDetails != "")
+                AssertTrueContentEquals(acquisitionFileDetailsPhysicalFileDetailsContent, acquisition.PhysicalFileDetails);
+
             AssertTrueIsDisplayed(acquisitionFileDetailsTypeLabel);
 
             if(acquisition.AcquisitionType != "")
@@ -698,26 +711,10 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(acquisitionFileTeamSubtitle);
 
             if (acquisition.AcquisitionTeam!.Count > 0)
-            {
-                var index = 1;
-
-                for (var i = 0; i < acquisition.AcquisitionTeam.Count; i++)
-                {
-                     AssertTrueContentEquals(By.XPath("//h2/div/div[contains(text(),'Acquisition Team')]/parent::div/parent::h2/following-sibling::div/div[" + index + "]/div/label"), acquisition.AcquisitionTeam[i].TeamMemberRole + ":");
-                     AssertTrueContentEquals(By.XPath("//h2/div/div[contains(text(),'Acquisition Team')]/parent::div/parent::h2/following-sibling::div/div[" + index + "]/div/a"), acquisition.AcquisitionTeam[i].TeamMemberContactName);
-
-                    if (acquisition.AcquisitionTeam[i].TeamMemberPrimaryContact != "")
-                    {
-                        index ++;
-                        AssertTrueContentEquals(By.XPath("//h2/div/div[contains(text(),'Acquisition Team')]/parent::div/parent::h2/following-sibling::div/div[" + index + "]/div/a"), acquisition.AcquisitionTeam[i].TeamMemberPrimaryContact);
-                    }
-
-                    index++;
-                }
-            }
+                sharedTeams.VerifyTeamMembersViewForm(acquisition.AcquisitionTeam);
 
             //Owners
-            if(acquisitionType == "Main")
+            if (acquisitionType == "Main")
                 AssertTrueIsDisplayed(acquisitionFileOwnerSubtitle);
             else
                 AssertTrueIsDisplayed(acquisitionFileSubinterestSubtitle);
@@ -835,8 +832,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (acquisitionType == "Main")
             {
-                VerifyRequiredTeamMemberMessages();
-                DeleteFirstStaffMember();
+                sharedTeams.VerifyRequiredTeamMemberMessages();
+                sharedTeams.DeleteFirstStaffMember();
             }
 
             //Owners
@@ -884,18 +881,6 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(acquisitionFileNameInput).SendKeys(acquisitionFileName);
         }
 
-        public void DeleteFirstStaffMember()
-        {
-            WaitUntilClickable(acquisitionFileTeamFirstMemberDeleteBttn);
-            webDriver.FindElement(acquisitionFileTeamFirstMemberDeleteBttn).Click();
-
-            WaitUntilVisible(acquisitionFileConfirmationModal);
-            Assert.Equal("Remove Team Member", sharedModals.ModalHeader());
-            Assert.Equal("Are you sure you want to remove this row?", sharedModals.ModalContent());
-
-            sharedModals.ModalClickOKBttn();
-        }
-
         public void VerifyErrorMessageDraftItems()
         {
             WaitUntilVisible(acquisitionFileConfirmationModal);
@@ -913,26 +898,6 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilVisible(acquisitionFileConfirmationModal);
             Assert.Equal("Please ensure all in-progress property takes have been completed or canceled before completing an Acquisition File.", sharedModals.ModalContent());
-        }
-
-        private void AddTeamMembers(TeamMember teamMember)
-        {
-            Wait();
-            FocusAndClick(acquisitionFileAddAnotherMemberLink);
-
-            Wait();
-            var teamMemberIndex = webDriver.FindElements(acquisitionFileTeamMembersGroup).Count() -1;
-
-            WaitUntilVisible(By.CssSelector("select[id='input-team."+ teamMemberIndex +".contactTypeCode']"));
-            ChooseSpecificSelectOption(By.CssSelector("select[id='input-team."+ teamMemberIndex +".contactTypeCode']"), teamMember.TeamMemberRole);
-            FocusAndClick(By.CssSelector("div[data-testid='teamMemberRow["+ teamMemberIndex +"]'] div[data-testid='contact-input'] button[title='Select Contact']"));
-
-            Wait();
-            sharedSelectContact.SelectContact(teamMember.TeamMemberContactName, teamMember.TeamMemberContactType);
-
-            Wait();
-            if(webDriver.FindElements(By.Id("input-team."+ teamMemberIndex +".primaryContactId")).Count > 0)
-                ChooseSpecificSelectOption(By.Id("input-team."+ teamMemberIndex +".primaryContactId"), teamMember.TeamMemberPrimaryContact);
         }
 
         private void AddOwners(AcquisitionOwner owner, int ownerIndex)
@@ -1009,26 +974,6 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(sharedModals.ModalContent() == "Are you sure you want to remove this Owner?");
 
             sharedModals.ModalClickOKBttn();
-        }
-
-        private void VerifyRequiredTeamMemberMessages()
-        {
-            //Add a new Team member form
-            Wait();
-            WaitUntilClickable(acquisitionFileAddAnotherMemberLink);
-            webDriver.FindElement(acquisitionFileAddAnotherMemberLink).Click();
-
-            //Verify that invalid team member message is displayed
-            ChooseSpecificSelectOption(By.Id("input-team.0.contactTypeCode"), "Expropriation agent");
-            webDriver.FindElement(acquisitionFileTeamSubtitle).Click();
-            AssertTrueIsDisplayed(acquisitionFileTeamInvalidTeamMemberMessage);
-
-            //verify that invalid profile message is displayed
-            webDriver.FindElement(By.CssSelector("div[data-testid='contact-input'] button[title='Select Contact']")).Click();
-            sharedSelectContact.SelectContact("Test", "");
-            ChooseSpecificSelectOption(By.Id("input-team.0.contactTypeCode"), "Select profile...");
-            webDriver.FindElement(acquisitionFileTeamSubtitle).Click();
-            AssertTrueIsDisplayed(acquisitionFileTeamInvalidProfileMessage);
         }
     }
 }

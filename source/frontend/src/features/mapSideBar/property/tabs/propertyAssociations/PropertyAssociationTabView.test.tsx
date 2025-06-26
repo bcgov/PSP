@@ -57,6 +57,7 @@ const fakeAssociations: ApiGen_Concepts_PropertyAssociations = {
     },
   ],
   dispositionAssociations: null,
+  managementAssociations: null,
 };
 
 describe('PropertyAssociationTabView component', () => {

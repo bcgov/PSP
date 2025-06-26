@@ -2,6 +2,7 @@ import axios, { AxiosError } from 'axios';
 import { FormikProps } from 'formik/dist/types';
 import { filter, find, orderBy, some } from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
+import { FaExclamationCircle } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
@@ -9,6 +10,7 @@ import { LeaseFormModel } from '@/features/leases/models';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
+import { useModalContext } from '@/hooks/useModalContext';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { IContactSearchResult } from '@/interfaces';
 import { IApiError } from '@/interfaces/IApiError';
@@ -49,6 +51,7 @@ export const AddLeaseStakeholderContainer: React.FunctionComponent<
   isPayableLease,
 }) => {
   const { lease } = useContext(LeaseStateContext);
+  const { setModalContent, setDisplayModal } = useModalContext();
   const [stakeholders, setStakeholders] = useState<FormStakeholder[]>(initialStakeholders);
   const [selectedContacts, setSelectedContacts] = useState<IContactSearchResult[]>(
     stakeholders.map(t => FormStakeholder.toContactSearchResult(t)) || [],
@@ -164,15 +167,36 @@ export const AddLeaseStakeholderContainer: React.FunctionComponent<
         if (axios.isAxiosError(e)) {
           const axiosError = e as AxiosError<IApiError>;
           if (axiosError?.response?.status === 409) {
-            toast.error(axiosError?.response.data.error);
-            formikRef?.current?.resetForm();
+            setModalContent({
+              variant: 'error',
+              title: 'Error',
+              headerIcon: <FaExclamationCircle size={22} />,
+              message: axiosError?.response?.data.error,
+              okButtonText: 'Close',
+              handleOk: () => {
+                formikRef?.current?.resetForm();
+                setDisplayModal(false);
+              },
+            });
             setStakeholders(initialStakeholders ?? []);
             setSelectedContacts(
               initialStakeholders?.map(t => FormStakeholder.toContactSearchResult(t)) ?? [],
             );
+            setDisplayModal(true);
           } else {
             if (axiosError.response?.status === 400) {
-              toast.error(axiosError.response.data.error);
+              setModalContent({
+                variant: 'error',
+                title: 'Error',
+                headerIcon: <FaExclamationCircle size={22} />,
+                message: axiosError?.response?.data.error,
+                okButtonText: 'Close',
+                handleOk: () => {
+                  formikRef?.current?.resetForm();
+                  setDisplayModal(false);
+                },
+              });
+              setDisplayModal(true);
             } else {
               toast.error('Unable to save. Please try again.');
             }

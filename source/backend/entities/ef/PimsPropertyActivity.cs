@@ -10,9 +10,8 @@ namespace Pims.Dal.Entities;
 /// Defines the activities that are associated with this property.
 /// </summary>
 [Table("PIMS_PROPERTY_ACTIVITY")]
+[Index("ManagementFileId", Name = "PRPACT_MANAGEMENT_FILE_ID_IDX")]
 [Index("PropMgmtActivityStatusTypeCode", Name = "PRPACT_PROP_MGMT_ACTIVITY_STATUS_TYPE_CODE_IDX")]
-[Index("PropMgmtActivitySubtypeCode", Name = "PRPACT_PROP_MGMT_ACTIVITY_SUBTYPE_CODE_IDX")]
-[Index("PropMgmtActivityTypeCode", Name = "PRPACT_PROP_MGMT_ACTIVITY_TYPE_CODE_IDX")]
 [Index("ServiceProviderOrgId", Name = "PRPACT_SERVICE_PROVIDER_ORG_ID_IDX")]
 [Index("ServiceProviderPersonId", Name = "PRPACT_SERVICE_PROVIDER_PERSON_ID_IDX")]
 public partial class PimsPropertyActivity
@@ -20,22 +19,6 @@ public partial class PimsPropertyActivity
     [Key]
     [Column("PIMS_PROPERTY_ACTIVITY_ID")]
     public long PimsPropertyActivityId { get; set; }
-
-    /// <summary>
-    /// Type of property management activity.
-    /// </summary>
-    [Required]
-    [Column("PROP_MGMT_ACTIVITY_TYPE_CODE")]
-    [StringLength(20)]
-    public string PropMgmtActivityTypeCode { get; set; }
-
-    /// <summary>
-    /// Subtype of property management activity.
-    /// </summary>
-    [Required]
-    [Column("PROP_MGMT_ACTIVITY_SUBTYPE_CODE")]
-    [StringLength(20)]
-    public string PropMgmtActivitySubtypeCode { get; set; }
 
     /// <summary>
     /// Status of the property management activity.
@@ -56,6 +39,19 @@ public partial class PimsPropertyActivity
     /// </summary>
     [Column("SERVICE_PROVIDER_ORG_ID")]
     public long? ServiceProviderOrgId { get; set; }
+
+    /// <summary>
+    /// Foreign key of the associated management file (PIMS_MANAGEMENT_FILE).
+    /// </summary>
+    [Column("MANAGEMENT_FILE_ID")]
+    public long? ManagementFileId { get; set; }
+
+    /// <summary>
+    /// Foreign key of the associated management activity type (PIMS_PROP_MGMT_ACTIVITY_TYPE).
+    /// </summary>
+    [Column("PROP_MGMT_ACTIVITY_TYPE_CODE")]
+    [StringLength(20)]
+    public string PropMgmtActivityTypeCode { get; set; }
 
     /// <summary>
     /// Date the request for a property management activity was added
@@ -88,62 +84,108 @@ public partial class PimsPropertyActivity
     [Column("IS_DISABLED")]
     public bool? IsDisabled { get; set; }
 
+    /// <summary>
+    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
+    /// </summary>
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
 
+    /// <summary>
+    /// The date and time the user created the record.
+    /// </summary>
     [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime AppCreateTimestamp { get; set; }
 
+    /// <summary>
+    /// The user account that created the record.
+    /// </summary>
     [Required]
     [Column("APP_CREATE_USERID")]
     [StringLength(30)]
     public string AppCreateUserid { get; set; }
 
+    /// <summary>
+    /// The GUID of the user account that created the record.
+    /// </summary>
     [Column("APP_CREATE_USER_GUID")]
     public Guid? AppCreateUserGuid { get; set; }
 
+    /// <summary>
+    /// The directory of the user account that created the record.
+    /// </summary>
     [Required]
     [Column("APP_CREATE_USER_DIRECTORY")]
     [StringLength(30)]
     public string AppCreateUserDirectory { get; set; }
 
+    /// <summary>
+    /// The date and time the user updated the record.
+    /// </summary>
     [Column("APP_LAST_UPDATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime AppLastUpdateTimestamp { get; set; }
 
+    /// <summary>
+    /// The user account that updated the record.
+    /// </summary>
     [Required]
     [Column("APP_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string AppLastUpdateUserid { get; set; }
 
+    /// <summary>
+    /// The GUID of the user account that updated the record.
+    /// </summary>
     [Column("APP_LAST_UPDATE_USER_GUID")]
     public Guid? AppLastUpdateUserGuid { get; set; }
 
+    /// <summary>
+    /// The directory of the user account that updated the record.
+    /// </summary>
     [Required]
     [Column("APP_LAST_UPDATE_USER_DIRECTORY")]
     [StringLength(30)]
     public string AppLastUpdateUserDirectory { get; set; }
 
+    /// <summary>
+    /// The date and time the record was created.
+    /// </summary>
     [Column("DB_CREATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime DbCreateTimestamp { get; set; }
 
+    /// <summary>
+    /// The user or proxy account that created the record.
+    /// </summary>
     [Required]
     [Column("DB_CREATE_USERID")]
     [StringLength(30)]
     public string DbCreateUserid { get; set; }
 
+    /// <summary>
+    /// The date and time the record was created or last updated.
+    /// </summary>
     [Column("DB_LAST_UPDATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime DbLastUpdateTimestamp { get; set; }
 
+    /// <summary>
+    /// The user or proxy account that created or last updated the record.
+    /// </summary>
     [Required]
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
+
+    [ForeignKey("ManagementFileId")]
+    [InverseProperty("PimsPropertyActivities")]
+    public virtual PimsManagementFile ManagementFile { get; set; }
 
     [InverseProperty("PimsPropertyActivity")]
     public virtual ICollection<PimsPropActInvolvedParty> PimsPropActInvolvedParties { get; set; } = new List<PimsPropActInvolvedParty>();
 
     [InverseProperty("PimsPropertyActivity")]
     public virtual ICollection<PimsPropActMinContact> PimsPropActMinContacts { get; set; } = new List<PimsPropActMinContact>();
+
+    [InverseProperty("PimsPropertyActivity")]
+    public virtual ICollection<PimsPropActivityMgmtActivity> PimsPropActivityMgmtActivities { get; set; } = new List<PimsPropActivityMgmtActivity>();
 
     [InverseProperty("PimsPropertyActivity")]
     public virtual ICollection<PimsPropPropActivity> PimsPropPropActivities { get; set; } = new List<PimsPropPropActivity>();
@@ -157,10 +199,6 @@ public partial class PimsPropertyActivity
     [ForeignKey("PropMgmtActivityStatusTypeCode")]
     [InverseProperty("PimsPropertyActivities")]
     public virtual PimsPropMgmtActivityStatusType PropMgmtActivityStatusTypeCodeNavigation { get; set; }
-
-    [ForeignKey("PropMgmtActivitySubtypeCode")]
-    [InverseProperty("PimsPropertyActivities")]
-    public virtual PimsPropMgmtActivitySubtype PropMgmtActivitySubtypeCodeNavigation { get; set; }
 
     [ForeignKey("PropMgmtActivityTypeCode")]
     [InverseProperty("PimsPropertyActivities")]

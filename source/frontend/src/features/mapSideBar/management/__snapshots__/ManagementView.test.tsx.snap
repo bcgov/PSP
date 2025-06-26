@@ -1,0 +1,1394 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ManagementView component > renders as expected 1`] = `
+<DocumentFragment>
+  @media only screen and (max-width:1199px) {
+
+}
+
+@media only screen and (max-width:1199px) {
+
+}
+
+<div
+    class="Toastify"
+  />
+  @media only screen and (max-width:1199px) {
+
+}
+
+@media only screen and (max-width:1199px) {
+
+}
+
+<div />
+  .c4.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c4.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
+.c4.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c4.btn:focus {
+  outline-width: 2px;
+  outline-style: solid;
+  outline-color: #2E5DD7;
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+.c4.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c4.btn.btn-primary:hover,
+.c4.btn.btn-primary:active,
+.c4.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
+.c4.btn.btn-secondary {
+  color: #013366;
+  background: none;
+  border-color: #013366;
+}
+
+.c4.btn.btn-secondary:hover,
+.c4.btn.btn-secondary:active,
+.c4.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c4.btn.btn-info {
+  color: #9F9D9C;
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c4.btn.btn-info:hover,
+.c4.btn.btn-info:active,
+.c4.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
+  background: none;
+}
+
+.c4.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
+  border: none;
+}
+
+.c4.btn.btn-light:hover,
+.c4.btn.btn-light:active,
+.c4.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
+.c4.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
+  border: none;
+}
+
+.c4.btn.btn-dark:hover,
+.c4.btn.btn-dark:active,
+.c4.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c4.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c4.btn.btn-danger:hover,
+.c4.btn.btn-danger:active,
+.c4.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c4.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c4.btn.btn-warning:hover,
+.c4.btn.btn-warning:active,
+.c4.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
+}
+
+.c4.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--surface-color-primary-button-default);
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c4.btn.btn-link:hover,
+.c4.btn.btn-link:active,
+.c4.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c4.btn.btn-link:disabled,
+.c4.btn.btn-link.disabled {
+  color: #9F9D9C;
+  background: none;
+  pointer-events: none;
+}
+
+.c4.btn:disabled,
+.c4.btn:disabled:hover {
+  color: #9F9D9C;
+  background-color: #EDEBE9;
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.c4.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c4.Button--icon-only:focus {
+  outline: none;
+}
+
+.c4.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c21 {
+  height: 100%;
+}
+
+.c22 {
+  overflow: auto;
+  height: 100%;
+  width: 22rem;
+}
+
+.c29 {
+  overflow: auto;
+  height: 100%;
+  width: 100%;
+}
+
+.c18 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c1 {
+  color: #474543;
+  font-family: 'BCSans-Bold';
+  font-size: 2.8rem;
+  border-bottom: solid 0.5rem var(--theme-blue-90);
+  width: 100%;
+  text-align: left;
+  margin-bottom: 2.4rem;
+}
+
+.c6 {
+  border-left: 0.1rem solid #ECEAE8;
+  width: 0.1rem;
+  height: 80%;
+  margin: auto;
+}
+
+.c8 {
+  width: 100%;
+  border-bottom: solid 0.5rem #3470B1;
+}
+
+.c7 {
+  font-size: 2.4rem;
+  cursor: pointer;
+}
+
+.c5.btn.btn-light.Button {
+  padding: 0;
+  border: 0.1rem solid #9F9D9C;
+  background-color: white;
+  color: #474543;
+}
+
+.c5.btn.btn-light.Button:focus,
+.c5.btn.btn-light.Button:active {
+  background-color: white;
+  color: #474543;
+}
+
+.c5.btn,
+.c5 .Button__icon,
+.c5 svg {
+  max-width: 2.4rem;
+  min-width: 2.4rem;
+  max-height: 2.4rem;
+  min-height: 2.4rem;
+  font-size: 1.4rem;
+}
+
+.c0 {
+  padding: 1.6rem;
+  color: #474543;
+}
+
+.c0.collapsed .row:first svg {
+  width: 2.6rem;
+  height: 2.6rem;
+  margin-right: 0;
+}
+
+.c0.expanded {
+  min-width: 90rem;
+  height: 100%;
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.c3 {
+  gap: 1.5rem;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c20 {
+  width: 100%;
+  position: relative;
+  overflow: auto;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.c9 {
+  width: 100%;
+  height: 100%;
+  display: contents;
+}
+
+.c10 {
+  position: relative;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: end;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: end;
+}
+
+.c31 {
+  height: 100%;
+}
+
+.c31 .tab-content {
+  border-radius: 0 0.4rem 0.4rem 0.4rem;
+  overflow-y: auto;
+  background-color: #f2f2f2;
+}
+
+.c31 .tab-content .tab-pane {
+  position: relative;
+}
+
+.c32 {
+  background-color: white;
+  color: var(--surface-color-primary-button-default);
+  font-size: 1.4rem;
+  border-color: transparent;
+}
+
+.c32 .nav-tabs {
+  height: auto;
+}
+
+.c32 .nav-item {
+  color: var(--surface-color-primary-button-default);
+  min-width: 5rem;
+  padding: 0.1rem 1.3rem;
+  margin-bottom: 0.1rem;
+  margin-left: 0.1rem;
+}
+
+.c32 .nav-item:hover {
+  color: #f2f2f2;
+  background-color: #1e5189;
+  border-color: transparent;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border-radius: 0.4rem;
+  text-shadow: 0.1rem 0 0 currentColor;
+}
+
+.c32 .nav-item.active {
+  border-radius: 0.4rem;
+  color: #f2f2f2;
+  background-color: #053662;
+  border-color: transparent;
+  text-shadow: 0.1rem 0 0 currentColor;
+}
+
+.c30 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  text-align: left;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.c33 {
+  background-color: #f2f2f2;
+  padding-top: 1rem;
+}
+
+.c34 {
+  text-align: right;
+  overflow: hidden;
+}
+
+.c38 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
+}
+
+.c35 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c37.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c36 {
+  font-weight: bold;
+}
+
+.c39 {
+  padding: 0 0.4rem;
+  display: block;
+}
+
+.c23 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  text-align: left;
+  padding: 0px;
+  margin: 0px;
+  width: 100%;
+  color: var(--surface-color-primary-button-default);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c24 {
+  width: 100%;
+  font-size: 1.4rem;
+  font-weight: normal;
+  cursor: pointer;
+  padding-bottom: 0.5rem;
+}
+
+.c24.selected {
+  font-weight: bold;
+  cursor: default;
+}
+
+.c24 div.Button__value {
+  font-size: 1.4rem;
+}
+
+.c28 {
+  background-color: #fcba19;
+  font-size: 1.5rem;
+  border-radius: 50%;
+  opacity: 0.8;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 1rem;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c28.selected {
+  background-color: #FCBA19;
+}
+
+.c25 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: flex-end;
+  -webkit-box-align: flex-end;
+  -ms-flex-align: flex-end;
+  align-items: flex-end;
+  width: 100%;
+  border-bottom: 1px solid #606060;
+}
+
+.c26 {
+  font-weight: bold;
+  font-size: 1.6rem;
+  color: #474543;
+  line-height: 2.2rem;
+}
+
+.c27 {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+}
+
+.c16 {
+  font-size: 0.87em;
+  line-height: 1.9;
+}
+
+.c15 {
+  text-align: right;
+}
+
+.c13 {
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.c19 {
+  font-family: 'BCSans-Bold';
+  font-size: 1.4rem;
+  border-radius: 0.4rem;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 0.2rem 0.5rem;
+  margin-left: 0.4rem;
+  gap: 0.5rem;
+  color: #6c4a00;
+  background-color: #fef1d8;
+}
+
+.c17 {
+  margin-top: auto;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.c11 {
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom-style: solid;
+  border-bottom-color: grey;
+  border-bottom-width: 0.1rem;
+}
+
+.c14 {
+  height: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c12 {
+  max-width: 60rem;
+}
+
+@media only screen and (max-width:1199px) {
+  .c0.expanded {
+    min-width: 70rem;
+  }
+}
+
+@media only screen and (max-width:1199px) {
+  .c15 {
+    text-align: left;
+  }
+}
+
+<div
+    class="c0 expanded"
+  >
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <h1
+          class="c1 c2"
+        >
+          <div
+            class="mr-2 mb-1"
+          >
+            <svg
+              fill="none"
+              height="2.8rem"
+              title="Management file Icon"
+              viewBox="0 0 24 24"
+              width="2.8rem"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g
+                clip-path="url(#clip0_14089_33993)"
+              >
+                <path
+                  d="M21.83 0L8.06001 0.02C6.94001 0.1 6.12001 1.02 6.01001 2.1V15.75C6.04001 16.98 6.96001 17.89 8.18001 17.99H21.77C23 17.95 23.91 17.03 24.01 15.82V2.24C23.97 1.01 23.05 0.1 21.84 0H21.83ZM20.41 10.07H16.62V13.79H14.48V10.07H10.76V7.93H14.48V4.14H16.62V7.83L16.72 7.93H20.41V10.07Z"
+                  fill="#494949"
+                />
+                <path
+                  d="M4.48 16.24V6H2.03C1.04 6 0.04 7.13 0 8.11V21.76C0.04 22.99 0.96 23.9 2.17 24H15.82C16.75 24.07 17.99 22.94 17.99 22.03V19.51H7.83C6.43 19.51 4.49 17.64 4.49 16.24H4.48Z"
+                  fill="#494949"
+                />
+              </g>
+              <defs>
+                <clippath
+                  id="clip0_14089_33993"
+                >
+                  <rect
+                    fill="white"
+                    height="24"
+                    width="24"
+                  />
+                </clippath>
+              </defs>
+            </svg>
+          </div>
+          Management File
+        </h1>
+      </div>
+      <div
+        class="c3 d-flex col-auto"
+      >
+        <span>
+          <button
+            class="c4 Button Button--icon-only c5 btn btn-light"
+            title="collapse"
+            type="button"
+          >
+            <div
+              class="Button__icon"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M17.59 18 19 16.59 14.42 12 19 7.41 17.59 6l-6 6z"
+                />
+                <path
+                  d="m11 18 1.41-1.41L7.83 12l4.58-4.59L11 6l-6 6z"
+                />
+              </svg>
+            </div>
+          </button>
+        </span>
+        <div
+          class="c6"
+        />
+        <svg
+          class="c7"
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          stroke-width="0"
+          viewBox="0 0 512 512"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <title>
+            close
+          </title>
+          <path
+            d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
+          />
+        </svg>
+      </div>
+    </div>
+    <div
+      class="c8"
+    />
+    <div
+      class="c9"
+    >
+      <div
+        class="c10"
+      >
+        <div
+          class="c11 no-gutters row"
+        >
+          <div
+            class="c12 col-xl-8 col-12"
+          >
+            <div
+              class="row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c13"
+                >
+                  File #:
+                </label>
+              </div>
+              <div
+                class="pl-1 text-left col-8"
+              >
+                M-1
+              </div>
+            </div>
+            <div
+              class="row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c13"
+                >
+                  File Name:
+                </label>
+              </div>
+              <div
+                class="pl-1 text-left col-8"
+              >
+                Test Management File
+              </div>
+            </div>
+            <div
+              class="row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c13"
+                >
+                  Ministry project:
+                </label>
+              </div>
+              <div
+                class="pl-1 text-left col-8"
+              >
+                00048 - CLAIMS
+              </div>
+            </div>
+            <div
+              class="row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c13"
+                >
+                  Ministry product:
+                </label>
+              </div>
+              <div
+                class="pl-1 text-left col-8"
+                data-testid="acq-header-product-val"
+              >
+                00055 - AVALANCHE  &  PROGRAM REVIEW
+              </div>
+            </div>
+            <div
+              class="row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c13"
+                >
+                  Historical file #:
+                </label>
+              </div>
+              <div
+                class="pl-1 text-left col-8"
+              />
+            </div>
+          </div>
+          <div
+            class="col"
+          >
+            <div
+              class="c14"
+            >
+              <div
+                class="no-gutters row"
+              >
+                <div
+                  class="c15 col"
+                >
+                  <span
+                    class="c16"
+                  >
+                    <strong>
+                      Created: 
+                    </strong>
+                    Nov 25, 2023 by 
+                    <span
+                      class="tooltip-icon"
+                      data-testid="tooltip-icon-userNameTooltip"
+                      id="userNameTooltip"
+                    >
+                      <strong>
+                        FOUGSTER
+                      </strong>
+                    </span>
+                  </span>
+                </div>
+              </div>
+              <div
+                class="no-gutters row"
+              >
+                <div
+                  class="c15 col"
+                >
+                  <span
+                    class="c16"
+                  >
+                    <strong>
+                      Updated: 
+                    </strong>
+                    Nov 24, 2023 by 
+                    <span
+                      class="tooltip-icon"
+                      data-testid="tooltip-icon-userNameTooltip"
+                      id="userNameTooltip"
+                    >
+                      <strong>
+                        FOUGSTER
+                      </strong>
+                    </span>
+                  </span>
+                </div>
+              </div>
+              <div
+                class="c17"
+              >
+                <div
+                  class="no-gutters justify-content-end align-items-end row"
+                >
+                  <div
+                    class="col"
+                  />
+                  <div
+                    class="align-self-end d-flex col-auto"
+                  >
+                    <span
+                      class="c16"
+                    >
+                      <b>
+                        File:
+                      </b>
+                    </span>
+                    <div
+                      class="c18 c19"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="16"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 24 24"
+                        width="16"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M0 0h24v24H0z"
+                          fill="none"
+                        />
+                        <path
+                          d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                        />
+                      </svg>
+                      DRAFT
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        class="c20"
+      >
+        <div
+          class="c21 no-gutters row"
+        >
+          <div
+            class="c22 d-flex flex-column col-auto"
+          >
+            <div
+              class="c23"
+            >
+              <div
+                class="c24 selected row"
+                data-testid="menu-item-summary"
+              >
+                <div
+                  class="col"
+                >
+                  <span
+                    title="File Details"
+                  >
+                    File Summary
+                  </span>
+                </div>
+              </div>
+              <div
+                class="c25"
+              >
+                <span
+                  class="c26"
+                >
+                  Properties
+                </span>
+              </div>
+              <div
+                class="p-1"
+              />
+              <div
+                class="c27"
+              >
+                <div
+                  class="c24 no-gutters row"
+                  data-testid="menu-item-row-0"
+                >
+                  <div
+                    class="col-1"
+                  />
+                  <div
+                    class="pr-2 col-auto"
+                  >
+                    <div
+                      class="c28"
+                    >
+                      1
+                    </div>
+                  </div>
+                  <div
+                    class="col"
+                  >
+                    <button
+                      class="c4 Button btn btn-link"
+                      title="View"
+                      type="button"
+                    >
+                      <div
+                        class="Button__value"
+                      >
+                        013-852-752
+                      </div>
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="c29 col"
+          >
+            <div
+              class="c30"
+            >
+              <div
+                class="c31"
+              >
+                <nav
+                  class="c32 nav nav-tabs"
+                  role="tablist"
+                >
+                  <a
+                    aria-selected="true"
+                    class="nav-item nav-link active"
+                    data-rb-event-key="fileDetails"
+                    href="#"
+                    role="tab"
+                  >
+                    File Details
+                  </a>
+                  <a
+                    aria-selected="false"
+                    class="nav-item nav-link"
+                    data-rb-event-key="activities"
+                    href="#"
+                    role="tab"
+                  >
+                    Activities
+                  </a>
+                </nav>
+                <div
+                  class="tab-content"
+                >
+                  <div
+                    aria-hidden="false"
+                    class="fade tab-pane active show"
+                    role="tabpanel"
+                  >
+                    <div
+                      class="c33"
+                    >
+                      <div
+                        class="c34 mr-3 my-1"
+                      />
+                      <div
+                        class="c35 form-section"
+                      >
+                        <div
+                          class="collapse show"
+                        >
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-5"
+                            >
+                              <label
+                                class="c36"
+                              >
+                                Status:
+                              </label>
+                            </div>
+                            <div
+                              class="c37 text-left col"
+                            >
+                              Draft
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="c35 form-section"
+                      >
+                        <h2
+                          class="c38"
+                        >
+                          <div
+                            class="no-gutters row"
+                          >
+                            <div
+                              class="align-content-end col"
+                            >
+                              Project
+                            </div>
+                          </div>
+                        </h2>
+                        <div
+                          class="collapse show"
+                        >
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-5"
+                            >
+                              <label
+                                class="c36"
+                              >
+                                Ministry project:
+                              </label>
+                            </div>
+                            <div
+                              class="c37 text-left col"
+                              data-testid="management-project"
+                            >
+                              00048 - CLAIMS
+                            </div>
+                          </div>
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-5"
+                            >
+                              <label
+                                class="c36"
+                              >
+                                Product:
+                              </label>
+                            </div>
+                            <div
+                              class="c37 text-left col"
+                              data-testid="management-product"
+                            >
+                              00055 AVALANCHE  &  PROGRAM REVIEW
+                            </div>
+                          </div>
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-5"
+                            >
+                              <label
+                                class="c36"
+                              >
+                                Funding:
+                              </label>
+                            </div>
+                            <div
+                              class="c37 text-left col"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="c35 form-section"
+                      >
+                        <h2
+                          class="c38"
+                        >
+                          <div
+                            class="no-gutters row"
+                          >
+                            <div
+                              class="align-content-end col"
+                            >
+                              Management Details
+                            </div>
+                          </div>
+                        </h2>
+                        <div
+                          class="collapse show"
+                        >
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-5"
+                            >
+                              <label
+                                class="c36"
+                              >
+                                Management file name:
+                              </label>
+                            </div>
+                            <div
+                              class="c37 text-left col"
+                            >
+                              Test Management File
+                            </div>
+                          </div>
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-5"
+                            >
+                              <label
+                                class="c36"
+                              >
+                                Historical file number:
+                              </label>
+                            </div>
+                            <div
+                              class="c37 text-left col"
+                            >
+                              legacyfile321
+                            </div>
+                          </div>
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-5"
+                            >
+                              <label
+                                class="c36"
+                              >
+                                Purpose:
+                              </label>
+                            </div>
+                            <div
+                              class="c37 text-left col"
+                            >
+                              Engineering
+                            </div>
+                          </div>
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-5"
+                            >
+                              <label
+                                class="c36"
+                              >
+                                Additional details:
+                              </label>
+                            </div>
+                            <div
+                              class="c37 text-left col"
+                            >
+                              ADDITIONAL DETAILS
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="c35 form-section"
+                      >
+                        <h2
+                          class="c38"
+                        >
+                          <div
+                            class="no-gutters row"
+                          >
+                            <div
+                              class="align-content-end col"
+                            >
+                              Management Team
+                            </div>
+                          </div>
+                        </h2>
+                        <div
+                          class="collapse show"
+                        >
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-5"
+                            >
+                              <label
+                                class="c36"
+                              >
+                                MoTI Solicitor:
+                              </label>
+                            </div>
+                            <div
+                              class="c37 text-left col"
+                            >
+                              <a
+                                class="c39"
+                                href="/contact/P6"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                              >
+                                <span>
+                                  Alejandro Sanchez
+                                </span>
+                                <svg
+                                  class="ml-2"
+                                  fill="currentColor"
+                                  height="1rem"
+                                  stroke="currentColor"
+                                  stroke-width="0"
+                                  viewBox="0 0 512 512"
+                                  width="1rem"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                                  />
+                                </svg>
+                              </a>
+                            </div>
+                          </div>
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-5"
+                            >
+                              <label
+                                class="c36"
+                              >
+                                Negotiation agent:
+                              </label>
+                            </div>
+                            <div
+                              class="c37 text-left col"
+                            >
+                              <a
+                                class="c39"
+                                href="/contact/P6"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                              >
+                                <span>
+                                  Alejandro Sanchez
+                                </span>
+                                <svg
+                                  class="ml-2"
+                                  fill="currentColor"
+                                  height="1rem"
+                                  stroke="currentColor"
+                                  stroke-width="0"
+                                  viewBox="0 0 512 512"
+                                  width="1rem"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                                  />
+                                </svg>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

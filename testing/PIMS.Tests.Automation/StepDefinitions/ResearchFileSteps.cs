@@ -138,6 +138,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 sharedFileProperties.SelectPropertyByAddress(researchFile.SearchProperties.Address);
                 sharedFileProperties.SelectFirstOptionFromSearch();
             }
+
             //Search for a property by Legal Description
             if (researchFile.SearchProperties.LegalDescription != "")
             {
@@ -145,8 +146,16 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 sharedFileProperties.SelectFirstOptionFromSearch();
             }
 
+            //Search for a property by Latitude and Longitude
+            if (researchFile.SearchProperties.LatitudeLongitude.LatitudeDegree != "")
+            {
+                sharedFileProperties.SelectPropertyByLongLant(researchFile.SearchProperties.LatitudeLongitude);
+                sharedFileProperties.SelectFirstOptionFromSearch();
+                sharedFileProperties.ResetSearch();
+            }
+
             //Save Research File
-            researchFiles.SaveResearchFileProperties();
+            researchFiles.SaveResearchFile();
 
             //Add Property Research Information
             if (researchFile.PropertyResearchRowCount != 0 && researchFile.PropertyResearchRowStart != 0)
@@ -199,7 +208,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             sharedFileProperties.DeleteLastPropertyFromFile();
 
             //Save changes
-            researchFiles.SaveResearchFileProperties();
+            researchFiles.SaveResearchFile();
 
             //Select 1st Property attached
             researchFiles.ChooseFirstPropertyOption();
@@ -365,10 +374,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
             sharedPagination.ResetSearch();
 
             //Filter research Files
-            searchResearchFiles.FilterResearchFiles(researchFile.ResearchFileName, researchFile.Status, researchFile.RoadName, "TRANPSP1");
+            searchResearchFiles.FilterResearchFiles(name: researchFile.ResearchFileName, status: researchFile.Status, roadName: researchFile.RoadName, createdBy: "TRANPSP1");
             Assert.True(searchResearchFiles.SearchFoundResults());
 
-            searchResearchFiles.FilterResearchFiles("Automated", "Archived", "Happy", "TRANPSP1");
+            searchResearchFiles.FilterResearchFiles(name: "Automated", status:"Archived", roadName: "Happy", createdBy: "TRANPSP1");
         }
 
        [StepDefinition(@"A new Research File is created successfully")]

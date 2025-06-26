@@ -40,6 +40,8 @@ export const useApiProjects = () => {
         ),
       getProjectProducts: (id: number) =>
         api.get<ApiGen_Concepts_Product[]>(`/projects/${id}/products`),
+      getProjectAtTime: (projectId: number, time: string) =>
+        api.get<ApiGen_Concepts_Project>(`/projects/${projectId}/historical?time=${time}`),
     }),
     [api],
   );

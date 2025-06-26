@@ -18,6 +18,7 @@ namespace Pims.Api.Models.Concepts.Lease
                 .Map(dest => dest.LeaseArea, src => src.LeaseArea)
                 .Map(dest => dest.PropertyName, src => src.Name)
                 .Map(dest => dest.Location, src => src.Location)
+                .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
                 .Map(dest => dest.Id, src => src.Internal_Id)
                 .Inherits<IBaseEntity, BaseConcurrentModel>();
 
@@ -29,8 +30,18 @@ namespace Pims.Api.Models.Concepts.Lease
                 .Map(dest => dest.LeaseArea, src => src.LeaseArea)
                 .Map(dest => dest.Name, src => src.PropertyName)
                 .Map(dest => dest.Location, src => src.Location)
+                .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
                 .Map(dest => dest.Internal_Id, src => src.Id)
                 .Inherits<BaseConcurrentModel, IBaseEntity>();
+
+            config.NewConfig<PimsPropertyLeaseHist, PimsPropertyLease>()
+                .Map(dest => dest.PropertyLeaseId, src => src.PropertyLeaseId)
+                .Map(dest => dest.PropertyId, src => src.PropertyId)
+                .Map(dest => dest.LeaseId, src => src.LeaseId)
+                .Map(dest => dest.AreaUnitTypeCode, src => src.AreaUnitTypeCode)
+                .Map(dest => dest.LeaseArea, src => src.LeaseArea)
+                .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
+                .Map(dest => dest.Name, src => src.Name);
         }
     }
 }

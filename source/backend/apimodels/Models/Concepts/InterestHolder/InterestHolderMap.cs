@@ -8,7 +8,8 @@ namespace Pims.Api.Models.Concepts.InterestHolder
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.PimsInterestHolder, InterestHolderModel>()
+            config
+                .NewConfig<Entity.PimsInterestHolder, InterestHolderModel>()
                 .Map(dest => dest.InterestHolderId, src => src.InterestHolderId)
                 .Map(dest => dest.AcquisitionFileId, src => src.AcquisitionFileId)
                 .Map(dest => dest.InterestHolderProperties, src => src.PimsInthldrPropInterests)
@@ -23,7 +24,8 @@ namespace Pims.Api.Models.Concepts.InterestHolder
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
 
-            config.NewConfig<InterestHolderModel, Entity.PimsInterestHolder>()
+            config
+                .NewConfig<InterestHolderModel, Entity.PimsInterestHolder>()
                 .Map(dest => dest.InterestHolderId, src => src.InterestHolderId)
                 .Map(dest => dest.AcquisitionFileId, src => src.AcquisitionFileId)
                 .Map(dest => dest.PimsInthldrPropInterests, src => src.InterestHolderProperties)
@@ -36,6 +38,17 @@ namespace Pims.Api.Models.Concepts.InterestHolder
                 .Map(dest => dest.InterestHolderTypeCode, src => src.InterestHolderType.Id)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Inherits<BaseAuditModel, Entity.IBaseAppEntity>();
+
+            config
+                .NewConfig<Entity.PimsInterestHolderHist, Entity.PimsInterestHolder>()
+                .Map(dest => dest.InterestHolderId, src => src.InterestHolderId)
+                .Map(dest => dest.AcquisitionFileId, src => src.AcquisitionFileId)
+                .Map(dest => dest.PersonId, src => src.PersonId)
+                .Map(dest => dest.OrganizationId, src => src.OrganizationId)
+                .Map(dest => dest.PrimaryContactId, src => src.PrimaryContactId)
+                .Map(dest => dest.Comment, src => src.Comment)
+                .Map(dest => dest.InterestHolderTypeCode, src => src.InterestHolderTypeCode)
+                .Map(dest => dest.IsDisabled, src => src.IsDisabled);
         }
     }
 }

@@ -1,7 +1,8 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { Claims } from '@/constants';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import { Claims, NoteTypes } from '@/constants';
 import { usePropertyDetails } from '@/features/mapSideBar/hooks/usePropertyDetails';
 import {
   IInventoryTabsProps,
@@ -14,6 +15,10 @@ import PropertyAssociationTabView from '@/features/mapSideBar/property/tabs/prop
 import { PropertyDetailsTabView } from '@/features/mapSideBar/property/tabs/propertyDetails/detail/PropertyDetailsTabView';
 import TakesDetailContainer from '@/features/mapSideBar/property/tabs/takes/detail/TakesDetailContainer';
 import TakesDetailView from '@/features/mapSideBar/property/tabs/takes/detail/TakesDetailView';
+import NoteSummaryContainer from '@/features/notes/list/ManagementNoteSummaryContainer';
+import NoteSummaryView from '@/features/notes/list/ManagementNoteSummaryView';
+import NoteListContainer from '@/features/notes/list/NoteListContainer';
+import NoteListView from '@/features/notes/list/NoteListView';
 import { PROPERTY_TYPES, useComposedProperties } from '@/hooks/repositories/useComposedProperties';
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
@@ -25,8 +30,10 @@ import { exists, getLatLng, isValidId } from '@/utils';
 
 import { getLeaseInfo, LeaseAssociationInfo } from '../../property/PropertyContainer';
 import CrownDetailsTabView from '../../property/tabs/crown/CrownDetailsTabView';
+import { PropertyManagementTabView } from '../../property/tabs/propertyDetailsManagement/detail/PropertyManagementTabView';
 import PropertyResearchTabView from '../../property/tabs/propertyResearch/detail/PropertyResearchTabView';
 import ResearchStatusUpdateSolver from '../../research/tabs/fileDetails/ResearchStatusUpdateSolver';
+import PropertyDocumentsTab from '../tabs/PropertyDocumentsTab';
 
 export interface IPropertyFileContainerProps {
   fileProperty: ApiGen_Concepts_FileProperty;
@@ -36,6 +43,7 @@ export interface IPropertyFileContainerProps {
   defaultTab: InventoryTabNames;
   fileContext?: ApiGen_CodeTypes_FileTypes;
   statusSolver?: ResearchStatusUpdateSolver;
+  onChildSuccess: () => void;
 }
 
 export const PropertyFileContainer: React.FunctionComponent<
@@ -46,6 +54,8 @@ export const PropertyFileContainer: React.FunctionComponent<
   const location = props.fileProperty?.property?.location ?? undefined;
   const latLng = useMemo(() => getLatLng(location) ?? undefined, [location]);
   const { hasClaim } = useKeycloakWrapper();
+
+  const { setFullWidthSideBar } = useMapStateMachine();
 
   const composedProperties = useComposedProperties({
     pid,
@@ -151,6 +161,19 @@ export const PropertyFileContainer: React.FunctionComponent<
     });
   }
 
+  if (props.fileContext === ApiGen_CodeTypes_FileTypes.Management) {
+    tabViews.push({
+      content: (
+        <PropertyManagementTabView
+          property={composedProperties.apiWrapper?.response}
+          loading={composedProperties.apiWrapper?.loading ?? false}
+        />
+      ),
+      key: InventoryTabNames.management,
+      name: 'Management',
+    });
+  }
+
   tabViews.push(...props.customTabs);
 
   if (isValidId(id)) {
@@ -198,11 +221,56 @@ export const PropertyFileContainer: React.FunctionComponent<
     });
   }
 
+  if (exists(composedProperties.apiWrapper?.response) && hasClaim(Claims.DOCUMENT_VIEW)) {
+    tabViews.push({
+      content: (
+        <PropertyDocumentsTab
+          fileId={composedProperties.apiWrapper.response.id}
+          onSuccess={props.onChildSuccess}
+        />
+      ),
+      key: InventoryTabNames.document,
+      name: 'Property Documents',
+    });
+  }
+
+  if (exists(composedProperties?.apiWrapper?.response) && hasClaim(Claims.NOTE_VIEW)) {
+    tabViews.push({
+      content: (
+        <>
+          <NoteListContainer
+            type={NoteTypes.Property}
+            entityId={composedProperties.apiWrapper.response.id}
+            onSuccess={props.onChildSuccess}
+            NoteListView={NoteListView}
+          />
+          <NoteSummaryContainer
+            associationType={NoteTypes.Management_File}
+            entityId={composedProperties.apiWrapper.response.id}
+            onSuccess={props.onChildSuccess}
+            NoteListView={NoteSummaryView}
+          />
+        </>
+      ),
+      key: InventoryTabNames.notes,
+      name: 'Notes',
+    });
+  }
+
   const InventoryTabsView = props.View;
 
   const params = useParams<{ tab?: string }>();
   const activeTab =
     Object.values(InventoryTabNames).find(t => t === params.tab) ?? props.defaultTab;
+
+  useEffect(() => {
+    if (activeTab === InventoryTabNames.document || activeTab === InventoryTabNames.notes) {
+      setFullWidthSideBar(true);
+    } else {
+      setFullWidthSideBar(false);
+    }
+    return () => setFullWidthSideBar(false);
+  }, [activeTab, setFullWidthSideBar]);
 
   return (
     <InventoryTabsView
