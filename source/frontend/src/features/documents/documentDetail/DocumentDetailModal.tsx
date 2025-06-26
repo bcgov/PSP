@@ -9,9 +9,9 @@ import { DocumentDetailContainer } from './DocumentDetailContainer';
 export interface IDocumentDetailModalProps {
   display?: boolean;
   relationshipType: ApiGen_CodeTypes_DocumentRelationType;
-  setDisplay?: (display: boolean) => void;
   pimsDocument?: DocumentRow;
   canEdit: boolean;
+  setDisplay?: (display: boolean) => void;
   onUpdateSuccess: () => void;
   onClose: () => void;
 }

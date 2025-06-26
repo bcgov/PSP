@@ -73,7 +73,7 @@ describe('DocumentDetailContainer component', () => {
           ApiGen_CodeTypes_DocumentRelationType.AcquisitionFiles
         }
         onUpdateSuccess={renderOptions?.props?.onUpdateSuccess ?? onUpdateSuccess}
-        canEdit={true}
+        canEdit={renderOptions?.props?.canEdit ?? true}
       />,
       {
         ...renderOptions,

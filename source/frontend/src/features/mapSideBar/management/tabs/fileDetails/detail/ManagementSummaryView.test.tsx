@@ -75,22 +75,28 @@ describe('ManagementSummaryView component', () => {
     expect(icon).toBeNull();
   });
 
-  it('renders the warning icon for management files in non-editable status', async () => {
-    const { queryByTitle, queryByTestId } = setup(
-      {
-        managementFile: {
-          ...mockManagementFileResponse(),
-          fileStatusTypeCode: toTypeCode(ApiGen_CodeTypes_ManagementFileStatusTypes.COMPLETE),
+  it.each([
+    ['Management File Status is "Completed"', ApiGen_CodeTypes_ManagementFileStatusTypes.COMPLETE],
+    ['Management File Status is "Archived"', ApiGen_CodeTypes_ManagementFileStatusTypes.ARCHIVED],
+  ])(
+    'renders the warning icon for management files in non-editable status - %s',
+    async (_: string, fileStatus: ApiGen_CodeTypes_ManagementFileStatusTypes) => {
+      const { queryByTitle, queryByTestId } = setup(
+        {
+          managementFile: {
+            ...mockManagementFileResponse(),
+            fileStatusTypeCode: toTypeCode(fileStatus),
+          },
         },
-      },
-      { claims: [Claims.MANAGEMENT_EDIT] },
-    );
-    await waitForEffects();
-    const editButton = queryByTitle('Edit management file');
-    const icon = queryByTestId('tooltip-icon-1-summary-cannot-edit-tooltip');
-    expect(editButton).toBeNull();
-    expect(icon).toBeVisible();
-  });
+        { claims: [Claims.MANAGEMENT_EDIT] },
+      );
+      await waitForEffects();
+      const editButton = queryByTitle('Edit management file');
+      const icon = queryByTestId('tooltip-icon-1-summary-cannot-edit-tooltip');
+      expect(editButton).toBeNull();
+      expect(icon).toBeVisible();
+    },
+  );
 
   it('it does not render the warning icon for management files in non-editable status for Admins', async () => {
     const { queryByTitle, queryByTestId } = setup(
