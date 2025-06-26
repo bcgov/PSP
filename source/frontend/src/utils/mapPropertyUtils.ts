@@ -412,7 +412,7 @@ export function sortFileProperties<T extends ApiGen_Concepts_FileProperty>(
 ): T[] | null {
   if (exists(fileProperties)) {
     return chain(fileProperties)
-      .orderBy([fp => fp.isActive !== false, fp => fp.displayOrder ?? Infinity, 'asc'])
+      .orderBy([fp => fp.displayOrder ?? Infinity], ['asc'])
       .value();
   }
   return null;
