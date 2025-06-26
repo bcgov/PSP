@@ -133,7 +133,7 @@ const ManagementForm: React.FC<IManagementFormProps> = props => {
             </Section>
 
             <Section header="Management Team">
-              <ManagementTeamSubForm />
+              <ManagementTeamSubForm canEditDetails={true} />
             </Section>
           </Container>
         );

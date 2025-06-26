@@ -40,6 +40,7 @@ describe('Activities list view', () => {
         onView={onView}
         setSort={setSort}
         sort={undefined}
+        canEditActivities={renderOptions?.canEditActivities ?? true}
       />,
       {
         ...renderOptions,

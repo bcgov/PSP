@@ -8,14 +8,17 @@ import { IManagementActivitiesListViewProps } from '@/features/mapSideBar/proper
 
 export const ManagementFileActivitiesListView: React.FunctionComponent<
   IManagementActivitiesListViewProps
-> = ({ isLoading, propertyActivities, sort, onDelete, onView, setSort }) => {
+> = ({ isLoading, propertyActivities, sort, canEditActivities, onDelete, onView, setSort }) => {
   return (
     <ManagementActivitiesList
       propertyActivities={propertyActivities}
       sort={sort}
       setSort={setSort}
       loading={isLoading}
-      columns={[...createActivityTableColumns(), activityActionColumn(onView, onDelete)]}
+      columns={[
+        ...createActivityTableColumns(),
+        activityActionColumn(canEditActivities, onView, onDelete),
+      ]}
     ></ManagementActivitiesList>
   );
 };

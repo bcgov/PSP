@@ -178,7 +178,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
           type={NoteTypes.Acquisition_File}
           entityId={acquisitionFile?.id}
           onSuccess={onChildSuccess}
-          NoteListView={NoteListView}
+          View={NoteListView}
         />
       ),
       key: FileTabType.NOTES,

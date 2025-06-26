@@ -13,6 +13,7 @@ export type IContactInputContainerProps = {
   displayErrorAsTooltip?: boolean;
   onContactSelected?: (contact: IContactSearchResult) => void;
   placeholder?: string;
+  canEditDetails?: boolean;
 };
 
 export const ContactInputContainer: React.FC<
@@ -29,6 +30,7 @@ export const ContactInputContainer: React.FC<
   displayErrorAsTooltip = true,
   onContactSelected,
   placeholder,
+  canEditDetails,
 }) => {
   const [showContactManager, setShowContactManager] = useState(false);
   const [selectedContacts, setSelectedContacts] = useState<IContactSearchResult[]>([]);
@@ -42,6 +44,8 @@ export const ContactInputContainer: React.FC<
       onContactSelected(selectedContacts[0]);
     }
   };
+
+  const editEnabled = canEditDetails ?? true;
 
   return (
     <View
@@ -70,6 +74,7 @@ export const ContactInputContainer: React.FC<
         restrictContactType: restrictContactType,
       }}
       placeholder={placeholder}
+      canEditDetails={editEnabled}
     />
   );
 };

@@ -10,6 +10,7 @@ import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { isValidId } from '@/utils';
 
+import ManagementStatusUpdateSolver from '../fileDetails/detail/ManagementStatusUpdateSolver';
 import AdHocFileActivitiesSummaryContainer from './list/AdHocSummaryActivitiesContainer';
 import AdHocSummaryActivitiesView from './list/AdHocSummaryActivitiesListView';
 import ManagementFileActivitiesListContainer from './list/ManagementFileActivitiesListContainer';
@@ -24,17 +25,19 @@ export const ActivitiesTab: React.FunctionComponent<IActivitiesTabProps> = ({ ma
   const pathGenerator = usePathGenerator();
 
   const onAdd = () => {
-    if (isValidId(managementFile?.id)) {
+    if (isValidId(managementFile.id)) {
       pathGenerator.addDetail('management', managementFile.id, 'activities');
     }
   };
+
+  const statusSolver = new ManagementStatusUpdateSolver(managementFile);
 
   return (
     <StyledSummarySection>
       <Section
         header={
           <SimpleSectionHeader title="Activity List">
-            {hasClaim(Claims.MANAGEMENT_EDIT) && (
+            {hasClaim(Claims.MANAGEMENT_EDIT) && statusSolver.canEditActivities() && (
               <StyledSectionAddButton onClick={onAdd}>
                 <FaPlus size="2rem" className="mr-2" />
                 Add Activity
@@ -50,6 +53,7 @@ export const ActivitiesTab: React.FunctionComponent<IActivitiesTabProps> = ({ ma
         <ManagementFileActivitiesListContainer
           View={ManagementFileActivitiesListView}
           managementFileId={managementFile.id}
+          statusSolver={statusSolver}
         ></ManagementFileActivitiesListContainer>
       </Section>
       <AdHocFileActivitiesSummaryContainer
