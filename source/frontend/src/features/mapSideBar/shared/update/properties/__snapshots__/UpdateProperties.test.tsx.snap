@@ -209,54 +209,54 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c30.c30.btn {
+.c29.c29.btn {
   background-color: unset;
   border: none;
 }
 
-.c30.c30.btn:hover,
-.c30.c30.btn:focus,
-.c30.c30.btn:active {
+.c29.c29.btn:hover,
+.c29.c29.btn:focus,
+.c29.c29.btn:active {
   background-color: unset;
   outline: none;
   box-shadow: none;
 }
 
-.c30.c30.btn svg {
+.c29.c29.btn svg {
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
 
-.c30.c30.btn svg:hover {
+.c29.c29.btn svg:hover {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
 }
 
-.c30.c30.btn.btn-primary svg {
+.c29.c29.btn.btn-primary svg {
   color: #013366;
 }
 
-.c30.c30.btn.btn-primary svg:hover {
+.c29.c29.btn.btn-primary svg:hover {
   color: #013366;
 }
 
-.c30.c30.btn.btn-light svg {
+.c29.c29.btn.btn-light svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c30.c30.btn.btn-light svg:hover {
+.c29.c29.btn.btn-light svg:hover {
   color: #CE3E39;
 }
 
-.c30.c30.btn.btn-info svg {
+.c29.c29.btn.btn-info svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c30.c30.btn.btn-info svg:hover {
+.c29.c29.btn.btn-info svg:hover {
   color: var(--surface-color-primary-button-hover);
 }
 
-.c31.c31.btn {
+.c30.c30.btn {
   font-size: 1.4rem;
   color: #aaaaaa;
   -webkit-text-decoration: none;
@@ -264,13 +264,13 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   line-height: unset;
 }
 
-.c31.c31.btn .text {
+.c30.c30.btn .text {
   display: none;
 }
 
-.c31.c31.btn:hover,
-.c31.c31.btn:active,
-.c31.c31.btn:focus {
+.c30.c30.btn:hover,
+.c30.c30.btn:active,
+.c30.c30.btn:focus {
   color: #d8292f;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -284,9 +284,9 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   flex-direction: row;
 }
 
-.c31.c31.btn:hover .text,
-.c31.c31.btn:active .text,
-.c31.c31.btn:focus .text {
+.c30.c30.btn:hover .text,
+.c30.c30.btn:active .text,
+.c30.c30.btn:focus .text {
   display: inline;
   line-height: 2rem;
 }
@@ -310,7 +310,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   border-bottom-left-radius: 0;
 }
 
-.c29 {
+.c28 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -322,7 +322,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   gap: 0.8rem;
 }
 
-.c29 .form-label {
+.c28 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
@@ -482,27 +482,18 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c25 {
-  font-size: 1.6rem;
-  color: #9F9D9C;
-  border-bottom: 0.2rem solid #606060;
-  margin-bottom: 0.9rem;
-  padding-bottom: 0.25rem;
-  font-family: 'BcSans-Bold';
-}
-
-.c28 {
+.c27 {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.c26 {
+.c25 {
   min-width: 3rem;
   min-height: 4.5rem;
 }
 
-.c27 {
+.c26 {
   font-size: 1.2rem;
 }
 
@@ -588,7 +579,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   align-items: end;
 }
 
-.c32 {
+.c31 {
   position: -webkit-sticky;
   position: sticky;
   padding-top: 2rem;
@@ -1232,47 +1223,49 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                 <div
                   class="align-content-end col"
                 >
-                  Selected properties
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="col-11"
+                    >
+                      Selected Properties
+                    </div>
+                    <div
+                      class="col"
+                    >
+                      <button
+                        class="c4 Button btn btn-link"
+                        title="Fit boundaries button"
+                        type="button"
+                      >
+                        <div
+                          class="Button__value"
+                        >
+                          <svg
+                            class="mr-2"
+                            fill="currentColor"
+                            height="18"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 256 256"
+                            width="18"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M216,48V88a8,8,0,0,1-16,0V56H168a8,8,0,0,1,0-16h40A8,8,0,0,1,216,48ZM88,200H56V168a8,8,0,0,0-16,0v40a8,8,0,0,0,8,8H88a8,8,0,0,0,0-16Zm120-40a8,8,0,0,0-8,8v32H168a8,8,0,0,0,0,16h40a8,8,0,0,0,8-8V168A8,8,0,0,0,208,160ZM88,40H48a8,8,0,0,0-8,8V88a8,8,0,0,0,16,0V56H88a8,8,0,0,0,0-16Z"
+                            />
+                          </svg>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </h2>
             <div
               class="collapse show"
             >
-              <div
-                class="c25 no-gutters row"
-              >
-                <div
-                  class="col-md-3"
-                >
-                  Identifier
-                </div>
-                <div
-                  class="col-md-9"
-                >
-                  Provide a descriptive name for this land
-                  <span
-                    class="tooltip-icon"
-                    data-testid="tooltip-icon-property-selector-tooltip"
-                    id="property-selector-tooltip"
-                  >
-                    <svg
-                      class="tooltip-icon"
-                      fill="currentColor"
-                      height="1em"
-                      stroke="currentColor"
-                      stroke-width="0"
-                      viewBox="0 0 512 512"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                      />
-                    </svg>
-                  </span>
-                </div>
-              </div>
               <div
                 class="align-items-center mb-3 no-gutters row"
               >
@@ -1283,7 +1276,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                     class="mb-0 d-flex align-items-center"
                   >
                     <svg
-                      class="c26"
+                      class="c25"
                       height="45"
                       id="Layer_2"
                       viewBox="0 0 20 30"
@@ -1340,7 +1333,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                           </g>
                         </g>
                         <text
-                          class="c27"
+                          class="c26"
                           textLength="1.25rem"
                           x="7"
                           y="15"
@@ -1353,7 +1346,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                       </title>
                     </svg>
                     <div
-                      class="c28 pl-3"
+                      class="c27 pl-3"
                     >
                       PID: 123-456-789
                     </div>
@@ -1363,7 +1356,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                   class="col-md-5"
                 >
                   <div
-                    class="c29 mb-0 w-100 input form-group"
+                    class="c28 mb-0 w-100 input form-group"
                   >
                     <input
                       class="form-control"
@@ -1375,10 +1368,37 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                   </div>
                 </div>
                 <div
+                  class="col-auto"
+                >
+                  <button
+                    class="c4 Button btn btn-link"
+                    type="button"
+                  >
+                    <div
+                      class="Button__value"
+                    >
+                      <svg
+                        class="ml-4"
+                        fill="currentColor"
+                        height="18"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="18"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M304 192v32c0 6.6-5.4 12-12 12h-56v56c0 6.6-5.4 12-12 12h-32c-6.6 0-12-5.4-12-12v-56h-56c-6.6 0-12-5.4-12-12v-32c0-6.6 5.4-12 12-12h56v-56c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v56h56c6.6 0 12 5.4 12 12zm201 284.7L476.7 505c-9.4 9.4-24.6 9.4-33.9 0L343 405.3c-4.5-4.5-7-10.6-7-17V372c-35.3 27.6-79.7 44-128 44C93.1 416 0 322.9 0 208S93.1 0 208 0s208 93.1 208 208c0 48.3-16.4 92.7-44 128h16.3c6.4 0 12.5 2.5 17 7l99.7 99.7c9.3 9.4 9.3 24.6 0 34zM344 208c0-75.2-60.8-136-136-136S72 132.8 72 208s60.8 136 136 136 136-60.8 136-136z"
+                        />
+                      </svg>
+                    </div>
+                  </button>
+                </div>
+                <div
                   class="pl-3 col-md-1"
                 >
                   <button
-                    class="c4 Button c30 btn btn-primary"
+                    class="c4 Button c29 btn btn-primary"
                     title="move-pin-location"
                     type="button"
                   >
@@ -1405,7 +1425,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                   class="col-md-2"
                 >
                   <button
-                    class="c4 Button c31 btn btn-link"
+                    class="c4 Button c30 btn btn-link"
                     type="button"
                   >
                     <div
@@ -1449,7 +1469,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
           class=""
         >
           <div
-            class="c32 justify-content-end pt-4 p-0 no-gutters row"
+            class="c31 justify-content-end pt-4 p-0 no-gutters row"
           >
             <div
               class="pr-3 col-auto"
