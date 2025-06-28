@@ -265,6 +265,20 @@ const selectedFeatureLoaderStates = {
           ],
           target: 'loading',
         },
+        MAP_MARK_LOCATION: {
+          actions: [
+            assign({
+              mapMarkedLocation: (_, event: any) => event.latlng,
+            }),
+          ],
+        },
+        MAP_CLEAR_MARK_LOCATION: {
+          actions: [
+            assign({
+              mapMarkedLocation: () => null,
+            }),
+          ],
+        },
         CLOSE_POPUP: {
           actions: [
             assign({
@@ -487,6 +501,7 @@ export const mapMachine = createMachine<MachineContext>({
     mapLocationSelected: null,
     mapFeatureSelected: null,
     mapLocationFeatureDataset: null,
+    mapMarkedLocation: null,
     selectedFeatureDataset: null,
     repositioningFeatureDataset: null,
     repositioningPropertyIndex: null,

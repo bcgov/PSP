@@ -19,8 +19,14 @@ export type MapSearchProps = object;
  * @param param0
  */
 const MapSearch: React.FC<React.PropsWithChildren<MapSearchProps>> = () => {
-  const { mapSearchCriteria, setMapSearchCriteria, mapClick, requestCenterToLocation } =
-    useMapStateMachine();
+  const {
+    mapSearchCriteria,
+    setMapSearchCriteria,
+    mapClick,
+    requestCenterToLocation,
+    mapMarkLocation,
+    mapClearLocationMark,
+  } = useMapStateMachine();
 
   const [propertySearchFilter, setPropertySearchFilter] = useState<IPropertyFilter | null>(null);
 
@@ -46,10 +52,12 @@ const MapSearch: React.FC<React.PropsWithChildren<MapSearchProps>> = () => {
           latLng = filter.coordinates?.toLatLng();
       }
       if (latLng) {
-        mapClick(latLng);
+        mapMarkLocation(latLng);
         requestCenterToLocation(latLng);
+        mapClick(latLng);
       }
     } else {
+      mapClearLocationMark();
       setPropertySearchFilter(filter);
     }
   };
