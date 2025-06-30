@@ -361,6 +361,26 @@ exports[`LayersMenu View > renders as expected 1`] = `
           class="collapse show"
         >
           <div
+            class="c3"
+          >
+            <div
+              class="form-check"
+            >
+              <input
+                class="form-check-input"
+                id="pmbc_parcel_pid"
+                type="checkbox"
+              />
+              <label
+                class="form-check-label"
+                for="pmbc_parcel_pid"
+                title=""
+              >
+                 Parcels PID
+              </label>
+            </div>
+          </div>
+          <div
             class="c8"
           >
             <div
