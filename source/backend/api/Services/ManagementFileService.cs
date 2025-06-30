@@ -26,7 +26,7 @@ namespace Pims.Api.Services
         private readonly IPropertyService _propertyService;
         private readonly ILookupRepository _lookupRepository;
         private readonly INoteRelationshipRepository<PimsManagementFileNote> _entityNoteRepository;
-        private readonly IManagementStatusSolver _managementStatusSolver;
+        private readonly IManagementFileStatusSolver _managementStatusSolver;
         private readonly IPropertyOperationService _propertyOperationService;
         private readonly IPropertyActivityRepository _propertyActivityRepository;
 
@@ -39,7 +39,7 @@ namespace Pims.Api.Services
             IPropertyService propertyService,
             ILookupRepository lookupRepository,
             INoteRelationshipRepository<PimsManagementFileNote> entityNoteRepository,
-            IManagementStatusSolver managementStatusSolver,
+            IManagementFileStatusSolver managementStatusSolver,
             IPropertyOperationService propertyOperationService,
             IPropertyActivityRepository propertyActivityRepository)
         {
@@ -108,6 +108,11 @@ namespace Pims.Api.Services
             if (!_managementStatusSolver.CanEditDetails(currentManagementStatus) && !_user.HasPermission(Permissions.SystemAdmin))
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+            }
+
+            if(!_user.HasPermission(Permissions.SystemAdmin) && _managementStatusSolver.IsAdminProtected(currentManagementStatus))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active, only an Administrator may update this file to an Active status.");
             }
 
             ValidateVersion(id, managementFile.ConcurrencyControlNumber);
@@ -418,5 +423,7 @@ namespace Pims.Api.Services
 
             return currentManagementFileStatus;
         }
+
+
     }
 }

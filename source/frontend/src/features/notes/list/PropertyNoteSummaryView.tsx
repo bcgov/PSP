@@ -37,10 +37,14 @@ export const PropertyNoteSummaryView: React.FunctionComponent<IPropertyNotesSumm
   const columns = [
     createNoteLinkColumn('Property Name', getNoteNavigationUrlTitle),
     ...createNoteTableColumns(),
-    createNoteActionsColumn((note: ApiGen_Concepts_Note) => {
-      setCurrentNote(note);
-      openViewNotes();
-    }, null),
+    createNoteActionsColumn(
+      false,
+      (note: ApiGen_Concepts_Note) => {
+        setCurrentNote(note);
+        openViewNotes();
+      },
+      null,
+    ),
   ];
 
   return (

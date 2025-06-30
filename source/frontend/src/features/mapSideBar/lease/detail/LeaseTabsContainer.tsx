@@ -230,7 +230,7 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
           type={NoteTypes.Lease_File}
           entityId={lease?.id}
           onSuccess={onSuccess}
-          NoteListView={NoteListView}
+          View={NoteListView}
         />
       ),
       key: LeaseFileTabNames.notes,
