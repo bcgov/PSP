@@ -133,7 +133,7 @@ describe('Expropriation Tab Container View', () => {
     expect(getByText('At lease one impacted property is required')).toBeInTheDocument();
   });
 
-    it('validates form 9 values before generating', async () => {
+  it('validates form 9 values before generating', async () => {
     const { getByText } = await setup();
     await act(async () => userEvent.click(getByText(/Generate Form 9/i)));
 
