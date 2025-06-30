@@ -67,7 +67,7 @@ describe('Expropriation Form 1', () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
-   it('validates form 1 values before generating', async () => {
+  it('validates form 1 values before generating', async () => {
     const { getByText, formikRef } = await setup();
     await act(async () => formikRef.current.submitForm());
 
@@ -76,7 +76,8 @@ describe('Expropriation Form 1', () => {
   });
 
   it(`submits the form when Generate button is clicked`, async () => {
-    const { getByText, getByTestId, getByTitle, getNatureOfInterest, getPurpose, formikRef } = await setup();
+    const { getByText, getByTestId, getByTitle, getNatureOfInterest, getPurpose, formikRef } =
+      await setup();
 
     // pick an organization from contact manager
     await act(async () => userEvent.click(getByTitle('Select Contact')));

@@ -75,7 +75,8 @@ describe('Expropriation Form 9', () => {
   });
 
   it(`submits the form when Generate button is clicked`, async () => {
-    const { getByText, getByTestId, getByTitle, getRegisteredPlanNumbers, formikRef } = await setup();
+    const { getByText, getByTestId, getByTitle, getRegisteredPlanNumbers, formikRef } =
+      await setup();
 
     // pick an organization from contact manager
     await act(async () => userEvent.click(getByTitle('Select Contact')));

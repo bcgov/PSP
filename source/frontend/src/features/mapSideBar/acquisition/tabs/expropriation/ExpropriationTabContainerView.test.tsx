@@ -7,7 +7,7 @@ import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvi
 import { useExpropriationEventRepository } from '@/hooks/repositories/useExpropriationEventRepository';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
 import { getMockExpropriationFile } from '@/mocks/index.mock';
-import { act, getMockRepositoryObj, render, RenderOptions,  within } from '@/utils/test-utils';
+import { act, getMockRepositoryObj, render, RenderOptions, within } from '@/utils/test-utils';
 
 import {
   ExpropriationTabContainerView,
@@ -17,7 +17,11 @@ import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { getMockContactOrganizationWithOnePerson } from '@/mocks/contacts.mock';
 import { FormikProps } from 'formik';
 import { createRef } from 'react';
-import { ExpropriationForm1Model, ExpropriationForm5Model, ExpropriationForm9Model } from './models';
+import {
+  ExpropriationForm1Model,
+  ExpropriationForm5Model,
+  ExpropriationForm9Model,
+} from './models';
 
 const history = createMemoryHistory();
 
@@ -70,7 +74,8 @@ describe('Expropriation Tab Container View', () => {
       ...rendered,
       getNatureOfInterestForm1: () =>
         rendered.container.querySelector(`input[name="landInterest"]`) as HTMLInputElement,
-      getPurposeForm1: () => rendered.container.querySelector(`input[name="purpose"]`) as HTMLInputElement,
+      getPurposeForm1: () =>
+        rendered.container.querySelector(`input[name="purpose"]`) as HTMLInputElement,
     };
   };
 
@@ -83,15 +88,15 @@ describe('Expropriation Tab Container View', () => {
     });
 
     const organization = getMockContactOrganizationWithOnePerson();
-        getContacts.mockResolvedValue({
-          data: {
-            items: [organization],
-            quantity: 1,
-            total: 1,
-            page: 1,
-            pageIndex: 0,
-          },
-        });
+    getContacts.mockResolvedValue({
+      data: {
+        items: [organization],
+        quantity: 1,
+        total: 1,
+        page: 1,
+        pageIndex: 0,
+      },
+    });
 
     vi.mocked(useAcquisitionProvider, { partial: true }).mockReturnValue({
       getAcquisitionOwners: mockGetAcquisitionOwnersApi,

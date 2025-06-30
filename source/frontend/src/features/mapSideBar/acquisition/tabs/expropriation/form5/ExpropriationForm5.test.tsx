@@ -74,7 +74,7 @@ describe('Expropriation Form 5', () => {
     expect(getByTestId('selectrow-1')).not.toBeChecked();
   });
 
-    it('validates form 5 values before generating', async () => {
+  it('validates form 5 values before generating', async () => {
     const { getByText, formikRef } = await setup();
     await act(async () => formikRef.current.submitForm());
 
