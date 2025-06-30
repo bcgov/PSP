@@ -55,6 +55,12 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
   const onGenerateForm8 = useGenerateExpropriationForm8();
   const onGenerateForm9 = useGenerateExpropriationForm9();
 
+  const onError = (error: Error) => {
+    if (error) {
+      toast.error(error?.message, { autoClose: 7000 });
+    }
+  };
+
   const handleGenerateForm1 = async (
     values: ExpropriationForm1Model,
     formikHelpers: FormikHelpers<ExpropriationForm1Model>,
@@ -119,12 +125,6 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
   const onGenerateForm9Click = () => {
     formikRefForm9.current?.setSubmitting(true);
     formikRefForm9.current?.submitForm();
-  };
-
-  const onError = (error: Error) => {
-    if (error) {
-      toast.error(error?.message, { autoClose: 7000 });
-    }
   };
 
   return (

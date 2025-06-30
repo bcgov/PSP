@@ -4,6 +4,9 @@ import { getMockExpropriationFile } from '@/mocks/index.mock';
 import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import ExpropriationForm1, { IExpropriationForm1Props } from './ExpropriationForm1';
+import { ExpropriationForm1Model } from '../models';
+import { createRef } from 'react';
+import { FormikProps } from 'formik';
 
 // mock auth library
 
@@ -20,12 +23,13 @@ describe('Expropriation Form 1', () => {
   const setup = async (
     renderOptions: RenderOptions & { props?: Partial<IExpropriationForm1Props> } = {},
   ) => {
+    const formikRef = createRef<FormikProps<ExpropriationForm1Model>>();
     const utils = render(
       <ExpropriationForm1
         {...renderOptions.props}
         acquisitionFile={renderOptions.props?.acquisitionFile ?? getMockExpropriationFile()}
         onGenerate={onGenerate}
-        formikRef={renderOptions.props?.formikRef ?? null}
+        formikRef={renderOptions.props?.formikRef ?? formikRef}
       ></ExpropriationForm1>,
       {
         ...renderOptions,
@@ -35,6 +39,7 @@ describe('Expropriation Form 1', () => {
 
     return {
       ...utils,
+      formikRef,
       getNatureOfInterest: () =>
         utils.container.querySelector(`input[name="landInterest"]`) as HTMLInputElement,
       getPurpose: () => utils.container.querySelector(`input[name="purpose"]`) as HTMLInputElement,
@@ -62,26 +67,33 @@ describe('Expropriation Form 1', () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
-  // it(`submits the form when Generate button is clicked`, async () => {
-  //   const { getByText, getByTestId, getByTitle, getNatureOfInterest, getPurpose } = await setup();
+   it('validates form 1 values before generating', async () => {
+    const { getByText, formikRef } = await setup();
+    await act(async () => formikRef.current.submitForm());
 
-  //   // pick an organization from contact manager
-  //   await act(async () => userEvent.click(getByTitle('Select Contact')));
-  //   await act(async () => userEvent.click(getByTestId('selectrow-O3')));
-  //   await act(async () => userEvent.click(getByText('Select')));
+    expect(getByText('Expropriation authority is required')).toBeInTheDocument();
+    expect(getByText('At lease one impacted property is required')).toBeInTheDocument();
+  });
 
-  //   // fill other form fields
-  //   await act(async () => userEvent.click(getByTestId('selectrow-1')));
-  //   await act(async () => userEvent.paste(getNatureOfInterest(), 'foo'));
-  //   await act(async () => userEvent.paste(getPurpose(), 'bar'));
+  it(`submits the form when Generate button is clicked`, async () => {
+    const { getByText, getByTestId, getByTitle, getNatureOfInterest, getPurpose, formikRef } = await setup();
 
-  //   await act(async () => userEvent.click(getByTitle(/Download File/i)));
+    // pick an organization from contact manager
+    await act(async () => userEvent.click(getByTitle('Select Contact')));
+    await act(async () => userEvent.click(getByTestId('selectrow-O3')));
+    await act(async () => userEvent.click(getByText('Select')));
 
-  //   expect(onGenerate).toHaveBeenCalled();
-  //   expect(onError).not.toHaveBeenCalled();
-  // });
+    // fill other form fields
+    await act(async () => userEvent.click(getByTestId('selectrow-1')));
+    await act(async () => userEvent.paste(getNatureOfInterest(), 'foo'));
+    await act(async () => userEvent.paste(getPurpose(), 'bar'));
+    await act(async () => formikRef.current.submitForm());
 
-  it(`clears the form when Cancel button is clicked`, async () => {
+    expect(onGenerate).toHaveBeenCalled();
+    expect(onError).not.toHaveBeenCalled();
+  });
+
+  it(`clears the form when Clear form button is clicked`, async () => {
     const { getByText, getByTestId, getNatureOfInterest, getPurpose } = await setup();
 
     await act(async () => userEvent.click(getByTestId('selectrow-1')));
@@ -98,25 +110,4 @@ describe('Expropriation Form 1', () => {
     expect(getNatureOfInterest()).not.toHaveValue();
     expect(getPurpose()).not.toHaveValue();
   });
-
-  // it(`calls onError callback when generate endpoint fails`, async () => {
-  //   const error = new Error('Network error');
-  //   onGenerate.mockRejectedValueOnce(error);
-  //   const { getByText, getByTestId, getByTitle, getNatureOfInterest, getPurpose } = await setup();
-
-  //   // pick an organization from contact manager
-  //   await act(async () => userEvent.click(getByTitle('Select Contact')));
-  //   await act(async () => userEvent.click(getByTestId('selectrow-O3')));
-  //   await act(async () => userEvent.click(getByText('Select')));
-
-  //   // fill other form fields
-  //   await act(async () => userEvent.click(getByTestId('selectrow-1')));
-  //   await act(async () => userEvent.paste(getNatureOfInterest(), 'foo'));
-  //   await act(async () => userEvent.paste(getPurpose(), 'bar'));
-
-  //   await act(async () => userEvent.click(getByTitle(/Download File/i)));
-
-  //   expect(onGenerate).toHaveBeenCalled();
-  //   expect(onError).toHaveBeenCalledWith(error);
-  // });
 });

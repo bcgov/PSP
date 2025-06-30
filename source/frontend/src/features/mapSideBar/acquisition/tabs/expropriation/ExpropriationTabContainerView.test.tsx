@@ -7,12 +7,17 @@ import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvi
 import { useExpropriationEventRepository } from '@/hooks/repositories/useExpropriationEventRepository';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
 import { getMockExpropriationFile } from '@/mocks/index.mock';
-import { act, getMockRepositoryObj, render, RenderOptions } from '@/utils/test-utils';
+import { act, getMockRepositoryObj, render, RenderOptions,  within } from '@/utils/test-utils';
 
 import {
   ExpropriationTabContainerView,
   IExpropriationTabContainerViewProps,
 } from './ExpropriationTabContainerView';
+import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
+import { getMockContactOrganizationWithOnePerson } from '@/mocks/contacts.mock';
+import { FormikProps } from 'formik';
+import { createRef } from 'react';
+import { ExpropriationForm1Model, ExpropriationForm5Model, ExpropriationForm9Model } from './models';
 
 const history = createMemoryHistory();
 
@@ -28,13 +33,22 @@ const mockGetAcquisitionOwnersApi = getMockRepositoryObj([]);
 vi.mock('@/hooks/repositories/useInterestHolderRepository');
 const mockGetAcquisitionInterestHoldersApi = getMockRepositoryObj([]);
 
-const onGenerate = vi.fn();
+vi.mock('@/hooks/pims-api/useApiContacts');
+const getContacts = vi.fn();
+vi.mocked(useApiContacts).mockReturnValue({
+  getContacts,
+} as unknown as ReturnType<typeof useApiContacts>);
+
+const handleGenerateForm1 = vi.fn();
 const onError = vi.fn();
 
 describe('Expropriation Tab Container View', () => {
   const setup = async (
     renderOptions: RenderOptions & { props?: Partial<IExpropriationTabContainerViewProps> } = {},
   ) => {
+    const formikRefForm1 = createRef<FormikProps<ExpropriationForm1Model>>();
+    const formikRefForm5 = createRef<FormikProps<ExpropriationForm5Model>>();
+    const formikRefForm9 = createRef<FormikProps<ExpropriationForm9Model>>();
     const rendered = render(
       <ExpropriationTabContainerView
         {...renderOptions.props}
@@ -52,11 +66,11 @@ describe('Expropriation Tab Container View', () => {
       },
     );
     await act(async () => {});
-
     return {
       ...rendered,
-      getSelectContactForm5Button: () =>
-        rendered.container.querySelector(`[title="Select Contact"]`)[1] as HTMLButtonElement,
+      getNatureOfInterestForm1: () =>
+        rendered.container.querySelector(`input[name="landInterest"]`) as HTMLInputElement,
+      getPurposeForm1: () => rendered.container.querySelector(`input[name="purpose"]`) as HTMLInputElement,
     };
   };
 
@@ -67,6 +81,17 @@ describe('Expropriation Tab Container View', () => {
       updateExpropriationEvent: mockUpdateExpropriationEventsApi,
       deleteExpropriationEvent: mockDeleteExpropriationEventsApi,
     });
+
+    const organization = getMockContactOrganizationWithOnePerson();
+        getContacts.mockResolvedValue({
+          data: {
+            items: [organization],
+            quantity: 1,
+            total: 1,
+            page: 1,
+            pageIndex: 0,
+          },
+        });
 
     vi.mocked(useAcquisitionProvider, { partial: true }).mockReturnValue({
       getAcquisitionOwners: mockGetAcquisitionOwnersApi,
@@ -117,27 +142,26 @@ describe('Expropriation Tab Container View', () => {
     expect(queryByTestId('tooltip-icon-deposit-notes-cannot-edit-tooltip')).toBeVisible();
   });
 
-  it('validates form 1 values before generating', async () => {
-    const { getByText } = await setup();
-    await act(async () => userEvent.click(getByText(/Generate Form 1/i)));
+  // it(`calls onError callback when generate form 1 endpoint fails`, async () => {
+  //   const error = new Error('Network error');
+  //   handleGenerateForm1.mockRejectedValueOnce(error);
+  //   const { getByText, getByTestId, getNatureOfInterestForm1, getPurposeForm1 } = await setup();
 
-    expect(getByText('Expropriation authority is required')).toBeInTheDocument();
-    expect(getByText('At lease one impacted property is required')).toBeInTheDocument();
-  });
+  //   // pick an organization from contact manager
+  //   const form1Wrapper = getByTestId('form-1-section');
+  //   const form1SelectContactButton = within(form1Wrapper).getByTitle('Select Contact');
+  //   await act(async () => userEvent.click(form1SelectContactButton));
+  //   await act(async () => userEvent.click(getByTestId('selectrow-O3')));
+  //   await act(async () => userEvent.click(getByText('Select')));
 
-  it('validates form 5 values before generating', async () => {
-    const { getByText } = await setup();
-    await act(async () => userEvent.click(getByText(/Generate Form 5/i)));
+  //   // fill other form fields
+  //   await act(async () => userEvent.click(within(form1Wrapper).getByTestId('selectrow-1')));
+  //   await act(async () => userEvent.paste(getNatureOfInterestForm1(), 'foo'));
+  //   await act(async () => userEvent.paste(getPurposeForm1(), 'bar'));
 
-    expect(getByText('Expropriation authority is required')).toBeInTheDocument();
-    expect(getByText('At lease one impacted property is required')).toBeInTheDocument();
-  });
+  //   await act(async () => userEvent.click(getByText(/Generate Form 1/i)));
 
-  it('validates form 9 values before generating', async () => {
-    const { getByText } = await setup();
-    await act(async () => userEvent.click(getByText(/Generate Form 9/i)));
-
-    expect(getByText('Expropriation authority is required')).toBeInTheDocument();
-    expect(getByText('At lease one impacted property is required')).toBeInTheDocument();
-  });
+  //   expect(handleGenerateForm1).toHaveBeenCalled();
+  //   expect(onError).toHaveBeenCalledWith(error);
+  // });
 });

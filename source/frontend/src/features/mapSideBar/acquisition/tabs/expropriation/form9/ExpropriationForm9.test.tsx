@@ -4,6 +4,9 @@ import { getMockExpropriationFile } from '@/mocks/index.mock';
 import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import ExpropriationForm9, { IExpropriationForm9Props } from './ExpropriationForm9';
+import { ExpropriationForm9Model } from '../models';
+import { FormikProps } from 'formik';
+import { createRef } from 'react';
 
 // mock auth library
 
@@ -14,17 +17,19 @@ vi.mocked(useApiContacts).mockReturnValue({
 } as unknown as ReturnType<typeof useApiContacts>);
 
 const onGenerate = vi.fn();
+const onError = vi.fn();
 
 describe('Expropriation Form 9', () => {
   const setup = async (
     renderOptions: RenderOptions & { props?: Partial<IExpropriationForm9Props> } = {},
   ) => {
+    const formikRef = createRef<FormikProps<ExpropriationForm9Model>>();
     const utils = render(
       <ExpropriationForm9
         {...renderOptions.props}
         acquisitionFile={renderOptions.props?.acquisitionFile ?? getMockExpropriationFile()}
         onGenerate={onGenerate}
-        formikRef={renderOptions.props?.formikRef ?? null}
+        formikRef={renderOptions.props?.formikRef ?? formikRef}
       ></ExpropriationForm9>,
       {
         ...renderOptions,
@@ -34,6 +39,7 @@ describe('Expropriation Form 9', () => {
 
     return {
       ...utils,
+      formikRef,
       getRegisteredPlanNumbers: () =>
         utils.container.querySelector(`input[name="registeredPlanNumbers"]`) as HTMLInputElement,
       getContactManagerSearchButton: () => utils.getByTestId('search'),
@@ -60,23 +66,31 @@ describe('Expropriation Form 9', () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
-  // it(`submits the form when Generate button is clicked`, async () => {
-  //   const { getByText, getByTestId, getByTitle, getRegisteredPlanNumbers } = await setup();
+  it('validates form 9 values before generating', async () => {
+    const { getByText, formikRef } = await setup();
+    await act(async () => formikRef.current.submitForm());
 
-  //   // pick an organization from contact manager
-  //   await act(async () => userEvent.click(getByTitle('Select Contact')));
-  //   await act(async () => userEvent.click(getByTestId('selectrow-O3')));
-  //   await act(async () => userEvent.click(getByText('Select')));
+    expect(getByText('Expropriation authority is required')).toBeInTheDocument();
+    expect(getByText('At lease one impacted property is required')).toBeInTheDocument();
+  });
 
-  //   // fill other form fields
-  //   await act(async () => userEvent.click(getByTestId('selectrow-1')));
-  //   await act(async () => userEvent.paste(getRegisteredPlanNumbers(), 'testing'));
+  it(`submits the form when Generate button is clicked`, async () => {
+    const { getByText, getByTestId, getByTitle, getRegisteredPlanNumbers, formikRef } = await setup();
 
-  //   await act(async () => userEvent.click(getByTitle(/Download File/i)));
+    // pick an organization from contact manager
+    await act(async () => userEvent.click(getByTitle('Select Contact')));
+    await act(async () => userEvent.click(getByTestId('selectrow-O3')));
+    await act(async () => userEvent.click(getByText('Select')));
 
-  //   expect(onGenerate).toHaveBeenCalled();
-  //   expect(onError).not.toHaveBeenCalled();
-  // });
+    // fill other form fields
+    await act(async () => userEvent.click(getByTestId('selectrow-1')));
+    await act(async () => userEvent.paste(getRegisteredPlanNumbers(), 'testing'));
+
+    await act(async () => formikRef.current.submitForm());
+
+    expect(onGenerate).toHaveBeenCalled();
+    expect(onError).not.toHaveBeenCalled();
+  });
 
   it(`clears the form when Cancel button is clicked`, async () => {
     const { getByText, getByTestId, getRegisteredPlanNumbers } = await setup();
