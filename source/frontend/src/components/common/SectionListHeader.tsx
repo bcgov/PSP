@@ -14,7 +14,8 @@ export interface ISectionListHeaderProps {
   addButtonIcon?: JSX.Element;
   cannotAddComponent?: JSX.Element;
   onAdd?: () => void;
-  claims: Claims[];
+  onGenerate?: () => void;
+  claims?: Claims[];
   'data-testId'?: string;
   className?: string;
   isAddEnabled?: boolean;
@@ -24,7 +25,8 @@ export const SectionListHeader: React.FunctionComponent<
   React.PropsWithChildren<ISectionListHeaderProps>
 > = props => {
   const { hasClaim } = useKeycloakWrapper();
-  const onClick = () => props.onAdd && props.onAdd();
+  const onClickAdd = () => props.onAdd && props.onAdd();
+  const onClickGenerate = () => props.onGenerate && props.onGenerate();
 
   return (
     <StyledRow className={clsx('no-gutters', props.className)}>
@@ -33,18 +35,32 @@ export const SectionListHeader: React.FunctionComponent<
       </Col>
       <Col xs="auto" className="my-1">
         {hasClaim(props.claims) && exists(props.onAdd) && props.isAddEnabled !== false && (
-          <StyledSectionAddButton onClick={onClick} data-testid={props['data-testId']}>
+          <StyledSectionAddButton onClick={onClickAdd} data-testid={props['data-testId']}>
             {props.addButtonIcon}
             &nbsp;{props.addButtonText ?? 'Add'}
           </StyledSectionAddButton>
         )}
-        {!props.isAddEnabled && exists(props.cannotAddComponent) && <>{props.cannotAddComponent}</>}
+        {exists(props.onGenerate) && props.isAddEnabled !== false && (
+          <StyledSectionAddButton
+            onClick={onClickGenerate}
+            data-testid={props['data-testId']}
+            title="Download File"
+          >
+            {props.addButtonIcon}
+            &nbsp;{props.addButtonText ?? 'Generate'}
+          </StyledSectionAddButton>
+        )}
+        {!props.isAddEnabled && exists(props.cannotAddComponent) && (
+          <span style={{ float: 'right' }}>{props.cannotAddComponent}</span>
+        )}
       </Col>
     </StyledRow>
   );
 };
 
 const StyledRow = styled(Row)`
+  display: grid;
+  grid-template-columns: 1fr 0.5fr;
   justify-content: space-between;
   align-items: end;
   min-height: 4.5rem;

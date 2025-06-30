@@ -139,6 +139,7 @@ export const StyledSectionAddButton = styled(StyledAddButton)`
     display: inline-block;
     margin-left: 1.5rem;
     margin-bottom: 0.5rem;
+    float: right;
   }
 `;
 

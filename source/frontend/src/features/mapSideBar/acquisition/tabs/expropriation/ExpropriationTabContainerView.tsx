@@ -1,4 +1,6 @@
-import { FaPlus } from 'react-icons/fa';
+import { FormikHelpers, FormikProps } from 'formik';
+import { useRef } from 'react';
+import { FaFileContract, FaPlus } from 'react-icons/fa';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -23,6 +25,11 @@ import ExpropriationForm9 from './form9/ExpropriationForm9';
 import ExpropriationEventHistoryContainer from './history/ExpropriationEventHistoryContainer';
 import ExpropriationEventHistoryView from './history/ExpropriationEventHistoryView';
 import ExpropriationEventModal from './history/modal/ExpropriationEventModal';
+import {
+  ExpropriationForm1Model,
+  ExpropriationForm5Model,
+  ExpropriationForm9Model,
+} from './models';
 
 export interface IExpropriationTabContainerViewProps {
   loading: boolean;
@@ -39,11 +46,80 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
   const match = useRouteMatch();
 
   const acquisitionFileTypeCode = acquisitionFile.acquisitionTypeCode?.id;
+  const formikRefForm1 = useRef<FormikProps<ExpropriationForm1Model>>(null);
+  const formikRefForm5 = useRef<FormikProps<ExpropriationForm5Model>>(null);
+  const formikRefForm9 = useRef<FormikProps<ExpropriationForm9Model>>(null);
 
   const onGenerateForm1 = useGenerateExpropriationForm1();
   const onGenerateForm5 = useGenerateExpropriationForm5();
   const onGenerateForm8 = useGenerateExpropriationForm8();
   const onGenerateForm9 = useGenerateExpropriationForm9();
+
+  const handleGenerateForm1 = async (
+    values: ExpropriationForm1Model,
+    formikHelpers: FormikHelpers<ExpropriationForm1Model>,
+  ) => {
+    try {
+      if (acquisitionFile.id) {
+        await onGenerateForm1(acquisitionFile.id, values);
+      }
+    } catch (e) {
+      if (typeof onError === 'function') {
+        onError(e as Error);
+      }
+    } finally {
+      formikHelpers?.setSubmitting(false);
+    }
+  };
+
+  const onGenerateForm1Click = () => {
+    formikRefForm1.current?.setSubmitting(true);
+    formikRefForm1.current?.submitForm();
+  };
+
+  const handleGenerateForm5 = async (
+    values: ExpropriationForm5Model,
+    formikHelpers: FormikHelpers<ExpropriationForm5Model>,
+  ) => {
+    try {
+      if (acquisitionFile.id) {
+        await onGenerateForm5(acquisitionFile.id, values);
+      }
+    } catch (e) {
+      if (typeof onError === 'function') {
+        onError(e as Error);
+      }
+    } finally {
+      formikHelpers?.setSubmitting(false);
+    }
+  };
+
+  const onGenerateForm5Click = () => {
+    formikRefForm5.current?.setSubmitting(true);
+    formikRefForm5.current?.submitForm();
+  };
+
+  const handleGenerateForm9 = async (
+    values: ExpropriationForm9Model,
+    formikHelpers: FormikHelpers<ExpropriationForm9Model>,
+  ) => {
+    try {
+      if (acquisitionFile.id) {
+        await onGenerateForm9(acquisitionFile.id, values);
+      }
+    } catch (e) {
+      if (typeof onError === 'function') {
+        onError(e as Error);
+      }
+    } finally {
+      formikHelpers?.setSubmitting(false);
+    }
+  };
+
+  const onGenerateForm9Click = () => {
+    formikRefForm9.current?.setSubmitting(true);
+    formikRefForm9.current?.submitForm();
+  };
 
   const onError = (error: Error) => {
     if (error) {
@@ -65,13 +141,25 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
         <Section
           isCollapsable
           initiallyExpanded
-          header="Form 1 - Notice of Expropriation"
+          header={
+            <SectionListHeader
+              title="Form 1 - Notice of Expropriation"
+              addButtonText="Generate Form 1"
+              addButtonIcon={<FaFileContract size={'2rem'} />}
+              onGenerate={onGenerateForm1Click}
+            />
+          }
           data-testid="form-1-section"
         >
           <ExpropriationForm1
             acquisitionFile={acquisitionFile}
-            onGenerate={onGenerateForm1}
-            onError={onError}
+            formikRef={formikRefForm1}
+            onGenerate={(
+              values: ExpropriationForm1Model,
+              formikHelpers: FormikHelpers<ExpropriationForm1Model>,
+            ) => {
+              handleGenerateForm1(values, formikHelpers);
+            }}
           ></ExpropriationForm1>
         </Section>
       )}
@@ -80,13 +168,25 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
         <Section
           isCollapsable
           initiallyExpanded={false}
-          header="Form 5 - Certificate of Approval of Expropriation"
+          header={
+            <SectionListHeader
+              title="Form 5 - Certificate of Approval of Expropriation"
+              addButtonText="Generate Form 5"
+              addButtonIcon={<FaFileContract size={'2rem'} />}
+              onGenerate={onGenerateForm5Click}
+            />
+          }
           data-testid="form-5-section"
         >
           <ExpropriationForm5
             acquisitionFile={acquisitionFile}
-            onGenerate={onGenerateForm5}
-            onError={onError}
+            formikRef={formikRefForm5}
+            onGenerate={(
+              values: ExpropriationForm5Model,
+              formikHelpers: FormikHelpers<ExpropriationForm5Model>,
+            ) => {
+              handleGenerateForm5(values, formikHelpers);
+            }}
           ></ExpropriationForm5>
         </Section>
       )}
@@ -131,13 +231,25 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
         <Section
           isCollapsable
           initiallyExpanded={false}
-          header="Form 9 - Vesting Notice"
+          header={
+            <SectionListHeader
+              title="Form 9 - Vesting Notice"
+              addButtonText="Generate Form 9"
+              addButtonIcon={<FaFileContract size={'2rem'} />}
+              onGenerate={onGenerateForm9Click}
+            />
+          }
           data-testid="form-9-section"
         >
           <ExpropriationForm9
             acquisitionFile={acquisitionFile}
-            onGenerate={onGenerateForm9}
-            onError={onError}
+            formikRef={formikRefForm9}
+            onGenerate={(
+              values: ExpropriationForm9Model,
+              formikHelpers: FormikHelpers<ExpropriationForm9Model>,
+            ) => {
+              handleGenerateForm9(values, formikHelpers);
+            }}
           ></ExpropriationForm9>
         </Section>
       )}

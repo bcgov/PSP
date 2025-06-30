@@ -1,7 +1,6 @@
 import { Formik, FormikHelpers, FormikProps } from 'formik';
 import { Fragment } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaFileContract } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import { Button } from '@/components/common/buttons';
@@ -10,7 +9,6 @@ import { ContactInputContainer } from '@/components/common/form/ContactInput/Con
 import ContactInputView from '@/components/common/form/ContactInput/ContactInputView';
 import FormItem from '@/components/common/form/FormItem';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { StyledAddButton } from '@/components/common/styles';
 import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
 import FilePropertiesTable from '@/components/filePropertiesTable/FilePropertiesTable';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
@@ -21,48 +19,42 @@ import { ExpropriationForm1YupSchema } from './ExpropriationForm1YupSchema';
 
 export interface IExpropriationForm1Props {
   acquisitionFile: ApiGen_Concepts_AcquisitionFile;
-  onGenerate: (acquisitionFileId: number, values: ExpropriationForm1Model) => Promise<void>;
-  onError?: (e: Error) => void;
+  formikRef: React.Ref<FormikProps<ExpropriationForm1Model>>;
+  onGenerate: (
+    values: ExpropriationForm1Model,
+    formikHelpers: FormikHelpers<ExpropriationForm1Model>,
+  ) => void | Promise<void>;
 }
 
 export const ExpropriationForm1: React.FC<IExpropriationForm1Props> = ({
   acquisitionFile,
+  formikRef,
   onGenerate,
-  onError,
 }) => {
-  const onSubmit = async (
+  const handleGenerate = async (
     values: ExpropriationForm1Model,
     formikHelpers: FormikHelpers<ExpropriationForm1Model>,
   ) => {
-    try {
-      if (acquisitionFile.id) {
-        await onGenerate(acquisitionFile.id, values);
-      }
-    } catch (e) {
-      if (typeof onError === 'function') {
-        onError(e as Error);
-      }
-    } finally {
-      formikHelpers?.setSubmitting(false);
-    }
+    return await onGenerate(values, formikHelpers);
   };
 
   const onCancelClick = (formikProps: FormikProps<ExpropriationForm1Model>) => {
     formikProps.resetForm();
   };
 
-  const onGenerateClick = (formikProps: FormikProps<ExpropriationForm1Model>) => {
-    formikProps.setSubmitting(true);
-    formikProps.submitForm();
-  };
-
   return (
     <StyledForm1Border>
       <Formik<ExpropriationForm1Model>
         enableReinitialize
+        innerRef={formikRef}
         initialValues={new ExpropriationForm1Model()}
         validationSchema={ExpropriationForm1YupSchema}
-        onSubmit={onSubmit}
+        onSubmit={(
+          values: ExpropriationForm1Model,
+          formikHelpers: FormikHelpers<ExpropriationForm1Model>,
+        ) => {
+          handleGenerate(values, formikHelpers);
+        }}
       >
         {formikProps => (
           <Fragment>
@@ -99,15 +91,9 @@ export const ExpropriationForm1: React.FC<IExpropriationForm1Props> = ({
 
             <RightFlexRow>
               <Col xs="auto" className="pr-4">
-                <Button variant="secondary" onClick={() => onCancelClick(formikProps)}>
+                <Button variant="primary" onClick={() => onCancelClick(formikProps)}>
                   Clear Form
                 </Button>
-              </Col>
-              <Col xs="auto">
-                <StyledAddButton title="Download File" onClick={() => onGenerateClick(formikProps)}>
-                  <FaFileContract size={28} className="mr-2" />
-                  Generate Form 1
-                </StyledAddButton>
               </Col>
             </RightFlexRow>
           </Fragment>

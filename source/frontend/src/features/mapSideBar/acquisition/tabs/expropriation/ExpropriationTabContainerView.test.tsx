@@ -1,3 +1,4 @@
+import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
 
 import { EnumAcquisitionFileType } from '@/constants/acquisitionFileType';
@@ -27,6 +28,9 @@ const mockGetAcquisitionOwnersApi = getMockRepositoryObj([]);
 vi.mock('@/hooks/repositories/useInterestHolderRepository');
 const mockGetAcquisitionInterestHoldersApi = getMockRepositoryObj([]);
 
+const onGenerate = vi.fn();
+const onError = vi.fn();
+
 describe('Expropriation Tab Container View', () => {
   const setup = async (
     renderOptions: RenderOptions & { props?: Partial<IExpropriationTabContainerViewProps> } = {},
@@ -47,11 +51,12 @@ describe('Expropriation Tab Container View', () => {
         history: history,
       },
     );
-
     await act(async () => {});
 
     return {
       ...rendered,
+      getSelectContactForm5Button: () =>
+        rendered.container.querySelector(`[title="Select Contact"]`)[1] as HTMLButtonElement,
     };
   };
 
@@ -110,5 +115,29 @@ describe('Expropriation Tab Container View', () => {
 
     expect(queryByText('Add Form 8')).toBeNull();
     expect(queryByTestId('tooltip-icon-deposit-notes-cannot-edit-tooltip')).toBeVisible();
+  });
+
+  it('validates form 1 values before generating', async () => {
+    const { getByText } = await setup();
+    await act(async () => userEvent.click(getByText(/Generate Form 1/i)));
+
+    expect(getByText('Expropriation authority is required')).toBeInTheDocument();
+    expect(getByText('At lease one impacted property is required')).toBeInTheDocument();
+  });
+
+  it('validates form 5 values before generating', async () => {
+    const { getByText } = await setup();
+    await act(async () => userEvent.click(getByText(/Generate Form 5/i)));
+
+    expect(getByText('Expropriation authority is required')).toBeInTheDocument();
+    expect(getByText('At lease one impacted property is required')).toBeInTheDocument();
+  });
+
+    it('validates form 9 values before generating', async () => {
+    const { getByText } = await setup();
+    await act(async () => userEvent.click(getByText(/Generate Form 9/i)));
+
+    expect(getByText('Expropriation authority is required')).toBeInTheDocument();
+    expect(getByText('At lease one impacted property is required')).toBeInTheDocument();
   });
 });

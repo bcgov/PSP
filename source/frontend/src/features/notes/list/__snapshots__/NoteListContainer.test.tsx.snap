@@ -285,9 +285,12 @@ exports[`Note List Container > renders as expected 1`] = `
   display: inline-block;
   margin-left: 1.5rem;
   margin-bottom: 0.5rem;
+  float: right;
 }
 
 .c2 {
+  display: grid;
+  grid-template-columns: 1fr 0.5fr;
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
