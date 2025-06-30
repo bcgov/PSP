@@ -110,7 +110,7 @@ export const useApiRequestWrapper = <
             );
           });
           if (returnApiError) {
-            return axiosError.response.data;
+            return axiosError.response?.data ?? getApiError(axiosError);
           }
         } else if (!throwError) {
           // If no error handling is provided, fall back to the default PIMS error handler (bomb icon).
@@ -122,7 +122,7 @@ export const useApiRequestWrapper = <
             }),
           );
           if (returnApiError) {
-            return axiosError.response.data;
+            return axiosError.response.data ?? getApiError(axiosError);
           }
         }
 
@@ -167,3 +167,12 @@ export const useApiRequestWrapper = <
     requestEndOn,
   };
 };
+
+const getApiError = (error: AxiosError): IApiError => ({
+  details: error.message,
+  error:
+    'An unknown error occurred, contact your system administrator if you continue to see this error.',
+  errorCode: error.code,
+  stackTrace: JSON.stringify(error),
+  type: 'Unknown',
+});
