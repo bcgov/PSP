@@ -91,4 +91,7 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   setMapLayersToRefresh: vi.fn(),
   setAdvancedSearchCriteria: vi.fn(),
   setCurrentMapBounds: vi.fn(),
+  mapMarkedLocation: undefined,
+  mapMarkLocation: vi.fn(),
+  mapClearLocationMark: vi.fn(),
 };
