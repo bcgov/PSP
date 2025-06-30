@@ -169,10 +169,10 @@ export const useApiRequestWrapper = <
 };
 
 const getApiError = (error: AxiosError): IApiError => ({
-  details: error.message,
+  details: error?.message,
   error:
     'An unknown error occurred, contact your system administrator if you continue to see this error.',
-  errorCode: error.code,
+  errorCode: error?.code,
   stackTrace: JSON.stringify(error),
   type: 'Unknown',
 });
