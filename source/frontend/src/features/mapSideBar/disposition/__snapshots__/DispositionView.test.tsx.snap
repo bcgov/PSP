@@ -609,14 +609,6 @@ exports[`DispositionView component > renders as expected 1`] = `
   padding-bottom: 1rem;
 }
 
-.c11 {
-  margin-top: 0.5rem;
-  margin-bottom: 1.5rem;
-  border-bottom-style: solid;
-  border-bottom-color: grey;
-  border-bottom-width: 0.1rem;
-}
-
 .c14 {
   height: 100%;
   display: -webkit-box;
@@ -630,6 +622,17 @@ exports[`DispositionView component > renders as expected 1`] = `
 
 .c12 {
   max-width: 60rem;
+}
+
+.c11 {
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom-style: solid;
+  border-bottom-color: grey;
+  border-bottom-width: 0.1rem;
+  max-height: 25rem;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 @media only screen and (max-width:1199px) {
@@ -754,142 +757,146 @@ exports[`DispositionView component > renders as expected 1`] = `
         class="c10"
       >
         <div
-          class="c11 no-gutters row"
+          class="c11"
         >
           <div
-            class="c12 col-7"
+            class="no-gutters row"
           >
             <div
-              class="row"
+              class="c12 col-7"
             >
               <div
-                class="pr-0 text-left col-3"
-              >
-                <label
-                  class="c13"
-                >
-                  File:
-                </label>
-              </div>
-              <div
-                class="pl-1 text-left col-9"
-              >
-                D-FILE_NUMBER 3A8F46B
-              </div>
-            </div>
-            <div
-              class="row"
-            >
-              <div
-                class="pr-0 text-left col-3"
-              >
-                <label
-                  class="c13"
-                >
-                  Historical file #:
-                </label>
-              </div>
-              <div
-                class="pl-1 text-left col-9"
-              />
-            </div>
-          </div>
-          <div
-            class="col-5"
-          >
-            <div
-              class="c14"
-            >
-              <div
-                class="no-gutters row"
+                class="row"
               >
                 <div
-                  class="c15 col"
+                  class="pr-0 text-left col-3"
                 >
-                  <span
-                    class="c16"
+                  <label
+                    class="c13"
                   >
-                    <strong>
-                      Created: 
-                    </strong>
-                    Nov 25, 2023 by 
-                    <span
-                      class="tooltip-icon"
-                      data-testid="tooltip-icon-userNameTooltip"
-                      id="userNameTooltip"
-                    >
-                      <strong>
-                        FOUGSTER
-                      </strong>
-                    </span>
-                  </span>
+                    File:
+                  </label>
+                </div>
+                <div
+                  class="pl-1 text-left col-9"
+                >
+                  D-FILE_NUMBER 3A8F46B
                 </div>
               </div>
               <div
-                class="no-gutters row"
+                class="row"
               >
                 <div
-                  class="c15 col"
+                  class="pr-0 text-left col-3"
                 >
-                  <span
-                    class="c16"
+                  <label
+                    class="c13"
                   >
-                    <strong>
-                      Updated: 
-                    </strong>
-                    Nov 24, 2023 by 
-                    <span
-                      class="tooltip-icon"
-                      data-testid="tooltip-icon-userNameTooltip"
-                      id="userNameTooltip"
-                    >
-                      <strong>
-                        FOUGSTER
-                      </strong>
-                    </span>
-                  </span>
+                    Historical file #:
+                  </label>
                 </div>
+                <div
+                  class="pl-1 text-left col-9"
+                />
               </div>
+            </div>
+            <div
+              class="col"
+            >
               <div
-                class="c17"
+                class="c14"
               >
                 <div
-                  class="no-gutters justify-content-end align-items-end row"
+                  class="no-gutters row"
                 >
                   <div
-                    class="col"
-                  />
-                  <div
-                    class="align-self-end d-flex col-auto"
+                    class="c15 col"
                   >
                     <span
                       class="c16"
                     >
-                      <b>
-                        File:
-                      </b>
-                    </span>
-                    <div
-                      class="c18 c19"
-                    >
-                      <svg
-                        fill="currentColor"
-                        height="16"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 24 24"
-                        width="16"
-                        xmlns="http://www.w3.org/2000/svg"
+                      <strong>
+                        Created: 
+                      </strong>
+                      Nov 25, 2023 by 
+                      <span
+                        class="tooltip-icon"
+                        data-testid="tooltip-icon-userNameTooltip"
+                        id="userNameTooltip"
                       >
-                        <path
-                          d="M0 0h24v24H0z"
-                          fill="none"
-                        />
-                        <path
-                          d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
-                        />
-                      </svg>
-                      DRAFT
+                        <strong>
+                          FOUGSTER
+                        </strong>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+                <div
+                  class="no-gutters row"
+                >
+                  <div
+                    class="c15 col"
+                  >
+                    <span
+                      class="c16"
+                    >
+                      <strong>
+                        Updated: 
+                      </strong>
+                      Nov 24, 2023 by 
+                      <span
+                        class="tooltip-icon"
+                        data-testid="tooltip-icon-userNameTooltip"
+                        id="userNameTooltip"
+                      >
+                        <strong>
+                          FOUGSTER
+                        </strong>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+                <div
+                  class="c17"
+                >
+                  <div
+                    class="no-gutters justify-content-end align-items-end row"
+                  >
+                    <div
+                      class="col"
+                    />
+                    <div
+                      class="align-self-end d-flex col-auto"
+                    >
+                      <span
+                        class="c16"
+                      >
+                        <b>
+                          File:
+                        </b>
+                      </span>
+                      <div
+                        class="c18 c19"
+                      >
+                        <svg
+                          fill="currentColor"
+                          height="16"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="16"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M0 0h24v24H0z"
+                            fill="none"
+                          />
+                          <path
+                            d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                          />
+                        </svg>
+                        DRAFT
+                      </div>
                     </div>
                   </div>
                 </div>
