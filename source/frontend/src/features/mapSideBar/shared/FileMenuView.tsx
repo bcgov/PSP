@@ -58,9 +58,11 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
         .map(fileProp => locationFromFileProperty(fileProp))
         .map(geom => getLatLng(geom))
         .filter(exists);
-      const latLngBoudns = latLngBounds(locations);
+      const bounds = latLngBounds(locations);
 
-      mapMachine.requestFlyToBounds(latLngBoudns);
+      if (exists(bounds) && bounds.isValid()) {
+        mapMachine.requestFlyToBounds(bounds);
+      }
     }
   };
 
