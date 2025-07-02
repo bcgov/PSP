@@ -15,7 +15,6 @@ import PropertyContactList from './PropertyContactList';
 export interface IPropertyContactListViewProps {
   isLoading: boolean;
   propertyContacts: ApiGen_Concepts_PropertyContact[];
-  propertyId?: number;
   onDelete: (contactId: number) => void;
 }
 
