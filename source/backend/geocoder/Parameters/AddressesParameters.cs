@@ -1,46 +1,69 @@
 namespace Pims.Geocoder.Parameters
 {
     /// <summary>
-    /// AddressesParameters class, provides a way to pass parameters to the addresses endpoint.
+    /// <para>
+    /// AddressesParameters class, provides a way to pass parameters to the addresses endpoint of BC Address Geocoder.
+    /// </para>
+    /// See - <see href="https://www2.gov.bc.ca/gov/content/data/geographic-data-services/location-services/geocoder"/>.
     /// </summary>
     public class AddressesParameters : BaseParameters
     {
         #region Properties
 
         /// <summary>
-        /// get/set - The API version.
-        /// </summary>
-        public string Ver { get; set; } = "1.2";
-
-        /// <summary>
+        /// <para>
         /// get/set - Civic address or intersection address as a single string in Single-line Address Format. If not present in an address request, individual address elements, such as streetName, localityName, and provinceCode must be provided.
         /// In an occupant/addresses resource, addressString represents an Occupant name followed by a frontGate delimiter('--') followed by an optional address.
+        /// </para>
+        /// <example>
+        /// For example:
+        /// <code>
+        /// 525 Superior Street, Victoria, BC
+        /// </code>
+        /// </example>
         /// </summary>
         public string AddressString { get; set; }
 
         /// <summary>
         /// get/set - The maximum number of search results to return.
         /// </summary>
+        /// <value>Default value: <c>5</c>.</value>
         public int MaxResults { get; set; } = 5;
 
         /// <summary>
-        /// get/set - In the case of a block level match, the method of interpolation to determine how far down the block the accessPoint should be. The geocoder supports linear and adaptive interpolation.
+        /// get/set - In the case of a block level match, the method of interpolation to determine how far down the block the accessPoint should be. The geocoder supports none, linear and adaptive interpolation.
         /// </summary>
+        /// <value>Default value: <c>adaptive</c>.</value>
         public string Interpolation { get; set; } = "adaptive";
 
         /// <summary>
-        /// get/set - If true, include unmatched address details such as site name in results.
+        /// get/set - If <c>true</c>, include unmatched address details such as site name in results.
         /// </summary>
+        /// <value>Default value: <c>true</c>.</value>
         public bool Echo { get; set; }
 
         /// <summary>
-        /// get/set - If true, addressString is expected to contain a partial address that requires completion. Not supported for shp, csv, gml formats.
+        /// get/set - If <c>true</c>, addressString is expected to contain a partial address that requires completion. Not supported for shp, csv, gml formats.
         /// </summary>
+        /// <value>Default value: <c>false</c>.</value>
         public bool AutoComplete { get; set; }
+
+        /// <summary>
+        /// get/set - If <c>true</c>, autoComplete suggestions are limited to addresses beginning with the provided partial address.
+        /// </summary>
+        /// <value>Default value: <c>false</c>.</value>
+        public bool ExactSpelling { get; set; }
+
+        /// <summary>
+        /// get/set - If <c>true</c>, autoComplete suggestions are sorted using a fuzzy match comparison to the addressString.
+        /// </summary>
+        /// <value>Default value: <c>false</c>.</value>
+        public bool FuzzyMatch { get; set; }
 
         /// <summary>
         /// get/set - The minimum score required for a match to be returned.
         /// </summary>
+        /// <value>Default value: <c>1</c>.</value>
         public int MinScore { get; set; }
 
         /// <summary>
@@ -126,7 +149,8 @@ namespace Pims.Geocoder.Parameters
         /// <summary>
         /// get/set - The ISO 3166-2 Sub-Country Code. The code for British Columbia is BC.
         /// </summary>
-        public string ProvinceCode { get; set; }
+        /// <value>Default value: <c>BC</c>.</value>
+        public string ProvinceCode { get; set; } = "BC";
 
         /// <summary>
         /// get/set - A comma separated list of locality names that matched addresses must belong to. For example, setting localities to Nanaimo only returns addresses in Nanaimo.
@@ -149,7 +173,7 @@ namespace Pims.Geocoder.Parameters
         public string Center { get; set; }
 
         /// <summary>
-        /// get/set - If true, uses supplied parcelPoint to derive an appropriate accessPoint.
+        /// get/set - If <c>true</c>, uses supplied parcelPoint to derive an appropriate accessPoint.
         /// </summary>
         public bool Extrapolate { get; set; }
 
