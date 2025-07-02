@@ -56,7 +56,7 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
   const mapMachine = useMapStateMachine();
 
   const fitBoundaries = () => {
-    const fileProperties = formFile.properties;
+    const fileProperties = formikRef?.current?.values?.properties;
 
     if (exists(fileProperties)) {
       const locations = fileProperties.map(
@@ -64,7 +64,9 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
       );
       const bounds = geoJSON(locations).getBounds();
 
-      mapMachine.requestFlyToBounds(bounds);
+      if (exists(bounds) && bounds.isValid()) {
+        mapMachine.requestFlyToBounds(bounds);
+      }
     }
   };
 
