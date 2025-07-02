@@ -17,6 +17,7 @@
     <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="7.0.0" />
     <PackageReference Include="AspNetCore.HealthChecks.UI" Version="7.0.2" />
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
+    <PackageReference Include="DistributedLock.SqlServer" Version="1.0.6" />
     <PackageReference Include="DotNetEnv" Version="2.5.0" />
     <PackageReference Include="Mapster" Version="7.4.0" />
     <PackageReference Include="Mapster.DependencyInjection" Version="1.0.1" />

@@ -234,7 +234,7 @@ namespace Pims.Api.Services
             IList<Task<ExternalResponse<Models.Mayan.Document.DocumentTypeModel>>> updateTasks = new List<Task<ExternalResponse<Models.Mayan.Document.DocumentTypeModel>>>();
             foreach (var pimsDocumentTyp in pimsDocumentTypes)
             {
-                var matchingTypeFromMayan = mayanDocumentTypes.Payload.Results.FirstOrDefault(x => x.Id == pimsDocumentTyp.MayanId);
+                var matchingTypeFromMayan = mayanDocumentTypes?.Payload?.Results?.FirstOrDefault(x => x.Id == pimsDocumentTyp.MayanId);
                 if (matchingTypeFromMayan == null)
                 {
                     createMayanDocumentTypeTasks.Add(new AddDocumentToMayanWithNameTaskWrapper()
