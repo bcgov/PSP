@@ -45,14 +45,14 @@ namespace Pims.Geocoder.Parameters
         /// <summary>
         /// get/set - If <c>true</c>, addressString is expected to contain a partial address that requires completion. Not supported for shp, csv, gml formats.
         /// </summary>
-        /// <value>Default value: <c>false</c>.</value>
-        public bool AutoComplete { get; set; }
+        /// <value>Default value: <c>true</c>.</value>
+        public bool AutoComplete { get; set; } = true;
 
         /// <summary>
         /// get/set - If <c>true</c>, autoComplete suggestions are limited to addresses beginning with the provided partial address.
         /// </summary>
-        /// <value>Default value: <c>false</c>.</value>
-        public bool ExactSpelling { get; set; }
+        /// <value>Default value: <c>true</c>.</value>
+        public bool ExactSpelling { get; set; } = true;
 
         /// <summary>
         /// get/set - If <c>true</c>, autoComplete suggestions are sorted using a fuzzy match comparison to the addressString.
