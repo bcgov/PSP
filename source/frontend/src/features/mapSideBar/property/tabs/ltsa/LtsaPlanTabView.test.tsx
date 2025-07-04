@@ -2,7 +2,6 @@ import { createMemoryHistory } from 'history';
 
 import { LeaseFormModel } from '@/features/leases/models';
 import { SpcpOrder } from '@/interfaces/ltsaModels';
-import { mockLtsaResponse } from '@/mocks/filterData.mock';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import LtsaPlanTabView, { ILtsaPlanTabViewProps } from './LtsaPlanTabView';
