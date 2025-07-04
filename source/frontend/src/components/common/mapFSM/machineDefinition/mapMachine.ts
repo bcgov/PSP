@@ -258,7 +258,6 @@ const selectedFeatureLoaderStates = {
           actions: [
             assign({
               isLoading: () => true,
-              mapLocationSelected: () => null,
               mapFeatureSelected: (_, event: any) => event.featureSelected,
               mapLocationFeatureDataset: () => null,
             }),
@@ -282,7 +281,6 @@ const selectedFeatureLoaderStates = {
         CLOSE_POPUP: {
           actions: [
             assign({
-              mapLocationSelected: () => null,
               mapFeatureSelected: () => null,
               mapLocationFeatureDataset: () => null,
             }),
