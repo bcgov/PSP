@@ -207,7 +207,7 @@ namespace Pims.Api.Services
 
         private async Task ValidateRelatedDocumentForPolling(PimsDocument relatedDocument, PimsDocumentQueue databaseDocumentQueue)
         {
-            if (relatedDocument?.MayanId == null || relatedDocument?.MayanId < 0)
+            if (relatedDocument?.MayanId == null || relatedDocument.MayanId < 0)
             {
                 this.Logger.LogError("Queued Document {documentQueueId} has no Mayan ID and is invalid.", databaseDocumentQueue.DocumentQueueId);
                 databaseDocumentQueue.MayanError = "Document does not have a valid MayanId.";
@@ -220,7 +220,7 @@ namespace Pims.Api.Services
         {
             var documentDetailsResponse = await _documentService.GetStorageDocumentDetail(relatedDocument.MayanId.Value);
 
-            if (documentDetailsResponse.Status != ExternalResponseStatus.Success || documentDetailsResponse?.Payload == null)
+            if (documentDetailsResponse.Status != ExternalResponseStatus.Success || documentDetailsResponse.Payload == null)
             {
                 this.Logger.LogError("Polling for queued document {documentQueueId} failed with status {documentDetailsResponseStatus}", databaseDocumentQueue.DocumentQueueId, documentDetailsResponse.Status);
                 databaseDocumentQueue.MayanError = "Document Polling failed.";

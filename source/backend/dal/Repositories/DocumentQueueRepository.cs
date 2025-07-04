@@ -115,7 +115,7 @@ namespace Pims.Dal.Repositories
                 queuedDocument.DataSourceTypeCode = existingQueuedDocument.DataSourceTypeCode; // Do not allow the data source to be updated.
                 Context.Entry(existingQueuedDocument).CurrentValues.SetValues(queuedDocument);
                 queuedDocument = Context.Update(queuedDocument).Entity;
-                Context.SaveChanges(); // Force changes to be saved here, in the scope of the lock.
+                await Context.SaveChangesAsync(); // Force changes to be saved here, in the scope of the lock.
                 return queuedDocument;
             }
         }

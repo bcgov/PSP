@@ -262,7 +262,7 @@ namespace Pims.Api.Services
             if (model.RemoveLingeringDocumentTypes)
             {
                 // Delete the document types that are not in the PIMS db
-                foreach (var mayanDocumentTypeToRemove in mayanDocumentTypes.Payload.Results)
+                foreach (var mayanDocumentTypeToRemove in mayanDocumentTypes?.Payload?.Results)
                 {
                     if (pimsDocumentTypes.FirstOrDefault(x => x.MayanId == mayanDocumentTypeToRemove.Id) == null)
                     {
