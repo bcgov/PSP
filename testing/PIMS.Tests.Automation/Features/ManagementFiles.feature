@@ -43,3 +43,9 @@ Scenario: 07._Management_Activity_Digital_Documents
 	When I insert activities to the Management Activities Tab
 	And I create Digital Documents for a Management Activity from row number 14
 	Then A new Management file is created or updated successfully
+
+Scenario: 08._Management_Property_Documents
+	Given I create a new Management File from row number 10
+	When I add Properties to the Management File
+	And I create Digital Documents for a Management Activity from row number 14
+	Then A new Management file is created or updated successfully
