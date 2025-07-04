@@ -20,6 +20,7 @@ export const getMockResearchFile = (): ApiGen_Concepts_ResearchFile => ({
   fileProperties: [
     {
       id: 55,
+      isActive: null,
       propertyId: 495,
       property: {
         ...getMockApiProperty(),
@@ -150,6 +151,7 @@ export const getEmptyResearchFileProperty = (): ApiGen_Concepts_ResearchFileProp
   propertyResearchPurposeTypes: null,
   researchSummary: null,
   location: null,
+  isActive: null,
   ...getEmptyBaseAudit(),
 });
 
@@ -161,7 +163,7 @@ export const getMockResearchFileProperty = (
   fileId,
   propertyName: 'Corner of Nakya PL',
   propertyId: 495,
-
+  isActive: null,
   propertyResearchPurposeTypes: [
     {
       id: 22,

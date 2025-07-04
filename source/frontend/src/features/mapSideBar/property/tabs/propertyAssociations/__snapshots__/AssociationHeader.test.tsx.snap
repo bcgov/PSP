@@ -6,17 +6,13 @@ exports[`AssociationHeader component > renders as expected when provided valid d
     class="Toastify"
   />
   <div />
-  .c0 {
-  color: #474543;
-}
-
-.c1 {
-  color: white;
-  background-color: #428bca;
+  .c1 {
+  background-color: #fcba19;
   font-size: 1.5rem;
   border-radius: 50%;
-  width: 2.5rem;
-  height: 2.5rem;
+  opacity: 0.8;
+  width: 3.25rem;
+  height: 3.25rem;
   padding: 1rem;
   display: -webkit-box;
   display: -webkit-flex;
@@ -30,6 +26,15 @@ exports[`AssociationHeader component > renders as expected when provided valid d
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  font-family: 'BCSans-Bold';
+}
+
+.c1.selected {
+  background-color: #FCBA19;
+}
+
+.c0 {
+  color: #474543;
 }
 
 <div

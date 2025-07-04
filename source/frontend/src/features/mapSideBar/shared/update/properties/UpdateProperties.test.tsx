@@ -82,6 +82,7 @@ describe('UpdateProperties component', () => {
         fileProperties: [
           {
             id: 3,
+            isActive: null,
             propertyId: 443,
             property: {
               ...getMockApiProperty(),
