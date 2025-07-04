@@ -20,6 +20,7 @@ import {
   OrderParent,
   SpcpOrder,
 } from '@/interfaces/ltsaModels';
+import { exists } from '@/utils';
 import { prettyFormatDate } from '@/utils/dateUtils';
 import { withNameSpace } from '@/utils/formUtils';
 
@@ -46,7 +47,7 @@ export const LtsaPlanTabView: React.FunctionComponent<
     <>
       <LoadingBackdrop show={loading} parentScreen={true} />
 
-      {!loading && planNumber && !spcpData ? (
+      {!loading && exists(planNumber) && !spcpData ? (
         <FormSection>
           <b>
             Failed to load data from LTSA.
@@ -62,7 +63,7 @@ export const LtsaPlanTabView: React.FunctionComponent<
           enableReinitialize={true}
         >
           <StyledForm>
-            {ltsaRequestedOn && (
+            {exists(ltsaRequestedOn) && (
               <StyledInlineMessageSection>
                 <InlineMessage>
                   This data was retrieved from LTSA on{' '}
@@ -96,8 +97,13 @@ export const LtsaPlanTabView: React.FunctionComponent<
                     <Fragment key={`legal-notation-${titleNameSpace}`}>
                       {legalNotations.map(
                         (notation: LegalNotationsOnStrataCommonProperty, index: number) => {
+                          const innerNameSpace = withNameSpace(
+                            titleNameSpace,
+                            `legalNotationsOnSCP.${index}`,
+                          );
+
                           return (
-                            <Fragment key={`legal-notation-sub-row-${index}`}>
+                            <Fragment key={`legal-notation-sub-row-${innerNameSpace}`}>
                               <Row className="pb-2">
                                 <Col>
                                   <SectionField
@@ -145,11 +151,11 @@ export const LtsaPlanTabView: React.FunctionComponent<
                 <FieldArray
                   name={withNameSpace(titleNameSpace, 'chargesOnTitle')}
                   render={() => (
-                    <Fragment key={`charge-sub-row-${titleNameSpace}`}>
+                    <Fragment key={`charge-row-${titleNameSpace}`}>
                       {charges.map((charge: ChargesOnStrataCommonProperty, index: number) => {
                         const innerNameSpace = withNameSpace(
                           titleNameSpace,
-                          `chargesOnSCP.${index}.charge`,
+                          `chargesOnSCP.${index}`,
                         );
                         return (
                           <Fragment key={`charge-sub-row-${innerNameSpace}`}>

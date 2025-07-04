@@ -1,0 +1,401 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`LtsaPlanTabView component > renders as expected when provided valid ltsa data object and requested on datetime 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c1 {
+  margin: 1.5rem;
+  padding: 0.5rem 1.5rem;
+  background-color: white;
+  text-align: left;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: 0.8rem;
+  font-style: italic;
+}
+
+.c7 {
+  float: right;
+  cursor: pointer;
+  font-size: 3.2rem;
+}
+
+.c4 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
+}
+
+.c3 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c6.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c5 {
+  font-weight: bold;
+}
+
+.c0 {
+  position: relative;
+}
+
+.c0.c0.c0 input,
+.c0.c0.c0 select,
+.c0.c0.c0 textarea {
+  background: none;
+  border: none;
+  resize: none;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding: 0;
+}
+
+.c0.c0.c0 .form-label {
+  font-weight: bold;
+}
+
+<form
+    action="#"
+    class="c0"
+  >
+    <div
+      class="c1"
+    >
+      <div
+        class="c2"
+      >
+        This data was retrieved from LTSA on 06-Apr-2022 11:32 AM
+      </div>
+    </div>
+    <div
+      class="c3 form-section"
+    >
+      <h2
+        class="c4"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="align-content-end col"
+          >
+            Strata Plan Common Property Details
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c5"
+            >
+              Strata plan number:
+            </label>
+          </div>
+          <div
+            class="c6 text-left col"
+          >
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                disabled=""
+                id="input-orderedProduct.fieldedData.strataPlanIdentifier.strataPlanNumber"
+                name="orderedProduct.fieldedData.strataPlanIdentifier.strataPlanNumber"
+                style="word-break: break-all;"
+                title="VISXXXX"
+                value="VISXXXX"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c5"
+            >
+              Land title district:
+            </label>
+          </div>
+          <div
+            class="c6 text-left col"
+          >
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                disabled=""
+                id="input-orderedProduct.fieldedData.strataPlanIdentifier.landTitleDistrict"
+                name="orderedProduct.fieldedData.strataPlanIdentifier.landTitleDistrict"
+                style="word-break: break-all;"
+                title="VICTORIA"
+                value="VICTORIA"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c3 form-section"
+    >
+      <h2
+        class="c4"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="align-content-end col"
+          >
+            Legal Notations on Strata Common Property
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="col"
+            >
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-auto"
+                >
+                  <label
+                    class="c5"
+                  >
+                    Legal notations#:
+                  </label>
+                </div>
+                <div
+                  class="c6 text-left col"
+                >
+                  EP96596
+                </div>
+              </div>
+            </div>
+            <div
+              class="col"
+            >
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-auto"
+                >
+                  <label
+                    class="c5"
+                  >
+                    Status:
+                  </label>
+                </div>
+                <div
+                  class="c6 text-left col"
+                >
+                  ACTIVE
+                </div>
+              </div>
+            </div>
+            <div
+              class="col"
+            >
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-auto"
+                >
+                  <label
+                    class="c5"
+                  >
+                    Cancellation date:
+                  </label>
+                </div>
+                <div
+                  class="c6 text-left col"
+                >
+                  Nov 14, 2000
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-4"
+            >
+              <label
+                class="c5"
+              >
+                Legal notations:
+              </label>
+            </div>
+            <div
+              class="c6 text-left col"
+            >
+              <p>
+                THIS TITLE MAY BE AFFECTED BY A PERMIT UNDER PART 26 OF THE LOCAL
+GOVERNMENT ACT, SEE EP96596
+(AS TO ALL EXCEPT CLOSED ROAD ON PLAN VIP80164)
+
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c3 form-section"
+    >
+      <h2
+        class="c4"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="align-content-end col"
+          >
+            Charges on Strata Common Property
+          </div>
+          <div
+            class="pl-2 d-flex align-items-end col-auto"
+          >
+            <svg
+              class="c7"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                collapse-section
+              </title>
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="m7 14 5-5 5 5z"
+              />
+            </svg>
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-4"
+            >
+              <label
+                class="c5"
+              >
+                Registration #:
+              </label>
+            </div>
+            <div
+              class="c6 text-left col"
+            >
+              EC43157
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-4"
+            >
+              <label
+                class="c5"
+              >
+                Nature:
+              </label>
+            </div>
+            <div
+              class="c6 text-left col"
+            >
+              UNDERSURFACE AND OTHER EXC & RES
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-4"
+            >
+              <label
+                class="c5"
+              >
+                Registered date:
+              </label>
+            </div>
+            <div
+              class="c6 text-left col"
+            >
+              May 8, 1989
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</DocumentFragment>
+`;
