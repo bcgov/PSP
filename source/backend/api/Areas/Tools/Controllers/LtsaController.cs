@@ -134,17 +134,17 @@ namespace Pims.Api.Areas.Tools.Controllers
         }
 
         /// <summary>
-        /// Post a new order using default parameters and the passed in titleNumber.
+        /// Post a new order using default parameters and the passed in strataPlanNumber.
         /// </summary>
         /// <param name="strataPlanNumber">the title number to create the order for.</param>
         /// <returns>The order created within LTSA.</returns>
         [HttpPost("order/spcp")]
         [Produces("application/json")]
         [ProducesResponseType(typeof(Model.OrderWrapper<Model.SpcpOrder>), 200)]
-        [ProducesResponseType(typeof(Pims.Api.Models.ErrorResponseModel), 400)]
+        [ProducesResponseType(typeof(Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "tools-ltsa" })]
         [HasPermission(Permissions.PropertyView)]
-        public async Task<IActionResult> PostSpcpOrderAsync(string strataPlanNumber)
+        public async Task<IActionResult> PostSpcpOrderAsync([FromQuery]string strataPlanNumber)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -154,6 +154,7 @@ namespace Pims.Api.Areas.Tools.Controllers
                 DateTime.Now);
 
             var result = await _ltsaService.PostSpcpOrder(strataPlanNumber);
+
             return new JsonResult(result?.Order);
         }
 

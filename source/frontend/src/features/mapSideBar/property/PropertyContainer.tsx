@@ -25,10 +25,11 @@ import { ApiGen_Concepts_Association } from '@/models/api/generated/ApiGen_Conce
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_LeaseRenewal } from '@/models/api/generated/ApiGen_Concepts_LeaseRenewal';
 import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
-import { exists, isValidId } from '@/utils';
+import { exists, isPlanNumberSPCP, isValidId } from '@/utils';
 
 import PropertyDocumentsTab from '../shared/tabs/PropertyDocumentsTab';
 import CrownDetailsTabView from './tabs/crown/CrownDetailsTabView';
+import LtsaPlanTabView from './tabs/ltsa/LtsaPlanTabView';
 import { PropertyManagementTabView } from './tabs/propertyDetailsManagement/detail/PropertyManagementTabView';
 
 export interface IPropertyContainerProps {
@@ -96,6 +97,7 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
 
   const leaseAssociations =
     composedPropertyState?.propertyAssociationWrapper?.response?.leaseAssociations;
+
   useMemo(
     () =>
       hasClaim(Claims.LEASE_VIEW)
@@ -124,6 +126,10 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
     composedPropertyState?.pin?.toString() ??
     composedPropertyState?.apiWrapper?.response?.pin?.toString();
 
+  const retrievedPlanNumber =
+    composedPropertyState?.planNumber?.toString() ??
+    composedPropertyState?.apiWrapper?.response?.planNumber?.toString();
+
   const tabViews: TabInventoryView[] = [];
   let defaultTab = InventoryTabNames.title;
 
@@ -139,6 +145,21 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
     key: InventoryTabNames.title,
     name: 'Title',
   });
+
+  if (exists(retrievedPlanNumber) && isPlanNumberSPCP(retrievedPlanNumber)) {
+    tabViews.push({
+      content: (
+        <LtsaPlanTabView
+          spcpData={composedPropertyState.spcpWrapper?.response}
+          ltsaRequestedOn={composedPropertyState.spcpWrapper?.requestedOn}
+          loading={composedPropertyState.ltsaWrapper?.loading ?? false}
+          planNumber={retrievedPlanNumber}
+        />
+      ),
+      key: InventoryTabNames.plan,
+      name: 'Plan',
+    });
+  }
 
   if (exists(composedPropertyState.composedProperty?.crownTenureFeatures)) {
     tabViews.push({
