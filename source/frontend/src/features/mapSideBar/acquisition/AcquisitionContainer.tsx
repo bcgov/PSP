@@ -226,22 +226,16 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
       return;
     }
 
-    const fileProperties = acquisitionFile.fileProperties ?? [];
-    const menuIndex = fileProperties.findIndex(fp => fp.id === filePropertyId);
-    if (menuIndex < 0) {
-      return;
-    }
-
     if (isEditing) {
       if (formikRef?.current?.dirty) {
         handleCancelClick(() =>
-          pathGenerator.showFilePropertyIndex('acquisition', acquisitionFile.id, menuIndex + 1),
+          pathGenerator.showFilePropertyId('acquisition', acquisitionFile.id, filePropertyId),
         );
         return;
       }
     }
     // The index needs to be offset to match the menu index
-    pathGenerator.showFilePropertyIndex('acquisition', acquisitionFile.id, menuIndex + 1);
+    pathGenerator.showFilePropertyId('acquisition', acquisitionFile.id, filePropertyId);
   };
 
   const onEditProperties = () => {

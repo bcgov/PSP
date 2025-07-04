@@ -17,7 +17,7 @@ export interface IPathGeneratorMethods {
   editDetail: (fileType: string, fileId: number, detailType: string, detailId: number) => void;
   addDetail: (fileType: string, fileId: number, detailType: string) => void;
   editProperties: (fileType: string, fileId: number) => void;
-  showFilePropertyIndex: (fileType: string, fileId: number, propertyIndex: number) => void;
+  showFilePropertyId: (fileType: string, fileId: number, filePropertyId: number) => void;
   showFilePropertyDetail: (
     fileType: string,
     fileId: number,
@@ -132,7 +132,7 @@ const usePathGenerator: IPathGenerator = () => {
     history.push(path);
   };
 
-  const showFilePropertyIndex = (fileType: string, fileId: number, menuIndex: number) => {
+  const showFilePropertyId = (fileType: string, fileId: number, menuIndex: number) => {
     const a = `${sidebarBasePath}/:fileType/:fileId/property/:menuIndex`;
     const path = generatePath(a, {
       fileType,
@@ -174,7 +174,7 @@ const usePathGenerator: IPathGenerator = () => {
     editDetails,
     addDetail,
     editProperties,
-    showFilePropertyIndex,
+    showFilePropertyId,
     showFilePropertyDetail,
   };
 };

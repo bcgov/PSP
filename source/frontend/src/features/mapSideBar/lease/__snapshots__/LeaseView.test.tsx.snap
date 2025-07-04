@@ -490,13 +490,13 @@ exports[`LeaseView component > renders as expected 1`] = `
   padding-bottom: 0.5rem;
 }
 
-.c23 div.Button__value {
-  font-size: 1.4rem;
+.c23.selected {
+  font-weight: bold;
+  cursor: default;
 }
 
-.c23.selected {
-  cursor: default;
-  font-weight: bold;
+.c23 div.Button__value {
+  font-size: 1.4rem;
 }
 
 .c27 {
@@ -1048,9 +1048,10 @@ exports[`LeaseView component > renders as expected 1`] = `
               <div
                 class="c26"
               >
+                Active
                 <div
                   class="c23 no-gutters row"
-                  data-testid="menu-item-row-0"
+                  data-testid="menu-item-row-387"
                 >
                   <div
                     class="col-1"
@@ -1070,7 +1071,7 @@ exports[`LeaseView component > renders as expected 1`] = `
                     <button
                       class="c4 Button btn btn-link"
                       data-testid="menu-item-property-0"
-                      title="View Property"
+                      title="View"
                       type="button"
                     >
                       <div
