@@ -17,7 +17,6 @@ import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/Ap
 import { ApiGen_Concepts_Document } from '@/models/api/generated/ApiGen_Concepts_Document';
 import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
 import { ApiGen_Concepts_DocumentType } from '@/models/api/generated/ApiGen_Concepts_DocumentType';
-import { exists } from '@/utils';
 
 import { DocumentRow } from '../ComposedDocument';
 import { DocumentViewerContext } from '../context/DocumentViewerContext';
@@ -44,6 +43,7 @@ export interface IDocumentListViewProps {
   defaultFilters?: IDocumentFilter;
   addButtonText?: string;
   disableAdd?: boolean;
+  canEditDocuments: boolean;
   title?: string;
   showParentInformation: boolean;
   relationshipDisplay?: ParentInformationDisplay;
@@ -61,20 +61,22 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
 ) => {
   const { hasClaim } = useKeycloakWrapper();
 
-  const { documentResults, isLoading, defaultFilters, hideFilters, title } = props;
+  const {
+    documentResults,
+    isLoading,
+    defaultFilters,
+    hideFilters,
+    title,
+    canEditDocuments,
+    disableAdd,
+  } = props;
 
   const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState<boolean>(false);
-
   const [documentTypes, setDocumentTypes] = useState<ApiGen_Concepts_DocumentType[]>([]);
-
-  const [sort, setSort] = React.useState<TableSort<ApiGen_Concepts_Document>>({});
-
-  const [filters, setFilters] = React.useState<IDocumentFilter>(
-    defaultFilters ?? defaultDocumentFilter,
-  );
+  const [sort, setSort] = useState<TableSort<ApiGen_Concepts_Document>>({});
+  const [filters, setFilters] = useState<IDocumentFilter>(defaultFilters ?? defaultDocumentFilter);
 
   const { getDocumentRelationshipTypes, getDocumentTypes } = useDocumentProvider();
-
   const { setPreviewDocumentId, setShowDocumentPreview } = useContext(DocumentViewerContext);
 
   useEffect(() => {
@@ -208,8 +210,6 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
   };
 
   const getHeader = (): React.ReactNode => {
-    const disableAdd = exists(props.disableAdd);
-
     return (
       <StyledRow className="no-gutters">
         <Col xs="auto">
@@ -217,7 +217,7 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
         </Col>
         <Col xs="auto" className="my-1">
           <ListHeaderActionsDiv>
-            {hasClaim([Claims.DOCUMENT_ADD]) && !disableAdd && (
+            {hasClaim([Claims.DOCUMENT_ADD]) && canEditDocuments && !disableAdd && (
               <StyledSectionAddButton
                 onClick={() => setIsUploadVisible && setIsUploadVisible(true)}
               >
@@ -260,6 +260,7 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
           results={sortedFilteredDocuments}
           loading={isLoading}
           sort={sort}
+          canEditDocuments={canEditDocuments}
           setSort={setSort}
           onViewDetails={handleViewDetails}
           onViewParent={props.onViewParent}

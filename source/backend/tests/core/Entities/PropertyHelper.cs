@@ -22,7 +22,7 @@ namespace Pims.Core.Test
         /// <param name="areaUnit"></param>
         /// <param name="dataSource"></param>
         /// <returns></returns>
-        public static PimsProperty CreateProperty(int pid, int? pin = null, PimsPropertyType type = null, PimsAddress address = null, PimsPropertyTenureType tenure = null, PimsAreaUnitType areaUnit = null, PimsDataSourceType dataSource = null, PimsPropertyStatusType status = null, PimsLease lease = null, short? regionCode = null, bool? isCoreInventory = null, bool? isRetired = null)
+        public static PimsProperty CreateProperty(int pid, int? pin = null, PimsPropertyType type = null, PimsAddress address = null, PimsPropertyTenureType tenure = null, PimsAreaUnitType areaUnit = null, PimsDataSourceType dataSource = null, PimsPropertyStatusType status = null, PimsLease lease = null, short? regionCode = null, bool? isCoreInventory = null, bool? isRetired = null, string? surveyPlanNumber = null, bool? noLocation = null)
         {
             type ??= CreatePropertyType($"Land-{pid}");
             address ??= CreateAddress(pid);
@@ -37,9 +37,10 @@ namespace Pims.Core.Test
                 PropertyId = pid,
                 Pin = pin,
                 ConcurrencyControlNumber = 1,
-                Location = new NetTopologySuite.Geometries.Point(0, 0) { SRID = SpatialReference.BCALBERS },
+                Location = noLocation != true ? new NetTopologySuite.Geometries.Point(0, 0) { SRID = SpatialReference.BCALBERS } : null,
                 SurplusDeclarationTypeCode = "SURPLUS",
                 IsRetired = false,
+                SurveyPlanNumber = surveyPlanNumber,
             };
 
             if (lease != null)

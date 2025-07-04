@@ -5,10 +5,11 @@ import {
   GeoJsonProperties,
   Geometry,
   MultiPolygon,
+  Point,
   Polygon,
 } from 'geojson';
 import { geoJSON, LatLngLiteral } from 'leaflet';
-import { compact, isNumber, orderBy } from 'lodash';
+import { chain, compact, isNumber } from 'lodash';
 import polylabel from 'polylabel';
 import { toast } from 'react-toastify';
 
@@ -272,6 +273,16 @@ export function featuresetToMapProperty(
   }
 }
 
+export const featuresetToLocationBoundaryDataset = (
+  featureSet: SelectedFeatureDataset,
+): LocationBoundaryDataset => {
+  return {
+    location: featureSet?.fileLocation ?? featureSet?.location,
+    boundary: featureSet?.pimsFeature?.geometry ?? featureSet?.parcelFeature?.geometry ?? null,
+    isActive: featureSet.isActive,
+  };
+};
+
 export function pidFromFeatureSet(featureset: SelectedFeatureDataset): string | null {
   if (exists(featureset.pimsFeature?.properties)) {
     return exists(featureset.pimsFeature?.properties?.PID)
@@ -302,6 +313,16 @@ export function locationFromFileProperty(
   return fileProperty?.location ?? fileProperty?.property?.location ?? null;
 }
 
+export function boundaryFromFileProperty(
+  fileProperty: ApiGen_Concepts_FileProperty | undefined | null,
+): Geometry | null {
+  return (
+    fileProperty?.property?.boundary ??
+    pimsGeomeryToGeometry(fileProperty?.property?.location) ??
+    null
+  );
+}
+
 export function latLngFromMapProperty(
   mapProperty: IMapProperty | undefined | null,
 ): LatLngLiteral | null {
@@ -311,12 +332,46 @@ export function latLngFromMapProperty(
   };
 }
 
+export function latLngLiteralToGeometry(latLng: LatLngLiteral | null | undefined): Point | null {
+  if (exists(latLng)) {
+    return { type: 'Point', coordinates: [latLng.lng, latLng.lat] };
+  }
+  return null;
+}
+
+export function pimsGeomeryToGeometry(
+  pimsGeomery: ApiGen_Concepts_Geometry | null | undefined,
+): Point | null {
+  if (exists(pimsGeomery?.coordinate)) {
+    return { type: 'Point', coordinates: [pimsGeomery.coordinate.x, pimsGeomery.coordinate.y] };
+  }
+  return null;
+}
+
 export function filePropertyToLocationBoundaryDataset(
   fileProperty: ApiGen_Concepts_FileProperty | undefined | null,
 ): LocationBoundaryDataset | null {
   const geom = locationFromFileProperty(fileProperty);
   const location = getLatLng(geom);
-  return exists(location) ? { location, boundary: fileProperty?.property?.boundary ?? null } : null;
+  return exists(location)
+    ? {
+        location,
+        boundary: fileProperty?.property?.boundary ?? null,
+        isActive: fileProperty.isActive,
+      }
+    : null;
+}
+
+export function propertyToLocationBoundaryDataset(
+  property: ApiGen_Concepts_Property | undefined | null,
+): LocationBoundaryDataset | null {
+  const location = getLatLng(property.location);
+  return exists(location)
+    ? {
+        location,
+        boundary: property?.boundary ?? null,
+      }
+    : null;
 }
 
 /**
@@ -359,8 +414,9 @@ export function sortFileProperties<T extends ApiGen_Concepts_FileProperty>(
   fileProperties: T[] | null,
 ): T[] | null {
   if (exists(fileProperties)) {
-    const sortedProperties = orderBy(fileProperties, fp => fp.displayOrder ?? Infinity, 'asc');
-    return sortedProperties;
+    return chain(fileProperties)
+      .orderBy([fp => fp.displayOrder ?? Infinity], ['asc'])
+      .value();
   }
   return null;
 }

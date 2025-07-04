@@ -109,6 +109,8 @@ const DocumentActivityListContainer: React.FunctionComponent<
     return [...new Set(documentResults?.map(x => x.relationshipType) ?? [])];
   }, [documentResults]);
 
+  const editDocumentsEnabled = !props.statusSolver || props.statusSolver?.canEditDocuments();
+
   return (
     <DocumentListView
       parentId={props.parentId}
@@ -125,6 +127,7 @@ const DocumentActivityListContainer: React.FunctionComponent<
       title={props.title}
       showParentInformation={true}
       data-testId="document-activity-list"
+      canEditDocuments={editDocumentsEnabled}
     />
   );
 };

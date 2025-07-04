@@ -127,6 +127,7 @@ describe('Disposition List View', () => {
             file: null,
             propertyName: null,
             location: null,
+            isActive: null,
             rowVersion: null,
           },
         ],

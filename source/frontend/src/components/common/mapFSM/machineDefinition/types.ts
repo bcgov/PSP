@@ -1,7 +1,6 @@
 import { LatLngBounds, LatLngLiteral } from 'leaflet';
 
 import { PropertyFilterFormModel } from '@/components/maps/leaflet/Control/AdvancedFilter/models';
-import { ILayerItem } from '@/components/maps/leaflet/Control/LayersControl/types';
 import { IMapSideBarViewState as IMapSideBarState } from '@/features/mapSideBar/MapSideBar';
 import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
 
@@ -33,6 +32,7 @@ export type MachineContext = {
   mapFeatureSelected: MarkerSelected | null;
   mapLocationSelected: LatLngLiteral | null;
   mapLocationFeatureDataset: LocationFeatureDataset | null;
+  mapMarkedLocation: LatLngLiteral | null;
   selectedFeatureDataset: SelectedFeatureDataset | null;
   repositioningFeatureDataset: SelectedFeatureDataset | null;
   repositioningPropertyIndex: number | null;
@@ -45,14 +45,13 @@ export type MachineContext = {
   advancedSearchCriteria: PropertyFilterFormModel | null;
 
   isLoading: boolean;
-  fitToResultsAfterLoading: boolean;
   requestedFitBounds: LatLngBounds;
   requestedFlyTo: RequestedFlyTo;
   requestedCenterTo: RequestedCenterTo;
   filePropertyLocations: LocationBoundaryDataset[];
   activePimsPropertyIds: number[];
-  activeLayers: ILayerItem[];
-  mapLayersToRefresh: ILayerItem[];
+  activeLayers: Set<string>;
+  mapLayersToRefresh: Set<string>;
   isFiltering: boolean;
   showDisposed: boolean;
   showRetired: boolean;

@@ -203,6 +203,7 @@ const DocumentFileListContainer: React.FunctionComponent<IDocumentListContainerP
         searchParentTypeLabel: 'File Type',
       }}
       data-testId="PIMS-Files-document-list"
+      canEditDocuments={true}
     />
   );
 };

@@ -173,22 +173,16 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
       return;
     }
 
-    const fileProperties = dispositionFile?.fileProperties ?? [];
-    const menuIndex = fileProperties.findIndex(fp => fp.id === filePropertyId);
-    if (menuIndex < 0) {
-      return;
-    }
-
     if (isEditing) {
       if (formikRef?.current?.dirty) {
         handleCancelClick(() =>
-          pathGenerator.showFilePropertyIndex('disposition', dispositionFile.id, menuIndex + 1),
+          pathGenerator.showFilePropertyId('disposition', dispositionFile.id, filePropertyId),
         );
         return;
       }
     }
     // The index needs to be offset to match the menu index
-    pathGenerator.showFilePropertyIndex('disposition', dispositionFile.id, menuIndex + 1);
+    pathGenerator.showFilePropertyId('disposition', dispositionFile.id, filePropertyId);
   };
 
   const onEditProperties = () => {

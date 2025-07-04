@@ -190,6 +190,7 @@ const DocumentManagementListContainer: React.FunctionComponent<
         searchParentTypeLabel: 'Association Type',
       }}
       data-testId="adHoc-properties-documents-list"
+      canEditDocuments={false}
     />
   );
 };

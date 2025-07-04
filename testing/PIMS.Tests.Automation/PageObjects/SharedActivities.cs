@@ -261,7 +261,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueContentEquals(managementActStatusContent, activity.PropertyActivityStatus);
 
             if (activityType == "Management File")
-            { 
+            {
                 AssertTrueIsDisplayed(managementActCommencementLabel);
                 AssertTrueContentEquals(managementActCommencementContent, TransformDateFormat(activity.PropertyActivityRequestedCommenceDate));
             }
@@ -314,7 +314,7 @@ namespace PIMS.Tests.Automation.PageObjects
                     for (int i = 0; i < activity.PropertyActivityInvolvedPartiesExtContacts.Count; i++)
                         Assert.Equal(webDriver.FindElements(managementActInvolvedPartiesContent)[i].Text, activity.PropertyActivityInvolvedPartiesExtContacts[i]);
             }
-            
+
 
             AssertTrueIsDisplayed(managementActServiceProviderLabel);
             if (activity.PropertyActivityServiceProvider != "")
@@ -343,14 +343,14 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 AssertTrueIsDisplayed(managementActFilePropertiesTitle);
                 AssertTrueIsDisplayed(managementActFileSelectedPropsLabel);
-                Assert.Equal(propsCount, webDriver.FindElements(managementActFilePropertiesCount).Count);
+                Assert.Equal(webDriver.FindElements(managementActFilePropertiesCount).Count,propsCount);
             }
             //Activity Details
             AssertTrueIsDisplayed(managementActivityDetailsTitle);
             AssertTrueIsDisplayed(managementActTypeLabel);
             AssertTrueIsDisplayed(managementActTypeInput);
             AssertTrueIsDisplayed(managementActSubTypeLabel);
-            AssertTrueIsDisplayed(managementActSubTypeSelect);
+            AssertTrueIsDisplayed(managementActSubTypeInput);
             AssertTrueIsDisplayed(managementActStatusLabel);
             AssertTrueIsDisplayed(managementActStatusInput);
 
@@ -396,7 +396,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueIsDisplayed(managementActInvolvedPartiesExtContactsBttn);
                 AssertTrueIsDisplayed(managementActInvolvedPartiesExtContactsAddContactLink);
             }
-            
+
             AssertTrueIsDisplayed(managementActServiceProviderLabel);
             AssertTrueIsDisplayed(managementActServiceProviderInput);
             AssertTrueIsDisplayed(managementActServiceProviderBttn);
@@ -437,7 +437,5 @@ namespace PIMS.Tests.Automation.PageObjects
             if (invoice.PropertyActivityInvoicePSTAmount != "0.00")
                 AssertTrueElementValueEquals(By.Id("input-invoices."+ index +".pstAmount"), TransformCurrencyFormat(invoice.PropertyActivityInvoicePSTAmount));
         }
-
-       
     }
 }

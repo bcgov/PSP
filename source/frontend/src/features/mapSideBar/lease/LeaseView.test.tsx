@@ -243,7 +243,7 @@ describe('LeaseView component', () => {
   });
 
   it('should display the Property Details tab according to routing', async () => {
-    history.replace(`/mapview/sidebar/lease/1/property/1`);
+    history.replace(`/mapview/sidebar/lease/1/property/387`);
     const { getByRole } = await setup();
     const tab = getByRole('tab', { name: /Property Details/i });
     expect(tab).toBeVisible();
@@ -259,7 +259,7 @@ describe('LeaseView component', () => {
   });
 
   it(`should display the Property Details tab when we are editing and the path doesn't match any route`, async () => {
-    history.replace(`/mapview/sidebar/lease/1/property/1/unknownTabWhatIsThis?edit=true`);
+    history.replace(`/mapview/sidebar/lease/1/property/387/unknownTabWhatIsThis?edit=true`);
     const { getByRole } = await setup();
     const tab = getByRole('tab', { name: /Property Details/i });
     expect(tab).toBeVisible();
@@ -273,7 +273,7 @@ describe('LeaseView component', () => {
   });
 
   it(`should display property edit title when editing and on property tab`, async () => {
-    history.replace(`/mapview/sidebar/lease/1/property/1?edit=true`);
+    history.replace(`/mapview/sidebar/lease/1/property/387?edit=true`);
     const { getByText } = await setup({ props: { containerState: { isEditing: true } } });
     expect(getByText('Update Lease / Licence')).toBeVisible();
   });

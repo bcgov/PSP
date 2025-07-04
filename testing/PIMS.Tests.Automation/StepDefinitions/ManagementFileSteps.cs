@@ -448,7 +448,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
                 propertyActivity.PropertyActivityPropsCount = int.Parse(ExcelDataContext.ReadData(i, "PropertyActivityPropsCount"));
                 propertyActivity.PropertyActivityType = ExcelDataContext.ReadData(i, "PropertyActivityType");
-                propertyActivity.PropertyActivitySubType = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "PropertyActivitySubType"));
+                propertyActivity.PropertyActivitySubType = ExcelDataContext.ReadData(i, "PropertyActivitySubType");
                 propertyActivity.PropertyActivityStatus = ExcelDataContext.ReadData(i, "PropertyActivityStatus");
                 propertyActivity.PropertyActivityRequestedCommenceDate = ExcelDataContext.ReadData(i, "PropertyActivityRequestedCommenceDate");
                 propertyActivity.PropertyActivityCompletionDate = ExcelDataContext.ReadData(i, "PropertyActivityCompletionDate");
