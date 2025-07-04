@@ -4,8 +4,10 @@ import { useCallback, useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaSearchPlus } from 'react-icons/fa';
 import { RiDragMove2Line } from 'react-icons/ri';
+import styled from 'styled-components';
 
 import { LinkButton, RemoveButton, StyledIconButton } from '@/components/common/buttons';
+import { Select } from '@/components/common/form';
 import { InlineInput } from '@/components/common/form/styles';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
@@ -15,10 +17,13 @@ import { exists } from '@/utils';
 import { withNameSpace } from '@/utils/formUtils';
 import { featuresetToMapProperty, getPropertyName, NameSourceType } from '@/utils/mapPropertyUtils';
 
+import DisabledDraftCircleNumber from './DisabledDraftCircleNumber';
+
 export interface ISelectedPropertyRowProps {
   index: number;
   nameSpace?: string;
   onRemove: () => void;
+  showDisable?: boolean;
   property: SelectedFeatureDataset;
 }
 
@@ -26,6 +31,7 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
   nameSpace,
   onRemove,
   index,
+  showDisable,
   property,
 }) => {
   const mapMachine = useMapStateMachine();
@@ -58,14 +64,17 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
       propertyIdentifier = `${propertyName.value}`;
       break;
     default:
-      propertyIdentifier = '';
       break;
   }
   return (
-    <Row className="align-items-center mb-3 no-gutters">
+    <StyledRow className="align-items-center mb-3 no-gutters">
       <Col md={3}>
         <div className="mb-0 d-flex align-items-center">
-          <DraftCircleNumber text={(index + 1).toString()} />
+          {property.isActive === false ? (
+            <DisabledDraftCircleNumber text={(index + 1).toString()} />
+          ) : (
+            <DraftCircleNumber text={(index + 1).toString()} />
+          )}
           <OverflowTip fullText={propertyIdentifier} className="pl-3"></OverflowTip>
         </div>
       </Col>
@@ -84,6 +93,18 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
           <FaSearchPlus size={18} className="ml-4" />
         </LinkButton>
       </Col>
+      {showDisable && (
+        <Col md={2}>
+          <Select
+            className="mb-0 ml-4"
+            field={withNameSpace(nameSpace, 'isActive')}
+            options={[
+              { label: 'Inactive', value: 'false' },
+              { label: 'Active', value: 'true' },
+            ]}
+          ></Select>
+        </Col>
+      )}
       <Col md={1} className="pl-3">
         <StyledIconButton
           title="move-pin-location"
@@ -94,11 +115,15 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
           <RiDragMove2Line size={22} />
         </StyledIconButton>
       </Col>
-      <Col md={2}>
+      <Col md={1}>
         <RemoveButton onRemove={onRemove} fontSize="1.4rem" />
       </Col>
-    </Row>
+    </StyledRow>
   );
 };
+
+const StyledRow = styled(Row)`
+  min-height: 4.5rem;
+`;
 
 export default SelectedPropertyRow;
