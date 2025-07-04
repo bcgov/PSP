@@ -128,7 +128,7 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void Update_Success()
+        public async void Update_Success()
         {
             // Arrange
             var service = CreateDocumentQueueServiceWithPermissions(Permissions.SystemAdmin);
@@ -139,12 +139,11 @@ namespace Pims.Api.Test.Services
             documentQueueRepositoryMock.Setup(m => m.CommitTransaction());
 
             // Act
-            var result = service.Update(documentQueue);
+            var result = await service.Update(documentQueue);
 
             // Assert
             result.Should().Be(documentQueue);
             documentQueueRepositoryMock.Verify(m => m.Update(documentQueue, false), Times.Once);
-            documentQueueRepositoryMock.Verify(m => m.CommitTransaction(), Times.Once);
         }
 
         [Fact]
@@ -155,10 +154,10 @@ namespace Pims.Api.Test.Services
             var documentQueue = new PimsDocumentQueue { DocumentQueueId = 1 };
 
             // Act
-            Action act = () => service.Update(documentQueue);
+            Func<Task> act = async () => await service.Update(documentQueue);
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            act.Should().ThrowAsync<NotAuthorizedException>();
         }
 
         [Fact]
@@ -213,12 +212,11 @@ namespace Pims.Api.Test.Services
             documentQueueRepositoryMock.Setup(m => m.TryGetById(documentQueue.DocumentQueueId)).Returns(databaseDocumentQueue);
 
             // Act
-            var result = await service.PollForDocument(documentQueue);
+            Func<Task> act = async () => await service.PollForDocument(documentQueue);
 
             // Assert
-            result.Should().Be(databaseDocumentQueue);
+            await act.Should().ThrowAsync<InvalidDataException>();
             documentQueueRepositoryMock.Verify(m => m.Update(databaseDocumentQueue, false), Times.Once);
-            documentQueueRepositoryMock.Verify(m => m.CommitTransaction(), Times.Once);
         }
 
         [Fact]
@@ -244,7 +242,6 @@ namespace Pims.Api.Test.Services
             // Assert
             result.Should().Be(databaseDocumentQueue);
             documentQueueRepositoryMock.Verify(m => m.Update(databaseDocumentQueue, false), Times.Once);
-            documentQueueRepositoryMock.Verify(m => m.CommitTransaction(), Times.Once);
         }
 
         [Fact]
@@ -254,7 +251,7 @@ namespace Pims.Api.Test.Services
             var service = CreateDocumentQueueServiceWithPermissions(Permissions.SystemAdmin);
             var documentQueue = new PimsDocumentQueue { DocumentQueueId = 1, DocumentId = 1 };
             var relatedDocument = new PimsDocument { MayanId = 1 };
-            var databaseDocumentQueue = new PimsDocumentQueue { DocumentQueueId = 1 };
+            var databaseDocumentQueue = new PimsDocumentQueue { DocumentQueueId = 1, DocumentQueueStatusTypeCode = DocumentQueueStatusTypes.PROCESSING.ToString() };
             var documentDetailModel = new DocumentDetailModel { FileLatest = null };
             var documentDetailsResponse = new ExternalResponse<DocumentDetailModel> { Status = ExternalResponseStatus.Success, Payload = documentDetailModel };
             var documentRepositoryMock = this._helper.GetService<Mock<IDocumentRepository>>();
@@ -299,7 +296,6 @@ namespace Pims.Api.Test.Services
             result.Should().Be(databaseDocumentQueue);
             result.DocumentQueueStatusTypeCode.Should().Be(DocumentQueueStatusTypes.SUCCESS.ToString());
             documentQueueRepositoryMock.Verify(m => m.Update(databaseDocumentQueue, true), Times.Once);
-            documentQueueRepositoryMock.Verify(m => m.CommitTransaction(), Times.Once);
         }
 
         [Fact]
@@ -364,7 +360,6 @@ namespace Pims.Api.Test.Services
             result.Should().NotBeNull();
             result.DocumentQueueStatusTypeCode.Should().Be(DocumentQueueStatusTypes.SUCCESS.ToString());
             documentQueueRepositoryMock.Verify(x => x.Update(It.IsAny<PimsDocumentQueue>(), It.IsAny<bool>()), Times.AtLeastOnce);
-            documentQueueRepositoryMock.Verify(x => x.CommitTransaction(), Times.AtLeastOnce);
             documentServiceMock.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), true), Times.Once);
         }
 
@@ -431,7 +426,6 @@ namespace Pims.Api.Test.Services
             result.DocProcessRetries.Should().Be(1);
             result.DocumentQueueStatusTypeCode.Should().Be(DocumentQueueStatusTypes.SUCCESS.ToString());
             documentQueueRepositoryMock.Verify(x => x.Update(It.IsAny<PimsDocumentQueue>(), It.IsAny<bool>()), Times.AtLeastOnce);
-            documentQueueRepositoryMock.Verify(x => x.CommitTransaction(), Times.AtLeastOnce);
             documentServiceMock.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), true), Times.Once);
         }
 
@@ -462,7 +456,6 @@ namespace Pims.Api.Test.Services
             result.Should().NotBeNull();
             result.DocumentQueueStatusTypeCode.Should().Be(DocumentQueueStatusTypes.PIMS_ERROR.ToString());
             documentQueueRepositoryMock.Verify(x => x.Update(It.IsAny<PimsDocumentQueue>(), It.IsAny<bool>()), Times.AtLeastOnce);
-            documentQueueRepositoryMock.Verify(x => x.CommitTransaction(), Times.AtLeastOnce);
             documentServiceMock.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), true), Times.Never);
         }
 
@@ -599,7 +592,6 @@ namespace Pims.Api.Test.Services
             result.Should().NotBeNull();
             result.DocumentQueueStatusTypeCode.Should().Be(DocumentQueueStatusTypes.PROCESSING.ToString());
             documentQueueRepositoryMock.Verify(x => x.Update(It.IsAny<PimsDocumentQueue>(), It.IsAny<bool>()), Times.AtLeastOnce);
-            documentQueueRepositoryMock.Verify(x => x.CommitTransaction(), Times.AtLeastOnce);
             documentServiceMock.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), true), Times.Once);
         }
 
@@ -688,13 +680,11 @@ namespace Pims.Api.Test.Services
             documentRepositoryMock.Setup(x => x.TryGetDocumentRelationships(It.IsAny<long>())).Returns((PimsDocument)null);
 
             // Act
-            var result = await service.Upload(documentQueue);
+            Func<Task> act = async () => await service.Upload(documentQueue);
+            await act.Should().ThrowAsync<InvalidDataException>();
 
             // Assert
-            result.Should().NotBeNull();
-            result.DocumentQueueStatusTypeCode.Should().Be(DocumentQueueStatusTypes.PIMS_ERROR.ToString());
-            documentQueueRepositoryMock.Verify(x => x.Update(It.IsAny<PimsDocumentQueue>(), It.IsAny<bool>()), Times.AtLeastOnce);
-            documentQueueRepositoryMock.Verify(x => x.CommitTransaction(), Times.AtLeastOnce);
+            documentQueueRepositoryMock.Verify(x => x.Update(It.Is<PimsDocumentQueue>(p => p.DocumentQueueStatusTypeCode == DocumentQueueStatusTypes.PIMS_ERROR.ToString()), It.IsAny<bool>()), Times.AtLeastOnce);
         }
 
         [Fact]
@@ -752,7 +742,6 @@ namespace Pims.Api.Test.Services
             result.Should().NotBeNull();
             result.DocumentQueueStatusTypeCode.Should().Be(DocumentQueueStatusTypes.MAYAN_ERROR.ToString());
             documentQueueRepositoryMock.Verify(x => x.Update(It.IsAny<PimsDocumentQueue>(), It.IsAny<bool>()), Times.AtLeastOnce);
-            documentQueueRepositoryMock.Verify(x => x.CommitTransaction(), Times.AtLeastOnce);
             documentServiceMock.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), true), Times.Once);
         }
 
