@@ -127,6 +127,7 @@ export const mockAcquisitionFileResponse = (
   fileProperties: [
     {
       id: 1,
+      isActive: null,
       propertyId: 292,
       property: {
         ...getMockApiProperty(),
@@ -161,7 +162,7 @@ export const mockAcquisitionFileResponse = (
         },
         rowVersion: 1,
       },
-      displayOrder: null,
+      displayOrder: 1,
       fileId: 1,
       file: null,
       propertyName: null,
@@ -170,6 +171,7 @@ export const mockAcquisitionFileResponse = (
     },
     {
       id: 2,
+      isActive: null,
       propertyId: 443,
       property: {
         ...getMockApiProperty(),
@@ -205,7 +207,7 @@ export const mockAcquisitionFileResponse = (
         rowVersion: 1,
       },
       rowVersion: 1,
-      displayOrder: null,
+      displayOrder: 2,
       fileId: 1,
       file: null,
       propertyName: null,

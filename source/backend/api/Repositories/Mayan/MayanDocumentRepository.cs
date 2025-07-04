@@ -257,8 +257,9 @@ namespace Pims.Api.Repositories.Mayan
             string authenticationToken = await _authRepository.GetTokenAsync();
 
             byte[] fileData;
-            using var byteReader = new BinaryReader(file.OpenReadStream());
-            fileData = byteReader.ReadBytes((int)file.OpenReadStream().Length);
+            using Stream stream = file.OpenReadStream();
+            using var byteReader = new BinaryReader(stream);
+            fileData = byteReader.ReadBytes((int)stream.Length);
 
             // Add the file data to the content
             using ByteArrayContent fileBytes = new(fileData);

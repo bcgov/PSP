@@ -255,3 +255,21 @@ export const ListPage = styled.div`
   gap: 2.5rem;
   padding: 0;
 `;
+
+export const StyledIconWrapper = styled.div`
+  &.selected {
+    background-color: ${props => props.theme.bcTokens.themeGold100};
+  }
+
+  background-color: ${props => props.theme.css.numberBackgroundColor};
+  font-size: 1.5rem;
+  border-radius: 50%;
+  opacity: 0.8;
+  width: 3.25rem;
+  height: 3.25rem;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'BCSans-Bold';
+`;

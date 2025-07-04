@@ -16,6 +16,8 @@ using DotNetEnv;
 using HealthChecks.SqlServer;
 using HealthChecks.UI.Client;
 using Mapster;
+using Medallion.Threading;
+using Medallion.Threading.SqlServer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -227,6 +229,7 @@ namespace Pims.Api
             services.AddHttpClient("Pims.Api.Logging").AddHttpMessageHandler<LoggingHandler>();
             services.AddPimsContext(this.Environment, csBuilder.ConnectionString);
             services.AddPimsDalRepositories();
+            services.AddSingleton<IDistributedLockProvider>(new SqlDistributedSynchronizationProvider(csBuilder.ConnectionString));
             AddPimsApiRepositories(services);
             AddPimsApiServices(services);
             services.AddPimsKeycloakService();

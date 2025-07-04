@@ -1103,54 +1103,54 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c8.c8.btn {
+.c9.c9.btn {
   background-color: unset;
   border: none;
 }
 
-.c8.c8.btn:hover,
-.c8.c8.btn:focus,
-.c8.c8.btn:active {
+.c9.c9.btn:hover,
+.c9.c9.btn:focus,
+.c9.c9.btn:active {
   background-color: unset;
   outline: none;
   box-shadow: none;
 }
 
-.c8.c8.btn svg {
+.c9.c9.btn svg {
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
 
-.c8.c8.btn svg:hover {
+.c9.c9.btn svg:hover {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
 }
 
-.c8.c8.btn.btn-primary svg {
+.c9.c9.btn.btn-primary svg {
   color: #013366;
 }
 
-.c8.c8.btn.btn-primary svg:hover {
+.c9.c9.btn.btn-primary svg:hover {
   color: #013366;
 }
 
-.c8.c8.btn.btn-light svg {
+.c9.c9.btn.btn-light svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c8.c8.btn.btn-light svg:hover {
+.c9.c9.btn.btn-light svg:hover {
   color: #CE3E39;
 }
 
-.c8.c8.btn.btn-info svg {
+.c9.c9.btn.btn-info svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c8.c8.btn.btn-info svg:hover {
+.c9.c9.btn.btn-info svg:hover {
   color: var(--surface-color-primary-button-hover);
 }
 
-.c9.c9.btn {
+.c10.c10.btn {
   font-size: 1.4rem;
   color: #aaaaaa;
   -webkit-text-decoration: none;
@@ -1158,13 +1158,13 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
   line-height: unset;
 }
 
-.c9.c9.btn .text {
+.c10.c10.btn .text {
   display: none;
 }
 
-.c9.c9.btn:hover,
-.c9.c9.btn:active,
-.c9.c9.btn:focus {
+.c10.c10.btn:hover,
+.c10.c10.btn:active,
+.c10.c10.btn:focus {
   color: #d8292f;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -1178,14 +1178,14 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
   flex-direction: row;
 }
 
-.c9.c9.btn:hover .text,
-.c9.c9.btn:active .text,
-.c9.c9.btn:focus .text {
+.c10.c10.btn:hover .text,
+.c10.c10.btn:active .text,
+.c10.c10.btn:focus .text {
   display: inline;
   line-height: 2rem;
 }
 
-.c7 {
+.c8 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1197,7 +1197,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
   gap: 0.8rem;
 }
 
-.c7 .form-label {
+.c8 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
@@ -1227,19 +1227,23 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
   font-family: 'BcSans-Bold';
 }
 
-.c6 {
+.c7 {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.c4 {
+.c5 {
   min-width: 3rem;
   min-height: 4.5rem;
 }
 
-.c5 {
+.c6 {
   font-size: 1.2rem;
+}
+
+.c4 {
+  min-height: 4.5rem;
 }
 
 <div
@@ -1332,7 +1336,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
         </div>
       </div>
       <div
-        class="align-items-center mb-3 no-gutters row"
+        class="c4 align-items-center mb-3 no-gutters row"
       >
         <div
           class="col-md-3"
@@ -1341,7 +1345,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
             class="mb-0 d-flex align-items-center"
           >
             <svg
-              class="c4"
+              class="c5"
               height="45"
               id="Layer_2"
               viewBox="0 0 20 30"
@@ -1398,7 +1402,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
                   </g>
                 </g>
                 <text
-                  class="c5"
+                  class="c6"
                   textLength="1.25rem"
                   x="7"
                   y="15"
@@ -1411,7 +1415,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
               </title>
             </svg>
             <div
-              class="c6 pl-3"
+              class="c7 pl-3"
             >
               PID: 123-456-789
             </div>
@@ -1421,7 +1425,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
           class="col-md-5"
         >
           <div
-            class="c7 mb-0 w-100 input form-group"
+            class="c8 mb-0 w-100 input form-group"
           >
             <input
               class="form-control"
@@ -1463,7 +1467,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
           class="pl-3 col-md-1"
         >
           <button
-            class="c2 Button c8 btn btn-primary"
+            class="c2 Button c9 btn btn-primary"
             title="move-pin-location"
             type="button"
           >
@@ -1487,10 +1491,10 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
           </button>
         </div>
         <div
-          class="col-md-2"
+          class="col-md-1"
         >
           <button
-            class="c2 Button c9 btn btn-link"
+            class="c2 Button c10 btn btn-link"
             type="button"
           >
             <div
@@ -1528,7 +1532,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
         </div>
       </div>
       <div
-        class="align-items-center mb-3 no-gutters row"
+        class="c4 align-items-center mb-3 no-gutters row"
       >
         <div
           class="col-md-3"
@@ -1537,7 +1541,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
             class="mb-0 d-flex align-items-center"
           >
             <svg
-              class="c4"
+              class="c5"
               height="45"
               id="Layer_2"
               viewBox="0 0 20 30"
@@ -1594,7 +1598,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
                   </g>
                 </g>
                 <text
-                  class="c5"
+                  class="c6"
                   textLength="1.25rem"
                   x="7"
                   y="15"
@@ -1607,7 +1611,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
               </title>
             </svg>
             <div
-              class="c6 pl-3"
+              class="c7 pl-3"
             >
               PIN: 1111222
             </div>
@@ -1617,7 +1621,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
           class="col-md-5"
         >
           <div
-            class="c7 mb-0 w-100 input form-group"
+            class="c8 mb-0 w-100 input form-group"
           >
             <input
               class="form-control"
@@ -1659,7 +1663,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
           class="pl-3 col-md-1"
         >
           <button
-            class="c2 Button c8 btn btn-primary"
+            class="c2 Button c9 btn btn-primary"
             title="move-pin-location"
             type="button"
           >
@@ -1683,10 +1687,10 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
           </button>
         </div>
         <div
-          class="col-md-2"
+          class="col-md-1"
         >
           <button
-            class="c2 Button c9 btn btn-link"
+            class="c2 Button c10 btn btn-link"
             type="button"
           >
             <div
