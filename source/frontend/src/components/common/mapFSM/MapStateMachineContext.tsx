@@ -356,7 +356,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     serviceSend({ type: 'FINISH_REPOSITION' });
   }, [serviceSend]);
 
-  const setFileProperties = useCallback(
+  const setFilePropertyLocations = useCallback(
     (locations: LocationBoundaryDataset[]) => {
       serviceSend({ type: 'SET_FILE_PROPERTY_LOCATIONS', locations });
     },
@@ -515,7 +515,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         toggleMapFilterDisplay,
         toggleMapLayerControl,
         toggleSidebarDisplay,
-        setFilePropertyLocations: setFileProperties,
+        setFilePropertyLocations,
         setVisiblePimsProperties,
         setShowDisposed,
         setShowRetired,

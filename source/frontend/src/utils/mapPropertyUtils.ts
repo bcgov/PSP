@@ -172,30 +172,6 @@ export const getFeatureBoundedCenter = (feature: Feature<Geometry, GeoJsonProper
   }
 };
 
-export function apiToMapProperty(fileProperty: ApiGen_Concepts_FileProperty): IMapProperty {
-  return {
-    propertyId: fileProperty.propertyId,
-    pid: fileProperty.property?.pid?.toString(),
-    pin: fileProperty.property?.pin?.toString(),
-    latitude: fileProperty.property?.location?.coordinate.y,
-    longitude: fileProperty.property?.location?.coordinate.x,
-    fileLocation: {
-      lat: fileProperty.property?.location?.coordinate.y,
-      lng: fileProperty.property?.location?.coordinate.x,
-    },
-    planNumber: fileProperty?.property?.planNumber?.toString() ?? undefined,
-    address: formatApiAddress(fileProperty.property?.address),
-    legalDescription: fileProperty?.property?.landLegalDescription,
-    region: fileProperty.property?.region?.id,
-    regionName: fileProperty?.property?.region?.description,
-    district: fileProperty?.property?.district?.id,
-    districtName: fileProperty?.property?.district?.description,
-    landArea: fileProperty?.property?.landArea,
-    areaUnit: AreaUnitTypes.SquareMeters,
-    isActive: fileProperty?.isActive,
-  };
-}
-
 function toMapProperty(
   feature: Feature<Geometry, GeoJsonProperties>,
   address?: string,

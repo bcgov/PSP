@@ -132,7 +132,7 @@ const usePathGenerator: IPathGenerator = () => {
     history.push(path);
   };
 
-  const showFilePropertyIndex = (fileType: string, fileId: number, menuIndex: number) => {
+  const showFilePropertyId = (fileType: string, fileId: number, menuIndex: number) => {
     const a = `${sidebarBasePath}/:fileType/:fileId/property/:menuIndex`;
     const path = generatePath(a, {
       fileType,
@@ -174,7 +174,7 @@ const usePathGenerator: IPathGenerator = () => {
     editDetails,
     addDetail,
     editProperties,
-    showFilePropertyId: showFilePropertyIndex,
+    showFilePropertyId,
     showFilePropertyDetail,
   };
 };
