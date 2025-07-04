@@ -55,7 +55,7 @@ describe('LtsaPlanTabView component', () => {
   it('renders as expected when provided valid ltsa data object and requested on datetime', () => {
     const { component } = setup({
       spcpData: getMockLtsaSPCPResponse(),
-      ltsaRequestedOn: new Date('06-Apr-2022 11:00 AM'),
+      ltsaRequestedOn: new Date('06-Apr-2022 11:00 AM GMT'),
       loading: false,
     });
 
