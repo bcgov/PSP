@@ -1,17 +1,21 @@
 import { FieldArray, FormikProps } from 'formik';
-import { LatLngLiteral } from 'leaflet';
+import { geoJSON, LatLngLiteral } from 'leaflet';
 import isNumber from 'lodash/isNumber';
 import { Col, Row } from 'react-bootstrap';
+import { PiCornersOut } from 'react-icons/pi';
 
+import { LinkButton } from '@/components/common/buttons/LinkButton';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { Section } from '@/components/common/Section/Section';
+import TooltipWrapper from '@/components/common/TooltipWrapper';
 import MapSelectorContainer from '@/components/propertySelector/MapSelectorContainer';
 import SelectedPropertyHeaderRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyHeaderRow';
 import SelectedPropertyRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyRow';
 import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
 import { useModalContext } from '@/hooks/useModalContext';
-import { isLatLngInFeatureSetBoundary } from '@/utils';
+import { exists, isLatLngInFeatureSetBoundary, latLngLiteralToGeometry } from '@/utils';
 
 import { AddressForm, PropertyForm } from '../../shared/models';
 import { DispositionFormModel } from '../models/DispositionFormModel';
@@ -28,6 +32,21 @@ const DispositionPropertiesSubForm: React.FunctionComponent<DispositionPropertie
   const { values } = formikProps;
   const { getPrimaryAddressByPid, bcaLoading } = useBcaAddress();
   const { setModalContent, setDisplayModal } = useModalContext();
+
+  const mapMachine = useMapStateMachine();
+
+  const fitBoundaries = () => {
+    const fileProperties = formikProps.values.fileProperties;
+
+    if (exists(fileProperties)) {
+      const locations = fileProperties.map(
+        p => p?.polygon ?? latLngLiteralToGeometry(p?.fileLocation),
+      );
+      const bounds = geoJSON(locations).getBounds();
+
+      mapMachine.requestFlyToBounds(bounds);
+    }
+  };
 
   return (
     <>
@@ -115,7 +134,23 @@ const DispositionPropertiesSubForm: React.FunctionComponent<DispositionPropertie
                 />
               </Col>
             </Row>
-            <Section header="Selected properties">
+            <Section
+              header={
+                <Row>
+                  <Col xs="11">Selected properties</Col>
+                  <Col>
+                    <TooltipWrapper
+                      tooltip="Fit map to the file properties"
+                      tooltipId="property-selector-tooltip"
+                    >
+                      <LinkButton title="Fit boundaries button" onClick={fitBoundaries}>
+                        <PiCornersOut size={18} className="mr-2" />
+                      </LinkButton>
+                    </TooltipWrapper>
+                  </Col>
+                </Row>
+              }
+            >
               <SelectedPropertyHeaderRow />
               {formikProps.values.fileProperties.map((property, index) => (
                 <SelectedPropertyRow

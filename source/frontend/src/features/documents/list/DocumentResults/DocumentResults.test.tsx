@@ -30,6 +30,7 @@ const setup = (renderOptions: RenderOptions & Partial<IDocumentResultProps> = { 
       onPreview={onPreview}
       onViewParent={onViewParent}
       showParentInformation={false}
+      canEditDocuments={renderOptions?.canEditDocuments ?? true}
     />,
     {
       ...rest,

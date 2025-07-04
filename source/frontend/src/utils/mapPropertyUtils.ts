@@ -5,6 +5,7 @@ import {
   GeoJsonProperties,
   Geometry,
   MultiPolygon,
+  Point,
   Polygon,
 } from 'geojson';
 import { geoJSON, LatLngLiteral } from 'leaflet';
@@ -312,6 +313,16 @@ export function locationFromFileProperty(
   return fileProperty?.location ?? fileProperty?.property?.location ?? null;
 }
 
+export function boundaryFromFileProperty(
+  fileProperty: ApiGen_Concepts_FileProperty | undefined | null,
+): Geometry | null {
+  return (
+    fileProperty?.property?.boundary ??
+    pimsGeomeryToGeometry(fileProperty?.property?.location) ??
+    null
+  );
+}
+
 export function latLngFromMapProperty(
   mapProperty: IMapProperty | undefined | null,
 ): LatLngLiteral | null {
@@ -319,6 +330,22 @@ export function latLngFromMapProperty(
     lat: Number(mapProperty?.fileLocation?.lat ?? mapProperty?.latitude ?? 0),
     lng: Number(mapProperty?.fileLocation?.lng ?? mapProperty?.longitude ?? 0),
   };
+}
+
+export function latLngLiteralToGeometry(latLng: LatLngLiteral | null | undefined): Point | null {
+  if (exists(latLng)) {
+    return { type: 'Point', coordinates: [latLng.lng, latLng.lat] };
+  }
+  return null;
+}
+
+export function pimsGeomeryToGeometry(
+  pimsGeomery: ApiGen_Concepts_Geometry | null | undefined,
+): Point | null {
+  if (exists(pimsGeomery?.coordinate)) {
+    return { type: 'Point', coordinates: [pimsGeomery.coordinate.x, pimsGeomery.coordinate.y] };
+  }
+  return null;
 }
 
 export function filePropertyToLocationBoundaryDataset(

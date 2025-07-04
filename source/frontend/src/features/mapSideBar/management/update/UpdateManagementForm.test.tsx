@@ -6,7 +6,7 @@ import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mockManagementFileResponse } from '@/mocks/managementFiles.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, render, RenderOptions, userEvent, waitForEffects } from '@/utils/test-utils';
+import { act, render, RenderOptions, userEvent, waitFor, waitForEffects } from '@/utils/test-utils';
 
 import { ManagementFormModel } from '../models/ManagementFormModel';
 import UpdateManagementForm, { IUpdateManagementFormProps } from './UpdateManagementForm';
@@ -26,9 +26,10 @@ vi.mock('react-visibility-sensor', () => {
   };
 });
 
+const retrieveProjectProductsFn = vi.fn();
 vi.mock('@/hooks/repositories/useProjectProvider');
 vi.mocked(useProjectProvider).mockReturnValue({
-  retrieveProjectProducts: vi.fn(),
+  retrieveProjectProducts: retrieveProjectProductsFn,
 } as unknown as ReturnType<typeof useProjectProvider>);
 
 describe('UpdateManagementForm component', () => {
@@ -40,6 +41,7 @@ describe('UpdateManagementForm component', () => {
         initialValues={props.initialValues}
         onSubmit={props.onSubmit}
         loading={props.loading}
+        canEditDetails={props.canEditDetails ?? true}
       />,
       {
         ...renderOptions,
@@ -82,12 +84,24 @@ describe('UpdateManagementForm component', () => {
   });
 
   it('renders as expected', async () => {
-    const { asFragment } = await setup({ initialValues, loading: false, formikRef: ref, onSubmit });
+    const { asFragment } = await setup({
+      initialValues,
+      loading: false,
+      formikRef: ref,
+      canEditDetails: true,
+      onSubmit,
+    });
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders loading spinner', async () => {
-    const { getByTestId } = await setup({ initialValues, loading: true, formikRef: ref, onSubmit });
+    const { getByTestId } = await setup({
+      initialValues,
+      loading: true,
+      formikRef: ref,
+      canEditDetails: true,
+      onSubmit,
+    });
     expect(getByTestId('filter-backdrop-loading')).toBeVisible();
   });
 
@@ -96,6 +110,7 @@ describe('UpdateManagementForm component', () => {
       initialValues,
       loading: false,
       formikRef: ref,
+      canEditDetails: true,
       onSubmit,
     });
 
@@ -124,6 +139,7 @@ describe('UpdateManagementForm component', () => {
       initialValues,
       loading: false,
       formikRef: ref,
+      canEditDetails: true,
       onSubmit,
     });
 
@@ -144,5 +160,38 @@ describe('UpdateManagementForm component', () => {
     await act(async () => getFormikRef().current?.submitForm());
 
     expect(onSubmit).toHaveBeenCalled();
+  });
+
+  it('it disables fields when file is not editable', async () => {
+    retrieveProjectProductsFn.mockResolvedValue([]);
+    const { container } = await setup({
+      initialValues,
+      loading: false,
+      formikRef: ref,
+      canEditDetails: false,
+      onSubmit,
+    });
+    await waitForEffects();
+
+    const projectInput = container.querySelector(`#typeahead-project`);
+    expect(projectInput).toBeDisabled();
+
+    const productInput = container.querySelector(`select#input-productId`);
+    expect(productInput).toBeDisabled();
+
+    const fundingInput = container.querySelector(`#input-fundingTypeCode`);
+    expect(fundingInput).toBeDisabled();
+
+    const fileNameInput = container.querySelector(`#input-fileName`);
+    expect(fileNameInput).toBeDisabled();
+
+    const legacyFileInput = container.querySelector(`#input-legacyFileNum`);
+    expect(legacyFileInput).toBeDisabled();
+
+    const pourposeInput = container.querySelector(`#input-purposeTypeCode`);
+    expect(pourposeInput).toBeDisabled();
+
+    const additionalDetailsInput = container.querySelector(`#input-additionalDetails`);
+    expect(additionalDetailsInput).toBeDisabled();
   });
 });

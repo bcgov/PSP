@@ -25,9 +25,11 @@ import { ApiGen_Concepts_PropertyActivityInvoice } from '@/models/api/generated/
 export interface IFileActivityDetailViewProps {
   managementId: number;
   activity: ApiGen_Concepts_PropertyActivity | null;
-  onClose: () => void;
   loading: boolean;
   show: boolean;
+  canEditDocuments: boolean;
+  canEditActivity: boolean;
+  onClose: () => void;
   setShow: (show: boolean) => void;
 }
 
@@ -81,7 +83,7 @@ export const FileActivityDetailView: React.FunctionComponent<
               <StyledSummarySection>
                 <LoadingBackdrop show={props.loading} />
                 <StyledEditWrapper className="mr-3 my-1">
-                  {hasClaim(Claims.MANAGEMENT_EDIT) && (
+                  {hasClaim(Claims.MANAGEMENT_EDIT) && props.canEditActivity && (
                     <EditButton
                       title="Edit File Property Activity"
                       onClick={() => {
@@ -123,6 +125,7 @@ export const FileActivityDetailView: React.FunctionComponent<
               parentId={props.activity?.id.toString() ?? ''}
               addButtonText="Add a Management Document"
               relationshipType={ApiGen_CodeTypes_DocumentRelationType.ManagementActivities}
+              disableAdd={!props.canEditDocuments}
             />
             <DocumentActivityListContainer
               title={'Related Documents'}

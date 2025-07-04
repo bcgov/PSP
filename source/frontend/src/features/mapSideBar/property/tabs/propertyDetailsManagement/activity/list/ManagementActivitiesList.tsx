@@ -96,6 +96,7 @@ export function createActivityTableColumns() {
 }
 
 export function activityActionColumn(
+  canEdit: boolean,
   onView: (activityId: number) => void,
   onDelete: (activityId: number) => void,
 ) {
@@ -109,7 +110,7 @@ export function activityActionColumn(
       const { hasClaim } = useKeycloakWrapper();
       const activityRow = cellProps.row.original;
       const renderDelete = () => {
-        if (hasClaim(Claims.MANAGEMENT_DELETE) && exists(onDelete)) {
+        if (hasClaim(Claims.MANAGEMENT_DELETE) && canEdit && exists(onDelete)) {
           if (
             activityRow?.activityStatusType?.id === PropertyManagementActivityStatusTypes.NOTSTARTED
           ) {

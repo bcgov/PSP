@@ -247,7 +247,7 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
             type={NoteTypes.Property}
             entityId={composedPropertyState.apiWrapper.response.id}
             onSuccess={onChildSuccess}
-            NoteListView={NoteListView}
+            View={NoteListView}
           />
           <NoteSummaryContainer
             associationType={NoteTypes.Management_File}

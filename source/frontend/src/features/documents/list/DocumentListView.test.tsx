@@ -62,6 +62,7 @@ describe('Document List View', () => {
         relationshipTypes={[]}
         showParentInformation={false}
         onViewParent={renderOptions?.onViewParent || onViewParent}
+        canEditDocuments={renderOptions?.canEditDocuments ?? true}
       />,
       {
         ...renderOptions,

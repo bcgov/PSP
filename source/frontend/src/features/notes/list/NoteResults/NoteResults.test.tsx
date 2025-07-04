@@ -19,7 +19,10 @@ const setup = (renderOptions: RenderOptions & Partial<INoteResultProps> = { resu
       sort={{}}
       results={results ?? []}
       setSort={setSort}
-      columns={[...createNoteTableColumns(), createNoteActionsColumn(onShowDetails, onDelete)]}
+      columns={[
+        ...createNoteTableColumns(),
+        createNoteActionsColumn(true, onShowDetails, onDelete),
+      ]}
     />,
     {
       ...rest,

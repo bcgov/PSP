@@ -8,9 +8,13 @@ import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTy
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
 import { exists, isValidId } from '@/utils';
+import AppRoute from '@/utils/AppRoute';
 
 import { SideBarContext } from '../context/sidebarContext';
+import { PropertyEditForms } from '../property/PropertyRouter';
 import { UpdatePropertyDetailsContainer } from '../property/tabs/propertyDetails/update/UpdatePropertyDetailsContainer';
+import { PropertyContactEditContainer } from '../property/tabs/propertyDetailsManagement/update/PropertyContactEditContainer';
+import { PropertyContactEditForm } from '../property/tabs/propertyDetailsManagement/update/PropertyContactEditForm';
 import { PropertyManagementUpdateContainer } from '../property/tabs/propertyDetailsManagement/update/summary/PropertyManagementUpdateContainer';
 import { PropertyManagementUpdateForm } from '../property/tabs/propertyDetailsManagement/update/summary/PropertyManagementUpdateForm';
 import UpdatePropertyForm from '../property/tabs/propertyResearch/update/UpdatePropertyForm';
@@ -106,6 +110,21 @@ export const FilePropertyRouter: React.FC<IFilePropertyRouterProps> = props => {
             ref={props.formikRef}
           />
         </Route>
+        <AppRoute
+          exact
+          path={`${path}/${InventoryTabNames.management}/${PropertyEditForms.UpdateContactContainer}/:contactId?`}
+          customRender={({ match }) => (
+            <PropertyContactEditContainer
+              propertyId={fileProperty?.propertyId}
+              contactId={match.params.contactId ? +match.params.contactId : 0}
+              View={PropertyContactEditForm}
+              onSuccess={onChildSuccess}
+              ref={props.formikRef}
+            />
+          )}
+          key={PropertyEditForms.UpdateContactContainer}
+          title="Update Contact"
+        ></AppRoute>
         <Redirect from={`${path}`} to={`${url}/${InventoryTabNames.property}?edit=true`} />
       </Switch>
     );

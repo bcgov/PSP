@@ -1,13 +1,17 @@
 import { FieldArray, FieldArrayRenderProps, FormikProps } from 'formik';
-import { LatLngLiteral } from 'leaflet';
+import { geoJSON, LatLngLiteral } from 'leaflet';
 import isNumber from 'lodash/isNumber';
 import { useCallback, useContext, useRef } from 'react';
 import { Col, Row } from 'react-bootstrap';
+import { PiCornersOut } from 'react-icons/pi';
 
+import { LinkButton } from '@/components/common/buttons';
 import { ModalProps } from '@/components/common/GenericModal';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { Section } from '@/components/common/Section/Section';
+import TooltipWrapper from '@/components/common/TooltipWrapper';
 import MapSelectorContainer from '@/components/propertySelector/MapSelectorContainer';
 import { IMapProperty } from '@/components/propertySelector/models';
 import { ModalContext } from '@/contexts/modalContext';
@@ -16,7 +20,13 @@ import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
 import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
 import { useProperties } from '@/hooks/repositories/useProperties';
 import { ApiGen_Concepts_PropertyView } from '@/models/api/generated/ApiGen_Concepts_PropertyView';
-import { exists, isLatLngInFeatureSetBoundary, isValidId, isValidString } from '@/utils';
+import {
+  exists,
+  isLatLngInFeatureSetBoundary,
+  isValidId,
+  isValidString,
+  latLngLiteralToGeometry,
+} from '@/utils';
 
 import { FormLeaseProperty, LeaseFormModel } from '../../models';
 import SelectedPropertyHeaderRow from './selectedPropertyList/SelectedPropertyHeaderRow';
@@ -33,6 +43,8 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
   const { getPropertiesFromView: getProperties } = useProperties();
   const { setModalContent, setDisplayModal } = useContext(ModalContext);
   const { getPrimaryAddressByPid, bcaLoading } = useBcaAddress();
+
+  const mapMachine = useMapStateMachine();
 
   const arrayHelpersRef = useRef<FieldArrayRenderProps | null>(null);
 
@@ -77,6 +89,21 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
 
     const result = await getProperties.execute(params);
     return result?.items ?? undefined;
+  };
+
+  const fitBoundaries = () => {
+    const fileProperties = values.properties;
+
+    if (exists(fileProperties)) {
+      const locations = fileProperties
+        .map(p => p?.property?.polygon ?? latLngLiteralToGeometry(p?.property?.fileLocation))
+        .filter(exists);
+      const bounds = geoJSON(locations).getBounds();
+
+      if (exists(bounds) && bounds.isValid()) {
+        mapMachine.requestFlyToBounds(bounds);
+      }
+    }
   };
 
   const confirmAdd = useCallback(
@@ -234,7 +261,23 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
                     />
                   </Col>
                 </Row>
-                <Section header="Selected properties">
+                <Section
+                  header={
+                    <Row>
+                      <Col xs="11">Selected Properties</Col>
+                      <Col>
+                        <TooltipWrapper
+                          tooltip="Fit map to the file properties"
+                          tooltipId="property-selector-tooltip"
+                        >
+                          <LinkButton title="Fit boundaries button" onClick={fitBoundaries}>
+                            <PiCornersOut size={18} className="mr-2" />
+                          </LinkButton>
+                        </TooltipWrapper>
+                      </Col>
+                    </Row>
+                  }
+                >
                   <SelectedPropertyHeaderRow />
                   {formikProps.values.properties.map((leaseProperty, index) => {
                     const property = leaseProperty?.property;

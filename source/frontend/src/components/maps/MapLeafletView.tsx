@@ -33,8 +33,8 @@ import { LegendControl } from './leaflet/Control/Legend/LegendControl';
 import { ZoomOutButton } from './leaflet/Control/ZoomOut/ZoomOutButton';
 import { LocationPopupContainer } from './leaflet/LayerPopup/LocationPopupContainer';
 import { FilePropertiesLayer } from './leaflet/Layers/FilePropertiesLayer';
-import { InventoryLayer } from './leaflet/Layers/InventoryLayer';
 import { LeafletLayerListener } from './leaflet/Layers/LeafletLayerListener';
+import { MarkerLayer } from './leaflet/Layers/MarkerLayer';
 import { MapEvents } from './leaflet/MapEvents/MapEvents';
 import * as Styled from './leaflet/styles';
 import { EsriVectorTileLayer } from './leaflet/VectorTileLayer/EsriVectorTileLayer';
@@ -79,6 +79,7 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
       return;
     }
     timer.current = setTimeout(() => {
+      mapMachine.mapClearLocationMark();
       mapMachine.mapClick(latlng);
       timer.current = null;
     }, doubleClickInterval ?? 250);
@@ -169,13 +170,12 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
   useEffect(() => {
     if (hasPendingFlyTo && isMapReady) {
       if (requestedFlyTo.bounds !== null) {
-        mapRef?.current?.flyToBounds(requestedFlyTo.bounds, { animate: false });
+        mapRef?.current?.flyToBounds(requestedFlyTo.bounds, { animate: true });
       }
       if (requestedFlyTo.location !== null) {
         mapRef?.current?.flyTo(requestedFlyTo.location, MAP_MAX_ZOOM, {
-          animate: false,
+          animate: true,
         });
-        mapRef?.current?.panTo(requestedFlyTo.location);
       }
 
       mapMachineProcessFlyTo();
@@ -280,11 +280,11 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
           active={mapMachine.isFiltering}
         />
         <LayersControl onToggle={mapMachine.toggleMapLayerControl} />
-        <InventoryLayer
+        <MarkerLayer
           zoom={zoom}
           maxZoom={MAP_MAX_ZOOM}
           bounds={mapMachine.currentMapBounds ?? defaultBounds}
-        ></InventoryLayer>
+        />
 
         {/* Client-side "layer" to highlight file property boundaries (when in the context of a file) */}
         <Pane name="fileProperties" style={{ zIndex: 600 }}>

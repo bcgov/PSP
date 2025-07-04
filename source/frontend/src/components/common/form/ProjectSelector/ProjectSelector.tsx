@@ -7,6 +7,8 @@ import { IAutocompletePrediction } from '@/interfaces';
 export interface IProjectSelectorProps {
   /** The formik field name */
   field: string;
+
+  disabled?: boolean;
   /* Called whenever the component selection changes. Receives an array of the selected options. */
   onChange?: (selected: IAutocompletePrediction[]) => void;
 }
@@ -24,6 +26,7 @@ export const ProjectSelector: React.FC<IProjectSelectorProps> = props => {
       options={matchedProjects}
       onSearch={handleTypeaheadSearch}
       onChange={props.onChange}
+      disabled={props.disabled ?? false}
     />
   );
 };
