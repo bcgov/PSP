@@ -1090,7 +1090,7 @@ namespace Pims.Api.Test.Services
             var propertyActivityRepository = this._helper.GetService<Mock<IPropertyActivityRepository>>();
             propertyActivityRepository.Setup(x => x.GetActivitiesByManagementFile(It.IsAny<long>())).Returns(new List<PimsPropertyActivity>());
 
-            var statusMock = this._helper.GetService<Mock<IManagementStatusSolver>>();
+            var statusMock = this._helper.GetService<Mock<IManagementFileStatusSolver>>();
             statusMock.Setup(x => x.GetCurrentManagementStatus(It.IsAny<string>())).Returns(ManagementFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<ManagementFileStatusTypes>())).Returns(true);
 
