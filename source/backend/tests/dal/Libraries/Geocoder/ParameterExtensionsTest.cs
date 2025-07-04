@@ -48,7 +48,6 @@ namespace Pims.Dal.Test.Libraries.Geocoder
             result[nameof(address.MaxDistance).LowercaseFirstCharacter()].Should().Be($"{address.MaxDistance}");
             result[nameof(address.Extrapolate).LowercaseFirstCharacter()].Should().Be($"{address.Extrapolate}".ToLower());
             if (!string.IsNullOrWhiteSpace(address.Interpolation)) result[nameof(address.Interpolation).LowercaseFirstCharacter()].Should().Be(address.Interpolation);
-            if (!string.IsNullOrWhiteSpace(address.Ver)) result[nameof(address.Ver).LowercaseFirstCharacter()].Should().Be(address.Ver);
             if (!string.IsNullOrWhiteSpace(address.AddressString)) result[nameof(address.AddressString).LowercaseFirstCharacter()].Should().Be(address.AddressString);
             if (!string.IsNullOrWhiteSpace(address.LocationDescriptor)) result[nameof(address.LocationDescriptor).LowercaseFirstCharacter()].Should().Be(address.LocationDescriptor);
             if (!string.IsNullOrWhiteSpace(address.MatchPrecision)) result[nameof(address.MatchPrecision).LowercaseFirstCharacter()].Should().Be(address.MatchPrecision);
