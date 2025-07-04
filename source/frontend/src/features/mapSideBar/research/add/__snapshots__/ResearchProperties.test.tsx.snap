@@ -214,54 +214,54 @@ exports[`ResearchProperties component > renders as expected when provided no pro
   margin-right: 0;
 }
 
-.c21.c21.btn {
+.c22.c22.btn {
   background-color: unset;
   border: none;
 }
 
-.c21.c21.btn:hover,
-.c21.c21.btn:focus,
-.c21.c21.btn:active {
+.c22.c22.btn:hover,
+.c22.c22.btn:focus,
+.c22.c22.btn:active {
   background-color: unset;
   outline: none;
   box-shadow: none;
 }
 
-.c21.c21.btn svg {
+.c22.c22.btn svg {
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
 
-.c21.c21.btn svg:hover {
+.c22.c22.btn svg:hover {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
 }
 
-.c21.c21.btn.btn-primary svg {
+.c22.c22.btn.btn-primary svg {
   color: #013366;
 }
 
-.c21.c21.btn.btn-primary svg:hover {
+.c22.c22.btn.btn-primary svg:hover {
   color: #013366;
 }
 
-.c21.c21.btn.btn-light svg {
+.c22.c22.btn.btn-light svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c21.c21.btn.btn-light svg:hover {
+.c22.c22.btn.btn-light svg:hover {
   color: #CE3E39;
 }
 
-.c21.c21.btn.btn-info svg {
+.c22.c22.btn.btn-info svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c21.c21.btn.btn-info svg:hover {
+.c22.c22.btn.btn-info svg:hover {
   color: var(--surface-color-primary-button-hover);
 }
 
-.c22.c22.btn {
+.c23.c23.btn {
   font-size: 1.4rem;
   color: #aaaaaa;
   -webkit-text-decoration: none;
@@ -269,13 +269,13 @@ exports[`ResearchProperties component > renders as expected when provided no pro
   line-height: unset;
 }
 
-.c22.c22.btn .text {
+.c23.c23.btn .text {
   display: none;
 }
 
-.c22.c22.btn:hover,
-.c22.c22.btn:active,
-.c22.c22.btn:focus {
+.c23.c23.btn:hover,
+.c23.c23.btn:active,
+.c23.c23.btn:focus {
   color: #d8292f;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -289,9 +289,9 @@ exports[`ResearchProperties component > renders as expected when provided no pro
   flex-direction: row;
 }
 
-.c22.c22.btn:hover .text,
-.c22.c22.btn:active .text,
-.c22.c22.btn:focus .text {
+.c23.c23.btn:hover .text,
+.c23.c23.btn:active .text,
+.c23.c23.btn:focus .text {
   display: inline;
   line-height: 2rem;
 }
@@ -315,7 +315,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
   border-bottom-left-radius: 0;
 }
 
-.c20 {
+.c21 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -327,7 +327,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
   gap: 0.8rem;
 }
 
-.c20 .form-label {
+.c21 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
@@ -474,19 +474,23 @@ exports[`ResearchProperties component > renders as expected when provided no pro
   font-family: 'BcSans-Bold';
 }
 
-.c19 {
+.c20 {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.c17 {
+.c18 {
   min-width: 3rem;
   min-height: 4.5rem;
 }
 
-.c18 {
+.c19 {
   font-size: 1.2rem;
+}
+
+.c17 {
+  min-height: 4.5rem;
 }
 
 <div
@@ -1091,7 +1095,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
             </div>
           </div>
           <div
-            class="align-items-center mb-3 no-gutters row"
+            class="c17 align-items-center mb-3 no-gutters row"
           >
             <div
               class="col-md-3"
@@ -1100,7 +1104,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
                 class="mb-0 d-flex align-items-center"
               >
                 <svg
-                  class="c17"
+                  class="c18"
                   height="45"
                   id="Layer_2"
                   viewBox="0 0 20 30"
@@ -1157,7 +1161,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
                       </g>
                     </g>
                     <text
-                      class="c18"
+                      class="c19"
                       textLength="1.25rem"
                       x="7"
                       y="15"
@@ -1170,7 +1174,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
                   </title>
                 </svg>
                 <div
-                  class="c19 pl-3"
+                  class="c20 pl-3"
                 >
                   PID: 123-456-789
                 </div>
@@ -1180,7 +1184,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
               class="col-md-5"
             >
               <div
-                class="c20 mb-0 w-100 input form-group"
+                class="c21 mb-0 w-100 input form-group"
               >
                 <input
                   class="form-control"
@@ -1222,7 +1226,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
               class="pl-3 col-md-1"
             >
               <button
-                class="c14 Button c21 btn btn-primary"
+                class="c14 Button c22 btn btn-primary"
                 title="move-pin-location"
                 type="button"
               >
@@ -1246,10 +1250,10 @@ exports[`ResearchProperties component > renders as expected when provided no pro
               </button>
             </div>
             <div
-              class="col-md-2"
+              class="col-md-1"
             >
               <button
-                class="c14 Button c22 btn btn-link"
+                class="c14 Button c23 btn btn-link"
                 type="button"
               >
                 <div
@@ -1287,7 +1291,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
             </div>
           </div>
           <div
-            class="align-items-center mb-3 no-gutters row"
+            class="c17 align-items-center mb-3 no-gutters row"
           >
             <div
               class="col-md-3"
@@ -1296,7 +1300,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
                 class="mb-0 d-flex align-items-center"
               >
                 <svg
-                  class="c17"
+                  class="c18"
                   height="45"
                   id="Layer_2"
                   viewBox="0 0 20 30"
@@ -1353,7 +1357,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
                       </g>
                     </g>
                     <text
-                      class="c18"
+                      class="c19"
                       textLength="1.25rem"
                       x="7"
                       y="15"
@@ -1366,7 +1370,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
                   </title>
                 </svg>
                 <div
-                  class="c19 pl-3"
+                  class="c20 pl-3"
                 >
                   PIN: 1111222
                 </div>
@@ -1376,7 +1380,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
               class="col-md-5"
             >
               <div
-                class="c20 mb-0 w-100 input form-group"
+                class="c21 mb-0 w-100 input form-group"
               >
                 <input
                   class="form-control"
@@ -1418,7 +1422,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
               class="pl-3 col-md-1"
             >
               <button
-                class="c14 Button c21 btn btn-primary"
+                class="c14 Button c22 btn btn-primary"
                 title="move-pin-location"
                 type="button"
               >
@@ -1442,10 +1446,10 @@ exports[`ResearchProperties component > renders as expected when provided no pro
               </button>
             </div>
             <div
-              class="col-md-2"
+              class="col-md-1"
             >
               <button
-                class="c14 Button c22 btn btn-link"
+                class="c14 Button c23 btn btn-link"
                 type="button"
               >
                 <div

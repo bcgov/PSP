@@ -21,7 +21,7 @@ describe('ManagementTeamSubForm component', () => {
     const ref = createRef<FormikProps<WithManagementTeam>>();
     const utils = render(
       <Formik innerRef={ref} initialValues={props.initialForm} onSubmit={vi.fn()}>
-        {formikProps => <ManagementTeamSubForm canEditDetails={true}  />}
+        {formikProps => <ManagementTeamSubForm canEditDetails={true} />}
       </Formik>,
       {
         ...renderOptions,

@@ -12,6 +12,7 @@ using Pims.Core.Security;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
+using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
 
 namespace Pims.Api.Services
@@ -71,6 +72,7 @@ namespace Pims.Api.Services
             // Update marker locations in the context of this file
             foreach (var incomingManagementProperty in managementFile.PimsManagementFileProperties)
             {
+                incomingManagementProperty.IsActive = true;
                 _propertyService.PopulateNewFileProperty(incomingManagementProperty);
             }
 
@@ -203,6 +205,13 @@ namespace Pims.Api.Services
                         needsUpdate = true;
                     }
 
+                    if (incomingManagementProperty.IsActive != existingProperty.IsActive)
+                    {
+                        existingProperty.IsActive = incomingManagementProperty.IsActive;
+                        AddPropertyActiveNote(incomingManagementProperty);
+                        needsUpdate = true;
+                    }
+
                     var incomingGeom = incomingManagementProperty.Location;
                     var existingGeom = existingProperty.Location;
                     if (existingGeom is null || (incomingGeom is not null && !existingGeom.EqualsExact(incomingGeom)))
@@ -319,6 +328,26 @@ namespace Pims.Api.Services
                 {
                     IsSystemGenerated = true,
                     NoteTxt = $"Management File status changed from {currentManagementFile.ManagementFileStatusTypeCodeNavigation.Description} to {newStatus.Description}",
+                    AppCreateTimestamp = DateTime.Now,
+                    AppCreateUserid = this._user.GetUsername(),
+                },
+            };
+
+            _entityNoteRepository.AddNoteRelationship(fileNoteInstance);
+        }
+
+        private void AddPropertyActiveNote(PimsManagementFileProperty updateManagementFileProperty)
+        {
+            string disabledOrEnabled = updateManagementFileProperty.IsActive ? "Enabled" : "Disabled";
+            PimsManagementFileNote fileNoteInstance = new()
+            {
+                ManagementFileId = updateManagementFileProperty.ManagementFileId,
+                AppCreateTimestamp = DateTime.Now,
+                AppCreateUserid = _user.GetUsername(),
+                Note = new PimsNote()
+                {
+                    IsSystemGenerated = true,
+                    NoteTxt = $"Management File property {(updateManagementFileProperty as IFilePropertyEntity).GetPropertyName()} {disabledOrEnabled}",
                     AppCreateTimestamp = DateTime.Now,
                     AppCreateUserid = this._user.GetUsername(),
                 },
