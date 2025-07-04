@@ -152,7 +152,7 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
         <LtsaPlanTabView
           spcpData={composedPropertyState.spcpWrapper?.response}
           ltsaRequestedOn={composedPropertyState.spcpWrapper?.requestedOn}
-          loading={composedPropertyState.ltsaWrapper?.loading ?? false}
+          loading={composedPropertyState.spcpWrapper?.loading ?? false}
           planNumber={retrievedPlanNumber}
         />
       ),

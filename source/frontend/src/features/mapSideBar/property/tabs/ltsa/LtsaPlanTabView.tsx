@@ -138,7 +138,7 @@ export const LtsaPlanTabView: React.FunctionComponent<
               </div>
             </Section>
 
-            <Section header="Charges on Strata common Property" isCollapsable initiallyExpanded>
+            <Section header="Charges on Strata Common Property" isCollapsable initiallyExpanded>
               <div>
                 {charges.length === 0 && 'None'}
 

@@ -72,7 +72,10 @@ vi.mocked(useApiProperties).mockReturnValue({
 });
 
 vi.mock('@/hooks/useLtsa');
-vi.mocked(useLtsa).mockReturnValue(getMockRepositoryObj());
+vi.mocked(useLtsa, { partial: true }).mockReturnValue({
+  ltsaRequestWrapper: getMockRepositoryObj(),
+  getStrataPlanCommonProperty: getMockRepositoryObj(),
+});
 
 vi.mock('@/hooks/repositories/useProjectProvider');
 vi.mocked(useProjectProvider, { partial: true }).mockReturnValue({
