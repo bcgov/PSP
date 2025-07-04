@@ -209,54 +209,54 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c29.c29.btn {
+.c30.c30.btn {
   background-color: unset;
   border: none;
 }
 
-.c29.c29.btn:hover,
-.c29.c29.btn:focus,
-.c29.c29.btn:active {
+.c30.c30.btn:hover,
+.c30.c30.btn:focus,
+.c30.c30.btn:active {
   background-color: unset;
   outline: none;
   box-shadow: none;
 }
 
-.c29.c29.btn svg {
+.c30.c30.btn svg {
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
 
-.c29.c29.btn svg:hover {
+.c30.c30.btn svg:hover {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
 }
 
-.c29.c29.btn.btn-primary svg {
+.c30.c30.btn.btn-primary svg {
   color: #013366;
 }
 
-.c29.c29.btn.btn-primary svg:hover {
+.c30.c30.btn.btn-primary svg:hover {
   color: #013366;
 }
 
-.c29.c29.btn.btn-light svg {
+.c30.c30.btn.btn-light svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c29.c29.btn.btn-light svg:hover {
+.c30.c30.btn.btn-light svg:hover {
   color: #CE3E39;
 }
 
-.c29.c29.btn.btn-info svg {
+.c30.c30.btn.btn-info svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c29.c29.btn.btn-info svg:hover {
+.c30.c30.btn.btn-info svg:hover {
   color: var(--surface-color-primary-button-hover);
 }
 
-.c30.c30.btn {
+.c31.c31.btn {
   font-size: 1.4rem;
   color: #aaaaaa;
   -webkit-text-decoration: none;
@@ -264,13 +264,13 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   line-height: unset;
 }
 
-.c30.c30.btn .text {
+.c31.c31.btn .text {
   display: none;
 }
 
-.c30.c30.btn:hover,
-.c30.c30.btn:active,
-.c30.c30.btn:focus {
+.c31.c31.btn:hover,
+.c31.c31.btn:active,
+.c31.c31.btn:focus {
   color: #d8292f;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -284,9 +284,9 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   flex-direction: row;
 }
 
-.c30.c30.btn:hover .text,
-.c30.c30.btn:active .text,
-.c30.c30.btn:focus .text {
+.c31.c31.btn:hover .text,
+.c31.c31.btn:active .text,
+.c31.c31.btn:focus .text {
   display: inline;
   line-height: 2rem;
 }
@@ -310,7 +310,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   border-bottom-left-radius: 0;
 }
 
-.c28 {
+.c29 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -322,7 +322,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   gap: 0.8rem;
 }
 
-.c28 .form-label {
+.c29 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
@@ -482,19 +482,23 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c27 {
+.c28 {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.c25 {
+.c26 {
   min-width: 3rem;
   min-height: 4.5rem;
 }
 
-.c26 {
+.c27 {
   font-size: 1.2rem;
+}
+
+.c25 {
+  min-height: 4.5rem;
 }
 
 .c5.btn.btn-light.Button {
@@ -579,7 +583,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   align-items: end;
 }
 
-.c31 {
+.c32 {
   position: -webkit-sticky;
   position: sticky;
   padding-top: 2rem;
@@ -1267,7 +1271,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
               class="collapse show"
             >
               <div
-                class="align-items-center mb-3 no-gutters row"
+                class="c25 align-items-center mb-3 no-gutters row"
               >
                 <div
                   class="col-md-3"
@@ -1276,7 +1280,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                     class="mb-0 d-flex align-items-center"
                   >
                     <svg
-                      class="c25"
+                      class="c26"
                       height="45"
                       id="Layer_2"
                       viewBox="0 0 20 30"
@@ -1333,7 +1337,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                           </g>
                         </g>
                         <text
-                          class="c26"
+                          class="c27"
                           textLength="1.25rem"
                           x="7"
                           y="15"
@@ -1346,7 +1350,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                       </title>
                     </svg>
                     <div
-                      class="c27 pl-3"
+                      class="c28 pl-3"
                     >
                       PID: 123-456-789
                     </div>
@@ -1356,7 +1360,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                   class="col-md-5"
                 >
                   <div
-                    class="c28 mb-0 w-100 input form-group"
+                    class="c29 mb-0 w-100 input form-group"
                   >
                     <input
                       class="form-control"
@@ -1398,7 +1402,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                   class="pl-3 col-md-1"
                 >
                   <button
-                    class="c4 Button c29 btn btn-primary"
+                    class="c4 Button c30 btn btn-primary"
                     title="move-pin-location"
                     type="button"
                   >
@@ -1422,10 +1426,10 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                   </button>
                 </div>
                 <div
-                  class="col-md-2"
+                  class="col-md-1"
                 >
                   <button
-                    class="c4 Button c30 btn btn-link"
+                    class="c4 Button c31 btn btn-link"
                     type="button"
                   >
                     <div
@@ -1469,7 +1473,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
           class=""
         >
           <div
-            class="c31 justify-content-end pt-4 p-0 no-gutters row"
+            class="c32 justify-content-end pt-4 p-0 no-gutters row"
           >
             <div
               class="pr-3 col-auto"
