@@ -181,7 +181,9 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
                             {currentFilePropertyId === fileProperty?.id ? (
                               <span title="View">{propertyName.value}</span>
                             ) : (
-                              <LinkButton title="View">{propertyName.value}</LinkButton>
+                              <LinkButton data-testid={`menu-item-property-${index}`} title="View">
+                                {propertyName.value}
+                              </LinkButton>
                             )}
                           </Col>
                           <Col xs="auto">
@@ -190,6 +192,8 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
                                 event.stopPropagation();
                                 onZoomToProperty(fileProperty);
                               }}
+                              data-testid={`menu-item-zoom-${index}`}
+                              title="Zoom to property"
                             >
                               <FaSearchPlus size={18} className="mr-2" />
                             </LinkButton>

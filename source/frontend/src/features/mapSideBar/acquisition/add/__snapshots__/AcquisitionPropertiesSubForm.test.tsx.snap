@@ -1403,7 +1403,7 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
           class="col-auto"
         >
           <button
-            class="c7 Button btn btn-link"
+            class="c8 Button btn btn-link"
             type="button"
           >
             <div
@@ -1599,7 +1599,7 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
           class="col-auto"
         >
           <button
-            class="c7 Button btn btn-link"
+            class="c8 Button btn btn-link"
             type="button"
           >
             <div

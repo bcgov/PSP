@@ -436,7 +436,7 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
       class="col-auto"
     >
       <button
-        class="c4 Button btn btn-link"
+        class="c5 Button btn btn-link"
         type="button"
       >
         <div
