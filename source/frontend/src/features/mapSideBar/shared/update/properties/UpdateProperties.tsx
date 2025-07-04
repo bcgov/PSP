@@ -40,6 +40,7 @@ export interface IUpdatePropertiesProps {
   confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
   confirmBeforeAddMessage?: React.ReactNode;
   formikRef?: React.RefObject<FormikProps<any>>;
+  disableProperties?: boolean;
 }
 
 export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> = props => {
@@ -268,6 +269,7 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
                         nameSpace={`properties.${index}`}
                         index={index}
                         property={property.toFeatureDataset()}
+                        showDisable={props.disableProperties}
                       />
                     ))}
                     {formikProps.values.properties.length === 0 && (
