@@ -36,7 +36,7 @@ describe('LtsaPlanTabView component', () => {
 
   beforeAll(() => {
     vi.useFakeTimers();
-    vi.setSystemTime(new Date('06-Apr-2022 11:32 AM').getTime());
+    vi.setSystemTime(new Date('06-Apr-2022 11:00 AM').getTime());
   });
 
   afterAll(() => {
@@ -55,7 +55,7 @@ describe('LtsaPlanTabView component', () => {
   it('renders as expected when provided valid ltsa data object and requested on datetime', () => {
     const { component } = setup({
       spcpData: getMockLtsaSPCPResponse(),
-      ltsaRequestedOn: new Date('06-Apr-2022 11:32 AM'),
+      ltsaRequestedOn: new Date('06-Apr-2022 11:00 AM'),
       loading: false,
     });
 
