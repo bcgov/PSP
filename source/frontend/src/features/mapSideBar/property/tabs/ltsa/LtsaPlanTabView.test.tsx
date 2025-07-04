@@ -34,6 +34,15 @@ describe('LtsaPlanTabView component', () => {
     };
   };
 
+  beforeAll(() => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('06-Apr-2022 11:32 AM').getTime());
+  });
+
+  afterAll(() => {
+    vi.useRealTimers();
+  });
+
   it('renders a spinner when the ltsa data is loading', () => {
     const {
       component: { getByTestId },
