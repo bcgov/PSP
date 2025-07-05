@@ -7,7 +7,14 @@ import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvi
 import { useExpropriationEventRepository } from '@/hooks/repositories/useExpropriationEventRepository';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
 import { getMockExpropriationFile } from '@/mocks/index.mock';
-import { act, getMockRepositoryObj, render, RenderOptions, waitFor, within } from '@/utils/test-utils';
+import {
+  act,
+  getMockRepositoryObj,
+  render,
+  RenderOptions,
+  waitFor,
+  within,
+} from '@/utils/test-utils';
 
 import {
   ExpropriationTabContainerView,
@@ -65,7 +72,7 @@ describe('Expropriation Tab Container View', () => {
         history: history,
       },
     );
-    await act(async () => { });
+    await act(async () => {});
     return {
       ...rendered,
       getNatureOfInterestForm1: () =>
