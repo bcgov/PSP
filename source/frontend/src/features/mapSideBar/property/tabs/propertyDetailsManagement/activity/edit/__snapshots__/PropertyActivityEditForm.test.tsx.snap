@@ -768,7 +768,7 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
                   <label
                     class="c9"
                   >
-                    Requested added date:
+                    Commencement:
                   </label>
                 </div>
                 <div
@@ -982,7 +982,7 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
                   <label
                     class="c9"
                   >
-                    Requestor:
+                    Contact manager:
                     <span>
                       <span
                         class="tooltip-icon"
@@ -1033,7 +1033,7 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
                   <label
                     class="c9"
                   >
-                    Involved parties:
+                    External contacts:
                   </label>
                 </div>
                 <div

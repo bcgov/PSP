@@ -1,5 +1,5 @@
 import { BBox } from 'geojson';
-import { LatLngBounds } from 'leaflet';
+import { LatLngBounds, LeafletMouseEvent } from 'leaflet';
 import React, { useMemo } from 'react';
 import { FeatureGroup, Marker, useMap } from 'react-leaflet';
 
@@ -71,7 +71,16 @@ export const MarkerLayer: React.FC<React.PropsWithChildren<InventoryLayerProps>>
 
       {exists(markedLocation) && (
         <FeatureGroup>
-          <Marker position={markedLocation} icon={getNotOwnerMarkerIcon(true)} />
+          <Marker
+            position={markedLocation}
+            icon={getNotOwnerMarkerIcon(true)}
+            eventHandlers={{
+              click: (e: LeafletMouseEvent) => {
+                e.originalEvent.stopPropagation();
+                mapMachine.mapClick(markedLocation);
+              },
+            }}
+          />
         </FeatureGroup>
       )}
     </>
