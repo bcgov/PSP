@@ -68,6 +68,7 @@ export const mockManagementFileResponse = (
       propertyName: null,
       location: null,
       displayOrder: null,
+      isActive: true,
       property: {
         id: 100,
         propertyType: null,
@@ -297,6 +298,7 @@ export const mockManagementFilePropertiesResponse =
   (): ApiGen_Concepts_ManagementFileProperty[] => [
     {
       id: 1,
+      isActive: null,
       propertyName: null,
       displayOrder: null,
       location: null,

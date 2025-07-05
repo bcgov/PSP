@@ -38,6 +38,11 @@ namespace Pims.Api.Models.Concepts.File
         public PropertyModel Property { get; set; }
 
         /// <summary>
+        /// get/set - Optional flag indicating if the relationship is active.
+        /// </summary>
+        public bool? IsActive { get; set; }
+
+        /// <summary>
         /// get/set - The relationship's property id.
         /// </summary>
         public long PropertyId { get; set; }

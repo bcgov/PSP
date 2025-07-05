@@ -60,6 +60,8 @@ export interface SelectedFeatureDataset extends FeatureDataset {
   regionFeature: Feature<Geometry, MOT_RegionalBoundary_Feature_Properties> | null;
   districtFeature: Feature<Geometry, MOT_DistrictBoundary_Feature_Properties> | null;
   municipalityFeature: Feature<Geometry, WHSE_Municipalities_Feature_Properties> | null;
+  isActive?: boolean;
+  displayOrder?: number;
 }
 
 const useLocationFeatureLoader = () => {
