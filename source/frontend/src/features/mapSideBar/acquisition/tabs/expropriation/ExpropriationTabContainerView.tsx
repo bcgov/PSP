@@ -2,7 +2,6 @@ import { FormikHelpers, FormikProps } from 'formik';
 import { useRef } from 'react';
 import { FaFileContract, FaPlus } from 'react-icons/fa';
 import { useHistory, useRouteMatch } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
@@ -55,12 +54,6 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
   const onGenerateForm8 = useGenerateExpropriationForm8();
   const onGenerateForm9 = useGenerateExpropriationForm9();
 
-  const onError = (error: Error) => {
-    if (error) {
-      toast.error(error?.message, { autoClose: 7000 });
-    }
-  };
-
   const handleGenerateForm1 = async (
     values: ExpropriationForm1Model,
     formikHelpers: FormikHelpers<ExpropriationForm1Model>,
@@ -68,10 +61,6 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
     try {
       if (acquisitionFile.id) {
         await onGenerateForm1(acquisitionFile.id, values);
-      }
-    } catch (e) {
-      if (typeof onError === 'function') {
-        onError(e as Error);
       }
     } finally {
       formikHelpers?.setSubmitting(false);
@@ -91,10 +80,6 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
       if (acquisitionFile.id) {
         await onGenerateForm5(acquisitionFile.id, values);
       }
-    } catch (e) {
-      if (typeof onError === 'function') {
-        onError(e as Error);
-      }
     } finally {
       formikHelpers?.setSubmitting(false);
     }
@@ -112,10 +97,6 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
     try {
       if (acquisitionFile.id) {
         await onGenerateForm9(acquisitionFile.id, values);
-      }
-    } catch (e) {
-      if (typeof onError === 'function') {
-        onError(e as Error);
       }
     } finally {
       formikHelpers?.setSubmitting(false);

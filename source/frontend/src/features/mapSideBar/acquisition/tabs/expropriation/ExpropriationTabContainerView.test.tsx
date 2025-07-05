@@ -7,7 +7,7 @@ import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvi
 import { useExpropriationEventRepository } from '@/hooks/repositories/useExpropriationEventRepository';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
 import { getMockExpropriationFile } from '@/mocks/index.mock';
-import { act, getMockRepositoryObj, render, RenderOptions, within } from '@/utils/test-utils';
+import { act, getMockRepositoryObj, render, RenderOptions, waitFor, within } from '@/utils/test-utils';
 
 import {
   ExpropriationTabContainerView,
@@ -15,13 +15,7 @@ import {
 } from './ExpropriationTabContainerView';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { getMockContactOrganizationWithOnePerson } from '@/mocks/contacts.mock';
-import { FormikProps } from 'formik';
-import { createRef } from 'react';
-import {
-  ExpropriationForm1Model,
-  ExpropriationForm5Model,
-  ExpropriationForm9Model,
-} from './models';
+import { useGenerateExpropriationForm1 } from '../../common/GenerateForm/hooks/useGenerateExpropriationForm1';
 
 const history = createMemoryHistory();
 
@@ -43,16 +37,18 @@ vi.mocked(useApiContacts).mockReturnValue({
   getContacts,
 } as unknown as ReturnType<typeof useApiContacts>);
 
-const handleGenerateForm1 = vi.fn();
+const onGenerateForm1 = vi.fn();
+vi.mock('../../common/GenerateForm/hooks/useGenerateExpropriationForm1');
+vi.mocked(useGenerateExpropriationForm1).mockReturnValue({
+  onGenerateForm1,
+} as unknown as ReturnType<typeof useGenerateExpropriationForm1>);
+
 const onError = vi.fn();
 
 describe('Expropriation Tab Container View', () => {
   const setup = async (
     renderOptions: RenderOptions & { props?: Partial<IExpropriationTabContainerViewProps> } = {},
   ) => {
-    const formikRefForm1 = createRef<FormikProps<ExpropriationForm1Model>>();
-    const formikRefForm5 = createRef<FormikProps<ExpropriationForm5Model>>();
-    const formikRefForm9 = createRef<FormikProps<ExpropriationForm9Model>>();
     const rendered = render(
       <ExpropriationTabContainerView
         {...renderOptions.props}
@@ -69,7 +65,7 @@ describe('Expropriation Tab Container View', () => {
         history: history,
       },
     );
-    await act(async () => {});
+    await act(async () => { });
     return {
       ...rendered,
       getNatureOfInterestForm1: () =>
@@ -146,27 +142,4 @@ describe('Expropriation Tab Container View', () => {
     expect(queryByText('Add Form 8')).toBeNull();
     expect(queryByTestId('tooltip-icon-deposit-notes-cannot-edit-tooltip')).toBeVisible();
   });
-
-  // it(`calls onError callback when generate form 1 endpoint fails`, async () => {
-  //   const error = new Error('Network error');
-  //   handleGenerateForm1.mockRejectedValueOnce(error);
-  //   const { getByText, getByTestId, getNatureOfInterestForm1, getPurposeForm1 } = await setup();
-
-  //   // pick an organization from contact manager
-  //   const form1Wrapper = getByTestId('form-1-section');
-  //   const form1SelectContactButton = within(form1Wrapper).getByTitle('Select Contact');
-  //   await act(async () => userEvent.click(form1SelectContactButton));
-  //   await act(async () => userEvent.click(getByTestId('selectrow-O3')));
-  //   await act(async () => userEvent.click(getByText('Select')));
-
-  //   // fill other form fields
-  //   await act(async () => userEvent.click(within(form1Wrapper).getByTestId('selectrow-1')));
-  //   await act(async () => userEvent.paste(getNatureOfInterestForm1(), 'foo'));
-  //   await act(async () => userEvent.paste(getPurposeForm1(), 'bar'));
-
-  //   await act(async () => userEvent.click(getByText(/Generate Form 1/i)));
-
-  //   expect(handleGenerateForm1).toHaveBeenCalled();
-  //   expect(onError).toHaveBeenCalledWith(error);
-  // });
 });

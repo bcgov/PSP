@@ -75,7 +75,7 @@ describe('Expropriation Form 1', () => {
     expect(getByText('At lease one impacted property is required')).toBeInTheDocument();
   });
 
-  it(`submits the form when Generate button is clicked`, async () => {
+  it(`submits the form when Generate form 1 button is clicked`, async () => {
     const { getByText, getByTestId, getByTitle, getNatureOfInterest, getPurpose, formikRef } =
       await setup();
 

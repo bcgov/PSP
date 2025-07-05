@@ -64,16 +64,6 @@ describe('Expropriation Form 5', () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it(`clears the form when Cancel button is clicked`, async () => {
-    const { getByText, getByTestId } = await setup();
-
-    await act(async () => userEvent.click(getByTestId('selectrow-1')));
-    expect(getByTestId('selectrow-1')).toBeChecked();
-
-    await act(async () => userEvent.click(getByText('Clear Form')));
-    expect(getByTestId('selectrow-1')).not.toBeChecked();
-  });
-
   it('validates form 5 values before generating', async () => {
     const { getByText, formikRef } = await setup();
     await act(async () => formikRef.current.submitForm());
@@ -97,21 +87,13 @@ describe('Expropriation Form 5', () => {
     expect(onError).not.toHaveBeenCalled();
   });
 
-  // it(`calls onError callback when generate endpoint fails`, async () => {
-  //   const error = new Error('Network error');
-  //   onGenerate.mockRejectedValueOnce(error);
-  //   const { getByText, getByTestId, getByTitle } = await setup();
+  it(`clears the form when Clear form button is clicked`, async () => {
+    const { getByText, getByTestId } = await setup();
 
-  //   // pick an organization from contact manager
-  //   await act(async () => userEvent.click(getByTitle('Select Contact')));
-  //   await act(async () => userEvent.click(getByTestId('selectrow-O3')));
-  //   await act(async () => userEvent.click(getByText('Select')));
+    await act(async () => userEvent.click(getByTestId('selectrow-1')));
+    expect(getByTestId('selectrow-1')).toBeChecked();
 
-  //   // fill other form fields
-  //   await act(async () => userEvent.click(getByTestId('selectrow-1')));
-  //   await act(async () => userEvent.click(getByText(/Generate Form 5/i)));
-
-  //   expect(onGenerate).toHaveBeenCalled();
-  //   expect(onError).toHaveBeenCalledWith(error);
-  // });
+    await act(async () => userEvent.click(getByText('Clear Form')));
+    expect(getByTestId('selectrow-1')).not.toBeChecked();
+  });
 });
