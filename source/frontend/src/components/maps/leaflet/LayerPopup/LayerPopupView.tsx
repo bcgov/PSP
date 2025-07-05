@@ -184,6 +184,7 @@ export const LayerPopupView: React.FC<React.PropsWithChildren<ILayerPopupViewPro
       </SimplePagination>
       <LayerPopupLinks
         onViewPropertyInfo={handleViewPropertyInfo}
+        latLng={layerPopup.latlng}
         bounds={getFirstBounds(layerPopup.layers)}
         onEllipsisClick={showFlyout ? closeFlyout : openFlyout}
         showViewPropertyInfo={showViewPropertyInfo}

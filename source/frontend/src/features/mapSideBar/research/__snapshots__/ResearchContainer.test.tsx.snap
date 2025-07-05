@@ -478,13 +478,13 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   padding-bottom: 0.5rem;
 }
 
-.c24 div.Button__value {
-  font-size: 1.4rem;
+.c24.selected {
+  font-weight: bold;
+  cursor: default;
 }
 
-.c24.selected {
-  cursor: default;
-  font-weight: bold;
+.c24 div.Button__value {
+  font-size: 1.4rem;
 }
 
 .c28 {
@@ -1002,9 +1002,10 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                 <div
                   class="c27"
                 >
+                  Active
                   <div
                     class="c24 no-gutters row"
-                    data-testid="menu-item-row-0"
+                    data-testid="menu-item-row-1"
                   >
                     <div
                       class="col-1"
@@ -1024,7 +1025,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                       <button
                         class="c4 Button btn btn-link"
                         data-testid="menu-item-property-0"
-                        title="View Property"
+                        title="View"
                         type="button"
                       >
                         <div

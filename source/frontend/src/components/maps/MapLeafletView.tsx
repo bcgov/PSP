@@ -79,7 +79,6 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
       return;
     }
     timer.current = setTimeout(() => {
-      mapMachine.mapClearLocationMark();
       mapMachine.mapClick(latlng);
       timer.current = null;
     }, doubleClickInterval ?? 250);
