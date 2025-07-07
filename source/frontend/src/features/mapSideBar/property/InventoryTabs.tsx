@@ -21,6 +21,7 @@ export enum InventoryTabNames {
   title = 'ltsa',
   value = 'bcassessment',
   research = 'research',
+  plan = 'plan',
   pims = 'pims',
   takes = 'takes',
   management = 'management',

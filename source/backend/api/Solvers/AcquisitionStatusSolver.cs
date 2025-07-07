@@ -72,8 +72,8 @@ namespace Pims.Api.Services
 
             var canEdit = acquisitionStatus switch
             {
-                AcquisitionStatusTypes.ACTIVE or AcquisitionStatusTypes.DRAFT or AcquisitionStatusTypes.HOLD => true,
-                AcquisitionStatusTypes.ARCHIV or AcquisitionStatusTypes.CANCEL or AcquisitionStatusTypes.CLOSED or AcquisitionStatusTypes.COMPLT => false,
+                AcquisitionStatusTypes.ACTIVE or AcquisitionStatusTypes.DRAFT => true,
+                AcquisitionStatusTypes.ARCHIV or AcquisitionStatusTypes.CANCEL or AcquisitionStatusTypes.CLOSED or AcquisitionStatusTypes.COMPLT or AcquisitionStatusTypes.HOLD => false,
                 _ => false,
             };
             return canEdit;

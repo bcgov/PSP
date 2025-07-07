@@ -122,6 +122,17 @@ export function formatApiPropertyManagementLease(
   }
 }
 
+export function isPlanNumberSPCP(planNumber: string): boolean {
+  if (!exists(planNumber)) {
+    return false;
+  }
+
+  const nonNumericPrefix = firstOrNull(planNumber?.match(/^\D+/)); // Extract non-numeric prefix
+  const isStrataCommonPropertyPrefix = nonNumericPrefix?.toUpperCase()?.endsWith('S'); // Check if the last character is 'S' PSP-10455
+
+  return isStrataCommonPropertyPrefix;
+}
+
 export function isStrataCommonProperty(
   feature: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties> | undefined | null,
 ) {
@@ -130,12 +141,11 @@ export function isStrataCommonProperty(
   }
 
   const planNumber = feature.properties.PLAN_NUMBER;
-  const nonNumericPrefix = firstOrNull(planNumber?.match(/^\D+/)); // Extract non-numeric prefix
-  const isStrataCommonPropertyPrefix = nonNumericPrefix?.toUpperCase()?.endsWith('S'); // Check if the last character is 'S' PSP-10455
+
   return (
+    isPlanNumberSPCP(planNumber) &&
     feature.properties.PID === null &&
     feature.properties.PIN === null &&
-    isStrataCommonPropertyPrefix &&
     feature.properties.OWNER_TYPE === 'Unclassified'
   );
 }
