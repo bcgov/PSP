@@ -20,6 +20,8 @@ export const SearchContainer: React.FC<ISearchContainerProps> = ({ View }) => {
     mapClick,
     requestCenterToLocation,
     mapFeatureData,
+    mapMarkLocation,
+    mapClearLocationMark,
   } = useMapStateMachine();
 
   const [propertySearchFilter, setPropertySearchFilter] = useState<IPropertyFilter | null>(null);
@@ -46,10 +48,12 @@ export const SearchContainer: React.FC<ISearchContainerProps> = ({ View }) => {
           latLng = filter.coordinates?.toLatLng();
       }
       if (latLng) {
-        mapClick(latLng);
+        mapMarkLocation(latLng);
         requestCenterToLocation(latLng);
+        mapClick(latLng);
       }
     } else {
+      mapClearLocationMark();
       setPropertySearchFilter(filter);
     }
   };
