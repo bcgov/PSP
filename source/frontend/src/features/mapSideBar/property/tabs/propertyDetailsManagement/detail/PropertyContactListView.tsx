@@ -36,7 +36,7 @@ export const PropertyContactListView: React.FunctionComponent<IPropertyContactLi
           title="Property Contact"
           addButtonText="Add a Contact"
           addButtonIcon={<FaUserPlus size={'2rem'} />}
-          onAdd={() => {
+          onButtonAction={() => {
             if (exists(matchProperty.params.propertyId)) {
               const path = generatePath(matchProperty.path, {
                 propertyId: matchProperty.params.propertyId,

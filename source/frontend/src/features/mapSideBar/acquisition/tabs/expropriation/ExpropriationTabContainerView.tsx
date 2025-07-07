@@ -124,10 +124,11 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
           initiallyExpanded
           header={
             <SectionListHeader
+              claims={[Claims.ACQUISITION_VIEW]}
               title="Form 1 - Notice of Expropriation"
               addButtonText="Generate Form 1"
               addButtonIcon={<FaFileContract size={'2rem'} />}
-              onGenerate={onGenerateForm1Click}
+              onButtonAction={onGenerateForm1Click}
             />
           }
           data-testid="form-1-section"
@@ -151,10 +152,11 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
           initiallyExpanded={false}
           header={
             <SectionListHeader
+              claims={[Claims.ACQUISITION_VIEW]}
               title="Form 5 - Certificate of Approval of Expropriation"
               addButtonText="Generate Form 5"
               addButtonIcon={<FaFileContract size={'2rem'} />}
-              onGenerate={onGenerateForm5Click}
+              onButtonAction={onGenerateForm5Click}
             />
           }
           data-testid="form-5-section"
@@ -182,7 +184,7 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
             title="Form 8 - Notice of Advance Payment"
             addButtonText="Add Form 8"
             addButtonIcon={<FaPlus size={'2rem'} />}
-            onAdd={() => {
+            onButtonAction={() => {
               history.push(`${match.url}/add`);
             }}
             cannotAddComponent={
@@ -214,10 +216,11 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
           initiallyExpanded={false}
           header={
             <SectionListHeader
+              claims={[Claims.ACQUISITION_VIEW]}
               title="Form 9 - Vesting Notice"
               addButtonText="Generate Form 9"
               addButtonIcon={<FaFileContract size={'2rem'} />}
-              onGenerate={onGenerateForm9Click}
+              onButtonAction={onGenerateForm9Click}
             />
           }
           data-testid="form-9-section"

@@ -13,9 +13,8 @@ export interface ISectionListHeaderProps {
   addButtonText?: string;
   addButtonIcon?: JSX.Element;
   cannotAddComponent?: JSX.Element;
-  onAdd?: () => void;
-  onGenerate?: () => void;
-  claims?: Claims[];
+  onButtonAction?: () => void;
+  claims: Claims[];
   'data-testId'?: string;
   className?: string;
   isAddEnabled?: boolean;
@@ -25,8 +24,7 @@ export const SectionListHeader: React.FunctionComponent<
   React.PropsWithChildren<ISectionListHeaderProps>
 > = props => {
   const { hasClaim } = useKeycloakWrapper();
-  const onClickAdd = () => props.onAdd && props.onAdd();
-  const onClickGenerate = () => props.onGenerate && props.onGenerate();
+  const onClickButtonAction = () => props.onButtonAction && props.onButtonAction();
 
   return (
     <StyledRow className={clsx('no-gutters', props.className)}>
@@ -34,20 +32,10 @@ export const SectionListHeader: React.FunctionComponent<
         {props.title}
       </Col>
       <Col xs="auto" className="my-1">
-        {hasClaim(props.claims) && exists(props.onAdd) && props.isAddEnabled !== false && (
-          <StyledSectionAddButton onClick={onClickAdd} data-testid={props['data-testId']}>
+        {hasClaim(props.claims) && exists(props.onButtonAction) && props.isAddEnabled !== false && (
+          <StyledSectionAddButton onClick={onClickButtonAction} data-testid={props['data-testId']}>
             {props.addButtonIcon}
             &nbsp;{props.addButtonText ?? 'Add'}
-          </StyledSectionAddButton>
-        )}
-        {exists(props.onGenerate) && props.isAddEnabled !== false && (
-          <StyledSectionAddButton
-            onClick={onClickGenerate}
-            data-testid={props['data-testId']}
-            title="Download File"
-          >
-            {props.addButtonIcon}
-            &nbsp;{props.addButtonText ?? 'Generate'}
           </StyledSectionAddButton>
         )}
         {!props.isAddEnabled && exists(props.cannotAddComponent) && (

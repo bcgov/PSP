@@ -80,7 +80,7 @@ export const ConsultationListView: React.FunctionComponent<IConsultationListView
             title="Approval / Consultations"
             addButtonText="Add Approval / Consultation"
             addButtonIcon={<FaPlus size="2rem" />}
-            onAdd={onAdd}
+            onButtonAction={onAdd}
             cannotAddComponent={
               <TooltipIcon toolTipId={`agreement-cannot-add-tooltip`} toolTip={cannotEditMessage} />
             }

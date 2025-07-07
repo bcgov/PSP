@@ -92,7 +92,7 @@ export const PeriodPaymentsView: React.FunctionComponent<
           addButtonText="Add a Period"
           addButtonIcon={<FaPlus size="2rem" />}
           claims={[Claims.LEASE_EDIT]}
-          onAdd={() => onEdit(defaultFormLeasePeriod)}
+          onButtonAction={() => onEdit(defaultFormLeasePeriod)}
           cannotAddComponent={
             <TooltipIcon
               toolTipId={`period-actions-cannot-add-tooltip`}
