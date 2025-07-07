@@ -93,7 +93,7 @@ export class ManagementActivityFormModel {
           propertyActivityId: this.id ?? 0,
           propertyId: x.propertyId,
           property: null,
-          rowVersion: matched.rowVersion ?? 0,
+          rowVersion: matched?.rowVersion ?? 0,
         } as ApiGen_Concepts_PropertyActivityProperty;
       }),
       invoices: this.invoices.map(i => i.toApi(this.id ?? 0)),
