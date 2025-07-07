@@ -83,6 +83,7 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
           defaultFilter={{ ...defaultPropertyFilter }}
           propertyFilter={props.propertyFilter}
           onChange={props.onFilterChange}
+          useGeocoder
         />
       </Section>
       <Section header="Results (PMBC)" isCollapsable initiallyExpanded>
