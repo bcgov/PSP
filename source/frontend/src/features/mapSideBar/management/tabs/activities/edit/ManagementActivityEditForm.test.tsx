@@ -20,6 +20,7 @@ import {
   ManagementActivityEditForm,
 } from './ManagementActivityEditForm';
 import { ManagementActivityFormModel } from './models';
+import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 
 // Need to mock this library for unit tests
 vi.mock('react-visibility-sensor', () => {
@@ -38,10 +39,13 @@ const storeState = {
 };
 
 const mockManagementActivityFormValues: ManagementActivityFormModel =
-  ManagementActivityFormModel.fromApi({
-    ...getMockPropertyManagementActivity(1),
-    activityProperties: [],
-  });
+  ManagementActivityFormModel.fromApi(
+    {
+      ...getMockPropertyManagementActivity(1),
+      activityProperties: [],
+    },
+    mockManagementFileResponse().fileProperties,
+  );
 
 const onCancel = vi.fn();
 const onSave = vi.fn();
@@ -95,7 +99,10 @@ describe('ManagementActivityEditForm component', () => {
   });
 
   beforeEach(() => {
-    initialValues = ManagementActivityFormModel.fromApi(getMockPropertyManagementActivity(1));
+    initialValues = ManagementActivityFormModel.fromApi(
+      getMockPropertyManagementActivity(1),
+      mockManagementFileResponse().fileProperties,
+    );
   });
 
   afterEach(() => {
@@ -261,6 +268,17 @@ describe('ManagementActivityEditForm component', () => {
 
   it('shows all properties selected by default when creating management activity', async () => {
     const mockDefaultValues = new ManagementActivityFormModel(null, 1);
+    mockDefaultValues.selectedProperties = mockManagementFileResponse().fileProperties.map(x => {
+      return {
+        id: x.id,
+        fileId: mockManagementFileResponse().id,
+        propertyName: x.propertyName,
+        location: x.location,
+        displayOrder: x.displayOrder,
+        property: x.property,
+        propertyId: x.propertyId,
+      } as ApiGen_Concepts_FileProperty;
+    });
 
     await setup({
       props: {
@@ -275,8 +293,19 @@ describe('ManagementActivityEditForm component', () => {
     expect(screen.getByTestId('selectrow-10')).toBeChecked();
   });
 
-  it('can select management file properties', async () => {
+  it('can de-select management file properties', async () => {
     const mockDefaultValues = new ManagementActivityFormModel(null, 1);
+    mockDefaultValues.selectedProperties = mockManagementFileResponse().fileProperties.map(x => {
+      return {
+        id: x.id,
+        fileId: mockManagementFileResponse().id,
+        propertyName: x.propertyName,
+        location: x.location,
+        displayOrder: x.displayOrder,
+        property: x.property,
+        propertyId: x.propertyId,
+      } as ApiGen_Concepts_FileProperty;
+    });
 
     await setup({
       props: {

@@ -44,6 +44,7 @@ export function createNoteTableColumns() {
 }
 
 export const createNoteActionsColumn = (
+  canEditNotes: boolean,
   onShowDetails: (note: ApiGen_Concepts_Note) => void,
   onDelete: (note: ApiGen_Concepts_Note) => void,
 ) => ({
@@ -62,6 +63,7 @@ export const createNoteActionsColumn = (
           <ViewButton onClick={() => onShowDetails(cellProps.row.original)} title="View Note" />
         )}
         {hasClaim(Claims.NOTE_DELETE) &&
+          canEditNotes &&
           exists(onDelete) &&
           !cellProps.row.original.isSystemGenerated && (
             <RemoveIconButton

@@ -26,10 +26,11 @@ import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
-import { exists, getLatLng, isValidId } from '@/utils';
+import { exists, getLatLng, isPlanNumberSPCP, isValidId } from '@/utils';
 
 import { getLeaseInfo, LeaseAssociationInfo } from '../../property/PropertyContainer';
 import CrownDetailsTabView from '../../property/tabs/crown/CrownDetailsTabView';
+import LtsaPlanTabView from '../../property/tabs/ltsa/LtsaPlanTabView';
 import { PropertyManagementTabView } from '../../property/tabs/propertyDetailsManagement/detail/PropertyManagementTabView';
 import PropertyResearchTabView from '../../property/tabs/propertyResearch/detail/PropertyResearchTabView';
 import ResearchStatusUpdateSolver from '../../research/tabs/fileDetails/ResearchStatusUpdateSolver';
@@ -51,6 +52,7 @@ export const PropertyFileContainer: React.FunctionComponent<
 > = props => {
   const pid = props.fileProperty?.property?.pid ?? undefined;
   const id = props.fileProperty?.property?.id ?? undefined;
+  const planNumber = props.fileProperty?.property?.planNumber ?? undefined;
   const location = props.fileProperty?.property?.location ?? undefined;
   const latLng = useMemo(() => getLatLng(location) ?? undefined, [location]);
   const { hasClaim } = useKeycloakWrapper();
@@ -82,6 +84,7 @@ export const PropertyFileContainer: React.FunctionComponent<
 
   const leaseAssociations =
     composedProperties?.propertyAssociationWrapper?.response?.leaseAssociations;
+
   useMemo(
     () =>
       hasClaim(Claims.LEASE_VIEW)
@@ -121,6 +124,21 @@ export const PropertyFileContainer: React.FunctionComponent<
     key: InventoryTabNames.title,
     name: 'Title',
   });
+
+  if (exists(planNumber) && isPlanNumberSPCP(planNumber)) {
+    tabViews.push({
+      content: (
+        <LtsaPlanTabView
+          spcpData={composedProperties.spcpWrapper?.response}
+          ltsaRequestedOn={composedProperties.spcpWrapper?.requestedOn}
+          loading={composedProperties.spcpWrapper?.loading ?? false}
+          planNumber={planNumber}
+        />
+      ),
+      key: InventoryTabNames.plan,
+      name: 'Plan',
+    });
+  }
 
   if (exists(composedProperties.composedProperty?.crownTenureFeatures)) {
     tabViews.push({
@@ -188,6 +206,7 @@ export const PropertyFileContainer: React.FunctionComponent<
       name: 'Property Details',
     });
   }
+
   if (isValidId(id)) {
     tabViews.push({
       content: (
@@ -242,7 +261,7 @@ export const PropertyFileContainer: React.FunctionComponent<
             type={NoteTypes.Property}
             entityId={composedProperties.apiWrapper.response.id}
             onSuccess={props.onChildSuccess}
-            NoteListView={NoteListView}
+            View={NoteListView}
           />
           <NoteSummaryContainer
             associationType={NoteTypes.Management_File}

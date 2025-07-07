@@ -38,6 +38,7 @@ export interface IMapStateMachineContext {
   requestedFlyTo: RequestedFlyTo;
   requestedCenterTo: RequestedCenterTo;
   mapMarkerSelected: MarkerSelected | null;
+  mapMarkedLocation: LatLngLiteral | null;
   mapLocationSelected: LatLngLiteral | null;
   mapLocationFeatureDataset: LocationFeatureDataset | null;
   selectedFeatureDataset: SelectedFeatureDataset | null;
@@ -79,6 +80,8 @@ export interface IMapStateMachineContext {
 
   mapClick: (latlng: LatLngLiteral) => void;
   mapMarkerClick: (featureSelected: MarkerSelected) => void;
+  mapMarkLocation: (laLng: LatLngLiteral) => void;
+  mapClearLocationMark: () => void;
 
   setMapSearchCriteria: (searchCriteria: IPropertyFilter) => void;
   refreshMapProperties: () => void;
@@ -236,6 +239,22 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
   const closeSidebar = useCallback(() => {
     serviceSend({
       type: 'CLOSE_SIDEBAR',
+    });
+  }, [serviceSend]);
+
+  const mapMarkLocation = useCallback(
+    (latlng: LatLngLiteral) => {
+      serviceSend({
+        type: 'MAP_MARK_LOCATION',
+        latlng,
+      });
+    },
+    [serviceSend],
+  );
+
+  const mapClearLocationMark = useCallback(() => {
+    serviceSend({
+      type: 'MAP_CLEAR_MARK_LOCATION',
     });
   }, [serviceSend]);
 
@@ -487,6 +506,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         requestedCenterTo: state.context.requestedCenterTo,
         mapMarkerSelected: state.context.mapFeatureSelected,
         mapLocationSelected: state.context.mapLocationSelected,
+        mapMarkedLocation: state.context.mapMarkedLocation,
         selectedFeatureDataset: state.context.selectedFeatureDataset,
         mapLocationFeatureDataset: state.context.mapLocationFeatureDataset,
         repositioningFeatureDataset: state.context.repositioningFeatureDataset,
@@ -521,6 +541,8 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         processFitBounds,
         openSidebar,
         closeSidebar,
+        mapMarkLocation,
+        mapClearLocationMark,
         requestFlyToLocation,
         requestCenterToLocation,
         requestFlyToBounds,

@@ -3,10 +3,12 @@ import { act, render, RenderOptions, screen, userEvent } from '@/utils/test-util
 
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import FileMenuView, { IFileMenuProps } from './FileMenuView';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 
 const onSelectFileSummary = vi.fn();
 const onSelectProperty = vi.fn();
 const onEditProperties = vi.fn();
+const mockRequestFlyToBounds = vi.fn();
 
 describe('FileMenuView component', () => {
   // render component under test
@@ -14,7 +16,7 @@ describe('FileMenuView component', () => {
     const rendered = render(
       <FileMenuView
         file={renderOptions.props?.file ?? mockAcquisitionFileResponse()}
-        currentPropertyIndex={renderOptions.props?.currentPropertyIndex ?? 0}
+        currentFilePropertyId={renderOptions.props?.currentFilePropertyId ?? 0}
         canEdit={renderOptions.props?.canEdit ?? false}
         isInNonEditableState={renderOptions.props?.isInNonEditableState ?? false}
         onSelectFileSummary={renderOptions.props?.onSelectFileSummary ?? onSelectFileSummary}
@@ -24,6 +26,7 @@ describe('FileMenuView component', () => {
       {
         useMockAuthentication: true,
         claims: [Claims.ACQUISITION_EDIT],
+        mockMapMachine: { ...mapMachineBaseMock, requestFlyToBounds: mockRequestFlyToBounds },
         ...renderOptions,
       },
     );
@@ -47,11 +50,11 @@ describe('FileMenuView component', () => {
   });
 
   it('renders the currently selected property with different style', () => {
-    setup({ props: { currentPropertyIndex: 1 } });
+    setup({ props: { currentFilePropertyId: 2 } });
 
     const fileSummary = screen.getByTestId('menu-item-summary');
-    const propertyOne = screen.getByTestId('menu-item-row-0');
-    const propertyTwo = screen.getByTestId('menu-item-row-1');
+    const propertyOne = screen.getByTestId('menu-item-row-1');
+    const propertyTwo = screen.getByTestId('menu-item-row-2');
 
     expect(propertyTwo).toHaveClass('selected');
     expect(propertyOne).not.toHaveClass('selected');
@@ -60,7 +63,7 @@ describe('FileMenuView component', () => {
 
   it('allows the selected property to be changed', async () => {
     setup();
-    const propertyTwo = screen.getByTestId('menu-item-row-1');
+    const propertyTwo = screen.getByTestId('menu-item-property-1');
     await act(async () => userEvent.click(propertyTwo));
     expect(onSelectProperty).toHaveBeenCalledWith(2);
   });
@@ -106,5 +109,35 @@ describe('FileMenuView component', () => {
 
     expect(button).toBeNull();
     expect(icon).toBeVisible();
+  });
+
+  it(`Request fly to properties boundaries`, async () => {
+    setup({
+      props: {
+        canEdit: true,
+        isInNonEditableState: true,
+      },
+    });
+
+    const boundariesButton = screen.queryByTestId('fit-file-properties-boundaries');
+
+    expect(boundariesButton).toBeVisible();
+    await act(async () => userEvent.click(boundariesButton));
+    expect(mockRequestFlyToBounds).toHaveBeenCalled();
+  });
+
+  it(`Request fly to single property`, async () => {
+    setup({
+      props: {
+        canEdit: true,
+        isInNonEditableState: true,
+      },
+    });
+
+    const zoomButton = screen.queryByTestId('menu-item-zoom-0');
+
+    expect(zoomButton).toBeVisible();
+    await act(async () => userEvent.click(zoomButton));
+    expect(mockRequestFlyToBounds).toHaveBeenCalled();
   });
 });

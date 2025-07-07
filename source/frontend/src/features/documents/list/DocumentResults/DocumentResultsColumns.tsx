@@ -23,6 +23,7 @@ import { ParentInformationDisplay } from '../DocumentListView';
 export interface IDocumentColumnProps {
   showParentInformation: boolean;
   relationshipDisplay?: ParentInformationDisplay;
+  canEditDocuments: boolean;
   onViewDetails: (values: ApiGen_Concepts_DocumentRelationship) => void;
   onViewParent: (relationshipType: ApiGen_CodeTypes_DocumentRelationType, parentId: number) => void;
   onDelete: (values: ApiGen_Concepts_DocumentRelationship) => void;
@@ -32,6 +33,7 @@ export interface IDocumentColumnProps {
 export const getDocumentColumns = ({
   showParentInformation,
   relationshipDisplay,
+  canEditDocuments,
   onViewDetails,
   onViewParent,
   onDelete,
@@ -95,7 +97,7 @@ export const getDocumentColumns = ({
       Header: 'Actions',
       width: 10,
       maxWidth: 10,
-      Cell: renderActions(onViewDetails, onDelete, showParentInformation),
+      Cell: renderActions(canEditDocuments, onViewDetails, onDelete, showParentInformation),
     },
   ];
   if (showParentInformation) {
@@ -197,6 +199,7 @@ function renderUploaded(cell: CellProps<DocumentRow, string | undefined>) {
 }
 
 const renderActions = (
+  canEditDocuments: boolean,
   onViewDetails: (values: ApiGen_Concepts_DocumentRelationship) => void,
   onDelete: (values: ApiGen_Concepts_DocumentRelationship) => void,
   showParentInformation: boolean,
@@ -216,8 +219,6 @@ const renderActions = (
       (original.mayanDocumentId && original.queueStatusTypeCode === null) ||
       (original.queueStatusTypeCode?.id === ApiGen_CodeTypes_DocumentQueueStatusTypes.SUCCESS &&
         original.mayanDocumentId);
-
-    const canDeleteDocument = documentInError || !documentProcessing;
 
     if (documentProcessing) {
       return (
@@ -263,7 +264,7 @@ const renderActions = (
           ></ViewButton>
         )}
 
-        {hasClaim(Claims.DOCUMENT_DELETE) && canDeleteDocument && !showParentInformation && (
+        {hasClaim(Claims.DOCUMENT_DELETE) && !showParentInformation && canEditDocuments && (
           <StyledRemoveLinkButton
             data-testid="document-delete-button"
             icon={<FaTrash size={21} id={`document-delete-${index}`} title="document delete" />}

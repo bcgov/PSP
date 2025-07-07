@@ -4,6 +4,7 @@ Alter the PIMS_PROP_MGMT_ACTIVITY_SUBTYPE table.
 Author        Date         Comment
 ------------  -----------  -----------------------------------------------------
 Doug Filteau  2023-May-15  Initial version.
+Doug Filteau  2025-Jun-27  Added UNKNOWN activity type.
 ----------------------------------------------------------------------------- */
 
 SET XACT_ABORT ON
@@ -34,6 +35,24 @@ IF @@ROWCOUNT = 1
      AND PROP_MGMT_ACTIVITY_SUBTYPE_CODE = @CurrCd;
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
+GO
+  
+-- --------------------------------------------------------------
+-- Insert the disabled 'UNKNOWN' activity subtype.
+-- --------------------------------------------------------------
+PRINT N'Insert the disabled "UNKNOWN" activity subtype.'
+GO
+DECLARE @CurrCd NVARCHAR(20)
+SET     @CurrCd = N'UNKNOWN'
+
+SELECT PROP_MGMT_ACTIVITY_SUBTYPE_CODE
+FROM   PIMS_PROP_MGMT_ACTIVITY_SUBTYPE
+WHERE  PROP_MGMT_ACTIVITY_SUBTYPE_CODE = @CurrCd;
+
+IF @@ROWCOUNT = 0
+  INSERT INTO PIMS_PROP_MGMT_ACTIVITY_SUBTYPE (PROP_MGMT_ACTIVITY_TYPE_CODE, PROP_MGMT_ACTIVITY_SUBTYPE_CODE, DESCRIPTION, IS_DISABLED)
+  VALUES
+    (N'UNKNOWN', N'UNKNOWN', N'Unknown', 1);
 GO
 
 -- --------------------------------------------------------------
