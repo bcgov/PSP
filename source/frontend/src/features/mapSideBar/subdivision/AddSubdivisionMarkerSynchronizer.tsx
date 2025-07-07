@@ -1,6 +1,6 @@
 import useDraftMarkerSynchronizer from '@/hooks/useDraftMarkerSynchronizer';
+import { propertyToLocationBoundaryDataset } from '@/utils/mapPropertyUtils';
 
-import { PropertyForm } from '../shared/models';
 import { SubdivisionFormModel } from './AddSubdivisionModel';
 
 interface IAddSubdivisionMarkerSynchronizerProps {
@@ -11,10 +11,8 @@ const AddSubdivisionMarkerSynchronizer: React.FunctionComponent<
   IAddSubdivisionMarkerSynchronizerProps
 > = ({ values }) => {
   useDraftMarkerSynchronizer([
-    ...(values.sourceProperty
-      ? [PropertyForm.fromPropertyApi(values.sourceProperty).toMapProperty()]
-      : []),
-    ...values.destinationProperties.map(dp => PropertyForm.fromPropertyApi(dp).toMapProperty()),
+    ...(values.sourceProperty ? [propertyToLocationBoundaryDataset(values.sourceProperty)] : []),
+    ...values.destinationProperties.map(dp => propertyToLocationBoundaryDataset(dp)),
   ]);
   return null;
 };

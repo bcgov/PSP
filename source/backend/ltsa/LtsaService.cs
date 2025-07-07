@@ -328,8 +328,9 @@ namespace Pims.Ltsa
         /// <returns></returns>
         public async Task<OrderWrapper<OrderParent<StrataPlanCommonProperty>>> PostSpcpOrder(string strataPlanNumber)
         {
-            SpcpOrder order = new(new StrataPlanCommonPropertyOrderParameters(strataPlanNumber));
-            var url = this.Options.HostUri.AppendToURL(this.Options.OrdersEndpoint);
+            var url = Options.HostUri.AppendToURL(Options.OrdersEndpoint);
+            SpcpOrder order = new(new StrataPlanCommonPropertyOrderParameters(strataPlanNumber), productType: OrderParent<StrataPlanCommonProperty>.ProductTypeEnum.commonProperty);
+
             return await PostOrderAsync<StrataPlanCommonProperty, OrderWrapper<SpcpOrder>>(url, new OrderWrapper<SpcpOrder>(order));
         }
 

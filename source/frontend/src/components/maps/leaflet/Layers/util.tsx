@@ -16,6 +16,7 @@ import otherInterestImage from '@/assets/images/pins/other-interest.png';
 import otherInterestHighlightImage from '@/assets/images/pins/other-interest-highlight.png';
 import retiredImage from '@/assets/images/pins/retired.png';
 import { ICluster } from '@/components/maps/types';
+import DisabledDraftCircleNumber from '@/components/propertySelector/selectedPropertyList/DisabledDraftCircleNumber';
 import { DraftCircleNumber } from '@/components/propertySelector/selectedPropertyList/DraftCircleNumber';
 import { TANTALIS_CrownSurveyParcels_Feature_Properties } from '@/models/layers/crownLand';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
@@ -226,7 +227,7 @@ export function getNotOwnerMarkerIcon(selected: boolean): L.Icon<L.IconOptions> 
   return notOwnedPropertyIcon;
 }
 
-// parcel icon (green) highlighted
+// parcel icon (blue with number) highlighted
 export const getDraftIcon = (text: string) => {
   return L.divIcon({
     iconSize: [29, 45],
@@ -234,6 +235,17 @@ export const getDraftIcon = (text: string) => {
     popupAnchor: [1, -34],
     shadowSize: [41, 41],
     html: ReactDOMServer.renderToStaticMarkup(<DraftCircleNumber text={text} />),
+  });
+};
+
+// disabled parcel icon (grey with number) highlighted
+export const getDisabledDraftIcon = (text: string) => {
+  return L.divIcon({
+    iconSize: [29, 40],
+    iconAnchor: [15, 40],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41],
+    html: ReactDOMServer.renderToStaticMarkup(<DisabledDraftCircleNumber text={text} />),
   });
 };
 

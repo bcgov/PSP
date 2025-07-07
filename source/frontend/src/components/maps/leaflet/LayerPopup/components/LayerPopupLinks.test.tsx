@@ -14,6 +14,7 @@ vi.mock('react-leaflet');
 // Mock react-leaflet dependencies
 const mapMachineMock: Partial<IMapStateMachineContext> = {
   requestFlyToBounds: vi.fn(),
+  requestFlyToLocation: vi.fn(),
 };
 
 const northEast = new L.LatLng(50.5, -120.7);
@@ -35,6 +36,7 @@ describe('Layer Popup links', () => {
       bounds: new L.LatLngBounds(southWest, northEast),
       onViewPropertyInfo: onViewPropertyInfoFn,
       showViewPropertyInfo: true,
+      latLng: undefined,
     });
     expect(asFragment()).toMatchSnapshot();
   });
@@ -44,6 +46,7 @@ describe('Layer Popup links', () => {
       bounds: new L.LatLngBounds(southWest, northEast),
       onViewPropertyInfo: onViewPropertyInfoFn,
       showViewPropertyInfo: true,
+      latLng: undefined,
     });
     const link = getByText(/Zoom/i);
     expect(link).toBeInTheDocument();
@@ -55,6 +58,7 @@ describe('Layer Popup links', () => {
       bounds: new L.LatLngBounds(southWest, northEast),
       onViewPropertyInfo: onViewPropertyInfoFn,
       showViewPropertyInfo: true,
+      latLng: undefined,
     });
     const link = getByText(/Zoom/i);
     expect(link).toBeInTheDocument();
@@ -63,11 +67,27 @@ describe('Layer Popup links', () => {
     expect(mapMachineMock.requestFlyToBounds).toBeCalled();
   });
 
+  it(`Zooms the map to property location when Zoom link is clicked`, async () => {
+    // render popup
+    const { getByText } = renderLinks({
+      bounds: undefined,
+      onViewPropertyInfo: onViewPropertyInfoFn,
+      showViewPropertyInfo: true,
+      latLng: southWest,
+    });
+    const link = getByText(/Zoom/i);
+    expect(link).toBeInTheDocument();
+    // click link
+    await act(async () => userEvent.click(link));
+    expect(mapMachineMock.requestFlyToLocation).toBeCalled();
+  });
+
   it('calls onViewPropertyInfo when link clicked', async () => {
     const { getByText } = renderLinks({
       bounds: new L.LatLngBounds(southWest, northEast),
       onViewPropertyInfo: onViewPropertyInfoFn,
       showViewPropertyInfo: true,
+      latLng: undefined,
     });
 
     const link = getByText('View Property Info');

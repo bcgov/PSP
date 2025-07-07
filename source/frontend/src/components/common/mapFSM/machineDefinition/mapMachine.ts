@@ -1,5 +1,5 @@
 import { FeatureCollection, Geometry } from 'geojson';
-import { geoJSON, latLngBounds } from 'leaflet';
+import { geoJSON } from 'leaflet';
 import { AnyEventObject, assign, createMachine, raise, send } from 'xstate';
 
 import { defaultBounds } from '@/components/maps/constants';
@@ -7,7 +7,6 @@ import { PropertyFilterFormModel } from '@/components/maps/leaflet/Control/Advan
 import { pimsBoundaryLayers } from '@/components/maps/leaflet/Control/LayersControl/LayerDefinitions';
 import { initialEnabledLayers } from '@/components/maps/leaflet/Control/LayersControl/LayersMenuLayout';
 import { defaultPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
-import { exists } from '@/utils';
 
 import { emptyFeatureData, LocationBoundaryDataset } from '../models';
 import { MachineContext, SideBarType } from './types';
@@ -49,7 +48,6 @@ const featureViewStates = {
                 event: AnyEventObject & { locations: LocationBoundaryDataset[] },
               ) => event.locations ?? [],
             }),
-            raise('REQUEST_FIT_FILE_BOUNDS'),
           ],
         },
       },
@@ -74,7 +72,6 @@ const featureViewStates = {
                 event: AnyEventObject & { locations: LocationBoundaryDataset[] },
               ) => event.locations ?? [],
             }),
-            raise('REQUEST_FIT_FILE_BOUNDS'),
           ],
         },
       },
@@ -95,7 +92,6 @@ const featureDataLoaderStates = {
           actions: assign({
             isLoading: () => true,
             searchCriteria: (_, event: any) => event.searchCriteria,
-            fitToResultsAfterLoading: () => true,
           }),
           target: 'loading',
         },
@@ -109,24 +105,10 @@ const featureDataLoaderStates = {
         src: 'loadFeatures',
         onDone: [
           {
-            cond: (context: MachineContext) => context.fitToResultsAfterLoading === true,
-            actions: [
-              raise('REQUEST_FIT_BOUNDS'),
-              assign({
-                isLoading: () => false,
-                mapFeatureData: (_, event: any) => event.data,
-                fitToResultsAfterLoading: () => false,
-                mapLayersToRefresh: () => pimsBoundaryLayers,
-              }),
-            ],
-            target: 'idle',
-          },
-          {
             actions: [
               assign({
                 isLoading: () => false,
                 mapFeatureData: (_, event: any) => event.data,
-                fitToResultsAfterLoading: () => false,
                 mapLayersToRefresh: () => pimsBoundaryLayers,
               }),
             ],
@@ -216,20 +198,6 @@ const mapRequestStates = {
           }),
           target: 'pendingFitBounds',
         },
-        REQUEST_FIT_FILE_BOUNDS: {
-          actions: assign({
-            requestedFitBounds: (context: MachineContext) => {
-              // zoom to the bounds that include all file properties
-              if (context.filePropertyLocations.length > 0) {
-                const locations = (context.filePropertyLocations ?? [])
-                  .map(pl => pl.location)
-                  .filter(exists);
-                return latLngBounds(locations);
-              }
-            },
-          }),
-          target: 'pendingFitBounds',
-        },
       },
     },
     pendingFlyTo: {
@@ -290,17 +258,29 @@ const selectedFeatureLoaderStates = {
           actions: [
             assign({
               isLoading: () => true,
-              mapLocationSelected: () => null,
               mapFeatureSelected: (_, event: any) => event.featureSelected,
               mapLocationFeatureDataset: () => null,
             }),
           ],
           target: 'loading',
         },
+        MAP_MARK_LOCATION: {
+          actions: [
+            assign({
+              mapMarkedLocation: (_, event: any) => event.latlng,
+            }),
+          ],
+        },
+        MAP_CLEAR_MARK_LOCATION: {
+          actions: [
+            assign({
+              mapMarkedLocation: () => null,
+            }),
+          ],
+        },
         CLOSE_POPUP: {
           actions: [
             assign({
-              mapLocationSelected: () => null,
               mapFeatureSelected: () => null,
               mapLocationFeatureDataset: () => null,
             }),
@@ -404,7 +384,6 @@ const sideBarStates = {
                 event: AnyEventObject & { locations: LocationBoundaryDataset[] },
               ) => event.locations ?? [],
             }),
-            raise('REQUEST_FIT_FILE_BOUNDS'),
           ],
         },
 
@@ -542,12 +521,12 @@ export const mapMachine = createMachine<MachineContext>({
     mapLocationSelected: null,
     mapFeatureSelected: null,
     mapLocationFeatureDataset: null,
+    mapMarkedLocation: null,
     selectedFeatureDataset: null,
     repositioningFeatureDataset: null,
     repositioningPropertyIndex: null,
     selectingComponentId: null,
     isLoading: false,
-    fitToResultsAfterLoading: false,
     searchCriteria: null,
     advancedSearchCriteria: new PropertyFilterFormModel(),
     mapFeatureData: emptyFeatureData,

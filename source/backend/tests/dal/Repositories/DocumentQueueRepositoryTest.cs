@@ -13,6 +13,7 @@ using Pims.Core.Exceptions;
 using Pims.Dal.Entities.Models;
 using System.Security;
 using Pims.Api.Models.CodeTypes;
+using System.Threading.Tasks;
 
 namespace Pims.Dal.Test.Repositories
 {
@@ -108,10 +109,10 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<DocumentQueueRepository>(user);
 
             // Act
-            Action act = () => repository.Update(null);
+            Func<Task> act = () => repository.Update(null);
 
             // Assert
-            act.Should().Throw<ArgumentNullException>();
+            act.Should().ThrowAsync<ArgumentNullException>();
         }
         #endregion
 

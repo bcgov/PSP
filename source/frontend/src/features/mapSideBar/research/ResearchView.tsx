@@ -21,7 +21,7 @@ import { PropertyForm } from '../shared/models';
 import SidebarFooter from '../shared/SidebarFooter';
 import { StyledFormWrapper } from '../shared/styles';
 import UpdateProperties from '../shared/update/properties/UpdateProperties';
-import { usePropertyIndexFromUrl } from '../shared/usePropertyIndexFromUrl';
+import { useFilePropertyIdFromUrl } from '../shared/usePropertyIndexFromUrl';
 import ResearchHeader from './common/ResearchHeader';
 import ResearchRouter from './ResearchRouter';
 import ResearchStatusUpdateSolver from './tabs/fileDetails/ResearchStatusUpdateSolver';
@@ -76,7 +76,7 @@ const ResearchView: React.FunctionComponent<IResearchViewProps> = ({
 
   // Extract the zero-based property index from the current URL path.
   // It will be null if route is not matched
-  const currentPropertyIndex: number | null = usePropertyIndexFromUrl();
+  const currentFilePropertyId: number | null = useFilePropertyIdFromUrl();
   const statusSolver = new ResearchStatusUpdateSolver(researchFile);
 
   return (
@@ -122,7 +122,7 @@ const ResearchView: React.FunctionComponent<IResearchViewProps> = ({
             leftComponent={
               <FileMenuView
                 file={researchFile}
-                currentPropertyIndex={currentPropertyIndex}
+                currentFilePropertyId={currentFilePropertyId}
                 canEdit={hasClaim(Claims.RESEARCH_EDIT)}
                 isInNonEditableState={!statusSolver.canEditProperties()}
                 onSelectFileSummary={onSelectFileSummary}
@@ -142,16 +142,15 @@ const ResearchView: React.FunctionComponent<IResearchViewProps> = ({
                   researchFile={researchFile}
                 />
                 <Route
-                  path={`${stripTrailingSlash(match.path)}/property/:menuIndex`}
+                  path={`${stripTrailingSlash(match.path)}/property/:filePropertyId`}
                   render={({ match }) => (
                     <FilePropertyRouter
                       formikRef={formikRef}
-                      selectedMenuIndex={Number(match.params.menuIndex)}
+                      selectedFilePropertyId={Number(match.params.filePropertyId)}
                       file={researchFile}
                       fileType={ApiGen_CodeTypes_FileTypes.Research}
                       isEditing={isEditing}
                       setIsEditing={setEditMode}
-                      defaultFileTab={FileTabType.FILE_DETAILS}
                       defaultPropertyTab={InventoryTabNames.research}
                       onSuccess={onSuccess}
                     />

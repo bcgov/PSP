@@ -95,6 +95,11 @@ export const layersMenuTree: LayerMenuEntry = {
       label: 'External',
       nodes: [
         {
+          layerDefinitionId: 'pmbc_parcel_pid',
+          key: 'pmbc_parcel_pid',
+          label: 'Parcels PID',
+        },
+        {
           key: 'administrative_group',
           label: 'Administrative Boundaries',
           nodes: [
@@ -257,12 +262,6 @@ export const layersMenuTree: LayerMenuEntry = {
               color: '#E9AD34',
             },
             {
-              layerDefinitionId: 'parcelLayerStyled',
-              key: 'parcelLayerStyled',
-              label: 'Parcel Boundaries Styled',
-              color: '#ff9800',
-            },
-            {
               layerDefinitionId: 'srwInterestParcels',
               key: 'srwInterestParcels',
               label: 'Interest Parcels - SRW',
@@ -273,6 +272,16 @@ export const layersMenuTree: LayerMenuEntry = {
               key: 'PMBC_BCTFA_PARCEL_POLYGON_FABRIC_KEY',
               label: 'BCTFA Ownership',
               color: '#42814A',
+            },
+            {
+              layerDefinitionId: 'pmbc_parcel_by_class',
+              key: 'pmbc_parcel_by_class',
+              label: 'Parcels By Class (multiple colors)',
+            },
+            {
+              layerDefinitionId: 'pmbc_parcel_by_owner',
+              key: 'pmbc_parcel_by_owner',
+              label: 'Parcels By Owner Type (multiple colors)',
             },
           ],
         },

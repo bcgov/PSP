@@ -12,6 +12,7 @@ using Pims.Core.Security;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
+using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
 
 namespace Pims.Api.Services
@@ -26,7 +27,7 @@ namespace Pims.Api.Services
         private readonly IPropertyService _propertyService;
         private readonly ILookupRepository _lookupRepository;
         private readonly INoteRelationshipRepository<PimsManagementFileNote> _entityNoteRepository;
-        private readonly IManagementStatusSolver _managementStatusSolver;
+        private readonly IManagementFileStatusSolver _managementStatusSolver;
         private readonly IPropertyOperationService _propertyOperationService;
         private readonly IPropertyActivityRepository _propertyActivityRepository;
 
@@ -39,7 +40,7 @@ namespace Pims.Api.Services
             IPropertyService propertyService,
             ILookupRepository lookupRepository,
             INoteRelationshipRepository<PimsManagementFileNote> entityNoteRepository,
-            IManagementStatusSolver managementStatusSolver,
+            IManagementFileStatusSolver managementStatusSolver,
             IPropertyOperationService propertyOperationService,
             IPropertyActivityRepository propertyActivityRepository)
         {
@@ -71,6 +72,7 @@ namespace Pims.Api.Services
             // Update marker locations in the context of this file
             foreach (var incomingManagementProperty in managementFile.PimsManagementFileProperties)
             {
+                incomingManagementProperty.IsActive = true;
                 _propertyService.PopulateNewFileProperty(incomingManagementProperty);
             }
 
@@ -108,6 +110,11 @@ namespace Pims.Api.Services
             if (!_managementStatusSolver.CanEditDetails(currentManagementStatus) && !_user.HasPermission(Permissions.SystemAdmin))
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+            }
+
+            if(!_user.HasPermission(Permissions.SystemAdmin) && _managementStatusSolver.IsAdminProtected(currentManagementStatus))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active, only an Administrator may update this file to an Active status.");
             }
 
             ValidateVersion(id, managementFile.ConcurrencyControlNumber);
@@ -195,6 +202,13 @@ namespace Pims.Api.Services
                     if (existingProperty.PropertyName != incomingManagementProperty.PropertyName)
                     {
                         existingProperty.PropertyName = incomingManagementProperty.PropertyName;
+                        needsUpdate = true;
+                    }
+
+                    if (incomingManagementProperty.IsActive != existingProperty.IsActive)
+                    {
+                        existingProperty.IsActive = incomingManagementProperty.IsActive;
+                        AddPropertyActiveNote(incomingManagementProperty);
                         needsUpdate = true;
                     }
 
@@ -322,6 +336,26 @@ namespace Pims.Api.Services
             _entityNoteRepository.AddNoteRelationship(fileNoteInstance);
         }
 
+        private void AddPropertyActiveNote(PimsManagementFileProperty updateManagementFileProperty)
+        {
+            string disabledOrEnabled = updateManagementFileProperty.IsActive ? "Enabled" : "Disabled";
+            PimsManagementFileNote fileNoteInstance = new()
+            {
+                ManagementFileId = updateManagementFileProperty.ManagementFileId,
+                AppCreateTimestamp = DateTime.Now,
+                AppCreateUserid = _user.GetUsername(),
+                Note = new PimsNote()
+                {
+                    IsSystemGenerated = true,
+                    NoteTxt = $"Management File property {(updateManagementFileProperty as IFilePropertyEntity).GetPropertyName()} {disabledOrEnabled}",
+                    AppCreateTimestamp = DateTime.Now,
+                    AppCreateUserid = this._user.GetUsername(),
+                },
+            };
+
+            _entityNoteRepository.AddNoteRelationship(fileNoteInstance);
+        }
+
         private void MatchProperties(PimsManagementFile managementFile, IEnumerable<UserOverrideCode> overrideCodes)
         {
             foreach (var managementProperty in managementFile.PimsManagementFileProperties)
@@ -418,5 +452,7 @@ namespace Pims.Api.Services
 
             return currentManagementFileStatus;
         }
+
+
     }
 }

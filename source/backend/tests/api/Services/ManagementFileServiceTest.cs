@@ -367,7 +367,7 @@ namespace Pims.Api.Test.Services
             var service = this.CreateManagementServiceWithPermissions(Permissions.ManagementEdit);
             var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
 
-            var statusMock = this._helper.GetService<Mock<IManagementStatusSolver>>();
+            var statusMock = this._helper.GetService<Mock<IManagementFileStatusSolver>>();
             statusMock.Setup(x => x.CanEditDetails(It.IsAny<ManagementFileStatusTypes>())).Returns(true);
 
             var managementFile = EntityHelper.CreateManagementFile(1);
@@ -394,7 +394,7 @@ namespace Pims.Api.Test.Services
             var service = this.CreateManagementServiceWithPermissions(Permissions.ManagementEdit);
             var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
 
-            var statusMock = this._helper.GetService<Mock<IManagementStatusSolver>>();
+            var statusMock = this._helper.GetService<Mock<IManagementFileStatusSolver>>();
             statusMock.Setup(x => x.CanEditDetails(It.IsAny<ManagementFileStatusTypes>())).Returns(true);
 
             var managementFile = EntityHelper.CreateManagementFile(1);
@@ -420,7 +420,7 @@ namespace Pims.Api.Test.Services
             var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
             var managementFilePropertyRepository = this._helper.GetService<Mock<IManagementFilePropertyRepository>>();
 
-            var statusMock = this._helper.GetService<Mock<IManagementStatusSolver>>();
+            var statusMock = this._helper.GetService<Mock<IManagementFileStatusSolver>>();
             statusMock.Setup(x => x.CanEditDetails(It.IsAny<ManagementFileStatusTypes>())).Returns(true);
 
             var managementFile = EntityHelper.CreateManagementFile(1);
@@ -469,7 +469,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(managementFile);
             repository.Setup(x => x.GetByName(It.IsAny<string>())).Returns(managementFile);
 
-            var statusMock = this._helper.GetService<Mock<IManagementStatusSolver>>();
+            var statusMock = this._helper.GetService<Mock<IManagementFileStatusSolver>>();
             statusMock.Setup(x => x.CanEditDetails(It.IsAny<ManagementFileStatusTypes>())).Returns(false);
 
             // Act
@@ -498,7 +498,7 @@ namespace Pims.Api.Test.Services
             var managementFile = EntityHelper.CreateManagementFile(1);
             managementFile.ManagementFileStatusTypeCode = fileStatus.ToString();
 
-            var statusMock = this._helper.GetService<Mock<IManagementStatusSolver>>();
+            var statusMock = this._helper.GetService<Mock<IManagementFileStatusSolver>>();
             statusMock.Setup(x => x.CanEditDetails(It.IsAny<ManagementFileStatusTypes>())).Returns(true);
 
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
@@ -521,7 +521,7 @@ namespace Pims.Api.Test.Services
             var service = this.CreateManagementServiceWithPermissions(Permissions.ManagementEdit);
             var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
 
-            var statusMock = this._helper.GetService<Mock<IManagementStatusSolver>>();
+            var statusMock = this._helper.GetService<Mock<IManagementFileStatusSolver>>();
             statusMock.Setup(x => x.CanEditDetails(It.IsAny<ManagementFileStatusTypes>())).Returns(true);
 
             var managementFile = EntityHelper.CreateManagementFile(1);
@@ -554,7 +554,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(managementFile);
             repository.Setup(x => x.GetByName(It.IsAny<string>())).Returns(managementFile);
 
-            var statusMock = this._helper.GetService<Mock<IManagementStatusSolver>>();
+            var statusMock = this._helper.GetService<Mock<IManagementFileStatusSolver>>();
             statusMock.Setup(x => x.CanEditDetails(It.IsAny<ManagementFileStatusTypes>())).Returns(false);
 
             // Act
@@ -579,7 +579,7 @@ namespace Pims.Api.Test.Services
             var noteRepository = this._helper.GetService<Mock<INoteRelationshipRepository<PimsManagementFileNote>>>();
             var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
 
-            var statusMock = this._helper.GetService<Mock<IManagementStatusSolver>>();
+            var statusMock = this._helper.GetService<Mock<IManagementFileStatusSolver>>();
             statusMock.Setup(x => x.CanEditDetails(It.IsAny<ManagementFileStatusTypes>())).Returns(true);
 
             repository.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<PimsManagementFile>())).Returns(managementFile);
@@ -626,7 +626,7 @@ namespace Pims.Api.Test.Services
             var propertyActivityRepository = this._helper.GetService<Mock<IPropertyActivityRepository>>();
             propertyActivityRepository.Setup(x => x.GetActivitiesByManagementFile(It.IsAny<long>())).Returns(new List<PimsPropertyActivity>());
 
-            var statusMock = this._helper.GetService<Mock<IManagementStatusSolver>>();
+            var statusMock = this._helper.GetService<Mock<IManagementFileStatusSolver>>();
             statusMock.Setup(x => x.GetCurrentManagementStatus(It.IsAny<string>())).Returns(ManagementFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<ManagementFileStatusTypes>())).Returns(true);
 
@@ -664,7 +664,7 @@ namespace Pims.Api.Test.Services
             propertyService.Setup(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), false));
             propertyService.Setup(x => x.UpdateFilePropertyLocation<PimsManagementFileProperty>(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>()));
 
-            var statusMock = this._helper.GetService<Mock<IManagementStatusSolver>>();
+            var statusMock = this._helper.GetService<Mock<IManagementFileStatusSolver>>();
             statusMock.Setup(x => x.GetCurrentManagementStatus(It.IsAny<string>())).Returns(ManagementFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<ManagementFileStatusTypes>())).Returns(true);
 
@@ -709,7 +709,7 @@ namespace Pims.Api.Test.Services
             propertyService.Setup(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), false));
             propertyService.Setup(x => x.UpdateFilePropertyLocation<PimsManagementFileProperty>(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>()));
 
-            var statusMock = this._helper.GetService<Mock<IManagementStatusSolver>>();
+            var statusMock = this._helper.GetService<Mock<IManagementFileStatusSolver>>();
             statusMock.Setup(x => x.GetCurrentManagementStatus(It.IsAny<string>())).Returns(ManagementFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<ManagementFileStatusTypes>())).Returns(true);
 
@@ -761,7 +761,7 @@ namespace Pims.Api.Test.Services
             });
             propertyService.Setup(x => x.PopulateNewFileProperty(It.IsAny<PimsManagementFileProperty>())).Returns<PimsManagementFileProperty>(x => x);
 
-            var statusMock = this._helper.GetService<Mock<IManagementStatusSolver>>();
+            var statusMock = this._helper.GetService<Mock<IManagementFileStatusSolver>>();
             statusMock.Setup(x => x.GetCurrentManagementStatus(It.IsAny<string>())).Returns(ManagementFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<ManagementFileStatusTypes>())).Returns(true);
 
@@ -810,7 +810,7 @@ namespace Pims.Api.Test.Services
             });
             propertyService.Setup(x => x.PopulateNewFileProperty(It.IsAny<PimsManagementFileProperty>())).Returns<PimsManagementFileProperty>(x => x);
 
-            var statusMock = this._helper.GetService<Mock<IManagementStatusSolver>>();
+            var statusMock = this._helper.GetService<Mock<IManagementFileStatusSolver>>();
             statusMock.Setup(x => x.GetCurrentManagementStatus(It.IsAny<string>())).Returns(ManagementFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<ManagementFileStatusTypes>())).Returns(true);
 
@@ -864,7 +864,7 @@ namespace Pims.Api.Test.Services
 
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
 
-            var statusMock = this._helper.GetService<Mock<IManagementStatusSolver>>();
+            var statusMock = this._helper.GetService<Mock<IManagementFileStatusSolver>>();
             statusMock.Setup(x => x.GetCurrentManagementStatus(It.IsAny<string>())).Returns(ManagementFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<ManagementFileStatusTypes>())).Returns(true);
 
@@ -902,7 +902,7 @@ namespace Pims.Api.Test.Services
             var propertyActivityRepository = this._helper.GetService<Mock<IPropertyActivityRepository>>();
             propertyActivityRepository.Setup(x => x.GetActivitiesByManagementFile(It.IsAny<long>())).Returns(new List<PimsPropertyActivity>());
 
-            var statusMock = this._helper.GetService<Mock<IManagementStatusSolver>>();
+            var statusMock = this._helper.GetService<Mock<IManagementFileStatusSolver>>();
             statusMock.Setup(x => x.GetCurrentManagementStatus(It.IsAny<string>())).Returns(ManagementFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<ManagementFileStatusTypes>())).Returns(true);
 
@@ -949,7 +949,7 @@ namespace Pims.Api.Test.Services
             var propertyActivityRepository = this._helper.GetService<Mock<IPropertyActivityRepository>>();
             propertyActivityRepository.Setup(x => x.GetActivitiesByManagementFile(It.IsAny<long>())).Returns(new List<PimsPropertyActivity>());
 
-            var statusMock = this._helper.GetService<Mock<IManagementStatusSolver>>();
+            var statusMock = this._helper.GetService<Mock<IManagementFileStatusSolver>>();
             statusMock.Setup(x => x.GetCurrentManagementStatus(It.IsAny<string>())).Returns(ManagementFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<ManagementFileStatusTypes>())).Returns(true);
 
@@ -996,7 +996,7 @@ namespace Pims.Api.Test.Services
             var propertyActivityRepository = this._helper.GetService<Mock<IPropertyActivityRepository>>();
             propertyActivityRepository.Setup(x => x.GetActivitiesByManagementFile(It.IsAny<long>())).Returns(new List<PimsPropertyActivity>());
 
-            var statusMock = this._helper.GetService<Mock<IManagementStatusSolver>>();
+            var statusMock = this._helper.GetService<Mock<IManagementFileStatusSolver>>();
             statusMock.Setup(x => x.GetCurrentManagementStatus(It.IsAny<string>())).Returns(ManagementFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<ManagementFileStatusTypes>())).Returns(true);
 
@@ -1053,7 +1053,7 @@ namespace Pims.Api.Test.Services
             var propertyActivityRepository = this._helper.GetService<Mock<IPropertyActivityRepository>>();
             propertyActivityRepository.Setup(x => x.GetActivitiesByManagementFile(It.IsAny<long>())).Returns(new List<PimsPropertyActivity>());
 
-            var statusMock = this._helper.GetService<Mock<IManagementStatusSolver>>();
+            var statusMock = this._helper.GetService<Mock<IManagementFileStatusSolver>>();
             statusMock.Setup(x => x.GetCurrentManagementStatus(It.IsAny<string>())).Returns(ManagementFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<ManagementFileStatusTypes>())).Returns(true);
 
@@ -1062,6 +1062,48 @@ namespace Pims.Api.Test.Services
 
             // Assert
             filePropertyRepository.Verify(x => x.GetPropertiesByManagementFileId(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void UpdateProperties_DisableProperties_AddsNote()
+        {
+            // Arrange
+            var service = this.CreateManagementServiceWithPermissions(Permissions.ManagementEdit, Permissions.PropertyAdd, Permissions.PropertyView);
+
+            var managementFile = EntityHelper.CreateManagementFile();
+            managementFile.ConcurrencyControlNumber = 1;
+
+            var property = EntityHelper.CreateProperty(12345, regionCode: 1);
+            managementFile.PimsManagementFileProperties = new List<PimsManagementFileProperty>() { new PimsManagementFileProperty() { Property = property, Internal_Id = 1, IsActive = true } };
+
+            var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(managementFile);
+
+            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(property);
+            propertyRepository.Setup(x => x.GetPropertyRegion(It.IsAny<long>())).Returns(1);
+
+            var filePropertyRepository = this._helper.GetService<Mock<IManagementFilePropertyRepository>>();
+            filePropertyRepository.Setup(x => x.GetPropertiesByManagementFileId(It.IsAny<long>())).Returns(new List<PimsManagementFileProperty>() { new PimsManagementFileProperty() { Property = property, Internal_Id = 1, IsActive = false } });
+
+            var propertyActivityRepository = this._helper.GetService<Mock<IPropertyActivityRepository>>();
+            propertyActivityRepository.Setup(x => x.GetActivitiesByManagementFile(It.IsAny<long>())).Returns(new List<PimsPropertyActivity>());
+
+            var statusMock = this._helper.GetService<Mock<IManagementFileStatusSolver>>();
+            statusMock.Setup(x => x.GetCurrentManagementStatus(It.IsAny<string>())).Returns(ManagementFileStatusTypes.ACTIVE);
+            statusMock.Setup(x => x.CanEditProperties(It.IsAny<ManagementFileStatusTypes>())).Returns(true);
+
+            List<PimsManagementFileNote> note = new List<PimsManagementFileNote>();
+            var entityNoteRepository = this._helper.GetService<Mock<INoteRelationshipRepository<PimsManagementFileNote>>>();
+            entityNoteRepository.Setup(x => x.AddNoteRelationship(Capture.In<PimsManagementFileNote>(note))).Returns(new PimsManagementFileNote());
+
+            // Act
+            service.UpdateProperties(managementFile, new List<UserOverrideCode>());
+
+            // Assert
+            entityNoteRepository.Verify(x => x.AddNoteRelationship(It.IsAny<PimsManagementFileNote>()), Times.Once);
+            note.FirstOrDefault().Note.NoteTxt.Should().Be("Management File property 000-012-345 Enabled");
         }
 
         [Fact]
@@ -1087,7 +1129,7 @@ namespace Pims.Api.Test.Services
             var filePropertyRepository = this._helper.GetService<Mock<IManagementFilePropertyRepository>>();
             filePropertyRepository.Setup(x => x.GetPropertiesByManagementFileId(It.IsAny<long>())).Returns(managementFile.PimsManagementFileProperties.ToList());
 
-            var statusMock = this._helper.GetService<Mock<IManagementStatusSolver>>();
+            var statusMock = this._helper.GetService<Mock<IManagementFileStatusSolver>>();
             statusMock.Setup(x => x.GetCurrentManagementStatus(It.IsAny<string>())).Returns(ManagementFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<ManagementFileStatusTypes>())).Returns(false);
 
@@ -1129,7 +1171,7 @@ namespace Pims.Api.Test.Services
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(retiredProperty);
 
-            var statusMock = this._helper.GetService<Mock<IManagementStatusSolver>>();
+            var statusMock = this._helper.GetService<Mock<IManagementFileStatusSolver>>();
             statusMock.Setup(x => x.GetCurrentManagementStatus(It.IsAny<string>())).Returns(ManagementFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<ManagementFileStatusTypes>())).Returns(true);
 
@@ -1187,7 +1229,7 @@ namespace Pims.Api.Test.Services
             var propertyOperationsService = this._helper.GetService<Mock<IPropertyOperationService>>();
             propertyOperationsService.Setup(x => x.GetOperationsForProperty(It.IsAny<long>())).Returns(new List<PimsPropertyOperation>());
 
-            var statusMock = this._helper.GetService<Mock<IManagementStatusSolver>>();
+            var statusMock = this._helper.GetService<Mock<IManagementFileStatusSolver>>();
             statusMock.Setup(x => x.GetCurrentManagementStatus(It.IsAny<string>())).Returns(ManagementFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<ManagementFileStatusTypes>())).Returns(true);
 

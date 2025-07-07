@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import { TableSort } from '@/components/Table/TableSort';
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
+import ManagementStatusUpdateSolver from '@/features/mapSideBar/management/tabs/fileDetails/detail/ManagementStatusUpdateSolver';
 import { usePropertyActivityRepository } from '@/hooks/repositories/usePropertyActivityRepository';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import useIsMounted from '@/hooks/util/useIsMounted';
@@ -13,6 +14,7 @@ import { IManagementActivitiesListViewProps } from './ManagementActivitiesListVi
 import { PropertyActivityRow } from './models/PropertyActivityRow';
 
 export interface IPropertyManagementActivitiesListContainerProps {
+  statusSolver?: ManagementStatusUpdateSolver;
   propertyId: number;
   isAdHoc?: boolean;
   View: React.FC<IManagementActivitiesListViewProps>;
@@ -20,7 +22,7 @@ export interface IPropertyManagementActivitiesListContainerProps {
 
 const PropertyManagementActivitiesListContainer: React.FunctionComponent<
   IPropertyManagementActivitiesListContainerProps
-> = ({ propertyId, isAdHoc, View }) => {
+> = ({ statusSolver, propertyId, isAdHoc, View }) => {
   const history = useHistory();
   const isMounted = useIsMounted();
   const { setModalContent, setDisplayModal } = useModalContext();
@@ -64,6 +66,8 @@ const PropertyManagementActivitiesListContainer: React.FunctionComponent<
     history.push(`/mapview/sidebar/property/${propertyId}/management/activity/${activityId}`);
   };
 
+  const canEditActivities = !statusSolver || statusSolver?.canEditActivities();
+
   return (
     <View
       sort={sort}
@@ -93,6 +97,7 @@ const PropertyManagementActivitiesListContainer: React.FunctionComponent<
         url: `/mapview/sidebar/management/${row.managementFileId}/activities/${row.activityId}`,
         title: `M-${row.managementFileId}`,
       })}
+      canEditActivities={canEditActivities}
     />
   );
 };

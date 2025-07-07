@@ -1,5 +1,7 @@
 import { ManagementActivitySubTypeModel } from '@/features/mapSideBar/property/tabs/propertyDetailsManagement/activity/models/ManagementActivitySubType';
 import { fromApiPersonOrApiOrganization, IContactSearchResult } from '@/interfaces';
+import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
+import { ApiGen_Concepts_ManagementFileProperty } from '@/models/api/generated/ApiGen_Concepts_ManagementFileProperty';
 import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
 import { ApiGen_Concepts_PropertyActivityInvoice } from '@/models/api/generated/ApiGen_Concepts_PropertyActivityInvoice';
 import { ApiGen_Concepts_PropertyActivityInvolvedParty } from '@/models/api/generated/ApiGen_Concepts_PropertyActivityInvolvedParty';
@@ -26,6 +28,7 @@ export class ManagementActivityFormModel {
   pstAmount = 0;
   totalAmount = 0;
   activityProperties: ActivityPropertyFormModel[] = [];
+  selectedProperties: ApiGen_Concepts_FileProperty[] = [];
 
   constructor(
     readonly id: number | null = null,
@@ -82,9 +85,17 @@ export class ManagementActivityFormModel {
             ...getEmptyBaseAudit(0),
           };
         }),
-      activityProperties: this.activityProperties
-        .filter(exists)
-        .map<ApiGen_Concepts_PropertyActivityProperty>(x => x.toApi()),
+      activityProperties: this.selectedProperties.map(x => {
+        const matched = this.activityProperties.find(y => y.propertyId === x.propertyId) ?? null;
+
+        return {
+          id: matched ? matched.id : 0,
+          propertyActivityId: this.id ?? 0,
+          propertyId: x.propertyId,
+          property: null,
+          rowVersion: matched?.rowVersion ?? 0,
+        } as ApiGen_Concepts_PropertyActivityProperty;
+      }),
       invoices: this.invoices.map(i => i.toApi(this.id ?? 0)),
       ...getEmptyBaseAudit(this.rowVersion),
     };
@@ -92,7 +103,10 @@ export class ManagementActivityFormModel {
     return apiActivity;
   }
 
-  static fromApi(model: ApiGen_Concepts_PropertyActivity | undefined): ManagementActivityFormModel {
+  static fromApi(
+    model: ApiGen_Concepts_PropertyActivity | undefined,
+    fileProperties: ApiGen_Concepts_ManagementFileProperty[],
+  ): ManagementActivityFormModel {
     const formModel = new ManagementActivityFormModel(
       model.id,
       model.managementFileId,
@@ -127,6 +141,21 @@ export class ManagementActivityFormModel {
     formModel.invoices = model.invoices?.map(i => ActivityInvoiceFormModel.fromApi(i)) ?? [];
     formModel.activityProperties =
       model.activityProperties?.map(p => ActivityPropertyFormModel.fromApi(p)) ?? [];
+
+    formModel.selectedProperties = model.activityProperties.map(x => {
+      const matchProperty =
+        fileProperties.find(
+          y => y.fileId === formModel.managementFileId && y.propertyId === x.propertyId,
+        ) ?? null;
+
+      return {
+        id: matchProperty ? matchProperty.id : 0,
+        fileId: formModel.managementFileId,
+        propertyId: x.propertyId,
+        property: x.property,
+        rowVersion: matchProperty?.rowVersion ?? 0,
+      } as ApiGen_Concepts_ManagementFileProperty;
+    });
 
     return formModel;
   }
