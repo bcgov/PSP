@@ -23,6 +23,9 @@ import RightSideLayout from '@/features/rightSideLayout/RightSideLayout';
 import { usePimsPropertyRepository } from '@/hooks/repositories/usePimsPropertyRepository';
 import { Api_PropertyFilterCriteria } from '@/models/api/ProjectFilterCriteria';
 
+import { WorklistContainer } from './worklist/WorklistContainer';
+import { WorklistView } from './worklist/WorklistView';
+
 enum MapCursors {
   DRAFT = 'draft-cursor',
   REPOSITION = 'reposition-cursor',
@@ -124,8 +127,7 @@ const MapContainer: React.FC<
         isOpen={isShowingWorkList}
         toggle={toggleWorkListControl}
       >
-        {/* FIXME: */}
-        <div>The worklist goes here!</div>
+        <WorklistContainer View={WorklistView} />
       </RightSideLayout>
     </StyleMapView>
   );
