@@ -58,6 +58,7 @@ export interface IMapStateMachineContext {
   isShowingMapFilter: boolean;
   isShowingMapLayers: boolean;
   isShowingMapSearch: boolean;
+  isShowingWorkList: boolean;
   activePimsPropertyIds: number[];
   showDisposed: boolean;
   showRetired: boolean;
@@ -97,6 +98,7 @@ export interface IMapStateMachineContext {
   toggleMapFilterDisplay: () => void;
   toggleMapLayerControl: () => void;
   toggleMapSearchControl: () => void;
+  toggleWorkListControl: () => void;
   showMapSearchControl: () => void;
   setFilePropertyLocations: (locations: LocationBoundaryDataset[]) => void;
   setMapLayers: (layers: Set<string>) => void;
@@ -470,6 +472,10 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     serviceSend({ type: 'TOGGLE_SEARCH' });
   }, [serviceSend]);
 
+  const toggleWorkListControl = useCallback(() => {
+    serviceSend({ type: 'TOGGLE_WORKLIST' });
+  }, [serviceSend]);
+
   const showMapSearchControl = useCallback(() => {
     serviceSend({ type: 'SHOW_SEARCH' });
   }, [serviceSend]);
@@ -493,6 +499,10 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
 
   const isShowingMapSearch = useMemo(() => {
     return state.matches({ mapVisible: { rightSideBar: 'searchVisible' } });
+  }, [state]);
+
+  const isShowingWorkList = useMemo(() => {
+    return state.matches({ mapVisible: { rightSideBar: 'worklistVisible' } });
   }, [state]);
 
   return (
@@ -531,6 +541,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         isShowingMapFilter: isShowingMapFilter,
         isShowingMapLayers: isShowingMapLayers,
         isShowingMapSearch: isShowingMapSearch,
+        isShowingWorkList: isShowingWorkList,
         activeLayers: state.context.activeLayers,
         activePimsPropertyIds: state.context.activePimsPropertyIds,
         showDisposed: state.context.showDisposed,
@@ -562,6 +573,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         toggleMapFilterDisplay,
         toggleMapLayerControl,
         toggleMapSearchControl,
+        toggleWorkListControl,
         showMapSearchControl,
         toggleSidebarDisplay,
         setFilePropertyLocations,

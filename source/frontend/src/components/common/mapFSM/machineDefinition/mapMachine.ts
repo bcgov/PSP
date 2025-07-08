@@ -428,6 +428,9 @@ const rightSideBarStates = {
         TOGGLE_SEARCH: {
           target: 'searchVisible',
         },
+        TOGGLE_WORKLIST: {
+          target: 'worklistVisible',
+        },
         SHOW_SEARCH: {
           target: 'searchVisible',
         },
@@ -443,6 +446,9 @@ const rightSideBarStates = {
         },
         TOGGLE_SEARCH: {
           target: 'searchVisible',
+        },
+        TOGGLE_WORKLIST: {
+          target: 'worklistVisible',
         },
         SET_ADVANCED_SEARCH_CRITERIA: {
           actions: assign({
@@ -479,6 +485,9 @@ const rightSideBarStates = {
         TOGGLE_SEARCH: {
           target: 'searchVisible',
         },
+        TOGGLE_WORKLIST: {
+          target: 'worklistVisible',
+        },
         SET_MAP_LAYERS: {
           actions: assign({ activeLayers: (_, event: any) => event.activeLayers }),
         },
@@ -493,6 +502,25 @@ const rightSideBarStates = {
           target: 'layerVisible',
         },
         TOGGLE_SEARCH: {
+          target: 'closed',
+        },
+        TOGGLE_WORKLIST: {
+          target: 'worklistVisible',
+        },
+      },
+    },
+    worklistVisible: {
+      on: {
+        TOGGLE_FILTER: {
+          target: 'filterVisible',
+        },
+        TOGGLE_LAYERS: {
+          target: 'layerVisible',
+        },
+        TOGGLE_SEARCH: {
+          target: 'searchVisible',
+        },
+        TOGGLE_WORKLIST: {
           target: 'closed',
         },
       },

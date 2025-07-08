@@ -38,10 +38,12 @@ const MapContainer: React.FC<
     isShowingMapFilter,
     isShowingMapLayers,
     isShowingMapSearch,
+    isShowingWorkList,
     isRepositioning,
     toggleMapFilterDisplay,
     toggleMapLayerControl,
     toggleMapSearchControl,
+    toggleWorkListControl,
     setVisiblePimsProperties,
     advancedSearchCriteria,
     isMapVisible,
@@ -114,6 +116,16 @@ const MapContainer: React.FC<
         toggle={toggleMapSearchControl}
       >
         <SearchContainer View={SearchView} />
+      </RightSideLayout>
+      <RightSideLayout
+        title="Working list"
+        closeTooltipText="Close working list"
+        data-testId="worklist-sidebar"
+        isOpen={isShowingWorkList}
+        toggle={toggleWorkListControl}
+      >
+        {/* FIXME: */}
+        <div>The worklist goes here!</div>
       </RightSideLayout>
     </StyleMapView>
   );
