@@ -262,11 +262,7 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
         />
         <LayersControl onToggle={mapMachine.toggleMapLayerControl} />
         <SearchControl onToggle={mapMachine.toggleMapSearchControl} />
-        <WorklistControl
-          onToggle={() => {
-            throw new Error('Not implemented yet'); // FIXME:
-          }}
-        />
+        <WorklistControl onToggle={mapMachine.toggleWorkListControl} />
         <MarkerLayer
           minZoom={MAP_MIN_MARKER_ZOOM}
           zoom={zoom}
