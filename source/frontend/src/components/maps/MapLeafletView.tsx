@@ -28,6 +28,7 @@ import LayersControl from './leaflet/Control/LayersControl/LayersControl';
 import { initialEnabledLayers } from './leaflet/Control/LayersControl/LayersMenuLayout';
 import { LegendControl } from './leaflet/Control/Legend/LegendControl';
 import SearchControl from './leaflet/Control/SearchControl/SearchControl';
+import WorklistControl from './leaflet/Control/WorklistControl/WorklistControl';
 import { ZoomOutButton } from './leaflet/Control/ZoomOut/ZoomOutButton';
 import { FilePropertiesLayer } from './leaflet/Layers/FilePropertiesLayer';
 import { LeafletLayerListener } from './leaflet/Layers/LeafletLayerListener';
@@ -261,6 +262,11 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
         />
         <LayersControl onToggle={mapMachine.toggleMapLayerControl} />
         <SearchControl onToggle={mapMachine.toggleMapSearchControl} />
+        <WorklistControl
+          onToggle={() => {
+            throw new Error('Not implemented yet'); // FIXME:
+          }}
+        />
         <MarkerLayer
           minZoom={MAP_MIN_MARKER_ZOOM}
           zoom={zoom}
