@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { Feature, GeoJsonProperties, Geometry } from 'geojson';
 import {
   geoJSON,
   LatLng,
@@ -28,14 +27,14 @@ import AdvancedFilterButton from './leaflet/Control/AdvancedFilter/AdvancedFilte
 import BasemapToggle, { BasemapToggleEvent } from './leaflet/Control/BaseMapToggle/BasemapToggle';
 import { BaseLayer, isVectorBasemap } from './leaflet/Control/BaseMapToggle/types';
 import LayersControl from './leaflet/Control/LayersControl/LayersControl';
+import { initialEnabledLayers } from './leaflet/Control/LayersControl/LayersMenuLayout';
 import { LegendControl } from './leaflet/Control/Legend/LegendControl';
 import SearchControl from './leaflet/Control/SearchControl/SearchControl';
 import { ZoomOutButton } from './leaflet/Control/ZoomOut/ZoomOutButton';
 import { LocationPopupContainer } from './leaflet/LayerPopup/LocationPopupContainer';
 import { FilePropertiesLayer } from './leaflet/Layers/FilePropertiesLayer';
-import { InventoryLayer } from './leaflet/Layers/InventoryLayer';
 import { LeafletLayerListener } from './leaflet/Layers/LeafletLayerListener';
-import { useConfiguredMapLayers } from './leaflet/Layers/useConfiguredMapLayers';
+import { MarkerLayer } from './leaflet/Layers/MarkerLayer';
 import { MapEvents } from './leaflet/MapEvents/MapEvents';
 import * as Styled from './leaflet/styles';
 import { EsriVectorTileLayer } from './leaflet/VectorTileLayer/EsriVectorTileLayer';
@@ -64,7 +63,6 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
   const popupRef = useRef<LeafletPopup>(null);
 
   const mapRef = useRef<LeafletMap | null>(null);
-  const layers = useConfiguredMapLayers();
 
   const [activeFeatureLayer, setActiveFeatureLayer] = useState<L.GeoJSON>();
   const { doubleClickInterval } = useTenant();
@@ -134,11 +132,12 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
     setDefaultMapLayers,
   } = mapMachine;
 
+  // Initialize layers
   useEffect(() => {
     if (isMapReady) {
-      setDefaultMapLayers(layers);
+      setDefaultMapLayers(new Set(initialEnabledLayers));
     }
-  }, [isMapReady, layers, setDefaultMapLayers]);
+  }, [isMapReady, setDefaultMapLayers]);
 
   useEffect(() => {
     activeFeatureLayer?.clearLayers();
@@ -149,20 +148,10 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
         // File marker repositioning is active - highlight the property and the corresponding boundary when user triggers the relocate action.
         activeFeatureLayer?.addData(pimsFeature);
       }
-    } else {
-      // Not repositioning - highlight parcels on map click as usual workflow
-      if (mapLocationFeatureDataset !== null) {
-        const location = mapLocationFeatureDataset.location;
-
-        let activeFeature: Feature<Geometry, GeoJsonProperties> = {
-          geometry: { coordinates: [location.lng, location.lat], type: 'Point' },
-          type: 'Feature',
-          properties: {},
-        };
-        if (firstOrNull(mapLocationFeatureDataset.parcelFeatures) !== null) {
-          activeFeature = mapLocationFeatureDataset.parcelFeatures[0];
-          activeFeatureLayer?.addData(activeFeature);
-        }
+    } else if (exists(mapLocationFeatureDataset)) {
+      if (firstOrNull(mapLocationFeatureDataset.parcelFeatures) !== null) {
+        const activeFeature = mapLocationFeatureDataset.parcelFeatures[0];
+        activeFeatureLayer?.addData(activeFeature);
       }
     }
   }, [activeFeatureLayer, isRepositioning, mapLocationFeatureDataset, repositioningFeatureDataset]);
@@ -170,13 +159,12 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
   useEffect(() => {
     if (hasPendingFlyTo && isMapReady) {
       if (requestedFlyTo.bounds !== null) {
-        mapRef?.current?.flyToBounds(requestedFlyTo.bounds, { animate: false });
+        mapRef?.current?.flyToBounds(requestedFlyTo.bounds, { animate: true });
       }
       if (requestedFlyTo.location !== null) {
         mapRef?.current?.flyTo(requestedFlyTo.location, MAP_MAX_ZOOM, {
-          animate: false,
+          animate: true,
         });
-        mapRef?.current?.panTo(requestedFlyTo.location);
       }
 
       mapMachineProcessFlyTo();
@@ -184,11 +172,11 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
   }, [isMapReady, hasPendingFlyTo, requestedFlyTo, mapMachineProcessFlyTo]);
 
   useEffect(() => {
-    if (hasPendingCenterTo && isMapReady && requestedCenterTo.location) {
+    if (hasPendingCenterTo && isMapReady && exists(requestedCenterTo?.location)) {
       mapRef.current?.setView(requestedCenterTo.location);
     }
-    mapMachineProcessCenterTo();
-  }, [hasPendingCenterTo, isMapReady, mapMachineProcessCenterTo, requestedCenterTo.location]);
+    mapMachineProcessCenterTo && mapMachineProcessCenterTo();
+  }, [hasPendingCenterTo, isMapReady, mapMachineProcessCenterTo, requestedCenterTo?.location]);
 
   useEffect(() => {
     mapRef.current?.invalidateSize();
@@ -282,11 +270,11 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
         />
         <LayersControl onToggle={mapMachine.toggleMapLayerControl} />
         <SearchControl onToggle={mapMachine.toggleMapSearchControl} />
-        <InventoryLayer
+        <MarkerLayer
           zoom={zoom}
           maxZoom={MAP_MAX_ZOOM}
           bounds={mapMachine.currentMapBounds ?? defaultBounds}
-        ></InventoryLayer>
+        />
 
         {/* Client-side "layer" to highlight file property boundaries (when in the context of a file) */}
         <Pane name="fileProperties" style={{ zIndex: 600 }}>

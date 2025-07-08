@@ -189,6 +189,7 @@ const DocumentManagementListContainer: React.FunctionComponent<
         searchParentIdLabel: 'Association Name',
         searchParentTypeLabel: 'Association Type',
       }}
+      canEditDocuments={false}
     />
   );
 };

@@ -7,8 +7,10 @@ import CustomAxios from '@/customAxios';
 import { toCqlFilter } from '@/hooks/layer-api/layerUtils';
 import { useLayerQuery } from '@/hooks/layer-api/useLayerQuery';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
-import { PIMS_Property_Location_Lite_View } from '@/models/layers/pimsPropertyLocationLiteView';
-import { PIMS_Property_Boundary_View } from '@/models/layers/pimsPropertyLocationView';
+import {
+  PIMS_Property_Boundary_View,
+  PIMS_Property_Location_Lite_View,
+} from '@/models/layers/pimsPropertyLocationView';
 import { TenantContext } from '@/tenants';
 
 /**

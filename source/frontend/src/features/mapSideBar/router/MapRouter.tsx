@@ -8,7 +8,7 @@ import Claims from '@/constants/claims';
 import { AddLeaseContainer } from '@/features/leases';
 import { LeaseContextProvider } from '@/features/leases/context/LeaseContext';
 import MotiInventoryContainer from '@/features/mapSideBar/property/MotiInventoryContainer';
-import { isValidId } from '@/utils';
+import { exists, isValidId } from '@/utils';
 import AppRoute from '@/utils/AppRoute';
 
 import AcquisitionContainer from '../acquisition/AcquisitionContainer';
@@ -23,6 +23,7 @@ import AddDispositionContainerView from '../disposition/add/AddDispositionContai
 import DispositionContainer from '../disposition/DispositionContainer';
 import DispositionView from '../disposition/DispositionView';
 import LeaseContainer from '../lease/LeaseContainer';
+import LeaseView from '../lease/LeaseView';
 import AddManagementContainer from '../management/add/AddManagementContainer';
 import AddManagementContainerView from '../management/add/AddManagementContainerView';
 import ManagementContainer from '../management/ManagementContainer';
@@ -157,7 +158,7 @@ export const MapRouter: React.FunctionComponent = memo(() => {
 
       openSidebar(sidebarType);
     } else {
-      closeSidebar();
+      exists(closeSidebar) && closeSidebar();
     }
   }, [
     isAcquisition,
@@ -348,7 +349,7 @@ export const MapRouter: React.FunctionComponent = memo(() => {
         path={`/mapview/sidebar/lease/:id`}
         customRender={({ match }) => (
           <LeaseContextProvider>
-            <LeaseContainer leaseId={Number(match.params.id)} onClose={onClose} />
+            <LeaseContainer leaseId={Number(match.params.id)} onClose={onClose} View={LeaseView} />
           </LeaseContextProvider>
         )}
         claim={Claims.LEASE_VIEW}

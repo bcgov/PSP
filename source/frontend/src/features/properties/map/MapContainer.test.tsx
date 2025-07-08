@@ -10,7 +10,9 @@ import {
   MarkerSelected,
   emptyPimsBoundaryFeatureCollection,
   emptyPimsLocationFeatureCollection,
+  emptyPimsLocationLiteFeatureCollection,
   emptyPmbcFeatureCollection,
+  emptySurveyedParcelsFeatures,
 } from '@/components/common/mapFSM/models';
 import { Claims } from '@/constants/index';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
@@ -182,8 +184,10 @@ describe('MapContainer', () => {
       activePimsPropertyIds: activePimsPropertyIds,
       mapFeatureData: {
         pimsLocationFeatures: createPimsFeatures(mockParcels),
+        pimsLocationLiteFeatures: createPimsFeatures(mockParcels),
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
         fullyAttributedFeatures: emptyPmbcFeatureCollection,
+        surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
       },
     };
     if (
@@ -288,8 +292,10 @@ describe('MapContainer', () => {
         ...mapMachineBaseMock,
         mapFeatureData: {
           pimsLocationFeatures: createPimsFeatures(smallMockParcels),
+          pimsLocationLiteFeatures: emptyPimsLocationLiteFeatureCollection,
           pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
           fullyAttributedFeatures: emptyPmbcFeatureCollection,
+          surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
         },
       },
     });
@@ -310,8 +316,10 @@ describe('MapContainer', () => {
         ...mapMachineBaseMock,
         mapFeatureData: {
           pimsLocationFeatures: emptyPimsLocationFeatureCollection,
+          pimsLocationLiteFeatures: emptyPimsLocationLiteFeatureCollection,
           pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
           fullyAttributedFeatures: emptyPmbcFeatureCollection,
+          surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
         },
       },
     });
@@ -366,8 +374,10 @@ describe('MapContainer', () => {
         ...mapMachineBaseMock,
         mapFeatureData: {
           pimsLocationFeatures: createPimsFeatures(largeMockParcels),
+          pimsLocationLiteFeatures: emptyPimsLocationLiteFeatureCollection,
           pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
           fullyAttributedFeatures: emptyPmbcFeatureCollection,
+          surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
         },
       },
     });
@@ -398,8 +408,10 @@ describe('MapContainer', () => {
       ...mapMachineBaseMock,
       mapFeatureData: {
         pimsLocationFeatures: pimsFeatures,
+        pimsLocationLiteFeatures: pimsFeatures,
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
         fullyAttributedFeatures: emptyPmbcFeatureCollection,
+        surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
       },
     };
 
@@ -436,8 +448,10 @@ describe('MapContainer', () => {
       ...mapMachineBaseMock,
       mapFeatureData: {
         pimsLocationFeatures: pimsFeatures,
+        pimsLocationLiteFeatures: pimsFeatures,
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
         fullyAttributedFeatures: emptyPmbcFeatureCollection,
+        surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
       },
     };
 
@@ -480,8 +494,10 @@ describe('MapContainer', () => {
       ...mapMachineBaseMock,
       mapFeatureData: {
         pimsLocationFeatures: pimsFeatures,
+        pimsLocationLiteFeatures: pimsFeatures,
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
         fullyAttributedFeatures: emptyPmbcFeatureCollection,
+        surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
       },
       isFiltering: false,
     };
@@ -515,8 +531,10 @@ describe('MapContainer', () => {
       ...mapMachineBaseMock,
       mapFeatureData: {
         pimsLocationFeatures: pimsFeatures,
+        pimsLocationLiteFeatures: pimsFeatures,
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
         fullyAttributedFeatures: emptyPmbcFeatureCollection,
+        surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
       },
       activePimsPropertyIds: activeIds,
       isFiltering: true,
@@ -561,8 +579,10 @@ describe('MapContainer', () => {
       ...mapMachineBaseMock,
       mapFeatureData: {
         pimsLocationFeatures: pimsFeatures,
+        pimsLocationLiteFeatures: pimsFeatures,
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
         fullyAttributedFeatures: emptyPmbcFeatureCollection,
+        surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
       },
       activePimsPropertyIds: activeIds,
       isFiltering: true,

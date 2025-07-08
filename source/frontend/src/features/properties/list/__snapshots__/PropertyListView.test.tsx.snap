@@ -501,9 +501,6 @@ exports[`Property list view > matches snapshot 1`] = `
               </button>
             </div>
           </div>
-          <div
-            class="row"
-          />
         </form>
       </div>
     </div>

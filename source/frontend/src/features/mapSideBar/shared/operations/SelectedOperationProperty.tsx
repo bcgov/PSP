@@ -1,12 +1,23 @@
+import { geoJSON } from 'leaflet';
+import { useCallback } from 'react';
 import { Col, Row } from 'react-bootstrap';
+import { FaSearchPlus } from 'react-icons/fa';
 
-import { RemoveButton } from '@/components/common/buttons';
+import { LinkButton, RemoveButton } from '@/components/common/buttons';
 import { InlineInput } from '@/components/common/form/styles';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import OverflowTip from '@/components/common/OverflowTip';
 import DraftCircleNumber from '@/components/propertySelector/selectedPropertyList/DraftCircleNumber';
 import { AreaUnitTypes } from '@/constants';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
-import { convertArea, formatApiAddress, formatNumber, pidFormatter } from '@/utils';
+import {
+  convertArea,
+  exists,
+  formatApiAddress,
+  formatNumber,
+  pidFormatter,
+  pimsGeomeryToGeometry,
+} from '@/utils';
 
 interface ISelectedOperationPropertyProps {
   property: ApiGen_Concepts_Property;
@@ -23,6 +34,20 @@ export const SelectedOperationProperty: React.FunctionComponent<
     const sqm = convertArea(area, unit, AreaUnitTypes.SquareMeters);
     return formatNumber(sqm, 0, 4);
   };
+
+  const mapMachine = useMapStateMachine();
+
+  const onZoomToProperty = useCallback(
+    (property: ApiGen_Concepts_Property) => {
+      const geom = property?.boundary ?? pimsGeomeryToGeometry(property?.location);
+      const bounds = geoJSON(geom).getBounds();
+
+      if (exists(bounds)) {
+        mapMachine.requestFlyToBounds(bounds);
+      }
+    },
+    [mapMachine],
+  );
 
   return (
     <Row className="align-items-center mb-3 no-gutters">
@@ -44,7 +69,12 @@ export const SelectedOperationProperty: React.FunctionComponent<
         )}
       </Col>
       <Col md={3}>{formatApiAddress(property?.address) ?? ''}</Col>
-      <Col md={1} className="d-flex justify-content-center">
+      <Col xs="auto">
+        <LinkButton onClick={() => onZoomToProperty(property)}>
+          <FaSearchPlus size={18} className="ml-4" />
+        </LinkButton>
+      </Col>
+      <Col md={'auto'} className="d-flex justify-content-center pl-2">
         <RemoveButton onRemove={onRemove} />
       </Col>
     </Row>

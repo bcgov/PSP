@@ -12,6 +12,7 @@ import useSupercluster from '@/components/maps/hooks/useSupercluster';
 import { useFilterContext } from '@/components/maps/providers/FilterProvider';
 import { ICluster } from '@/components/maps/types';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
+import { TANTALIS_CrownSurveyParcels_Feature_Properties } from '@/models/layers/crownLand';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import {
   PIMS_Property_Boundary_View,
@@ -57,6 +58,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
         | PIMS_Property_Location_Lite_View
         | PIMS_Property_Boundary_View
         | PMBC_FullyAttributed_Feature_Properties
+        | TANTALIS_CrownSurveyParcels_Feature_Properties
       >
     >();
   const featureGroupRef = useRef<L.FeatureGroup>(null);
@@ -84,13 +86,14 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
       | PIMS_Property_Location_Lite_View
       | PIMS_Property_Boundary_View
       | PMBC_FullyAttributed_Feature_Properties
+      | TANTALIS_CrownSurveyParcels_Feature_Properties
     >
   >({});
 
   const pimsLocationFeatures: FeatureCollection<Geometry, PIMS_Property_Location_Lite_View> =
     useMemo(() => {
-      let filteredFeatures = mapMachine.mapFeatureData.pimsLocationLiteFeatures.features.filter(x =>
-        mapMachine.activePimsPropertyIds.includes(Number(x.properties.PROPERTY_ID)),
+      let filteredFeatures = mapMachine.mapFeatureData?.pimsLocationLiteFeatures?.features?.filter(
+        x => mapMachine.activePimsPropertyIds.includes(Number(x.properties.PROPERTY_ID)),
       );
 
       if (!mapMachine.showRetired) {
@@ -108,20 +111,23 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
       };
     }, [
       mapMachine.activePimsPropertyIds,
-      mapMachine.mapFeatureData.pimsLocationLiteFeatures.type,
-      mapMachine.mapFeatureData.pimsLocationLiteFeatures.features,
+      mapMachine.mapFeatureData?.pimsLocationLiteFeatures?.type,
+      mapMachine.mapFeatureData?.pimsLocationLiteFeatures?.features,
       mapMachine.showDisposed,
       mapMachine.showRetired,
     ]);
 
-  const pimsBoundaryFeatures = mapMachine.mapFeatureData.pimsBoundaryFeatures;
+  const pimsBoundaryFeatures = mapMachine.mapFeatureData?.pimsBoundaryFeatures;
 
-  const pmbcFeatures = mapMachine.mapFeatureData.fullyAttributedFeatures;
+  const pmbcFeatures = mapMachine.mapFeatureData?.fullyAttributedFeatures;
+
+  const surveyedParcelsFeatures = mapMachine.mapFeatureData?.surveyedParcelsFeatures;
 
   const featurePoints: Supercluster.PointFeature<
     | PIMS_Property_Location_Lite_View
     | PIMS_Property_Boundary_View
     | PMBC_FullyAttributed_Feature_Properties
+    | TANTALIS_CrownSurveyParcels_Feature_Properties
   >[] = useMemo(() => {
     const pimsLocationPoints =
       featureCollectionResponseToPointFeature<PIMS_Property_Location_Lite_View>(
@@ -133,8 +139,12 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
       featureCollectionResponseToPointFeature<PMBC_FullyAttributed_Feature_Properties>(
         pmbcFeatures,
       );
-    return [...pimsLocationPoints, ...pimsBoundaryPoints, ...pmbcPoints];
-  }, [pimsLocationFeatures, pimsBoundaryFeatures, pmbcFeatures]);
+    const crownPoints =
+      featureCollectionResponseToPointFeature<TANTALIS_CrownSurveyParcels_Feature_Properties>(
+        surveyedParcelsFeatures,
+      );
+    return [...pimsLocationPoints, ...pimsBoundaryPoints, ...pmbcPoints, ...crownPoints];
+  }, [pimsLocationFeatures, pimsBoundaryFeatures, pmbcFeatures, surveyedParcelsFeatures]);
 
   // get clusters
   // clusters are an array of GeoJSON Feature objects, but some of them
@@ -265,6 +275,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
               | PIMS_Property_Location_Lite_View
               | PIMS_Property_Boundary_View
               | PMBC_FullyAttributed_Feature_Properties
+              | TANTALIS_CrownSurveyParcels_Feature_Properties
             >;
 
             const isSelected =
@@ -339,7 +350,7 @@ export const getFeatureLatLng = <P,>(feature: Feature<Geometry, P>) => {
 const featureCollectionResponseToPointFeature = <P,>(
   response: FeatureCollection<Geometry, P> | undefined,
 ): PointFeature<P>[] => {
-  const validFeatures = response?.features.filter(feature => !!feature?.geometry) ?? [];
+  const validFeatures = response?.features?.filter(feature => exists(feature?.geometry)) ?? [];
   const data: PointFeature<P>[] = validFeatures.map(feature => {
     return featureResponseToPointFeature(feature);
   });

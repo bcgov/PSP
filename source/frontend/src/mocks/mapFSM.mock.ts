@@ -3,18 +3,22 @@ import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMach
 import {
   emptyPimsBoundaryFeatureCollection,
   emptyPimsLocationFeatureCollection,
+  emptyPimsLocationLiteFeatureCollection,
   emptyPmbcFeatureCollection,
+  emptySurveyedParcelsFeatures,
 } from '@/components/common/mapFSM/models';
 import { defaultBounds } from '@/components/maps/constants';
 import { PropertyFilterFormModel } from '@/components/maps/leaflet/Control/AdvancedFilter/models';
-import { layersTree } from '@/components/maps/leaflet/Control/LayersControl/DefaultLayers';
+import { initialEnabledLayers } from '@/components/maps/leaflet/Control/LayersControl/LayersMenuLayout';
 
 export const mapMachineBaseMock: IMapStateMachineContext = {
   requestFlyToBounds: vi.fn(),
   mapFeatureData: {
     pimsLocationFeatures: emptyPimsLocationFeatureCollection,
+    pimsLocationLiteFeatures: emptyPimsLocationLiteFeatureCollection,
     pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
     fullyAttributedFeatures: emptyPmbcFeatureCollection,
+    surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
   },
   mapSideBarViewState: {
     isCollapsed: false,
@@ -47,7 +51,7 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
 
   filePropertyLocations: [],
   activePimsPropertyIds: [],
-  activeLayers: layersTree,
+  activeLayers: initialEnabledLayers,
   isSelecting: false,
   isRepositioning: false,
   isFiltering: false,
@@ -56,7 +60,7 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   isShowingMapSearch: false,
   showDisposed: false,
   showRetired: false,
-  mapLayersToRefresh: [],
+  mapLayersToRefresh: new Set(),
   advancedSearchCriteria: new PropertyFilterFormModel(),
   isMapVisible: true,
   currentMapBounds: defaultBounds,
@@ -93,4 +97,7 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   setMapLayersToRefresh: vi.fn(),
   setAdvancedSearchCriteria: vi.fn(),
   setCurrentMapBounds: vi.fn(),
+  mapMarkedLocation: undefined,
+  mapMarkLocation: vi.fn(),
+  mapClearLocationMark: vi.fn(),
 };

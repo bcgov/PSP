@@ -1,4 +1,5 @@
-import { ILayerItem } from '@/components/maps/leaflet/Control/LayersControl/types';
+import { LayerDefinition } from '@/components/maps/leaflet/Control/LayersControl/types';
+import { Dictionary } from '@/interfaces/Dictionary';
 
 /**
  * API Tenant configuration.
@@ -36,16 +37,17 @@ export interface ITenantConfig2 {
   // Login page settings.
   login: ITenantLoginConfig;
   // optional additional layers to add using config.
-  layers: ILayerItem[];
+  layers: Dictionary<Partial<LayerDefinition>>;
   // the url that should be used to query the PSP properties layer.
   propertiesUrl: string;
   // the url that should be used to display PSP properties on the map.
   minimalPropertiesUrl: string;
   // configuration pertaining the Fully Attributed Parcel Map layer
-  parcelMapFullyAttributed: ILayerConfig;
+  parcelMapFullyAttributed: Partial<LayerDefinition>;
   electoralLayerUrl: string;
   municipalLayerUrl: string;
   fullyAttributedParcelsLayerUrl: string;
+  internalFullyAttributedParcelsLayerUrl: string;
   regionalLayerUrl: string;
   motiRegionLayerUrl: string;
   hwyDistrictLayerUrl: string;
@@ -59,6 +61,7 @@ export interface ITenantConfig2 {
   crownLandLeasesUrl: string;
   crownLandInventoryUrl: string;
   crownLandInclusionsUrl: string;
+  crownLandSurveyedParcelsUrl: string;
   // the amount of time it takes to time out the idle prompt (in minutes)
   idlePromptTimeout: number;
   // the amount of time it takes to display the idle prompt (in minutes)
@@ -71,6 +74,7 @@ export interface ITenantConfig2 {
   geographicNamesUrl: string;
   // the number of results to display when searching for geographic names
   geographicNamesResultLimit: number;
+  landTitleDistricts: string[];
 }
 
 export interface ITenantLoginConfig {
@@ -91,11 +95,6 @@ export interface ITenantLogoConfig {
   image: string;
   // Path to image with text.
   imageWithText: string;
-}
-
-export interface ILayerConfig {
-  url: string;
-  name: string;
 }
 
 export interface IBcAssessmentLayerConfig {

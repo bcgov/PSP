@@ -196,18 +196,17 @@ namespace Pims.Dal.Repositories
         public bool TryDeleteByFile(long activityId, long managementFileId)
         {
             var propertyActivity = Context.PimsPropertyActivities
-                .Include(pa => pa.PimsPropPropActivities).FirstOrDefault(x => x.PimsPropertyActivityId == activityId && x.ManagementFileId == managementFileId);
+                .Include(pa => pa.PimsPropPropActivities)
+                .Include(st => st.PimsPropActivityMgmtActivities)
+                .FirstOrDefault(x => x.PimsPropertyActivityId == activityId && x.ManagementFileId == managementFileId);
 
             if (propertyActivity is null)
             {
-                return false;
+                return true;
             }
 
-            // There may be zero to many of these relationships.
-            propertyActivity.PimsPropPropActivities.ForEach(pp =>
-            {
-                Context.PimsPropPropActivities.Remove(pp);
-            });
+            Context.PimsPropPropActivities.RemoveRange(propertyActivity.PimsPropPropActivities);
+            Context.PimsPropActivityMgmtActivities.RemoveRange(propertyActivity.PimsPropActivityMgmtActivities);
 
             Context.PimsPropertyActivities.Remove(propertyActivity);
 

@@ -6,6 +6,7 @@ Author        Date         Comment
 Doug Filteau  2023-Sep-11  Initial version.
 Doug Filteau  2024-Feb-26  Added UTILITYBILL and TAXESLEVIES.
 Doug Filteau  2025-May-07  Added CONSULTATION and TRAILMTC.
+Doug Filteau  2025-Jun-27  Added UNKNOWN activity type.
 ----------------------------------------------------------------------------- */
 
 DELETE FROM PIMS_PROP_MGMT_ACTIVITY_TYPE
@@ -28,7 +29,15 @@ VALUES
   (N'TRAILMTC',      N'Trail Maintenance'),
   (N'CORRESPOND',    N'Correspondence');
 GO
-
+  
+-- --------------------------------------------------------------
+-- Insert the disabled 'UNKNOWN' activity type.
+-- --------------------------------------------------------------
+INSERT INTO PIMS_PROP_MGMT_ACTIVITY_TYPE (PROP_MGMT_ACTIVITY_TYPE_CODE, DESCRIPTION, IS_DISABLED)
+VALUES
+  (N'UNKNOWN', N'Unknown', 1);
+GO
+  
 -- --------------------------------------------------------------
 -- Update the display order.
 -- --------------------------------------------------------------

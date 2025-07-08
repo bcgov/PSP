@@ -85,7 +85,7 @@ export const ManagementFileActivityRouter: React.FunctionComponent<
         customRender={({ match }) => (
           <FileActivityDetailContainer
             managementFileId={match.params.managementFileId}
-            propertyActivityId={match.params.activityId}
+            managementActivityId={match.params.activityId}
             onClose={() => {
               pathGenerator.showDetails(
                 'management',

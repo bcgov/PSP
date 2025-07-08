@@ -1,16 +1,20 @@
 import { FeatureCollection, Geometry } from 'geojson';
 import { LatLngBounds, LatLngLiteral } from 'leaflet';
 
+import { TANTALIS_CrownSurveyParcels_Feature_Properties } from '@/models/layers/crownLand';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
-import { PIMS_Property_Location_Lite_View } from '@/models/layers/pimsPropertyLocationLiteView';
 import {
   PIMS_Property_Boundary_View,
+  PIMS_Property_Location_Lite_View,
   PIMS_Property_Location_View,
 } from '@/models/layers/pimsPropertyLocationView';
 
 export interface MarkerSelected {
   readonly clusterId: string;
-  readonly pimsLocationFeature: PIMS_Property_Location_View | null;
+  readonly pimsLocationFeature:
+    | PIMS_Property_Location_View
+    | PIMS_Property_Location_Lite_View
+    | null;
   readonly pimsBoundaryFeature: PIMS_Property_Boundary_View | null;
   readonly fullyAttributedFeature: PMBC_FullyAttributed_Feature_Properties | null;
   readonly latlng: LatLngLiteral;
@@ -23,6 +27,10 @@ export interface MapFeatureData {
   readonly fullyAttributedFeatures: FeatureCollection<
     Geometry,
     PMBC_FullyAttributed_Feature_Properties
+  >;
+  readonly surveyedParcelsFeatures: FeatureCollection<
+    Geometry,
+    TANTALIS_CrownSurveyParcels_Feature_Properties
   >;
 }
 
@@ -38,6 +46,7 @@ export interface RequestedCenterTo {
 export interface LocationBoundaryDataset {
   readonly location: LatLngLiteral;
   readonly boundary: Geometry | null;
+  readonly isActive?: boolean;
 }
 
 export const emptyPimsLocationFeatureCollection: FeatureCollection<
@@ -72,9 +81,18 @@ export const emptyPmbcFeatureCollection: FeatureCollection<
   features: [],
 };
 
+export const emptySurveyedParcelsFeatures: FeatureCollection<
+  Geometry,
+  TANTALIS_CrownSurveyParcels_Feature_Properties
+> = {
+  type: 'FeatureCollection',
+  features: [],
+};
+
 export const emptyFeatureData: MapFeatureData = {
   pimsLocationFeatures: emptyPimsLocationFeatureCollection,
   pimsLocationLiteFeatures: emptyPimsLocationLiteFeatureCollection,
   pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
   fullyAttributedFeatures: emptyPmbcFeatureCollection,
+  surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
 };

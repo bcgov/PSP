@@ -281,6 +281,13 @@ exports[`MapFilterBar > renders correctly 1`] = `
             >
               Lat/Long
             </option>
+            <option
+              class="option"
+              data-testid="select-option-surveyParcel"
+              value="surveyParcel"
+            >
+              Survey Parcel
+            </option>
           </select>
         </div>
       </div>
@@ -375,9 +382,6 @@ exports[`MapFilterBar > renders correctly 1`] = `
         </button>
       </div>
     </div>
-    <div
-      class="row"
-    />
   </form>
 </DocumentFragment>
 `;

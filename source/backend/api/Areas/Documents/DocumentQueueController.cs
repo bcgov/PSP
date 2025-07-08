@@ -62,7 +62,7 @@ namespace Pims.Api.Controllers
         [ProducesResponseType(typeof(List<DocumentTypeModel>), 200)]
         [SwaggerOperation(Tags = new[] { "document-types" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult Update(long documentQueueId, [FromBody] DocumentQueueModel documentQueue)
+        public async Task<IActionResult> Update(long documentQueueId, [FromBody] DocumentQueueModel documentQueue)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -77,7 +77,7 @@ namespace Pims.Api.Controllers
                 throw new BadRequestException("Invalid document queue id.");
             }
 
-            var queuedDocuments = _documentQueueService.Update(_mapper.Map<PimsDocumentQueue>(documentQueue));
+            var queuedDocuments = await _documentQueueService.Update(_mapper.Map<PimsDocumentQueue>(documentQueue));
             var updatedDocumentQueue = _mapper.Map<DocumentQueueModel>(queuedDocuments);
             return new JsonResult(updatedDocumentQueue);
         }
