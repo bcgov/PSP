@@ -107,15 +107,8 @@ namespace Pims.Api.Services
             ValidateName(managementFile);
 
             ManagementFileStatusTypes? currentManagementStatus = GetCurrentManagementStatus(managementFile.Internal_Id);
-            if (!_managementStatusSolver.CanEditDetails(currentManagementStatus) && !_user.HasPermission(Permissions.SystemAdmin))
-            {
-                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
-            }
-
-            if(!_user.HasPermission(Permissions.SystemAdmin) && _managementStatusSolver.IsAdminProtected(currentManagementStatus))
-            {
-                throw new BusinessRuleViolationException("The file you are editing is not active, only an Administrator may update this file to an Active status.");
-            }
+            ManagementFileStatusTypes newManagementStatus = (ManagementFileStatusTypes)Enum.Parse(typeof(ManagementFileStatusTypes), managementFile.ManagementFileStatusTypeCode);
+            ValidateStatus(currentManagementStatus, newManagementStatus);
 
             ValidateVersion(id, managementFile.ConcurrencyControlNumber);
 
@@ -280,6 +273,28 @@ namespace Pims.Api.Services
             }
         }
 
+        private void ValidateStatus(ManagementFileStatusTypes? currentManagementStatus, ManagementFileStatusTypes newManagementStatus)
+        {
+            // All users can change states back to Active or Draft, from Hold, Cancelled.
+            if ((currentManagementStatus == ManagementFileStatusTypes.HOLD || currentManagementStatus == ManagementFileStatusTypes.CANCELLED)
+                && (newManagementStatus == ManagementFileStatusTypes.ACTIVE || newManagementStatus == ManagementFileStatusTypes.DRAFT))
+            {
+                return;
+            }
+
+            // Not Editable and Admin protected must have Admin
+            if (!_managementStatusSolver.CanEditDetails(currentManagementStatus) && _managementStatusSolver.IsAdminProtected(currentManagementStatus) && !_user.HasPermission(Permissions.SystemAdmin))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active, only an Administrator may update this file to an Active status.");
+            }
+
+            // Not Editable -- Status must be updated first
+            if (!_managementStatusSolver.CanEditDetails(currentManagementStatus))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+            }
+        }
+
         private void ValidateName(PimsManagementFile managementFile)
         {
             var existingFile = _managementFileRepository.GetByName(managementFile.FileName);
@@ -299,7 +314,7 @@ namespace Pims.Api.Services
             var currentProperties = _managementFilePropertyRepository.GetPropertiesByManagementFileId(incomingManagementFile.Internal_Id);
 
             // The following checks result in hard STOP errors
-            if (isFileClosing && currentProperties.Any(p => !p.Property.IsOwned))
+            if (isFileClosing && currentProperties is not null && currentProperties.Any(p => !p.Property.IsOwned))
             {
                 throw new BusinessRuleViolationException("You have one or more properties attached to this Management file that is NOT in the \"Core Inventory\" (i.e. owned by BCTFA and/or HMK). To complete this file you must either, remove these non \"Non-Core Inventory\" properties, OR make sure the property is added to the PIMS inventory first.");
             }
@@ -452,7 +467,5 @@ namespace Pims.Api.Services
 
             return currentManagementFileStatus;
         }
-
-
     }
 }
