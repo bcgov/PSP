@@ -156,7 +156,11 @@ export const FilePropertyRouter: React.FC<IFilePropertyRouterProps> = props => {
 const getFileProperty = (file: ApiGen_Concepts_File, selectedFilePropertyId: number) => {
   const properties = file?.fileProperties || [];
 
-  return properties.find(p => p.id === selectedFilePropertyId);
+  const fileProperty = properties.find(p => p.id === selectedFilePropertyId);
+  if (exists(fileProperty) && !exists(fileProperty.file)) {
+    fileProperty.file = file;
+  }
+  return fileProperty;
 };
 
 export default FilePropertyRouter;
