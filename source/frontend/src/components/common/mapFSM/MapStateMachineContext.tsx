@@ -97,6 +97,7 @@ export interface IMapStateMachineContext {
   toggleMapFilterDisplay: () => void;
   toggleMapLayerControl: () => void;
   toggleMapSearchControl: () => void;
+  showMapSearchControl: () => void;
   setFilePropertyLocations: (locations: LocationBoundaryDataset[]) => void;
   setMapLayers: (layers: Set<string>) => void;
   setMapLayersToRefresh: (layers: Set<string>) => void;
@@ -469,6 +470,10 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     serviceSend({ type: 'TOGGLE_SEARCH' });
   }, [serviceSend]);
 
+  const showMapSearchControl = useCallback(() => {
+    serviceSend({ type: 'SHOW_SEARCH' });
+  }, [serviceSend]);
+
   const isRepositioning = useMemo(() => {
     return state.matches({ mapVisible: { featureView: 'repositioning' } });
   }, [state]);
@@ -557,6 +562,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         toggleMapFilterDisplay,
         toggleMapLayerControl,
         toggleMapSearchControl,
+        showMapSearchControl,
         toggleSidebarDisplay,
         setFilePropertyLocations,
         setVisiblePimsProperties,

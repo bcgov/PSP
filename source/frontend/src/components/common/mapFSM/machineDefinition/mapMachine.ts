@@ -251,6 +251,7 @@ const selectedFeatureLoaderStates = {
               mapFeatureSelected: () => null,
               mapLocationFeatureDataset: () => null,
             }),
+            raise('SHOW_SEARCH'),
           ],
           target: 'loading',
         },
@@ -425,6 +426,9 @@ const rightSideBarStates = {
           target: 'layerVisible',
         },
         TOGGLE_SEARCH: {
+          target: 'searchVisible',
+        },
+        SHOW_SEARCH: {
           target: 'searchVisible',
         },
       },
