@@ -47,7 +47,7 @@ export const DepositNotes: FunctionComponent<PropsWithChildren<IDepositNotesProp
             addButtonText="Edit Comments"
             addButtonIcon={<FaEdit size={'2rem'} />}
             data-testId="edit-comments"
-            onAdd={() => {
+            onButtonAction={() => {
               onEdit();
               setCollapsed(false);
             }}
