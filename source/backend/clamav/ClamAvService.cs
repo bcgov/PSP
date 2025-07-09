@@ -54,19 +54,17 @@ namespace Pims.Av
                 this._logger.LogInformation("ClamAV scan disabled");
                 return;
             }
-            using var ms = new MemoryStream();
-            file.OpenReadStream().CopyTo(ms);
-            byte[] fileBytes = ms.ToArray();
+            using Stream stream = file.OpenReadStream();
 
-            await ScanAsync(fileBytes);
+            await ScanAsync(stream);
         }
 
         /// <summary>
         /// Scan the passed file, throw exceptions if the scan fails, or returns a positive result.
         /// </summary>
-        /// <param name="fileData"></param>
+        /// <param name="stream"></param>
         /// <returns></returns>
-        public async Task ScanAsync(byte[] fileData)
+        public async Task ScanAsync(Stream stream)
         {
             if (this.Options.DisableScan)
             {
@@ -74,7 +72,7 @@ namespace Pims.Av
                 return;
             }
             this._logger.LogInformation("ClamAV scan start");
-            var scanResult = await this.Client.SendAndScanFileAsync(fileData);
+            var scanResult = await this.Client.SendAndScanFileAsync(stream);
 
             switch (scanResult.Result)
             {

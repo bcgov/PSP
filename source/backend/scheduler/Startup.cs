@@ -267,6 +267,7 @@ namespace Pims.Scheduler
             services.AddHangfireServer(options =>
             {
                 options.Queues = hangfireOptions.Queues;
+                options.WorkerCount = 1;
             });
             services.AddHangfireConsoleExtensions();
 
