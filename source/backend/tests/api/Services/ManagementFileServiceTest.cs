@@ -547,18 +547,33 @@ namespace Pims.Api.Test.Services
             var service = this.CreateManagementServiceWithPermissions(Permissions.SystemAdmin, Permissions.ManagementEdit);
             var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
             var managementFile = EntityHelper.CreateManagementFile(1);
-            managementFile.ManagementFileStatusTypeCode = ManagementFileStatusTypes.COMPLETE.ToString();
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
 
+            repository.Setup(x => x.GetByName(It.IsAny<string>())).Returns(managementFile);
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
             repository.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<PimsManagementFile>())).Returns(managementFile);
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(managementFile);
-            repository.Setup(x => x.GetByName(It.IsAny<string>())).Returns(managementFile);
 
             var statusMock = this._helper.GetService<Mock<IManagementFileStatusSolver>>();
-            statusMock.Setup(x => x.CanEditDetails(It.IsAny<ManagementFileStatusTypes>())).Returns(false);
+            statusMock.Setup(x => x.CanEditDetails(It.IsAny<ManagementFileStatusTypes>())).Returns(true);
+
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+            lookupRepository.Setup(x => x.GetAllManagementFileStatusTypes()).Returns(new PimsManagementFileStatusType[]{ new PimsManagementFileStatusType() {
+                Id = ManagementFileStatusTypes.COMPLETE.ToString(),
+                Description = "COMPLETE",
+            },});
+
+
+            PimsManagementFile updatedFile = new()
+            {
+                ManagementFileId = 1,
+                ManagementFileStatusTypeCode = ManagementFileStatusTypes.COMPLETE.ToString(),
+                ManagementFilePurposeTypeCode = managementFile.ManagementFilePurposeTypeCode,
+                ConcurrencyControlNumber = 1,
+            };
 
             // Act
-            var result = service.Update(1, managementFile, new List<UserOverrideCode>() { });
+            var result = service.Update(1, updatedFile, new List<UserOverrideCode>() { });
 
             // Assert
             Assert.NotNull(result);
