@@ -256,19 +256,14 @@ namespace Pims.Api.Repositories.Mayan
             _logger.LogDebug("Uploading document {documentType}...", documentType);
             string authenticationToken = await _authRepository.GetTokenAsync();
 
-            byte[] fileData;
             using Stream stream = file.OpenReadStream();
-            using var byteReader = new BinaryReader(stream);
-            fileData = byteReader.ReadBytes((int)stream.Length);
-
-            // Add the file data to the content
-            using ByteArrayContent fileBytes = new(fileData);
+            using StreamContent streamContent = new StreamContent(stream);
             using MultipartFormDataContent multiContent = new MultipartFormDataContent();
-            multiContent.Add(fileBytes, "file", file.FileName);
 
             // Add the document id to the content
             using HttpContent content = new StringContent(documentType.ToString(CultureInfo.InvariantCulture));
             multiContent.Add(content, "document_type_id");
+            multiContent.Add(streamContent, "file", file.FileName);
 
             Uri endpoint = new($"{_config.BaseUri}/documents/upload/");
             ExternalResponse<DocumentDetailModel> response = await PostAsync<DocumentDetailModel>(endpoint, multiContent, authenticationToken);
