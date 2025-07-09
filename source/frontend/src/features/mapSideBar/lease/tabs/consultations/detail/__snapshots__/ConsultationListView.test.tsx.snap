@@ -294,17 +294,6 @@ exports[`ConsultationListView component > renders as expected 1`] = `
   line-height: 2rem;
 }
 
-.c15.required::before {
-  content: '*';
-  position: absolute;
-  top: 0.75rem;
-  left: 0rem;
-}
-
-.c14 {
-  font-weight: bold;
-}
-
 .c5.btn.btn-primary,
 .c5.btn.btn-primary:active {
   background-color: #42814A;
@@ -320,6 +309,17 @@ exports[`ConsultationListView component > renders as expected 1`] = `
   display: inline-block;
   margin-left: 1.5rem;
   margin-bottom: 0.5rem;
+}
+
+.c15.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c14 {
+  font-weight: bold;
 }
 
 .c9 {

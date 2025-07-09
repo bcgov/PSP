@@ -26,6 +26,7 @@ import {
   RenderOptions,
   act,
   cleanup,
+  getMockRepositoryObj,
   mockKeycloak,
   render,
   screen,
@@ -40,6 +41,7 @@ import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts
 import MapContainer from './MapContainer';
 import { PropertyFilterFormModel } from '@/components/maps/leaflet/Control/AdvancedFilter/models';
 import debounce from 'lodash/debounce';
+import { useLtsa } from '@/hooks/useLtsa';
 
 const mockAxios = new MockAdapter(axios);
 
@@ -47,6 +49,10 @@ vi.mock('@/components/maps/leaflet/LayerPopup/components/LayerPopupContent');
 vi.mock('@/features/advancedFilterBar/AdvancedFilterBar');
 vi.mock('@/hooks/pims-api/useApiProperties');
 vi.mock('@/hooks/useLtsa');
+vi.mocked(useLtsa, { partial: true }).mockReturnValue({
+  ltsaRequestWrapper: getMockRepositoryObj(),
+  getStrataPlanCommonProperty: getMockRepositoryObj(),
+});
 vi.mock('@/hooks/repositories/useComposedProperties');
 vi.mock('@/hooks/repositories/usePropertyAssociations');
 vi.mock('@/hooks/repositories/mapLayer/useParcelMapLayer');
