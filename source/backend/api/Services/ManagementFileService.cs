@@ -289,7 +289,7 @@ namespace Pims.Api.Services
             }
 
             // Not Editable -- Status must be updated first
-            if (!_managementStatusSolver.CanEditDetails(currentManagementStatus))
+            if (!_managementStatusSolver.CanEditDetails(currentManagementStatus) && !_managementStatusSolver.CanEditDetails(newManagementStatus))
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
