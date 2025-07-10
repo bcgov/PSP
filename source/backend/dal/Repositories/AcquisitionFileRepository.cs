@@ -911,6 +911,13 @@ namespace Pims.Dal.Repositories
                 || acq.PimsCompensationRequisitions.Any(cr => EF.Functions.Like(cr.AlternateProject.Code, $"%{filter.ProjectNameOrNumber}%") || EF.Functions.Like(cr.AlternateProject.Description, $"%{filter.ProjectNameOrNumber}%")));
             }
 
+            if (!string.IsNullOrWhiteSpace(filter.OwnerName))
+            {
+                predicate = predicate.And(acq => acq.PimsAcquisitionOwners.Any(ownr => EF.Functions.Like(ownr.GivenName, $"%{filter.OwnerName}%")
+                                    || EF.Functions.Like(ownr.LastNameAndCorpName, $"%{filter.OwnerName}%")
+                                    || EF.Functions.Like(ownr.OtherName, $"%{filter.OwnerName}%")));
+            }
+
             predicate = predicate.And(acq => regions.Contains(acq.RegionCode));
 
             if (contractorPersonId is not null)

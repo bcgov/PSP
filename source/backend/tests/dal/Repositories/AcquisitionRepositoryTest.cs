@@ -195,6 +195,35 @@ namespace Pims.Dal.Test.Repositories
             // Assert
             result.Should().HaveCount(1);
         }
+
+        [Fact]
+        public void GetOwner_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileView);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.PimsAcquisitionOwners = new List<PimsAcquisitionOwner>() { new PimsAcquisitionOwner()
+                {
+                    AcquisitionFileId = acqFile.AcquisitionFileId,
+                    GivenName = "JOE",
+                    LastNameAndCorpName = "DOE",
+                    ContactEmailAddr = "john.doe@hotmail.com",
+                }
+            };
+
+            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(acqFile);
+            var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
+            var filter = new AcquisitionFilter() { OwnerName = "DOE" };
+
+            // Act
+            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 });
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
+
         #endregion
 
         #region Add
