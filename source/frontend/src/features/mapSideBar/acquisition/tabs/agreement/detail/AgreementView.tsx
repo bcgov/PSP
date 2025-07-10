@@ -52,7 +52,7 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
             title="Agreements"
             addButtonText="Add Agreement"
             addButtonIcon={<FaPlus size={'2rem'} />}
-            onAdd={() => {
+            onButtonAction={() => {
               history.push(`${match.url}/add`);
             }}
             isAddEnabled={!isFileFinalStatus}

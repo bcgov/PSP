@@ -111,7 +111,7 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
           type={NoteTypes.Disposition_File}
           entityId={dispositionFile?.id}
           onSuccess={onChildSuccess}
-          NoteListView={NoteListView}
+          View={NoteListView}
         />
       ),
       key: FileTabType.NOTES,

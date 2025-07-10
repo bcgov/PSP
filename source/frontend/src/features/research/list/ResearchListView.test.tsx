@@ -643,6 +643,7 @@ const mockResearchListViewResponse: ApiGen_Concepts_ResearchFile[] = [
     fileProperties: [
       {
         id: 1,
+        isActive: null,
         propertyId: 1,
         property: {
           ...getMockApiProperty(),
@@ -675,6 +676,7 @@ const mockResearchListViewResponse: ApiGen_Concepts_ResearchFile[] = [
       },
       {
         id: 2,
+        isActive: null,
         propertyId: 2,
         property: {
           ...getMockApiProperty(),

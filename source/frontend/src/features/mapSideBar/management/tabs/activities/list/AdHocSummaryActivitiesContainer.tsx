@@ -48,6 +48,7 @@ const AdHocFileActivitiesSummaryContainer: React.FunctionComponent<
         url: `/mapview/sidebar/property/${row.adHocPropertyId}/management/activity/${row.activityId}`,
         title: row.adHocPropertyName,
       })}
+      canEditActivities={false}
     />
   );
 };

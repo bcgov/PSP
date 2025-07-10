@@ -1,7 +1,6 @@
 ﻿using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
-using PIMS.Tests.Automation.PageObjects;
 
 namespace PIMS.Tests.Automation.StepDefinitions
 {
@@ -15,6 +14,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly PropertyPIMSFiles pimsFiles;
         private readonly MapFeatures mapFeatures;
         private readonly SharedPagination sharedPagination;
+        private readonly SharedActivities sharedActivities;
 
         private readonly GenericSteps genericSteps;
 
@@ -33,6 +33,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             pimsFiles = new PropertyPIMSFiles(driver);
             mapFeatures = new MapFeatures(driver);
             sharedPagination = new SharedPagination(driver);
+            sharedActivities = new SharedActivities(driver);
             genericSteps = new GenericSteps(driver);
 
             property = new Property();
@@ -54,10 +55,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //searchProperties.SearchPropertyByAddressMap(searchProperty.Address);
 
             //Validate that the result gives only one pin
-            //Assert.True(searchProperties.PropertiesMapFoundCount());
+            Assert.True(searchProperties.PropertiesMapFoundCount());
 
             //Search for a valid Plan in Inventory
-            //searchProperties.SearchPropertyReset();
             searchProperties.SearchPropertyByPlan(searchProperty.PlanNumber);
 
             //Validate that the result gives only one pin
@@ -255,7 +255,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.SearchPropertyByPID(searchProperty.PID);
 
             //Validate that the result gives only one pin
-            Assert.True(searchProperties.PropertiesMapFoundCount());
+            Assert.True(searchProperties.PropertiesPinMapFoundCount() == 1);
 
             //Click on the founf property
             searchProperties.SelectFoundPin();
@@ -347,7 +347,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Insert and cancel Summary Information
             propertyManagementTab.InsertManagementSummaryInformation(propertyManagement);
-            propertyManagementTab.CancelPropertyManagement();
+            sharedActivities.CancelPropertyManagement();
 
             //Click on Edit Summary
             propertyManagementTab.UpdateManagementSummaryButton();
@@ -367,7 +367,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                     propertyManagementTab.AddNewPropertyContactButton();
                     propertyManagementTab.VerifyCreateContactsInitForm();
                     propertyManagementTab.InsertNewPropertyContact(propertyManagement.ManagementPropertyContacts[i]);
-                    propertyManagementTab.CancelPropertyManagement();
+                    sharedActivities.CancelPropertyManagement();
                 }
 
                 propertyManagementTab.AddNewPropertyContactButton();
@@ -383,15 +383,15 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 {
                     //Checking Initial Activity form and cancel changes
                     propertyManagementTab.AddNewPropertyActivityButton();
-                    propertyManagementTab.VerifyCreateActivityInitForm();
-                    propertyManagementTab.InsertNewPropertyActivity(propertyManagement.ManagementPropertyActivities[j]);
-                    propertyManagementTab.CancelPropertyManagement();
+                    sharedActivities.VerifyCreateActivityInitForm();
+                    sharedActivities.InsertNewPropertyActivity(propertyManagement.ManagementPropertyActivities[j]);
+                    sharedActivities.CancelPropertyManagement();
                 }
 
                 propertyManagementTab.AddNewPropertyActivityButton();
-                propertyManagementTab.InsertNewPropertyActivity(propertyManagement.ManagementPropertyActivities[j]);
+                sharedActivities.InsertNewPropertyActivity(propertyManagement.ManagementPropertyActivities[j]);
                 propertyManagementTab.SavePropertyManagement();
-                propertyManagementTab.VerifyInsertedActivity(propertyManagement.ManagementPropertyActivities[j]);
+                sharedActivities.VerifyInsertedActivity(propertyManagement.ManagementPropertyActivities[j], "Property Management");
                 propertyManagementTab.ViewLastActivityFromList();
                 propertyManagementTab.VerifyLastInsertedActivityTable(propertyManagement.ManagementPropertyActivities[j]);
             }
@@ -411,10 +411,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
             for (int j = 0; j < propertyManagement.ManagementPropertyActivities.Count; j++)
             {
                 propertyManagementTab.AddNewPropertyActivityButton();
-                propertyManagementTab.VerifyCreateActivityInitForm();
-                propertyManagementTab.InsertNewPropertyActivity(propertyManagement.ManagementPropertyActivities[j]);
+                sharedActivities.VerifyCreateActivityInitForm();
+                sharedActivities.InsertNewPropertyActivity(propertyManagement.ManagementPropertyActivities[j]);
                 propertyManagementTab.SavePropertyManagement();
-                propertyManagementTab.VerifyInsertedActivity(propertyManagement.ManagementPropertyActivities[j]);
+                sharedActivities.VerifyInsertedActivity(propertyManagement.ManagementPropertyActivities[j], "Property Management");
                 propertyManagementTab.ViewLastActivityFromList();
                 propertyManagementTab.VerifyLastInsertedActivityTable(propertyManagement.ManagementPropertyActivities[j]);
             }
@@ -428,7 +428,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             PopulateManagementProperty(rowNumber);
 
             //Close Activity Tray
-            propertyManagementTab.CloseActivityTray();
+            sharedActivities.CloseActivityTray();
 
             //Update Summary section
             propertyManagementTab.UpdateManagementSummaryButton();
@@ -445,13 +445,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Update an activity
             propertyManagementTab.ViewLastActivityFromList();
             propertyManagementTab.ViewLastActivityButton();
-            propertyManagementTab.UpdateSelectedActivity();
-            propertyManagementTab.InsertNewPropertyActivity(propertyManagement.ManagementPropertyActivities[0]);
+            sharedActivities.UpdateSelectedActivityBttn();
+            sharedActivities.InsertNewPropertyActivity(propertyManagement.ManagementPropertyActivities[0]);
             propertyManagementTab.SavePropertyManagement();
-            propertyManagementTab.VerifyInsertedActivity(propertyManagement.ManagementPropertyActivities[0]);
+            sharedActivities.VerifyInsertedActivity(propertyManagement.ManagementPropertyActivities[0], "Property Management");
             propertyManagementTab.ViewLastActivityFromList();
             propertyManagementTab.VerifyLastInsertedActivityTable(propertyManagement.ManagementPropertyActivities[0]);
-
         }
 
         [StepDefinition(@"I clean up the Property Management Tab from row number (.*)")]
@@ -461,7 +460,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             PopulateManagementProperty(rowNumber);
 
             //Close Activity Tray
-            propertyManagementTab.CloseActivityTray();
+            sharedActivities.CloseActivityTray();
 
             //Clean up Summary section
             propertyManagementTab.UpdateManagementSummaryButton();
@@ -479,7 +478,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public void DeleteActivitiesManagementPropertyTab()
         {
             //Close Activity Tray
-            propertyManagementTab.CloseActivityTray();
+            sharedActivities.CloseActivityTray();
 
             //Delete all Activities
             propertyManagementTab.DeleteAllActivities();
@@ -712,11 +711,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 propertyActivity.PropertyActivityType = ExcelDataContext.ReadData(i, "PropertyActivityType");
                 propertyActivity.PropertyActivitySubType = ExcelDataContext.ReadData(i, "PropertyActivitySubType");
                 propertyActivity.PropertyActivityStatus = ExcelDataContext.ReadData(i, "PropertyActivityStatus");
-                propertyActivity.PropertyActivityRequestedDate = ExcelDataContext.ReadData(i, "PropertyActivityRequestedDate");
+                propertyActivity.PropertyActivityRequestedCommenceDate = ExcelDataContext.ReadData(i, "PropertyActivityRequestedCommenceDate");
+                propertyActivity.PropertyActivityCompletionDate = ExcelDataContext.ReadData(i, "PropertyActivityCompletionDate");
                 propertyActivity.PropertyActivityDescription = ExcelDataContext.ReadData(i, "PropertyActivityDescription");
                 propertyActivity.PropertyActivityMinistryContact = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "PropertyActivityMinistryContact"));
-                propertyActivity.PropertyActivityRequestedSource = ExcelDataContext.ReadData(i, "PropertyActivityRequestedSource");
-                propertyActivity.PropertyActivityInvolvedParties = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "PropertyActivityInvolvedParties"));
+                propertyActivity.PropertyActivityRequestorContactMngr = ExcelDataContext.ReadData(i, "PropertyActivityRequestorContactMngr");
+                propertyActivity.PropertyActivityInvolvedPartiesExtContacts = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "PropertyActivityInvolvedPartiesExtContacts"));
                 propertyActivity.PropertyActivityServiceProvider = ExcelDataContext.ReadData(i, "PropertyActivityServiceProvider");
                 propertyActivity.ManagementPropertyActivityInvoicesStartRow = int.Parse(ExcelDataContext.ReadData(i, "ManagementPropertyActivityInvoicesStartRow"));
                 propertyActivity.ManagementPropertyActivityInvoicesCount = int.Parse(ExcelDataContext.ReadData(i, "ManagementPropertyActivityInvoicesCount"));
@@ -726,7 +726,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 propertyActivity.ManagementPropertyActivityGrandTotal = ExcelDataContext.ReadData(i, "ManagementPropertyActivityGrandTotal");
 
                 if (propertyActivity.ManagementPropertyActivityInvoicesStartRow != 0 && propertyActivity.ManagementPropertyActivityInvoicesCount != 0)
-                    PopulateManagementActivitiesInvoiceCollection(propertyManagement.ManagementPropertyActivitiesStartRow, propertyManagement.ManagementPropertyActivitiesCount, propertyActivity.ManagementPropertyActivityInvoices);
+                    PopulateManagementActivitiesInvoiceCollection(propertyActivity.ManagementPropertyActivityInvoicesStartRow, propertyActivity.ManagementPropertyActivityInvoicesCount, propertyActivity.ManagementPropertyActivityInvoices);
                 else
                     propertyActivity.ManagementPropertyActivityInvoices = new List<ManagementPropertyActivityInvoice>();
 

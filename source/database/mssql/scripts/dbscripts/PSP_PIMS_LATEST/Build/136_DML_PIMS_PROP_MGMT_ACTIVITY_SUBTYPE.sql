@@ -9,6 +9,7 @@ Doug Filteau  2024-Jul-03  Add/enable PROPADMIN and remove the leading space
                            from WATERANDSEWER.
 Doug Filteau  2024-Jul-11  Added BYLAWINFRAC.
 Doug Filteau  2025-May-07  Added CONSULTATION and TRAILMTC.
+Doug Filteau  2025-Jun-27  Added UNKNOWN activity subtype.
 ----------------------------------------------------------------------------- */
 
 DELETE FROM PIMS_PROP_MGMT_ACTIVITY_SUBTYPE
@@ -95,6 +96,14 @@ VALUES
   (N'TRAILMTC',      N'ENGINEERRVW',      N'Engineering review'),
   
   (N'CORRESPOND',    N'CORRESPOND',       N'Correspondence');
+GO
+  
+-- --------------------------------------------------------------
+-- Insert the disabled 'UNKNOWN' activity subtype.
+-- --------------------------------------------------------------
+INSERT INTO PIMS_PROP_MGMT_ACTIVITY_SUBTYPE (PROP_MGMT_ACTIVITY_TYPE_CODE, PROP_MGMT_ACTIVITY_SUBTYPE_CODE, DESCRIPTION, IS_DISABLED)
+VALUES
+  (N'UNKNOWN', N'UNKNOWN', N'Unknown', 1);
 GO
 
 -- --------------------------------------------------------------

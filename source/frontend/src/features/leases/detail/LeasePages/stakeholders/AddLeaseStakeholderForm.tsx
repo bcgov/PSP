@@ -75,7 +75,7 @@ export const AddLeaseStakeholderForm: React.FunctionComponent<
             title={isPayableLease ? 'Payees' : 'Tenants'}
             addButtonText={isPayableLease ? 'Select Payee(s)' : 'Select Tenant(s)'}
             addButtonIcon={<FaPlus size={'2rem'} />}
-            onAdd={() => {
+            onButtonAction={() => {
               setShowContactManager(true);
             }}
           />

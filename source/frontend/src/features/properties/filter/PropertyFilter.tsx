@@ -173,9 +173,9 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                       } else {
                         toast.warn('No valid PIDs found for this address, using lat/long instead.');
                       }
-                      setFieldValue('latitude', val.latitude);
-                      setFieldValue('longitude', val.longitude);
                     }
+                    setFieldValue('latitude', val.latitude);
+                    setFieldValue('longitude', val.longitude);
                   }}
                   value={values.address}
                   autoSetting="off"

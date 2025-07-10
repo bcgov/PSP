@@ -1,18 +1,19 @@
 import { feature, featureCollection } from '@turf/turf';
 import { FeatureCollection } from 'geojson';
-import L, { LatLng, LatLngLiteral } from 'leaflet';
+import L, { LatLng } from 'leaflet';
 import find from 'lodash/find';
 import { useEffect, useMemo, useRef } from 'react';
 import { FeatureGroup, GeoJSON, Marker } from 'react-leaflet';
 import { v4 as uuidv4 } from 'uuid';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import { LocationBoundaryDataset } from '@/components/common/mapFSM/models';
 import { usePrevious } from '@/hooks/usePrevious';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import { exists } from '@/utils';
 
 import { useFilterContext } from '../../providers/FilterProvider';
-import { getDraftIcon } from './util';
+import { getDisabledDraftIcon, getDraftIcon } from './util';
 
 export const FilePropertiesLayer: React.FunctionComponent = () => {
   const draftFeatureGroupRef = useRef<L.FeatureGroup>(null);
@@ -22,8 +23,8 @@ export const FilePropertiesLayer: React.FunctionComponent = () => {
   const mapMarkerClickFn = mapMachine.mapMarkerClick;
   const filePropertyLocations = mapMachine.filePropertyLocations;
 
-  const draftPoints = useMemo<LatLngLiteral[]>(() => {
-    return (filePropertyLocations ?? []).map(pl => pl.location).filter(exists);
+  const draftPoints = useMemo<LocationBoundaryDataset[]>(() => {
+    return (filePropertyLocations ?? []).filter(dp => exists(dp?.location));
   }, [filePropertyLocations]);
 
   const draftBoundaryFeatures = useMemo<FeatureCollection>(() => {
@@ -60,7 +61,7 @@ export const FilePropertiesLayer: React.FunctionComponent = () => {
       //react-leaflet is not displaying removed drafts but the layer is still present, this
       //causes the fitbounds calculation to be off. Fixed by manually cleaning up layers referencing removed drafts.
       group.getLayers().forEach((l: any) => {
-        if (!find(draftPoints, vl => (l._latlng as LatLng)?.equals(vl))) {
+        if (!find(draftPoints, vl => (l._latlng as LatLng)?.equals(vl.location))) {
           group.removeLayer(l);
         }
       });
@@ -84,8 +85,12 @@ export const FilePropertiesLayer: React.FunctionComponent = () => {
             return (
               <Marker
                 key={uuidv4()}
-                position={draftPoint}
-                icon={getDraftIcon((index + 1).toString())}
+                position={draftPoint.location}
+                icon={
+                  draftPoint.isActive
+                    ? getDraftIcon((index + 1).toString())
+                    : getDisabledDraftIcon((index + 1).toString())
+                }
                 zIndexOffset={500}
                 eventHandlers={{
                   click: e => {
@@ -95,7 +100,7 @@ export const FilePropertiesLayer: React.FunctionComponent = () => {
 
                     mapMarkerClickFn({
                       clusterId: 'NO_ID',
-                      latlng: draftPoint,
+                      latlng: draftPoint.location,
                       pimsLocationFeature: null,
                       pimsBoundaryFeature: null,
                       fullyAttributedFeature: null,
