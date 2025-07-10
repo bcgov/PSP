@@ -10,9 +10,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Concepts.Document;
-using Pims.Api.Models.Mayan.Document;
 using Pims.Api.Models.Requests.Document.Upload;
-using Pims.Api.Models.Requests.Http;
 using Pims.Core.Api.Exceptions;
 using Pims.Core.Api.Services;
 using Pims.Core.Extensions;
@@ -69,7 +67,6 @@ namespace Pims.Api.Services
             {
                 throw new KeyNotFoundException($"Unable to find queued document by id: ${documentQueueId}");
             }
-
             return documentQueue;
         }
 
@@ -86,26 +83,9 @@ namespace Pims.Api.Services
 
             var queuedDocuments = _documentQueueRepository.GetAllByFilter(filter);
 
-            if (filter.MaxFileSize != null)
-            {
-                List<PimsDocumentQueue> documentsBelowMaxFileSize = new List<PimsDocumentQueue>();
-                long totalFileSize = 0;
-                queuedDocuments.ForEach(currentDocument =>
-                {
-                    if (currentDocument.DocumentSize + totalFileSize <= filter.MaxFileSize)
-                    {
-                        totalFileSize += currentDocument.DocumentSize;
-                        documentsBelowMaxFileSize.Add(currentDocument);
-                    }
-                });
-                if (documentsBelowMaxFileSize.Count == 0 && queuedDocuments.Any())
-                {
-                    documentsBelowMaxFileSize.Add(queuedDocuments.FirstOrDefault());
-                }
-                this.Logger.LogDebug("returning {length} documents below file size", documentsBelowMaxFileSize.Count);
-                return documentsBelowMaxFileSize;
-            }
-            return queuedDocuments;
+            return filter.MaxFileSize != null
+                ? FilterDocumentsByMaxFileSize(queuedDocuments, filter.MaxFileSize.Value)
+                : queuedDocuments;
         }
 
         /// <summary>
@@ -114,15 +94,15 @@ namespace Pims.Api.Services
         /// <param name="documentQueue">The document queue object to update.</param>
         /// <returns>The updated document queue object.</returns>
         /// <exception cref="UnauthorizedAccessException">Thrown when the user is not authorized to perform this operation.</exception>
-        public PimsDocumentQueue Update(PimsDocumentQueue documentQueue)
+        public async Task<PimsDocumentQueue> Update(PimsDocumentQueue documentQueue)
         {
             this.Logger.LogInformation("Updating queued document {documentQueueId}", documentQueue.DocumentQueueId);
             this.Logger.LogDebug("Incoming queued document {document}", documentQueue.Serialize());
 
             this.User.ThrowIfNotAuthorizedOrServiceAccount(Permissions.SystemAdmin, this._keycloakOptions);
 
-            _documentQueueRepository.Update(documentQueue);
-            _documentQueueRepository.CommitTransaction();
+            await _documentQueueRepository.Update(documentQueue);
+
             return documentQueue;
         }
 
@@ -139,69 +119,18 @@ namespace Pims.Api.Services
             this.Logger.LogDebug("Polling queued document {document}", documentQueue.Serialize());
 
             this.User.ThrowIfNotAuthorizedOrServiceAccount(Permissions.SystemAdmin, this._keycloakOptions);
-            if (documentQueue.DocumentId == null)
-            {
-                this.Logger.LogError("polled queued document does not have a document Id {documentQueueId}", documentQueue.DocumentQueueId);
-                throw new InvalidDataException("DocumentId is required to poll for a document.");
-            }
+
+            ValidateDocumentQueueForPolling(documentQueue);
 
             var databaseDocumentQueue = _documentQueueRepository.TryGetById(documentQueue.DocumentQueueId);
-            if (databaseDocumentQueue == null)
-            {
-                this.Logger.LogError("Unable to find document queue with {id}", documentQueue.DocumentQueueId);
-                throw new KeyNotFoundException($"Unable to find document queue with matching id: {documentQueue.DocumentQueueId}");
-            }
-            else if (databaseDocumentQueue.DocumentQueueStatusTypeCode != DocumentQueueStatusTypes.PROCESSING.ToString())
-            {
-                this.Logger.LogError("Document Queue {documentQueueId} is not in valid state, aborting poll.", documentQueue.DocumentQueueId);
-                return databaseDocumentQueue;
-            }
-            else if (databaseDocumentQueue.DocumentQueueStatusTypeCode == DocumentQueueStatusTypes.PENDING.ToString() || databaseDocumentQueue.DocumentQueueStatusTypeCode == DocumentQueueStatusTypes.SUCCESS.ToString())
-            {
-                this.Logger.LogError("Document Queue {documentQueueId} is not in valid state, aborting poll.", documentQueue.DocumentQueueId);
-                return databaseDocumentQueue;
-            }
+            ValidateDatabaseDocumentQueueForPolling(databaseDocumentQueue, documentQueue.DocumentQueueId);
 
             var relatedDocument = _documentRepository.TryGet(documentQueue.DocumentId.Value);
+            await ValidateRelatedDocumentForPolling(relatedDocument, databaseDocumentQueue);
 
-            if (relatedDocument?.MayanId == null || relatedDocument?.MayanId < 0)
-            {
-                this.Logger.LogError("Queued Document {documentQueueId} has no mayan id and is invalid.", documentQueue.DocumentQueueId);
-                databaseDocumentQueue.MayanError = "Document does not have a valid MayanId.";
-                UpdateDocumentQueueStatus(databaseDocumentQueue, DocumentQueueStatusTypes.PIMS_ERROR);
-                return databaseDocumentQueue;
-            }
-
-            ExternalResponse<DocumentDetailModel> documentDetailsResponse = await _documentService.GetStorageDocumentDetail(relatedDocument.MayanId.Value);
-
-            if (documentDetailsResponse.Status != ExternalResponseStatus.Success || documentDetailsResponse?.Payload == null)
-            {
-                this.Logger.LogError("Polling for queued document {documentQueueId} failed with status {documentDetailsResponseStatus}", documentQueue.DocumentQueueId, documentDetailsResponse.Status);
-                databaseDocumentQueue.MayanError = "Document Polling failed.";
-                UpdateDocumentQueueStatus(databaseDocumentQueue, DocumentQueueStatusTypes.PIMS_ERROR);
-                return databaseDocumentQueue;
-            }
-
-            if (documentDetailsResponse.Payload.FileLatest?.Id == null)
-            {
-                this.Logger.LogInformation("Polling for queued document {documentQueueId} complete, file still processing", documentQueue.DocumentQueueId);
-            }
-            else
-            {
-                this.Logger.LogInformation("Polling for queued document {documentQueueId} complete, file uploaded successfully", documentQueue.DocumentQueueId);
-                UpdateDocumentQueueStatus(databaseDocumentQueue, DocumentQueueStatusTypes.SUCCESS);
-            }
-
-            return databaseDocumentQueue;
+            return await PollDocumentStatusAsync(databaseDocumentQueue, relatedDocument);
         }
 
-        /// <summary>
-        /// Uploads the specified document queue.
-        /// </summary>
-        /// <param name="documentQueue">The document queue object containing the document to upload.</param>
-        /// <returns>A task that represents the asynchronous operation. The task result contains the updated document queue object, or null if the upload failed.</returns>
-        /// <exception cref="UnauthorizedAccessException">Thrown when the user is not authorized to perform this operation.</exception>
-        /// <exception cref="InvalidOperationException">Thrown when the document queue does not have a valid document ID or related document.</exception>
         public async Task<PimsDocumentQueue> Upload(PimsDocumentQueue documentQueue)
         {
             this.Logger.LogInformation("Uploading queued document {documentQueueId}", documentQueue.DocumentQueueId);
@@ -210,60 +139,163 @@ namespace Pims.Api.Services
             this.User.ThrowIfNotAuthorizedOrServiceAccount(Permissions.SystemAdmin, this._keycloakOptions);
 
             var databaseDocumentQueue = _documentQueueRepository.TryGetById(documentQueue.DocumentQueueId);
-            if (databaseDocumentQueue == null)
-            {
-                this.Logger.LogError("Unable to find document queue with {id}", documentQueue.DocumentQueueId);
-                throw new KeyNotFoundException($"Unable to find document queue with matching id: {documentQueue.DocumentQueueId}");
-            }
+            ValidateDatabaseDocumentQueueForUpload(databaseDocumentQueue, documentQueue.DocumentQueueId);
+
             databaseDocumentQueue.DocProcessStartDt = DateTime.UtcNow;
 
-            bool isValid = ValidateQueuedDocument(databaseDocumentQueue, documentQueue);
-            if (!isValid)
+            if (!ValidateQueuedDocument(databaseDocumentQueue, documentQueue))
             {
-                this.Logger.LogDebug("Document Queue {documentQueueId}, invalid, aborting upload.", documentQueue.DocumentQueueId);
                 databaseDocumentQueue.MayanError = "Document is invalid.";
-                UpdateDocumentQueueStatus(databaseDocumentQueue, DocumentQueueStatusTypes.PIMS_ERROR);
+                await UpdateDocumentQueueStatus(databaseDocumentQueue, DocumentQueueStatusTypes.PIMS_ERROR);
                 return databaseDocumentQueue;
             }
 
-            // if the document queued for upload is already in an error state, update the retries.
-            if (databaseDocumentQueue.DocumentQueueStatusTypeCode == DocumentQueueStatusTypes.PIMS_ERROR.ToString() || databaseDocumentQueue.DocumentQueueStatusTypeCode == DocumentQueueStatusTypes.MAYAN_ERROR.ToString())
+            databaseDocumentQueue = HandleRetryForErroredDocument(databaseDocumentQueue);
+
+            var relatedDocument = _documentRepository.TryGetDocumentRelationships(databaseDocumentQueue.DocumentId.Value);
+            await ValidateRelatedDocumentForUpload(relatedDocument, databaseDocumentQueue);
+
+            return await UploadDocumentAsync(databaseDocumentQueue, relatedDocument);
+        }
+
+        private List<PimsDocumentQueue> FilterDocumentsByMaxFileSize(IEnumerable<DocumentQueueSearchResult> queuedDocuments, long maxFileSize)
+        {
+            List<PimsDocumentQueue> documentsBelowMaxFileSize = new();
+            long totalFileSize = 0;
+
+            foreach (var currentDocument in queuedDocuments)
             {
-                this.Logger.LogDebug("Document Queue {documentQueueId}, previously errored, retrying", documentQueue.DocumentQueueId);
+                if (currentDocument.DocumentSize + totalFileSize <= maxFileSize)
+                {
+                    totalFileSize += currentDocument.DocumentSize;
+                    documentsBelowMaxFileSize.Add(currentDocument);
+                }
+            }
+
+            if (documentsBelowMaxFileSize.Count == 0 && queuedDocuments.Any())
+            {
+                documentsBelowMaxFileSize.Add(queuedDocuments.First());
+            }
+
+            this.Logger.LogDebug("Returning {length} documents below file size", documentsBelowMaxFileSize.Count);
+            return documentsBelowMaxFileSize;
+        }
+
+        private void ValidateDocumentQueueForPolling(PimsDocumentQueue documentQueue)
+        {
+            if (documentQueue.DocumentId == null)
+            {
+                this.Logger.LogError("Polled queued document does not have a document Id {documentQueueId}", documentQueue.DocumentQueueId);
+                throw new InvalidDataException("DocumentId is required to poll for a document.");
+            }
+        }
+
+        private void ValidateDatabaseDocumentQueueForPolling(PimsDocumentQueue databaseDocumentQueue, long documentQueueId)
+        {
+            if (databaseDocumentQueue == null)
+            {
+                this.Logger.LogError("Unable to find document queue with {id}", documentQueueId);
+                throw new KeyNotFoundException($"Unable to find document queue with matching id: {documentQueueId}");
+            }
+
+            if (databaseDocumentQueue.DocumentQueueStatusTypeCode != DocumentQueueStatusTypes.PROCESSING.ToString())
+            {
+                this.Logger.LogError("Document Queue {documentQueueId} is not in valid state, aborting poll.", documentQueueId);
+                throw new InvalidOperationException("Document queue is not in a valid state for polling.");
+            }
+        }
+
+        private async Task ValidateRelatedDocumentForPolling(PimsDocument relatedDocument, PimsDocumentQueue databaseDocumentQueue)
+        {
+            if (relatedDocument?.MayanId == null || relatedDocument.MayanId < 0)
+            {
+                this.Logger.LogError("Queued Document {documentQueueId} has no Mayan ID and is invalid.", databaseDocumentQueue.DocumentQueueId);
+                databaseDocumentQueue.MayanError = "Document does not have a valid MayanId.";
+                await UpdateDocumentQueueStatus(databaseDocumentQueue, DocumentQueueStatusTypes.PIMS_ERROR);
+                throw new InvalidDataException("Document does not have a valid MayanId.");
+            }
+        }
+
+        private async Task<PimsDocumentQueue> PollDocumentStatusAsync(PimsDocumentQueue databaseDocumentQueue, PimsDocument relatedDocument)
+        {
+            var documentDetailsResponse = await _documentService.GetStorageDocumentDetail(relatedDocument.MayanId.Value);
+
+            if (documentDetailsResponse.Status != ExternalResponseStatus.Success || documentDetailsResponse.Payload == null)
+            {
+                this.Logger.LogError("Polling for queued document {documentQueueId} failed with status {documentDetailsResponseStatus}", databaseDocumentQueue.DocumentQueueId, documentDetailsResponse.Status);
+                databaseDocumentQueue.MayanError = "Document Polling failed.";
+                await UpdateDocumentQueueStatus(databaseDocumentQueue, DocumentQueueStatusTypes.PIMS_ERROR);
+                return databaseDocumentQueue;
+            }
+
+            if (documentDetailsResponse.Payload.FileLatest?.Id == null)
+            {
+                this.Logger.LogInformation("Polling for queued document {documentQueueId} complete, file still processing", databaseDocumentQueue.DocumentQueueId);
+            }
+            else
+            {
+                this.Logger.LogInformation("Polling for queued document {documentQueueId} complete, file uploaded successfully", databaseDocumentQueue.DocumentQueueId);
+                await UpdateDocumentQueueStatus(databaseDocumentQueue, DocumentQueueStatusTypes.SUCCESS);
+            }
+
+            return databaseDocumentQueue;
+        }
+
+        private void ValidateDatabaseDocumentQueueForUpload(PimsDocumentQueue databaseDocumentQueue, long documentQueueId)
+        {
+            if (databaseDocumentQueue == null)
+            {
+                this.Logger.LogError("Unable to find document queue with {id}", documentQueueId);
+                throw new KeyNotFoundException($"Unable to find document queue with matching id: {documentQueueId}");
+            }
+        }
+
+        private PimsDocumentQueue HandleRetryForErroredDocument(PimsDocumentQueue databaseDocumentQueue)
+        {
+            if (databaseDocumentQueue.DocumentQueueStatusTypeCode == DocumentQueueStatusTypes.PIMS_ERROR.ToString() ||
+                databaseDocumentQueue.DocumentQueueStatusTypeCode == DocumentQueueStatusTypes.MAYAN_ERROR.ToString())
+            {
+                this.Logger.LogDebug("Document Queue {documentQueueId}, previously errored, retrying", databaseDocumentQueue.DocumentQueueId);
                 databaseDocumentQueue.DocProcessRetries = ++databaseDocumentQueue.DocProcessRetries ?? 1;
                 databaseDocumentQueue.DocProcessEndDt = null;
             }
+            return databaseDocumentQueue;
+        }
 
-            PimsDocument relatedDocument = null;
-            relatedDocument = _documentRepository.TryGetDocumentRelationships(databaseDocumentQueue.DocumentId.Value);
+        private async Task ValidateRelatedDocumentForUpload(PimsDocument relatedDocument, PimsDocumentQueue databaseDocumentQueue)
+        {
             if (relatedDocument?.DocumentTypeId == null)
             {
                 databaseDocumentQueue.MayanError = "Document does not have a valid DocumentType.";
                 this.Logger.LogError("Queued document {documentQueueId} does not have a related PIMS_DOCUMENT {documentId} with valid DocumentType, aborting.", databaseDocumentQueue.DocumentQueueId, relatedDocument?.DocumentId);
-                UpdateDocumentQueueStatus(databaseDocumentQueue, DocumentQueueStatusTypes.PIMS_ERROR);
-                return databaseDocumentQueue;
+                await UpdateDocumentQueueStatus(databaseDocumentQueue, DocumentQueueStatusTypes.PIMS_ERROR);
+                throw new InvalidDataException("Document does not have a valid DocumentType.");
             }
+        }
 
+        private async Task<PimsDocumentQueue> UploadDocumentAsync(PimsDocumentQueue databaseDocumentQueue, PimsDocument relatedDocument)
+        {
             try
             {
-                PimsDocumentTyp documentTyp = _documentTypeRepository.GetById(relatedDocument.DocumentTypeId); // throws KeyNotFoundException if not found.
+                var documentType = _documentTypeRepository.GetById(relatedDocument.DocumentTypeId);
 
-                IFormFile file = null;
-                using MemoryStream memStream = new(databaseDocumentQueue.Document);
-                file = new FormFile(memStream, 0, databaseDocumentQueue.Document.Length, relatedDocument.FileName, relatedDocument.FileName);
+                using var memStream = new MemoryStream(databaseDocumentQueue.Document);
+                var file = new FormFile(memStream, 0, databaseDocumentQueue.Document.Length, relatedDocument.FileName, relatedDocument.FileName);
 
-                DocumentUploadRequest request = new DocumentUploadRequest()
+                var request = new DocumentUploadRequest
                 {
                     File = file,
                     DocumentStatusCode = relatedDocument.DocumentStatusTypeCode,
                     DocumentTypeId = relatedDocument.DocumentTypeId,
-                    DocumentTypeMayanId = documentTyp.MayanId,
+                    DocumentTypeMayanId = documentType.MayanId,
                     DocumentId = relatedDocument.DocumentId,
-                    DocumentMetadata = databaseDocumentQueue.DocumentMetadata != null ? JsonSerializer.Deserialize<List<DocumentMetadataUpdateModel>>(databaseDocumentQueue.DocumentMetadata) : null,
+                    DocumentMetadata = databaseDocumentQueue.DocumentMetadata != null
+                        ? JsonSerializer.Deserialize<List<DocumentMetadataUpdateModel>>(databaseDocumentQueue.DocumentMetadata)
+                        : null,
                 };
-                this.Logger.LogDebug("Document Queue {documentQueueId}, beginning upload.", documentQueue.DocumentQueueId);
-                DocumentUploadResponse response = await _documentService.UploadDocumentAsync(request, true);
-                UpdateDocumentQueueStatus(databaseDocumentQueue, DocumentQueueStatusTypes.PROCESSING); // Set the status to processing, as the document is now being uploaded. Must be set after the mayan id is set, so that the poll logic functions correctly.
+
+                this.Logger.LogDebug("Document Queue {documentQueueId}, beginning upload.", databaseDocumentQueue.DocumentQueueId);
+                var response = await _documentService.UploadDocumentAsync(request, true);
 
                 if (response.DocumentExternalResponse.Status != ExternalResponseStatus.Success || response?.DocumentExternalResponse?.Payload == null)
                 {
@@ -273,42 +305,40 @@ namespace Pims.Api.Services
                         databaseDocumentQueue.DocumentQueueStatusTypeCode,
                         response.DocumentExternalResponse.Status);
 
-                    databaseDocumentQueue.MayanError = $"Failed to upload document, mayan error: {response.DocumentExternalResponse.Message}";
-                    UpdateDocumentQueueStatus(databaseDocumentQueue, DocumentQueueStatusTypes.MAYAN_ERROR);
+                    databaseDocumentQueue.MayanError = $"Failed to upload document, Mayan error: {response.DocumentExternalResponse.Message}";
+                    await UpdateDocumentQueueStatus(databaseDocumentQueue, DocumentQueueStatusTypes.MAYAN_ERROR);
                     return databaseDocumentQueue;
                 }
-                response.MetadataExternalResponse.Where(r => r.Status != ExternalResponseStatus.Success).ForEach(r => this.Logger.LogError("url: ${url} status: ${status} message ${message}", r.Payload.Url, r.Status, r.Message)); // Log any metadata errors, but don't fail the upload.
 
-                // Mayan may have already returned a file id from the original upload. If not, this job will remain in the processing state (to be periodically checked for completion in another job).
+                response.MetadataExternalResponse
+                    .Where(r => r.Status != ExternalResponseStatus.Success)
+                    .ToList()
+                    .ForEach(r => this.Logger.LogError("url: ${url} status: ${status} message ${message}", r.Payload.Url, r.Status, r.Message));
+
                 if (response.DocumentExternalResponse?.Payload?.FileLatest?.Id != null)
                 {
-                    UpdateDocumentQueueStatus(databaseDocumentQueue, DocumentQueueStatusTypes.SUCCESS);
+                    await UpdateDocumentQueueStatus(databaseDocumentQueue, DocumentQueueStatusTypes.SUCCESS);
+                }
+                else
+                {
+                    await UpdateDocumentQueueStatus(databaseDocumentQueue, DocumentQueueStatusTypes.PROCESSING);
                 }
             }
             catch (Exception ex) when (ex is BadRequestException || ex is KeyNotFoundException || ex is InvalidDataException || ex is JsonException)
             {
                 this.Logger.LogError($"Error: {ex.Message}");
                 databaseDocumentQueue.MayanError = ex.Message;
-                UpdateDocumentQueueStatus(databaseDocumentQueue, DocumentQueueStatusTypes.PIMS_ERROR);
+                await UpdateDocumentQueueStatus(databaseDocumentQueue, DocumentQueueStatusTypes.PIMS_ERROR);
             }
+
             return databaseDocumentQueue;
         }
 
-        /// <summary>
-        /// Updates the status of the specified document queue.
-        /// </summary>
-        /// <param name="documentQueue">The document queue object to update.</param>
-        /// <param name="statusType">The new status type to set for the document queue.</param>
-        /// <remarks>
-        /// This method updates the document queue's status and commits the transaction.
-        /// If the status is a final state, it also updates the processing end date.
-        /// </remarks>
-        private void UpdateDocumentQueueStatus(PimsDocumentQueue documentQueue, DocumentQueueStatusTypes statusType)
+        private async Task UpdateDocumentQueueStatus(PimsDocumentQueue documentQueue, DocumentQueueStatusTypes statusType)
         {
             documentQueue.DocumentQueueStatusTypeCode = statusType.ToString();
             bool removeDocument = false;
 
-            // Any final states should update the processing end date.
             if (statusType != DocumentQueueStatusTypes.PROCESSING && statusType != DocumentQueueStatusTypes.PENDING)
             {
                 documentQueue.DocProcessEndDt = DateTime.UtcNow;
@@ -318,20 +348,10 @@ namespace Pims.Api.Services
                     removeDocument = true;
                 }
             }
-            _documentQueueRepository.Update(documentQueue, removeDocument);
-            _documentQueueRepository.CommitTransaction();
+
+            await _documentQueueRepository.Update(documentQueue, removeDocument);
         }
 
-        /// <summary>
-        /// Validates the queued document against the database document queue.
-        /// </summary>
-        /// <param name="databaseDocumentQueue">The document queue object from the database.</param>
-        /// <param name="externalDocument">The document queue object to validate against the database.</param>
-        /// <returns>True if the queued document is valid; otherwise, false.</returns>
-        /// <remarks>
-        /// This method checks if the status type, process retries, and document content are valid.
-        /// It also ensures that at least one file document ID is associated with the document.
-        /// </remarks>
         private bool ValidateQueuedDocument(PimsDocumentQueue databaseDocumentQueue, PimsDocumentQueue externalDocument)
         {
             if (databaseDocumentQueue.DocumentQueueStatusTypeCode != externalDocument.DocumentQueueStatusTypeCode)
@@ -339,16 +359,19 @@ namespace Pims.Api.Services
                 this.Logger.LogError("Requested document queue status: {documentQueueStatusTypeCode} does not match current database status: {documentQueueStatusTypeCode}", externalDocument.DocumentQueueStatusTypeCode, databaseDocumentQueue.DocumentQueueStatusTypeCode);
                 return false;
             }
-            else if (databaseDocumentQueue.DocProcessRetries != externalDocument.DocProcessRetries)
+
+            if (databaseDocumentQueue.DocProcessRetries != externalDocument.DocProcessRetries)
             {
                 this.Logger.LogError("Requested document retries: {documentQueueStatusTypeCode} does not match current database retries: {documentQueueStatusTypeCode}", externalDocument.DocumentQueueStatusTypeCode, databaseDocumentQueue.DocumentQueueStatusTypeCode);
                 return false;
             }
-            else if (databaseDocumentQueue.Document == null || databaseDocumentQueue.DocumentId == null)
+
+            if (databaseDocumentQueue.Document == null || databaseDocumentQueue.DocumentId == null)
             {
                 this.Logger.LogError("Queued document file content is empty, unable to upload.");
                 return false;
             }
+
             return true;
         }
     }

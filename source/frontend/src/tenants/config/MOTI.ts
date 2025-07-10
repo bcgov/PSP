@@ -22,6 +22,6 @@ export const config: ITenantConfig2 = {
       body: 'By signing in you acknowledge that not all data included within has been vetted for completeness and accuracy. Please exercise caution by verifying information prior to relying on it.',
       backgroundImage: '/tenants/MOTI/background-image.jpg',
     },
-    layers: [],
+    layers: {},
   },
 };

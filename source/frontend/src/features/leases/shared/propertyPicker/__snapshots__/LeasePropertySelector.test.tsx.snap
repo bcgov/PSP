@@ -341,11 +341,12 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
 .c5 {
   color: var(--theme-blue-100);
   font-family: 'BCSans-Bold';
-  font-size: 2.2rem;
+  font-size: 1.7rem;
   border-bottom: solid 0.2rem;
   width: 100%;
   text-align: left;
   margin-bottom: 1.6rem;
+  margin-top: 1.6rem;
 }
 
 .c1 {
@@ -1068,7 +1069,43 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
             <div
               class="align-content-end col"
             >
-              Selected properties
+              <div
+                class="row"
+              >
+                <div
+                  class="col-11"
+                >
+                  Selected Properties
+                </div>
+                <div
+                  class="col"
+                >
+                  <button
+                    class="c14 Button btn btn-link"
+                    title="Fit boundaries button"
+                    type="button"
+                  >
+                    <div
+                      class="Button__value"
+                    >
+                      <svg
+                        class="mr-2"
+                        fill="currentColor"
+                        height="18"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 256 256"
+                        width="18"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M216,48V88a8,8,0,0,1-16,0V56H168a8,8,0,0,1,0-16h40A8,8,0,0,1,216,48ZM88,200H56V168a8,8,0,0,0-16,0v40a8,8,0,0,0,8,8H88a8,8,0,0,0,0-16Zm120-40a8,8,0,0,0-8,8v32H168a8,8,0,0,0,0,16h40a8,8,0,0,0,8-8V168A8,8,0,0,0,208,160ZM88,40H48a8,8,0,0,0-8,8V88a8,8,0,0,0,16,0V56H88a8,8,0,0,0,0-16Z"
+                        />
+                      </svg>
+                    </div>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </h2>
@@ -1228,6 +1265,33 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
                   >
                     <path
                       d="M11 11V5.82843L9.17157 7.65685L7.75736 6.24264L12 2L16.2426 6.24264L14.8284 7.65685L13 5.82843V11H18.1716L16.3431 9.17157L17.7574 7.75736L22 12L17.7574 16.2426L16.3431 14.8284L18.1716 13H13V18.1716L14.8284 16.3431L16.2426 17.7574L12 22L7.75736 17.7574L9.17157 16.3431L11 18.1716V13H5.82843L7.65685 14.8284L6.24264 16.2426L2 12L6.24264 7.75736L7.65685 9.17157L5.82843 11H11Z"
+                    />
+                  </svg>
+                </div>
+              </button>
+            </div>
+            <div
+              class="col-auto"
+            >
+              <button
+                class="c14 Button btn btn-link"
+                type="button"
+              >
+                <div
+                  class="Button__value"
+                >
+                  <svg
+                    class="mr-5"
+                    fill="currentColor"
+                    height="18"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="18"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M304 192v32c0 6.6-5.4 12-12 12h-56v56c0 6.6-5.4 12-12 12h-32c-6.6 0-12-5.4-12-12v-56h-56c-6.6 0-12-5.4-12-12v-32c0-6.6 5.4-12 12-12h56v-56c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v56h56c6.6 0 12 5.4 12 12zm201 284.7L476.7 505c-9.4 9.4-24.6 9.4-33.9 0L343 405.3c-4.5-4.5-7-10.6-7-17V372c-35.3 27.6-79.7 44-128 44C93.1 416 0 322.9 0 208S93.1 0 208 0s208 93.1 208 208c0 48.3-16.4 92.7-44 128h16.3c6.4 0 12.5 2.5 17 7l99.7 99.7c9.3 9.4 9.3 24.6 0 34zM344 208c0-75.2-60.8-136-136-136S72 132.8 72 208s60.8 136 136 136 136-60.8 136-136z"
                     />
                   </svg>
                 </div>
@@ -1508,6 +1572,33 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
                   >
                     <path
                       d="M11 11V5.82843L9.17157 7.65685L7.75736 6.24264L12 2L16.2426 6.24264L14.8284 7.65685L13 5.82843V11H18.1716L16.3431 9.17157L17.7574 7.75736L22 12L17.7574 16.2426L16.3431 14.8284L18.1716 13H13V18.1716L14.8284 16.3431L16.2426 17.7574L12 22L7.75736 17.7574L9.17157 16.3431L11 18.1716V13H5.82843L7.65685 14.8284L6.24264 16.2426L2 12L6.24264 7.75736L7.65685 9.17157L5.82843 11H11Z"
+                    />
+                  </svg>
+                </div>
+              </button>
+            </div>
+            <div
+              class="col-auto"
+            >
+              <button
+                class="c14 Button btn btn-link"
+                type="button"
+              >
+                <div
+                  class="Button__value"
+                >
+                  <svg
+                    class="mr-5"
+                    fill="currentColor"
+                    height="18"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="18"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M304 192v32c0 6.6-5.4 12-12 12h-56v56c0 6.6-5.4 12-12 12h-32c-6.6 0-12-5.4-12-12v-56h-56c-6.6 0-12-5.4-12-12v-32c0-6.6 5.4-12 12-12h56v-56c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v56h56c6.6 0 12 5.4 12 12zm201 284.7L476.7 505c-9.4 9.4-24.6 9.4-33.9 0L343 405.3c-4.5-4.5-7-10.6-7-17V372c-35.3 27.6-79.7 44-128 44C93.1 416 0 322.9 0 208S93.1 0 208 0s208 93.1 208 208c0 48.3-16.4 92.7-44 128h16.3c6.4 0 12.5 2.5 17 7l99.7 99.7c9.3 9.4 9.3 24.6 0 34zM344 208c0-75.2-60.8-136-136-136S72 132.8 72 208s60.8 136 136 136 136-60.8 136-136z"
                     />
                   </svg>
                 </div>

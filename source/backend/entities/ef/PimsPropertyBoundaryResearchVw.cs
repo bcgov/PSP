@@ -13,6 +13,6 @@ public partial class PimsPropertyBoundaryResearchVw
     [Column("PROPERTY_ID")]
     public long PropertyId { get; set; }
 
-    [Column("LOCATION", TypeName = "geometry")]
-    public Geometry Location { get; set; }
+    [Column("BOUNDARY", TypeName = "geometry")]
+    public Geometry Boundary { get; set; }
 }

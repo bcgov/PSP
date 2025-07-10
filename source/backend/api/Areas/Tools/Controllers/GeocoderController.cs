@@ -63,7 +63,7 @@ namespace Pims.Api.Areas.Tools.Controllers
         [HasPermission(Permissions.PropertyEdit)]
         public async Task<IActionResult> FindAddressesAsync(string address)
         {
-            var parameters = this.Request.QueryString.ParseQueryString<AddressesParameters>();
+            var parameters = Request.QueryString.ParseQueryString<AddressesParameters>();
             parameters.AddressString = address;
             var result = await _geocoderService.GetSiteAddressesAsync(parameters);
             return new JsonResult(_mapper.Map<GeoAddressResponse[]>(result.Features));
@@ -99,7 +99,7 @@ namespace Pims.Api.Areas.Tools.Controllers
         [HasPermission(Permissions.PropertyEdit)]
         public async Task<IActionResult> FindNearestAddressAsync(string point)
         {
-            var parameters = this.Request.QueryString.ParseQueryString<NearestParameters>();
+            var parameters = Request.QueryString.ParseQueryString<NearestParameters>();
             parameters.Point = point;
             var result = await _geocoderService.GetNearestSiteAsync(parameters);
             return new JsonResult(_mapper.Map<GeoAddressResponse>(result));
@@ -118,7 +118,7 @@ namespace Pims.Api.Areas.Tools.Controllers
         [HasPermission(Permissions.PropertyEdit)]
         public async Task<IActionResult> FindNearAddressesAsync(string point)
         {
-            var parameters = this.Request.QueryString.ParseQueryString<NearParameters>();
+            var parameters = Request.QueryString.ParseQueryString<NearParameters>();
             parameters.Point = point;
             var result = await _geocoderService.GetNearSitesAsync(parameters);
             return new JsonResult(_mapper.Map<GeoAddressResponse[]>(result.Features));

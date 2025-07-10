@@ -5,10 +5,7 @@ import noop from 'lodash/noop';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
-import {
-  IMapStateMachineContext,
-  useMapStateMachine,
-} from '@/components/common/mapFSM/MapStateMachineContext';
+import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { RenderOptions, act, renderAsync, userEvent, waitFor } from '@/utils/test-utils';

@@ -241,11 +241,12 @@ exports[`AddResearchForm component > renders as expected 1`] = `
 .c13 {
   color: var(--theme-blue-100);
   font-family: 'BCSans-Bold';
-  font-size: 2.2rem;
+  font-size: 1.7rem;
   border-bottom: solid 0.2rem;
   width: 100%;
   text-align: left;
   margin-bottom: 1.6rem;
+  margin-top: 1.6rem;
 }
 
 .c8 {

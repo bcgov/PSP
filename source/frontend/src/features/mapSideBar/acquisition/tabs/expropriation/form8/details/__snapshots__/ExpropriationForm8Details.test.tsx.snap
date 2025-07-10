@@ -217,11 +217,12 @@ exports[`Form 8 Detail View component > renders as expected 1`] = `
 .c10 {
   color: var(--theme-blue-100);
   font-family: 'BCSans-Bold';
-  font-size: 2.2rem;
+  font-size: 1.7rem;
   border-bottom: solid 0.2rem;
   width: 100%;
   text-align: left;
   margin-bottom: 1.6rem;
+  margin-top: 1.6rem;
 }
 
 .c4.btn.btn-primary,
@@ -239,6 +240,7 @@ exports[`Form 8 Detail View component > renders as expected 1`] = `
   display: inline-block;
   margin-left: 1.5rem;
   margin-bottom: 0.5rem;
+  float: right;
 }
 
 .c1 {
@@ -266,8 +268,9 @@ exports[`Form 8 Detail View component > renders as expected 1`] = `
 }
 
 .c0 {
-  border: solid 0.2rem var(--theme-blue-90);
+  border: solid 0.2rem #0056b3;
   margin-bottom: 0.5rem;
+  border-radius: 0.5rem;
 }
 
 .c8 {

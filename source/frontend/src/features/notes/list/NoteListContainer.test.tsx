@@ -15,6 +15,8 @@ import {
 
 import NoteListContainer, { INoteListContainerProps } from './NoteListContainer';
 import { NoteListView } from './NoteListView';
+import ManagementStatusUpdateSolver from '@/features/mapSideBar/management/tabs/fileDetails/detail/ManagementStatusUpdateSolver';
+import { IUpdateNotesStrategy } from '../models/IUpdateNotesStrategy';
 
 vi.mock('@/hooks/repositories/useNoteRepository');
 const mockGetAllNotesApi = getMockRepositoryObj([]);
@@ -35,7 +37,7 @@ describe('Note List Container', () => {
         type={renderOptions?.type ?? NoteTypes.Acquisition_File}
         entityId={renderOptions?.entityId ?? 1}
         onSuccess={renderOptions?.onSuccess ?? onSuccess}
-        NoteListView={NoteListView}
+        View={NoteListView}
       />,
       {
         ...renderOptions,

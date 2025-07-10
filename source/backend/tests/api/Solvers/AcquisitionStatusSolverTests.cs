@@ -214,7 +214,7 @@ namespace Pims.Api.Test.Services
                 new object[] {AcquisitionStatusTypes.CANCEL, false},
                 new object[] {AcquisitionStatusTypes.CLOSED, false},
                 new object[] {AcquisitionStatusTypes.COMPLT, false},
-                new object[] {AcquisitionStatusTypes.HOLD, true},
+                new object[] {AcquisitionStatusTypes.HOLD, false},
           };
 
         [Theory]
