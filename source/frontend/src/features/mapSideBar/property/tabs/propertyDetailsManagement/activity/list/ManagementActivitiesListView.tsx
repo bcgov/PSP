@@ -46,7 +46,7 @@ const ManagementActivitiesListView: React.FunctionComponent<IManagementActivitie
             title="Activities List"
             addButtonText="Add an Activity"
             addButtonIcon={<BiListPlus size={'2.5rem'} />}
-            onAdd={onCreate}
+            onButtonAction={onCreate}
             isAddEnabled={canEditActivities}
           />
         ) : (

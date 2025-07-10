@@ -153,12 +153,13 @@ export const LtsaPlanTabView: React.FunctionComponent<
                   render={() => (
                     <Fragment key={`charge-row-${titleNameSpace}`}>
                       {charges.map((charge: ChargesOnStrataCommonProperty, index: number) => {
-                        const innerNameSpace = withNameSpace(
+                        const innerNameSpace = withNameSpace(titleNameSpace, `chargesOnSCP`);
+                        const ownerNamespace = withNameSpace(
                           titleNameSpace,
-                          `chargesOnSCP.${index}`,
+                          `chargesOnSCP.${index}.charge`,
                         );
                         return (
-                          <Fragment key={`charge-sub-row-${innerNameSpace}`}>
+                          <Fragment key={`charge-sub-row-${innerNameSpace}-${index}`}>
                             <SectionField label="Registration #">
                               {charge.chargeNumber}
                             </SectionField>
@@ -169,7 +170,7 @@ export const LtsaPlanTabView: React.FunctionComponent<
                               {prettyFormatDate(charge.charge.applicationReceivedDate)}
                             </SectionField>
 
-                            <LtsaChargeOwnerSubForm nameSpace={innerNameSpace} />
+                            <LtsaChargeOwnerSubForm nameSpace={ownerNamespace} />
 
                             {index < charges.length - 1 && <hr></hr>}
                           </Fragment>

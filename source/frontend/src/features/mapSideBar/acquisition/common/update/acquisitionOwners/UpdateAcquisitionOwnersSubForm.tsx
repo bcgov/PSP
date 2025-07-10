@@ -7,6 +7,7 @@ import { LinkButton, RemoveButton } from '@/components/common/buttons';
 import { Input } from '@/components/common/form';
 import { RadioGroup } from '@/components/common/form/RadioGroup';
 import { SectionField } from '@/components/common/Section/SectionField';
+import { H3 } from '@/components/common/styles';
 import Address from '@/features/contacts/contact/create/components/address/Address';
 
 import { TeamMemberFormModal } from '../../modals/AcquisitionFormModal';
@@ -239,12 +240,4 @@ export const ButtonDiv = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: end;
-`;
-
-export const H3 = styled.h3`
-  font-size: 2rem;
-  font-weight: 700;
-  text-decoration: none solid rgb(33, 37, 41);
-  line-height: 2rem;
-  margin-bottom: 1rem;
 `;
