@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { geoJSON, LatLng, LatLngBounds, LeafletEvent, Map as LeafletMap } from 'leaflet';
+import { geoJSON, LatLngBounds, LeafletEvent, LeafletMouseEvent, Map, Popup } from 'leaflet';
 import { isEqual } from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
 import {
@@ -59,7 +59,7 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
   const [zoom, setZoom] = useState(defaultZoom);
   const [isMapReady, setIsMapReady] = useState(false);
 
-  const mapRef = useRef<LeafletMap | null>(null);
+  const mapRef = useRef<Map | null>(null);
 
   const [activeFeatureLayer, setActiveFeatureLayer] = useState<L.GeoJSON>();
   const { doubleClickInterval } = useTenant();
@@ -71,13 +71,22 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
 
   const timer = useRef(null);
 
-  const handleMapClickEvent = (latlng: LatLng) => {
+  const handleMapClickEvent = (event: LeafletMouseEvent) => {
     if (timer?.current !== null) {
       return;
     }
+
+    const latlng = event?.latlng;
+    const isCtrlKeyPressed = event?.originalEvent?.ctrlKey ?? false;
+
     timer.current = setTimeout(() => {
-      mapMachine.mapClick(latlng);
       timer.current = null;
+      // CTRL + click adds the clicked location to the property working list; otherwise treat it as a regular map-click
+      if (isCtrlKeyPressed) {
+        mapMachine.worklistMapClick(latlng);
+      } else {
+        mapMachine.mapClick(latlng);
+      }
     }, doubleClickInterval ?? 250);
   };
 
@@ -222,7 +231,7 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
         doubleClickZoom
       >
         <MapEvents
-          click={e => handleMapClickEvent(e.latlng)}
+          click={handleMapClickEvent}
           dblclick={() => handleDoubleClickEvent()}
           zoomend={e => handleZoomUpdate(e.sourceTarget.getZoom())}
           moveend={handleBounds}

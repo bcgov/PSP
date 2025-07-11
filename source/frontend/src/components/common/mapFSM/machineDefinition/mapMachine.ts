@@ -533,7 +533,7 @@ const selectedWorklistFeatureLoaderStates = {
   states: {
     idle: {
       on: {
-        MAP_WORKLIST_CLICK: {
+        WORKLIST_MAP_CLICK: {
           actions: [
             assign({
               isLoading: () => true,
@@ -599,6 +599,8 @@ export const mapMachine = createMachine<MachineContext>({
     repositioningFeatureDataset: null,
     repositioningPropertyIndex: null,
     selectingComponentId: null,
+    worklistSelectedMapLocation: null,
+    worklistLocationFeatureDataset: null,
     isLoading: false,
     searchCriteria: null,
     advancedSearchCriteria: new PropertyFilterFormModel(),

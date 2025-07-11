@@ -45,6 +45,9 @@ export interface IMapStateMachineContext {
   selectedFeatureDataset: SelectedFeatureDataset | null;
   repositioningFeatureDataset: SelectedFeatureDataset | null;
   repositioningPropertyIndex: number | null;
+  // worklist-related state
+  worklistSelectedMapLocation: LatLngLiteral | null;
+  worklistLocationFeatureDataset: WorklistLocationFeatureDataset | null;
   showPopup: boolean;
   isLoading: boolean;
   mapSearchCriteria: IPropertyFilter | null;
@@ -84,6 +87,9 @@ export interface IMapStateMachineContext {
   mapMarkerClick: (featureSelected: MarkerSelected) => void;
   mapMarkLocation: (laLng: LatLngLiteral) => void;
   mapClearLocationMark: () => void;
+
+  // worklist
+  worklistMapClick: (latlng: LatLngLiteral) => void;
 
   setMapSearchCriteria: (searchCriteria: IPropertyFilter) => void;
   refreshMapProperties: () => void;
@@ -193,7 +199,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
       },
       loadWorklistLocationData: async (
         context: MachineContext,
-        event: AnyEventObject & { type: 'MAP_WORKLIST_CLICK'; latlng: LatLngLiteral },
+        event: AnyEventObject & { type: 'WORKLIST_MAP_CLICK'; latlng: LatLngLiteral },
       ): Promise<WorklistLocationFeatureDataset> => {
         const response = locationLoader.loadWorklistLocationDetails({ latLng: event.latlng });
         return response;
@@ -284,6 +290,16 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
       serviceSend({
         type: 'MAP_MARKER_CLICK',
         featureSelected,
+      });
+    },
+    [serviceSend],
+  );
+
+  const worklistMapClick = useCallback(
+    (latlng: LatLngLiteral) => {
+      serviceSend({
+        type: 'WORKLIST_MAP_CLICK',
+        latlng,
       });
     },
     [serviceSend],
@@ -534,6 +550,8 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         mapLocationFeatureDataset: state.context.mapLocationFeatureDataset,
         repositioningFeatureDataset: state.context.repositioningFeatureDataset,
         repositioningPropertyIndex: state.context.repositioningPropertyIndex,
+        worklistSelectedMapLocation: state.context.worklistSelectedMapLocation,
+        worklistLocationFeatureDataset: state.context.worklistLocationFeatureDataset,
         showPopup: showPopup,
         isLoading: state.context.isLoading,
         mapSearchCriteria: state.context.searchCriteria,
@@ -572,6 +590,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         requestFlyToBounds,
         mapClick,
         mapMarkerClick,
+        worklistMapClick,
         closePopup,
         prepareForCreation,
         startSelection,
