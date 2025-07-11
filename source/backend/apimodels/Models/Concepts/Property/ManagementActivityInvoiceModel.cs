@@ -3,7 +3,7 @@ using Pims.Api.Models.Base;
 
 namespace Pims.Api.Models.Concepts.Property
 {
-    public class PropertyActivityInvoiceModel : BaseAuditModel
+    public class ManagementActivityInvoiceModel : BaseAuditModel
     {
         #region Properties
         public long Id { get; set; }
@@ -26,9 +26,9 @@ namespace Pims.Api.Models.Concepts.Property
 
         public bool? IsDisabled { get; set; }
 
-        public long PropertyActivityId { get; set; }
+        public long ManagementActivityId { get; set; }
 
-        public PropertyActivityModel PropertyActivity { get; set; }
+        public ManagementActivityModel ManagementActivity { get; set; }
 
         #endregion
     }

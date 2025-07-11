@@ -4,12 +4,12 @@ using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts.Property
 {
-    public class PropertyActivityMap : IRegister
+    public class ManagementActivityMap : IRegister
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.PimsPropertyActivity, PropertyActivityModel>()
-                .Map(dest => dest.Id, src => src.PimsPropertyActivityId)
+            config.NewConfig<Entity.PimsManagementActivity, ManagementActivityModel>()
+                .Map(dest => dest.Id, src => src.PimsManagementActivityId)
                 .Map(dest => dest.ManagementFileId, src => src.ManagementFileId)
                 .Map(dest => dest.ManagementFile, src => src.ManagementFile)
                 .Map(dest => dest.ActivityTypeCode, src => src.PropMgmtActivityTypeCodeNavigation)
@@ -26,12 +26,12 @@ namespace Pims.Api.Models.Concepts.Property
                 .Map(dest => dest.ServiceProviderPerson, src => src.ServiceProviderPerson)
                 .Map(dest => dest.InvolvedParties, src => src.PimsPropActInvolvedParties)
                 .Map(dest => dest.MinistryContacts, src => src.PimsPropActMinContacts)
-                .Map(dest => dest.ActivityProperties, src => src.PimsPropPropActivities)
+                .Map(dest => dest.ActivityProperties, src => src.PimsManagementActivityProperties)
                 .Map(dest => dest.Invoices, src => src.PimsPropertyActivityInvoices)
                 .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
 
-            config.NewConfig<PropertyActivityModel, Entity.PimsPropertyActivity>()
-                .Map(dest => dest.PimsPropertyActivityId, src => src.Id)
+            config.NewConfig<ManagementActivityModel, Entity.PimsManagementActivity>()
+                .Map(dest => dest.PimsManagementActivityId, src => src.Id)
                 .Map(dest => dest.ManagementFileId, src => src.ManagementFileId)
                 .Map(dest => dest.PropMgmtActivityTypeCode, src => src.ActivityTypeCode.Id)
                 .Map(dest => dest.PimsPropActivityMgmtActivities, src => src.ActivitySubTypeCodes)
@@ -45,7 +45,7 @@ namespace Pims.Api.Models.Concepts.Property
                 .Map(dest => dest.ServiceProviderPersonId, src => src.ServiceProviderPersonId)
                 .Map(dest => dest.PimsPropActInvolvedParties, src => src.InvolvedParties)
                 .Map(dest => dest.PimsPropActMinContacts, src => src.MinistryContacts)
-                .Map(dest => dest.PimsPropPropActivities, src => src.ActivityProperties)
+                .Map(dest => dest.PimsManagementActivityProperties, src => src.ActivityProperties)
                 .Map(dest => dest.PimsPropertyActivityInvoices, src => src.Invoices)
                 .Inherits<BaseAuditModel, Entity.IBaseAppEntity>();
         }

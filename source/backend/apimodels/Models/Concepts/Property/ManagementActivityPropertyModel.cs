@@ -2,15 +2,15 @@ using Pims.Api.Models.Base;
 
 namespace Pims.Api.Models.Concepts.Property
 {
-    public class PropertyActivityPropertyModel : BaseAuditModel
+    public class ManagementActivityPropertyModel : BaseAuditModel
     {
         #region Properties
 
         public long Id { get; set; }
 
-        public long PropertyActivityId { get; set; }
+        public long ManagementActivityId { get; set; }
 
-        public PropertyActivityModel PropertyActivity { get; set; }
+        public ManagementActivityModel ManagementActivity { get; set; }
 
         public long PropertyId { get; set; }
 

@@ -8,7 +8,7 @@ using Pims.Api.Models.Concepts.Person;
 
 namespace Pims.Api.Models.Concepts.Property
 {
-    public class PropertyActivityModel : BaseAuditModel
+    public class ManagementActivityModel : BaseAuditModel
     {
         #region Properties
 
@@ -42,13 +42,13 @@ namespace Pims.Api.Models.Concepts.Property
 
         public PersonModel ServiceProviderPerson { get; set; }
 
-        public IList<PropertyActivityInvolvedPartyModel> InvolvedParties { get; set; }
+        public IList<ManagementActivityInvolvedPartyModel> InvolvedParties { get; set; }
 
         public IList<PropertyMinistryContactModel> MinistryContacts { get; set; }
 
-        public IList<PropertyActivityPropertyModel> ActivityProperties { get; set; }
+        public IList<ManagementActivityPropertyModel> ActivityProperties { get; set; }
 
-        public IList<PropertyActivityInvoiceModel> Invoices { get; set; }
+        public IList<ManagementActivityInvoiceModel> Invoices { get; set; }
 
         #endregion
     }
