@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-[Table("PIMS_PROP_ACT_MIN_CONTACT_HIST")]
-[Index("PropActMinContactHistId", "EndDateHist", Name = "PIMS_PRACMC_H_UK", IsUnique = true)]
-public partial class PimsPropActMinContactHist
+[Table("PIMS_MANAGEMENT_ACTIVITY_HIST")]
+[Index("ManagementActivityHistId", "EndDateHist", Name = "PIMS_MGMTAC_H_UK", IsUnique = true)]
+public partial class PimsManagementActivityHist
 {
     [Key]
-    [Column("_PROP_ACT_MIN_CONTACT_HIST_ID")]
-    public long PropActMinContactHistId { get; set; }
+    [Column("_MANAGEMENT_ACTIVITY_HIST_ID")]
+    public long ManagementActivityHistId { get; set; }
 
     [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
     public DateTime EffectiveDateHist { get; set; }
@@ -20,14 +20,39 @@ public partial class PimsPropActMinContactHist
     [Column("END_DATE_HIST", TypeName = "datetime")]
     public DateTime? EndDateHist { get; set; }
 
-    [Column("PROP_ACT_MIN_CONTACT_ID")]
-    public long PropActMinContactId { get; set; }
-
     [Column("PIMS_MANAGEMENT_ACTIVITY_ID")]
     public long PimsManagementActivityId { get; set; }
 
-    [Column("PERSON_ID")]
-    public long PersonId { get; set; }
+    [Required]
+    [Column("PROP_MGMT_ACTIVITY_STATUS_TYPE_CODE")]
+    [StringLength(20)]
+    public string PropMgmtActivityStatusTypeCode { get; set; }
+
+    [Column("SERVICE_PROVIDER_PERSON_ID")]
+    public long? ServiceProviderPersonId { get; set; }
+
+    [Column("SERVICE_PROVIDER_ORG_ID")]
+    public long? ServiceProviderOrgId { get; set; }
+
+    [Column("MANAGEMENT_FILE_ID")]
+    public long? ManagementFileId { get; set; }
+
+    [Column("PROP_MGMT_ACTIVITY_TYPE_CODE")]
+    [StringLength(20)]
+    public string PropMgmtActivityTypeCode { get; set; }
+
+    [Column("REQUEST_ADDED_DT")]
+    public DateOnly RequestAddedDt { get; set; }
+
+    [Column("COMPLETION_DT")]
+    public DateOnly? CompletionDt { get; set; }
+
+    [Column("REQUEST_SOURCE")]
+    [StringLength(2000)]
+    public string RequestSource { get; set; }
+
+    [Column("IS_DISABLED")]
+    public bool? IsDisabled { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
@@ -79,4 +104,8 @@ public partial class PimsPropActMinContactHist
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
+
+    [Column("DESCRIPTION")]
+    [StringLength(4000)]
+    public string Description { get; set; }
 }

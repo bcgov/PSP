@@ -8,15 +8,15 @@ namespace Pims.Dal.Entities;
 
 [Table("PIMS_PROPERTY_ACTIVITY_DOCUMENT")]
 [Index("DocumentId", Name = "PRACDO_DOCUMENT_ID_IDX")]
-[Index("PimsPropertyActivityId", Name = "PRACDO_PIMS_PROPERTY_ACTIVITY_ID_IDX")]
+[Index("PimsManagementActivityId", Name = "PRACDO_PIMS_PROPERTY_ACTIVITY_ID_IDX")]
 public partial class PimsPropertyActivityDocument
 {
     [Key]
     [Column("PROPERTY_ACTIVITY_DOCUMENT_ID")]
     public long PropertyActivityDocumentId { get; set; }
 
-    [Column("PIMS_PROPERTY_ACTIVITY_ID")]
-    public long PimsPropertyActivityId { get; set; }
+    [Column("PIMS_MANAGEMENT_ACTIVITY_ID")]
+    public long PimsManagementActivityId { get; set; }
 
     [Column("DOCUMENT_ID")]
     public long DocumentId { get; set; }
@@ -76,7 +76,7 @@ public partial class PimsPropertyActivityDocument
     [InverseProperty("PimsPropertyActivityDocuments")]
     public virtual PimsDocument Document { get; set; }
 
-    [ForeignKey("PimsPropertyActivityId")]
+    [ForeignKey("PimsManagementActivityId")]
     [InverseProperty("PimsPropertyActivityDocuments")]
-    public virtual PimsPropertyActivity PimsPropertyActivity { get; set; }
+    public virtual PimsManagementActivity PimsManagementActivity { get; set; }
 }

@@ -23,8 +23,8 @@ public partial class PimsPropertyActivityDocumentHist
     [Column("PROPERTY_ACTIVITY_DOCUMENT_ID")]
     public long PropertyActivityDocumentId { get; set; }
 
-    [Column("PIMS_PROPERTY_ACTIVITY_ID")]
-    public long PimsPropertyActivityId { get; set; }
+    [Column("PIMS_MANAGEMENT_ACTIVITY_ID")]
+    public long PimsManagementActivityId { get; set; }
 
     [Column("DOCUMENT_ID")]
     public long DocumentId { get; set; }
