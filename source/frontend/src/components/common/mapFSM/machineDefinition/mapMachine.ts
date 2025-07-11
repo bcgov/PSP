@@ -528,6 +528,47 @@ const rightSideBarStates = {
   },
 };
 
+const selectedWorklistFeatureLoaderStates = {
+  initial: 'idle',
+  states: {
+    idle: {
+      on: {
+        MAP_WORKLIST_CLICK: {
+          actions: [
+            assign({
+              isLoading: () => true,
+              worklistSelectedMapLocation: (_, event: any) => event.latlng,
+              worklistLocationFeatureDataset: () => null,
+            }),
+          ],
+          target: 'loading',
+        },
+      },
+    },
+    loading: {
+      invoke: {
+        src: 'loadWorklistLocationData',
+        onDone: {
+          target: 'idle',
+          actions: [
+            assign({
+              isLoading: () => false,
+              worklistSelectedMapLocation: () => null,
+              worklistLocationFeatureDataset: (context: any, event: any) => event.data,
+            }),
+          ],
+        },
+        onError: {
+          target: 'idle',
+          actions: assign({
+            isLoading: () => false,
+          }),
+        },
+      },
+    },
+  },
+};
+
 export const mapMachine = createMachine<MachineContext>({
   // Machine identifier
   id: 'map',
@@ -634,6 +675,7 @@ export const mapMachine = createMachine<MachineContext>({
         selectedFeatureLoader: selectedFeatureLoaderStates,
         sideBar: sideBarStates,
         rightSideBar: rightSideBarStates,
+        selectedWorklistFeatureLoader: selectedWorklistFeatureLoaderStates,
       },
     },
   },

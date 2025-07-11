@@ -27,6 +27,7 @@ import {
 import useLocationFeatureLoader, {
   LocationFeatureDataset,
   SelectedFeatureDataset,
+  WorklistLocationFeatureDataset,
 } from './useLocationFeatureLoader';
 import { useMapSearch } from './useMapSearch';
 
@@ -163,7 +164,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         event:
           | (AnyEventObject & { type: 'MAP_CLICK'; latlng: LatLngLiteral })
           | (AnyEventObject & { type: 'MAP_MARKER_CLICK'; featureSelected: MarkerSelected }),
-      ) => {
+      ): Promise<LocationFeatureDataset> => {
         let result: LocationFeatureDataset | undefined = undefined;
 
         if (event.type === 'MAP_CLICK') {
@@ -189,6 +190,13 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         }
 
         return result;
+      },
+      loadWorklistLocationData: async (
+        context: MachineContext,
+        event: AnyEventObject & { type: 'MAP_WORKLIST_CLICK'; latlng: LatLngLiteral },
+      ): Promise<WorklistLocationFeatureDataset> => {
+        const response = locationLoader.loadWorklistLocationDetails({ latLng: event.latlng });
+        return response;
       },
       loadFeatures: (context: MachineContext, event: any): Promise<MapFeatureData> => {
         // If there is data in the event, use that criteria.
