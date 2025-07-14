@@ -598,7 +598,7 @@ exports[`Management List View > matches snapshot 1`] = `
                           <option
                             value=""
                           >
-                            Select file status...
+                            All Status
                           </option>
                           <option
                             class="option"
