@@ -39,6 +39,7 @@ export function WorklistContextProvider({
   const select = useCallback((id: string) => setSelectedId(id), []);
   const remove = useCallback((id: string) => setParcels(prev => prev.filter(p => p.id !== id)), []);
 
+  // The worklist should not allow duplicate property (using pid/pin/globalUID, lat/lng)
   const add = useCallback((parcel: ParcelFeature) => {
     setParcels(prev => {
       const alreadyExists = prev.some(p => areParcelsEqual(p, parcel));

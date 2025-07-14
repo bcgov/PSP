@@ -17,6 +17,7 @@ import {
   MAP_MIN_MARKER_ZOOM,
   MAX_ZOOM,
 } from '@/constants/strings';
+import WorklistMapClickMonitor from '@/features/properties/worklist/WorklistMapClickMonitor';
 import { useTenant } from '@/tenants';
 import { exists, firstOrNull } from '@/utils';
 
@@ -278,6 +279,10 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
           maxZoom={MAP_MAX_ZOOM}
           bounds={mapMachine.currentMapBounds ?? defaultBounds}
         />
+
+        <Pane name="worklistParcels" style={{ zIndex: 500 }}>
+          <WorklistMapClickMonitor />
+        </Pane>
 
         {/* Client-side "layer" to highlight file property boundaries (when in the context of a file) */}
         <Pane name="fileProperties" style={{ zIndex: 600 }}>
