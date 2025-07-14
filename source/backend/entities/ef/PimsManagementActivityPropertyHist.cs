@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-[Table("PIMS_PROPERTY_ACTIVITY_HIST")]
-[Index("PropertyActivityHistId", "EndDateHist", Name = "PIMS_PRPACT_H_UK", IsUnique = true)]
-public partial class PimsPropertyActivityHist
+[Table("PIMS_MANAGEMENT_ACTIVITY_PROPERTY_HIST")]
+[Index("ManagementActivityPropertyHistId", "EndDateHist", Name = "PIMS_MAACPR_H_UK", IsUnique = true)]
+public partial class PimsManagementActivityPropertyHist
 {
     [Key]
-    [Column("_PROPERTY_ACTIVITY_HIST_ID")]
-    public long PropertyActivityHistId { get; set; }
+    [Column("_MANAGEMENT_ACTIVITY_PROPERTY_HIST_ID")]
+    public long ManagementActivityPropertyHistId { get; set; }
 
     [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
     public DateTime EffectiveDateHist { get; set; }
@@ -20,39 +20,14 @@ public partial class PimsPropertyActivityHist
     [Column("END_DATE_HIST", TypeName = "datetime")]
     public DateTime? EndDateHist { get; set; }
 
-    [Column("PIMS_PROPERTY_ACTIVITY_ID")]
-    public long PimsPropertyActivityId { get; set; }
+    [Column("MANAGEMENT_ACTIVITY_PROPERTY_ID")]
+    public long ManagementActivityPropertyId { get; set; }
 
-    [Required]
-    [Column("PROP_MGMT_ACTIVITY_STATUS_TYPE_CODE")]
-    [StringLength(20)]
-    public string PropMgmtActivityStatusTypeCode { get; set; }
+    [Column("PROPERTY_ID")]
+    public long PropertyId { get; set; }
 
-    [Column("SERVICE_PROVIDER_PERSON_ID")]
-    public long? ServiceProviderPersonId { get; set; }
-
-    [Column("SERVICE_PROVIDER_ORG_ID")]
-    public long? ServiceProviderOrgId { get; set; }
-
-    [Column("MANAGEMENT_FILE_ID")]
-    public long? ManagementFileId { get; set; }
-
-    [Column("PROP_MGMT_ACTIVITY_TYPE_CODE")]
-    [StringLength(20)]
-    public string PropMgmtActivityTypeCode { get; set; }
-
-    [Column("REQUEST_ADDED_DT")]
-    public DateOnly RequestAddedDt { get; set; }
-
-    [Column("COMPLETION_DT")]
-    public DateOnly? CompletionDt { get; set; }
-
-    [Column("REQUEST_SOURCE")]
-    [StringLength(2000)]
-    public string RequestSource { get; set; }
-
-    [Column("IS_DISABLED")]
-    public bool? IsDisabled { get; set; }
+    [Column("PIMS_MANAGEMENT_ACTIVITY_ID")]
+    public long PimsManagementActivityId { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
@@ -104,8 +79,4 @@ public partial class PimsPropertyActivityHist
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
-
-    [Column("DESCRIPTION")]
-    [StringLength(4000)]
-    public string Description { get; set; }
 }

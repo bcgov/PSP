@@ -7,34 +7,52 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Table contains the many-to-many relationship between the proeprty activity file and the associated property management activity type and subtype.
+/// Defines the contacts that are associated with this management file.
 /// </summary>
-[Table("PIMS_PROP_ACTIVITY_MGMT_ACTIVITY")]
-[Index("PimsManagementActivityId", Name = "PACMAC_PIMS_MANAGEMENT_ACTIVITY_ID_IDX")]
-[Index("PropMgmtActivitySubtypeCode", Name = "PACMAC_PROP_MGMT_ACTIVITY_SUBTYPE_CODE_IDX")]
-[Index("PimsManagementActivityId", "PropMgmtActivitySubtypeCode", Name = "PACMAC_UNIQUE_ACTIVITY_TUC", IsUnique = true)]
-public partial class PimsPropActivityMgmtActivity
+[Table("PIMS_MANAGEMENT_FILE_CONTACT")]
+[Index("OrganizationId", Name = "MFFLCN_ORGANIZATION_ID_IDX")]
+[Index("PersonId", Name = "MFFLCN_PERSON_ID_IDX")]
+[Index("PrimaryContactId", Name = "MFFLCN_PRIMARY_CONTACT_ID_IDX")]
+public partial class PimsManagementFileContact
 {
     /// <summary>
     /// Generated surrogate primary key.
     /// </summary>
     [Key]
-    [Column("PROP_ACTVTY_MGMT_ACTVTY_TYP_ID")]
-    public long PropActvtyMgmtActvtyTypId { get; set; }
+    [Column("MANAGEMENT_FILE_CONTACT_ID")]
+    public long ManagementFileContactId { get; set; }
 
     /// <summary>
-    /// Foreign key to the PIMS_PROPERTY_ACTIVITY table.
+    /// Foreign key to_PIMS_MANAGEMENT_FILE table.
     /// </summary>
-    [Column("PIMS_MANAGEMENT_ACTIVITY_ID")]
-    public long PimsManagementActivityId { get; set; }
+    [Column("MANAGEMENT_FILE_ID")]
+    public long? ManagementFileId { get; set; }
 
     /// <summary>
-    /// Foreign key to the PROP_MGMT_ACTIVITY_SUBTYPE table.
+    /// Foreign key to_PIMS_PERSON table.
+    /// </summary>
+    [Column("PERSON_ID")]
+    public long? PersonId { get; set; }
+
+    /// <summary>
+    /// Foreign key to_PIMS_ORGANIZATION table.
+    /// </summary>
+    [Column("ORGANIZATION_ID")]
+    public long? OrganizationId { get; set; }
+
+    /// <summary>
+    /// Primary contact for the organization.  Foreign key to_PIMS_PERSON table.
+    /// </summary>
+    [Column("PRIMARY_CONTACT_ID")]
+    public long? PrimaryContactId { get; set; }
+
+    /// <summary>
+    /// Purpose of property contact
     /// </summary>
     [Required]
-    [Column("PROP_MGMT_ACTIVITY_SUBTYPE_CODE")]
-    [StringLength(20)]
-    public string PropMgmtActivitySubtypeCode { get; set; }
+    [Column("PURPOSE")]
+    [StringLength(500)]
+    public string Purpose { get; set; }
 
     /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
@@ -107,6 +125,7 @@ public partial class PimsPropActivityMgmtActivity
     /// <summary>
     /// The user or proxy account that created the record.
     /// </summary>
+    [Required]
     [Column("DB_CREATE_USERID")]
     [StringLength(30)]
     public string DbCreateUserid { get; set; }
@@ -125,11 +144,19 @@ public partial class PimsPropActivityMgmtActivity
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    [ForeignKey("PimsManagementActivityId")]
-    [InverseProperty("PimsPropActivityMgmtActivities")]
-    public virtual PimsManagementActivity PimsManagementActivity { get; set; }
+    [ForeignKey("ManagementFileId")]
+    [InverseProperty("PimsManagementFileContacts")]
+    public virtual PimsManagementFile ManagementFile { get; set; }
 
-    [ForeignKey("PropMgmtActivitySubtypeCode")]
-    [InverseProperty("PimsPropActivityMgmtActivities")]
-    public virtual PimsPropMgmtActivitySubtype PropMgmtActivitySubtypeCodeNavigation { get; set; }
+    [ForeignKey("OrganizationId")]
+    [InverseProperty("PimsManagementFileContacts")]
+    public virtual PimsOrganization Organization { get; set; }
+
+    [ForeignKey("PersonId")]
+    [InverseProperty("PimsManagementFileContactPeople")]
+    public virtual PimsPerson Person { get; set; }
+
+    [ForeignKey("PrimaryContactId")]
+    [InverseProperty("PimsManagementFileContactPrimaryContacts")]
+    public virtual PimsPerson PrimaryContact { get; set; }
 }

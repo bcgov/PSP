@@ -191,6 +191,12 @@ public partial class PimsManagementFile
     public virtual PimsManagementFileStatusType ManagementFileStatusTypeCodeNavigation { get; set; }
 
     [InverseProperty("ManagementFile")]
+    public virtual ICollection<PimsManagementActivity> PimsManagementActivities { get; set; } = new List<PimsManagementActivity>();
+
+    [InverseProperty("ManagementFile")]
+    public virtual ICollection<PimsManagementFileContact> PimsManagementFileContacts { get; set; } = new List<PimsManagementFileContact>();
+
+    [InverseProperty("ManagementFile")]
     public virtual ICollection<PimsManagementFileDocument> PimsManagementFileDocuments { get; set; } = new List<PimsManagementFileDocument>();
 
     [InverseProperty("ManagementFile")]
@@ -201,9 +207,6 @@ public partial class PimsManagementFile
 
     [InverseProperty("ManagementFile")]
     public virtual ICollection<PimsManagementFileTeam> PimsManagementFileTeams { get; set; } = new List<PimsManagementFileTeam>();
-
-    [InverseProperty("ManagementFile")]
-    public virtual ICollection<PimsPropertyActivity> PimsPropertyActivities { get; set; } = new List<PimsPropertyActivity>();
 
     [ForeignKey("ProductId")]
     [InverseProperty("PimsManagementFiles")]

@@ -9,16 +9,16 @@ namespace Pims.Dal.Entities;
 /// <summary>
 /// Defines the activities that are associated with this property.
 /// </summary>
-[Table("PIMS_PROPERTY_ACTIVITY")]
-[Index("ManagementFileId", Name = "PRPACT_MANAGEMENT_FILE_ID_IDX")]
+[Table("PIMS_MANAGEMENT_ACTIVITY")]
+[Index("ManagementFileId", Name = "MGMTAC_MANAGEMENT_FILE_ID_IDX")]
 [Index("PropMgmtActivityStatusTypeCode", Name = "PRPACT_PROP_MGMT_ACTIVITY_STATUS_TYPE_CODE_IDX")]
 [Index("ServiceProviderOrgId", Name = "PRPACT_SERVICE_PROVIDER_ORG_ID_IDX")]
 [Index("ServiceProviderPersonId", Name = "PRPACT_SERVICE_PROVIDER_PERSON_ID_IDX")]
-public partial class PimsPropertyActivity
+public partial class PimsManagementActivity
 {
     [Key]
-    [Column("PIMS_PROPERTY_ACTIVITY_ID")]
-    public long PimsPropertyActivityId { get; set; }
+    [Column("PIMS_MANAGEMENT_ACTIVITY_ID")]
+    public long PimsManagementActivityId { get; set; }
 
     /// <summary>
     /// Status of the property management activity.
@@ -175,40 +175,40 @@ public partial class PimsPropertyActivity
     public string DbLastUpdateUserid { get; set; }
 
     [ForeignKey("ManagementFileId")]
-    [InverseProperty("PimsPropertyActivities")]
+    [InverseProperty("PimsManagementActivities")]
     public virtual PimsManagementFile ManagementFile { get; set; }
 
-    [InverseProperty("PimsPropertyActivity")]
+    [InverseProperty("PimsManagementActivity")]
+    public virtual ICollection<PimsManagementActivityProperty> PimsManagementActivityProperties { get; set; } = new List<PimsManagementActivityProperty>();
+
+    [InverseProperty("PimsManagementActivity")]
     public virtual ICollection<PimsPropActInvolvedParty> PimsPropActInvolvedParties { get; set; } = new List<PimsPropActInvolvedParty>();
 
-    [InverseProperty("PimsPropertyActivity")]
+    [InverseProperty("PimsManagementActivity")]
     public virtual ICollection<PimsPropActMinContact> PimsPropActMinContacts { get; set; } = new List<PimsPropActMinContact>();
 
-    [InverseProperty("PimsPropertyActivity")]
+    [InverseProperty("PimsManagementActivity")]
     public virtual ICollection<PimsPropActivityMgmtActivity> PimsPropActivityMgmtActivities { get; set; } = new List<PimsPropActivityMgmtActivity>();
 
-    [InverseProperty("PimsPropertyActivity")]
-    public virtual ICollection<PimsPropPropActivity> PimsPropPropActivities { get; set; } = new List<PimsPropPropActivity>();
-
-    [InverseProperty("PimsPropertyActivity")]
+    [InverseProperty("PimsManagementActivity")]
     public virtual ICollection<PimsPropertyActivityDocument> PimsPropertyActivityDocuments { get; set; } = new List<PimsPropertyActivityDocument>();
 
-    [InverseProperty("PimsPropertyActivity")]
+    [InverseProperty("PimsManagementActivity")]
     public virtual ICollection<PimsPropertyActivityInvoice> PimsPropertyActivityInvoices { get; set; } = new List<PimsPropertyActivityInvoice>();
 
     [ForeignKey("PropMgmtActivityStatusTypeCode")]
-    [InverseProperty("PimsPropertyActivities")]
+    [InverseProperty("PimsManagementActivities")]
     public virtual PimsPropMgmtActivityStatusType PropMgmtActivityStatusTypeCodeNavigation { get; set; }
 
     [ForeignKey("PropMgmtActivityTypeCode")]
-    [InverseProperty("PimsPropertyActivities")]
+    [InverseProperty("PimsManagementActivities")]
     public virtual PimsPropMgmtActivityType PropMgmtActivityTypeCodeNavigation { get; set; }
 
     [ForeignKey("ServiceProviderOrgId")]
-    [InverseProperty("PimsPropertyActivities")]
+    [InverseProperty("PimsManagementActivities")]
     public virtual PimsOrganization ServiceProviderOrg { get; set; }
 
     [ForeignKey("ServiceProviderPersonId")]
-    [InverseProperty("PimsPropertyActivities")]
+    [InverseProperty("PimsManagementActivities")]
     public virtual PimsPerson ServiceProviderPerson { get; set; }
 }

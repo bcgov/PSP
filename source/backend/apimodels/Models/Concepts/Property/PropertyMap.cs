@@ -32,7 +32,6 @@ namespace Pims.Api.Models.Concepts.Property
                 .Map(dest => dest.PphStatusUpdateUserid, src => src.PphStatusUpdateUserid)
                 .Map(dest => dest.PphStatusUpdateTimestamp, src => src.PphStatusUpdateTimestamp)
                 .Map(dest => dest.PphStatusUpdateUserGuid, src => src.PphStatusUpdateUserGuid)
-                .Map(dest => dest.Notes, src => src.Notes)
                 .Map(dest => dest.IsOwned, src => src.IsOwned)
 
                 // multi-selects
@@ -81,7 +80,6 @@ namespace Pims.Api.Models.Concepts.Property
             .Map(dest => dest.IsRwyBeltDomPatent, src => src.IsRwyBeltDomPatent)
             .Map(dest => dest.PphStatusTypeCode, src => src.PphStatusTypeCode)
 
-            .Map(dest => dest.Notes, src => src.Notes)
             .Map(dest => dest.IsOwned, src => src.IsOwned)
 
             // multi-selects
@@ -119,7 +117,6 @@ namespace Pims.Api.Models.Concepts.Property
                 .Map(dest => dest.IsRwyBeltDomPatent, src => src.IsRwyBeltDomPatent)
                 .Map(dest => dest.PphStatusTypeCode, src => src.PphStatusTypeCode)
 
-                .Map(dest => dest.Notes, src => src.Notes)
                 .Map(dest => dest.IsOwned, src => src.IsOwned)
 
                 .Map(dest => dest.LandArea, src => src.LandArea)

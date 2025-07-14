@@ -23,8 +23,8 @@ public partial class PimsPropActivityMgmtActivityHist
     [Column("PROP_ACTVTY_MGMT_ACTVTY_TYP_ID")]
     public long PropActvtyMgmtActvtyTypId { get; set; }
 
-    [Column("PIMS_PROPERTY_ACTIVITY_ID")]
-    public long PimsPropertyActivityId { get; set; }
+    [Column("PIMS_MANAGEMENT_ACTIVITY_ID")]
+    public long PimsManagementActivityId { get; set; }
 
     [Required]
     [Column("PROP_MGMT_ACTIVITY_SUBTYPE_CODE")]

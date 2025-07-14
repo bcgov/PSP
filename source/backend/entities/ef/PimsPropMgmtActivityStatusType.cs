@@ -60,5 +60,5 @@ public partial class PimsPropMgmtActivityStatusType
     public string DbLastUpdateUserid { get; set; }
 
     [InverseProperty("PropMgmtActivityStatusTypeCodeNavigation")]
-    public virtual ICollection<PimsPropertyActivity> PimsPropertyActivities { get; set; } = new List<PimsPropertyActivity>();
+    public virtual ICollection<PimsManagementActivity> PimsManagementActivities { get; set; } = new List<PimsManagementActivity>();
 }

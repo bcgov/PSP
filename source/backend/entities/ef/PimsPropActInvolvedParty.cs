@@ -12,15 +12,15 @@ namespace Pims.Dal.Entities;
 [Table("PIMS_PROP_ACT_INVOLVED_PARTY")]
 [Index("OrganizationId", Name = "PAINVP_ORGANIZATION_ID_IDX")]
 [Index("PersonId", Name = "PAINVP_PERSON_ID_IDX")]
-[Index("PimsPropertyActivityId", Name = "PAINVP_PIMS_PROPERTY_ACTIVITY_ID_IDX")]
+[Index("PimsManagementActivityId", Name = "PAINVP_PIMS_PROPERTY_ACTIVITY_ID_IDX")]
 public partial class PimsPropActInvolvedParty
 {
     [Key]
     [Column("PROP_ACT_INVOLVED_PARTY_ID")]
     public long PropActInvolvedPartyId { get; set; }
 
-    [Column("PIMS_PROPERTY_ACTIVITY_ID")]
-    public long PimsPropertyActivityId { get; set; }
+    [Column("PIMS_MANAGEMENT_ACTIVITY_ID")]
+    public long PimsManagementActivityId { get; set; }
 
     [Column("PERSON_ID")]
     public long? PersonId { get; set; }
@@ -87,7 +87,7 @@ public partial class PimsPropActInvolvedParty
     [InverseProperty("PimsPropActInvolvedParties")]
     public virtual PimsPerson Person { get; set; }
 
-    [ForeignKey("PimsPropertyActivityId")]
+    [ForeignKey("PimsManagementActivityId")]
     [InverseProperty("PimsPropActInvolvedParties")]
-    public virtual PimsPropertyActivity PimsPropertyActivity { get; set; }
+    public virtual PimsManagementActivity PimsManagementActivity { get; set; }
 }

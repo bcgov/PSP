@@ -58,13 +58,13 @@ namespace Pims.Api.Areas.Property.Controllers
         [HttpGet("{propertyId}/management-activities")]
         [HasPermission(Permissions.ManagementView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(List<PropertyActivityModel>), 200)]
+        [ProducesResponseType(typeof(List<ManagementActivityModel>), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetPropertyActivities(long propertyId)
         {
             var activities = _propertyService.GetActivities(propertyId);
-            return new JsonResult(_mapper.Map<List<PropertyActivityModel>>(activities));
+            return new JsonResult(_mapper.Map<List<ManagementActivityModel>>(activities));
         }
 
         /// <summary>
@@ -74,16 +74,16 @@ namespace Pims.Api.Areas.Property.Controllers
         [HttpGet("{propertyId}/management-activities/{activityId}")]
         [HasPermission(Permissions.ManagementView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(PropertyActivityModel), 200)]
+        [ProducesResponseType(typeof(ManagementActivityModel), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetPropertyActivity(long propertyId, long activityId)
         {
             var propertyActivity = _propertyService.GetActivity(activityId);
 
-            if (propertyActivity.PimsPropPropActivities.Any(x => x.PropertyId == propertyId))
+            if (propertyActivity.PimsManagementActivityProperties.Any(x => x.PropertyId == propertyId))
             {
-                return new JsonResult(_mapper.Map<PropertyActivityModel>(propertyActivity));
+                return new JsonResult(_mapper.Map<ManagementActivityModel>(propertyActivity));
             }
 
             throw new BadRequestException("Activity with the given id does not match the property id");
@@ -96,19 +96,19 @@ namespace Pims.Api.Areas.Property.Controllers
         [HttpPost("{propertyId}/management-activities")]
         [HasPermission(Permissions.ManagementAdd)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(PropertyActivityModel), 200)]
+        [ProducesResponseType(typeof(ManagementActivityModel), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult CreatePropertyActivity(long propertyId, [FromBody] PropertyActivityModel activityModel)
+        public IActionResult CreatePropertyActivity(long propertyId, [FromBody] ManagementActivityModel activityModel)
         {
             if (propertyId != activityModel.ActivityProperties[0].PropertyId)
             {
                 throw new BadRequestException("Invalid property id.");
             }
-            var activityEntity = _mapper.Map<PimsPropertyActivity>(activityModel);
+            var activityEntity = _mapper.Map<PimsManagementActivity>(activityModel);
             var createdActivity = _propertyService.CreateActivity(activityEntity);
 
-            return new JsonResult(_mapper.Map<PropertyActivityModel>(createdActivity));
+            return new JsonResult(_mapper.Map<ManagementActivityModel>(createdActivity));
         }
 
         /// <summary>
@@ -118,21 +118,21 @@ namespace Pims.Api.Areas.Property.Controllers
         [HttpPut("{propertyId}/management-activities/{activityId}")]
         [HasPermission(Permissions.ManagementEdit)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(PropertyActivityModel), 200)]
+        [ProducesResponseType(typeof(ManagementActivityModel), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult UpdatePropertyActivity(long propertyId, long activityId, [FromBody] PropertyActivityModel activityModel)
+        public IActionResult UpdatePropertyActivity(long propertyId, long activityId, [FromBody] ManagementActivityModel activityModel)
         {
-            var propertyActivity = _mapper.Map<PimsPropertyActivity>(activityModel);
-            if (!propertyActivity.PimsPropPropActivities.Any(x => x.PropertyId == propertyId && x.PimsPropertyActivityId == activityId)
-                || propertyActivity.PimsPropertyActivityId != activityId)
+            var propertyActivity = _mapper.Map<PimsManagementActivity>(activityModel);
+            if (!propertyActivity.PimsManagementActivityProperties.Any(x => x.PropertyId == propertyId && x.PimsManagementActivityId == activityId)
+                || propertyActivity.PimsManagementActivityId != activityId)
             {
                 throw new BadRequestException("Invalid activity identifiers.");
             }
 
             var updatedProperty = _propertyService.UpdateActivity(propertyActivity);
 
-            return new JsonResult(_mapper.Map<PropertyActivityModel>(updatedProperty));
+            return new JsonResult(_mapper.Map<ManagementActivityModel>(updatedProperty));
         }
 
         /// <summary>
