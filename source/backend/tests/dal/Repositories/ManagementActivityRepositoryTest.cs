@@ -14,20 +14,20 @@ namespace Pims.Dal.Test.Repositories
     [Trait("category", "dal")]
     [Trait("group", "property")]
     [ExcludeFromCodeCoverage]
-    public class PropertyActivityRepositoryTest
+    public class ManagementActivityRepositoryTest
     {
         private TestHelper _helper;
 
-        public PropertyActivityRepositoryTest()
+        public ManagementActivityRepositoryTest()
         {
             _helper = new TestHelper();
         }
 
-        private PropertyActivityRepository CreateRepositoryWithPermissions(params Permissions[] permissions)
+        private ManagementActivityRepository CreateRepositoryWithPermissions(params Permissions[] permissions)
         {
             var user = PrincipalHelper.CreateForPermission(permissions);
             _helper.CreatePimsContext(user, true);
-            return _helper.CreateRepository<PropertyActivityRepository>();
+            return _helper.CreateRepository<ManagementActivityRepository>();
         }
 
         #region Tests

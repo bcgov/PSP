@@ -16,9 +16,9 @@ namespace Pims.Core.Test
         /// <param name="activitySubTypeCode"></param>
         /// <param name="activityStatusTypeCode"></param>
         /// <returns>New Instance of PimsPropertyActivity.</returns>
-        public static PimsPropertyActivity CreatePropertyActivity(long id, string activityTypeCode = "PROPERTYMTC", string activitySubTypeCode = "LANDSCAPING", string activityStatusTypeCode = "NOTSTARTED")
+        public static PimsManagementActivity CreatePropertyActivity(long id, string activityTypeCode = "PROPERTYMTC", string activitySubTypeCode = "LANDSCAPING", string activityStatusTypeCode = "NOTSTARTED")
         {
-            PimsPropertyActivity propertyActivity = new PimsPropertyActivity()
+            PimsManagementActivity propertyActivity = new PimsManagementActivity()
             {
                 Internal_Id = id,
                 PropMgmtActivityTypeCode = activityTypeCode,
@@ -26,7 +26,7 @@ namespace Pims.Core.Test
                 {
                     new ()
                     {
-                        PimsPropertyActivityId = id,
+                        PimsManagementActivityId = id,
                         PropMgmtActivitySubtypeCode = activitySubTypeCode,
                     },
                 },
