@@ -779,7 +779,7 @@ namespace Pims.Api.Test.Services
             propertyActivityDocumentRepository.Setup(x => x.AddDocument(It.IsAny<PimsPropertyActivityDocument>())).Returns(new PimsPropertyActivityDocument()
             {
                 PropertyActivityDocumentId = 101,
-                PimsPropertyActivityId = 1,
+                PimsManagementActivityId = 1,
                 DocumentId = 100,
             });
 

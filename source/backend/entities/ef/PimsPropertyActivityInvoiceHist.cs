@@ -23,8 +23,8 @@ public partial class PimsPropertyActivityInvoiceHist
     [Column("PROPERTY_ACTIVITY_INVOICE_ID")]
     public long PropertyActivityInvoiceId { get; set; }
 
-    [Column("PIMS_PROPERTY_ACTIVITY_ID")]
-    public long PimsPropertyActivityId { get; set; }
+    [Column("PIMS_MANAGEMENT_ACTIVITY_ID")]
+    public long PimsManagementActivityId { get; set; }
 
     [Column("INVOICE_DT")]
     public DateOnly InvoiceDt { get; set; }

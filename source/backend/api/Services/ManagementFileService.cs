@@ -29,7 +29,7 @@ namespace Pims.Api.Services
         private readonly INoteRelationshipRepository<PimsManagementFileNote> _entityNoteRepository;
         private readonly IManagementFileStatusSolver _managementStatusSolver;
         private readonly IPropertyOperationService _propertyOperationService;
-        private readonly IPropertyActivityRepository _propertyActivityRepository;
+        private readonly IManagementActivityRepository _managementActivityRepository;
 
         public ManagementFileService(
             ClaimsPrincipal user,
@@ -42,7 +42,7 @@ namespace Pims.Api.Services
             INoteRelationshipRepository<PimsManagementFileNote> entityNoteRepository,
             IManagementFileStatusSolver managementStatusSolver,
             IPropertyOperationService propertyOperationService,
-            IPropertyActivityRepository propertyActivityRepository)
+            IManagementActivityRepository managementActivityRepository)
         {
             _user = user;
             _logger = logger;
@@ -54,7 +54,7 @@ namespace Pims.Api.Services
             _entityNoteRepository = entityNoteRepository;
             _managementStatusSolver = managementStatusSolver;
             _propertyOperationService = propertyOperationService;
-            _propertyActivityRepository = propertyActivityRepository;
+            _managementActivityRepository = managementActivityRepository;
         }
 
         public PimsManagementFile Add(PimsManagementFile managementFile, IEnumerable<UserOverrideCode> userOverrides)
@@ -226,7 +226,8 @@ namespace Pims.Api.Services
                 }
             }
 
-            IEnumerable<PimsPropPropActivity> fileActivityProperties = _propertyActivityRepository.GetActivitiesByManagementFile(managementFile.Internal_Id).SelectMany(pa => pa.PimsPropPropActivities);
+            IEnumerable<PimsManagementActivityProperty> fileActivityProperties = _managementActivityRepository.GetActivitiesByManagementFile(managementFile.Internal_Id).SelectMany(pa => pa.PimsManagementActivityProperties);
+
             // The ones not on the new set should be deleted
             List<PimsManagementFileProperty> differenceSet = currentFileProperties.Where(x => !managementFile.PimsManagementFileProperties.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
             foreach (var deletedProperty in differenceSet)

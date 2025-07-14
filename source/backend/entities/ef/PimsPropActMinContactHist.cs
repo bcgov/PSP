@@ -23,8 +23,8 @@ public partial class PimsPropActMinContactHist
     [Column("PROP_ACT_MIN_CONTACT_ID")]
     public long PropActMinContactId { get; set; }
 
-    [Column("PIMS_PROPERTY_ACTIVITY_ID")]
-    public long PimsPropertyActivityId { get; set; }
+    [Column("PIMS_MANAGEMENT_ACTIVITY_ID")]
+    public long PimsManagementActivityId { get; set; }
 
     [Column("PERSON_ID")]
     public long PersonId { get; set; }

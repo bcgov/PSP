@@ -80,7 +80,6 @@ namespace Pims.Dal
             repositories.AddScoped<Repositories.ILeaseStakeholderRepository, Repositories.LeaseStakeholderRepository>();
             repositories.AddScoped<Repositories.IExpropriationPaymentRepository, Repositories.ExpropriationPaymentRepository>();
             repositories.AddScoped<Repositories.IPropertyContactRepository, Repositories.PropertyContactRepository>();
-            repositories.AddScoped<Repositories.IPropertyActivityRepository, Repositories.PropertyActivityRepository>();
             repositories.AddScoped<Repositories.IDispositionFilePropertyRepository, Repositories.DispositionFilePropertyRepository>();
             repositories.AddScoped<Repositories.IDispositionFileRepository, Repositories.DispositionFileRepository>();
             repositories.AddScoped<Repositories.IDispositionFileChecklistRepository, Repositories.DispositionFileChecklistRepository>();
