@@ -1,13 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
+using DocumentFormat.OpenXml.Office2010.Excel;
+using Medallion.Threading;
+using Medallion.Threading.SqlServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Models.CodeTypes;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Pims.Dal.Repositories
 {
@@ -16,6 +20,7 @@ namespace Pims.Dal.Repositories
     /// </summary>
     public class DocumentQueueRepository : BaseRepository<PimsDocument>, IDocumentQueueRepository
     {
+        private readonly IDistributedLockProvider _synchronizationProvider;
         #region Constructors
 
         /// <summary>
@@ -27,9 +32,11 @@ namespace Pims.Dal.Repositories
         public DocumentQueueRepository(
             PimsContext dbContext,
             ClaimsPrincipal user,
+            IDistributedLockProvider synchronizationProvider,
             ILogger<DocumentRepository> logger)
             : base(dbContext, user, logger)
         {
+            this._synchronizationProvider = synchronizationProvider;
         }
         #endregion
 
@@ -42,7 +49,6 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public PimsDocumentQueue TryGetById(long documentQueueId)
         {
-
             return Context.PimsDocumentQueues
                 .AsNoTracking()
                 .FirstOrDefault(dq => dq.DocumentQueueId == documentQueueId);
@@ -83,25 +89,35 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="queuedDocument"></param>
         /// <returns></returns>
-        public PimsDocumentQueue Update(PimsDocumentQueue queuedDocument, bool removeDocument = false)
+        public async Task<PimsDocumentQueue> Update(PimsDocumentQueue queuedDocument, bool removeDocument = false)
         {
-            queuedDocument.ThrowIfNull(nameof(queuedDocument));
-            var existingQueuedDocument = TryGetById(queuedDocument.DocumentQueueId) ?? throw new KeyNotFoundException($"DocumentQueueId {queuedDocument.DocumentQueueId} not found.");
-            if (existingQueuedDocument?.DocumentQueueStatusTypeCode == DocumentQueueStatusTypes.SUCCESS.ToString() && queuedDocument.DocumentQueueStatusTypeCode != DocumentQueueStatusTypes.SUCCESS.ToString())
+            // Use a distributed lock to ensure that only one process can update the document queue at a time (prevents deadlocks from history triggers).
+            var @lock = this._synchronizationProvider.CreateLock("DocumentQueueLock");
+            await using (await @lock.AcquireAsync())
             {
-                throw new InvalidOperationException($"DocumentQueueId {queuedDocument.DocumentQueueId} is already completed.");
-            }
-            if (!removeDocument)
-            {
-                queuedDocument.Document = existingQueuedDocument.Document;
-            }
+                queuedDocument.ThrowIfNull(nameof(queuedDocument));
+                var existingQueuedDocument = Context.PimsDocumentQueues
+                    .AsNoTracking()
+                    .FirstOrDefault(dq => dq.DocumentQueueId == queuedDocument.DocumentQueueId)
+                    ?? throw new KeyNotFoundException($"DocumentQueueId {queuedDocument.DocumentQueueId} not found.");
 
-            queuedDocument.MayanError = queuedDocument.MayanError?.Truncate(4000);
-            queuedDocument.DataSourceTypeCode = existingQueuedDocument.DataSourceTypeCode; // Do not allow the data source to be updated.
-            Context.Entry(existingQueuedDocument).CurrentValues.SetValues(queuedDocument);
-            queuedDocument = Context.Update(queuedDocument).Entity;
+                if (existingQueuedDocument?.DocumentQueueStatusTypeCode == DocumentQueueStatusTypes.SUCCESS.ToString() && queuedDocument.DocumentQueueStatusTypeCode != DocumentQueueStatusTypes.SUCCESS.ToString())
+                {
+                    throw new InvalidOperationException($"DocumentQueueId {queuedDocument.DocumentQueueId} is already completed.");
+                }
 
-            return queuedDocument;
+                if (!removeDocument)
+                {
+                    queuedDocument.Document = existingQueuedDocument.Document;
+                }
+
+                queuedDocument.MayanError = queuedDocument.MayanError?.Truncate(4000);
+                queuedDocument.DataSourceTypeCode = existingQueuedDocument.DataSourceTypeCode; // Do not allow the data source to be updated.
+                Context.Entry(existingQueuedDocument).CurrentValues.SetValues(queuedDocument);
+                queuedDocument = Context.Update(queuedDocument).Entity;
+                Context.SaveChanges(); // Force changes to be saved here, in the scope of the lock.
+                return queuedDocument;
+            }
         }
 
         /// <summary>
@@ -187,7 +203,7 @@ namespace Pims.Dal.Repositories
         {
             if (pimsDocumentQueueStatusType == null)
             {
-                Context.PimsDocumentQueues.Count();
+                return Context.PimsDocumentQueues.Count();
             }
 
             return Context.PimsDocumentQueues.Count(d => d.DocumentQueueStatusTypeCode == pimsDocumentQueueStatusType.DocumentQueueStatusTypeCode);

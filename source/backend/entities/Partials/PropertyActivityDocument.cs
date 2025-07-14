@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Pims.Dal.Entities
 {
     /// <summary>
-    /// PimsDocument for Property Activities.
+    /// PimsPropertyActivityDocument for Property Activities.
     /// </summary>
     public partial class PimsPropertyActivityDocument : PimsFileDocument, IBaseAppEntity
     {
@@ -11,7 +11,7 @@ namespace Pims.Dal.Entities
         public override long Internal_Id { get => PropertyActivityDocumentId; set => PropertyActivityDocumentId = value; }
 
         [NotMapped]
-        public override long FileId { get => this.PimsPropertyActivityId; set => this.PimsPropertyActivityId = value; }
+        public override long FileId { get => this.PimsManagementActivityId; set => this.PimsManagementActivityId = value; }
 
         [NotMapped]
         public override long? InternalDocumentId { get => this.DocumentId; set => this.DocumentId = value.GetValueOrDefault(); }

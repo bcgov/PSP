@@ -1,4 +1,4 @@
-import { LatLngBounds } from 'leaflet';
+import { LatLngBounds, LatLngLiteral } from 'leaflet';
 import noop from 'lodash/noop';
 import React, { useCallback } from 'react';
 import { FaEllipsisH, FaEye, FaSearchPlus } from 'react-icons/fa';
@@ -7,9 +7,11 @@ import styled from 'styled-components';
 import { LinkButton } from '@/components/common/buttons';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
+import { exists } from '@/utils/utils';
 
 export interface ILayerPopupLinksProps {
   bounds: LatLngBounds | undefined;
+  latLng: LatLngLiteral | undefined;
   onEllipsisClick?: () => void;
   onViewPropertyInfo: (event: React.MouseEvent<HTMLElement>) => void;
   showViewPropertyInfo: boolean;
@@ -17,17 +19,20 @@ export interface ILayerPopupLinksProps {
 
 export const LayerPopupLinks: React.FC<React.PropsWithChildren<ILayerPopupLinksProps>> = ({
   bounds,
+  latLng,
   onViewPropertyInfo,
   onEllipsisClick,
   showViewPropertyInfo,
 }) => {
-  const { requestFlyToBounds } = useMapStateMachine();
+  const { requestFlyToBounds, requestFlyToLocation } = useMapStateMachine();
 
   const onZoomToBounds = useCallback(() => {
-    if (bounds !== undefined) {
+    if (exists(bounds)) {
       requestFlyToBounds(bounds);
+    } else if (exists(latLng)) {
+      requestFlyToLocation(latLng);
     }
-  }, [requestFlyToBounds, bounds]);
+  }, [bounds, latLng, requestFlyToBounds, requestFlyToLocation]);
 
   return (
     <StyledContainer>

@@ -319,6 +319,17 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
   flex-wrap: nowrap;
 }
 
+.c16 {
+  color: var(--theme-blue-100);
+  font-family: 'BCSans-Bold';
+  font-size: 1.7rem;
+  border-bottom: solid 0.2rem;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 1.6rem;
+  margin-top: 1.6rem;
+}
+
 .c12 {
   color: #474543;
   font-size: 1.6rem;
@@ -465,15 +476,6 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
   -webkit-justify-content: end;
   -ms-flex-pack: end;
   justify-content: end;
-}
-
-.c16 {
-  font-size: 2rem;
-  font-weight: 700;
-  -webkit-text-decoration: none solid rgb(33,37,41);
-  text-decoration: none solid rgb(33,37,41);
-  line-height: 2rem;
-  margin-bottom: 1rem;
 }
 
 .c0 {

@@ -22,6 +22,8 @@ const defaultComposedProperty: ComposedProperty = {
   geoserverFeatureCollection: undefined,
   bcAssessmentSummary: undefined,
   crownTenureFeatures: undefined,
+  planNumber: undefined,
+  spcpOrder: undefined,
 };
 
 vi.mock('@/hooks/repositories/useHistoricalNumberRepository');

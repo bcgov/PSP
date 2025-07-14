@@ -1,4 +1,4 @@
-import { BillingInfo, LtsaOrders, OrderParent } from '@/interfaces/ltsaModels';
+import { BillingInfo, LtsaOrders, OrderParent, SpcpOrder } from '@/interfaces/ltsaModels';
 
 export const getMockLtsaResponse: () => LtsaOrders = () => ({
   parcelInfo: {
@@ -189,4 +189,68 @@ export const getMockLtsaResponse: () => LtsaOrders = () => ({
       },
     },
   ],
+});
+
+export const getMockLtsaSPCPResponse: () => SpcpOrder = () => ({
+  productType: OrderParent.ProductTypeEnum.CommonProperty,
+  fileReference: 'folio',
+  productOrderParameters: {
+    strataPlanNumber: 'VISXXXX',
+    includeCancelledInfo: false,
+  },
+  orderId: 'XXXXXXXX-7c1c-449b-a214-157299732eb4',
+  status: OrderParent.StatusEnum.Processing,
+  orderedProduct: {
+    fieldedData: {
+      strataPlanIdentifier: {
+        strataPlanNumber: 'VISXXXX',
+        landTitleDistrict: 'VICTORIA',
+      },
+      legalNotationsOnSCP: [
+        {
+          legalNotationNumber: 'EP96596',
+          status: 'ACTIVE',
+          legalNotation: {
+            applicationReceivedDate: '2000-11-14T19:38:00Z',
+            originalLegalNotationNumber: 'EP96596',
+            legalNotationText:
+              'THIS TITLE MAY BE AFFECTED BY A PERMIT UNDER PART 26 OF THE LOCAL\nGOVERNMENT ACT, SEE EP96596\n(AS TO ALL EXCEPT CLOSED ROAD ON PLAN VIP80164)\n',
+          },
+        },
+      ],
+      chargesOnSCP: [
+        {
+          status: 'REGISTERED',
+          enteredDate: '2009-07-27T20:55:12Z',
+          interAlia: false,
+          chargeNumber: 'EC43157',
+          chargeRemarks: 'INTER ALIA\nDD EC43156, SECTION 47 LAND ACT\n',
+          charge: {
+            chargeNumber: 'EC43157',
+            transactionType: 'UNDERSURFACE AND OTHER EXC & RES',
+            applicationReceivedDate: '1989-05-08T18:18:00Z',
+            chargeOwnershipGroups: [
+              {
+                jointTenancyIndication: false,
+                interestFractionNumerator: '1',
+                interestFractionDenominator: '1',
+                ownershipRemarks: '',
+                chargeOwners: [
+                  {
+                    lastNameOrCorpName1:
+                      'HER MAJESTY THE QUEEN IN RIGHT OF THE PROVINCE OF BRITISH COLUMBIA',
+                    incorporationNumber: '',
+                  },
+                ],
+              },
+            ],
+            certificatesOfCharge: [],
+            correctionsAltos1: [],
+            corrections: [],
+          },
+          chargeRelease: {},
+        },
+      ],
+    },
+  },
 });
