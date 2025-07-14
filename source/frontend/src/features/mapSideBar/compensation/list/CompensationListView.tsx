@@ -102,7 +102,7 @@ export const CompensationListView: React.FunctionComponent<ICompensationListView
             title="Compensation Requisitions"
             addButtonText="Add Requisition"
             addButtonIcon={<FaPlus size={'2rem'} />}
-            onAdd={statusUpdateSolver?.canEditOrDeleteCompensation() ? onAdd : null}
+            onButtonAction={statusUpdateSolver?.canEditOrDeleteCompensation() ? onAdd : null}
             isAddEnabled={statusUpdateSolver?.canEditOrDeleteCompensation()}
             cannotAddComponent={
               <TooltipIcon

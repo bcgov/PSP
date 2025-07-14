@@ -29,7 +29,7 @@ namespace Pims.Api.Services
         private readonly INoteRelationshipRepository<PimsManagementFileNote> _entityNoteRepository;
         private readonly IManagementFileStatusSolver _managementStatusSolver;
         private readonly IPropertyOperationService _propertyOperationService;
-        private readonly IPropertyActivityRepository _propertyActivityRepository;
+        private readonly IManagementActivityRepository _managementActivityRepository;
 
         public ManagementFileService(
             ClaimsPrincipal user,
@@ -42,7 +42,7 @@ namespace Pims.Api.Services
             INoteRelationshipRepository<PimsManagementFileNote> entityNoteRepository,
             IManagementFileStatusSolver managementStatusSolver,
             IPropertyOperationService propertyOperationService,
-            IPropertyActivityRepository propertyActivityRepository)
+            IManagementActivityRepository managementActivityRepository)
         {
             _user = user;
             _logger = logger;
@@ -54,7 +54,7 @@ namespace Pims.Api.Services
             _entityNoteRepository = entityNoteRepository;
             _managementStatusSolver = managementStatusSolver;
             _propertyOperationService = propertyOperationService;
-            _propertyActivityRepository = propertyActivityRepository;
+            _managementActivityRepository = managementActivityRepository;
         }
 
         public PimsManagementFile Add(PimsManagementFile managementFile, IEnumerable<UserOverrideCode> userOverrides)
@@ -107,15 +107,8 @@ namespace Pims.Api.Services
             ValidateName(managementFile);
 
             ManagementFileStatusTypes? currentManagementStatus = GetCurrentManagementStatus(managementFile.Internal_Id);
-            if (!_managementStatusSolver.CanEditDetails(currentManagementStatus) && !_user.HasPermission(Permissions.SystemAdmin))
-            {
-                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
-            }
-
-            if(!_user.HasPermission(Permissions.SystemAdmin) && _managementStatusSolver.IsAdminProtected(currentManagementStatus))
-            {
-                throw new BusinessRuleViolationException("The file you are editing is not active, only an Administrator may update this file to an Active status.");
-            }
+            ManagementFileStatusTypes newManagementStatus = (ManagementFileStatusTypes)Enum.Parse(typeof(ManagementFileStatusTypes), managementFile.ManagementFileStatusTypeCode);
+            ValidateStatus(currentManagementStatus, newManagementStatus);
 
             ValidateVersion(id, managementFile.ConcurrencyControlNumber);
 
@@ -233,7 +226,8 @@ namespace Pims.Api.Services
                 }
             }
 
-            IEnumerable<PimsPropPropActivity> fileActivityProperties = _propertyActivityRepository.GetActivitiesByManagementFile(managementFile.Internal_Id).SelectMany(pa => pa.PimsPropPropActivities);
+            IEnumerable<PimsManagementActivityProperty> fileActivityProperties = _managementActivityRepository.GetActivitiesByManagementFile(managementFile.Internal_Id).SelectMany(pa => pa.PimsManagementActivityProperties);
+
             // The ones not on the new set should be deleted
             List<PimsManagementFileProperty> differenceSet = currentFileProperties.Where(x => !managementFile.PimsManagementFileProperties.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
             foreach (var deletedProperty in differenceSet)
@@ -280,6 +274,28 @@ namespace Pims.Api.Services
             }
         }
 
+        private void ValidateStatus(ManagementFileStatusTypes? currentManagementStatus, ManagementFileStatusTypes newManagementStatus)
+        {
+            // All users can change states back to Active or Draft, from Hold, Cancelled.
+            if ((currentManagementStatus == ManagementFileStatusTypes.HOLD || currentManagementStatus == ManagementFileStatusTypes.CANCELLED)
+                && (newManagementStatus == ManagementFileStatusTypes.ACTIVE || newManagementStatus == ManagementFileStatusTypes.DRAFT))
+            {
+                return;
+            }
+
+            // Not Editable and Admin protected must have Admin
+            if (!_managementStatusSolver.CanEditDetails(currentManagementStatus) && _managementStatusSolver.IsAdminProtected(currentManagementStatus) && !_user.HasPermission(Permissions.SystemAdmin))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active, only an Administrator may update this file to an Active status.");
+            }
+
+            // Not Editable -- Status must be updated first
+            if (!_managementStatusSolver.CanEditDetails(currentManagementStatus) && !_managementStatusSolver.CanEditDetails(newManagementStatus))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+            }
+        }
+
         private void ValidateName(PimsManagementFile managementFile)
         {
             var existingFile = _managementFileRepository.GetByName(managementFile.FileName);
@@ -299,7 +315,7 @@ namespace Pims.Api.Services
             var currentProperties = _managementFilePropertyRepository.GetPropertiesByManagementFileId(incomingManagementFile.Internal_Id);
 
             // The following checks result in hard STOP errors
-            if (isFileClosing && currentProperties.Any(p => !p.Property.IsOwned))
+            if (isFileClosing && currentProperties is not null && currentProperties.Any(p => !p.Property.IsOwned))
             {
                 throw new BusinessRuleViolationException("You have one or more properties attached to this Management file that is NOT in the \"Core Inventory\" (i.e. owned by BCTFA and/or HMK). To complete this file you must either, remove these non \"Non-Core Inventory\" properties, OR make sure the property is added to the PIMS inventory first.");
             }
@@ -452,7 +468,5 @@ namespace Pims.Api.Services
 
             return currentManagementFileStatus;
         }
-
-
     }
 }

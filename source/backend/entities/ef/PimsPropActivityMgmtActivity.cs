@@ -10,9 +10,9 @@ namespace Pims.Dal.Entities;
 /// Table contains the many-to-many relationship between the proeprty activity file and the associated property management activity type and subtype.
 /// </summary>
 [Table("PIMS_PROP_ACTIVITY_MGMT_ACTIVITY")]
-[Index("PimsPropertyActivityId", Name = "PACMAC_PIMS_PROPERTY_ACTIVITY_ID_IDX")]
+[Index("PimsManagementActivityId", Name = "PACMAC_PIMS_MANAGEMENT_ACTIVITY_ID_IDX")]
 [Index("PropMgmtActivitySubtypeCode", Name = "PACMAC_PROP_MGMT_ACTIVITY_SUBTYPE_CODE_IDX")]
-[Index("PimsPropertyActivityId", "PropMgmtActivitySubtypeCode", Name = "PACMAC_UNIQUE_ACTIVITY_TUC", IsUnique = true)]
+[Index("PimsManagementActivityId", "PropMgmtActivitySubtypeCode", Name = "PACMAC_UNIQUE_ACTIVITY_TUC", IsUnique = true)]
 public partial class PimsPropActivityMgmtActivity
 {
     /// <summary>
@@ -25,8 +25,8 @@ public partial class PimsPropActivityMgmtActivity
     /// <summary>
     /// Foreign key to the PIMS_PROPERTY_ACTIVITY table.
     /// </summary>
-    [Column("PIMS_PROPERTY_ACTIVITY_ID")]
-    public long PimsPropertyActivityId { get; set; }
+    [Column("PIMS_MANAGEMENT_ACTIVITY_ID")]
+    public long PimsManagementActivityId { get; set; }
 
     /// <summary>
     /// Foreign key to the PROP_MGMT_ACTIVITY_SUBTYPE table.
@@ -125,9 +125,9 @@ public partial class PimsPropActivityMgmtActivity
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    [ForeignKey("PimsPropertyActivityId")]
+    [ForeignKey("PimsManagementActivityId")]
     [InverseProperty("PimsPropActivityMgmtActivities")]
-    public virtual PimsPropertyActivity PimsPropertyActivity { get; set; }
+    public virtual PimsManagementActivity PimsManagementActivity { get; set; }
 
     [ForeignKey("PropMgmtActivitySubtypeCode")]
     [InverseProperty("PimsPropActivityMgmtActivities")]

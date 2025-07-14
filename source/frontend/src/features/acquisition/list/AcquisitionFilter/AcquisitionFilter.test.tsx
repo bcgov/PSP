@@ -66,7 +66,7 @@ describe('Acquisition Filter', () => {
 
     expect(setFilter).toHaveBeenCalledWith(
       expect.objectContaining({
-        acquisitionFileStatusTypeCode: 'ACTIVE',
+        acquisitionFileStatusTypeCode: '',
         acquisitionFileNameOrNumber: 'an acquisition file name',
         projectNameOrNumber: '',
       }),
@@ -81,7 +81,7 @@ describe('Acquisition Filter', () => {
 
     expect(setFilter).toHaveBeenCalledWith(
       expect.objectContaining({
-        acquisitionFileStatusTypeCode: 'ACTIVE',
+        acquisitionFileStatusTypeCode: '',
         acquisitionFileNameOrNumber: '',
         projectNameOrNumber: 'Hwy 14 improvements',
       }),

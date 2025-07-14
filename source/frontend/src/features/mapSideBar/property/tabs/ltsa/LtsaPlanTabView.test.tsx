@@ -2,7 +2,7 @@ import { createMemoryHistory } from 'history';
 
 import { LeaseFormModel } from '@/features/leases/models';
 import { SpcpOrder } from '@/interfaces/ltsaModels';
-import { render, RenderOptions } from '@/utils/test-utils';
+import { getByTitle, render, RenderOptions } from '@/utils/test-utils';
 
 import LtsaPlanTabView, { ILtsaPlanTabViewProps } from './LtsaPlanTabView';
 import { getMockLtsaSPCPResponse } from '@/mocks/ltsa.mock';
@@ -60,6 +60,20 @@ describe('LtsaPlanTabView component', () => {
     });
 
     expect(component.asFragment()).toMatchSnapshot();
+  });
+
+  it('renders as expected the charges owner information', () => {
+    const {
+      component: { getByTitle },
+    } = setup({
+      spcpData: getMockLtsaSPCPResponse(),
+      ltsaRequestedOn: new Date('06-Apr-2022 11:00 AM GMT'),
+      loading: false,
+    });
+
+    expect(
+      getByTitle('HER MAJESTY THE QUEEN IN RIGHT OF THE PROVINCE OF BRITISH COLUMBIA'),
+    ).toBeVisible();
   });
 
   it('does not throw an exception for an invalid ltsa data object', () => {

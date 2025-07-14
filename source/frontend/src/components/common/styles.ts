@@ -97,11 +97,12 @@ export const H2 = styled.h2`
 export const H3 = styled.h3`
   color: ${props => props.theme.css.headerTextColor};
   font-family: 'BCSans-Bold';
-  font-size: 2.2rem;
+  font-size: 1.7rem;
   border-bottom: solid 0.2rem ${props => props.theme.css.actionColor};
   width: 100%;
   text-align: left;
   margin-bottom: 1.6rem;
+  margin-top: 1.6rem;
 `;
 
 export const FilterBoxForm = styled(Form)`
@@ -138,6 +139,7 @@ export const StyledSectionAddButton = styled(StyledAddButton)`
     display: inline-block;
     margin-left: 1.5rem;
     margin-bottom: 0.5rem;
+    float: right;
   }
 `;
 

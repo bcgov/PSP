@@ -37,7 +37,16 @@ export const defaultFilter: ILeaseFilter = {
   pin: '',
   lFileNo: '',
   searchBy: 'lFileNo',
-  leaseStatusTypes: ['ACTIVE'],
+  leaseStatusTypes: [
+    'ACTIVE',
+    'ARCHIVED',
+    'DISCARD',
+    'DRAFT',
+    'DUPLICATE',
+    'EXPIRED',
+    'INACTIVE',
+    'TERMINATED',
+  ],
   programs: [],
   tenantName: '',
   expiryStartDate: '',
@@ -135,7 +144,16 @@ export const LeaseFilter: React.FunctionComponent<React.PropsWithChildren<ILease
 
   // Necessary since the lookup codes might have not been loaded before the first render
   useEffect(() => {
-    setSelectedStatus([{ id: 'ACTIVE', text: 'Active' }]);
+    setSelectedStatus([
+      { id: 'ACTIVE', text: 'Active' },
+      { id: 'ARCHIVED', text: 'Archived' },
+      { id: 'DISCARD', text: 'Cancelled' },
+      { id: 'DRAFT', text: 'Draft' },
+      { id: 'DUPLICATE', text: 'Duplicate' },
+      { id: 'EXPIRED', text: 'Expired' },
+      { id: 'INACTIVE', text: 'Hold' },
+      { id: 'TERMINATED', text: 'Terminated' },
+    ]);
   }, []);
 
   function onSelectedStatusChange(selectedList: MultiSelectOption[]) {

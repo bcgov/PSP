@@ -165,8 +165,9 @@ export const ExpropriationForm8Details: React.FunctionComponent<
 export default ExpropriationForm8Details;
 
 const StyledForm8Border = styled.div`
-  border: solid 0.2rem ${props => props.theme.css.headerBorderColor};
+  border: solid 0.2rem ${props => props.theme.css.iconBlueHover};
   margin-bottom: 0.5rem;
+  border-radius: 0.5rem;
 `;
 
 const StyledPayeeDisplayName = styled.div`
