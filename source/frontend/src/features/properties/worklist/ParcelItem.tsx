@@ -35,8 +35,8 @@ export function ParcelItem({ parcel, onSelect, onRemove, onZoomToParcel }: IParc
 
   return (
     <StyledRow onClick={() => onSelect(parcel.id)}>
-      <Col md={5}>
-        <OverflowTip fullText={propertyIdentifier} className="pl-3"></OverflowTip>
+      <Col>
+        <OverflowTip fullText={propertyIdentifier}></OverflowTip>
       </Col>
       <Col xs="auto">
         <LinkButton
@@ -66,5 +66,6 @@ export function ParcelItem({ parcel, onSelect, onRemove, onZoomToParcel }: IParc
 export default ParcelItem;
 
 const StyledRow = styled(Row)`
+  width: 100%;
   min-height: 4.5rem;
 `;

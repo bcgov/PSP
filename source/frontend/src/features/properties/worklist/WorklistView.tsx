@@ -35,11 +35,11 @@ export const WorklistView: React.FC<IWorklistViewProps> = ({
   }
 
   return (
-    <StyledContainer className="align-items-center mb-3">
+    <StyledContainer className="p-3">
       <StyledHeader>
         <StyledSpan>
           {parcels.length}
-          {parcels.length > 1 ? 'properties' : 'property'}
+          {parcels.length > 1 ? ' properties' : ' property'}
         </StyledSpan>
         <MoreOptionsButton onClick={handleMoreOptionsClick} />
       </StyledHeader>
@@ -61,10 +61,16 @@ export const WorklistView: React.FC<IWorklistViewProps> = ({
 
 const StyledContainer = styled.div`
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
 `;
 
-const StyledHeader = styled.div``;
+const StyledHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+`;
 
-const StyledSpan = styled.span``;
+const StyledSpan = styled.span`
+  font-size: 1.3rem;
+`;
