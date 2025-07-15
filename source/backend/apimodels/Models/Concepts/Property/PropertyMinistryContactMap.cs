@@ -12,16 +12,16 @@ namespace Pims.Api.Models.Concepts.Property
                 .Map(dest => dest.Id, src => src.PropActMinContactId)
                 .Map(dest => dest.PersonId, src => src.PersonId)
                 .Map(dest => dest.Person, src => src.Person)
-                .Map(dest => dest.PropertyActivityId, src => src.PimsPropertyActivityId)
-                .Map(dest => dest.PropertyActivity, src => src.PimsPropertyActivity)
+                .Map(dest => dest.ManagementActivityId, src => src.PimsManagementActivityId)
+                .Map(dest => dest.ManagementActivity, src => src.PimsManagementActivity)
                 .Inherits<Entity.IBaseEntity, BaseConcurrentModel>();
 
             config.NewConfig<PropertyMinistryContactModel, Entity.PimsPropActMinContact>()
                 .Map(dest => dest.PropActMinContactId, src => src.Id)
                 .Map(dest => dest.PersonId, src => src.PersonId)
                 .Map(dest => dest.Person, src => src.Person)
-                .Map(dest => dest.PimsPropertyActivityId, src => src.PropertyActivityId)
-                .Map(dest => dest.PimsPropertyActivity, src => src.PropertyActivity)
+                .Map(dest => dest.PimsManagementActivityId, src => src.ManagementActivityId)
+                .Map(dest => dest.PimsManagementActivity, src => src.ManagementActivity)
                 .Inherits<BaseConcurrentModel, Entity.IBaseEntity>();
         }
     }

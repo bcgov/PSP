@@ -13,7 +13,7 @@ export interface ISectionListHeaderProps {
   addButtonText?: string;
   addButtonIcon?: JSX.Element;
   cannotAddComponent?: JSX.Element;
-  onAdd?: () => void;
+  onButtonAction?: () => void;
   claims: Claims[];
   'data-testId'?: string;
   className?: string;
@@ -24,7 +24,7 @@ export const SectionListHeader: React.FunctionComponent<
   React.PropsWithChildren<ISectionListHeaderProps>
 > = props => {
   const { hasClaim } = useKeycloakWrapper();
-  const onClick = () => props.onAdd && props.onAdd();
+  const onClickButtonAction = () => props.onButtonAction && props.onButtonAction();
 
   return (
     <StyledRow className={clsx('no-gutters', props.className)}>
@@ -32,19 +32,23 @@ export const SectionListHeader: React.FunctionComponent<
         {props.title}
       </Col>
       <Col xs="auto" className="my-1">
-        {hasClaim(props.claims) && exists(props.onAdd) && props.isAddEnabled !== false && (
-          <StyledSectionAddButton onClick={onClick} data-testid={props['data-testId']}>
+        {hasClaim(props.claims) && exists(props.onButtonAction) && props.isAddEnabled !== false && (
+          <StyledSectionAddButton onClick={onClickButtonAction} data-testid={props['data-testId']}>
             {props.addButtonIcon}
             &nbsp;{props.addButtonText ?? 'Add'}
           </StyledSectionAddButton>
         )}
-        {!props.isAddEnabled && exists(props.cannotAddComponent) && <>{props.cannotAddComponent}</>}
+        {!props.isAddEnabled && exists(props.cannotAddComponent) && (
+          <span style={{ float: 'right' }}>{props.cannotAddComponent}</span>
+        )}
       </Col>
     </StyledRow>
   );
 };
 
 const StyledRow = styled(Row)`
+  display: grid;
+  grid-template-columns: 1fr 0.5fr;
   justify-content: space-between;
   align-items: end;
   min-height: 4.5rem;

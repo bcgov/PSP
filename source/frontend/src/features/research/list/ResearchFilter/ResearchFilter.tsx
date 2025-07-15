@@ -24,7 +24,7 @@ export const defaultResearchFilter: IResearchFilter = {
   pid: '',
   pin: '',
   regionCode: '',
-  researchFileStatusTypeCode: 'ACTIVE',
+  researchFileStatusTypeCode: '',
   name: '',
   roadOrAlias: '',
   appCreateUserid: '',

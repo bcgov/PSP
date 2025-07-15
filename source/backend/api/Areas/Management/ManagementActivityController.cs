@@ -54,7 +54,7 @@ namespace Pims.Api.Areas.Management.Controllers
         [HttpGet("{managementActivityId:long}")]
         [HasPermission(Permissions.ManagementView, Permissions.ActivityView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(PropertyActivityModel), 200)]
+        [ProducesResponseType(typeof(ManagementActivityModel), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetManagementActivity(long managementActivityId)
@@ -68,7 +68,7 @@ namespace Pims.Api.Areas.Management.Controllers
 
             var activity = _propertyService.GetActivity(managementActivityId);
 
-            return new JsonResult(_mapper.Map<PropertyActivityModel>(activity));
+            return new JsonResult(_mapper.Map<ManagementActivityModel>(activity));
         }
     }
 }

@@ -10,15 +10,15 @@ namespace Pims.Dal.Entities;
 /// Defines the activities that are associated with this property.
 /// </summary>
 [Table("PIMS_PROPERTY_ACTIVITY_INVOICE")]
-[Index("PimsPropertyActivityId", Name = "PRACIN_PIMS_PROPERTY_ACTIVITY_ID_IDX")]
+[Index("PimsManagementActivityId", Name = "PRACIN_PIMS_PROPERTY_ACTIVITY_ID_IDX")]
 public partial class PimsPropertyActivityInvoice
 {
     [Key]
     [Column("PROPERTY_ACTIVITY_INVOICE_ID")]
     public long PropertyActivityInvoiceId { get; set; }
 
-    [Column("PIMS_PROPERTY_ACTIVITY_ID")]
-    public long PimsPropertyActivityId { get; set; }
+    [Column("PIMS_MANAGEMENT_ACTIVITY_ID")]
+    public long PimsManagementActivityId { get; set; }
 
     /// <summary>
     /// Date of the invoice
@@ -127,7 +127,7 @@ public partial class PimsPropertyActivityInvoice
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    [ForeignKey("PimsPropertyActivityId")]
+    [ForeignKey("PimsManagementActivityId")]
     [InverseProperty("PimsPropertyActivityInvoices")]
-    public virtual PimsPropertyActivity PimsPropertyActivity { get; set; }
+    public virtual PimsManagementActivity PimsManagementActivity { get; set; }
 }

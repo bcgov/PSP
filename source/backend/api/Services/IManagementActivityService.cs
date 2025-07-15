@@ -5,6 +5,6 @@ namespace Pims.Api.Services
 {
     public interface IManagementActivityService
     {
-        Paged<PimsPropertyActivity> GetPage(ManagementActivityFilter filter, bool? all = false);
+        Paged<PimsManagementActivity> GetPage(ManagementActivityFilter filter, bool? all = false);
     }
 }
