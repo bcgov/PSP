@@ -412,6 +412,13 @@ namespace PIMS.Tests.Automation.PageObjects
 
                     Wait();
                 }
+                if (sharedModals.ModalContent().Contains("You are completing this Disposition File with owned PIMS inventory properties"))
+                {
+                    Assert.Equal("User Override Required", sharedModals.ModalHeader());
+                    Assert.Equal("You are completing this Disposition File with owned PIMS inventory properties. All properties will be removed from the PIMS inventory (any Other Interests will remain). Do you wish to proceed?", sharedModals.ModalContent());
+                    sharedModals.ModalClickOKBttn();
+
+                }
                 else if (sharedModals.ModalHeader() == "Error")
                     break;
 
