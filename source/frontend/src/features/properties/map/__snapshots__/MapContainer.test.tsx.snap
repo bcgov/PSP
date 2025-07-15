@@ -750,7 +750,7 @@ exports[`MapContainer > Renders the map 1`] = `
               <div
                 class="leaflet-marker-icon marker-cluster marker-cluster-small leaflet-zoom-hide leaflet-interactive"
                 role="button"
-                style="margin-left: -20px; margin-top: -20px; width: 40px; height: 40px; left: 88px; top: -242px; z-index: -242;"
+                style="margin-left: -20px; margin-top: -20px; width: 40px; height: 40px; left: 89627px; top: -248223px; z-index: -248223;"
                 tabindex="0"
               >
                 <div>
@@ -781,8 +781,14 @@ exports[`MapContainer > Renders the map 1`] = `
                   <img
                     alt=""
                     class="leaflet-tile"
-                    src="https://maps.gov.bc.ca/arcgis/rest/services/province/roads_wm/MapServer/tile/6/20/9"
-                    style="width: 256px; height: 256px; left: -214px; top: -231px;"
+                    src="https://maps.gov.bc.ca/arcgis/rest/services/province/roads_wm/MapServer/tile/16/21403/10071"
+                    style="width: 256px; height: 256px; left: -256px; top: -256px;"
+                  />
+                  <img
+                    alt=""
+                    class="leaflet-tile"
+                    src="https://maps.gov.bc.ca/arcgis/rest/services/province/roads_wm/MapServer/tile/16/21403/10072"
+                    style="width: 256px; height: 256px; left: 0px; top: -256px;"
                   />
                 </div>
               </div>
@@ -802,8 +808,14 @@ exports[`MapContainer > Renders the map 1`] = `
                   <img
                     alt=""
                     class="leaflet-tile"
-                    src="https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows?&service=WMS&request=GetMap&layers=pub%3AWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&styles=&format=image%2Fpng&transparent=true&version=1.1.1&layerIdentifier=parcelLayer&url=https%3A%2F%2Fopenmaps.gov.bc.ca%2Fgeo%2Fpub%2FWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW%2Fows%3F&width=256&height=256&srs=EPSG%3A3857&bbox=-14401959.121379772,6887893.492833805,-13775786.985667607,7514065.628545967"
-                    style="width: 256px; height: 256px; left: -214px; top: -231px;"
+                    src="https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows?&service=WMS&request=GetMap&layers=pub%3AWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&styles=&format=image%2Fpng&transparent=true&version=1.1.1&layerIdentifier=parcelLayer&url=https%3A%2F%2Fopenmaps.gov.bc.ca%2Fgeo%2Fpub%2FWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW%2Fows%3F&width=256&height=256&srs=EPSG%3A3857&bbox=-13879129.847909166,6949043.115461947,-13878518.351682883,6949654.611688225"
+                    style="width: 256px; height: 256px; left: -256px; top: -256px;"
+                  />
+                  <img
+                    alt=""
+                    class="leaflet-tile"
+                    src="https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows?&service=WMS&request=GetMap&layers=pub%3AWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&styles=&format=image%2Fpng&transparent=true&version=1.1.1&layerIdentifier=parcelLayer&url=https%3A%2F%2Fopenmaps.gov.bc.ca%2Fgeo%2Fpub%2FWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW%2Fows%3F&width=256&height=256&srs=EPSG%3A3857&bbox=-13878518.351682883,6949043.115461947,-13877906.855456602,6949654.611688225"
+                    style="width: 256px; height: 256px; left: 0px; top: -256px;"
                   />
                 </div>
               </div>
@@ -817,7 +829,11 @@ exports[`MapContainer > Renders the map 1`] = `
                 >
                   <img
                     class="leaflet-tile leaflet-tile-loaded"
-                    style="width: 256px; height: 256px; left: -214px; top: -231px;"
+                    style="width: 256px; height: 256px; left: -256px; top: -256px;"
+                  />
+                  <img
+                    class="leaflet-tile leaflet-tile-loaded"
+                    style="width: 256px; height: 256px; left: 0px; top: -256px;"
                   />
                 </div>
               </div>
@@ -1026,9 +1042,9 @@ exports[`MapContainer > Renders the map 1`] = `
               >
                 <div
                   class="leaflet-control-scale-line"
-                  style="width: 68px;"
+                  style="width: 69px;"
                 >
-                  100 km
+                  100 m
                 </div>
               </div>
             </div>

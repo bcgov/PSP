@@ -44,7 +44,7 @@ export interface PIMS_Property_Location_View {
   readonly HISTORICAL_FILE_NUMBER_STR: string | null;
 }
 
-export const EmptyPropertyLocation: PIMS_Property_Location_View = {
+export const emptyPropertyLocation: PIMS_Property_Location_View = {
   PROPERTY_ID: null,
   PID: null,
   PID_PADDED: null,
@@ -137,4 +137,17 @@ export interface PIMS_Property_Boundary_View {
   readonly IS_RECEIVABLE_LEASE: boolean | null;
   readonly IS_ACTIVE_RECEIVABLE_LEASE: boolean | null;
   readonly HISTORICAL_FILE_NUMBER_STR: string | null;
+}
+
+// Source : Pims Geoserverview
+// name: PIMS_PROPERTY_LITE_VW
+export interface PIMS_Property_Lite_View {
+  readonly LOCATION: Geometry | null;
+  readonly BOUNDARY: Geometry | null;
+  readonly IS_OWNED: boolean | null;
+  readonly IS_RETIRED: boolean | null;
+  readonly IS_DISPOSED: boolean | null;
+  readonly IS_OTHER_INTEREST: boolean | null;
+  readonly HAS_ACTIVE_ACQUISITION_FILE: boolean | null;
+  readonly HAS_ACTIVE_RESEARCH_FILE: boolean | null;
 }

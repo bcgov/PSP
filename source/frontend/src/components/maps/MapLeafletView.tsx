@@ -11,11 +11,16 @@ import {
 } from 'react-leaflet';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { MAP_MAX_NATIVE_ZOOM, MAP_MAX_ZOOM, MAX_ZOOM } from '@/constants/strings';
+import {
+  MAP_MAX_NATIVE_ZOOM,
+  MAP_MAX_ZOOM,
+  MAP_MIN_MARKER_ZOOM,
+  MAX_ZOOM,
+} from '@/constants/strings';
 import { useTenant } from '@/tenants';
 import { exists, firstOrNull } from '@/utils';
 
-import { DEFAULT_MAP_ZOOM, defaultBounds, defaultLatLng } from './constants';
+import { defaultBounds, defaultLatLng } from './constants';
 import AdvancedFilterButton from './leaflet/Control/AdvancedFilter/AdvancedFilterButton';
 import BasemapToggle, { BasemapToggleEvent } from './leaflet/Control/BaseMapToggle/BasemapToggle';
 import { BaseLayer, isVectorBasemap } from './leaflet/Control/BaseMapToggle/types';
@@ -33,6 +38,7 @@ import { EsriVectorTileLayer } from './leaflet/VectorTileLayer/EsriVectorTileLay
 
 export type MapLeafletViewProps = {
   parentWidth: number | undefined;
+  defaultZoom?: number;
 };
 
 type BaseLayerFile = {
@@ -45,10 +51,11 @@ type BaseLayerFile = {
  */
 const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = ({
   parentWidth,
+  defaultZoom,
 }) => {
   const [baseLayers, setBaseLayers] = useState<BaseLayer[]>([]);
   const [activeBasemap, setActiveBasemap] = useState<BaseLayer | null>(null);
-  const [zoom, setZoom] = useState(DEFAULT_MAP_ZOOM);
+  const [zoom, setZoom] = useState(defaultZoom);
   const [isMapReady, setIsMapReady] = useState(false);
 
   const mapRef = useRef<LeafletMap | null>(null);
@@ -207,7 +214,7 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
 
       <LeafletMapContainer
         center={[defaultLatLng.lat, defaultLatLng.lng]}
-        zoom={DEFAULT_MAP_ZOOM}
+        zoom={zoom}
         maxZoom={MAP_MAX_ZOOM}
         closePopupOnClick={false}
         ref={handleMapCreated}
@@ -255,6 +262,7 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
         <LayersControl onToggle={mapMachine.toggleMapLayerControl} />
         <SearchControl onToggle={mapMachine.toggleMapSearchControl} />
         <MarkerLayer
+          minZoom={MAP_MIN_MARKER_ZOOM}
           zoom={zoom}
           maxZoom={MAP_MAX_ZOOM}
           bounds={mapMachine.currentMapBounds ?? defaultBounds}

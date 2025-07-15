@@ -19,6 +19,7 @@ import {
   isPimsBoundary,
   isPimsFeature,
   isPimsLocation,
+  isPimsPropertyLite,
 } from '../Layers/util';
 
 interface SinglePropertyMarkerProps {
@@ -82,7 +83,7 @@ const SinglePropertyMarker: React.FC<React.PropsWithChildren<SinglePropertyMarke
     const [longitude, latitude] = pointFeature.geometry.coordinates;
 
     const latlng = { lat: latitude, lng: longitude };
-    if (isPimsLocation(pointFeature)) {
+    if (isPimsLocation(pointFeature) || isPimsPropertyLite(pointFeature)) {
       mapMachine.mapMarkerClick({
         clusterId: clusterId,
         latlng: latlng,
