@@ -244,9 +244,12 @@ exports[`PeriodsForm component > renders as expected 1`] = `
   display: inline-block;
   margin-left: 1.5rem;
   margin-bottom: 0.5rem;
+  float: right;
 }
 
 .c3 {
+  display: grid;
+  grid-template-columns: 1fr 0.5fr;
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
@@ -946,9 +949,12 @@ exports[`PeriodsForm component > renders with data as expected 1`] = `
   display: inline-block;
   margin-left: 1.5rem;
   margin-bottom: 0.5rem;
+  float: right;
 }
 
 .c3 {
+  display: grid;
+  grid-template-columns: 1fr 0.5fr;
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;

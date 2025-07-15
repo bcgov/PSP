@@ -11,15 +11,15 @@ namespace Pims.Dal.Entities;
 /// </summary>
 [Table("PIMS_PROP_ACT_MIN_CONTACT")]
 [Index("PersonId", Name = "PRACMC_PERSON_ID_IDX")]
-[Index("PimsPropertyActivityId", Name = "PRACMC_PIMS_PROPERTY_ACTIVITY_ID_IDX")]
+[Index("PimsManagementActivityId", Name = "PRACMC_PIMS_PROPERTY_ACTIVITY_ID_IDX")]
 public partial class PimsPropActMinContact
 {
     [Key]
     [Column("PROP_ACT_MIN_CONTACT_ID")]
     public long PropActMinContactId { get; set; }
 
-    [Column("PIMS_PROPERTY_ACTIVITY_ID")]
-    public long PimsPropertyActivityId { get; set; }
+    [Column("PIMS_MANAGEMENT_ACTIVITY_ID")]
+    public long PimsManagementActivityId { get; set; }
 
     [Column("PERSON_ID")]
     public long PersonId { get; set; }
@@ -79,7 +79,7 @@ public partial class PimsPropActMinContact
     [InverseProperty("PimsPropActMinContacts")]
     public virtual PimsPerson Person { get; set; }
 
-    [ForeignKey("PimsPropertyActivityId")]
+    [ForeignKey("PimsManagementActivityId")]
     [InverseProperty("PimsPropActMinContacts")]
-    public virtual PimsPropertyActivity PimsPropertyActivity { get; set; }
+    public virtual PimsManagementActivity PimsManagementActivity { get; set; }
 }

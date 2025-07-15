@@ -1,3 +1,4 @@
+import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
 
 import { EnumAcquisitionFileType } from '@/constants/acquisitionFileType';
@@ -6,12 +7,22 @@ import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvi
 import { useExpropriationEventRepository } from '@/hooks/repositories/useExpropriationEventRepository';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
 import { getMockExpropriationFile } from '@/mocks/index.mock';
-import { act, getMockRepositoryObj, render, RenderOptions } from '@/utils/test-utils';
+import {
+  act,
+  getMockRepositoryObj,
+  render,
+  RenderOptions,
+  waitFor,
+  within,
+} from '@/utils/test-utils';
 
 import {
   ExpropriationTabContainerView,
   IExpropriationTabContainerViewProps,
 } from './ExpropriationTabContainerView';
+import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
+import { getMockContactOrganizationWithOnePerson } from '@/mocks/contacts.mock';
+import { useGenerateExpropriationForm1 } from '../../common/GenerateForm/hooks/useGenerateExpropriationForm1';
 
 const history = createMemoryHistory();
 
@@ -26,6 +37,20 @@ const mockGetAcquisitionOwnersApi = getMockRepositoryObj([]);
 
 vi.mock('@/hooks/repositories/useInterestHolderRepository');
 const mockGetAcquisitionInterestHoldersApi = getMockRepositoryObj([]);
+
+vi.mock('@/hooks/pims-api/useApiContacts');
+const getContacts = vi.fn();
+vi.mocked(useApiContacts).mockReturnValue({
+  getContacts,
+} as unknown as ReturnType<typeof useApiContacts>);
+
+const onGenerateForm1 = vi.fn();
+vi.mock('../../common/GenerateForm/hooks/useGenerateExpropriationForm1');
+vi.mocked(useGenerateExpropriationForm1).mockReturnValue({
+  onGenerateForm1,
+} as unknown as ReturnType<typeof useGenerateExpropriationForm1>);
+
+const onError = vi.fn();
 
 describe('Expropriation Tab Container View', () => {
   const setup = async (
@@ -47,11 +72,13 @@ describe('Expropriation Tab Container View', () => {
         history: history,
       },
     );
-
     await act(async () => {});
-
     return {
       ...rendered,
+      getNatureOfInterestForm1: () =>
+        rendered.container.querySelector(`input[name="landInterest"]`) as HTMLInputElement,
+      getPurposeForm1: () =>
+        rendered.container.querySelector(`input[name="purpose"]`) as HTMLInputElement,
     };
   };
 
@@ -61,6 +88,17 @@ describe('Expropriation Tab Container View', () => {
       addExpropriationEvent: mockAddExpropriationEventsApi,
       updateExpropriationEvent: mockUpdateExpropriationEventsApi,
       deleteExpropriationEvent: mockDeleteExpropriationEventsApi,
+    });
+
+    const organization = getMockContactOrganizationWithOnePerson();
+    getContacts.mockResolvedValue({
+      data: {
+        items: [organization],
+        quantity: 1,
+        total: 1,
+        page: 1,
+        pageIndex: 0,
+      },
     });
 
     vi.mocked(useAcquisitionProvider, { partial: true }).mockReturnValue({

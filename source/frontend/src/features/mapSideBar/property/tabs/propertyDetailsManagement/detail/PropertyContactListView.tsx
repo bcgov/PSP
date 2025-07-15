@@ -25,7 +25,11 @@ export const PropertyContactListView: React.FunctionComponent<IPropertyContactLi
 }) => {
   const history = useHistory();
   const matchProperty = useRouteMatch<{ propertyId: string }>();
-  const matchPropertyFile = useRouteMatch<{ id: string; menuIndex: string }>();
+  const matchPropertyFile = useRouteMatch<{
+    id: string;
+    menuIndex: string;
+    filePropertyId: string;
+  }>();
   return (
     <Section
       isCollapsable
@@ -36,7 +40,7 @@ export const PropertyContactListView: React.FunctionComponent<IPropertyContactLi
           title="Property Contact"
           addButtonText="Add a Contact"
           addButtonIcon={<FaUserPlus size={'2rem'} />}
-          onAdd={() => {
+          onButtonAction={() => {
             if (exists(matchProperty.params.propertyId)) {
               const path = generatePath(matchProperty.path, {
                 propertyId: matchProperty.params.propertyId,
@@ -46,6 +50,7 @@ export const PropertyContactListView: React.FunctionComponent<IPropertyContactLi
             } else {
               const path = generatePath(matchPropertyFile.path, {
                 id: matchPropertyFile.params.id,
+                filePropertyId: matchPropertyFile.params.filePropertyId,
                 menuIndex: matchPropertyFile.params.menuIndex,
                 tab: InventoryTabNames.management,
               });

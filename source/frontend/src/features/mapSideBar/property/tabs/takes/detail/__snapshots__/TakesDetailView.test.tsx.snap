@@ -60,6 +60,8 @@ exports[`TakesDetailView component > renders as expected 1`] = `
 }
 
 .c6 {
+  display: grid;
+  grid-template-columns: 1fr 0.5fr;
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;

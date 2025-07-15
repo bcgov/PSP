@@ -44,7 +44,7 @@ namespace Pims.Dal.Repositories
                 .Include(x => x.Document)
                     .ThenInclude(q => q.PimsDocumentQueues)
                         .ThenInclude(s => s.DocumentQueueStatusTypeCodeNavigation)
-                .Where(ad => ad.PimsPropertyActivityId == parentId)
+                .Where(ad => ad.PimsManagementActivityId == parentId)
                 .AsNoTracking()
                 .ToList();
         }
