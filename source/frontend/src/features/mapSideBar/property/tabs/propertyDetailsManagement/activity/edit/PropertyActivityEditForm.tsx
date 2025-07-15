@@ -25,7 +25,7 @@ import SaveCancelButtons from '@/features/leases/SaveCancelButtons';
 import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { useModalManagement } from '@/hooks/useModalManagement';
-import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
+import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 import { exists, isValidId } from '@/utils';
 import { mapLookupCode } from '@/utils/mapLookupCode';
@@ -46,7 +46,7 @@ export interface IPropertyActivityEditFormProps {
   onCancel: () => void;
   onClose: () => void;
   setShow: (show: boolean) => void;
-  onSave: (model: ApiGen_Concepts_PropertyActivity) => Promise<void>;
+  onSave: (model: ApiGen_Concepts_ManagementActivity) => Promise<void>;
 }
 
 export const PropertyActivityEditForm: React.FunctionComponent<

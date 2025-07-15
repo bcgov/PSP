@@ -341,7 +341,5 @@ export const mockPropertyInfo: ApiGen_Concepts_Property = {
     displayOrder: null,
   },
   municipalZoning: 'Some municipal zoning comments',
-  notes:
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam porttitor nisl at elit vestibulum vestibulum. Nullam eget consectetur felis, id porta eros. Proin at massa rutrum, molestie lorem a, congue lorem.',
   rowVersion: 16,
 };

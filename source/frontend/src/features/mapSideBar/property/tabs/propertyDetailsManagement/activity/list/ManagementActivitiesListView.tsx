@@ -5,7 +5,7 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionListHeader } from '@/components/common/SectionListHeader';
 import { TableSort } from '@/components/Table/TableSort';
 import Claims from '@/constants/claims';
-import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
+import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 
 import ManagementActivitiesList, {
   activityActionColumn,
@@ -16,10 +16,10 @@ import { PropertyActivityRow } from './models/PropertyActivityRow';
 export interface IManagementActivitiesListViewProps {
   isLoading: boolean;
   propertyActivities: PropertyActivityRow[];
-  sort: TableSort<ApiGen_Concepts_PropertyActivity>;
+  sort: TableSort<ApiGen_Concepts_ManagementActivity>;
   canEditActivities: boolean;
   getNavigationUrl?: (row: PropertyActivityRow) => { title: string; url: string };
-  setSort: React.Dispatch<React.SetStateAction<TableSort<ApiGen_Concepts_PropertyActivity>>>;
+  setSort: React.Dispatch<React.SetStateAction<TableSort<ApiGen_Concepts_ManagementActivity>>>;
   onCreate?: () => void;
   onView?: (activityId: number) => void;
   onDelete?: (activityId: number) => void;

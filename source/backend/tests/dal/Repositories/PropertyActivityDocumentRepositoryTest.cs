@@ -10,38 +10,38 @@ using Xunit;
 
 namespace Pims.Dal.Test.Repositories
 {
-    public class PropertyActivityDocumentRepositoryTest
+    public class ManagementActivityDocumentRepositoryTest
     {
         [Fact]
-        public void AddPropertyActivity_Success()
+        public void AddManagementActivity_Success()
         {
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.DocumentView);
 
-            var propertyActivityFileDocument = new PimsPropertyActivityDocument();
+            var managementActivityFileDocument = new PimsPropertyActivityDocument();
 
             var repository = helper.CreateRepository<PropertyActivityDocumentRepository>(user);
 
             // Act
-            var result = repository.AddDocument(propertyActivityFileDocument);
+            var result = repository.AddDocument(managementActivityFileDocument);
 
             // Assert
             result.PropertyActivityDocumentId.Should().Be(1);
         }
 
         [Fact]
-        public void GetAllByPropertyActivity_Success()
+        public void GetAllByManagementActivity_Success()
         {
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.DocumentView);
 
             var document = new PimsDocument() { DocumentStatusTypeCodeNavigation = new PimsDocumentStatusType() { DocumentStatusTypeCode = "test", Description = "Active", DbCreateUserid = "test", DbLastUpdateUserid = "test" }, DocumentType = new PimsDocumentTyp() { DocumentType = "IMAGE", DocumentTypeDescription = "Image", DbCreateUserid = "test", DbLastUpdateUserid = "test" }, FileName = "test.txt" };
-            var propertyActivityFileDocument = new PimsPropertyActivityDocument() { Document = document };
+            var managementActivityFileDocument = new PimsPropertyActivityDocument() { Document = document };
             PimsManagementActivity pimsManagementActivity = new PimsManagementActivity()
             {
-                PimsPropertyActivityDocuments = new List<PimsPropertyActivityDocument>() { propertyActivityFileDocument },
+                PimsPropertyActivityDocuments = new List<PimsPropertyActivityDocument>() { managementActivityFileDocument },
                 PropMgmtActivityStatusTypeCode = "ACTIVE",
                 PimsPropActivityMgmtActivities = new List<PimsPropActivityMgmtActivity>()
                 {
@@ -57,25 +57,25 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<PropertyActivityDocumentRepository>(user);
 
             // Act
-            var result = repository.GetAllByParentId(propertyActivityFileDocument.PimsManagementActivityId);
+            var result = repository.GetAllByParentId(managementActivityFileDocument.PimsManagementActivityId);
 
             // Assert
             result.FirstOrDefault().Internal_Id.Should().Be(1);
         }
 
         [Fact]
-        public void DeletePropertyActivity_Success()
+        public void DeleteManagementActivity_Success()
         {
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.DocumentView);
 
-            var propertyActivityFileDocument = new PimsPropertyActivityDocument();
+            var managementActivityFileDocument = new PimsPropertyActivityDocument();
 
             var repository = helper.CreateRepository<PropertyActivityDocumentRepository>(user);
 
             // Act
-            var result = repository.DeleteDocument(propertyActivityFileDocument);
+            var result = repository.DeleteDocument(managementActivityFileDocument);
 
             // Assert
             result.Should().BeTrue();

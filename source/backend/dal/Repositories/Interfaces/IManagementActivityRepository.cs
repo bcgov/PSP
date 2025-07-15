@@ -21,9 +21,9 @@ namespace Pims.Dal.Repositories
 
         IList<PimsManagementActivity> GetActivitiesByPropertyIds(IEnumerable<long> propertyIds);
 
-        PimsManagementActivity Create(PimsManagementActivity propertyActivity);
+        PimsManagementActivity Create(PimsManagementActivity managementActivity);
 
-        PimsManagementActivity Update(PimsManagementActivity propertyActivity);
+        PimsManagementActivity Update(PimsManagementActivity managementActivity);
 
         bool TryDelete(long activityId);
 

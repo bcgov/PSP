@@ -359,7 +359,6 @@ export class PropertyForm {
       volumetricType: null,
       municipalZoning: null,
       generalLocation: null,
-      notes: null,
       surplusDeclarationType: null,
       surplusDeclarationComment: null,
       historicalFileNumbers: null,

@@ -1,9 +1,8 @@
-import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
-import { ApiGen_Concepts_PropertyActivitySubtype } from '@/models/api/generated/ApiGen_Concepts_PropertyActivitySubtype';
+import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 
-const emptyActivity: ApiGen_Concepts_PropertyActivity = {
+const emptyActivity: ApiGen_Concepts_ManagementActivity = {
   id: 0,
   managementFileId: null,
   managementFile: null,
@@ -39,7 +38,7 @@ const emptyActivity: ApiGen_Concepts_PropertyActivity = {
 export const getMockPropertyManagementActivity = (
   id = 1,
   propertyId = 1,
-): ApiGen_Concepts_PropertyActivity => ({
+): ApiGen_Concepts_ManagementActivity => ({
   ...emptyActivity,
   id: id,
   activityTypeCode: {
@@ -73,8 +72,8 @@ export const getMockPropertyManagementActivity = (
   activityProperties: [
     {
       id: 15,
-      propertyActivityId: 1,
-      propertyActivity: null,
+      managementActivityId: 1,
+      managementActivity: null,
       propertyId: propertyId,
       property: null,
       ...getEmptyBaseAudit(1),
@@ -85,7 +84,7 @@ export const getMockPropertyManagementActivity = (
 export const mockGetPropertyManagementActivityNotStarted = (
   id = 1,
   propertyId = 1,
-): ApiGen_Concepts_PropertyActivity => ({
+): ApiGen_Concepts_ManagementActivity => ({
   ...emptyActivity,
   id: id,
   activityTypeCode: {
@@ -106,8 +105,8 @@ export const mockGetPropertyManagementActivityNotStarted = (
   activityProperties: [
     {
       id: 73,
-      propertyActivityId: 200,
-      propertyActivity: null,
+      managementActivityId: 200,
+      managementActivity: null,
       propertyId: propertyId,
       property: null,
       ...getEmptyBaseAudit(1),
@@ -115,7 +114,7 @@ export const mockGetPropertyManagementActivityNotStarted = (
   ],
 });
 
-export const mockGetPropertyManagementActivityList = (): ApiGen_Concepts_PropertyActivity[] => [
+export const mockGetManagementActivityList = (): ApiGen_Concepts_ManagementActivity[] => [
   {
     ...emptyActivity,
     id: 1,
@@ -125,397 +124,3 @@ export const mockGetPropertyManagementActivityList = (): ApiGen_Concepts_Propert
     id: 2,
   },
 ];
-
-export const getMockApiManagementActivitySubTypes =
-  (): ApiGen_Concepts_PropertyActivitySubtype[] => [
-    {
-      typeCode: 'ACCESS',
-      parentTypeCode: 'APPLICPERMIT',
-      description: 'Access',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'ACCOMMAGREE',
-      parentTypeCode: '1STNTNCONSULT',
-      description: 'Accommodation Agreement',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'AGRILANDRES',
-      parentTypeCode: 'APPLICPERMIT',
-      description: 'Agricultural Land Reserves (ALR)',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'APPRAISAL',
-      parentTypeCode: 'INVESTRPT',
-      description: 'Appraisal',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'ARBORIST',
-      parentTypeCode: 'PROPERTYMTC',
-      description: 'Danger tree removal/arborist report',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'BYLAWINFRAC',
-      parentTypeCode: 'INCDNTISSUE',
-      description: 'By-Law Infraction',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'COMPLAINT',
-      parentTypeCode: 'TRAILMTC',
-      description: 'Issue/complaint',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'CONSULTREC',
-      parentTypeCode: '1STNTNCONSULT',
-      description: 'Consultation Record',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'CONTRACTOR',
-      parentTypeCode: 'CONSULTATION',
-      description: 'MoTT contractor/consultant',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'DEMOLITION',
-      parentTypeCode: 'PROPERTYMTC',
-      description: 'Demolition',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'DEVELOPMENT',
-      parentTypeCode: 'APPLICPERMIT',
-      description: 'Development',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'ELECTRICAL',
-      parentTypeCode: 'PROPERTYMTC',
-      description: 'Electrical',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'ELECTRICITYBILL',
-      parentTypeCode: 'UTILITYBILL',
-      description: 'Electricity',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'ELEVATOR',
-      parentTypeCode: 'PROPERTYMTC',
-      description: 'Elevator',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'ENCAMPMENT',
-      parentTypeCode: 'INCDNTISSUE',
-      description: 'Encampment',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'ENGINEERING',
-      parentTypeCode: 'INVESTRPT',
-      description: 'Danger tree removal/arborist report',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'ENGINEERRVW',
-      parentTypeCode: 'TRAILMTC',
-      description: 'Engineering review',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'ENVIRONMENT',
-      parentTypeCode: 'INVESTRPT',
-      description: 'Environmental',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'EXPRINTEREST',
-      parentTypeCode: 'INQUIRY',
-      description: 'Expression of Interest',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'FIRESAFETY',
-      parentTypeCode: 'PROPERTYMTC',
-      description: 'Fire Safety',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'GARBAGEDUMP',
-      parentTypeCode: 'INCDNTISSUE',
-      description: 'Garbage/Dumping',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'GARBAGERECYCLING',
-      parentTypeCode: 'PROPERTYMTC',
-      description: 'Garbage/Recycling',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'GASBILL',
-      parentTypeCode: 'UTILITYBILL',
-      description: 'Gas',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'GENINQUIRY',
-      parentTypeCode: 'INQUIRY',
-      description: 'General Inquiry',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'GEOTECH',
-      parentTypeCode: 'INVESTRPT',
-      description: 'Geotechnical',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'HEATINGFUEL',
-      parentTypeCode: 'PROPERTYMTC',
-      description: 'Heating Fuel',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'HVAC',
-      parentTypeCode: 'PROPERTYMTC',
-      description: 'HVAC',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'INTERNAL',
-      parentTypeCode: 'CONSULTATION',
-      description: 'Internal',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'INTERNET',
-      parentTypeCode: 'PROPERTYMTC',
-      description: 'Internet',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'INTERNETBILL',
-      parentTypeCode: 'UTILITYBILL',
-      description: 'Internet',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'JANITORIAL',
-      parentTypeCode: 'PROPERTYMTC',
-      description: 'Janitorial',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'LANDSCAPING',
-      parentTypeCode: 'PROPERTYMTC',
-      description: 'Landscaping',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'LANDUSEPLAN',
-      parentTypeCode: 'INVESTRPT',
-      description: 'Land Use Planning',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'LEGALSURVEY',
-      parentTypeCode: 'INVESTRPT',
-      description: 'Legal Survey',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'LIGHTING',
-      parentTypeCode: 'PROPERTYMTC',
-      description: 'Lighting',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'LL_BUILDGLAND',
-      parentTypeCode: 'LANDLORDIMPRV',
-      description: 'Building/Land',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'LL_PREMISES',
-      parentTypeCode: 'LANDLORDIMPRV',
-      description: 'Premises',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'MUNIPROPTAX',
-      parentTypeCode: 'TAXESLEVIES',
-      description: 'Municipal property taxes',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'OTHERCONS',
-      parentTypeCode: 'CONSULTATION',
-      description: 'Other',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'OTHERTAX',
-      parentTypeCode: 'TAXESLEVIES',
-      description: 'Other',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'PARKINGLOT',
-      parentTypeCode: 'PROPERTYMTC',
-      description: 'Parking Lot',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'PERMITS',
-      parentTypeCode: 'APPLICPERMIT',
-      description: 'Permits',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'PROPADMIN',
-      parentTypeCode: 'PROPERTYMGMT',
-      description: 'Administration',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'PUBLIC',
-      parentTypeCode: 'CONSULTATION',
-      description: 'Public',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'RESURFACING',
-      parentTypeCode: 'TRAILMTC',
-      description: 'Resurfacing',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'RIPARIAN',
-      parentTypeCode: 'TRAILMTC',
-      description: 'Riparian restoration',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'SECURITY',
-      parentTypeCode: 'PROPERTYMTC',
-      description: 'Security',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'SEWERWATERBILL',
-      parentTypeCode: 'UTILITYBILL',
-      description: 'Sewer and Water',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'SIGNAGE',
-      parentTypeCode: 'TRAILMTC',
-      description: 'Signage',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'SITEINSPECT',
-      parentTypeCode: 'PROPERTYMTC',
-      description: 'Site Inspection',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'SNOWREMOVAL',
-      parentTypeCode: 'PROPERTYMTC',
-      description: 'Snow Removal',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'STRENOFCLAIM',
-      parentTypeCode: '1STNTNCONSULT',
-      description: 'Strength of Claim Assessment',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'SUBDIVISION',
-      parentTypeCode: 'APPLICPERMIT',
-      description: 'Sub-Division',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'TELEPHONE',
-      parentTypeCode: 'PROPERTYMTC',
-      description: 'Telephone',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'TELEPHONEBILL',
-      parentTypeCode: 'UTILITYBILL',
-      description: 'Telephone',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'TN_BUILDGLAND',
-      parentTypeCode: 'TENANTIMPROV',
-      description: 'Building/Land',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'TN_PREMISES',
-      parentTypeCode: 'TENANTIMPROV',
-      description: 'Premises',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'TRESPASS',
-      parentTypeCode: 'INCDNTISSUE',
-      description: 'Trespass',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'TRESTLEMTC',
-      parentTypeCode: 'TRAILMTC',
-      description: 'Trestle maintenance/rehabilitation',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'VANDALISM',
-      parentTypeCode: 'INCDNTISSUE',
-      description: 'Vandalism',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'VEGETATION',
-      parentTypeCode: 'TRAILMTC',
-      description: 'Vegetation brushing',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'WATERANDSEWER',
-      parentTypeCode: 'PROPERTYMTC',
-      description: 'Water and Sewer',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'WATERTAX',
-      parentTypeCode: 'TAXESLEVIES',
-      description: 'Water',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'WINDOWCLEAN',
-      parentTypeCode: 'PROPERTYMTC',
-      description: 'Window Cleaning',
-      isDisabled: false,
-    },
-    {
-      typeCode: 'ZONING',
-      parentTypeCode: 'APPLICPERMIT',
-      description: 'Zoning',
-      isDisabled: false,
-    },
-  ];

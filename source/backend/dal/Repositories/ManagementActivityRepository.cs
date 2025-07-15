@@ -20,7 +20,7 @@ namespace Pims.Dal.Repositories
         #region Constructors
 
         /// <summary>
-        /// Creates a new instance of a PropertyActivityRepository, and initializes it with the specified arguments.
+        /// Creates a new instance of a ManagementActivityRepository, and initializes it with the specified arguments.
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
@@ -242,13 +242,13 @@ namespace Pims.Dal.Repositories
         /// <summary>
         /// Creates the passed property activity in the database.
         /// </summary>
-        /// <param name="propertyActivity"></param>
+        /// <param name="managementActivity"></param>
         /// <returns></returns>
-        public PimsManagementActivity Create(PimsManagementActivity propertyActivity)
+        public PimsManagementActivity Create(PimsManagementActivity managementActivity)
         {
-            propertyActivity.ThrowIfNull(nameof(propertyActivity));
+            managementActivity.ThrowIfNull(nameof(managementActivity));
 
-            var entityEntry = Context.PimsManagementActivities.Add(propertyActivity);
+            var entityEntry = Context.PimsManagementActivities.Add(managementActivity);
 
             return entityEntry.Entity;
         }
@@ -256,31 +256,31 @@ namespace Pims.Dal.Repositories
         /// <summary>
         /// Update the passed property activity in the database.
         /// </summary>
-        /// <param name="propertyActivity"></param>
+        /// <param name="managementActivity"></param>
         /// <returns></returns>
-        public PimsManagementActivity Update(PimsManagementActivity propertyActivity)
+        public PimsManagementActivity Update(PimsManagementActivity managementActivity)
         {
-            propertyActivity.ThrowIfNull(nameof(propertyActivity));
+            managementActivity.ThrowIfNull(nameof(managementActivity));
 
-            var existingPropertyActivity = Context.PimsManagementActivities
-                .FirstOrDefault(p => p.PimsManagementActivityId == propertyActivity.PimsManagementActivityId) ?? throw new KeyNotFoundException();
+            var existingManagementActivities = Context.PimsManagementActivities
+                .FirstOrDefault(p => p.PimsManagementActivityId == managementActivity.PimsManagementActivityId) ?? throw new KeyNotFoundException();
 
             // update direct relationships - PimsPropActMinContact, PimsPropActInvolvedParty, PimsPropertyActivityInvoice
             Context.UpdateChild<PimsManagementActivity, long, PimsPropActMinContact, long>(
-                o => o.PimsPropActMinContacts, existingPropertyActivity.PimsManagementActivityId, propertyActivity.PimsPropActMinContacts.ToArray());
+                o => o.PimsPropActMinContacts, existingManagementActivities.PimsManagementActivityId, managementActivity.PimsPropActMinContacts.ToArray());
             Context.UpdateChild<PimsManagementActivity, long, PimsPropActInvolvedParty, long>(
-                o => o.PimsPropActInvolvedParties, existingPropertyActivity.PimsManagementActivityId, propertyActivity.PimsPropActInvolvedParties.ToArray());
+                o => o.PimsPropActInvolvedParties, existingManagementActivities.PimsManagementActivityId, managementActivity.PimsPropActInvolvedParties.ToArray());
             Context.UpdateChild<PimsManagementActivity, long, PimsPropertyActivityInvoice, long>(
-                o => o.PimsPropertyActivityInvoices, existingPropertyActivity.PimsManagementActivityId, propertyActivity.PimsPropertyActivityInvoices.ToArray());
+                o => o.PimsPropertyActivityInvoices, existingManagementActivities.PimsManagementActivityId, managementActivity.PimsPropertyActivityInvoices.ToArray());
             Context.UpdateChild<PimsManagementActivity, long, PimsManagementActivityProperty, long>(
-                o => o.PimsManagementActivityProperties, existingPropertyActivity.PimsManagementActivityId, propertyActivity.PimsManagementActivityProperties.ToArray());
+                o => o.PimsManagementActivityProperties, existingManagementActivities.PimsManagementActivityId, managementActivity.PimsManagementActivityProperties.ToArray());
             Context.UpdateChild<PimsManagementActivity, long, PimsPropActivityMgmtActivity, long>(
-                o => o.PimsPropActivityMgmtActivities, existingPropertyActivity.PimsManagementActivityId, propertyActivity.PimsPropActivityMgmtActivities.ToArray());
+                o => o.PimsPropActivityMgmtActivities, existingManagementActivities.PimsManagementActivityId, managementActivity.PimsPropActivityMgmtActivities.ToArray());
 
-            // update main entity - PimsPropertyActivity
-            Context.Entry(existingPropertyActivity).CurrentValues.SetValues(propertyActivity);
+            // update main entity - PimsManagementActivity
+            Context.Entry(existingManagementActivities).CurrentValues.SetValues(managementActivity);
 
-            return existingPropertyActivity;
+            return existingManagementActivities;
         }
 
         /// <summary>
@@ -291,23 +291,23 @@ namespace Pims.Dal.Repositories
         public bool TryDelete(long activityId)
         {
             bool deletedSuccessfully = false;
-            var propertyActivityRelationships = Context.PimsManagementActivityProperties.FirstOrDefault(x => x.PimsManagementActivityId == activityId);
+            var managementActivityRelationships = Context.PimsManagementActivityProperties.FirstOrDefault(x => x.PimsManagementActivityId == activityId);
 
-            if (propertyActivityRelationships is not null)
+            if (managementActivityRelationships is not null)
             {
                 // This will check if there is no other Property that has the same activity associated.
                 // If there is, it will only remove the relationship for the current property.
-                if (Context.PimsManagementActivityProperties.Count(x => x.PimsManagementActivityId == propertyActivityRelationships.PimsManagementActivityId) > 1)
+                if (Context.PimsManagementActivityProperties.Count(x => x.PimsManagementActivityId == managementActivityRelationships.PimsManagementActivityId) > 1)
                 {
-                    Context.PimsManagementActivityProperties.Remove(propertyActivityRelationships);
+                    Context.PimsManagementActivityProperties.Remove(managementActivityRelationships);
                     deletedSuccessfully = true;
                 }
                 else
                 {
-                    Context.PimsManagementActivityProperties.Remove(propertyActivityRelationships);
+                    Context.PimsManagementActivityProperties.Remove(managementActivityRelationships);
 
-                    var propertyActivity = Context.PimsManagementActivities.FirstOrDefault(x => x.PimsManagementActivityId.Equals(propertyActivityRelationships.PimsManagementActivityId));
-                    Context.PimsManagementActivities.Remove(propertyActivity);
+                    var managementActivity = Context.PimsManagementActivities.FirstOrDefault(x => x.PimsManagementActivityId.Equals(managementActivityRelationships.PimsManagementActivityId));
+                    Context.PimsManagementActivities.Remove(managementActivity);
 
                     deletedSuccessfully = true;
                 }
@@ -323,20 +323,20 @@ namespace Pims.Dal.Repositories
         /// <returns>Boolean of deletion sucess.</returns>
         public bool TryDeleteByFile(long activityId, long managementFileId)
         {
-            var propertyActivity = Context.PimsManagementActivities
+            var managementActivity = Context.PimsManagementActivities
                 .Include(pa => pa.PimsManagementActivityProperties)
                 .Include(st => st.PimsPropActivityMgmtActivities)
                 .FirstOrDefault(x => x.PimsManagementActivityId == activityId && x.ManagementFileId == managementFileId);
 
-            if (propertyActivity is null)
+            if (managementActivity is null)
             {
                 return true;
             }
 
-            Context.PimsManagementActivityProperties.RemoveRange(propertyActivity.PimsManagementActivityProperties);
-            Context.PimsPropActivityMgmtActivities.RemoveRange(propertyActivity.PimsPropActivityMgmtActivities);
+            Context.PimsManagementActivityProperties.RemoveRange(managementActivity.PimsManagementActivityProperties);
+            Context.PimsPropActivityMgmtActivities.RemoveRange(managementActivity.PimsPropActivityMgmtActivities);
 
-            Context.PimsManagementActivities.Remove(propertyActivity);
+            Context.PimsManagementActivities.Remove(managementActivity);
 
             return true;
         }

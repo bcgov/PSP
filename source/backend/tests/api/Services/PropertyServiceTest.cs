@@ -864,7 +864,7 @@ namespace Pims.Api.Test.Services
             var service = this.CreatePropertyServiceWithPermissions(Permissions.ManagementDelete, Permissions.PropertyEdit);
             var repository = this._helper.GetService<Mock<IManagementActivityRepository>>();
 
-            var propertyManagementActivity = EntityHelper.CreatePropertyActivity(10, activityStatusTypeCode: "STARTED");
+            var propertyManagementActivity = EntityHelper.CreateManagementActivity(10, activityStatusTypeCode: "STARTED");
 
             repository.Setup(x => x.GetActivity(It.IsAny<long>())).Returns(propertyManagementActivity);
 
@@ -883,7 +883,7 @@ namespace Pims.Api.Test.Services
             var service = this.CreatePropertyServiceWithPermissions(Permissions.ManagementDelete, Permissions.PropertyEdit);
             var repository = this._helper.GetService<Mock<IManagementActivityRepository>>();
 
-            var propertyManagementActivity = EntityHelper.CreatePropertyActivity(1);
+            var propertyManagementActivity = EntityHelper.CreateManagementActivity(1);
 
             repository.Setup(x => x.GetActivity(It.IsAny<long>())).Returns(propertyManagementActivity);
             repository.Setup(x => x.TryDelete(It.IsAny<long>())).Returns(true);

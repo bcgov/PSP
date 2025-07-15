@@ -5,8 +5,8 @@ import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import useActivityContactRetriever from '@/features/mapSideBar/property/tabs/propertyDetailsManagement/activity/hooks';
 import { useManagementActivityRepository } from '@/hooks/repositories/useManagementActivityRepository';
 import { usePimsPropertyRepository } from '@/hooks/repositories/usePimsPropertyRepository';
+import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
-import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
 import { exists, isValidId } from '@/utils/utils';
 
 import ManagementStatusUpdateSolver from '../../fileDetails/detail/ManagementStatusUpdateSolver';
@@ -26,18 +26,12 @@ export interface IPropertyActivityDetailContainerProps {
  */
 export const FileActivityDetailContainer: React.FunctionComponent<
   React.PropsWithChildren<IPropertyActivityDetailContainerProps>
-> = ({
-  managementFileId,
-  managementActivityId: propertyActivityId,
-  onClose,
-  viewEnabled,
-  View,
-}) => {
+> = ({ managementFileId, managementActivityId, onClose, viewEnabled, View }) => {
   const [show, setShow] = useState(true);
   const { file } = useContext(SideBarContext);
   const castedFile = file as unknown as ApiGen_Concepts_ManagementFile;
 
-  const [loadedActivity, setLoadedActivity] = useState<ApiGen_Concepts_PropertyActivity | null>(
+  const [loadedActivity, setLoadedActivity] = useState<ApiGen_Concepts_ManagementActivity | null>(
     null,
   );
 
@@ -94,10 +88,10 @@ export const FileActivityDetailContainer: React.FunctionComponent<
   );
 
   useEffect(() => {
-    if (isValidId(managementFileId) && isValidId(propertyActivityId)) {
-      fetchActivity(managementFileId, propertyActivityId);
+    if (isValidId(managementFileId) && isValidId(managementActivityId)) {
+      fetchActivity(managementFileId, managementActivityId);
     }
-  }, [managementFileId, propertyActivityId, fetchActivity]);
+  }, [managementFileId, managementActivityId, fetchActivity]);
 
   const StatusSolver = new ManagementStatusUpdateSolver(castedFile);
 

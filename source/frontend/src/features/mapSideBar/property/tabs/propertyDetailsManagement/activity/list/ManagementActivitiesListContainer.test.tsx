@@ -2,7 +2,7 @@ import { createMemoryHistory } from 'history';
 
 import { Claims } from '@/constants';
 import {
-  mockGetPropertyManagementActivityList,
+  mockGetManagementActivityList,
   mockGetPropertyManagementActivityNotStarted,
 } from '@/mocks/PropertyManagementActivity.mock';
 import { act, render, RenderOptions, screen, userEvent, waitFor } from '@/utils/test-utils';
@@ -34,8 +34,8 @@ const mockDeleteApi = {
   loading: false,
 };
 
-vi.mock('@/hooks/repositories/usePropertyActivityRepository', () => ({
-  usePropertyActivityRepository: () => {
+vi.mock('@/hooks/repositories/useManagementActivityPropertyRepository', () => ({
+  useManagementActivityPropertyRepository: () => {
     return {
       getActivities: mockGetApi,
       deleteActivity: mockDeleteApi,
@@ -72,7 +72,7 @@ describe('ManagementActivitiesListContainer component', () => {
   });
 
   it('renders as expected', async () => {
-    mockGetApi.execute.mockResolvedValue(mockGetPropertyManagementActivityList());
+    mockGetApi.execute.mockResolvedValue(mockGetManagementActivityList());
     const { asFragment } = await setup({});
     await act(async () => {});
     const fragment = await waitFor(() => asFragment());
@@ -82,7 +82,7 @@ describe('ManagementActivitiesListContainer component', () => {
   });
 
   it('Delete activity calls displays delete modal', async () => {
-    mockGetApi.execute.mockResolvedValue(mockGetPropertyManagementActivityList());
+    mockGetApi.execute.mockResolvedValue(mockGetManagementActivityList());
     await setup({});
 
     await act(async () => {
