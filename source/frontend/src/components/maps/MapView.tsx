@@ -9,14 +9,16 @@ import * as Styled from './leaflet/styles';
 import MapLeafletView from './MapLeafletView';
 import MapSearch from './MapSearch';
 
-export type MapViewProps = object;
-
 /**
  * Container for the map component.
  * @param param0
  */
 
-const MapView: React.FC<React.PropsWithChildren<MapViewProps>> = () => {
+export type MapViewProps = {
+  defaultZoom?: number;
+};
+
+const MapView: React.FC<React.PropsWithChildren<MapViewProps>> = ({ defaultZoom }) => {
   const { width, ref: resizeRef } = useResizeDetector();
 
   // hide the top search bar when either the left-hand sidebar or right-hand advanced bar is open
@@ -32,7 +34,7 @@ const MapView: React.FC<React.PropsWithChildren<MapViewProps>> = () => {
     >
       <LoadingBackdrop show={mapMachine.isLoading} parentScreen />
       {isShowingSearchBar && <MapSearch />}
-      <MapLeafletView parentWidth={width} />
+      <MapLeafletView parentWidth={width} defaultZoom={defaultZoom} />
     </Styled.MapGrid>
   );
 };

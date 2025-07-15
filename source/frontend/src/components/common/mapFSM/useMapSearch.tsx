@@ -8,7 +8,11 @@ import { usePimsPropertyLayer } from '@/hooks/repositories/mapLayer/usePimsPrope
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { useModalContext } from '@/hooks/useModalContext';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
-import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
+import {
+  emptyPropertyLocation,
+  PIMS_Property_Lite_View,
+  PIMS_Property_Location_View,
+} from '@/models/layers/pimsPropertyLocationView';
 import { exists } from '@/utils';
 
 import {
@@ -366,7 +370,7 @@ export const useMapSearch = () => {
     try {
       const loadPropertiesTask = loadPimsPropertiesMinimal();
 
-      let pidPinInventoryData: FeatureCollection<Geometry, PIMS_Property_Location_View> | undefined;
+      let pidPinInventoryData: FeatureCollection<Geometry, PIMS_Property_Lite_View> | undefined;
       try {
         pidPinInventoryData = await loadPropertiesTask;
       } catch {
@@ -395,25 +399,25 @@ export const useMapSearch = () => {
           pimsLocationFeatures: {
             type: pidPinInventoryData.type,
             bbox: pidPinInventoryData.bbox,
-            features: validFeatures,
+            features: validFeatures.map(vf => ({
+              type: vf.type,
+              geometry: vf.geometry,
+              id: vf.id,
+              properties: {
+                ...emptyPropertyLocation,
+                ...vf.properties,
+              },
+            })),
           },
           pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
           fullyAttributedFeatures: emptyPmbcFeatureCollection,
         };
-
-        if (validFeatures.length === 0) {
-          toast.info('No search results found');
-        } else {
-          toast.info(`${validFeatures.length} properties found`);
-        }
       } else {
         result = {
           pimsLocationFeatures: emptyPimsLocationFeatureCollection,
           pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
           fullyAttributedFeatures: emptyPmbcFeatureCollection,
         };
-
-        toast.info('No search results found');
       }
     } catch (error) {
       toast.error((error as Error).message, { autoClose: 7000 });

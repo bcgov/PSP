@@ -3,7 +3,7 @@ import { createMemoryHistory } from 'history';
 import Claims from '@/constants/claims';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { emptyPmbcParcel } from '@/models/layers/parcelMapBC';
-import { EmptyPropertyLocation } from '@/models/layers/pimsPropertyLocationView';
+import { emptyPropertyLocation } from '@/models/layers/pimsPropertyLocationView';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { pidParser, pinParser } from '@/utils/propertyUtils';
 import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
@@ -94,7 +94,7 @@ describe('LayerPopupView component', () => {
         featureDataset: {
           pimsFeature: {
             type: 'Feature',
-            properties: { ...EmptyPropertyLocation, PROPERTY_ID: propertyId },
+            properties: { ...emptyPropertyLocation, PROPERTY_ID: propertyId },
             geometry: { type: 'Point', coordinates: [] },
           },
           location: { lat: 0, lng: 0 },
@@ -278,7 +278,7 @@ describe('LayerPopupView component', () => {
           pimsFeature: {
             type: 'Feature',
             properties: {
-              ...EmptyPropertyLocation,
+              ...emptyPropertyLocation,
               IS_RETIRED: false,
               IS_DISPOSED: false,
               PROPERTY_ID: 1,
@@ -326,7 +326,7 @@ describe('LayerPopupView component', () => {
           pimsFeature: {
             type: 'Feature',
             properties: {
-              ...EmptyPropertyLocation,
+              ...emptyPropertyLocation,
               IS_RETIRED: true,
               IS_DISPOSED: true,
               PROPERTY_ID: 1,
@@ -419,7 +419,7 @@ describe('LayerPopupView component', () => {
         featureDataset: {
           pimsFeature: {
             type: 'Feature',
-            properties: { ...EmptyPropertyLocation, PROPERTY_ID: propertyId },
+            properties: { ...emptyPropertyLocation, PROPERTY_ID: propertyId },
             geometry: { type: 'Point', coordinates: [] },
           },
           location: { lat: 0, lng: 0 },
@@ -456,7 +456,7 @@ describe('LayerPopupView component', () => {
         featureDataset: {
           pimsFeature: {
             type: 'Feature',
-            properties: { ...EmptyPropertyLocation, PROPERTY_ID: propertyId },
+            properties: { ...emptyPropertyLocation, PROPERTY_ID: propertyId },
             geometry: { type: 'Point', coordinates: [] },
           },
           location: { lat: 0, lng: 0 },
