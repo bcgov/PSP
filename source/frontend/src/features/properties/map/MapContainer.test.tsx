@@ -336,7 +336,7 @@ describe('MapContainer', () => {
   it('the map can zoom out until the markers are clustered', async () => {
     const { container } = await setup();
 
-    // click the zoom-out button 10 times
+    // click the zoom-out button 5 times
     const zoomOut = container.querySelector('.leaflet-control-zoom-out');
     for (let i = 1; i <= 5; i++) {
       await act(async () => userEvent.click(zoomOut!));

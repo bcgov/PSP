@@ -13,11 +13,11 @@ import MapLeafletView from './MapLeafletView';
  * @param param0
  */
 
-export type MapViewProps = {
+interface IMapViewProps {
   defaultZoom?: number;
-};
+}
 
-const MapView: React.FC<React.PropsWithChildren<MapViewProps>> = ({ defaultZoom }) => {
+const MapView: React.FC<React.PropsWithChildren<IMapViewProps>> = ({ defaultZoom }) => {
   const { width, ref: resizeRef } = useResizeDetector();
 
   // hide the top search bar when either the left-hand sidebar or right-hand advanced bar is open
