@@ -15,7 +15,7 @@ import {
 import { Claims } from '@/constants/index';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import {
-  EmptyPropertyLocation,
+  emptyPropertyLocation,
   PIMS_Property_Location_View,
 } from '@/models/layers/pimsPropertyLocationView';
 import leafletMouseSlice from '@/store/slices/leafletMouse/LeafletMouseSlice';
@@ -124,7 +124,7 @@ export const createPimsFeatures = (
         id: `PIMS_PROPERTY_LOCATION_VW.fid--${x.id}`,
         geometry: { type: 'Point', coordinates: [x.longitude, x.latitude] },
         properties: {
-          ...EmptyPropertyLocation,
+          ...emptyPropertyLocation,
           PROPERTY_ID: x.propertyId ?? null,
           PID: x.pid ?? null,
           IS_OWNED: true,
@@ -197,7 +197,7 @@ describe('MapContainer', () => {
     }
     const utils = render(
       <>
-        <MapContainer />
+        <MapContainer defaultZoom={16} />
       </>,
       {
         store,
@@ -274,7 +274,7 @@ describe('MapContainer', () => {
   it('shows the current map scale', async () => {
     await setup();
     expect(document.querySelector('.leaflet-control-scale')).toBeVisible();
-    expect(document.querySelector('.leaflet-control-scale-line')).toHaveTextContent(/100 km/i);
+    expect(document.querySelector('.leaflet-control-scale-line')).toHaveTextContent(/100 m/i);
   });
 
   it('Renders markers when provided', async () => {
@@ -320,11 +320,20 @@ describe('MapContainer', () => {
   });
 
   it('the map can zoom out until the markers are clustered', async () => {
-    const { container } = await setup();
+    const { container } = await setup({
+      mockMapMachine: {
+        ...mapMachineBaseMock,
+        mapFeatureData: {
+          pimsLocationFeatures: createPimsFeatures(largeMockParcels),
+          pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
+          fullyAttributedFeatures: emptyPmbcFeatureCollection,
+        },
+      },
+    });
 
     // click the zoom-out button 10 times
     const zoomOut = container.querySelector('.leaflet-control-zoom-out');
-    for (let i = 1; i <= 10; i++) {
+    for (let i = 1; i <= 5; i++) {
       await act(async () => userEvent.click(zoomOut!));
     }
 

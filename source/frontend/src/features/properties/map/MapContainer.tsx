@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import DraftSvg from '@/assets/images/pins/icon-draft.svg';
 import RelocationSvg from '@/assets/images/pins/icon-relocate.svg';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import { DEFAULT_MAP_ZOOM } from '@/components/maps/constants';
 import { FilterContentContainer } from '@/components/maps/leaflet/Control/AdvancedFilter/FilterContentContainer';
 import { FilterContentForm } from '@/components/maps/leaflet/Control/AdvancedFilter/FilterContentForm';
 import { LayersMenu } from '@/components/maps/leaflet/Control/LayersControl/LayersMenu';
@@ -26,7 +27,7 @@ enum MapCursors {
   DEFAULT = 'default',
 }
 
-const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = () => {
+const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = ({ defaultZoom }) => {
   const [showActionBar, setShowActionBar] = useState(false);
   const {
     isSelecting,
@@ -78,7 +79,7 @@ const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = () =>
       </SideBarContextProvider>
       {!showActionBar && (
         <FilterProvider>
-          <MapView />
+          <MapView defaultZoom={defaultZoom ?? DEFAULT_MAP_ZOOM} />
         </FilterProvider>
       )}
       <RightSideLayout

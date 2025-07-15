@@ -271,7 +271,7 @@ export const isPimsFeature = (
 ): feature is Supercluster.PointFeature<
   PIMS_Property_Location_View | PIMS_Property_Boundary_View
 > => {
-  return isPimsLocation(feature) || isPimsBoundary(feature);
+  return isPimsLocation(feature) || isPimsBoundary(feature) || isPimsPropertyLite(feature);
 };
 
 export const isPimsLocation = (
@@ -284,6 +284,12 @@ export const isPimsBoundary = (
   feature: Supercluster.PointFeature<MarkerFeature>,
 ): feature is Supercluster.PointFeature<PIMS_Property_Boundary_View> => {
   return feature.id?.toString().startsWith('PIMS_PROPERTY_BOUNDARY_') ?? false;
+};
+
+export const isPimsPropertyLite = (
+  feature: Supercluster.PointFeature<MarkerFeature>,
+): feature is Supercluster.PointFeature<PIMS_Property_Boundary_View> => {
+  return feature.id?.toString().startsWith('PIMS_PROPERTY_LITE_') ?? false;
 };
 
 export const isFaParcelMap = (
