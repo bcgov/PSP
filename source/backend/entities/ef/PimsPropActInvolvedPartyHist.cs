@@ -23,8 +23,8 @@ public partial class PimsPropActInvolvedPartyHist
     [Column("PROP_ACT_INVOLVED_PARTY_ID")]
     public long PropActInvolvedPartyId { get; set; }
 
-    [Column("PIMS_PROPERTY_ACTIVITY_ID")]
-    public long PimsPropertyActivityId { get; set; }
+    [Column("PIMS_MANAGEMENT_ACTIVITY_ID")]
+    public long PimsManagementActivityId { get; set; }
 
     [Column("PERSON_ID")]
     public long? PersonId { get; set; }

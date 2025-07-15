@@ -207,13 +207,6 @@ public partial class PimsProperty
     public DateTime? SurplusDeclarationDate { get; set; }
 
     /// <summary>
-    /// Notes about the property
-    /// </summary>
-    [Column("NOTES")]
-    [StringLength(4000)]
-    public string Notes { get; set; }
-
-    /// <summary>
     /// Municipal zoning that applies this property.
     /// </summary>
     [Column("MUNICIPAL_ZONING")]
@@ -407,10 +400,10 @@ public partial class PimsProperty
     public virtual ICollection<PimsHistoricalFileNumber> PimsHistoricalFileNumbers { get; set; } = new List<PimsHistoricalFileNumber>();
 
     [InverseProperty("Property")]
-    public virtual ICollection<PimsManagementFileProperty> PimsManagementFileProperties { get; set; } = new List<PimsManagementFileProperty>();
+    public virtual ICollection<PimsManagementActivityProperty> PimsManagementActivityProperties { get; set; } = new List<PimsManagementActivityProperty>();
 
     [InverseProperty("Property")]
-    public virtual ICollection<PimsPropPropActivity> PimsPropPropActivities { get; set; } = new List<PimsPropPropActivity>();
+    public virtual ICollection<PimsManagementFileProperty> PimsManagementFileProperties { get; set; } = new List<PimsManagementFileProperty>();
 
     [InverseProperty("Property")]
     public virtual ICollection<PimsPropPropAnomalyTyp> PimsPropPropAnomalyTyps { get; set; } = new List<PimsPropPropAnomalyTyp>();

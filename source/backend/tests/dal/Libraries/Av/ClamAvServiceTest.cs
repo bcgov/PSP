@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.IO;
 using FluentAssertions;
 using Microsoft.Extensions.Options;
 using Moq;
@@ -30,13 +31,13 @@ namespace Pims.Dal.Test.Libraries.Av
 
             var client = helper.GetService<Mock<IClamClient>>();
             var scanResult = new ClamScanResult("ok");
-            client.Setup(_ => _.SendAndScanFileAsync(It.IsAny<byte[]>())).ReturnsAsync(scanResult);
+            client.Setup(_ => _.SendAndScanFileAsync(It.IsAny<Stream>())).ReturnsAsync(scanResult);
 
             // Execute
-            await service.ScanAsync(new byte[] { 1, 2, 3 });
+            await service.ScanAsync(new MemoryStream(new byte[] { 1, 2, 3 }));
 
             // Verify
-            client.Verify(_ => _.SendAndScanFileAsync(It.IsAny<byte[]>()), Times.Once);
+            client.Verify(_ => _.SendAndScanFileAsync(It.IsAny<Stream>()), Times.Once);
         }
 
         [Fact]
@@ -54,7 +55,7 @@ namespace Pims.Dal.Test.Libraries.Av
             client.Setup(_ => _.SendAndScanFileAsync(It.IsAny<byte[]>())).ReturnsAsync(scanResult);
 
             // Execute
-            await service.ScanAsync(new byte[] { 1, 2, 3 });
+            await service.ScanAsync(new MemoryStream((new byte[] { 1, 2, 3 })));
 
             // Verify
             client.Verify(_ => _.SendAndScanFileAsync(It.IsAny<byte[]>()), Times.Never);
@@ -72,14 +73,14 @@ namespace Pims.Dal.Test.Libraries.Av
 
             var client = helper.GetService<Mock<IClamClient>>();
             var scanResult = new ClamScanResult("found");
-            client.Setup(_ => _.SendAndScanFileAsync(It.IsAny<byte[]>())).ReturnsAsync(scanResult);
+            client.Setup(_ => _.SendAndScanFileAsync(It.IsAny<Stream>())).ReturnsAsync(scanResult);
 
             // Execute
-            var exception = await Assert.ThrowsAsync<AvException>(async () => await service.ScanAsync(new byte[] { 1, 2, 3 }));
+            var exception = await Assert.ThrowsAsync<AvException>(async () => await service.ScanAsync(new MemoryStream(new byte[] { 1, 2, 3 })));
 
             // Verify
             exception.Message.Should().Contain("threats found");
-            client.Verify(_ => _.SendAndScanFileAsync(It.IsAny<byte[]>()), Times.Once);
+            client.Verify(_ => _.SendAndScanFileAsync(It.IsAny<Stream>()), Times.Once);
         }
 
         [Fact]
@@ -94,14 +95,14 @@ namespace Pims.Dal.Test.Libraries.Av
 
             var client = helper.GetService<Mock<IClamClient>>();
             var scanResult = new ClamScanResult("error");
-            client.Setup(_ => _.SendAndScanFileAsync(It.IsAny<byte[]>())).ReturnsAsync(scanResult);
+            client.Setup(_ => _.SendAndScanFileAsync(It.IsAny<Stream>())).ReturnsAsync(scanResult);
 
             // Execute
-            var exception = await Assert.ThrowsAsync<AvException>(async () => await service.ScanAsync(new byte[] { 1, 2, 3 }));
+            var exception = await Assert.ThrowsAsync<AvException>(async () => await service.ScanAsync(new MemoryStream(new byte[] { 1, 2, 3 })));
 
             // Verify
             exception.Message.Should().Contain("error");
-            client.Verify(_ => _.SendAndScanFileAsync(It.IsAny<byte[]>()), Times.Once);
+            client.Verify(_ => _.SendAndScanFileAsync(It.IsAny<Stream>()), Times.Once);
         }
 
         [Fact]
@@ -116,14 +117,14 @@ namespace Pims.Dal.Test.Libraries.Av
 
             var client = helper.GetService<Mock<IClamClient>>();
             var scanResult = new ClamScanResult(string.Empty);
-            client.Setup(_ => _.SendAndScanFileAsync(It.IsAny<byte[]>())).ReturnsAsync(scanResult);
+            client.Setup(_ => _.SendAndScanFileAsync(It.IsAny<Stream>())).ReturnsAsync(scanResult);
 
             // Execute
-            var exception = await Assert.ThrowsAsync<AvException>(async () => await service.ScanAsync(new byte[] { 1, 2, 3 }));
+            var exception = await Assert.ThrowsAsync<AvException>(async () => await service.ScanAsync(new MemoryStream(new byte[] { 1, 2, 3 })));
 
             // Verify
             exception.Message.Should().Contain("unknown");
-            client.Verify(_ => _.SendAndScanFileAsync(It.IsAny<byte[]>()), Times.Once);
+            client.Verify(_ => _.SendAndScanFileAsync(It.IsAny<Stream>()), Times.Once);
         }
 
         [Fact]
@@ -138,13 +139,13 @@ namespace Pims.Dal.Test.Libraries.Av
 
             var client = helper.GetService<Mock<IClamClient>>();
             var scanResult = new ClamScanResult("ok");
-            client.Setup(_ => _.SendAndScanFileAsync(It.IsAny<byte[]>())).ReturnsAsync(scanResult);
+            client.Setup(_ => _.SendAndScanFileAsync(It.IsAny<Stream>())).ReturnsAsync(scanResult);
 
             // Execute
             await service.ScanAsync(helper.GetFormFile(string.Empty));
 
             // Verify
-            client.Verify(_ => _.SendAndScanFileAsync(It.IsAny<byte[]>()), Times.Once);
+            client.Verify(_ => _.SendAndScanFileAsync(It.IsAny<Stream>()), Times.Once);
         }
 
         [Fact]
@@ -180,14 +181,14 @@ namespace Pims.Dal.Test.Libraries.Av
 
             var client = helper.GetService<Mock<IClamClient>>();
             var scanResult = new ClamScanResult("found");
-            client.Setup(_ => _.SendAndScanFileAsync(It.IsAny<byte[]>())).ReturnsAsync(scanResult);
+            client.Setup(_ => _.SendAndScanFileAsync(It.IsAny<Stream>())).ReturnsAsync(scanResult);
 
             // Execute
             var exception = await Assert.ThrowsAsync<AvException>(async () => await service.ScanAsync(helper.GetFormFile(string.Empty)));
 
             // Verify
             exception.Message.Should().Contain("threats found");
-            client.Verify(_ => _.SendAndScanFileAsync(It.IsAny<byte[]>()), Times.Once);
+            client.Verify(_ => _.SendAndScanFileAsync(It.IsAny<Stream>()), Times.Once);
         }
 
         [Fact]
@@ -202,14 +203,14 @@ namespace Pims.Dal.Test.Libraries.Av
 
             var client = helper.GetService<Mock<IClamClient>>();
             var scanResult = new ClamScanResult("error");
-            client.Setup(_ => _.SendAndScanFileAsync(It.IsAny<byte[]>())).ReturnsAsync(scanResult);
+            client.Setup(_ => _.SendAndScanFileAsync(It.IsAny<Stream>())).ReturnsAsync(scanResult);
 
             // Execute
             var exception = await Assert.ThrowsAsync<AvException>(async () => await service.ScanAsync(helper.GetFormFile(string.Empty)));
 
             // Verify
             exception.Message.Should().Contain("error");
-            client.Verify(_ => _.SendAndScanFileAsync(It.IsAny<byte[]>()), Times.Once);
+            client.Verify(_ => _.SendAndScanFileAsync(It.IsAny<Stream>()), Times.Once);
         }
 
         [Fact]
@@ -224,14 +225,14 @@ namespace Pims.Dal.Test.Libraries.Av
 
             var client = helper.GetService<Mock<IClamClient>>();
             var scanResult = new ClamScanResult(string.Empty);
-            client.Setup(_ => _.SendAndScanFileAsync(It.IsAny<byte[]>())).ReturnsAsync(scanResult);
+            client.Setup(_ => _.SendAndScanFileAsync(It.IsAny<Stream>())).ReturnsAsync(scanResult);
 
             // Execute
             var exception = await Assert.ThrowsAsync<AvException>(async () => await service.ScanAsync(helper.GetFormFile(string.Empty)));
 
             // Verify
             exception.Message.Should().Contain("unknown");
-            client.Verify(_ => _.SendAndScanFileAsync(It.IsAny<byte[]>()), Times.Once);
+            client.Verify(_ => _.SendAndScanFileAsync(It.IsAny<Stream>()), Times.Once);
         }
         #endregion
     }

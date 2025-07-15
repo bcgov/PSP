@@ -76,7 +76,7 @@ namespace Pims.Api.Areas.Management.Controllers
         [HttpPost("filter")]
         [HasPermission(Permissions.ManagementView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<PropertyActivityModel>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<ManagementActivityModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "managementfile" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
@@ -99,7 +99,7 @@ namespace Pims.Api.Areas.Management.Controllers
 
             var managementActivities = _managementActivityService.GetPage((ManagementActivityFilter)filter);
 
-            return new JsonResult(_mapper.Map<PageModel<PropertyActivityModel>>(managementActivities));
+            return new JsonResult(_mapper.Map<PageModel<ManagementActivityModel>>(managementActivities));
         }
 
         #endregion

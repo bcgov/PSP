@@ -39,7 +39,7 @@ namespace Pims.Dal.Test.Repositories
 
             var document = new PimsDocument() { DocumentStatusTypeCodeNavigation = new PimsDocumentStatusType() { DocumentStatusTypeCode = "test", Description = "Active", DbCreateUserid = "test", DbLastUpdateUserid = "test" }, DocumentType = new PimsDocumentTyp() { DocumentType = "IMAGE", DocumentTypeDescription = "Image", DbCreateUserid = "test", DbLastUpdateUserid = "test" }, FileName = "test.txt" };
             var propertyActivityFileDocument = new PimsPropertyActivityDocument() { Document = document };
-            PimsPropertyActivity pimsPropertyActivity = new PimsPropertyActivity()
+            PimsManagementActivity pimsManagementActivity = new PimsManagementActivity()
             {
                 PimsPropertyActivityDocuments = new List<PimsPropertyActivityDocument>() { propertyActivityFileDocument },
                 PropMgmtActivityStatusTypeCode = "ACTIVE",
@@ -52,12 +52,12 @@ namespace Pims.Dal.Test.Repositories
                 },
                 PropMgmtActivityTypeCode = "test"
             };
-            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(pimsPropertyActivity);
+            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(pimsManagementActivity);
 
             var repository = helper.CreateRepository<PropertyActivityDocumentRepository>(user);
 
             // Act
-            var result = repository.GetAllByParentId(propertyActivityFileDocument.PimsPropertyActivityId);
+            var result = repository.GetAllByParentId(propertyActivityFileDocument.PimsManagementActivityId);
 
             // Assert
             result.FirstOrDefault().Internal_Id.Should().Be(1);
