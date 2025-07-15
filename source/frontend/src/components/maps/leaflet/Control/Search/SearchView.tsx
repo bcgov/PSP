@@ -17,6 +17,8 @@ import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocatio
 import { exists } from '@/utils';
 import { isStrataCommonProperty } from '@/utils/propertyUtils';
 
+import { PropertyQuickInfoContainer } from './PropertyQuickInfoContainer';
+
 export interface ISearchViewProps {
   onFilterChange: (filter: IPropertyFilter) => void;
   propertyFilter: IPropertyFilter;
@@ -78,39 +80,46 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
 
   return (
     <>
-      <Section>
-        <PropertyFilter
-          defaultFilter={{ ...defaultPropertyFilter }}
-          propertyFilter={props.propertyFilter}
-          onChange={props.onFilterChange}
-          useGeocoder
-        />
-      </Section>
-      <Section header="Results (PMBC)" isCollapsable initiallyExpanded>
-        <StyledScrollable className="pb-4">
-          {propertyProjections.map((property, index) => (
-            <StyledRow key={`feature-${property.pid}-${index}`} index={index}>
-              {property.isStrataLot && <Col>Common Property ({property.plan})</Col>}
-              {property.pid && <Col>PID: {property.pid} </Col>}
-              {property.pin && <Col>PIN: {property.pin} </Col>}
-            </StyledRow>
-          ))}
-        </StyledScrollable>
-      </Section>
-      <Section header="Results (PIMS)" isCollapsable initiallyExpanded>
-        <Scrollable className="pb-4">
-          {pimsPropertyProjections.map((property, index) => (
-            <StyledRow key={`feature-${property.pid}-${index}`} index={index}>
-              {property.isStrataLot && <Col>Common Property ({property.plan})</Col>}
-              {property.pid && <Col>PID: {property.pid} </Col>}
-              {property.pin && <Col>PIN: {property.pin} </Col>}
-            </StyledRow>
-          ))}
-        </Scrollable>
-      </Section>
+      <StyledWrapper>
+        <Section>
+          <PropertyFilter
+            defaultFilter={{ ...defaultPropertyFilter }}
+            propertyFilter={props.propertyFilter}
+            onChange={props.onFilterChange}
+            useGeocoder
+          />
+        </Section>
+        <Section header="Results (PMBC)" isCollapsable initiallyExpanded>
+          <StyledScrollable className="pb-4">
+            {propertyProjections.map((property, index) => (
+              <StyledRow key={`feature-${property.pid}-${index}`} index={index}>
+                {property.isStrataLot && <Col>Common Property ({property.plan})</Col>}
+                {property.pid && <Col>PID: {property.pid} </Col>}
+                {property.pin && <Col>PIN: {property.pin} </Col>}
+              </StyledRow>
+            ))}
+          </StyledScrollable>
+        </Section>
+        <Section header="Results (PIMS)" isCollapsable initiallyExpanded>
+          <Scrollable className="pb-4">
+            {pimsPropertyProjections.map((property, index) => (
+              <StyledRow key={`feature-${property.pid}-${index}`} index={index}>
+                {property.isStrataLot && <Col>Common Property ({property.plan})</Col>}
+                {property.pid && <Col>PID: {property.pid} </Col>}
+                {property.pin && <Col>PIN: {property.pin} </Col>}
+              </StyledRow>
+            ))}
+          </Scrollable>
+        </Section>
+      </StyledWrapper>
+      <PropertyQuickInfoContainer />
     </>
   );
 };
+
+const StyledWrapper = styled.div`
+  height: 60%;
+`;
 
 const StyledRow = styled(Row)<{ index: number }>`
   color: rgb(1, 51, 102);

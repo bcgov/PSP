@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { RemoveIconButton } from '@/components/common/buttons';
 import ViewButton from '@/components/common/buttons/ViewButton';
-import { StyledLink } from '@/components/maps/leaflet/LayerPopup/styles';
+import { StyledLink } from '@/components/common/styles';
 import { ColumnWithProps } from '@/components/Table';
 import { UtcDateCell } from '@/components/Table/DateCell';
 import { Claims } from '@/constants/index';

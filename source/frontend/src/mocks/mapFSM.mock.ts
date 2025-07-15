@@ -87,6 +87,7 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   toggleMapFilterDisplay: vi.fn(),
   toggleMapLayerControl: vi.fn(),
   toggleMapSearchControl: vi.fn(),
+  showMapSearchControl: vi.fn(),
   setShowDisposed: vi.fn(),
   setShowRetired: vi.fn(),
   setMapLayers: vi.fn(),
