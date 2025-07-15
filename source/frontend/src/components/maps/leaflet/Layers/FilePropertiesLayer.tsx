@@ -87,7 +87,7 @@ export const FilePropertiesLayer: React.FunctionComponent = () => {
                 key={uuidv4()}
                 position={draftPoint.location}
                 icon={
-                  draftPoint.isActive
+                  draftPoint.isActive !== false
                     ? getDraftIcon((index + 1).toString())
                     : getDisabledDraftIcon((index + 1).toString())
                 }
