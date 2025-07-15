@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { geoJSON, LatLngBounds, LeafletEvent, LeafletMouseEvent, Map, Popup } from 'leaflet';
+import { geoJSON, LatLngBounds, LeafletEvent, LeafletMouseEvent, Map } from 'leaflet';
 import { isEqual } from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
 import {
