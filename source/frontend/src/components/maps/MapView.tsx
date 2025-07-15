@@ -7,7 +7,6 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import LoadingBackdrop from '../common/LoadingBackdrop';
 import * as Styled from './leaflet/styles';
 import MapLeafletView from './MapLeafletView';
-import MapSearch from './MapSearch';
 
 /**
  * Container for the map component.
@@ -23,17 +22,10 @@ const MapView: React.FC<React.PropsWithChildren<MapViewProps>> = ({ defaultZoom 
 
   // hide the top search bar when either the left-hand sidebar or right-hand advanced bar is open
   const mapMachine = useMapStateMachine();
-  const isShowingSearchBar = mapMachine.isShowingSearchBar;
 
   return (
-    <Styled.MapGrid
-      ref={resizeRef}
-      className={classNames('px-0', 'map', {
-        hideSearchBar: !isShowingSearchBar,
-      })}
-    >
+    <Styled.MapGrid ref={resizeRef} className={classNames('px-0', 'map')}>
       <LoadingBackdrop show={mapMachine.isLoading} parentScreen />
-      {isShowingSearchBar && <MapSearch />}
       <MapLeafletView parentWidth={width} defaultZoom={defaultZoom} />
     </Styled.MapGrid>
   );

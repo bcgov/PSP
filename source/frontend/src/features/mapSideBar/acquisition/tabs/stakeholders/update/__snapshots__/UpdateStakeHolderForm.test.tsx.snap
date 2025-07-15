@@ -294,6 +294,11 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
   line-height: 2rem;
 }
 
+.c3 {
+  padding: 0 0.4rem;
+  display: block;
+}
+
 .c6 {
   position: relative;
   border-radius: 0.4rem;
@@ -374,11 +379,6 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.c3 {
-  padding: 0 0.4rem;
-  display: block;
 }
 
 <div

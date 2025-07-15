@@ -10,7 +10,9 @@ import {
   MarkerSelected,
   emptyPimsBoundaryFeatureCollection,
   emptyPimsLocationFeatureCollection,
+  emptyPimsLocationLiteFeatureCollection,
   emptyPmbcFeatureCollection,
+  emptySurveyedParcelsFeatures,
 } from '@/components/common/mapFSM/models';
 import { Claims } from '@/constants/index';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
@@ -24,6 +26,7 @@ import {
   RenderOptions,
   act,
   cleanup,
+  getMockRepositoryObj,
   mockKeycloak,
   render,
   screen,
@@ -38,6 +41,7 @@ import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts
 import MapContainer from './MapContainer';
 import { PropertyFilterFormModel } from '@/components/maps/leaflet/Control/AdvancedFilter/models';
 import debounce from 'lodash/debounce';
+import { useLtsa } from '@/hooks/useLtsa';
 
 const mockAxios = new MockAdapter(axios);
 
@@ -45,6 +49,10 @@ vi.mock('@/components/maps/leaflet/LayerPopup/components/LayerPopupContent');
 vi.mock('@/features/advancedFilterBar/AdvancedFilterBar');
 vi.mock('@/hooks/pims-api/useApiProperties');
 vi.mock('@/hooks/useLtsa');
+vi.mocked(useLtsa, { partial: true }).mockReturnValue({
+  ltsaRequestWrapper: getMockRepositoryObj(),
+  getStrataPlanCommonProperty: getMockRepositoryObj(),
+});
 vi.mock('@/hooks/repositories/useComposedProperties');
 vi.mock('@/hooks/repositories/usePropertyAssociations');
 vi.mock('@/hooks/repositories/mapLayer/useParcelMapLayer');
@@ -182,8 +190,10 @@ describe('MapContainer', () => {
       activePimsPropertyIds: activePimsPropertyIds,
       mapFeatureData: {
         pimsLocationFeatures: createPimsFeatures(mockParcels),
+        pimsLocationLiteFeatures: createPimsFeatures(mockParcels),
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
         fullyAttributedFeatures: emptyPmbcFeatureCollection,
+        surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
       },
     };
     if (
@@ -288,8 +298,10 @@ describe('MapContainer', () => {
         ...mapMachineBaseMock,
         mapFeatureData: {
           pimsLocationFeatures: createPimsFeatures(smallMockParcels),
+          pimsLocationLiteFeatures: emptyPimsLocationLiteFeatureCollection,
           pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
           fullyAttributedFeatures: emptyPmbcFeatureCollection,
+          surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
         },
       },
     });
@@ -310,8 +322,10 @@ describe('MapContainer', () => {
         ...mapMachineBaseMock,
         mapFeatureData: {
           pimsLocationFeatures: emptyPimsLocationFeatureCollection,
+          pimsLocationLiteFeatures: emptyPimsLocationLiteFeatureCollection,
           pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
           fullyAttributedFeatures: emptyPmbcFeatureCollection,
+          surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
         },
       },
     });
@@ -320,16 +334,7 @@ describe('MapContainer', () => {
   });
 
   it('the map can zoom out until the markers are clustered', async () => {
-    const { container } = await setup({
-      mockMapMachine: {
-        ...mapMachineBaseMock,
-        mapFeatureData: {
-          pimsLocationFeatures: createPimsFeatures(largeMockParcels),
-          pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-          fullyAttributedFeatures: emptyPmbcFeatureCollection,
-        },
-      },
-    });
+    const { container } = await setup();
 
     // click the zoom-out button 10 times
     const zoomOut = container.querySelector('.leaflet-control-zoom-out');
@@ -375,8 +380,10 @@ describe('MapContainer', () => {
         ...mapMachineBaseMock,
         mapFeatureData: {
           pimsLocationFeatures: createPimsFeatures(largeMockParcels),
+          pimsLocationLiteFeatures: emptyPimsLocationLiteFeatureCollection,
           pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
           fullyAttributedFeatures: emptyPmbcFeatureCollection,
+          surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
         },
       },
     });
@@ -407,8 +414,10 @@ describe('MapContainer', () => {
       ...mapMachineBaseMock,
       mapFeatureData: {
         pimsLocationFeatures: pimsFeatures,
+        pimsLocationLiteFeatures: pimsFeatures,
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
         fullyAttributedFeatures: emptyPmbcFeatureCollection,
+        surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
       },
     };
 
@@ -445,8 +454,10 @@ describe('MapContainer', () => {
       ...mapMachineBaseMock,
       mapFeatureData: {
         pimsLocationFeatures: pimsFeatures,
+        pimsLocationLiteFeatures: pimsFeatures,
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
         fullyAttributedFeatures: emptyPmbcFeatureCollection,
+        surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
       },
     };
 
@@ -489,8 +500,10 @@ describe('MapContainer', () => {
       ...mapMachineBaseMock,
       mapFeatureData: {
         pimsLocationFeatures: pimsFeatures,
+        pimsLocationLiteFeatures: pimsFeatures,
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
         fullyAttributedFeatures: emptyPmbcFeatureCollection,
+        surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
       },
       isFiltering: false,
     };
@@ -524,8 +537,10 @@ describe('MapContainer', () => {
       ...mapMachineBaseMock,
       mapFeatureData: {
         pimsLocationFeatures: pimsFeatures,
+        pimsLocationLiteFeatures: pimsFeatures,
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
         fullyAttributedFeatures: emptyPmbcFeatureCollection,
+        surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
       },
       activePimsPropertyIds: activeIds,
       isFiltering: true,
@@ -570,8 +585,10 @@ describe('MapContainer', () => {
       ...mapMachineBaseMock,
       mapFeatureData: {
         pimsLocationFeatures: pimsFeatures,
+        pimsLocationLiteFeatures: pimsFeatures,
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
         fullyAttributedFeatures: emptyPmbcFeatureCollection,
+        surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
       },
       activePimsPropertyIds: activeIds,
       isFiltering: true,

@@ -10,7 +10,6 @@ import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import {
   PIMS_Property_Boundary_View,
   PIMS_Property_Lite_View,
-  PIMS_Property_Location_View,
 } from '@/models/layers/pimsPropertyLocationView';
 import { TenantContext } from '@/tenants';
 
@@ -49,7 +48,7 @@ export const usePimsPropertyLayer = () => {
         const url = `${propertiesUrl}${
           geoserver_params ? toCqlFilter(geoserver_params, params?.forceExactMatch) : ''
         }`;
-        return CustomAxios().get<FeatureCollection<Geometry, PIMS_Property_Location_View>>(url);
+        return CustomAxios().get<FeatureCollection<Geometry, PIMS_Property_Boundary_View>>(url);
       },
       [propertiesUrl],
     ),

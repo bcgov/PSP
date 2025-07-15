@@ -251,6 +251,7 @@ const selectedFeatureLoaderStates = {
               mapFeatureSelected: () => null,
               mapLocationFeatureDataset: () => null,
             }),
+            raise('SHOW_SEARCH'),
           ],
           target: 'loading',
         },
@@ -413,39 +414,35 @@ const sideBarStates = {
   },
 };
 
-const advancedFilterSideBarStates = {
+const rightSideBarStates = {
   initial: 'closed',
   states: {
     closed: {
       on: {
         TOGGLE_FILTER: {
-          target: 'mapFilterOpened',
+          target: 'filterVisible',
         },
         TOGGLE_LAYERS: {
-          target: 'layerControl',
+          target: 'layerVisible',
+        },
+        TOGGLE_SEARCH: {
+          target: 'searchVisible',
+        },
+        SHOW_SEARCH: {
+          target: 'searchVisible',
         },
       },
     },
-    layerControl: {
-      on: {
-        TOGGLE_FILTER: {
-          target: 'mapFilterOpened',
-        },
-        TOGGLE_LAYERS: {
-          target: 'closed',
-        },
-        SET_MAP_LAYERS: {
-          actions: assign({ activeLayers: (_, event: any) => event.activeLayers }),
-        },
-      },
-    },
-    mapFilterOpened: {
+    filterVisible: {
       on: {
         TOGGLE_FILTER: {
           target: 'closed',
         },
         TOGGLE_LAYERS: {
-          target: 'layerControl',
+          target: 'layerVisible',
+        },
+        TOGGLE_SEARCH: {
+          target: 'searchVisible',
         },
         SET_ADVANCED_SEARCH_CRITERIA: {
           actions: assign({
@@ -468,6 +465,35 @@ const advancedFilterSideBarStates = {
               advancedSearchCriteria: () => new PropertyFilterFormModel(),
             }),
           ],
+        },
+      },
+    },
+    layerVisible: {
+      on: {
+        TOGGLE_FILTER: {
+          target: 'filterVisible',
+        },
+        TOGGLE_LAYERS: {
+          target: 'closed',
+        },
+        TOGGLE_SEARCH: {
+          target: 'searchVisible',
+        },
+        SET_MAP_LAYERS: {
+          actions: assign({ activeLayers: (_, event: any) => event.activeLayers }),
+        },
+      },
+    },
+    searchVisible: {
+      on: {
+        TOGGLE_FILTER: {
+          target: 'filterVisible',
+        },
+        TOGGLE_LAYERS: {
+          target: 'layerVisible',
+        },
+        TOGGLE_SEARCH: {
+          target: 'closed',
         },
       },
     },
@@ -579,7 +605,7 @@ export const mapMachine = createMachine<MachineContext>({
         mapRequest: mapRequestStates,
         selectedFeatureLoader: selectedFeatureLoaderStates,
         sideBar: sideBarStates,
-        advancedFilterSideBar: advancedFilterSideBarStates,
+        rightSideBar: rightSideBarStates,
       },
     },
   },

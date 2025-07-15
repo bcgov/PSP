@@ -31,6 +31,10 @@ export interface IGeoSearchParams {
   HISTORICAL_FILE_NUMBER_STR?: string;
   BBOX?: string;
   GEOGRAPHIC_NAME?: string;
+  SECTION?: number | string;
+  TOWNSHIP?: number | string;
+  RANGE?: number | string;
+  DISTRICT?: string;
   latitude?: number | string;
   longitude?: number | string;
 

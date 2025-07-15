@@ -3,7 +3,9 @@ import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMach
 import {
   emptyPimsBoundaryFeatureCollection,
   emptyPimsLocationFeatureCollection,
+  emptyPimsLocationLiteFeatureCollection,
   emptyPmbcFeatureCollection,
+  emptySurveyedParcelsFeatures,
 } from '@/components/common/mapFSM/models';
 import { defaultBounds } from '@/components/maps/constants';
 import { PropertyFilterFormModel } from '@/components/maps/leaflet/Control/AdvancedFilter/models';
@@ -13,8 +15,10 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   requestFlyToBounds: vi.fn(),
   mapFeatureData: {
     pimsLocationFeatures: emptyPimsLocationFeatureCollection,
+    pimsLocationLiteFeatures: emptyPimsLocationLiteFeatureCollection,
     pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
     fullyAttributedFeatures: emptyPmbcFeatureCollection,
+    surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
   },
   mapSideBarViewState: {
     isCollapsed: false,
@@ -53,6 +57,7 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   isFiltering: false,
   isShowingMapFilter: false,
   isShowingMapLayers: false,
+  isShowingMapSearch: false,
   showDisposed: false,
   showRetired: false,
   mapLayersToRefresh: new Set(),
@@ -81,6 +86,8 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   setVisiblePimsProperties: vi.fn(),
   toggleMapFilterDisplay: vi.fn(),
   toggleMapLayerControl: vi.fn(),
+  toggleMapSearchControl: vi.fn(),
+  showMapSearchControl: vi.fn(),
   setShowDisposed: vi.fn(),
   setShowRetired: vi.fn(),
   setMapLayers: vi.fn(),

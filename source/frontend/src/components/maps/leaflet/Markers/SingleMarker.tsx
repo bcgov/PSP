@@ -4,10 +4,11 @@ import { Marker, useMap } from 'react-leaflet';
 import { PointFeature } from 'supercluster';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import { TANTALIS_CrownSurveyParcels_Feature_Properties } from '@/models/layers/crownLand';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import {
   PIMS_Property_Boundary_View,
-  PIMS_Property_Location_View,
+  PIMS_Property_Location_Lite_View,
 } from '@/models/layers/pimsPropertyLocationView';
 import { useTenant } from '@/tenants';
 
@@ -23,9 +24,10 @@ import {
 
 interface SinglePropertyMarkerProps {
   pointFeature: PointFeature<
-    | PIMS_Property_Location_View
+    | PIMS_Property_Location_Lite_View
     | PIMS_Property_Boundary_View
     | PMBC_FullyAttributed_Feature_Properties
+    | TANTALIS_CrownSurveyParcels_Feature_Properties
   >;
   markerPosition: LatLngLiteral;
   isSelected: boolean;
@@ -41,9 +43,10 @@ const SinglePropertyMarker: React.FC<React.PropsWithChildren<SinglePropertyMarke
 
   const getIcon = (
     feature: PointFeature<
-      | PIMS_Property_Location_View
+      | PIMS_Property_Location_Lite_View
       | PIMS_Property_Boundary_View
       | PMBC_FullyAttributed_Feature_Properties
+      | TANTALIS_CrownSurveyParcels_Feature_Properties
     >,
     isSelected: boolean,
     showDisposed: boolean,
