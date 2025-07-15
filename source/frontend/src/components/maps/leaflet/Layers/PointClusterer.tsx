@@ -17,7 +17,6 @@ import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelM
 import {
   PIMS_Property_Boundary_View,
   PIMS_Property_Location_Lite_View,
-  PIMS_Property_Location_View,
 } from '@/models/layers/pimsPropertyLocationView';
 import { exists } from '@/utils';
 
@@ -273,7 +272,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
             );
           } else {
             const clusterFeature = cluster as PointFeature<
-              | PIMS_Property_Location_View
+              | PIMS_Property_Location_Lite_View
               | PIMS_Property_Boundary_View
               | PMBC_FullyAttributed_Feature_Properties
               | TANTALIS_CrownSurveyParcels_Feature_Properties
@@ -299,7 +298,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
          */}
         {spider.markers?.map((m, index: number) => {
           const clusterFeature = m as PointFeature<
-            | PIMS_Property_Location_View
+            | PIMS_Property_Location_Lite_View
             | PIMS_Property_Boundary_View
             | PMBC_FullyAttributed_Feature_Properties
           >;

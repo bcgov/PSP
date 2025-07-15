@@ -332,6 +332,11 @@ exports[`PropertyContactListView component > renders as expected when provided v
   margin-bottom: 0.5rem;
 }
 
+.c7 {
+  padding: 0 0.4rem;
+  display: block;
+}
+
 .c6 {
   float: right;
   cursor: pointer;
@@ -367,11 +372,6 @@ exports[`PropertyContactListView component > renders as expected when provided v
 
 .c2 .btn {
   margin: 0;
-}
-
-.c7 {
-  padding: 0 0.4rem;
-  display: block;
 }
 
 <div
