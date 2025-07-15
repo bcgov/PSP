@@ -109,6 +109,7 @@ const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps
       title={props.title}
       showParentInformation={false}
       relationshipTypes={[]}
+      data-testId="main-document-list"
     />
   );
 };

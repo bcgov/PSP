@@ -7,11 +7,25 @@ namespace PIMS.Tests.Automation.PageObjects
     {
         //Documents Tab Element
         private readonly By documentsTab = By.CssSelector("a[data-rb-event-key='documents']");
+        private readonly By propsDocumentsTab = By.CssSelector("a[data-rb-event-key='document']");
 
         //Documents Tab List Header
         private readonly By documentsFileTitle = By.XPath("//span[contains(text(),'File Documents')]");
         private readonly By documentsTitle = By.XPath("//span[contains(text(),'Documents')]");
         private readonly By addDocumentBttn = By.XPath("//button[@data-testid='refresh-button']/preceding-sibling::button");
+        private readonly By refreshDocumentBttn = By.CssSelector("button[data-testid='refresh-button']");
+
+        private readonly By refresh1stTableBttn = By.XPath("//span[contains(text(),'Property Documents')]/parent::div/following-sibling::div/div/button[2]");
+        private readonly By refresh2ndTableBttn = By.XPath("//span[contains(text(),'Property Documents')]/parent::div/following-sibling::div/div/button");
+        private readonly By documentsTableColumnType = By.XPath("//button[@data-testid='refresh-button']/preceding-sibling::button/parent::div/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Document type')]");
+        private readonly By documentsTableColumnTypeSort = By.CssSelector("div[data-testid='sort-column-documentType']");
+        private readonly By documentsTableColumnName = By.XPath("//button[@data-testid='refresh-button']/preceding-sibling::button/parent::div/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Document name')]");
+        private readonly By documentsTableColumnNameSort = By.CssSelector("div[data-testid='sort-column-fileName']");
+        private readonly By documentsTableColumnUploaded = By.XPath("//button[@data-testid='refresh-button']/preceding-sibling::button/parent::div/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Uploaded')]");
+        private readonly By documentsTableColumnUploadedSort = By.CssSelector("div[data-testid='sort-column-appCreateTimestamp']");
+        private readonly By documentsTableColumnStatus = By.XPath("//button[@data-testid='refresh-button']/preceding-sibling::button/parent::div/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Status')]");
+        private readonly By documentsTableColumnStatusSort = By.CssSelector("div[data-testid='sort-column-statusTypeCode']");
+        private readonly By documentsTableColumnActions = By.XPath("//button[@data-testid='refresh-button']/preceding-sibling::button/parent::div/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Actions')]");
 
         //Upload Documents Dialog General Elements
         private readonly By documentsUploadHeader = By.CssSelector("div[class='modal-header'] div[class='modal-title h4']");
@@ -177,8 +191,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By documentTransferAdmTypeTransferLabel = By.XPath("//label[contains(text(),'Transfer')]");
         private readonly By documentTransferAdmTypeTransferInput = By.CssSelector("input[data-testid='metadata-input-TRANSFER_NUMBER']");
 
-
-
         //View Document Details Elements
         private readonly By documentViewDocumentTypeLabel = By.XPath("//div[@class='modal-body']/div/div/div/div/div/label[contains(text(),'Document type')]");
         private readonly By documentViewDocumentTypeContent = By.XPath("//div[@class='modal-body']/div/div/div/div/div/label[contains(text(),'Document type')]/parent::div/following-sibling::div");
@@ -318,6 +330,12 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilVisible(documentsTab);
             webDriver.FindElement(documentsTab).Click();
+        }
+
+        public void NavigatePropertyDocumentsTab()
+        {
+            WaitUntilVisible(propsDocumentsTab);
+            webDriver.FindElement(propsDocumentsTab).Click();
         }
 
         public void NavigateToFirstPageDocumentsTable()
@@ -628,7 +646,7 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilDisappear(documentTableWaitSpinner);
         }
 
-        public void EditDocument()
+        public void EditDocumentButton()
         {
             Wait(2000);
             FocusAndClick(documentEditBttn);
@@ -1058,9 +1076,6 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(documenyViewDocumentNameLabel);
             AssertTrueContentNotEquals(documentViewFileNameContent, "");
 
-            //WaitUntilVisible(documentViewDownloadButton);
-            //AssertTrueIsDisplayed(documentViewDownloadButton);
-
             //Document Information
             AssertTrueIsDisplayed(documentViewInfoSubtitle);
             AssertTrueIsDisplayed(documentViewDocumentInfoTooltip);
@@ -1220,6 +1235,22 @@ namespace PIMS.Tests.Automation.PageObjects
             
             if (document.YearPrivyCouncil != "" && webDriver.FindElements(documentPrivyCouncilTypePrivyLabel).Count > 0)
                 AssertTrueContentEquals(documentViewYearPrivyCouncilContent, document.YearPrivyCouncil);
+        }
+
+        public void VerifyPropertyMgmtFileDocumentsInitMainTables(string title1stTable, string title2ndTable)
+        {
+            AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'"+ title1stTable +"')]/parent::div/parent::div/parent::div/parent::div/parent::h2"));
+            AssertTrueIsDisplayed(addDocumentBttn);
+            AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'"+ title1stTable +"')]/parent::div/following-sibling::div/div/button[2]"));
+            AssertTrueIsDisplayed(documentsTableColumnType);
+            AssertTrueIsDisplayed(documentsTableColumnName);
+            AssertTrueIsDisplayed(documentsTableColumnUploaded);
+            AssertTrueIsDisplayed(documentsTableColumnStatus);
+            AssertTrueIsDisplayed(documentsTableColumnActions);
+
+
+            AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'"+ title2ndTable +"')]/parent::div/parent::div/parent::div/parent::div/parent::h2"));
+            AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'"+ title2ndTable +"')]/parent::div/following-sibling::div/div/button"));
         }
 
         public void VerifyInitUploadDocumentForm()
@@ -1581,11 +1612,10 @@ namespace PIMS.Tests.Automation.PageObjects
         private string TranformFormatDateDocument(string date)
         {
             if (date == "")
-            {
                 return "";
-            }
+            
             else
-            {
+            { 
                 var dateObject = DateTime.Parse(date);
                 return dateObject.ToString("G");
             }
