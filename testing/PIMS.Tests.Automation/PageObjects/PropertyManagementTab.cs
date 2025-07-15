@@ -359,7 +359,10 @@ namespace PIMS.Tests.Automation.PageObjects
             var lastInsertedActivityIndex = webDriver.FindElements(managementActivitiesBodyCount).Count;
 
             AssertTrueContentEquals(By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastInsertedActivityIndex +"]/div/div[@role='cell'][1]"), activity.PropertyActivityType);
-            AssertTrueContentEquals(By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastInsertedActivityIndex +"]/div/div[@role='cell'][2]"), activity.PropertyActivitySubType);
+
+            foreach (string subtype in activity.PropertyActivitySubTypeList)
+                AssertTrueContentEquals(By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastInsertedActivityIndex +"]/div/div[@role='cell'][2]"), subtype);
+
             AssertTrueContentEquals(By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastInsertedActivityIndex +"]/div/div[@role='cell'][3]"), activity.PropertyActivityStatus);
             AssertTrueContentEquals(By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastInsertedActivityIndex +"]/div/div[@role='cell'][4]"), TransformDateFormat(activity.PropertyActivityRequestedCommenceDate));
             Assert.True(webDriver.FindElements(By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastInsertedActivityIndex +"]/div/div[@role='cell'][5]/div/div")).Count > 0);
