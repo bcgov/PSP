@@ -29,7 +29,9 @@ enum MapCursors {
   DEFAULT = 'default',
 }
 
-const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = ({ defaultZoom }) => {
+const MapContainer: React.FC<
+  React.PropsWithChildren<MapContainerProps & { defaultZoom?: number }>
+> = ({ defaultZoom }) => {
   const [showActionBar, setShowActionBar] = useState(false);
   const {
     isSelecting,
