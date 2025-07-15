@@ -21,7 +21,7 @@ namespace Pims.Dal.Test.Repositories
 
             var managementActivityFileDocument = new PimsPropertyActivityDocument();
 
-            var repository = helper.CreateRepository<PropertyActivityDocumentRepository>(user);
+            var repository = helper.CreateRepository<ManagementActivityDocumentRepository>(user);
 
             // Act
             var result = repository.AddDocument(managementActivityFileDocument);
@@ -54,7 +54,7 @@ namespace Pims.Dal.Test.Repositories
             };
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(pimsManagementActivity);
 
-            var repository = helper.CreateRepository<PropertyActivityDocumentRepository>(user);
+            var repository = helper.CreateRepository<ManagementActivityDocumentRepository>(user);
 
             // Act
             var result = repository.GetAllByParentId(managementActivityFileDocument.PimsManagementActivityId);
@@ -72,7 +72,7 @@ namespace Pims.Dal.Test.Repositories
 
             var managementActivityFileDocument = new PimsPropertyActivityDocument();
 
-            var repository = helper.CreateRepository<PropertyActivityDocumentRepository>(user);
+            var repository = helper.CreateRepository<ManagementActivityDocumentRepository>(user);
 
             // Act
             var result = repository.DeleteDocument(managementActivityFileDocument);
@@ -88,7 +88,7 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.DocumentView);
 
-            var repository = helper.CreateRepository<PropertyActivityDocumentRepository>(user);
+            var repository = helper.CreateRepository<ManagementActivityDocumentRepository>(user);
 
             // Act
             Action act = () => repository.DeleteDocument(null);
