@@ -355,9 +355,43 @@ this.ScenarioInitialize(scenarioInfo);
  await testRunner.WhenAsync("I insert activities to the Management Activities Tab", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 44
- await testRunner.AndAsync("I create Digital Documents for a Management Activity from row number 11", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync("I create Digital Documents for a Management Activity from row number 14", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 45
+ await testRunner.ThenAsync("A new Management file is created or updated successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="08._Management_Property_Documents")]
+        [Xunit.TraitAttribute("FeatureTitle", "ManagementFiles")]
+        [Xunit.TraitAttribute("Description", "08._Management_Property_Documents")]
+        public async global::System.Threading.Tasks.Task _08__Management_Property_Documents()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("08._Management_Property_Documents", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 47
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 48
+ await testRunner.GivenAsync("I create a new Management File from row number 10", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 49
+ await testRunner.WhenAsync("I add Properties to the Management File", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 50
+ await testRunner.AndAsync("I create Digital Documents for a Management Activity from row number 14", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 51
  await testRunner.ThenAsync("A new Management file is created or updated successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }

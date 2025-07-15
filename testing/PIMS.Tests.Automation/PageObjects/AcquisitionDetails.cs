@@ -222,7 +222,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CreateMinimumAcquisitionFile(AcquisitionFile acquisition)
         {
-            Wait();
+            Wait(5000);
 
             webDriver.FindElement(acquisitionFileNameInput).SendKeys(acquisition.AcquisitionFileName);
             webDriver.FindElement(acquisitionFileDetailsTypeSelect);
