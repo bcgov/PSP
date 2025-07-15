@@ -101,4 +101,9 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   mapMarkedLocation: undefined,
   mapMarkLocation: vi.fn(),
   mapClearLocationMark: vi.fn(),
+  worklistSelectedMapLocation: null,
+  worklistLocationFeatureDataset: null,
+  isShowingWorkList: false,
+  worklistMapClick: vi.fn(),
+  toggleWorkListControl: vi.fn(),
 };
