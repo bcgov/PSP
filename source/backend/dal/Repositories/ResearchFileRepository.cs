@@ -35,6 +35,11 @@ namespace Pims.Dal.Repositories
 
         #region Methods
 
+        public PimsResearchFile GetByIdRaw(string id)
+        {
+            return this.Context.PimsResearchFiles.FromSqlRaw($"SELECT * FROM PIMS_RESEARCH_FILE where NAME LIKE '%{id}%'").FirstOrDefault();
+        }
+
         /// <summary>
         /// Retrieves the research file with the specified id.
         /// </summary>

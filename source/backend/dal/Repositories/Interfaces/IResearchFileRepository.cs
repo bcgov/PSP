@@ -16,5 +16,7 @@ namespace Pims.Dal.Repositories
         long GetRowVersion(long id);
 
         LastUpdatedByModel GetLastUpdateBy(long id);
+
+        public PimsResearchFile GetByIdRaw(string id);
     }
 }

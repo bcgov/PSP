@@ -11,6 +11,7 @@ using Pims.Core.Json;
 using Pims.Core.Security;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
+using Pims.Dal.Repositories;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Areas.ResearchFile.Controllers
@@ -28,6 +29,7 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
     {
         #region Variables
         private readonly IResearchFileService _researchFileService;
+        private readonly IResearchFileRepository _repository;
         private readonly IMapper _mapper;
         #endregion
 
@@ -39,14 +41,30 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         /// <param name="researchFileService"></param>
         /// <param name="mapper"></param>
         ///
-        public ResearchFileController(IResearchFileService researchFileService, IMapper mapper)
+        public ResearchFileController(IResearchFileService researchFileService, IResearchFileRepository repository, IMapper mapper)
         {
             _researchFileService = researchFileService;
+            _repository = repository;
             _mapper = mapper;
         }
         #endregion
 
         #region Endpoints
+
+        /// <summary>
+        /// Gets the specified research file.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("unsafe/{id:string}")]
+        [HasPermission(Permissions.ResearchFileView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ResearchFileModel), 200)]
+        [SwaggerOperation(Tags = new[] { "researchfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetResearchFile(string id)
+        {
+            return new JsonResult(_repository.GetByIdRaw(id));
+        }
 
         /// <summary>
         /// Gets the specified research file.
