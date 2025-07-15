@@ -1,4 +1,4 @@
-import React, { CSSProperties } from 'react';
+import React, { CSSProperties, MouseEventHandler } from 'react';
 import { ButtonProps } from 'react-bootstrap';
 import { FaTrash } from 'react-icons/fa';
 import { MdClose } from 'react-icons/md';
@@ -14,7 +14,7 @@ interface IRemoveButtonProps extends ButtonProps {
   fontSize?: string;
   icon?: React.ReactNode;
   style?: CSSProperties | null;
-  onRemove: () => void;
+  onRemove: MouseEventHandler;
 }
 
 export const RemoveButton: React.FunctionComponent<
