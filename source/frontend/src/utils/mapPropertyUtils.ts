@@ -21,10 +21,12 @@ import { AreaUnitTypes } from '@/constants';
 import { DistrictCodes } from '@/constants/districtCodes';
 import { RegionCodes } from '@/constants/regionCodes';
 import { AddressForm } from '@/features/mapSideBar/shared/models';
+import { ParcelFeature } from '@/features/properties/worklist/models';
 import { ApiGen_CodeTypes_GeoJsonTypes } from '@/models/api/generated/ApiGen_CodeTypes_GeoJsonTypes';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Geometry } from '@/models/api/generated/ApiGen_Concepts_Geometry';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { enumFromValue, exists, formatApiAddress, pidFormatter } from '@/utils';
 
 export enum NameSourceType {
@@ -58,6 +60,31 @@ export const getPropertyName = (property: IMapProperty): PropertyName => {
     return {
       label: NameSourceType.ADDRESS,
       value: property.address,
+    };
+  }
+  return { label: NameSourceType.NONE, value: '' };
+};
+
+export const getWorklistPropertyName = (parcelFeature: ParcelFeature | null): PropertyName => {
+  if (!exists(parcelFeature)) {
+    return { label: NameSourceType.NONE, value: '' };
+  }
+
+  const pid = pidFromFullyAttributedFeature(parcelFeature.feature);
+  const pin = pinFromFullyAttributedFeature(parcelFeature.feature);
+  const planNumber = parcelFeature.feature?.properties?.PLAN_NUMBER;
+  const location = parcelFeature.location;
+
+  if (exists(pid) && pid?.toString()?.length > 0 && pid !== '0') {
+    return { label: NameSourceType.PID, value: pidFormatter(pid.toString()) };
+  } else if (exists(pin) && pin?.toString()?.length > 0 && pin !== '0') {
+    return { label: NameSourceType.PIN, value: pin.toString() };
+  } else if (exists(planNumber) && planNumber?.toString()?.length > 0) {
+    return { label: NameSourceType.PLAN, value: planNumber.toString() };
+  } else if (exists(location?.lat) && exists(location?.lng)) {
+    return {
+      label: NameSourceType.LOCATION,
+      value: compact([location.lng?.toFixed(6), location.lat?.toFixed(6)]).join(', '),
     };
   }
   return { label: NameSourceType.NONE, value: '' };
@@ -283,6 +310,18 @@ export const featuresetToLocationBoundaryDataset = (
   };
 };
 
+export function pidFromFullyAttributedFeature(
+  parcelFeature: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties> | null,
+): string | null {
+  return exists(parcelFeature?.properties) ? parcelFeature?.properties?.PID?.toString() : null;
+}
+
+export function pinFromFullyAttributedFeature(
+  parcelFeature: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties> | null,
+): string | null {
+  return exists(parcelFeature?.properties) ? parcelFeature?.properties?.PIN?.toString() : null;
+}
+
 export function pidFromFeatureSet(featureset: SelectedFeatureDataset): string | null {
   if (exists(featureset.pimsFeature?.properties)) {
     return exists(featureset.pimsFeature?.properties?.PID)
@@ -290,9 +329,7 @@ export function pidFromFeatureSet(featureset: SelectedFeatureDataset): string | 
       : null;
   }
 
-  return exists(featureset.parcelFeature?.properties)
-    ? featureset.parcelFeature?.properties?.PID
-    : null;
+  return pidFromFullyAttributedFeature(featureset.parcelFeature);
 }
 
 export function pinFromFeatureSet(featureset: SelectedFeatureDataset): string | null {
@@ -302,9 +339,7 @@ export function pinFromFeatureSet(featureset: SelectedFeatureDataset): string | 
       : null;
   }
 
-  return exists(featureset.parcelFeature?.properties)
-    ? featureset.parcelFeature?.properties?.PIN?.toString()
-    : null;
+  return pinFromFullyAttributedFeature(featureset.parcelFeature);
 }
 
 export function locationFromFileProperty(
