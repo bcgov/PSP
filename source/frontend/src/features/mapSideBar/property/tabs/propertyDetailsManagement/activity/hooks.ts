@@ -2,8 +2,8 @@ import { useCallback } from 'react';
 
 import { useOrganizationRepository } from '@/features/contacts/repositories/useOrganizationRepository';
 import { usePersonRepository } from '@/features/contacts/repositories/usePersonRepository';
-import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
-import { ApiGen_Concepts_PropertyActivityInvolvedParty } from '@/models/api/generated/ApiGen_Concepts_PropertyActivityInvolvedParty';
+import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
+import { ApiGen_Concepts_ManagementActivityInvolvedParty } from '@/models/api/generated/ApiGen_Concepts_ManagementActivityInvolvedParty';
 import { ApiGen_Concepts_PropertyMinistryContact } from '@/models/api/generated/ApiGen_Concepts_PropertyMinistryContact';
 import { isValidId } from '@/utils';
 
@@ -29,7 +29,7 @@ const useActivityContactRetriever = () => {
   );
 
   const fetchPartiesContact = useCallback(
-    async (c: ApiGen_Concepts_PropertyActivityInvolvedParty) => {
+    async (c: ApiGen_Concepts_ManagementActivityInvolvedParty) => {
       if (isValidId(c.personId)) {
         const person = await getPerson(c.personId);
         if (person !== undefined) {
@@ -47,7 +47,7 @@ const useActivityContactRetriever = () => {
   );
 
   const fetchProviderContact = useCallback(
-    async (c: ApiGen_Concepts_PropertyActivity) => {
+    async (c: ApiGen_Concepts_ManagementActivity) => {
       if (isValidId(c.serviceProviderPersonId)) {
         const person = await getPerson(c.serviceProviderPersonId);
         if (person !== undefined) {

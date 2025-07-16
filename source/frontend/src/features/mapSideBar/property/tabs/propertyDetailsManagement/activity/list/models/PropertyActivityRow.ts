@@ -1,6 +1,6 @@
 import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
+import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 import { ApiGen_Concepts_ManagementActivitySubType } from '@/models/api/generated/ApiGen_Concepts_ManagementActivitySubType';
-import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
 import { firstOrNull, getApiPropertyName, isValidIsoDateTime } from '@/utils';
 
 export class PropertyActivityRow {
@@ -19,7 +19,7 @@ export class PropertyActivityRow {
     readonly activityId: number,
   ) {}
 
-  public static fromApi(model: ApiGen_Concepts_PropertyActivity): PropertyActivityRow {
+  public static fromApi(model: ApiGen_Concepts_ManagementActivity): PropertyActivityRow {
     const row = new PropertyActivityRow(model.id, model.id);
     row.activityType = model.activityTypeCode;
     row.activitySubTypes = model.activitySubTypeCodes;

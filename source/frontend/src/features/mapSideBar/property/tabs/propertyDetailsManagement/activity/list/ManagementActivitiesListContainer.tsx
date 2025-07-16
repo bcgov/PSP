@@ -4,10 +4,10 @@ import { useHistory } from 'react-router-dom';
 import { TableSort } from '@/components/Table/TableSort';
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import ManagementStatusUpdateSolver from '@/features/mapSideBar/management/tabs/fileDetails/detail/ManagementStatusUpdateSolver';
-import { usePropertyActivityRepository } from '@/hooks/repositories/usePropertyActivityRepository';
+import { useManagementActivityPropertyRepository } from '@/hooks/repositories/useManagementActivityPropertyRepository';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import useIsMounted from '@/hooks/util/useIsMounted';
-import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
+import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 import { isValidId } from '@/utils';
 
 import { IManagementActivitiesListViewProps } from './ManagementActivitiesListView';
@@ -28,12 +28,12 @@ const PropertyManagementActivitiesListContainer: React.FunctionComponent<
   const { setModalContent, setDisplayModal } = useModalContext();
   const [propertyActivities, setPropertyActivities] = useState<PropertyActivityRow[]>([]);
   const { staleLastUpdatedBy } = useContext(SideBarContext);
-  const [sort, setSort] = useState<TableSort<ApiGen_Concepts_PropertyActivity>>({});
+  const [sort, setSort] = useState<TableSort<ApiGen_Concepts_ManagementActivity>>({});
 
   const {
     getActivities: { execute: getActivities, loading },
     deleteActivity: { execute: deleteActivity, loading: deletingActivity },
-  } = usePropertyActivityRepository();
+  } = useManagementActivityPropertyRepository();
 
   const fetchPropertyActivities = useCallback(async () => {
     const response = await getActivities(propertyId);

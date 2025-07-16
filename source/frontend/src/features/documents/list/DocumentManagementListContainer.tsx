@@ -6,8 +6,8 @@ import { useManagementProvider } from '@/hooks/repositories/useManagementProvide
 import useIsMounted from '@/hooks/util/useIsMounted';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
+import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 import { ApiGen_Concepts_ManagementFileProperty } from '@/models/api/generated/ApiGen_Concepts_ManagementFileProperty';
-import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
 import { exists, getFilePropertyName, relationshipTypeToPathName } from '@/utils';
 
 import { DocumentRow } from '../ComposedDocument';
@@ -27,7 +27,7 @@ const DocumentManagementListContainer: React.FunctionComponent<
   const [propertyDocuments, setPropertyDocuments] = useState<DocumentRow[]>([]);
 
   const [managementActivities, setManagementActivities] = useState<
-    ApiGen_Concepts_PropertyActivity[]
+    ApiGen_Concepts_ManagementActivity[]
   >([]);
 
   const [managementProperties, setManagementProperties] = useState<
@@ -60,7 +60,7 @@ const DocumentManagementListContainer: React.FunctionComponent<
   }, [getProperties, props.parentId, isMounted]);
 
   const retrieveActivitiesDocuments = useCallback(
-    async (activities: ApiGen_Concepts_PropertyActivity[]) => {
+    async (activities: ApiGen_Concepts_ManagementActivity[]) => {
       if (!exists(activities)) {
         return;
       }

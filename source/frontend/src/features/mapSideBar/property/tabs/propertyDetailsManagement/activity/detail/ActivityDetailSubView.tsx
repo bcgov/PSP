@@ -6,11 +6,11 @@ import { readOnlyMultiSelectStyle } from '@/components/common/form';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
-import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
+import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 import { exists, prettyFormatDate } from '@/utils';
 
 interface IPropertyActivityDetailsSubViewProps {
-  activity: ApiGen_Concepts_PropertyActivity | null;
+  activity: ApiGen_Concepts_ManagementActivity | null;
 }
 
 const PropertyActivityDetailsSubView: React.FunctionComponent<

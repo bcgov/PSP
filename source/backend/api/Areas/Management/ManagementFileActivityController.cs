@@ -84,13 +84,13 @@ namespace Pims.Api.Areas.Management.Controllers
         /// Get the specified management file activity.
         /// </summary>
         /// <returns></returns>
-        [HttpGet("{managementFileId:long}/management-activities/{propertyActivityId:long}")]
+        [HttpGet("{managementFileId:long}/management-activities/{managementActivityId:long}")]
         [HasPermission(Permissions.ManagementView, Permissions.ActivityView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ManagementActivityModel), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult GetManagementActivity(long managementFileId, long propertyActivityId)
+        public IActionResult GetManagementActivity(long managementFileId, long managementActivityId)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -99,7 +99,7 @@ namespace Pims.Api.Areas.Management.Controllers
                 User.GetUsername(),
                 DateTime.Now);
 
-            var activity = _propertyService.GetActivity(propertyActivityId);
+            var activity = _propertyService.GetActivity(managementActivityId);
 
             if (activity.ManagementFileId != managementFileId)
             {
@@ -152,13 +152,13 @@ namespace Pims.Api.Areas.Management.Controllers
                 User.GetUsername(),
                 DateTime.Now);
 
-            var propertyActivity = _mapper.Map<PimsManagementActivity>(activityModel);
-            if (!propertyActivity.ManagementFileId.HasValue || propertyActivity.ManagementFileId != managementFileId || propertyActivity.Internal_Id != activityId)
+            var managementActivity = _mapper.Map<PimsManagementActivity>(activityModel);
+            if (!managementActivity.ManagementFileId.HasValue || managementActivity.ManagementFileId != managementFileId || managementActivity.Internal_Id != activityId)
             {
                 throw new BadRequestException("Invalid activity identifiers.");
             }
 
-            var updatedProperty = _propertyService.UpdateActivity(propertyActivity);
+            var updatedProperty = _propertyService.UpdateActivity(managementActivity);
 
             return new JsonResult(_mapper.Map<ManagementActivityModel>(updatedProperty));
         }
@@ -167,13 +167,13 @@ namespace Pims.Api.Areas.Management.Controllers
         /// Delete the specified management file activity.
         /// </summary>
         /// <returns></returns>
-        [HttpDelete("{managementFileId:long}/management-activities/{propertyActivityId:long}")]
+        [HttpDelete("{managementFileId:long}/management-activities/{managementActivityId:long}")]
         [HasPermission(Permissions.ManagementEdit, Permissions.ActivityEdit)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ManagementActivityModel), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult DeleteManagementActivity(long managementFileId, long propertyActivityId)
+        public IActionResult DeleteManagementActivity(long managementFileId, long managementActivityId)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -182,7 +182,7 @@ namespace Pims.Api.Areas.Management.Controllers
                 User.GetUsername(),
                 DateTime.Now);
 
-            var deleted = _propertyService.DeleteFileActivity(managementFileId, propertyActivityId);
+            var deleted = _propertyService.DeleteFileActivity(managementFileId, managementActivityId);
 
             return new JsonResult(deleted);
         }

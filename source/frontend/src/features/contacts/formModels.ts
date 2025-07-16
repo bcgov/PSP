@@ -170,7 +170,7 @@ export class IEditablePersonForm {
       birthDate: null,
       addressComment: null,
       useOrganizationAddress: this.useOrganizationAddress,
-      propertyActivityId: null,
+      managementActivityId: null,
     };
 
     return apiPerson;

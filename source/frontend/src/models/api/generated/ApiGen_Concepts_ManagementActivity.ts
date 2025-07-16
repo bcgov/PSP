@@ -6,17 +6,17 @@ import { UtcIsoDate } from '@/models/api/UtcIsoDateTime';
 
 import { ApiGen_Base_BaseAudit } from './ApiGen_Base_BaseAudit';
 import { ApiGen_Base_CodeType } from './ApiGen_Base_CodeType';
+import { ApiGen_Concepts_ManagementActivityInvoice } from './ApiGen_Concepts_ManagementActivityInvoice';
+import { ApiGen_Concepts_ManagementActivityInvolvedParty } from './ApiGen_Concepts_ManagementActivityInvolvedParty';
+import { ApiGen_Concepts_ManagementActivityProperty } from './ApiGen_Concepts_ManagementActivityProperty';
 import { ApiGen_Concepts_ManagementActivitySubType } from './ApiGen_Concepts_ManagementActivitySubType';
 import { ApiGen_Concepts_ManagementFile } from './ApiGen_Concepts_ManagementFile';
 import { ApiGen_Concepts_Organization } from './ApiGen_Concepts_Organization';
 import { ApiGen_Concepts_Person } from './ApiGen_Concepts_Person';
-import { ApiGen_Concepts_PropertyActivityInvoice } from './ApiGen_Concepts_PropertyActivityInvoice';
-import { ApiGen_Concepts_PropertyActivityInvolvedParty } from './ApiGen_Concepts_PropertyActivityInvolvedParty';
-import { ApiGen_Concepts_PropertyActivityProperty } from './ApiGen_Concepts_PropertyActivityProperty';
 import { ApiGen_Concepts_PropertyMinistryContact } from './ApiGen_Concepts_PropertyMinistryContact';
 
-// LINK: @backend/apimodels/Models/Concepts/Property/PropertyActivityModel.cs
-export interface ApiGen_Concepts_PropertyActivity extends ApiGen_Base_BaseAudit {
+// LINK: @backend/apimodels/Models/Concepts/Property/ManagementActivityModel.cs
+export interface ApiGen_Concepts_ManagementActivity extends ApiGen_Base_BaseAudit {
   id: number;
   managementFileId: number | null;
   managementFile: ApiGen_Concepts_ManagementFile | null;
@@ -32,8 +32,8 @@ export interface ApiGen_Concepts_PropertyActivity extends ApiGen_Base_BaseAudit 
   serviceProviderOrg: ApiGen_Concepts_Organization | null;
   serviceProviderPersonId: number | null;
   serviceProviderPerson: ApiGen_Concepts_Person | null;
-  involvedParties: ApiGen_Concepts_PropertyActivityInvolvedParty[] | null;
+  involvedParties: ApiGen_Concepts_ManagementActivityInvolvedParty[] | null;
   ministryContacts: ApiGen_Concepts_PropertyMinistryContact[] | null;
-  activityProperties: ApiGen_Concepts_PropertyActivityProperty[] | null;
-  invoices: ApiGen_Concepts_PropertyActivityInvoice[] | null;
+  activityProperties: ApiGen_Concepts_ManagementActivityProperty[] | null;
+  invoices: ApiGen_Concepts_ManagementActivityInvoice[] | null;
 }
