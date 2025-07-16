@@ -304,7 +304,7 @@ namespace Pims.Api.Test.Services
             DocumentUploadRequest uploadRequest = new() { DocumentTypeId = 1, File = this._helper.GetFormFile("Lorem Ipsum") };
 
             // Assert
-            Func<Task> sut = async () => await service.UploadPropertyActivityDocument(1, uploadRequest);
+            Func<Task> sut = async () => await service.UploadManagementFileDocument(1, uploadRequest);
 
             // Assert
             sut.Should().ThrowAsync<NotAuthorizedException>();
@@ -423,7 +423,7 @@ namespace Pims.Api.Test.Services
             DocumentUploadRequest uploadRequest = new() { DocumentTypeId = 1, File = this._helper.GetFormFile("Lorem Ipsum", "test.exe") };
 
             // Assert
-            Func<Task> action = async () => await service.UploadPropertyActivityDocument(1, uploadRequest);
+            Func<Task> action = async () => await service.UploadManagementActivityDocument(1, uploadRequest);
 
             // Assert
             action.Should().ThrowAsync<BusinessRuleViolationException>().WithMessage("This file has an invalid file extension.");
@@ -818,7 +818,7 @@ namespace Pims.Api.Test.Services
                 DocumentStatusCode = "DocumentStatus",
             };
 
-            Func<Task> act = async () => await service.UploadPropertyActivityDocument(1, uploadRequest);
+            Func<Task> act = async () => await service.UploadManagementActivityDocument(1, uploadRequest);
 
             // Assert
             var ex = await act.Should().ThrowAsync<BadRequestException>();
@@ -1240,7 +1240,7 @@ namespace Pims.Api.Test.Services
             };
 
             // Act
-            var result = await service.DeletePropertyActivityDocumentAsync(doc);
+            var result = await service.DeleteManagementActivityDocumentAsync(doc);
 
             // Assert
             Assert.NotNull(result);
@@ -1286,7 +1286,7 @@ namespace Pims.Api.Test.Services
             };
 
             // Act
-            var result = await service.DeletePropertyActivityDocumentAsync(doc);
+            var result = await service.DeleteManagementActivityDocumentAsync(doc);
 
             // Assert
             Assert.NotNull(result);
@@ -1420,7 +1420,7 @@ namespace Pims.Api.Test.Services
             };
 
             // Act
-            Func<Task> act = async () => await service.DeletePropertyActivityDocumentAsync(doc);
+            Func<Task> act = async () => await service.DeleteManagementActivityDocumentAsync(doc);
 
             // Assert
             act.Should().ThrowAsync<NotAuthorizedException>();

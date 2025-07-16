@@ -94,7 +94,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             for (var l = 0; l < digitalDocumentList.Count; l++)
             {
                 digitalDocumentsTab.ViewUploadedDocument(l);
-                digitalDocumentsTab.EditDocument();
+                digitalDocumentsTab.EditDocumentButton();
                 digitalDocumentsTab.VerifyDocumentFields(digitalDocumentList[l].DocumentType);
                 digitalDocumentsTab.InsertDocumentTypeDetails(digitalDocumentList[l]);
                 digitalDocumentsTab.SaveDigitalDocumentUpdate();
@@ -172,7 +172,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             for (var l = 0; l < digitalDocumentList.Count; l++)
             {
                 digitalDocumentsTab.ViewUploadedDocument(l);
-                digitalDocumentsTab.EditDocument();
+                digitalDocumentsTab.EditDocumentButton();
                 digitalDocumentsTab.VerifyDocumentFields(digitalDocumentList[l].DocumentType);
                 digitalDocumentsTab.InsertDocumentTypeDetails(digitalDocumentList[l]);
                 digitalDocumentsTab.SaveDigitalDocumentUpdate();
@@ -222,7 +222,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Edit digital document's details
             digitalDocumentsTab.NavigateToFirstPageDocumentsTable();
             digitalDocumentsTab.View1stDocument();
-            digitalDocumentsTab.EditDocument();
+            digitalDocumentsTab.EditDocumentButton();
             digitalDocumentsTab.UpdateNewDocumentType(digitalDocumentList[0]);
 
             //Cancel digital document's details
@@ -231,7 +231,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Edit digital document's details
             digitalDocumentsTab.View1stDocument();
-            digitalDocumentsTab.EditDocument();
+            digitalDocumentsTab.EditDocumentButton();
             digitalDocumentsTab.UpdateNewDocumentType(digitalDocumentList[0]);
 
             //Save document's changes
@@ -283,6 +283,111 @@ namespace PIMS.Tests.Automation.StepDefinitions
             var firstFileStatusAscResult = digitalDocumentsTab.FirstDocumentFileStatus();
 
             Assert.NotEqual(firstFileStatusDescResult,  firstFileStatusAscResult);
+            digitalDocumentsTab.OrderByDocumentFileStatus();
+
+            //Filter Documents by Type
+            digitalDocumentsTab.FilterByType(digitalDocumentList[0].DocumentType);
+            Assert.True(digitalDocumentsTab.TotalSearchDocuments() > 0);
+
+            //Filter Documents by Name
+            digitalDocumentsTab.FilterByName("PSP");
+            Assert.True(digitalDocumentsTab.TotalSearchDocuments() > 0);
+
+            //Filter Documents by Status
+            digitalDocumentsTab.FilterByStatus(digitalDocumentList[0].DocumentStatus);
+            Assert.True(digitalDocumentsTab.TotalSearchDocuments() > 0);
+
+            //Delete digital document
+            digitalDocumentsTab.Delete1stDocument();
+        }
+
+        [StepDefinition(@"I edit a Digital Document for a property from row number (.*)")]
+        public void UpdatePropertyDigitalDocuments(int rowNumber)
+        {
+
+            //Access the documents tab
+            digitalDocumentsTab.NavigatePropertyDocumentsTab();
+
+            //Getting Digital Document Details
+            PopulateDigitalDocumentIndex(rowNumber);
+
+            //Add new digital document
+            digitalDocumentsTab.AddNewDocumentButton();
+            //digitalDocumentsTab.InsertDocumentTypeStatus(digitalDocumentList[0]);
+
+            Random random = new Random();
+            var index2 = random.Next(0, documentFiles.Count());
+            var document2 = documentFiles.ElementAt(index2);
+
+            digitalDocumentsTab.UploadDocument(document2.Url);
+
+            //Cancel uploading a new document
+            digitalDocumentsTab.CancelDigitalDocument();
+
+            //Edit digital document's details
+            digitalDocumentsTab.NavigateToFirstPageDocumentsTable();
+            digitalDocumentsTab.View1stDocument();
+            digitalDocumentsTab.EditDocumentButton();
+            digitalDocumentsTab.UpdateNewDocumentType(digitalDocumentList[0]);
+
+            //Cancel digital document's details
+            digitalDocumentsTab.CancelEditDigitalDocument();
+            digitalDocumentsTab.CloseDigitalDocumentViewDetails();
+
+            //Edit digital document's details
+            digitalDocumentsTab.View1stDocument();
+            digitalDocumentsTab.EditDocumentButton();
+            digitalDocumentsTab.UpdateNewDocumentType(digitalDocumentList[0]);
+
+            //Save document's changes
+            digitalDocumentsTab.SaveEditDigitalDocument();
+
+            //Verify Details View Form
+            digitalDocumentsTab.View1stDocument();
+            //digitalDocumentsTab.VerifyDocumentDetailsUpdateViewForm(digitalDocumentList[0]);
+
+            //Close Digital Documents Details View
+            digitalDocumentsTab.CloseDigitalDocumentViewDetails();
+
+            //Verify Pagination Elements
+            digitalDocumentsTab.VerifyPaginationElements();
+
+            //Verify Pagination Functionality
+            sharedPagination.ChoosePaginationOption(5);
+            Assert.Equal(5, digitalDocumentsTab.DigitalDocumentsTableResultNumber());
+
+            sharedPagination.ChoosePaginationOption(10);
+            Assert.True(digitalDocumentsTab.DigitalDocumentsTableResultNumber() <= 10);
+
+            sharedPagination.ChoosePaginationOption(20);
+            Assert.True(digitalDocumentsTab.DigitalDocumentsTableResultNumber() <= 20);
+
+            //Verify Column Sorting by Document Type
+            digitalDocumentsTab.OrderByDocumentFileType();
+            var firstFileTypeDescResult = digitalDocumentsTab.FirstDocumentFileType();
+
+            digitalDocumentsTab.OrderByDocumentFileType();
+            var firstFileTypeAscResult = digitalDocumentsTab.FirstDocumentFileType();
+
+            Assert.NotEqual(firstFileTypeDescResult, firstFileTypeAscResult);
+
+            //Verify Column Sorting by Document Type
+            digitalDocumentsTab.OrderByDocumentFileName();
+            var firstFileNameDescResult = digitalDocumentsTab.FirstDocumentFileName();
+
+            digitalDocumentsTab.OrderByDocumentFileName();
+            var firstFileNameAscResult = digitalDocumentsTab.FirstDocumentFileName();
+
+            Assert.NotEqual(firstFileNameDescResult, firstFileNameAscResult);
+
+            //Verify Column Sorting by File Name
+            digitalDocumentsTab.OrderByDocumentFileStatus();
+            var firstFileStatusDescResult = digitalDocumentsTab.FirstDocumentFileStatus();
+
+            digitalDocumentsTab.OrderByDocumentFileStatus();
+            var firstFileStatusAscResult = digitalDocumentsTab.FirstDocumentFileStatus();
+
+            Assert.NotEqual(firstFileStatusDescResult, firstFileStatusAscResult);
             digitalDocumentsTab.OrderByDocumentFileStatus();
 
             //Filter Documents by Type

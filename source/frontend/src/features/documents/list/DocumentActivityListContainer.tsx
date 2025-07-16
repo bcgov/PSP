@@ -126,6 +126,7 @@ const DocumentActivityListContainer: React.FunctionComponent<
       disableAdd={props.disableAdd}
       title={props.title}
       showParentInformation={true}
+      data-testId="document-activity-list"
       canEditDocuments={editDocumentsEnabled}
     />
   );

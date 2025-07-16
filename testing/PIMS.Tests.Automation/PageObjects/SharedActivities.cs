@@ -20,8 +20,11 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By managementActTypeInput = By.Id("input-activityTypeCode");
         private readonly By managementActTypeContent = By.XPath("//label[contains(text(),'Activity type')]/parent::div/following-sibling::div");
         private readonly By managementActSubTypeLabel = By.XPath("//label[contains(text(),'Sub-type')]");
-        private readonly By managementActSubTypeInput = By.Id("input-activitySubtypeCode");
-        private readonly By managementActSubTypeContent = By.XPath("//label[contains(text(),'Sub-type')]/parent::div/following-sibling::div");
+        private readonly By managementActSubTypeSelect = By.Id("multiselect-activitySubtypeCodes");
+        private readonly By managementActSubTypeSelectOptions = By.CssSelector("div[id='multiselect-activitySubtypeCodes'] div[class='optionListContainer displayNone']");
+        private readonly By managementActSubTypeSelect1stOption = By.CssSelector("div[id='multiselect-activitySubtypeCodes'] div[class='optionListContainer displayNone'] ul li:first-child");
+        private readonly By managementActSubTypeDeleteBttns = By.CssSelector("div[id='multiselect-activitySubtypeCodes'] i[class='custom-close']");
+        private readonly By managementActSubTypeContents = By.CssSelector("div[id='multiselectContainerReact']");
         private readonly By managementActStatusLabel = By.XPath("//label[contains(text(),'Activity status')]");
         private readonly By managementActStatusInput = By.Id("input-activityStatusCode");
         private readonly By managementActStatusContent = By.XPath("//label[contains(text(),'Activity status')]/parent::div/following-sibling::div");
@@ -118,7 +121,22 @@ namespace PIMS.Tests.Automation.PageObjects
             ChooseSpecificSelectOption(managementActTypeInput, activity.PropertyActivityType);
 
             Wait();
-            ChooseSpecificSelectOption(managementActSubTypeInput, activity.PropertyActivitySubType);
+            if (webDriver.FindElements(managementActSubTypeDeleteBttns).Count > 0)
+            {
+                while (webDriver.FindElements(managementActSubTypeDeleteBttns).Count > 0)
+                    webDriver.FindElements(managementActSubTypeDeleteBttns)[0].Click();
+            }
+
+            if (activity.PropertyActivitySubTypeList.First() != "")
+            {
+                foreach (string subtype in activity.PropertyActivitySubTypeList)
+                {
+                    webDriver.FindElement(managementActSubTypeSelect).Click();
+
+                    WaitUntilVisible(managementActSubTypeSelectOptions);
+                    ChooseMultiSelectSpecificOption(managementActSubTypeSelectOptions, subtype);
+                }
+            }
 
             ChooseSpecificSelectOption(managementActStatusInput, activity.PropertyActivityStatus);
 
@@ -143,21 +161,21 @@ namespace PIMS.Tests.Automation.PageObjects
             while (webDriver.FindElements(managementActMinistryContactDeleteBttns).Count > 0)
                 webDriver.FindElements(managementActMinistryContactDeleteBttns)[0].Click();
 
-            if (activity.PropertyActivityMinistryContact.First() != "")
+            if (activity.PropertyActivityMinistryContactList.First() != "")
             {
                 webDriver.FindElement(managementActMinistryContactBttn).Click();
-                sharedSelectContact.SelectContact(activity.PropertyActivityMinistryContact[0], "");
+                sharedSelectContact.SelectContact(activity.PropertyActivityMinistryContactList[0], "");
 
-                if (activity.PropertyActivityMinistryContact.Count > 1)
+                if (activity.PropertyActivityMinistryContactList.Count > 1)
                 {
-                    for (int i = 1; i < activity.PropertyActivityMinistryContact.Count; i++)
+                    for (int i = 1; i < activity.PropertyActivityMinistryContactList.Count; i++)
                     {
                         var elementNumber = i + 1;
                         webDriver.FindElement(managementActMinistryContactAddContactLink).Click();
 
                         WaitUntilVisible(By.XPath("//label[contains(text(),'Ministry contacts')]/parent::div/following-sibling::div/div["+ elementNumber +"]/div/div/div/div/button"));
                         webDriver.FindElement(By.XPath("//label[contains(text(),'Ministry contacts')]/parent::div/following-sibling::div/div["+ elementNumber +"]/div/div/div/div/button")).Click();
-                        sharedSelectContact.SelectContact(activity.PropertyActivityMinistryContact[i], "");
+                        sharedSelectContact.SelectContact(activity.PropertyActivityMinistryContactList[i], "");
                     }
                 }
             }
@@ -174,21 +192,21 @@ namespace PIMS.Tests.Automation.PageObjects
             while (webDriver.FindElements(managementActInvolvedPartiesDeleteBttns).Count > 0)
                 webDriver.FindElements(managementActInvolvedPartiesDeleteBttns)[0].Click();
 
-            if (activity.PropertyActivityInvolvedPartiesExtContacts.First() != "")
+            if (activity.PropertyActivityInvolvedPartiesExtContactsList.First() != "")
             {
                 webDriver.FindElement(managementActInvolvedPartiesExtContactsBttn).Click();
-                sharedSelectContact.SelectContact(activity.PropertyActivityInvolvedPartiesExtContacts[0], "");
+                sharedSelectContact.SelectContact(activity.PropertyActivityInvolvedPartiesExtContactsList[0], "");
 
-                if (activity.PropertyActivityInvolvedPartiesExtContacts.Count > 1)
+                if (activity.PropertyActivityInvolvedPartiesExtContactsList.Count > 1)
                 {
-                    for (int idx = 1; idx < activity.PropertyActivityInvolvedPartiesExtContacts.Count; idx++)
+                    for (int idx = 1; idx < activity.PropertyActivityInvolvedPartiesExtContactsList.Count; idx++)
                     {
                         var elementNumber = idx + 1;
                         webDriver.FindElement(managementActInvolvedPartiesExtContactsAddContactLink).Click();
 
                         WaitUntilVisible(By.XPath("//input[@id='input-involvedParties["+ idx +"].id']/parent::div/parent::div/following-sibling::div/button"));
                         webDriver.FindElement(By.XPath("//input[@id='input-involvedParties["+ idx +"].id']/parent::div/parent::div/following-sibling::div/button")).Click();
-                        sharedSelectContact.SelectContact(activity.PropertyActivityInvolvedPartiesExtContacts[idx], "");
+                        sharedSelectContact.SelectContact(activity.PropertyActivityInvolvedPartiesExtContactsList[idx], "");
                     }
                 }
             }
@@ -233,13 +251,17 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueContentEquals(managementActTypeContent, activity.PropertyActivityType);
 
             AssertTrueIsDisplayed(managementActSubTypeLabel);
-            //AssertTrueContentEquals(managementActSubTypeContent, activity.PropertyActivitySubType); -- TODO
+            if (activity.PropertyActivitySubTypeList.First() != "")
+            {
+                var subTypesUI = GetViewFieldListContent(managementActSubTypeContents);
+                Assert.True(Enumerable.SequenceEqual(subTypesUI, activity.PropertyActivitySubTypeList));
+            }
 
             AssertTrueIsDisplayed(managementActStatusLabel);
             AssertTrueContentEquals(managementActStatusContent, activity.PropertyActivityStatus);
 
             if (activityType == "Management File")
-            { 
+            {
                 AssertTrueIsDisplayed(managementActCommencementLabel);
                 AssertTrueContentEquals(managementActCommencementContent, TransformDateFormat(activity.PropertyActivityRequestedCommenceDate));
             }
@@ -259,9 +281,9 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueContentEquals(managementActDescriptionContent, activity.PropertyActivityDescription);
 
             AssertTrueIsDisplayed(managementActMinistryContactLabel);
-            if (activity.PropertyActivityMinistryContact.First() != "")
-                for (int i = 0; i < activity.PropertyActivityMinistryContact.Count; i++)
-                    Assert.Equal(webDriver.FindElements(managementActMinistryContactContent)[i].Text, activity.PropertyActivityMinistryContact[i]);
+            if (activity.PropertyActivityMinistryContactList.First() != "")
+                for (int i = 0; i < activity.PropertyActivityMinistryContactList.Count; i++)
+                    Assert.Equal(webDriver.FindElements(managementActMinistryContactContent)[i].Text, activity.PropertyActivityMinistryContactList[i]);
 
             if (activityType == "Management File")
             {
@@ -281,18 +303,18 @@ namespace PIMS.Tests.Automation.PageObjects
             if (activityType == "Management File")
             {
                 AssertTrueIsDisplayed(managementActDetailsActivityExternalContactsLabel);
-                if (activity.PropertyActivityInvolvedPartiesExtContacts.First() != "")
-                    for (int i = 0; i < activity.PropertyActivityInvolvedPartiesExtContacts.Count; i++)
-                        Assert.Equal(webDriver.FindElements(managementActDetailsActivityExternalContactsCount)[i].Text, activity.PropertyActivityInvolvedPartiesExtContacts[i]);
+                if (activity.PropertyActivityInvolvedPartiesExtContactsList.First() != "")
+                    for (int i = 0; i < activity.PropertyActivityInvolvedPartiesExtContactsList.Count; i++)
+                        Assert.Equal(webDriver.FindElements(managementActDetailsActivityExternalContactsCount)[i].Text, activity.PropertyActivityInvolvedPartiesExtContactsList[i]);
             }
             else
             {
                 AssertTrueIsDisplayed(managementActInvolvedPartiesLabel);
-                if (activity.PropertyActivityInvolvedPartiesExtContacts.First() != "")
-                    for (int i = 0; i < activity.PropertyActivityInvolvedPartiesExtContacts.Count; i++)
-                        Assert.Equal(webDriver.FindElements(managementActInvolvedPartiesContent)[i].Text, activity.PropertyActivityInvolvedPartiesExtContacts[i]);
+                if (activity.PropertyActivityInvolvedPartiesExtContactsList.First() != "")
+                    for (int i = 0; i < activity.PropertyActivityInvolvedPartiesExtContactsList.Count; i++)
+                        Assert.Equal(webDriver.FindElements(managementActInvolvedPartiesContent)[i].Text, activity.PropertyActivityInvolvedPartiesExtContactsList[i]);
             }
-            
+
 
             AssertTrueIsDisplayed(managementActServiceProviderLabel);
             if (activity.PropertyActivityServiceProvider != "")
@@ -328,7 +350,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(managementActTypeLabel);
             AssertTrueIsDisplayed(managementActTypeInput);
             AssertTrueIsDisplayed(managementActSubTypeLabel);
-            AssertTrueIsDisplayed(managementActSubTypeInput);
+            AssertTrueIsDisplayed(managementActSubTypeSelect);
             AssertTrueIsDisplayed(managementActStatusLabel);
             AssertTrueIsDisplayed(managementActStatusInput);
 
@@ -374,7 +396,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueIsDisplayed(managementActInvolvedPartiesExtContactsBttn);
                 AssertTrueIsDisplayed(managementActInvolvedPartiesExtContactsAddContactLink);
             }
-            
+
             AssertTrueIsDisplayed(managementActServiceProviderLabel);
             AssertTrueIsDisplayed(managementActServiceProviderInput);
             AssertTrueIsDisplayed(managementActServiceProviderBttn);
@@ -415,7 +437,5 @@ namespace PIMS.Tests.Automation.PageObjects
             if (invoice.PropertyActivityInvoicePSTAmount != "0.00")
                 AssertTrueElementValueEquals(By.Id("input-invoices."+ index +".pstAmount"), TransformCurrencyFormat(invoice.PropertyActivityInvoicePSTAmount));
         }
-
-       
     }
 }
