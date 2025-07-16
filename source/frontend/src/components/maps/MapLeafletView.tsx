@@ -34,6 +34,7 @@ import { ZoomOutButton } from './leaflet/Control/ZoomOut/ZoomOutButton';
 import { FilePropertiesLayer } from './leaflet/Layers/FilePropertiesLayer';
 import { LeafletLayerListener } from './leaflet/Layers/LeafletLayerListener';
 import { MarkerLayer } from './leaflet/Layers/MarkerLayer';
+import WorklistParcelsLayer from './leaflet/Layers/WorklistParcelsLayer';
 import { MapEvents } from './leaflet/MapEvents/MapEvents';
 import * as Styled from './leaflet/styles';
 import { EsriVectorTileLayer } from './leaflet/VectorTileLayer/EsriVectorTileLayer';
@@ -281,6 +282,7 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
         />
 
         <Pane name="worklistParcels" style={{ zIndex: 500 }}>
+          <WorklistParcelsLayer />
           <WorklistMapClickMonitor />
         </Pane>
 
