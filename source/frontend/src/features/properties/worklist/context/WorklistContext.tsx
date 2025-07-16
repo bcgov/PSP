@@ -1,7 +1,12 @@
 import { createContext, ReactNode, useCallback, useContext, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { exists, pidFromFullyAttributedFeature, pinFromFullyAttributedFeature } from '@/utils';
+import {
+  exists,
+  pidFromFullyAttributedFeature,
+  pinFromFullyAttributedFeature,
+  planFromFullyAttributedFeature,
+} from '@/utils';
 
 import { ParcelFeature } from '../models';
 
@@ -99,13 +104,32 @@ function areParcelsEqual(p1: ParcelFeature, p2: ParcelFeature): boolean {
     return true;
   }
 
+  // Some parcels are only identified by their plan-number (e.g. common strata, parks)
+  // Only consider plan-number as an identifier when there are no PID/PIN
+  const planNumber1 = planFromFullyAttributedFeature(p1.feature);
+  const planNumber2 = planFromFullyAttributedFeature(p2.feature);
+  if (
+    planNumber1 === planNumber2 &&
+    !exists(pid1) &&
+    !exists(pin1) &&
+    !exists(pid2) &&
+    !exists(pin2)
+  ) {
+    return true;
+  }
+
+  // Only consider lat/long when there are no PID/PIN
   const location1 = p1.location;
   const location2 = p2.location;
   if (
     exists(location1) &&
     exists(location2) &&
     location1.lat === location2.lat &&
-    location1.lng === location2.lng
+    location1.lng === location2.lng &&
+    !exists(pid1) &&
+    !exists(pin1) &&
+    !exists(pid2) &&
+    !exists(pin2)
   ) {
     return true;
   }

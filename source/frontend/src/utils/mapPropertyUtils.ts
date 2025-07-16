@@ -72,7 +72,7 @@ export const getWorklistPropertyName = (parcelFeature: ParcelFeature | null): Pr
 
   const pid = pidFromFullyAttributedFeature(parcelFeature.feature);
   const pin = pinFromFullyAttributedFeature(parcelFeature.feature);
-  const planNumber = parcelFeature.feature?.properties?.PLAN_NUMBER;
+  const planNumber = planFromFullyAttributedFeature(parcelFeature.feature);
   const location = parcelFeature.location;
 
   if (exists(pid) && pid?.toString()?.length > 0 && pid !== '0') {
@@ -320,6 +320,14 @@ export function pinFromFullyAttributedFeature(
   parcelFeature: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties> | null,
 ): string | null {
   return exists(parcelFeature?.properties) ? parcelFeature?.properties?.PIN?.toString() : null;
+}
+
+export function planFromFullyAttributedFeature(
+  parcelFeature: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties> | null,
+): string | null {
+  return exists(parcelFeature?.properties)
+    ? parcelFeature?.properties?.PLAN_NUMBER?.toString()
+    : null;
 }
 
 export function pidFromFeatureSet(featureset: SelectedFeatureDataset): string | null {
