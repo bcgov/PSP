@@ -1,11 +1,10 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 
-import { MoreOptionsButton } from '@/components/common/buttons/MoreOptionsButton';
 import { Section } from '@/components/common/Section/Section';
 import { exists } from '@/utils';
 
 import { ParcelFeature } from './models';
+import MoreOptionsDropdown from './MoreOptionsDropdown';
 import ParcelItem from './ParcelItem';
 
 export interface IWorklistViewProps {
@@ -13,6 +12,7 @@ export interface IWorklistViewProps {
   selectedId: string | null;
   onSelect: (id: string) => void;
   onRemove: (id: string) => void;
+  onClearAll: () => void;
   onZoomToParcel: (parcel: ParcelFeature) => void;
 }
 
@@ -21,15 +21,9 @@ export const WorklistView: React.FC<IWorklistViewProps> = ({
   selectedId,
   onSelect,
   onRemove,
+  onClearAll,
   onZoomToParcel,
 }) => {
-  // open/close "more options" menu
-  const [showMoreOptions, setShowMoreOptions] = useState(false);
-
-  const handleMoreOptionsClick = () => {
-    setShowMoreOptions(prev => !prev);
-  };
-
   if (parcels.length === 0) {
     return <Section>CTRL + Click to add a property</Section>;
   }
@@ -41,10 +35,8 @@ export const WorklistView: React.FC<IWorklistViewProps> = ({
           {parcels.length}
           {parcels.length > 1 ? ' properties' : ' property'}
         </StyledSpan>
-        <MoreOptionsButton onClick={handleMoreOptionsClick} />
+        <MoreOptionsDropdown canClearAll={parcels?.length > 0} onClearAll={onClearAll} />
       </StyledHeader>
-      {/* TODO: Implement more-options menu UI */}
-      {showMoreOptions && <div>More options go here (clear list, etc)</div>}
       {parcels.map(p => (
         <ParcelItem
           key={p.id}

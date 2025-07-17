@@ -17,6 +17,7 @@ interface IWorklistContext {
   remove: (id: string) => void;
   add: (parcel: ParcelFeature) => void;
   addRange: (parcel: ParcelFeature[]) => void;
+  clearAll: () => void;
 }
 
 const WorklistContext = createContext<IWorklistContext | undefined>(undefined);
@@ -76,8 +77,14 @@ export function WorklistContextProvider({
     });
   }, []);
 
+  const clearAll = useCallback(() => {
+    setParcels([]);
+  }, []);
+
   return (
-    <WorklistContext.Provider value={{ parcels, selectedId, select, remove, add, addRange }}>
+    <WorklistContext.Provider
+      value={{ parcels, selectedId, select, remove, add, addRange, clearAll }}
+    >
       {children}
     </WorklistContext.Provider>
   );

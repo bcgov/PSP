@@ -13,7 +13,7 @@ export interface IWorklistContainerProps {
 }
 
 export const WorklistContainer: React.FC<IWorklistContainerProps> = ({ View }) => {
-  const { parcels, selectedId, select, remove } = useWorklistContext();
+  const { parcels, selectedId, select, remove, clearAll } = useWorklistContext();
   const { requestFlyToBounds, requestFlyToLocation } = useMapStateMachine();
 
   // A worklist parcel points to either a parcel-map boundary/shape or a lat/long (if no parcels were found at that location)
@@ -39,6 +39,7 @@ export const WorklistContainer: React.FC<IWorklistContainerProps> = ({ View }) =
       selectedId={selectedId}
       onSelect={select}
       onRemove={remove}
+      onClearAll={clearAll}
       onZoomToParcel={onZoomToBounds}
     ></View>
   );
