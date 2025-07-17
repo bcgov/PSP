@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+import { Scrollable } from '@/components/common/Scrollable/Scrollable';
 import { Section } from '@/components/common/Section/Section';
 import { exists } from '@/utils';
 
@@ -37,16 +38,18 @@ export const WorklistView: React.FC<IWorklistViewProps> = ({
         </StyledSpan>
         <MoreOptionsDropdown canClearAll={parcels?.length > 0} onClearAll={onClearAll} />
       </StyledHeader>
-      {parcels.map(p => (
-        <ParcelItem
-          key={p.id}
-          parcel={p}
-          isSelected={exists(p.id) && p.id === selectedId}
-          onSelect={onSelect}
-          onRemove={onRemove}
-          onZoomToParcel={onZoomToParcel}
-        ></ParcelItem>
-      ))}
+      <ScrollArea>
+        {parcels.map(p => (
+          <ParcelItem
+            key={p.id}
+            parcel={p}
+            isSelected={exists(p.id) && p.id === selectedId}
+            onSelect={onSelect}
+            onRemove={onRemove}
+            onZoomToParcel={onZoomToParcel}
+          ></ParcelItem>
+        ))}
+      </ScrollArea>
     </StyledContainer>
   );
 };
@@ -54,6 +57,7 @@ export const WorklistView: React.FC<IWorklistViewProps> = ({
 const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
+  height: 100%; /* make the flex‑children measure against full height */
 `;
 
 const StyledHeader = styled.div`
@@ -62,6 +66,16 @@ const StyledHeader = styled.div`
   justify-content: space-between;
   width: 100%;
   padding-bottom: 1rem;
+
+  position: sticky;
+  top: 0; /* pin to the top of the scrolling container   */
+  z-index: 1; /* sit above the rows                           */
+  background: '#fff';
+`;
+
+const ScrollArea = styled(Scrollable)`
+  flex: 1 1 auto; /* consume remaining height in the column       */
+  overflow-y: auto; /* provide the scrolling behaviour              */
 `;
 
 const StyledSpan = styled.span`

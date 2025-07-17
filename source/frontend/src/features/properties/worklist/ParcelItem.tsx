@@ -35,30 +35,30 @@ export function ParcelItem({ parcel, onSelect, onRemove, onZoomToParcel }: IParc
 
   return (
     <StyledRow onClick={() => onSelect(parcel.id)}>
-      <Col>
+      <StyledPidCol>
         <StyledOverflowTip fullText={propertyIdentifier}></StyledOverflowTip>
-      </Col>
-      <Col xs="auto">
-        <LinkButton
-          title="Zoom to worklist parcel"
-          onClick={e => {
-            e.preventDefault();
-            onZoomToParcel(parcel);
-          }}
-        >
-          <FaSearchPlus size={18} />
-        </LinkButton>
-      </Col>
-      <Col xs="auto">
-        <RemoveIconButton
-          title="Delete worklist parcel"
-          data-testId={`delete-worklist-parcel-${parcel.id ?? 'unknown'}`}
-          onRemove={e => {
-            e.stopPropagation();
-            onRemove(parcel.id);
-          }}
-        />
-      </Col>
+      </StyledPidCol>
+      <StyledButtonCol>
+        <ButtonContainer>
+          <LinkButton
+            title="Zoom to worklist parcel"
+            onClick={e => {
+              e.preventDefault();
+              onZoomToParcel(parcel);
+            }}
+          >
+            <FaSearchPlus size={18} />
+          </LinkButton>
+          <RemoveIconButton
+            title="Delete worklist parcel"
+            data-testId={`delete-worklist-parcel-${parcel.id ?? 'unknown'}`}
+            onRemove={e => {
+              e.stopPropagation();
+              onRemove(parcel.id);
+            }}
+          />
+        </ButtonContainer>
+      </StyledButtonCol>
     </StyledRow>
   );
 }
@@ -79,6 +79,31 @@ const StyledRow = styled(Row)`
 `;
 
 const StyledOverflowTip = styled(OverflowTip)`
+  font-size: 1.4rem;
   font-weight: 700;
   color: ${props => props.theme.css.pimsBlue200};
+`;
+
+const StyledPidCol = styled(Col)`
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 3rem;
+  padding-right: 0;
+`;
+
+const StyledButtonCol = styled(Col)`
+  width: 10rem;
+  flex: 0 0 10rem; /* Prevents shrinking/growing */
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const ButtonContainer = styled.div`
+  display: none;
+  gap: 0.5rem;
+  align-items: center;
+
+  ${StyledRow}:hover & {
+    display: flex;
+  }
 `;
