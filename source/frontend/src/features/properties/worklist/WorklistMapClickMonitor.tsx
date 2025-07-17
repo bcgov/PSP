@@ -7,7 +7,7 @@ import { useWorklistContext } from './context/WorklistContext';
 import { ParcelFeature } from './models';
 
 export const WorklistMapClickMonitor: React.FunctionComponent<unknown> = () => {
-  const { addRange } = useWorklistContext();
+  const { add, addRange } = useWorklistContext();
   const { worklistLocationFeatureDataset } = useMapStateMachine();
   const previous = usePrevious(worklistLocationFeatureDataset);
 
@@ -27,6 +27,12 @@ export const WorklistMapClickMonitor: React.FunctionComponent<unknown> = () => {
 
       if (worklistParcels.length > 0) {
         addRange(worklistParcels);
+      } else {
+        // We didn't find any parcel-map properties - add a lat/long location to the worklist
+        const latLongParcel = new ParcelFeature();
+        latLongParcel.location = worklistLocationFeatureDataset.location;
+        latLongParcel.feature = null;
+        add(latLongParcel);
       }
     }
   }, [previous, worklistLocationFeatureDataset]);
