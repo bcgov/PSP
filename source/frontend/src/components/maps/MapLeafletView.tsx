@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { geoJSON, LatLngBounds, LeafletEvent, LeafletMouseEvent, Map } from 'leaflet';
 import { isEqual } from 'lodash';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   LayerGroup,
   MapContainer as LeafletMapContainer,
@@ -17,6 +17,7 @@ import {
   MAP_MIN_MARKER_ZOOM,
   MAX_ZOOM,
 } from '@/constants/strings';
+import { useWorklistContext } from '@/features/properties/worklist/context/WorklistContext';
 import WorklistMapClickMonitor from '@/features/properties/worklist/WorklistMapClickMonitor';
 import { useTenant } from '@/tenants';
 import { exists, firstOrNull } from '@/utils';
@@ -65,6 +66,9 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
 
   const [activeFeatureLayer, setActiveFeatureLayer] = useState<L.GeoJSON>();
   const { doubleClickInterval } = useTenant();
+
+  const { parcels } = useWorklistContext();
+  const isWorklistActive = useMemo(() => parcels?.length > 0, [parcels?.length]);
 
   // add geojson layer to the map
   if (!!mapRef.current && !activeFeatureLayer) {
@@ -273,7 +277,7 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
         />
         <LayersControl onToggle={mapMachine.toggleMapLayerControl} />
         <SearchControl onToggle={mapMachine.toggleMapSearchControl} />
-        <WorklistControl onToggle={mapMachine.toggleWorkListControl} />
+        <WorklistControl active={isWorklistActive} onToggle={mapMachine.toggleWorkListControl} />
         <MarkerLayer
           minZoom={MAP_MIN_MARKER_ZOOM}
           zoom={zoom}
