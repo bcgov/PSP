@@ -25,7 +25,7 @@ export const WorklistView: React.FC<IWorklistViewProps> = ({
   onZoomToParcel,
 }) => {
   if (parcels.length === 0) {
-    return <Section>CTRL + Click to add a property</Section>;
+    return <StyledSection>CTRL + Click to add a property</StyledSection>;
   }
 
   return (
@@ -61,8 +61,18 @@ const StyledHeader = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  padding-bottom: 1rem;
 `;
 
 const StyledSpan = styled.span`
   font-size: 1.3rem;
+`;
+
+const StyledSection = styled(Section)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin-top: auto;
+  margin-bottom: auto;
 `;

@@ -36,7 +36,7 @@ export function ParcelItem({ parcel, onSelect, onRemove, onZoomToParcel }: IParc
   return (
     <StyledRow onClick={() => onSelect(parcel.id)}>
       <Col>
-        <OverflowTip fullText={propertyIdentifier}></OverflowTip>
+        <StyledOverflowTip fullText={propertyIdentifier}></StyledOverflowTip>
       </Col>
       <Col xs="auto">
         <LinkButton
@@ -66,6 +66,19 @@ export function ParcelItem({ parcel, onSelect, onRemove, onZoomToParcel }: IParc
 export default ParcelItem;
 
 const StyledRow = styled(Row)`
-  width: 100%;
+  display: flex;
+  align-items: center;
+  margin-left: 0;
+  margin-right: 0;
   min-height: 4.5rem;
+
+  &:hover {
+    // Adding a 38% opacity to the background color (to match the mockups)
+    background-color: ${props => props.theme.css.pimsBlue10 + '38'};
+  }
+`;
+
+const StyledOverflowTip = styled(OverflowTip)`
+  font-weight: 700;
+  color: ${props => props.theme.css.pimsBlue200};
 `;
