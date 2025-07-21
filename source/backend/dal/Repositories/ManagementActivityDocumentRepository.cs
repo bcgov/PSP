@@ -10,19 +10,19 @@ using Pims.Dal.Entities;
 namespace Pims.Dal.Repositories
 {
     /// <summary>
-    /// PropertyActivityDocumentRepository class, provides a service layer to interact with document activity files within the datasource.
+    /// ManagementActivityDocumentRepository class, provides a service layer to interact with document activity files within the datasource.
     /// </summary>
-    public class PropertyActivityDocumentRepository : BaseRepository<PimsPropertyActivityDocument>, IDocumentRelationshipRepository<PimsPropertyActivityDocument>
+    public class ManagementActivityDocumentRepository : BaseRepository<PimsPropertyActivityDocument>, IDocumentRelationshipRepository<PimsPropertyActivityDocument>
     {
         #region Constructors
 
         /// <summary>
-        /// Creates a new instance of a PropertyActivityDocumentRepository, and initializes it with the specified arguments.
+        /// Creates a new instance of a ManagementActivityDocumentRepository, and initializes it with the specified arguments.
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public PropertyActivityDocumentRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<PropertyActivityDocumentRepository> logger)
+        public ManagementActivityDocumentRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<ManagementActivityDocumentRepository> logger)
             : base(dbContext, user, logger)
         {
         }
@@ -52,13 +52,13 @@ namespace Pims.Dal.Repositories
         /// <summary>
         /// Adds the passed property document activity file to the database.
         /// </summary>
-        /// <param name="propertyActivityDocument"></param>
+        /// <param name="managementActivityDocument"></param>
         /// <returns></returns>
-        public PimsPropertyActivityDocument AddDocument(PimsPropertyActivityDocument propertyActivityDocument)
+        public PimsPropertyActivityDocument AddDocument(PimsPropertyActivityDocument managementActivityDocument)
         {
-            propertyActivityDocument.ThrowIfNull(nameof(propertyActivityDocument));
+            managementActivityDocument.ThrowIfNull(nameof(managementActivityDocument));
 
-            var newEntry = this.Context.PimsPropertyActivityDocuments.Add(propertyActivityDocument);
+            var newEntry = this.Context.PimsPropertyActivityDocuments.Add(managementActivityDocument);
             if (newEntry.State == EntityState.Added)
             {
                 return newEntry.Entity;
@@ -72,16 +72,16 @@ namespace Pims.Dal.Repositories
         /// <summary>
         /// Deletes the passed property document activity file in the database.
         /// </summary>
-        /// <param name="propertyActivityDocument"></param>
+        /// <param name="managementActivityDocument"></param>
         /// <returns></returns>
-        public bool DeleteDocument(PimsPropertyActivityDocument propertyActivityDocument)
+        public bool DeleteDocument(PimsPropertyActivityDocument managementActivityDocument)
         {
-            if (propertyActivityDocument == null)
+            if (managementActivityDocument == null)
             {
-                throw new ArgumentNullException(nameof(propertyActivityDocument), "propertyActivityDocument cannot be null.");
+                throw new ArgumentNullException(nameof(managementActivityDocument), "managementActivityDocument cannot be null.");
             }
 
-            this.Context.PimsPropertyActivityDocuments.Remove(new PimsPropertyActivityDocument() { PropertyActivityDocumentId = propertyActivityDocument.PropertyActivityDocumentId });
+            this.Context.PimsPropertyActivityDocuments.Remove(new PimsPropertyActivityDocument() { PropertyActivityDocumentId = managementActivityDocument.PropertyActivityDocumentId });
             return true;
         }
 

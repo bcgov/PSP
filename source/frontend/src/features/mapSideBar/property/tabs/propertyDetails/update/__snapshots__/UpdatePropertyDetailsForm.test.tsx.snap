@@ -2631,10 +2631,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
             name="notes"
             rows="4"
             style="word-break: break-all;"
-            title="I edited this Test notes for this property - again"
-          >
-            I edited this Test notes for this property - again
-          </textarea>
+          />
         </div>
       </div>
     </div>

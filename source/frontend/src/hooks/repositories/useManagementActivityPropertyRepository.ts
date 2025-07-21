@@ -2,8 +2,7 @@ import { AxiosResponse } from 'axios';
 import { useCallback, useMemo } from 'react';
 
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
-import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
-import { ApiGen_Concepts_PropertyActivitySubtype } from '@/models/api/generated/ApiGen_Concepts_PropertyActivitySubtype';
+import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 import { useApiPropertyActivities } from '../pims-api/useApiPropertyActivities';
@@ -11,30 +10,12 @@ import { useApiPropertyActivities } from '../pims-api/useApiPropertyActivities';
 /**
  * hook that interacts with the Property Activity API.
  */
-export const usePropertyActivityRepository = () => {
-  const {
-    getActivitySubtypesApi,
-    getActivitiesApi,
-    getActivityApi,
-    postActivityApi,
-    putActivityApi,
-    deleteActivityApi,
-  } = useApiPropertyActivities();
-
-  const getActivitySubtypes = useApiRequestWrapper<
-    () => Promise<AxiosResponse<ApiGen_Concepts_PropertyActivitySubtype[], any>>
-  >({
-    requestFunction: useCallback(
-      async () => await getActivitySubtypesApi(),
-      [getActivitySubtypesApi],
-    ),
-    requestName: 'getActivitySubtypes',
-    onSuccess: useAxiosSuccessHandler(),
-    onError: useAxiosErrorHandler('Failed to retrive property activity subtypes.'),
-  });
+export const useManagementActivityPropertyRepository = () => {
+  const { getActivitiesApi, getActivityApi, postActivityApi, putActivityApi, deleteActivityApi } =
+    useApiPropertyActivities();
 
   const getActivities = useApiRequestWrapper<
-    (propertyId: number) => Promise<AxiosResponse<ApiGen_Concepts_PropertyActivity[], any>>
+    (propertyId: number) => Promise<AxiosResponse<ApiGen_Concepts_ManagementActivity[], any>>
   >({
     requestFunction: useCallback(
       async (propertyId: number) => await getActivitiesApi(propertyId),
@@ -49,7 +30,7 @@ export const usePropertyActivityRepository = () => {
     (
       propertyId: number,
       activityId: number,
-    ) => Promise<AxiosResponse<ApiGen_Concepts_PropertyActivity, any>>
+    ) => Promise<AxiosResponse<ApiGen_Concepts_ManagementActivity, any>>
   >({
     requestFunction: useCallback(
       async (propertyId: number, activityId: number) =>
@@ -64,11 +45,11 @@ export const usePropertyActivityRepository = () => {
   const createActivity = useApiRequestWrapper<
     (
       propertyId: number,
-      activity: ApiGen_Concepts_PropertyActivity,
-    ) => Promise<AxiosResponse<ApiGen_Concepts_PropertyActivity, any>>
+      activity: ApiGen_Concepts_ManagementActivity,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_ManagementActivity, any>>
   >({
     requestFunction: useCallback(
-      async (propertyId: number, activity: ApiGen_Concepts_PropertyActivity) =>
+      async (propertyId: number, activity: ApiGen_Concepts_ManagementActivity) =>
         await postActivityApi(propertyId, activity),
       [postActivityApi],
     ),
@@ -80,11 +61,11 @@ export const usePropertyActivityRepository = () => {
   const updateActivity = useApiRequestWrapper<
     (
       propertyId: number,
-      activity: ApiGen_Concepts_PropertyActivity,
-    ) => Promise<AxiosResponse<ApiGen_Concepts_PropertyActivity, any>>
+      activity: ApiGen_Concepts_ManagementActivity,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_ManagementActivity, any>>
   >({
     requestFunction: useCallback(
-      async (propertyId: number, activity: ApiGen_Concepts_PropertyActivity) =>
+      async (propertyId: number, activity: ApiGen_Concepts_ManagementActivity) =>
         await putActivityApi(propertyId, activity),
       [putActivityApi],
     ),
@@ -110,20 +91,12 @@ export const usePropertyActivityRepository = () => {
 
   return useMemo(
     () => ({
-      getActivitySubtypes,
       getActivities,
       getActivity,
       createActivity,
       updateActivity,
       deleteActivity,
     }),
-    [
-      getActivitySubtypes,
-      getActivities,
-      getActivity,
-      createActivity,
-      updateActivity,
-      deleteActivity,
-    ],
+    [getActivities, getActivity, createActivity, updateActivity, deleteActivity],
   );
 };

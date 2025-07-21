@@ -262,32 +262,32 @@ namespace Pims.Api.Services
             return managementFilePropertyIds;
         }
 
-        public PimsManagementActivity CreateActivity(PimsManagementActivity propertyActivity)
+        public PimsManagementActivity CreateActivity(PimsManagementActivity managementActivity)
         {
             _logger.LogInformation("Creating property Activity...");
             _user.ThrowIfNotAllAuthorized(Permissions.ManagementAdd, Permissions.PropertyEdit);
 
-            if (propertyActivity.PropMgmtActivityStatusTypeCode == null)
+            if (managementActivity.PropMgmtActivityStatusTypeCode == null)
             {
-                propertyActivity.PropMgmtActivityStatusTypeCode = "NOTSTARTED";
+                managementActivity.PropMgmtActivityStatusTypeCode = "NOTSTARTED";
             }
 
-            var propertyActivityResult = _managementActivityRepository.Create(propertyActivity);
+            var managementActivityResult = _managementActivityRepository.Create(managementActivity);
             _managementActivityRepository.CommitTransaction();
 
-            return propertyActivityResult;
+            return managementActivityResult;
         }
 
-        public PimsManagementActivity UpdateActivity(PimsManagementActivity propertyActivity)
+        public PimsManagementActivity UpdateActivity(PimsManagementActivity managementActivity)
         {
-            propertyActivity.ThrowIfNull(nameof(propertyActivity));
-            _logger.LogInformation("Updating property Activity with Id: {ActivityId}", propertyActivity.Internal_Id);
+            managementActivity.ThrowIfNull(nameof(managementActivity));
+            _logger.LogInformation("Updating property Activity with Id: {ActivityId}", managementActivity.Internal_Id);
             _user.ThrowIfNotAllAuthorized(Permissions.ManagementEdit, Permissions.PropertyEdit);
 
-            var propertyActivityResult = _managementActivityRepository.Update(propertyActivity);
+            var managementActivityResult = _managementActivityRepository.Update(managementActivity);
             _managementActivityRepository.CommitTransaction();
 
-            return propertyActivityResult;
+            return managementActivityResult;
         }
 
         public bool DeleteFileActivity(long managementFileId, long activityId)
@@ -295,14 +295,14 @@ namespace Pims.Api.Services
             _logger.LogInformation("Deleting Management Activity with id {activityId}", activityId);
             _user.ThrowIfNotAllAuthorized(Permissions.ManagementDelete, Permissions.PropertyEdit);
 
-            var propertyManagementActivity = _managementActivityRepository.GetActivity(activityId);
+            var managementActivity = _managementActivityRepository.GetActivity(activityId);
 
-            if (propertyManagementActivity.ManagementFileId != managementFileId)
+            if (managementActivity.ManagementFileId != managementFileId)
             {
                 throw new BadRequestException("Activity with the given id does not match the management file id");
             }
 
-            if (!propertyManagementActivity.PropMgmtActivityStatusTypeCode.Equals(PropertyActivityStatusTypeCode.NOTSTARTED.ToString()))
+            if (!managementActivity.PropMgmtActivityStatusTypeCode.Equals(ManagementActivityStatusTypeCode.NOTSTARTED.ToString()))
             {
                 throw new BadRequestException($"PropertyManagementActivity can not be deleted since it has already started");
             }
@@ -320,7 +320,7 @@ namespace Pims.Api.Services
 
             var propertyManagementActivity = _managementActivityRepository.GetActivity(activityId);
 
-            if (!propertyManagementActivity.PropMgmtActivityStatusTypeCode.Equals(PropertyActivityStatusTypeCode.NOTSTARTED.ToString()))
+            if (!propertyManagementActivity.PropMgmtActivityStatusTypeCode.Equals(ManagementActivityStatusTypeCode.NOTSTARTED.ToString()))
             {
                 throw new BadRequestException($"PropertyManagementActivity can not be deleted since it has already started");
             }

@@ -6,7 +6,7 @@ import { IManagementActivitiesListViewProps } from '@/features/mapSideBar/proper
 import { PropertyActivityRow } from '@/features/mapSideBar/property/tabs/propertyDetailsManagement/activity/list/models/PropertyActivityRow';
 import { useManagementActivityRepository } from '@/hooks/repositories/useManagementActivityRepository';
 import useIsMounted from '@/hooks/util/useIsMounted';
-import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
+import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 import { isValidId } from '@/utils/utils';
 
 export interface IPropertyManagementActivitiesListContainerProps {
@@ -20,7 +20,7 @@ const AdHocFileActivitiesSummaryContainer: React.FunctionComponent<
   const isMounted = useIsMounted();
   const [propertyActivities, setPropertyActivities] = useState<PropertyActivityRow[]>([]);
   const { staleLastUpdatedBy } = useContext(SideBarContext);
-  const [sort, setSort] = useState<TableSort<ApiGen_Concepts_PropertyActivity>>({});
+  const [sort, setSort] = useState<TableSort<ApiGen_Concepts_ManagementActivity>>({});
 
   const {
     getManagementFileActivities: { execute: getActivities, loading },
