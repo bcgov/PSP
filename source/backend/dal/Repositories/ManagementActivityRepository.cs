@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using LinqKit;
@@ -11,12 +12,26 @@ using Pims.Dal.Helpers.Extensions;
 
 namespace Pims.Dal.Repositories
 {
-    public class ManagementActivityRepository : BaseRepository<PimsPropertyActivity>, IManagementActivityRepository
+    /// <summary>
+    /// ManagementActivityRepository class, provides a service layer to interact with management activities within the datasource.
+    /// </summary>
+    public class ManagementActivityRepository : BaseRepository<PimsManagementActivity>, IManagementActivityRepository
     {
+        #region Constructors
+
+        /// <summary>
+        /// Creates a new instance of a ManagementActivityRepository, and initializes it with the specified arguments.
+        /// </summary>
+        /// <param name="dbContext"></param>
+        /// <param name="user"></param>
+        /// <param name="logger"></param>
         public ManagementActivityRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<ManagementActivityRepository> logger)
             : base(dbContext, user, logger)
         {
         }
+        #endregion
+
+        #region Methods
 
         /// <summary>
         /// Returns the total number of Management Actities in the database.
@@ -24,10 +39,10 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public int Count()
         {
-            return Context.PimsPropertyActivities.Count();
+            return Context.PimsManagementActivities.Count();
         }
 
-        public Paged<PimsPropertyActivity> GetPageDeep(ManagementActivityFilter filter)
+        public Paged<PimsManagementActivity> GetPageDeep(ManagementActivityFilter filter)
         {
             using var scope = Logger.QueryScope();
 
@@ -42,28 +57,28 @@ namespace Pims.Dal.Repositories
             var skip = (filter.Page - 1) * filter.Quantity;
             var pageItems = query.Skip(skip).Take(filter.Quantity).ToList();
 
-            return new Paged<PimsPropertyActivity>(pageItems, filter.Page, filter.Quantity, query.Count());
+            return new Paged<PimsManagementActivity>(pageItems, filter.Page, filter.Quantity, query.Count());
         }
 
-        private IQueryable<PimsPropertyActivity> GetCommonManagementActivityQuery(ManagementActivityFilter filter)
+        private IQueryable<PimsManagementActivity> GetCommonManagementActivityQuery(ManagementActivityFilter filter)
         {
-            var predicate = PredicateBuilder.New<PimsPropertyActivity>(act => true);
+            var predicate = PredicateBuilder.New<PimsManagementActivity>(act => true);
 
             if (!string.IsNullOrWhiteSpace(filter.Pid))
             {
                 var pidValue = filter.Pid.Replace("-", string.Empty).Trim().TrimStart('0');
-                predicate = predicate.And(x => x.PimsPropPropActivities.Any(pd => pd != null && EF.Functions.Like(pd.Property.Pid.ToString(), $"%{pidValue}%")));
+                predicate = predicate.And(x => x.PimsManagementActivityProperties.Any(pd => pd != null && EF.Functions.Like(pd.Property.Pid.ToString(), $"%{pidValue}%")));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.Pin))
             {
                 var pinValue = filter.Pin.Replace("-", string.Empty).Trim().TrimStart('0');
-                predicate = predicate.And(x => x.PimsPropPropActivities.Any(pd => pd != null && EF.Functions.Like(pd.Property.Pin.ToString(), $"%{pinValue}%")));
+                predicate = predicate.And(x => x.PimsManagementActivityProperties.Any(pd => pd != null && EF.Functions.Like(pd.Property.Pin.ToString(), $"%{pinValue}%")));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.Address))
             {
-                predicate = predicate.And(x => x.PimsPropPropActivities.Any(pd => pd != null &&
+                predicate = predicate.And(x => x.PimsManagementActivityProperties.Any(pd => pd != null &&
                     (EF.Functions.Like(pd.Property.Address.StreetAddress1, $"%{filter.Address}%") ||
                     EF.Functions.Like(pd.Property.Address.StreetAddress2, $"%{filter.Address}%") ||
                     EF.Functions.Like(pd.Property.Address.StreetAddress3, $"%{filter.Address}%") ||
@@ -98,12 +113,12 @@ namespace Pims.Dal.Repositories
                 predicate = predicate.And(x => EF.Functions.Like(x.ManagementFile.Project.Code, $"%{filter.ProjectNameOrNumber}%") || EF.Functions.Like(x.ManagementFile.Project.Description, $"%{filter.ProjectNameOrNumber}%"));
             }
 
-            var query = Context.PimsPropertyActivities.AsNoTracking()
+            var query = Context.PimsManagementActivities.AsNoTracking()
                 .Include(s => s.PropMgmtActivityStatusTypeCodeNavigation)
                 .Include(t => t.PropMgmtActivityTypeCodeNavigation)
                 .Include(st => st.PimsPropActivityMgmtActivities)
                     .ThenInclude(x => x.PropMgmtActivitySubtypeCodeNavigation)
-                .Include(pp => pp.PimsPropPropActivities)
+                .Include(pp => pp.PimsManagementActivityProperties)
                     .ThenInclude(p => p.Property)
                         .ThenInclude(a => a.Address)
                 .Include(f => f.ManagementFile)
@@ -142,5 +157,190 @@ namespace Pims.Dal.Repositories
 
             return query;
         }
+
+        /// <summary>
+        /// Return a summary List of Management activities for a specific property.
+        /// </summary>
+        /// <param name="propertyId"></param>
+        /// <returns>List of Property's management activities.</returns>
+        public IList<PimsManagementActivity> GetActivitiesByProperty(long propertyId)
+        {
+            List<PimsManagementActivity> activities = Context.PimsManagementActivities.AsNoTracking()
+                    .Include(pa => pa.PropMgmtActivityTypeCodeNavigation)
+                    .Include(pa => pa.PimsPropActivityMgmtActivities)
+                        .ThenInclude(st => st.PropMgmtActivitySubtypeCodeNavigation)
+                    .Include(pa => pa.PropMgmtActivityStatusTypeCodeNavigation)
+                    .Include(pa => pa.PimsManagementActivityProperties)
+                    .Where(pa => pa.PimsManagementActivityProperties.Any(x => x.PropertyId == propertyId))
+                    .ToList();
+
+            return activities;
+        }
+
+        /// <summary>
+        /// Return a summary List of Management activities for a specific management file.
+        /// </summary>
+        /// <param name="managementFileId"></param>
+        /// <returns>List of Property's management activities.</returns>
+        public IList<PimsManagementActivity> GetActivitiesByManagementFile(long managementFileId)
+        {
+            List<PimsManagementActivity> activities = Context.PimsManagementActivities.AsNoTracking()
+                    .Include(pa => pa.PropMgmtActivityTypeCodeNavigation)
+                    .Include(pa => pa.PimsPropActivityMgmtActivities)
+                        .ThenInclude(st => st.PropMgmtActivitySubtypeCodeNavigation)
+                    .Include(pa => pa.PropMgmtActivityStatusTypeCodeNavigation)
+                    .Include(pa => pa.PimsManagementActivityProperties)
+                    .Where(pa => pa.ManagementFileId == managementFileId)
+                    .OrderByDescending(x => x.RequestAddedDt)
+                    .ToList();
+
+            return activities;
+        }
+
+        /// <summary>
+        /// Return a list of all activities that are associated to any of the listed properties.
+        /// </summary>
+        /// <param name="propertyIds"></param>
+        /// <returns>List of Property's management activities.</returns>
+        public IList<PimsManagementActivity> GetActivitiesByPropertyIds(IEnumerable<long> propertyIds)
+        {
+            var activities = Context.PimsManagementActivities.AsNoTracking()
+                    .Include(pa => pa.PropMgmtActivityTypeCodeNavigation)
+                    .Include(pa => pa.PimsPropActivityMgmtActivities)
+                        .ThenInclude(st => st.PropMgmtActivitySubtypeCodeNavigation)
+                    .Include(pa => pa.PropMgmtActivityStatusTypeCodeNavigation)
+                    .Include(pa => pa.PimsManagementActivityProperties)
+                    .ThenInclude(ppa => ppa.Property)
+                    .Where(pa => pa.PimsManagementActivityProperties.Any(ppa => propertyIds.Contains(ppa.PropertyId)))
+                    .OrderByDescending(x => x.RequestAddedDt)
+                    .ToList();
+
+            return activities;
+        }
+
+        /// <summary>
+        /// Get the property activity for the specified activity with 'activityId' value.
+        /// </summary>
+        /// <param name="activityId"></param>
+        /// <returns></returns>
+        public PimsManagementActivity GetActivity(long activityId)
+        {
+            var activity = Context.PimsManagementActivities
+                .Include(a => a.PimsManagementActivityProperties)
+                .Include(a => a.PimsPropertyActivityInvoices)
+                .Include(a => a.PropMgmtActivityTypeCodeNavigation)
+                .Include(pa => pa.PimsPropActivityMgmtActivities)
+                    .ThenInclude(st => st.PropMgmtActivitySubtypeCodeNavigation)
+                .Include(a => a.PropMgmtActivityStatusTypeCodeNavigation)
+                .Include(a => a.PimsPropActMinContacts)
+                .Include(a => a.PimsPropActInvolvedParties)
+                .AsNoTracking()
+                .FirstOrDefault(p => p.PimsManagementActivityId == activityId) ?? throw new KeyNotFoundException();
+            return activity;
+        }
+
+        /// <summary>
+        /// Creates the passed property activity in the database.
+        /// </summary>
+        /// <param name="managementActivity"></param>
+        /// <returns></returns>
+        public PimsManagementActivity Create(PimsManagementActivity managementActivity)
+        {
+            managementActivity.ThrowIfNull(nameof(managementActivity));
+
+            var entityEntry = Context.PimsManagementActivities.Add(managementActivity);
+
+            return entityEntry.Entity;
+        }
+
+        /// <summary>
+        /// Update the passed property activity in the database.
+        /// </summary>
+        /// <param name="managementActivity"></param>
+        /// <returns></returns>
+        public PimsManagementActivity Update(PimsManagementActivity managementActivity)
+        {
+            managementActivity.ThrowIfNull(nameof(managementActivity));
+
+            var existingManagementActivities = Context.PimsManagementActivities
+                .FirstOrDefault(p => p.PimsManagementActivityId == managementActivity.PimsManagementActivityId) ?? throw new KeyNotFoundException();
+
+            // update direct relationships - PimsPropActMinContact, PimsPropActInvolvedParty, PimsPropertyActivityInvoice
+            Context.UpdateChild<PimsManagementActivity, long, PimsPropActMinContact, long>(
+                o => o.PimsPropActMinContacts, existingManagementActivities.PimsManagementActivityId, managementActivity.PimsPropActMinContacts.ToArray());
+            Context.UpdateChild<PimsManagementActivity, long, PimsPropActInvolvedParty, long>(
+                o => o.PimsPropActInvolvedParties, existingManagementActivities.PimsManagementActivityId, managementActivity.PimsPropActInvolvedParties.ToArray());
+            Context.UpdateChild<PimsManagementActivity, long, PimsPropertyActivityInvoice, long>(
+                o => o.PimsPropertyActivityInvoices, existingManagementActivities.PimsManagementActivityId, managementActivity.PimsPropertyActivityInvoices.ToArray());
+            Context.UpdateChild<PimsManagementActivity, long, PimsManagementActivityProperty, long>(
+                o => o.PimsManagementActivityProperties, existingManagementActivities.PimsManagementActivityId, managementActivity.PimsManagementActivityProperties.ToArray());
+            Context.UpdateChild<PimsManagementActivity, long, PimsPropActivityMgmtActivity, long>(
+                o => o.PimsPropActivityMgmtActivities, existingManagementActivities.PimsManagementActivityId, managementActivity.PimsPropActivityMgmtActivities.ToArray());
+
+            // update main entity - PimsManagementActivity
+            Context.Entry(existingManagementActivities).CurrentValues.SetValues(managementActivity);
+
+            return existingManagementActivities;
+        }
+
+        /// <summary>
+        /// TryDelete the Activity associated with the property and if no property associated to activity delete the activicy as well.
+        /// </summary>
+        /// <param name="activityId"></param>
+        /// <returns>Boolean of deletion sucess.</returns>
+        public bool TryDelete(long activityId)
+        {
+            bool deletedSuccessfully = false;
+            var managementActivityRelationships = Context.PimsManagementActivityProperties.FirstOrDefault(x => x.PimsManagementActivityId == activityId);
+
+            if (managementActivityRelationships is not null)
+            {
+                // This will check if there is no other Property that has the same activity associated.
+                // If there is, it will only remove the relationship for the current property.
+                if (Context.PimsManagementActivityProperties.Count(x => x.PimsManagementActivityId == managementActivityRelationships.PimsManagementActivityId) > 1)
+                {
+                    Context.PimsManagementActivityProperties.Remove(managementActivityRelationships);
+                    deletedSuccessfully = true;
+                }
+                else
+                {
+                    Context.PimsManagementActivityProperties.Remove(managementActivityRelationships);
+
+                    var managementActivity = Context.PimsManagementActivities.FirstOrDefault(x => x.PimsManagementActivityId.Equals(managementActivityRelationships.PimsManagementActivityId));
+                    Context.PimsManagementActivities.Remove(managementActivity);
+
+                    deletedSuccessfully = true;
+                }
+            }
+
+            return deletedSuccessfully;
+        }
+
+        /// <summary>
+        /// Delete an activity, and all property-activity relationships.
+        /// </summary>
+        /// <param name="activityId"></param>
+        /// <returns>Boolean of deletion sucess.</returns>
+        public bool TryDeleteByFile(long activityId, long managementFileId)
+        {
+            var managementActivity = Context.PimsManagementActivities
+                .Include(pa => pa.PimsManagementActivityProperties)
+                .Include(st => st.PimsPropActivityMgmtActivities)
+                .FirstOrDefault(x => x.PimsManagementActivityId == activityId && x.ManagementFileId == managementFileId);
+
+            if (managementActivity is null)
+            {
+                return true;
+            }
+
+            Context.PimsManagementActivityProperties.RemoveRange(managementActivity.PimsManagementActivityProperties);
+            Context.PimsPropActivityMgmtActivities.RemoveRange(managementActivity.PimsPropActivityMgmtActivities);
+
+            Context.PimsManagementActivities.Remove(managementActivity);
+
+            return true;
+        }
+
+        #endregion
     }
 }

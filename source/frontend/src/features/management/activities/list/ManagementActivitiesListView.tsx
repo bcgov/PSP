@@ -14,7 +14,7 @@ import { PROP_MGMT_ACTIVITY_STATUS_TYPES, PROP_MGMT_ACTIVITY_TYPES } from '@/con
 import { useApiManagementActivities } from '@/hooks/pims-api/useApiManagementActivities';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { useSearch } from '@/hooks/useSearch';
-import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
+import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 import { Api_ManagementActivityFilter } from '@/models/api/ManagementActivityFilter';
 import { generateMultiSortCriteria, mapLookupCode } from '@/utils';
 import { toFilteredApiPaginateParams } from '@/utils/CommonFunctions';
@@ -74,7 +74,7 @@ export const ManagementActivitiesListView: React.FC<unknown> = () => {
     setCurrentPage,
     setPageSize,
     loading,
-  } = useSearch<ApiGen_Concepts_PropertyActivity, Api_ManagementActivityFilter>(
+  } = useSearch<ApiGen_Concepts_ManagementActivity, Api_ManagementActivityFilter>(
     new ManagementActivityFilterModel().toApi(),
     getManagementActivitiesPagedApi,
     'No matching results can be found. Try widening your search criteria.',

@@ -13,8 +13,8 @@ import DocumentListContainer from '@/features/documents/list/DocumentListContain
 import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
-import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
-import { ApiGen_Concepts_PropertyActivityInvoice } from '@/models/api/generated/ApiGen_Concepts_PropertyActivityInvoice';
+import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
+import { ApiGen_Concepts_ManagementActivityInvoice } from '@/models/api/generated/ApiGen_Concepts_ManagementActivityInvoice';
 
 import ActivityDetailInvoiceTotalsView from './ActivityDetailInvoiceTotalsView';
 import PropertyActivityDetailsSubView from './ActivityDetailSubView';
@@ -22,7 +22,7 @@ import { InvoiceView } from './InvoiceView';
 
 export interface IPropertyActivityDetailViewProps {
   propertyId: number;
-  activity: ApiGen_Concepts_PropertyActivity | null;
+  activity: ApiGen_Concepts_ManagementActivity | null;
   onClose: () => void;
   loading: boolean;
   show: boolean;
@@ -41,7 +41,7 @@ export const PropertyActivityDetailView: React.FunctionComponent<
   const history = useHistory();
 
   if (props.activity !== null) {
-    const invoices: ApiGen_Concepts_PropertyActivityInvoice[] = props.activity.invoices ?? [];
+    const invoices: ApiGen_Concepts_ManagementActivityInvoice[] = props.activity.invoices ?? [];
 
     return (
       <ReactVisibilitySensor
@@ -80,9 +80,9 @@ export const PropertyActivityDetailView: React.FunctionComponent<
 
                 <PropertyActivityDetailsSubView activity={props.activity} />
 
-                {invoices.map((x: ApiGen_Concepts_PropertyActivityInvoice, index: number) => (
+                {invoices.map((x: ApiGen_Concepts_ManagementActivityInvoice, index: number) => (
                   <InvoiceView
-                    key={`activity-${x.propertyActivityId}-invoice-${x.id}`}
+                    key={`activity-${x.managementActivityId}-invoice-${x.id}`}
                     activityInvoice={x}
                     index={index}
                   />

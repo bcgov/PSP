@@ -23,7 +23,7 @@ const defaultComposedProperty: ComposedProperty = {
   bcAssessmentSummary: undefined,
   crownTenureFeatures: undefined,
   planNumber: undefined,
-  spcpOrder: undefined
+  spcpOrder: undefined,
 };
 
 vi.mock('@/hooks/repositories/useHistoricalNumberRepository');

@@ -60,8 +60,8 @@ public partial class PimsPropMgmtActivityType
     public string DbLastUpdateUserid { get; set; }
 
     [InverseProperty("PropMgmtActivityTypeCodeNavigation")]
-    public virtual ICollection<PimsPropMgmtActivitySubtype> PimsPropMgmtActivitySubtypes { get; set; } = new List<PimsPropMgmtActivitySubtype>();
+    public virtual ICollection<PimsManagementActivity> PimsManagementActivities { get; set; } = new List<PimsManagementActivity>();
 
     [InverseProperty("PropMgmtActivityTypeCodeNavigation")]
-    public virtual ICollection<PimsPropertyActivity> PimsPropertyActivities { get; set; } = new List<PimsPropertyActivity>();
+    public virtual ICollection<PimsPropMgmtActivitySubtype> PimsPropMgmtActivitySubtypes { get; set; } = new List<PimsPropMgmtActivitySubtype>();
 }

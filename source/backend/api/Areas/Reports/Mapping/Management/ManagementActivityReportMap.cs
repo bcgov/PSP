@@ -9,7 +9,7 @@ namespace Pims.Api.Areas.Reports.Mapping.Management
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.PimsPropertyActivity, ManagementActivityReportModel>()
+            config.NewConfig<Entity.PimsManagementActivity, ManagementActivityReportModel>()
                 .Map(dest => dest.ManagementFileName, src => src.ManagementFile.FileName)
                 .Map(dest => dest.LegacyFileNum, src => src.ManagementFile.LegacyFileNum)
                 .Map(dest => dest.ActivityType, src => src.PropMgmtActivityTypeCodeNavigation.Description)

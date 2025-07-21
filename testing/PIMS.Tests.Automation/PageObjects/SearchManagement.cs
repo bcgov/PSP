@@ -36,7 +36,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By managementListViewOrderByHistFile = By.CssSelector("div[data-testid='sort-column-legacyFileNum']");
         private readonly By managementListViewProjectColumnHeader = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Project')]");
         private readonly By managementListViewPurposeColumnHeader = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Purpose')]");
-        private readonly By managementListViewOrderByPurpose = By.CssSelector("div[data-testid='sort-column-managementFileProgramTypeCode']");
+        private readonly By managementListViewOrderByPurpose = By.CssSelector("div[data-testid='sort-column-managementFilePurposeTypeCode']");
         private readonly By managementListViewTeamMemberColumnHeader = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Team member')]");
         private readonly By managementListViewAddressColumnHeader = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Civic Address / PID / PIN')]");
         private readonly By managementListViewStatusColumnHeader = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Status')]");

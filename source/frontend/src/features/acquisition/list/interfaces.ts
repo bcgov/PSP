@@ -17,7 +17,7 @@ export interface ApiGen_Concepts_AcquisitionFilter {
 }
 
 export class AcquisitionFilterModel {
-  acquisitionFileStatusTypeCode = 'ACTIVE';
+  acquisitionFileStatusTypeCode = '';
   acquisitionFileNameOrNumber = '';
   acquisitionTeamMembers: MultiSelectOption[] = [];
   projectNameOrNumber = '';

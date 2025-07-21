@@ -62,5 +62,11 @@ Scenario Outline: 09._Property_Management_Lease_Active_Indicator
 	| No				| 16        |
 	| Yes               | 17        |
 
+Scenario: 10._Properties_Digital_Documents
+	Given I search for a property in the inventory by PID from row number 37
+	When I create Digital Documents for a "Property" row number 16
+	Then A Property Information is saved successfully
+
+
 
 
