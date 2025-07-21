@@ -56,5 +56,9 @@ const ControlButton = styled(Button)<{ $active?: boolean }>`
       border-top-right-radius: 0;
       border-bottom-right-radius: 0;
     }
+
+    &:hover {
+      opacity: 1;
+    }
   }
 `;

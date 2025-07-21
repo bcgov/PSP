@@ -428,6 +428,9 @@ const rightSideBarStates = {
         TOGGLE_SEARCH: {
           target: 'searchVisible',
         },
+        TOGGLE_WORKLIST: {
+          target: 'worklistVisible',
+        },
         SHOW_SEARCH: {
           target: 'searchVisible',
         },
@@ -443,6 +446,9 @@ const rightSideBarStates = {
         },
         TOGGLE_SEARCH: {
           target: 'searchVisible',
+        },
+        TOGGLE_WORKLIST: {
+          target: 'worklistVisible',
         },
         SET_ADVANCED_SEARCH_CRITERIA: {
           actions: assign({
@@ -479,6 +485,9 @@ const rightSideBarStates = {
         TOGGLE_SEARCH: {
           target: 'searchVisible',
         },
+        TOGGLE_WORKLIST: {
+          target: 'worklistVisible',
+        },
         SET_MAP_LAYERS: {
           actions: assign({ activeLayers: (_, event: any) => event.activeLayers }),
         },
@@ -494,6 +503,66 @@ const rightSideBarStates = {
         },
         TOGGLE_SEARCH: {
           target: 'closed',
+        },
+        TOGGLE_WORKLIST: {
+          target: 'worklistVisible',
+        },
+      },
+    },
+    worklistVisible: {
+      on: {
+        TOGGLE_FILTER: {
+          target: 'filterVisible',
+        },
+        TOGGLE_LAYERS: {
+          target: 'layerVisible',
+        },
+        TOGGLE_SEARCH: {
+          target: 'searchVisible',
+        },
+        TOGGLE_WORKLIST: {
+          target: 'closed',
+        },
+      },
+    },
+  },
+};
+
+const selectedWorklistFeatureLoaderStates = {
+  initial: 'idle',
+  states: {
+    idle: {
+      on: {
+        WORKLIST_MAP_CLICK: {
+          actions: [
+            assign({
+              isLoading: () => true,
+              worklistSelectedMapLocation: (_, event: any) => event.latlng,
+              worklistLocationFeatureDataset: () => null,
+            }),
+          ],
+          target: 'loading',
+        },
+      },
+    },
+    loading: {
+      invoke: {
+        src: 'loadWorklistLocationData',
+        onDone: {
+          target: 'idle',
+          actions: [
+            assign({
+              isLoading: () => false,
+              worklistSelectedMapLocation: () => null,
+              worklistLocationFeatureDataset: (context: any, event: any) => event.data,
+            }),
+          ],
+        },
+        onError: {
+          target: 'idle',
+          actions: assign({
+            isLoading: () => false,
+          }),
         },
       },
     },
@@ -530,6 +599,8 @@ export const mapMachine = createMachine<MachineContext>({
     repositioningFeatureDataset: null,
     repositioningPropertyIndex: null,
     selectingComponentId: null,
+    worklistSelectedMapLocation: null,
+    worklistLocationFeatureDataset: null,
     isLoading: false,
     searchCriteria: null,
     advancedSearchCriteria: new PropertyFilterFormModel(),
@@ -606,6 +677,7 @@ export const mapMachine = createMachine<MachineContext>({
         selectedFeatureLoader: selectedFeatureLoaderStates,
         sideBar: sideBarStates,
         rightSideBar: rightSideBarStates,
+        selectedWorklistFeatureLoader: selectedWorklistFeatureLoaderStates,
       },
     },
   },

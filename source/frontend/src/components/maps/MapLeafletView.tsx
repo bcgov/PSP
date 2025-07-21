@@ -1,7 +1,7 @@
 import axios from 'axios';
-import { geoJSON, LatLng, LatLngBounds, LeafletEvent, Map as LeafletMap } from 'leaflet';
+import { geoJSON, LatLngBounds, LeafletEvent, LeafletMouseEvent, Map } from 'leaflet';
 import { isEqual } from 'lodash';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import {
   LayerGroup,
   MapContainer as LeafletMapContainer,
@@ -17,6 +17,8 @@ import {
   MAP_MIN_MARKER_ZOOM,
   MAX_ZOOM,
 } from '@/constants/strings';
+import { useWorklistContext } from '@/features/properties/worklist/context/WorklistContext';
+import WorklistMapClickMonitor from '@/features/properties/worklist/WorklistMapClickMonitor';
 import { useTenant } from '@/tenants';
 import { exists, firstOrNull } from '@/utils';
 
@@ -28,10 +30,12 @@ import LayersControl from './leaflet/Control/LayersControl/LayersControl';
 import { initialEnabledLayers } from './leaflet/Control/LayersControl/LayersMenuLayout';
 import { LegendControl } from './leaflet/Control/Legend/LegendControl';
 import SearchControl from './leaflet/Control/SearchControl/SearchControl';
+import WorklistControl from './leaflet/Control/WorklistControl/WorklistControl';
 import { ZoomOutButton } from './leaflet/Control/ZoomOut/ZoomOutButton';
 import { FilePropertiesLayer } from './leaflet/Layers/FilePropertiesLayer';
 import { LeafletLayerListener } from './leaflet/Layers/LeafletLayerListener';
 import { MarkerLayer } from './leaflet/Layers/MarkerLayer';
+import WorklistParcelsLayer from './leaflet/Layers/WorklistParcelsLayer';
 import { MapEvents } from './leaflet/MapEvents/MapEvents';
 import * as Styled from './leaflet/styles';
 import { EsriVectorTileLayer } from './leaflet/VectorTileLayer/EsriVectorTileLayer';
@@ -58,10 +62,13 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
   const [zoom, setZoom] = useState(defaultZoom);
   const [isMapReady, setIsMapReady] = useState(false);
 
-  const mapRef = useRef<LeafletMap | null>(null);
+  const mapRef = useRef<Map | null>(null);
 
   const [activeFeatureLayer, setActiveFeatureLayer] = useState<L.GeoJSON>();
   const { doubleClickInterval } = useTenant();
+
+  const { parcels } = useWorklistContext();
+  const isWorklistActive = useMemo(() => parcels?.length > 0, [parcels?.length]);
 
   // add geojson layer to the map
   if (!!mapRef.current && !activeFeatureLayer) {
@@ -70,13 +77,22 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
 
   const timer = useRef(null);
 
-  const handleMapClickEvent = (latlng: LatLng) => {
+  const handleMapClickEvent = (event: LeafletMouseEvent) => {
     if (timer?.current !== null) {
       return;
     }
+
+    const latlng = event?.latlng;
+    const isCtrlKeyPressed = event?.originalEvent?.ctrlKey ?? false;
+
     timer.current = setTimeout(() => {
-      mapMachine.mapClick(latlng);
       timer.current = null;
+      // CTRL + click adds the clicked location to the property working list; otherwise treat it as a regular map-click
+      if (isCtrlKeyPressed) {
+        mapMachine.worklistMapClick(latlng);
+      } else {
+        mapMachine.mapClick(latlng);
+      }
     }, doubleClickInterval ?? 250);
   };
 
@@ -221,7 +237,7 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
         doubleClickZoom
       >
         <MapEvents
-          click={e => handleMapClickEvent(e.latlng)}
+          click={handleMapClickEvent}
           dblclick={() => handleDoubleClickEvent()}
           zoomend={e => handleZoomUpdate(e.sourceTarget.getZoom())}
           moveend={handleBounds}
@@ -261,12 +277,18 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
         />
         <LayersControl onToggle={mapMachine.toggleMapLayerControl} />
         <SearchControl onToggle={mapMachine.toggleMapSearchControl} />
+        <WorklistControl active={isWorklistActive} onToggle={mapMachine.toggleWorkListControl} />
         <MarkerLayer
           minZoom={MAP_MIN_MARKER_ZOOM}
           zoom={zoom}
           maxZoom={MAP_MAX_ZOOM}
           bounds={mapMachine.currentMapBounds ?? defaultBounds}
         />
+
+        <Pane name="worklistParcels" style={{ zIndex: 500 }}>
+          <WorklistParcelsLayer />
+          <WorklistMapClickMonitor />
+        </Pane>
 
         {/* Client-side "layer" to highlight file property boundaries (when in the context of a file) */}
         <Pane name="fileProperties" style={{ zIndex: 600 }}>

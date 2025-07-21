@@ -27,6 +27,7 @@ import {
 import useLocationFeatureLoader, {
   LocationFeatureDataset,
   SelectedFeatureDataset,
+  WorklistLocationFeatureDataset,
 } from './useLocationFeatureLoader';
 import { useMapSearch } from './useMapSearch';
 
@@ -44,6 +45,9 @@ export interface IMapStateMachineContext {
   selectedFeatureDataset: SelectedFeatureDataset | null;
   repositioningFeatureDataset: SelectedFeatureDataset | null;
   repositioningPropertyIndex: number | null;
+  // worklist-related state
+  worklistSelectedMapLocation: LatLngLiteral | null;
+  worklistLocationFeatureDataset: WorklistLocationFeatureDataset | null;
   showPopup: boolean;
   isLoading: boolean;
   mapSearchCriteria: IPropertyFilter | null;
@@ -58,6 +62,7 @@ export interface IMapStateMachineContext {
   isShowingMapFilter: boolean;
   isShowingMapLayers: boolean;
   isShowingMapSearch: boolean;
+  isShowingWorkList: boolean;
   activePimsPropertyIds: number[];
   showDisposed: boolean;
   showRetired: boolean;
@@ -83,6 +88,9 @@ export interface IMapStateMachineContext {
   mapMarkLocation: (laLng: LatLngLiteral) => void;
   mapClearLocationMark: () => void;
 
+  // worklist
+  worklistMapClick: (latlng: LatLngLiteral) => void;
+
   setMapSearchCriteria: (searchCriteria: IPropertyFilter) => void;
   refreshMapProperties: () => void;
   prepareForCreation: (selectedFeature: SelectedFeatureDataset) => void;
@@ -97,6 +105,7 @@ export interface IMapStateMachineContext {
   toggleMapFilterDisplay: () => void;
   toggleMapLayerControl: () => void;
   toggleMapSearchControl: () => void;
+  toggleWorkListControl: () => void;
   showMapSearchControl: () => void;
   setFilePropertyLocations: (locations: LocationBoundaryDataset[]) => void;
   setMapLayers: (layers: Set<string>) => void;
@@ -161,7 +170,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         event:
           | (AnyEventObject & { type: 'MAP_CLICK'; latlng: LatLngLiteral })
           | (AnyEventObject & { type: 'MAP_MARKER_CLICK'; featureSelected: MarkerSelected }),
-      ) => {
+      ): Promise<LocationFeatureDataset> => {
         let result: LocationFeatureDataset | undefined = undefined;
 
         if (event.type === 'MAP_CLICK') {
@@ -187,6 +196,13 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         }
 
         return result;
+      },
+      loadWorklistLocationData: async (
+        context: MachineContext,
+        event: AnyEventObject & { type: 'WORKLIST_MAP_CLICK'; latlng: LatLngLiteral },
+      ): Promise<WorklistLocationFeatureDataset> => {
+        const response = locationLoader.loadWorklistLocationDetails({ latLng: event.latlng });
+        return response;
       },
       loadFeatures: (context: MachineContext, event: any): Promise<MapFeatureData> => {
         // If there is data in the event, use that criteria.
@@ -274,6 +290,16 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
       serviceSend({
         type: 'MAP_MARKER_CLICK',
         featureSelected,
+      });
+    },
+    [serviceSend],
+  );
+
+  const worklistMapClick = useCallback(
+    (latlng: LatLngLiteral) => {
+      serviceSend({
+        type: 'WORKLIST_MAP_CLICK',
+        latlng,
       });
     },
     [serviceSend],
@@ -470,6 +496,10 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     serviceSend({ type: 'TOGGLE_SEARCH' });
   }, [serviceSend]);
 
+  const toggleWorkListControl = useCallback(() => {
+    serviceSend({ type: 'TOGGLE_WORKLIST' });
+  }, [serviceSend]);
+
   const showMapSearchControl = useCallback(() => {
     serviceSend({ type: 'SHOW_SEARCH' });
   }, [serviceSend]);
@@ -495,6 +525,10 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     return state.matches({ mapVisible: { rightSideBar: 'searchVisible' } });
   }, [state]);
 
+  const isShowingWorkList = useMemo(() => {
+    return state.matches({ mapVisible: { rightSideBar: 'worklistVisible' } });
+  }, [state]);
+
   return (
     <MapStateMachineContext.Provider
       value={{
@@ -516,6 +550,8 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         mapLocationFeatureDataset: state.context.mapLocationFeatureDataset,
         repositioningFeatureDataset: state.context.repositioningFeatureDataset,
         repositioningPropertyIndex: state.context.repositioningPropertyIndex,
+        worklistSelectedMapLocation: state.context.worklistSelectedMapLocation,
+        worklistLocationFeatureDataset: state.context.worklistLocationFeatureDataset,
         showPopup: showPopup,
         isLoading: state.context.isLoading,
         mapSearchCriteria: state.context.searchCriteria,
@@ -531,6 +567,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         isShowingMapFilter: isShowingMapFilter,
         isShowingMapLayers: isShowingMapLayers,
         isShowingMapSearch: isShowingMapSearch,
+        isShowingWorkList: isShowingWorkList,
         activeLayers: state.context.activeLayers,
         activePimsPropertyIds: state.context.activePimsPropertyIds,
         showDisposed: state.context.showDisposed,
@@ -553,6 +590,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         requestFlyToBounds,
         mapClick,
         mapMarkerClick,
+        worklistMapClick,
         closePopup,
         prepareForCreation,
         startSelection,
@@ -562,6 +600,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         toggleMapFilterDisplay,
         toggleMapLayerControl,
         toggleMapSearchControl,
+        toggleWorkListControl,
         showMapSearchControl,
         toggleSidebarDisplay,
         setFilePropertyLocations,

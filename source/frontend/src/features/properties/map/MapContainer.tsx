@@ -23,6 +23,9 @@ import RightSideLayout from '@/features/rightSideLayout/RightSideLayout';
 import { usePimsPropertyRepository } from '@/hooks/repositories/usePimsPropertyRepository';
 import { Api_PropertyFilterCriteria } from '@/models/api/ProjectFilterCriteria';
 
+import { WorklistContainer } from '../worklist/WorklistContainer';
+import { WorklistView } from '../worklist/WorklistView';
+
 enum MapCursors {
   DRAFT = 'draft-cursor',
   REPOSITION = 'reposition-cursor',
@@ -38,10 +41,12 @@ const MapContainer: React.FC<
     isShowingMapFilter,
     isShowingMapLayers,
     isShowingMapSearch,
+    isShowingWorkList,
     isRepositioning,
     toggleMapFilterDisplay,
     toggleMapLayerControl,
     toggleMapSearchControl,
+    toggleWorkListControl,
     setVisiblePimsProperties,
     advancedSearchCriteria,
     isMapVisible,
@@ -114,6 +119,15 @@ const MapContainer: React.FC<
         toggle={toggleMapSearchControl}
       >
         <SearchContainer View={SearchView} />
+      </RightSideLayout>
+      <RightSideLayout
+        title="Working list"
+        closeTooltipText="Close working list"
+        data-testId="worklist-sidebar"
+        isOpen={isShowingWorkList}
+        toggle={toggleWorkListControl}
+      >
+        <WorklistContainer View={WorklistView} />
       </RightSideLayout>
     </StyleMapView>
   );
