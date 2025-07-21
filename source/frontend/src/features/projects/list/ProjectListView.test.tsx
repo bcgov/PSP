@@ -92,7 +92,7 @@ describe('Project List View', () => {
       expect.objectContaining<IProjectFilter>({
         projectName: 'NAME',
         projectNumber: '',
-        projectStatusCode: 'AC',
+        projectStatusCode: '',
         projectRegionCode: '',
       }),
     );
