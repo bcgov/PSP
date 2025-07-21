@@ -47,7 +47,7 @@ namespace Pims.Dal.Test.Repositories
         }
 
         [Fact]
-        public void TryDeletePropertyActivity_Returns_False()
+        public void TryDeleteManagementActivity_Returns_False()
         {
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.ManagementView);

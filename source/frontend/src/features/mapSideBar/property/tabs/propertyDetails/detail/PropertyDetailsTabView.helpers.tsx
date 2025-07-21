@@ -57,5 +57,4 @@ export const defaultPropertyInfo: Partial<ApiGen_Concepts_Property> = {
   volumetricUnit: undefined,
   volumetricType: undefined,
   municipalZoning: '',
-  notes: '',
 };

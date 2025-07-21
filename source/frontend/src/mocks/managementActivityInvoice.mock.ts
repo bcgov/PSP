@@ -1,13 +1,13 @@
-import { ApiGen_Concepts_PropertyActivityInvoice } from '@/models/api/generated/ApiGen_Concepts_PropertyActivityInvoice';
+import { ApiGen_Concepts_ManagementActivityInvoice } from '@/models/api/generated/ApiGen_Concepts_ManagementActivityInvoice';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 
-export const getMockPropertyActivityInvoice = (
+export const getMockManagementActivityInvoice = (
   id = 1,
-  propertyActivityId = 1,
-): ApiGen_Concepts_PropertyActivityInvoice => ({
+  managementActivityId = 1,
+): ApiGen_Concepts_ManagementActivityInvoice => ({
   id,
-  propertyActivityId,
-  propertyActivity: null,
+  managementActivityId,
+  managementActivity: null,
   invoiceDateTime: '2024-10-09',
   invoiceNum: 'INV-0001',
   description: 'Extra description goes here',

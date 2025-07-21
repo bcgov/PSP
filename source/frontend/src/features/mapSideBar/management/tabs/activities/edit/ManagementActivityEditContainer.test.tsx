@@ -7,7 +7,7 @@ import { useManagementActivityRepository } from '@/hooks/repositories/useManagem
 import { mockManagementFileResponse } from '@/mocks/managementFiles.mock';
 import { getMockPropertyManagementActivity } from '@/mocks/PropertyManagementActivity.mock';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
-import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
+import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { act, getMockRepositoryObj, render, RenderOptions, screen } from '@/utils/test-utils';
 
@@ -126,7 +126,7 @@ describe('ManagementActivityEditContainer component', () => {
         activityProperties: [
           {
             id: 15,
-            propertyActivityId: 1,
+            managementActivityId: 1,
             propertyId: 1,
             rowVersion: 1,
           },
@@ -146,15 +146,15 @@ describe('ManagementActivityEditContainer component', () => {
   });
 
   it('loads related contact information for person and organizations', async () => {
-    const apiManagement: ApiGen_Concepts_PropertyActivity = {
+    const apiManagement: ApiGen_Concepts_ManagementActivity = {
       ...getMockPropertyManagementActivity(1),
       ministryContacts: [
         {
           id: 1,
           personId: 1,
           person: null,
-          propertyActivityId: 1,
-          propertyActivity: null,
+          managementActivityId: 1,
+          managementActivity: null,
           ...getEmptyBaseAudit(),
         },
       ],
@@ -165,8 +165,8 @@ describe('ManagementActivityEditContainer component', () => {
           person: null,
           organizationId: 1,
           organization: null,
-          propertyActivityId: 1,
-          propertyActivity: null,
+          managementActivityId: 1,
+          managementActivity: null,
           ...getEmptyBaseAudit(),
         },
       ],

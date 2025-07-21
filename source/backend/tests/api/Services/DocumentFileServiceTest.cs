@@ -304,7 +304,7 @@ namespace Pims.Api.Test.Services
             DocumentUploadRequest uploadRequest = new() { DocumentTypeId = 1, File = this._helper.GetFormFile("Lorem Ipsum") };
 
             // Assert
-            Func<Task> sut = async () => await service.UploadPropertyActivityDocument(1, uploadRequest);
+            Func<Task> sut = async () => await service.UploadManagementFileDocument(1, uploadRequest);
 
             // Assert
             sut.Should().ThrowAsync<NotAuthorizedException>();
@@ -423,7 +423,7 @@ namespace Pims.Api.Test.Services
             DocumentUploadRequest uploadRequest = new() { DocumentTypeId = 1, File = this._helper.GetFormFile("Lorem Ipsum", "test.exe") };
 
             // Assert
-            Func<Task> action = async () => await service.UploadPropertyActivityDocument(1, uploadRequest);
+            Func<Task> action = async () => await service.UploadManagementActivityDocument(1, uploadRequest);
 
             // Assert
             action.Should().ThrowAsync<BusinessRuleViolationException>().WithMessage("This file has an invalid file extension.");
@@ -765,7 +765,7 @@ namespace Pims.Api.Test.Services
             var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd, Permissions.ManagementEdit);
             var documentRepository = this._helper.GetService<Mock<IDocumentRepository>>();
             var documentQueueRepository = this._helper.GetService<Mock<IDocumentQueueRepository>>();
-            var propertyActivityDocumentRepository = this._helper.GetService<Mock<IDocumentRelationshipRepository<PimsPropertyActivityDocument>>>();
+            var managementActivityDocumentRepository = this._helper.GetService<Mock<IDocumentRelationshipRepository<PimsPropertyActivityDocument>>>();
 
             documentQueueRepository.Setup(x => x.BeginTransaction()).Returns(new Mock<IDbContextTransaction>().Object);
             documentRepository.Setup(x => x.Add(It.IsAny<PimsDocument>())).Returns(new PimsDocument()
@@ -776,7 +776,7 @@ namespace Pims.Api.Test.Services
                 FileName = "NewFile.docx",
             });
 
-            propertyActivityDocumentRepository.Setup(x => x.AddDocument(It.IsAny<PimsPropertyActivityDocument>())).Returns(new PimsPropertyActivityDocument()
+            managementActivityDocumentRepository.Setup(x => x.AddDocument(It.IsAny<PimsPropertyActivityDocument>())).Returns(new PimsPropertyActivityDocument()
             {
                 PropertyActivityDocumentId = 101,
                 PimsManagementActivityId = 1,
@@ -792,21 +792,21 @@ namespace Pims.Api.Test.Services
                 DocumentStatusCode = "DocumentStatus",
             };
 
-            await service.UploadPropertyActivityDocument(1, uploadRequest);
+            await service.UploadManagementActivityDocument(1, uploadRequest);
 
             // Assert
             documentRepository.Verify(x => x.Add(It.IsAny<PimsDocument>()), Times.Once);
-            propertyActivityDocumentRepository.Verify(x => x.AddDocument(It.IsAny<PimsPropertyActivityDocument>()), Times.Once);
+            managementActivityDocumentRepository.Verify(x => x.AddDocument(It.IsAny<PimsPropertyActivityDocument>()), Times.Once);
             documentQueueRepository.Verify(x => x.Add(It.IsAny<PimsDocumentQueue>()), Times.Once);
         }
 
         [Fact]
-        public async void UploadDocument_PropertyActivity_Fail_EmptyFile()
+        public async void UploadDocument_ManagementActivity_Fail_EmptyFile()
         {
             // Arrange
             var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd, Permissions.ManagementEdit);
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
-            var propertyActivityDocumentRepository = this._helper.GetService<Mock<IDocumentRelationshipRepository<PimsPropertyActivityDocument>>>();
+            var managementActivityDocumentRepository = this._helper.GetService<Mock<IDocumentRelationshipRepository<PimsPropertyActivityDocument>>>();
             documentService.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), false));
 
             // Act
@@ -818,14 +818,14 @@ namespace Pims.Api.Test.Services
                 DocumentStatusCode = "DocumentStatus",
             };
 
-            Func<Task> act = async () => await service.UploadPropertyActivityDocument(1, uploadRequest);
+            Func<Task> act = async () => await service.UploadManagementActivityDocument(1, uploadRequest);
 
             // Assert
             var ex = await act.Should().ThrowAsync<BadRequestException>();
             ex.Which.Message.Should().Be("The submitted file is empty");
 
             documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), false), Times.Never);
-            propertyActivityDocumentRepository.Verify(x => x.AddDocument(It.IsAny<PimsPropertyActivityDocument>()), Times.Never);
+            managementActivityDocumentRepository.Verify(x => x.AddDocument(It.IsAny<PimsPropertyActivityDocument>()), Times.Never);
         }
 
         [Fact]
@@ -1240,7 +1240,7 @@ namespace Pims.Api.Test.Services
             };
 
             // Act
-            var result = await service.DeletePropertyActivityDocumentAsync(doc);
+            var result = await service.DeleteManagementActivityDocumentAsync(doc);
 
             // Assert
             Assert.NotNull(result);
@@ -1286,7 +1286,7 @@ namespace Pims.Api.Test.Services
             };
 
             // Act
-            var result = await service.DeletePropertyActivityDocumentAsync(doc);
+            var result = await service.DeleteManagementActivityDocumentAsync(doc);
 
             // Assert
             Assert.NotNull(result);
@@ -1420,7 +1420,7 @@ namespace Pims.Api.Test.Services
             };
 
             // Act
-            Func<Task> act = async () => await service.DeletePropertyActivityDocumentAsync(doc);
+            Func<Task> act = async () => await service.DeleteManagementActivityDocumentAsync(doc);
 
             // Assert
             act.Should().ThrowAsync<NotAuthorizedException>();

@@ -47,6 +47,7 @@ export interface IDocumentListViewProps {
   title?: string;
   showParentInformation: boolean;
   relationshipDisplay?: ParentInformationDisplay;
+  'data-testId'?: string;
   onDelete: (relationship: ApiGen_Concepts_DocumentRelationship) => Promise<boolean | undefined>;
   onSuccess: () => void;
   onRefresh: () => void;
@@ -219,7 +220,6 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
             {hasClaim([Claims.DOCUMENT_ADD]) && canEditDocuments && !disableAdd && (
               <StyledSectionAddButton
                 onClick={() => setIsUploadVisible && setIsUploadVisible(true)}
-                data-testid={props['data-testId']}
               >
                 <FaPlus size={'2rem'} />
                 &nbsp;{'Add Document'}
@@ -239,7 +239,13 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
 
   return (
     <>
-      <Section header={getHeader()} title="documents" isCollapsable initiallyExpanded>
+      <Section
+        header={getHeader()}
+        title="documents"
+        data-testid={props['data-testId']}
+        isCollapsable
+        initiallyExpanded
+      >
         {!hideFilters && (
           <DocumentFilterForm
             onSetFilter={setFilters}

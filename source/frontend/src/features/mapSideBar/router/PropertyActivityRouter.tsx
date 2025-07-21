@@ -78,7 +78,7 @@ export const PropertyActivityRouter: React.FunctionComponent<
         customRender={({ match }) => (
           <PropertyActivityEditContainer
             propertyId={Number(match.params.propertyId)}
-            propertyActivityId={Number(match.params.activityId)}
+            managementActivityId={Number(match.params.activityId)}
             onClose={onClose}
             viewEnabled={activityEditEnabled.isExact}
             View={PropertyActivityEditForm}
@@ -94,7 +94,7 @@ export const PropertyActivityRouter: React.FunctionComponent<
         customRender={({ match }) => (
           <PropertyActivityDetailContainer
             propertyId={Number(match.params.propertyId)}
-            propertyActivityId={Number(match.params.activityId)}
+            managementActivityId={Number(match.params.activityId)}
             onClose={onClose}
             viewEnabled={activityDetailEnabled.isExact}
             View={PropertyActivityDetailView}

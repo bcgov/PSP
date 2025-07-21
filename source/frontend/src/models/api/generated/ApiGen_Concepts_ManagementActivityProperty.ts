@@ -4,13 +4,13 @@
  */
 import { ApiGen_Base_BaseAudit } from './ApiGen_Base_BaseAudit';
 import { ApiGen_Concepts_ManagementActivity } from './ApiGen_Concepts_ManagementActivity';
-import { ApiGen_Concepts_Person } from './ApiGen_Concepts_Person';
+import { ApiGen_Concepts_Property } from './ApiGen_Concepts_Property';
 
-// LINK: @backend/apimodels/Models/Concepts/Property/PropertyMinistryContactModel.cs
-export interface ApiGen_Concepts_PropertyMinistryContact extends ApiGen_Base_BaseAudit {
+// LINK: @backend/apimodels/Models/Concepts/Property/ManagementActivityPropertyModel.cs
+export interface ApiGen_Concepts_ManagementActivityProperty extends ApiGen_Base_BaseAudit {
   id: number;
-  personId: number;
-  person: ApiGen_Concepts_Person | null;
   managementActivityId: number;
   managementActivity: ApiGen_Concepts_ManagementActivity | null;
+  propertyId: number;
+  property: ApiGen_Concepts_Property | null;
 }

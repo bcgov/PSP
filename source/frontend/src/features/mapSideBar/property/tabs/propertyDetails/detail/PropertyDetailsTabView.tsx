@@ -236,11 +236,6 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
           </SectionField>
         )}
       </Section>
-
-      <Section header="Comments">
-        <p>{property?.notes}</p>
-      </Section>
-
       <OperationContainer propertyId={property?.id} View={OperationSectionView} />
     </StyledSummarySection>
   );
