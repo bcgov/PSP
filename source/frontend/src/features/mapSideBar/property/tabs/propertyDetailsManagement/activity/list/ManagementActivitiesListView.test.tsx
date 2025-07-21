@@ -3,10 +3,9 @@ import { createMemoryHistory } from 'history';
 import Claims from '@/constants/claims';
 import { mockLookups } from '@/mocks/index.mock';
 import {
-  mockGetPropertyManagementActivityList,
+  mockGetManagementActivityList,
   mockGetPropertyManagementActivityNotStarted,
 } from '@/mocks/PropertyManagementActivity.mock';
-import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { fireEvent, render, RenderOptions, waitFor } from '@/utils/test-utils';
 
@@ -14,6 +13,7 @@ import ManagementActivitiesListView, {
   IManagementActivitiesListViewProps,
 } from './ManagementActivitiesListView';
 import { PropertyActivityRow } from './models/PropertyActivityRow';
+import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
@@ -60,11 +60,11 @@ describe('Activities list view', () => {
   });
 
   it('renders as expected', async () => {
-    const apiModelList = mockGetPropertyManagementActivityList();
+    const apiModelList = mockGetManagementActivityList();
     const { asFragment } = await setup({
       claims: [Claims.MANAGEMENT_VIEW],
       propertyActivities: [
-        ...apiModelList.map((x: ApiGen_Concepts_PropertyActivity) =>
+        ...apiModelList.map((x: ApiGen_Concepts_ManagementActivity) =>
           PropertyActivityRow.fromApi(x),
         ),
       ],
@@ -74,11 +74,11 @@ describe('Activities list view', () => {
   });
 
   it('Hides the delete activity button when user has only read claims', async () => {
-    const apiModelList = mockGetPropertyManagementActivityList();
+    const apiModelList = mockGetManagementActivityList();
     const { queryByTestId } = await setup({
       claims: [Claims.MANAGEMENT_VIEW],
       propertyActivities: [
-        ...apiModelList.map((x: ApiGen_Concepts_PropertyActivity) =>
+        ...apiModelList.map((x: ApiGen_Concepts_ManagementActivity) =>
           PropertyActivityRow.fromApi(x),
         ),
       ],
@@ -89,22 +89,22 @@ describe('Activities list view', () => {
   });
 
   it('Shows the delete activity button when user has delete claims', async () => {
-    const propertyActivity = mockGetPropertyManagementActivityNotStarted();
+    const managementActivity = mockGetPropertyManagementActivityNotStarted();
     const { queryByTestId } = await setup({
       claims: [Claims.MANAGEMENT_VIEW, Claims.MANAGEMENT_DELETE],
-      propertyActivities: [PropertyActivityRow.fromApi(propertyActivity)],
+      propertyActivities: [PropertyActivityRow.fromApi(managementActivity)],
     });
 
-    const firstRowDelete = queryByTestId(`activity-delete-${propertyActivity.id}`);
+    const firstRowDelete = queryByTestId(`activity-delete-${managementActivity.id}`);
     expect(firstRowDelete).toBeInTheDocument();
   });
 
   it('Hides the delete activity button when activity has already started', async () => {
-    const apiModelList = mockGetPropertyManagementActivityList();
+    const apiModelList = mockGetManagementActivityList();
     const { queryByTestId } = await setup({
       claims: [Claims.MANAGEMENT_VIEW, Claims.MANAGEMENT_DELETE],
       propertyActivities: [
-        ...apiModelList.map((x: ApiGen_Concepts_PropertyActivity) =>
+        ...apiModelList.map((x: ApiGen_Concepts_ManagementActivity) =>
           PropertyActivityRow.fromApi(x),
         ),
       ],
@@ -114,13 +114,13 @@ describe('Activities list view', () => {
   });
 
   it('Calls the delete function when clicked Delete Button', async () => {
-    const propertyActivity = mockGetPropertyManagementActivityNotStarted();
+    const managementActivity = mockGetPropertyManagementActivityNotStarted();
     const { queryByTestId } = await setup({
       claims: [Claims.MANAGEMENT_VIEW, Claims.MANAGEMENT_DELETE],
-      propertyActivities: [PropertyActivityRow.fromApi(propertyActivity)],
+      propertyActivities: [PropertyActivityRow.fromApi(managementActivity)],
     });
 
-    const firstRowDelete = queryByTestId(`activity-delete-${propertyActivity.id}`);
+    const firstRowDelete = queryByTestId(`activity-delete-${managementActivity.id}`);
     expect(firstRowDelete).toBeInTheDocument();
 
     await waitFor(() => {

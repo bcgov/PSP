@@ -3,9 +3,8 @@ import { Mock } from 'vitest';
 
 import { Claims } from '@/constants';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
-import { usePropertyActivityRepository } from '@/hooks/repositories/usePropertyActivityRepository';
+import { useManagementActivityPropertyRepository } from '@/hooks/repositories/useManagementActivityPropertyRepository';
 import { getMockPropertyManagementActivity } from '@/mocks/PropertyManagementActivity.mock';
-import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { act, render, RenderOptions, screen } from '@/utils/test-utils';
 
@@ -16,6 +15,7 @@ import {
 } from './PropertyActivityEditContainer';
 import { IPropertyActivityEditFormProps } from './PropertyActivityEditForm';
 import { PropertyActivityFormModel } from './models';
+import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 
 const history = createMemoryHistory();
 
@@ -31,7 +31,7 @@ const mockContactApi: ReturnType<typeof useActivityContactRetriever> = {
 vi.mock('../hooks');
 vi.mocked(useActivityContactRetriever).mockReturnValue(mockContactApi);
 
-const mockPropertyActivityApi: ReturnType<typeof usePropertyActivityRepository> = {
+const mockPropertyActivityApi: ReturnType<typeof useManagementActivityPropertyRepository> = {
   createActivity: {
     error: undefined,
     response: undefined,
@@ -60,13 +60,6 @@ const mockPropertyActivityApi: ReturnType<typeof usePropertyActivityRepository> 
     loading: false,
     status: 200,
   },
-  getActivitySubtypes: {
-    error: undefined,
-    response: undefined,
-    execute: vi.fn(),
-    loading: false,
-    status: 200,
-  },
   updateActivity: {
     error: undefined,
     response: undefined,
@@ -76,8 +69,8 @@ const mockPropertyActivityApi: ReturnType<typeof usePropertyActivityRepository> 
   },
 };
 
-vi.mock('@/hooks/repositories/usePropertyActivityRepository');
-vi.mocked(usePropertyActivityRepository).mockReturnValue(mockPropertyActivityApi);
+vi.mock('@/hooks/repositories/useManagementActivityPropertyRepository');
+vi.mocked(useManagementActivityPropertyRepository).mockReturnValue(mockPropertyActivityApi);
 
 describe('PropertyActivityEditContainer component', () => {
   let viewProps: IPropertyActivityEditFormProps;
@@ -96,7 +89,7 @@ describe('PropertyActivityEditContainer component', () => {
       <SideBarContextProvider>
         <PropertyActivityEditContainer
           propertyId={renderOptions?.props?.propertyId ?? 1}
-          propertyActivityId={renderOptions?.props?.propertyActivityId ?? 1}
+          managementActivityId={renderOptions?.props?.managementActivityId ?? 1}
           viewEnabled={renderOptions?.props?.viewEnabled ?? true}
           onClose={renderOptions?.props?.onClose ?? onClose}
           View={TestView}
@@ -164,15 +157,15 @@ describe('PropertyActivityEditContainer component', () => {
   });
 
   it('loads related contact information for person and organizations', async () => {
-    const apiManagement: ApiGen_Concepts_PropertyActivity = {
+    const apiManagement: ApiGen_Concepts_ManagementActivity = {
       ...getMockPropertyManagementActivity(1),
       ministryContacts: [
         {
           id: 1,
           personId: 1,
           person: null,
-          propertyActivityId: 1,
-          propertyActivity: null,
+          managementActivityId: 1,
+          managementActivity: null,
           ...getEmptyBaseAudit(),
         },
       ],
@@ -183,8 +176,8 @@ describe('PropertyActivityEditContainer component', () => {
           person: null,
           organizationId: 1,
           organization: null,
-          propertyActivityId: 1,
-          propertyActivity: null,
+          managementActivityId: 1,
+          managementActivity: null,
           ...getEmptyBaseAudit(),
         },
       ],

@@ -30,8 +30,8 @@ import { useModalManagement } from '@/hooks/useModalManagement';
 import useIsMounted from '@/hooks/util/useIsMounted';
 import { ApiGen_CodeTypes_ManagementActivityStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_ManagementActivityStatusTypes';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
+import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
-import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 import { exists, isValidId } from '@/utils';
 import { mapLookupCode } from '@/utils/mapLookupCode';
@@ -51,7 +51,7 @@ export interface IManagementActivityEditFormProps {
   loading: boolean;
   show: boolean;
   setShow: (show: boolean) => void;
-  onSave: (model: ApiGen_Concepts_PropertyActivity) => Promise<void>;
+  onSave: (model: ApiGen_Concepts_ManagementActivity) => Promise<void>;
 }
 
 export const ManagementActivityEditForm: React.FunctionComponent<

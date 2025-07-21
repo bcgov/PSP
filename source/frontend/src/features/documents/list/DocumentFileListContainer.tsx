@@ -1,12 +1,12 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator';
-import { usePropertyActivityRepository } from '@/hooks/repositories/usePropertyActivityRepository';
+import { useManagementActivityPropertyRepository } from '@/hooks/repositories/useManagementActivityPropertyRepository';
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
 import useIsMounted from '@/hooks/util/useIsMounted';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
-import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
+import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 import { ApiGen_Concepts_PropertyAssociations } from '@/models/api/generated/ApiGen_Concepts_PropertyAssociations';
 import { exists, relationshipTypeToPathName } from '@/utils';
 
@@ -25,7 +25,7 @@ const DocumentFileListContainer: React.FunctionComponent<IDocumentListContainerP
   const [fileDocuments, setFileDocuments] = useState<DocumentRow[]>([]);
 
   const [managementActivities, setManagementActivities] = useState<
-    ApiGen_Concepts_PropertyActivity[]
+    ApiGen_Concepts_ManagementActivity[]
   >([]);
 
   const [fileAssociations, setFileAssociations] =
@@ -36,7 +36,7 @@ const DocumentFileListContainer: React.FunctionComponent<IDocumentListContainerP
 
   const {
     getActivities: { execute: getActivities, loading: loadingActivities },
-  } = usePropertyActivityRepository();
+  } = useManagementActivityPropertyRepository();
 
   const { retrieveDocumentRelationship, retrieveDocumentRelationshipLoading } =
     useDocumentRelationshipProvider();
@@ -116,7 +116,7 @@ const DocumentFileListContainer: React.FunctionComponent<IDocumentListContainerP
   );
 
   const retrieveActivitiesDocuments = useCallback(
-    async (activities: ApiGen_Concepts_PropertyActivity[]) => {
+    async (activities: ApiGen_Concepts_ManagementActivity[]) => {
       if (!exists(activities)) {
         return;
       }
@@ -202,6 +202,7 @@ const DocumentFileListContainer: React.FunctionComponent<IDocumentListContainerP
         searchParentIdLabel: 'File Number',
         searchParentTypeLabel: 'File Type',
       }}
+      data-testId="pims-files-document-list"
       canEditDocuments={true}
     />
   );
