@@ -17,8 +17,8 @@ import {
 import { Claims } from '@/constants/index';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import {
-  emptyPropertyLocation,
   PIMS_Property_Location_View,
+  emptyPropertyLocation,
 } from '@/models/layers/pimsPropertyLocationView';
 import leafletMouseSlice from '@/store/slices/leafletMouse/LeafletMouseSlice';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
@@ -35,13 +35,13 @@ import {
   waitForEffects,
 } from '@/utils/test-utils';
 
+import { PropertyFilterFormModel } from '@/components/maps/leaflet/Control/AdvancedFilter/models';
 import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
+import { useLtsa } from '@/hooks/useLtsa';
 import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
-import MapContainer from './MapContainer';
-import { PropertyFilterFormModel } from '@/components/maps/leaflet/Control/AdvancedFilter/models';
 import debounce from 'lodash/debounce';
-import { useLtsa } from '@/hooks/useLtsa';
+import MapContainer from './MapContainer';
 
 const mockAxios = new MockAdapter(axios);
 
@@ -205,18 +205,13 @@ describe('MapContainer', () => {
           mp => mp.properties.PROPERTY_ID,
         );
     }
-    const utils = render(
-      <>
-        <MapContainer defaultZoom={16} />
-      </>,
-      {
-        store,
-        history,
-        mockMapMachine: defaultMapMachine,
-        ...renderOptions,
-        useMockAuthentication: true,
-      },
-    );
+    const utils = render(<MapContainer defaultZoom={16} />, {
+      store,
+      history,
+      mockMapMachine: defaultMapMachine,
+      ...renderOptions,
+      useMockAuthentication: true,
+    });
     await act(async () => {}); // Wait for async mount actions to settle
 
     return { ...utils };
@@ -369,6 +364,22 @@ describe('MapContainer', () => {
     vi.advanceTimersByTime(500);
 
     expect(mapMachineBaseMock.mapClick).toHaveBeenLastCalledWith({
+      lat: 52.81604319154934,
+      lng: -124.67285156250001,
+    });
+  });
+
+  it('can CTRL + click to add property to the working list', async () => {
+    await setup();
+    vi.useFakeTimers();
+
+    const map = document.querySelector('.leaflet-container');
+    expect(map).toBeVisible();
+    await act(async () => userEvent.click(map, { ctrlKey: true }));
+
+    vi.advanceTimersByTime(500);
+
+    expect(mapMachineBaseMock.worklistMapClick).toHaveBeenLastCalledWith({
       lat: 52.81604319154934,
       lng: -124.67285156250001,
     });
