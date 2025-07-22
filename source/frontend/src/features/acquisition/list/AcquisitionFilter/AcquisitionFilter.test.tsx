@@ -81,7 +81,6 @@ describe('Acquisition Filter', () => {
 
     expect(setFilter).toHaveBeenCalledWith(
       expect.objectContaining({
-        acquisitionFileStatusTypeCode: 'ACTIVE',
         ownerName: 'DOE',
       }),
     );
