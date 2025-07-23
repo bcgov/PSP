@@ -230,6 +230,10 @@ exports[`AdvancedFilterButton > renders as expected 1`] = `
   border-bottom-right-radius: 0;
 }
 
+.c1.btn:hover {
+  opacity: 1;
+}
+
 <div
     id="mapid"
     style="width: 500px; height: 500px;"

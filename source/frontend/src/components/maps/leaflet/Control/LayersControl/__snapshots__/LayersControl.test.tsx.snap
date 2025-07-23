@@ -228,6 +228,10 @@ exports[`LayersControl View > renders correctly 1`] = `
   box-shadow: -0.2rem 0.1rem 0.4rem rgba(0,0,0,0.2);
 }
 
+.c1.btn:hover {
+  opacity: 1;
+}
+
 <div
     id="mapid"
     style="width: 500px; height: 500px;"
