@@ -172,17 +172,20 @@ namespace Pims.Dal.Repositories
                 if (Context.PimsPropPropActivities.Count(x => x.PimsPropertyActivityId == propertyActivityRelationships.PimsPropertyActivityId) > 1)
                 {
                     Context.PimsPropPropActivities.Remove(propertyActivityRelationships);
-                    deletedSuccessfully = true;
                 }
                 else
                 {
                     Context.PimsPropPropActivities.Remove(propertyActivityRelationships);
 
-                    var propertyActivity = Context.PimsPropertyActivities.FirstOrDefault(x => x.PimsPropertyActivityId.Equals(propertyActivityRelationships.PimsPropertyActivityId));
-                    Context.PimsPropertyActivities.Remove(propertyActivity);
+                    var propertyActivity = Context.PimsPropertyActivities
+                        .Include(st => st.PimsPropActivityMgmtActivities)
+                        .FirstOrDefault(x => x.PimsPropertyActivityId.Equals(propertyActivityRelationships.PimsPropertyActivityId));
 
-                    deletedSuccessfully = true;
+                    Context.PimsPropActivityMgmtActivities.RemoveRange(propertyActivity.PimsPropActivityMgmtActivities);
+                    Context.PimsPropertyActivities.Remove(propertyActivity);
                 }
+
+                deletedSuccessfully = true;
             }
 
             return deletedSuccessfully;
