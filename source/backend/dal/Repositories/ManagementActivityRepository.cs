@@ -284,55 +284,29 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// TryDelete the Activity associated with the property and if no property associated to activity delete the activicy as well.
+        /// Delete an activity, and all downstream relationships.
         /// </summary>
         /// <param name="activityId"></param>
         /// <returns>Boolean of deletion sucess.</returns>
         public bool TryDelete(long activityId)
         {
-            bool deletedSuccessfully = false;
-            var managementActivityRelationships = Context.PimsManagementActivityProperties.FirstOrDefault(x => x.PimsManagementActivityId == activityId);
-
-            if (managementActivityRelationships is not null)
-            {
-                // This will check if there is no other Property that has the same activity associated.
-                // If there is, it will only remove the relationship for the current property.
-                if (Context.PimsManagementActivityProperties.Count(x => x.PimsManagementActivityId == managementActivityRelationships.PimsManagementActivityId) > 1)
-                {
-                    Context.PimsManagementActivityProperties.Remove(managementActivityRelationships);
-                    deletedSuccessfully = true;
-                }
-                else
-                {
-                    Context.PimsManagementActivityProperties.Remove(managementActivityRelationships);
-
-                    var managementActivity = Context.PimsManagementActivities.FirstOrDefault(x => x.PimsManagementActivityId.Equals(managementActivityRelationships.PimsManagementActivityId));
-                    Context.PimsManagementActivities.Remove(managementActivity);
-
-                    deletedSuccessfully = true;
-                }
-            }
-
-            return deletedSuccessfully;
-        }
-
-        /// <summary>
-        /// Delete an activity, and all property-activity relationships.
-        /// </summary>
-        /// <param name="activityId"></param>
-        /// <returns>Boolean of deletion sucess.</returns>
-        public bool TryDeleteByFile(long activityId, long managementFileId)
-        {
             var managementActivity = Context.PimsManagementActivities
                 .Include(pa => pa.PimsManagementActivityProperties)
                 .Include(st => st.PimsPropActivityMgmtActivities)
-                .FirstOrDefault(x => x.PimsManagementActivityId == activityId && x.ManagementFileId == managementFileId);
+                .Include(mamc => mamc.PimsPropActMinContacts)
+                .Include(maip => maip.PimsPropActInvolvedParties)
+                .Include(mai => mai.PimsPropertyActivityInvoices)
+                .FirstOrDefault(x => x.PimsManagementActivityId == activityId);
 
             if (managementActivity is null)
             {
                 return true;
             }
 
+            Context.PimsPropertyActivityInvoices.RemoveRange(managementActivity.PimsPropertyActivityInvoices);
+            Context.PimsPropActMinContacts.RemoveRange(managementActivity.PimsPropActMinContacts);
+            Context.PimsPropActMinContacts.RemoveRange(managementActivity.PimsPropActMinContacts);
+            Context.PimsPropActInvolvedParties.RemoveRange(managementActivity.PimsPropActInvolvedParties);
             Context.PimsManagementActivityProperties.RemoveRange(managementActivity.PimsManagementActivityProperties);
             Context.PimsPropActivityMgmtActivities.RemoveRange(managementActivity.PimsPropActivityMgmtActivities);
 
