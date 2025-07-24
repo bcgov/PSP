@@ -1,14 +1,8 @@
 import { renderHook } from '@testing-library/react-hooks';
-import * as turf from '@turf/turf';
-import { LatLngLiteral } from 'leaflet';
 
-import {
-  emptyPmbcParcel,
-  PMBC_FullyAttributed_Feature_Properties,
-} from '@/models/layers/parcelMapBC';
 import { act } from '@/utils/test-utils';
 
-import { exists } from '@/utils';
+import { getMockWorklistParcel } from '@/mocks/worklistParcel.mock';
 import { ParcelFeature } from '../models';
 import { IWorklistNotifier, useWorklistContext, WorklistContextProvider } from './WorklistContext';
 
@@ -17,28 +11,6 @@ const mockNotifier: IWorklistNotifier = {
   error: vi.fn(),
   success: vi.fn(),
   warn: vi.fn(),
-};
-
-// Factory for ParcelFeature using fromFullyAttributedFeature
-const createParcel = (
-  id: string,
-  props: Partial<PMBC_FullyAttributed_Feature_Properties> = {},
-  coords?: LatLngLiteral,
-): ParcelFeature => {
-  const geometry = exists(coords) ? [coords.lng, coords.lat] : [0, 0];
-  const geoFeature = turf.point<PMBC_FullyAttributed_Feature_Properties>(geometry, {
-    ...emptyPmbcParcel,
-    ...props,
-  });
-
-  const parcel = ParcelFeature.fromFullyAttributedFeature(geoFeature);
-  parcel.id = id;
-
-  if (exists(coords)) {
-    parcel.location = coords;
-  }
-
-  return parcel;
 };
 
 describe('WorklistContextProvider', () => {
@@ -76,8 +48,8 @@ describe('WorklistContextProvider', () => {
   });
 
   it('respects initial parcels', () => {
-    const a = createParcel('a');
-    const b = createParcel('b');
+    const a = getMockWorklistParcel('a');
+    const b = getMockWorklistParcel('b');
     const { result } = renderWorklistHook([a, b]);
     expect(result.current.parcels.map(p => p.id)).toEqual(['a', 'b']);
   });
@@ -89,7 +61,7 @@ describe('WorklistContextProvider', () => {
   });
 
   it('add() adds a unique parcel', () => {
-    const parcel = createParcel('1', { PID: '123456789' });
+    const parcel = getMockWorklistParcel('1', { PID: '123456789' });
     const { result } = renderWorklistHook();
     act(() => result.current.add(parcel));
 
@@ -99,8 +71,8 @@ describe('WorklistContextProvider', () => {
   });
 
   it('add() prevents duplicate by internal ID and calls notifier.error', () => {
-    const parcel = createParcel('1');
-    const duplicate = createParcel('1');
+    const parcel = getMockWorklistParcel('1');
+    const duplicate = getMockWorklistParcel('1');
 
     const { result } = renderWorklistHook();
 
@@ -114,8 +86,8 @@ describe('WorklistContextProvider', () => {
   });
 
   it('add() prevents duplicate by PID and calls notifier.error', () => {
-    const parcel = createParcel('1', { PID: '123456789' });
-    const duplicate = createParcel('2', { PID: '123456789' });
+    const parcel = getMockWorklistParcel('1', { PID: '123456789' });
+    const duplicate = getMockWorklistParcel('2', { PID: '123456789' });
 
     const { result } = renderWorklistHook();
 
@@ -129,8 +101,8 @@ describe('WorklistContextProvider', () => {
   });
 
   it('add() prevents duplicate by PIN and calls notifier.error', () => {
-    const parcel = createParcel('p1', { PIN: 999999999 });
-    const duplicate = createParcel('p2', { PIN: 999999999 });
+    const parcel = getMockWorklistParcel('p1', { PIN: 999999999 });
+    const duplicate = getMockWorklistParcel('p2', { PIN: 999999999 });
 
     const { result } = renderWorklistHook();
 
@@ -144,8 +116,8 @@ describe('WorklistContextProvider', () => {
   });
 
   it('add() prevents duplicate by PLAN_NUMBER (fallback) and calls notifier.error', () => {
-    const parcel = createParcel('plan1', { PLAN_NUMBER: 'SP-12345' });
-    const duplicate = createParcel('plan2', { PLAN_NUMBER: 'SP-12345' });
+    const parcel = getMockWorklistParcel('plan1', { PLAN_NUMBER: 'SP-12345' });
+    const duplicate = getMockWorklistParcel('plan2', { PLAN_NUMBER: 'SP-12345' });
 
     const { result } = renderWorklistHook();
 
@@ -159,8 +131,8 @@ describe('WorklistContextProvider', () => {
   });
 
   it('add() prevents duplicate by lat/lng (no PID/PIN)', () => {
-    const parcel = createParcel('loc1', {}, { lat: 49.1, lng: -123.1 });
-    const duplicate = createParcel('loc2', {}, { lat: 49.1, lng: -123.1 });
+    const parcel = getMockWorklistParcel('loc1', {}, { lat: 49.1, lng: -123.1 });
+    const duplicate = getMockWorklistParcel('loc2', {}, { lat: 49.1, lng: -123.1 });
 
     const { result } = renderWorklistHook();
 
@@ -174,10 +146,10 @@ describe('WorklistContextProvider', () => {
   });
 
   it('addRange() adds only unique parcels and warns on duplicates', () => {
-    const existing = createParcel('base', { PID: '111' });
-    const p1 = createParcel('a', { PID: '222' });
-    const p2 = createParcel('b', { PID: '333' });
-    const dupe = createParcel('dupe', { PID: '111' });
+    const existing = getMockWorklistParcel('base', { PID: '111' });
+    const p1 = getMockWorklistParcel('a', { PID: '222' });
+    const p2 = getMockWorklistParcel('b', { PID: '333' });
+    const dupe = getMockWorklistParcel('dupe', { PID: '111' });
 
     const { result } = renderWorklistHook([existing]);
 
@@ -193,8 +165,8 @@ describe('WorklistContextProvider', () => {
   });
 
   it('addRange() notifies only success when no duplicates', () => {
-    const p1 = createParcel('a', { PID: '123' });
-    const p2 = createParcel('b', { PID: '456' });
+    const p1 = getMockWorklistParcel('a', { PID: '123' });
+    const p2 = getMockWorklistParcel('b', { PID: '456' });
 
     const { result } = renderWorklistHook();
 
@@ -206,8 +178,11 @@ describe('WorklistContextProvider', () => {
   });
 
   it('addRange() notifies only warn when all are duplicates', () => {
-    const existing = createParcel('a', { PID: '123' });
-    const dupes = [createParcel('b', { PID: '123' }), createParcel('c', { PID: '123' })];
+    const existing = getMockWorklistParcel('a', { PID: '123' });
+    const dupes = [
+      getMockWorklistParcel('b', { PID: '123' }),
+      getMockWorklistParcel('c', { PID: '123' }),
+    ];
 
     const { result } = renderWorklistHook([existing]);
 
@@ -219,8 +194,8 @@ describe('WorklistContextProvider', () => {
   });
 
   it('remove() deletes parcel by ID', () => {
-    const a = createParcel('a', { PID: '111' });
-    const b = createParcel('b', { PID: '222' });
+    const a = getMockWorklistParcel('a', { PID: '111' });
+    const b = getMockWorklistParcel('b', { PID: '222' });
     const { result } = renderWorklistHook([a, b]);
 
     act(() => result.current.remove('a'));
@@ -228,8 +203,8 @@ describe('WorklistContextProvider', () => {
   });
 
   it('clearAll() removes all parcels', () => {
-    const a = createParcel('a');
-    const b = createParcel('b');
+    const a = getMockWorklistParcel('a');
+    const b = getMockWorklistParcel('b');
     const { result } = renderWorklistHook([a, b]);
 
     act(() => result.current.clearAll());
