@@ -1,5 +1,5 @@
-require('dotenv').config();
-const { setWorldConstructor } = require('@cucumber/cucumber');
+require("dotenv").config();
+const { setWorldConstructor } = require("@cucumber/cucumber");
 
 const BASE_URL = process.env.BASE_URL;
 
@@ -29,6 +29,5 @@ setWorldConstructor(CustomWorld);
 
 module.exports = {
   BASE_URL,
-  getUserCredential
+  getUserCredential,
 };
-
