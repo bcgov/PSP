@@ -2,6 +2,7 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Feature, FeatureCollection, Point } from 'geojson';
 import { createMemoryHistory } from 'history';
+import debounce from 'lodash/debounce';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
@@ -40,7 +41,6 @@ import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
 import { useLtsa } from '@/hooks/useLtsa';
 import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
-import debounce from 'lodash/debounce';
 import MapContainer from './MapContainer';
 
 const mockAxios = new MockAdapter(axios);
