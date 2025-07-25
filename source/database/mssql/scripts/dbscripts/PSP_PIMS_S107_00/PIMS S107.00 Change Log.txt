@@ -53,6 +53,8 @@ PSP_PIMS | Development Sprint: S107.00 | Design Sprint: 106 | Date: 2025-Jul-09
   - 056_PIMS_PROP_ACT_MIN_CONTACT.sql
   - 107_PIMS_PROPERTY_ACTIVITY_DOCUMENT.sql
   - 124_PIMS_PROP_ACTIVITY_MGMT_ACTIVITY.sql
+- Added seed scripts:
+  - 011_Remove_Sequences.sql
 - Altered seed scripts:
   - 087_DML_PIMS_PPH_STATUS_TYPE.sql
   - 007_PSP_PIMS_PROPERTY_ACTIVITY_HIST_Add.sql
