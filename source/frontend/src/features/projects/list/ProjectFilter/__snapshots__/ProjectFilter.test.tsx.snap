@@ -359,7 +359,7 @@ exports[`Project Filter > matches snapshot 1`] = `
                 <option
                   value=""
                 >
-                  All Statuses
+                  All Status
                 </option>
                 <option
                   class="option"

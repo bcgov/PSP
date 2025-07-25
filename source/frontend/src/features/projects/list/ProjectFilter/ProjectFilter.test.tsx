@@ -69,7 +69,7 @@ describe('Project Filter', () => {
       expect.objectContaining<IProjectFilter>({
         projectName: '',
         projectNumber: '1201',
-        projectStatusCode: 'AC',
+        projectStatusCode: '',
         projectRegionCode: '',
       }),
     );
@@ -85,7 +85,7 @@ describe('Project Filter', () => {
       expect.objectContaining<IProjectFilter>({
         projectName: 'Hwy',
         projectNumber: '',
-        projectStatusCode: 'AC',
+        projectStatusCode: '',
         projectRegionCode: '',
       }),
     );
@@ -101,7 +101,7 @@ describe('Project Filter', () => {
       expect.objectContaining<IProjectFilter>({
         projectName: '',
         projectNumber: '',
-        projectStatusCode: 'AC',
+        projectStatusCode: '',
         projectRegionCode: '2',
       }),
     );
