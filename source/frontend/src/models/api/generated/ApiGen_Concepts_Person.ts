@@ -22,7 +22,7 @@ export interface ApiGen_Concepts_Person extends ApiGen_Base_BaseConcurrent {
   addressComment: string | null;
   useOrganizationAddress: boolean | null;
   isDisabled: boolean;
-  propertyActivityId: number | null;
+  managementActivityId: number | null;
   contactMethods: ApiGen_Concepts_ContactMethod[] | null;
   personAddresses: ApiGen_Concepts_PersonAddress[] | null;
   personOrganizations: ApiGen_Concepts_PersonOrganization[] | null;

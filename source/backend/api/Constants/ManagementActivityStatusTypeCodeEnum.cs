@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 namespace Pims.Api.Constants
 {
     [JsonConverter(typeof(JsonStringEnumMemberConverter))]
-    public enum PropertyActivityStatusTypeCode
+    public enum ManagementActivityStatusTypeCode
     {
         [EnumMember(Value = "CANCELLED")]
         CANCELLED,

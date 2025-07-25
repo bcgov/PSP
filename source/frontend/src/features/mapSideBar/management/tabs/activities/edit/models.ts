@@ -1,11 +1,11 @@
 import { ManagementActivitySubTypeModel } from '@/features/mapSideBar/property/tabs/propertyDetailsManagement/activity/models/ManagementActivitySubType';
 import { fromApiPersonOrApiOrganization, IContactSearchResult } from '@/interfaces';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
+import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
+import { ApiGen_Concepts_ManagementActivityInvoice } from '@/models/api/generated/ApiGen_Concepts_ManagementActivityInvoice';
+import { ApiGen_Concepts_ManagementActivityInvolvedParty } from '@/models/api/generated/ApiGen_Concepts_ManagementActivityInvolvedParty';
+import { ApiGen_Concepts_ManagementActivityProperty } from '@/models/api/generated/ApiGen_Concepts_ManagementActivityProperty';
 import { ApiGen_Concepts_ManagementFileProperty } from '@/models/api/generated/ApiGen_Concepts_ManagementFileProperty';
-import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
-import { ApiGen_Concepts_PropertyActivityInvoice } from '@/models/api/generated/ApiGen_Concepts_PropertyActivityInvoice';
-import { ApiGen_Concepts_PropertyActivityInvolvedParty } from '@/models/api/generated/ApiGen_Concepts_PropertyActivityInvolvedParty';
-import { ApiGen_Concepts_PropertyActivityProperty } from '@/models/api/generated/ApiGen_Concepts_PropertyActivityProperty';
 import { ApiGen_Concepts_PropertyMinistryContact } from '@/models/api/generated/ApiGen_Concepts_PropertyMinistryContact';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { exists, isValidIsoDateTime } from '@/utils';
@@ -40,8 +40,8 @@ export class ManagementActivityFormModel {
     this.rowVersion = rowVersion;
   }
 
-  toApi(): ApiGen_Concepts_PropertyActivity {
-    const apiActivity: ApiGen_Concepts_PropertyActivity = {
+  toApi(): ApiGen_Concepts_ManagementActivity {
+    const apiActivity: ApiGen_Concepts_ManagementActivity = {
       id: this.id ?? 0,
       managementFileId: this.managementFileId,
       managementFile: null,
@@ -61,15 +61,15 @@ export class ManagementActivityFormModel {
 
       involvedParties: this.involvedParties
         .filter(exists)
-        .map<ApiGen_Concepts_PropertyActivityInvolvedParty>(x => {
+        .map<ApiGen_Concepts_ManagementActivityInvolvedParty>(x => {
           return {
             id: 0,
             organizationId: x.organizationId ?? null,
             organization: null,
             personId: x.personId ?? null,
             person: null,
-            propertyActivityId: this.id ?? 0,
-            propertyActivity: null,
+            managementActivityId: this.id ?? 0,
+            managementActivity: null,
             ...getEmptyBaseAudit(0),
           };
         }),
@@ -80,8 +80,8 @@ export class ManagementActivityFormModel {
             id: 0,
             personId: x.personId ?? 0,
             person: null,
-            propertyActivityId: this.id ?? 0,
-            propertyActivity: null,
+            managementActivityId: this.id ?? 0,
+            managementActivity: null,
             ...getEmptyBaseAudit(0),
           };
         }),
@@ -90,11 +90,11 @@ export class ManagementActivityFormModel {
 
         return {
           id: matched ? matched.id : 0,
-          propertyActivityId: this.id ?? 0,
+          managementActivityId: this.id ?? 0,
           propertyId: x.propertyId,
           property: null,
           rowVersion: matched?.rowVersion ?? 0,
-        } as ApiGen_Concepts_PropertyActivityProperty;
+        } as ApiGen_Concepts_ManagementActivityProperty;
       }),
       invoices: this.invoices.map(i => i.toApi(this.id ?? 0)),
       ...getEmptyBaseAudit(this.rowVersion),
@@ -104,7 +104,7 @@ export class ManagementActivityFormModel {
   }
 
   static fromApi(
-    model: ApiGen_Concepts_PropertyActivity | undefined,
+    model: ApiGen_Concepts_ManagementActivity | undefined,
     fileProperties: ApiGen_Concepts_ManagementFileProperty[],
   ): ManagementActivityFormModel {
     const formModel = new ManagementActivityFormModel(
@@ -163,15 +163,15 @@ export class ManagementActivityFormModel {
 
 export class ActivityPropertyFormModel {
   id = 0;
-  propertyActivityId = 0;
+  managementActivityId = 0;
   propertyId = 0;
   rowVersion = 0;
 
-  toApi(): ApiGen_Concepts_PropertyActivityProperty {
+  toApi(): ApiGen_Concepts_ManagementActivityProperty {
     return {
       id: this.id,
-      propertyActivityId: this.propertyActivityId,
-      propertyActivity: null,
+      managementActivityId: this.managementActivityId,
+      managementActivity: null,
       propertyId: this.propertyId,
       property: null,
       ...getEmptyBaseAudit(this.rowVersion),
@@ -179,13 +179,13 @@ export class ActivityPropertyFormModel {
   }
 
   static fromApi(
-    model: ApiGen_Concepts_PropertyActivityProperty | undefined,
+    model: ApiGen_Concepts_ManagementActivityProperty | undefined,
   ): ActivityPropertyFormModel {
     const newFormModel = new ActivityPropertyFormModel();
 
     if (exists(model)) {
       newFormModel.id = model.id;
-      newFormModel.propertyActivityId = model.propertyActivityId;
+      newFormModel.managementActivityId = model.managementActivityId;
       newFormModel.propertyId = model.propertyId;
       newFormModel.rowVersion = model.rowVersion || 0;
     }
@@ -207,11 +207,11 @@ export class ActivityInvoiceFormModel {
   isPstRequired = false;
 
   isDisabled = false;
-  propertyActivityId = 0;
-  propertyActivity = '';
+  managementActivityId = 0;
+  managementActivity = '';
   rowVersion = 0;
 
-  toApi(propertyActivityId: number): ApiGen_Concepts_PropertyActivityInvoice {
+  toApi(managementActivityId: number): ApiGen_Concepts_ManagementActivityInvoice {
     return {
       id: this.id,
       invoiceDateTime: this.invoiceDateTime,
@@ -223,14 +223,14 @@ export class ActivityInvoiceFormModel {
       totalAmount: Number(this.totalAmount),
       isPstRequired: this.isPstRequired,
       isDisabled: this.isDisabled,
-      propertyActivityId: propertyActivityId,
-      propertyActivity: null,
+      managementActivityId: managementActivityId,
+      managementActivity: null,
       ...getEmptyBaseAudit(this.rowVersion),
     };
   }
 
   static fromApi(
-    model: ApiGen_Concepts_PropertyActivityInvoice | undefined,
+    model: ApiGen_Concepts_ManagementActivityInvoice | undefined,
   ): ActivityInvoiceFormModel {
     const formModel = new ActivityInvoiceFormModel();
 
@@ -247,7 +247,7 @@ export class ActivityInvoiceFormModel {
       formModel.totalAmount = model.totalAmount || 0;
       formModel.isPstRequired = model.isPstRequired || false;
       formModel.isDisabled = model.isDisabled || false;
-      formModel.propertyActivityId = model.propertyActivityId || 0;
+      formModel.managementActivityId = model.managementActivityId || 0;
       formModel.rowVersion = model.rowVersion || 0;
     }
 

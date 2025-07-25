@@ -41,9 +41,9 @@ namespace Pims.Api.Services
 
         IEnumerable<PimsManagementActivity> GetActivitiesByPropertyIds(IEnumerable<long> propertyIds);
 
-        PimsManagementActivity CreateActivity(PimsManagementActivity propertyActivity);
+        PimsManagementActivity CreateActivity(PimsManagementActivity managementActivity);
 
-        PimsManagementActivity UpdateActivity(PimsManagementActivity propertyActivity);
+        PimsManagementActivity UpdateActivity(PimsManagementActivity managementActivity);
 
         bool DeleteActivity(long activityId);
 

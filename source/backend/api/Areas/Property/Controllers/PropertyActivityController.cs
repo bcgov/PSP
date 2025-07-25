@@ -28,7 +28,6 @@ namespace Pims.Api.Areas.Property.Controllers
     {
         #region Variables
         private readonly IPropertyService _propertyService;
-        private readonly ILookupRepository _lookupRepository;
         private readonly IMapper _mapper;
         #endregion
 
@@ -38,13 +37,11 @@ namespace Pims.Api.Areas.Property.Controllers
         /// Creates a new instance of a PropertyActivityController class, initializes it with the specified arguments.
         /// </summary>
         /// <param name="propertyService"></param>
-        /// /// <param name="lookupRepository"></param>
         /// <param name="mapper"></param>
         ///
-        public PropertyActivityController(IPropertyService propertyService, ILookupRepository lookupRepository, IMapper mapper)
+        public PropertyActivityController(IPropertyService propertyService, IMapper mapper)
         {
             _propertyService = propertyService;
-            _lookupRepository = lookupRepository;
             _mapper = mapper;
         }
         #endregion
@@ -79,11 +76,11 @@ namespace Pims.Api.Areas.Property.Controllers
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetPropertyActivity(long propertyId, long activityId)
         {
-            var propertyActivity = _propertyService.GetActivity(activityId);
+            var managementActivity = _propertyService.GetActivity(activityId);
 
-            if (propertyActivity.PimsManagementActivityProperties.Any(x => x.PropertyId == propertyId))
+            if (managementActivity.PimsManagementActivityProperties.Any(x => x.PropertyId == propertyId))
             {
-                return new JsonResult(_mapper.Map<ManagementActivityModel>(propertyActivity));
+                return new JsonResult(_mapper.Map<ManagementActivityModel>(managementActivity));
             }
 
             throw new BadRequestException("Activity with the given id does not match the property id");
@@ -123,14 +120,14 @@ namespace Pims.Api.Areas.Property.Controllers
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult UpdatePropertyActivity(long propertyId, long activityId, [FromBody] ManagementActivityModel activityModel)
         {
-            var propertyActivity = _mapper.Map<PimsManagementActivity>(activityModel);
-            if (!propertyActivity.PimsManagementActivityProperties.Any(x => x.PropertyId == propertyId && x.PimsManagementActivityId == activityId)
-                || propertyActivity.PimsManagementActivityId != activityId)
+            var managementActivity = _mapper.Map<PimsManagementActivity>(activityModel);
+            if (!managementActivity.PimsManagementActivityProperties.Any(x => x.PropertyId == propertyId && x.PimsManagementActivityId == activityId)
+                || managementActivity.PimsManagementActivityId != activityId)
             {
                 throw new BadRequestException("Invalid activity identifiers.");
             }
 
-            var updatedProperty = _propertyService.UpdateActivity(propertyActivity);
+            var updatedProperty = _propertyService.UpdateActivity(managementActivity);
 
             return new JsonResult(_mapper.Map<ManagementActivityModel>(updatedProperty));
         }

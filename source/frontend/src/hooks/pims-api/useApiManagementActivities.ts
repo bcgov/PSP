@@ -2,7 +2,7 @@ import queryString from 'query-string';
 import React from 'react';
 
 import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
-import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
+import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 
 import { IPaginateRequest } from './interfaces/IPaginateRequest';
 import useAxiosApi from './useApi';
@@ -18,23 +18,25 @@ export const useApiManagementActivities = () => {
 
   return React.useMemo(
     () => ({
-      getPropertyActivityApi: (propertyActivityId: number) =>
-        api.get<ApiGen_Concepts_PropertyActivity>(`/management-activities/${propertyActivityId}`),
+      getPropertyActivityApi: (managementActivityId: number) =>
+        api.get<ApiGen_Concepts_ManagementActivity>(
+          `/management-activities/${managementActivityId}`,
+        ),
 
-      postActivityApi: (managementFileId: number, activity: ApiGen_Concepts_PropertyActivity) =>
-        api.post<ApiGen_Concepts_PropertyActivity>(
+      postActivityApi: (managementFileId: number, activity: ApiGen_Concepts_ManagementActivity) =>
+        api.post<ApiGen_Concepts_ManagementActivity>(
           `/managementfiles/${managementFileId}/management-activities`,
           activity,
         ),
 
-      putActivityApi: (managementFileId: number, activity: ApiGen_Concepts_PropertyActivity) =>
-        api.put<ApiGen_Concepts_PropertyActivity>(
+      putActivityApi: (managementFileId: number, activity: ApiGen_Concepts_ManagementActivity) =>
+        api.put<ApiGen_Concepts_ManagementActivity>(
           `/managementfiles/${managementFileId}/management-activities/${activity.id}`,
           activity,
         ),
 
       getManagementActivitiesPagedApi: (params: IPaginateManagementActivities | null) =>
-        api.get<ApiGen_Base_Page<ApiGen_Concepts_PropertyActivity>>(
+        api.get<ApiGen_Base_Page<ApiGen_Concepts_ManagementActivity>>(
           `/management-activities/search?${params ? queryString.stringify(params) : ''}`,
         ),
 
@@ -53,22 +55,22 @@ export const useApiManagementActivities = () => {
             },
           },
         ),
-      getActivityApi: (managementFileId: number, propertyActivityId: number) =>
-        api.get<ApiGen_Concepts_PropertyActivity>(
-          `/managementfiles/${managementFileId}/management-activities/${propertyActivityId}`,
+      getActivityApi: (managementFileId: number, managementActivityId: number) =>
+        api.get<ApiGen_Concepts_ManagementActivity>(
+          `/managementfiles/${managementFileId}/management-activities/${managementActivityId}`,
         ),
 
       getActivitiesApi: (managementFileId: number) =>
-        api.get<ApiGen_Concepts_PropertyActivity[]>(
+        api.get<ApiGen_Concepts_ManagementActivity[]>(
           `/managementfiles/${managementFileId}/management-activities/`,
         ),
       getFileActivitiesApi: (managementFileId: number) =>
-        api.get<ApiGen_Concepts_PropertyActivity[]>(
+        api.get<ApiGen_Concepts_ManagementActivity[]>(
           `/managementfiles/${managementFileId}/properties/management-activities/`,
         ),
-      deleteActivityApi: (managementFileId: number, propertyActivityId: number) =>
+      deleteActivityApi: (managementFileId: number, managementActivityId: number) =>
         api.delete<boolean>(
-          `/managementfiles/${managementFileId}/management-activities/${propertyActivityId}`,
+          `/managementfiles/${managementFileId}/management-activities/${managementActivityId}`,
         ),
     }),
     [api],
