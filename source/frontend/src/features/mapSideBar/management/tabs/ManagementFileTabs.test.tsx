@@ -84,8 +84,8 @@ vi.mock('@/features/documents/hooks/useDocumentProvider', () => ({
   },
 }));
 
-vi.mock('@/hooks/repositories/useManagementProvider', () => ({
-  useManagementProvider: () => {
+vi.mock('@/hooks/repositories/useManagementFileRepository', () => ({
+  useManagementFileRepository: () => {
     return {
       getManagementFileOffers: mockGetManagementFileOffersApi,
       getManagementFileSale: mockGetManagementFileSalesApi,

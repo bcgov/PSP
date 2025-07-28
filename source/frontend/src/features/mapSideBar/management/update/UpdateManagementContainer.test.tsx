@@ -22,7 +22,7 @@ import { IUpdateManagementFormProps } from './UpdateManagementForm';
 import { ManagementFormModel } from '../models/ManagementFormModel';
 
 // mock API service calls
-vi.mock('@/hooks/repositories/useManagementProvider');
+vi.mock('@/hooks/repositories/useManagementFileRepository');
 
 type Provider = typeof useManagementFileRepository;
 const mockUpdateManagementFile = vi.fn();
