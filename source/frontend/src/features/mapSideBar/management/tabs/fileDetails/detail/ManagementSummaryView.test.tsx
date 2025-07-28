@@ -12,6 +12,9 @@ import { mockManagementFileResponse } from '@/mocks/managementFiles.mock';
 // mock auth library
 
 const onEdit = vi.fn();
+const onAddContact = vi.fn();
+const onEditContact = vi.fn();
+const onDeleteContact = vi.fn();
 
 const mockManagementFileApi = mockManagementFileResponse();
 
@@ -22,7 +25,17 @@ describe('ManagementSummaryView component', () => {
     renderOptions: RenderOptions = {},
   ) => {
     const utils = render(
-      <ManagementSummaryView managementFile={props.managementFile} onEdit={onEdit} />,
+      <ManagementSummaryView
+        managementFile={props.managementFile}
+        onFileEdit={onEdit}
+        managementFileContacts={[]}
+        fileStatusSolver={undefined}
+        keyCloakWrapper={undefined}
+        isLoading={false}
+        onAddContact={onAddContact}
+        onEditContact={onEditContact}
+        onDeleteContact={onDeleteContact}
+      />,
       {
         useMockAuthentication: true,
         ...renderOptions,

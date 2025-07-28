@@ -3,7 +3,7 @@ import { FormikHelpers, FormikProps } from 'formik';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { useManagementProvider } from '@/hooks/repositories/useManagementProvider';
+import { useManagementFileRepository } from '@/hooks/repositories/useManagementFileRepository';
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useInitialMapSelectorProperties } from '@/hooks/useInitialMapSelectorProperties';
@@ -39,7 +39,7 @@ const AddManagementContainer: React.FC<IAddManagementContainerProps> = ({
 
   const {
     addManagementFileApi: { execute: addManagementFileApi, loading },
-  } = useManagementProvider();
+  } = useManagementFileRepository();
 
   // Warn user that property is part of an existing management file
   const confirmBeforeAdd = useCallback(

@@ -1,7 +1,7 @@
 import { Formik, FormikProps } from 'formik';
 import { createRef } from 'react';
 
-import { useManagementProvider } from '@/hooks/repositories/useManagementProvider';
+import { useManagementFileRepository } from '@/hooks/repositories/useManagementFileRepository';
 import { mockManagementFileResponse } from '@/mocks/managementFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
@@ -24,10 +24,10 @@ import { ManagementFormModel } from '../models/ManagementFormModel';
 // mock API service calls
 vi.mock('@/hooks/repositories/useManagementProvider');
 
-type Provider = typeof useManagementProvider;
+type Provider = typeof useManagementFileRepository;
 const mockUpdateManagementFile = vi.fn();
 
-vi.mocked(useManagementProvider).mockReturnValue({
+vi.mocked(useManagementFileRepository).mockReturnValue({
   putManagementFile: {
     error: undefined,
     response: undefined,
