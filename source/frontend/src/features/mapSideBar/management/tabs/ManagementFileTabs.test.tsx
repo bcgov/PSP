@@ -92,6 +92,8 @@ vi.mock('@/hooks/repositories/useManagementFileRepository', () => ({
       deleteManagementOffer: mockDeleteManagementFileOfferApi,
       getManagementAppraisal: mockGetManagementFileAppraisalApi,
       getManagementProperties: mockGetManagementPropertiesApi,
+      getAllManagementFileContacts: getMockRepositoryObj(),
+      deleteManagementContact: getMockRepositoryObj(),
     };
   },
 }));
