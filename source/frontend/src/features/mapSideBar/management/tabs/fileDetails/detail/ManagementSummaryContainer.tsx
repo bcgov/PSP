@@ -3,7 +3,6 @@ import { generatePath, useHistory, useRouteMatch } from 'react-router-dom';
 
 import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
 import { useManagementFileRepository } from '@/hooks/repositories/useManagementFileRepository';
-import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { ApiGen_Concepts_ManagementFileContact } from '@/models/api/generated/ApiGen_Concepts_ManagementFileContact';
 import { exists } from '@/utils';
@@ -22,7 +21,6 @@ const ManagementSummaryContainer: React.FunctionComponent<IManagementSummaryCont
   View,
   onFileEdit,
 }) => {
-  const keycloak = useKeycloakWrapper();
   const history = useHistory();
   const statusSolver = new ManagementStatusUpdateSolver(managementFile);
   const [fileContacts, setFileContacts] = useState<ApiGen_Concepts_ManagementFileContact[]>([]);
@@ -81,7 +79,6 @@ const ManagementSummaryContainer: React.FunctionComponent<IManagementSummaryCont
       managementFile={managementFile}
       managementFileContacts={fileContacts}
       fileStatusSolver={statusSolver}
-      keyCloakWrapper={keycloak}
       isLoading={loadingManagementFileContacts || loadingDelete}
       onFileEdit={onFileEdit}
       onAddContact={handleAddContact}

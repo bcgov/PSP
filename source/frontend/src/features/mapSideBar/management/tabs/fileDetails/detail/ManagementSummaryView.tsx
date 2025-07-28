@@ -11,7 +11,7 @@ import TooltipIcon from '@/components/common/TooltipIcon';
 import { StyledLink } from '@/components/maps/leaflet/LayerPopup/styles';
 import { Claims, Roles } from '@/constants';
 import { cannotEditMessage } from '@/features/mapSideBar/acquisition/common/constants';
-import { IKeycloak } from '@/hooks/useKeycloakWrapper';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { ApiGen_Concepts_ManagementFileContact } from '@/models/api/generated/ApiGen_Concepts_ManagementFileContact';
 import { isValidId } from '@/utils';
@@ -24,7 +24,6 @@ export interface IManagementSummaryViewProps {
   managementFile: ApiGen_Concepts_ManagementFile;
   managementFileContacts: ApiGen_Concepts_ManagementFileContact[];
   fileStatusSolver: ManagementStatusUpdateSolver;
-  keyCloakWrapper: IKeycloak;
   isLoading: boolean;
   onFileEdit: () => void;
   onAddContact: () => void;
@@ -36,18 +35,16 @@ export const ManagementSummaryView: React.FunctionComponent<IManagementSummaryVi
   managementFile,
   managementFileContacts,
   fileStatusSolver,
-  keyCloakWrapper,
   isLoading,
   onFileEdit,
   onAddContact,
   onEditContact,
   onDeleteContact,
 }) => {
+  const keycloak = useKeycloakWrapper();
+
   const canEditDetails = () => {
-    if (
-      keyCloakWrapper.hasRole(Roles.SYSTEM_ADMINISTRATOR) ||
-      !fileStatusSolver.isAdminProtected()
-    ) {
+    if (keycloak.hasRole(Roles.SYSTEM_ADMINISTRATOR) || !fileStatusSolver.isAdminProtected()) {
       return true;
     }
     return false;
@@ -64,14 +61,14 @@ export const ManagementSummaryView: React.FunctionComponent<IManagementSummaryVi
   return (
     <StyledSummarySection>
       <StyledEditWrapper className="mr-3 my-1">
-        {keyCloakWrapper.hasClaim(Claims.MANAGEMENT_EDIT) && managementFile && canEditDetails() ? (
+        {keycloak.hasClaim(Claims.MANAGEMENT_EDIT) && managementFile && canEditDetails() ? (
           <EditButton
             title="Edit management file"
             onClick={onFileEdit}
             style={{ float: 'right' }}
           />
         ) : null}
-        {keyCloakWrapper.hasClaim(Claims.MANAGEMENT_EDIT) && managementFile && !canEditDetails() ? (
+        {keycloak.hasClaim(Claims.MANAGEMENT_EDIT) && managementFile && !canEditDetails() ? (
           <TooltipIcon
             toolTipId={`${managementFile.id || 0}-summary-cannot-edit-tooltip`}
             toolTip={cannotEditMessage}
@@ -90,7 +87,7 @@ export const ManagementSummaryView: React.FunctionComponent<IManagementSummaryVi
         header={
           <SectionListHeader
             claims={[Claims.PROPERTY_EDIT]}
-            title="Property Contact"
+            title="Management Contact"
             addButtonText="Add a Contact"
             addButtonIcon={<FaUserPlus size={'2rem'} />}
             onButtonAction={() => onAddContact()}
