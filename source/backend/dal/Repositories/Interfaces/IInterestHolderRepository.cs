@@ -11,6 +11,6 @@ namespace Pims.Dal.Repositories
 
         bool DeleteInterestHoldersPropertyTypes(ICollection<PimsPropInthldrInterestTyp> inthldPropTypes);
         bool DeleteInterestHoldersProperties(ICollection<PimsInthldrPropInterest> interestHolderProperties);
-        public bool DeleteInterestHolders(ICollection<PimsInterestHolder> interestHolders);
+        bool DeleteInterestHolders(ICollection<PimsInterestHolder> interestHolders);
     }
 }

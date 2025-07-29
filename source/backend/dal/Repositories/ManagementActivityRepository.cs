@@ -305,7 +305,6 @@ namespace Pims.Dal.Repositories
 
             Context.PimsPropertyActivityInvoices.RemoveRange(managementActivity.PimsPropertyActivityInvoices);
             Context.PimsPropActMinContacts.RemoveRange(managementActivity.PimsPropActMinContacts);
-            Context.PimsPropActMinContacts.RemoveRange(managementActivity.PimsPropActMinContacts);
             Context.PimsPropActInvolvedParties.RemoveRange(managementActivity.PimsPropActInvolvedParties);
             Context.PimsManagementActivityProperties.RemoveRange(managementActivity.PimsManagementActivityProperties);
             Context.PimsPropActivityMgmtActivities.RemoveRange(managementActivity.PimsPropActivityMgmtActivities);

@@ -552,8 +552,8 @@ namespace Pims.Api.Services
                             .FirstOrDefault(oldInth => oldInth.InterestHolderId == incommingInterestHolder.InterestHolderId);
 
                         // If the stakeholder has changed (person or org) it means it is actually a new stakeholder, so reset all the ids.
-                        if (incommingInterestHolder.PersonId != currentInterestHolder.PersonId ||
-                            incommingInterestHolder.OrganizationId != currentInterestHolder.OrganizationId)
+                        if (incommingInterestHolder.PersonId != currentInterestHolder?.PersonId ||
+                            incommingInterestHolder.OrganizationId != currentInterestHolder?.OrganizationId)
                         {
                             incommingInterestHolder.InterestHolderId = 0;
                             incommingInterestHolder.PimsInthldrPropInterests.ForEach(pi => pi.PimsInthldrPropInterestId = 0);
