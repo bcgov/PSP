@@ -35,6 +35,8 @@ PSP_PIMS | Development Sprint: S108.00 | Design Sprint: 107 | Date: 2025-Jul-28
   - PIMS_MANAGEMENT_ACTIVITY_PROPERTY_HIST
   - PIMS_PROPERTY
   - PIMS_PROPERTY_HIST
+- Added views:
+  - PIMS_PROPERTY_VW_BKP
 - Altered views:
   - PIMS_PROPERTY_VW
 - Altered test scripts:
