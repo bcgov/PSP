@@ -10,6 +10,12 @@ import {
 
 import { ParcelFeature } from '../models';
 
+export interface IWorklistNotifier {
+  error: (msg: string) => void;
+  success: (msg: string) => void;
+  warn: (msg: string) => void;
+}
+
 interface IWorklistContext {
   parcels: ParcelFeature[];
   selectedId: string | null;
@@ -33,11 +39,14 @@ export function useWorklistContext() {
 export interface IWorklistContextProviderProps {
   children: ReactNode;
   parcels?: ParcelFeature[];
+  /** Override the default react‑toastify notifier in tests or other environments */
+  notifier?: IWorklistNotifier;
 }
 
 export function WorklistContextProvider({
   children,
   parcels: initialParcels,
+  notifier = toast, // default is react‑toastify’s toast object
 }: IWorklistContextProviderProps) {
   const [parcels, setParcels] = useState<ParcelFeature[]>(initialParcels ?? []);
   const [selectedId, setSelectedId] = useState<string | null>(null);
@@ -46,40 +55,44 @@ export function WorklistContextProvider({
   const remove = useCallback((id: string) => setParcels(prev => prev.filter(p => p.id !== id)), []);
 
   // The worklist should not allow duplicate property (using pid/pin/globalUID, lat/lng)
-  const add = useCallback((parcel: ParcelFeature) => {
-    setParcels(prev => {
-      const alreadyExists = prev.some(p => areParcelsEqual(p, parcel));
-      if (alreadyExists) {
-        toast.error('Duplicate parcel detected. Add to worklist skipped.');
-        return prev;
-      }
-      return [...prev, parcel];
-    });
-  }, []);
-
-  const addRange = useCallback((newParcels: ParcelFeature[]) => {
-    setParcels(prev => {
-      const uniqueParcels = newParcels.filter(newParcel => {
-        return !prev.some(existingParcel => areParcelsEqual(existingParcel, newParcel));
+  const add = useCallback(
+    (parcel: ParcelFeature) => {
+      setParcels(prev => {
+        const alreadyExists = prev.some(p => areParcelsEqual(p, parcel));
+        if (alreadyExists) {
+          notifier.error('Duplicate parcel detected. Add to worklist skipped.');
+          return prev;
+        }
+        return [...prev, parcel];
       });
+    },
+    [notifier],
+  );
 
-      const duplicatesSkipped = newParcels.length - uniqueParcels.length;
+  const addRange = useCallback(
+    (newParcels: ParcelFeature[]) => {
+      setParcels(prev => {
+        const uniqueParcels = newParcels.filter(newParcel => {
+          return !prev.some(existingParcel => areParcelsEqual(existingParcel, newParcel));
+        });
 
-      if (uniqueParcels.length > 0) {
-        toast.success(`Added ${uniqueParcels.length} new parcel(s).`);
-      }
+        const duplicatesSkipped = newParcels.length - uniqueParcels.length;
 
-      if (duplicatesSkipped > 0) {
-        toast.warn(`${duplicatesSkipped} duplicate parcel(s) were skipped.`);
-      }
+        if (uniqueParcels.length > 0) {
+          notifier.success(`Added ${uniqueParcels.length} new parcel(s).`);
+        }
 
-      return [...prev, ...uniqueParcels];
-    });
-  }, []);
+        if (duplicatesSkipped > 0) {
+          notifier.warn(`${duplicatesSkipped} duplicate parcel(s) were skipped.`);
+        }
 
-  const clearAll = useCallback(() => {
-    setParcels([]);
-  }, []);
+        return [...prev, ...uniqueParcels];
+      });
+    },
+    [notifier],
+  );
+
+  const clearAll = useCallback(() => setParcels([]), []);
 
   return (
     <WorklistContext.Provider

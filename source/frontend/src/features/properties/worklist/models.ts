@@ -10,8 +10,8 @@ export class ParcelFeature {
   location: LatLngLiteral | null;
   public feature: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties> | null;
 
-  public constructor() {
-    this.id = uuidv4();
+  public constructor(id?: string) {
+    this.id = id ?? uuidv4();
     this.name = '';
     this.location = null;
     this.feature = null;

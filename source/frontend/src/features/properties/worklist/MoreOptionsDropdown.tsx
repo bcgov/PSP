@@ -12,6 +12,9 @@ export interface IMoreOptionsDropdownProps {
 
   /** Callback invoked when the "Clear All" option is clicked. */
   onClearAll: () => void;
+
+  /** ARIA label for accessibility */
+  ariaLabel?: string;
 }
 
 /**
@@ -20,17 +23,27 @@ export interface IMoreOptionsDropdownProps {
 const MoreOptionsDropdown: React.FC<IMoreOptionsDropdownProps> = ({
   onClearAll,
   canClearAll = true,
+  ariaLabel = 'More options',
 }) => {
   return (
     <Dropdown alignRight>
       <TooltipWrapper tooltipId="more-options-tooltip" tooltip="More options...">
-        <StyledToggleButton id="dropdown-ellipsis" variant="light" bsPrefix="btn">
+        <StyledToggleButton
+          id="dropdown-ellipsis"
+          variant="light"
+          bsPrefix="btn"
+          aria-label={ariaLabel}
+        >
           <FaEllipsisH size={18} />
         </StyledToggleButton>
       </TooltipWrapper>
 
       <StyledDropdownMenu>
-        <StyledDropdownItem disabled={!canClearAll} onClick={canClearAll ? onClearAll : undefined}>
+        <StyledDropdownItem
+          aria-label="Clear list"
+          disabled={!canClearAll}
+          onClick={canClearAll ? onClearAll : undefined}
+        >
           <MdClose size={20} className="mr-1" />
           Clear list
         </StyledDropdownItem>
