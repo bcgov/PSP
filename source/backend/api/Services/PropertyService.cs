@@ -30,6 +30,7 @@ namespace Pims.Api.Services
         private readonly IManagementActivityRepository _managementActivityRepository;
         private readonly ICoordinateTransformService _coordinateService;
         private readonly IPropertyLeaseRepository _propertyLeaseRepository;
+        private readonly IDocumentFileService _documentFileService;
         private readonly IMapper _mapper;
         private readonly ILookupRepository _lookupRepository;
 
@@ -42,6 +43,7 @@ namespace Pims.Api.Services
             IManagementActivityRepository managementActivityRepository,
             ICoordinateTransformService coordinateService,
             IPropertyLeaseRepository propertyLeaseRepository,
+            IDocumentFileService documentFileService,
             IMapper mapper,
             ILookupRepository lookupRepository)
         {
@@ -53,6 +55,7 @@ namespace Pims.Api.Services
             _managementActivityRepository = managementActivityRepository;
             _coordinateService = coordinateService;
             _propertyLeaseRepository = propertyLeaseRepository;
+            _documentFileService = documentFileService;
             _mapper = mapper;
             _lookupRepository = lookupRepository;
         }
@@ -292,7 +295,7 @@ namespace Pims.Api.Services
 
         public bool DeleteFileActivity(long managementFileId, long activityId)
         {
-            _logger.LogInformation("Deleting Management Activity with id {activityId}", activityId);
+            _logger.LogInformation("Deleting Management Activity with id {activityId} for file {managementFileId}", activityId, managementFileId);
             _user.ThrowIfNotAllAuthorized(Permissions.ManagementDelete, Permissions.PropertyEdit);
 
             var managementActivity = _managementActivityRepository.GetActivity(activityId);
@@ -302,15 +305,7 @@ namespace Pims.Api.Services
                 throw new BadRequestException("Activity with the given id does not match the management file id");
             }
 
-            if (!managementActivity.PropMgmtActivityStatusTypeCode.Equals(ManagementActivityStatusTypeCode.NOTSTARTED.ToString()))
-            {
-                throw new BadRequestException($"PropertyManagementActivity can not be deleted since it has already started");
-            }
-
-            var success = _managementActivityRepository.TryDeleteByFile(activityId, managementFileId);
-            _propertyRepository.CommitTransaction();
-
-            return success;
+            return DeleteActivity(activityId);
         }
 
         public bool DeleteActivity(long activityId)
@@ -322,7 +317,13 @@ namespace Pims.Api.Services
 
             if (!propertyManagementActivity.PropMgmtActivityStatusTypeCode.Equals(ManagementActivityStatusTypeCode.NOTSTARTED.ToString()))
             {
-                throw new BadRequestException($"PropertyManagementActivity can not be deleted since it has already started");
+                throw new BadRequestException($"PropertyManagementActivity can not be deleted given it has already started");
+            }
+
+            var activityDocuments = _documentFileService.GetFileDocuments<PimsPropertyActivityDocument>(FileType.ManagementActivity, activityId);
+            if (activityDocuments.Count > 0)
+            {
+                throw new BadRequestException($"PropertyManagementActivity can not be deleted. There is at least one document related to it.");
             }
 
             var success = _managementActivityRepository.TryDelete(activityId);

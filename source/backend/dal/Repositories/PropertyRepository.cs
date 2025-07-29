@@ -445,13 +445,19 @@ namespace Pims.Dal.Repositories
         /// <param name="property"></param>
         public void Delete(PimsProperty property)
         {
-            if(property.PimsHistoricalFileNumbers.Count > 0)
+            if (property.PimsHistoricalFileNumbers.Count > 0)
             {
-                foreach(PimsHistoricalFileNumber number in property.PimsHistoricalFileNumbers)
+                foreach (PimsHistoricalFileNumber number in property.PimsHistoricalFileNumbers)
                 {
                     Context.Entry(new PimsHistoricalFileNumber() { HistoricalFileNumberId = number.HistoricalFileNumberId }).State = EntityState.Deleted;
                 }
             }
+
+            Context.PimsPropPropTenureTyps.RemoveRange(property.PimsPropPropTenureTyps);
+            Context.PimsPropPropAnomalyTyps.RemoveRange(property.PimsPropPropAnomalyTyps);
+            Context.PimsPropPropPurposes.RemoveRange(property.PimsPropPropPurposes);
+            Context.PimsPropPropRoadTyps.RemoveRange(property.PimsPropPropRoadTyps);
+            Context.CommitTransaction(); // Needed to avoid FK violations
 
             Context.Entry(new PimsProperty() { PropertyId = property.PropertyId }).State = EntityState.Deleted;
         }

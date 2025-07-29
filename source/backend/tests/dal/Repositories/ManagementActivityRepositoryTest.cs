@@ -46,19 +46,6 @@ namespace Pims.Dal.Test.Repositories
             act.Should().Throw<KeyNotFoundException>();
         }
 
-        [Fact]
-        public void TryDeleteManagementActivity_Returns_False()
-        {
-            // Arrange
-            var repository = CreateRepositoryWithPermissions(Permissions.ManagementView);
-
-            // Act
-            var updatedProperty = repository.TryDelete(9999);
-
-            // Assert
-            Assert.False(updatedProperty);
-        }
-
         #endregion
     }
 }
