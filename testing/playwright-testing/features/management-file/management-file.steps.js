@@ -1,9 +1,7 @@
-const { When} = require("@cucumber/cucumber");
+const { When } = require("@cucumber/cucumber");
 const {
   ManagementFileDetails,
 } = require("../../support/pages/ManagementFileDetails.js");
-const {
-} = require("../../support/world.js");
 const mgmFiles = require("../../data/managementFiles.json");
 
 let managementFileDetails;
