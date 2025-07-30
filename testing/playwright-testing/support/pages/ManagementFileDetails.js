@@ -1,7 +1,7 @@
 const { SharedFileProperties } = require("./SharedFileProperties");
 const { SharedTeamMembers } = require("./SharedTeamMembers");
 const { SharedModal } = require("./SharedModal");
-const { expect } = require('@playwright/test');
+const { expect } = require("@playwright/test");
 
 class ManagementFileDetails {
   constructor(page) {
@@ -69,10 +69,8 @@ class ManagementFileDetails {
         await this.sharedModal.mainModalClickOKBttn();
       } else if (header === "Confirm status change") {
         expect(header).toBe("Confirm status change");
-        const paragraph1 =
-          await this.sharedModal.confirmationModalParagraph1();
-        const paragraph2 =
-          await this.sharedModal.confirmationModalParagraph2();
+        const paragraph1 = await this.sharedModal.confirmationModalParagraph1();
+        const paragraph2 = await this.sharedModal.confirmationModalParagraph2();
         expect(paragraph1).toContain(
           "If you save it, only the administrator can turn it back on..."
         );

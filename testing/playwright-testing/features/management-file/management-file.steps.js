@@ -3,7 +3,10 @@ const {
   ManagementFileDetails,
 } = require("../../support/pages/ManagementFileDetails.js");
 const mgmFiles = require("../../data/managementFiles.json");
-const {clickSaveButton,  clickCancelButton } = require("../../support/common.js");
+const {
+  clickSaveButton,
+  clickCancelButton,
+} = require("../../support/common.js");
 
 let managementFileDetails;
 let managementFileCode;
@@ -21,7 +24,9 @@ When(
     await managementFileDetails.validateInitManagementFileDetailsPage();
 
     //Create basic Management File
-    await managementFileDetails.createMinimumManagementFileDetails(mgmFiles[rowNbr]);
+    await managementFileDetails.createMinimumManagementFileDetails(
+      mgmFiles[rowNbr]
+    );
 
     //Save Management File
     await clickSaveButton(this.page);

@@ -6,7 +6,8 @@ class SharedFileProperties {
   async verifyPropertiesToIncludeInFileInitForm() {
     //Title and instructions
     await this.page
-      .locator('h2 div:has-text("Properties to include in this file")').first()
+      .locator('h2 div:has-text("Properties to include in this file")')
+      .first()
       .isVisible();
     await this.page
       .locator(
