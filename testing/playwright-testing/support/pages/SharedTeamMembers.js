@@ -1,11 +1,11 @@
 const { SharedSelectContact } = require("./SharedSelectContacts");
-const { SharedModals } = require("./SharedModal");
+const { SharedModal } = require("./SharedModal");
 
 class SharedTeamMembers {
   constructor(page) {
     this.page = page;
     this.sharedSelectContact = new SharedSelectContact(this.page);
-    this.sharedModals = new SharedModals(page);
+    this.sharedModal = new SharedModal(page);
   }
 
   async AddTeamMembers(teamMember) {
@@ -135,12 +135,14 @@ class SharedTeamMembers {
     await this.page
       .locator('div[class="modal-content"]')
       .waitFor({ state: "visible" });
-    await expect(this.sharedModals.mainModalHeaderContent()).toBe(
+    await expect(this.sharedModal.mainModalHeaderContent()).toBe(
       "Remove Team Member"
     );
-    await expect(this.sharedModals.mainModalContent()).toBe(
+    await expect(this.sharedModal.mainModalContent()).toBe(
       "Do you wish to remove this team member?"
     );
-    await this.sharedModals.mainModalClickOKBttn();
+    await this.sharedModal.mainModalClickOKBttn();
   }
 }
+
+module.exports = { SharedTeamMembers };

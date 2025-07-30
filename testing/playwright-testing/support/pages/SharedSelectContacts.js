@@ -1,9 +1,9 @@
-const { SharedModals } = require("./SharedModal");
+const { SharedModal } = require("./SharedModal");
 
 class SharedSelectContact {
   constructor(page) {
     this.page = page;
-    this.sharedModals = new SharedModals(page);
+    this.sharedModal = new SharedModal(page);
   }
 
   async selectContact(contactSearchName, contactType) {
@@ -27,6 +27,8 @@ class SharedSelectContact {
       .locator('input[type="radio"][name="table-radio"]')
       .first()
       .check();
-    this.sharedModals.mainModalClickOKBttn();
+    this.sharedModal.mainModalClickOKBttn();
   }
 }
+
+module.exports = { SharedSelectContact };

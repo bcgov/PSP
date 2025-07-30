@@ -1,10 +1,8 @@
-const { Given, When, Then } = require("@cucumber/cucumber");
+const { When} = require("@cucumber/cucumber");
 const {
   ManagementFileDetails,
 } = require("../../support/pages/ManagementFileDetails.js");
 const {
-  clickSaveButton,
-  clickCancelButton,
 } = require("../../support/world.js");
 const mgmFiles = require("../../data/managementFiles.json");
 

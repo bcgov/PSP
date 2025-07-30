@@ -73,7 +73,7 @@ class SharedModal {
   }
 
   async cancelActionModal() {
-    if (this.isModalContainerVisible()) {
+    if (await this.isModalContainerVisible()) {
       await expect(this.mainModalHeaderContent()).resolves.toBe(
         "Confirm Changes"
       );
@@ -87,3 +87,5 @@ class SharedModal {
     }
   }
 }
+
+module.exports = { SharedModal };
