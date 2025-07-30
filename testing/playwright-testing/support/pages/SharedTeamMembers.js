@@ -71,7 +71,7 @@ class SharedTeamMembers {
   }
 
   async verifyTeamMembersViewForm(teamMembers) {
-    const index = 1;
+    let index = 1;
 
     for (let i = 0; i < teamMembers.length; i++) {
       await expect(
