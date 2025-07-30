@@ -544,25 +544,65 @@ namespace Pims.Api.Services
             // Verify that the interest holder is still the same (person or org)
             if (currentInterestHolders.Count > 0)
             {
-                foreach (var newInterestHolder in interestHolders)
+                foreach (var incommingInterestHolder in interestHolders)
                 {
-                    if (newInterestHolder.InterestHolderId != 0)
+                    if (incommingInterestHolder.InterestHolderId != 0)
                     {
                         PimsInterestHolder currentInterestHolder = currentInterestHolders
-                            .FirstOrDefault(oldInth => oldInth.InterestHolderId == newInterestHolder.InterestHolderId);
+                            .FirstOrDefault(oldInth => oldInth.InterestHolderId == incommingInterestHolder.InterestHolderId);
 
                         // If the stakeholder has changed (person or org) it means it is actually a new stakeholder, so reset all the ids.
-                        if (newInterestHolder.PersonId != currentInterestHolder.PersonId ||
-                            newInterestHolder.OrganizationId != currentInterestHolder.OrganizationId)
+                        if (incommingInterestHolder.PersonId != currentInterestHolder?.PersonId ||
+                            incommingInterestHolder.OrganizationId != currentInterestHolder?.OrganizationId)
                         {
-                            newInterestHolder.InterestHolderId = 0;
-                            newInterestHolder.PimsInthldrPropInterests.ForEach(pi => pi.PimsInthldrPropInterestId = 0);
+                            incommingInterestHolder.InterestHolderId = 0;
+                            incommingInterestHolder.PimsInthldrPropInterests.ForEach(pi => pi.PimsInthldrPropInterestId = 0);
                         }
                     }
                 }
             }
 
             ValidateInterestHoldersDependency(acquisitionFileId, interestHolders);
+
+            // get all interest holder and related tables to be deleted
+            var deletedInthPropertyTypes = new List<PimsPropInthldrInterestTyp>();
+            var deletedInthProperties = new List<PimsInthldrPropInterest>();
+            var deletedInterestHolders = new List<PimsInterestHolder>();
+
+            foreach (var currentInterestHolder in currentInterestHolders)
+            {
+                PimsInterestHolder foundInterestHolder = interestHolders.FirstOrDefault(incdInth => incdInth.InterestHolderId == currentInterestHolder.InterestHolderId);
+                if (foundInterestHolder != null)
+                {
+                    foreach (var currentPropertyInterest in currentInterestHolder.PimsInthldrPropInterests)
+                    {
+                        PimsInthldrPropInterest foundInterestProp = foundInterestHolder.PimsInthldrPropInterests.FirstOrDefault(ihp => ihp.Internal_Id == currentPropertyInterest.Internal_Id);
+                        if (foundInterestProp != null)
+                        {
+                            foreach (var currentPropInterestType in currentPropertyInterest.PimsPropInthldrInterestTyps)
+                            {
+                                PimsPropInthldrInterestTyp foundInterestPropType = foundInterestProp.PimsPropInthldrInterestTyps.FirstOrDefault(iht => iht.Internal_Id == currentPropInterestType.Internal_Id);
+                                if (foundInterestPropType == null)
+                                {
+                                    deletedInthPropertyTypes.Add(currentPropInterestType);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            deletedInthProperties.Add(currentPropertyInterest);
+                        }
+                    }
+                }
+                else
+                {
+                    deletedInterestHolders.Add(currentInterestHolder);
+                }
+            }
+            _interestHolderRepository.DeleteInterestHoldersPropertyTypes(deletedInthPropertyTypes);
+            _interestHolderRepository.DeleteInterestHoldersProperties(deletedInthProperties);
+            _interestHolderRepository.DeleteInterestHolders(deletedInterestHolders);
+
             _interestHolderRepository.UpdateAllForAcquisition(acquisitionFileId, interestHolders);
             _interestHolderRepository.CommitTransaction();
 

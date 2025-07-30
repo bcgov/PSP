@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Moq;
 using NetTopologySuite.Geometries;
+using Pims.Api.Constants;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Services;
 using Pims.Core.Api.Exceptions;
@@ -877,16 +878,40 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void Delete_PropertyManagementActivity_BadRequest_Activity_Has_Documents()
+        {
+            // Arrange
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.ManagementDelete, Permissions.PropertyEdit);
+            var repository = this._helper.GetService<Mock<IManagementActivityRepository>>();
+            var documentService = this._helper.GetService<Mock<IDocumentFileService>>();
+
+            var propertyManagementActivity = EntityHelper.CreateManagementActivity(10);
+
+            repository.Setup(x => x.GetActivity(It.IsAny<long>())).Returns(propertyManagementActivity);
+            documentService.Setup(x => x.GetFileDocuments<PimsPropertyActivityDocument>(It.IsAny<FileType>(), It.IsAny<long>())).Returns(new List<PimsPropertyActivityDocument>() { new PimsPropertyActivityDocument() });
+
+
+            // Act
+            Action act = () => service.DeleteActivity(1);
+
+            // Assert
+            act.Should().Throw<BadRequestException>();
+            repository.Verify(x => x.TryDelete(It.IsAny<long>()), Times.Never);
+        }
+
+        [Fact]
         public void Delete_PropertyManagementActivity_Success()
         {
             // Arrange
             var service = this.CreatePropertyServiceWithPermissions(Permissions.ManagementDelete, Permissions.PropertyEdit);
             var repository = this._helper.GetService<Mock<IManagementActivityRepository>>();
+            var documentService = this._helper.GetService<Mock<IDocumentFileService>>();
 
             var propertyManagementActivity = EntityHelper.CreateManagementActivity(1);
 
             repository.Setup(x => x.GetActivity(It.IsAny<long>())).Returns(propertyManagementActivity);
             repository.Setup(x => x.TryDelete(It.IsAny<long>())).Returns(true);
+            documentService.Setup(x => x.GetFileDocuments<PimsPropertyActivityDocument>(It.IsAny<FileType>(), It.IsAny<long>())).Returns(new List<PimsPropertyActivityDocument>());
 
             // Act
             var result = service.DeleteActivity(1);
