@@ -5,7 +5,6 @@ const {
 const mgmFiles = require("../../data/managementFiles.json");
 const {
   clickSaveButton,
-  clickCancelButton,
 } = require("../../support/common.js");
 
 let managementFileDetails;
