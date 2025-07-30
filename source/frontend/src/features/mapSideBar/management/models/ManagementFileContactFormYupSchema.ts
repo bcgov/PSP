@@ -5,6 +5,7 @@ export const ManagementFileContactFormYupSchema = yup.object().shape({
   primaryContactId: yup.number().nullable(),
   purposeDescription: yup
     .string()
-    .max(500, 'Purpose description must be at most 500 characters')
+    // eslint-disable-next-line no-template-curly-in-string
+    .max(500, 'Purpose description must be at most ${max} characters')
     .required('Purpose description is required'),
 });

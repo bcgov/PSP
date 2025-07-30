@@ -318,8 +318,6 @@ namespace Pims.Dal.Repositories
 
         public List<PimsManagementFileContact> GetContacts(long managementFileId)
         {
-            User.ThrowIfNotAllAuthorized(Permissions.ManagementView);
-
             return Context.PimsManagementFileContacts
                 .AsNoTracking()
                 .Include(x => x.Person)
@@ -331,8 +329,6 @@ namespace Pims.Dal.Repositories
 
         public PimsManagementFileContact GetContact(long managementFileId, long contactId)
         {
-            User.ThrowIfNotAllAuthorized(Permissions.ManagementView);
-
             return Context.PimsManagementFileContacts
                 .AsNoTracking()
                 .Include(x => x.Person)

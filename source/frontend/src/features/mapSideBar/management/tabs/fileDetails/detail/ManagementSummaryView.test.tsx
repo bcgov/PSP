@@ -55,7 +55,7 @@ describe('ManagementSummaryView component', () => {
 
   afterEach(() => {
     cleanup();
-    vi.resetAllMocks();
+    vi.clearAllMocks();
   });
 
   it('matches snapshot', async () => {

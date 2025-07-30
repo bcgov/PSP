@@ -38,7 +38,7 @@ export const UpdateManagementFileContactContainer = React.forwardRef<
     } else {
       result = await createContact(props.managementFileId, model);
     }
-    if (result?.id) {
+    if (isValidId(result?.id)) {
       props.onSuccess();
     }
   };

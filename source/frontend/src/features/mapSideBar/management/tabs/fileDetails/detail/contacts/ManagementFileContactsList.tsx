@@ -109,14 +109,14 @@ export function createContactTableColumns(
         const { hasClaim } = useKeycloakWrapper();
         return (
           <ActionsDiv>
-            {hasClaim(Claims.PROPERTY_EDIT) && (
+            {hasClaim(Claims.MANAGEMENT_EDIT) && (
               <LinkButton
                 icon={<FaEdit size={'2rem'} />}
                 onClick={() => cellProps.row.original.id && onEdit(cellProps.row.original.id)}
               ></LinkButton>
             )}
 
-            {hasClaim(Claims.PROPERTY_EDIT) && (
+            {hasClaim(Claims.MANAGEMENT_EDIT) && (
               <RemoveIconButton
                 id={`contact-delete-${cellProps.row.id}`}
                 data-testId={`contact-delete-${cellProps.row.id}`}
@@ -133,7 +133,7 @@ export function createContactTableColumns(
   return columns;
 }
 
-const ManagementFileContacstList: React.FunctionComponent<IManagementFileContacstListProps> = ({
+const ManagementFileContactsList: React.FunctionComponent<IManagementFileContacstListProps> = ({
   managementFileContacts,
   onContactEdit,
   onContactDelete,
@@ -182,7 +182,7 @@ const ManagementFileContacstList: React.FunctionComponent<IManagementFileContacs
   );
 };
 
-export default ManagementFileContacstList;
+export default ManagementFileContactsList;
 
 const ActionsDiv = styled(InlineFlexDiv)`
   justify-content: center;

@@ -12,11 +12,12 @@ import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import { useOrganizationRepository } from '@/features/contacts/repositories/useOrganizationRepository';
 import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';
+import { IContactSearchResult } from '@/interfaces';
 import { ApiGen_Concepts_ManagementFileContact } from '@/models/api/generated/ApiGen_Concepts_ManagementFileContact';
 import { ApiGen_Concepts_PersonOrganization } from '@/models/api/generated/ApiGen_Concepts_PersonOrganization';
 import { formatContactSearchResult } from '@/utils/contactUtils';
 import { formatApiPersonNames } from '@/utils/personUtils';
-import { isValidId } from '@/utils/utils';
+import { exists, isValidId } from '@/utils/utils';
 
 import { ManagementFileContactFormModel } from '../../models/ManagementFileContactFormModel';
 import { ManagementFileContactFormYupSchema } from '../../models/ManagementFileContactFormYupSchema';
@@ -28,7 +29,7 @@ export interface IManagementFileContactEditFormProps {
 }
 
 const ManagementFileContactEditForm = forwardRef<
-  FormikProps<any>,
+  FormikProps<ManagementFileContactFormModel>,
   IManagementFileContactEditFormProps
 >((props, ref) => {
   const {
@@ -37,29 +38,42 @@ const ManagementFileContactEditForm = forwardRef<
 
   const [primaryContactOptions, setPrimaryContactOptions] = useState<SelectOption[] | null>([]);
 
-  const getOrganizationInfo = useCallback(async () => {
-    const org = await fetchOrganization(props.managementFileContact?.contact?.organizationId);
-    if (org && org.organizationPersons) {
-      const orgContacts =
-        org?.organizationPersons?.map((orgPerson: ApiGen_Concepts_PersonOrganization) => {
-          return {
-            label: `${formatApiPersonNames(orgPerson.person)}`,
-            value: orgPerson.personId ?? '',
-          };
-        }) ?? [];
+  const getOrganizationInfo = useCallback(
+    async (orgId: number) => {
+      const org = await fetchOrganization(orgId);
+      if (org && org.organizationPersons) {
+        const orgContacts =
+          org?.organizationPersons?.map((orgPerson: ApiGen_Concepts_PersonOrganization) => {
+            return {
+              label: `${formatApiPersonNames(orgPerson.person)}`,
+              value: orgPerson.personId ?? '',
+            };
+          }) ?? [];
 
-      setPrimaryContactOptions(orgContacts);
-    }
-  }, [fetchOrganization, props.managementFileContact?.contact?.organizationId]);
+        setPrimaryContactOptions(orgContacts);
+      }
+    },
+    [fetchOrganization],
+  );
 
   useEffect(() => {
     if (isValidId(props.managementFileContact?.contact?.organizationId)) {
-      getOrganizationInfo();
+      getOrganizationInfo(props.managementFileContact?.contact?.organizationId);
     }
   }, [getOrganizationInfo, props.managementFileContact?.contact?.organizationId]);
 
   const saveContact = (values: ManagementFileContactFormModel) => {
     props.onSave(values.toApi());
+  };
+
+  const handleContactSelected = (
+    contact: IContactSearchResult,
+    formikProps: FormikProps<ManagementFileContactFormModel>,
+  ): void => {
+    formikProps.setFieldValue('contact', contact);
+    if (exists(contact.organization?.id)) {
+      getOrganizationInfo(contact.organization?.id);
+    }
   };
 
   return (
@@ -72,6 +86,7 @@ const ManagementFileContactEditForm = forwardRef<
             innerRef={ref}
             validationSchema={ManagementFileContactFormYupSchema}
             initialValues={props.managementFileContact}
+            validateOnChange={false}
             onSubmit={saveContact}
           >
             {formikProps => (
@@ -81,9 +96,7 @@ const ManagementFileContactEditForm = forwardRef<
                     <ContactInputContainer
                       field="contact"
                       View={ContactInputView}
-                      onContactSelected={contact => {
-                        formikProps.setFieldValue('contact', contact);
-                      }}
+                      onContactSelected={contact => handleContactSelected(contact, formikProps)}
                     />
                   )}
                   {isValidId(formikProps.values.id) && (

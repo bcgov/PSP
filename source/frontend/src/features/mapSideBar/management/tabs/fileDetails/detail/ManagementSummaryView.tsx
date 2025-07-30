@@ -17,7 +17,7 @@ import { ApiGen_Concepts_ManagementFileContact } from '@/models/api/generated/Ap
 import { isValidId } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
-import ManagementFileContacstList from './contacts/ManagementFileContactsList';
+import ManagementFileContactsList from './contacts/ManagementFileContactsList';
 import ManagementStatusUpdateSolver from './ManagementStatusUpdateSolver';
 
 export interface IManagementSummaryViewProps {
@@ -86,7 +86,7 @@ export const ManagementSummaryView: React.FunctionComponent<IManagementSummaryVi
         initiallyExpanded
         header={
           <SectionListHeader
-            claims={[Claims.PROPERTY_EDIT]}
+            claims={[Claims.MANAGEMENT_EDIT]}
             title="Management Contact"
             addButtonText="Add a Contact"
             addButtonIcon={<FaUserPlus size={'2rem'} />}
@@ -95,7 +95,7 @@ export const ManagementSummaryView: React.FunctionComponent<IManagementSummaryVi
         }
       >
         <LoadingBackdrop show={isLoading} />
-        <ManagementFileContacstList
+        <ManagementFileContactsList
           managementFileContacts={managementFileContacts ?? []}
           onContactEdit={onEditContact}
           onContactDelete={onDeleteContact}
