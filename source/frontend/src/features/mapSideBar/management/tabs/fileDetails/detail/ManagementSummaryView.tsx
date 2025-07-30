@@ -56,7 +56,7 @@ export const ManagementSummaryView: React.FunctionComponent<IManagementSummaryVi
         ) : null}
       </StyledEditWrapper>
       <Section>
-        <SectionField label="Status" labelWidth={{ xs: '5' }}>
+        <SectionField label="Status" labelWidth={{ xs: '5' }} valueTestId="management-status">
           {managementFile?.fileStatusTypeCode?.description}
         </SectionField>
       </Section>
@@ -71,21 +71,33 @@ export const ManagementSummaryView: React.FunctionComponent<IManagementSummaryVi
         <SectionField label="Product" labelWidth={{ xs: '5' }} valueTestId="management-product">
           {productName}
         </SectionField>
-        <SectionField label="Funding" labelWidth={{ xs: '5' }}>
+        <SectionField label="Funding" labelWidth={{ xs: '5' }} valueTestId="management-funding">
           {managementFile?.fundingTypeCode?.description}
         </SectionField>
       </Section>
       <Section header="Management Details">
-        <SectionField label="Management file name" labelWidth={{ xs: '5' }}>
+        <SectionField
+          label="Management file name"
+          labelWidth={{ xs: '5' }}
+          valueTestId="management-file-name"
+        >
           {managementFile?.fileName}
         </SectionField>
-        <SectionField label="Historical file number" labelWidth={{ xs: '5' }}>
+        <SectionField
+          label="Historical file number"
+          labelWidth={{ xs: '5' }}
+          valueTestId="management-legacy-file-number"
+        >
           {managementFile?.legacyFileNum}
         </SectionField>
-        <SectionField label="Purpose" labelWidth={{ xs: '5' }}>
+        <SectionField label="Purpose" labelWidth={{ xs: '5' }} valueTestId="management-purpose">
           {managementFile?.purposeTypeCode?.description}
         </SectionField>
-        <SectionField label="Additional details" labelWidth={{ xs: '5' }}>
+        <SectionField
+          label="Additional details"
+          labelWidth={{ xs: '5' }}
+          valueTestId="management-additional-details"
+        >
           {managementFile?.additionalDetails}
         </SectionField>
       </Section>
@@ -95,6 +107,7 @@ export const ManagementSummaryView: React.FunctionComponent<IManagementSummaryVi
             <SectionField
               label={teamMember?.teamProfileType?.description || ''}
               labelWidth={{ xs: '5' }}
+              valueTestId={`management-team-member-${index}`}
             >
               <StyledLink
                 target="_blank"

@@ -81,7 +81,7 @@ export const UpdateAcquisitionTeamSubForm: React.FunctionComponent<
           </LinkButton>
 
           <TeamMemberFormModal
-            message="Are you sure you want to remove this row?"
+            message="Do you wish to remove this team member?"
             title="Remove Team Member"
             display={showRemoveMemberModal}
             handleOk={() => {

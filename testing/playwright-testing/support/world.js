@@ -1,12 +1,6 @@
 require("dotenv").config();
 const { setWorldConstructor } = require("@cucumber/cucumber");
 
-const BASE_URL = process.env.BASE_URL;
-
-function getUserCredential(envKey) {
-  return process.env[envKey];
-}
-
 class CustomWorld {
   constructor() {
     this.browser = null;
@@ -26,8 +20,3 @@ class CustomWorld {
 }
 
 setWorldConstructor(CustomWorld);
-
-module.exports = {
-  BASE_URL,
-  getUserCredential,
-};
