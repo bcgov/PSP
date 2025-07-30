@@ -10,8 +10,8 @@ import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { RenderOptions, act, renderAsync, userEvent, waitFor } from '@/utils/test-utils';
 
-import AddResearchContainer, { IAddResearchContainerProps } from './AddResearchContainer';
 import { cleanup } from '@testing-library/react-hooks';
+import AddResearchContainer, { IAddResearchContainerProps } from './AddResearchContainer';
 
 const mockStore = configureMockStore([thunk]);
 
@@ -96,7 +96,7 @@ describe('AddResearchContainer component', () => {
       onSuccess: noop,
       mockMapMachine: {
         ...mapMachineBaseMock,
-        selectedFeatureDataset: {
+        selectedFeatures: {
           location: { lat: 0, lng: 0 },
           fileLocation: null,
           pimsFeature: null,

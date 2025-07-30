@@ -31,7 +31,7 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({
   const [isFormValid, setIsFormValid] = useState<boolean>(true);
   const formikRef = useRef<FormikProps<DispositionFormModel>>(null);
   const mapMachine = useMapStateMachine();
-  const selectedFeatureDataset = mapMachine.selectedFeatureDataset;
+  const selectedFeatureDataset = mapMachine.selectedFeatures;
 
   const { setModalContent, setDisplayModal } = useModalContext();
   const { execute: getPropertyAssociations } = usePropertyAssociations();

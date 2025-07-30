@@ -276,7 +276,7 @@ describe('AddLeaseContainer component', () => {
   it('should pre-populate the region if a property is selected', async () => {
     const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
-      selectedFeatureDataset: {
+      selectedFeatures: {
         location: { lng: -120.69195885, lat: 50.25163372 },
         fileLocation: null,
         pimsFeature: null,

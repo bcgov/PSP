@@ -250,7 +250,7 @@ describe('AddAcquisitionContainer component', () => {
   it('should pre-populate the region if a property is selected', async () => {
     const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
-      selectedFeatureDataset: {
+      selectedFeatures: {
         location: { lng: -120.69195885, lat: 50.25163372 },
         fileLocation: null,
         pimsFeature: null,
@@ -279,7 +279,7 @@ describe('AddAcquisitionContainer component', () => {
   it('should not pre-populate the region if a property is selected and the region cannot be determined', async () => {
     const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
-      selectedFeatureDataset: {
+      selectedFeatures: {
         location: { lng: -120.69195885, lat: 50.25163372 },
         fileLocation: null,
         pimsFeature: null,

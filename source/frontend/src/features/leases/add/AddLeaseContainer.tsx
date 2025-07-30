@@ -32,7 +32,7 @@ export const AddLeaseContainer: React.FunctionComponent<
   const formikRef = useRef<FormikProps<LeaseFormModel>>(null);
   const mapMachine = useMapStateMachine();
 
-  const selectedFeatureDataset = mapMachine.selectedFeatureDataset;
+  const selectedFeatureDataset = mapMachine.selectedFeatures;
 
   const withUserOverride = useApiUserOverride('Failed to save Lease File');
   const { addLease } = useAddLease();

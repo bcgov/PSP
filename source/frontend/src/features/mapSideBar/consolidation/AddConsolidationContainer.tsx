@@ -36,7 +36,7 @@ const AddConsolidationContainer: React.FC<IAddConsolidationContainerProps> = ({
   );
   const formikRef = useRef<FormikProps<ConsolidationFormModel>>(null);
   const mapMachine = useMapStateMachine();
-  const selectedFeatureDataset = mapMachine.selectedFeatureDataset;
+  const selectedFeatureDataset = mapMachine.selectedFeatures;
   const { setModalContent, setDisplayModal } = useModalContext();
   const { getPrimaryAddressByPid, bcaLoading } = useBcaAddress();
 

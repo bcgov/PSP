@@ -37,7 +37,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
   const { setModalContent, setDisplayModal } = useModalContext();
 
   const mapMachine = useMapStateMachine();
-  const selectedFeatureDataset = mapMachine.selectedFeatureDataset;
+  const selectedFeatureDataset = mapMachine.selectedFeatures;
 
   const { execute: getPropertyAssociations } = usePropertyAssociations();
   const [needsUserConfirmation, setNeedsUserConfirmation] = useState<boolean>(true);

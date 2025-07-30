@@ -33,7 +33,7 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
   const history = useHistory();
   const formikRef = useRef<FormikProps<ResearchForm>>(null);
   const mapMachine = useMapStateMachine();
-  const selectedFeatureDataset = mapMachine.selectedFeatureDataset;
+  const selectedFeatureDataset = mapMachine.selectedFeatures;
   const { setModalContent, setDisplayModal } = useModalContext();
   const { execute: getPropertyAssociations } = usePropertyAssociations();
 

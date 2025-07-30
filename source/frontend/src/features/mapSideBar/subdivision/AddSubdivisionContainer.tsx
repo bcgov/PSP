@@ -34,7 +34,7 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({
   const [initialForm, setInitialForm] = useState<SubdivisionFormModel>(new SubdivisionFormModel());
   const formikRef = useRef<FormikProps<SubdivisionFormModel>>(null);
   const mapMachine = useMapStateMachine();
-  const selectedFeatureDataset = mapMachine.selectedFeatureDataset;
+  const selectedFeatureDataset = mapMachine.selectedFeatures;
   const { setModalContent, setDisplayModal } = useModalContext();
   const { getPrimaryAddressByPid, bcaLoading } = useBcaAddress();
 
