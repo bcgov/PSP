@@ -619,7 +619,11 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
               />
             </svg>
           </div>
-          Create Acquisition Sub-Interest File
+          <div
+            data-testid="form-title"
+          >
+            Create Acquisition Sub-Interest File
+          </div>
         </h1>
       </div>
       <div
@@ -2925,6 +2929,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
           >
             <button
               class="c4 Button btn btn-secondary"
+              data-testid="cancel-button"
               type="button"
             >
               <div
@@ -2939,6 +2944,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
           >
             <button
               class="c4 Button mr-9 btn btn-primary"
+              data-testid="save-button"
               type="button"
             >
               <div
@@ -3578,7 +3584,11 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
               />
             </svg>
           </div>
-          Create Acquisition File
+          <div
+            data-testid="form-title"
+          >
+            Create Acquisition File
+          </div>
         </h1>
       </div>
       <div
@@ -5762,6 +5772,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
           >
             <button
               class="c4 Button btn btn-secondary"
+              data-testid="cancel-button"
               type="button"
             >
               <div
@@ -5776,6 +5787,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
           >
             <button
               class="c4 Button mr-9 btn btn-primary"
+              data-testid="save-button"
               type="button"
             >
               <div

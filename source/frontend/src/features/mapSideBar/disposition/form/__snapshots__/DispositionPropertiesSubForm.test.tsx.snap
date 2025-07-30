@@ -1495,13 +1495,13 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
         >
           <button
             class="c2 Button c10 btn btn-link"
+            data-testid="remove-button"
             type="button"
           >
             <div
               class="Button__value"
             >
               <svg
-                data-testid="remove-button"
                 fill="currentColor"
                 height="2rem"
                 stroke="currentColor"
@@ -1691,13 +1691,13 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
         >
           <button
             class="c2 Button c10 btn btn-link"
+            data-testid="remove-button"
             type="button"
           >
             <div
               class="Button__value"
             >
               <svg
-                data-testid="remove-button"
                 fill="currentColor"
                 height="2rem"
                 stroke="currentColor"

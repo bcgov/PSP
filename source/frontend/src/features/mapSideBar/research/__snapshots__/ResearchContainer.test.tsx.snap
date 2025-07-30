@@ -652,7 +652,11 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                 />
               </svg>
             </div>
-            Research File
+            <div
+              data-testid="form-title"
+            >
+              Research File
+            </div>
           </h1>
         </div>
         <div

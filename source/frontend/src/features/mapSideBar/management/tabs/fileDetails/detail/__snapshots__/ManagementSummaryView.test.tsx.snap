@@ -73,6 +73,7 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
           </div>
           <div
             class="c4 text-left col"
+            data-testid="management-status"
           >
             Draft
           </div>
@@ -150,6 +151,7 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
           </div>
           <div
             class="c4 text-left col"
+            data-testid="management-funding"
           />
         </div>
       </div>
@@ -187,6 +189,7 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
           </div>
           <div
             class="c4 text-left col"
+            data-testid="management-file-name"
           >
             Test Management File
           </div>
@@ -205,6 +208,7 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
           </div>
           <div
             class="c4 text-left col"
+            data-testid="management-legacy-file-number"
           >
             legacyfile321
           </div>
@@ -223,6 +227,7 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
           </div>
           <div
             class="c4 text-left col"
+            data-testid="management-purpose"
           >
             Engineering
           </div>
@@ -241,6 +246,7 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
           </div>
           <div
             class="c4 text-left col"
+            data-testid="management-additional-details"
           >
             ADDITIONAL DETAILS
           </div>
@@ -280,6 +286,7 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
           </div>
           <div
             class="c4 text-left col"
+            data-testid="management-team-member-0"
           >
             <a
               class="c6"
@@ -321,6 +328,7 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
           </div>
           <div
             class="c4 text-left col"
+            data-testid="management-team-member-1"
           >
             <a
               class="c6"
