@@ -11,7 +11,7 @@ import { PaddedScrollable, StyledAddButton } from '@/components/common/styles';
 import { Claims } from '@/constants';
 import { MANAGEMENT_FILE_PURPOSE_TYPES, MANAGEMENT_FILE_STATUS_TYPES } from '@/constants/API';
 import { useApiManagementFile } from '@/hooks/pims-api/useApiManagementFile';
-import { useManagementProvider } from '@/hooks/repositories/useManagementProvider';
+import { useManagementFileRepository } from '@/hooks/repositories/useManagementFileRepository';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { useSearch } from '@/hooks/useSearch';
@@ -32,7 +32,7 @@ export const ManagementListView: React.FC<unknown> = () => {
   const { getManagementFilesPagedApi } = useApiManagementFile();
   const {
     getAllManagementTeamMembers: { response: team, execute: loadManagementTeam },
-  } = useManagementProvider();
+  } = useManagementFileRepository();
 
   // lookup codes to filter management list
   const lookupCodes = useLookupCodeHelpers();

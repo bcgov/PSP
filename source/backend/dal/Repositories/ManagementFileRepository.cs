@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
+using Pims.Core.Security;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
@@ -286,7 +287,7 @@ namespace Pims.Dal.Repositories
                 .FirstOrDefault(x => x.ManagementFileId == managementFileId) ?? throw new KeyNotFoundException();
 
             Context.Entry(existingFile).CurrentValues.SetValues(managementFile);
-            Context.UpdateChild<PimsManagementFile, long, PimsManagementFileTeam, long>(p => p.PimsManagementFileTeams, managementFile.Internal_Id, managementFile.PimsManagementFileTeams.ToArray());
+            Context.UpdateChild<PimsManagementFile, long, PimsManagementFileTeam, long>( x => x.PimsManagementFileTeams, managementFile.Internal_Id, managementFile.PimsManagementFileTeams.ToArray());
 
             return existingFile;
         }
@@ -313,6 +314,63 @@ namespace Pims.Dal.Repositories
                 .Include(x => x.Person)
                 .Include(x => x.Organization)
                 .ToList();
+        }
+
+        public List<PimsManagementFileContact> GetContacts(long managementFileId)
+        {
+            return Context.PimsManagementFileContacts
+                .AsNoTracking()
+                .Include(x => x.Person)
+                .Include(x => x.Organization)
+                .Include(x => x.PrimaryContact)
+                .Where(x => x.ManagementFileId == managementFileId)
+                .ToList();
+        }
+
+        public PimsManagementFileContact GetContact(long managementFileId, long contactId)
+        {
+            return Context.PimsManagementFileContacts
+                .AsNoTracking()
+                .Include(x => x.Person)
+                .Include(x => x.Organization)
+                .Include(x => x.PrimaryContact)
+                .Where(x => x.ManagementFileId == managementFileId && x.ManagementFileContactId == contactId)
+                .FirstOrDefault() ?? throw new KeyNotFoundException();
+        }
+
+        public PimsManagementFileContact AddContact(PimsManagementFileContact contact)
+        {
+            contact.ThrowIfNull(nameof(contact));
+
+            Context.PimsManagementFileContacts.Add(contact);
+
+            return contact;
+        }
+
+        public PimsManagementFileContact UpdateContact(PimsManagementFileContact contact)
+        {
+            contact.ThrowIfNull(nameof(contact));
+
+            var existingContact = Context.PimsManagementFileContacts
+                .FirstOrDefault(x => x.ManagementFileContactId == contact.ManagementFileContactId) ?? throw new KeyNotFoundException();
+
+            // The contact cannot be updated by bussiness requirements.
+            if (existingContact.PersonId != contact.PersonId || existingContact.OrganizationId != contact.OrganizationId)
+            {
+                throw new InvalidOperationException("Property contact's contact cannot be updated");
+            }
+
+            Context.Entry(existingContact).CurrentValues.SetValues(contact);
+
+            return existingContact;
+        }
+
+        public void DeleteContact(long managementFileId, long contactId)
+        {
+            var existingContact = Context.PimsManagementFileContacts
+                .FirstOrDefault(x => x.ManagementFileId == managementFileId && x.ManagementFileContactId == contactId) ?? throw new KeyNotFoundException();
+
+            Context.PimsManagementFileContacts.Remove(existingContact);
         }
 
         /// <summary>
@@ -429,6 +487,7 @@ namespace Pims.Dal.Repositories
 
             return query;
         }
+
         #endregion
     }
 }
