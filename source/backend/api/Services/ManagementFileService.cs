@@ -265,6 +265,55 @@ namespace Pims.Api.Services
             return _managementFileRepository.GetPageDeep(filter);
         }
 
+        public IEnumerable<PimsManagementFileContact> GetContacts(long id)
+        {
+            _logger.LogInformation("Getting management file contacts");
+            _user.ThrowIfNotAuthorized(Permissions.ManagementView);
+
+            return _managementFileRepository.GetContacts(id);
+        }
+
+        public PimsManagementFileContact GetContact(long managementFileId, long contactId)
+        {
+            _logger.LogInformation("Getting management file contact");
+            _user.ThrowIfNotAuthorized(Permissions.ManagementView);
+
+            return _managementFileRepository.GetContact(managementFileId, contactId);
+        }
+
+        public PimsManagementFileContact AddContact(PimsManagementFileContact contact)
+        {
+            _logger.LogInformation("Creating file contact");
+            _user.ThrowIfNotAuthorized(Permissions.ManagementEdit);
+
+            _managementFileRepository.AddContact(contact);
+            _managementActivityRepository.CommitTransaction();
+
+            return contact;
+        }
+
+        public PimsManagementFileContact UpdateContact(PimsManagementFileContact contact)
+        {
+            _logger.LogInformation("Updating file contact...");
+            _user.ThrowIfNotAuthorized(Permissions.ManagementEdit);
+
+            _managementFileRepository.UpdateContact(contact);
+            _managementActivityRepository.CommitTransaction();
+
+            return contact;
+        }
+
+        public bool DeleteContact(long managementFileId, long contactId)
+        {
+            _logger.LogInformation("Deleting file contact...");
+            _user.ThrowIfNotAuthorized(Permissions.ManagementEdit);
+
+            _managementFileRepository.DeleteContact(managementFileId, contactId);
+            _managementActivityRepository.CommitTransaction();
+
+            return true;
+        }
+
         private static void ValidateStaff(PimsManagementFile managementFile)
         {
             bool duplicate = managementFile.PimsManagementFileTeams.GroupBy(p => $"{p.ManagementFileProfileTypeCode}-O-{p.OrganizationId}-P-{p.PersonId}").Any(g => g.Count() > 1);
@@ -468,5 +517,6 @@ namespace Pims.Api.Services
 
             return currentManagementFileStatus;
         }
+
     }
 }

@@ -3,7 +3,7 @@ import { FormikHelpers, FormikProps } from 'formik';
 import React from 'react';
 
 import * as API from '@/constants/API';
-import { useManagementProvider } from '@/hooks/repositories/useManagementProvider';
+import { useManagementFileRepository } from '@/hooks/repositories/useManagementFileRepository';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { useModalContext } from '@/hooks/useModalContext';
@@ -37,7 +37,7 @@ export const UpdateManagementContainer = React.forwardRef<
 
   const {
     putManagementFile: { execute: updateManagementFile, loading },
-  } = useManagementProvider();
+  } = useManagementFileRepository();
 
   const withUserOverride = useApiUserOverride<
     (userOverrideCodes: UserOverrideCode[]) => Promise<ApiGen_Concepts_ManagementFile | void>
