@@ -1,7 +1,7 @@
 const { Given } = require("@cucumber/cucumber");
 const { launchBrowser } = require("../../utils/browserSetup.js");
 const { LoginPage } = require("../../support/pages/LoginPage.js");
-const { BASE_URL, getUserCredential } = require("../../support/world.js");
+const { BASE_URL, getUserCredential } = require("../../support/common.js");
 
 Given(
   "I log in as {string} with password {string}",

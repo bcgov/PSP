@@ -1,9 +1,6 @@
 class LoginPage {
   constructor(page) {
     this.page = page;
-    this.usernameInput = 'input[name="user"]';
-    this.passwordInput = 'input[name="password"]';
-    this.loginButton = 'input[name="btnSubmit"]';
   }
 
   async navigate(baseUrl) {
@@ -12,9 +9,9 @@ class LoginPage {
 
   async login(username, password) {
     await this.page.getByRole("button", { name: "Sign In" }).click();
-    await this.page.fill(this.usernameInput, username);
-    await this.page.fill(this.passwordInput, password);
-    await this.page.locator(this.loginButton).click();
+    await this.page.locator('input[name="user"]').fill(username);
+    await this.page.locator('input[name="password"]').fill(password);
+    await this.page.locator('input[name="btnSubmit"]').click();
   }
 }
 

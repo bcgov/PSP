@@ -6,7 +6,7 @@ class SharedFileProperties {
   async verifyPropertiesToIncludeInFileInitForm() {
     //Title and instructions
     await this.page
-      .locator('div:has-text("Properties to include in this file")')
+      .locator('h2 div:has-text("Properties to include in this file")').first()
       .isVisible();
     await this.page
       .locator(
@@ -15,24 +15,24 @@ class SharedFileProperties {
       .isVisible();
 
     //Tabs search options
-    await page.getByRole("tab", { name: "Locate on Map" }).isVisible();
-    await page.getByRole("tab", { name: "Search" }).isVisible();
+    await this.page.getByRole("tab", { name: "Locate on Map" }).isVisible();
+    await this.page.getByRole("tab", { name: "Search" }).isVisible();
 
     //Select a Property Details
-    await page.getByText("PID:").isVisible();
-    await page.getByText("PIN:").isVisible();
-    await page.getByText("Plan #:").isVisible();
-    await page.getByText("Address:").isVisible();
-    await page.getByText("Region:").isVisible();
-    await page.getByText("District:").isVisible();
-    await page.getByLabel("Legal Description:").isVisible();
+    await this.page.getByText("PID:").isVisible();
+    await this.page.getByText("PIN:").isVisible();
+    await this.page.getByText("Plan #:").isVisible();
+    await this.page.getByText("Address:").isVisible();
+    await this.page.getByText("Region:").isVisible();
+    await this.page.getByText("District:").isVisible();
+    await this.page.getByLabel("Legal Description:").isVisible();
 
     //Selected Properties section
-    await page.getByText("Selected properties").isVisible();
-    await page
+    await this.page.getByText("Selected properties").isVisible();
+    await this.page
       .getByTestId("tooltip-icon-property-selector-tooltip")
       .isVisible();
-    await page.getByText("No Properties selected").isVisible();
+    await this.page.getByText("No Properties selected").isVisible();
   }
 }
 

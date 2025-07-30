@@ -4,12 +4,12 @@ function getUserCredential(envKey) {
   return process.env[envKey];
 }
 
-function clickSaveButton() {
-  this.page.getByTestId("save-button").click();
+function clickSaveButton(page) {
+  page.getByTestId("save-button").click();
 }
 
-function clickCancelButton() {
-  this.page.getByTestId("cancel-button").click();
+function clickCancelButton(page) {
+  page.getByTestId("cancel-button").click();
 }
 
 module.exports = {

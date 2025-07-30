@@ -1,13 +1,14 @@
 const { SharedFileProperties } = require("./SharedFileProperties");
-const { sharedTeamMembers } = require("./SharedTeamMembers");
-const { SharedModals } = require("./SharedModal");
+const { SharedTeamMembers } = require("./SharedTeamMembers");
+const { SharedModal } = require("./SharedModal");
+const { expect } = require('@playwright/test');
 
 class ManagementFileDetails {
   constructor(page) {
     this.page = page;
     this.sharedFileProperties = new SharedFileProperties(page);
     this.sharedTeamMembers = new SharedTeamMembers(page);
-    this.sharedModals = new SharedModals(page);
+    this.sharedModal = new SharedModal(page);
   }
   async navigateManagementMainMenu() {
     await this.page
@@ -39,8 +40,8 @@ class ManagementFileDetails {
 
   async saveManagementFile() {
     while ((await this.managementFileConfirmationModal.count()) > 0) {
-      const header = await this.sharedModals.mainModalHeader();
-      const content = await this.sharedModals.mainModalContent();
+      const header = await this.sharedModal.mainModalHeader();
+      const content = await this.sharedModal.mainModalContent();
 
       if (
         content.includes(
@@ -54,7 +55,7 @@ class ManagementFileDetails {
         expect(content).toContain(
           "To add the property, the spatial details for this property will need to be updated..."
         );
-        await this.sharedModals.mainModalClickOKBttn();
+        await this.sharedModal.mainModalClickOKBttn();
       } else if (
         content.includes(
           "You have made changes to the properties in this file."
@@ -65,18 +66,18 @@ class ManagementFileDetails {
           "You have made changes to the properties in this file."
         );
         expect(content).toContain("Do you want to save these changes?");
-        await this.sharedModals.mainModalClickOKBttn();
+        await this.sharedModal.mainModalClickOKBttn();
       } else if (header === "Confirm status change") {
         expect(header).toBe("Confirm status change");
         const paragraph1 =
-          await this.sharedModals.confirmationModalParagraph1();
+          await this.sharedModal.confirmationModalParagraph1();
         const paragraph2 =
-          await this.sharedModals.confirmationModalParagraph2();
+          await this.sharedModal.confirmationModalParagraph2();
         expect(paragraph1).toContain(
           "If you save it, only the administrator can turn it back on..."
         );
         expect(paragraph2).toBe("Do you want to acknowledge and proceed?");
-        await this.sharedModals.mainModalClickOKBttn();
+        await this.sharedModal.mainModalClickOKBttn();
       } else {
         break;
       }
@@ -189,11 +190,11 @@ class ManagementFileDetails {
     }
   }
 
-  async getManagementCode() {
+  async getManagementFileCode() {
     return await this.page.getByTestId("mgmt-fileId").textContent();
   }
 
-  async validateManagementFileDetailsPage() {
+  async validateInitManagementFileDetailsPage() {
     await this.page
       .getByRole("h1", { name: "Create Management File" })
       .isVisible();
