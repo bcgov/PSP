@@ -71,7 +71,9 @@ describe('LtsaPlanTabView component', () => {
       loading: false,
     });
 
-    expect(getByTitle('HER MAJESTY THE QUEEN IN RIGHT OF THE PROVINCE OF BRITISH COLUMBIA')).toBeVisible();
+    expect(
+      getByTitle('HER MAJESTY THE QUEEN IN RIGHT OF THE PROVINCE OF BRITISH COLUMBIA'),
+    ).toBeVisible();
   });
 
   it('does not throw an exception for an invalid ltsa data object', () => {
