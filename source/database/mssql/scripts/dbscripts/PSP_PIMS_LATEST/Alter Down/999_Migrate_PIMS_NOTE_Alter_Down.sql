@@ -30,6 +30,17 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
+-- Remove the migrated notes from PIMS_PROPERTY_NOTE
+PRINT N'Remove the migrated notes from PIMS_PROPERTY_NOTE'
+GO
+DELETE pnot
+FROM   PIMS_PROPERTY_NOTE pnot JOIN
+       PIMS_NOTE          note ON note.NOTE_ID = pnot.NOTE_ID
+WHERE  note.APP_LAST_UPDATE_USER_DIRECTORY = N'107_Migration'
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
 -- Remove the migrated property notes
 PRINT N'Remove the migrated property notes'
 GO

@@ -7,7 +7,6 @@ import { Input, Select } from '@/components/common/form';
 import { UserRegionSelectContainer } from '@/components/common/form/UserRegionSelect/UserRegionSelectContainer';
 import { ColButtons, FilterBoxForm } from '@/components/common/styles';
 import { PROJECT_STATUS_TYPES } from '@/constants/API';
-import { ProjectStatusTypes } from '@/constants/projectStatusTypes';
 import { IProjectFilter } from '@/features/projects/interfaces';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { mapLookupCode } from '@/utils';
@@ -22,7 +21,7 @@ export const defaultFilter: IProjectFilter = {
   projectName: '',
   projectNumber: '',
   projectRegionCode: '',
-  projectStatusCode: ProjectStatusTypes.Active,
+  projectStatusCode: '',
 };
 
 /**
@@ -82,7 +81,7 @@ export const ProjectFilter: React.FunctionComponent<
                   <Select
                     field="projectStatusCode"
                     options={projectStatusOptions}
-                    placeholder="All Statuses"
+                    placeholder="All Status"
                     value={initialFilter?.projectStatusCode}
                   />
                 </Col>

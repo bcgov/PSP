@@ -26,7 +26,5 @@ namespace Pims.Dal.Repositories
         PimsManagementActivity Update(PimsManagementActivity managementActivity);
 
         bool TryDelete(long activityId);
-
-        bool TryDeleteByFile(long activityId, long managementFileId);
     }
 }

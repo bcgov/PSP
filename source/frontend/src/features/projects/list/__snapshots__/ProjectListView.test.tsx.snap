@@ -501,7 +501,7 @@ exports[`Project List View > matches snapshot 1`] = `
                           <option
                             value=""
                           >
-                            All Statuses
+                            All Status
                           </option>
                         </select>
                       </div>
