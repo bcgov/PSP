@@ -1,28 +1,32 @@
 const { SharedModals } = require("./SharedModal");
 
 class SharedSelectContact {
-    constructor(page) {
-        this.page = page;
-        this.sharedModals = new SharedModals(page);
+  constructor(page) {
+    this.page = page;
+    this.sharedModals = new SharedModals(page);
+  }
+
+  async selectContact(contactSearchName, contactType) {
+    switch (contactType) {
+      case "Individual":
+        await page.locator('input[name="searchBy"][value="persons"]').check();
+        break;
+      case "Organization":
+        await page
+          .locator('input[name="searchBy"][value="organizations"]')
+          .check();
+        break;
+      default:
+        break;
     }
 
-    async selectContact(contactSearchName, contactType)
-    {
-        switch (contactType) {
-            case "Individual":
-                await page.locator('input[name="searchBy"][value="persons"]').check();
-                break;
-            case "Organization":
-                await page.locator('input[name="searchBy"][value="organizations"]').check();
-                break;
-            default:
-                break;
-        }
+    await this.page.locator("#input-summary").fill(contactSearchName);
+    await this.page.locator("#search-button").click();
 
-        await this.page.locator('#input-summary').fill(contactSearchName);
-        await this.page.locator('#search-button').click();
-
-        await page.locator('input[type="radio"][name="table-radio"]').first().check();
-        this.sharedModals.mainModalClickOKBttn();
-    }
+    await page
+      .locator('input[type="radio"][name="table-radio"]')
+      .first()
+      .check();
+    this.sharedModals.mainModalClickOKBttn();
+  }
 }
