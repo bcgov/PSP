@@ -276,20 +276,22 @@ describe('AddLeaseContainer component', () => {
   it('should pre-populate the region if a property is selected', async () => {
     const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
-      selectedFeatures: {
-        location: { lng: -120.69195885, lat: 50.25163372 },
-        fileLocation: null,
-        pimsFeature: null,
-        parcelFeature: null,
-        regionFeature: {
-          type: 'Feature',
-          properties: { ...emptyRegion, REGION_NUMBER: 1, REGION_NAME: 'South Coast Region' },
-          geometry: getMockPolygon(),
+      selectedFeatures: [
+        {
+          location: { lng: -120.69195885, lat: 50.25163372 },
+          fileLocation: null,
+          pimsFeature: null,
+          parcelFeature: null,
+          regionFeature: {
+            type: 'Feature',
+            properties: { ...emptyRegion, REGION_NUMBER: 1, REGION_NAME: 'South Coast Region' },
+            geometry: getMockPolygon(),
+          },
+          districtFeature: null,
+          selectingComponentId: null,
+          municipalityFeature: null,
         },
-        districtFeature: null,
-        selectingComponentId: null,
-        municipalityFeature: null,
-      },
+      ],
     };
 
     const { findByDisplayValue } = setup({ mockMapMachine: testMockMachine });

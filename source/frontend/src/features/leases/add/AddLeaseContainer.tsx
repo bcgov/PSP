@@ -32,21 +32,21 @@ export const AddLeaseContainer: React.FunctionComponent<
   const formikRef = useRef<FormikProps<LeaseFormModel>>(null);
   const mapMachine = useMapStateMachine();
 
-  const selectedFeatureDataset = mapMachine.selectedFeatures;
+  const selectedFeatures = mapMachine.selectedFeatures;
 
   const withUserOverride = useApiUserOverride('Failed to save Lease File');
   const { addLease } = useAddLease();
   const [isValid, setIsValid] = useState<boolean>(true);
 
   const initialProperty = useMemo<IMapProperty | null>(() => {
-    if (selectedFeatureDataset) {
-      return featuresetToMapProperty(selectedFeatureDataset);
+    if (selectedFeatures) {
+      return featuresetToMapProperty(selectedFeatures);
     }
     return null;
-  }, [selectedFeatureDataset]);
+  }, [selectedFeatures]);
 
   const { initialProperty: initialFormProperty, bcaLoading } =
-    useInitialMapSelectorProperties(selectedFeatureDataset);
+    useInitialMapSelectorProperties(selectedFeatures);
   if (!!initialProperty && !!initialFormProperty) {
     initialProperty.address = initialFormProperty?.formattedAddress;
   }
