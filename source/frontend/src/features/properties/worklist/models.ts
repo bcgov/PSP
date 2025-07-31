@@ -2,6 +2,7 @@ import { Feature, Geometry } from 'geojson';
 import { LatLngLiteral } from 'leaflet';
 import { v4 as uuidv4 } from 'uuid';
 
+import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 
 export class ParcelFeature {
@@ -23,5 +24,29 @@ export class ParcelFeature {
     const parcelFeature = new ParcelFeature();
     parcelFeature.feature = feature;
     return parcelFeature;
+  }
+
+  public static fromSelectedFeatureDataset(featureSet: SelectedFeatureDataset): ParcelFeature {
+    const parcelFeature = new ParcelFeature();
+    parcelFeature.id = featureSet.id ?? uuidv4();
+    parcelFeature.location = featureSet.location;
+    parcelFeature.feature = featureSet.parcelFeature;
+    return parcelFeature;
+  }
+
+  public toSelectedFeatureDataset(): SelectedFeatureDataset {
+    return {
+      selectingComponentId: null,
+      location: this.location ?? { lat: 0, lng: 0 },
+      fileLocation: this.location ?? null,
+      id: this.id,
+      parcelFeature: this.feature,
+      pimsFeature: null,
+      regionFeature: null,
+      districtFeature: null,
+      municipalityFeature: null,
+      isActive: true,
+      displayOrder: 0,
+    };
   }
 }
