@@ -22,13 +22,11 @@ import {
   getMockApiInterestHolderPerson,
 } from '@/mocks/interestHolders.mock';
 import { getMockLeaseStakeholders } from '@/mocks/lease.mock';
-import { ApiGen_CodeTypes_AcquisitionStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionStatusTypes';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { ApiGen_Concepts_CompReqAcqPayee } from '@/models/api/generated/ApiGen_Concepts_CompReqAcqPayee';
 import { ApiGen_Concepts_CompReqLeasePayee } from '@/models/api/generated/ApiGen_Concepts_CompReqLeasePayee';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
-import { toTypeCodeNullable } from '@/utils/formUtils';
 import { act, render, RenderOptions, userEvent, waitForEffects } from '@/utils/test-utils';
 
 import CompensationRequisitionDetailView, {

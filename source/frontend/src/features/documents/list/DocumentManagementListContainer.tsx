@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator';
 import { useManagementActivityRepository } from '@/hooks/repositories/useManagementActivityRepository';
-import { useManagementProvider } from '@/hooks/repositories/useManagementProvider';
+import { useManagementFileRepository } from '@/hooks/repositories/useManagementFileRepository';
 import useIsMounted from '@/hooks/util/useIsMounted';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
@@ -40,7 +40,7 @@ const DocumentManagementListContainer: React.FunctionComponent<
 
   const {
     getManagementProperties: { execute: getProperties, loading: propertiesLoading },
-  } = useManagementProvider();
+  } = useManagementFileRepository();
 
   const { retrieveDocumentRelationship, retrieveDocumentRelationshipLoading } =
     useDocumentRelationshipProvider();
