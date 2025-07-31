@@ -78,7 +78,6 @@ export const ManagementSummaryView: React.FunctionComponent<IManagementSummaryVi
       <Section>
         <SectionField label="Status" labelWidth={{ xs: '5' }} valueTestId="management-status">
           {managementFile.fileStatusTypeCode?.description}
-
         </SectionField>
       </Section>
 
@@ -114,21 +113,33 @@ export const ManagementSummaryView: React.FunctionComponent<IManagementSummaryVi
         <SectionField label="Product" labelWidth={{ xs: '5' }} valueTestId="management-product">
           {productName}
         </SectionField>
-        <SectionField label="Funding" labelWidth={{ xs: '5' }}  valueTestId="management-funding">
+        <SectionField label="Funding" labelWidth={{ xs: '5' }} valueTestId="management-funding">
           {managementFile.fundingTypeCode?.description}
         </SectionField>
       </Section>
       <Section header="Management Details">
-        <SectionField label="Management file name" labelWidth={{ xs: '5' }} valueTestId="management-file-name">
+        <SectionField
+          label="Management file name"
+          labelWidth={{ xs: '5' }}
+          valueTestId="management-file-name"
+        >
           {managementFile.fileName}
         </SectionField>
-        <SectionField label="Historical file number" labelWidth={{ xs: '5' }} valueTestId="management-legacy-file-number">
+        <SectionField
+          label="Historical file number"
+          labelWidth={{ xs: '5' }}
+          valueTestId="management-legacy-file-number"
+        >
           {managementFile.legacyFileNum}
         </SectionField>
         <SectionField label="Purpose" labelWidth={{ xs: '5' }} valueTestId="management-purpose">
           {managementFile.purposeTypeCode?.description}
         </SectionField>
-        <SectionField label="Additional details" labelWidth={{ xs: '5' }} valueTestId="management-additional-details">
+        <SectionField
+          label="Additional details"
+          labelWidth={{ xs: '5' }}
+          valueTestId="management-additional-details"
+        >
           {managementFile.additionalDetails}
         </SectionField>
       </Section>
