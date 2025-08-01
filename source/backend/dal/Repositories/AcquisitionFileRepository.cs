@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using DocumentFormat.OpenXml.Drawing;
 using LinqKit;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
@@ -915,18 +914,22 @@ namespace Pims.Dal.Repositories
 
             if (!string.IsNullOrWhiteSpace(filter.OwnerName))
             {
-                predicate = predicate.And(acq => acq.PimsAcquisitionOwners.Any(ownr => EF.Functions.Like(ownr.GivenName, $"%{filter.OwnerName}%")
+                var ownerBuilder = PredicateBuilder.New<PimsAcquisitionFile>(acq => false);
+
+                ownerBuilder = ownerBuilder.Or(acq => acq.PimsAcquisitionOwners.Any(ownr => EF.Functions.Like(ownr.GivenName, $"%{filter.OwnerName}%")
                                     || EF.Functions.Like(ownr.LastNameAndCorpName, $"%{filter.OwnerName}%")
                                     || EF.Functions.Like(ownr.OtherName, $"%{filter.OwnerName}%")));
 
-                predicate = predicate.Or(acq => acq.PimsInterestHolders.Any(rep => rep.InterestHolderTypeCode == InterestHolderTypes.AOREP.ToString() && rep.PersonId != null && (EF.Functions.Like(rep.Person.Surname, $"%{filter.OwnerName}%")
+                ownerBuilder = ownerBuilder.Or(acq => acq.PimsInterestHolders.Any(rep => rep.InterestHolderTypeCode == InterestHolderTypes.AOREP.ToString() && rep.PersonId != null && (EF.Functions.Like(rep.Person.Surname, $"%{filter.OwnerName}%")
                                     || EF.Functions.Like(rep.Person.FirstName, $"%{filter.OwnerName}%"))));
 
-                predicate = predicate.Or(acq => acq.PimsInterestHolders.Any(sol => sol.InterestHolderTypeCode == InterestHolderTypes.AOSLCTR.ToString() && sol.PersonId != null && (EF.Functions.Like(sol.Person.Surname, $"%{filter.OwnerName}%")
+                ownerBuilder = ownerBuilder.Or(acq => acq.PimsInterestHolders.Any(sol => sol.InterestHolderTypeCode == InterestHolderTypes.AOSLCTR.ToString() && sol.PersonId != null && (EF.Functions.Like(sol.Person.Surname, $"%{filter.OwnerName}%")
                                     || EF.Functions.Like(sol.Person.FirstName, $"%{filter.OwnerName}%")
                                     || EF.Functions.Like(sol.Organization.OrganizationName, $"%{filter.OwnerName}%"))));
 
-                predicate = predicate.Or(acq => acq.PimsInterestHolders.Any(sol => sol.InterestHolderTypeCode == InterestHolderTypes.AOSLCTR.ToString() && sol.OrganizationId != null && EF.Functions.Like(sol.Organization.OrganizationName, $"%{filter.OwnerName}%")));
+                ownerBuilder = ownerBuilder.Or(acq => acq.PimsInterestHolders.Any(sol => sol.InterestHolderTypeCode == InterestHolderTypes.AOSLCTR.ToString() && sol.OrganizationId != null && EF.Functions.Like(sol.Organization.OrganizationName, $"%{filter.OwnerName}%")));
+
+                predicate = predicate.And(ownerBuilder);
             }
 
             predicate = predicate.And(acq => regions.Contains(acq.RegionCode));
