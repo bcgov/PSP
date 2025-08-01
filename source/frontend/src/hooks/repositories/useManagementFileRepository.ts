@@ -4,6 +4,7 @@ import { useCallback, useMemo } from 'react';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { Api_LastUpdatedBy } from '@/models/api/File';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
+import { ApiGen_Concepts_ManagementFileContact } from '@/models/api/generated/ApiGen_Concepts_ManagementFileContact';
 import { ApiGen_Concepts_ManagementFileProperty } from '@/models/api/generated/ApiGen_Concepts_ManagementFileProperty';
 import { ApiGen_Concepts_ManagementFileTeam } from '@/models/api/generated/ApiGen_Concepts_ManagementFileTeam';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
@@ -14,11 +15,18 @@ import {
 } from '@/utils';
 
 import { useApiManagementFile } from '../pims-api/useApiManagementFile';
+import {
+  deleteManagementFileContactsApi,
+  getManagementFileContactApi,
+  getManagementFileContactsApi,
+  postManagementFileContactsApi,
+  putManagementFileContactsApi,
+} from '../pims-api/useApiManagementFileContact';
 
 /**
  * hook that interacts with the Management File API.
  */
-export const useManagementProvider = () => {
+export const useManagementFileRepository = () => {
   const {
     postManagementFileApi,
     getManagementFile,
@@ -131,6 +139,90 @@ export const useManagementProvider = () => {
     onError: useAxiosErrorHandler('Failed to retrieve Management File Team Members'),
   });
 
+  const getManagementContactsApi = useApiRequestWrapper<
+    (
+      managementFileId: number,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_ManagementFileContact[], any>>
+  >({
+    requestFunction: useCallback(
+      async (managementFileId: number) => await getManagementFileContactsApi(managementFileId),
+      [],
+    ),
+    requestName: 'GetManagementFileContacts',
+    onError: useAxiosErrorHandler('Failed to retrieve Management File Contacts'),
+  });
+
+  const getManagementContactApi = useApiRequestWrapper<
+    (
+      managementFileId: number,
+      managementFileContactId: number,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_ManagementFileContact, any>>
+  >({
+    requestFunction: useCallback(
+      async (managementFileId: number, managementFileContactId: number) =>
+        await getManagementFileContactApi(managementFileId, managementFileContactId),
+      [],
+    ),
+    requestName: 'GetManagementFileContact',
+    onError: useAxiosErrorHandler('Failed to retrieve Management File Contact'),
+  });
+
+  const postManagementContactApi = useApiRequestWrapper<
+    (
+      managementFileId: number,
+      managementFileContact: ApiGen_Concepts_ManagementFileContact,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_ManagementFileContact, any>>
+  >({
+    requestFunction: useCallback(
+      async (
+        managementFileId: number,
+        managementFileContact: ApiGen_Concepts_ManagementFileContact,
+      ) => await postManagementFileContactsApi(managementFileId, managementFileContact),
+      [],
+    ),
+    requestName: 'PostManagementFileContact',
+    onError: useAxiosErrorHandler('Failed to create Management File Contact'),
+  });
+
+  const putManagementContactApi = useApiRequestWrapper<
+    (
+      managementFileId: number,
+      managementFileContactId: number,
+      managementFileContact: ApiGen_Concepts_ManagementFileContact,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_ManagementFileContact, any>>
+  >({
+    requestFunction: useCallback(
+      async (
+        managementFileId: number,
+        managementFileContactId: number,
+        managementFileContact: ApiGen_Concepts_ManagementFileContact,
+      ) =>
+        await putManagementFileContactsApi(
+          managementFileId,
+          managementFileContactId,
+          managementFileContact,
+        ),
+      [],
+    ),
+    requestName: 'PutManagementFileContact',
+    onError: useAxiosErrorHandler('Failed to update Management File Contact'),
+  });
+
+  const deleteManagementContactApi = useApiRequestWrapper<
+    (
+      managementFileId: number,
+      managementFileContactId: number,
+    ) => Promise<AxiosResponse<boolean, any>>
+  >({
+    requestFunction: useCallback(
+      async (managementFileId: number, managementFileContactId: number) =>
+        await deleteManagementFileContactsApi(managementFileId, managementFileContactId),
+      [],
+    ),
+    requestName: 'DeleteManagementFileContact',
+    onError: useAxiosErrorHandler('Failed to delete Management File Contact'),
+  });
+
   return useMemo(
     () => ({
       addManagementFileApi: addManagementFileApi,
@@ -140,15 +232,25 @@ export const useManagementProvider = () => {
       updateManagementProperties: updateManagementPropertiesApi,
       getManagementProperties: getManagementPropertiesApi,
       getAllManagementTeamMembers: getAllManagementTeamMembersApi,
+      getAllManagementFileContacts: getManagementContactsApi,
+      getManagementFileContact: getManagementContactApi,
+      postManagementFileContact: postManagementContactApi,
+      putManagementContact: putManagementContactApi,
+      deleteManagementContact: deleteManagementContactApi,
     }),
     [
       addManagementFileApi,
       getManagementFileApi,
       updateManagementFileApi,
       getLastUpdatedBy,
+      updateManagementPropertiesApi,
       getManagementPropertiesApi,
       getAllManagementTeamMembersApi,
-      updateManagementPropertiesApi,
+      getManagementContactsApi,
+      getManagementContactApi,
+      postManagementContactApi,
+      putManagementContactApi,
+      deleteManagementContactApi,
     ],
   );
 };

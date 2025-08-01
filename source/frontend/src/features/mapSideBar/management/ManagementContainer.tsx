@@ -5,7 +5,7 @@ import { matchPath, useHistory, useLocation, useRouteMatch } from 'react-router-
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { useManagementProvider } from '@/hooks/repositories/useManagementProvider';
+import { useManagementFileRepository } from '@/hooks/repositories/useManagementFileRepository';
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
 import { useQuery } from '@/hooks/use-query';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
@@ -52,7 +52,7 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
     },
     updateManagementProperties,
     getLastUpdatedBy: { execute: getLastUpdatedBy, loading: loadingGetLastUpdatedBy },
-  } = useManagementProvider();
+  } = useManagementFileRepository();
   const { execute: getPropertyAssociations } = usePropertyAssociations();
 
   const { setModalContent, setDisplayModal } = useModalContext();
