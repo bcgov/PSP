@@ -5,26 +5,34 @@ import { MdClose } from 'react-icons/md';
 import styled from 'styled-components';
 
 import TooltipWrapper from '@/components/common/TooltipWrapper';
+import { Claims } from '@/constants';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 
 export interface IMoreOptionsDropdownProps {
+  /** ARIA label for accessibility */
+  ariaLabel?: string;
+
   /** Whether the "Clear All" action is enabled. When false, the option is grayed out and unclickable. */
   canClearAll?: boolean;
 
   /** Callback invoked when the "Clear All" option is clicked. */
   onClearAll: () => void;
 
-  /** ARIA label for accessibility */
-  ariaLabel?: string;
+  /** Callback invoked when the "Create Research File" option is clicked. */
+  onCreateResearchFile: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
 /**
  * A dropdown menu component with options to operate on the property worklist
  */
 const MoreOptionsDropdown: React.FC<IMoreOptionsDropdownProps> = ({
-  onClearAll,
-  canClearAll = true,
   ariaLabel = 'More options',
+  canClearAll = true,
+  onClearAll,
+  onCreateResearchFile,
 }) => {
+  const keycloak = useKeycloakWrapper();
+
   return (
     <Dropdown alignRight>
       <TooltipWrapper tooltipId="more-options-tooltip" tooltip="More options...">
@@ -47,6 +55,11 @@ const MoreOptionsDropdown: React.FC<IMoreOptionsDropdownProps> = ({
           <MdClose size={20} className="mr-1" />
           Clear list
         </StyledDropdownItem>
+        {keycloak.hasClaim(Claims.RESEARCH_ADD) && (
+          <StyledDropdownItem aria-label="Create research file" onClick={onCreateResearchFile}>
+            Create Research File
+          </StyledDropdownItem>
+        )}
       </StyledDropdownMenu>
     </Dropdown>
   );

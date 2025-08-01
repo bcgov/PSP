@@ -171,6 +171,7 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
     <Formik<ResearchForm>
       innerRef={formikRef}
       initialValues={initialForm}
+      enableReinitialize
       onSubmit={async (values: ResearchForm) => {
         const researchFile: ApiGen_Concepts_ResearchFile = values.toApi();
         return withUserOverride((userOverrideCodes: UserOverrideCode[]) =>

@@ -13,8 +13,9 @@ export interface IWorklistViewProps {
   selectedId: string | null;
   onSelect: (id: string) => void;
   onRemove: (id: string) => void;
-  onClearAll: () => void;
   onZoomToParcel: (parcel: ParcelFeature) => void;
+  onClearAll: () => void;
+  onCreateResearchFile: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
 export const WorklistView: React.FC<IWorklistViewProps> = ({
@@ -22,8 +23,9 @@ export const WorklistView: React.FC<IWorklistViewProps> = ({
   selectedId,
   onSelect,
   onRemove,
-  onClearAll,
   onZoomToParcel,
+  onClearAll,
+  onCreateResearchFile,
 }) => {
   if (parcels.length === 0) {
     return <StyledSection>CTRL + Click to add a property</StyledSection>;
@@ -36,7 +38,11 @@ export const WorklistView: React.FC<IWorklistViewProps> = ({
           {parcels.length}
           {parcels.length > 1 ? ' properties' : ' property'}
         </StyledSpan>
-        <MoreOptionsDropdown canClearAll={parcels?.length > 0} onClearAll={onClearAll} />
+        <MoreOptionsDropdown
+          canClearAll={parcels?.length > 0}
+          onClearAll={onClearAll}
+          onCreateResearchFile={onCreateResearchFile}
+        />
       </StyledHeader>
       <ScrollArea>
         {parcels.map(p => (
