@@ -182,7 +182,7 @@ describe('ManagementView component', () => {
       updatePropertyHistoricalNumbers: getMockRepositoryObj([]),
     });
 
-    vi.mocked(useManagementFileRepository, {partial: true}).mockReturnValue({
+    vi.mocked(useManagementFileRepository, { partial: true }).mockReturnValue({
       putManagementFile: getMockRepositoryObj(),
       getAllManagementFileContacts: getMockRepositoryObj([]),
       deleteManagementContact: getMockRepositoryObj(),
