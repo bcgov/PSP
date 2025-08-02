@@ -1,8 +1,8 @@
 import { geoJSON } from 'leaflet';
 import { useCallback } from 'react';
-import { useHistory } from 'react-router-dom';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator';
 import { exists } from '@/utils';
 
 import { useWorklistContext } from './context/WorklistContext';
@@ -16,7 +16,7 @@ export interface IWorklistContainerProps {
 export const WorklistContainer: React.FC<IWorklistContainerProps> = ({ View }) => {
   const { parcels, selectedId, select, remove, clearAll } = useWorklistContext();
   const { requestFlyToBounds, requestFlyToLocation, prepareForCreation } = useMapStateMachine();
-  const history = useHistory();
+  const pathGenerator = usePathGenerator();
 
   // A worklist parcel points to either a parcel-map boundary/shape or a lat/long (if no parcels were found at that location)
   const onZoomToBounds = useCallback(
@@ -40,16 +40,79 @@ export const WorklistContainer: React.FC<IWorklistContainerProps> = ({ View }) =
     (event: React.MouseEvent<HTMLElement>) => {
       event.stopPropagation();
       event.preventDefault();
+
       if (parcels.length === 0) {
         return;
       }
-      // Set the selected features in the map state machine
-      // This will allow the AddResearchContainer to access the selected features
       const featuresSets = parcels.map(p => p.toSelectedFeatureDataset());
       prepareForCreation(featuresSets);
-      history.push('/mapview/sidebar/research/new');
+      pathGenerator.newFile('research');
     },
-    [history, parcels, prepareForCreation],
+    [parcels, pathGenerator, prepareForCreation],
+  );
+
+  // Handle creating a acquisition file from the worklist
+  const handleCreateAcquisitionFile = useCallback(
+    (event: React.MouseEvent<HTMLElement>) => {
+      event.stopPropagation();
+      event.preventDefault();
+
+      if (parcels.length === 0) {
+        return;
+      }
+      const featuresSets = parcels.map(p => p.toSelectedFeatureDataset());
+      prepareForCreation(featuresSets);
+      pathGenerator.newFile('acquisition');
+    },
+    [parcels, pathGenerator, prepareForCreation],
+  );
+
+  // Handle creating a disposition file from the worklist
+  const handleCreateDispositionFile = useCallback(
+    (event: React.MouseEvent<HTMLElement>) => {
+      event.stopPropagation();
+      event.preventDefault();
+
+      if (parcels.length === 0) {
+        return;
+      }
+      const featuresSets = parcels.map(p => p.toSelectedFeatureDataset());
+      prepareForCreation(featuresSets);
+      pathGenerator.newFile('disposition');
+    },
+    [parcels, pathGenerator, prepareForCreation],
+  );
+
+  // Handle creating a lease file from the worklist
+  const handleCreateLeaseFile = useCallback(
+    (event: React.MouseEvent<HTMLElement>) => {
+      event.stopPropagation();
+      event.preventDefault();
+
+      if (parcels.length === 0) {
+        return;
+      }
+      const featuresSets = parcels.map(p => p.toSelectedFeatureDataset());
+      prepareForCreation(featuresSets);
+      pathGenerator.newFile('lease');
+    },
+    [parcels, pathGenerator, prepareForCreation],
+  );
+
+  // Handle creating a management file from the worklist
+  const handleCreateManagementFile = useCallback(
+    (event: React.MouseEvent<HTMLElement>) => {
+      event.stopPropagation();
+      event.preventDefault();
+
+      if (parcels.length === 0) {
+        return;
+      }
+      const featuresSets = parcels.map(p => p.toSelectedFeatureDataset());
+      prepareForCreation(featuresSets);
+      pathGenerator.newFile('management');
+    },
+    [parcels, pathGenerator, prepareForCreation],
   );
 
   return (
@@ -61,6 +124,10 @@ export const WorklistContainer: React.FC<IWorklistContainerProps> = ({ View }) =
       onZoomToParcel={onZoomToBounds}
       onClearAll={clearAll}
       onCreateResearchFile={handleCreateResearchFile}
+      onCreateAcquisitionFile={handleCreateAcquisitionFile}
+      onCreateDispositionFile={handleCreateDispositionFile}
+      onCreateLeaseFile={handleCreateLeaseFile}
+      onCreateManagementFile={handleCreateManagementFile}
     />
   );
 };

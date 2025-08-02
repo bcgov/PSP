@@ -16,6 +16,10 @@ export interface IWorklistViewProps {
   onZoomToParcel: (parcel: ParcelFeature) => void;
   onClearAll: () => void;
   onCreateResearchFile: (event: React.MouseEvent<HTMLElement>) => void;
+  onCreateAcquisitionFile: (event: React.MouseEvent<HTMLElement>) => void;
+  onCreateDispositionFile: (event: React.MouseEvent<HTMLElement>) => void;
+  onCreateLeaseFile: (event: React.MouseEvent<HTMLElement>) => void;
+  onCreateManagementFile: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
 export const WorklistView: React.FC<IWorklistViewProps> = ({
@@ -26,6 +30,10 @@ export const WorklistView: React.FC<IWorklistViewProps> = ({
   onZoomToParcel,
   onClearAll,
   onCreateResearchFile,
+  onCreateAcquisitionFile,
+  onCreateDispositionFile,
+  onCreateLeaseFile,
+  onCreateManagementFile,
 }) => {
   if (parcels.length === 0) {
     return <StyledSection>CTRL + Click to add a property</StyledSection>;
@@ -42,6 +50,10 @@ export const WorklistView: React.FC<IWorklistViewProps> = ({
           canClearAll={parcels?.length > 0}
           onClearAll={onClearAll}
           onCreateResearchFile={onCreateResearchFile}
+          onCreateAcquisitionFile={onCreateAcquisitionFile}
+          onCreateDispositionFile={onCreateDispositionFile}
+          onCreateLeaseFile={onCreateLeaseFile}
+          onCreateManagementFile={onCreateManagementFile}
         />
       </StyledHeader>
       <ScrollArea>
