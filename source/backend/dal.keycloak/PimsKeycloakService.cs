@@ -2,13 +2,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Core.Security;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
 using Pims.Keycloak;
-using Pims.Keycloak.Models;
 using Entity = Pims.Dal.Entities;
 using KModel = Pims.Keycloak.Models;
 
@@ -170,19 +170,44 @@ namespace Pims.Dal.Keycloak
 
             euser = _userRepository.UpdateOnly(euser);
 
-            var roles = update.IsDisabled.HasValue && update.IsDisabled.Value ? System.Array.Empty<PimsRole>() : euser.PimsUserRoles.Select(ur => _roleRepository.Find(ur.RoleId));
+            var pimsRoles = update.IsDisabled.HasValue && update.IsDisabled.Value ? System.Array.Empty<PimsRole>() : euser.PimsUserRoles.Select(ur => _roleRepository.Find(ur.RoleId));
 
             // Now update keycloak
             if (kuser != null)
             {
-                var keycloakUserGroups = await _keycloakRepository.GetUserGroupsAsync(euser.GuidIdentifierValue.Value);
-                var newRolesToAdd = roles.Where(r => keycloakUserGroups.All(crr => crr.Name != r.Name));
-                var rolesToRemove = keycloakUserGroups.Where(r => roles.All(crr => crr.Name != r.Name));
-                var addOperations = newRolesToAdd.Select(nr => new UserRoleOperation() { Operation = "add", RoleName = nr.Name, Username = update.GetIdirUsername() });
-                var removeOperations = rolesToRemove.Select(rr => new UserRoleOperation() { Operation = "del", RoleName = rr.Name, Username = update.GetIdirUsername() });
+                var username = euser.GetIdirUsername();
+                var response = await _keycloakRepository.GetUserRoles(username);
+                var keycloakUserRoles = response.Data;
 
-                await _keycloakRepository.ModifyUserRoleMappings(addOperations.Concat(removeOperations));
+                var newRolesToAdd = pimsRoles.Where(pimsRole => keycloakUserRoles.All(kcRole => kcRole.Name != pimsRole.Name && !pimsRole.IsDisabled))
+                                        .Select(pimsRole => new KModel.RoleModel() { Name = pimsRole.Name });
+                var rolesToRemove = keycloakUserRoles.Where(kcRole => pimsRoles.All(pimsRole => pimsRole.Name != kcRole.Name));
+
+                // Add any new roles to keycloak.
+                if (newRolesToAdd.Any())
+                {
+                    var addResponse = await _keycloakRepository.AddRolesToUser(username, newRolesToAdd);
+                    if (!addResponse.IsSuccessStatusCode)
+                    {
+                        throw new HttpClientRequestException(addResponse, $"Failed to update the user role mappings for '{username}' during operation 'add' on roles '{string.Join(',', newRolesToAdd.Select(r => r.Name))}'");
+                    }
+                }
+
+                // Remove any roles that are no longer assigned in PIMS.
+                if (rolesToRemove.Any())
+                {
+                    foreach (var role in rolesToRemove)
+                    {
+                        var deleteResponse = await _keycloakRepository.DeleteRoleFromUsers(username, role.Name);
+                        if (!deleteResponse.IsSuccessStatusCode)
+                        {
+                            throw new HttpClientRequestException(deleteResponse, $"Failed to update the user role mappings for '{username}' during operation 'delete' on role '{role.Name}'");
+                        }
+                    }
+                }
             }
+
+            // Commit the changes to the database.
             _userRepository.CommitTransaction();
 
             return _userRepository.GetById(euser.Internal_Id);

@@ -78,7 +78,7 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
           <OverflowTip fullText={propertyIdentifier} className="pl-3"></OverflowTip>
         </div>
       </Col>
-      <Col md={5}>
+      <Col md={showDisable ? 4 : 5}>
         <InlineInput
           className="mb-0 w-100"
           label=""

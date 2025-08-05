@@ -6,7 +6,44 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
     class="Toastify"
   />
   <div />
-  .c0 {
+  .c11 {
+  margin-top: 0.3rem;
+}
+
+.c12 {
+  min-width: 5rem;
+  max-width: 5rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  text-align: center;
+  padding: 0;
+}
+
+.c12:-moz-read-only {
+  background: white;
+}
+
+.c12:read-only {
+  background: white;
+}
+
+.c9 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c7 {
+  float: right;
+  cursor: pointer;
+  font-size: 3.2rem;
+}
+
+.c0 {
   background-color: #f2f2f2;
   padding-top: 1rem;
 }
@@ -43,8 +80,44 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
 }
 
 .c6 {
+  display: grid;
+  grid-template-columns: 1fr 0.5fr;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: end;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: end;
+  min-height: 4.5rem;
+}
+
+.c6 .btn {
+  margin: 0;
+}
+
+.c8 {
   padding: 0 0.4rem;
   display: block;
+}
+
+.c10 {
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  -webkit-align-content: space-between;
+  -ms-flex-line-pack: space-between;
+  align-content: space-between;
 }
 
 <div
@@ -75,6 +148,377 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
             class="c4 text-left col"
           >
             Draft
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c2 form-section"
+    >
+      <h2
+        class="c5"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="align-content-end col"
+          >
+            <div
+              class="c6 no-gutters row"
+            >
+              <div
+                class="align-items-end col-auto"
+              >
+                Management Contact
+              </div>
+              <div
+                class="my-1 col-auto"
+              />
+            </div>
+          </div>
+          <div
+            class="pl-2 d-flex align-items-end col-auto"
+          >
+            <svg
+              class="c7"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                collapse-section
+              </title>
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="m7 14 5-5 5 5z"
+              />
+            </svg>
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="table"
+          data-testid="ManagementFileContactsContactsTable"
+          role="table"
+        >
+          <div
+            class="thead thead-light"
+          >
+            <div
+              class="tr"
+              role="row"
+              style="display: flex; flex: 1 0 auto; min-width: 210px;"
+            >
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  Contact
+                </div>
+              </div>
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  Primary Contact
+                </div>
+              </div>
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  Purpose
+                </div>
+              </div>
+              <div
+                class="th"
+                colspan="1"
+                role="columnheader"
+                style="box-sizing: border-box; flex: 25 0 auto; min-width: 30px; width: 25px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              >
+                <div
+                  class="sortable-column"
+                >
+                  Actions
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="tbody"
+            role="rowgroup"
+          >
+            <div
+              class="tr-wrapper"
+            >
+              <div
+                class="tr"
+                role="row"
+                style="display: flex; flex: 1 0 auto; min-width: 210px;"
+              >
+                <div
+                  class="td"
+                  role="cell"
+                  style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                  title=""
+                >
+                  <a
+                    class="c8"
+                    href="/contact/O3"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    Dairy Queen Forever! Property Management
+                  </a>
+                </div>
+                <div
+                  class="td"
+                  role="cell"
+                  style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                  title=""
+                >
+                  <a
+                    class="c8"
+                    href="/contact/P3"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    Stinky Cheese
+                  </a>
+                </div>
+                <div
+                  class="td"
+                  role="cell"
+                  style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                  title=""
+                >
+                  test 23
+                </div>
+                <div
+                  class="td"
+                  role="cell"
+                  style="box-sizing: border-box; flex: 25 0 auto; min-width: 30px; width: 25px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                  title=""
+                >
+                  <div
+                    class="c9 c10"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="tr-wrapper"
+            >
+              <div
+                class="tr"
+                role="row"
+                style="display: flex; flex: 1 0 auto; min-width: 210px;"
+              >
+                <div
+                  class="td"
+                  role="cell"
+                  style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                  title=""
+                >
+                  <a
+                    class="c8"
+                    href="/contact/P14"
+                    rel="noopener noreferrer"
+                    target="_blank"
+                  >
+                    Alejandro Sanchez
+                  </a>
+                </div>
+                <div
+                  class="td"
+                  role="cell"
+                  style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                  title=""
+                >
+                  Not applicable
+                </div>
+                <div
+                  class="td"
+                  role="cell"
+                  style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                  title=""
+                >
+                  test 2
+                </div>
+                <div
+                  class="td"
+                  role="cell"
+                  style="box-sizing: border-box; flex: 25 0 auto; min-width: 30px; width: 25px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                  title=""
+                >
+                  <div
+                    class="c9 c10"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="row"
+        >
+          <div
+            class="align-self-center col-auto"
+          >
+            <span>
+              1 - 2 of 2
+            </span>
+          </div>
+          <div
+            class="ml-auto align-self-center col-auto"
+          />
+          <div
+            class="align-self-center col-auto"
+          >
+            <div
+              class="Menu-root"
+            >
+              <div
+                class="Menu-button"
+              >
+                <div
+                  class="d-flex"
+                >
+                  <span
+                    class="c11"
+                  >
+                    Show
+                  </span>
+                  <input
+                    class="c12 form-control"
+                    data-testid="input-page-size"
+                    readonly=""
+                    type="number"
+                    value="10"
+                  />
+                  <span
+                    class="c11"
+                  >
+                    Entries
+                  </span>
+                </div>
+              </div>
+              <div
+                class="Menu-items"
+                style="width: 10.0rem;"
+              >
+                <div
+                  class="Menu-options scrollable list-group"
+                >
+                  <div
+                    class="Menu-item list-group-item"
+                    title="menu-item-5"
+                  >
+                    5
+                  </div>
+                  <div
+                    class="Menu-item list-group-item"
+                    title="menu-item-10"
+                  >
+                    10
+                  </div>
+                  <div
+                    class="Menu-item list-group-item"
+                    title="menu-item-20"
+                  >
+                    20
+                  </div>
+                  <div
+                    class="Menu-item list-group-item"
+                    title="menu-item-50"
+                  >
+                    50
+                  </div>
+                  <div
+                    class="Menu-item list-group-item"
+                    title="menu-item-100"
+                  >
+                    100
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="align-self-center col-auto"
+          >
+            <ul
+              class="pagination"
+            >
+              <li
+                class="page-item disabled"
+              >
+                <a
+                  aria-disabled="true"
+                  aria-label="Previous page"
+                  class="page-link "
+                  rel="prev"
+                  role="button"
+                  tabindex="-1"
+                >
+                  &lt;
+                </a>
+              </li>
+              <li
+                class="page-item active"
+              >
+                <a
+                  aria-current="page"
+                  aria-label="Page 1 is your current page"
+                  class="page-link"
+                  rel="canonical"
+                  role="button"
+                  tabindex="-1"
+                >
+                  1
+                </a>
+              </li>
+              <li
+                class="page-item disabled"
+              >
+                <a
+                  aria-disabled="true"
+                  aria-label="Next page"
+                  class="page-link "
+                  rel="next"
+                  role="button"
+                  tabindex="-1"
+                >
+                  &gt;
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -282,7 +726,7 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
             class="c4 text-left col"
           >
             <a
-              class="c6"
+              class="c8"
               href="/contact/P6"
               rel="noopener noreferrer"
               target="_blank"
@@ -323,7 +767,7 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
             class="c4 text-left col"
           >
             <a
-              class="c6"
+              class="c8"
               href="/contact/P6"
               rel="noopener noreferrer"
               target="_blank"

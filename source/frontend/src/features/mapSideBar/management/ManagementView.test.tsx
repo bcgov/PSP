@@ -28,11 +28,13 @@ import {
   render,
   RenderOptions,
   userEvent,
+  waitForEffects,
 } from '@/utils/test-utils';
 
 import { ApiGen_CodeTypes_ManagementFileStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_ManagementFileStatusTypes';
 import { toTypeCode } from '@/utils/formUtils';
 import ManagementView, { IManagementViewProps } from './ManagementView';
+import { useManagementFileRepository } from '@/hooks/repositories/useManagementFileRepository';
 
 // mock auth library
 
@@ -98,6 +100,10 @@ vi.mocked(useProjectProvider, { partial: true }).mockReturnValue({
 });
 
 vi.mock('@/hooks/repositories/useHistoricalNumberRepository');
+
+vi.mock('@/hooks/pims-api/useApiManagementFile');
+vi.mock('@/hooks/pims-api/useApiManagementFileContact');
+vi.mock('@/hooks/repositories/useManagementFileRepository');
 
 const DEFAULT_PROPS: IManagementViewProps = {
   onClose,
@@ -176,6 +182,12 @@ describe('ManagementView component', () => {
       updatePropertyHistoricalNumbers: getMockRepositoryObj([]),
     });
 
+    vi.mocked(useManagementFileRepository, { partial: true }).mockReturnValue({
+      putManagementFile: getMockRepositoryObj(),
+      getAllManagementFileContacts: getMockRepositoryObj([]),
+      deleteManagementContact: getMockRepositoryObj(),
+    });
+
     history.replace(`/mapview/sidebar/management/1`);
   });
 
@@ -191,6 +203,7 @@ describe('ManagementView component', () => {
 
   it('renders the underlying form', async () => {
     const { getAllByText, getByText } = await setup();
+    await waitForEffects();
     const testManagementFile = mockManagementFileResponse();
 
     expect(getByText('Management File')).toBeVisible();
@@ -292,7 +305,9 @@ describe('ManagementView component', () => {
 
   it(`should display property edit title when editing`, async () => {
     history.replace(`/mapview/sidebar/management/1?edit=true`);
+
     const { getByText } = await setup({ ...DEFAULT_PROPS, isEditing: true } as any);
+    await waitForEffects();
     expect(getByText('Update Management File')).toBeVisible();
   });
 

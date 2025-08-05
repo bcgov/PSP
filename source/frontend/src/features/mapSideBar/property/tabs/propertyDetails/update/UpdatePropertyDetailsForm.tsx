@@ -362,10 +362,6 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
           </SectionField>
         )}
       </Section>
-
-      <Section header="Comments">
-        <TextArea field="notes" rows={4} />
-      </Section>
     </StyledSummarySection>
   );
 };

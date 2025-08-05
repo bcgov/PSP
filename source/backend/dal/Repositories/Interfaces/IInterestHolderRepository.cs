@@ -8,5 +8,9 @@ namespace Pims.Dal.Repositories
         List<PimsInterestHolder> GetInterestHoldersByAcquisitionFile(long acquisitionFileId);
 
         List<PimsInterestHolder> UpdateAllForAcquisition(long acquisitionFileId, List<PimsInterestHolder> interestHolders);
+
+        bool DeleteInterestHoldersPropertyTypes(ICollection<PimsPropInthldrInterestTyp> inthldPropTypes);
+        bool DeleteInterestHoldersProperties(ICollection<PimsInthldrPropInterest> interestHolderProperties);
+        bool DeleteInterestHolders(ICollection<PimsInterestHolder> interestHolders);
     }
 }

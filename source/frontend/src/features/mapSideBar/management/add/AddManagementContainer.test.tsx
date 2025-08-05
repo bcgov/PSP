@@ -26,8 +26,8 @@ const mockCreateManagementFile = {
   loading: false,
 };
 
-vi.mock('@/hooks/repositories/useManagementProvider', () => ({
-  useManagementProvider: () => {
+vi.mock('@/hooks/repositories/useManagementFileRepository', () => ({
+  useManagementFileRepository: () => {
     return {
       addManagementFileApi: mockCreateManagementFile,
     };

@@ -10827,9 +10827,6 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.WhenCreated).HasComment("WHEN_CREATED is the date and time the source record was created (not the time when it was loaded into the BC Geographic Warehouse).");
             entity.Property(e => e.WhenUpdated).HasComment("WHEN_UPDATED is the date and time the source record was last modified (not the time when it was loaded into, or modified in, the BC Geographic Warehouse).");
         });
-        modelBuilder.HasSequence("ETL_DATA_SOURCE_TRACE_ID_SEQ", "etl")
-            .HasMin(1L)
-            .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_ACCESS_REQUEST_H_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
@@ -11494,9 +11491,6 @@ public partial class PimsBaseContext : DbContext
         modelBuilder.HasSequence("PIMS_PROP_LEASE_COMP_REQ_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_PROP_PROP_ACTIVITY_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_PROP_PROP_ADJACENT_LAND_TYPE_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
@@ -11540,9 +11534,6 @@ public partial class PimsBaseContext : DbContext
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_PROPERTY_ACTIVITY_DOCUMENT_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_PROPERTY_ACTIVITY_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_PROPERTY_ACTIVITY_INVOICE_H_ID_SEQ")
