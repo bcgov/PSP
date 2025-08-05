@@ -574,13 +574,13 @@ exports[`UpdateProjectsSubForm > renders as expected with pre-existing form data
         >
           <button
             class="c3 Button c4 btn btn-link"
+            data-testid="remove-button"
             type="button"
           >
             <div
               class="Button__value"
             >
               <svg
-                data-testid="remove-button"
                 fill="currentColor"
                 height="2rem"
                 stroke="currentColor"

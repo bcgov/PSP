@@ -1,0 +1,30 @@
+[
+  {
+    "Test Case Description": "Create complete lease with Renewals",
+    "RenewalIsExercised": "Yes",
+    "RenewalCommencementDate": 1711152000000,
+    "RenewalExpiryDate": 1714435200000,
+    "RenewalNotes": "First renewal"
+  },
+  {
+    "Test Case Description": "Create complete lease with Renewals",
+    "RenewalIsExercised": "Yes",
+    "RenewalCommencementDate": 1714521600000,
+    "RenewalExpiryDate": 1746057600000,
+    "RenewalNotes": "Second renewal"
+  },
+  {
+    "Test Case Description": "Create complete lease with Renewals",
+    "RenewalIsExercised": "No",
+    "RenewalCommencementDate": 1746144000000,
+    "RenewalExpiryDate": 2061676800000,
+    "RenewalNotes": "Third renewal"
+  },
+  {
+    "Test Case Description": "Update lease renewal",
+    "RenewalIsExercised": "Yes",
+    "RenewalCommencementDate": 1711756800000,
+    "RenewalExpiryDate": 1714435200000,
+    "RenewalNotes": "Update of renewal section"
+  }
+]

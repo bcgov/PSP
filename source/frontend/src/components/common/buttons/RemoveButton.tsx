@@ -21,9 +21,12 @@ export const RemoveButton: React.FunctionComponent<
   React.PropsWithChildren<IRemoveButtonProps>
 > = props => {
   return (
-    <StyledRemoveLinkButton $fontSize={props.fontSize} onClick={props.onRemove}>
-      <MdClose data-testid={props['data-testId'] ?? 'remove-button'} size="2rem" title="remove" />{' '}
-      <span className="text">{props.label ?? 'Remove'}</span>
+    <StyledRemoveLinkButton
+      $fontSize={props.fontSize}
+      onClick={props.onRemove}
+      data-testid={props['data-testId'] ?? 'remove-button'}
+    >
+      <MdClose size="2rem" title="remove" /> <span className="text">{props.label ?? 'Remove'}</span>
     </StyledRemoveLinkButton>
   );
 };

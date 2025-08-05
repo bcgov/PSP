@@ -1,0 +1,80 @@
+[
+  {
+    "Test Case Description": "Create new complete lease",
+    "PaymentSentDate": 1645660800000,
+    "PaymentMethod": "Cheque",
+    "PaymentCategory": "Additional Rent",
+    "PaymentTotalReceived": 1500.5,
+    "PaymentExpectedPayment": 1500.5,
+    "PaymentIsGSTApplicable": false,
+    "PaymentGST": 0.0,
+    "PaymentStatus": "Paid",
+    "PeriodParentIndex": 1,
+    "ParentPeriodPaymentType": "Variable"
+  },
+  {
+    "Test Case Description": "Create new complete lease",
+    "PaymentSentDate": 1647907200000,
+    "PaymentMethod": "Credit / Debit",
+    "PaymentCategory": "Variable Rent",
+    "PaymentTotalReceived": 200.79,
+    "PaymentExpectedPayment": 191.23,
+    "PaymentIsGSTApplicable": true,
+    "PaymentGST": 9.56,
+    "PaymentStatus": "Partial",
+    "PeriodParentIndex": 1,
+    "ParentPeriodPaymentType": "Variable"
+  },
+  {
+    "Test Case Description": "Create new complete lease",
+    "PaymentSentDate": 1654819200000,
+    "PaymentMethod": "EFT",
+    "PaymentCategory": "Additional Rent",
+    "PaymentTotalReceived": 3000.0,
+    "PaymentExpectedPayment": 3000.0,
+    "PaymentIsGSTApplicable": false,
+    "PaymentGST": 0.0,
+    "PaymentStatus": "Overpayment",
+    "PeriodParentIndex": 2,
+    "ParentPeriodPaymentType": "Variable"
+  },
+  {
+    "Test Case Description": "Create new complete lease",
+    "PaymentSentDate": 1658275200000,
+    "PaymentMethod": "H120",
+    "PaymentCategory": "Base Rent",
+    "PaymentTotalReceived": 13.0,
+    "PaymentExpectedPayment": 13.0,
+    "PaymentIsGSTApplicable": false,
+    "PaymentGST": 0.0,
+    "PaymentStatus": "Partial",
+    "PeriodParentIndex": 3,
+    "ParentPeriodPaymentType": "Predetermined"
+  },
+  {
+    "Test Case Description": "Create new complete lease",
+    "PaymentSentDate": 1658361600000,
+    "PaymentMethod": "Other",
+    "PaymentCategory": "Base Rent",
+    "PaymentTotalReceived": 126000.0,
+    "PaymentExpectedPayment": 126000.0,
+    "PaymentIsGSTApplicable": false,
+    "PaymentGST": 0.0,
+    "PaymentStatus": "Overpayment",
+    "PeriodParentIndex": 3,
+    "ParentPeriodPaymentType": "Predetermined"
+  },
+  {
+    "Test Case Description": "Edit created lease",
+    "PaymentSentDate": 1647302400000,
+    "PaymentMethod": "Post-dated cheque",
+    "PaymentCategory": "Additional Rent",
+    "PaymentTotalReceived": 3000.0,
+    "PaymentExpectedPayment": 2857.14,
+    "PaymentIsGSTApplicable": false,
+    "PaymentGST": 142.86,
+    "PaymentStatus": "Overpayment",
+    "PeriodParentIndex": 1,
+    "ParentPeriodPaymentType": "Variable"
+  }
+]

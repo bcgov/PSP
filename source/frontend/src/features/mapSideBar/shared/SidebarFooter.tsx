@@ -36,12 +36,17 @@ const SidebarFooter: React.FunctionComponent<ISidebarFooterProps> = ({
             )}
           </Col>
           <Col xs="auto" className="pr-6">
-            <Button variant="secondary" onClick={onCancel}>
+            <Button variant="secondary" onClick={onCancel} data-testid="cancel-button">
               {cancelButtonLabel ?? 'Cancel'}
             </Button>
           </Col>
           <Col xs="auto">
-            <Button disabled={isOkDisabled} onClick={onSave} className="mr-9">
+            <Button
+              disabled={isOkDisabled}
+              onClick={onSave}
+              className="mr-9"
+              data-testid="save-button"
+            >
               {saveButtonLabel ?? 'Save'}
             </Button>
           </Col>

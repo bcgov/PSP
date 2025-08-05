@@ -331,6 +331,7 @@ exports[`Note List Container > renders as expected 1`] = `
             >
               <button
                 class="c3 Button c4 c5 btn btn-primary"
+                data-testid="note-add-button"
                 type="button"
               >
                 <div

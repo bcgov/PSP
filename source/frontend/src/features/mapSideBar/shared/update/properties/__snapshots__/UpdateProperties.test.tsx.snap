@@ -621,7 +621,11 @@ exports[`UpdateProperties component > renders as expected 1`] = `
             <div
               class="mr-2 mb-1"
             />
-            Property selection
+            <div
+              data-testid="form-title"
+            >
+              Property selection
+            </div>
           </h1>
         </div>
         <div
@@ -1431,13 +1435,13 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                 >
                   <button
                     class="c4 Button c31 btn btn-link"
+                    data-testid="remove-button"
                     type="button"
                   >
                     <div
                       class="Button__value"
                     >
                       <svg
-                        data-testid="remove-button"
                         fill="currentColor"
                         height="2rem"
                         stroke="currentColor"
@@ -1484,6 +1488,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
             >
               <button
                 class="c4 Button btn btn-secondary"
+                data-testid="cancel-button"
                 type="button"
               >
                 <div
@@ -1498,6 +1503,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
             >
               <button
                 class="c4 Button mr-9 btn btn-primary"
+                data-testid="save-button"
                 type="button"
               >
                 <div

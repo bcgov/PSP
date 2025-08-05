@@ -1,0 +1,37 @@
+[
+  {
+    "Test Case Description": "Create AF with Expropriation",
+    "ExpropriationDateHistoryOwner": "Abdullah Sumeli (Owner's Solicitor)",
+    "ExpropriationDateHistoryOwnerDisplay": "Abdullah Sumeli",
+    "ExpropriationDateHistoryEvent": "Expropriation notice served date",
+    "ExpropriationDateHistoryDate": 1646265600000
+  },
+  {
+    "Test Case Description": "Create AF with Expropriation",
+    "ExpropriationDateHistoryOwner": "Abma Monica (Owner's Representative)",
+    "ExpropriationDateHistoryOwnerDisplay": "Abma Monica",
+    "ExpropriationDateHistoryEvent": "Certificate of expropriation approval",
+    "ExpropriationDateHistoryDate": 1599696000000
+  },
+  {
+    "Test Case Description": "Create AF with Expropriation",
+    "ExpropriationDateHistoryOwner": "Andreas Michael Matusza (Life Estate)",
+    "ExpropriationDateHistoryOwnerDisplay": "Andreas Michael Matusza",
+    "ExpropriationDateHistoryEvent": "Advanced payment served date",
+    "ExpropriationDateHistoryDate": 939513600000
+  },
+  {
+    "Test Case Description": "Update AF with Expropriation",
+    "ExpropriationDateHistoryOwner": "Budget Truck and Car Rental (Non-Interest Payee)",
+    "ExpropriationDateHistoryOwnerDisplay": "Budget Truck and Car Rental",
+    "ExpropriationDateHistoryEvent": "Expropriation vesting date",
+    "ExpropriationDateHistoryDate": 1504828800000
+  },
+  {
+    "Test Case Description": "Create Minimum AF",
+    "ExpropriationDateHistoryOwner": "Minimum Test Inc, Inc. No. BC00009123 (OR Reg. No.... (Owner)",
+    "ExpropriationDateHistoryOwnerDisplay": "Minimum Test Inc (Inc#:BC00009123)",
+    "ExpropriationDateHistoryEvent": "Expropriation vesting date",
+    "ExpropriationDateHistoryDate": null
+  }
+]

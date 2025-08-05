@@ -200,6 +200,7 @@ exports[`ManagementFileTabs component > matches snapshot 1`] = `
                 </div>
                 <div
                   class="c6 text-left col"
+                  data-testid="management-status"
                 >
                   Draft
                 </div>
@@ -416,6 +417,7 @@ exports[`ManagementFileTabs component > matches snapshot 1`] = `
                 </div>
                 <div
                   class="c6 text-left col"
+                  data-testid="management-funding"
                 />
               </div>
             </div>
@@ -453,6 +455,7 @@ exports[`ManagementFileTabs component > matches snapshot 1`] = `
                 </div>
                 <div
                   class="c6 text-left col"
+                  data-testid="management-file-name"
                 >
                   Test Management File
                 </div>
@@ -471,6 +474,7 @@ exports[`ManagementFileTabs component > matches snapshot 1`] = `
                 </div>
                 <div
                   class="c6 text-left col"
+                  data-testid="management-legacy-file-number"
                 >
                   legacyfile321
                 </div>
@@ -489,6 +493,7 @@ exports[`ManagementFileTabs component > matches snapshot 1`] = `
                 </div>
                 <div
                   class="c6 text-left col"
+                  data-testid="management-purpose"
                 >
                   Engineering
                 </div>
@@ -507,6 +512,7 @@ exports[`ManagementFileTabs component > matches snapshot 1`] = `
                 </div>
                 <div
                   class="c6 text-left col"
+                  data-testid="management-additional-details"
                 >
                   ADDITIONAL DETAILS
                 </div>
@@ -546,6 +552,7 @@ exports[`ManagementFileTabs component > matches snapshot 1`] = `
                 </div>
                 <div
                   class="c6 text-left col"
+                  data-testid="management-team-member-0"
                 >
                   <a
                     class="c10"
@@ -587,6 +594,7 @@ exports[`ManagementFileTabs component > matches snapshot 1`] = `
                 </div>
                 <div
                   class="c6 text-left col"
+                  data-testid="management-team-member-1"
                 >
                   <a
                     class="c10"

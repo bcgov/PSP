@@ -67,7 +67,7 @@ const MapSideBarLayout: React.FunctionComponent<
               <StyledExpandedHeader>
                 <>
                   <div className="mr-2 mb-1">{icon}</div>
-                  {title}
+                  <div data-testid="form-title">{title}</div>
                 </>
               </StyledExpandedHeader>
             </Col>

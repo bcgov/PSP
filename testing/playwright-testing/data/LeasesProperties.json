@@ -1,0 +1,80 @@
+[
+  {
+    "Test Case Description": "Create a new lease details",
+    "LeasePropPID": "029-372-445",
+    "LeasePropHistoricalFile": "Property Negotiation (PN):7888-000",
+    "LeasePropDescriptiveName": "Property 01",
+    "LeasePropArea": 500.0,
+    "LeasePropAddressLine1": "1365 STRATHCONA AVE",
+    "LeasePropAddressLine2": null,
+    "LeasePropAddressLine3": null,
+    "LeasePropAddressCity": "PRINCE GEORGE",
+    "LeasePropPostalCode": "V2L 4E1",
+    "LeasePropLegalDescription": "PARCEL A (BEING A CONSOLIDATION OF LOTS A AND B, SEE CA3897871) DISTRICT LOT 932 CARIBOO DISTRICT PLAN 28384"
+  },
+  {
+    "Test Case Description": "Create a new lease details",
+    "LeasePropPID": "006-411-401",
+    "LeasePropHistoricalFile": "LIS:0909-000999",
+    "LeasePropDescriptiveName": "Property 02",
+    "LeasePropArea": 25.0,
+    "LeasePropAddressLine1": "12807 ROSEFIELD RD",
+    "LeasePropAddressLine2": "OFFICE 4556",
+    "LeasePropAddressLine3": "BUZZER 222",
+    "LeasePropAddressCity": "PRESPATOU",
+    "LeasePropPostalCode": null,
+    "LeasePropLegalDescription": "THE EAST 1/2 OF DISTRICT LOT 2333 PEACE RIVER DISTRICT"
+  },
+  {
+    "Test Case Description": "Create a new lease details",
+    "LeasePropPID": "023-551-101",
+    "LeasePropHistoricalFile": "PS:0001",
+    "LeasePropDescriptiveName": null,
+    "LeasePropArea": null,
+    "LeasePropAddressLine1": "6840 DAISY LANE",
+    "LeasePropAddressLine2": null,
+    "LeasePropAddressLine3": null,
+    "LeasePropAddressCity": "WHISTLER",
+    "LeasePropPostalCode": "V0N 1B6",
+    "LeasePropLegalDescription": "STRATA LOT 22 AND AN UNDIVIDED 4/1000 INTEREST IN LOT 6 BLOCK G PLAN 14389, DISTRICT LOT 1755 GROUP 1 NEW WESTMINSTER DISTRICT STRATA PLAN LMS2535 TOGETHER WITH AN INTEREST IN THE COMMON PROPERTY IN PROPORTION TO THE UNIT ENTITLEMENT OF THE STRATA LOT AS SHOWN ON FORM 1"
+  },
+  {
+    "Test Case Description": "Create a new lease details",
+    "LeasePropPID": null,
+    "LeasePropHistoricalFile": null,
+    "LeasePropDescriptiveName": null,
+    "LeasePropArea": null,
+    "LeasePropAddressLine1": null,
+    "LeasePropAddressLine2": null,
+    "LeasePropAddressLine3": null,
+    "LeasePropAddressCity": null,
+    "LeasePropPostalCode": null,
+    "LeasePropLegalDescription": "DISTRICT LOT 672, GROUP 2, NEW WESTMINSTER DIST."
+  },
+  {
+    "Test Case Description": "Create a new lease details",
+    "LeasePropPID": "029-450-608",
+    "LeasePropHistoricalFile": null,
+    "LeasePropDescriptiveName": null,
+    "LeasePropArea": null,
+    "LeasePropAddressLine1": null,
+    "LeasePropAddressLine2": null,
+    "LeasePropAddressLine3": null,
+    "LeasePropAddressCity": null,
+    "LeasePropPostalCode": null,
+    "LeasePropLegalDescription": "THAT PART OF LOT 2 DISTRICT LOT 71 CARIBOO DISTRICT PLAN BCP49571 EXCEPT PLAN BCP49574 SHOWN ON PLAN BCP49575"
+  },
+  {
+    "Test Case Description": "Edit lease details",
+    "LeasePropPID": "029-372-445",
+    "LeasePropHistoricalFile": null,
+    "LeasePropDescriptiveName": "Inserting a testing name",
+    "LeasePropArea": 900.0,
+    "LeasePropAddressLine1": "1365 STRATHCONA AVE",
+    "LeasePropAddressLine2": null,
+    "LeasePropAddressLine3": null,
+    "LeasePropAddressCity": "PRINCE GEORGE",
+    "LeasePropPostalCode": "V2L 4E1",
+    "LeasePropLegalDescription": "PARCEL A (BEING A CONSOLIDATION OF LOTS A AND B, SEE CA3897871) DISTRICT LOT 932 CARIBOO DISTRICT PLAN 28384"
+  }
+]
