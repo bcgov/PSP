@@ -248,7 +248,10 @@ exports[`PeriodsForm component > renders as expected 1`] = `
 }
 
 .c3 {
-  display: grid;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   grid-template-columns: 1fr 0.5fr;
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
@@ -953,7 +956,10 @@ exports[`PeriodsForm component > renders with data as expected 1`] = `
 }
 
 .c3 {
-  display: grid;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   grid-template-columns: 1fr 0.5fr;
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;

@@ -47,7 +47,7 @@ export const SectionListHeader: React.FunctionComponent<
 };
 
 const StyledRow = styled(Row)`
-  display: grid;
+  display: flex;
   grid-template-columns: 1fr 0.5fr;
   justify-content: space-between;
   align-items: end;

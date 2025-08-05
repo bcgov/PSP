@@ -22,7 +22,10 @@ exports[`DepositsContainer > renders as expected 1`] = `
 }
 
 .c2 {
-  display: grid;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   grid-template-columns: 1fr 0.5fr;
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;

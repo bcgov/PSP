@@ -98,6 +98,8 @@ const PropertyManagementActivitiesListContainer: React.FunctionComponent<
         title: `M-${row.managementFileId}`,
       })}
       canEditActivities={canEditActivities}
+      addActivityButtonText="Add an Ad-hoc Activity"
+      activitiesListTitle="Ad-hoc Activities List"
     />
   );
 };

@@ -40,7 +40,7 @@ export const ActivitiesTab: React.FunctionComponent<IActivitiesTabProps> = ({ ma
             {hasClaim(Claims.MANAGEMENT_EDIT) && statusSolver.canEditActivities() && (
               <StyledSectionAddButton onClick={onAdd}>
                 <FaPlus size="2rem" className="mr-2" />
-                Add Activity
+                Add an Activity
               </StyledSectionAddButton>
             )}
           </SimpleSectionHeader>
