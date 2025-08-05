@@ -35,6 +35,11 @@ namespace Pims.Dal.Entities.Models
         public string ProjectNameOrNumber { get; set; }
 
         /// <summary>
+        /// get/set - The Property Owner's name to search.
+        /// </summary>
+        public string OwnerName { get; set; }
+
+        /// <summary>
         /// get/set - The MOTI person id to search by for acquisition team members.
         /// </summary>
         public string AcquisitionTeamMemberPersonId { get; set; }
