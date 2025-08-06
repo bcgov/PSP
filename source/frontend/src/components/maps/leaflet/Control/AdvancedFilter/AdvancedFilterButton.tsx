@@ -5,8 +5,6 @@ import styled from 'styled-components';
 import { Button } from '@/components/common/buttons/Button';
 import { TooltipWrapper } from '@/components/common/TooltipWrapper';
 
-import Control from '../Control';
-
 export type IAdvanceFilterButtonProps = {
   /** whether the button should be displayed as active - ie. whether the map filter is active */
   active?: boolean;
@@ -22,20 +20,16 @@ const AdvancedFilterButton: React.FC<IAdvanceFilterButtonProps> = ({
   onToggle,
 }) => {
   return (
-    <Control position="topright">
-      <div className="w-100">
-        <TooltipWrapper tooltipId="advanced-filter-button-id" tooltip="Advanced Map Filters">
-          <ControlButton
-            title="advanced-filter-button"
-            variant="outline-secondary"
-            onClick={onToggle}
-            $active={active}
-          >
-            <FaFilter size="1.6em" />
-          </ControlButton>
-        </TooltipWrapper>
-      </div>
-    </Control>
+    <TooltipWrapper tooltipId="advanced-filter-button-id" tooltip="Advanced Map Filters">
+      <ControlButton
+        title="advanced-filter-button"
+        variant="outline-secondary"
+        onClick={onToggle}
+        $active={active}
+      >
+        <FaFilter size="1.6em" />
+      </ControlButton>
+    </TooltipWrapper>
   );
 };
 

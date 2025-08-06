@@ -5,8 +5,6 @@ import styled from 'styled-components';
 import { Button } from '@/components/common/buttons/Button';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 
-import Control from '../Control';
-
 export type IWorklistControl = {
   /** whether the button should be displayed as active - ie. whether the worklist has active items */
   active?: boolean;
@@ -19,18 +17,16 @@ export type IWorklistControl = {
  */
 const WorklistControl: React.FC<IWorklistControl> = ({ active = false, onToggle }) => {
   return (
-    <Control position="topright">
-      <TooltipWrapper tooltipId="worklist-control-id" tooltip="Property Worklist">
-        <WorklistButton
-          id="worklistControlButton"
-          variant="outline-secondary"
-          $active={active}
-          onClick={onToggle}
-        >
-          <WorklistIcon />
-        </WorklistButton>
-      </TooltipWrapper>
-    </Control>
+    <TooltipWrapper tooltipId="worklist-control-id" tooltip="Property Worklist">
+      <WorklistButton
+        id="worklistControlButton"
+        variant="outline-secondary"
+        $active={active}
+        onClick={onToggle}
+      >
+        <WorklistIcon />
+      </WorklistButton>
+    </TooltipWrapper>
   );
 };
 
@@ -44,7 +40,6 @@ const WorklistButton = styled(Button)<{ $active?: boolean }>`
   &.btn {
     width: 5.2rem;
     height: 5.2rem;
-    margin-left: -5.1rem;
     background-color: ${({ theme, $active }) =>
       $active ? theme.bcTokens.surfaceColorPrimaryButtonDefault : '#FFFFFF'};
     color: ${({ theme, $active }) =>

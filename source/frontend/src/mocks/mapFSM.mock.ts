@@ -58,6 +58,7 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   isShowingMapFilter: false,
   isShowingMapLayers: false,
   isShowingMapSearch: false,
+  isShowingQuickInfo: false,
   showDisposed: false,
   showRetired: false,
   mapLayersToRefresh: new Set(),
@@ -106,4 +107,8 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   isShowingWorkList: false,
   worklistMapClick: vi.fn(),
   toggleWorkListControl: vi.fn(),
+  isQuickInfoMinimized: false,
+  openQuickInfo: vi.fn(),
+  closeQuickInfo: vi.fn(),
+  minimizeQuickInfo: vi.fn(),
 };

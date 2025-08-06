@@ -7,11 +7,6 @@ import DraftSvg from '@/assets/images/pins/icon-draft.svg';
 import RelocationSvg from '@/assets/images/pins/icon-relocate.svg';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { DEFAULT_MAP_ZOOM } from '@/components/maps/constants';
-import { FilterContentContainer } from '@/components/maps/leaflet/Control/AdvancedFilter/FilterContentContainer';
-import { FilterContentForm } from '@/components/maps/leaflet/Control/AdvancedFilter/FilterContentForm';
-import { LayersMenu } from '@/components/maps/leaflet/Control/LayersControl/LayersMenu';
-import { SearchContainer } from '@/components/maps/leaflet/Control/Search/SearchContainer';
-import { SearchView } from '@/components/maps/leaflet/Control/Search/SearchView';
 import MapView from '@/components/maps/MapView';
 import { FilterProvider } from '@/components/maps/providers/FilterProvider';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
@@ -19,12 +14,8 @@ import MapSideBar from '@/features/mapSideBar/MapSideBar';
 import CompensationRequisitionRouter from '@/features/mapSideBar/router/CompensationRequisitionRouter';
 import ManagementFileActivityRouter from '@/features/mapSideBar/router/ManagementFileActivityRouter';
 import PropertyActivityRouter from '@/features/mapSideBar/router/PropertyActivityRouter';
-import RightSideLayout from '@/features/rightSideLayout/RightSideLayout';
 import { usePimsPropertyRepository } from '@/hooks/repositories/usePimsPropertyRepository';
 import { Api_PropertyFilterCriteria } from '@/models/api/ProjectFilterCriteria';
-
-import { WorklistContainer } from '../worklist/WorklistContainer';
-import { WorklistView } from '../worklist/WorklistView';
 
 enum MapCursors {
   DRAFT = 'draft-cursor',
@@ -38,15 +29,7 @@ const MapContainer: React.FC<
   const [showActionBar, setShowActionBar] = useState(false);
   const {
     isSelecting,
-    isShowingMapFilter,
-    isShowingMapLayers,
-    isShowingMapSearch,
-    isShowingWorkList,
     isRepositioning,
-    toggleMapFilterDisplay,
-    toggleMapLayerControl,
-    toggleMapSearchControl,
-    toggleWorkListControl,
     setVisiblePimsProperties,
     advancedSearchCriteria,
     isMapVisible,
@@ -93,42 +76,6 @@ const MapContainer: React.FC<
           <MapView defaultZoom={defaultZoom ?? DEFAULT_MAP_ZOOM} />
         </FilterProvider>
       )}
-      <RightSideLayout
-        isOpen={isShowingMapFilter}
-        toggle={toggleMapFilterDisplay}
-        title="Filter By:"
-        closeTooltipText="Close Advanced Map Filters"
-        data-testId="advanced-filter-sidebar"
-      >
-        <FilterContentContainer View={FilterContentForm} />
-      </RightSideLayout>
-      <RightSideLayout
-        title="View Layer By:"
-        closeTooltipText="Close Map Layers"
-        data-testId="map-layers-sidebar"
-        isOpen={isShowingMapLayers}
-        toggle={toggleMapLayerControl}
-      >
-        <LayersMenu />
-      </RightSideLayout>
-      <RightSideLayout
-        title="Search by"
-        closeTooltipText="Close search"
-        data-testId="search-sidebar"
-        isOpen={isShowingMapSearch}
-        toggle={toggleMapSearchControl}
-      >
-        <SearchContainer View={SearchView} />
-      </RightSideLayout>
-      <RightSideLayout
-        title="Working list"
-        closeTooltipText="Close working list"
-        data-testId="worklist-sidebar"
-        isOpen={isShowingWorkList}
-        toggle={toggleWorkListControl}
-      >
-        <WorklistContainer View={WorklistView} />
-      </RightSideLayout>
     </StyleMapView>
   );
 };

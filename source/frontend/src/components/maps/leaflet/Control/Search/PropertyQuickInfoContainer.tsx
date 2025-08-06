@@ -1,9 +1,11 @@
 import { geoJSON } from 'leaflet';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { SyntheticEvent, useCallback, useEffect, useMemo, useState } from 'react';
+import React from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaEye, FaSearchPlus } from 'react-icons/fa';
+import { FaEye, FaMinus, FaPlus, FaSearchPlus, FaWindowClose } from 'react-icons/fa';
 import styled from 'styled-components';
 
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { SectionField } from '@/components/common/Section/SectionField';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
@@ -79,8 +81,26 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
     [hasMultipleProperties, locationInfo?.PID],
   );
 
+  const mapMachine = useMapStateMachine();
+
+  const isVisible = useMemo(() => mapMachine.isShowingQuickInfo, [mapMachine]);
+  const isMinimized = useMemo(() => mapMachine.isQuickInfoMinimized, [mapMachine]);
+
+  const toggleMinimize = () => {
+    if (isMinimized) {
+      mapMachine.openQuickInfo();
+    } else {
+      mapMachine.minimizeQuickInfo();
+    }
+  };
+
+  const close = useCallback(() => {
+    mapMachine.closeQuickInfo();
+  }, [mapMachine]);
+
   return (
-    <>
+    <StyledContainer isMinimized={isMinimized} isVisible={isVisible}>
+      <LoadingBackdrop show={mapMachine.isLoading} parentScreen />
       <StyledHeaderRow noGutters>
         <Col xs="1">
           {showViewPropertyInfo && (
@@ -93,47 +113,107 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
           )}
         </Col>
         <Col xs="1">...</Col>
-        <Col xs="8" className="text-center">
+        <Col xs="1"></Col>
+        <Col xs="6" className="text-center">
           Property
         </Col>
         <Col xs="1">
           <TooltipWrapper tooltipId={`property-quick-info-zoom`} tooltip={'Zoom to property'}>
-            <FaSearchPlus size={18} title="Zoom map" onClick={onZoomToBounds} />
+            <FaSearchPlus
+              size={18}
+              title="Zoom map"
+              onClick={(event: React.MouseEvent<SVGElement>) => {
+                event.preventDefault();
+                event.stopPropagation();
+                onZoomToBounds();
+              }}
+            />
           </TooltipWrapper>
         </Col>
-        <Col xs="1">-</Col>
+        <Col xs="1">
+          <TooltipWrapper
+            tooltipId={`property-quick-info-toggle`}
+            tooltip={'Toggle Quick Property Information'}
+          >
+            <StyledIconWrapper
+              onClick={(event: SyntheticEvent) => {
+                event.preventDefault();
+                event.stopPropagation();
+                toggleMinimize();
+              }}
+            >
+              {isMinimized ? (
+                <FaPlus data-testid="toggle-icon" size={18} title="Toggle quick info" />
+              ) : (
+                <FaMinus data-testid="toggle-icon" size={18} title="Toggle quick info" />
+              )}
+            </StyledIconWrapper>
+          </TooltipWrapper>
+        </Col>
+        <Col xs="1">
+          <TooltipWrapper
+            tooltipId={`property-quick-info-close`}
+            tooltip={'Close Quick Property Information'}
+          >
+            <StyledCloseIcon
+              data-testid="close-icon"
+              size={18}
+              title="Toggle quick info"
+              onClick={(event: React.MouseEvent<SVGElement>) => {
+                event.preventDefault();
+                event.stopPropagation();
+                close();
+              }}
+            />
+          </TooltipWrapper>
+        </Col>
       </StyledHeaderRow>
-      {!hasMultipleProperties && (
-        <StyledInfoWrapper>
-          <Row noGutters>
-            <Col>
-              <SectionField label={'PID'} labelWidth={{ xs: 12 }}>
-                {pidFormatter(locationInfo?.PID) ?? '-'}
+      {!isMinimized && (
+        <>
+          {!hasMultipleProperties && (
+            <StyledInfoWrapper>
+              <Row noGutters>
+                <Col>
+                  <SectionField label={'PID'} labelWidth={{ xs: 12 }}>
+                    {pidFormatter(locationInfo?.PID) ?? '-'}
+                  </SectionField>
+                </Col>
+                <Col>
+                  <SectionField label={'PIN'} labelWidth={{ xs: 12 }}>
+                    {locationInfo?.PIN ?? '-'}
+                  </SectionField>
+                </Col>
+                <Col>
+                  <SectionField label={'Plan'} labelWidth={{ xs: 12 }}>
+                    {locationInfo?.PLAN_NUMBER ?? '-'}
+                  </SectionField>
+                </Col>
+              </Row>
+              <SectionField label={'Owners'} labelWidth={{ xs: 12 }}>
+                {ownerNames ?? '-'}
               </SectionField>
-            </Col>
-            <Col>
-              <SectionField label={'PIN'} labelWidth={{ xs: 12 }}>
-                {locationInfo?.PIN ?? '-'}
+              <SectionField label={'Legal Description'} labelWidth={{ xs: 12 }}>
+                {locationInfo?.LEGAL_DESCRIPTION ?? '-'}
               </SectionField>
-            </Col>
-            <Col>
-              <SectionField label={'Plan'} labelWidth={{ xs: 12 }}>
-                {locationInfo?.PLAN_NUMBER ?? '-'}
-              </SectionField>
-            </Col>
-          </Row>
-          <SectionField label={'Owners'} labelWidth={{ xs: 12 }}>
-            {ownerNames ?? '-'}
-          </SectionField>
-          <SectionField label={'Legal Description'} labelWidth={{ xs: 12 }}>
-            {locationInfo?.LEGAL_DESCRIPTION ?? '-'}
-          </SectionField>
-        </StyledInfoWrapper>
+            </StyledInfoWrapper>
+          )}
+          {hasMultipleProperties && <div className="pt-8">Multiple properties found</div>}
+        </>
       )}
-      {hasMultipleProperties && <div className="pt-8">Multiple properties found</div>}
-    </>
+    </StyledContainer>
   );
 };
+
+const StyledContainer = styled.div<{ isMinimized: boolean; isVisible: boolean }>`
+  height: ${p => (p.isMinimized ? 3.5 : 25)}rem;
+  width: 34rem;
+  display: ${p => (p.isVisible ? 'default' : 'none')};
+
+  background-color: ${props => props.theme.bcTokens.surfaceColorFormsDefault};
+  border-radius: 0.4rem;
+  box-shadow: -0.2rem 0.1rem 0.4rem rgba(0, 0, 0, 0.2);
+`;
+
 const StyledInfoWrapper = styled.div`
   font-size: 1.4rem;
   padding: 1rem;
@@ -149,4 +229,16 @@ const StyledHeaderRow = styled(Row)`
   text-decoration: none solid rgb(255, 255, 255);
   line-height: 1.4rem;
   font-weight: bold;
+`;
+
+const StyledIconWrapper = styled.div`
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+`;
+
+const StyledCloseIcon = styled(FaWindowClose)`
+  color: ${props => props.theme.bcTokens.surfaceColorFormsDefault};
+  font-size: 22px;
+  cursor: pointer;
 `;

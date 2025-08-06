@@ -41,6 +41,6 @@ export const WorklistContainer: React.FC<IWorklistContainerProps> = ({ View }) =
       onRemove={remove}
       onClearAll={clearAll}
       onZoomToParcel={onZoomToBounds}
-    ></View>
+    />
   );
 };

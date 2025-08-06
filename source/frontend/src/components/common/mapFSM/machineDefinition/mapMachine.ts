@@ -251,7 +251,6 @@ const selectedFeatureLoaderStates = {
               mapFeatureSelected: () => null,
               mapLocationFeatureDataset: () => null,
             }),
-            raise('SHOW_SEARCH'),
           ],
           target: 'loading',
         },
@@ -308,7 +307,7 @@ const selectedFeatureLoaderStates = {
             raise('FINISHED_LOCATION_DATA_LOAD'),
           ],
         },
-        onError: {
+        Error: {
           target: 'idle',
           actions: assign({
             isLoading: () => false,
@@ -528,6 +527,42 @@ const rightSideBarStates = {
   },
 };
 
+const quickInfoStates = {
+  initial: 'closed',
+  states: {
+    closed: {
+      on: {
+        OPEN_QUICK_INFO: {
+          target: 'opened',
+        },
+        FINISHED_LOCATION_DATA_LOAD: {
+          target: 'opened',
+        },
+      },
+    },
+    opened: {
+      on: {
+        MIN_QUICK_INFO: {
+          target: 'minimized',
+        },
+        CLOSE_QUICK_INFO: {
+          target: 'closed',
+        },
+      },
+    },
+    minimized: {
+      on: {
+        OPEN_QUICK_INFO: {
+          target: 'opened',
+        },
+        CLOSE_QUICK_INFO: {
+          target: 'closed',
+        },
+      },
+    },
+  },
+};
+
 const selectedWorklistFeatureLoaderStates = {
   initial: 'idle',
   states: {
@@ -677,6 +712,7 @@ export const mapMachine = createMachine<MachineContext>({
         selectedFeatureLoader: selectedFeatureLoaderStates,
         sideBar: sideBarStates,
         rightSideBar: rightSideBarStates,
+        quickInfo: quickInfoStates,
         selectedWorklistFeatureLoader: selectedWorklistFeatureLoaderStates,
       },
     },

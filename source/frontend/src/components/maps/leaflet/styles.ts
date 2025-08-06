@@ -20,6 +20,7 @@ export const MapContainer = styled.div`
     font-size: 1.2rem;
 
     .leaflet-control-attribution {
+      display: none;
       font-size: 1.1rem;
     }
 
