@@ -60,7 +60,11 @@ export const createNoteActionsColumn = (
     return (
       <StyledDiv>
         {hasClaim(Claims.NOTE_VIEW) && exists(onShowDetails) && (
-          <ViewButton onClick={() => onShowDetails(cellProps.row.original)} title="View Note" />
+          <ViewButton
+            onClick={() => onShowDetails(cellProps.row.original)}
+            title="View Note"
+            data-testId={'view-note-' + cellProps.row.index}
+          />
         )}
         {hasClaim(Claims.NOTE_DELETE) &&
           canEditNotes &&
@@ -69,6 +73,7 @@ export const createNoteActionsColumn = (
             <RemoveIconButton
               title="Delete Note"
               onRemove={() => onDelete(cellProps.row.original)}
+              data-testId={'remove-note-' + cellProps.row.index}
             />
           )}
       </StyledDiv>

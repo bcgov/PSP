@@ -17,24 +17,21 @@ class Notes {
     await this.page.getByTestId("note-field").fill(note);
   }
 
-  async ViewSecondNoteDetails() {
-    Wait();
-    webDriver.FindElement(notesTab2ndResultViewBttn).Click();
+  async viewSecondNoteDetails() {
+    await this.page.getByTestId("view-note-1").click();
   }
 
-  async EditNote(note) {
-    WaitUntilClickable(notedEditBttn);
-    webDriver.FindElement(notedEditBttn).Click();
+  async editNote(note) {
+    await this.page.locator("button[aria-label='edit']").click();
 
-    ClearInput(noteEditTextarea);
-    webDriver.FindElement(noteEditTextarea).SendKeys(note);
+    await this.page.getByTestId("note-field").fill('');
+    await this.page.getByTestId("note-field").fill(note);
   }
 
-  async CancelNote() {
-    WaitUntilClickable(notesAddDetailsCancelBttn);
-    webDriver.FindElement(notesAddDetailsCancelBttn).Click();
+  async cancelNote() {
 
-    Wait();
+    await this.page.getByTestId("cancel-modal-button").click();
+
     if (webDriver.FindElements(notesCancelPopupContent).Count() > 0) {
       AssertTrueIsDisplayed(notesCancelPopupHeader);
       Assert.Contains(
