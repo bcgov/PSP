@@ -6,12 +6,12 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import { useManagementFileRepository } from '@/hooks/repositories/useManagementFileRepository';
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
-import { useInitialMapSelectorProperties } from '@/hooks/useInitialMapSelectorProperties';
+import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
 import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { exists, featuresetToMapProperty, isValidId } from '@/utils';
+import { exists, isValidId } from '@/utils';
 
 import { PropertyForm } from '../../shared/models';
 import { ManagementFormModel } from '../models/ManagementFormModel';
@@ -30,9 +30,6 @@ const AddManagementContainer: React.FC<IAddManagementContainerProps> = ({
 }) => {
   const [isFormValid, setIsFormValid] = useState<boolean>(true);
   const formikRef = useRef<FormikProps<ManagementFormModel>>(null);
-  const mapMachine = useMapStateMachine();
-  const selectedFeatureDataset = mapMachine.selectedFeatures;
-
   const { setModalContent, setDisplayModal } = useModalContext();
   const { execute: getPropertyAssociations } = usePropertyAssociations();
   const [needsUserConfirmation, setNeedsUserConfirmation] = useState<boolean>(true);
@@ -57,22 +54,27 @@ const AddManagementContainer: React.FC<IAddManagementContainerProps> = ({
     [getPropertyAssociations],
   );
 
+  const mapMachine = useMapStateMachine();
+  const selectedFeatureDatasets = mapMachine.selectedFeatures ?? [];
+
+  // Get PropertyForms with addresses for all selected features
+  const { featuresWithAddresses, bcaLoading } =
+    useFeatureDatasetsWithAddresses(selectedFeatureDatasets);
+
   const initialForm = useMemo(() => {
     const managementForm = new ManagementFormModel();
     // support creating a new management file from the map popup
-    if (selectedFeatureDataset !== null) {
-      const property = PropertyForm.fromMapProperty(
-        featuresetToMapProperty(selectedFeatureDataset),
-      );
-      managementForm.fileProperties = [property];
+    if (featuresWithAddresses?.length > 0) {
+      managementForm.fileProperties = featuresWithAddresses.map(obj => {
+        const property = PropertyForm.fromFeatureDataset(obj.feature);
+        if (exists(obj.address)) {
+          property.address = obj.address;
+        }
+        return property;
+      });
     }
     return managementForm;
-  }, [selectedFeatureDataset]);
-
-  const { bcaLoading, initialProperty } = useInitialMapSelectorProperties(selectedFeatureDataset);
-  if (initialForm?.fileProperties.length && initialProperty) {
-    initialForm.fileProperties[0].address = initialProperty.address;
-  }
+  }, [featuresWithAddresses]);
 
   // Require user confirmation before adding a property to file
   // This is the flow for Map Marker -> right-click -> create Management File
@@ -80,14 +82,19 @@ const AddManagementContainer: React.FC<IAddManagementContainerProps> = ({
     const runAsync = async () => {
       if (exists(initialForm) && exists(formikRef.current) && needsUserConfirmation) {
         if (initialForm.fileProperties.length > 0) {
-          const formProperty = initialForm.fileProperties[0];
-          if (await confirmBeforeAdd(formProperty)) {
+          // Check all properties for confirmation
+          const needsConfirmation = await Promise.all(
+            initialForm.fileProperties.map(formProperty => confirmBeforeAdd(formProperty)),
+          );
+          if (needsConfirmation.some(confirm => confirm)) {
             setModalContent({
               variant: 'warning',
               title: 'User Override Required',
               message: (
                 <>
-                  <p>This property has already been added to one or more management files.</p>
+                  <p>
+                    One or more properties have already been added to one or more management files.
+                  </p>
                   <p>Do you want to acknowledge and proceed?</p>
                 </>
               ),
@@ -118,14 +125,7 @@ const AddManagementContainer: React.FC<IAddManagementContainerProps> = ({
     };
 
     runAsync();
-  }, [
-    confirmBeforeAdd,
-    initialForm,
-    needsUserConfirmation,
-    setDisplayModal,
-    setModalContent,
-    bcaLoading,
-  ]);
+  }, [confirmBeforeAdd, initialForm, needsUserConfirmation, setDisplayModal, setModalContent]);
 
   const handleCancel = useCallback(() => onClose(), [onClose]);
 
