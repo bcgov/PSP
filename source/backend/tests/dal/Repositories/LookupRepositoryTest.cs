@@ -943,7 +943,7 @@ namespace Pims.Dal.Tests.Repositories
             var result = lookupRepository.GetAllMgmtActivityStatusTypes();
 
             // Assert
-            Assert.IsType<PimsPropMgmtActivityStatusType[]>(result);
+            Assert.IsType<PimsMgmtActivityStatusType[]>(result);
         }
 
         [Fact]
@@ -960,7 +960,7 @@ namespace Pims.Dal.Tests.Repositories
             var result = lookupRepository.GetAllMgmtActivitySubtypes();
 
             // Assert
-            Assert.IsType<PimsPropMgmtActivitySubtype[]>(result);
+            Assert.IsType<PimsMgmtActivitySubtype[]>(result);
         }
 
         [Fact]
@@ -977,7 +977,7 @@ namespace Pims.Dal.Tests.Repositories
             var result = lookupRepository.GetAllMgmtActivityTypes();
 
             // Assert
-            Assert.IsType<PimsPropMgmtActivityType[]>(result);
+            Assert.IsType<PimsMgmtActivityType[]>(result);
         }
 
         [Fact]
