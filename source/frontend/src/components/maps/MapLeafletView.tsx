@@ -277,10 +277,6 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
         <Control position="topright">
           <Row noGutters>
             <Col xs="auto">
-              <AdvancedFilterButton
-                onToggle={mapMachine.toggleMapFilterDisplay}
-                active={mapMachine.isFiltering}
-              />
               <LayersControl onToggle={mapMachine.toggleMapLayerControl} />
               <SearchControl onToggle={mapMachine.toggleMapSearchControl} />
               <WorklistControl
