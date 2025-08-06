@@ -320,7 +320,7 @@ namespace Pims.Api.Services
                 throw new BadRequestException($"PropertyManagementActivity can not be deleted given it has already started");
             }
 
-            var activityDocuments = _documentFileService.GetFileDocuments<PimsPropertyActivityDocument>(FileType.ManagementActivity, activityId);
+            var activityDocuments = _documentFileService.GetFileDocuments<PimsMgmtActivityDocument>(FileType.ManagementActivity, activityId);
             if (activityDocuments.Count > 0)
             {
                 throw new BadRequestException($"PropertyManagementActivity can not be deleted. There is at least one document related to it.");
