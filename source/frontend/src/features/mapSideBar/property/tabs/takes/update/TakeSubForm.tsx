@@ -171,7 +171,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({ take }) => {
             </>
           )}
           <SectionField
-            label="Is this being acquired for MoTI inventory? *"
+            label="Is this being acquired for MOTT inventory? *"
             labelWidth={{ xs: 8 }}
             tooltip="Selecting Yes for this option will result in the property being added to inventory"
             className="pt-4"

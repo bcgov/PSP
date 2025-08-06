@@ -817,7 +817,7 @@ exports[`Empty Header > MOTI Login Loading 1`] = `
         class="logo-title col-md-6 col-16"
       >
         <h1>
-          MOTI Property Information Management System (PIMS)
+          MOTT Property Information Management System (PIMS)
         </h1>
       </div>
     </div>
@@ -861,7 +861,7 @@ exports[`Empty Header > MOTI Login Loading 1`] = `
           class="message-body"
         >
           <p>
-            PIMS enables users to track and manage information relating to the property interests of the MOTI and BCTFA.
+            PIMS enables users to track and manage information relating to the property interests of the MOTT and BCTFA.
           </p>
           <hr
             class="spacer"

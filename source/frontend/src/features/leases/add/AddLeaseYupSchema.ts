@@ -21,9 +21,9 @@ export const AddLeaseYupSchema = Yup.object().shape({
     otherwise: Yup.date().nullable(),
   }),
   paymentReceivableTypeCode: Yup.string().required('Payment Receivable Type is required'),
-  regionId: Yup.string().required('MOTI Region Type is required'),
+  regionId: Yup.string().required('MOTT Region Type is required'),
   programTypeCode: Yup.string().required('Program Type is required'),
-  motiName: Yup.string().max(200, 'MOTI Contact must be at most ${max} characters'),
+  motiName: Yup.string().max(200, 'MOTT Contact must be at most ${max} characters'),
   otherProgramTypeDescription: Yup.string().when('programTypeCode', {
     is: (programTypeCode: string) => programTypeCode && programTypeCode === 'OTHER',
     then: Yup.string()

@@ -196,7 +196,7 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
                     </SectionField>
                   )}
                   <SectionField
-                    label="Is this being acquired for MoTI inventory? *"
+                    label="Is this being acquired for MOTT inventory? *"
                     labelWidth={{ xs: 9 }}
                     tooltip="The property will be added to inventory"
                     className="pt-4"

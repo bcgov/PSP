@@ -247,7 +247,7 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
           <label
             class="c7"
           >
-            MOTI contact:
+            MOTT contact:
           </label>
         </div>
         <div
@@ -276,7 +276,7 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
           <label
             class="c7"
           >
-            MOTI region:
+            MOTT region:
           </label>
         </div>
         <div

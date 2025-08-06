@@ -108,7 +108,7 @@ describe('AddLeaseContainer component', () => {
 
   it('renders as expected', async () => {
     const { asFragment, findByText } = await setup({});
-    await findByText(/MOTI contact/i);
+    await findByText(/MOTT contact/i);
     expect(asFragment()).toMatchSnapshot();
   });
 
