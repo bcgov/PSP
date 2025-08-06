@@ -645,7 +645,11 @@ exports[`LeaseView component > renders as expected 1`] = `
               />
             </svg>
           </div>
-          Lease / Licence
+          <div
+            data-testid="form-title"
+          >
+            Lease / Licence
+          </div>
         </h1>
       </div>
       <div

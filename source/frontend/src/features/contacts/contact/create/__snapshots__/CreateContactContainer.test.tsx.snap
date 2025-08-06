@@ -900,13 +900,13 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
                         >
                           <button
                             class="c17 Button c18 btn btn-link"
+                            data-testid="remove-button"
                             type="button"
                           >
                             <div
                               class="Button__value"
                             >
                               <svg
-                                data-testid="remove-button"
                                 fill="currentColor"
                                 height="2rem"
                                 stroke="currentColor"
@@ -1042,13 +1042,13 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
                       >
                         <button
                           class="c17 Button c18 btn btn-link"
+                          data-testid="remove-button"
                           type="button"
                         >
                           <div
                             class="Button__value"
                           >
                             <svg
-                              data-testid="remove-button"
                               fill="currentColor"
                               height="2rem"
                               stroke="currentColor"

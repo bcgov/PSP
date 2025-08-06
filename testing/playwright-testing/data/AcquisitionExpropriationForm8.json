@@ -1,0 +1,47 @@
+[
+  {
+    "Test Case Description": "Create AF with Expropriation",
+    "Form8Payee": "Abdullah Sumeli (Owner's Solicitor)",
+    "Form8PayeeDisplay": "Abdullah Sumeli",
+    "Form8ExpropriationAuthority": "Wyld, David & Colleen",
+    "Form8Description": "Creating 1st Form 8",
+    "ExpPaymentStartRow": 1,
+    "ExpPaymentCount": 3
+  },
+  {
+    "Test Case Description": "Create AF with Expropriation",
+    "Form8Payee": "Abma Monica (Owner's Representative)",
+    "Form8PayeeDisplay": "Abma Monica",
+    "Form8ExpropriationAuthority": "US Border Services - Paid by Clipper",
+    "Form8Description": "Creating 2nd Form 8",
+    "ExpPaymentStartRow": 4,
+    "ExpPaymentCount": 1
+  },
+  {
+    "Test Case Description": "Create AF with Expropriation",
+    "Form8Payee": "Andreas Michael Matusza (Life Estate)",
+    "Form8PayeeDisplay": "Andreas Michael Matusza",
+    "Form8ExpropriationAuthority": "South Coast British Columbia Transportation Authority (Translink)",
+    "Form8Description": "Creating 3rd Form 8",
+    "ExpPaymentStartRow": 0,
+    "ExpPaymentCount": 0
+  },
+  {
+    "Test Case Description": "Update AF with Expropriation",
+    "Form8Payee": "Budget Truck and Car Rental (Non-Interest Payee)",
+    "Form8PayeeDisplay": "Budget Truck and Car Rental",
+    "Form8ExpropriationAuthority": "Albaraka Investments Inc.",
+    "Form8Description": "Updating Form 8",
+    "ExpPaymentStartRow": 5,
+    "ExpPaymentCount": 1
+  },
+  {
+    "Test Case Description": "Create Minimum AF",
+    "Form8Payee": "Minimum Test Inc, Inc. No. BC00009123 (OR Reg. No.... (Owner)",
+    "Form8PayeeDisplay": "Minimum Test Inc (Inc#:BC00009123)",
+    "Form8ExpropriationAuthority": "Vancouver City Saving Credit Union",
+    "Form8Description": "Minimum Expropriation test",
+    "ExpPaymentStartRow": 6,
+    "ExpPaymentCount": 1
+  }
+]

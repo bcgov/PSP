@@ -18,7 +18,10 @@ export const LeaseTeamView: React.FunctionComponent<React.PropsWithChildren<ILea
     <Section header="Lease & Licence Team">
       {lease.leaseTeam.map((teamMember, index) => (
         <React.Fragment key={`lease-team-${teamMember?.id ?? index}`}>
-          <SectionField label={teamMember?.teamProfileType.description || ''}>
+          <SectionField
+            label={teamMember?.teamProfileType.description || ''}
+            valueTestId={`teamMember[${index}]`}
+          >
             <StyledLink
               target="_blank"
               rel="noopener noreferrer"
@@ -37,7 +40,7 @@ export const LeaseTeamView: React.FunctionComponent<React.PropsWithChildren<ILea
             </StyledLink>
           </SectionField>
           {exists(teamMember?.organizationId) && (
-            <SectionField label="Primary contact">
+            <SectionField label="Primary contact" valueTestId={`primaryContact[${index}]`}>
               {teamMember?.primaryContactId ? (
                 <StyledLink
                   target="_blank"

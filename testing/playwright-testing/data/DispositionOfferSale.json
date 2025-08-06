@@ -1,0 +1,29 @@
+[
+  {
+    "Test Case Description": "Create Offers Section",
+    "OfferOfferStatus": "Accepted",
+    "OfferOfferName": "Automated Offer name 1",
+    "OfferOfferDate": 1709251200000,
+    "OfferOfferExpiryDate": 1715731200000,
+    "OfferPrice": 550000.0,
+    "OfferNotes": "Test Offer Notes 1"
+  },
+  {
+    "Test Case Description": "Create Offers Section",
+    "OfferOfferStatus": "Open",
+    "OfferOfferName": "Automated Offer name 2",
+    "OfferOfferDate": 1709251200000,
+    "OfferOfferExpiryDate": 1715731200000,
+    "OfferPrice": 550000.0,
+    "OfferNotes": "Test Offer Notes 2"
+  },
+  {
+    "Test Case Description": "Update Offers Section",
+    "OfferOfferStatus": "Open",
+    "OfferOfferName": "Automated Offer name Updated",
+    "OfferOfferDate": 1718841600000,
+    "OfferOfferExpiryDate": 1717027200000,
+    "OfferPrice": 1200.5,
+    "OfferNotes": "Test Offer Notes Updated"
+  }
+]

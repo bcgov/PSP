@@ -505,7 +505,11 @@ exports[`Add Consolidation View > matches snapshot 1`] = `
               />
             </svg>
           </div>
-          Create a Consolidation
+          <div
+            data-testid="form-title"
+          >
+            Create a Consolidation
+          </div>
         </h1>
       </div>
       <div
@@ -775,6 +779,7 @@ exports[`Add Consolidation View > matches snapshot 1`] = `
           >
             <button
               class="c5 Button btn btn-secondary"
+              data-testid="cancel-button"
               type="button"
             >
               <div
@@ -789,6 +794,7 @@ exports[`Add Consolidation View > matches snapshot 1`] = `
           >
             <button
               class="c5 Button mr-9 btn btn-primary"
+              data-testid="save-button"
               type="button"
             >
               <div

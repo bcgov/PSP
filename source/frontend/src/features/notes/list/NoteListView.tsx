@@ -115,6 +115,7 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
           addButtonText="Add a Note"
           addButtonIcon={<FaPlus size={'2rem'} />}
           onButtonAction={openAddNotes}
+          data-testId="note-add-button"
         />
       );
     } else {

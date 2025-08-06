@@ -579,7 +579,11 @@ exports[`Add Management Container View > matches snapshot 1`] = `
               />
             </svg>
           </div>
-          Create Management File
+          <div
+            data-testid="form-title"
+          >
+            Create Management File
+          </div>
         </h1>
       </div>
       <div
@@ -1675,6 +1679,7 @@ exports[`Add Management Container View > matches snapshot 1`] = `
           >
             <button
               class="c4 Button btn btn-secondary"
+              data-testid="cancel-button"
               type="button"
             >
               <div
@@ -1689,6 +1694,7 @@ exports[`Add Management Container View > matches snapshot 1`] = `
           >
             <button
               class="c4 Button mr-9 btn btn-primary"
+              data-testid="save-button"
               type="button"
             >
               <div

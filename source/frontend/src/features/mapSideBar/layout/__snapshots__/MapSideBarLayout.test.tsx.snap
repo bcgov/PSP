@@ -349,7 +349,11 @@ exports[`MapSideBarLayout component > matches snapshot 1`] = `
           >
             icon
           </div>
-          title
+          <div
+            data-testid="form-title"
+          >
+            title
+          </div>
         </h1>
       </div>
       <div
