@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-[Table("PIMS_PROPERTY_ACTIVITY_DOCUMENT_HIST")]
-[Index("PropertyActivityDocumentHistId", "EndDateHist", Name = "PIMS_PRACDO_H_UK", IsUnique = true)]
-public partial class PimsPropertyActivityDocumentHist
+[Table("PIMS_MANAGEMENT_ACTIVITY_INVOICE_HIST")]
+[Index("ManagementActivityInvoiceHistId", "EndDateHist", Name = "PIMS_MAAINV_H_UK", IsUnique = true)]
+public partial class PimsManagementActivityInvoiceHist
 {
     [Key]
-    [Column("_PROPERTY_ACTIVITY_DOCUMENT_HIST_ID")]
-    public long PropertyActivityDocumentHistId { get; set; }
+    [Column("_MANAGEMENT_ACTIVITY_INVOICE_HIST_ID")]
+    public long ManagementActivityInvoiceHistId { get; set; }
 
     [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
     public DateTime EffectiveDateHist { get; set; }
@@ -20,14 +20,40 @@ public partial class PimsPropertyActivityDocumentHist
     [Column("END_DATE_HIST", TypeName = "datetime")]
     public DateTime? EndDateHist { get; set; }
 
-    [Column("PROPERTY_ACTIVITY_DOCUMENT_ID")]
-    public long PropertyActivityDocumentId { get; set; }
+    [Column("MANAGEMENT_ACTIVITY_INVOICE_ID")]
+    public long ManagementActivityInvoiceId { get; set; }
 
-    [Column("PIMS_MANAGEMENT_ACTIVITY_ID")]
-    public long PimsManagementActivityId { get; set; }
+    [Column("MANAGEMENT_ACTIVITY_ID")]
+    public long ManagementActivityId { get; set; }
 
-    [Column("DOCUMENT_ID")]
-    public long DocumentId { get; set; }
+    [Column("INVOICE_DT")]
+    public DateOnly InvoiceDt { get; set; }
+
+    [Column("INVOICE_NUM")]
+    [StringLength(50)]
+    public string InvoiceNum { get; set; }
+
+    [Column("DESCRIPTION")]
+    [StringLength(1000)]
+    public string Description { get; set; }
+
+    [Column("PRETAX_AMT", TypeName = "money")]
+    public decimal PretaxAmt { get; set; }
+
+    [Column("GST_AMT", TypeName = "money")]
+    public decimal? GstAmt { get; set; }
+
+    [Column("PST_AMT", TypeName = "money")]
+    public decimal? PstAmt { get; set; }
+
+    [Column("TOTAL_AMT", TypeName = "money")]
+    public decimal? TotalAmt { get; set; }
+
+    [Column("IS_PST_REQUIRED")]
+    public bool IsPstRequired { get; set; }
+
+    [Column("IS_DISABLED")]
+    public bool? IsDisabled { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }

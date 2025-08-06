@@ -214,14 +214,14 @@ exports[`MapContainer > Renders the map 1`] = `
   margin-right: 0;
 }
 
-.c17 {
+.c16 {
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2.4rem;
 }
 
-.c16 {
+.c15 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
@@ -229,42 +229,42 @@ exports[`MapContainer > Renders the map 1`] = `
   border-radius: 0.5rem;
 }
 
-.c23 {
+.c22 {
   padding-left: 0rem;
   padding-bottom: 0.5rem;
 }
 
-.c23 .form-check input {
+.c22 .form-check input {
   margin-left: -0.3rem;
 }
 
-.c23 .form-check label {
+.c22 .form-check label {
   font-weight: bold;
 }
 
-.c18 {
+.c17 {
   padding-left: 0rem;
   padding-bottom: 0.5rem;
 }
 
-.c18 .form-check input {
+.c17 .form-check input {
   margin-left: 0rem;
 }
 
-.c18 .form-check label {
+.c17 .form-check label {
   font-weight: normal;
 }
 
-.c24 {
+.c23 {
   font-size: 2.4rem;
   margin: -0.5rem;
 }
 
-.c15 {
+.c14 {
   font-size: 1.4rem;
 }
 
-.c15 .form-check {
+.c14 .form-check {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -276,12 +276,12 @@ exports[`MapContainer > Renders the map 1`] = `
   padding-left: 0rem;
 }
 
-.c15 .form-check input {
+.c14 .form-check input {
   padding-left: 0rem;
   margin-top: 0rem;
 }
 
-.c15 .form-check label {
+.c14 .form-check label {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -294,7 +294,7 @@ exports[`MapContainer > Renders the map 1`] = `
   margin-left: 0rem;
 }
 
-.c19 {
+.c18 {
   width: 1.4rem;
   height: 1.4rem;
   background-color: #3388ff;
@@ -302,7 +302,7 @@ exports[`MapContainer > Renders the map 1`] = `
   padding-right: 1.4rem;
 }
 
-.c20 {
+.c19 {
   width: 1.4rem;
   height: 1.4rem;
   background-color: #42814A;
@@ -310,7 +310,7 @@ exports[`MapContainer > Renders the map 1`] = `
   padding-right: 1.4rem;
 }
 
-.c21 {
+.c20 {
   width: 1.4rem;
   height: 1.4rem;
   background-color: #FC802D;
@@ -318,7 +318,7 @@ exports[`MapContainer > Renders the map 1`] = `
   padding-right: 1.4rem;
 }
 
-.c22 {
+.c21 {
   width: 1.4rem;
   height: 1.4rem;
   background-color: #555555;
@@ -409,27 +409,11 @@ exports[`MapContainer > Renders the map 1`] = `
   transition: 1s;
 }
 
-.c7.btn {
-  width: 5.2rem;
-  height: 5.2rem;
-  background-color: #FFFFFF;
-  color: #013366;
-  border-color: #013366;
-  box-shadow: -0.2rem 0.1rem 0.4rem rgba(0,0,0,0.2);
-  -webkit-transition: 1s;
-  transition: 1s;
-}
-
-.c7.btn.open {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-.c9 {
+.c8 {
   font-size: 3rem;
 }
 
-.c8.btn {
+.c7.btn {
   width: 5.2rem;
   height: 5.2rem;
   margin-left: -5.1rem;
@@ -500,7 +484,7 @@ exports[`MapContainer > Renders the map 1`] = `
   margin-bottom: 0.2rem;
 }
 
-.c10 {
+.c9 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -526,7 +510,7 @@ exports[`MapContainer > Renders the map 1`] = `
   overflow: hidden;
 }
 
-.c11 {
+.c10 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -550,7 +534,7 @@ exports[`MapContainer > Renders the map 1`] = `
   gap: 1.5rem;
 }
 
-.c12 {
+.c11 {
   font-size: 1.8rem;
   color: #FFFFFF;
   -webkit-text-decoration: none solid rgb(255,255,255);
@@ -560,7 +544,7 @@ exports[`MapContainer > Renders the map 1`] = `
   margin: 0;
 }
 
-.c13 {
+.c12 {
   position: absolute;
   top: 0.6rem;
   right: 0.8rem;
@@ -569,7 +553,7 @@ exports[`MapContainer > Renders the map 1`] = `
   cursor: pointer;
 }
 
-.c14 {
+.c13 {
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
@@ -840,39 +824,8 @@ exports[`MapContainer > Renders the map 1`] = `
               <div
                 class="leaflet-control"
               >
-                <div
-                  class="w-100"
-                >
-                  <button
-                    class="c4 Button c7 btn btn-outline-secondary"
-                    title="advanced-filter-button"
-                    type="button"
-                  >
-                    <div
-                      class="Button__value"
-                    >
-                      <svg
-                        fill="currentColor"
-                        height="1.6em"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 512 512"
-                        width="1.6em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M487.976 0H24.028C2.71 0-8.047 25.866 7.058 40.971L192 225.941V432c0 7.831 3.821 15.17 10.237 19.662l80 55.98C298.02 518.69 320 507.493 320 487.98V225.941l184.947-184.97C520.021 25.896 509.338 0 487.976 0z"
-                        />
-                      </svg>
-                    </div>
-                  </button>
-                </div>
-              </div>
-              <div
-                class="leaflet-control"
-              >
                 <button
-                  class="c4 Button c8 btn btn-outline-secondary"
+                  class="c4 Button c7 btn btn-outline-secondary"
                   id="layersControlButton"
                   type="button"
                 >
@@ -880,7 +833,7 @@ exports[`MapContainer > Renders the map 1`] = `
                     class="Button__value"
                   >
                     <svg
-                      class="c9"
+                      class="c8"
                       fill="currentColor"
                       height="1em"
                       stroke="currentColor"
@@ -937,19 +890,19 @@ exports[`MapContainer > Renders the map 1`] = `
       </div>
     </div>
     <div
-      class="c10"
+      class="c9"
       data-testid="advanced-filter-sidebar"
     >
       <div
-        class="c11"
+        class="c10"
       >
         <p
-          class="c12"
+          class="c11"
         >
           Filter By:
         </p>
         <svg
-          class="c13"
+          class="c12"
           fill="currentColor"
           height="1em"
           stroke="currentColor"
@@ -967,23 +920,23 @@ exports[`MapContainer > Renders the map 1`] = `
         </svg>
       </div>
       <div
-        class="c14"
+        class="c13"
       />
     </div>
     <div
-      class="c10"
+      class="c9"
       data-testid="map-layers-sidebar"
     >
       <div
-        class="c11"
+        class="c10"
       >
         <p
-          class="c12"
+          class="c11"
         >
           View Layer By:
         </p>
         <svg
-          class="c13"
+          class="c12"
           fill="currentColor"
           height="1em"
           stroke="currentColor"
@@ -1001,19 +954,19 @@ exports[`MapContainer > Renders the map 1`] = `
         </svg>
       </div>
       <div
-        class="c14"
+        class="c13"
       >
         <form
           class=""
         >
           <div
-            class="c15 form-group"
+            class="c14 form-group"
           >
             <div
-              class="c16 form-section"
+              class="c15 form-section"
             >
               <h2
-                class="c17"
+                class="c16"
               >
                 <div
                   class="no-gutters row"
@@ -1029,7 +982,7 @@ exports[`MapContainer > Renders the map 1`] = `
                 class="collapse show"
               >
                 <div
-                  class="c18"
+                  class="c17"
                 >
                   <div
                     class="form-check"
@@ -1045,7 +998,7 @@ exports[`MapContainer > Renders the map 1`] = `
                       title=""
                     >
                       <div
-                        class="c19"
+                        class="c18"
                         color="#3388ff"
                       />
                        Research
@@ -1053,7 +1006,7 @@ exports[`MapContainer > Renders the map 1`] = `
                   </div>
                 </div>
                 <div
-                  class="c18"
+                  class="c17"
                 >
                   <div
                     class="form-check"
@@ -1069,7 +1022,7 @@ exports[`MapContainer > Renders the map 1`] = `
                       title=""
                     >
                       <div
-                        class="c20"
+                        class="c19"
                         color="#42814A"
                       />
                        Acquisition
@@ -1077,7 +1030,7 @@ exports[`MapContainer > Renders the map 1`] = `
                   </div>
                 </div>
                 <div
-                  class="c18"
+                  class="c17"
                 >
                   <div
                     class="form-check"
@@ -1093,7 +1046,7 @@ exports[`MapContainer > Renders the map 1`] = `
                       title=""
                     >
                       <div
-                        class="c21"
+                        class="c20"
                         color="#FC802D"
                       />
                        Management
@@ -1101,7 +1054,7 @@ exports[`MapContainer > Renders the map 1`] = `
                   </div>
                 </div>
                 <div
-                  class="c18"
+                  class="c17"
                 >
                   <div
                     class="form-check"
@@ -1117,7 +1070,7 @@ exports[`MapContainer > Renders the map 1`] = `
                       title=""
                     >
                       <div
-                        class="c22"
+                        class="c21"
                         color="#555555"
                       />
                        Disposition
@@ -1125,7 +1078,7 @@ exports[`MapContainer > Renders the map 1`] = `
                   </div>
                 </div>
                 <div
-                  class="c23"
+                  class="c22"
                 >
                   <div
                     class="row no-gutters"
@@ -1134,7 +1087,7 @@ exports[`MapContainer > Renders the map 1`] = `
                       class="col-1"
                     >
                       <svg
-                        class="c24"
+                        class="c23"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -1175,7 +1128,7 @@ exports[`MapContainer > Renders the map 1`] = `
                   </div>
                 </div>
                 <div
-                  class="c23"
+                  class="c22"
                 >
                   <div
                     class="row no-gutters"
@@ -1184,7 +1137,7 @@ exports[`MapContainer > Renders the map 1`] = `
                       class="col-1"
                     >
                       <svg
-                        class="c24"
+                        class="c23"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -1227,10 +1180,10 @@ exports[`MapContainer > Renders the map 1`] = `
               </div>
             </div>
             <div
-              class="c16 form-section"
+              class="c15 form-section"
             >
               <h2
-                class="c17"
+                class="c16"
               >
                 <div
                   class="no-gutters row"
@@ -1246,7 +1199,7 @@ exports[`MapContainer > Renders the map 1`] = `
                 class="collapse show"
               >
                 <div
-                  class="c18"
+                  class="c17"
                 >
                   <div
                     class="form-check"
@@ -1266,7 +1219,7 @@ exports[`MapContainer > Renders the map 1`] = `
                   </div>
                 </div>
                 <div
-                  class="c23"
+                  class="c22"
                 >
                   <div
                     class="row no-gutters"
@@ -1275,7 +1228,7 @@ exports[`MapContainer > Renders the map 1`] = `
                       class="col-1"
                     >
                       <svg
-                        class="c24"
+                        class="c23"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -1316,7 +1269,7 @@ exports[`MapContainer > Renders the map 1`] = `
                   </div>
                 </div>
                 <div
-                  class="c23"
+                  class="c22"
                 >
                   <div
                     class="row no-gutters"
@@ -1325,7 +1278,7 @@ exports[`MapContainer > Renders the map 1`] = `
                       class="col-1"
                     >
                       <svg
-                        class="c24"
+                        class="c23"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -1366,7 +1319,7 @@ exports[`MapContainer > Renders the map 1`] = `
                   </div>
                 </div>
                 <div
-                  class="c23"
+                  class="c22"
                 >
                   <div
                     class="row no-gutters"
@@ -1375,7 +1328,7 @@ exports[`MapContainer > Renders the map 1`] = `
                       class="col-1"
                     >
                       <svg
-                        class="c24"
+                        class="c23"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -1416,7 +1369,7 @@ exports[`MapContainer > Renders the map 1`] = `
                   </div>
                 </div>
                 <div
-                  class="c23"
+                  class="c22"
                 >
                   <div
                     class="row no-gutters"
@@ -1425,7 +1378,7 @@ exports[`MapContainer > Renders the map 1`] = `
                       class="col-1"
                     >
                       <svg
-                        class="c24"
+                        class="c23"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -1466,7 +1419,7 @@ exports[`MapContainer > Renders the map 1`] = `
                   </div>
                 </div>
                 <div
-                  class="c23"
+                  class="c22"
                 >
                   <div
                     class="row no-gutters"
@@ -1475,7 +1428,7 @@ exports[`MapContainer > Renders the map 1`] = `
                       class="col-1"
                     >
                       <svg
-                        class="c24"
+                        class="c23"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -1516,7 +1469,7 @@ exports[`MapContainer > Renders the map 1`] = `
                   </div>
                 </div>
                 <div
-                  class="c23"
+                  class="c22"
                 >
                   <div
                     class="row no-gutters"
@@ -1525,7 +1478,7 @@ exports[`MapContainer > Renders the map 1`] = `
                       class="col-1"
                     >
                       <svg
-                        class="c24"
+                        class="c23"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -1566,7 +1519,7 @@ exports[`MapContainer > Renders the map 1`] = `
                   </div>
                 </div>
                 <div
-                  class="c23"
+                  class="c22"
                 >
                   <div
                     class="row no-gutters"
@@ -1575,7 +1528,7 @@ exports[`MapContainer > Renders the map 1`] = `
                       class="col-1"
                     >
                       <svg
-                        class="c24"
+                        class="c23"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"

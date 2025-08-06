@@ -1863,7 +1863,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                   <label
                     class="c14"
                   >
-                    MOTI contact:
+                    MOTT contact:
                   </label>
                 </div>
                 <div
@@ -1892,7 +1892,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                   <label
                     class="c14"
                   >
-                    MOTI region:
+                    MOTT region:
                   </label>
                 </div>
                 <div

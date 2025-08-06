@@ -101,9 +101,9 @@ namespace Pims.Api.Mapping.Lookup
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.Type, src => src.GetType().Name);
 
-            config.NewConfig<Entity.PimsPropMgmtActivitySubtype, Model.LookupModel>()
+            config.NewConfig<Entity.PimsMgmtActivitySubtype, Model.LookupModel>()
                  .Map(dest => dest.Id, src => src.Id)
-                 .Map(dest => dest.ParentId, src => src.PropMgmtActivityTypeCode)
+                 .Map(dest => dest.ParentId, src => src.MgmtActivityTypeCode)
                  .Map(dest => dest.Name, src => src.Description)
                  .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                  .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)

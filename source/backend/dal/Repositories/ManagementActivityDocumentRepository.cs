@@ -12,7 +12,7 @@ namespace Pims.Dal.Repositories
     /// <summary>
     /// ManagementActivityDocumentRepository class, provides a service layer to interact with document activity files within the datasource.
     /// </summary>
-    public class ManagementActivityDocumentRepository : BaseRepository<PimsPropertyActivityDocument>, IDocumentRelationshipRepository<PimsPropertyActivityDocument>
+    public class ManagementActivityDocumentRepository : BaseRepository<PimsMgmtActivityDocument>, IDocumentRelationshipRepository<PimsMgmtActivityDocument>
     {
         #region Constructors
 
@@ -34,9 +34,9 @@ namespace Pims.Dal.Repositories
         /// Get a list of all the document file relationships for a a given property activity.
         /// </summary>
         /// <returns></returns>
-        public IList<PimsPropertyActivityDocument> GetAllByParentId(long parentId)
+        public IList<PimsMgmtActivityDocument> GetAllByParentId(long parentId)
         {
-            return this.Context.PimsPropertyActivityDocuments
+            return Context.PimsMgmtActivityDocuments
                 .Include(ad => ad.Document)
                     .ThenInclude(d => d.DocumentStatusTypeCodeNavigation)
                 .Include(ad => ad.Document)
@@ -44,7 +44,7 @@ namespace Pims.Dal.Repositories
                 .Include(x => x.Document)
                     .ThenInclude(q => q.PimsDocumentQueues)
                         .ThenInclude(s => s.DocumentQueueStatusTypeCodeNavigation)
-                .Where(ad => ad.PimsManagementActivityId == parentId)
+                .Where(ad => ad.ManagementActivityId == parentId)
                 .AsNoTracking()
                 .ToList();
         }
@@ -54,11 +54,11 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="managementActivityDocument"></param>
         /// <returns></returns>
-        public PimsPropertyActivityDocument AddDocument(PimsPropertyActivityDocument managementActivityDocument)
+        public PimsMgmtActivityDocument AddDocument(PimsMgmtActivityDocument managementActivityDocument)
         {
             managementActivityDocument.ThrowIfNull(nameof(managementActivityDocument));
 
-            var newEntry = this.Context.PimsPropertyActivityDocuments.Add(managementActivityDocument);
+            var newEntry = Context.PimsMgmtActivityDocuments.Add(managementActivityDocument);
             if (newEntry.State == EntityState.Added)
             {
                 return newEntry.Entity;
@@ -74,14 +74,15 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="managementActivityDocument"></param>
         /// <returns></returns>
-        public bool DeleteDocument(PimsPropertyActivityDocument managementActivityDocument)
+        public bool DeleteDocument(PimsMgmtActivityDocument managementActivityDocument)
         {
             if (managementActivityDocument == null)
             {
                 throw new ArgumentNullException(nameof(managementActivityDocument), "managementActivityDocument cannot be null.");
             }
 
-            this.Context.PimsPropertyActivityDocuments.Remove(new PimsPropertyActivityDocument() { PropertyActivityDocumentId = managementActivityDocument.PropertyActivityDocumentId });
+            Context.PimsMgmtActivityDocuments.Remove(new PimsMgmtActivityDocument() { MgmtActivityDocumentId = managementActivityDocument.ManagementActivityId });
+
             return true;
         }
 

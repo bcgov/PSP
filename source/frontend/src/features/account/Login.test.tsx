@@ -140,10 +140,10 @@ describe('login', () => {
       initialized: true,
     });
     const { getByText } = renderLogin();
-    expect(getByText('MOTI Property Information Management System (PIMS)')).toBeInTheDocument();
+    expect(getByText('MOTT Property Information Management System (PIMS)')).toBeInTheDocument();
     expect(
       getByText(
-        'PIMS enables users to track and manage information relating to the property interests of the MOTI and BCTFA.',
+        'PIMS enables users to track and manage information relating to the property interests of the MOTT and BCTFA.',
       ),
     ).toBeInTheDocument();
   });
