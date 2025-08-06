@@ -6,35 +6,29 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-/// <summary>
-/// Table contains the many-to-many relationship between the proeprty activity file and the associated property management activity type and subtype.
-/// </summary>
-[Table("PIMS_PROP_ACTIVITY_MGMT_ACTIVITY")]
-[Index("PimsManagementActivityId", Name = "PACMAC_PIMS_MANAGEMENT_ACTIVITY_ID_IDX")]
-[Index("PropMgmtActivitySubtypeCode", Name = "PACMAC_PROP_MGMT_ACTIVITY_SUBTYPE_CODE_IDX")]
-[Index("PimsManagementActivityId", "PropMgmtActivitySubtypeCode", Name = "PACMAC_UNIQUE_ACTIVITY_TUC", IsUnique = true)]
-public partial class PimsPropActivityMgmtActivity
+[Table("PIMS_MGMT_ACTIVITY_DOCUMENT")]
+[Index("DocumentId", Name = "MGACDC_DOCUMENT_ID_IDX")]
+[Index("ManagementActivityId", Name = "MGACDC_MANAGEMENT_ACTIVITY_ID_IDX")]
+public partial class PimsMgmtActivityDocument
 {
     /// <summary>
     /// Generated surrogate primary key.
     /// </summary>
     [Key]
-    [Column("PROP_ACTVTY_MGMT_ACTVTY_TYP_ID")]
-    public long PropActvtyMgmtActvtyTypId { get; set; }
+    [Column("MGMT_ACTIVITY_DOCUMENT_ID")]
+    public long MgmtActivityDocumentId { get; set; }
 
     /// <summary>
-    /// Foreign key to the PIMS_PROPERTY_ACTIVITY table.
+    /// Foreign key to the PIMS_MANAGEMENT_ACTIVITY table.
     /// </summary>
-    [Column("PIMS_MANAGEMENT_ACTIVITY_ID")]
-    public long PimsManagementActivityId { get; set; }
+    [Column("MANAGEMENT_ACTIVITY_ID")]
+    public long ManagementActivityId { get; set; }
 
     /// <summary>
-    /// Foreign key to the PROP_MGMT_ACTIVITY_SUBTYPE table.
+    /// Foreign key to the PIMS_DOCUMENT table.
     /// </summary>
-    [Required]
-    [Column("PROP_MGMT_ACTIVITY_SUBTYPE_CODE")]
-    [StringLength(20)]
-    public string PropMgmtActivitySubtypeCode { get; set; }
+    [Column("DOCUMENT_ID")]
+    public long DocumentId { get; set; }
 
     /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
@@ -107,6 +101,7 @@ public partial class PimsPropActivityMgmtActivity
     /// <summary>
     /// The user or proxy account that created the record.
     /// </summary>
+    [Required]
     [Column("DB_CREATE_USERID")]
     [StringLength(30)]
     public string DbCreateUserid { get; set; }
@@ -125,11 +120,11 @@ public partial class PimsPropActivityMgmtActivity
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    [ForeignKey("PimsManagementActivityId")]
-    [InverseProperty("PimsPropActivityMgmtActivities")]
-    public virtual PimsManagementActivity PimsManagementActivity { get; set; }
+    [ForeignKey("DocumentId")]
+    [InverseProperty("PimsMgmtActivityDocuments")]
+    public virtual PimsDocument Document { get; set; }
 
-    [ForeignKey("PropMgmtActivitySubtypeCode")]
-    [InverseProperty("PimsPropActivityMgmtActivities")]
-    public virtual PimsPropMgmtActivitySubtype PropMgmtActivitySubtypeCodeNavigation { get; set; }
+    [ForeignKey("ManagementActivityId")]
+    [InverseProperty("PimsMgmtActivityDocuments")]
+    public virtual PimsManagementActivity ManagementActivity { get; set; }
 }

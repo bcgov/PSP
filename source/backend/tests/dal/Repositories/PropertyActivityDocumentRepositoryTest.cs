@@ -19,7 +19,7 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.DocumentView);
 
-            var managementActivityFileDocument = new PimsPropertyActivityDocument();
+            var managementActivityFileDocument = new PimsMgmtActivityDocument();
 
             var repository = helper.CreateRepository<ManagementActivityDocumentRepository>(user);
 
@@ -27,7 +27,7 @@ namespace Pims.Dal.Test.Repositories
             var result = repository.AddDocument(managementActivityFileDocument);
 
             // Assert
-            result.PropertyActivityDocumentId.Should().Be(1);
+            result.MgmtActivityDocumentId.Should().Be(1);
         }
 
         [Fact]
@@ -38,26 +38,26 @@ namespace Pims.Dal.Test.Repositories
             var user = PrincipalHelper.CreateForPermission(Permissions.DocumentView);
 
             var document = new PimsDocument() { DocumentStatusTypeCodeNavigation = new PimsDocumentStatusType() { DocumentStatusTypeCode = "test", Description = "Active", DbCreateUserid = "test", DbLastUpdateUserid = "test" }, DocumentType = new PimsDocumentTyp() { DocumentType = "IMAGE", DocumentTypeDescription = "Image", DbCreateUserid = "test", DbLastUpdateUserid = "test" }, FileName = "test.txt" };
-            var managementActivityFileDocument = new PimsPropertyActivityDocument() { Document = document };
+            var managementActivityFileDocument = new PimsMgmtActivityDocument() { Document = document };
             PimsManagementActivity pimsManagementActivity = new PimsManagementActivity()
             {
-                PimsPropertyActivityDocuments = new List<PimsPropertyActivityDocument>() { managementActivityFileDocument },
-                PropMgmtActivityStatusTypeCode = "ACTIVE",
-                PimsPropActivityMgmtActivities = new List<PimsPropActivityMgmtActivity>()
+                PimsMgmtActivityDocuments = new List<PimsMgmtActivityDocument>() { managementActivityFileDocument },
+                MgmtActivityStatusTypeCode = "ACTIVE",
+                PimsMgmtActivityActivitySubtyps = new List<PimsMgmtActivityActivitySubtyp>()
                 {
                     new ()
                     {
-                        PropMgmtActivitySubtypeCode = "ACCESS",
+                        MgmtActivitySubtypeCode = "ACCESS",
                     }
                 },
-                PropMgmtActivityTypeCode = "test"
+                MgmtActivityTypeCode = "test"
             };
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(pimsManagementActivity);
 
             var repository = helper.CreateRepository<ManagementActivityDocumentRepository>(user);
 
             // Act
-            var result = repository.GetAllByParentId(managementActivityFileDocument.PimsManagementActivityId);
+            var result = repository.GetAllByParentId(managementActivityFileDocument.ManagementActivityId);
 
             // Assert
             result.FirstOrDefault().Internal_Id.Should().Be(1);
@@ -70,7 +70,7 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.DocumentView);
 
-            var managementActivityFileDocument = new PimsPropertyActivityDocument();
+            var managementActivityFileDocument = new PimsMgmtActivityDocument();
 
             var repository = helper.CreateRepository<ManagementActivityDocumentRepository>(user);
 

@@ -121,8 +121,8 @@ namespace Pims.Api.Areas.Property.Controllers
         public IActionResult UpdatePropertyActivity(long propertyId, long activityId, [FromBody] ManagementActivityModel activityModel)
         {
             var managementActivity = _mapper.Map<PimsManagementActivity>(activityModel);
-            if (!managementActivity.PimsManagementActivityProperties.Any(x => x.PropertyId == propertyId && x.PimsManagementActivityId == activityId)
-                || managementActivity.PimsManagementActivityId != activityId)
+            if (!managementActivity.PimsManagementActivityProperties.Any(x => x.PropertyId == propertyId && x.ManagementActivityId == activityId)
+                || managementActivity.ManagementActivityId != activityId)
             {
                 throw new BadRequestException("Invalid activity identifiers.");
             }

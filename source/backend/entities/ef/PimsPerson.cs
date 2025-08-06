@@ -179,6 +179,12 @@ public partial class PimsPerson
     public virtual ICollection<PimsManagementFileTeam> PimsManagementFileTeamPrimaryContacts { get; set; } = new List<PimsManagementFileTeam>();
 
     [InverseProperty("Person")]
+    public virtual ICollection<PimsMgmtActInvolvedParty> PimsMgmtActInvolvedParties { get; set; } = new List<PimsMgmtActInvolvedParty>();
+
+    [InverseProperty("Person")]
+    public virtual ICollection<PimsMgmtActMinContact> PimsMgmtActMinContacts { get; set; } = new List<PimsMgmtActMinContact>();
+
+    [InverseProperty("Person")]
     public virtual ICollection<PimsPersonAddress> PimsPersonAddresses { get; set; } = new List<PimsPersonAddress>();
 
     [InverseProperty("Person")]
@@ -186,12 +192,6 @@ public partial class PimsPerson
 
     [InverseProperty("Person")]
     public virtual ICollection<PimsProjectPerson> PimsProjectPeople { get; set; } = new List<PimsProjectPerson>();
-
-    [InverseProperty("Person")]
-    public virtual ICollection<PimsPropActInvolvedParty> PimsPropActInvolvedParties { get; set; } = new List<PimsPropActInvolvedParty>();
-
-    [InverseProperty("Person")]
-    public virtual ICollection<PimsPropActMinContact> PimsPropActMinContacts { get; set; } = new List<PimsPropActMinContact>();
 
     [InverseProperty("Person")]
     public virtual ICollection<PimsPropertyContact> PimsPropertyContactPeople { get; set; } = new List<PimsPropertyContact>();

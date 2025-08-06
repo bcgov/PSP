@@ -8,8 +8,8 @@ namespace Pims.Api.Models.Concepts.Property
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.PimsPropertyActivityInvoice, ManagementActivityInvoiceModel>()
-                .Map(dest => dest.Id, src => src.PropertyActivityInvoiceId)
+            config.NewConfig<Entity.PimsManagementActivityInvoice, ManagementActivityInvoiceModel>()
+                .Map(dest => dest.Id, src => src.ManagementActivityInvoiceId)
                 .Map(dest => dest.InvoiceDateTime, src => src.InvoiceDt)
                 .Map(dest => dest.InvoiceNum, src => src.InvoiceNum)
                 .Map(dest => dest.Description, src => src.Description)
@@ -19,12 +19,12 @@ namespace Pims.Api.Models.Concepts.Property
                 .Map(dest => dest.TotalAmount, src => src.TotalAmt)
                 .Map(dest => dest.IsPstRequired, src => src.IsPstRequired)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.ManagementActivityId, src => src.PimsManagementActivityId)
-                .Map(dest => dest.ManagementActivity, src => src.PimsManagementActivity)
+                .Map(dest => dest.ManagementActivityId, src => src.ManagementActivityId)
+                .Map(dest => dest.ManagementActivity, src => src.ManagementActivity)
                 .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
 
-            config.NewConfig<ManagementActivityInvoiceModel, Entity.PimsPropertyActivityInvoice>()
-                .Map(dest => dest.PropertyActivityInvoiceId, src => src.Id)
+            config.NewConfig<ManagementActivityInvoiceModel, Entity.PimsManagementActivityInvoice>()
+                .Map(dest => dest.ManagementActivityInvoiceId, src => src.Id)
                 .Map(dest => dest.InvoiceDt, src => src.InvoiceDateTime)
                 .Map(dest => dest.InvoiceNum, src => src.InvoiceNum)
                 .Map(dest => dest.Description, src => src.Description)
@@ -34,7 +34,7 @@ namespace Pims.Api.Models.Concepts.Property
                 .Map(dest => dest.TotalAmt, src => src.TotalAmount)
                 .Map(dest => dest.IsPstRequired, src => src.IsPstRequired)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
-                .Map(dest => dest.PimsManagementActivityId, src => src.ManagementActivityId)
+                .Map(dest => dest.ManagementActivityId, src => src.ManagementActivityId)
                 .Inherits<BaseAuditModel, Entity.IBaseAppEntity>();
         }
     }
