@@ -17,8 +17,6 @@ import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocatio
 import { exists } from '@/utils';
 import { isStrataCommonProperty } from '@/utils/propertyUtils';
 
-import { PropertyQuickInfoContainer } from './PropertyQuickInfoContainer';
-
 export interface ISearchViewProps {
   onFilterChange: (filter: IPropertyFilter) => void;
   propertyFilter: IPropertyFilter;
@@ -112,7 +110,6 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
           </Scrollable>
         </Section>
       </StyledWrapper>
-      <PropertyQuickInfoContainer />
     </>
   );
 };

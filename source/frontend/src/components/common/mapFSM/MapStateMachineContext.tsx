@@ -63,6 +63,8 @@ export interface IMapStateMachineContext {
   isShowingMapLayers: boolean;
   isShowingMapSearch: boolean;
   isShowingWorkList: boolean;
+  isShowingQuickInfo: boolean;
+  isQuickInfoMinimized: boolean;
   activePimsPropertyIds: number[];
   showDisposed: boolean;
   showRetired: boolean;
@@ -107,6 +109,9 @@ export interface IMapStateMachineContext {
   toggleMapSearchControl: () => void;
   toggleWorkListControl: () => void;
   showMapSearchControl: () => void;
+  openQuickInfo: () => void;
+  closeQuickInfo: () => void;
+  minimizeQuickInfo: () => void;
   setFilePropertyLocations: (locations: LocationBoundaryDataset[]) => void;
   setMapLayers: (layers: Set<string>) => void;
   setMapLayersToRefresh: (layers: Set<string>) => void;
@@ -504,6 +509,18 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     serviceSend({ type: 'SHOW_SEARCH' });
   }, [serviceSend]);
 
+  const openQuickInfo = useCallback(() => {
+    serviceSend({ type: 'OPEN_QUICK_INFO' });
+  }, [serviceSend]);
+
+  const minimizeQuickInfo = useCallback(() => {
+    serviceSend({ type: 'MIN_QUICK_INFO' });
+  }, [serviceSend]);
+
+  const closeQuickInfo = useCallback(() => {
+    serviceSend({ type: 'CLOSE_QUICK_INFO' });
+  }, [serviceSend]);
+
   const isRepositioning = useMemo(() => {
     return state.matches({ mapVisible: { featureView: 'repositioning' } });
   }, [state]);
@@ -527,6 +544,17 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
 
   const isShowingWorkList = useMemo(() => {
     return state.matches({ mapVisible: { rightSideBar: 'worklistVisible' } });
+  }, [state]);
+
+  const isShowingQuickInfo = useMemo(() => {
+    return (
+      state.matches({ mapVisible: { quickInfo: 'opened' } }) ||
+      state.matches({ mapVisible: { quickInfo: 'minimized' } })
+    );
+  }, [state]);
+
+  const isQuickInfoMinimized = useMemo(() => {
+    return state.matches({ mapVisible: { quickInfo: 'minimized' } });
   }, [state]);
 
   return (
@@ -568,6 +596,8 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         isShowingMapLayers: isShowingMapLayers,
         isShowingMapSearch: isShowingMapSearch,
         isShowingWorkList: isShowingWorkList,
+        isShowingQuickInfo: isShowingQuickInfo,
+        isQuickInfoMinimized: isQuickInfoMinimized,
         activeLayers: state.context.activeLayers,
         activePimsPropertyIds: state.context.activePimsPropertyIds,
         showDisposed: state.context.showDisposed,
@@ -602,6 +632,9 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         toggleMapSearchControl,
         toggleWorkListControl,
         showMapSearchControl,
+        openQuickInfo,
+        minimizeQuickInfo,
+        closeQuickInfo,
         toggleSidebarDisplay,
         setFilePropertyLocations,
         setVisiblePimsProperties,

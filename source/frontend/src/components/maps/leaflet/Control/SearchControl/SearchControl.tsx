@@ -6,8 +6,6 @@ import styled from 'styled-components';
 import { Button } from '@/components/common/buttons/Button';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 
-import Control from '../Control';
-
 const SearchIcon = styled(FaSearch)`
   font-size: 3rem;
 `;
@@ -30,13 +28,11 @@ const LayersControl: React.FC<React.PropsWithChildren<ISearchControl>> = ({ onTo
   });
 
   return (
-    <Control position="topright">
-      <TooltipWrapper tooltipId="search-control-id" tooltip="Search Controls">
-        <SearchButton id="searchControlButton" variant="outline-secondary" onClick={onToggle}>
-          <SearchIcon />
-        </SearchButton>
-      </TooltipWrapper>
-    </Control>
+    <TooltipWrapper tooltipId="search-control-id" tooltip="Search Controls">
+      <SearchButton id="searchControlButton" variant="outline-secondary" onClick={onToggle}>
+        <SearchIcon />
+      </SearchButton>
+    </TooltipWrapper>
   );
 };
 
@@ -46,7 +42,6 @@ const SearchButton = styled(Button)`
   &.btn {
     width: 5.2rem;
     height: 5.2rem;
-    margin-left: -5.1rem;
     background-color: #fff;
     color: ${({ theme }) => theme.bcTokens.surfaceColorPrimaryButtonDefault};
     border-color: ${({ theme }) => theme.bcTokens.surfaceColorPrimaryButtonDefault};

@@ -2,6 +2,7 @@ import axios from 'axios';
 import { geoJSON, LatLngBounds, LeafletEvent, LeafletMouseEvent, Map } from 'leaflet';
 import { isEqual } from 'lodash';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { Col, Row } from 'react-bootstrap';
 import {
   LayerGroup,
   MapContainer as LeafletMapContainer,
@@ -19,6 +20,7 @@ import {
 } from '@/constants/strings';
 import { useWorklistContext } from '@/features/properties/worklist/context/WorklistContext';
 import WorklistMapClickMonitor from '@/features/properties/worklist/WorklistMapClickMonitor';
+import RightSideContainer from '@/features/rightSideLayout/RightSideContainer';
 import { useTenant } from '@/tenants';
 import { exists, firstOrNull } from '@/utils';
 
@@ -26,9 +28,11 @@ import { defaultBounds, defaultLatLng } from './constants';
 import AdvancedFilterButton from './leaflet/Control/AdvancedFilter/AdvancedFilterButton';
 import BasemapToggle, { BasemapToggleEvent } from './leaflet/Control/BaseMapToggle/BasemapToggle';
 import { BaseLayer, isVectorBasemap } from './leaflet/Control/BaseMapToggle/types';
+import Control from './leaflet/Control/Control';
 import LayersControl from './leaflet/Control/LayersControl/LayersControl';
 import { initialEnabledLayers } from './leaflet/Control/LayersControl/LayersMenuLayout';
 import { LegendControl } from './leaflet/Control/Legend/LegendControl';
+import { PropertyQuickInfoContainer } from './leaflet/Control/Search/PropertyQuickInfoContainer';
 import SearchControl from './leaflet/Control/SearchControl/SearchControl';
 import WorklistControl from './leaflet/Control/WorklistControl/WorklistControl';
 import { ZoomOutButton } from './leaflet/Control/ZoomOut/ZoomOutButton';
@@ -271,13 +275,30 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
         <LegendControl />
         <ZoomOutButton />
         <ScaleControl position="bottomleft" metric={true} imperial={false} />
-        <AdvancedFilterButton
-          onToggle={mapMachine.toggleMapFilterDisplay}
-          active={mapMachine.isFiltering}
-        />
-        <LayersControl onToggle={mapMachine.toggleMapLayerControl} />
-        <SearchControl onToggle={mapMachine.toggleMapSearchControl} />
-        <WorklistControl active={isWorklistActive} onToggle={mapMachine.toggleWorkListControl} />
+        <Control position="topright">
+          <Row noGutters>
+            <Col xs="auto">
+              <AdvancedFilterButton
+                onToggle={mapMachine.toggleMapFilterDisplay}
+                active={mapMachine.isFiltering}
+              />
+              <LayersControl onToggle={mapMachine.toggleMapLayerControl} />
+              <SearchControl onToggle={mapMachine.toggleMapSearchControl} />
+              <WorklistControl
+                active={isWorklistActive}
+                onToggle={mapMachine.toggleWorkListControl}
+              />
+            </Col>
+            <Col xs="auto">
+              <RightSideContainer />
+            </Col>
+          </Row>
+        </Control>
+
+        <Control position="bottomright">
+          <PropertyQuickInfoContainer />
+        </Control>
+
         <MarkerLayer
           minZoom={MAP_MIN_MARKER_ZOOM}
           zoom={zoom}
