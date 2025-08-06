@@ -24,7 +24,6 @@ import { useTenant } from '@/tenants';
 import { exists, firstOrNull } from '@/utils';
 
 import { DEFAULT_MAP_ZOOM, defaultBounds, defaultLatLng } from './constants';
-import AdvancedFilterButton from './leaflet/Control/AdvancedFilter/AdvancedFilterButton';
 import BasemapToggle, { BasemapToggleEvent } from './leaflet/Control/BaseMapToggle/BasemapToggle';
 import { BaseLayer, isVectorBasemap } from './leaflet/Control/BaseMapToggle/types';
 import LayersControl from './leaflet/Control/LayersControl/LayersControl';
@@ -274,10 +273,10 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
         <LegendControl />
         <ZoomOutButton />
         <ScaleControl position="bottomleft" metric={true} imperial={false} />
-        <AdvancedFilterButton
+        {/* <AdvancedFilterButton
           onToggle={mapMachine.toggleMapFilterDisplay}
           active={mapMachine.isFiltering}
-        />
+        /> */}
         <LayersControl onToggle={mapMachine.toggleMapLayerControl} />
         <MarkerLayer
           zoom={zoom}
