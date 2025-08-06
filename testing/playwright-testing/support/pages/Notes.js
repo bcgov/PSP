@@ -24,12 +24,11 @@ class Notes {
   async editNote(note) {
     await this.page.locator("button[aria-label='edit']").click();
 
-    await this.page.getByTestId("note-field").fill('');
+    await this.page.getByTestId("note-field").fill("");
     await this.page.getByTestId("note-field").fill(note);
   }
 
   async cancelNote() {
-
     await this.page.getByTestId("cancel-modal-button").click();
 
     if (webDriver.FindElements(notesCancelPopupContent).Count() > 0) {
