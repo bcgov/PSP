@@ -134,19 +134,19 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void GetFileDocuments_PropertyActivity_Success()
+        public void GetFileDocuments_MgmtActivity_Success()
         {
             // Arrange
             var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentView, Permissions.ManagementView);
-            var propertyActivityDocumentRepository = this._helper.GetService<Mock<IDocumentRelationshipRepository<PimsPropertyActivityDocument>>>();
+            var mgmtActivityDocumentRepository = this._helper.GetService<Mock<IDocumentRelationshipRepository<PimsMgmtActivityDocument>>>();
 
-            propertyActivityDocumentRepository.Setup(x => x.GetAllByParentId(It.IsAny<long>())).Returns(new List<PimsPropertyActivityDocument>());
+            mgmtActivityDocumentRepository.Setup(x => x.GetAllByParentId(It.IsAny<long>())).Returns(new List<PimsMgmtActivityDocument>());
 
             // Act
-            var sut = service.GetFileDocuments<PimsPropertyActivityDocument>(Constants.FileType.ManagementActivity, 1);
+            var sut = service.GetFileDocuments<PimsMgmtActivityDocument>(Constants.FileType.ManagementActivity, 1);
 
             // Assert
-            propertyActivityDocumentRepository.Verify(x => x.GetAllByParentId(It.IsAny<long>()), Times.Once);
+            mgmtActivityDocumentRepository.Verify(x => x.GetAllByParentId(It.IsAny<long>()), Times.Once);
         }
 
         [Fact]
@@ -159,7 +159,7 @@ namespace Pims.Api.Test.Services
             managementFileDocumentRepository.Setup(x => x.GetAllByParentId(It.IsAny<long>())).Returns(new List<PimsManagementFileDocument>());
 
             // Act
-            var sut = service.GetFileDocuments<PimsPropertyActivityDocument>(Constants.FileType.ManagementFile, 1);
+            var sut = service.GetFileDocuments<PimsManagementFileDocument>(Constants.FileType.ManagementFile, 1);
 
             // Assert
             managementFileDocumentRepository.Verify(x => x.GetAllByParentId(It.IsAny<long>()), Times.Once);
@@ -219,7 +219,7 @@ namespace Pims.Api.Test.Services
             var managementFileDocumentRepository = this._helper.GetService<Mock<IDocumentRelationshipRepository<PimsManagementFileDocument>>>();
 
             // Act
-            Action act = () => service.GetFileDocuments<PimsPropertyActivityDocument>(Constants.FileType.ManagementFile, 1);
+            Action act = () => service.GetFileDocuments<PimsManagementFileDocument>(Constants.FileType.ManagementFile, 1);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
@@ -759,13 +759,13 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public async void UploadDocument_PropertyActivity_Success()
+        public async void UploadDocument_MgmtActivity_Success()
         {
             // Arrange
             var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd, Permissions.ManagementEdit);
             var documentRepository = this._helper.GetService<Mock<IDocumentRepository>>();
             var documentQueueRepository = this._helper.GetService<Mock<IDocumentQueueRepository>>();
-            var managementActivityDocumentRepository = this._helper.GetService<Mock<IDocumentRelationshipRepository<PimsPropertyActivityDocument>>>();
+            var managementActivityDocumentRepository = this._helper.GetService<Mock<IDocumentRelationshipRepository<PimsMgmtActivityDocument>>>();
 
             documentQueueRepository.Setup(x => x.BeginTransaction()).Returns(new Mock<IDbContextTransaction>().Object);
             documentRepository.Setup(x => x.Add(It.IsAny<PimsDocument>())).Returns(new PimsDocument()
@@ -776,10 +776,10 @@ namespace Pims.Api.Test.Services
                 FileName = "NewFile.docx",
             });
 
-            managementActivityDocumentRepository.Setup(x => x.AddDocument(It.IsAny<PimsPropertyActivityDocument>())).Returns(new PimsPropertyActivityDocument()
+            managementActivityDocumentRepository.Setup(x => x.AddDocument(It.IsAny<PimsMgmtActivityDocument>())).Returns(new PimsMgmtActivityDocument()
             {
-                PropertyActivityDocumentId = 101,
-                PimsManagementActivityId = 1,
+                MgmtActivityDocumentId = 101,
+                ManagementActivityId = 1,
                 DocumentId = 100,
             });
 
@@ -796,7 +796,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             documentRepository.Verify(x => x.Add(It.IsAny<PimsDocument>()), Times.Once);
-            managementActivityDocumentRepository.Verify(x => x.AddDocument(It.IsAny<PimsPropertyActivityDocument>()), Times.Once);
+            managementActivityDocumentRepository.Verify(x => x.AddDocument(It.IsAny<PimsMgmtActivityDocument>()), Times.Once);
             documentQueueRepository.Verify(x => x.Add(It.IsAny<PimsDocumentQueue>()), Times.Once);
         }
 
@@ -806,7 +806,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd, Permissions.ManagementEdit);
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
-            var managementActivityDocumentRepository = this._helper.GetService<Mock<IDocumentRelationshipRepository<PimsPropertyActivityDocument>>>();
+            var managementActivityDocumentRepository = this._helper.GetService<Mock<IDocumentRelationshipRepository<PimsMgmtActivityDocument>>>();
             documentService.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), false));
 
             // Act
@@ -825,7 +825,7 @@ namespace Pims.Api.Test.Services
             ex.Which.Message.Should().Be("The submitted file is empty");
 
             documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), false), Times.Never);
-            managementActivityDocumentRepository.Verify(x => x.AddDocument(It.IsAny<PimsPropertyActivityDocument>()), Times.Never);
+            managementActivityDocumentRepository.Verify(x => x.AddDocument(It.IsAny<PimsMgmtActivityDocument>()), Times.Never);
         }
 
         [Fact]
@@ -1209,7 +1209,7 @@ namespace Pims.Api.Test.Services
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
             var documentRepository = this._helper.GetService<Mock<IDocumentRepository>>();
             var documentQueueRepository = this._helper.GetService<Mock<IDocumentQueueRepository>>();
-            var propertyActivityDocumentRepository = this._helper.GetService<Mock<IDocumentRelationshipRepository<PimsPropertyActivityDocument>>>();
+            var propertyActivityDocumentRepository = this._helper.GetService<Mock<IDocumentRelationshipRepository<PimsMgmtActivityDocument>>>();
 
             documentRepository.Setup(x => x.Find(It.IsAny<long>())).Returns(new PimsDocument() { DocumentId = 2, MayanId = 200 });
             documentRepository.Setup(x => x.BeginTransaction()).Returns(new Mock<IDbContextTransaction>().Object);
@@ -1225,10 +1225,10 @@ namespace Pims.Api.Test.Services
                 DocumentQueueStatusTypeCode = DocumentQueueStatusTypes.SUCCESS.ToString(),
             });
             documentQueueRepository.Setup(x => x.Delete(It.IsAny<PimsDocumentQueue>())).Returns(true);
-            propertyActivityDocumentRepository.Setup(x => x.DeleteDocument(It.IsAny<PimsPropertyActivityDocument>())).Returns(true);
+            propertyActivityDocumentRepository.Setup(x => x.DeleteDocument(It.IsAny<PimsMgmtActivityDocument>())).Returns(true);
             documentRepository.Setup(x => x.DeleteDocument(It.IsAny<PimsDocument>())).Returns(true);
 
-            PimsPropertyActivityDocument doc = new()
+            PimsMgmtActivityDocument doc = new()
             {
                 Internal_Id = 1,
                 DocumentId = 2,
@@ -1255,7 +1255,7 @@ namespace Pims.Api.Test.Services
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
             var documentRepository = this._helper.GetService<Mock<IDocumentRepository>>();
             var documentQueueRepository = this._helper.GetService<Mock<IDocumentQueueRepository>>();
-            var propertyActivityDocumentRepository = this._helper.GetService<Mock<IDocumentRelationshipRepository<PimsPropertyActivityDocument>>>();
+            var mgmtActivityDocumentRepository = this._helper.GetService<Mock<IDocumentRelationshipRepository<PimsMgmtActivityDocument>>>();
 
             documentRepository.Setup(x => x.Find(It.IsAny<long>())).Returns(new PimsDocument() { DocumentId = 2, MayanId = 200 });
             documentRepository.Setup(x => x.BeginTransaction()).Returns(new Mock<IDbContextTransaction>().Object);
@@ -1271,10 +1271,10 @@ namespace Pims.Api.Test.Services
                 DocumentQueueStatusTypeCode = DocumentQueueStatusTypes.SUCCESS.ToString(),
             });
             documentQueueRepository.Setup(x => x.Delete(It.IsAny<PimsDocumentQueue>())).Returns(true);
-            propertyActivityDocumentRepository.Setup(x => x.DeleteDocument(It.IsAny<PimsPropertyActivityDocument>())).Returns(true);
+            mgmtActivityDocumentRepository.Setup(x => x.DeleteDocument(It.IsAny<PimsMgmtActivityDocument>())).Returns(true);
             documentRepository.Setup(x => x.DeleteDocument(It.IsAny<PimsDocument>())).Returns(true);
 
-            PimsPropertyActivityDocument doc = new()
+            PimsMgmtActivityDocument doc = new()
             {
                 Internal_Id = 1,
                 DocumentId = 2,
@@ -1411,9 +1411,9 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var service = this.CreateDocumentFileServiceWithPermissions();
-            var propertyActivityDocumentRepository = this._helper.GetService<Mock<IDocumentRelationshipRepository<PimsPropertyActivityDocument>>>();
+            var propertyActivityDocumentRepository = this._helper.GetService<Mock<IDocumentRelationshipRepository<PimsMgmtActivityDocument>>>();
 
-            PimsPropertyActivityDocument doc = new()
+            PimsMgmtActivityDocument doc = new()
             {
                 Internal_Id = 1,
                 DocumentId = 2,

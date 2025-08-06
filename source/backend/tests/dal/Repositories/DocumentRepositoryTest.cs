@@ -126,7 +126,7 @@ namespace Pims.Dal.Test.Repositories
             document.PimsResearchFileDocuments = new List<PimsResearchFileDocument>() { new PimsResearchFileDocument() };
             document.PimsProjectDocuments = new List<PimsProjectDocument>() { new PimsProjectDocument() };
             document.PimsLeaseDocuments = new List<PimsLeaseDocument>() { new PimsLeaseDocument() };
-            document.PimsPropertyActivityDocuments = new List<PimsPropertyActivityDocument>() { new PimsPropertyActivityDocument() };
+            document.PimsMgmtActivityDocuments = new List<PimsMgmtActivityDocument>() { new PimsMgmtActivityDocument() };
             document.PimsDispositionFileDocuments = new List<PimsDispositionFileDocument>() { new PimsDispositionFileDocument() };
             document.PimsFormTypes = new List<PimsFormType>() { new PimsFormType() { FormTypeCode = "FORM", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "Form" } };
 
@@ -172,7 +172,8 @@ namespace Pims.Dal.Test.Repositories
             document.PimsResearchFileDocuments = new List<PimsResearchFileDocument>() { new PimsResearchFileDocument() };
             document.PimsProjectDocuments = new List<PimsProjectDocument>() { new PimsProjectDocument() };
             document.PimsLeaseDocuments = new List<PimsLeaseDocument>() { new PimsLeaseDocument() };
-            document.PimsPropertyActivityDocuments = new List<PimsPropertyActivityDocument>() { new PimsPropertyActivityDocument() };
+            document.PimsManagementFileDocuments = new List<PimsManagementFileDocument>() { new PimsManagementFileDocument() };
+            document.PimsMgmtActivityDocuments = new List<PimsMgmtActivityDocument>() { new PimsMgmtActivityDocument() };
             document.PimsDispositionFileDocuments = new List<PimsDispositionFileDocument>() { new PimsDispositionFileDocument() };
             document.PimsFormTypes = new List<PimsFormType>() { new PimsFormType() { FormTypeCode = "FORM", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "Form" } };
 

@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-[Table("PIMS_PROP_ACT_MIN_CONTACT_HIST")]
-[Index("PropActMinContactHistId", "EndDateHist", Name = "PIMS_PRACMC_H_UK", IsUnique = true)]
-public partial class PimsPropActMinContactHist
+[Table("PIMS_MGMT_ACT_INVOLVED_PARTY_HIST")]
+[Index("MgmtActInvolvedPartyHistId", "EndDateHist", Name = "PIMS_MAINVP_H_UK", IsUnique = true)]
+public partial class PimsMgmtActInvolvedPartyHist
 {
     [Key]
-    [Column("_PROP_ACT_MIN_CONTACT_HIST_ID")]
-    public long PropActMinContactHistId { get; set; }
+    [Column("_MGMT_ACT_INVOLVED_PARTY_HIST_ID")]
+    public long MgmtActInvolvedPartyHistId { get; set; }
 
     [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
     public DateTime EffectiveDateHist { get; set; }
@@ -20,14 +20,17 @@ public partial class PimsPropActMinContactHist
     [Column("END_DATE_HIST", TypeName = "datetime")]
     public DateTime? EndDateHist { get; set; }
 
-    [Column("PROP_ACT_MIN_CONTACT_ID")]
-    public long PropActMinContactId { get; set; }
+    [Column("MGMT_ACT_INVOLVED_PARTY_ID")]
+    public long MgmtActInvolvedPartyId { get; set; }
 
-    [Column("PIMS_MANAGEMENT_ACTIVITY_ID")]
-    public long PimsManagementActivityId { get; set; }
+    [Column("MANAGEMENT_ACTIVITY_ID")]
+    public long ManagementActivityId { get; set; }
 
     [Column("PERSON_ID")]
-    public long PersonId { get; set; }
+    public long? PersonId { get; set; }
+
+    [Column("ORGANIZATION_ID")]
+    public long? OrganizationId { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }

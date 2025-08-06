@@ -7,31 +7,38 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Associates a property to a property management actity (many-to-many).
+/// Associates a property management activity to a vendor (many-to-many).
 /// </summary>
-[Table("PIMS_MANAGEMENT_ACTIVITY_PROPERTY")]
-[Index("ManagementActivityId", Name = "MAACPR_MANAGEMENT_ACTIVITY_ID_IDX")]
-[Index("PropertyId", Name = "MAACPR_PROPERTY_ID_IDX")]
-public partial class PimsManagementActivityProperty
+[Table("PIMS_MGMT_ACT_INVOLVED_PARTY")]
+[Index("ManagementActivityId", Name = "MAINVP_MANAGEMENT_ACTIVITY_ID_IDX")]
+[Index("OrganizationId", Name = "MAINVP_ORGANIZATION_ID_IDX")]
+[Index("PersonId", Name = "MAINVP_PERSON_ID_IDX")]
+public partial class PimsMgmtActInvolvedParty
 {
     /// <summary>
     /// Generated surrogate primary key.
     /// </summary>
     [Key]
-    [Column("MANAGEMENT_ACTIVITY_PROPERTY_ID")]
-    public long ManagementActivityPropertyId { get; set; }
-
-    /// <summary>
-    /// Foreign key to the PIMS_PROPERTY table.
-    /// </summary>
-    [Column("PROPERTY_ID")]
-    public long PropertyId { get; set; }
+    [Column("MGMT_ACT_INVOLVED_PARTY_ID")]
+    public long MgmtActInvolvedPartyId { get; set; }
 
     /// <summary>
     /// Foreign key to the PIMS_MANAGEMENT_ACTIVITY table.
     /// </summary>
     [Column("MANAGEMENT_ACTIVITY_ID")]
     public long ManagementActivityId { get; set; }
+
+    /// <summary>
+    /// Foreign key to the PIMS_PERSON table.
+    /// </summary>
+    [Column("PERSON_ID")]
+    public long? PersonId { get; set; }
+
+    /// <summary>
+    /// Foreign key to the PIMS_ORGANIZATION table.
+    /// </summary>
+    [Column("ORGANIZATION_ID")]
+    public long? OrganizationId { get; set; }
 
     /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
@@ -124,10 +131,14 @@ public partial class PimsManagementActivityProperty
     public string DbLastUpdateUserid { get; set; }
 
     [ForeignKey("ManagementActivityId")]
-    [InverseProperty("PimsManagementActivityProperties")]
+    [InverseProperty("PimsMgmtActInvolvedParties")]
     public virtual PimsManagementActivity ManagementActivity { get; set; }
 
-    [ForeignKey("PropertyId")]
-    [InverseProperty("PimsManagementActivityProperties")]
-    public virtual PimsProperty Property { get; set; }
+    [ForeignKey("OrganizationId")]
+    [InverseProperty("PimsMgmtActInvolvedParties")]
+    public virtual PimsOrganization Organization { get; set; }
+
+    [ForeignKey("PersonId")]
+    [InverseProperty("PimsMgmtActInvolvedParties")]
+    public virtual PimsPerson Person { get; set; }
 }

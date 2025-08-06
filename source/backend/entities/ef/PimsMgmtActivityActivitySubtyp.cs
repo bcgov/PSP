@@ -7,31 +7,34 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Associates a property to a property management actity (many-to-many).
+/// Table contains the many-to-many relationship between the proeprty activity file and the associated property management activity type and subtype.
 /// </summary>
-[Table("PIMS_MANAGEMENT_ACTIVITY_PROPERTY")]
-[Index("ManagementActivityId", Name = "MAACPR_MANAGEMENT_ACTIVITY_ID_IDX")]
-[Index("PropertyId", Name = "MAACPR_PROPERTY_ID_IDX")]
-public partial class PimsManagementActivityProperty
+[Table("PIMS_MGMT_ACTIVITY_ACTIVITY_SUBTYP")]
+[Index("ManagementActivityId", Name = "MAASTY_MANAGEMENT_ACTIVITY_ID_IDX")]
+[Index("MgmtActivitySubtypeCode", Name = "MAASTY_MGMT_ACTIVITY_SUBTYPE_CODE_IDX")]
+[Index("ManagementActivityId", "MgmtActivitySubtypeCode", Name = "MAASTY_UNIQUE_ACTIVITY_TUC", IsUnique = true)]
+public partial class PimsMgmtActivityActivitySubtyp
 {
     /// <summary>
     /// Generated surrogate primary key.
     /// </summary>
     [Key]
-    [Column("MANAGEMENT_ACTIVITY_PROPERTY_ID")]
-    public long ManagementActivityPropertyId { get; set; }
-
-    /// <summary>
-    /// Foreign key to the PIMS_PROPERTY table.
-    /// </summary>
-    [Column("PROPERTY_ID")]
-    public long PropertyId { get; set; }
+    [Column("MGMT_ACTIVITY_ACTIVITY_SUBTYP_ID")]
+    public long MgmtActivityActivitySubtypId { get; set; }
 
     /// <summary>
     /// Foreign key to the PIMS_MANAGEMENT_ACTIVITY table.
     /// </summary>
     [Column("MANAGEMENT_ACTIVITY_ID")]
     public long ManagementActivityId { get; set; }
+
+    /// <summary>
+    /// Foreign key to the PROP_MGMT_ACTIVITY_SUBTYPE table.
+    /// </summary>
+    [Required]
+    [Column("MGMT_ACTIVITY_SUBTYPE_CODE")]
+    [StringLength(20)]
+    public string MgmtActivitySubtypeCode { get; set; }
 
     /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
@@ -104,7 +107,6 @@ public partial class PimsManagementActivityProperty
     /// <summary>
     /// The user or proxy account that created the record.
     /// </summary>
-    [Required]
     [Column("DB_CREATE_USERID")]
     [StringLength(30)]
     public string DbCreateUserid { get; set; }
@@ -124,10 +126,10 @@ public partial class PimsManagementActivityProperty
     public string DbLastUpdateUserid { get; set; }
 
     [ForeignKey("ManagementActivityId")]
-    [InverseProperty("PimsManagementActivityProperties")]
+    [InverseProperty("PimsMgmtActivityActivitySubtyps")]
     public virtual PimsManagementActivity ManagementActivity { get; set; }
 
-    [ForeignKey("PropertyId")]
-    [InverseProperty("PimsManagementActivityProperties")]
-    public virtual PimsProperty Property { get; set; }
+    [ForeignKey("MgmtActivitySubtypeCode")]
+    [InverseProperty("PimsMgmtActivityActivitySubtyps")]
+    public virtual PimsMgmtActivitySubtype MgmtActivitySubtypeCodeNavigation { get; set; }
 }

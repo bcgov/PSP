@@ -740,7 +740,7 @@ namespace Pims.Api.Test.Services
             var result = service.CreateActivity(activity);
 
             // Assert
-            activity.PropMgmtActivityStatusTypeCode.Should().Be("NOTSTARTED");
+            activity.MgmtActivityStatusTypeCode.Should().Be("NOTSTARTED");
             repository.Verify(x => x.Create(It.IsAny<PimsManagementActivity>()), Times.Once);
         }
 
@@ -819,20 +819,20 @@ namespace Pims.Api.Test.Services
             // Act
             var result = service.UpdateActivity(new PimsManagementActivity()
             {
-                PimsManagementActivityId = 10,
+                ManagementActivityId = 10,
                 PimsManagementActivityProperties = new List<PimsManagementActivityProperty>()
                 {
                     new PimsManagementActivityProperty()
                     {
                         ManagementActivityPropertyId = 100,
                         PropertyId = 1,
-                        PimsManagementActivityId = 10,
+                        ManagementActivityId = 10,
                     },
                     new PimsManagementActivityProperty()
                     {
                         ManagementActivityPropertyId = 101,
                         PropertyId = 1,
-                        PimsManagementActivityId = 11,
+                        ManagementActivityId = 11,
                     }
                 }
             });
