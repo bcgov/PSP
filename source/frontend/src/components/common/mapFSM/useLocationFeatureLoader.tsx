@@ -70,6 +70,8 @@ export interface WorklistLocationFeatureDataset
     Geometry,
     PMBC_FullyAttributed_Feature_Properties
   > | null;
+  regionFeature: Feature<Geometry, MOT_RegionalBoundary_Feature_Properties> | null;
+  districtFeature: Feature<Geometry, MOT_DistrictBoundary_Feature_Properties> | null;
 }
 
 const useLocationFeatureLoader = () => {
@@ -248,15 +250,32 @@ const useLocationFeatureLoader = () => {
       const result: WorklistLocationFeatureDataset = {
         location: latLng,
         fullyAttributedFeatures: null,
+        regionFeature: null,
+        districtFeature: null,
       };
 
-      // This query can return multiple results
-      const pmbcFeatures = await fullyAttributedServiceFindAll(latLng);
+      // call these APIs in parallel - notice there is no "await"
+      const fullyAttributedTask = await fullyAttributedServiceFindAll(latLng);
+      const regionTask = adminBoundaryLayerServiceFindRegion(latLng, 'SHAPE');
+      const districtTask = adminBoundaryLayerServiceFindDistrict(latLng, 'SHAPE');
+
+      const [pmbcFeatures, regionFeature, districtFeature] = await Promise.all([
+        fullyAttributedTask,
+        regionTask,
+        districtTask,
+      ]);
+
       result.fullyAttributedFeatures = pmbcFeatures ?? null;
+      result.regionFeature = regionFeature ?? null;
+      result.districtFeature = districtFeature ?? null;
 
       return result;
     },
-    [fullyAttributedServiceFindAll],
+    [
+      adminBoundaryLayerServiceFindDistrict,
+      adminBoundaryLayerServiceFindRegion,
+      fullyAttributedServiceFindAll,
+    ],
   );
 
   return {
