@@ -22,6 +22,8 @@ export const WorklistMapClickMonitor: React.FunctionComponent<unknown> = () => {
         worklistLocationFeatureDataset.fullyAttributedFeatures?.features?.map(pmbcFeature => {
           const newParcel = ParcelDataset.fromFullyAttributedFeature(pmbcFeature);
           newParcel.location = worklistLocationFeatureDataset.location;
+          newParcel.regionFeature = worklistLocationFeatureDataset.regionFeature;
+          newParcel.districtFeature = worklistLocationFeatureDataset.districtFeature;
           return newParcel;
         }) ?? [];
 
