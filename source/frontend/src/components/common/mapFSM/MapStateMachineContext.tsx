@@ -1,7 +1,7 @@
 import { useInterpret, useSelector } from '@xstate/react';
 import { dequal } from 'dequal';
 import { LatLngBounds, LatLngLiteral } from 'leaflet';
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AnyEventObject } from 'xstate';
 
