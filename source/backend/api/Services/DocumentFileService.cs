@@ -31,7 +31,7 @@ namespace Pims.Api.Services
         private readonly IDocumentQueueRepository _documentQueueRepository;
         private readonly IDocumentRelationshipRepository<PimsAcquisitionFileDocument> _acquisitionFileDocumentRepository;
         private readonly IDocumentRelationshipRepository<PimsResearchFileDocument> _researchFileDocumentRepository;
-        private readonly IDocumentRelationshipRepository<PimsPropertyActivityDocument> _managementActivityDocumentRepository;
+        private readonly IDocumentRelationshipRepository<PimsMgmtActivityDocument> _managementActivityDocumentRepository;
         private readonly IDocumentRelationshipRepository<PimsLeaseDocument> _leaseFileDocumentRepository;
         private readonly IDocumentRelationshipRepository<PimsProjectDocument> _projectDocumentRepository;
         private readonly IDocumentRelationshipRepository<PimsDispositionFileDocument> _dispositionFileDocumentRepository;
@@ -47,7 +47,7 @@ namespace Pims.Api.Services
             IDocumentRelationshipRepository<PimsResearchFileDocument> researchFileDocumentRepository,
             IDocumentRelationshipRepository<PimsLeaseDocument> leaseFileDocumentRepository,
             IDocumentRelationshipRepository<PimsProjectDocument> projectDocumentRepository,
-            IDocumentRelationshipRepository<PimsPropertyActivityDocument> managementActivityDocumentRepository,
+            IDocumentRelationshipRepository<PimsMgmtActivityDocument> managementActivityDocumentRepository,
             IDocumentRelationshipRepository<PimsDispositionFileDocument> dispositionFileDocumentRepository,
             IDocumentRelationshipRepository<PimsManagementFileDocument> managementFileDocumentRepository,
             IDocumentRelationshipRepository<PimsPropertyDocument> propertyDocumentRepository,
@@ -188,7 +188,7 @@ namespace Pims.Api.Services
             return await DeletePropertyDocumentAsync(leaseDocument, _leaseFileDocumentRepository);
         }
 
-        public async Task<ExternalResponse<string>> DeleteManagementActivityDocumentAsync(PimsPropertyActivityDocument managementActivityDocument)
+        public async Task<ExternalResponse<string>> DeleteManagementActivityDocumentAsync(PimsMgmtActivityDocument managementActivityDocument)
         {
             Logger.LogInformation("Deleting PIMS document for single Management Activity");
             User.ThrowIfNotAllAuthorized(Permissions.DocumentDelete, Permissions.ManagementEdit);

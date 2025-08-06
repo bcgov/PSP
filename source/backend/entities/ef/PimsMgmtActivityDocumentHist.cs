@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-[Table("PIMS_PROP_ACTIVITY_MGMT_ACTIVITY_HIST")]
-[Index("PropActivityMgmtActivityHistId", "EndDateHist", Name = "PIMS_PACMAC_H_UK", IsUnique = true)]
-public partial class PimsPropActivityMgmtActivityHist
+[Table("PIMS_MGMT_ACTIVITY_DOCUMENT_HIST")]
+[Index("MgmtActivityDocumentHistId", "EndDateHist", Name = "PIMS_MGACDC_H_UK", IsUnique = true)]
+public partial class PimsMgmtActivityDocumentHist
 {
     [Key]
-    [Column("_PROP_ACTIVITY_MGMT_ACTIVITY_HIST_ID")]
-    public long PropActivityMgmtActivityHistId { get; set; }
+    [Column("_MGMT_ACTIVITY_DOCUMENT_HIST_ID")]
+    public long MgmtActivityDocumentHistId { get; set; }
 
     [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
     public DateTime EffectiveDateHist { get; set; }
@@ -20,16 +20,14 @@ public partial class PimsPropActivityMgmtActivityHist
     [Column("END_DATE_HIST", TypeName = "datetime")]
     public DateTime? EndDateHist { get; set; }
 
-    [Column("PROP_ACTVTY_MGMT_ACTVTY_TYP_ID")]
-    public long PropActvtyMgmtActvtyTypId { get; set; }
+    [Column("MGMT_ACTIVITY_DOCUMENT_ID")]
+    public long MgmtActivityDocumentId { get; set; }
 
-    [Column("PIMS_MANAGEMENT_ACTIVITY_ID")]
-    public long PimsManagementActivityId { get; set; }
+    [Column("MANAGEMENT_ACTIVITY_ID")]
+    public long ManagementActivityId { get; set; }
 
-    [Required]
-    [Column("PROP_MGMT_ACTIVITY_SUBTYPE_CODE")]
-    [StringLength(20)]
-    public string PropMgmtActivitySubtypeCode { get; set; }
+    [Column("DOCUMENT_ID")]
+    public long DocumentId { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
@@ -69,6 +67,7 @@ public partial class PimsPropActivityMgmtActivityHist
     [Column("DB_CREATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime DbCreateTimestamp { get; set; }
 
+    [Required]
     [Column("DB_CREATE_USERID")]
     [StringLength(30)]
     public string DbCreateUserid { get; set; }
