@@ -1256,7 +1256,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
               <label
                 class="c5"
               >
-                MOTI region:
+                MOTT region:
               </label>
             </div>
             <div

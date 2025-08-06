@@ -715,7 +715,7 @@ exports[`EditUserForm component > renders as expected 1`] = `
         <label
           class="c0"
         >
-          MoTI Region(s):
+          MOTT region(s):
         </label>
       </div>
       <div
