@@ -184,7 +184,7 @@ namespace Pims.Dal.Test.Repositories
             var result = repository.DocumentRelationshipCount(1);
 
             // Assert
-            result.Should().Be(7);
+            result.Should().Be(8);
         }
         #endregion
 

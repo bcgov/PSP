@@ -153,11 +153,11 @@ namespace Pims.Dal.Repositories
                 Context.PimsDispositionFileDocuments.RemoveRange(documentToDelete.PimsDispositionFileDocuments);
             }
 
-            foreach (var pimsFormTypeDocument in documentToDelete.PimsFormTypes)
+            foreach (var pimsFormTypeDocument in documentToDelete.PimsFormTypes.ToList())
             {
                 var updatedFormType = pimsFormTypeDocument;
                 updatedFormType.DocumentId = null;
-                Context.Entry(pimsFormTypeDocument).Property(x => x.DocumentId).IsModified = true;
+                Context.Entry(updatedFormType).Property(x => x.DocumentId).IsModified = true;
             }
 
             if (commitTransaction)
