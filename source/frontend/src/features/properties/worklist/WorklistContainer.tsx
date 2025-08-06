@@ -6,7 +6,7 @@ import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator'
 import { exists } from '@/utils';
 
 import { useWorklistContext } from './context/WorklistContext';
-import { ParcelFeature } from './models';
+import { ParcelDataset } from './models';
 import { IWorklistViewProps } from './WorklistView';
 
 export interface IWorklistContainerProps {
@@ -20,7 +20,7 @@ export const WorklistContainer: React.FC<IWorklistContainerProps> = ({ View }) =
 
   // A worklist parcel points to either a parcel-map boundary/shape or a lat/long (if no parcels were found at that location)
   const onZoomToBounds = useCallback(
-    (parcel: ParcelFeature) => {
+    (parcel: ParcelDataset) => {
       if (exists(parcel.pmbcFeature)) {
         const bounds = geoJSON(parcel.pmbcFeature).getBounds();
         if (exists(bounds) && bounds.isValid()) {

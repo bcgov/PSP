@@ -4,7 +4,7 @@ import { getMockWorklistParcel } from '@/mocks/worklistParcel.mock';
 import { act, render, RenderOptions, screen } from '@/utils/test-utils';
 
 import { useWorklistContext } from './context/WorklistContext';
-import { ParcelFeature } from './models';
+import { ParcelDataset } from './models';
 import { WorklistContainer } from './WorklistContainer';
 import { IWorklistViewProps } from './WorklistView';
 
@@ -25,7 +25,7 @@ vi.mock('leaflet', async () => {
 });
 
 // Parcel list mock
-let mockParcels: ParcelFeature[] = [];
+let mockParcels: ParcelDataset[] = [];
 
 // Mocks
 const select = vi.fn();

@@ -21,7 +21,7 @@ import { AreaUnitTypes } from '@/constants';
 import { DistrictCodes } from '@/constants/districtCodes';
 import { RegionCodes } from '@/constants/regionCodes';
 import { AddressForm } from '@/features/mapSideBar/shared/models';
-import { ParcelFeature } from '@/features/properties/worklist/models';
+import { ParcelDataset } from '@/features/properties/worklist/models';
 import { ApiGen_CodeTypes_GeoJsonTypes } from '@/models/api/generated/ApiGen_CodeTypes_GeoJsonTypes';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Geometry } from '@/models/api/generated/ApiGen_Concepts_Geometry';
@@ -65,7 +65,7 @@ export const getPropertyName = (property: IMapProperty): PropertyName => {
   return { label: NameSourceType.NONE, value: '' };
 };
 
-export const getWorklistPropertyName = (parcelFeature: ParcelFeature | null): PropertyName => {
+export const getWorklistPropertyName = (parcelFeature: ParcelDataset | null): PropertyName => {
   if (!exists(parcelFeature)) {
     return { label: NameSourceType.NONE, value: '' };
   }

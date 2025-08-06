@@ -4,16 +4,16 @@ import { Scrollable } from '@/components/common/Scrollable/Scrollable';
 import { Section } from '@/components/common/Section/Section';
 import { exists } from '@/utils';
 
-import { ParcelFeature } from './models';
+import { ParcelDataset } from './models';
 import MoreOptionsDropdown from './MoreOptionsDropdown';
 import ParcelItem from './ParcelItem';
 
 export interface IWorklistViewProps {
-  parcels: ParcelFeature[];
+  parcels: ParcelDataset[];
   selectedId: string | null;
   onSelect: (id: string) => void;
   onRemove: (id: string) => void;
-  onZoomToParcel: (parcel: ParcelFeature) => void;
+  onZoomToParcel: (parcel: ParcelDataset) => void;
   onClearAll: () => void;
   onCreateResearchFile: (event: React.MouseEvent<HTMLElement>) => void;
   onCreateAcquisitionFile: (event: React.MouseEvent<HTMLElement>) => void;

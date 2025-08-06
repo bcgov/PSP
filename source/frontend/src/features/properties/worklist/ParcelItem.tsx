@@ -6,14 +6,14 @@ import { LinkButton, RemoveIconButton } from '@/components/common/buttons';
 import OverflowTip from '@/components/common/OverflowTip';
 import { getWorklistPropertyName, NameSourceType } from '@/utils';
 
-import { ParcelFeature } from './models';
+import { ParcelDataset } from './models';
 
 export interface IParcelItemProps {
-  parcel: ParcelFeature;
+  parcel: ParcelDataset;
   isSelected: boolean;
   onSelect: (id: string) => void;
   onRemove: (id: string) => void;
-  onZoomToParcel: (parcel: ParcelFeature) => void;
+  onZoomToParcel: (parcel: ParcelDataset) => void;
 }
 
 export function ParcelItem({ parcel, onSelect, onRemove, onZoomToParcel }: IParcelItemProps) {
