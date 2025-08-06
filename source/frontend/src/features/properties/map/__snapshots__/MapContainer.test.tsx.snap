@@ -214,118 +214,6 @@ exports[`MapContainer > Renders the map 1`] = `
   margin-right: 0;
 }
 
-.c16 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
-.c15 {
-  margin: 1.6rem;
-  padding: 1.6rem;
-  background-color: white;
-  text-align: left;
-  border-radius: 0.5rem;
-}
-
-.c22 {
-  padding-left: 0rem;
-  padding-bottom: 0.5rem;
-}
-
-.c22 .form-check input {
-  margin-left: -0.3rem;
-}
-
-.c22 .form-check label {
-  font-weight: bold;
-}
-
-.c17 {
-  padding-left: 0rem;
-  padding-bottom: 0.5rem;
-}
-
-.c17 .form-check input {
-  margin-left: 0rem;
-}
-
-.c17 .form-check label {
-  font-weight: normal;
-}
-
-.c23 {
-  font-size: 2.4rem;
-  margin: -0.5rem;
-}
-
-.c14 {
-  font-size: 1.4rem;
-}
-
-.c14 .form-check {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  padding-left: 0rem;
-}
-
-.c14 .form-check input {
-  padding-left: 0rem;
-  margin-top: 0rem;
-}
-
-.c14 .form-check label {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  padding-left: 1.8rem;
-  margin-left: 0rem;
-}
-
-.c18 {
-  width: 1.4rem;
-  height: 1.4rem;
-  background-color: #3388ff;
-  margin-right: 0.5rem;
-  padding-right: 1.4rem;
-}
-
-.c19 {
-  width: 1.4rem;
-  height: 1.4rem;
-  background-color: #42814A;
-  margin-right: 0.5rem;
-  padding-right: 1.4rem;
-}
-
-.c20 {
-  width: 1.4rem;
-  height: 1.4rem;
-  background-color: #FC802D;
-  margin-right: 0.5rem;
-  padding-right: 1.4rem;
-}
-
-.c21 {
-  width: 1.4rem;
-  height: 1.4rem;
-  background-color: #555555;
-  margin-right: 0.5rem;
-  padding-right: 1.4rem;
-}
-
 .c3 {
   grid-area: map;
 }
@@ -349,6 +237,7 @@ exports[`MapContainer > Renders the map 1`] = `
 }
 
 .c3 .leaflet-container .leaflet-control-attribution {
+  display: none;
   font-size: 1.1rem;
 }
 
@@ -398,15 +287,23 @@ exports[`MapContainer > Renders the map 1`] = `
   grid-template-rows: 6rem 1fr;
   grid-template-columns: min-content 1fr;
   grid-template-areas: 'filter filter' 'map map';
+  grid-template-rows: 0 1fr;
+  -webkit-transition: 1s;
+  transition: 1s;
   -webkit-transition: margin 1s,width 1s;
   transition: margin 1s,width 1s;
   position: relative;
 }
 
-.c2.hideSearchBar {
-  grid-template-rows: 0 1fr;
-  -webkit-transition: 1s;
-  transition: 1s;
+.c19.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c18 {
+  font-weight: bold;
 }
 
 .c8 {
@@ -416,11 +313,14 @@ exports[`MapContainer > Renders the map 1`] = `
 .c7.btn {
   width: 5.2rem;
   height: 5.2rem;
-  margin-left: -5.1rem;
   background-color: #fff;
   color: #013366;
   border-color: #013366;
   box-shadow: -0.2rem 0.1rem 0.4rem rgba(0,0,0,0.2);
+}
+
+.c7.btn:hover {
+  opacity: 1;
 }
 
 .c5.c5.btn {
@@ -444,6 +344,78 @@ exports[`MapContainer > Renders the map 1`] = `
 
 .c5.c5.btn:focus {
   color: white;
+}
+
+.c13 {
+  height: 25rem;
+  width: 34rem;
+  display: none;
+  background-color: #FFFFFF;
+  border-radius: 0.4rem;
+  box-shadow: -0.2rem 0.1rem 0.4rem rgba(0,0,0,0.2);
+}
+
+.c17 {
+  font-size: 1.4rem;
+  padding: 1rem;
+}
+
+.c14 {
+  background-color: #003366;
+  color: #FFFFFF;
+  padding: 1rem;
+  font-size: 1.8rem;
+  color: #FFFFFF;
+  -webkit-text-decoration: none solid rgb(255,255,255);
+  text-decoration: none solid rgb(255,255,255);
+  line-height: 1.4rem;
+  font-weight: bold;
+}
+
+.c15 {
+  color: white;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.c16 {
+  color: #FFFFFF;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+.c10 {
+  font-size: 3rem;
+}
+
+.c9.btn {
+  width: 5.2rem;
+  height: 5.2rem;
+  background-color: #fff;
+  color: #013366;
+  border-color: #013366;
+  box-shadow: -0.2rem 0.1rem 0.4rem rgba(0,0,0,0.2);
+}
+
+.c9.btn:hover {
+  opacity: 1;
+}
+
+.c12 {
+  font-size: 3rem;
+}
+
+.c11.btn {
+  width: 5.2rem;
+  height: 5.2rem;
+  background-color: #FFFFFF;
+  color: #013366;
+  border-color: #013366;
+  box-shadow: -0.2rem 0.1rem 0.4rem rgba(0,0,0,0.2);
+}
+
+.c11.btn:hover {
+  opacity: 1;
 }
 
 .c6.c6.btn {
@@ -484,83 +456,6 @@ exports[`MapContainer > Renders the map 1`] = `
   margin-bottom: 0.2rem;
 }
 
-.c9 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-flow: column;
-  -ms-flex-flow: column;
-  flex-flow: column;
-  position: relative;
-  margin: 0;
-  min-height: 5.2rem;
-  height: calc(100vh - 7.2rem - 4.8rem);
-  max-width: 0;
-  width: 0;
-  margin-left: 0;
-  background-color: #FFFFFF;
-  visibility: hidden;
-  opacity: 0;
-  border-radius: 0.4rem;
-  box-shadow: -0.2rem 0.1rem 0.4rem rgba(0,0,0,0.2);
-  -webkit-transition: all 1s ease-in-out;
-  transition: all 1s ease-in-out;
-  z-index: 1000;
-  overflow: hidden;
-}
-
-.c10 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-  position: relative;
-  width: 100%;
-  height: 5.2rem;
-  background-color: #003366;
-  color: #FFFFFF;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  padding: 1rem 1.8rem;
-  gap: 1.5rem;
-}
-
-.c11 {
-  font-size: 1.8rem;
-  color: #FFFFFF;
-  -webkit-text-decoration: none solid rgb(255,255,255);
-  text-decoration: none solid rgb(255,255,255);
-  line-height: 1.8rem;
-  font-weight: bold;
-  margin: 0;
-}
-
-.c12 {
-  position: absolute;
-  top: 0.6rem;
-  right: 0.8rem;
-  color: #FFFFFF;
-  font-size: 22px;
-  cursor: pointer;
-}
-
-.c13 {
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-  overflow-y: auto;
-}
-
 .c0 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -591,7 +486,7 @@ exports[`MapContainer > Renders the map 1`] = `
       class="c1"
     />
     <div
-      class="c2 px-0 map hideSearchBar"
+      class="c2 px-0 map"
     >
       <div
         class="c3"
@@ -641,7 +536,7 @@ exports[`MapContainer > Renders the map 1`] = `
               <div
                 class="leaflet-marker-icon marker-cluster marker-cluster-small leaflet-zoom-hide leaflet-interactive"
                 role="button"
-                style="margin-left: -20px; margin-top: -20px; width: 40px; height: 40px; left: 88px; top: -242px; z-index: -242;"
+                style="margin-left: -20px; margin-top: -20px; width: 40px; height: 40px; left: 89627px; top: -248223px; z-index: -248223;"
                 tabindex="0"
               >
                 <div>
@@ -672,8 +567,14 @@ exports[`MapContainer > Renders the map 1`] = `
                   <img
                     alt=""
                     class="leaflet-tile"
-                    src="https://maps.gov.bc.ca/arcgis/rest/services/province/roads_wm/MapServer/tile/6/20/9"
-                    style="width: 256px; height: 256px; left: -214px; top: -231px;"
+                    src="https://maps.gov.bc.ca/arcgis/rest/services/province/roads_wm/MapServer/tile/16/21403/10071"
+                    style="width: 256px; height: 256px; left: -256px; top: -256px;"
+                  />
+                  <img
+                    alt=""
+                    class="leaflet-tile"
+                    src="https://maps.gov.bc.ca/arcgis/rest/services/province/roads_wm/MapServer/tile/16/21403/10072"
+                    style="width: 256px; height: 256px; left: 0px; top: -256px;"
                   />
                 </div>
               </div>
@@ -693,8 +594,14 @@ exports[`MapContainer > Renders the map 1`] = `
                   <img
                     alt=""
                     class="leaflet-tile"
-                    src="https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows?&service=WMS&request=GetMap&layers=pub%3AWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&styles=&format=image%2Fpng&transparent=true&version=1.1.1&layerIdentifier=parcelLayer&url=https%3A%2F%2Fopenmaps.gov.bc.ca%2Fgeo%2Fpub%2FWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW%2Fows%3F&width=256&height=256&srs=EPSG%3A3857&bbox=-14401959.121379772,6887893.492833805,-13775786.985667607,7514065.628545967"
-                    style="width: 256px; height: 256px; left: -214px; top: -231px;"
+                    src="https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows?&service=WMS&request=GetMap&layers=pub%3AWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&styles=&format=image%2Fpng&transparent=true&version=1.1.1&layerIdentifier=parcelLayer&url=https%3A%2F%2Fopenmaps.gov.bc.ca%2Fgeo%2Fpub%2FWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW%2Fows%3F&width=256&height=256&srs=EPSG%3A3857&bbox=-13879129.847909166,6949043.115461947,-13878518.351682883,6949654.611688225"
+                    style="width: 256px; height: 256px; left: -256px; top: -256px;"
+                  />
+                  <img
+                    alt=""
+                    class="leaflet-tile"
+                    src="https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows?&service=WMS&request=GetMap&layers=pub%3AWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&styles=&format=image%2Fpng&transparent=true&version=1.1.1&layerIdentifier=parcelLayer&url=https%3A%2F%2Fopenmaps.gov.bc.ca%2Fgeo%2Fpub%2FWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW%2Fows%3F&width=256&height=256&srs=EPSG%3A3857&bbox=-13878518.351682883,6949043.115461947,-13877906.855456602,6949654.611688225"
+                    style="width: 256px; height: 256px; left: 0px; top: -256px;"
                   />
                 </div>
               </div>
@@ -708,11 +615,19 @@ exports[`MapContainer > Renders the map 1`] = `
                 >
                   <img
                     class="leaflet-tile leaflet-tile-loaded"
-                    style="width: 256px; height: 256px; left: -214px; top: -231px;"
+                    style="width: 256px; height: 256px; left: -256px; top: -256px;"
+                  />
+                  <img
+                    class="leaflet-tile leaflet-tile-loaded"
+                    style="width: 256px; height: 256px; left: 0px; top: -256px;"
                   />
                 </div>
               </div>
             </div>
+            <div
+              class="leaflet-pane leaflet-worklistParcels-pane"
+              style="z-index: 500;"
+            />
             <div
               class="leaflet-pane leaflet-fileProperties-pane"
               style="z-index: 600;"
@@ -824,30 +739,89 @@ exports[`MapContainer > Renders the map 1`] = `
               <div
                 class="leaflet-control"
               >
-                <button
-                  class="c4 Button c7 btn btn-outline-secondary"
-                  id="layersControlButton"
-                  type="button"
+                <div
+                  class="row no-gutters"
                 >
                   <div
-                    class="Button__value"
+                    class="col-auto"
                   >
-                    <svg
-                      class="c8"
-                      fill="currentColor"
-                      height="1em"
-                      stroke="currentColor"
-                      stroke-width="0"
-                      viewBox="0 0 512 512"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
+                    <button
+                      class="c4 Button c7 btn btn-outline-secondary"
+                      id="layersControlButton"
+                      type="button"
                     >
-                      <path
-                        d="M12.41 148.02l232.94 105.67c6.8 3.09 14.49 3.09 21.29 0l232.94-105.67c16.55-7.51 16.55-32.52 0-40.03L266.65 2.31a25.607 25.607 0 0 0-21.29 0L12.41 107.98c-16.55 7.51-16.55 32.53 0 40.04zm487.18 88.28l-58.09-26.33-161.64 73.27c-7.56 3.43-15.59 5.17-23.86 5.17s-16.29-1.74-23.86-5.17L70.51 209.97l-58.1 26.33c-16.55 7.5-16.55 32.5 0 40l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 276.3c16.55-7.5 16.55-32.5 0-40zm0 127.8l-57.87-26.23-161.86 73.37c-7.56 3.43-15.59 5.17-23.86 5.17s-16.29-1.74-23.86-5.17L70.29 337.87 12.41 364.1c-16.55 7.5-16.55 32.5 0 40l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 404.1c16.55-7.5 16.55-32.5 0-40z"
-                      />
-                    </svg>
+                      <div
+                        class="Button__value"
+                      >
+                        <svg
+                          class="c8"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 512 512"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M12.41 148.02l232.94 105.67c6.8 3.09 14.49 3.09 21.29 0l232.94-105.67c16.55-7.51 16.55-32.52 0-40.03L266.65 2.31a25.607 25.607 0 0 0-21.29 0L12.41 107.98c-16.55 7.51-16.55 32.53 0 40.04zm487.18 88.28l-58.09-26.33-161.64 73.27c-7.56 3.43-15.59 5.17-23.86 5.17s-16.29-1.74-23.86-5.17L70.51 209.97l-58.1 26.33c-16.55 7.5-16.55 32.5 0 40l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 276.3c16.55-7.5 16.55-32.5 0-40zm0 127.8l-57.87-26.23-161.86 73.37c-7.56 3.43-15.59 5.17-23.86 5.17s-16.29-1.74-23.86-5.17L70.29 337.87 12.41 364.1c-16.55 7.5-16.55 32.5 0 40l232.94 105.59c6.8 3.08 14.49 3.08 21.29 0L499.59 404.1c16.55-7.5 16.55-32.5 0-40z"
+                          />
+                        </svg>
+                      </div>
+                    </button>
+                    <button
+                      class="c4 Button c9 btn btn-outline-secondary"
+                      id="searchControlButton"
+                      type="button"
+                    >
+                      <div
+                        class="Button__value"
+                      >
+                        <svg
+                          class="c10"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 512 512"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+                          />
+                        </svg>
+                      </div>
+                    </button>
+                    <button
+                      class="c4 Button c11 btn btn-outline-secondary"
+                      id="worklistControlButton"
+                      type="button"
+                    >
+                      <div
+                        class="Button__value"
+                      >
+                        <svg
+                          class="c12"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 512 512"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M48 48a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm0 160a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm0 160a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm448 16H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zm0-320H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16V80a16 16 0 0 0-16-16zm0 160H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16z"
+                          />
+                        </svg>
+                      </div>
+                    </button>
                   </div>
-                </button>
+                  <div
+                    class="col-auto"
+                  />
+                </div>
               </div>
             </div>
             <div
@@ -858,15 +832,216 @@ exports[`MapContainer > Renders the map 1`] = `
               >
                 <div
                   class="leaflet-control-scale-line"
-                  style="width: 68px;"
+                  style="width: 69px;"
                 >
-                  100 km
+                  100 m
                 </div>
               </div>
             </div>
             <div
               class="leaflet-bottom leaflet-right"
             >
+              <div
+                class="leaflet-control"
+              >
+                <div
+                  class="c13"
+                >
+                  <div
+                    class="c14 row no-gutters"
+                  >
+                    <div
+                      class="col-1"
+                    />
+                    <div
+                      class="col-1"
+                    >
+                      ...
+                    </div>
+                    <div
+                      class="col-1"
+                    />
+                    <div
+                      class="text-center col-6"
+                    >
+                      Property
+                    </div>
+                    <div
+                      class="col-1"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="18"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="18"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <title>
+                          Zoom map
+                        </title>
+                        <path
+                          d="M304 192v32c0 6.6-5.4 12-12 12h-56v56c0 6.6-5.4 12-12 12h-32c-6.6 0-12-5.4-12-12v-56h-56c-6.6 0-12-5.4-12-12v-32c0-6.6 5.4-12 12-12h56v-56c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v56h56c6.6 0 12 5.4 12 12zm201 284.7L476.7 505c-9.4 9.4-24.6 9.4-33.9 0L343 405.3c-4.5-4.5-7-10.6-7-17V372c-35.3 27.6-79.7 44-128 44C93.1 416 0 322.9 0 208S93.1 0 208 0s208 93.1 208 208c0 48.3-16.4 92.7-44 128h16.3c6.4 0 12.5 2.5 17 7l99.7 99.7c9.3 9.4 9.3 24.6 0 34zM344 208c0-75.2-60.8-136-136-136S72 132.8 72 208s60.8 136 136 136 136-60.8 136-136z"
+                        />
+                      </svg>
+                    </div>
+                    <div
+                      class="col-1"
+                    >
+                      <div
+                        class="c15"
+                      >
+                        <svg
+                          data-testid="toggle-icon"
+                          fill="currentColor"
+                          height="18"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 448 512"
+                          width="18"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <title>
+                            Minimize quick info
+                          </title>
+                          <path
+                            d="M416 208H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h384c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                    <div
+                      class="col-1"
+                    >
+                      <svg
+                        class="c16"
+                        data-testid="close-icon"
+                        fill="currentColor"
+                        height="18"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="18"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <title>
+                          Toggle quick info
+                        </title>
+                        <path
+                          d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                  <div
+                    class="c17"
+                  >
+                    <div
+                      class="row no-gutters"
+                    >
+                      <div
+                        class="col"
+                      >
+                        <div
+                          class="pb-2 row"
+                        >
+                          <div
+                            class="pr-0 text-left col-12"
+                          >
+                            <label
+                              class="c18"
+                            >
+                              PID:
+                            </label>
+                          </div>
+                          <div
+                            class="c19 text-left col"
+                          />
+                        </div>
+                      </div>
+                      <div
+                        class="col"
+                      >
+                        <div
+                          class="pb-2 row"
+                        >
+                          <div
+                            class="pr-0 text-left col-12"
+                          >
+                            <label
+                              class="c18"
+                            >
+                              PIN:
+                            </label>
+                          </div>
+                          <div
+                            class="c19 text-left col"
+                          >
+                            -
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="col"
+                      >
+                        <div
+                          class="pb-2 row"
+                        >
+                          <div
+                            class="pr-0 text-left col-12"
+                          >
+                            <label
+                              class="c18"
+                            >
+                              Plan:
+                            </label>
+                          </div>
+                          <div
+                            class="c19 text-left col"
+                          >
+                            -
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div
+                      class="pb-2 row"
+                    >
+                      <div
+                        class="pr-0 text-left col-12"
+                      >
+                        <label
+                          class="c18"
+                        >
+                          Owners:
+                        </label>
+                      </div>
+                      <div
+                        class="c19 text-left col"
+                      />
+                    </div>
+                    <div
+                      class="pb-2 row"
+                    >
+                      <div
+                        class="pr-0 text-left col-12"
+                      >
+                        <label
+                          class="c18"
+                        >
+                          Legal Description:
+                        </label>
+                      </div>
+                      <div
+                        class="c19 text-left col"
+                      >
+                        -
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
               <div
                 class="leaflet-control-attribution leaflet-control"
               >
@@ -887,691 +1062,6 @@ exports[`MapContainer > Renders the map 1`] = `
             </div>
           </div>
         </div>
-      </div>
-    </div>
-    <div
-      class="c9"
-      data-testid="advanced-filter-sidebar"
-    >
-      <div
-        class="c10"
-      >
-        <p
-          class="c11"
-        >
-          Filter By:
-        </p>
-        <svg
-          class="c12"
-          fill="currentColor"
-          height="1em"
-          stroke="currentColor"
-          stroke-width="0"
-          viewBox="0 0 512 512"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <title>
-            close
-          </title>
-          <path
-            d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
-          />
-        </svg>
-      </div>
-      <div
-        class="c13"
-      />
-    </div>
-    <div
-      class="c9"
-      data-testid="map-layers-sidebar"
-    >
-      <div
-        class="c10"
-      >
-        <p
-          class="c11"
-        >
-          View Layer By:
-        </p>
-        <svg
-          class="c12"
-          fill="currentColor"
-          height="1em"
-          stroke="currentColor"
-          stroke-width="0"
-          viewBox="0 0 512 512"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <title>
-            close
-          </title>
-          <path
-            d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
-          />
-        </svg>
-      </div>
-      <div
-        class="c13"
-      >
-        <form
-          class=""
-        >
-          <div
-            class="c14 form-group"
-          >
-            <div
-              class="c15 form-section"
-            >
-              <h2
-                class="c16"
-              >
-                <div
-                  class="no-gutters row"
-                >
-                  <div
-                    class="align-content-end col"
-                  >
-                    PIMS
-                  </div>
-                </div>
-              </h2>
-              <div
-                class="collapse show"
-              >
-                <div
-                  class="c17"
-                >
-                  <div
-                    class="form-check"
-                  >
-                    <input
-                      class="form-check-input"
-                      id="research"
-                      type="checkbox"
-                    />
-                    <label
-                      class="form-check-label"
-                      for="research"
-                      title=""
-                    >
-                      <div
-                        class="c18"
-                        color="#3388ff"
-                      />
-                       Research
-                    </label>
-                  </div>
-                </div>
-                <div
-                  class="c17"
-                >
-                  <div
-                    class="form-check"
-                  >
-                    <input
-                      class="form-check-input"
-                      id="acquisition"
-                      type="checkbox"
-                    />
-                    <label
-                      class="form-check-label"
-                      for="acquisition"
-                      title=""
-                    >
-                      <div
-                        class="c19"
-                        color="#42814A"
-                      />
-                       Acquisition
-                    </label>
-                  </div>
-                </div>
-                <div
-                  class="c17"
-                >
-                  <div
-                    class="form-check"
-                  >
-                    <input
-                      class="form-check-input"
-                      id="management"
-                      type="checkbox"
-                    />
-                    <label
-                      class="form-check-label"
-                      for="management"
-                      title=""
-                    >
-                      <div
-                        class="c20"
-                        color="#FC802D"
-                      />
-                       Management
-                    </label>
-                  </div>
-                </div>
-                <div
-                  class="c17"
-                >
-                  <div
-                    class="form-check"
-                  >
-                    <input
-                      class="form-check-input"
-                      id="disposition"
-                      type="checkbox"
-                    />
-                    <label
-                      class="form-check-label"
-                      for="disposition"
-                      title=""
-                    >
-                      <div
-                        class="c21"
-                        color="#555555"
-                      />
-                       Disposition
-                    </label>
-                  </div>
-                </div>
-                <div
-                  class="c22"
-                >
-                  <div
-                    class="row no-gutters"
-                  >
-                    <div
-                      class="col-1"
-                    >
-                      <svg
-                        class="c23"
-                        fill="currentColor"
-                        height="1em"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 24 24"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="m10 17 5-5-5-5v10z"
-                        />
-                        <path
-                          d="M0 24V0h24v24H0z"
-                          fill="none"
-                        />
-                      </svg>
-                    </div>
-                    <div
-                      class="col"
-                    >
-                      <div
-                        class="form-check"
-                      >
-                        <input
-                          class="form-check-input"
-                          id="LeaseLayers"
-                          type="checkbox"
-                        />
-                        <label
-                          class="form-check-label"
-                          for="LeaseLayers"
-                          title=""
-                        >
-                          Lease
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="c22"
-                >
-                  <div
-                    class="row no-gutters"
-                  >
-                    <div
-                      class="col-1"
-                    >
-                      <svg
-                        class="c23"
-                        fill="currentColor"
-                        height="1em"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 24 24"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="m10 17 5-5-5-5v10z"
-                        />
-                        <path
-                          d="M0 24V0h24v24H0z"
-                          fill="none"
-                        />
-                      </svg>
-                    </div>
-                    <div
-                      class="col"
-                    >
-                      <div
-                        class="form-check"
-                      >
-                        <input
-                          class="form-check-input"
-                          id="InterestLayers"
-                          type="checkbox"
-                        />
-                        <label
-                          class="form-check-label"
-                          for="InterestLayers"
-                          title=""
-                        >
-                          Interests
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div
-              class="c15 form-section"
-            >
-              <h2
-                class="c16"
-              >
-                <div
-                  class="no-gutters row"
-                >
-                  <div
-                    class="align-content-end col"
-                  >
-                    External
-                  </div>
-                </div>
-              </h2>
-              <div
-                class="collapse show"
-              >
-                <div
-                  class="c17"
-                >
-                  <div
-                    class="form-check"
-                  >
-                    <input
-                      class="form-check-input"
-                      id="pmbc_parcel_pid"
-                      type="checkbox"
-                    />
-                    <label
-                      class="form-check-label"
-                      for="pmbc_parcel_pid"
-                      title=""
-                    >
-                       Parcels PID
-                    </label>
-                  </div>
-                </div>
-                <div
-                  class="c22"
-                >
-                  <div
-                    class="row no-gutters"
-                  >
-                    <div
-                      class="col-1"
-                    >
-                      <svg
-                        class="c23"
-                        fill="currentColor"
-                        height="1em"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 24 24"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="m10 17 5-5-5-5v10z"
-                        />
-                        <path
-                          d="M0 24V0h24v24H0z"
-                          fill="none"
-                        />
-                      </svg>
-                    </div>
-                    <div
-                      class="col"
-                    >
-                      <div
-                        class="form-check"
-                      >
-                        <input
-                          class="form-check-input"
-                          id="administrative_group"
-                          type="checkbox"
-                        />
-                        <label
-                          class="form-check-label"
-                          for="administrative_group"
-                          title=""
-                        >
-                          Administrative Boundaries
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="c22"
-                >
-                  <div
-                    class="row no-gutters"
-                  >
-                    <div
-                      class="col-1"
-                    >
-                      <svg
-                        class="c23"
-                        fill="currentColor"
-                        height="1em"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 24 24"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="m10 17 5-5-5-5v10z"
-                        />
-                        <path
-                          d="M0 24V0h24v24H0z"
-                          fill="none"
-                        />
-                      </svg>
-                    </div>
-                    <div
-                      class="col"
-                    >
-                      <div
-                        class="form-check"
-                      >
-                        <input
-                          class="form-check-input"
-                          id="legalHighwayResearch"
-                          type="checkbox"
-                        />
-                        <label
-                          class="form-check-label"
-                          for="legalHighwayResearch"
-                          title=""
-                        >
-                          Legal Highway Research
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="c22"
-                >
-                  <div
-                    class="row no-gutters"
-                  >
-                    <div
-                      class="col-1"
-                    >
-                      <svg
-                        class="c23"
-                        fill="currentColor"
-                        height="1em"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 24 24"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="m10 17 5-5-5-5v10z"
-                        />
-                        <path
-                          d="M0 24V0h24v24H0z"
-                          fill="none"
-                        />
-                      </svg>
-                    </div>
-                    <div
-                      class="col"
-                    >
-                      <div
-                        class="form-check"
-                      >
-                        <input
-                          class="form-check-input"
-                          id="firstNations"
-                          type="checkbox"
-                        />
-                        <label
-                          class="form-check-label"
-                          for="firstNations"
-                          title=""
-                        >
-                          First Nations
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="c22"
-                >
-                  <div
-                    class="row no-gutters"
-                  >
-                    <div
-                      class="col-1"
-                    >
-                      <svg
-                        class="c23"
-                        fill="currentColor"
-                        height="1em"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 24 24"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="m10 17 5-5-5-5v10z"
-                        />
-                        <path
-                          d="M0 24V0h24v24H0z"
-                          fill="none"
-                        />
-                      </svg>
-                    </div>
-                    <div
-                      class="col"
-                    >
-                      <div
-                        class="form-check"
-                      >
-                        <input
-                          class="form-check-input"
-                          id="landOwnership"
-                          type="checkbox"
-                        />
-                        <label
-                          class="form-check-label"
-                          for="landOwnership"
-                          title=""
-                        >
-                          Land Ownership
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="c22"
-                >
-                  <div
-                    class="row no-gutters"
-                  >
-                    <div
-                      class="col-1"
-                    >
-                      <svg
-                        class="c23"
-                        fill="currentColor"
-                        height="1em"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 24 24"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="m10 17 5-5-5-5v10z"
-                        />
-                        <path
-                          d="M0 24V0h24v24H0z"
-                          fill="none"
-                        />
-                      </svg>
-                    </div>
-                    <div
-                      class="col"
-                    >
-                      <div
-                        class="form-check"
-                      >
-                        <input
-                          class="form-check-input"
-                          id="zoning"
-                          type="checkbox"
-                        />
-                        <label
-                          class="form-check-label"
-                          for="zoning"
-                          title=""
-                        >
-                          Zoning
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="c22"
-                >
-                  <div
-                    class="row no-gutters"
-                  >
-                    <div
-                      class="col-1"
-                    >
-                      <svg
-                        class="c23"
-                        fill="currentColor"
-                        height="1em"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 24 24"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="m10 17 5-5-5-5v10z"
-                        />
-                        <path
-                          d="M0 24V0h24v24H0z"
-                          fill="none"
-                        />
-                      </svg>
-                    </div>
-                    <div
-                      class="col"
-                    >
-                      <div
-                        class="form-check"
-                      >
-                        <input
-                          class="form-check-input"
-                          id="electoral"
-                          type="checkbox"
-                        />
-                        <label
-                          class="form-check-label"
-                          for="electoral"
-                          title=""
-                        >
-                          Electoral
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="c22"
-                >
-                  <div
-                    class="row no-gutters"
-                  >
-                    <div
-                      class="col-1"
-                    >
-                      <svg
-                        class="c23"
-                        fill="currentColor"
-                        height="1em"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 24 24"
-                        width="1em"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="m10 17 5-5-5-5v10z"
-                        />
-                        <path
-                          d="M0 24V0h24v24H0z"
-                          fill="none"
-                        />
-                      </svg>
-                    </div>
-                    <div
-                      class="col"
-                    >
-                      <div
-                        class="form-check"
-                      >
-                        <input
-                          class="form-check-input"
-                          id="federal_bc_parks"
-                          type="checkbox"
-                        />
-                        <label
-                          class="form-check-label"
-                          for="federal_bc_parks"
-                          title=""
-                        >
-                          Federal/BC Parks
-                        </label>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </form>
       </div>
     </div>
   </div>

@@ -37,6 +37,11 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
   flex-wrap: nowrap;
 }
 
+.c8 {
+  padding: 0 0.4rem;
+  display: block;
+}
+
 .c7 {
   float: right;
   cursor: pointer;
@@ -95,11 +100,6 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
 
 .c6 .btn {
   margin: 0;
-}
-
-.c8 {
-  padding: 0 0.4rem;
-  display: block;
 }
 
 .c10 {
