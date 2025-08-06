@@ -226,7 +226,7 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
           <label
             class="c3"
           >
-            MOTI contact:
+            MOTT contact:
           </label>
         </div>
         <div
@@ -244,7 +244,7 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
           <label
             class="c3"
           >
-            MOTI region:
+            MOTT region:
           </label>
         </div>
         <div
@@ -541,7 +541,7 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
           <label
             class="c3"
           >
-            MOTI contact:
+            MOTT contact:
           </label>
         </div>
         <div
@@ -557,7 +557,7 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
           <label
             class="c3"
           >
-            MOTI region:
+            MOTT region:
           </label>
         </div>
         <div

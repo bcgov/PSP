@@ -65,7 +65,7 @@ export const columns: ColumnWithProps<AcquisitionSearchResultModel>[] = [
     maxWidth: 40,
   },
   {
-    Header: 'MOTI Region',
+    Header: 'MOTT region',
     accessor: 'regionCode',
     align: 'left',
     clickable: true,
