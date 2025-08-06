@@ -143,9 +143,9 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
               }}
             >
               {isMinimized ? (
-                <FaPlus data-testid="toggle-icon" size={18} title="Toggle quick info" />
+                <FaPlus data-testid="toggle-icon" size={18} title="Open quick info" />
               ) : (
-                <FaMinus data-testid="toggle-icon" size={18} title="Toggle quick info" />
+                <FaMinus data-testid="toggle-icon" size={18} title="Minimize quick info" />
               )}
             </StyledIconWrapper>
           </TooltipWrapper>

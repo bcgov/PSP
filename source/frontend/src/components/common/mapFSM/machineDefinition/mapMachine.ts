@@ -307,7 +307,7 @@ const selectedFeatureLoaderStates = {
             raise('FINISHED_LOCATION_DATA_LOAD'),
           ],
         },
-        Error: {
+        onError: {
           target: 'idle',
           actions: assign({
             isLoading: () => false,

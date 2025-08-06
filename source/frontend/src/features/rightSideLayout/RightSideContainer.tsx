@@ -1,4 +1,3 @@
-import { Dictionary } from '@reduxjs/toolkit/dist/entities/models';
 import { useMemo } from 'react';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
@@ -7,6 +6,7 @@ import { FilterContentForm } from '@/components/maps/leaflet/Control/AdvancedFil
 import { LayersMenu } from '@/components/maps/leaflet/Control/LayersControl/LayersMenu';
 import { SearchContainer } from '@/components/maps/leaflet/Control/Search/SearchContainer';
 import { SearchView } from '@/components/maps/leaflet/Control/Search/SearchView';
+import { Dictionary } from '@/interfaces/Dictionary';
 
 import { WorklistContainer } from '../properties/worklist/WorklistContainer';
 import { WorklistView } from '../properties/worklist/WorklistView';
@@ -16,14 +16,14 @@ interface StateDefinition {
   title: string;
   tooltipText: string;
   testDataId: string;
-  component: any;
+  component: React.ReactNode;
 }
 
 interface SelectedState extends StateDefinition {
   toggleCallback: () => void;
 }
 
-const Buttonsssss: Dictionary<StateDefinition> = {
+const ButtonsDefinition: Dictionary<StateDefinition> = {
   filter: {
     title: 'Filter By:',
     tooltipText: 'Close Advanced Map Filters',
@@ -64,13 +64,13 @@ const RightSideContainer: React.FC<React.PropsWithChildren<unknown>> = () => {
 
   const rightSideContent: SelectedState = useMemo(() => {
     if (isShowingMapFilter) {
-      return { ...Buttonsssss['filter'], toggleCallback: toggleMapFilterDisplay };
+      return { ...ButtonsDefinition['filter'], toggleCallback: toggleMapFilterDisplay };
     } else if (isShowingMapLayers) {
-      return { ...Buttonsssss['layers'], toggleCallback: toggleMapLayerControl };
+      return { ...ButtonsDefinition['layers'], toggleCallback: toggleMapLayerControl };
     } else if (isShowingMapSearch) {
-      return { ...Buttonsssss['search'], toggleCallback: toggleMapSearchControl };
+      return { ...ButtonsDefinition['search'], toggleCallback: toggleMapSearchControl };
     } else if (isShowingWorkList) {
-      return { ...Buttonsssss['workingList'], toggleCallback: toggleWorkListControl };
+      return { ...ButtonsDefinition['workingList'], toggleCallback: toggleWorkListControl };
     } else {
       return null;
     }
