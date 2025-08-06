@@ -6,27 +6,30 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-/// <summary>
-/// Associates a property management activity to a vendor (many-to-many).
-/// </summary>
-[Table("PIMS_PROP_ACT_INVOLVED_PARTY")]
-[Index("OrganizationId", Name = "PAINVP_ORGANIZATION_ID_IDX")]
-[Index("PersonId", Name = "PAINVP_PERSON_ID_IDX")]
-[Index("PimsManagementActivityId", Name = "PAINVP_PIMS_PROPERTY_ACTIVITY_ID_IDX")]
-public partial class PimsPropActInvolvedParty
+[Table("PIMS_MGMT_ACTIVITY_ACTIVITY_SUBTYP_HIST")]
+[Index("MgmtActivityActivitySubtypHistId", "EndDateHist", Name = "PIMS_MAASTY_H_UK", IsUnique = true)]
+public partial class PimsMgmtActivityActivitySubtypHist
 {
     [Key]
-    [Column("PROP_ACT_INVOLVED_PARTY_ID")]
-    public long PropActInvolvedPartyId { get; set; }
+    [Column("_MGMT_ACTIVITY_ACTIVITY_SUBTYP_HIST_ID")]
+    public long MgmtActivityActivitySubtypHistId { get; set; }
 
-    [Column("PIMS_MANAGEMENT_ACTIVITY_ID")]
-    public long PimsManagementActivityId { get; set; }
+    [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
+    public DateTime EffectiveDateHist { get; set; }
 
-    [Column("PERSON_ID")]
-    public long? PersonId { get; set; }
+    [Column("END_DATE_HIST", TypeName = "datetime")]
+    public DateTime? EndDateHist { get; set; }
 
-    [Column("ORGANIZATION_ID")]
-    public long? OrganizationId { get; set; }
+    [Column("MGMT_ACTIVITY_ACTIVITY_SUBTYP_ID")]
+    public long MgmtActivityActivitySubtypId { get; set; }
+
+    [Column("MANAGEMENT_ACTIVITY_ID")]
+    public long ManagementActivityId { get; set; }
+
+    [Required]
+    [Column("MGMT_ACTIVITY_SUBTYPE_CODE")]
+    [StringLength(20)]
+    public string MgmtActivitySubtypeCode { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
@@ -66,7 +69,6 @@ public partial class PimsPropActInvolvedParty
     [Column("DB_CREATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime DbCreateTimestamp { get; set; }
 
-    [Required]
     [Column("DB_CREATE_USERID")]
     [StringLength(30)]
     public string DbCreateUserid { get; set; }
@@ -78,16 +80,4 @@ public partial class PimsPropActInvolvedParty
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
-
-    [ForeignKey("OrganizationId")]
-    [InverseProperty("PimsPropActInvolvedParties")]
-    public virtual PimsOrganization Organization { get; set; }
-
-    [ForeignKey("PersonId")]
-    [InverseProperty("PimsPropActInvolvedParties")]
-    public virtual PimsPerson Person { get; set; }
-
-    [ForeignKey("PimsManagementActivityId")]
-    [InverseProperty("PimsPropActInvolvedParties")]
-    public virtual PimsManagementActivity PimsManagementActivity { get; set; }
 }

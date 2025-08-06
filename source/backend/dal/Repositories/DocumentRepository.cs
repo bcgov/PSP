@@ -51,7 +51,8 @@ namespace Pims.Dal.Repositories
                 .Include(d => d.PimsProjectDocuments)
                 .Include(d => d.PimsFormTypes)
                 .Include(d => d.PimsLeaseDocuments)
-                .Include(d => d.PimsPropertyActivityDocuments)
+                .Include(d => d.PimsManagementFileDocuments)
+                .Include(d => d.PimsMgmtActivityDocuments)
                 .Include(d => d.PimsDispositionFileDocuments)
                 .Where(d => d.DocumentId == documentId)
                 .AsNoTracking()
@@ -111,47 +112,52 @@ namespace Pims.Dal.Repositories
                 .Include(d => d.PimsProjectDocuments)
                 .Include(d => d.PimsFormTypes)
                 .Include(d => d.PimsLeaseDocuments)
-                .Include(d => d.PimsPropertyActivityDocuments)
+                .Include(d => d.PimsManagementFileDocuments)
+                .Include(d => d.PimsMgmtActivityDocuments)
                 .Include(d => d.PimsDispositionFileDocuments)
                 .Where(d => d.DocumentId == document.Internal_Id)
-                .AsNoTracking()
                 .FirstOrDefault();
 
-            foreach (var pimsResearchFileDocument in documentToDelete.PimsResearchFileDocuments)
+            if(documentToDelete.PimsResearchFileDocuments.Count > 0)
             {
-                Context.PimsResearchFileDocuments.Remove(new PimsResearchFileDocument() { Internal_Id = pimsResearchFileDocument.Internal_Id });
+                Context.PimsResearchFileDocuments.RemoveRange(documentToDelete.PimsResearchFileDocuments);
             }
 
-            foreach (var pimsAcquisitionFileDocument in documentToDelete.PimsAcquisitionFileDocuments)
+            if (documentToDelete.PimsAcquisitionFileDocuments.Count > 0)
             {
-                Context.PimsAcquisitionFileDocuments.Remove(new PimsAcquisitionFileDocument() { Internal_Id = pimsAcquisitionFileDocument.Internal_Id });
+                Context.PimsAcquisitionFileDocuments.RemoveRange(documentToDelete.PimsAcquisitionFileDocuments);
             }
 
-            foreach (var pimsProjectDocument in documentToDelete.PimsProjectDocuments)
+            if(documentToDelete.PimsProjectDocuments.Count > 0)
             {
-                Context.PimsProjectDocuments.Remove(new PimsProjectDocument() { Internal_Id = pimsProjectDocument.Internal_Id });
+                Context.PimsProjectDocuments.RemoveRange(documentToDelete.PimsProjectDocuments);
             }
 
-            foreach (var pimsLeaseDocument in documentToDelete.PimsLeaseDocuments)
+            if(documentToDelete.PimsLeaseDocuments.Count > 0)
             {
-                Context.PimsLeaseDocuments.Remove(new PimsLeaseDocument() { Internal_Id = pimsLeaseDocument.Internal_Id });
+                Context.PimsLeaseDocuments.RemoveRange(documentToDelete.PimsLeaseDocuments);
             }
 
-            foreach (var pimsPropertyActivityDocument in documentToDelete.PimsPropertyActivityDocuments)
+            if (documentToDelete.PimsManagementFileDocuments.Count > 0)
             {
-                Context.PimsPropertyActivityDocuments.Remove(new PimsPropertyActivityDocument() { Internal_Id = pimsPropertyActivityDocument.Internal_Id });
+                Context.PimsManagementFileDocuments.RemoveRange(documentToDelete.PimsManagementFileDocuments);
             }
 
-            foreach (var pimsDispositionFileDocument in documentToDelete.PimsDispositionFileDocuments)
+            if (documentToDelete.PimsMgmtActivityDocuments.Count > 0)
             {
-                Context.PimsDispositionFileDocuments.Remove(new PimsDispositionFileDocument() { Internal_Id = pimsDispositionFileDocument.Internal_Id });
+                Context.PimsMgmtActivityDocuments.RemoveRange(documentToDelete.PimsMgmtActivityDocuments);
             }
 
-            foreach (var pimsFormTypeDocument in documentToDelete.PimsFormTypes)
+            if(documentToDelete.PimsDispositionFileDocuments.Count > 0)
+            {
+                Context.PimsDispositionFileDocuments.RemoveRange(documentToDelete.PimsDispositionFileDocuments);
+            }
+
+            foreach (var pimsFormTypeDocument in documentToDelete.PimsFormTypes.ToList())
             {
                 var updatedFormType = pimsFormTypeDocument;
                 updatedFormType.DocumentId = null;
-                Context.Entry(pimsFormTypeDocument).Property(x => x.DocumentId).IsModified = true;
+                Context.Entry(updatedFormType).Property(x => x.DocumentId).IsModified = true;
             }
 
             if (commitTransaction)
@@ -159,7 +165,7 @@ namespace Pims.Dal.Repositories
                 Context.CommitTransaction(); // TODO: required to enforce delete order. Can be removed when cascade deletes are implemented.
             }
 
-            Context.PimsDocuments.Remove(new PimsDocument() { Internal_Id = document.Internal_Id });
+            Context.PimsDocuments.Remove(documentToDelete);
 
             return true;
         }
@@ -186,7 +192,8 @@ namespace Pims.Dal.Repositories
                 .Include(d => d.PimsProjectDocuments)
                 .Include(d => d.PimsFormTypes)
                 .Include(d => d.PimsLeaseDocuments)
-                .Include(d => d.PimsPropertyActivityDocuments)
+                .Include(d => d.PimsManagementFileDocuments)
+                .Include(d => d.PimsMgmtActivityDocuments)
                 .Include(d => d.PimsDispositionFileDocuments)
                 .Where(d => d.DocumentId == documentId)
                 .AsNoTracking()
@@ -197,7 +204,8 @@ namespace Pims.Dal.Repositories
                     documentRelationships.PimsProjectDocuments.Count +
                     documentRelationships.PimsFormTypes.Count +
                     documentRelationships.PimsLeaseDocuments.Count +
-                    documentRelationships.PimsPropertyActivityDocuments.Count +
+                    documentRelationships.PimsManagementFileDocuments.Count +
+                    documentRelationships.PimsMgmtActivityDocuments.Count +
                     documentRelationships.PimsDispositionFileDocuments.Count;
         }
 

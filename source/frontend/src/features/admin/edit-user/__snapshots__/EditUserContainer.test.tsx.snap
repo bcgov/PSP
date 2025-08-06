@@ -662,7 +662,7 @@ exports[`EditUserContainer component > makes a request based on the user id 1`] 
         <label
           class="c0"
         >
-          MoTI Region(s):
+          MOTT region(s):
         </label>
       </div>
       <div

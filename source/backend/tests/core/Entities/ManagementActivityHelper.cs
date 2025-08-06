@@ -18,19 +18,19 @@ namespace Pims.Core.Test
         /// <returns>New Instance of PimsPropertyActivity.</returns>
         public static PimsManagementActivity CreateManagementActivity(long id, string activityTypeCode = "PROPERTYMTC", string activitySubTypeCode = "LANDSCAPING", string activityStatusTypeCode = "NOTSTARTED")
         {
-            PimsManagementActivity managementActivity = new PimsManagementActivity()
+            PimsManagementActivity managementActivity = new ()
             {
                 Internal_Id = id,
-                PropMgmtActivityTypeCode = activityTypeCode,
-                PimsPropActivityMgmtActivities = new List<PimsPropActivityMgmtActivity>()
+                MgmtActivityTypeCode = activityTypeCode,
+                PimsMgmtActivityActivitySubtyps = new List<PimsMgmtActivityActivitySubtyp>()
                 {
                     new ()
                     {
-                        PimsManagementActivityId = id,
-                        PropMgmtActivitySubtypeCode = activitySubTypeCode,
+                        ManagementActivityId = id,
+                        MgmtActivitySubtypeCode = activitySubTypeCode,
                     },
                 },
-                PropMgmtActivityStatusTypeCode = activityStatusTypeCode,
+                MgmtActivityStatusTypeCode = activityStatusTypeCode,
             };
 
             return managementActivity;

@@ -110,7 +110,7 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
 
       <Section header="Property Attributes">
         <SectionField label="Legal description">{property?.landLegalDescription}</SectionField>
-        <SectionField label="MOTI region">{property?.region?.description}</SectionField>
+        <SectionField label="MOTT region">{property?.region?.description}</SectionField>
         <SectionField label="Highways district">
           <InlineContainer>
             {property?.district?.description !== 'Cannot determine' && (
