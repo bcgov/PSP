@@ -113,7 +113,7 @@ describe('WorklistContainer', () => {
   });
 
   it('calls requestFlyToLocation when parcel has no feature', async () => {
-    mockParcels[0].feature = null;
+    mockParcels[0].pmbcFeature = null;
 
     const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,

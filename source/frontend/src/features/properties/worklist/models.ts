@@ -9,20 +9,20 @@ export class ParcelFeature {
   public id: string;
   public name: string;
   location: LatLngLiteral | null;
-  public feature: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties> | null;
+  public pmbcFeature: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties> | null;
 
   public constructor(id?: string) {
     this.id = id ?? uuidv4();
     this.name = '';
     this.location = null;
-    this.feature = null;
+    this.pmbcFeature = null;
   }
 
   public static fromFullyAttributedFeature(
     feature: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties> | null,
   ) {
     const parcelFeature = new ParcelFeature();
-    parcelFeature.feature = feature;
+    parcelFeature.pmbcFeature = feature;
     return parcelFeature;
   }
 
@@ -30,7 +30,7 @@ export class ParcelFeature {
     const parcelFeature = new ParcelFeature();
     parcelFeature.id = featureSet.id ?? uuidv4();
     parcelFeature.location = featureSet.location;
-    parcelFeature.feature = featureSet.parcelFeature;
+    parcelFeature.pmbcFeature = featureSet.parcelFeature;
     return parcelFeature;
   }
 
@@ -40,7 +40,7 @@ export class ParcelFeature {
       location: this.location ?? { lat: 0, lng: 0 },
       fileLocation: this.location ?? null,
       id: this.id,
-      parcelFeature: this.feature,
+      parcelFeature: this.pmbcFeature,
       pimsFeature: null,
       regionFeature: null,
       districtFeature: null,

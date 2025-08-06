@@ -31,7 +31,7 @@ export const WorklistMapClickMonitor: React.FunctionComponent<unknown> = () => {
         // We didn't find any parcel-map properties - add a lat/long location to the worklist
         const latLongParcel = new ParcelFeature();
         latLongParcel.location = worklistLocationFeatureDataset.location;
-        latLongParcel.feature = null;
+        latLongParcel.pmbcFeature = null;
         add(latLongParcel);
       }
     }

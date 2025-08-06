@@ -112,22 +112,22 @@ function areParcelsEqual(p1: ParcelFeature, p2: ParcelFeature): boolean {
     return true;
   }
 
-  const pid1 = pidFromFullyAttributedFeature(p1.feature) ?? null;
-  const pid2 = pidFromFullyAttributedFeature(p2.feature) ?? null;
+  const pid1 = pidFromFullyAttributedFeature(p1.pmbcFeature) ?? null;
+  const pid2 = pidFromFullyAttributedFeature(p2.pmbcFeature) ?? null;
   if (exists(pid1) && pid1 === pid2) {
     return true;
   }
 
-  const pin1 = pinFromFullyAttributedFeature(p1.feature) ?? null;
-  const pin2 = pinFromFullyAttributedFeature(p2.feature) ?? null;
+  const pin1 = pinFromFullyAttributedFeature(p1.pmbcFeature) ?? null;
+  const pin2 = pinFromFullyAttributedFeature(p2.pmbcFeature) ?? null;
   if (exists(pin1) && pin1 === pin2) {
     return true;
   }
 
   // Some parcels are only identified by their plan-number (e.g. common strata, parks)
   // Only consider plan-number as an identifier when there are no PID/PIN
-  const planNumber1 = planFromFullyAttributedFeature(p1.feature) ?? null;
-  const planNumber2 = planFromFullyAttributedFeature(p2.feature) ?? null;
+  const planNumber1 = planFromFullyAttributedFeature(p1.pmbcFeature) ?? null;
+  const planNumber2 = planFromFullyAttributedFeature(p2.pmbcFeature) ?? null;
   if (
     exists(planNumber1) &&
     !exists(pid1) &&

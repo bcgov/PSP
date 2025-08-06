@@ -155,7 +155,7 @@ describe('WorklistContextProvider', () => {
 
     act(() => result.current.addRange([p1, dupe, p2]));
 
-    expect(result.current.parcels.map(p => p.feature?.properties?.PID)).toEqual([
+    expect(result.current.parcels.map(p => p.pmbcFeature?.properties?.PID)).toEqual([
       '111',
       '222',
       '333',

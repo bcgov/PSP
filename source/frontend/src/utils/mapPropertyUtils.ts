@@ -70,9 +70,9 @@ export const getWorklistPropertyName = (parcelFeature: ParcelFeature | null): Pr
     return { label: NameSourceType.NONE, value: '' };
   }
 
-  const pid = pidFromFullyAttributedFeature(parcelFeature.feature);
-  const pin = pinFromFullyAttributedFeature(parcelFeature.feature);
-  const planNumber = planFromFullyAttributedFeature(parcelFeature.feature);
+  const pid = pidFromFullyAttributedFeature(parcelFeature.pmbcFeature);
+  const pin = pinFromFullyAttributedFeature(parcelFeature.pmbcFeature);
+  const planNumber = planFromFullyAttributedFeature(parcelFeature.pmbcFeature);
   const location = parcelFeature.location;
 
   if (exists(pid) && pid?.toString()?.length > 0 && pid !== '0') {
