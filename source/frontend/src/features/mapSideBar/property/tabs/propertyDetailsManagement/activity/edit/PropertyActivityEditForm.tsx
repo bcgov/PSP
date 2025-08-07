@@ -17,9 +17,9 @@ import * as Styled from '@/components/common/styles';
 import { TrayHeaderContent } from '@/components/common/styles';
 import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
 import {
-  PROP_MGMT_ACTIVITY_STATUS_TYPES,
-  PROP_MGMT_ACTIVITY_SUBTYPES_TYPES,
-  PROP_MGMT_ACTIVITY_TYPES,
+  MGMT_ACTIVITY_STATUS_TYPES,
+  MGMT_ACTIVITY_SUBTYPES_TYPES,
+  MGMT_ACTIVITY_TYPES,
 } from '@/constants/API';
 import SaveCancelButtons from '@/features/leases/SaveCancelButtons';
 import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';
@@ -59,14 +59,10 @@ export const PropertyActivityEditForm: React.FunctionComponent<
     useState<ManagementActivitySubTypeModel[]>(null);
 
   const lookupCodes = useLookupCodeHelpers();
-  const activityTypeOptions = lookupCodes
-    .getByType(PROP_MGMT_ACTIVITY_TYPES)
-    .map(c => mapLookupCode(c));
-  const activitySubTypeCodes: ILookupCode[] = lookupCodes.getByType(
-    PROP_MGMT_ACTIVITY_SUBTYPES_TYPES,
-  );
+  const activityTypeOptions = lookupCodes.getByType(MGMT_ACTIVITY_TYPES).map(c => mapLookupCode(c));
+  const activitySubTypeCodes: ILookupCode[] = lookupCodes.getByType(MGMT_ACTIVITY_SUBTYPES_TYPES);
   const activityStatusOptions = lookupCodes
-    .getByType(PROP_MGMT_ACTIVITY_STATUS_TYPES)
+    .getByType(MGMT_ACTIVITY_STATUS_TYPES)
     .map(c => mapLookupCode(c));
 
   const onActivityTypeChange = async (changeEvent: ChangeEvent<HTMLInputElement>) => {
