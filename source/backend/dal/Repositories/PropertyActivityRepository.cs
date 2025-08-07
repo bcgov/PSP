@@ -172,17 +172,20 @@ namespace Pims.Dal.Repositories
                 if (Context.PimsPropPropActivities.Count(x => x.PimsPropertyActivityId == propertyActivityRelationships.PimsPropertyActivityId) > 1)
                 {
                     Context.PimsPropPropActivities.Remove(propertyActivityRelationships);
-                    deletedSuccessfully = true;
                 }
                 else
                 {
                     Context.PimsPropPropActivities.Remove(propertyActivityRelationships);
 
-                    var propertyActivity = Context.PimsPropertyActivities.FirstOrDefault(x => x.PimsPropertyActivityId.Equals(propertyActivityRelationships.PimsPropertyActivityId));
-                    Context.PimsPropertyActivities.Remove(propertyActivity);
+                    var propertyActivity = Context.PimsPropertyActivities
+                        .Include(st => st.PimsPropActivityMgmtActivities)
+                        .FirstOrDefault(x => x.PimsPropertyActivityId.Equals(propertyActivityRelationships.PimsPropertyActivityId));
 
-                    deletedSuccessfully = true;
+                    Context.PimsPropActivityMgmtActivities.RemoveRange(propertyActivity.PimsPropActivityMgmtActivities);
+                    Context.PimsPropertyActivities.Remove(propertyActivity);
                 }
+
+                deletedSuccessfully = true;
             }
 
             return deletedSuccessfully;
@@ -196,18 +199,17 @@ namespace Pims.Dal.Repositories
         public bool TryDeleteByFile(long activityId, long managementFileId)
         {
             var propertyActivity = Context.PimsPropertyActivities
-                .Include(pa => pa.PimsPropPropActivities).FirstOrDefault(x => x.PimsPropertyActivityId == activityId && x.ManagementFileId == managementFileId);
+                .Include(pa => pa.PimsPropPropActivities)
+                .Include(st => st.PimsPropActivityMgmtActivities)
+                .FirstOrDefault(x => x.PimsPropertyActivityId == activityId && x.ManagementFileId == managementFileId);
 
             if (propertyActivity is null)
             {
-                return false;
+                return true;
             }
 
-            // There may be zero to many of these relationships.
-            propertyActivity.PimsPropPropActivities.ForEach(pp =>
-            {
-                Context.PimsPropPropActivities.Remove(pp);
-            });
+            Context.PimsPropPropActivities.RemoveRange(propertyActivity.PimsPropPropActivities);
+            Context.PimsPropActivityMgmtActivities.RemoveRange(propertyActivity.PimsPropActivityMgmtActivities);
 
             Context.PimsPropertyActivities.Remove(propertyActivity);
 

@@ -81,7 +81,7 @@ namespace Pims.Scheduler.Test.Services
         public async Task UploadQueuedDocuments_SingleDocumentError_ReturnsError()
         {
             // Arrange
-            var document = new DocumentQueueModel { Id = 1, DocumentQueueStatusType = new CodeTypeModel<string>() { Id = DocumentQueueStatusTypes.PROCESSING.ToString() } };
+            var document = new DocumentQueueModel { Id = 1, DocumentQueueStatusType = new CodeTypeModel<string>() { Id = DocumentQueueStatusTypes.PENDING.ToString() } };
             var searchResponse = new ExternalResponse<List<DocumentQueueModel>>
             {
                 Status = ExternalResponseStatus.Success,
@@ -106,7 +106,7 @@ namespace Pims.Scheduler.Test.Services
         public async Task UploadQueuedDocuments_SingleDocumentError_ReturnsError_UpdatesQueue()
         {
             // Arrange
-            var document = new DocumentQueueModel { Id = 1, DocumentQueueStatusType = new CodeTypeModel<string>() { Id = DocumentQueueStatusTypes.PROCESSING.ToString() } };
+            var document = new DocumentQueueModel { Id = 1, DocumentQueueStatusType = new CodeTypeModel<string>() { Id = DocumentQueueStatusTypes.PENDING.ToString() } };
             var searchResponse = new ExternalResponse<List<DocumentQueueModel>>
             {
                 Status = ExternalResponseStatus.Success,
@@ -136,7 +136,8 @@ namespace Pims.Scheduler.Test.Services
         public async Task UploadQueuedDocuments_SingleDocumentSuccess_ReturnsSuccess()
         {
             // Arrange
-            var document = new DocumentQueueModel { Id = 1, DocumentQueueStatusType = new CodeTypeModel<string>() { Id = DocumentQueueStatusTypes.PROCESSING.ToString() } };
+            var document = new DocumentQueueModel { Id = 1, DocumentQueueStatusType = new CodeTypeModel<string>() { Id = DocumentQueueStatusTypes.PENDING.ToString() } };
+            var responseDocument = new DocumentQueueModel { Id = 1, DocumentQueueStatusType = new CodeTypeModel<string>() { Id = DocumentQueueStatusTypes.PROCESSING.ToString() } };
             var searchResponse = new ExternalResponse<List<DocumentQueueModel>>
             {
                 Status = ExternalResponseStatus.Success,
@@ -146,7 +147,7 @@ namespace Pims.Scheduler.Test.Services
             _documentQueueRepositoryMock.Setup(x => x.UploadQueuedDocument(document)).ReturnsAsync(new ExternalResponse<DocumentQueueModel>
             {
                 Status = ExternalResponseStatus.Success,
-                Payload = document,
+                Payload = responseDocument,
             });
 
             // Act
@@ -157,11 +158,37 @@ namespace Pims.Scheduler.Test.Services
         }
 
         [Fact]
+        public async Task UploadQueuedDocuments_SingleDocumentSkipProcessing()
+        {
+            // Arrange
+            var document = new DocumentQueueModel { Id = 1, DocumentQueueStatusType = new CodeTypeModel<string>() { Id = DocumentQueueStatusTypes.PROCESSING.ToString() } };
+            var responseDocument = new DocumentQueueModel { Id = 1, DocumentQueueStatusType = new CodeTypeModel<string>() { Id = DocumentQueueStatusTypes.PROCESSING.ToString() } };
+            var searchResponse = new ExternalResponse<List<DocumentQueueModel>>
+            {
+                Status = ExternalResponseStatus.Success,
+                Payload = new List<DocumentQueueModel> { document },
+            };
+            _documentQueueRepositoryMock.Setup(x => x.SearchQueuedDocumentsAsync(It.IsAny<DocumentQueueFilter>())).ReturnsAsync(searchResponse);
+            _documentQueueRepositoryMock.Setup(x => x.UploadQueuedDocument(document)).ReturnsAsync(new ExternalResponse<DocumentQueueModel>
+            {
+                Status = ExternalResponseStatus.Success,
+                Payload = responseDocument,
+            });
+
+            // Act
+            var result = await _service.UploadQueuedDocuments();
+
+            // Assert
+            result.Status.Should().Be(TaskResponseStatusTypes.SKIPPED);
+        }
+
+        [Fact]
         public async Task UploadQueuedDocuments_TwoDocumentsMixedResults_ReturnsPartialSuccess()
         {
             // Arrange
-            var document1 = new DocumentQueueModel { Id = 1, DocumentQueueStatusType = new CodeTypeModel<string>() { Id = DocumentQueueStatusTypes.PROCESSING.ToString() } };
-            var document2 = new DocumentQueueModel { Id = 2, DocumentQueueStatusType = new CodeTypeModel<string>() { Id = DocumentQueueStatusTypes.PROCESSING.ToString() } };
+            var document1 = new DocumentQueueModel { Id = 1, DocumentQueueStatusType = new CodeTypeModel<string>() { Id = DocumentQueueStatusTypes.PENDING.ToString() } };
+            var document2 = new DocumentQueueModel { Id = 2, DocumentQueueStatusType = new CodeTypeModel<string>() { Id = DocumentQueueStatusTypes.PENDING.ToString() } };
+            var responseDocument1 = new DocumentQueueModel { Id = 1, DocumentQueueStatusType = new CodeTypeModel<string>() { Id = DocumentQueueStatusTypes.PROCESSING.ToString() } };
             var searchResponse = new ExternalResponse<List<DocumentQueueModel>>
             {
                 Status = ExternalResponseStatus.Success,
@@ -171,7 +198,7 @@ namespace Pims.Scheduler.Test.Services
             _documentQueueRepositoryMock.Setup(x => x.UploadQueuedDocument(document1)).ReturnsAsync(new ExternalResponse<DocumentQueueModel>
             {
                 Status = ExternalResponseStatus.Success,
-                Payload = document1,
+                Payload = responseDocument1,
             });
             _documentQueueRepositoryMock.Setup(x => x.UploadQueuedDocument(document2)).ReturnsAsync(new ExternalResponse<DocumentQueueModel>
             {

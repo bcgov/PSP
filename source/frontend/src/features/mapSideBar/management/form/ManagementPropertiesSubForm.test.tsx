@@ -75,8 +75,8 @@ describe('ManagementPropertiesSubForm component', () => {
 
     await waitFor(() => {
       expect(customSetFilePropertyLocations).toHaveBeenCalledWith<LocationBoundaryDataset[][]>([
-        { location: { lat: 0, lng: 0 }, boundary: null },
-        { location: { lat: 0, lng: 0 }, boundary: null },
+        { location: { lat: undefined, lng: undefined }, boundary: null, isActive: true },
+        { location: { lat: undefined, lng: undefined }, boundary: null, isActive: true },
       ]);
     });
 
@@ -91,7 +91,7 @@ describe('ManagementPropertiesSubForm component', () => {
 
     await waitFor(() => {
       expect(customSetFilePropertyLocations).toHaveBeenCalledWith<LocationBoundaryDataset[][]>([
-        { location: { lat: 0, lng: 0 }, boundary: null },
+        { location: { lat: undefined, lng: undefined }, boundary: null, isActive: true },
       ]);
     });
 
@@ -103,8 +103,8 @@ describe('ManagementPropertiesSubForm component', () => {
 
     await waitFor(() => {
       expect(customSetFilePropertyLocations).toHaveBeenCalledWith<LocationBoundaryDataset[][]>([
-        { location: { lat: 0, lng: 0 }, boundary: null },
-        { location: { lat: 0, lng: 0 }, boundary: null },
+        { location: { lat: undefined, lng: undefined }, boundary: null, isActive: true },
+        { location: { lat: undefined, lng: undefined }, boundary: null, isActive: true },
       ]);
     });
 
@@ -120,8 +120,8 @@ describe('ManagementPropertiesSubForm component', () => {
 
     await waitFor(() => {
       expect(customSetFilePropertyLocations).toHaveBeenCalledWith<LocationBoundaryDataset[][]>([
-        { location: { lat: 1, lng: 2 }, boundary: null },
-        { location: { lat: 0, lng: 0 }, boundary: null },
+        { location: { lat: 1, lng: 2 }, boundary: null, isActive: true },
+        { location: { lat: undefined, lng: undefined }, boundary: null, isActive: true },
       ]);
     });
   });
@@ -137,8 +137,8 @@ describe('ManagementPropertiesSubForm component', () => {
 
     await waitFor(() => {
       expect(customSetFilePropertyLocations).toHaveBeenCalledWith<LocationBoundaryDataset[][]>([
-        { location: { lat: 1, lng: 2 }, boundary: null },
-        { location: { lat: 3, lng: 4 }, boundary: null },
+        { location: { lat: 1, lng: 2 }, boundary: null, isActive: true },
+        { location: { lat: 3, lng: 4 }, boundary: null, isActive: true },
       ]);
     });
   });
