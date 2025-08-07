@@ -67,6 +67,7 @@ export const getMockLocationFeatureDataset = (): LocationFeatureDataset => ({
         COMPILED_IND: null,
         STATED_AREA: null,
         WHEN_CREATED: null,
+        SHAPE: null,
       },
     },
   ],

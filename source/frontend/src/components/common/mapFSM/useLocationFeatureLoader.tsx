@@ -64,6 +64,14 @@ export interface SelectedFeatureDataset extends FeatureDataset {
   displayOrder?: number;
 }
 
+export interface WorklistLocationFeatureDataset
+  extends Omit<FeatureDataset, 'selectingComponentId' | 'fileLocation'> {
+  fullyAttributedFeatures: FeatureCollection<
+    Geometry,
+    PMBC_FullyAttributed_Feature_Properties
+  > | null;
+}
+
 const useLocationFeatureLoader = () => {
   const fullyAttributedService = useFullyAttributedParcelMapLayer();
   const adminBoundaryLayerService = useAdminBoundaryMapLayer();
@@ -235,8 +243,25 @@ const useLocationFeatureLoader = () => {
     ],
   );
 
+  const loadWorklistLocationDetails = useCallback(
+    async ({ latLng }: { latLng: LatLngLiteral }): Promise<WorklistLocationFeatureDataset> => {
+      const result: WorklistLocationFeatureDataset = {
+        location: latLng,
+        fullyAttributedFeatures: null,
+      };
+
+      // This query can return multiple results
+      const pmbcFeatures = await fullyAttributedServiceFindAll(latLng);
+      result.fullyAttributedFeatures = pmbcFeatures ?? null;
+
+      return result;
+    },
+    [fullyAttributedServiceFindAll],
+  );
+
   return {
     loadLocationDetails,
+    loadWorklistLocationDetails,
   };
 };
 

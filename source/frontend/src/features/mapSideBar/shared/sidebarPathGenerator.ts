@@ -25,6 +25,7 @@ export interface IPathGeneratorMethods {
     detailType: string,
     replace: boolean,
   ) => void;
+  showPropertyByPid: (pid: string) => void;
 }
 
 export type IPathGenerator = () => IPathGeneratorMethods;
@@ -165,6 +166,15 @@ const usePathGenerator: IPathGenerator = () => {
     }
   };
 
+  const showPropertyByPid = (pid: string) => {
+    const a = `${sidebarBasePath}/non-inventory-property/pid/:pid`;
+    const path = generatePath(a, {
+      pid,
+    });
+
+    history.push(path);
+  };
+
   return {
     newFile,
     showFile,
@@ -176,6 +186,7 @@ const usePathGenerator: IPathGenerator = () => {
     editProperties,
     showFilePropertyId,
     showFilePropertyDetail,
+    showPropertyByPid,
   };
 };
 

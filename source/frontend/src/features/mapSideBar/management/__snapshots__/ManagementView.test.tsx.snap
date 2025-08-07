@@ -283,6 +283,11 @@ exports[`ManagementView component > renders as expected 1`] = `
   cursor: pointer;
 }
 
+.c41 {
+  padding: 0 0.4rem;
+  display: block;
+}
+
 .c5.btn.btn-light.Button {
   padding: 0;
   border: 0.1rem solid #9F9D9C;
@@ -495,11 +500,6 @@ exports[`ManagementView component > renders as expected 1`] = `
 
 .c39 .btn {
   margin: 0;
-}
-
-.c41 {
-  padding: 0 0.4rem;
-  display: block;
 }
 
 .c23 {

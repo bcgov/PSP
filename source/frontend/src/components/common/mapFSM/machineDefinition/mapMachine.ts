@@ -413,39 +413,41 @@ const sideBarStates = {
   },
 };
 
-const advancedFilterSideBarStates = {
+const rightSideBarStates = {
   initial: 'closed',
   states: {
     closed: {
       on: {
         TOGGLE_FILTER: {
-          target: 'mapFilterOpened',
+          target: 'filterVisible',
         },
         TOGGLE_LAYERS: {
-          target: 'layerControl',
+          target: 'layerVisible',
+        },
+        TOGGLE_SEARCH: {
+          target: 'searchVisible',
+        },
+        TOGGLE_WORKLIST: {
+          target: 'worklistVisible',
+        },
+        SHOW_SEARCH: {
+          target: 'searchVisible',
         },
       },
     },
-    layerControl: {
-      on: {
-        TOGGLE_FILTER: {
-          target: 'mapFilterOpened',
-        },
-        TOGGLE_LAYERS: {
-          target: 'closed',
-        },
-        SET_MAP_LAYERS: {
-          actions: assign({ activeLayers: (_, event: any) => event.activeLayers }),
-        },
-      },
-    },
-    mapFilterOpened: {
+    filterVisible: {
       on: {
         TOGGLE_FILTER: {
           target: 'closed',
         },
         TOGGLE_LAYERS: {
-          target: 'layerControl',
+          target: 'layerVisible',
+        },
+        TOGGLE_SEARCH: {
+          target: 'searchVisible',
+        },
+        TOGGLE_WORKLIST: {
+          target: 'worklistVisible',
         },
         SET_ADVANCED_SEARCH_CRITERIA: {
           actions: assign({
@@ -468,6 +470,134 @@ const advancedFilterSideBarStates = {
               advancedSearchCriteria: () => new PropertyFilterFormModel(),
             }),
           ],
+        },
+      },
+    },
+    layerVisible: {
+      on: {
+        TOGGLE_FILTER: {
+          target: 'filterVisible',
+        },
+        TOGGLE_LAYERS: {
+          target: 'closed',
+        },
+        TOGGLE_SEARCH: {
+          target: 'searchVisible',
+        },
+        TOGGLE_WORKLIST: {
+          target: 'worklistVisible',
+        },
+        SET_MAP_LAYERS: {
+          actions: assign({ activeLayers: (_, event: any) => event.activeLayers }),
+        },
+      },
+    },
+    searchVisible: {
+      on: {
+        TOGGLE_FILTER: {
+          target: 'filterVisible',
+        },
+        TOGGLE_LAYERS: {
+          target: 'layerVisible',
+        },
+        TOGGLE_SEARCH: {
+          target: 'closed',
+        },
+        TOGGLE_WORKLIST: {
+          target: 'worklistVisible',
+        },
+      },
+    },
+    worklistVisible: {
+      on: {
+        TOGGLE_FILTER: {
+          target: 'filterVisible',
+        },
+        TOGGLE_LAYERS: {
+          target: 'layerVisible',
+        },
+        TOGGLE_SEARCH: {
+          target: 'searchVisible',
+        },
+        TOGGLE_WORKLIST: {
+          target: 'closed',
+        },
+      },
+    },
+  },
+};
+
+const quickInfoStates = {
+  initial: 'closed',
+  states: {
+    closed: {
+      on: {
+        OPEN_QUICK_INFO: {
+          target: 'opened',
+        },
+        FINISHED_LOCATION_DATA_LOAD: {
+          target: 'opened',
+        },
+      },
+    },
+    opened: {
+      on: {
+        MIN_QUICK_INFO: {
+          target: 'minimized',
+        },
+        CLOSE_QUICK_INFO: {
+          target: 'closed',
+        },
+      },
+    },
+    minimized: {
+      on: {
+        OPEN_QUICK_INFO: {
+          target: 'opened',
+        },
+        CLOSE_QUICK_INFO: {
+          target: 'closed',
+        },
+      },
+    },
+  },
+};
+
+const selectedWorklistFeatureLoaderStates = {
+  initial: 'idle',
+  states: {
+    idle: {
+      on: {
+        WORKLIST_MAP_CLICK: {
+          actions: [
+            assign({
+              isLoading: () => true,
+              worklistSelectedMapLocation: (_, event: any) => event.latlng,
+              worklistLocationFeatureDataset: () => null,
+            }),
+          ],
+          target: 'loading',
+        },
+      },
+    },
+    loading: {
+      invoke: {
+        src: 'loadWorklistLocationData',
+        onDone: {
+          target: 'idle',
+          actions: [
+            assign({
+              isLoading: () => false,
+              worklistSelectedMapLocation: () => null,
+              worklistLocationFeatureDataset: (context: any, event: any) => event.data,
+            }),
+          ],
+        },
+        onError: {
+          target: 'idle',
+          actions: assign({
+            isLoading: () => false,
+          }),
         },
       },
     },
@@ -504,6 +634,8 @@ export const mapMachine = createMachine<MachineContext>({
     repositioningFeatureDataset: null,
     repositioningPropertyIndex: null,
     selectingComponentId: null,
+    worklistSelectedMapLocation: null,
+    worklistLocationFeatureDataset: null,
     isLoading: false,
     searchCriteria: null,
     advancedSearchCriteria: new PropertyFilterFormModel(),
@@ -579,7 +711,9 @@ export const mapMachine = createMachine<MachineContext>({
         mapRequest: mapRequestStates,
         selectedFeatureLoader: selectedFeatureLoaderStates,
         sideBar: sideBarStates,
-        advancedFilterSideBar: advancedFilterSideBarStates,
+        rightSideBar: rightSideBarStates,
+        quickInfo: quickInfoStates,
+        selectedWorklistFeatureLoader: selectedWorklistFeatureLoaderStates,
       },
     },
   },

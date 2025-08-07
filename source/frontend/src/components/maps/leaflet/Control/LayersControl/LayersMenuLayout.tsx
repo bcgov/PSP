@@ -250,6 +250,12 @@ export const layersMenuTree: LayerMenuEntry = {
               color: '#FC802D',
             },
             {
+              layerDefinitionId: 'crownSurveyParcels',
+              key: 'crownSurveyParcels',
+              label: 'Crown Surveyed Parcels',
+              color: '#777777',
+            },
+            {
               layerDefinitionId: 'parcelLayer',
               key: 'parcelBoundaries',
               label: 'Parcel Boundaries',
