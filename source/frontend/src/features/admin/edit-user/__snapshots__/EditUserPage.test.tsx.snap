@@ -651,7 +651,7 @@ exports[`Edit user page > EditUserPage renders 1`] = `
               <label
                 class="c2"
               >
-                MoTI Region(s):
+                MOTT region(s):
               </label>
             </div>
             <div

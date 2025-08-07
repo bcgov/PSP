@@ -1255,13 +1255,13 @@ exports[`ResearchProperties component > renders as expected when provided no pro
             >
               <button
                 class="c14 Button c23 btn btn-link"
+                data-testid="remove-button"
                 type="button"
               >
                 <div
                   class="Button__value"
                 >
                   <svg
-                    data-testid="remove-button"
                     fill="currentColor"
                     height="2rem"
                     stroke="currentColor"
@@ -1451,13 +1451,13 @@ exports[`ResearchProperties component > renders as expected when provided no pro
             >
               <button
                 class="c14 Button c23 btn btn-link"
+                data-testid="remove-button"
                 type="button"
               >
                 <div
                   class="Button__value"
                 >
                   <svg
-                    data-testid="remove-button"
                     fill="currentColor"
                     height="2rem"
                     stroke="currentColor"

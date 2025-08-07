@@ -25,7 +25,6 @@ import { useTenant } from '@/tenants';
 import { exists, firstOrNull } from '@/utils';
 
 import { defaultBounds, defaultLatLng } from './constants';
-import AdvancedFilterButton from './leaflet/Control/AdvancedFilter/AdvancedFilterButton';
 import BasemapToggle, { BasemapToggleEvent } from './leaflet/Control/BaseMapToggle/BasemapToggle';
 import { BaseLayer, isVectorBasemap } from './leaflet/Control/BaseMapToggle/types';
 import Control from './leaflet/Control/Control';
@@ -278,10 +277,6 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
         <Control position="topright">
           <Row noGutters>
             <Col xs="auto">
-              <AdvancedFilterButton
-                onToggle={mapMachine.toggleMapFilterDisplay}
-                active={mapMachine.isFiltering}
-              />
               <LayersControl onToggle={mapMachine.toggleMapLayerControl} />
               <SearchControl onToggle={mapMachine.toggleMapSearchControl} />
               <WorklistControl

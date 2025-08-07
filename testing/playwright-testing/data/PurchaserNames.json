@@ -1,0 +1,38 @@
+[
+  {
+    "Test Case Description": "Create DF with Offer and Sales Tab",
+    "PurchaserName": "TestingOrganisation",
+    "PurchaseMemberContactType": "Organization",
+    "PurchaseMemberPrimaryContact": "Sue Tairaku"
+  },
+  {
+    "Test Case Description": "Create DF with Offer and Sales Tab",
+    "PurchaserName": "Test West Coast Nissan Ltd.",
+    "PurchaseMemberContactType": "Organization",
+    "PurchaseMemberPrimaryContact": null
+  },
+  {
+    "Test Case Description": "Create DF with Offer and Sales Tab",
+    "PurchaserName": "ISLAND SAVINGS TEST CREDIT UNION",
+    "PurchaseMemberContactType": "Organization",
+    "PurchaseMemberPrimaryContact": "SHINDO GREWAL"
+  },
+  {
+    "Test Case Description": "Create DF with Offer and Sales Tab",
+    "PurchaserName": "Al Dommasch",
+    "PurchaseMemberContactType": "Individual",
+    "PurchaseMemberPrimaryContact": null
+  },
+  {
+    "Test Case Description": "Create DF with Offer and Sales Tab",
+    "PurchaserName": "Al Test Radke",
+    "PurchaseMemberContactType": "Individual",
+    "PurchaseMemberPrimaryContact": null
+  },
+  {
+    "Test Case Description": "Edit DF with Offer and Sales Tab",
+    "PurchaserName": "ISLAND SAVINGS TEST CREDIT UNION",
+    "PurchaseMemberContactType": "Organization",
+    "PurchaseMemberPrimaryContact": "SHINDO GREWAL"
+  }
+]

@@ -1,0 +1,152 @@
+[
+  {
+    "Test Case Description": "Create AF with Stakeholders",
+    "StakeholderType": "Interest",
+    "StakeholderContactType": "Organization",
+    "PayeeName": null,
+    "InterestHolder": "TRANS MOUNTAIN PIPELINE INC.",
+    "StakeholderPrimaryContact": "No contacts available/selected",
+    "InterestType": "Agriculture Credit Act",
+    "StakeholderIndex": 0
+  },
+  {
+    "Test Case Description": "Create AF with Stakeholders",
+    "StakeholderType": "Interest",
+    "StakeholderContactType": "Individual",
+    "PayeeName": null,
+    "InterestHolder": "Ali Thomson",
+    "StakeholderPrimaryContact": null,
+    "InterestType": "Equitable Charge",
+    "StakeholderIndex": 1
+  },
+  {
+    "Test Case Description": "Create AF with Stakeholders",
+    "StakeholderType": "Interest",
+    "StakeholderContactType": "Organization",
+    "PayeeName": null,
+    "InterestHolder": "TOYS R US(CANADA) LTD.",
+    "StakeholderPrimaryContact": "No contacts available/selected",
+    "InterestType": "Lis Pendens",
+    "StakeholderIndex": 2
+  },
+  {
+    "Test Case Description": "Create AF with Stakeholders",
+    "StakeholderType": "Interest",
+    "StakeholderContactType": "Individual",
+    "PayeeName": null,
+    "InterestHolder": "ALICE SHEN",
+    "StakeholderPrimaryContact": null,
+    "InterestType": "Restrictive Covenant",
+    "StakeholderIndex": 3
+  },
+  {
+    "Test Case Description": "Create AF with Stakeholders",
+    "StakeholderType": "Interest",
+    "StakeholderContactType": "Individual",
+    "PayeeName": null,
+    "InterestHolder": "Sou San Chiang",
+    "StakeholderPrimaryContact": null,
+    "InterestType": "Right of Way",
+    "StakeholderIndex": 4
+  },
+  {
+    "Test Case Description": "Create AF with Stakeholders",
+    "StakeholderType": "Non-Interest Payee",
+    "StakeholderContactType": "Organization",
+    "PayeeName": "Alder Steel Mart Ltd.",
+    "InterestHolder": null,
+    "StakeholderPrimaryContact": null,
+    "InterestType": null,
+    "StakeholderIndex": 0
+  },
+  {
+    "Test Case Description": "Create AF with Stakeholders",
+    "StakeholderType": "Non-Interest Payee",
+    "StakeholderContactType": "Organization",
+    "PayeeName": "Trailermaster Inc.",
+    "InterestHolder": null,
+    "StakeholderPrimaryContact": null,
+    "InterestType": null,
+    "StakeholderIndex": 1
+  },
+  {
+    "Test Case Description": "Create AF with Stakeholders",
+    "StakeholderType": "Non-Interest Payee",
+    "StakeholderContactType": "Individual",
+    "PayeeName": "Alfred Garnette Pancake",
+    "InterestHolder": null,
+    "StakeholderPrimaryContact": null,
+    "InterestType": null,
+    "StakeholderIndex": 2
+  },
+  {
+    "Test Case Description": "Create AF with Stakeholders",
+    "StakeholderType": "Non-Interest Payee",
+    "StakeholderContactType": "Individual",
+    "PayeeName": "Wayne Coleman",
+    "InterestHolder": null,
+    "StakeholderPrimaryContact": null,
+    "InterestType": null,
+    "StakeholderIndex": 3
+  },
+  {
+    "Test Case Description": "Create AF with Stakeholders",
+    "StakeholderType": "Non-Interest Payee",
+    "StakeholderContactType": "Individual",
+    "PayeeName": "Ronald Mackenzie",
+    "InterestHolder": null,
+    "StakeholderPrimaryContact": null,
+    "InterestType": null,
+    "StakeholderIndex": 4
+  },
+  {
+    "Test Case Description": "Create AF with Compensation",
+    "StakeholderType": "Non-Interest Payee",
+    "StakeholderContactType": "Individual",
+    "PayeeName": "Agnes Anne Griko",
+    "InterestHolder": null,
+    "StakeholderPrimaryContact": null,
+    "InterestType": null,
+    "StakeholderIndex": 0
+  },
+  {
+    "Test Case Description": "Create AF with Compensation",
+    "StakeholderType": "Interest",
+    "StakeholderContactType": "Organization",
+    "PayeeName": null,
+    "InterestHolder": "Amix Real Estate Holdings Ltd.",
+    "StakeholderPrimaryContact": "Cortney Ortiz",
+    "InterestType": "Lease",
+    "StakeholderIndex": 0
+  },
+  {
+    "Test Case Description": "Create AF with Expropriation",
+    "StakeholderType": "Non-Interest Payee",
+    "StakeholderContactType": "Organization",
+    "PayeeName": "Budget Truck and Car Rental",
+    "InterestHolder": null,
+    "StakeholderPrimaryContact": null,
+    "InterestType": null,
+    "StakeholderIndex": 0
+  },
+  {
+    "Test Case Description": "Create AF with Expropriation",
+    "StakeholderType": "Interest",
+    "StakeholderContactType": "Individual",
+    "PayeeName": null,
+    "InterestHolder": "Andreas Michael Matusza",
+    "StakeholderPrimaryContact": null,
+    "InterestType": "Life Estate",
+    "StakeholderIndex": 0
+  },
+  {
+    "Test Case Description": "Create Minimum AF",
+    "StakeholderType": "Interest",
+    "StakeholderContactType": "Individual",
+    "PayeeName": null,
+    "InterestHolder": "Ali Thomson",
+    "StakeholderPrimaryContact": null,
+    "InterestType": "Equitable Charge",
+    "StakeholderIndex": 0
+  }
+]

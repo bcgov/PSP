@@ -624,7 +624,11 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
               />
             </svg>
           </div>
-          Create Lease/Licence
+          <div
+            data-testid="form-title"
+          >
+            Create Lease/Licence
+          </div>
         </h1>
       </div>
       <div
@@ -1859,7 +1863,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                   <label
                     class="c14"
                   >
-                    MOTI contact:
+                    MOTT contact:
                   </label>
                 </div>
                 <div
@@ -1888,7 +1892,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                   <label
                     class="c14"
                   >
-                    MOTI region:
+                    MOTT region:
                   </label>
                 </div>
                 <div
@@ -2803,6 +2807,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
           >
             <button
               class="c4 Button btn btn-secondary"
+              data-testid="cancel-button"
               type="button"
             >
               <div
@@ -2817,6 +2822,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
           >
             <button
               class="c4 Button mr-9 btn btn-primary"
+              data-testid="save-button"
               type="button"
             >
               <div

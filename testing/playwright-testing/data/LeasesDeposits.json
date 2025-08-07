@@ -1,0 +1,62 @@
+[
+  {
+    "Test Case Description": "Create a new complete lease",
+    "DepositType": "Security deposit",
+    "DepositTypeOther": null,
+    "DepositDescription": "Automation Test - Deposit Description",
+    "DepositAmount": 250.0,
+    "DepositPaidDate": 1645747200000,
+    "DepositHolder": "John Smith",
+    "ReturnTerminationDate": 1648166400000,
+    "TerminationClaimDeposit": 75,
+    "ReturnedAmount": 50,
+    "ReturnInterestPaid": 25,
+    "ReturnedDate": 1648598400000,
+    "ReturnPayeeName": "John Smith"
+  },
+  {
+    "Test Case Description": "Create a new complete lease",
+    "DepositType": "Other deposit",
+    "DepositTypeOther": "Special Levy",
+    "DepositDescription": "Automation - Special Levy required on the first payment",
+    "DepositAmount": 632.0,
+    "DepositPaidDate": 1648166400000,
+    "DepositHolder": "Jacqueline Pamela Baker",
+    "ReturnTerminationDate": 1649980800000,
+    "TerminationClaimDeposit": 150,
+    "ReturnedAmount": 150,
+    "ReturnInterestPaid": 50,
+    "ReturnedDate": 1651276800000,
+    "ReturnPayeeName": "Jacqueline Pamela Baker"
+  },
+  {
+    "Test Case Description": "Edit Lease",
+    "DepositType": "Pet deposit",
+    "DepositTypeOther": null,
+    "DepositDescription": "Automation - Update previously created Deposit",
+    "DepositAmount": 50.99,
+    "DepositPaidDate": 1648166400000,
+    "DepositHolder": "Jacqueline Pamela Baker",
+    "ReturnTerminationDate": 1649980800000,
+    "TerminationClaimDeposit": 150,
+    "ReturnedAmount": 150,
+    "ReturnInterestPaid": 50,
+    "ReturnedDate": 1651276800000,
+    "ReturnPayeeName": "Jacqueline Pamela Baker"
+  },
+  {
+    "Test Case Description": "Create minimum lease",
+    "DepositType": "Security deposit",
+    "DepositTypeOther": null,
+    "DepositDescription": "Automation - Minimum lease with one insurance",
+    "DepositAmount": 3500.79,
+    "DepositPaidDate": 1683849600000,
+    "DepositHolder": "Bernadette Johanna Miller",
+    "ReturnTerminationDate": 1685404800000,
+    "TerminationClaimDeposit": 3000,
+    "ReturnedAmount": 3000,
+    "ReturnInterestPaid": 0,
+    "ReturnedDate": 1685577600000,
+    "ReturnPayeeName": "Alicia Ortega"
+  }
+]

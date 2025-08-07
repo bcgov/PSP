@@ -1,0 +1,86 @@
+[
+  {
+    "Test Case Description": "Create Complete Lease with payees",
+    "ContactType": "Organization",
+    "Summary": "BELL MOBILITY INC.",
+    "LeaseTenantsPrimaryContact": "No contacts available",
+    "TenantType": "Owner Representative"
+  },
+  {
+    "Test Case Description": "Create Complete Lease with payees",
+    "ContactType": "Individual",
+    "Summary": "Don Cavers",
+    "LeaseTenantsPrimaryContact": "Not applicable",
+    "TenantType": "Owner"
+  },
+  {
+    "Test Case Description": "Create Complete Lease with payees",
+    "ContactType": "Organization",
+    "Summary": "District of Saanich",
+    "LeaseTenantsPrimaryContact": "Chris Pease",
+    "TenantType": "Owner"
+  },
+  {
+    "Test Case Description": "Create Complete Lease with payees",
+    "ContactType": "Organization",
+    "Summary": "Sakwi Creek Hydro LP",
+    "LeaseTenantsPrimaryContact": "Paul Schincariol",
+    "TenantType": "Owner Representative"
+  },
+  {
+    "Test Case Description": "Edit Lease",
+    "ContactType": "Organization",
+    "Summary": "Sakwi Creek Hydro LP",
+    "LeaseTenantsPrimaryContact": "Paul Schincariol",
+    "TenantType": "Owner"
+  },
+  {
+    "Test Case Description": "Create minimum Lease",
+    "ContactType": "Individual",
+    "Summary": "Pauline Faulkes",
+    "LeaseTenantsPrimaryContact": "Not applicable",
+    "TenantType": "Property manager"
+  },
+  {
+    "Test Case Description": "Create Complete Lease with tenants",
+    "ContactType": "Individual",
+    "Summary": "Don Cavers",
+    "LeaseTenantsPrimaryContact": "Not applicable",
+    "TenantType": "Assignee"
+  },
+  {
+    "Test Case Description": "Create Complete Lease with tenants",
+    "ContactType": "Organization",
+    "Summary": "District of Saanich",
+    "LeaseTenantsPrimaryContact": "Chris Pease",
+    "TenantType": "Tenant"
+  },
+  {
+    "Test Case Description": "Create Complete Lease with tenants",
+    "ContactType": "Organization",
+    "Summary": "Sakwi Creek Hydro LP",
+    "LeaseTenantsPrimaryContact": "Paul Schincariol",
+    "TenantType": "Property manager"
+  },
+  {
+    "Test Case Description": "Create Complete Lease with tenants",
+    "ContactType": "Organization",
+    "Summary": "Bishop of Victoria",
+    "LeaseTenantsPrimaryContact": "No contacts available",
+    "TenantType": "Representative"
+  },
+  {
+    "Test Case Description": "Create Complete Lease with tenants",
+    "ContactType": "Individual",
+    "Summary": "Alejandro Sanchez",
+    "LeaseTenantsPrimaryContact": "Not applicable",
+    "TenantType": "Representative"
+  },
+  {
+    "Test Case Description": "Edit Lease with Tenants",
+    "ContactType": "Individual",
+    "Summary": "Don Cavers",
+    "LeaseTenantsPrimaryContact": "Not applicable",
+    "TenantType": "Unknown"
+  }
+]

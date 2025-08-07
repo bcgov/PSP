@@ -913,13 +913,13 @@ exports[`UpdateContactContainer > renders as expected 1`] = `
                         >
                           <button
                             class="c16 Button c17 btn btn-link"
+                            data-testid="remove-button"
                             type="button"
                           >
                             <div
                               class="Button__value"
                             >
                               <svg
-                                data-testid="remove-button"
                                 fill="currentColor"
                                 height="2rem"
                                 stroke="currentColor"
@@ -1055,13 +1055,13 @@ exports[`UpdateContactContainer > renders as expected 1`] = `
                       >
                         <button
                           class="c16 Button c17 btn btn-link"
+                          data-testid="remove-button"
                           type="button"
                         >
                           <div
                             class="Button__value"
                           >
                             <svg
-                              data-testid="remove-button"
                               fill="currentColor"
                               height="2rem"
                               stroke="currentColor"

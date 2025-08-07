@@ -593,7 +593,11 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
               />
             </svg>
           </div>
-          Create Disposition File
+          <div
+            data-testid="form-title"
+          >
+            Create Disposition File
+          </div>
         </h1>
       </div>
       <div
@@ -2188,6 +2192,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
           >
             <button
               class="c4 Button btn btn-secondary"
+              data-testid="cancel-button"
               type="button"
             >
               <div
@@ -2202,6 +2207,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
           >
             <button
               class="c4 Button mr-9 btn btn-primary"
+              data-testid="save-button"
               type="button"
             >
               <div

@@ -295,42 +295,22 @@ exports[`MapContainer > Renders the map 1`] = `
   position: relative;
 }
 
-.c20.required::before {
+.c19.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c19 {
+.c18 {
   font-weight: bold;
 }
 
-.c7.btn {
-  width: 5.2rem;
-  height: 5.2rem;
-  background-color: #FFFFFF;
-  color: #013366;
-  border-color: #013366;
-  box-shadow: -0.2rem 0.1rem 0.4rem rgba(0,0,0,0.2);
-  -webkit-transition: 1s;
-  transition: 1s;
-}
-
-.c7.btn.open {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-.c7.btn:hover {
-  opacity: 1;
-}
-
-.c9 {
+.c8 {
   font-size: 3rem;
 }
 
-.c8.btn {
+.c7.btn {
   width: 5.2rem;
   height: 5.2rem;
   background-color: #fff;
@@ -339,7 +319,7 @@ exports[`MapContainer > Renders the map 1`] = `
   box-shadow: -0.2rem 0.1rem 0.4rem rgba(0,0,0,0.2);
 }
 
-.c8.btn:hover {
+.c7.btn:hover {
   opacity: 1;
 }
 
@@ -366,7 +346,7 @@ exports[`MapContainer > Renders the map 1`] = `
   color: white;
 }
 
-.c14 {
+.c13 {
   height: 25rem;
   width: 34rem;
   display: none;
@@ -375,12 +355,12 @@ exports[`MapContainer > Renders the map 1`] = `
   box-shadow: -0.2rem 0.1rem 0.4rem rgba(0,0,0,0.2);
 }
 
-.c18 {
+.c17 {
   font-size: 1.4rem;
   padding: 1rem;
 }
 
-.c15 {
+.c14 {
   background-color: #003366;
   color: #FFFFFF;
   padding: 1rem;
@@ -392,23 +372,23 @@ exports[`MapContainer > Renders the map 1`] = `
   font-weight: bold;
 }
 
-.c16 {
+.c15 {
   color: white;
   font-size: 22px;
   cursor: pointer;
 }
 
-.c17 {
+.c16 {
   color: #FFFFFF;
   font-size: 22px;
   cursor: pointer;
 }
 
-.c11 {
+.c10 {
   font-size: 3rem;
 }
 
-.c10.btn {
+.c9.btn {
   width: 5.2rem;
   height: 5.2rem;
   background-color: #fff;
@@ -417,15 +397,15 @@ exports[`MapContainer > Renders the map 1`] = `
   box-shadow: -0.2rem 0.1rem 0.4rem rgba(0,0,0,0.2);
 }
 
-.c10.btn:hover {
+.c9.btn:hover {
   opacity: 1;
 }
 
-.c13 {
+.c12 {
   font-size: 3rem;
 }
 
-.c12.btn {
+.c11.btn {
   width: 5.2rem;
   height: 5.2rem;
   background-color: #FFFFFF;
@@ -434,7 +414,7 @@ exports[`MapContainer > Renders the map 1`] = `
   box-shadow: -0.2rem 0.1rem 0.4rem rgba(0,0,0,0.2);
 }
 
-.c12.btn:hover {
+.c11.btn:hover {
   opacity: 1;
 }
 
@@ -767,29 +747,6 @@ exports[`MapContainer > Renders the map 1`] = `
                   >
                     <button
                       class="c4 Button c7 btn btn-outline-secondary"
-                      title="advanced-filter-button"
-                      type="button"
-                    >
-                      <div
-                        class="Button__value"
-                      >
-                        <svg
-                          fill="currentColor"
-                          height="1.6em"
-                          stroke="currentColor"
-                          stroke-width="0"
-                          viewBox="0 0 512 512"
-                          width="1.6em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M487.976 0H24.028C2.71 0-8.047 25.866 7.058 40.971L192 225.941V432c0 7.831 3.821 15.17 10.237 19.662l80 55.98C298.02 518.69 320 507.493 320 487.98V225.941l184.947-184.97C520.021 25.896 509.338 0 487.976 0z"
-                          />
-                        </svg>
-                      </div>
-                    </button>
-                    <button
-                      class="c4 Button c8 btn btn-outline-secondary"
                       id="layersControlButton"
                       type="button"
                     >
@@ -797,7 +754,7 @@ exports[`MapContainer > Renders the map 1`] = `
                         class="Button__value"
                       >
                         <svg
-                          class="c9"
+                          class="c8"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -813,7 +770,7 @@ exports[`MapContainer > Renders the map 1`] = `
                       </div>
                     </button>
                     <button
-                      class="c4 Button c10 btn btn-outline-secondary"
+                      class="c4 Button c9 btn btn-outline-secondary"
                       id="searchControlButton"
                       type="button"
                     >
@@ -821,7 +778,7 @@ exports[`MapContainer > Renders the map 1`] = `
                         class="Button__value"
                       >
                         <svg
-                          class="c11"
+                          class="c10"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -837,7 +794,7 @@ exports[`MapContainer > Renders the map 1`] = `
                       </div>
                     </button>
                     <button
-                      class="c4 Button c12 btn btn-outline-secondary"
+                      class="c4 Button c11 btn btn-outline-secondary"
                       id="worklistControlButton"
                       type="button"
                     >
@@ -845,7 +802,7 @@ exports[`MapContainer > Renders the map 1`] = `
                         class="Button__value"
                       >
                         <svg
-                          class="c13"
+                          class="c12"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -888,10 +845,10 @@ exports[`MapContainer > Renders the map 1`] = `
                 class="leaflet-control"
               >
                 <div
-                  class="c14"
+                  class="c13"
                 >
                   <div
-                    class="c15 row no-gutters"
+                    class="c14 row no-gutters"
                   >
                     <div
                       class="col-1"
@@ -933,7 +890,7 @@ exports[`MapContainer > Renders the map 1`] = `
                       class="col-1"
                     >
                       <div
-                        class="c16"
+                        class="c15"
                       >
                         <svg
                           data-testid="toggle-icon"
@@ -958,7 +915,7 @@ exports[`MapContainer > Renders the map 1`] = `
                       class="col-1"
                     >
                       <svg
-                        class="c17"
+                        class="c16"
                         data-testid="close-icon"
                         fill="currentColor"
                         height="18"
@@ -978,7 +935,7 @@ exports[`MapContainer > Renders the map 1`] = `
                     </div>
                   </div>
                   <div
-                    class="c18"
+                    class="c17"
                   >
                     <div
                       class="row no-gutters"
@@ -993,13 +950,13 @@ exports[`MapContainer > Renders the map 1`] = `
                             class="pr-0 text-left col-12"
                           >
                             <label
-                              class="c19"
+                              class="c18"
                             >
                               PID:
                             </label>
                           </div>
                           <div
-                            class="c20 text-left col"
+                            class="c19 text-left col"
                           />
                         </div>
                       </div>
@@ -1013,13 +970,13 @@ exports[`MapContainer > Renders the map 1`] = `
                             class="pr-0 text-left col-12"
                           >
                             <label
-                              class="c19"
+                              class="c18"
                             >
                               PIN:
                             </label>
                           </div>
                           <div
-                            class="c20 text-left col"
+                            class="c19 text-left col"
                           >
                             -
                           </div>
@@ -1035,13 +992,13 @@ exports[`MapContainer > Renders the map 1`] = `
                             class="pr-0 text-left col-12"
                           >
                             <label
-                              class="c19"
+                              class="c18"
                             >
                               Plan:
                             </label>
                           </div>
                           <div
-                            class="c20 text-left col"
+                            class="c19 text-left col"
                           >
                             -
                           </div>
@@ -1055,13 +1012,13 @@ exports[`MapContainer > Renders the map 1`] = `
                         class="pr-0 text-left col-12"
                       >
                         <label
-                          class="c19"
+                          class="c18"
                         >
                           Owners:
                         </label>
                       </div>
                       <div
-                        class="c20 text-left col"
+                        class="c19 text-left col"
                       />
                     </div>
                     <div
@@ -1071,13 +1028,13 @@ exports[`MapContainer > Renders the map 1`] = `
                         class="pr-0 text-left col-12"
                       >
                         <label
-                          class="c19"
+                          class="c18"
                         >
                           Legal Description:
                         </label>
                       </div>
                       <div
-                        class="c20 text-left col"
+                        class="c19 text-left col"
                       >
                         -
                       </div>

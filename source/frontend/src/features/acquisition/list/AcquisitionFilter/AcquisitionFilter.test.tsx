@@ -73,6 +73,19 @@ describe('Acquisition Filter', () => {
     );
   });
 
+  it('searches by acquisition file Owner name', async () => {
+    const { container, searchButton } = setup();
+
+    fillInput(container, 'ownerName', 'DOE');
+    await act(async () => userEvent.click(searchButton));
+
+    expect(setFilter).toHaveBeenCalledWith(
+      expect.objectContaining({
+        ownerName: 'DOE',
+      }),
+    );
+  });
+
   it('searches by ministry project name or number', async () => {
     const { container, searchButton } = setup();
 

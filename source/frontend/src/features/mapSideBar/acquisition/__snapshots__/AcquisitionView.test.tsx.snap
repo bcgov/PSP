@@ -711,7 +711,11 @@ exports[`AcquisitionView component > renders as expected 1`] = `
               />
             </svg>
           </div>
-          Acquisition File
+          <div
+            data-testid="form-title"
+          >
+            Acquisition File
+          </div>
         </h1>
       </div>
       <div

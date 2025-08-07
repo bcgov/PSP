@@ -922,6 +922,7 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
               >
                 <button
                   class="c9 Button btn btn-secondary"
+                  data-testid="cancel-button"
                   type="button"
                 >
                   <div
@@ -936,6 +937,7 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
               >
                 <button
                   class="c9 Button Button--disabled mr-9 btn btn-primary"
+                  data-testid="save-button"
                   disabled=""
                   type="button"
                 >

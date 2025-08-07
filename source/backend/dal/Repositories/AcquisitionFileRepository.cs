@@ -6,6 +6,7 @@ using LinqKit;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Models.CodeTypes;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
@@ -911,6 +912,26 @@ namespace Pims.Dal.Repositories
                 || acq.PimsCompensationRequisitions.Any(cr => EF.Functions.Like(cr.AlternateProject.Code, $"%{filter.ProjectNameOrNumber}%") || EF.Functions.Like(cr.AlternateProject.Description, $"%{filter.ProjectNameOrNumber}%")));
             }
 
+            if (!string.IsNullOrWhiteSpace(filter.OwnerName))
+            {
+                var ownerBuilder = PredicateBuilder.New<PimsAcquisitionFile>(acq => false);
+
+                ownerBuilder = ownerBuilder.Or(acq => acq.PimsAcquisitionOwners.Any(ownr => EF.Functions.Like(ownr.GivenName, $"%{filter.OwnerName}%")
+                                    || EF.Functions.Like(ownr.LastNameAndCorpName, $"%{filter.OwnerName}%")
+                                    || EF.Functions.Like(ownr.OtherName, $"%{filter.OwnerName}%")));
+
+                ownerBuilder = ownerBuilder.Or(acq => acq.PimsInterestHolders.Any(rep => rep.InterestHolderTypeCode == InterestHolderTypes.AOREP.ToString() && rep.PersonId != null && (EF.Functions.Like(rep.Person.Surname, $"%{filter.OwnerName}%")
+                                    || EF.Functions.Like(rep.Person.FirstName, $"%{filter.OwnerName}%"))));
+
+                ownerBuilder = ownerBuilder.Or(acq => acq.PimsInterestHolders.Any(sol => sol.InterestHolderTypeCode == InterestHolderTypes.AOSLCTR.ToString() && sol.PersonId != null && (EF.Functions.Like(sol.Person.Surname, $"%{filter.OwnerName}%")
+                                    || EF.Functions.Like(sol.Person.FirstName, $"%{filter.OwnerName}%")
+                                    || EF.Functions.Like(sol.Organization.OrganizationName, $"%{filter.OwnerName}%"))));
+
+                ownerBuilder = ownerBuilder.Or(acq => acq.PimsInterestHolders.Any(sol => sol.InterestHolderTypeCode == InterestHolderTypes.AOSLCTR.ToString() && sol.OrganizationId != null && EF.Functions.Like(sol.Organization.OrganizationName, $"%{filter.OwnerName}%")));
+
+                predicate = predicate.And(ownerBuilder);
+            }
+
             predicate = predicate.And(acq => regions.Contains(acq.RegionCode));
 
             if (contractorPersonId is not null)
@@ -943,6 +964,7 @@ namespace Pims.Dal.Repositories
                 .Include(tm => tm.PimsAcquisitionFileTeams)
                     .ThenInclude(c => c.AcqFlTeamProfileTypeCodeNavigation)
                 .Include(ow => ow.PimsAcquisitionOwners)
+                .Include(ih => ih.PimsInterestHolders)
                 .Include(fp => fp.PimsPropertyAcquisitionFiles)
                     .ThenInclude(prop => prop.Property)
                     .ThenInclude(ad => ad.Address)

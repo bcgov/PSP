@@ -283,6 +283,11 @@ exports[`ManagementView component > renders as expected 1`] = `
   cursor: pointer;
 }
 
+.c41 {
+  padding: 0 0.4rem;
+  display: block;
+}
+
 .c5.btn.btn-light.Button {
   padding: 0;
   border: 0.1rem solid #9F9D9C;
@@ -495,11 +500,6 @@ exports[`ManagementView component > renders as expected 1`] = `
 
 .c39 .btn {
   margin: 0;
-}
-
-.c41 {
-  padding: 0 0.4rem;
-  display: block;
 }
 
 .c23 {
@@ -716,7 +716,11 @@ exports[`ManagementView component > renders as expected 1`] = `
               </defs>
             </svg>
           </div>
-          Management File
+          <div
+            data-testid="form-title"
+          >
+            Management File
+          </div>
         </h1>
       </div>
       <div
@@ -787,6 +791,7 @@ exports[`ManagementView component > renders as expected 1`] = `
       >
         <div
           class="c11 no-gutters row"
+          data-testid="mgmt-file-header"
         >
           <div
             class="c12 col-xl-8 col-12"
@@ -806,7 +811,11 @@ exports[`ManagementView component > renders as expected 1`] = `
               <div
                 class="pl-1 text-left col-8"
               >
-                M-1
+                <div
+                  data-testid="mgmt-fileId"
+                >
+                  M-1
+                </div>
               </div>
             </div>
             <div
@@ -818,13 +827,17 @@ exports[`ManagementView component > renders as expected 1`] = `
                 <label
                   class="c13"
                 >
-                  File Name:
+                  File name:
                 </label>
               </div>
               <div
                 class="pl-1 text-left col-8"
               >
-                Test Management File
+                <div
+                  data-testid="mgmt-file-name"
+                >
+                  Test Management File
+                </div>
               </div>
             </div>
             <div
@@ -842,7 +855,11 @@ exports[`ManagementView component > renders as expected 1`] = `
               <div
                 class="pl-1 text-left col-8"
               >
-                00048 - CLAIMS
+                <div
+                  data-testid="mgmt-file-project"
+                >
+                  00048 - CLAIMS
+                </div>
               </div>
             </div>
             <div
@@ -861,7 +878,11 @@ exports[`ManagementView component > renders as expected 1`] = `
                 class="pl-1 text-left col-8"
                 data-testid="acq-header-product-val"
               >
-                00055 - AVALANCHE  &  PROGRAM REVIEW
+                <div
+                  data-testid="mgmt-file-product"
+                >
+                  00055 - AVALANCHE  &  PROGRAM REVIEW
+                </div>
               </div>
             </div>
             <div
@@ -1198,6 +1219,7 @@ exports[`ManagementView component > renders as expected 1`] = `
                             </div>
                             <div
                               class="c37 text-left col"
+                              data-testid="management-status"
                             >
                               Draft
                             </div>
@@ -1414,6 +1436,7 @@ exports[`ManagementView component > renders as expected 1`] = `
                             </div>
                             <div
                               class="c37 text-left col"
+                              data-testid="management-funding"
                             />
                           </div>
                         </div>
@@ -1451,6 +1474,7 @@ exports[`ManagementView component > renders as expected 1`] = `
                             </div>
                             <div
                               class="c37 text-left col"
+                              data-testid="management-file-name"
                             >
                               Test Management File
                             </div>
@@ -1469,6 +1493,7 @@ exports[`ManagementView component > renders as expected 1`] = `
                             </div>
                             <div
                               class="c37 text-left col"
+                              data-testid="management-legacy-file-number"
                             >
                               legacyfile321
                             </div>
@@ -1487,6 +1512,7 @@ exports[`ManagementView component > renders as expected 1`] = `
                             </div>
                             <div
                               class="c37 text-left col"
+                              data-testid="management-purpose"
                             >
                               Engineering
                             </div>
@@ -1505,6 +1531,7 @@ exports[`ManagementView component > renders as expected 1`] = `
                             </div>
                             <div
                               class="c37 text-left col"
+                              data-testid="management-additional-details"
                             >
                               ADDITIONAL DETAILS
                             </div>
@@ -1544,6 +1571,7 @@ exports[`ManagementView component > renders as expected 1`] = `
                             </div>
                             <div
                               class="c37 text-left col"
+                              data-testid="management-team-member-0"
                             >
                               <a
                                 class="c41"
@@ -1585,6 +1613,7 @@ exports[`ManagementView component > renders as expected 1`] = `
                             </div>
                             <div
                               class="c37 text-left col"
+                              data-testid="management-team-member-1"
                             >
                               <a
                                 class="c41"

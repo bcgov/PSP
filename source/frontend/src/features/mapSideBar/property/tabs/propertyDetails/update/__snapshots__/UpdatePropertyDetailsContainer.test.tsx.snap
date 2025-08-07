@@ -546,13 +546,13 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
                 >
                   <button
                     class="c7 Button c8 btn btn-link"
+                    data-testid="remove-button"
                     type="button"
                   >
                     <div
                       class="Button__value"
                     >
                       <svg
-                        data-testid="remove-button"
                         fill="currentColor"
                         height="2rem"
                         stroke="currentColor"
@@ -1256,7 +1256,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
               <label
                 class="c5"
               >
-                MOTI region:
+                MOTT region:
               </label>
             </div>
             <div

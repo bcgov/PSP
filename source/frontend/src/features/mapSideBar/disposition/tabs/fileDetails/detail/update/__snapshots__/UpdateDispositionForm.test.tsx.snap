@@ -1500,13 +1500,13 @@ exports[`UpdateDispositionForm component > renders as expected 1`] = `
           >
             <button
               class="c9 Button c11 btn btn-link"
+              data-testid="team.0.remove-button"
               type="button"
             >
               <div
                 class="Button__value"
               >
                 <svg
-                  data-testid="team.0.remove-button"
                   fill="currentColor"
                   height="2rem"
                   stroke="currentColor"
@@ -1704,13 +1704,13 @@ exports[`UpdateDispositionForm component > renders as expected 1`] = `
           >
             <button
               class="c9 Button c11 btn btn-link"
+              data-testid="team.1.remove-button"
               type="button"
             >
               <div
                 class="Button__value"
               >
                 <svg
-                  data-testid="team.1.remove-button"
                   fill="currentColor"
                   height="2rem"
                   stroke="currentColor"
