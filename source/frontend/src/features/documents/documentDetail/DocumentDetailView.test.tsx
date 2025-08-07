@@ -11,7 +11,7 @@ import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { mockKeycloak, render, RenderOptions } from '@/utils/test-utils';
 
 import { ComposedDocument } from '../ComposedDocument';
-import { DocumentDetailView } from './DocumentDetailView';
+import { DocumentDetailView, IDocumentDetailsViewProps } from './DocumentDetailView';
 
 // mock auth library
 
@@ -119,15 +119,16 @@ const mockDocument: ComposedDocument = {
   },
   mayanFileId: 2,
 };
+
 describe('DocumentDetailView component', () => {
   // render component under test
-  const setup = (renderOptions: RenderOptions & { document?: ComposedDocument }) => {
+  const setup = (renderOptions?: RenderOptions & Partial<IDocumentDetailsViewProps>) => {
     const utils = render(
       <DocumentDetailView
-        document={renderOptions.document ?? mockDocument}
-        isLoading={false}
+        document={renderOptions?.document ?? mockDocument}
+        isLoading={renderOptions?.isLoading ?? false}
         setIsEditable={vi.fn()}
-        canEdit={true}
+        canEdit={renderOptions?.canEdit ?? true}
       />,
       {
         ...renderOptions,

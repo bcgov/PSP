@@ -23067,7 +23067,7 @@ with cteDistinct (PROPERTY_ID) AS
           PIMS_PROPERTY_RESEARCH_FILE prf ON prf.PROPERTY_ID = prp.PROPERTY_ID)  
 
 SELECT ct.PROPERTY_ID
-     , pr.LOCATION
+     , pr.BOUNDARY
 FROM   cteDistinct   ct JOIN
        PIMS_PROPERTY pr ON pr.PROPERTY_ID = ct.PROPERTY_ID
 GO

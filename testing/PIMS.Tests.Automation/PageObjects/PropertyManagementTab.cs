@@ -1,7 +1,5 @@
 ﻿using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
-using System.Diagnostics;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -51,81 +49,44 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By managementContactsPurposeDescriptionTextarea = By.Id("input-purposeDescription");
 
         //View Activity List Elements
-        private readonly By managementActivitiesTitle = By.XPath("//div[contains(text(),'Activities List')]");
-        private readonly By managementeAddActivityBttn = By.XPath("//div[contains(text(),'Activities List')]/following-sibling::div/button");
-        private readonly By managementActivitiesTable = By.CssSelector("div[data-testid='PropertyManagementActivitiesTable']");
-        private readonly By managementActivitiesBodyCount = By.CssSelector("div[data-testid='PropertyManagementActivitiesTable'] div[class='tbody'] div[class='tr-wrapper']");
+        private readonly By managementAddActivityBttn = By.XPath("//div[contains(text(),'Activities List')]/following-sibling::div/button");
+        private readonly By managementFileActivitiesTitle = By.XPath("//div[contains(text(),'Activities List')]");
+        private readonly By managementActivitiesListTable = By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']");
+        private readonly By managementActivitiesListTableActivityTypeColumn = By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Activity type')]");
+        private readonly By managementActivitiesListTableActivitySubtypeColumn = By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Activity sub-type')]");
+        private readonly By managementActivitiesListTableActivityStatusColumn = By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Activity status')]");
+        private readonly By managementActivitiesListTableCommencementColumn = By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Commencement')]");
+        private readonly By managementActivitiesListTableActionsColumn = By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Actions')]");
+        private readonly By managementActivitiesListTable1stActTypeContext = By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[1]/div/div[1]");
+        private readonly By managementActivitiesListTable1stActSubtypeContext = By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[1]/div/div[2]");
+        private readonly By managementActivitiesListTable1stActStatusContext = By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[1]/div/div[3]");
+        private readonly By managementActivitiesListTable1stActCommencementContext = By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[1]/div/div[4]");
+        private readonly By managementActivitiesListTable1stActViewBttn = By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[1]/div/div[5]/div/button[@title='property-activity view details']");
+        private readonly By managementActivitiesListTable1stActDeleteBttn = By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[1]/div/div[5]/div/button[@title='Delete']");
+        private readonly By managementActivitiesListTable1stActWarning = By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[1]/div/div[5]/div/button/following-sibling::*");
+        private readonly By managementActivitiesBodyCount = By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[@class='tr-wrapper']");
         private readonly By managementActivitiesDeleteBttns = By.CssSelector("button[title='Delete']");
-        private readonly By managementActivityPaginationOptions = By.XPath("//div[@data-testid='PropertyManagementActivitiesTable']/following-sibling::div/div/ul[@class='pagination']/li");
-        
+        private readonly By managementActivityPaginationOptions = By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/following-sibling::div/div/ul[@class='pagination']/li");
 
-        //Create Activity Elements
-        //Activity Details
-        private readonly By managementActCloseTrayBttn = By.CssSelector("*[id='close-tray']");
-        private readonly By managementActEditButton = By.CssSelector("button[title='Edit Property Activity']");
-        private readonly By managementActivityDetailsTitle = By.XPath("//div[contains(text(),'Activity Details')]");
-        private readonly By managementActTypeLabel = By.XPath("//label[contains(text(),'Activity type')]");
-        private readonly By managementActTypeInput = By.Id("input-activityTypeCode");
-        private readonly By managementActTypeContent = By.XPath("//label[contains(text(),'Activity type')]/parent::div/following-sibling::div");
-        private readonly By managementActSubTypeLabel = By.XPath("//label[contains(text(),'Sub-type')]");
-        private readonly By managementActSubTypeInput = By.Id("input-activitySubtypeCode");
-        private readonly By managementActSubTypeContent = By.XPath("//label[contains(text(),'Sub-type')]/parent::div/following-sibling::div");
-        private readonly By managementActStatusLabel = By.XPath("//label[contains(text(),'Activity status')]");
-        private readonly By managementActStatusInput = By.Id("input-activityStatusCode");
-        private readonly By managementActStatusContent = By.XPath("//label[contains(text(),'Activity status')]/parent::div/following-sibling::div");
-        private readonly By managementActRequestAddedDateLabel = By.XPath("//label[contains(text(),'Requested added date')]");
-        private readonly By managementActRequestAddedDateInput = By.Id("datepicker-requestedDate");
-        private readonly By managementActRequestAddedDateContent = By.XPath("//label[contains(text(),'Requested added date')]/parent::div/following-sibling::div");
-        private readonly By managementActCompletionDateLabel = By.XPath("//label[contains(text(),'Completion date')]");
-        private readonly By managementActCompletionDateInput = By.Id("datepicker-completionDate");
-        private readonly By managementActCompletionDateContent = By.XPath("//label[contains(text(),'Completion date')]/parent::div/following-sibling::div");
-        private readonly By managementActDescriptionLabel = By.XPath("//div[contains(text(),'Activity Details')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Description')]");
-        private readonly By managementActDescriptionInput = By.Id("input-description");
-        private readonly By managementActDescriptionContent = By.XPath("//div[contains(text(),'Activity Details')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Description')]/parent::div/following-sibling::div");
-        private readonly By managementActMinistryContactLabel = By.XPath("//label[contains(text(),'Ministry contacts')]");
-        private readonly By managementActMinistryContactInput = By.XPath("//label[contains(text(),'Ministry contacts')]/parent::div/following-sibling::div/div/div/div/div/div//div[contains(text(),'Select from contacts')]");
-        private readonly By managementActMinistryContactBttn = By.XPath("//label[contains(text(),'Ministry contacts')]/parent::div/following-sibling::div/div/div/div/div/div/button");
-        private readonly By managementActMinistryContactAddContactLink = By.XPath("//label[contains(text(),'Ministry contacts')]/parent::div/following-sibling::div/div/following-sibling::button");
-        private readonly By managementActMinistryContactDeleteBttns = By.XPath("//label[contains(text(),'Ministry contacts')]/parent::div/following-sibling::div/div/div/button");
-        private readonly By managementActMinistryContactContent = By.XPath("//label[contains(text(),'Ministry contacts')]/parent::div/following-sibling::div/a/span");
-        private readonly By managementActRequestorLabel = By.XPath("//label[contains(text(),'Requestor')]");
-        private readonly By managementActRequestorTooltip = By.XPath("//label[contains(text(),'Requestor')]/span/span[@data-testid='tooltip-icon-section-field-tooltip']");
-        private readonly By managementActRequestorInput = By.Id("input-requestedSource");
-        private readonly By managementActRequestorContent = By.XPath("//label[contains(text(),'Requestor')]/parent::div/following-sibling::div");
-        private readonly By managementActInvolvedPartiesLabel = By.XPath("//label[contains(text(),'Involved parties')]");
-        private readonly By managementActInvolvedPartiesInput = By.XPath("//label[contains(text(),'Involved parties')]/parent::div/following-sibling::div/div/div/div/div/div//div[contains(text(),'Select from contacts')]");
-        private readonly By managementActInvolvedPartiesBttn = By.XPath("//label[contains(text(),'Involved parties')]/parent::div/following-sibling::div/div/div/div/div/div/button");
-        private readonly By managementActInvolvedPartiesAddContactLink = By.XPath("//label[contains(text(),'Involved parties')]/parent::div/following-sibling::div/div/following-sibling::button");
-        private readonly By managementActInvolvedPartiesDeleteBttns = By.XPath("//label[contains(text(),'Involved parties')]/parent::div/following-sibling::div/div/div/button");
-        private readonly By managementActInvolvedPartiesContent = By.XPath("//label[contains(text(),'Involved parties')]/parent::div/following-sibling::div/a/span");
-        private readonly By managementActServiceProviderLabel = By.XPath("//label[contains(text(),'Service provider')]");
-        private readonly By managementActServiceProviderInput = By.XPath("//label[contains(text(),'Service provider')]/parent::div/following-sibling::div/div/div/div/div[contains(text(),'Select from contacts')]");
-        private readonly By managementActServiceProviderBttn = By.XPath("//label[contains(text(),'Service provider')]/parent::div/following-sibling::div/div/div/div/button");
-        private readonly By managementActServiceProviderContent = By.XPath("//label[contains(text(),'Service provider')]/parent::div/following-sibling::div/a/span");
+        //View Property File Activity Summary Elements
+        private readonly By activitiesFileListSubtitle = By.XPath("//div[contains(text(),'Property File Activity Summary')]");
+        private readonly By activitiesFileListTooltip = By.CssSelector("span[data-testid='tooltip-icon-property-file-activity-summary']");
+        private readonly By activitiesFileListTableExpandBttn = By.XPath("//div[contains(text(),'Property File Activity Summary')]/parent::div/parent::div/parent::div/following-sibling::div");
+        private readonly By activitiesFileListTableActivityTypeColumn = By.XPath("//div[contains(text(),'Property File Activity Summary')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Activity type')]");
+        private readonly By activitiesFileListTableActivitySubtypeColumn = By.XPath("//div[contains(text(),'Property File Activity Summary')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Activity sub-type')]");
+        private readonly By activitiesFileListTableActivityStatusColumn = By.XPath("//div[contains(text(),'Property File Activity Summary')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Activity status')]");
+        private readonly By activitiesFileListTableActivityCommencementColumn = By.XPath("//div[contains(text(),'Property File Activity Summary')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Commencement')]");
+        private readonly By activitiesFileListTableActivityNavigationColumn = By.XPath("//div[contains(text(),'Property File Activity Summary')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Navigation')]");
+        private readonly By activitiesFileListTable1stActTypeContext = By.XPath("//div[contains(text(),'Property File Activity Summary')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[1]/div/div[1]");
+        private readonly By activitiesFileListTable1stActSubtypeContext = By.XPath("//div[contains(text(),'Property File Activity Summary')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[1]/div/div[2]");
+        private readonly By activitiesFileListTable1stActStatusContext = By.XPath("//div[contains(text(),'Property File Activity Summary')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[1]/div/div[3]");
+        private readonly By activitiesFileListTable1stActCommencementContext = By.XPath("//div[contains(text(),'Property File Activity Summary')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[1]/div/div[4]");
+        private readonly By activitiesFileListTable1stActNavigationContext = By.XPath("//div[contains(text(),'Property File Activity Summary')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[1]/div/div[5]/a");
+        private readonly By activitiesFileActivityPaginationOptions = By.XPath("//div[contains(text(),'Property File Activity Summary')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/following-sibling::div/div/ul[@class='pagination']/li");
 
-        private readonly By managementActInvoiceTotalsSubtitle = By.XPath("//div[contains(text(),'Invoices Total')]");
-        private readonly By managementActInvoiceTotalPretaxLabel = By.XPath("//div[contains(text(),'Invoices Total')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Total (before tax)')]");
-        private readonly By managementActInvoiceTotalPretaxContent = By.XPath("//div[contains(text(),'Invoices Total')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Total (before tax)')]/parent::div/following-sibling::div");
-        private readonly By managementActInvoiceTotalGSTLabel = By.XPath("//div[contains(text(),'Invoices Total')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'GST amount')]");
-        private readonly By managementActInvoiceTotalGSTContent = By.XPath("//div[contains(text(),'Invoices Total')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'GST amount')]/parent::div/following-sibling::div");
-        private readonly By managementActInvoiceTotalPSTLabel = By.XPath("//div[contains(text(),'Invoices Total')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'PST amount')]");
-        private readonly By managementActInvoiceTotalPSTContent = By.XPath("//div[contains(text(),'Invoices Total')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'PST amount')]/parent::div/following-sibling::div");
-        private readonly By managementActInvoiceGrandTotalLabel = By.XPath("//div[contains(text(),'Invoices Total')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Total amount')]");
-        private readonly By managementActInvoiceGrandTotalContent = By.XPath("//div[contains(text(),'Invoices Total')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Total amount')]/parent::div/following-sibling::div");
+        private readonly By activitiesTablesEmptyInfo = By.XPath("//div[contains(text(),'No property management activities found')]");
 
-        //Invoices View Element
-        private readonly By managementAddInvoiceBttn = By.XPath("//div[contains(text(),'Invoices Total')]/following-sibling::div/button");
-        private readonly By managementInvoicesTotalSubtitle = By.XPath("//div[contains(text(),'Invoices Total')]");
-        private readonly By managementActPretaxAmountLabel = By.XPath("//label[contains(text(),'Total (before tax)')]");
-        private readonly By managementActPretaxAmountInput = By.Id("input-pretaxAmount");
-        private readonly By managementActGSTAmountLabel = By.XPath("//label[contains(text(),'GST amount')]");
-        private readonly By managementActGSTAmountInput = By.Id("input-gstAmount");
-        private readonly By managementActPSTAmountLabel = By.XPath("//label[contains(text(),'PST amount')]");
-        private readonly By managementActPSTAmountInput = By.Id("input-pstAmount");
-        private readonly By managementActTotalAmountLabel = By.XPath("//label[contains(text(),'Total amount')]");
-        private readonly By managementActTotalAmountInput = By.Id("input-totalAmount");
-
-        private readonly By managementActAddDocumentBttn = By.XPath("//div[contains(text(),'Documents')]/parent::div/div/button");
+       
 
         private SharedModals sharedModals;
         private SharedSelectContact sharedSelectContact;
@@ -155,7 +116,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
             var lastInsertedContactIndex = webDriver.FindElements(managementContactsBodyCount).Count;
             webDriver.FindElement(By.CssSelector("div[data-testid='PropertyContactsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ lastInsertedContactIndex +") div[role='cell']:nth-child(4) button:nth-child(1)")).Click();
-
         }
 
         public void ViewLastActivityButton()
@@ -164,14 +124,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
             var lastInsertedActivityIndex = webDriver.FindElements(managementActivitiesBodyCount).Count;
             webDriver.FindElement(By.XPath("//div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastInsertedActivityIndex +"]/div/div[@role='cell'][5]/div/button[1]")).Click();
-
-        }
-
-        public void UpdateSelectedActivity()
-        {
-            WaitUntilClickable(managementActEditButton);
-            webDriver.FindElement(managementActEditButton).Click();
-            
         }
 
         public void AddNewPropertyContactButton()
@@ -182,20 +134,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void AddNewPropertyActivityButton()
         {
-            WaitUntilClickable(managementeAddActivityBttn);
-            webDriver.FindElement(managementeAddActivityBttn).Click();
-        }
-
-        public void AddNewDocumentButton()
-        {
-            WaitUntilVisible(managementActAddDocumentBttn);
-            webDriver.FindElement(managementActAddDocumentBttn).Click();
-        }
-
-        public void CloseActivityTray()
-        {
-            WaitUntilClickable(managementActCloseTrayBttn);
-            webDriver.FindElement(managementActCloseTrayBttn).Click();
+            WaitUntilClickable(managementAddActivityBttn);
+            webDriver.FindElement(managementAddActivityBttn).Click();
         }
 
         public void InsertManagementSummaryInformation(PropertyManagement managementProperty)
@@ -266,116 +206,10 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(managementContactsPurposeDescriptionTextarea).SendKeys(contact.PropertyContactPurposeDescription);
         }
 
-        public void InsertNewPropertyActivity(PropertyActivity activity)
-        {
-            Wait();
-
-            //Choosing Activity type, Sub-type, status
-            ChooseSpecificSelectOption(managementActTypeInput, activity.PropertyActivityType);
-
-            Wait();
-            ChooseSpecificSelectOption(managementActSubTypeInput, activity.PropertyActivitySubType);
-
-            ChooseSpecificSelectOption(managementActStatusInput, activity.PropertyActivityStatus);
-
-            //Inserting Requested Added Date
-            ClearInput(managementActRequestAddedDateInput);
-            webDriver.FindElement(managementActRequestAddedDateInput).Click();
-            webDriver.FindElement(managementActRequestAddedDateInput).SendKeys(activity.PropertyActivityRequestedDate);
-            webDriver.FindElement(managementActRequestAddedDateInput).SendKeys(Keys.Enter);
-
-            //Inserting Completion Date
-            if (activity.PropertyActivityCompletionDate != null)
-            {
-                webDriver.FindElement(managementActCompletionDateInput).SendKeys(activity.PropertyActivityCompletionDate);
-                webDriver.FindElement(managementActCompletionDateInput).SendKeys(Keys.Enter);
-            }
-
-            //Inserting Description
-            ClearInput(managementActDescriptionInput);
-            webDriver.FindElement(managementActDescriptionInput).SendKeys(activity.PropertyActivityDescription);
-
-            //Deleting previous Ministry Contacts and adding new
-            while (webDriver.FindElements(managementActMinistryContactDeleteBttns).Count > 0)
-                webDriver.FindElements(managementActMinistryContactDeleteBttns)[0].Click();
-
-            if (activity.PropertyActivityMinistryContact.First() != "")
-            {
-                webDriver.FindElement(managementActMinistryContactBttn).Click();
-                sharedSelectContact.SelectContact(activity.PropertyActivityMinistryContact[0], "");
-
-                if (activity.PropertyActivityMinistryContact.Count > 1)
-                {
-                    for (int i = 1; i < activity.PropertyActivityMinistryContact.Count; i++)
-                    {
-                        var elementNumber = i + 1;
-                        webDriver.FindElement(managementActMinistryContactAddContactLink).Click();
-
-                        WaitUntilVisible(By.XPath("//label[contains(text(),'Ministry contacts')]/parent::div/following-sibling::div/div["+ elementNumber +"]/div/div/div/div/button"));
-                        webDriver.FindElement(By.XPath("//label[contains(text(),'Ministry contacts')]/parent::div/following-sibling::div/div["+ elementNumber +"]/div/div/div/div/button")).Click();
-                        sharedSelectContact.SelectContact(activity.PropertyActivityMinistryContact[i], "");
-                    } 
-                }
-            }
-
-            //Inserting Requestor
-            if (activity.PropertyActivityRequestedSource != string.Empty)
-            {
-                ClearInput(managementActRequestorInput);
-                webDriver.FindElement(managementActRequestorInput).Click();
-                webDriver.FindElement(managementActRequestorInput).SendKeys(activity.PropertyActivityRequestedSource);
-            }
-                
-
-            //Deleting Involved parties and adding new
-            while (webDriver.FindElements(managementActInvolvedPartiesDeleteBttns).Count > 0)
-                webDriver.FindElements(managementActInvolvedPartiesDeleteBttns)[0].Click();
-
-            if (activity.PropertyActivityInvolvedParties.First() != "")
-            {
-                webDriver.FindElement(managementActInvolvedPartiesBttn).Click();
-                sharedSelectContact.SelectContact(activity.PropertyActivityInvolvedParties[0], "");
-
-                if (activity.PropertyActivityInvolvedParties.Count > 1)
-                {
-                    for (int i = 1; i < activity.PropertyActivityInvolvedParties.Count; i++)
-                    {
-                        var elementNumber = i + 1;
-                        webDriver.FindElement(managementActInvolvedPartiesAddContactLink).Click();
-
-                        WaitUntilVisible(By.XPath("//label[contains(text(),'Involved parties')]/parent::div/following-sibling::div/div["+ elementNumber +"]/div/div/div/div/button"));
-                        webDriver.FindElement(By.XPath("//label[contains(text(),'Involved parties')]/parent::div/following-sibling::div/div["+ elementNumber +"]/div/div/div/div/button")).Click();
-                        sharedSelectContact.SelectContact(activity.PropertyActivityInvolvedParties[i], "");
-                    }
-                }
-            }
-
-            if (activity.PropertyActivityServiceProvider != "")
-            {
-                webDriver.FindElement(managementActServiceProviderBttn).Click();
-                sharedSelectContact.SelectContact(activity.PropertyActivityServiceProvider, "");
-            }
-            if (activity.ManagementPropertyActivityInvoices.Count > 0)
-                for (int i = 0; i < activity.ManagementPropertyActivityInvoices.Count; i++)
-                    AddInvoice(activity.ManagementPropertyActivityInvoices[i], i);
-        }
-
         public void SavePropertyManagement()
         {
             ButtonElement("Save");
             WaitUntilVisible(managementSummaryEditBttn);
-        }
-
-        public void CancelPropertyManagement()
-        {
-            ButtonElement("Cancel");
-
-            Wait();
-            Assert.Equal("Confirm Changes", sharedModals.ModalHeader());
-            Assert.Contains("If you choose to cancel now, your changes will not be saved.", sharedModals.ModalContent());
-            Assert.Contains("Do you want to proceed?", sharedModals.ModalContent());
-
-            sharedModals.ModalClickOKBttn();
         }
 
         public void DeleteAllContacts()
@@ -413,13 +247,6 @@ namespace PIMS.Tests.Automation.PageObjects
             }
         }
 
-        public void ViewLastActivityFromList()
-        {
-            var paginationLastPage = webDriver.FindElements(managementActivityPaginationOptions).Count() -1;
-
-            webDriver.FindElement(By.XPath("//div[@data-testid='PropertyManagementActivitiesTable']/following-sibling::div/div/ul[@class='pagination']/li["+ paginationLastPage +"]")).Click();
-        }
-
         public void VerifyInitManagementTabView()
         {
             //Summary
@@ -438,10 +265,24 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(managementeAddContactBttn);
             AssertTrueIsDisplayed(managementContactsTable);
 
-            //Activities List
-            AssertTrueIsDisplayed(managementActivitiesTitle);
-            AssertTrueIsDisplayed(managementeAddActivityBttn);
-            AssertTrueIsDisplayed(managementActivitiesTable);
+            //Activiies List
+            AssertTrueIsDisplayed(managementFileActivitiesTitle);
+            AssertTrueIsDisplayed(managementActivitiesListTable);
+            AssertTrueIsDisplayed(managementActivitiesListTableActivityTypeColumn);
+            AssertTrueIsDisplayed(managementActivitiesListTableActivitySubtypeColumn);
+            AssertTrueIsDisplayed(managementActivitiesListTableActivityStatusColumn);
+            AssertTrueIsDisplayed(managementActivitiesListTableCommencementColumn);
+            AssertTrueIsDisplayed(managementActivitiesListTableActionsColumn);
+
+            //Property File Activity Summary
+            AssertTrueIsDisplayed(activitiesFileListSubtitle);
+            AssertTrueIsDisplayed(activitiesFileListTooltip);
+            AssertTrueIsDisplayed(activitiesFileListTableExpandBttn);
+            AssertTrueIsDisplayed(activitiesFileListTableActivityTypeColumn);
+            AssertTrueIsDisplayed(activitiesFileListTableActivitySubtypeColumn);
+            AssertTrueIsDisplayed(activitiesFileListTableActivityStatusColumn);
+            AssertTrueIsDisplayed(activitiesFileListTableActivityCommencementColumn);
+            AssertTrueIsDisplayed(activitiesFileListTableActivityNavigationColumn);
         }
 
         public void VerifyCreateSummaryInitForm()
@@ -467,50 +308,6 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(managementContactsPrimaryContactLabel);
             AssertTrueIsDisplayed(managementContactsPurposeDescriptionLabel);
             AssertTrueIsDisplayed(managementContactsPurposeDescriptionTextarea);
-        }
-
-        public void VerifyCreateActivityInitForm()
-        {
-            //Activity Details
-            AssertTrueIsDisplayed(managementActivityDetailsTitle);
-            AssertTrueIsDisplayed(managementActTypeLabel);
-            AssertTrueIsDisplayed(managementActTypeInput);
-            AssertTrueIsDisplayed(managementActSubTypeLabel);
-            AssertTrueIsDisplayed(managementActSubTypeInput);
-            AssertTrueIsDisplayed(managementActStatusLabel);
-            AssertTrueIsDisplayed(managementActStatusInput);
-            AssertTrueIsDisplayed(managementActRequestAddedDateLabel);
-            AssertTrueIsDisplayed(managementActRequestAddedDateInput);
-            AssertTrueIsDisplayed(managementActCompletionDateLabel);
-            AssertTrueIsDisplayed(managementActCompletionDateInput);
-            AssertTrueIsDisplayed(managementActDescriptionLabel);
-            AssertTrueIsDisplayed(managementActDescriptionInput);
-            AssertTrueIsDisplayed(managementActMinistryContactLabel);
-            AssertTrueIsDisplayed(managementActMinistryContactInput);
-            AssertTrueIsDisplayed(managementActMinistryContactBttn);
-            AssertTrueIsDisplayed(managementActMinistryContactAddContactLink);
-            AssertTrueIsDisplayed(managementActRequestorLabel);
-            AssertTrueIsDisplayed(managementActRequestorTooltip);
-            AssertTrueIsDisplayed(managementActRequestorInput);
-            AssertTrueIsDisplayed(managementActInvolvedPartiesLabel);
-            AssertTrueIsDisplayed(managementActInvolvedPartiesInput);
-            AssertTrueIsDisplayed(managementActInvolvedPartiesBttn);
-            AssertTrueIsDisplayed(managementActInvolvedPartiesAddContactLink);
-            AssertTrueIsDisplayed(managementActServiceProviderLabel);
-            AssertTrueIsDisplayed(managementActServiceProviderInput);
-            AssertTrueIsDisplayed(managementActServiceProviderBttn);
-
-            //Invoice
-            AssertTrueIsDisplayed(managementAddInvoiceBttn);
-            AssertTrueIsDisplayed(managementInvoicesTotalSubtitle);
-            AssertTrueIsDisplayed(managementActPretaxAmountLabel);
-            AssertTrueIsDisplayed(managementActPretaxAmountInput);
-            AssertTrueIsDisplayed(managementActGSTAmountLabel);
-            AssertTrueIsDisplayed(managementActGSTAmountInput);
-            AssertTrueIsDisplayed(managementActPSTAmountLabel);
-            AssertTrueIsDisplayed(managementActPSTAmountInput);
-            AssertTrueIsDisplayed(managementActTotalAmountLabel);
-            AssertTrueIsDisplayed(managementActTotalAmountInput);
         }
 
         public void VerifyInsertedSummaryForm(PropertyManagement managementProperty)
@@ -555,113 +352,30 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(By.CssSelector("div[data-testid='PropertyContactsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ lastInsertedContactIndex +") div[role='cell']:nth-child(4) button[title='Delete contact']"));
         }
 
-        public void VerifyInsertedActivity(PropertyActivity activity)
-        {
-            Wait(2000);
-
-            //Activity Details section
-            AssertTrueIsDisplayed(managementActivityDetailsTitle);
-
-            AssertTrueIsDisplayed(managementActTypeLabel);
-            AssertTrueContentEquals(managementActTypeContent, activity.PropertyActivityType);
-
-            AssertTrueIsDisplayed(managementActSubTypeLabel);
-            AssertTrueContentEquals(managementActSubTypeContent, activity.PropertyActivitySubType);
-
-            AssertTrueIsDisplayed(managementActStatusLabel);
-            AssertTrueContentEquals(managementActStatusContent, activity.PropertyActivityStatus);
-
-            AssertTrueIsDisplayed(managementActRequestAddedDateLabel);
-            AssertTrueContentEquals(managementActRequestAddedDateContent,TransformDateFormat(activity.PropertyActivityRequestedDate));
-
-            if (activity.PropertyActivityCompletionDate != null)
-            {
-                AssertTrueIsDisplayed(managementActCompletionDateLabel);
-                AssertTrueContentEquals(managementActCompletionDateContent, TransformDateFormat(activity.PropertyActivityCompletionDate));
-            }
-            
-            AssertTrueIsDisplayed(managementActDescriptionLabel);
-            AssertTrueContentEquals(managementActDescriptionContent, activity.PropertyActivityDescription);
-
-            AssertTrueIsDisplayed(managementActMinistryContactLabel);
-            if (activity.PropertyActivityMinistryContact.First() != "")
-                for(int i = 0; i < activity.PropertyActivityMinistryContact.Count; i++)
-                    Assert.Equal(webDriver.FindElements(managementActMinistryContactContent)[i].Text, activity.PropertyActivityMinistryContact[i]);
-
-            AssertTrueIsDisplayed(managementActRequestorLabel);
-            AssertTrueIsDisplayed(managementActRequestorTooltip);
-            if (activity.PropertyActivityRequestedSource != "")
-                AssertTrueContentEquals(managementActRequestorContent, activity.PropertyActivityRequestedSource);
-
-            AssertTrueIsDisplayed(managementActInvolvedPartiesLabel);
-            if (activity.PropertyActivityInvolvedParties.First() != "")
-                for (int i = 0; i < activity.PropertyActivityInvolvedParties.Count; i++)
-                    Assert.Equal(webDriver.FindElements(managementActInvolvedPartiesContent)[i].Text, activity.PropertyActivityInvolvedParties[i]);
-
-            AssertTrueIsDisplayed(managementActServiceProviderLabel);
-            if(activity.PropertyActivityServiceProvider != "")
-                AssertTrueContentEquals(managementActServiceProviderContent, activity.PropertyActivityServiceProvider);
-
-            //Invoices section
-            AssertTrueIsDisplayed(managementActInvoiceTotalsSubtitle);
-
-            AssertTrueIsDisplayed(managementActInvoiceTotalPretaxLabel);
-            AssertTrueContentEquals(managementActInvoiceTotalPretaxContent, TransformCurrencyFormat(activity.ManagementPropertyActivityTotalPreTax));
-
-            AssertTrueIsDisplayed(managementActInvoiceTotalGSTLabel);
-            AssertTrueContentEquals(managementActInvoiceTotalGSTContent, TransformCurrencyFormat(activity.ManagementPropertyActivityTotalGST));
-
-            AssertTrueIsDisplayed(managementActInvoiceTotalPSTLabel);
-            AssertTrueContentEquals(managementActInvoiceTotalPSTContent, TransformCurrencyFormat(activity.ManagementPropertyActivityTotalPST));
-
-            AssertTrueIsDisplayed(managementActInvoiceGrandTotalLabel);
-            AssertTrueContentEquals(managementActInvoiceGrandTotalContent, TransformCurrencyFormat(activity.ManagementPropertyActivityGrandTotal));
-        }
-
         public void VerifyLastInsertedActivityTable(PropertyActivity activity)
         {
-            //WaitUntilSpinnerDisappear();
+            Wait();
 
             var lastInsertedActivityIndex = webDriver.FindElements(managementActivitiesBodyCount).Count;
 
-            AssertTrueContentEquals(By.CssSelector("div[data-testid='PropertyManagementActivitiesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ lastInsertedActivityIndex +") div[role='cell']:nth-child(1)"), activity.PropertyActivityType);
-            AssertTrueContentEquals(By.CssSelector("div[data-testid='PropertyManagementActivitiesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ lastInsertedActivityIndex +") div[role='cell']:nth-child(2)"), activity.PropertyActivitySubType);
-            AssertTrueContentEquals(By.CssSelector("div[data-testid='PropertyManagementActivitiesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ lastInsertedActivityIndex +") div[role='cell']:nth-child(3)"), activity.PropertyActivityStatus);
-            AssertTrueContentEquals(By.CssSelector("div[data-testid='PropertyManagementActivitiesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ lastInsertedActivityIndex +") div[role='cell']:nth-child(4)"), TransformDateFormat(activity.PropertyActivityRequestedDate));
-            Assert.True(webDriver.FindElements(By.CssSelector("div[data-testid='PropertyManagementActivitiesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ lastInsertedActivityIndex +") div[role='cell']:nth-child(5) button")).Count > 0);
+            AssertTrueContentEquals(By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastInsertedActivityIndex +"]/div/div[@role='cell'][1]"), activity.PropertyActivityType);
+            AssertTrueContentEquals(By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastInsertedActivityIndex +"]/div/div[@role='cell'][2]"), activity.PropertyActivitySubType);
+            AssertTrueContentEquals(By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastInsertedActivityIndex +"]/div/div[@role='cell'][3]"), activity.PropertyActivityStatus);
+            AssertTrueContentEquals(By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastInsertedActivityIndex +"]/div/div[@role='cell'][4]"), TransformDateFormat(activity.PropertyActivityRequestedCommenceDate));
+            Assert.True(webDriver.FindElements(By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastInsertedActivityIndex +"]/div/div[@role='cell'][5]/div/div")).Count > 0);
+        }
+
+        public void ViewLastActivityFromList()
+        {
+            var paginationLastPage = webDriver.FindElements(managementActivityPaginationOptions).Count() -1;
+
+            webDriver.FindElement(By.XPath("//div[@data-testid='PropertyManagementActivitiesTable']/following-sibling::div/div/ul[@class='pagination']/li["+ paginationLastPage +"]")).Click();
         }
 
         public string VerifyLeaseActiveStatus()
         {
             Wait();
             return webDriver.FindElement(managementLeaseContent).Text;
-        }
-
-        private void AddInvoice(ManagementPropertyActivityInvoice invoice, int index)
-        {
-            Wait();
-            webDriver.FindElement(managementAddInvoiceBttn).Click();
-
-            Wait();
-            webDriver.FindElement(By.Id("input-invoices."+ index +".invoiceNum")).SendKeys(invoice.PropertyActivityInvoiceNumber);
-
-            webDriver.FindElement(By.Id("datepicker-invoices."+ index +".invoiceDateTime")).SendKeys(invoice.PropertyActivityInvoiceDate);
-            webDriver.FindElement(By.Id("datepicker-invoices."+ index +".invoiceDateTime")).SendKeys(Keys.Enter);
-
-            webDriver.FindElement(By.Id("input-invoices."+ index +".description")).SendKeys(invoice.PropertyActivityInvoiceDescription);
-
-            webDriver.FindElement(By.Id("input-invoices."+ index +".pretaxAmount")).Click();
-            CleanUpCurrencyInput(By.Id("input-invoices."+ index +".pretaxAmount"));
-
-            foreach (char c in invoice.PropertyActivityInvoicePretaxAmount)
-                SendKeysToCurrencyInput(By.Id("input-invoices."+ index +".pretaxAmount"), c);
-
-            ChooseSpecificSelectOption(By.Id("input-invoices."+ index +".isPstRequired"), invoice.PropertyActivityInvoicePSTApplicable);
-
-            AssertTrueElementValueEquals(By.Id("input-invoices."+ index +".gstAmount"), TransformCurrencyFormat(invoice.PropertyActivityInvoiceGSTAmount));
-
-            if(invoice.PropertyActivityInvoicePSTAmount != "0.00")
-                AssertTrueElementValueEquals(By.Id("input-invoices."+ index +".pstAmount"), TransformCurrencyFormat(invoice.PropertyActivityInvoicePSTAmount));
         }
     }
 }

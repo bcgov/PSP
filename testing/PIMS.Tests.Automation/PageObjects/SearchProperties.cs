@@ -188,12 +188,15 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SelectFoundPin()
         {
-            WaitUntilSpinnerDisappear();
+            Wait();
 
-            while (webDriver.FindElements(searchPropertyFoundLocationPopup).Count.Equals(0))
+            while (webDriver.FindElements(searchPropertyFoundCluster).Count > 0)
                 FocusAndClick(searchPropertyFoundCluster);
 
-            FocusAndClick(searchPropertyFoundLocationPopup);
+            if (webDriver.FindElements(searchPropertyFoundLocationPopup).Count == 1)
+                FocusAndClick(searchPropertyFoundLocationPopup);
+            else
+                FocusAndClick(searchPropertyFoundLocationPin);
         }
 
         public void SelectFirstFoundPropertyList()

@@ -4,14 +4,17 @@ import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { InventoryTabNames, InventoryTabs } from '@/features/mapSideBar/property/InventoryTabs';
-import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
 import { exists, isValidId } from '@/utils';
+import AppRoute from '@/utils/AppRoute';
 
 import { SideBarContext } from '../context/sidebarContext';
+import { PropertyEditForms } from '../property/PropertyRouter';
 import { UpdatePropertyDetailsContainer } from '../property/tabs/propertyDetails/update/UpdatePropertyDetailsContainer';
+import { PropertyContactEditContainer } from '../property/tabs/propertyDetailsManagement/update/PropertyContactEditContainer';
+import { PropertyContactEditForm } from '../property/tabs/propertyDetailsManagement/update/PropertyContactEditForm';
 import { PropertyManagementUpdateContainer } from '../property/tabs/propertyDetailsManagement/update/summary/PropertyManagementUpdateContainer';
 import { PropertyManagementUpdateForm } from '../property/tabs/propertyDetailsManagement/update/summary/PropertyManagementUpdateForm';
 import UpdatePropertyForm from '../property/tabs/propertyResearch/update/UpdatePropertyForm';
@@ -28,8 +31,7 @@ export interface IFilePropertyRouterProps {
   fileType: ApiGen_CodeTypes_FileTypes;
   isEditing: boolean;
   setIsEditing: (value: boolean) => void;
-  selectedMenuIndex: number;
-  defaultFileTab: FileTabType;
+  selectedFilePropertyId: number;
   defaultPropertyTab: InventoryTabNames;
   onSuccess: () => void;
 }
@@ -50,8 +52,8 @@ export const FilePropertyRouter: React.FC<IFilePropertyRouterProps> = props => {
     return null;
   }
 
-  const fileProperty = getFileProperty(props.file, props.selectedMenuIndex);
-  if (fileProperty == null) {
+  const fileProperty = getFileProperty(props.file, props.selectedFilePropertyId);
+  if (!exists(fileProperty)) {
     toast.warn('Could not find property in the file, showing file details instead', {
       autoClose: 15000,
     });
@@ -69,7 +71,7 @@ export const FilePropertyRouter: React.FC<IFilePropertyRouterProps> = props => {
             }
             return (
               <UpdatePropertyDetailsContainer
-                id={fileProperty!.property!.id}
+                id={fileProperty.property.id}
                 onSuccess={props.onSuccess}
                 ref={props.formikRef}
               />
@@ -108,6 +110,21 @@ export const FilePropertyRouter: React.FC<IFilePropertyRouterProps> = props => {
             ref={props.formikRef}
           />
         </Route>
+        <AppRoute
+          exact
+          path={`${path}/${InventoryTabNames.management}/${PropertyEditForms.UpdateContactContainer}/:contactId?`}
+          customRender={({ match }) => (
+            <PropertyContactEditContainer
+              propertyId={fileProperty?.propertyId}
+              contactId={match.params.contactId ? +match.params.contactId : 0}
+              View={PropertyContactEditForm}
+              onSuccess={onChildSuccess}
+              ref={props.formikRef}
+            />
+          )}
+          key={PropertyEditForms.UpdateContactContainer}
+          title="Update Contact"
+        ></AppRoute>
         <Redirect from={`${path}`} to={`${url}/${InventoryTabNames.property}?edit=true`} />
       </Switch>
     );
@@ -136,16 +153,11 @@ export const FilePropertyRouter: React.FC<IFilePropertyRouterProps> = props => {
   }
 };
 
-const getFileProperty = (file: ApiGen_Concepts_File, selectedMenuIndex: number) => {
+const getFileProperty = (file: ApiGen_Concepts_File, selectedFilePropertyId: number) => {
   const properties = file?.fileProperties || [];
-  const selectedPropertyIndex = selectedMenuIndex - 1;
 
-  if (selectedPropertyIndex < 0 || selectedPropertyIndex >= properties.length) {
-    return null;
-  }
-
-  const fileProperty = properties[selectedPropertyIndex];
-  if (exists(fileProperty)) {
+  const fileProperty = properties.find(p => p.id === selectedFilePropertyId);
+  if (exists(fileProperty) && !exists(fileProperty.file)) {
     fileProperty.file = file;
   }
   return fileProperty;

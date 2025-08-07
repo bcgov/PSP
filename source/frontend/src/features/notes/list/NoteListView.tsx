@@ -6,6 +6,7 @@ import { SectionListHeader } from '@/components/common/SectionListHeader';
 import { TableSort } from '@/components/Table/TableSort';
 import { Claims } from '@/constants/claims';
 import { NoteTypes } from '@/constants/noteTypes';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_Concepts_EntityNote } from '@/models/api/generated/ApiGen_Concepts_EntityNote';
 import { ApiGen_Concepts_Note } from '@/models/api/generated/ApiGen_Concepts_Note';
@@ -26,6 +27,7 @@ export interface INoteListViewProps {
   notes: ApiGen_Concepts_Note[];
   entityNotes?: ApiGen_Concepts_EntityNote[];
   sort: TableSort<ApiGen_Concepts_Note>;
+  canEditNotes: boolean;
   openAddNotes?: () => void;
   closeAddNotes?: () => void;
   deleteNote?: (type: NoteTypes, noteId: number) => Promise<boolean>;
@@ -52,6 +54,7 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
   isViewNotesOpened,
   currentNote,
   isAddNotesOpened,
+  canEditNotes,
   openAddNotes,
   setSort,
   setCurrentNote,
@@ -61,10 +64,13 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
   closeAddNotes,
   closeViewNotes,
 }: INoteListViewProps) => {
+  const { hasClaim } = useKeycloakWrapper();
+
   const { setModalContent, setDisplayModal } = useModalContext();
   const columns = [
     ...createNoteTableColumns(),
     createNoteActionsColumn(
+      canEditNotes,
       (note: ApiGen_Concepts_Note) => {
         setCurrentNote(note);
         openViewNotes();
@@ -100,21 +106,24 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
     ),
   ];
 
-  return (
-    <Section
-      header={
+  const getHeader = (): React.ReactNode => {
+    if (hasClaim([Claims.NOTE_ADD]) && canEditNotes) {
+      return (
         <SectionListHeader
           claims={[Claims.NOTE_ADD]}
           title="Notes"
           addButtonText="Add a Note"
           addButtonIcon={<FaPlus size={'2rem'} />}
-          onAdd={openAddNotes}
+          onButtonAction={openAddNotes}
         />
-      }
-      title="notes"
-      isCollapsable
-      initiallyExpanded
-    >
+      );
+    } else {
+      return 'Notes';
+    }
+  };
+
+  return (
+    <Section header={getHeader()} title="notes" isCollapsable initiallyExpanded>
       <NoteResults
         results={notes}
         loading={loading}

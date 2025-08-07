@@ -16,5 +16,9 @@
         public List<TeamMember> ManagementTeam { get; set; } = new List<TeamMember>() { };
         public int ManagementSearchPropertiesIndex { get; set; } = 0;
         public SearchProperty ManagementSearchProperties { get; set; } = new SearchProperty() { };
+        public int ManagementTotalProperties { get; set; } = 0;
+        public int ManagementActivityStartRow { get; set; } = 0;
+        public int ManagementActivityCount { get; set; } = 0;
+        public List<PropertyActivity> ManagementPropertyActivities { get; set; } = new List<PropertyActivity>();
     }
 }

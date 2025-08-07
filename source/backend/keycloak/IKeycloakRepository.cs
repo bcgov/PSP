@@ -18,10 +18,6 @@ namespace Pims.Keycloak
 
         Task<HttpResponseMessage> DeleteRoleFromUsers(string username, string roleName);
 
-        Task<RoleModel[]> GetUserGroupsAsync(Guid id);
-
-        Task ModifyUserRoleMappings(IEnumerable<UserRoleOperation> operations);
-
         Task<ResponseWrapper<RoleModel>> GetAllRoles();
 
         Task<ResponseWrapper<RoleModel>> GetAllGroupRoles(string groupName);

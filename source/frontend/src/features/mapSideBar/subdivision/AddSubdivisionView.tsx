@@ -1,17 +1,21 @@
 import { FieldArray, Formik, FormikHelpers, FormikProps } from 'formik';
+import { geoJSON } from 'leaflet';
 import noop from 'lodash/noop';
 import { useCallback } from 'react';
-import { Tab } from 'react-bootstrap';
+import { Col, Row, Tab } from 'react-bootstrap';
 import { FaInfoCircle } from 'react-icons/fa';
+import { PiCornersOut } from 'react-icons/pi';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import * as Yup from 'yup';
 
 import SubdivisionIcon from '@/assets/images/subdivision-icon.svg?react';
+import { LinkButton } from '@/components/common/buttons';
 import ConfirmNavigation from '@/components/common/ConfirmNavigation';
 import { Form } from '@/components/common/form';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { Section } from '@/components/common/Section/Section';
 import { H2 } from '@/components/common/styles';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
@@ -21,6 +25,7 @@ import { PropertySelectorPidSearchContainerProps } from '@/components/propertySe
 import PropertySearchSelectorPidFormView from '@/components/propertySelector/search/PropertySelectorPidSearchView';
 import { AreaUnitTypes } from '@/constants/areaUnitTypes';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import { exists, pimsGeomeryToGeometry } from '@/utils';
 import { convertArea } from '@/utils/convertUtils';
 
 import MapSideBarLayout from '../layout/MapSideBarLayout';
@@ -75,6 +80,23 @@ const AddSubdivisionView: React.FunctionComponent<
   PropertySelectorPidSearchComponent,
 }) => {
   const history = useHistory();
+
+  const mapMachine = useMapStateMachine();
+
+  const fitBoundaries = () => {
+    const fileProperties = formikRef.current.values.destinationProperties;
+
+    if (exists(fileProperties)) {
+      const locations = fileProperties
+        .map(fileProp => fileProp?.boundary ?? pimsGeomeryToGeometry(fileProp?.location))
+        .filter(exists);
+      const bounds = geoJSON(locations).getBounds();
+
+      if (exists(bounds) && bounds.isValid()) {
+        mapMachine.requestFlyToBounds(bounds);
+      }
+    }
+  };
 
   const getAreaValue = (area: number, unit: string): number => {
     const sqm = convertArea(area, unit, AreaUnitTypes.SquareMeters);
@@ -182,7 +204,23 @@ const AddSubdivisionView: React.FunctionComponent<
                 />
                 <FieldArray name="destinationProperties">
                   {({ remove }) => (
-                    <Section header="Selected Children" noPadding className="pt-4">
+                    <Section
+                      header={
+                        <Row>
+                          <Col xs="11">Selected Children</Col>
+                          <Col>
+                            <TooltipWrapper
+                              tooltip="Fit map to the file properties"
+                              tooltipId="property-selector-tooltip"
+                            >
+                              <LinkButton title="Fit boundaries button" onClick={fitBoundaries}>
+                                <PiCornersOut size={18} className="mr-2" />
+                              </LinkButton>
+                            </TooltipWrapper>
+                          </Col>
+                        </Row>
+                      }
+                    >
                       <SelectedOperationPropertyHeader />
                       {values.destinationProperties.map((property, index) => (
                         <SelectedOperationProperty

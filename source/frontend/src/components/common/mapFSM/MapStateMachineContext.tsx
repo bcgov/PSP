@@ -6,7 +6,6 @@ import { useHistory } from 'react-router-dom';
 import { AnyEventObject } from 'xstate';
 
 import { PropertyFilterFormModel } from '@/components/maps/leaflet/Control/AdvancedFilter/models';
-import { ILayerItem } from '@/components/maps/leaflet/Control/LayersControl/types';
 import { IGeoSearchParams } from '@/constants/API';
 import { IMapSideBarViewState } from '@/features/mapSideBar/MapSideBar';
 import {
@@ -39,6 +38,7 @@ export interface IMapStateMachineContext {
   requestedFlyTo: RequestedFlyTo;
   requestedCenterTo: RequestedCenterTo;
   mapMarkerSelected: MarkerSelected | null;
+  mapMarkedLocation: LatLngLiteral | null;
   mapLocationSelected: LatLngLiteral | null;
   mapLocationFeatureDataset: LocationFeatureDataset | null;
   selectedFeatureDataset: SelectedFeatureDataset | null;
@@ -60,8 +60,8 @@ export interface IMapStateMachineContext {
   activePimsPropertyIds: number[];
   showDisposed: boolean;
   showRetired: boolean;
-  activeLayers: ILayerItem[];
-  mapLayersToRefresh: ILayerItem[];
+  activeLayers: Set<string>;
+  mapLayersToRefresh: Set<string>;
   advancedSearchCriteria: PropertyFilterFormModel;
   isMapVisible: boolean;
   currentMapBounds: LatLngBounds;
@@ -79,6 +79,8 @@ export interface IMapStateMachineContext {
 
   mapClick: (latlng: LatLngLiteral) => void;
   mapMarkerClick: (featureSelected: MarkerSelected) => void;
+  mapMarkLocation: (laLng: LatLngLiteral) => void;
+  mapClearLocationMark: () => void;
 
   setMapSearchCriteria: (searchCriteria: IPropertyFilter) => void;
   refreshMapProperties: () => void;
@@ -94,9 +96,9 @@ export interface IMapStateMachineContext {
   toggleMapFilterDisplay: () => void;
   toggleMapLayerControl: () => void;
   setFilePropertyLocations: (locations: LocationBoundaryDataset[]) => void;
-  setMapLayers: (layers: ILayerItem[]) => void;
-  setMapLayersToRefresh: (layers: ILayerItem[]) => void;
-  setDefaultMapLayers: (layers: ILayerItem[]) => void;
+  setMapLayers: (layers: Set<string>) => void;
+  setMapLayersToRefresh: (layers: Set<string>) => void;
+  setDefaultMapLayers: (layers: Set<string>) => void;
 
   setVisiblePimsProperties: (propertyIds: number[]) => void;
   setShowDisposed: (show: boolean) => void;
@@ -226,6 +228,22 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
   const closeSidebar = useCallback(() => {
     serviceSend({
       type: 'CLOSE_SIDEBAR',
+    });
+  }, [serviceSend]);
+
+  const mapMarkLocation = useCallback(
+    (latlng: LatLngLiteral) => {
+      serviceSend({
+        type: 'MAP_MARK_LOCATION',
+        latlng,
+      });
+    },
+    [serviceSend],
+  );
+
+  const mapClearLocationMark = useCallback(() => {
+    serviceSend({
+      type: 'MAP_CLEAR_MARK_LOCATION',
     });
   }, [serviceSend]);
 
@@ -365,21 +383,21 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
   );
 
   const setMapLayers = useCallback(
-    (activeLayers: ILayerItem[]) => {
+    (activeLayers: Set<string>) => {
       serviceSend({ type: 'SET_MAP_LAYERS', activeLayers });
     },
     [serviceSend],
   );
 
   const setMapLayersToRefresh = useCallback(
-    (refreshLayers: ILayerItem[]) => {
+    (refreshLayers: Set<string>) => {
       serviceSend({ type: 'SET_REFRESH_MAP_LAYERS', refreshLayers });
     },
     [serviceSend],
   );
 
   const setDefaultMapLayers = useCallback(
-    (activeLayers: ILayerItem[]) => {
+    (activeLayers: Set<string>) => {
       serviceSend({ type: 'DEFAULT_MAP_LAYERS', activeLayers });
     },
     [serviceSend],
@@ -469,6 +487,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         requestedCenterTo: state.context.requestedCenterTo,
         mapMarkerSelected: state.context.mapFeatureSelected,
         mapLocationSelected: state.context.mapLocationSelected,
+        mapMarkedLocation: state.context.mapMarkedLocation,
         selectedFeatureDataset: state.context.selectedFeatureDataset,
         mapLocationFeatureDataset: state.context.mapLocationFeatureDataset,
         repositioningFeatureDataset: state.context.repositioningFeatureDataset,
@@ -502,6 +521,8 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         processFitBounds,
         openSidebar,
         closeSidebar,
+        mapMarkLocation,
+        mapClearLocationMark,
         requestFlyToLocation,
         requestCenterToLocation,
         requestFlyToBounds,

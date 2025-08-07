@@ -856,19 +856,19 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Filter leases Files
             PopulateLeaseLicense(rowNumber);
-            searchLeases.FilterLeasesFiles("", "", "", "", "", "", lease.LeaseStatus, "", lease.LeaseExpiryDate, "", "", "");
+            searchLeases.FilterLeasesFiles(status: lease.LeaseStatus, expiryDateFrom: lease.LeaseExpiryDate);
             Assert.True(searchLeases.SearchFoundResults());
 
-            searchLeases.FilterLeasesFiles("", "", "", "", "", "", "", "Progressive Motor Sports", "", "", "", "");
+            searchLeases.FilterLeasesFiles(tenant: "Progressive Motor Sports");
             Assert.True(searchLeases.SearchFoundResults());
 
-            searchLeases.FilterLeasesFiles("003-549-551", "", "", "", "", "", "Duplicate", "Jonathan Doe", "05/12/1987", "", "", "");
+            searchLeases.FilterLeasesFiles(pid: "003-549-551", status: "Duplicate", tenant: "Jonathan Doe", expiryDateFrom: "05/12/1987");
             Assert.False(searchLeases.SearchFoundResults());
 
-            searchLeases.FilterLeasesFiles("", "", "", "", "TestPN654", "", "", "", "", "", "", "");
+            searchLeases.FilterLeasesFiles(historicalFile: "TestPN654");
             Assert.True(searchLeases.SearchFoundResults());
 
-            searchLeases.FilterLeasesFiles("", "", "", "", "", "", "Cancelled", "", "03/22/2024", "", "", "");
+            searchLeases.FilterLeasesFiles(status: "Cancelled", expiryDateFrom: "03/22/2024");
             searchLeases.OrderByLastLease();
         }
 
@@ -1094,6 +1094,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 lease.SearchProperties.Address = ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "Address");
                 lease.SearchProperties.PlanNumber = ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "PlanNumber");
                 lease.SearchProperties.LegalDescription = ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "LegalDescription");
+                lease.SearchProperties.LatitudeLongitude.LatitudeDegree = ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "LatitudeDegree");
+                lease.SearchProperties.LatitudeLongitude.LatitudeMinutes = ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "LatitudeMinutes");
+                lease.SearchProperties.LatitudeLongitude.LatitudeSeconds = ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "LatitudeSeconds");
+                lease.SearchProperties.LatitudeLongitude.LatitudeDirection = ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "LatitudeDirection");
+                lease.SearchProperties.LatitudeLongitude.LongitudeDegree = ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "LongitudeDegree");
+                lease.SearchProperties.LatitudeLongitude.LongitudeMinutes = ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "LongitudeMinutes");
+                lease.SearchProperties.LatitudeLongitude.LongitudeSeconds = ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "LongitudeSeconds");
+                lease.SearchProperties.LatitudeLongitude.LongitudeDirection = ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "LongitudeDirection");
             }
 
             lease.LeasePropertyDetailsStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "LeasePropertyDetailsStartRow"));

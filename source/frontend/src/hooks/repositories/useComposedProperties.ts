@@ -4,13 +4,13 @@ import { LatLngLiteral } from 'leaflet';
 import { useEffect, useMemo, useState } from 'react';
 
 import { ComposedProperty } from '@/features/mapSideBar/property/ComposedProperty';
-import { LtsaOrders } from '@/interfaces/ltsaModels';
+import { LtsaOrders, SpcpOrder } from '@/interfaces/ltsaModels';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { ApiGen_Concepts_PropertyAssociations } from '@/models/api/generated/ApiGen_Concepts_PropertyAssociations';
 import { IBcAssessmentSummary } from '@/models/layers/bcAssesment';
 import { TANTALIS_CrownLandTenures_Feature_Properties } from '@/models/layers/crownLand';
 import { useTenant } from '@/tenants/useTenant';
-import { exists, isValidId } from '@/utils';
+import { exists, isPlanNumberSPCP, isValidId } from '@/utils';
 
 import { useGeoServer } from '../layer-api/useGeoServer';
 import { IWfsGetAllFeaturesOptions } from '../layer-api/useWfsLayer';
@@ -37,7 +37,11 @@ export default interface ComposedPropertyState {
   pid?: string;
   pin?: string;
   id?: number;
+  planNumber?: string;
   ltsaWrapper?: IResponseWrapper<(pid: string) => Promise<AxiosResponse<LtsaOrders, any>>>;
+  spcpWrapper?: IResponseWrapper<
+    (strataPlanNumber: string) => Promise<AxiosResponse<SpcpOrder, any>>
+  >;
   apiWrapper?: IResponseWrapper<
     (id: number) => Promise<AxiosResponse<ApiGen_Concepts_Property, any>>
   >;
@@ -64,6 +68,7 @@ export interface IUseComposedPropertiesProps {
   id?: number;
   pid?: number;
   pin?: number;
+  planNumber?: string;
   latLng?: LatLngLiteral;
   propertyTypes: PROPERTY_TYPES[];
 }
@@ -72,12 +77,13 @@ export const useComposedProperties = ({
   id,
   pid,
   pin,
+  planNumber,
   latLng,
   propertyTypes,
 }: IUseComposedPropertiesProps): ComposedPropertyState => {
   const { getPropertyWrapper } = usePimsPropertyRepository();
   const { getPropertyWfsWrapper } = useGeoServer();
-  const getLtsaWrapper = useLtsa();
+  const { ltsaRequestWrapper, getStrataPlanCommonProperty } = useLtsa();
   const getPropertyAssociationsWrapper = usePropertyAssociations();
   const { bcAssessment } = useTenant();
   const { findByPid, findByPin, findByWrapper } = useFullyAttributedParcelMapLayer();
@@ -90,12 +96,16 @@ export const useComposedProperties = ({
 
   const retrievedPid = getPropertyWrapper?.response?.pid?.toString() ?? pid?.toString();
   const retrievedPin = getPropertyWrapper?.response?.pin?.toString() ?? pin?.toString();
+  const retrievedPlanNumber =
+    getPropertyWrapper?.response?.planNumber?.toString() ?? planNumber?.toString();
 
   const [composedProperty, setComposedProperty] = useState<ComposedProperty>({
     pid: undefined,
     pin: undefined,
+    planNumber: undefined,
     id: undefined,
     ltsaOrders: undefined,
+    spcpOrder: undefined,
     pimsProperty: undefined,
     propertyAssociations: undefined,
     parcelMapFeatureCollection: undefined,
@@ -131,7 +141,8 @@ export const useComposedProperties = ({
     typeCheckWrapper,
   ]);
 
-  const executeGetLtsa = getLtsaWrapper.execute;
+  const executeGetLtsa = ltsaRequestWrapper.execute;
+  const executeGetStrataLtsa = getStrataPlanCommonProperty.execute;
   const executeBcAssessmentSummary = getSummaryWrapper.execute;
 
   // calls to 3rd-party services (ie LTSA, ParcelMap, Tantalis Crown Land)
@@ -148,6 +159,8 @@ export const useComposedProperties = ({
       );
     } else if (exists(retrievedPin)) {
       typeCheckWrapper(() => findByPin(retrievedPin, true), PROPERTY_TYPES.PARCEL_MAP);
+    } else if (exists(retrievedPlanNumber) && isPlanNumberSPCP(retrievedPlanNumber)) {
+      typeCheckWrapper(() => executeGetStrataLtsa(retrievedPlanNumber), PROPERTY_TYPES.LTSA);
     }
 
     // Crown land doesn't necessarily have a PIMS ID or PID or PIN so we need to use the lat/long of the selected property
@@ -163,10 +176,12 @@ export const useComposedProperties = ({
     executeGetLtsa,
     retrievedPid,
     retrievedPin,
+    retrievedPlanNumber,
     typeCheckWrapper,
     executeBcAssessmentSummary,
     findMultipleCrownLandTenure,
     latLng,
+    executeGetStrataLtsa,
   ]);
 
   useEffect(() => {
@@ -174,7 +189,9 @@ export const useComposedProperties = ({
       id: id,
       pid: retrievedPid,
       pin: retrievedPin,
-      ltsaOrders: getLtsaWrapper.response,
+      planNumber: retrievedPlanNumber,
+      ltsaOrders: ltsaRequestWrapper.response,
+      spcpOrder: getStrataPlanCommonProperty.response,
       pimsProperty: getPropertyWrapper.response,
       propertyAssociations: getPropertyAssociationsWrapper.response,
       parcelMapFeatureCollection: findByWrapper.response,
@@ -187,13 +204,15 @@ export const useComposedProperties = ({
     id,
     retrievedPid,
     retrievedPin,
-    getLtsaWrapper.response,
     getPropertyWrapper.response,
     getPropertyAssociationsWrapper.response,
     findByWrapper.response,
     getPropertyWfsWrapper.response,
     getSummaryWrapper.response,
     crownResponse,
+    retrievedPlanNumber,
+    ltsaRequestWrapper.response,
+    getStrataPlanCommonProperty.response,
   ]);
 
   return useMemo(
@@ -201,17 +220,20 @@ export const useComposedProperties = ({
       id: id,
       pid: pid?.toString() ?? retrievedPid,
       pin: pin?.toString() ?? retrievedPin,
+      planNumber: planNumber?.toString() ?? retrievedPlanNumber,
       composedProperty: composedProperty,
-      ltsaWrapper: getLtsaWrapper,
+      ltsaWrapper: ltsaRequestWrapper,
+      spcpWrapper: getStrataPlanCommonProperty,
       apiWrapper: getPropertyWrapper,
       propertyAssociationWrapper: getPropertyAssociationsWrapper,
       parcelMapWrapper: findByWrapper,
       geoserverWrapper: getPropertyWfsWrapper,
       bcAssessmentWrapper: getSummaryWrapper,
       composedLoading:
-        getLtsaWrapper?.loading ||
+        ltsaRequestWrapper?.loading ||
         getPropertyWrapper?.loading ||
         getPropertyAssociationsWrapper?.loading ||
+        getStrataPlanCommonProperty?.loading ||
         findByWrapper?.loading ||
         getPropertyWfsWrapper?.loading ||
         getSummaryWrapper?.loading ||
@@ -223,8 +245,11 @@ export const useComposedProperties = ({
       retrievedPid,
       pin,
       retrievedPin,
+      planNumber,
+      retrievedPlanNumber,
       composedProperty,
-      getLtsaWrapper,
+      ltsaRequestWrapper,
+      getStrataPlanCommonProperty,
       getPropertyWrapper,
       getPropertyAssociationsWrapper,
       findByWrapper,

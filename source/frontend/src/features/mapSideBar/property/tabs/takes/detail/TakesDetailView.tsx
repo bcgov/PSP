@@ -109,7 +109,7 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
             claims={[Claims.PROPERTY_EDIT]}
             addButtonIcon={<FaPlus />}
             addButtonText="Add Take"
-            onAdd={onAdd}
+            onButtonAction={onAdd}
             cannotAddComponent={
               <TooltipIcon toolTipId={`takes-cannot-add-tooltip`} toolTip={cannotEditMessage} />
             }
