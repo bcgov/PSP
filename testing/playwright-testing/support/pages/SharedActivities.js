@@ -154,22 +154,33 @@ class SharedActivities {
       }
     }
 
-     if (activity.PropertyActivityServiceProvider != null) {
-        await this.page.locator("#input-serviceProvider.id").click();
-        await this.sharedSelectContacts.selectContact(activity.PropertyActivityServiceProvider, "");
-     }
+    if (activity.PropertyActivityServiceProvider != null) {
+      await this.page.locator("#input-serviceProvider.id").click();
+      await this.sharedSelectContacts.selectContact(
+        activity.PropertyActivityServiceProvider,
+        ""
+      );
+    }
 
-     if (activity.ManagementPropertyActivityInvoices.count() > 0) {
-        activity.ManagementPropertyActivityInvoices.forEach((invoice, index) => {
-          this.addInvoice(invoice, index);
-        });
-     }
+    if (activity.ManagementPropertyActivityInvoices.count() > 0) {
+      activity.ManagementPropertyActivityInvoices.forEach((invoice, index) => {
+        this.addInvoice(invoice, index);
+      });
+    }
   }
 
   async cancelPropertyManagement() {
-    await expect(this.page.locator("div[class='modal-header'] div[class='modal-title h4']")).toHaveTextContent("Confirm Changes");
-    await expect(this.page.locator("div[class='modal-body']")).toHaveTextContent( /If you choose to cancel now, your changes will not be saved./);
-    await expect(this.page.locator("div[class='modal-body']")).toHaveTextContent( /Do you want to proceed?/);
+    await expect(
+      this.page.locator("div[class='modal-header'] div[class='modal-title h4']")
+    ).toHaveTextContent("Confirm Changes");
+    await expect(
+      this.page.locator("div[class='modal-body']")
+    ).toHaveTextContent(
+      /If you choose to cancel now, your changes will not be saved./
+    );
+    await expect(
+      this.page.locator("div[class='modal-body']")
+    ).toHaveTextContent(/Do you want to proceed?/);
     await this.page.getByTestId("ok-modal-button").click();
   }
 
@@ -178,11 +189,18 @@ class SharedActivities {
   }
 
   async verifyInsertedActivity(activity, activityType) {
-
     //Activity Details section
-    await expect(this.page.locator("//div[contains(text(),'Activity Details')]")).toBeVisible();
-    await expect(this.page.locator("//label[contains(text(),'Activity type')]")).toBeVisible();
-    await expect(this.page.locator("//label[contains(text(),'Activity type')]/parent::div/following-sibling::div")).toHaveTextContent(activity.PropertyActivityType);
+    await expect(
+      this.page.locator("//div[contains(text(),'Activity Details')]")
+    ).toBeVisible();
+    await expect(
+      this.page.locator("//label[contains(text(),'Activity type')]")
+    ).toBeVisible();
+    await expect(
+      this.page.locator(
+        "//label[contains(text(),'Activity type')]/parent::div/following-sibling::div"
+      )
+    ).toHaveTextContent(activity.PropertyActivityType);
 
     AssertTrueIsDisplayed(managementActSubTypeLabel);
     if (activity.PropertyActivitySubTypeList.First() != "") {
@@ -234,20 +252,23 @@ class SharedActivities {
     //      for (int i = 0; i < activity.PropertyActivityMinistryContactList.Count; i++)
     //          Assert.Equal(webDriver.FindElements(managementActMinistryContactContent)[i].Text, activity.PropertyActivityMinistryContactList[i]);
 
-     if (activityType == "Management File")
-     {
-         AssertTrueIsDisplayed(managementActContactManagerLabel);
-         AssertTrueIsDisplayed(managementActContactManagerTooltip);
-         if (activity.PropertyActivityRequestorContactMngr != "")
-             AssertTrueContentEquals(managementActContactManagerContent, activity.PropertyActivityRequestorContactMngr);
-     }
-     else
-     {
-         AssertTrueIsDisplayed(managementActRequestorLabel);
-         AssertTrueIsDisplayed(managementActRequestorTooltip);
-         if (activity.PropertyActivityRequestorContactMngr != "")
-             AssertTrueContentEquals(managementActRequestorContent, activity.PropertyActivityRequestorContactMngr);
-     }
+    if (activityType == "Management File") {
+      AssertTrueIsDisplayed(managementActContactManagerLabel);
+      AssertTrueIsDisplayed(managementActContactManagerTooltip);
+      if (activity.PropertyActivityRequestorContactMngr != "")
+        AssertTrueContentEquals(
+          managementActContactManagerContent,
+          activity.PropertyActivityRequestorContactMngr
+        );
+    } else {
+      AssertTrueIsDisplayed(managementActRequestorLabel);
+      AssertTrueIsDisplayed(managementActRequestorTooltip);
+      if (activity.PropertyActivityRequestorContactMngr != "")
+        AssertTrueContentEquals(
+          managementActRequestorContent,
+          activity.PropertyActivityRequestorContactMngr
+        );
+    }
 
     //  if (activityType == "Management File")
     //  {
