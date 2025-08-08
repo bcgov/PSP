@@ -8,6 +8,11 @@ describe('WorklistView', () => {
   const onRemove = vi.fn();
   const onClearAll = vi.fn();
   const onZoomToParcel = vi.fn();
+  const onCreateAcquisitionFile = vi.fn();
+  const onCreateResearchFile = vi.fn();
+  const onCreateDispositionFile = vi.fn();
+  const onCreateLeaseFile = vi.fn();
+  const onCreateManagementFile = vi.fn();
 
   beforeEach(() => {
     cleanup();
@@ -25,6 +30,11 @@ describe('WorklistView', () => {
         onRemove={onRemove}
         onClearAll={onClearAll}
         onZoomToParcel={onZoomToParcel}
+        onCreateAcquisitionFile={onCreateAcquisitionFile}
+        onCreateResearchFile={onCreateResearchFile}
+        onCreateDispositionFile={onCreateDispositionFile}
+        onCreateLeaseFile={onCreateLeaseFile}
+        onCreateManagementFile={onCreateManagementFile}
       />,
       { ...renderOptions },
     );

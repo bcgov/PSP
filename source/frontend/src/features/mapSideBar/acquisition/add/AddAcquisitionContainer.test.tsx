@@ -250,23 +250,25 @@ describe('AddAcquisitionContainer component', () => {
   it('should pre-populate the region if a property is selected', async () => {
     const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
-      selectedFeatures: {
-        location: { lng: -120.69195885, lat: 50.25163372 },
-        fileLocation: null,
-        pimsFeature: null,
-        parcelFeature: null,
-        regionFeature: {
-          type: 'Feature',
-          properties: { ...emptyRegion, REGION_NUMBER: 1, REGION_NAME: 'South Coast Region' },
-          geometry: {
-            type: 'Polygon',
-            coordinates: [[[-120.69195885, 50.25163372]]],
+      selectedFeatures: [
+        {
+          location: { lng: -120.69195885, lat: 50.25163372 },
+          fileLocation: null,
+          pimsFeature: null,
+          parcelFeature: null,
+          regionFeature: {
+            type: 'Feature',
+            properties: { ...emptyRegion, REGION_NUMBER: 1, REGION_NAME: 'South Coast Region' },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [[[-120.69195885, 50.25163372]]],
+            },
           },
+          districtFeature: null,
+          municipalityFeature: null,
+          selectingComponentId: null,
         },
-        districtFeature: null,
-        municipalityFeature: null,
-        selectingComponentId: null,
-      },
+      ],
     };
 
     await act(async () => {
@@ -279,23 +281,25 @@ describe('AddAcquisitionContainer component', () => {
   it('should not pre-populate the region if a property is selected and the region cannot be determined', async () => {
     const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
-      selectedFeatures: {
-        location: { lng: -120.69195885, lat: 50.25163372 },
-        fileLocation: null,
-        pimsFeature: null,
-        parcelFeature: null,
-        regionFeature: {
-          type: 'Feature',
-          properties: { ...emptyRegion, REGION_NUMBER: 4 },
-          geometry: {
-            type: 'Polygon',
-            coordinates: [[[-120.69195885, 50.25163372]]],
+      selectedFeatures: [
+        {
+          location: { lng: -120.69195885, lat: 50.25163372 },
+          fileLocation: null,
+          pimsFeature: null,
+          parcelFeature: null,
+          regionFeature: {
+            type: 'Feature',
+            properties: { ...emptyRegion, REGION_NUMBER: 4 },
+            geometry: {
+              type: 'Polygon',
+              coordinates: [[[-120.69195885, 50.25163372]]],
+            },
           },
+          districtFeature: null,
+          municipalityFeature: null,
+          selectingComponentId: null,
         },
-        districtFeature: null,
-        municipalityFeature: null,
-        selectingComponentId: null,
-      },
+      ],
     };
 
     await act(async () => {

@@ -29,6 +29,7 @@ import {
 
 import { useAddLease } from '../hooks/useAddLease';
 import AddLeaseContainer, { IAddLeaseContainerProps } from './AddLeaseContainer';
+import AddLeaseForm from './AddLeaseForm';
 
 const retrieveUserInfo = vi.fn();
 vi.mock('@/hooks/repositories/useUserInfoRepository');
@@ -86,13 +87,16 @@ const onSuccess = vi.fn();
 describe('AddLeaseContainer component', () => {
   // render component under test
   const setup = (renderOptions: RenderOptions & Partial<IAddLeaseContainerProps> = {}) => {
-    const utils = render(<AddLeaseContainer onClose={onClose} onSuccess={onSuccess} />, {
-      ...renderOptions,
-      store: storeState,
-      useMockAuthentication: true,
-      mockMapMachine: renderOptions.mockMapMachine,
-      history,
-    });
+    const utils = render(
+      <AddLeaseContainer onClose={onClose} onSuccess={onSuccess} View={AddLeaseForm} />,
+      {
+        ...renderOptions,
+        store: storeState,
+        useMockAuthentication: true,
+        mockMapMachine: renderOptions.mockMapMachine,
+        history,
+      },
+    );
 
     return {
       ...utils,

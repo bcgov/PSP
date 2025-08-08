@@ -96,16 +96,18 @@ describe('AddResearchContainer component', () => {
       onSuccess: noop,
       mockMapMachine: {
         ...mapMachineBaseMock,
-        selectedFeatures: {
-          location: { lat: 0, lng: 0 },
-          fileLocation: null,
-          pimsFeature: null,
-          parcelFeature: selectedFeature,
-          regionFeature: null,
-          districtFeature: null,
-          selectingComponentId: null,
-          municipalityFeature: undefined,
-        },
+        selectedFeatures: [
+          {
+            location: { lat: 0, lng: 0 },
+            fileLocation: null,
+            pimsFeature: null,
+            parcelFeature: selectedFeature,
+            regionFeature: null,
+            districtFeature: null,
+            selectingComponentId: null,
+            municipalityFeature: undefined,
+          },
+        ],
       },
     });
     await act(async () => {

@@ -4,6 +4,11 @@ import MoreOptionsDropdown, { IMoreOptionsDropdownProps } from './MoreOptionsDro
 
 describe('<MoreOptionsDropdown />', () => {
   const onClearAll = vi.fn();
+  const onCreateAcquisitionFile = vi.fn();
+  const onCreateResearchFile = vi.fn();
+  const onCreateDispositionFile = vi.fn();
+  const onCreateLeaseFile = vi.fn();
+  const onCreateManagementFile = vi.fn();
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -17,6 +22,11 @@ describe('<MoreOptionsDropdown />', () => {
         onClearAll={onClearAll}
         canClearAll={renderOptions.props?.canClearAll}
         ariaLabel={renderOptions.props?.ariaLabel}
+        onCreateAcquisitionFile={onCreateAcquisitionFile}
+        onCreateResearchFile={onCreateResearchFile}
+        onCreateDispositionFile={onCreateDispositionFile}
+        onCreateLeaseFile={onCreateLeaseFile}
+        onCreateManagementFile={onCreateManagementFile}
       />,
       { ...renderOptions },
     );
