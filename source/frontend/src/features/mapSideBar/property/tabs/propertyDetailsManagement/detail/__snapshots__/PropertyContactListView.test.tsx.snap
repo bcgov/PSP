@@ -333,6 +333,11 @@ exports[`PropertyContactListView component > renders as expected when provided v
   float: right;
 }
 
+.c7 {
+  padding: 0 0.4rem;
+  display: block;
+}
+
 .c6 {
   float: right;
   cursor: pointer;
@@ -384,11 +389,6 @@ exports[`PropertyContactListView component > renders as expected when provided v
   -webkit-flex: 0.5 1 0;
   -ms-flex: 0.5 1 0;
   flex: 0.5 1 0;
-}
-
-.c7 {
-  padding: 0 0.4rem;
-  display: block;
 }
 
 <div

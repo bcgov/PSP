@@ -222,5 +222,6 @@ const selectedFeature: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties
     COMPILED_IND: null,
     STATED_AREA: null,
     WHEN_CREATED: null,
+    SHAPE: null,
   },
 };

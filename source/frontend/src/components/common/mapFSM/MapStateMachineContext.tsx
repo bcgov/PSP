@@ -12,7 +12,7 @@ import {
   defaultPropertyFilter,
   IPropertyFilter,
 } from '@/features/properties/filter/IPropertyFilter';
-import { exists, firstOrNull } from '@/utils';
+import { exists, firstOrNull, isValidString } from '@/utils';
 import { pidParser, pinParser } from '@/utils/propertyUtils';
 
 import { mapMachine } from './machineDefinition/mapMachine';
@@ -27,6 +27,7 @@ import {
 import useLocationFeatureLoader, {
   LocationFeatureDataset,
   SelectedFeatureDataset,
+  WorklistLocationFeatureDataset,
 } from './useLocationFeatureLoader';
 import { useMapSearch } from './useMapSearch';
 
@@ -44,6 +45,9 @@ export interface IMapStateMachineContext {
   selectedFeatureDataset: SelectedFeatureDataset | null;
   repositioningFeatureDataset: SelectedFeatureDataset | null;
   repositioningPropertyIndex: number | null;
+  // worklist-related state
+  worklistSelectedMapLocation: LatLngLiteral | null;
+  worklistLocationFeatureDataset: WorklistLocationFeatureDataset | null;
   showPopup: boolean;
   isLoading: boolean;
   mapSearchCriteria: IPropertyFilter | null;
@@ -57,6 +61,10 @@ export interface IMapStateMachineContext {
   isFiltering: boolean;
   isShowingMapFilter: boolean;
   isShowingMapLayers: boolean;
+  isShowingMapSearch: boolean;
+  isShowingWorkList: boolean;
+  isShowingQuickInfo: boolean;
+  isQuickInfoMinimized: boolean;
   activePimsPropertyIds: number[];
   showDisposed: boolean;
   showRetired: boolean;
@@ -82,6 +90,9 @@ export interface IMapStateMachineContext {
   mapMarkLocation: (laLng: LatLngLiteral) => void;
   mapClearLocationMark: () => void;
 
+  // worklist
+  worklistMapClick: (latlng: LatLngLiteral) => void;
+
   setMapSearchCriteria: (searchCriteria: IPropertyFilter) => void;
   refreshMapProperties: () => void;
   prepareForCreation: (selectedFeature: SelectedFeatureDataset) => void;
@@ -95,6 +106,12 @@ export interface IMapStateMachineContext {
   finishReposition: () => void;
   toggleMapFilterDisplay: () => void;
   toggleMapLayerControl: () => void;
+  toggleMapSearchControl: () => void;
+  toggleWorkListControl: () => void;
+  showMapSearchControl: () => void;
+  openQuickInfo: () => void;
+  closeQuickInfo: () => void;
+  minimizeQuickInfo: () => void;
   setFilePropertyLocations: (locations: LocationBoundaryDataset[]) => void;
   setMapLayers: (layers: Set<string>) => void;
   setMapLayersToRefresh: (layers: Set<string>) => void;
@@ -158,7 +175,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         event:
           | (AnyEventObject & { type: 'MAP_CLICK'; latlng: LatLngLiteral })
           | (AnyEventObject & { type: 'MAP_MARKER_CLICK'; featureSelected: MarkerSelected }),
-      ) => {
+      ): Promise<LocationFeatureDataset> => {
         let result: LocationFeatureDataset | undefined = undefined;
 
         if (event.type === 'MAP_CLICK') {
@@ -185,6 +202,13 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
 
         return result;
       },
+      loadWorklistLocationData: async (
+        context: MachineContext,
+        event: AnyEventObject & { type: 'WORKLIST_MAP_CLICK'; latlng: LatLngLiteral },
+      ): Promise<WorklistLocationFeatureDataset> => {
+        const response = locationLoader.loadWorklistLocationDetails({ latLng: event.latlng });
+        return response;
+      },
       loadFeatures: (context: MachineContext, event: any): Promise<MapFeatureData> => {
         // If there is data in the event, use that criteria.
         // Otherwise, use the stored one in the context.
@@ -205,6 +229,15 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         } else if (geoFilter?.HISTORICAL_FILE_NUMBER_STR) {
           geoFilter.forceExactMatch = false;
           return mapSearch.searchByHistorical(geoFilter);
+        } else if (
+          isValidString(geoFilter?.SECTION?.toString()) ||
+          isValidString(geoFilter?.RANGE?.toString()) ||
+          isValidString(geoFilter?.TOWNSHIP?.toString()) ||
+          isValidString(geoFilter?.DISTRICT?.toString())
+        ) {
+          geoFilter.forceExactMatch = false;
+          const response = mapSearch.searchBySurveyParcel(geoFilter);
+          return response;
         } else {
           return mapSearch.loadMapProperties();
         }
@@ -262,6 +295,16 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
       serviceSend({
         type: 'MAP_MARKER_CLICK',
         featureSelected,
+      });
+    },
+    [serviceSend],
+  );
+
+  const worklistMapClick = useCallback(
+    (latlng: LatLngLiteral) => {
+      serviceSend({
+        type: 'WORKLIST_MAP_CLICK',
+        latlng,
       });
     },
     [serviceSend],
@@ -454,6 +497,30 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     serviceSend({ type: 'TOGGLE_LAYERS' });
   }, [serviceSend]);
 
+  const toggleMapSearchControl = useCallback(() => {
+    serviceSend({ type: 'TOGGLE_SEARCH' });
+  }, [serviceSend]);
+
+  const toggleWorkListControl = useCallback(() => {
+    serviceSend({ type: 'TOGGLE_WORKLIST' });
+  }, [serviceSend]);
+
+  const showMapSearchControl = useCallback(() => {
+    serviceSend({ type: 'SHOW_SEARCH' });
+  }, [serviceSend]);
+
+  const openQuickInfo = useCallback(() => {
+    serviceSend({ type: 'OPEN_QUICK_INFO' });
+  }, [serviceSend]);
+
+  const minimizeQuickInfo = useCallback(() => {
+    serviceSend({ type: 'MIN_QUICK_INFO' });
+  }, [serviceSend]);
+
+  const closeQuickInfo = useCallback(() => {
+    serviceSend({ type: 'CLOSE_QUICK_INFO' });
+  }, [serviceSend]);
+
   const isRepositioning = useMemo(() => {
     return state.matches({ mapVisible: { featureView: 'repositioning' } });
   }, [state]);
@@ -464,11 +531,30 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
   }, [isRepositioning, state.context.mapLocationFeatureDataset]);
 
   const isShowingMapFilter = useMemo(() => {
-    return state.matches({ mapVisible: { advancedFilterSideBar: 'mapFilterOpened' } });
+    return state.matches({ mapVisible: { rightSideBar: 'filterVisible' } });
   }, [state]);
 
   const isShowingMapLayers = useMemo(() => {
-    return state.matches({ mapVisible: { advancedFilterSideBar: 'layerControl' } });
+    return state.matches({ mapVisible: { rightSideBar: 'layerVisible' } });
+  }, [state]);
+
+  const isShowingMapSearch = useMemo(() => {
+    return state.matches({ mapVisible: { rightSideBar: 'searchVisible' } });
+  }, [state]);
+
+  const isShowingWorkList = useMemo(() => {
+    return state.matches({ mapVisible: { rightSideBar: 'worklistVisible' } });
+  }, [state]);
+
+  const isShowingQuickInfo = useMemo(() => {
+    return (
+      state.matches({ mapVisible: { quickInfo: 'opened' } }) ||
+      state.matches({ mapVisible: { quickInfo: 'minimized' } })
+    );
+  }, [state]);
+
+  const isQuickInfoMinimized = useMemo(() => {
+    return state.matches({ mapVisible: { quickInfo: 'minimized' } });
   }, [state]);
 
   return (
@@ -492,6 +578,8 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         mapLocationFeatureDataset: state.context.mapLocationFeatureDataset,
         repositioningFeatureDataset: state.context.repositioningFeatureDataset,
         repositioningPropertyIndex: state.context.repositioningPropertyIndex,
+        worklistSelectedMapLocation: state.context.worklistSelectedMapLocation,
+        worklistLocationFeatureDataset: state.context.worklistLocationFeatureDataset,
         showPopup: showPopup,
         isLoading: state.context.isLoading,
         mapSearchCriteria: state.context.searchCriteria,
@@ -506,6 +594,10 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         isFiltering: !dequal(state.context.advancedSearchCriteria, new PropertyFilterFormModel()),
         isShowingMapFilter: isShowingMapFilter,
         isShowingMapLayers: isShowingMapLayers,
+        isShowingMapSearch: isShowingMapSearch,
+        isShowingWorkList: isShowingWorkList,
+        isShowingQuickInfo: isShowingQuickInfo,
+        isQuickInfoMinimized: isQuickInfoMinimized,
         activeLayers: state.context.activeLayers,
         activePimsPropertyIds: state.context.activePimsPropertyIds,
         showDisposed: state.context.showDisposed,
@@ -528,6 +620,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         requestFlyToBounds,
         mapClick,
         mapMarkerClick,
+        worklistMapClick,
         closePopup,
         prepareForCreation,
         startSelection,
@@ -536,6 +629,12 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         finishReposition,
         toggleMapFilterDisplay,
         toggleMapLayerControl,
+        toggleMapSearchControl,
+        toggleWorkListControl,
+        showMapSearchControl,
+        openQuickInfo,
+        minimizeQuickInfo,
+        closeQuickInfo,
         toggleSidebarDisplay,
         setFilePropertyLocations,
         setVisiblePimsProperties,
@@ -566,6 +665,10 @@ const getQueryParams = (filter: IPropertyFilter): IGeoSearchParams => {
     STREET_ADDRESS_1: filter.address,
     SURVEY_PLAN_NUMBER: filter.planNumber,
     HISTORICAL_FILE_NUMBER_STR: filter.historical,
+    SECTION: filter.section,
+    TOWNSHIP: filter.township,
+    RANGE: filter.range,
+    DISTRICT: filter.district,
     latitude: filter.latitude,
     longitude: filter.longitude,
     forceExactMatch: pidValue?.length === 9,

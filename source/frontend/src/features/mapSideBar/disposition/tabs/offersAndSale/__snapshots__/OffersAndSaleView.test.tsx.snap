@@ -188,7 +188,12 @@ exports[`Disposition Offer Detail View component > renders as expected 1`] = `
       </p>
     </div>
   </div>
-  .c1 {
+  .c5 {
+  padding: 0 0.4rem;
+  display: block;
+}
+
+.c1 {
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
@@ -212,11 +217,6 @@ exports[`Disposition Offer Detail View component > renders as expected 1`] = `
 
 .c3 {
   font-weight: bold;
-}
-
-.c5 {
-  padding: 0 0.4rem;
-  display: block;
 }
 
 .c7 {
