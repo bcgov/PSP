@@ -34,6 +34,7 @@ import AddProjectForm from '../project/add/AddProjectForm';
 import ProjectContainer from '../project/ProjectContainer';
 import ProjectContainerView from '../project/ProjectContainerView';
 import AddResearchContainer from '../research/add/AddResearchContainer';
+import AddResearchForm from '../research/add/AddResearchForm';
 import ResearchContainer from '../research/ResearchContainer';
 import ResearchView from '../research/ResearchView';
 import AddSubdivisionContainer from '../subdivision/AddSubdivisionContainer';
@@ -194,6 +195,7 @@ export const MapRouter: React.FunctionComponent = memo(() => {
             onSuccess={(newResearchId: number) => {
               history.replace(`/mapview/sidebar/research/${newResearchId}`);
             }}
+            View={AddResearchForm}
           />
         )}
         claim={Claims.RESEARCH_ADD}

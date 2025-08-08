@@ -20,16 +20,17 @@ import SidebarFooter from '../../shared/SidebarFooter';
 import { StyledFormWrapper } from '../../shared/styles';
 import { useAddResearch } from '../hooks/useAddResearch';
 import { AddResearchFileYupSchema } from './AddResearchFileYupSchema';
-import AddResearchForm from './AddResearchForm';
+import { IAddResearchFormProps } from './AddResearchForm';
 import { ResearchForm } from './models';
 
 export interface IAddResearchContainerProps {
   onClose: () => void;
   onSuccess: (newResearchId: number) => void;
+  View: React.FC<IAddResearchFormProps>;
 }
 
 export const AddResearchContainer: React.FunctionComponent<IAddResearchContainerProps> = props => {
-  const { onClose } = props;
+  const { onClose, onSuccess, View } = props;
   const history = useHistory();
   const formikRef = useRef<FormikProps<ResearchForm>>(null);
   const mapMachine = useMapStateMachine();
@@ -148,7 +149,7 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
         }
         mapMachine.refreshMapProperties();
         formikRef.current?.resetForm({ values: ResearchForm.fromApi(response) });
-        props.onSuccess(response.id);
+        onSuccess(response.id);
       }
     } finally {
       formikRef.current?.setSubmitting(false);
@@ -196,7 +197,7 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
           onClose={cancelFunc}
         >
           <StyledFormWrapper>
-            <AddResearchForm confirmBeforeAdd={confirmBeforeAdd} />
+            <View confirmBeforeAdd={confirmBeforeAdd} />
           </StyledFormWrapper>
           <ConfirmNavigation navigate={history.push} shouldBlockNavigation={checkState} />
         </MapSideBarLayout>
