@@ -27,6 +27,7 @@ import {
   selectOptions,
 } from '@/utils/test-utils';
 
+import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import { useAddLease } from '../hooks/useAddLease';
 import AddLeaseContainer, { IAddLeaseContainerProps } from './AddLeaseContainer';
 import AddLeaseForm from './AddLeaseForm';
@@ -86,9 +87,11 @@ const onSuccess = vi.fn();
 
 describe('AddLeaseContainer component', () => {
   // render component under test
-  const setup = (renderOptions: RenderOptions & Partial<IAddLeaseContainerProps> = {}) => {
+  const setup = async (renderOptions: RenderOptions & Partial<IAddLeaseContainerProps> = {}) => {
     const utils = render(
-      <AddLeaseContainer onClose={onClose} onSuccess={onSuccess} View={AddLeaseForm} />,
+      <SideBarContextProvider>
+        <AddLeaseContainer onClose={onClose} onSuccess={onSuccess} View={AddLeaseForm} />
+      </SideBarContextProvider>,
       {
         ...renderOptions,
         store: storeState,
@@ -97,6 +100,9 @@ describe('AddLeaseContainer component', () => {
         history,
       },
     );
+
+    // wait for the component to finish loading
+    await act(async () => {});
 
     return {
       ...utils,
@@ -117,7 +123,7 @@ describe('AddLeaseContainer component', () => {
   });
 
   it('cancels the form', async () => {
-    const { getCloseButton } = setup({});
+    const { getCloseButton } = await setup({});
 
     await act(async () => selectOptions('regionId', '1'));
     await act(async () => userEvent.click(getCloseButton()));
@@ -126,7 +132,7 @@ describe('AddLeaseContainer component', () => {
   });
 
   it('requires confirmation when navigating away', async () => {
-    const { getByTitle } = setup({});
+    const { getByTitle } = await setup({});
 
     await act(async () => selectOptions('regionId', '1'));
 
@@ -137,7 +143,7 @@ describe('AddLeaseContainer component', () => {
   });
 
   it('saves the form with minimal data', async () => {
-    const { getByText, getPurposeMultiSelect, container } = setup({});
+    const { getByText, getPurposeMultiSelect, container } = await setup({});
 
     await act(async () => selectOptions('statusTypeCode', ApiGen_CodeTypes_LeaseStatusTypes.DRAFT));
     await act(async () =>
@@ -183,7 +189,7 @@ describe('AddLeaseContainer component', () => {
       }),
     );
 
-    const { getByText, findByText, getPurposeMultiSelect, container } = setup({});
+    const { getByText, findByText, getPurposeMultiSelect, container } = await setup({});
 
     await act(async () => selectOptions('statusTypeCode', ApiGen_CodeTypes_LeaseStatusTypes.DRAFT));
     await act(async () =>
@@ -227,7 +233,7 @@ describe('AddLeaseContainer component', () => {
       }),
     );
 
-    const { getByText, getPurposeMultiSelect, getByTestId, container } = setup({});
+    const { getByText, getPurposeMultiSelect, getByTestId, container } = await setup({});
 
     await act(async () => selectOptions('statusTypeCode', ApiGen_CodeTypes_LeaseStatusTypes.DRAFT));
     await act(async () =>
@@ -298,9 +304,17 @@ describe('AddLeaseContainer component', () => {
       ],
     };
 
-    const { findByDisplayValue } = setup({ mockMapMachine: testMockMachine });
+    const { findByDisplayValue } = await setup({ mockMapMachine: testMockMachine });
     const text = await findByDisplayValue(/South Coast Region/i);
     expect(text).toBeVisible();
+  });
+
+  it('resets the "draft" markers when the file is opened', async () => {
+    const testMockMachine: IMapStateMachineContext = {
+      ...mapMachineBaseMock,
+    };
+    await setup({ mockMapMachine: testMockMachine });
+    expect(testMockMachine.setFilePropertyLocations).toHaveBeenCalledWith([]);
   });
 });
 

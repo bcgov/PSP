@@ -10,7 +10,15 @@ import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_C
 import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
 import { emptyRegion } from '@/models/layers/motRegionalBoundary';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, getByName, renderAsync, RenderOptions, screen, userEvent } from '@/utils/test-utils';
+import {
+  act,
+  getByName,
+  getMockRepositoryObj,
+  render,
+  RenderOptions,
+  screen,
+  userEvent,
+} from '@/utils/test-utils';
 
 import { AcquisitionOwnerFormModel, OwnerAddressFormModel } from '../common/models';
 import { AddAcquisitionContainer, IAddAcquisitionContainerProps } from './AddAcquisitionContainer';
@@ -64,23 +72,14 @@ vi.mocked(useUserInfoRepository).mockReturnValue({
 
 // Mock API service calls
 
-const addAcquisitionFileApi = {
-  execute: vi.fn(),
-  error: undefined,
-  loading: false,
-  response: undefined,
-};
-const getAcquisitionFileApi = {
-  execute: vi.fn(),
-  error: undefined,
-  loading: false,
-  response: undefined,
-};
+const addAcquisitionFileApi = getMockRepositoryObj();
+const getAcquisitionFileApi = getMockRepositoryObj();
+
 vi.mock('@/hooks/repositories/useAcquisitionProvider');
-vi.mocked(useAcquisitionProvider).mockReturnValue({
+vi.mocked(useAcquisitionProvider, { partial: true }).mockReturnValue({
   addAcquisitionFile: addAcquisitionFileApi,
   getAcquisitionFile: getAcquisitionFileApi,
-} as unknown as ReturnType<typeof useAcquisitionProvider>);
+});
 
 const mocks = vi.hoisted(() => {
   return {
@@ -119,7 +118,7 @@ describe('AddAcquisitionContainer component', () => {
       initialized: true,
     }));
 
-    const utils = await renderAsync(<AddAcquisitionContainer {...props} />, {
+    const utils = render(<AddAcquisitionContainer {...props} />, {
       ...renderOptions,
       store: {
         [lookupCodesSlice.name]: { lookupCodes: mockLookups },
@@ -128,6 +127,9 @@ describe('AddAcquisitionContainer component', () => {
       mockMapMachine: renderOptions.mockMapMachine,
       history,
     });
+
+    // wait for the component to finish loading
+    await act(async () => {});
 
     return {
       ...utils,
