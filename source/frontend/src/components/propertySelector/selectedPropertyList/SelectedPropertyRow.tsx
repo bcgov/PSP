@@ -89,7 +89,7 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
         />
       </Col>
       <Col xs="auto">
-        <LinkButton onClick={onZoomToProperty}>
+        <LinkButton onClick={onZoomToProperty} data-testid={'zoom-to-property-' + index}>
           <FaSearchPlus size={18} className="ml-4" />
         </LinkButton>
       </Col>
@@ -111,12 +111,17 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
           onClick={() => {
             mapMachine.startReposition(property, index);
           }}
+          data-testid={'move-pin-location-' + index}
         >
           <RiDragMove2Line size={22} />
         </StyledIconButton>
       </Col>
       <Col md={1}>
-        <RemoveButton onRemove={onRemove} fontSize="1.4rem" />
+        <RemoveButton
+          onRemove={onRemove}
+          fontSize="1.4rem"
+          data-testId={'delete-property-' + index}
+        />
       </Col>
     </StyledRow>
   );

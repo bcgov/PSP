@@ -134,6 +134,7 @@ export const MapSelectorContainer: FunctionComponent<IMapSelectorContainerProps>
             );
             setSearchSelectedProperties([]);
           }}
+          data-testid="add-selected-properties-button"
         >
           Add to selection
         </Button>

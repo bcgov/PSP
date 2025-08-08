@@ -15,7 +15,8 @@ export interface ISectionListHeaderProps {
   cannotAddComponent?: JSX.Element;
   onButtonAction?: () => void;
   claims: Claims[];
-  'data-testId'?: string;
+  'title-data-testId'?: string;
+  'button-data-testId'?: string;
   className?: string;
   isAddEnabled?: boolean;
 }
@@ -28,12 +29,15 @@ export const SectionListHeader: React.FunctionComponent<
 
   return (
     <StyledRow className={clsx('no-gutters', props.className)}>
-      <Col xs="auto" className="align-items-end">
+      <Col xs="auto" className="align-items-end" data-testid={props['title-data-testId']}>
         {props.title}
       </Col>
       <Col xs="auto" className="my-1">
         {hasClaim(props.claims) && exists(props.onButtonAction) && props.isAddEnabled !== false && (
-          <StyledSectionAddButton onClick={onClickButtonAction} data-testid={props['data-testId']}>
+          <StyledSectionAddButton
+            onClick={onClickButtonAction}
+            data-testid={props['button-data-testId']}
+          >
             {props.addButtonIcon}
             &nbsp;{props.addButtonText ?? 'Add'}
           </StyledSectionAddButton>

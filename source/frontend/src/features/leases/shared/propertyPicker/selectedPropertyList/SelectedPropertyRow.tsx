@@ -104,7 +104,11 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
           </LinkButton>
         </Col>
         <Col md={2}>
-          <RemoveButton onRemove={onRemove} fontSize="1.4rem" />
+          <RemoveButton
+            onRemove={onRemove}
+            fontSize="1.4rem"
+            data-testId={'delete-property-' + index}
+          />
         </Col>
       </Row>
       <Row className="align-items-center mb-3 no-gutters">
