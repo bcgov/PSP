@@ -27,13 +27,6 @@ const AddLeaseForm: React.FunctionComponent<React.PropsWithChildren<IAddLeaseFor
   formikRef,
   initialValues,
 }) => {
-  const handleSubmit = async (
-    values: LeaseFormModel,
-    formikHelpers: FormikHelpers<LeaseFormModel>,
-  ) => {
-    return await onSubmit(values, formikHelpers);
-  };
-
   return (
     <StyledFormWrapper>
       <Formik<LeaseFormModel>
@@ -41,9 +34,7 @@ const AddLeaseForm: React.FunctionComponent<React.PropsWithChildren<IAddLeaseFor
         innerRef={formikRef}
         initialValues={initialValues}
         validationSchema={AddLeaseYupSchema.concat(AddLeaseTeamYupSchema)}
-        onSubmit={(values: LeaseFormModel, formikHelpers: FormikHelpers<LeaseFormModel>) => {
-          handleSubmit(values, formikHelpers);
-        }}
+        onSubmit={onSubmit}
       >
         {formikProps => (
           <>
