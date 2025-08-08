@@ -263,8 +263,10 @@ exports[`AgreementView component > renders as expected 1`] = `
 }
 
 .c3 {
-  display: grid;
-  grid-template-columns: 1fr 0.5fr;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
@@ -278,6 +280,18 @@ exports[`AgreementView component > renders as expected 1`] = `
 
 .c3 .btn {
   margin: 0;
+}
+
+.c3 .primary-column {
+  -webkit-flex: 1 1 0;
+  -ms-flex: 1 1 0;
+  flex: 1 1 0;
+}
+
+.c3 .secondary-column {
+  -webkit-flex: 0.5 1 0;
+  -ms-flex: 0.5 1 0;
+  flex: 0.5 1 0;
 }
 
 .c6 {
@@ -353,13 +367,10 @@ exports[`AgreementView component > renders as expected 1`] = `
               class="c3 no-gutters row"
             >
               <div
-                class="align-items-end col-auto"
+                class="align-items-end primary-column col-auto"
               >
                 Agreements
               </div>
-              <div
-                class="my-1 col-auto"
-              />
             </div>
           </div>
         </div>

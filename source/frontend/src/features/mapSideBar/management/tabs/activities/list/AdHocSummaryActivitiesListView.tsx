@@ -25,12 +25,12 @@ const AdHocSummaryActivitiesView: React.FunctionComponent<IManagementActivitiesL
         <div className="d-flex">
           <SectionListHeader
             claims={[Claims.MANAGEMENT_VIEW]}
-            title="Ad-Hoc Activity Summary"
+            title="Ad-hoc Activities List"
             className="mr-2"
           />
           <TooltipIcon
             toolTipId="property-file-activity-summary"
-            toolTip="These are all of the Ad-Hoc activities that reference a property on this file."
+            toolTip="These are all of the Ad-hoc activities that reference a property on this file."
             className="align-self-end"
           />
         </div>
