@@ -782,7 +782,7 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
                       Name of the area
                     </li>
                     <li>
-                      Name of the MoTI highway district
+                      Name of the MOTT highway district
                     </li>
                     <li>
                       Name of the enquirer

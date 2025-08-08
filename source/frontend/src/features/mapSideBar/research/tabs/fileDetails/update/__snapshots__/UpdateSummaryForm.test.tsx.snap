@@ -598,7 +598,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
               Name of the area
             </li>
             <li>
-              Name of the MoTI highway district
+              Name of the MOTT highway district
             </li>
             <li>
               Name of the enquirer

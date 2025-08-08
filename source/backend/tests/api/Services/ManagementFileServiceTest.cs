@@ -785,7 +785,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             var exception = act.Should().Throw<UserOverrideException>();
-            exception.WithMessage("You have added one or more properties to the management file that are not in the MOTI Inventory. To acquire these properties, add them to an acquisition file. Do you want to proceed?");
+            exception.WithMessage("You have added one or more properties to the management file that are not in the MOTT Inventory. To acquire these properties, add them to an acquisition file. Do you want to proceed?");
         }
 
         [Fact]
