@@ -12,7 +12,7 @@ import { AddLeaseYupSchema } from './AddLeaseYupSchema';
 import AdministrationSubForm from './AdministrationSubForm';
 import LeaseDetailSubForm from './LeaseDetailSubForm';
 
-interface IAddLeaseFormProps {
+export interface IAddLeaseFormProps {
   onSubmit: (
     values: LeaseFormModel,
     formikHelpers: FormikHelpers<LeaseFormModel>,

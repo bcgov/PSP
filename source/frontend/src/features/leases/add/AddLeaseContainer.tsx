@@ -17,17 +17,18 @@ import { featuresetToMapProperty } from '@/utils/mapPropertyUtils';
 
 import { useAddLease } from '../hooks/useAddLease';
 import { LeaseFormModel } from '../models';
-import AddLeaseForm from './AddLeaseForm';
+import { IAddLeaseFormProps } from './AddLeaseForm';
 
 export interface IAddLeaseContainerProps {
   onClose: () => void;
   onSuccess: (newLeaseId: number) => void;
+  View: React.FC<IAddLeaseFormProps>;
 }
 
 export const AddLeaseContainer: React.FunctionComponent<
   React.PropsWithChildren<IAddLeaseContainerProps>
 > = props => {
-  const { onClose } = props;
+  const { onClose, onSuccess, View } = props;
   const history = useHistory();
   const formikRef = useRef<FormikProps<LeaseFormModel>>(null);
   const mapMachine = useMapStateMachine();
@@ -69,7 +70,7 @@ export const AddLeaseContainer: React.FunctionComponent<
           );
         }
         mapMachine.refreshMapProperties();
-        props.onSuccess(response.id);
+        onSuccess(response.id);
       }
     } finally {
       formikHelpers.setSubmitting(false);
@@ -112,7 +113,7 @@ export const AddLeaseContainer: React.FunctionComponent<
       showCloseButton
       onClose={handleCancel}
     >
-      <AddLeaseForm
+      <View
         onSubmit={(values: LeaseFormModel, formikHelpers: FormikHelpers<LeaseFormModel>) =>
           withUserOverride((useOverrideCodes: UserOverrideCode[]) =>
             saveLeaseFile(values, formikHelpers, useOverrideCodes),

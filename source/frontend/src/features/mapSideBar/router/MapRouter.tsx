@@ -6,6 +6,7 @@ import { SideBarType } from '@/components/common/mapFSM/machineDefinition/types'
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import Claims from '@/constants/claims';
 import { AddLeaseContainer } from '@/features/leases';
+import AddLeaseForm from '@/features/leases/add/AddLeaseForm';
 import { LeaseContextProvider } from '@/features/leases/context/LeaseContext';
 import MotiInventoryContainer from '@/features/mapSideBar/property/MotiInventoryContainer';
 import { exists, isValidId } from '@/utils';
@@ -308,6 +309,7 @@ export const MapRouter: React.FunctionComponent = memo(() => {
             onSuccess={(newLeaseId: number) => {
               history.replace(`/mapview/sidebar/lease/${newLeaseId}`);
             }}
+            View={AddLeaseForm}
           />
         )}
         claim={Claims.LEASE_ADD}
