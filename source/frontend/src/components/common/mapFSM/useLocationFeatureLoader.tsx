@@ -255,7 +255,7 @@ const useLocationFeatureLoader = () => {
       };
 
       // call these APIs in parallel - notice there is no "await"
-      const fullyAttributedTask = await fullyAttributedServiceFindAll(latLng);
+      const fullyAttributedTask = fullyAttributedServiceFindAll(latLng);
       const regionTask = adminBoundaryLayerServiceFindRegion(latLng, 'SHAPE');
       const districtTask = adminBoundaryLayerServiceFindDistrict(latLng, 'SHAPE');
 
