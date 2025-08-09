@@ -56,7 +56,7 @@ const MoreOptionsDropdown: React.FC<IMoreOptionsDropdownProps> = ({
         </StyledToggleButton>
       </TooltipWrapper>
 
-      <StyledDropdownMenu>
+      <StyledDropdownMenu data-testid="more-options-menu">
         <StyledDropdownItem
           aria-label="Clear list"
           disabled={!canClearAll}

@@ -36,7 +36,10 @@ describe('WorklistView', () => {
         onCreateLeaseFile={onCreateLeaseFile}
         onCreateManagementFile={onCreateManagementFile}
       />,
-      { ...renderOptions },
+      {
+        useMockAuthentication: true,
+        ...renderOptions,
+      },
     );
   };
 
