@@ -59,7 +59,7 @@ export const DetailFeeDetermination: React.FunctionComponent<
               License administration fees are charged when there is either: a financial gain for the
               licensee and a benefit to the public, or when there is no financial gain to the
               licensee and there is no benefit for the public. The LAF can vary based on the impact
-              to the land, the length of the LOO, and if MOTI requires a legal review.
+              to the land, the length of the LOO, and if MOTT requires a legal review.
             </p>
           )}
         </StyledHelpText>

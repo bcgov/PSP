@@ -745,7 +745,7 @@ namespace Pims.Api.Services
                         }
                         else
                         {
-                            throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the disposition file that are not in the MOTI Inventory. Do you want to proceed?");
+                            throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the disposition file that are not in the MOTT Inventory. Do you want to proceed?");
                         }
                     }
                 }
@@ -773,7 +773,7 @@ namespace Pims.Api.Services
                         }
                         else
                         {
-                            throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the disposition file that are not in the MoTI Inventory. Do you want to proceed?");
+                            throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the disposition file that are not in the MoTT Inventory. Do you want to proceed?");
                         }
                     }
                 }
@@ -786,7 +786,7 @@ namespace Pims.Api.Services
                     }
                     else
                     {
-                        throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the disposition file that are not in the MoTI Inventory. Do you want to proceed?");
+                        throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the disposition file that are not in the MoTT Inventory. Do you want to proceed?");
                     }
                 }
             }
