@@ -222,6 +222,40 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   margin-right: 0;
 }
 
+.c34.c34.btn {
+  color: #aaaaaa;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  line-height: unset;
+}
+
+.c34.c34.btn .text {
+  display: none;
+}
+
+.c34.c34.btn:hover,
+.c34.c34.btn:active,
+.c34.c34.btn:focus {
+  color: #d8292f;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  opacity: unset;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.c34.c34.btn:hover .text,
+.c34.c34.btn:active .text,
+.c34.c34.btn:focus .text {
+  display: inline;
+  line-height: 2rem;
+}
+
 .c17 .react-datepicker__calendar-icon {
   width: 2.4rem;
   height: 3rem;
@@ -289,7 +323,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   margin-top: 1.6rem;
 }
 
-.c32 {
+.c35 {
   color: #474543;
   font-size: 1.6rem;
   -webkit-text-decoration: none;
@@ -395,16 +429,6 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   align-items: end;
 }
 
-.c34 {
-  position: -webkit-sticky;
-  position: sticky;
-  padding-top: 2rem;
-  bottom: 0;
-  border-top: 2px solid #e5e5e5;
-  background: white;
-  z-index: 10;
-}
-
 .c11 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -422,7 +446,17 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   overflow-y: auto;
 }
 
-.c33 {
+.c37 {
+  position: -webkit-sticky;
+  position: sticky;
+  padding-top: 2rem;
+  bottom: 0;
+  border-top: 2px solid #e5e5e5;
+  background: white;
+  z-index: 10;
+}
+
+.c36 {
   position: relative;
   border-radius: 0.4rem;
   padding-top: 0.8rem;
@@ -436,8 +470,53 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   cursor: pointer;
 }
 
-.c33.is-invalid {
+.c36.is-invalid {
   border: #CE3E39 solid 0.1rem;
+}
+
+.c32 {
+  position: relative;
+  border-radius: 0.4rem;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  padding-left: 1.2rem;
+  padding-right: 2.8rem;
+  word-break: break-all;
+  background-image: none;
+  color: #474543;
+  border: #606060 solid 0.1rem;
+  cursor: default;
+}
+
+.c32.is-invalid {
+  border: #CE3E39 solid 0.1rem;
+}
+
+.c33.c33.btn {
+  position: absolute;
+  top: calc(50% - 1.4rem);
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  padding-right: 1.2rem;
+  height: 1.6rem;
+  right: 0rem;
+  color: #9F9D9C;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  line-height: unset;
+}
+
+.c33.c33.btn .text {
+  display: none;
+}
+
+.c33.c33.btn:hover,
+.c33.c33.btn:active,
+.c33.c33.btn:focus {
+  color: #CE3E39;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  opacity: unset;
 }
 
 .c14 {
@@ -753,7 +832,9 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                   </div>
                   <div
                     class="c16 text-left col"
-                  />
+                  >
+                    999 - Hwy 14 Expansion
+                  </div>
                 </div>
                 <div
                   class="pb-2 row"
@@ -791,7 +872,9 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                   </div>
                   <div
                     class="c16 text-left col"
-                  />
+                  >
+                    00048 MISCELLANEOUS CLAIMS
+                  </div>
                 </div>
                 <div
                   class="pb-2 row"
@@ -1418,7 +1501,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                             name="assignedDate"
                             placeholder="MMM DD, YYYY"
                             type="text"
-                            value=""
+                            value="Dec 18, 2024"
                           />
                         </div>
                       </div>
@@ -1487,7 +1570,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                             name="deliveryDate"
                             placeholder="MMM DD, YYYY"
                             type="text"
-                            value=""
+                            value="Jul 29, 2022"
                           />
                         </div>
                       </div>
@@ -1556,7 +1639,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                             name="estimatedCompletionDate"
                             placeholder="MMM DD, YYYY"
                             type="text"
-                            value=""
+                            value="Nov 01, 2024"
                           />
                         </div>
                       </div>
@@ -1603,7 +1686,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                             name="possessionDate"
                             placeholder="MMM DD, YYYY"
                             type="text"
-                            value=""
+                            value="Dec 20, 2024"
                           />
                         </div>
                       </div>
@@ -2313,8 +2396,8 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                         id="input-legacyFileNumber"
                         name="legacyFileNumber"
                         style="word-break: break-all;"
-                        title=""
-                        value=""
+                        title="legacy file number"
+                        value="legacy file number"
                       />
                     </div>
                   </div>
@@ -2683,6 +2766,400 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
               <div
                 class="collapse show"
               >
+                <div
+                  class="py-3 row"
+                  data-testid="teamMemberRow[0]"
+                >
+                  <div
+                    class="col-xl-5 col-auto"
+                  >
+                    <div
+                      class="form-group"
+                    >
+                      <select
+                        class="form-select form-control"
+                        data-testid="select-profile"
+                        id="input-team.0.contactTypeCode"
+                        name="team.0.contactTypeCode"
+                      >
+                        <option
+                          value=""
+                        >
+                          Select profile...
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-EXPRAGENT"
+                          value="EXPRAGENT"
+                        >
+                          Expropriation agent
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-MOTILAWYER"
+                          value="MOTILAWYER"
+                        >
+                          MoTI Solicitor
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-NEGOTAGENT"
+                          value="NEGOTAGENT"
+                        >
+                          Negotiation agent
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-PROPAGENT"
+                          value="PROPAGENT"
+                        >
+                          Property agent
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-PROPANLYS"
+                          value="PROPANLYS"
+                        >
+                          Property analyst
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-PROPCOORD"
+                          value="PROPCOORD"
+                        >
+                          Property coordinator
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div
+                    class="pl-0 col-xl-5 col-auto"
+                    data-testid="contact-input"
+                  >
+                    <div
+                      class="form-group"
+                    >
+                      <div
+                        class="row"
+                      >
+                        <div
+                          class="col"
+                        >
+                          <div
+                            class="c32"
+                          >
+                            Bob Billy Smith
+                            <button
+                              class="c4 Button c33 btn btn-link"
+                              title="remove"
+                              type="button"
+                            >
+                              <div
+                                class="Button__value"
+                              >
+                                <svg
+                                  fill="currentColor"
+                                  height="2rem"
+                                  stroke="currentColor"
+                                  stroke-width="0"
+                                  viewBox="0 0 24 24"
+                                  width="2rem"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M0 0h24v24H0z"
+                                    fill="none"
+                                  />
+                                  <path
+                                    d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                                  />
+                                </svg>
+                              </div>
+                            </button>
+                          </div>
+                          <div
+                            class="d-none input form-group"
+                          >
+                            <input
+                              class="form-control"
+                              id="input-team.0.contact.id"
+                              name="team.0.contact.id"
+                              placeholder="Select from Contacts"
+                              style="word-break: break-all;"
+                              title="P1"
+                              value="P1"
+                            />
+                          </div>
+                        </div>
+                        <div
+                          class="pl-0 col-auto"
+                        >
+                          <button
+                            class="c4 Button Button--icon-only px-2 btn btn-primary"
+                            title="Select Contact"
+                            type="button"
+                          >
+                            <div
+                              class="Button__icon"
+                            >
+                              <svg
+                                fill="currentColor"
+                                height="20"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 448 512"
+                                width="20"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M436 160c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h320c26.5 0 48-21.5 48-48v-48h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20zm-228-32c35.3 0 64 28.7 64 64s-28.7 64-64 64-64-28.7-64-64 28.7-64 64-64zm112 236.8c0 10.6-10 19.2-22.4 19.2H118.4C106 384 96 375.4 96 364.8v-19.2c0-31.8 30.1-57.6 67.2-57.6h5c12.3 5.1 25.7 8 39.8 8s27.6-2.9 39.8-8h5c37.1 0 67.2 25.8 67.2 57.6v19.2z"
+                                />
+                              </svg>
+                            </div>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div />
+                  </div>
+                  <div
+                    class="pl-0 mt-2 col-xl-2 col-auto"
+                  >
+                    <button
+                      class="c4 Button c34 btn btn-link"
+                      data-testid="team.0.remove-button"
+                      type="button"
+                    >
+                      <div
+                        class="Button__value"
+                      >
+                        <svg
+                          fill="currentColor"
+                          height="2rem"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="2rem"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <title>
+                            remove
+                          </title>
+                          <path
+                            d="M0 0h24v24H0z"
+                            fill="none"
+                          />
+                          <path
+                            d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                          />
+                        </svg>
+                         
+                        <span
+                          class="text"
+                        >
+                          Remove
+                        </span>
+                      </div>
+                    </button>
+                  </div>
+                </div>
+                <div
+                  class="py-3 row"
+                  data-testid="teamMemberRow[1]"
+                >
+                  <div
+                    class="col-xl-5 col-auto"
+                  >
+                    <div
+                      class="form-group"
+                    >
+                      <select
+                        class="form-select form-control"
+                        data-testid="select-profile"
+                        id="input-team.1.contactTypeCode"
+                        name="team.1.contactTypeCode"
+                      >
+                        <option
+                          value=""
+                        >
+                          Select profile...
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-EXPRAGENT"
+                          value="EXPRAGENT"
+                        >
+                          Expropriation agent
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-MOTILAWYER"
+                          value="MOTILAWYER"
+                        >
+                          MoTI Solicitor
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-NEGOTAGENT"
+                          value="NEGOTAGENT"
+                        >
+                          Negotiation agent
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-PROPAGENT"
+                          value="PROPAGENT"
+                        >
+                          Property agent
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-PROPANLYS"
+                          value="PROPANLYS"
+                        >
+                          Property analyst
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-PROPCOORD"
+                          value="PROPCOORD"
+                        >
+                          Property coordinator
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div
+                    class="pl-0 col-xl-5 col-auto"
+                    data-testid="contact-input"
+                  >
+                    <div
+                      class="form-group"
+                    >
+                      <div
+                        class="row"
+                      >
+                        <div
+                          class="col"
+                        >
+                          <div
+                            class="c32"
+                          >
+                            Stinky Cheese
+                            <button
+                              class="c4 Button c33 btn btn-link"
+                              title="remove"
+                              type="button"
+                            >
+                              <div
+                                class="Button__value"
+                              >
+                                <svg
+                                  fill="currentColor"
+                                  height="2rem"
+                                  stroke="currentColor"
+                                  stroke-width="0"
+                                  viewBox="0 0 24 24"
+                                  width="2rem"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M0 0h24v24H0z"
+                                    fill="none"
+                                  />
+                                  <path
+                                    d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                                  />
+                                </svg>
+                              </div>
+                            </button>
+                          </div>
+                          <div
+                            class="d-none input form-group"
+                          >
+                            <input
+                              class="form-control"
+                              id="input-team.1.contact.id"
+                              name="team.1.contact.id"
+                              placeholder="Select from Contacts"
+                              style="word-break: break-all;"
+                              title="P3"
+                              value="P3"
+                            />
+                          </div>
+                        </div>
+                        <div
+                          class="pl-0 col-auto"
+                        >
+                          <button
+                            class="c4 Button Button--icon-only px-2 btn btn-primary"
+                            title="Select Contact"
+                            type="button"
+                          >
+                            <div
+                              class="Button__icon"
+                            >
+                              <svg
+                                fill="currentColor"
+                                height="20"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 448 512"
+                                width="20"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M436 160c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h320c26.5 0 48-21.5 48-48v-48h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20zm-228-32c35.3 0 64 28.7 64 64s-28.7 64-64 64-64-28.7-64-64 28.7-64 64-64zm112 236.8c0 10.6-10 19.2-22.4 19.2H118.4C106 384 96 375.4 96 364.8v-19.2c0-31.8 30.1-57.6 67.2-57.6h5c12.3 5.1 25.7 8 39.8 8s27.6-2.9 39.8-8h5c37.1 0 67.2 25.8 67.2 57.6v19.2z"
+                                />
+                              </svg>
+                            </div>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div />
+                  </div>
+                  <div
+                    class="pl-0 mt-2 col-xl-2 col-auto"
+                  >
+                    <button
+                      class="c4 Button c34 btn btn-link"
+                      data-testid="team.1.remove-button"
+                      type="button"
+                    >
+                      <div
+                        class="Button__value"
+                      >
+                        <svg
+                          fill="currentColor"
+                          height="2rem"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="2rem"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <title>
+                            remove
+                          </title>
+                          <path
+                            d="M0 0h24v24H0z"
+                            fill="none"
+                          />
+                          <path
+                            d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                          />
+                        </svg>
+                         
+                        <span
+                          class="text"
+                        >
+                          Remove
+                        </span>
+                      </div>
+                    </button>
+                  </div>
+                </div>
                 <button
                   class="c4 Button btn btn-link"
                   data-testid="add-team-member"
@@ -2717,7 +3194,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                 class="collapse show"
               >
                 <p
-                  class="c32"
+                  class="c35"
                 >
                   Each property in this sub-file should be impacted by the sub-interest(s) in this section
                 </p>
@@ -2758,7 +3235,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                           class="col"
                         >
                           <div
-                            class="c33"
+                            class="c36"
                           >
                             Select from contacts
                           </div>
@@ -2832,7 +3309,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                           class="col"
                         >
                           <div
-                            class="c33"
+                            class="c36"
                           >
                             Select from contacts
                           </div>
@@ -2919,7 +3396,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
         class=""
       >
         <div
-          class="c34 justify-content-end pt-4 p-0 no-gutters row"
+          class="c37 justify-content-end pt-4 p-0 no-gutters row"
         >
           <div
             class="pr-3 col-auto"
@@ -3360,16 +3837,6 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
   align-items: end;
 }
 
-.c35 {
-  position: -webkit-sticky;
-  position: sticky;
-  padding-top: 2rem;
-  bottom: 0;
-  border-top: 2px solid #e5e5e5;
-  background: white;
-  z-index: 10;
-}
-
 .c11 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -3385,6 +3852,16 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
   text-align: left;
   height: 100%;
   overflow-y: auto;
+}
+
+.c35 {
+  position: -webkit-sticky;
+  position: sticky;
+  padding-top: 2rem;
+  bottom: 0;
+  border-top: 2px solid #e5e5e5;
+  background: white;
+  z-index: 10;
 }
 
 .c34 {

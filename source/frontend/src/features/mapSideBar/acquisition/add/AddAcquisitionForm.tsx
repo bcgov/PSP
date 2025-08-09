@@ -50,7 +50,7 @@ export interface IAddAcquisitionFormProps {
   /** Submission handler */
   onSubmit: (
     values: AcquisitionForm,
-    setSubmitting: (isSubmitting: boolean) => void,
+    formikHelpers: FormikHelpers<AcquisitionForm>,
     userOverrides: UserOverrideCode[],
   ) => void | Promise<any>;
   confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
@@ -81,7 +81,7 @@ export const AddAcquisitionForm: React.FunctionComponent<IAddAcquisitionFormProp
     if (isMinistryRegionDiff(values)) {
       setShowDiffMinistryRegionModal(true);
     } else {
-      onSubmit(values, formikHelpers.setSubmitting, []);
+      onSubmit(values, formikHelpers, []);
     }
   };
 
@@ -116,7 +116,7 @@ const AddAcquisitionDetailSubForm: React.FC<{
   formikProps: FormikProps<AcquisitionForm>;
   onSubmit: (
     values: AcquisitionForm,
-    setSubmitting: (isSubmitting: boolean) => void,
+    formikHelpers: FormikHelpers<AcquisitionForm>,
     userOverrides: UserOverrideCode[],
   ) => void | Promise<any>;
   showDiffMinistryRegionModal: boolean;
@@ -491,7 +491,7 @@ const AddAcquisitionDetailSubForm: React.FC<{
         display={showDiffMinistryRegionModal}
         handleOk={() => {
           setShowDiffMinistryRegionModal(false);
-          onSubmit(formikProps.values, formikProps.setSubmitting, [UserOverrideCode.UPDATE_REGION]);
+          onSubmit(formikProps.values, formikProps, [UserOverrideCode.UPDATE_REGION]);
         }}
         handleCancel={() => {
           setShowDiffMinistryRegionModal(false);

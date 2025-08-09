@@ -9,6 +9,7 @@ import { initialEnabledLayers } from '@/components/maps/leaflet/Control/LayersCo
 import { defaultPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
 
 import { emptyFeatureData, LocationBoundaryDataset } from '../models';
+import { SelectedFeatureDataset } from '../useLocationFeatureLoader';
 import { MachineContext, SideBarType } from './types';
 
 const featureViewStates = {
@@ -630,7 +631,7 @@ export const mapMachine = createMachine<MachineContext>({
     mapFeatureSelected: null,
     mapLocationFeatureDataset: null,
     mapMarkedLocation: null,
-    selectedFeatureDataset: null,
+    selectedFeatures: [],
     repositioningFeatureDataset: null,
     repositioningPropertyIndex: null,
     selectingComponentId: null,
@@ -692,7 +693,10 @@ export const mapMachine = createMachine<MachineContext>({
         },
         PREPARE_FOR_CREATION: {
           actions: assign({
-            selectedFeatureDataset: (_, event: any) => event.selectedFeature,
+            selectedFeatures: (
+              _,
+              event: AnyEventObject & { selectedFeatures: SelectedFeatureDataset[] },
+            ) => event.selectedFeatures,
           }),
         },
         DEFAULT_MAP_LAYERS: {

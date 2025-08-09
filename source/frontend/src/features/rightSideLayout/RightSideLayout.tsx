@@ -41,6 +41,8 @@ const RightSideLayout: React.FC<React.PropsWithChildren<IRightSideLayoutProps>> 
 export default RightSideLayout;
 
 export const StyledMapSideBar = styled.div<{ show: boolean }>`
+  display: flex;
+  flex-direction: column;
   height: calc(100vh - 7.2rem - 4.8rem - 28rem);
   max-width: ${props => (props.show ? `34.1rem` : `0`)};
   width: ${props => (props.show ? `100%` : `0`)};

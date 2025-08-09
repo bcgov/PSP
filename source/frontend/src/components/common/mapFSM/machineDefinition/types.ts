@@ -37,7 +37,7 @@ export type MachineContext = {
   mapLocationSelected: LatLngLiteral | null;
   mapLocationFeatureDataset: LocationFeatureDataset | null;
   mapMarkedLocation: LatLngLiteral | null;
-  selectedFeatureDataset: SelectedFeatureDataset | null;
+  selectedFeatures: SelectedFeatureDataset[];
   repositioningFeatureDataset: SelectedFeatureDataset | null;
   repositioningPropertyIndex: number | null;
   selectingComponentId: string | null;

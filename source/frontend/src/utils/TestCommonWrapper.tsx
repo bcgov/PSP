@@ -11,7 +11,7 @@ import css from '@/assets/scss/_variables.module.scss';
 import ModalContainer from '@/components/common/ModalContainer';
 import { ModalContextProvider } from '@/contexts/modalContext';
 import { WorklistContextProvider } from '@/features/properties/worklist/context/WorklistContext';
-import { ParcelFeature } from '@/features/properties/worklist/models';
+import { ParcelDataset } from '@/features/properties/worklist/models';
 import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
 import { TenantConsumer, TenantProvider } from '@/tenants';
 
@@ -24,7 +24,7 @@ interface TestProviderWrapperParams {
   claims?: string[];
   roles?: string[];
   history?: MemoryHistory;
-  worklistParcels?: ParcelFeature[];
+  worklistParcels?: ParcelDataset[];
 }
 
 /**

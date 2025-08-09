@@ -1,9 +1,15 @@
 import { act, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
+import { Claims } from '@/constants';
 import MoreOptionsDropdown, { IMoreOptionsDropdownProps } from './MoreOptionsDropdown';
 
 describe('<MoreOptionsDropdown />', () => {
   const onClearAll = vi.fn();
+  const onCreateAcquisitionFile = vi.fn();
+  const onCreateResearchFile = vi.fn();
+  const onCreateDispositionFile = vi.fn();
+  const onCreateLeaseFile = vi.fn();
+  const onCreateManagementFile = vi.fn();
 
   beforeEach(() => {
     vi.clearAllMocks();
@@ -17,8 +23,17 @@ describe('<MoreOptionsDropdown />', () => {
         onClearAll={onClearAll}
         canClearAll={renderOptions.props?.canClearAll}
         ariaLabel={renderOptions.props?.ariaLabel}
+        onCreateAcquisitionFile={onCreateAcquisitionFile}
+        onCreateResearchFile={onCreateResearchFile}
+        onCreateDispositionFile={onCreateDispositionFile}
+        onCreateLeaseFile={onCreateLeaseFile}
+        onCreateManagementFile={onCreateManagementFile}
       />,
-      { ...renderOptions },
+      {
+        useMockAuthentication: true,
+        claims: [],
+        ...renderOptions,
+      },
     );
   };
 
@@ -60,5 +75,81 @@ describe('<MoreOptionsDropdown />', () => {
     await act(async () => userEvent.hover(toggle));
     expect(screen.getByRole('tooltip')).toBeTruthy();
     expect(screen.getByText(/more options\.\.\./i)).toBeVisible();
+  });
+
+  it('renders all file creation options in dropdown', async () => {
+    setup({
+      claims: [
+        Claims.RESEARCH_ADD,
+        Claims.ACQUISITION_ADD,
+        Claims.DISPOSITION_ADD,
+        Claims.LEASE_ADD,
+        Claims.MANAGEMENT_ADD,
+      ],
+    });
+
+    const toggle = screen.getByLabelText(/more options/i);
+    await act(async () => userEvent.click(toggle));
+
+    expect(screen.getByText(/create acquisition file/i)).toBeInTheDocument();
+    expect(screen.getByText(/create research file/i)).toBeInTheDocument();
+    expect(screen.getByText(/create disposition file/i)).toBeInTheDocument();
+    expect(screen.getByText(/create lease\/licence file/i)).toBeInTheDocument();
+    expect(screen.getByText(/create management file/i)).toBeInTheDocument();
+  });
+
+  it('calls correct callback when "Create Acquisition File" is clicked', async () => {
+    setup({ claims: [Claims.ACQUISITION_ADD] });
+
+    const toggle = screen.getByLabelText(/more options/i);
+    await act(async () => userEvent.click(toggle));
+
+    const item = screen.getByText(/create acquisition file/i);
+    await act(async () => userEvent.click(item));
+    expect(onCreateAcquisitionFile).toHaveBeenCalled();
+  });
+
+  it('calls correct callback when "Create Research File" is clicked', async () => {
+    setup({ claims: [Claims.RESEARCH_ADD] });
+
+    const toggle = screen.getByLabelText(/more options/i);
+    await act(async () => userEvent.click(toggle));
+
+    const item = screen.getByText(/create research file/i);
+    await act(async () => userEvent.click(item));
+    expect(onCreateResearchFile).toHaveBeenCalled();
+  });
+
+  it('calls correct callback when "Create Disposition File" is clicked', async () => {
+    setup({ claims: [Claims.DISPOSITION_ADD] });
+
+    const toggle = screen.getByLabelText(/more options/i);
+    await act(async () => userEvent.click(toggle));
+
+    const item = screen.getByText(/create disposition file/i);
+    await act(async () => userEvent.click(item));
+    expect(onCreateDispositionFile).toHaveBeenCalled();
+  });
+
+  it('calls correct callback when "Create Lease File" is clicked', async () => {
+    setup({ claims: [Claims.LEASE_ADD] });
+
+    const toggle = screen.getByLabelText(/more options/i);
+    await act(async () => userEvent.click(toggle));
+
+    const item = screen.getByText(/create lease\/licence file/i);
+    await act(async () => userEvent.click(item));
+    expect(onCreateLeaseFile).toHaveBeenCalled();
+  });
+
+  it('calls correct callback when "Create Management File" is clicked', async () => {
+    setup({ claims: [Claims.MANAGEMENT_ADD] });
+
+    const toggle = screen.getByLabelText(/more options/i);
+    await act(async () => userEvent.click(toggle));
+
+    const item = screen.getByText(/create management file/i);
+    await act(async () => userEvent.click(item));
+    expect(onCreateManagementFile).toHaveBeenCalled();
   });
 });
