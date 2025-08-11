@@ -89,6 +89,7 @@ export const AddLeaseContainer: React.FunctionComponent<
         handleSuccess(response);
       }
     } finally {
+      mapMachine.processCreation();
       formikHelpers.setSubmitting(false);
     }
   };

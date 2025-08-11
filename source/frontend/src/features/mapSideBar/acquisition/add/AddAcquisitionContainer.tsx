@@ -221,6 +221,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
         handleSuccess(response);
       }
     } finally {
+      mapMachine.processCreation();
       formikHelpers?.setSubmitting(false);
     }
   };
