@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 import { FormikProps } from 'formik';
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { matchPath, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
+import { generatePath, matchPath, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
@@ -18,6 +18,7 @@ import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { exists, isValidId, sortFileProperties, stripTrailingSlash } from '@/utils';
 
 import { SideBarContext } from '../context/sidebarContext';
+import { FileTabType } from '../shared/detail/FileTabs';
 import { PropertyForm } from '../shared/models';
 import usePathGenerator from '../shared/sidebarPathGenerator';
 import { IManagementViewProps } from './ManagementView';
@@ -64,6 +65,7 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
   const history = useHistory();
   const match = useRouteMatch();
   const query = useQuery();
+  const matchFile = useRouteMatch<{ id: string }>();
   const isEditing = query.get('edit') === 'true';
 
   const setIsEditing = (value: boolean) => {
@@ -72,7 +74,17 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
     } else {
       query.delete('edit');
     }
-    history.push({ search: query.toString() });
+
+    if (value) {
+      history.push({ search: query.toString() });
+    } else {
+      // Not Editing => Return to file Details
+      const path = generatePath(matchFile.path, {
+        id: matchFile.params.id,
+        detailType: FileTabType.FILE_DETAILS,
+      });
+      history.push({ pathname: path, search: query.toString() });
+    }
   };
 
   const isPropertySelector = useMemo(
@@ -107,7 +119,7 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
     }
   }, [managementFileId, getLastUpdatedBy, setLastUpdatedBy]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (
       !exists(lastUpdatedBy) ||
       managementFileId !== lastUpdatedBy.parentId ||
