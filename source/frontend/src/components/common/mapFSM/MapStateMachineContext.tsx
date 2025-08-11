@@ -73,6 +73,7 @@ export interface IMapStateMachineContext {
   advancedSearchCriteria: PropertyFilterFormModel;
   isMapVisible: boolean;
   currentMapBounds: LatLngBounds;
+  isEditPropertiesMode: boolean;
 
   requestFlyToLocation: (latlng: LatLngLiteral) => void;
   requestCenterToLocation: (latlng: LatLngLiteral) => void;
@@ -96,6 +97,7 @@ export interface IMapStateMachineContext {
   setMapSearchCriteria: (searchCriteria: IPropertyFilter) => void;
   refreshMapProperties: () => void;
   prepareForCreation: (selectedFeatures: SelectedFeatureDataset[]) => void;
+  processCreation: () => void;
   startSelection: (selectingComponentId?: string) => void;
   finishSelection: () => void;
   startReposition: (
@@ -124,6 +126,7 @@ export interface IMapStateMachineContext {
   resetMapFilter: () => void;
   setAdvancedSearchCriteria: (advancedSearchCriteria: PropertyFilterFormModel) => void;
   setCurrentMapBounds: (bounds: LatLngBounds) => void;
+  setEditPropertiesMode: (value: boolean) => void;
 }
 
 const MapStateMachineContext = React.createContext<IMapStateMachineContext>(
@@ -387,6 +390,12 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     [serviceSend],
   );
 
+  const processCreation = useCallback(() => {
+    serviceSend({
+      type: 'PROCESS_CREATION',
+    });
+  }, [serviceSend]);
+
   const startSelection = useCallback(
     (selectingComponentId?: string) => {
       serviceSend({ type: 'START_SELECTION', selectingComponentId });
@@ -521,6 +530,13 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     serviceSend({ type: 'CLOSE_QUICK_INFO' });
   }, [serviceSend]);
 
+  const setEditPropertiesMode = useCallback(
+    (value: boolean) => {
+      serviceSend({ type: 'SET_EDIT_PROPERTIES_MODE', isEditPropertiesMode: value });
+    },
+    [serviceSend],
+  );
+
   const isRepositioning = useMemo(() => {
     return state.matches({ mapVisible: { featureView: 'repositioning' } });
   }, [state]);
@@ -605,6 +621,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         mapLayersToRefresh: state.context.mapLayersToRefresh,
         isMapVisible: state.matches({ mapVisible: {} }),
         currentMapBounds: state.context.currentMapBounds,
+        isEditPropertiesMode: state.context.isEditPropertiesMode,
 
         setMapSearchCriteria,
         refreshMapProperties,
@@ -623,6 +640,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         worklistMapClick,
         closePopup,
         prepareForCreation,
+        processCreation,
         startSelection,
         finishSelection,
         startReposition,
@@ -647,6 +665,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         resetMapFilter,
         setAdvancedSearchCriteria,
         setCurrentMapBounds,
+        setEditPropertiesMode,
       }}
     >
       {children}

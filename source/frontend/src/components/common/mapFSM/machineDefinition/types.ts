@@ -64,4 +64,5 @@ export type MachineContext = {
   showDisposed: boolean;
   showRetired: boolean;
   currentMapBounds: LatLngBounds | null;
+  isEditPropertiesMode: boolean;
 };
