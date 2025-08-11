@@ -117,7 +117,7 @@ describe('AddResearchContainer component', () => {
   });
 
   it('should confirm and close the form when navigating away', async () => {
-    const { getCancelButton, getByText, getByTitle, getNameTextbox } = await setup();
+    const { getByTitle, getNameTextbox } = await setup();
 
     await act(async () => userEvent.paste(getNameTextbox(), 'Test Value'));
 
@@ -128,7 +128,7 @@ describe('AddResearchContainer component', () => {
   });
 
   it('should call onClose Cancel button is clicked with changes', async () => {
-    const { getCancelButton, getByText, getByTitle, getNameTextbox } = await setup();
+    const { getCancelButton, getByText, getNameTextbox } = await setup();
 
     expect(getByText(/Create Research File/i)).toBeVisible();
 
