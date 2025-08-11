@@ -4,17 +4,22 @@ import { Scrollable } from '@/components/common/Scrollable/Scrollable';
 import { Section } from '@/components/common/Section/Section';
 import { exists } from '@/utils';
 
-import { ParcelFeature } from './models';
+import { ParcelDataset } from './models';
 import MoreOptionsDropdown from './MoreOptionsDropdown';
 import ParcelItem from './ParcelItem';
 
 export interface IWorklistViewProps {
-  parcels: ParcelFeature[];
+  parcels: ParcelDataset[];
   selectedId: string | null;
   onSelect: (id: string) => void;
   onRemove: (id: string) => void;
+  onZoomToParcel: (parcel: ParcelDataset) => void;
   onClearAll: () => void;
-  onZoomToParcel: (parcel: ParcelFeature) => void;
+  onCreateResearchFile: (event: React.MouseEvent<HTMLElement>) => void;
+  onCreateAcquisitionFile: (event: React.MouseEvent<HTMLElement>) => void;
+  onCreateDispositionFile: (event: React.MouseEvent<HTMLElement>) => void;
+  onCreateLeaseFile: (event: React.MouseEvent<HTMLElement>) => void;
+  onCreateManagementFile: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
 export const WorklistView: React.FC<IWorklistViewProps> = ({
@@ -22,8 +27,13 @@ export const WorklistView: React.FC<IWorklistViewProps> = ({
   selectedId,
   onSelect,
   onRemove,
-  onClearAll,
   onZoomToParcel,
+  onClearAll,
+  onCreateResearchFile,
+  onCreateAcquisitionFile,
+  onCreateDispositionFile,
+  onCreateLeaseFile,
+  onCreateManagementFile,
 }) => {
   if (parcels.length === 0) {
     return <StyledSection>CTRL + Click to add a property</StyledSection>;
@@ -36,7 +46,15 @@ export const WorklistView: React.FC<IWorklistViewProps> = ({
           {parcels.length}
           {parcels.length > 1 ? ' properties' : ' property'}
         </StyledSpan>
-        <MoreOptionsDropdown canClearAll={parcels?.length > 0} onClearAll={onClearAll} />
+        <MoreOptionsDropdown
+          canClearAll={parcels?.length > 0}
+          onClearAll={onClearAll}
+          onCreateResearchFile={onCreateResearchFile}
+          onCreateAcquisitionFile={onCreateAcquisitionFile}
+          onCreateDispositionFile={onCreateDispositionFile}
+          onCreateLeaseFile={onCreateLeaseFile}
+          onCreateManagementFile={onCreateManagementFile}
+        />
       </StyledHeader>
       <ScrollArea>
         {parcels.map(p => (

@@ -42,7 +42,7 @@ export interface IMapStateMachineContext {
   mapMarkedLocation: LatLngLiteral | null;
   mapLocationSelected: LatLngLiteral | null;
   mapLocationFeatureDataset: LocationFeatureDataset | null;
-  selectedFeatureDataset: SelectedFeatureDataset | null;
+  selectedFeatures: SelectedFeatureDataset[];
   repositioningFeatureDataset: SelectedFeatureDataset | null;
   repositioningPropertyIndex: number | null;
   // worklist-related state
@@ -95,7 +95,7 @@ export interface IMapStateMachineContext {
 
   setMapSearchCriteria: (searchCriteria: IPropertyFilter) => void;
   refreshMapProperties: () => void;
-  prepareForCreation: (selectedFeature: SelectedFeatureDataset) => void;
+  prepareForCreation: (selectedFeatures: SelectedFeatureDataset[]) => void;
   startSelection: (selectingComponentId?: string) => void;
   finishSelection: () => void;
   startReposition: (
@@ -381,8 +381,8 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
   );
 
   const prepareForCreation = useCallback(
-    (selectedFeature: SelectedFeatureDataset) => {
-      serviceSend({ type: 'PREPARE_FOR_CREATION', selectedFeature });
+    (selectedFeatures: SelectedFeatureDataset[]) => {
+      serviceSend({ type: 'PREPARE_FOR_CREATION', selectedFeatures });
     },
     [serviceSend],
   );
@@ -574,7 +574,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         mapMarkerSelected: state.context.mapFeatureSelected,
         mapLocationSelected: state.context.mapLocationSelected,
         mapMarkedLocation: state.context.mapMarkedLocation,
-        selectedFeatureDataset: state.context.selectedFeatureDataset,
+        selectedFeatures: state.context.selectedFeatures,
         mapLocationFeatureDataset: state.context.mapLocationFeatureDataset,
         repositioningFeatureDataset: state.context.repositioningFeatureDataset,
         repositioningPropertyIndex: state.context.repositioningPropertyIndex,

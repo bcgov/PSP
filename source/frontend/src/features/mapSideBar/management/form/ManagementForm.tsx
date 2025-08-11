@@ -69,6 +69,7 @@ const ManagementForm: React.FC<IManagementFormProps> = props => {
       initialValues={initialValues}
       validationSchema={AddManagementFormYupSchema}
       onSubmit={onSubmit}
+      enableReinitialize={true}
     >
       {formikProps => {
         return (

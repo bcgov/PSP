@@ -48,6 +48,8 @@ describe('WorklistMapClickMonitor', () => {
       ...mapMachineBaseMock,
       worklistLocationFeatureDataset: {
         location: { lat: 49, lng: -123 },
+        districtFeature: null,
+        regionFeature: null,
         fullyAttributedFeatures: null,
       },
     };
@@ -58,11 +60,19 @@ describe('WorklistMapClickMonitor', () => {
   });
 
   it('adds range when new dataset has valid features', () => {
-    mockPrevious = { location: { lat: 49, lng: -123 }, fullyAttributedFeatures: null };
+    mockPrevious = {
+      location: { lat: 49, lng: -123 },
+      districtFeature: null,
+      regionFeature: null,
+      fullyAttributedFeatures: null,
+    };
+
     const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
       worklistLocationFeatureDataset: {
         location: { lat: 49.2, lng: -123.1 },
+        districtFeature: null,
+        regionFeature: null,
         fullyAttributedFeatures: turf.featureCollection([
           turf.point([-123.1, 49.2], { ...emptyPmbcParcel }),
           turf.point([-75.3, 39.9], { ...emptyPmbcParcel }),
@@ -76,11 +86,19 @@ describe('WorklistMapClickMonitor', () => {
   });
 
   it('adds single parcel by lat/lng when no features exist', () => {
-    mockPrevious = { location: { lat: 49, lng: -123 }, fullyAttributedFeatures: null };
+    mockPrevious = {
+      location: { lat: 49, lng: -123 },
+      districtFeature: null,
+      regionFeature: null,
+      fullyAttributedFeatures: null,
+    };
+
     const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
       worklistLocationFeatureDataset: {
         location: { lat: 50, lng: -123 },
+        districtFeature: null,
+        regionFeature: null,
         fullyAttributedFeatures: turf.featureCollection([]),
       },
     };
@@ -97,6 +115,8 @@ describe('WorklistMapClickMonitor', () => {
   it('does not re-add if same dataset is passed again', () => {
     const dataset: WorklistLocationFeatureDataset = {
       location: { lat: 49, lng: -123 },
+      districtFeature: null,
+      regionFeature: null,
       fullyAttributedFeatures: turf.featureCollection([
         turf.point([-123, 49], { ...emptyPmbcParcel }),
       ]),
