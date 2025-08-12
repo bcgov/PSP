@@ -1,17 +1,25 @@
-import { screen } from '@testing-library/react';
 import { Feature, Geometry } from 'geojson';
 import { createMemoryHistory } from 'history';
-import noop from 'lodash/noop';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
-import { RenderOptions, act, renderAsync, userEvent, waitFor } from '@/utils/test-utils';
+import {
+  RenderOptions,
+  act,
+  getMockRepositoryObj,
+  render,
+  screen,
+  userEvent,
+} from '@/utils/test-utils';
 
-import AddResearchContainer, { IAddResearchContainerProps } from './AddResearchContainer';
+import { usePimsPropertyRepository } from '@/hooks/repositories/usePimsPropertyRepository';
 import { cleanup } from '@testing-library/react-hooks';
+import { SideBarContextProvider } from '../../context/sidebarContext';
+import AddResearchContainer, { IAddResearchContainerProps } from './AddResearchContainer';
+import AddResearchForm from './AddResearchForm';
 
 const mockStore = configureMockStore([thunk]);
 
@@ -33,36 +41,28 @@ vi.mock('react-visibility-sensor', () => {
   };
 });
 
-const mockGetByPidWrapper = {
-  error: undefined,
-  response: undefined,
-  execute: vi.fn(),
-  loading: false,
-};
+const mockGetByPidWrapper = getMockRepositoryObj();
+const mockGetByPinWrapper = getMockRepositoryObj();
 
-const mockGetByPinWrapper = {
-  error: undefined,
-  response: undefined,
-  execute: vi.fn(),
-  loading: false,
-};
-
-vi.mock('@/hooks/repositories/usePimsPropertyRepository', () => ({
-  usePimsPropertyRepository: () => {
-    return {
-      getPropertyByPidWrapper: mockGetByPidWrapper,
-      getPropertyByPinWrapper: mockGetByPinWrapper,
-    };
-  },
-}));
+vi.mock('@/hooks/repositories/usePimsPropertyRepository');
+vi.mocked(usePimsPropertyRepository, { partial: true }).mockReturnValue({
+  getPropertyByPidWrapper: mockGetByPidWrapper,
+  getPropertyByPinWrapper: mockGetByPinWrapper,
+});
 
 describe('AddResearchContainer component', () => {
   const setup = async (
-    renderOptions: RenderOptions & IAddResearchContainerProps & Partial<IMapStateMachineContext>,
+    renderOptions: RenderOptions & { props?: Partial<IAddResearchContainerProps> } = {},
   ) => {
     // render component under test
-    const utils = await renderAsync(
-      <AddResearchContainer onClose={renderOptions.onClose} onSuccess={renderOptions.onSuccess} />,
+    const utils = render(
+      <SideBarContextProvider>
+        <AddResearchContainer
+          onClose={renderOptions.props?.onClose ?? onClose}
+          onSuccess={renderOptions.props?.onSuccess ?? onSuccess}
+          View={AddResearchForm}
+        />
+      </SideBarContextProvider>,
       {
         claims: [],
         useMockAuthentication: true,
@@ -71,6 +71,9 @@ describe('AddResearchContainer component', () => {
         ...renderOptions,
       },
     );
+
+    // wait for the component to finish loading
+    await act(async () => {});
 
     return {
       ...utils,
@@ -85,40 +88,36 @@ describe('AddResearchContainer component', () => {
   });
 
   it('renders as expected', async () => {
-    const { asFragment } = await setup({ onClose: noop, onSuccess: noop });
+    const { asFragment } = await setup();
     await act(async () => {});
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('displays the currently selected property', async () => {
     const { findByText } = await setup({
-      onClose: noop,
-      onSuccess: noop,
       mockMapMachine: {
         ...mapMachineBaseMock,
-        selectedFeatureDataset: {
-          location: { lat: 0, lng: 0 },
-          fileLocation: null,
-          pimsFeature: null,
-          parcelFeature: selectedFeature,
-          regionFeature: null,
-          districtFeature: null,
-          selectingComponentId: null,
-          municipalityFeature: undefined,
-        },
+        selectedFeatures: [
+          {
+            location: { lat: 0, lng: 0 },
+            fileLocation: null,
+            pimsFeature: null,
+            parcelFeature: selectedFeature,
+            regionFeature: null,
+            districtFeature: null,
+            selectingComponentId: null,
+            municipalityFeature: undefined,
+          },
+        ],
       },
     });
-    await act(async () => {
-      const pidText = await findByText('PID: 002-225-255');
-      expect(pidText).toBeVisible();
-    });
+
+    const pidText = await findByText('PID: 002-225-255');
+    expect(pidText).toBeVisible();
   });
 
   it('should confirm and close the form when navigating away', async () => {
-    const { getCancelButton, getByText, getByTitle, getNameTextbox } = await setup({
-      onClose: onClose,
-      onSuccess: noop,
-    });
+    const { getByTitle, getNameTextbox } = await setup();
 
     await act(async () => userEvent.paste(getNameTextbox(), 'Test Value'));
 
@@ -129,46 +128,26 @@ describe('AddResearchContainer component', () => {
   });
 
   it('should call onClose Cancel button is clicked with changes', async () => {
-    const { getCancelButton, getByText, getByTitle, getNameTextbox } = await setup({
-      onClose: onClose,
-      onSuccess: noop,
-    });
+    const { getCancelButton, getByText, getNameTextbox } = await setup();
 
     expect(getByText(/Create Research File/i)).toBeVisible();
 
     await act(async () => userEvent.paste(getNameTextbox(), 'Test Value'));
     await act(async () => userEvent.click(getCancelButton()));
 
-    expect(onClose).toBeCalled();
+    expect(onClose).toHaveBeenCalled();
   });
 
-  it('resets the list of draft properties when closed', async () => {
+  it('resets the "draft" markers when the file is opened', async () => {
     const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
     };
-
-    const { getByTitle } = await setup({
-      onClose: noop,
-      onSuccess: noop,
-      mockMapMachine: testMockMachine,
-    });
-
-    const closeButton = getByTitle('close');
-
-    await act(async () => {
-      userEvent.click(closeButton);
-    });
-    await waitFor(() => {
-      expect(testMockMachine.setFilePropertyLocations).toHaveBeenCalledWith([]);
-    });
+    await setup({ mockMapMachine: testMockMachine });
+    expect(testMockMachine.setFilePropertyLocations).toHaveBeenCalledWith([]);
   });
 
   it('should have the Help with choosing a name text in the component', async () => {
-    await setup({
-      onClose: noop,
-      onSuccess: noop,
-    });
-    await act(async () => {});
+    await setup();
     expect(screen.getByText(`Help with choosing a name`)).toBeInTheDocument();
   });
 });
@@ -222,5 +201,6 @@ const selectedFeature: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties
     COMPILED_IND: null,
     STATED_AREA: null,
     WHEN_CREATED: null,
+    SHAPE: null,
   },
 };

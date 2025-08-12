@@ -18,9 +18,9 @@ import { TrayHeaderContent } from '@/components/common/styles';
 import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
 import FilePropertiesTable from '@/components/filePropertiesTable/FilePropertiesTable';
 import {
-  PROP_MGMT_ACTIVITY_STATUS_TYPES,
-  PROP_MGMT_ACTIVITY_SUBTYPES_TYPES,
-  PROP_MGMT_ACTIVITY_TYPES,
+  MGMT_ACTIVITY_STATUS_TYPES,
+  MGMT_ACTIVITY_SUBTYPES_TYPES,
+  MGMT_ACTIVITY_TYPES,
 } from '@/constants/API';
 import SaveCancelButtons from '@/features/leases/SaveCancelButtons';
 import { ManagementActivitySubTypeModel } from '@/features/mapSideBar/property/tabs/propertyDetailsManagement/activity/models/ManagementActivitySubType';
@@ -76,16 +76,12 @@ export const ManagementActivityEditForm: React.FunctionComponent<
   const [showConfirmModal, openConfirmModal, closeConfirmModal] = useModalManagement();
   const lookupCodes = useLookupCodeHelpers();
 
-  const activityTypeOptions = lookupCodes
-    .getByType(PROP_MGMT_ACTIVITY_TYPES)
-    .map(c => mapLookupCode(c));
+  const activityTypeOptions = lookupCodes.getByType(MGMT_ACTIVITY_TYPES).map(c => mapLookupCode(c));
 
-  const activitySubTypeCodes: ILookupCode[] = lookupCodes.getByType(
-    PROP_MGMT_ACTIVITY_SUBTYPES_TYPES,
-  );
+  const activitySubTypeCodes: ILookupCode[] = lookupCodes.getByType(MGMT_ACTIVITY_SUBTYPES_TYPES);
 
   const activityStatusOptions = lookupCodes
-    .getByType(PROP_MGMT_ACTIVITY_STATUS_TYPES)
+    .getByType(MGMT_ACTIVITY_STATUS_TYPES)
     .map(c => mapLookupCode(c));
 
   const onActivityTypeChange = async (changeEvent: ChangeEvent<HTMLInputElement>) => {

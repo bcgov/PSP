@@ -7,8 +7,8 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import { SectionListHeader } from '@/components/common/SectionListHeader';
+import { StyledLink } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
-import { StyledLink } from '@/components/maps/leaflet/LayerPopup/styles';
 import { Claims, Roles } from '@/constants';
 import { cannotEditMessage } from '@/features/mapSideBar/acquisition/common/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
@@ -81,27 +81,6 @@ export const ManagementSummaryView: React.FunctionComponent<IManagementSummaryVi
         </SectionField>
       </Section>
 
-      <Section
-        isCollapsable
-        initiallyExpanded
-        header={
-          <SectionListHeader
-            claims={[Claims.MANAGEMENT_EDIT]}
-            title="Management Contact"
-            addButtonText="Add a Contact"
-            addButtonIcon={<FaUserPlus size={'2rem'} />}
-            onButtonAction={() => onAddContact()}
-          />
-        }
-      >
-        <LoadingBackdrop show={isLoading} />
-        <ManagementFileContactsList
-          managementFileContacts={managementFileContacts ?? []}
-          onContactEdit={onEditContact}
-          onContactDelete={onDeleteContact}
-        />
-      </Section>
-
       <Section header="Project">
         <SectionField
           label="Ministry project"
@@ -117,6 +96,7 @@ export const ManagementSummaryView: React.FunctionComponent<IManagementSummaryVi
           {managementFile.fundingTypeCode?.description}
         </SectionField>
       </Section>
+
       <Section header="Management Details">
         <SectionField
           label="Management file name"
@@ -142,6 +122,27 @@ export const ManagementSummaryView: React.FunctionComponent<IManagementSummaryVi
         >
           {managementFile.additionalDetails}
         </SectionField>
+      </Section>
+
+      <Section
+        isCollapsable
+        initiallyExpanded
+        header={
+          <SectionListHeader
+            claims={[Claims.MANAGEMENT_EDIT]}
+            title="Management Contact"
+            addButtonText="Add a Contact"
+            addButtonIcon={<FaUserPlus size={'2rem'} />}
+            onButtonAction={() => onAddContact()}
+          />
+        }
+      >
+        <LoadingBackdrop show={isLoading} />
+        <ManagementFileContactsList
+          managementFileContacts={managementFileContacts ?? []}
+          onContactEdit={onEditContact}
+          onContactDelete={onDeleteContact}
+        />
       </Section>
 
       <Section header="Management Team">

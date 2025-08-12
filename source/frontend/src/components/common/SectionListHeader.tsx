@@ -29,34 +29,41 @@ export const SectionListHeader: React.FunctionComponent<
 
   return (
     <StyledRow className={clsx('no-gutters', props.className)}>
-      <Col xs="auto" className="align-items-end" data-testid={props['title-data-testId']}>
+      <Col xs="auto" className="align-items-end primary-column">
         {props.title}
       </Col>
-      <Col xs="auto" className="my-1">
-        {hasClaim(props.claims) && exists(props.onButtonAction) && props.isAddEnabled !== false && (
-          <StyledSectionAddButton
-            onClick={onClickButtonAction}
-            data-testid={props['button-data-testId']}
-          >
+
+      {hasClaim(props.claims) && exists(props.onButtonAction) && props.isAddEnabled !== false && (
+        <Col xs="auto" className=" my-1 secondary-column">
+          <StyledSectionAddButton onClick={onClickButtonAction} data-testid={props['data-testId']}>
             {props.addButtonIcon}
             &nbsp;{props.addButtonText ?? 'Add'}
           </StyledSectionAddButton>
-        )}
-        {!props.isAddEnabled && exists(props.cannotAddComponent) && (
+        </Col>
+      )}
+      {!props.isAddEnabled && exists(props.cannotAddComponent) && (
+        <Col xs="auto" className="my-1 secondary-column">
           <span style={{ float: 'right' }}>{props.cannotAddComponent}</span>
-        )}
-      </Col>
+        </Col>
+      )}
     </StyledRow>
   );
 };
 
 const StyledRow = styled(Row)`
-  display: grid;
-  grid-template-columns: 1fr 0.5fr;
+  display: flex;
   justify-content: space-between;
   align-items: end;
   min-height: 4.5rem;
   .btn {
     margin: 0;
+  }
+
+  .primary-column {
+    flex: 1 1 0;
+  }
+
+  .secondary-column {
+    flex: 0.5 1 0;
   }
 `;

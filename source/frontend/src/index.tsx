@@ -28,6 +28,7 @@ import getKeycloakEventHandler from '@/utils/getKeycloakEventHandler';
 import App from './App';
 import { config } from './config';
 import { DocumentViewerContextProvider } from './features/documents/context/DocumentViewerContext';
+import { WorklistContextProvider } from './features/properties/worklist/context/WorklistContext';
 import { ITenantConfig2 } from './hooks/pims-api/interfaces/ITenantConfig';
 import { useRefreshSiteminder } from './hooks/useRefreshSiteminder';
 import { initializeTelemetry } from './telemetry';
@@ -77,8 +78,10 @@ const InnerComponent = ({ tenant }: { tenant: ITenantConfig2 }) => {
         <Provider store={store}>
           <AuthStateContextProvider>
             <DocumentViewerContextProvider>
-              <App />
-              <ReactRouterSpanProcessor />
+              <WorklistContextProvider>
+                <App />
+                <ReactRouterSpanProcessor />
+              </WorklistContextProvider>
             </DocumentViewerContextProvider>
           </AuthStateContextProvider>
         </Provider>

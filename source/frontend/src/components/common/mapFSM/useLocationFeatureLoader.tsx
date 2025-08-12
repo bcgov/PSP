@@ -64,6 +64,16 @@ export interface SelectedFeatureDataset extends FeatureDataset {
   displayOrder?: number;
 }
 
+export interface WorklistLocationFeatureDataset
+  extends Omit<FeatureDataset, 'selectingComponentId' | 'fileLocation'> {
+  fullyAttributedFeatures: FeatureCollection<
+    Geometry,
+    PMBC_FullyAttributed_Feature_Properties
+  > | null;
+  regionFeature: Feature<Geometry, MOT_RegionalBoundary_Feature_Properties> | null;
+  districtFeature: Feature<Geometry, MOT_DistrictBoundary_Feature_Properties> | null;
+}
+
 const useLocationFeatureLoader = () => {
   const fullyAttributedService = useFullyAttributedParcelMapLayer();
   const adminBoundaryLayerService = useAdminBoundaryMapLayer();
@@ -235,8 +245,42 @@ const useLocationFeatureLoader = () => {
     ],
   );
 
+  const loadWorklistLocationDetails = useCallback(
+    async ({ latLng }: { latLng: LatLngLiteral }): Promise<WorklistLocationFeatureDataset> => {
+      const result: WorklistLocationFeatureDataset = {
+        location: latLng,
+        fullyAttributedFeatures: null,
+        regionFeature: null,
+        districtFeature: null,
+      };
+
+      // call these APIs in parallel - notice there is no "await"
+      const fullyAttributedTask = fullyAttributedServiceFindAll(latLng);
+      const regionTask = adminBoundaryLayerServiceFindRegion(latLng, 'SHAPE');
+      const districtTask = adminBoundaryLayerServiceFindDistrict(latLng, 'SHAPE');
+
+      const [pmbcFeatures, regionFeature, districtFeature] = await Promise.all([
+        fullyAttributedTask,
+        regionTask,
+        districtTask,
+      ]);
+
+      result.fullyAttributedFeatures = pmbcFeatures ?? null;
+      result.regionFeature = regionFeature ?? null;
+      result.districtFeature = districtFeature ?? null;
+
+      return result;
+    },
+    [
+      adminBoundaryLayerServiceFindDistrict,
+      adminBoundaryLayerServiceFindRegion,
+      fullyAttributedServiceFindAll,
+    ],
+  );
+
   return {
     loadLocationDetails,
+    loadWorklistLocationDetails,
   };
 };
 

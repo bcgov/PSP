@@ -20,6 +20,7 @@ export const MapContainer = styled.div`
     font-size: 1.2rem;
 
     .leaflet-control-attribution {
+      display: none;
       font-size: 1.1rem;
     }
 
@@ -63,10 +64,8 @@ export const MapGrid = styled.div`
   grid-template-areas:
     'filter filter'
     'map map';
-  &.hideSearchBar {
-    grid-template-rows: 0 1fr;
-    transition: 1s;
-  }
+  grid-template-rows: 0 1fr;
+  transition: 1s;
 
   transition: margin 1s, width 1s;
   position: relative;
