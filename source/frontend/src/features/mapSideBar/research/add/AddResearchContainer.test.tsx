@@ -4,20 +4,22 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
+import { usePimsPropertyRepository } from '@/hooks/repositories/usePimsPropertyRepository';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import {
   RenderOptions,
   act,
+  cleanup,
   getMockRepositoryObj,
   render,
   screen,
   userEvent,
 } from '@/utils/test-utils';
 
-import { usePimsPropertyRepository } from '@/hooks/repositories/usePimsPropertyRepository';
-import { cleanup } from '@testing-library/react-hooks';
+import { getMockResearchFile } from '@/mocks/researchFile.mock';
 import { SideBarContextProvider } from '../../context/sidebarContext';
+import { useAddResearch } from '../hooks/useAddResearch';
 import AddResearchContainer, { IAddResearchContainerProps } from './AddResearchContainer';
 import AddResearchForm from './AddResearchForm';
 
@@ -50,6 +52,12 @@ vi.mocked(usePimsPropertyRepository, { partial: true }).mockReturnValue({
   getPropertyByPinWrapper: mockGetByPinWrapper,
 });
 
+const mockAddResearchFile = vi.fn();
+vi.mock('../hooks/useAddResearch');
+vi.mocked(useAddResearch, { partial: true }).mockReturnValue({
+  addResearchFile: mockAddResearchFile,
+});
+
 describe('AddResearchContainer component', () => {
   const setup = async (
     renderOptions: RenderOptions & { props?: Partial<IAddResearchContainerProps> } = {},
@@ -80,11 +88,13 @@ describe('AddResearchContainer component', () => {
       store,
       getNameTextbox: () => utils.container.querySelector(`input[name="name"]`) as HTMLInputElement,
       getCancelButton: () => utils.getByText(/Cancel/i),
+      getSaveButton: () => utils.getByRole('button', { name: /Save/i }),
     };
   };
 
   beforeEach(() => {
     cleanup();
+    mockAddResearchFile.mockResolvedValue(getMockResearchFile());
   });
 
   it('renders as expected', async () => {
@@ -136,6 +146,27 @@ describe('AddResearchContainer component', () => {
     await act(async () => userEvent.click(getCancelButton()));
 
     expect(onClose).toHaveBeenCalled();
+  });
+
+  it('should save the form and navigate to details view when Save button is clicked', async () => {
+    const testMockMachine: IMapStateMachineContext = {
+      ...mapMachineBaseMock,
+      processCreation: vi.fn(),
+      refreshMapProperties: vi.fn(),
+    };
+
+    const { getSaveButton, getByText, getNameTextbox } = await setup({
+      mockMapMachine: testMockMachine,
+    });
+
+    expect(getByText(/Create Research File/i)).toBeVisible();
+
+    await act(async () => userEvent.paste(getNameTextbox(), 'Test Value'));
+    await act(async () => userEvent.click(getSaveButton()));
+
+    expect(onSuccess).toHaveBeenCalled();
+    expect(testMockMachine.processCreation).toHaveBeenCalled();
+    expect(testMockMachine.refreshMapProperties).toHaveBeenCalled();
   });
 
   it('resets the "draft" markers when the file is opened', async () => {

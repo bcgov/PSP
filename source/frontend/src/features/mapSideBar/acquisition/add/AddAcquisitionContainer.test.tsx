@@ -313,9 +313,14 @@ describe('AddAcquisitionContainer component', () => {
 
   it('should save the form and navigate to details view when Save button is clicked', async () => {
     let testObj: any = undefined;
+    const testMockMachine: IMapStateMachineContext = {
+      ...mapMachineBaseMock,
+      processCreation: vi.fn(),
+      refreshMapProperties: vi.fn(),
+    };
 
     await act(async () => {
-      testObj = await setup(DEFAULT_PROPS);
+      testObj = await setup(DEFAULT_PROPS, { mockMapMachine: testMockMachine });
     });
 
     const {
@@ -340,6 +345,8 @@ describe('AddAcquisitionContainer component', () => {
     const expectedValues = formValues.toApi();
     expect(addAcquisitionFileApi.execute).toHaveBeenCalledWith(expectedValues, []);
     expect(onSuccess).toHaveBeenCalledWith(1);
+    expect(testMockMachine.processCreation).toHaveBeenCalled();
+    expect(testMockMachine.refreshMapProperties).toHaveBeenCalled();
   });
 
   it(`should save the form with owner address information when 'Other' country is selected and no province is supplied`, async () => {

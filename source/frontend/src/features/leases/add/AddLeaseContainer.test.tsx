@@ -2,8 +2,10 @@ import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
 
 import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
+import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
 import { getMockPolygon } from '@/mocks/geometries.mock';
+import { getMockApiLease } from '@/mocks/lease.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { ApiGen_CodeTypes_LeaseAccountTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseAccountTypes';
@@ -27,7 +29,6 @@ import {
   selectOptions,
 } from '@/utils/test-utils';
 
-import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import { useAddLease } from '../hooks/useAddLease';
 import AddLeaseContainer, { IAddLeaseContainerProps } from './AddLeaseContainer';
 import AddLeaseForm from './AddLeaseForm';
@@ -112,8 +113,9 @@ describe('AddLeaseContainer component', () => {
     };
   };
 
-  afterEach(() => {
+  beforeEach(() => {
     vi.clearAllMocks();
+    addLease.mockResolvedValue(getMockApiLease());
   });
 
   it('renders as expected', async () => {
@@ -143,7 +145,15 @@ describe('AddLeaseContainer component', () => {
   });
 
   it('saves the form with minimal data', async () => {
-    const { getByText, getPurposeMultiSelect, container } = await setup({});
+    const testMockMachine: IMapStateMachineContext = {
+      ...mapMachineBaseMock,
+      processCreation: vi.fn(),
+      refreshMapProperties: vi.fn(),
+    };
+
+    const { getByText, getPurposeMultiSelect, container } = await setup({
+      mockMapMachine: testMockMachine,
+    });
 
     await act(async () => selectOptions('statusTypeCode', ApiGen_CodeTypes_LeaseStatusTypes.DRAFT));
     await act(async () =>
@@ -180,6 +190,8 @@ describe('AddLeaseContainer component', () => {
     await act(async () => userEvent.click(getByText(/Save/i)));
 
     expect(addLease).toHaveBeenCalledWith(leaseData, []);
+    expect(testMockMachine.processCreation).toHaveBeenCalled();
+    expect(onSuccess).toHaveBeenCalled();
   });
 
   it('triggers the confirm popup', async () => {
