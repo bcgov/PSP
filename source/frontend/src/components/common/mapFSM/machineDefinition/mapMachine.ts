@@ -703,7 +703,6 @@ export const mapMachine = createMachine<MachineContext>({
         PROCESS_CREATION: {
           actions: assign({
             selectedFeatures: () => [],
-            isEditPropertiesMode: () => false,
           }),
         },
         SET_EDIT_PROPERTIES_MODE: {
