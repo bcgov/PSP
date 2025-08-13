@@ -19,11 +19,15 @@ export const usePimsHighwayLayer = () => {
   const {
     findMultipleWhereContainsWrapped: {
       execute: findMultipleWhereContainsWrappedExecute,
-      loading: findMultipleWhereContainsWrappedLoading,
+      loading: findMultipleHighwayWhereContainsWrappedLoading,
+    },
+    findMultipleWhereContainsBoundaryWrapped: {
+      execute: findMultipleWhereContainsBoundaryWrappedExecute,
+      loading: findMultipleHighwayWhereContainsBoundaryWrappedLoading,
     },
   } = useLayerQuery(highwayLayerUrl, true);
 
-  const findMultiple = useCallback(
+  const findMultipleHighway = useCallback(
     async (
       latlng: LatLngLiteral,
       geometryName?: string | undefined,
@@ -48,11 +52,45 @@ export const usePimsHighwayLayer = () => {
     [findMultipleWhereContainsWrappedExecute],
   );
 
+  const findMultipleHighwayBoundary = useCallback(
+    async (
+      boundary: Geometry,
+      geometryName?: string | undefined,
+      spatialReferenceId?: number | undefined,
+    ) => {
+      const featureCollection = await findMultipleWhereContainsBoundaryWrappedExecute(
+        boundary,
+        geometryName,
+        spatialReferenceId,
+      );
+
+      // TODO: Enhance useLayerQuery to allow generics to match the Property types
+      const forceCasted = featureCollection as FeatureCollection<
+        Geometry,
+        ISS_ProvincialPublicHighway
+      >;
+
+      return forceCasted !== undefined && forceCasted.features.length > 0
+        ? forceCasted.features
+        : undefined;
+    },
+    [findMultipleWhereContainsBoundaryWrappedExecute],
+  );
+
   return useMemo(
     () => ({
-      findMultiple,
-      findMultipleLoading: findMultipleWhereContainsWrappedLoading,
+      findMultipleHighway: findMultipleHighway,
+      findMultipleHighwayWhereContainsWrappedLoading:
+        findMultipleHighwayWhereContainsWrappedLoading,
+      findMultipleHighwayBoundary: findMultipleHighwayBoundary,
+      findMultipleHighwayWhereContainsBoundaryWrappedLoading:
+        findMultipleHighwayWhereContainsBoundaryWrappedLoading,
     }),
-    [findMultiple, findMultipleWhereContainsWrappedLoading],
+    [
+      findMultipleHighway,
+      findMultipleHighwayBoundary,
+      findMultipleHighwayWhereContainsBoundaryWrappedLoading,
+      findMultipleHighwayWhereContainsWrappedLoading,
+    ],
   );
 };

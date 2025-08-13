@@ -19,7 +19,7 @@ const defaultComposedProperty: ComposedProperty = {
   pimsProperty: undefined,
   propertyAssociations: undefined,
   parcelMapFeatureCollection: undefined,
-  geoserverFeatureCollection: undefined,
+  pimsGeoserverFeatureCollection: undefined,
   bcAssessmentSummary: undefined,
   crownTenureFeatures: undefined,
   planNumber: undefined,
@@ -141,7 +141,7 @@ describe('MotiInventoryHeader component', () => {
     const result = await setup({
       composedProperty: {
         ...defaultComposedProperty,
-        geoserverFeatureCollection: {
+        pimsGeoserverFeatureCollection: {
           type: 'FeatureCollection',
           features: [testProperty],
         },

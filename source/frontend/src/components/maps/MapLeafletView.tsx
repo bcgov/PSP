@@ -275,7 +275,7 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
         <ZoomOutButton />
         <ScaleControl position="bottomleft" metric={true} imperial={false} />
         <Control position="topright">
-          <Row noGutters>
+          <Row noGutters className="flex-nowrap">
             <Col xs="auto">
               <LayersControl onToggle={mapMachine.toggleMapLayerControl} />
               <SearchControl onToggle={mapMachine.toggleMapSearchControl} />

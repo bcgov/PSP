@@ -8,7 +8,7 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import { PROPERTY_TYPES, useComposedProperties } from '@/hooks/repositories/useComposedProperties';
 import { useQuery } from '@/hooks/use-query';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
-import { pinParser } from '@/utils';
+import { firstOrNull, pinParser } from '@/utils';
 
 import MapSideBarLayout from '../layout/MapSideBarLayout';
 import SidebarFooter from '../shared/SidebarFooter';
@@ -48,16 +48,10 @@ export const MotiInventoryContainer: React.FunctionComponent<
         ? undefined
         : Number(props.pid),
     pin: pinParser(props?.pin),
-    latLng: selectedFeatureData?.location ?? undefined,
-    propertyTypes: [
-      PROPERTY_TYPES.ASSOCIATIONS,
-      PROPERTY_TYPES.LTSA,
-      PROPERTY_TYPES.PIMS_API,
-      PROPERTY_TYPES.BC_ASSESSMENT,
-      PROPERTY_TYPES.PARCEL_MAP,
-      PROPERTY_TYPES.PIMS_GEOSERVER,
-      PROPERTY_TYPES.CROWN_TENURES,
-    ],
+    boundary: props.id
+      ? firstOrNull(selectedFeatureData?.pimsFeatures)?.geometry
+      : firstOrNull(selectedFeatureData?.parcelFeatures)?.geometry,
+    propertyTypes: propertyTabData,
   });
 
   useEffect(() => {
@@ -158,3 +152,20 @@ const LotIcon = styled(LotSvg)`
   width: 3rem;
   height: 3rem;
 `;
+
+const propertyTabData = [
+  PROPERTY_TYPES.ASSOCIATIONS,
+  PROPERTY_TYPES.LTSA,
+  PROPERTY_TYPES.PIMS_API,
+  PROPERTY_TYPES.BC_ASSESSMENT,
+  PROPERTY_TYPES.PARCEL_MAP,
+  PROPERTY_TYPES.PIMS_GEOSERVER,
+  PROPERTY_TYPES.CROWN_TENURES,
+  PROPERTY_TYPES.CROWN_INCLUSIONS,
+  PROPERTY_TYPES.CROWN_INVENTORY,
+  PROPERTY_TYPES.CROWN_LEASES,
+  PROPERTY_TYPES.CROWN_LICENSES,
+  PROPERTY_TYPES.CROWN_SURVEYS,
+  PROPERTY_TYPES.MUNICIPALITY,
+  PROPERTY_TYPES.HIGHWAYS,
+];
