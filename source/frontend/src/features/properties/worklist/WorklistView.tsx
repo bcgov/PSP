@@ -11,6 +11,7 @@ import ParcelItem from './ParcelItem';
 export interface IWorklistViewProps {
   parcels: ParcelDataset[];
   selectedId: string | null;
+  canAddToOpenFile?: boolean;
   onSelect: (id: string) => void;
   onRemove: (id: string) => void;
   onZoomToParcel: (parcel: ParcelDataset) => void;
@@ -20,11 +21,13 @@ export interface IWorklistViewProps {
   onCreateDispositionFile: (event: React.MouseEvent<HTMLElement>) => void;
   onCreateLeaseFile: (event: React.MouseEvent<HTMLElement>) => void;
   onCreateManagementFile: (event: React.MouseEvent<HTMLElement>) => void;
+  onAddToOpenFile: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
 export const WorklistView: React.FC<IWorklistViewProps> = ({
   parcels,
   selectedId,
+  canAddToOpenFile = false,
   onSelect,
   onRemove,
   onZoomToParcel,
@@ -34,6 +37,7 @@ export const WorklistView: React.FC<IWorklistViewProps> = ({
   onCreateDispositionFile,
   onCreateLeaseFile,
   onCreateManagementFile,
+  onAddToOpenFile,
 }) => {
   if (parcels.length === 0) {
     return <StyledSection>CTRL + Click to add a property</StyledSection>;
@@ -54,6 +58,8 @@ export const WorklistView: React.FC<IWorklistViewProps> = ({
           onCreateDispositionFile={onCreateDispositionFile}
           onCreateLeaseFile={onCreateLeaseFile}
           onCreateManagementFile={onCreateManagementFile}
+          canAddToOpenFile={canAddToOpenFile}
+          onAddToOpenFile={onAddToOpenFile}
         />
       </StyledHeader>
       <ScrollArea>

@@ -15,7 +15,8 @@ export interface IWorklistContainerProps {
 
 export const WorklistContainer: React.FC<IWorklistContainerProps> = ({ View }) => {
   const { parcels, selectedId, select, remove, clearAll } = useWorklistContext();
-  const { requestFlyToBounds, requestFlyToLocation, prepareForCreation } = useMapStateMachine();
+  const { requestFlyToBounds, requestFlyToLocation, prepareForCreation, isEditPropertiesMode } =
+    useMapStateMachine();
   const pathGenerator = usePathGenerator();
 
   // A worklist parcel points to either a parcel-map boundary/shape or a lat/long (if no parcels were found at that location)
@@ -115,6 +116,20 @@ export const WorklistContainer: React.FC<IWorklistContainerProps> = ({ View }) =
     [parcels, pathGenerator, prepareForCreation],
   );
 
+  const handleAddToOpenFile = useCallback(
+    (event: React.MouseEvent<HTMLElement>) => {
+      event.stopPropagation();
+      event.preventDefault();
+
+      // If in edit properties mode, prepare the parcels for addition to an open file
+      if (parcels.length > 0 && isEditPropertiesMode) {
+        const featuresSets = parcels.map(p => p.toSelectedFeatureDataset());
+        prepareForCreation(featuresSets);
+      }
+    },
+    [isEditPropertiesMode, parcels, prepareForCreation],
+  );
+
   return (
     <View
       parcels={parcels ?? []}
@@ -128,6 +143,8 @@ export const WorklistContainer: React.FC<IWorklistContainerProps> = ({ View }) =
       onCreateDispositionFile={handleCreateDispositionFile}
       onCreateLeaseFile={handleCreateLeaseFile}
       onCreateManagementFile={handleCreateManagementFile}
+      canAddToOpenFile={isEditPropertiesMode}
+      onAddToOpenFile={handleAddToOpenFile}
     />
   );
 };

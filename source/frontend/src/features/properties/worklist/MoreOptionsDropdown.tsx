@@ -9,6 +9,7 @@ import DispositionIcon from '@/assets/images/disposition-icon.svg?react';
 import LeaseIcon from '@/assets/images/lease-icon.svg?react';
 import ManagementIcon from '@/assets/images/management-icon.svg?react';
 import ResearchIcon from '@/assets/images/research-icon.svg?react';
+import TooltipIcon from '@/components/common/TooltipIcon';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import { Claims } from '@/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
@@ -18,6 +19,7 @@ export interface IMoreOptionsDropdownProps {
   ariaLabel?: string;
   /** Whether the "Clear All" action is enabled. When false, the option is grayed out and unclickable. */
   canClearAll?: boolean;
+  canAddToOpenFile?: boolean;
   /** Callback invoked when the "Clear All" option is clicked. */
   onClearAll: () => void;
   /** Callbacks for the various "Create File" options. */
@@ -26,6 +28,7 @@ export interface IMoreOptionsDropdownProps {
   onCreateDispositionFile: (event: React.MouseEvent<HTMLElement>) => void;
   onCreateLeaseFile: (event: React.MouseEvent<HTMLElement>) => void;
   onCreateManagementFile: (event: React.MouseEvent<HTMLElement>) => void;
+  onAddToOpenFile: (event: React.MouseEvent<HTMLElement>) => void;
 }
 
 /**
@@ -34,12 +37,14 @@ export interface IMoreOptionsDropdownProps {
 const MoreOptionsDropdown: React.FC<IMoreOptionsDropdownProps> = ({
   ariaLabel = 'More options',
   canClearAll = true,
+  canAddToOpenFile = false,
   onClearAll,
   onCreateResearchFile,
   onCreateAcquisitionFile,
   onCreateDispositionFile,
   onCreateLeaseFile,
   onCreateManagementFile,
+  onAddToOpenFile,
 }) => {
   const keycloak = useKeycloakWrapper();
 
@@ -101,6 +106,21 @@ const MoreOptionsDropdown: React.FC<IMoreOptionsDropdownProps> = ({
             Create Disposition File
           </StyledDropdownItem>
         )}
+        <Dropdown.Divider />
+        {canAddToOpenFile && (
+          <StyledDropdownItem aria-label="Add to open file" onClick={onAddToOpenFile}>
+            Add to open file
+          </StyledDropdownItem>
+        )}
+        {!canAddToOpenFile && (
+          <StyledDropdownItemText>
+            Add to open file
+            <TooltipIcon
+              toolTipId="add-to-file-tooltip"
+              toolTip={'A file must be open and in "edit property" mode'}
+            />
+          </StyledDropdownItemText>
+        )}
       </StyledDropdownMenu>
     </Dropdown>
   );
@@ -161,4 +181,11 @@ const StyledDropdownItem = styled(Dropdown.Item)`
     color: #6c757d; /* Bootstrap's default muted text */
     pointer-events: none;
   }
+`;
+
+const StyledDropdownItemText = styled(Dropdown.ItemText)`
+  display: flex;
+  align-items: center;
+  font-size: 1.4rem;
+  color: ${props => props.theme.css.pimsGrey80} !important;
 `;
