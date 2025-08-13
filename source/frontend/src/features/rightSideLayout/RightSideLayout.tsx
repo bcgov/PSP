@@ -29,7 +29,14 @@ const RightSideLayout: React.FC<React.PropsWithChildren<IRightSideLayoutProps>> 
             tooltipId={`close-sidebar-tooltip-${title?.toLocaleLowerCase()}`}
             tooltip={closeTooltipText}
           >
-            <CloseIcon title="close" onClick={toggle} />
+            <CloseIcon
+              title="close"
+              onClick={e => {
+                e.preventDefault();
+                e.stopPropagation();
+                toggle();
+              }}
+            />
           </TooltipWrapper>
         </StyledHeader>
         <StyledContent>{children}</StyledContent>

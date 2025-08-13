@@ -16,12 +16,12 @@ export interface IWorklistViewProps {
   onRemove: (id: string) => void;
   onZoomToParcel: (parcel: ParcelDataset) => void;
   onClearAll: () => void;
-  onCreateResearchFile: (event: React.MouseEvent<HTMLElement>) => void;
-  onCreateAcquisitionFile: (event: React.MouseEvent<HTMLElement>) => void;
-  onCreateDispositionFile: (event: React.MouseEvent<HTMLElement>) => void;
-  onCreateLeaseFile: (event: React.MouseEvent<HTMLElement>) => void;
-  onCreateManagementFile: (event: React.MouseEvent<HTMLElement>) => void;
-  onAddToOpenFile: (event: React.MouseEvent<HTMLElement>) => void;
+  onCreateResearchFile: () => void;
+  onCreateAcquisitionFile: () => void;
+  onCreateDispositionFile: () => void;
+  onCreateLeaseFile: () => void;
+  onCreateManagementFile: () => void;
+  onAddToOpenFile: () => void;
 }
 
 export const WorklistView: React.FC<IWorklistViewProps> = ({

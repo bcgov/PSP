@@ -37,98 +37,62 @@ export const WorklistContainer: React.FC<IWorklistContainerProps> = ({ View }) =
   );
 
   // Handle creating a research file from the worklist
-  const handleCreateResearchFile = useCallback(
-    (event: React.MouseEvent<HTMLElement>) => {
-      event.stopPropagation();
-      event.preventDefault();
-
-      if (parcels.length === 0) {
-        return;
-      }
-      const featuresSets = parcels.map(p => p.toSelectedFeatureDataset());
-      prepareForCreation(featuresSets);
-      pathGenerator.newFile('research');
-    },
-    [parcels, pathGenerator, prepareForCreation],
-  );
+  const handleCreateResearchFile = useCallback(() => {
+    if (parcels.length === 0) {
+      return;
+    }
+    const featuresSets = parcels.map(p => p.toSelectedFeatureDataset());
+    prepareForCreation(featuresSets);
+    pathGenerator.newFile('research');
+  }, [parcels, pathGenerator, prepareForCreation]);
 
   // Handle creating a acquisition file from the worklist
-  const handleCreateAcquisitionFile = useCallback(
-    (event: React.MouseEvent<HTMLElement>) => {
-      event.stopPropagation();
-      event.preventDefault();
-
-      if (parcels.length === 0) {
-        return;
-      }
-      const featuresSets = parcels.map(p => p.toSelectedFeatureDataset());
-      prepareForCreation(featuresSets);
-      pathGenerator.newFile('acquisition');
-    },
-    [parcels, pathGenerator, prepareForCreation],
-  );
+  const handleCreateAcquisitionFile = useCallback(() => {
+    if (parcels.length === 0) {
+      return;
+    }
+    const featuresSets = parcels.map(p => p.toSelectedFeatureDataset());
+    prepareForCreation(featuresSets);
+    pathGenerator.newFile('acquisition');
+  }, [parcels, pathGenerator, prepareForCreation]);
 
   // Handle creating a disposition file from the worklist
-  const handleCreateDispositionFile = useCallback(
-    (event: React.MouseEvent<HTMLElement>) => {
-      event.stopPropagation();
-      event.preventDefault();
-
-      if (parcels.length === 0) {
-        return;
-      }
-      const featuresSets = parcels.map(p => p.toSelectedFeatureDataset());
-      prepareForCreation(featuresSets);
-      pathGenerator.newFile('disposition');
-    },
-    [parcels, pathGenerator, prepareForCreation],
-  );
+  const handleCreateDispositionFile = useCallback(() => {
+    if (parcels.length === 0) {
+      return;
+    }
+    const featuresSets = parcels.map(p => p.toSelectedFeatureDataset());
+    prepareForCreation(featuresSets);
+    pathGenerator.newFile('disposition');
+  }, [parcels, pathGenerator, prepareForCreation]);
 
   // Handle creating a lease file from the worklist
-  const handleCreateLeaseFile = useCallback(
-    (event: React.MouseEvent<HTMLElement>) => {
-      event.stopPropagation();
-      event.preventDefault();
-
-      if (parcels.length === 0) {
-        return;
-      }
-      const featuresSets = parcels.map(p => p.toSelectedFeatureDataset());
-      prepareForCreation(featuresSets);
-      pathGenerator.newFile('lease');
-    },
-    [parcels, pathGenerator, prepareForCreation],
-  );
+  const handleCreateLeaseFile = useCallback(() => {
+    if (parcels.length === 0) {
+      return;
+    }
+    const featuresSets = parcels.map(p => p.toSelectedFeatureDataset());
+    prepareForCreation(featuresSets);
+    pathGenerator.newFile('lease');
+  }, [parcels, pathGenerator, prepareForCreation]);
 
   // Handle creating a management file from the worklist
-  const handleCreateManagementFile = useCallback(
-    (event: React.MouseEvent<HTMLElement>) => {
-      event.stopPropagation();
-      event.preventDefault();
+  const handleCreateManagementFile = useCallback(() => {
+    if (parcels.length === 0) {
+      return;
+    }
+    const featuresSets = parcels.map(p => p.toSelectedFeatureDataset());
+    prepareForCreation(featuresSets);
+    pathGenerator.newFile('management');
+  }, [parcels, pathGenerator, prepareForCreation]);
 
-      if (parcels.length === 0) {
-        return;
-      }
+  const handleAddToOpenFile = useCallback(() => {
+    // If in edit properties mode, prepare the parcels for addition to an open file
+    if (parcels.length > 0 && isEditPropertiesMode) {
       const featuresSets = parcels.map(p => p.toSelectedFeatureDataset());
       prepareForCreation(featuresSets);
-      pathGenerator.newFile('management');
-    },
-    [parcels, pathGenerator, prepareForCreation],
-  );
-
-  const handleAddToOpenFile = useCallback(
-    (event: React.MouseEvent<HTMLElement>) => {
-      event.stopPropagation();
-      event.preventDefault();
-
-      // If in edit properties mode, prepare the parcels for addition to an open file
-      if (parcels.length > 0 && isEditPropertiesMode) {
-        const featuresSets = parcels.map(p => p.toSelectedFeatureDataset());
-        prepareForCreation(featuresSets);
-      }
-    },
-    [isEditPropertiesMode, parcels, prepareForCreation],
-  );
+    }
+  }, [isEditPropertiesMode, parcels, prepareForCreation]);
 
   return (
     <View

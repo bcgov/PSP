@@ -23,12 +23,12 @@ export interface IMoreOptionsDropdownProps {
   /** Callback invoked when the "Clear All" option is clicked. */
   onClearAll: () => void;
   /** Callbacks for the various "Create File" options. */
-  onCreateResearchFile: (event: React.MouseEvent<HTMLElement>) => void;
-  onCreateAcquisitionFile: (event: React.MouseEvent<HTMLElement>) => void;
-  onCreateDispositionFile: (event: React.MouseEvent<HTMLElement>) => void;
-  onCreateLeaseFile: (event: React.MouseEvent<HTMLElement>) => void;
-  onCreateManagementFile: (event: React.MouseEvent<HTMLElement>) => void;
-  onAddToOpenFile: (event: React.MouseEvent<HTMLElement>) => void;
+  onCreateResearchFile: () => void;
+  onCreateAcquisitionFile: () => void;
+  onCreateDispositionFile: () => void;
+  onCreateLeaseFile: () => void;
+  onCreateManagementFile: () => void;
+  onAddToOpenFile: () => void;
 }
 
 /**
@@ -65,13 +65,28 @@ const MoreOptionsDropdown: React.FC<IMoreOptionsDropdownProps> = ({
         <StyledDropdownItem
           aria-label="Clear list"
           disabled={!canClearAll}
-          onClick={canClearAll ? onClearAll : undefined}
+          onClick={
+            canClearAll
+              ? (e: React.MouseEvent<HTMLElement>) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  onClearAll();
+                }
+              : undefined
+          }
         >
           <MdClose size={20} className="mr-1" />
           Clear list
         </StyledDropdownItem>
         {keycloak.hasClaim(Claims.RESEARCH_ADD) && (
-          <StyledDropdownItem aria-label="Create research file" onClick={onCreateResearchFile}>
+          <StyledDropdownItem
+            aria-label="Create research file"
+            onClick={(e: React.MouseEvent<HTMLElement>) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onCreateResearchFile();
+            }}
+          >
             <ResearchIcon className="mr-1" width="2rem" height="2rem" />
             Create Research File
           </StyledDropdownItem>
@@ -79,20 +94,38 @@ const MoreOptionsDropdown: React.FC<IMoreOptionsDropdownProps> = ({
         {keycloak.hasClaim(Claims.ACQUISITION_ADD) && (
           <StyledDropdownItem
             aria-label="Create acquisition file"
-            onClick={onCreateAcquisitionFile}
+            onClick={(e: React.MouseEvent<HTMLElement>) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onCreateAcquisitionFile();
+            }}
           >
             <AcquisitionIcon className="mr-1" width="2rem" height="2rem" />
             Create Acquisition File
           </StyledDropdownItem>
         )}
         {keycloak.hasClaim(Claims.MANAGEMENT_ADD) && (
-          <StyledDropdownItem aria-label="Create management file" onClick={onCreateManagementFile}>
+          <StyledDropdownItem
+            aria-label="Create management file"
+            onClick={(e: React.MouseEvent<HTMLElement>) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onCreateManagementFile();
+            }}
+          >
             <ManagementIcon className="mr-1" width="2rem" height="2rem" />
             Create Management File
           </StyledDropdownItem>
         )}
         {keycloak.hasClaim(Claims.LEASE_ADD) && (
-          <StyledDropdownItem aria-label="Create lease file" onClick={onCreateLeaseFile}>
+          <StyledDropdownItem
+            aria-label="Create lease file"
+            onClick={(e: React.MouseEvent<HTMLElement>) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onCreateLeaseFile();
+            }}
+          >
             <LeaseIcon className="mr-1" width="2rem" height="2rem" />
             Create Lease/Licence File
           </StyledDropdownItem>
@@ -100,7 +133,11 @@ const MoreOptionsDropdown: React.FC<IMoreOptionsDropdownProps> = ({
         {keycloak.hasClaim(Claims.DISPOSITION_ADD) && (
           <StyledDropdownItem
             aria-label="Create disposition file"
-            onClick={onCreateDispositionFile}
+            onClick={(e: React.MouseEvent<HTMLElement>) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onCreateDispositionFile();
+            }}
           >
             <DispositionIcon className="mr-1" width="2rem" height="2rem" />
             Create Disposition File
@@ -108,7 +145,14 @@ const MoreOptionsDropdown: React.FC<IMoreOptionsDropdownProps> = ({
         )}
         <Dropdown.Divider />
         {canAddToOpenFile && (
-          <StyledDropdownItem aria-label="Add to open file" onClick={onAddToOpenFile}>
+          <StyledDropdownItem
+            aria-label="Add to open file"
+            onClick={(e: React.MouseEvent<HTMLElement>) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onAddToOpenFile();
+            }}
+          >
             Add to open file
           </StyledDropdownItem>
         )}
