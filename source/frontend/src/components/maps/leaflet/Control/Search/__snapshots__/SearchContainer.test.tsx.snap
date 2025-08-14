@@ -545,7 +545,7 @@ exports[`MapSearch component > renders as expected 1`] = `
         class="collapse show"
       >
         <div
-          class="c5 pb-4"
+          class="c5 c6 pb-4"
         />
       </div>
     </div>

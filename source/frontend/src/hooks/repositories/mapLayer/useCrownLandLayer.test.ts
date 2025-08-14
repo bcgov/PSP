@@ -24,6 +24,10 @@ vi.mock('@/hooks/layer-api/useLayerQuery', async () => {
           execute: vi.fn(),
           loading: false,
         },
+        findMultipleWhereContainsBoundaryWrapped: {
+          execute: vi.fn(),
+          loading: false,
+        },
         findMultipleRawWrapped: {
           execute: mockExecuteRaw,
           loading: false,

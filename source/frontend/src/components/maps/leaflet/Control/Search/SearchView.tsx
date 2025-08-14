@@ -17,7 +17,7 @@ import {
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
 import { exists } from '@/utils';
-import { isStrataCommonProperty } from '@/utils/propertyUtils';
+import { isStrataCommonProperty, pidFormatter } from '@/utils/propertyUtils';
 
 export interface ISearchViewProps {
   onFilterChange: (filter: IPropertyFilter) => void;
@@ -110,15 +110,15 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
           </StyledScrollable>
         </Section>
         <Section header="Results (PIMS)" isCollapsable initiallyExpanded>
-          <Scrollable className="pb-4">
+          <StyledScrollable className="pb-4">
             {pimsPropertyProjections.map((property, index) => (
               <StyledRow key={`feature-${property.pid}-${index}`} index={index}>
                 {property.isStrataLot && <Col>Common Property ({property.plan})</Col>}
-                {property.pid && <Col>PID: {property.pid} </Col>}
+                {property.pid && <Col>PID: {pidFormatter(property.pid)} </Col>}
                 {property.pin && <Col>PIN: {property.pin} </Col>}
               </StyledRow>
             ))}
-          </Scrollable>
+          </StyledScrollable>
         </Section>
       </StyledWrapper>
     </>
