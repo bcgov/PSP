@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dropdown } from 'react-bootstrap';
-import { FaEllipsisH } from 'react-icons/fa';
+import { FaEllipsisH, FaPlus } from 'react-icons/fa';
 import { MdClose } from 'react-icons/md';
 import styled from 'styled-components';
 
@@ -75,7 +75,7 @@ const MoreOptionsDropdown: React.FC<IMoreOptionsDropdownProps> = ({
               : undefined
           }
         >
-          <MdClose size={20} className="mr-1" />
+          <MdClose size="1.5rem" className="mr-2" />
           Clear list
         </StyledDropdownItem>
         {keycloak.hasClaim(Claims.RESEARCH_ADD) && (
@@ -87,7 +87,7 @@ const MoreOptionsDropdown: React.FC<IMoreOptionsDropdownProps> = ({
               onCreateResearchFile();
             }}
           >
-            <ResearchIcon className="mr-1" width="2rem" height="2rem" />
+            <ResearchIcon className="mr-2" width="1.5rem" height="1.5rem" fill="currentColor" />
             Create Research File
           </StyledDropdownItem>
         )}
@@ -100,7 +100,7 @@ const MoreOptionsDropdown: React.FC<IMoreOptionsDropdownProps> = ({
               onCreateAcquisitionFile();
             }}
           >
-            <AcquisitionIcon className="mr-1" width="2rem" height="2rem" />
+            <AcquisitionIcon className="mr-2" width="1.5rem" height="1.5rem" fill="currentColor" />
             Create Acquisition File
           </StyledDropdownItem>
         )}
@@ -113,7 +113,7 @@ const MoreOptionsDropdown: React.FC<IMoreOptionsDropdownProps> = ({
               onCreateManagementFile();
             }}
           >
-            <ManagementIcon className="mr-1" width="2rem" height="2rem" />
+            <ManagementIcon className="mr-2" width="1.5rem" height="1.5rem" fill="currentColor" />
             Create Management File
           </StyledDropdownItem>
         )}
@@ -126,7 +126,7 @@ const MoreOptionsDropdown: React.FC<IMoreOptionsDropdownProps> = ({
               onCreateLeaseFile();
             }}
           >
-            <LeaseIcon className="mr-1" width="2rem" height="2rem" />
+            <LeaseIcon className="mr-2" width="1.5rem" height="1.5rem" fill="currentColor" />
             Create Lease/Licence File
           </StyledDropdownItem>
         )}
@@ -139,7 +139,7 @@ const MoreOptionsDropdown: React.FC<IMoreOptionsDropdownProps> = ({
               onCreateDispositionFile();
             }}
           >
-            <DispositionIcon className="mr-1" width="2rem" height="2rem" />
+            <DispositionIcon className="mr-2" width="1.5rem" height="1.5rem" fill="currentColor" />
             Create Disposition File
           </StyledDropdownItem>
         )}
@@ -153,6 +153,7 @@ const MoreOptionsDropdown: React.FC<IMoreOptionsDropdownProps> = ({
               onAddToOpenFile();
             }}
           >
+            <FaPlus size="1.5rem" className="mr-2" />
             Add to open file
           </StyledDropdownItem>
         )}
