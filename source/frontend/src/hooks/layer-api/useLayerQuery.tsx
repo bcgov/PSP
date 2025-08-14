@@ -1,3 +1,4 @@
+import { geojsonToWKT } from '@terraformer/wkt';
 import { AxiosResponse } from 'axios';
 import { FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
 import { LatLngLiteral } from 'leaflet';
@@ -64,6 +65,14 @@ export interface IUserLayerQuery {
   findOneWhereContainsWrapped: IResponseWrapper<
     (
       latlng: LatLngLiteral,
+      geometryName?: string,
+      spatialReferenceId?: number,
+      sortBy?: string,
+    ) => Promise<AxiosResponse<FeatureCollection<Geometry, GeoJsonProperties>>>
+  >;
+  findMultipleWhereContainsBoundaryWrapped: IResponseWrapper<
+    (
+      boundary: Geometry,
       geometryName?: string,
       spatialReferenceId?: number,
       sortBy?: string,
@@ -222,6 +231,31 @@ export const useLayerQuery = (
     requestName: `findMultipleWhereContainsWrapped-${baseAllUrl}`,
   });
 
+  // NOTE: sortby is used here to ensure that if there are multiple features at a given location the non-retired feature will be returned first.
+  const findMultipleWhereContainsBoundaryWrapped = useApiRequestWrapper({
+    requestFunction: useCallback(
+      async (
+        boundary: Geometry,
+        geometryName = 'SHAPE',
+        spatialReferenceId = 4326,
+        sortBy = '',
+      ): Promise<AxiosResponse<FeatureCollection<Geometry, GeoJsonProperties>>> => {
+        const data = await wfsAxios2({ authenticated, withCredentials }).get<
+          FeatureCollection<Geometry, GeoJsonProperties>
+        >(
+          `${baseAllUrl}${
+            sortBy ? '&' + sortBy : ''
+          }&cql_filter=INTERSECTS(${geometryName},SRID=${spatialReferenceId};${geojsonToWKT(
+            boundary,
+          )})`,
+        );
+        return data;
+      },
+      [authenticated, withCredentials, baseAllUrl],
+    ),
+    requestName: `findMultipleWhereContainsBoundaryWrapped-${baseAllUrl}`,
+  });
+
   const findOneWhereExactWrapped = useApiRequestWrapper({
     requestFunction: useCallback(
       async (
@@ -310,6 +344,7 @@ export const useLayerQuery = (
     findOneMetadataByLocation,
     findOneWhereContainsWrapped,
     findMultipleWhereContainsWrapped,
+    findMultipleWhereContainsBoundaryWrapped,
     findOneWhereExactWrapped,
     findMultipleRawWrapped,
   };

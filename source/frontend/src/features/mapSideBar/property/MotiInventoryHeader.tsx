@@ -31,7 +31,7 @@ export interface IMotiInventoryHeaderProps {
 
 export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderProps> = props => {
   const parcelMapData = props.composedProperty.parcelMapFeatureCollection;
-  const geoserverMapData = props.composedProperty.geoserverFeatureCollection;
+  const geoserverMapData = props.composedProperty.pimsGeoserverFeatureCollection;
   const apiProperty = props.composedProperty.pimsProperty;
 
   let property: IMapProperty | null = null;

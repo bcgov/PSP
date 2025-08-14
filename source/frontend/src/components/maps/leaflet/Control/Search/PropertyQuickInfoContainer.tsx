@@ -108,7 +108,9 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
               tooltipId={`property-quick-info-view-property`}
               tooltip={'View Property Information'}
             >
-              <FaEye size={18} title="Zoom map" onClick={onViewPropertyInfo} />
+              <StyledIconWrapper>
+                <FaEye size={18} title="Zoom map" onClick={onViewPropertyInfo} />
+              </StyledIconWrapper>
             </TooltipWrapper>
           )}
         </Col>
@@ -119,15 +121,17 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
         </Col>
         <Col xs="1">
           <TooltipWrapper tooltipId={`property-quick-info-zoom`} tooltip={'Zoom to property'}>
-            <FaSearchPlus
-              size={18}
-              title="Zoom map"
-              onClick={(event: React.MouseEvent<SVGElement>) => {
-                event.preventDefault();
-                event.stopPropagation();
-                onZoomToBounds();
-              }}
-            />
+            <StyledIconWrapper>
+              <FaSearchPlus
+                size={18}
+                title="Zoom map"
+                onClick={(event: React.MouseEvent<SVGElement>) => {
+                  event.preventDefault();
+                  event.stopPropagation();
+                  onZoomToBounds();
+                }}
+              />
+            </StyledIconWrapper>
           </TooltipWrapper>
         </Col>
         <Col xs="1">
