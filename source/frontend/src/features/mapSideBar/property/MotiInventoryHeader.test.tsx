@@ -24,6 +24,12 @@ const defaultComposedProperty: ComposedProperty = {
   crownTenureFeatures: undefined,
   planNumber: undefined,
   spcpOrder: undefined,
+  crownInclusionFeatures: undefined,
+  crownInventoryFeatures: undefined,
+  crownLeaseFeatures: undefined,
+  crownLicenseFeatures: undefined,
+  highwayFeatures: undefined,
+  municipalityFeatures: undefined,
 };
 
 vi.mock('@/hooks/repositories/useHistoricalNumberRepository');

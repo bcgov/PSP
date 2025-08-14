@@ -1,3 +1,4 @@
+import { point } from '@turf/turf';
 import { AxiosResponse } from 'axios';
 import { Feature, FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
 import { useEffect, useMemo, useState } from 'react';
@@ -158,18 +159,16 @@ export const useComposedProperties = ({
       exists(propertyResponse) &&
       exists(parcelResponse)
     ) {
-      debugger;
       if (exists(id)) {
         if (exists(propertyResponse?.boundary)) {
           setRetrievedBoundary(propertyResponse?.boundary);
         } else {
-          setRetrievedBoundary({
-            type: 'Point',
-            coordinates: [
+          setRetrievedBoundary(
+            point([
               propertyResponse?.location.coordinate?.x,
               propertyResponse?.location.coordinate?.y,
-            ],
-          } as Geometry);
+            ]).geometry,
+          );
         }
       } else if (!exists(retrievedBoundary) && parcelResponse?.features?.length > 0) {
         setRetrievedBoundary(firstOrNull(parcelResponse?.features).geometry);
@@ -242,7 +241,6 @@ export const useComposedProperties = ({
 
   // calls to 3rd-party services (ie LTSA, ParcelMap, Tantalis Crown Land)
   useEffect(() => {
-    debugger;
     if (retrievedPid !== undefined) {
       typeCheckWrapper(() => executeGetLtsa(retrievedPid ?? ''), PROPERTY_TYPES.LTSA);
       typeCheckWrapper(
@@ -327,7 +325,6 @@ export const useComposedProperties = ({
   ]);
 
   useEffect(() => {
-    console.log('calling set composed property');
     setComposedProperty({
       id: id,
       pid: retrievedPid,

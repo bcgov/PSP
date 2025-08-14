@@ -8,7 +8,7 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import { PROPERTY_TYPES, useComposedProperties } from '@/hooks/repositories/useComposedProperties';
 import { useQuery } from '@/hooks/use-query';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
-import { firstOrNull, pinParser } from '@/utils';
+import { exists, firstOrNull, pinParser } from '@/utils';
 
 import MapSideBarLayout from '../layout/MapSideBarLayout';
 import SidebarFooter from '../shared/SidebarFooter';
@@ -40,7 +40,6 @@ export const MotiInventoryContainer: React.FunctionComponent<
   const selectedFeatureData = mapMachine.mapLocationFeatureDataset;
 
   const formikRef = useRef<FormikProps<any>>(null);
-
   const composedPropertyState = useComposedProperties({
     id: props.id,
     pid:
@@ -48,7 +47,7 @@ export const MotiInventoryContainer: React.FunctionComponent<
         ? undefined
         : Number(props.pid),
     pin: pinParser(props?.pin),
-    boundary: props.id
+    boundary: exists(props.id)
       ? firstOrNull(selectedFeatureData?.pimsFeatures)?.geometry
       : firstOrNull(selectedFeatureData?.parcelFeatures)?.geometry,
     propertyTypes: propertyTabData,

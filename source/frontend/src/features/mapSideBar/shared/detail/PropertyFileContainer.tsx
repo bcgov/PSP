@@ -63,13 +63,7 @@ export const PropertyFileContainer: React.FunctionComponent<
     pid,
     id,
     boundary,
-    propertyTypes: [
-      PROPERTY_TYPES.ASSOCIATIONS,
-      PROPERTY_TYPES.LTSA,
-      PROPERTY_TYPES.PIMS_API,
-      PROPERTY_TYPES.BC_ASSESSMENT,
-      PROPERTY_TYPES.CROWN_TENURES,
-    ],
+    propertyTypes: propertyFileTabData,
   });
 
   const { getLease } = useLeaseRepository();
@@ -368,5 +362,22 @@ export const PropertyFileContainer: React.FunctionComponent<
     />
   );
 };
+
+const propertyFileTabData = [
+  PROPERTY_TYPES.ASSOCIATIONS,
+  PROPERTY_TYPES.LTSA,
+  PROPERTY_TYPES.PIMS_API,
+  PROPERTY_TYPES.BC_ASSESSMENT,
+  PROPERTY_TYPES.PARCEL_MAP,
+  PROPERTY_TYPES.PIMS_GEOSERVER,
+  PROPERTY_TYPES.CROWN_TENURES,
+  PROPERTY_TYPES.CROWN_INCLUSIONS,
+  PROPERTY_TYPES.CROWN_INVENTORY,
+  PROPERTY_TYPES.CROWN_LEASES,
+  PROPERTY_TYPES.CROWN_LICENSES,
+  PROPERTY_TYPES.CROWN_SURVEYS,
+  PROPERTY_TYPES.MUNICIPALITY,
+  PROPERTY_TYPES.HIGHWAYS,
+];
 
 export default PropertyFileContainer;

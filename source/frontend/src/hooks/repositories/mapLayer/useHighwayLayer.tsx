@@ -70,7 +70,7 @@ export const usePimsHighwayLayer = () => {
         ISS_ProvincialPublicHighway
       >;
 
-      return forceCasted !== undefined && forceCasted.features.length > 0
+      return forceCasted !== undefined && forceCasted?.features?.length > 0
         ? forceCasted.features
         : undefined;
     },
