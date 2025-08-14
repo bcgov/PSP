@@ -105,7 +105,7 @@ describe('PropertyFileContainer component', () => {
 
   it('renders as expected', async () => {
     // Need to mock toasts or snapshots will change with each test run
-    vi.spyOn(toast, 'success').mockReturnValue(1);
+    vi.spyOn(toast, 'error').mockReturnValue(1);
     const { asFragment } = await setup();
     expect(asFragment()).toMatchSnapshot();
     vi.restoreAllMocks();
