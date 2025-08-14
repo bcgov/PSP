@@ -262,6 +262,24 @@ exports[`MapSearch component > renders as expected 1`] = `
       <div
         class="collapse show"
       >
+        <button
+          class="c2 Button btn btn-primary"
+          type="button"
+        >
+          <div
+            class="Button__value"
+          >
+            Search PIMS information
+          </div>
+        </button>
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <div
+        class="collapse show"
+      >
         <form
           class=""
           novalidate=""
@@ -270,7 +288,7 @@ exports[`MapSearch component > renders as expected 1`] = `
             class="row no-gutters"
           >
             <div
-              class="col-5"
+              class="col-auto"
             >
               <div
                 class="idir-input-group form-group"
@@ -358,10 +376,10 @@ exports[`MapSearch component > renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="row"
+            class="pt-2 row"
           >
             <div
-              class="col"
+              class="col-auto"
             >
               <button
                 class="c2 Button Button--disabled primary btn btn-primary"
@@ -396,7 +414,7 @@ exports[`MapSearch component > renders as expected 1`] = `
               </button>
             </div>
             <div
-              class="col"
+              class="col-auto"
             >
               <button
                 class="c2 Button btn btn-info"
