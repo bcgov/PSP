@@ -67,7 +67,7 @@ export const PropertySearchSelectorFormView: React.FunctionComponent<
   }
 
   return (
-    <Section header="Search for a property">
+    <Section header="Search for a property" data-testid="property-search-selector-section">
       <LayerFilter
         onSearch={onSearch}
         filter={search}

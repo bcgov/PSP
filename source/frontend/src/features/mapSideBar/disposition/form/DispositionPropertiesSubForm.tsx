@@ -137,7 +137,7 @@ const DispositionPropertiesSubForm: React.FunctionComponent<DispositionPropertie
             <Section
               header={
                 <Row>
-                  <Col xs="11">Selected properties</Col>
+                  <Col xs="11">Selected Properties</Col>
                   <Col>
                     <TooltipWrapper
                       tooltip="Fit map to the file properties"

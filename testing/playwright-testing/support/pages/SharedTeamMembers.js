@@ -1,5 +1,6 @@
-const { SharedSelectContact } = require("./SharedSelectContacts");
-const { SharedModal } = require("./SharedModal");
+const SharedSelectContact = require("./SharedSelectContacts");
+const SharedModal = require("./SharedModal");
+const { expect } = require("@playwright/test");
 
 class SharedTeamMembers {
   constructor(page) {
@@ -8,7 +9,7 @@ class SharedTeamMembers {
     this.sharedModal = new SharedModal(page);
   }
 
-  async AddTeamMembers(teamMember) {
+  async addTeamMembers(teamMember) {
     await this.page.getByTestId("add-team-member").click();
 
     const countMembersIdx =
@@ -39,13 +40,16 @@ class SharedTeamMembers {
     }
   }
 
-  async AddMgmtTeamMembers(teamMember) {
+  async addMgmtTeamMembers(teamMember) {
     await this.page.getByTestId("add-team-member").click();
 
     const countMembersIdx =
       (await this.page.locator("div[data-testid^='teamMemberRow']").count()) -
       1;
-
+    const escaped = await this.page.evaluate(
+      (str) => CSS.escape(str),
+      `${countMembersIdx}`
+    );
     const contactTypeselects = this.page.locator(
       "select[id^='input-team.'][id$='.teamProfileTypeCode']"
     );
@@ -61,11 +65,11 @@ class SharedTeamMembers {
 
     if (
       await this.page
-        .locator(`#input-team.${countMembersIdx}.primaryContactId`)
+        .locator(`#input-team.${escaped}.primaryContactId`)
         .isVisible()
     ) {
       await this.page
-        .locator(`#input-team.${countMembersIdx}.primaryContactId`)
+        .locator(`#input-team.${escaped}.primaryContactId`)
         .selectOption({ label: teamMember.TeamMemberPrimaryContact });
     }
   }
@@ -135,14 +139,16 @@ class SharedTeamMembers {
     await this.page
       .locator('div[class="modal-content"]')
       .waitFor({ state: "visible" });
-    await expect(this.sharedModal.mainModalHeaderContent()).toBe(
-      "Remove Team Member"
-    );
-    await expect(this.sharedModal.mainModalContent()).toBe(
+
+    const actualHeaderTitle = await this.sharedModal.mainModalHeader();
+    expect(actualHeaderTitle).toEqual("Remove Team Member");
+
+    const actualModalContent = await this.sharedModal.mainModalContent();
+    expect(actualModalContent).toEqual(
       "Do you wish to remove this team member?"
     );
     await this.sharedModal.mainModalClickOKBttn();
   }
 }
 
-module.exports = { SharedTeamMembers };
+module.exports = SharedTeamMembers;

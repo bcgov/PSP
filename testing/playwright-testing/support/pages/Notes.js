@@ -1,3 +1,5 @@
+const { expect } = require("@playwright/test");
+
 class Notes {
   constructor(page) {
     this.page = page;
@@ -17,119 +19,158 @@ class Notes {
     await this.page.getByTestId("note-field").fill(note);
   }
 
-  async ViewSecondNoteDetails() {
-    Wait();
-    webDriver.FindElement(notesTab2ndResultViewBttn).Click();
+  async viewSecondNoteDetails() {
+    await this.page.getByTestId("view-note-1").click();
   }
 
-  async EditNote(note) {
-    WaitUntilClickable(notedEditBttn);
-    webDriver.FindElement(notedEditBttn).Click();
+  async editNote(note) {
+    await this.page.locator("button[aria-label='edit']").click();
 
-    ClearInput(noteEditTextarea);
-    webDriver.FindElement(noteEditTextarea).SendKeys(note);
+    await this.page.getByTestId("note-field").fill("");
+    await this.page.getByTestId("note-field").fill(note);
   }
 
-  async CancelNote() {
-    WaitUntilClickable(notesAddDetailsCancelBttn);
-    webDriver.FindElement(notesAddDetailsCancelBttn).Click();
+  async cancelNote() {
+    await this.page.getByTestId("cancel-modal-button").click();
 
-    Wait();
-    if (webDriver.FindElements(notesCancelPopupContent).Count() > 0) {
-      AssertTrueIsDisplayed(notesCancelPopupHeader);
-      Assert.Contains(
-        "If you choose to cancel now, your changes will not be saved.",
-        webDriver.FindElement(notesCancelPopupBody).Text
+    if ((await this.page.locator("div[class='modal-content']").count()) == 2) {
+      await expect(
+        this.page.locator("div[class='modal-title h4']").last()
+      ).toHaveText("Confirm Changes");
+      await expect(
+        this.page.locator("div[class='modal-body'] p").last()
+      ).toHaveText(
+        "If you choose to cancel now, your changes will not be saved."
       );
-      Assert.Contains(
-        "Do you want to proceed?",
-        webDriver.FindElement(notesCancelPopupBody).Text
-      );
+      await expect(
+        this.page.locator("div[class='modal-body'] p").last()
+      ).toHaveTextContent("Do you want to proceed?");
 
-      Wait(2000);
-      webDriver.FindElement(notesCancelOkBttn).Click();
+      await this.page.getByTestId("cancel-modal-button").last().click();
     }
   }
 
-  async DeleteLastSecondNote() {
-    Wait(2000);
-    webDriver.FindElement(note2ndDeleteNoteBttn).Click();
+  async deleteSecondNote() {
+    await this.page.getByTestId("remove-note-1").click();
 
-    WaitUntilVisible(notesDeletePopupHeader);
-    AssertTrueContentEquals(notesDeletePopupHeader, "Delete Note");
-    AssertTrueContentEquals(
-      notesDeletePopupBody,
-      "Are you sure you want to delete this note?"
+    await expect(
+      this.page.locator("div[class='modal-title h4']")
+    ).toHaveTextContent("Delete Note");
+    await expect(
+      this.page.locator("div[class='modal-body']")
+    ).toHaveTextContent("Are you sure you want to delete this note?");
+    await expect(this.page.getByTestId("ok-modal-button")).click();
+  }
+
+  async verifyNotesAddNew() {
+    await expect(
+      this.page.locator("div[class='modal-title h4']")
+    ).toHaveTextContent("Notes");
+    await expect(
+      this.page.locator("label[for='input-note.note']")
+    ).toHaveTextContent("Type a note:");
+    await expect(this.page.getByTestId("note-field")).toBeVisible();
+    await expect(this.page.getByTestId("cancel-modal-button")).toBeVisible();
+    await expect(this.page.getByTest("ok-modal-button")).toBeVisible();
+  }
+
+  async verifyNotesEditForm() {
+    await expect(this.page.getByTestId("notes-created-label")).toBeVisible();
+    await expect(this.page.getByTestId("notes-created-date")).toBeVisible();
+    await expect(this.page.getByTestId("notes-updated-label")).toBeVisible();
+    await expect(this.page.getByTestId("notes-updated-date")).toBeVisible();
+    await expect(
+      this.page
+        .locator(
+          "div[class='modal-body'] span[data-testid='tooltip-icon-userNameTooltip']"
+        )
+        .count()
+    ).toBe(2);
+
+    await expect(
+      this.page.locator("label[for='input-note.note']")
+    ).toHaveTextContent("Type a note:");
+    await expect(this.page.getByTestId("note-field")).toBeVisible();
+    await expect(this.page.getByTestId("cancel-modal-button")).toBeVisible();
+    await expect(this.page.getByTest("ok-modal-button")).toBeVisible();
+  }
+
+  async verifyNotesTabListView() {
+    await expect(this.page.getByTestId("notes-header")).toHaveTextContent(
+      "Notes"
     );
+    await expect(this.page.getByTestId("note-add-button")).toBeVisible();
 
-    webDriver.FindElement(notesDeleteOkBttn).Click();
+    await expect(
+      this.page.locator(
+        "//div[@data-testid='notesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Note')]"
+      )
+    ).toBeVisible();
+    await expect(
+      this.page.locator(
+        "//div[@data-testid='notesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Created date')]"
+      )
+    ).toBeVisible();
+    await expect(
+      this.page.locator(
+        "//div[@data-testid='notesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Last updated by')]"
+      )
+    ).toBeVisible();
+    await expect(
+      this.page.locator(
+        "//div[@data-testid='notesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Actions')]"
+      )
+    ).toBeVisible();
+
+    if (
+      (await this.page
+        .locator(
+          "//div[@data-testid='notesTable']/div[@class='tbody']/div[@class='tr-wrapper']"
+        )
+        .count()) > 0
+    ) {
+      await expect(
+        this.page.locator(
+          "//div[@data-testid='notesTable']/div[@class='tbody']"
+        )
+      ).toBeVisible();
+    } else {
+      await expect(
+        this.page.locator("//div[contains(text(),'No matching Notes found')]")
+      ).toBeVisible();
+    }
   }
 
-  async VerifyNotesAddNew() {
-    AssertTrueIsDisplayed(notesAddDetailsHeader);
-    AssertTrueContentEquals(notesAddDetailsHeader, "Notes");
-    AssertTrueIsDisplayed(notesAddDetailsLabel);
-    AssertTrueIsDisplayed(notesAddDetailsTextarea);
-    AssertTrueIsDisplayed(notesAddDetailsSaveBttn);
-    AssertTrueIsDisplayed(notesAddDetailsCancelBttn);
+  async notesTabCount() {
+    return await this.page
+      .locator(
+        "//div[@data-testid='notesTable']/div[@class='tbody']/div[@class='tr-wrapper']"
+      )
+      .count();
   }
 
-  async VerifyNotesEditForm() {
-    AssertTrueIsDisplayed(notesEditCreatedLabel);
-    AssertTrueIsDisplayed(notesEditCreatedDate);
-    AssertTrueIsDisplayed(notesEditCreatedBy);
-
-    if (webDriver.FindElements(notesEditUpdatedLabel).Count > 0)
-      AssertTrueIsDisplayed(notesEditUpdatedDate);
-
-    AssertTrueIsDisplayed(notesEditUpdatedBy);
-    AssertTrueIsDisplayed(notedEditBttn);
-    AssertTrueIsDisplayed(noteEditViewTextarea);
-    AssertTrueIsDisplayed(notesAddDetailsSaveBttn);
-  }
-
-  async VerifyNotesTabListView() {
-    Wait(3000);
-
-    AssertTrueIsDisplayed(notesTabTitle);
-    AssertTrueIsDisplayed(notesTabAddBttn);
-    AssertTrueIsDisplayed(notesTabTableHeaderNoteColumn);
-    AssertTrueIsDisplayed(notesTabTableHeaderCreatedDateColumn);
-    AssertTrueIsDisplayed(notesTabTableHeaderUpdatedByColumn);
-
-    if (webDriver.FindElements(notesTabTableContentTotal).Count > 0)
-      AssertTrueIsDisplayed(notesTabTableBody);
-    else AssertTrueIsDisplayed(notesTabTableNoContent);
-  }
-
-  async NotesTabCount() {
-    WaitUntilTableSpinnerDisappear();
-    return webDriver.FindElements(notesTabTableContentTotal).Count();
-  }
-
-  async VerifyAutomaticNotes(fileType, fromStatus, toStatus) {
-    WaitUntilTableSpinnerDisappear();
-
-    WaitUntilVisibleText(
-      note1stNoteContent,
-      webDriver.FindElement(note1stNoteContent).Text
-    );
-    AssertTrueContentEquals(
-      note1stNoteContent,
+  async verifyAutomaticNotes(fileType, fromStatus, toStatus) {
+    await expect(
+      this.page.locator(
+        "div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper'] div:first-child div[role='cell']:first-child"
+      )
+    ).toHaveText(
       fileType + " status changed from " + fromStatus + " to " + toStatus
     );
   }
 
-  async VerifyAutomaticNotesCompensation(
-    CompensationNbr,
+  async verifyAutomaticNotesCompensation(
+    compensationNbr,
     fromStatus,
     toStatus
   ) {
-    Wait();
-    AssertTrueContentEquals(
-      note1stNoteContent,
+    await expect(
+      this.page.locator(
+        "div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper'] div:first-child div[role='cell']:first-child"
+      )
+    ).toHaveText(
       "Compensation Requisition with # " +
-        CompensationNbr +
+        compensationNbr +
         ", changed status from '" +
         fromStatus +
         "' to '" +
@@ -139,4 +180,4 @@ class Notes {
   }
 }
 
-module.exports = { Notes };
+module.exports = Notes;

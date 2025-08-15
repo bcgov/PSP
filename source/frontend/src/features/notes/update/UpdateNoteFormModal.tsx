@@ -75,11 +75,11 @@ const FormBody: React.FC<React.PropsWithChildren<FormikProps<NoteForm>>> = ({ va
   return (
     <Container>
       <Row className="no-gutters">
-        <Col md={2} className="mr-2">
+        <Col md={2} className="mr-2" data-testid="notes-created-label">
           Created:
         </Col>
         <Col>
-          <span>
+          <span data-testid="notes-created-date">
             <strong>{prettyFormatUTCDate(values?.appCreateTimestamp)}</strong> by{' '}
             <UserNameTooltip
               userName={values?.appCreateUserid}
@@ -89,11 +89,11 @@ const FormBody: React.FC<React.PropsWithChildren<FormikProps<NoteForm>>> = ({ va
         </Col>
       </Row>
       <Row className="no-gutters">
-        <Col md={2} className="mr-2">
+        <Col md={2} className="mr-2" data-testid="notes-updated-label">
           Last updated:
         </Col>
         <Col>
-          <span>
+          <span data-testid="notes-updated-date">
             <strong>{prettyFormatUTCDate(values?.appLastUpdateTimestamp)}</strong> by{' '}
             <UserNameTooltip
               userName={values?.appLastUpdateUserid}

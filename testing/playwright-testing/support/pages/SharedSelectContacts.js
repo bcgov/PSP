@@ -1,4 +1,4 @@
-const { SharedModal } = require("./SharedModal");
+const SharedModal = require("./SharedModal");
 
 class SharedSelectContact {
   constructor(page) {
@@ -9,10 +9,12 @@ class SharedSelectContact {
   async selectContact(contactSearchName, contactType) {
     switch (contactType) {
       case "Individual":
-        await page.locator('input[name="searchBy"][value="persons"]').check();
+        await this.page
+          .locator('input[name="searchBy"][value="persons"]')
+          .check();
         break;
       case "Organization":
-        await page
+        await this.page
           .locator('input[name="searchBy"][value="organizations"]')
           .check();
         break;
@@ -23,7 +25,7 @@ class SharedSelectContact {
     await this.page.locator("#input-summary").fill(contactSearchName);
     await this.page.locator("#search-button").click();
 
-    await page
+    await this.page
       .locator('input[type="radio"][name="table-radio"]')
       .first()
       .check();
@@ -31,4 +33,4 @@ class SharedSelectContact {
   }
 }
 
-module.exports = { SharedSelectContact };
+module.exports = SharedSelectContact;

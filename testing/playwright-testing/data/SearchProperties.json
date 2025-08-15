@@ -7,14 +7,16 @@
     "PlanNumber": "VAP20162",
     "LegalDescription": "DISTRICT LOT 2405",
     "MultiplePIDS": null,
-    "LatitudeDegree": null,
-    "LatitudeMinutes": null,
-    "LatitudeSeconds": null,
-    "LatitudeDirection": null,
-    "LongitudeDegree": null,
-    "LongitudeMinutes": null,
-    "LongitudeSeconds": null,
-    "LongitudeDirection": null
+    "Coordinates": {
+      "LatitudeDegree": null,
+      "LatitudeMinutes": null,
+      "LatitudeSeconds": null,
+      "LatitudeDirection": null,
+      "LongitudeDegree": null,
+      "LongitudeMinutes": null,
+      "LongitudeSeconds": null,
+      "LongitudeDirection": null
+    }
   },
   {
     "Test Case Description": "RF Edit",
@@ -24,14 +26,16 @@
     "PlanNumber": null,
     "LegalDescription": "LOT 97",
     "MultiplePIDS": null,
-    "LatitudeDegree": null,
-    "LatitudeMinutes": null,
-    "LatitudeSeconds": null,
-    "LatitudeDirection": null,
-    "LongitudeDegree": null,
-    "LongitudeMinutes": null,
-    "LongitudeSeconds": null,
-    "LongitudeDirection": null
+    "Coordinates": {
+      "LatitudeDegree": null,
+      "LatitudeMinutes": null,
+      "LatitudeSeconds": null,
+      "LatitudeDirection": null,
+      "LongitudeDegree": null,
+      "LongitudeMinutes": null,
+      "LongitudeSeconds": null,
+      "LongitudeDirection": null
+    }
   },
   {
     "Test Case Description": "RF Minimum Fields",
@@ -41,14 +45,16 @@
     "PlanNumber": null,
     "LegalDescription": null,
     "MultiplePIDS": null,
-    "LatitudeDegree": null,
-    "LatitudeMinutes": null,
-    "LatitudeSeconds": null,
-    "LatitudeDirection": null,
-    "LongitudeDegree": null,
-    "LongitudeMinutes": null,
-    "LongitudeSeconds": null,
-    "LongitudeDirection": null
+    "Coordinates": {
+      "LatitudeDegree": null,
+      "LatitudeMinutes": null,
+      "LatitudeSeconds": null,
+      "LatitudeDirection": null,
+      "LongitudeDegree": null,
+      "LongitudeMinutes": null,
+      "LongitudeSeconds": null,
+      "LongitudeDirection": null
+    }
   },
   {
     "Test Case Description": "RF Create from Pin",
@@ -58,14 +64,16 @@
     "PlanNumber": null,
     "LegalDescription": null,
     "MultiplePIDS": null,
-    "LatitudeDegree": null,
-    "LatitudeMinutes": null,
-    "LatitudeSeconds": null,
-    "LatitudeDirection": null,
-    "LongitudeDegree": null,
-    "LongitudeMinutes": null,
-    "LongitudeSeconds": null,
-    "LongitudeDirection": null
+    "Coordinates": {
+      "LatitudeDegree": null,
+      "LatitudeMinutes": null,
+      "LatitudeSeconds": null,
+      "LatitudeDirection": null,
+      "LongitudeDegree": null,
+      "LongitudeMinutes": null,
+      "LongitudeSeconds": null,
+      "LongitudeDirection": null
+    }
   },
   {
     "Test Case Description": "RF Exception Cases",
@@ -75,14 +83,16 @@
     "PlanNumber": null,
     "LegalDescription": "LOT 97",
     "MultiplePIDS": null,
-    "LatitudeDegree": null,
-    "LatitudeMinutes": null,
-    "LatitudeSeconds": null,
-    "LatitudeDirection": null,
-    "LongitudeDegree": null,
-    "LongitudeMinutes": null,
-    "LongitudeSeconds": null,
-    "LongitudeDirection": null
+    "Coordinates": {
+      "LatitudeDegree": null,
+      "LatitudeMinutes": null,
+      "LatitudeSeconds": null,
+      "LatitudeDirection": null,
+      "LongitudeDegree": null,
+      "LongitudeMinutes": null,
+      "LongitudeSeconds": null,
+      "LongitudeDirection": null
+    }
   },
   {
     "Test Case Description": "Non-existing PID property",
@@ -92,14 +102,16 @@
     "PlanNumber": null,
     "LegalDescription": null,
     "MultiplePIDS": null,
-    "LatitudeDegree": null,
-    "LatitudeMinutes": null,
-    "LatitudeSeconds": null,
-    "LatitudeDirection": null,
-    "LongitudeDegree": null,
-    "LongitudeMinutes": null,
-    "LongitudeSeconds": null,
-    "LongitudeDirection": null
+    "Coordinates": {
+      "LatitudeDegree": null,
+      "LatitudeMinutes": null,
+      "LatitudeSeconds": null,
+      "LatitudeDirection": null,
+      "LongitudeDegree": null,
+      "LongitudeMinutes": null,
+      "LongitudeSeconds": null,
+      "LongitudeDirection": null
+    }
   },
   {
     "Test Case Description": "Payable Pin",
@@ -109,14 +121,16 @@
     "PlanNumber": null,
     "LegalDescription": null,
     "MultiplePIDS": null,
-    "LatitudeDegree": null,
-    "LatitudeMinutes": null,
-    "LatitudeSeconds": null,
-    "LatitudeDirection": null,
-    "LongitudeDegree": null,
-    "LongitudeMinutes": null,
-    "LongitudeSeconds": null,
-    "LongitudeDirection": null
+    "Coordinates": {
+      "LatitudeDegree": null,
+      "LatitudeMinutes": null,
+      "LatitudeSeconds": null,
+      "LatitudeDirection": null,
+      "LongitudeDegree": null,
+      "LongitudeMinutes": null,
+      "LongitudeSeconds": null,
+      "LongitudeDirection": null
+    }
   },
   {
     "Test Case Description": "RF POI",
@@ -126,14 +140,16 @@
     "PlanNumber": null,
     "LegalDescription": null,
     "MultiplePIDS": null,
-    "LatitudeDegree": null,
-    "LatitudeMinutes": null,
-    "LatitudeSeconds": null,
-    "LatitudeDirection": null,
-    "LongitudeDegree": null,
-    "LongitudeMinutes": null,
-    "LongitudeSeconds": null,
-    "LongitudeDirection": null
+    "Coordinates": {
+      "LatitudeDegree": null,
+      "LatitudeMinutes": null,
+      "LatitudeSeconds": null,
+      "LatitudeDirection": null,
+      "LongitudeDegree": null,
+      "LongitudeMinutes": null,
+      "LongitudeSeconds": null,
+      "LongitudeDirection": null
+    }
   },
   {
     "Test Case Description": "Main Search Properties - Map",
@@ -143,14 +159,16 @@
     "PlanNumber": "PRP6459",
     "LegalDescription": null,
     "MultiplePIDS": null,
-    "LatitudeDegree": 49.0,
-    "LatitudeMinutes": 54.0,
-    "LatitudeSeconds": 37.0,
-    "LatitudeDirection": "N",
-    "LongitudeDegree": 123.0,
-    "LongitudeMinutes": 5.0,
-    "LongitudeSeconds": 47.0,
-    "LongitudeDirection": "W"
+    "Coordinates": {
+      "LatitudeDegree": 49.0,
+      "LatitudeMinutes": 54.0,
+      "LatitudeSeconds": 37.0,
+      "LatitudeDirection": "N",
+      "LongitudeDegree": 123.0,
+      "LongitudeMinutes": 5.0,
+      "LongitudeSeconds": 47.0,
+      "LongitudeDirection": "W"
+    }
   },
   {
     "Test Case Description": "Main Search invalid PID",
@@ -160,14 +178,16 @@
     "PlanNumber": null,
     "LegalDescription": null,
     "MultiplePIDS": null,
-    "LatitudeDegree": null,
-    "LatitudeMinutes": null,
-    "LatitudeSeconds": null,
-    "LatitudeDirection": null,
-    "LongitudeDegree": null,
-    "LongitudeMinutes": null,
-    "LongitudeSeconds": null,
-    "LongitudeDirection": null
+    "Coordinates": {
+      "LatitudeDegree": null,
+      "LatitudeMinutes": null,
+      "LatitudeSeconds": null,
+      "LatitudeDirection": null,
+      "LongitudeDegree": null,
+      "LongitudeMinutes": null,
+      "LongitudeSeconds": null,
+      "LongitudeDirection": null
+    }
   },
   {
     "Test Case Description": "Lease Create New",
@@ -177,14 +197,16 @@
     "PlanNumber": "24TR2_NEW_WESTMINSTER",
     "LegalDescription": "THAT PART OF LOT 2 DISTRICT LOT 71 CARIBOO DISTRICT",
     "MultiplePIDS": null,
-    "LatitudeDegree": null,
-    "LatitudeMinutes": null,
-    "LatitudeSeconds": null,
-    "LatitudeDirection": null,
-    "LongitudeDegree": null,
-    "LongitudeMinutes": null,
-    "LongitudeSeconds": null,
-    "LongitudeDirection": null
+    "Coordinates": {
+      "LatitudeDegree": null,
+      "LatitudeMinutes": null,
+      "LatitudeSeconds": null,
+      "LatitudeDirection": null,
+      "LongitudeDegree": null,
+      "LongitudeMinutes": null,
+      "LongitudeSeconds": null,
+      "LongitudeDirection": null
+    }
   },
   {
     "Test Case Description": "Lease update",
@@ -194,14 +216,16 @@
     "PlanNumber": null,
     "LegalDescription": null,
     "MultiplePIDS": null,
-    "LatitudeDegree": null,
-    "LatitudeMinutes": null,
-    "LatitudeSeconds": null,
-    "LatitudeDirection": null,
-    "LongitudeDegree": null,
-    "LongitudeMinutes": null,
-    "LongitudeSeconds": null,
-    "LongitudeDirection": null
+    "Coordinates": {
+      "LatitudeDegree": null,
+      "LatitudeMinutes": null,
+      "LatitudeSeconds": null,
+      "LatitudeDirection": null,
+      "LongitudeDegree": null,
+      "LongitudeMinutes": null,
+      "LongitudeSeconds": null,
+      "LongitudeDirection": null
+    }
   },
   {
     "Test Case Description": "Lease Create from Green Pin",
@@ -211,14 +235,16 @@
     "PlanNumber": null,
     "LegalDescription": null,
     "MultiplePIDS": null,
-    "LatitudeDegree": null,
-    "LatitudeMinutes": null,
-    "LatitudeSeconds": null,
-    "LatitudeDirection": null,
-    "LongitudeDegree": null,
-    "LongitudeMinutes": null,
-    "LongitudeSeconds": null,
-    "LongitudeDirection": null
+    "Coordinates": {
+      "LatitudeDegree": null,
+      "LatitudeMinutes": null,
+      "LatitudeSeconds": null,
+      "LatitudeDirection": null,
+      "LongitudeDegree": null,
+      "LongitudeMinutes": null,
+      "LongitudeSeconds": null,
+      "LongitudeDirection": null
+    }
   },
   {
     "Test Case Description": "Lease Minimum Fields",
@@ -228,14 +254,16 @@
     "PlanNumber": null,
     "LegalDescription": null,
     "MultiplePIDS": null,
-    "LatitudeDegree": null,
-    "LatitudeMinutes": null,
-    "LatitudeSeconds": null,
-    "LatitudeDirection": null,
-    "LongitudeDegree": null,
-    "LongitudeMinutes": null,
-    "LongitudeSeconds": null,
-    "LongitudeDirection": null
+    "Coordinates": {
+      "LatitudeDegree": null,
+      "LatitudeMinutes": null,
+      "LatitudeSeconds": null,
+      "LatitudeDirection": null,
+      "LongitudeDegree": null,
+      "LongitudeMinutes": null,
+      "LongitudeSeconds": null,
+      "LongitudeDirection": null
+    }
   },
   {
     "Test Case Description": "AF Add Properties",
@@ -245,14 +273,16 @@
     "PlanNumber": "NWP24768",
     "LegalDescription": "THE SOUTH WEST 1/4 OF DISTRICT LOT 7195 CARIBOO DISTRICT",
     "MultiplePIDS": null,
-    "LatitudeDegree": null,
-    "LatitudeMinutes": null,
-    "LatitudeSeconds": null,
-    "LatitudeDirection": null,
-    "LongitudeDegree": null,
-    "LongitudeMinutes": null,
-    "LongitudeSeconds": null,
-    "LongitudeDirection": null
+    "Coordinates": {
+      "LatitudeDegree": null,
+      "LatitudeMinutes": null,
+      "LatitudeSeconds": null,
+      "LatitudeDirection": null,
+      "LongitudeDegree": null,
+      "LongitudeMinutes": null,
+      "LongitudeSeconds": null,
+      "LongitudeDirection": null
+    }
   },
   {
     "Test Case Description": "AF Edit Existing",
@@ -262,14 +292,16 @@
     "PlanNumber": null,
     "LegalDescription": "LOT 21 AND AN UNDIVIDED 1/24TH SHARE IN LOT 1 SECTION 32",
     "MultiplePIDS": null,
-    "LatitudeDegree": null,
-    "LatitudeMinutes": null,
-    "LatitudeSeconds": null,
-    "LatitudeDirection": null,
-    "LongitudeDegree": null,
-    "LongitudeMinutes": null,
-    "LongitudeSeconds": null,
-    "LongitudeDirection": null
+    "Coordinates": {
+      "LatitudeDegree": null,
+      "LatitudeMinutes": null,
+      "LatitudeSeconds": null,
+      "LatitudeDirection": null,
+      "LongitudeDegree": null,
+      "LongitudeMinutes": null,
+      "LongitudeSeconds": null,
+      "LongitudeDirection": null
+    }
   },
   {
     "Test Case Description": "AF Minimum Fields",
@@ -279,14 +311,16 @@
     "PlanNumber": null,
     "LegalDescription": null,
     "MultiplePIDS": null,
-    "LatitudeDegree": null,
-    "LatitudeMinutes": null,
-    "LatitudeSeconds": null,
-    "LatitudeDirection": null,
-    "LongitudeDegree": null,
-    "LongitudeMinutes": null,
-    "LongitudeSeconds": null,
-    "LongitudeDirection": null
+    "Coordinates": {
+      "LatitudeDegree": null,
+      "LatitudeMinutes": null,
+      "LatitudeSeconds": null,
+      "LatitudeDirection": null,
+      "LongitudeDegree": null,
+      "LongitudeMinutes": null,
+      "LongitudeSeconds": null,
+      "LongitudeDirection": null
+    }
   },
   {
     "Test Case Description": "AF Filters Search",
@@ -296,14 +330,16 @@
     "PlanNumber": null,
     "LegalDescription": null,
     "MultiplePIDS": null,
-    "LatitudeDegree": null,
-    "LatitudeMinutes": null,
-    "LatitudeSeconds": null,
-    "LatitudeDirection": null,
-    "LongitudeDegree": null,
-    "LongitudeMinutes": null,
-    "LongitudeSeconds": null,
-    "LongitudeDirection": null
+    "Coordinates": {
+      "LatitudeDegree": null,
+      "LatitudeMinutes": null,
+      "LatitudeSeconds": null,
+      "LatitudeDirection": null,
+      "LongitudeDegree": null,
+      "LongitudeMinutes": null,
+      "LongitudeSeconds": null,
+      "LongitudeDirection": null
+    }
   },
   {
     "Test Case Description": "AF Create from pin",
@@ -313,14 +349,16 @@
     "PlanNumber": null,
     "LegalDescription": null,
     "MultiplePIDS": null,
-    "LatitudeDegree": null,
-    "LatitudeMinutes": null,
-    "LatitudeSeconds": null,
-    "LatitudeDirection": null,
-    "LongitudeDegree": null,
-    "LongitudeMinutes": null,
-    "LongitudeSeconds": null,
-    "LongitudeDirection": null
+    "Coordinates": {
+      "LatitudeDegree": null,
+      "LatitudeMinutes": null,
+      "LatitudeSeconds": null,
+      "LatitudeDirection": null,
+      "LongitudeDegree": null,
+      "LongitudeMinutes": null,
+      "LongitudeSeconds": null,
+      "LongitudeDirection": null
+    }
   },
   {
     "Test Case Description": "AF Create with Stakeholders",
@@ -330,14 +368,16 @@
     "PlanNumber": null,
     "LegalDescription": null,
     "MultiplePIDS": null,
-    "LatitudeDegree": null,
-    "LatitudeMinutes": null,
-    "LatitudeSeconds": null,
-    "LatitudeDirection": null,
-    "LongitudeDegree": null,
-    "LongitudeMinutes": null,
-    "LongitudeSeconds": null,
-    "LongitudeDirection": null
+    "Coordinates": {
+      "LatitudeDegree": null,
+      "LatitudeMinutes": null,
+      "LatitudeSeconds": null,
+      "LatitudeDirection": null,
+      "LongitudeDegree": null,
+      "LongitudeMinutes": null,
+      "LongitudeSeconds": null,
+      "LongitudeDirection": null
+    }
   },
   {
     "Test Case Description": "AF Create with Compensation",
@@ -347,14 +387,16 @@
     "PlanNumber": null,
     "LegalDescription": null,
     "MultiplePIDS": null,
-    "LatitudeDegree": null,
-    "LatitudeMinutes": null,
-    "LatitudeSeconds": null,
-    "LatitudeDirection": null,
-    "LongitudeDegree": null,
-    "LongitudeMinutes": null,
-    "LongitudeSeconds": null,
-    "LongitudeDirection": null
+    "Coordinates": {
+      "LatitudeDegree": null,
+      "LatitudeMinutes": null,
+      "LatitudeSeconds": null,
+      "LatitudeDirection": null,
+      "LongitudeDegree": null,
+      "LongitudeMinutes": null,
+      "LongitudeSeconds": null,
+      "LongitudeDirection": null
+    }
   },
   {
     "Test Case Description": "AF Update with Compensation",
@@ -364,14 +406,16 @@
     "PlanNumber": null,
     "LegalDescription": null,
     "MultiplePIDS": null,
-    "LatitudeDegree": null,
-    "LatitudeMinutes": null,
-    "LatitudeSeconds": null,
-    "LatitudeDirection": null,
-    "LongitudeDegree": null,
-    "LongitudeMinutes": null,
-    "LongitudeSeconds": null,
-    "LongitudeDirection": null
+    "Coordinates": {
+      "LatitudeDegree": null,
+      "LatitudeMinutes": null,
+      "LatitudeSeconds": null,
+      "LatitudeDirection": null,
+      "LongitudeDegree": null,
+      "LongitudeMinutes": null,
+      "LongitudeSeconds": null,
+      "LongitudeDirection": null
+    }
   },
   {
     "Test Case Description": "Property Create Property Management",
@@ -381,14 +425,16 @@
     "PlanNumber": null,
     "LegalDescription": null,
     "MultiplePIDS": null,
-    "LatitudeDegree": null,
-    "LatitudeMinutes": null,
-    "LatitudeSeconds": null,
-    "LatitudeDirection": null,
-    "LongitudeDegree": null,
-    "LongitudeMinutes": null,
-    "LongitudeSeconds": null,
-    "LongitudeDirection": null
+    "Coordinates": {
+      "LatitudeDegree": null,
+      "LatitudeMinutes": null,
+      "LatitudeSeconds": null,
+      "LatitudeDirection": null,
+      "LongitudeDegree": null,
+      "LongitudeMinutes": null,
+      "LongitudeSeconds": null,
+      "LongitudeDirection": null
+    }
   },
   {
     "Test Case Description": "Property PIMS File Validation",
@@ -398,14 +444,16 @@
     "PlanNumber": null,
     "LegalDescription": null,
     "MultiplePIDS": null,
-    "LatitudeDegree": null,
-    "LatitudeMinutes": null,
-    "LatitudeSeconds": null,
-    "LatitudeDirection": null,
-    "LongitudeDegree": null,
-    "LongitudeMinutes": null,
-    "LongitudeSeconds": null,
-    "LongitudeDirection": null
+    "Coordinates": {
+      "LatitudeDegree": null,
+      "LatitudeMinutes": null,
+      "LatitudeSeconds": null,
+      "LatitudeDirection": null,
+      "LongitudeDegree": null,
+      "LongitudeMinutes": null,
+      "LongitudeSeconds": null,
+      "LongitudeDirection": null
+    }
   },
   {
     "Test Case Description": "DF Add Properties",
@@ -415,14 +463,16 @@
     "PlanNumber": "NWP56954",
     "LegalDescription": "THE WEST 1/2 OF THE SOUTH 1/2 OF DISTRICT LOT 6612 RANGE 5",
     "MultiplePIDS": null,
-    "LatitudeDegree": null,
-    "LatitudeMinutes": null,
-    "LatitudeSeconds": null,
-    "LatitudeDirection": null,
-    "LongitudeDegree": null,
-    "LongitudeMinutes": null,
-    "LongitudeSeconds": null,
-    "LongitudeDirection": null
+    "Coordinates": {
+      "LatitudeDegree": null,
+      "LatitudeMinutes": null,
+      "LatitudeSeconds": null,
+      "LatitudeDirection": null,
+      "LongitudeDegree": null,
+      "LongitudeMinutes": null,
+      "LongitudeSeconds": null,
+      "LongitudeDirection": null
+    }
   },
   {
     "Test Case Description": "DF Edit",
@@ -432,14 +482,16 @@
     "PlanNumber": null,
     "LegalDescription": null,
     "MultiplePIDS": null,
-    "LatitudeDegree": null,
-    "LatitudeMinutes": null,
-    "LatitudeSeconds": null,
-    "LatitudeDirection": null,
-    "LongitudeDegree": null,
-    "LongitudeMinutes": null,
-    "LongitudeSeconds": null,
-    "LongitudeDirection": null
+    "Coordinates": {
+      "LatitudeDegree": null,
+      "LatitudeMinutes": null,
+      "LatitudeSeconds": null,
+      "LatitudeDirection": null,
+      "LongitudeDegree": null,
+      "LongitudeMinutes": null,
+      "LongitudeSeconds": null,
+      "LongitudeDirection": null
+    }
   },
   {
     "Test Case Description": "DF Minimum Fields",
@@ -449,14 +501,16 @@
     "PlanNumber": null,
     "LegalDescription": null,
     "MultiplePIDS": null,
-    "LatitudeDegree": null,
-    "LatitudeMinutes": null,
-    "LatitudeSeconds": null,
-    "LatitudeDirection": null,
-    "LongitudeDegree": null,
-    "LongitudeMinutes": null,
-    "LongitudeSeconds": null,
-    "LongitudeDirection": null
+    "Coordinates": {
+      "LatitudeDegree": null,
+      "LatitudeMinutes": null,
+      "LatitudeSeconds": null,
+      "LatitudeDirection": null,
+      "LongitudeDegree": null,
+      "LongitudeMinutes": null,
+      "LongitudeSeconds": null,
+      "LongitudeDirection": null
+    }
   },
   {
     "Test Case Description": "DF Create from Pin",
@@ -466,14 +520,16 @@
     "PlanNumber": null,
     "LegalDescription": null,
     "MultiplePIDS": null,
-    "LatitudeDegree": null,
-    "LatitudeMinutes": null,
-    "LatitudeSeconds": null,
-    "LatitudeDirection": null,
-    "LongitudeDegree": null,
-    "LongitudeMinutes": null,
-    "LongitudeSeconds": null,
-    "LongitudeDirection": null
+    "Coordinates": {
+      "LatitudeDegree": null,
+      "LatitudeMinutes": null,
+      "LatitudeSeconds": null,
+      "LatitudeDirection": null,
+      "LongitudeDegree": null,
+      "LongitudeMinutes": null,
+      "LongitudeSeconds": null,
+      "LongitudeDirection": null
+    }
   },
   {
     "Test Case Description": "Main Search Properties - List View",
@@ -483,14 +539,16 @@
     "PlanNumber": "VAP3795",
     "LegalDescription": null,
     "MultiplePIDS": null,
-    "LatitudeDegree": null,
-    "LatitudeMinutes": null,
-    "LatitudeSeconds": null,
-    "LatitudeDirection": null,
-    "LongitudeDegree": null,
-    "LongitudeMinutes": null,
-    "LongitudeSeconds": null,
-    "LongitudeDirection": null
+    "Coordinates": {
+      "LatitudeDegree": null,
+      "LatitudeMinutes": null,
+      "LatitudeSeconds": null,
+      "LatitudeDirection": null,
+      "LongitudeDegree": null,
+      "LongitudeMinutes": null,
+      "LongitudeSeconds": null,
+      "LongitudeDirection": null
+    }
   },
   {
     "Test Case Description": "AF Takes - Manual Test Takes",
@@ -500,14 +558,16 @@
     "PlanNumber": null,
     "LegalDescription": null,
     "MultiplePIDS": "006-112-447;014-993-805;014-983-214;015-210-979;011-584-360;015-197-115;014-992-876;005-565-405;015-339-041;015-319-121;015-009-513;015-197-174;015-197-093;015-197-140;015-184-099;012-241-814;012-491-284;015-372-863",
-    "LatitudeDegree": null,
-    "LatitudeMinutes": null,
-    "LatitudeSeconds": null,
-    "LatitudeDirection": null,
-    "LongitudeDegree": null,
-    "LongitudeMinutes": null,
-    "LongitudeSeconds": null,
-    "LongitudeDirection": null
+    "Coordinates": {
+      "LatitudeDegree": null,
+      "LatitudeMinutes": null,
+      "LatitudeSeconds": null,
+      "LatitudeDirection": null,
+      "LongitudeDegree": null,
+      "LongitudeMinutes": null,
+      "LongitudeSeconds": null,
+      "LongitudeDirection": null
+    }
   },
   {
     "Test Case Description": "DF Main Path",
@@ -517,14 +577,16 @@
     "PlanNumber": null,
     "LegalDescription": null,
     "MultiplePIDS": null,
-    "LatitudeDegree": null,
-    "LatitudeMinutes": null,
-    "LatitudeSeconds": null,
-    "LatitudeDirection": null,
-    "LongitudeDegree": null,
-    "LongitudeMinutes": null,
-    "LongitudeSeconds": null,
-    "LongitudeDirection": null
+    "Coordinates": {
+      "LatitudeDegree": null,
+      "LatitudeMinutes": null,
+      "LatitudeSeconds": null,
+      "LatitudeDirection": null,
+      "LongitudeDegree": null,
+      "LongitudeMinutes": null,
+      "LongitudeSeconds": null,
+      "LongitudeDirection": null
+    }
   },
   {
     "Test Case Description": "DF Errors",
@@ -534,14 +596,16 @@
     "PlanNumber": null,
     "LegalDescription": null,
     "MultiplePIDS": null,
-    "LatitudeDegree": null,
-    "LatitudeMinutes": null,
-    "LatitudeSeconds": null,
-    "LatitudeDirection": null,
-    "LongitudeDegree": null,
-    "LongitudeMinutes": null,
-    "LongitudeSeconds": null,
-    "LongitudeDirection": null
+    "Coordinates": {
+      "LatitudeDegree": null,
+      "LatitudeMinutes": null,
+      "LatitudeSeconds": null,
+      "LatitudeDirection": null,
+      "LongitudeDegree": null,
+      "LongitudeMinutes": null,
+      "LongitudeSeconds": null,
+      "LongitudeDirection": null
+    }
   },
   {
     "Test Case Description": "Property Management Lease Active status",
@@ -551,14 +615,16 @@
     "PlanNumber": null,
     "LegalDescription": null,
     "MultiplePIDS": null,
-    "LatitudeDegree": null,
-    "LatitudeMinutes": null,
-    "LatitudeSeconds": null,
-    "LatitudeDirection": null,
-    "LongitudeDegree": null,
-    "LongitudeMinutes": null,
-    "LongitudeSeconds": null,
-    "LongitudeDirection": null
+    "Coordinates": {
+      "LatitudeDegree": null,
+      "LatitudeMinutes": null,
+      "LatitudeSeconds": null,
+      "LatitudeDirection": null,
+      "LongitudeDegree": null,
+      "LongitudeMinutes": null,
+      "LongitudeSeconds": null,
+      "LongitudeDirection": null
+    }
   },
   {
     "Test Case Description": "DF Non-Inventory error",
@@ -568,14 +634,16 @@
     "PlanNumber": null,
     "LegalDescription": null,
     "MultiplePIDS": null,
-    "LatitudeDegree": null,
-    "LatitudeMinutes": null,
-    "LatitudeSeconds": null,
-    "LatitudeDirection": null,
-    "LongitudeDegree": null,
-    "LongitudeMinutes": null,
-    "LongitudeSeconds": null,
-    "LongitudeDirection": null
+    "Coordinates": {
+      "LatitudeDegree": null,
+      "LatitudeMinutes": null,
+      "LatitudeSeconds": null,
+      "LatitudeDirection": null,
+      "LongitudeDegree": null,
+      "LongitudeMinutes": null,
+      "LongitudeSeconds": null,
+      "LongitudeDirection": null
+    }
   },
   {
     "Test Case Description": "MF Property Digital Documents and Props Documents",
@@ -585,13 +653,15 @@
     "PlanNumber": null,
     "LegalDescription": null,
     "MultiplePIDS": null,
-    "LatitudeDegree": null,
-    "LatitudeMinutes": null,
-    "LatitudeSeconds": null,
-    "LatitudeDirection": null,
-    "LongitudeDegree": null,
-    "LongitudeMinutes": null,
-    "LongitudeSeconds": null,
-    "LongitudeDirection": null
+    "Coordinates": {
+      "LatitudeDegree": null,
+      "LatitudeMinutes": null,
+      "LatitudeSeconds": null,
+      "LatitudeDirection": null,
+      "LongitudeDegree": null,
+      "LongitudeMinutes": null,
+      "LongitudeSeconds": null,
+      "LongitudeDirection": null
+    }
   }
 ]

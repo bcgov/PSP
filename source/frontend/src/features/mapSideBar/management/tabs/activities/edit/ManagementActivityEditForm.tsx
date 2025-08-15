@@ -223,6 +223,7 @@ export const ManagementActivityEditForm: React.FunctionComponent<
                             field="ministryContacts"
                             formikProps={formikProps}
                             contactType={RestrictContactType.ONLY_INDIVIDUALS}
+                            dataTestId="ministry-contacts-add-link"
                           />
                         </SectionField>
                         <SectionField
@@ -237,6 +238,7 @@ export const ManagementActivityEditForm: React.FunctionComponent<
                             field="involvedParties"
                             formikProps={formikProps}
                             contactType={RestrictContactType.ALL}
+                            dataTestId="external-contacts-add-link"
                           />
                         </SectionField>
                         <SectionField label="Service provider" contentWidth={{ xs: 7 }}>

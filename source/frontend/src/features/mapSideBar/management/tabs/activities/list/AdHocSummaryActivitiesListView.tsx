@@ -42,6 +42,7 @@ const AdHocSummaryActivitiesView: React.FunctionComponent<IManagementActivitiesL
         setSort={setSort}
         loading={isLoading}
         columns={[...createActivityTableColumns(), activityNavigationColumn(getNavigationUrl)]}
+        dataTestId="adhoc-activity-list-readonly"
       ></ManagementActivitiesList>
     </Section>
   );

@@ -30,6 +30,7 @@ export interface IManagementActivitiesListProps {
   columns: Column<PropertyActivityRow>[];
   sort: TableSort<ApiGen_Concepts_ManagementActivity>;
   setSort: (value: TableSort<ApiGen_Concepts_ManagementActivity>) => void;
+  dataTestId?: string;
 }
 
 export function createActivityTableColumns() {
@@ -184,6 +185,7 @@ const ManagementActivitiesList: React.FunctionComponent<IManagementActivitiesLis
   columns,
   sort,
   setSort,
+  dataTestId,
   ...rest
 }) => {
   const location = useLocation();
@@ -201,7 +203,7 @@ const ManagementActivitiesList: React.FunctionComponent<IManagementActivitiesLis
   return (
     <Table<PropertyActivityRow>
       loading={loading}
-      name="PropertyManagementActivitiesTable"
+      name={dataTestId}
       manualSortBy={true}
       totalItems={propertyActivities.length}
       columns={columns}
