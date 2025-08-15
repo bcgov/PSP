@@ -60,26 +60,25 @@ const MoreOptionsMenu: React.FC<IMoreOptionsMenuProps> = ({
           // Disabled option with optional tooltip
           if (opt.disabled) {
             return (
-              <>
+              <React.Fragment key={index}>
                 {opt.separator && index > 0 && <Dropdown.Divider key={`divider-${index}`} />}
-                <StyledDropdownItemText key={index}>
+                <StyledDropdownItemText>
                   {opt.icon && <span>{opt.icon}</span>}
                   {opt.label}
                   {opt.tooltip && (
                     <TooltipIcon toolTipId={`tooltip-${index}`} toolTip={opt.tooltip} />
                   )}
                 </StyledDropdownItemText>
-              </>
+              </React.Fragment>
             );
           }
 
           // Normal clickable item
           return (
-            <>
+            <React.Fragment key={index}>
               {opt.separator && index > 0 && <Dropdown.Divider key={`divider-${index}`} />}
               <StyledDropdownItem
                 aria-label={opt.label}
-                key={index}
                 onClick={e => {
                   e.preventDefault();
                   e.stopPropagation();
@@ -89,7 +88,7 @@ const MoreOptionsMenu: React.FC<IMoreOptionsMenuProps> = ({
                 {opt.icon && <span>{opt.icon}</span>}
                 {opt.label}
               </StyledDropdownItem>
-            </>
+            </React.Fragment>
           );
         })}
       </StyledDropdownMenu>

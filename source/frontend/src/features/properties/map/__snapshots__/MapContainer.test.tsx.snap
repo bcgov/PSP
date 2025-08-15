@@ -295,15 +295,47 @@ exports[`MapContainer > Renders the map 1`] = `
   position: relative;
 }
 
-.c19.required::before {
+.c20.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c18 {
+.c19 {
   font-weight: bold;
+}
+
+.c15 {
+  border: none;
+  padding: 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  background-color: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.c15::after {
+  display: none !important;
+}
+
+.c15 svg {
+  color: #FFFFFF;
+}
+
+.c15:focus,
+.c15:active,
+.c15:focus:active {
+  background-color: transparent !important;
+  box-shadow: none !important;
+  outline: none !important;
 }
 
 .c8 {
@@ -355,7 +387,7 @@ exports[`MapContainer > Renders the map 1`] = `
   box-shadow: -0.2rem 0.1rem 0.4rem rgba(0,0,0,0.2);
 }
 
-.c17 {
+.c18 {
   font-size: 1.4rem;
   padding: 1rem;
 }
@@ -372,13 +404,13 @@ exports[`MapContainer > Renders the map 1`] = `
   font-weight: bold;
 }
 
-.c15 {
+.c16 {
   color: white;
   font-size: 22px;
   cursor: pointer;
 }
 
-.c16 {
+.c17 {
   color: #FFFFFF;
   font-size: 22px;
   cursor: pointer;
@@ -855,9 +887,34 @@ exports[`MapContainer > Renders the map 1`] = `
                       class="col-1"
                     />
                     <div
-                      class="col-1"
+                      class="pl-2 col-1"
                     >
-                      ...
+                      <div
+                        class="dropdown"
+                      >
+                        <button
+                          aria-expanded="false"
+                          aria-haspopup="true"
+                          aria-label="More options"
+                          class="c15 dropdown-toggle btn btn-link"
+                          id="dropdown-ellipsis"
+                          type="button"
+                        >
+                          <svg
+                            fill="currentColor"
+                            height="18"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 512 512"
+                            width="18"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"
+                            />
+                          </svg>
+                        </button>
+                      </div>
                     </div>
                     <div
                       class="col-1"
@@ -871,7 +928,7 @@ exports[`MapContainer > Renders the map 1`] = `
                       class="col-1"
                     >
                       <div
-                        class="c15"
+                        class="c16"
                       >
                         <svg
                           fill="currentColor"
@@ -895,7 +952,7 @@ exports[`MapContainer > Renders the map 1`] = `
                       class="col-1"
                     >
                       <div
-                        class="c15"
+                        class="c16"
                       >
                         <svg
                           data-testid="toggle-icon"
@@ -920,7 +977,7 @@ exports[`MapContainer > Renders the map 1`] = `
                       class="col-1"
                     >
                       <svg
-                        class="c16"
+                        class="c17"
                         data-testid="close-icon"
                         fill="currentColor"
                         height="18"
@@ -940,7 +997,7 @@ exports[`MapContainer > Renders the map 1`] = `
                     </div>
                   </div>
                   <div
-                    class="c17"
+                    class="c18"
                   >
                     <div
                       class="row no-gutters"
@@ -955,13 +1012,13 @@ exports[`MapContainer > Renders the map 1`] = `
                             class="pr-0 text-left col-12"
                           >
                             <label
-                              class="c18"
+                              class="c19"
                             >
                               PID:
                             </label>
                           </div>
                           <div
-                            class="c19 text-left col"
+                            class="c20 text-left col"
                           />
                         </div>
                       </div>
@@ -975,13 +1032,13 @@ exports[`MapContainer > Renders the map 1`] = `
                             class="pr-0 text-left col-12"
                           >
                             <label
-                              class="c18"
+                              class="c19"
                             >
                               PIN:
                             </label>
                           </div>
                           <div
-                            class="c19 text-left col"
+                            class="c20 text-left col"
                           >
                             -
                           </div>
@@ -997,13 +1054,13 @@ exports[`MapContainer > Renders the map 1`] = `
                             class="pr-0 text-left col-12"
                           >
                             <label
-                              class="c18"
+                              class="c19"
                             >
                               Plan:
                             </label>
                           </div>
                           <div
-                            class="c19 text-left col"
+                            class="c20 text-left col"
                           >
                             -
                           </div>
@@ -1017,13 +1074,13 @@ exports[`MapContainer > Renders the map 1`] = `
                         class="pr-0 text-left col-12"
                       >
                         <label
-                          class="c18"
+                          class="c19"
                         >
                           Owners:
                         </label>
                       </div>
                       <div
-                        class="c19 text-left col"
+                        class="c20 text-left col"
                       />
                     </div>
                     <div
@@ -1033,13 +1090,13 @@ exports[`MapContainer > Renders the map 1`] = `
                         class="pr-0 text-left col-12"
                       >
                         <label
-                          class="c18"
+                          class="c19"
                         >
                           Legal Description:
                         </label>
                       </div>
                       <div
-                        class="c19 text-left col"
+                        class="c20 text-left col"
                       >
                         -
                       </div>
