@@ -222,7 +222,7 @@ exports[`MapFilterBar > renders correctly 1`] = `
       class="row no-gutters"
     >
       <div
-        class="col-5"
+        class="col-auto"
       >
         <div
           class="idir-input-group form-group"
@@ -310,10 +310,10 @@ exports[`MapFilterBar > renders correctly 1`] = `
       </div>
     </div>
     <div
-      class="row"
+      class="pt-2 row"
     >
       <div
-        class="col"
+        class="col-auto"
       >
         <button
           class="c0 Button Button--disabled primary btn btn-primary"
@@ -348,7 +348,7 @@ exports[`MapFilterBar > renders correctly 1`] = `
         </button>
       </div>
       <div
-        class="col"
+        class="col-auto"
       >
         <button
           class="c0 Button btn btn-info"

@@ -174,6 +174,7 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({
         handleSuccess(response);
       }
     } finally {
+      mapMachine.processCreation();
       formikHelpers?.setSubmitting(false);
     }
   };

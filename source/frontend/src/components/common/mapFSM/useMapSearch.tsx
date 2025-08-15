@@ -352,7 +352,6 @@ export const useMapSearch = () => {
 
         const [pinPmbcData, pidPmbcData] = await Promise.all([findByPinTask, findByPidTask]);
 
-        // If the property was found on the pims inventory, use that.
         const attributedFeatures: FeatureCollection<
           Geometry,
           PMBC_FullyAttributed_Feature_Properties
@@ -367,15 +366,7 @@ export const useMapSearch = () => {
 
         //filter out any pmbc features that do not have geometry, or are part of the pims feature result set.
         const validPmbcFeatures = attributedFeatures.features.filter(
-          feature =>
-            !!feature?.geometry &&
-            !validPimsFeatures?.find(
-              pf =>
-                (exists(feature?.properties?.PID_NUMBER) &&
-                  pf.properties.PID === feature?.properties?.PID_NUMBER) ||
-                (exists(feature?.properties?.PIN) &&
-                  pf.properties.PIN === feature?.properties?.PIN),
-            ),
+          feature => !!feature?.geometry,
         );
         result = {
           pimsLocationFeatures: validPimsFeatures.length

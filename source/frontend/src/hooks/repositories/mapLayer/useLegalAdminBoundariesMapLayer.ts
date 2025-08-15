@@ -22,7 +22,11 @@ export const useLegalAdminBoundariesMapLayer = () => {
   const {
     findMultipleWhereContainsWrapped: findOneMunicipalWrapped_,
     findMultipleWhereContainsWrapped: findMultipleMunicipalWrapped_,
+    findMultipleWhereContainsBoundaryWrapped: findMultipleMunicipalBoundaryWrapped_,
   } = useLayerQuery(municipalLayerUrl);
+
+  const findMultipleMunicipalBoundaryWrappedExecute = findMultipleMunicipalBoundaryWrapped_.execute;
+  const findMultipleMunicipalBoundaryWrappedLoading = findMultipleMunicipalBoundaryWrapped_.loading;
 
   const findMultipleMunicipalWrappedExecute = findMultipleMunicipalWrapped_.execute;
   const findMultipleMunicipalWrappedLoading = findMultipleMunicipalWrapped_.loading;
@@ -87,12 +91,33 @@ export const useLegalAdminBoundariesMapLayer = () => {
     [findMultipleMunicipalWrappedExecute],
   );
 
+  const findMultipleMunicipalityBoundary = useCallback(
+    async (boundary: Geometry, geometryName?: string, spatialReferenceId?: number) => {
+      const featureCollection = await findMultipleMunicipalBoundaryWrappedExecute(
+        boundary,
+        geometryName,
+        spatialReferenceId,
+      );
+
+      // TODO: Enhance useLayerQuery to allow generics to match the Property types
+      const forceCasted = featureCollection as
+        | FeatureCollection<Geometry, WHSE_Municipalities_Feature_Properties>
+        | undefined;
+      return forceCasted !== undefined && forceCasted.features.length > 0
+        ? forceCasted.features
+        : undefined;
+    },
+    [findMultipleMunicipalBoundaryWrappedExecute],
+  );
+
   return useMemo(
     () => ({
       findOneAgriculturalReserve,
       findOneAgriculturalReserveLoading: findOneAlrWrappedLoading,
       findMultipleMunicipality,
       findMultipleMunicipalLoading: findMultipleMunicipalWrappedLoading,
+      findMultipleMunicipalityBoundary,
+      findMultipleMunicipalBoundaryLoading: findMultipleMunicipalBoundaryWrappedLoading,
       findOneMunicipality,
       findOneMunicipalLoading: findOneMunicipalWrappedLoading,
     }),
@@ -101,6 +126,8 @@ export const useLegalAdminBoundariesMapLayer = () => {
       findOneAlrWrappedLoading,
       findMultipleMunicipality,
       findMultipleMunicipalWrappedLoading,
+      findMultipleMunicipalityBoundary,
+      findMultipleMunicipalBoundaryWrappedLoading,
       findOneMunicipality,
       findOneMunicipalWrappedLoading,
     ],

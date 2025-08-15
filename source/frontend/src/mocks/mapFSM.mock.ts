@@ -111,4 +111,7 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   openQuickInfo: vi.fn(),
   closeQuickInfo: vi.fn(),
   minimizeQuickInfo: vi.fn(),
+  isEditPropertiesMode: false,
+  processCreation: vi.fn(),
+  setEditPropertiesMode: vi.fn(),
 };

@@ -1,5 +1,4 @@
 import { FeatureCollection, Geometry } from 'geojson';
-import { LatLngLiteral } from 'leaflet';
 import { useCallback } from 'react';
 
 import { useLayerQuery } from '@/hooks/layer-api/useLayerQuery';
@@ -30,7 +29,7 @@ export const useCrownLandLayer = () => {
   } = useTenant();
 
   const {
-    findMultipleWhereContainsWrapped: {
+    findMultipleWhereContainsBoundaryWrapped: {
       execute: findMultipleWhereContainsCrownLandLeasesExecute,
       loading: findMultipleWhereContainsCrownLandLeasesLoading,
     },
@@ -38,12 +37,12 @@ export const useCrownLandLayer = () => {
 
   const findMultipleCrownLandLease = useCallback(
     async (
-      latlng: LatLngLiteral,
+      boundary: Geometry,
       geometryName?: string | undefined,
       spatialReferenceId?: number | undefined,
     ) => {
       const featureCollection = await findMultipleWhereContainsCrownLandLeasesExecute(
-        latlng,
+        boundary,
         geometryName,
         spatialReferenceId,
       );
@@ -62,7 +61,7 @@ export const useCrownLandLayer = () => {
   );
 
   const {
-    findMultipleWhereContainsWrapped: {
+    findMultipleWhereContainsBoundaryWrapped: {
       execute: findMultipleWhereContainsCrownLandLicensesExecute,
       loading: findMultipleWhereContainsCrownLandLicensesLoading,
     },
@@ -70,12 +69,12 @@ export const useCrownLandLayer = () => {
 
   const findMultipleCrownLandLicense = useCallback(
     async (
-      latlng: LatLngLiteral,
+      boundary: Geometry,
       geometryName?: string | undefined,
       spatialReferenceId?: number | undefined,
     ) => {
       const featureCollection = await findMultipleWhereContainsCrownLandLicensesExecute(
-        latlng,
+        boundary,
         geometryName,
         spatialReferenceId,
       );
@@ -94,7 +93,7 @@ export const useCrownLandLayer = () => {
   );
 
   const {
-    findMultipleWhereContainsWrapped: {
+    findMultipleWhereContainsBoundaryWrapped: {
       execute: findMultipleWhereContainsCrownLandTenuresExecute,
       loading: findMultipleWhereContainsCrownLandTenuresLoading,
     },
@@ -102,12 +101,12 @@ export const useCrownLandLayer = () => {
 
   const findMultipleCrownLandTenure = useCallback(
     async (
-      latlng: LatLngLiteral,
+      boundary: Geometry,
       geometryName?: string | undefined,
       spatialReferenceId?: number | undefined,
     ) => {
       const featureCollection = await findMultipleWhereContainsCrownLandTenuresExecute(
-        latlng,
+        boundary,
         geometryName,
         spatialReferenceId,
       );
@@ -126,7 +125,7 @@ export const useCrownLandLayer = () => {
   );
 
   const {
-    findMultipleWhereContainsWrapped: {
+    findMultipleWhereContainsBoundaryWrapped: {
       execute: findMultipleWhereContainsCrownLandInventoryExecute,
       loading: findMultipleWhereContainsCrownLandInventoryLoading,
     },
@@ -134,12 +133,12 @@ export const useCrownLandLayer = () => {
 
   const findMultipleCrownLandInventory = useCallback(
     async (
-      latlng: LatLngLiteral,
+      boundary: Geometry,
       geometryName?: string | undefined,
       spatialReferenceId?: number | undefined,
     ) => {
       const featureCollection = await findMultipleWhereContainsCrownLandInventoryExecute(
-        latlng,
+        boundary,
         geometryName,
         spatialReferenceId,
       );
@@ -158,7 +157,7 @@ export const useCrownLandLayer = () => {
   );
 
   const {
-    findMultipleWhereContainsWrapped: {
+    findMultipleWhereContainsBoundaryWrapped: {
       execute: findMultipleWhereContainsCrownLandInclusionsExecute,
       loading: findMultipleWhereContainsCrownLandInclusionsLoading,
     },
@@ -166,12 +165,12 @@ export const useCrownLandLayer = () => {
 
   const findMultipleCrownLandInclusion = useCallback(
     async (
-      latlng: LatLngLiteral,
+      boundary: Geometry,
       geometryName?: string | undefined,
       spatialReferenceId?: number | undefined,
     ) => {
       const featureCollection = await findMultipleWhereContainsCrownLandInclusionsExecute(
-        latlng,
+        boundary,
         geometryName,
         spatialReferenceId,
       );

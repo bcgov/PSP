@@ -2,6 +2,10 @@ import { FormikHelpers, FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
 import { createRef } from 'react';
 
+import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
+import { useManagementFileRepository } from '@/hooks/repositories/useManagementFileRepository';
+import { mockManagementFileResponse } from '@/mocks/managementFiles.mock';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import {
   act,
   createAxiosError,
@@ -11,10 +15,6 @@ import {
   screen,
 } from '@/utils/test-utils';
 
-import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
-import { useManagementFileRepository } from '@/hooks/repositories/useManagementFileRepository';
-import { mockManagementFileResponse } from '@/mocks/managementFiles.mock';
-import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { SideBarContextProvider } from '../../context/sidebarContext';
 import { ManagementFormModel } from '../models/ManagementFormModel';
 import AddManagementContainer, { IAddManagementContainerProps } from './AddManagementContainer';
@@ -68,6 +68,7 @@ describe('Add Management Container component', () => {
 
   beforeEach(() => {
     viewProps = undefined;
+    mockCreateManagementFile.execute.mockResolvedValue(mockManagementFileResponse());
   });
 
   afterEach(() => {
@@ -97,8 +98,12 @@ describe('Add Management Container component', () => {
   });
 
   it('calls onSuccess when the Management is saved successfully', async () => {
-    mockCreateManagementFile.execute.mockResolvedValue(mockManagementFileResponse());
-    await setup();
+    const testMockMachine: IMapStateMachineContext = {
+      ...mapMachineBaseMock,
+      processCreation: vi.fn(),
+      refreshMapProperties: vi.fn(),
+    };
+    await setup({ mockMapMachine: testMockMachine });
 
     await act(async () => {
       await viewProps?.onSubmit(ManagementFormModel.fromApi(mockManagementFileResponse()), {
@@ -108,21 +113,24 @@ describe('Add Management Container component', () => {
     });
 
     expect(onSuccess).toHaveBeenCalled();
+    expect(testMockMachine.processCreation).toHaveBeenCalled();
+    expect(testMockMachine.refreshMapProperties).toHaveBeenCalled();
   });
 
   it('calls setSubmitting(false) after submit', async () => {
-    mockCreateManagementFile.execute.mockResolvedValue(mockManagementFileResponse());
     await setup();
 
     const setSubmitting = vi.fn();
+    const resetForm = vi.fn();
     await act(async () => {
       await viewProps?.onSubmit(ManagementFormModel.fromApi(mockManagementFileResponse()), {
         setSubmitting,
-        resetForm: vi.fn(),
+        resetForm,
       } as unknown as FormikHelpers<ManagementFormModel>);
     });
 
     expect(setSubmitting).toHaveBeenCalledWith(false);
+    expect(resetForm).toHaveBeenCalled();
   });
 
   it('displays error when addManagementFileApi throws', async () => {
@@ -141,7 +149,6 @@ describe('Add Management Container component', () => {
   });
 
   it('calls resetForm after successful submit', async () => {
-    mockCreateManagementFile.execute.mockResolvedValue(mockManagementFileResponse());
     await setup();
 
     const resetForm = vi.fn();

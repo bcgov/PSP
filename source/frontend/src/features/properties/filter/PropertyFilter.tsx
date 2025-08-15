@@ -110,7 +110,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
       {({ isSubmitting, setFieldValue, values, resetForm, isValid }) => (
         <Form>
           <Row noGutters>
-            <Col xs="5">
+            <Col xs="auto">
               <Select
                 field="searchBy"
                 options={searchOptions}
@@ -238,8 +238,8 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
               </>
             )}
           </Row>
-          <Row>
-            <Col>
+          <Row className="pt-2">
+            <Col xs="auto">
               <SearchButton
                 disabled={
                   isSubmitting ||
@@ -262,7 +262,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                 Search
               </SearchButton>
             </Col>
-            <Col>
+            <Col xs="auto">
               <ResetButton
                 disabled={isSubmitting}
                 onClick={() => {

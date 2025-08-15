@@ -44,6 +44,7 @@ export function ParcelItem({ parcel, onSelect, onRemove, onZoomToParcel }: IParc
             title="Zoom to worklist parcel"
             onClick={e => {
               e.preventDefault();
+              e.stopPropagation();
               onZoomToParcel(parcel);
             }}
           >
@@ -53,6 +54,7 @@ export function ParcelItem({ parcel, onSelect, onRemove, onZoomToParcel }: IParc
             title="Delete worklist parcel"
             data-testId={`delete-worklist-parcel-${parcel.id ?? 'unknown'}`}
             onRemove={e => {
+              e.preventDefault();
               e.stopPropagation();
               onRemove(parcel.id);
             }}

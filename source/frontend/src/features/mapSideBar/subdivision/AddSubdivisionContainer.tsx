@@ -141,6 +141,7 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({
         handleSuccess(propertyOperations);
       }
     } finally {
+      mapMachine.processCreation();
       formikHelpers?.setSubmitting(false);
     }
   };

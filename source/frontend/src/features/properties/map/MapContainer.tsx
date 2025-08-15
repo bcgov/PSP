@@ -85,6 +85,7 @@ const StyleMapView = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
+  min-width: 135rem; // any smaller and the right and left side bars conflict
   &.draft-cursor,
   &.draft-cursor .leaflet-grab,
   &.draft-cursor .leaflet-interactive {
