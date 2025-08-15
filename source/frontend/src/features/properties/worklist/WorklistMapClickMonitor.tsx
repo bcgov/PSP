@@ -4,7 +4,7 @@ import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import { exists } from '@/utils';
 
 import { useWorklistContext } from './context/WorklistContext';
-import { ParcelFeature } from './models';
+import { ParcelDataset } from './models';
 
 export const WorklistMapClickMonitor: React.FunctionComponent<unknown> = () => {
   const { add, addRange } = useWorklistContext();
@@ -18,10 +18,12 @@ export const WorklistMapClickMonitor: React.FunctionComponent<unknown> = () => {
       previous !== undefined
     ) {
       // Loop over the location featurecollection, adding it to the worklist if the parcelFeature is not there already
-      const worklistParcels: ParcelFeature[] =
+      const worklistParcels: ParcelDataset[] =
         worklistLocationFeatureDataset.fullyAttributedFeatures?.features?.map(pmbcFeature => {
-          const newParcel = ParcelFeature.fromFullyAttributedFeature(pmbcFeature);
+          const newParcel = ParcelDataset.fromFullyAttributedFeature(pmbcFeature);
           newParcel.location = worklistLocationFeatureDataset.location;
+          newParcel.regionFeature = worklistLocationFeatureDataset.regionFeature;
+          newParcel.districtFeature = worklistLocationFeatureDataset.districtFeature;
           return newParcel;
         }) ?? [];
 
@@ -29,9 +31,9 @@ export const WorklistMapClickMonitor: React.FunctionComponent<unknown> = () => {
         addRange(worklistParcels);
       } else {
         // We didn't find any parcel-map properties - add a lat/long location to the worklist
-        const latLongParcel = new ParcelFeature();
+        const latLongParcel = new ParcelDataset();
         latLongParcel.location = worklistLocationFeatureDataset.location;
-        latLongParcel.feature = null;
+        latLongParcel.pmbcFeature = null;
         add(latLongParcel);
       }
     }

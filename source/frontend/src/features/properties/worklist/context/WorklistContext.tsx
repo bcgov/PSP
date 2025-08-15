@@ -8,7 +8,7 @@ import {
   planFromFullyAttributedFeature,
 } from '@/utils';
 
-import { ParcelFeature } from '../models';
+import { ParcelDataset } from '../models';
 
 export interface IWorklistNotifier {
   error: (msg: string) => void;
@@ -16,13 +16,13 @@ export interface IWorklistNotifier {
   warn: (msg: string) => void;
 }
 
-interface IWorklistContext {
-  parcels: ParcelFeature[];
+export interface IWorklistContext {
+  parcels: ParcelDataset[];
   selectedId: string | null;
   select: (id: string) => void;
   remove: (id: string) => void;
-  add: (parcel: ParcelFeature) => void;
-  addRange: (parcel: ParcelFeature[]) => void;
+  add: (parcel: ParcelDataset) => void;
+  addRange: (parcel: ParcelDataset[]) => void;
   clearAll: () => void;
 }
 
@@ -38,7 +38,7 @@ export function useWorklistContext() {
 
 export interface IWorklistContextProviderProps {
   children: ReactNode;
-  parcels?: ParcelFeature[];
+  parcels?: ParcelDataset[];
   /** Override the default react‑toastify notifier in tests or other environments */
   notifier?: IWorklistNotifier;
 }
@@ -48,7 +48,7 @@ export function WorklistContextProvider({
   parcels: initialParcels,
   notifier = toast, // default is react‑toastify’s toast object
 }: IWorklistContextProviderProps) {
-  const [parcels, setParcels] = useState<ParcelFeature[]>(initialParcels ?? []);
+  const [parcels, setParcels] = useState<ParcelDataset[]>(initialParcels ?? []);
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const select = useCallback((id: string) => setSelectedId(id), []);
@@ -56,7 +56,7 @@ export function WorklistContextProvider({
 
   // The worklist should not allow duplicate property (using pid/pin/globalUID, lat/lng)
   const add = useCallback(
-    (parcel: ParcelFeature) => {
+    (parcel: ParcelDataset) => {
       setParcels(prev => {
         const alreadyExists = prev.some(p => areParcelsEqual(p, parcel));
         if (alreadyExists) {
@@ -70,7 +70,7 @@ export function WorklistContextProvider({
   );
 
   const addRange = useCallback(
-    (newParcels: ParcelFeature[]) => {
+    (newParcels: ParcelDataset[]) => {
       setParcels(prev => {
         const uniqueParcels = newParcels.filter(newParcel => {
           return !prev.some(existingParcel => areParcelsEqual(existingParcel, newParcel));
@@ -103,7 +103,7 @@ export function WorklistContextProvider({
   );
 }
 
-function areParcelsEqual(p1: ParcelFeature, p2: ParcelFeature): boolean {
+function areParcelsEqual(p1: ParcelDataset, p2: ParcelDataset): boolean {
   if (!exists(p1) || !exists(p2)) {
     return false;
   }
@@ -112,22 +112,22 @@ function areParcelsEqual(p1: ParcelFeature, p2: ParcelFeature): boolean {
     return true;
   }
 
-  const pid1 = pidFromFullyAttributedFeature(p1.feature) ?? null;
-  const pid2 = pidFromFullyAttributedFeature(p2.feature) ?? null;
+  const pid1 = pidFromFullyAttributedFeature(p1.pmbcFeature) ?? null;
+  const pid2 = pidFromFullyAttributedFeature(p2.pmbcFeature) ?? null;
   if (exists(pid1) && pid1 === pid2) {
     return true;
   }
 
-  const pin1 = pinFromFullyAttributedFeature(p1.feature) ?? null;
-  const pin2 = pinFromFullyAttributedFeature(p2.feature) ?? null;
+  const pin1 = pinFromFullyAttributedFeature(p1.pmbcFeature) ?? null;
+  const pin2 = pinFromFullyAttributedFeature(p2.pmbcFeature) ?? null;
   if (exists(pin1) && pin1 === pin2) {
     return true;
   }
 
   // Some parcels are only identified by their plan-number (e.g. common strata, parks)
   // Only consider plan-number as an identifier when there are no PID/PIN
-  const planNumber1 = planFromFullyAttributedFeature(p1.feature) ?? null;
-  const planNumber2 = planFromFullyAttributedFeature(p2.feature) ?? null;
+  const planNumber1 = planFromFullyAttributedFeature(p1.pmbcFeature) ?? null;
+  const planNumber2 = planFromFullyAttributedFeature(p2.pmbcFeature) ?? null;
   if (
     exists(planNumber1) &&
     !exists(pid1) &&

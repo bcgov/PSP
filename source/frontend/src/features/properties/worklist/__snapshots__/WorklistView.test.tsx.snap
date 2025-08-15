@@ -294,15 +294,6 @@ exports[`WorklistView > matches snapshot with multiple parcels 1`] = `
   line-height: 2rem;
 }
 
-.c4 {
-  width: 100%;
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-  overflow-y: auto;
-}
-
 .c3 {
   border: none;
   padding: 0;
@@ -317,9 +308,14 @@ exports[`WorklistView > matches snapshot with multiple parcels 1`] = `
   background-color: transparent !important;
   box-shadow: none !important;
   outline: none !important;
-  padding: 0.5rem;
-  min-width: 3rem;
-  min-height: 3rem;
+}
+
+.c3::after {
+  display: none !important;
+}
+
+.c3 svg {
+  color: #1a5a96;
 }
 
 .c3:focus,
@@ -328,6 +324,15 @@ exports[`WorklistView > matches snapshot with multiple parcels 1`] = `
   background-color: transparent !important;
   box-shadow: none !important;
   outline: none !important;
+}
+
+.c4 {
+  width: 100%;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  overflow-y: auto;
 }
 
 .c9 {
@@ -466,7 +471,7 @@ exports[`WorklistView > matches snapshot with multiple parcels 1`] = `
           aria-expanded="false"
           aria-haspopup="true"
           aria-label="More options"
-          class="c3 btn btn btn-light"
+          class="c3 dropdown-toggle btn btn-link"
           id="dropdown-ellipsis"
           type="button"
         >

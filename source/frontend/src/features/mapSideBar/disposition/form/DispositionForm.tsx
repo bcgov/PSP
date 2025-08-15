@@ -77,6 +77,7 @@ const DispositionForm: React.FC<IDispositionFormProps> = props => {
 
   return (
     <Formik<DispositionFormModel>
+      enableReinitialize
       innerRef={formikRef}
       initialValues={initialValues}
       validationSchema={AddDispositionFormYupSchema}

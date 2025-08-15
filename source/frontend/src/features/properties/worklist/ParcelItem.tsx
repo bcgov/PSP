@@ -6,14 +6,14 @@ import { LinkButton, RemoveIconButton } from '@/components/common/buttons';
 import OverflowTip from '@/components/common/OverflowTip';
 import { getWorklistPropertyName, NameSourceType } from '@/utils';
 
-import { ParcelFeature } from './models';
+import { ParcelDataset } from './models';
 
 export interface IParcelItemProps {
-  parcel: ParcelFeature;
+  parcel: ParcelDataset;
   isSelected: boolean;
   onSelect: (id: string) => void;
   onRemove: (id: string) => void;
-  onZoomToParcel: (parcel: ParcelFeature) => void;
+  onZoomToParcel: (parcel: ParcelDataset) => void;
 }
 
 export function ParcelItem({ parcel, onSelect, onRemove, onZoomToParcel }: IParcelItemProps) {
@@ -44,6 +44,7 @@ export function ParcelItem({ parcel, onSelect, onRemove, onZoomToParcel }: IParc
             title="Zoom to worklist parcel"
             onClick={e => {
               e.preventDefault();
+              e.stopPropagation();
               onZoomToParcel(parcel);
             }}
           >
@@ -53,6 +54,7 @@ export function ParcelItem({ parcel, onSelect, onRemove, onZoomToParcel }: IParc
             title="Delete worklist parcel"
             data-testId={`delete-worklist-parcel-${parcel.id ?? 'unknown'}`}
             onRemove={e => {
+              e.preventDefault();
               e.stopPropagation();
               onRemove(parcel.id);
             }}

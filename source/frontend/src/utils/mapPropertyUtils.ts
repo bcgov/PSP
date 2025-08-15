@@ -20,8 +20,8 @@ import { IMapProperty } from '@/components/propertySelector/models';
 import { AreaUnitTypes } from '@/constants';
 import { DistrictCodes } from '@/constants/districtCodes';
 import { RegionCodes } from '@/constants/regionCodes';
-import { AddressForm } from '@/features/mapSideBar/shared/models';
-import { ParcelFeature } from '@/features/properties/worklist/models';
+import { AddressForm, PropertyForm } from '@/features/mapSideBar/shared/models';
+import { ParcelDataset } from '@/features/properties/worklist/models';
 import { ApiGen_CodeTypes_GeoJsonTypes } from '@/models/api/generated/ApiGen_CodeTypes_GeoJsonTypes';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Geometry } from '@/models/api/generated/ApiGen_Concepts_Geometry';
@@ -65,14 +65,14 @@ export const getPropertyName = (property: IMapProperty): PropertyName => {
   return { label: NameSourceType.NONE, value: '' };
 };
 
-export const getWorklistPropertyName = (parcelFeature: ParcelFeature | null): PropertyName => {
+export const getWorklistPropertyName = (parcelFeature: ParcelDataset | null): PropertyName => {
   if (!exists(parcelFeature)) {
     return { label: NameSourceType.NONE, value: '' };
   }
 
-  const pid = pidFromFullyAttributedFeature(parcelFeature.feature);
-  const pin = pinFromFullyAttributedFeature(parcelFeature.feature);
-  const planNumber = planFromFullyAttributedFeature(parcelFeature.feature);
+  const pid = pidFromFullyAttributedFeature(parcelFeature.pmbcFeature);
+  const pin = pinFromFullyAttributedFeature(parcelFeature.pmbcFeature);
+  const planNumber = planFromFullyAttributedFeature(parcelFeature.pmbcFeature);
   const location = parcelFeature.location;
 
   if (exists(pid) && pid?.toString()?.length > 0 && pid !== '0') {
@@ -463,3 +463,26 @@ export function sortFileProperties<T extends ApiGen_Concepts_FileProperty>(
   }
   return null;
 }
+
+export const areSelectedFeaturesEqual = (
+  lhs: SelectedFeatureDataset,
+  rhs: SelectedFeatureDataset,
+) => {
+  const lhsName = getPropertyName(featuresetToMapProperty(lhs));
+  const rhsName = getPropertyName(featuresetToMapProperty(rhs));
+  if (
+    (lhsName.label === rhsName.label &&
+      lhsName.label !== NameSourceType.NONE &&
+      lhsName.label !== NameSourceType.PLAN) ||
+    (lhsName.label === NameSourceType.PLAN &&
+      lhs.location.lat === rhs.location.lat &&
+      lhs.location.lng === rhs.location.lng)
+  ) {
+    return lhsName.value === rhsName.value;
+  }
+  return false;
+};
+
+export const arePropertyFormsEqual = (lhs: PropertyForm, rhs: PropertyForm): boolean => {
+  return areSelectedFeaturesEqual(lhs.toFeatureDataset(), rhs.toFeatureDataset());
+};

@@ -44,7 +44,7 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   repositioningFeatureDataset: null,
   repositioningPropertyIndex: null,
   selectingComponentId: null,
-  selectedFeatureDataset: null,
+  selectedFeatures: [],
   showPopup: false,
   isLoading: false,
   mapSearchCriteria: null,
@@ -111,4 +111,7 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   openQuickInfo: vi.fn(),
   closeQuickInfo: vi.fn(),
   minimizeQuickInfo: vi.fn(),
+  isEditPropertiesMode: false,
+  processCreation: vi.fn(),
+  setEditPropertiesMode: vi.fn(),
 };

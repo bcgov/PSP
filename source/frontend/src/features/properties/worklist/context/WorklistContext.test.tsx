@@ -3,7 +3,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import { act } from '@/utils/test-utils';
 
 import { getMockWorklistParcel } from '@/mocks/worklistParcel.mock';
-import { ParcelFeature } from '../models';
+import { ParcelDataset } from '../models';
 import { IWorklistNotifier, useWorklistContext, WorklistContextProvider } from './WorklistContext';
 
 //  Mock notification service
@@ -18,7 +18,7 @@ describe('WorklistContextProvider', () => {
     vi.clearAllMocks();
   });
 
-  const renderWorklistHook = (initial: ParcelFeature[] = []) =>
+  const renderWorklistHook = (initial: ParcelDataset[] = []) =>
     renderHook(() => useWorklistContext(), {
       wrapper: ({ children }) => (
         <WorklistContextProvider parcels={initial} notifier={mockNotifier}>
@@ -155,7 +155,7 @@ describe('WorklistContextProvider', () => {
 
     act(() => result.current.addRange([p1, dupe, p2]));
 
-    expect(result.current.parcels.map(p => p.feature?.properties?.PID)).toEqual([
+    expect(result.current.parcels.map(p => p.pmbcFeature?.properties?.PID)).toEqual([
       '111',
       '222',
       '333',

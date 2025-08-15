@@ -27,8 +27,9 @@ import { ApiGen_Concepts_LeaseRenewal } from '@/models/api/generated/ApiGen_Conc
 import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
 import { exists, isPlanNumberSPCP, isValidId } from '@/utils';
 
+import { LayerTabContainer } from '../layer/LayerTabContainer';
+import { LayerTabView } from '../layer/LayerTabView';
 import PropertyDocumentsTab from '../shared/tabs/PropertyDocumentsTab';
-import CrownDetailsTabView from './tabs/crown/CrownDetailsTabView';
 import LtsaPlanTabView from './tabs/ltsa/LtsaPlanTabView';
 import { PropertyManagementTabView } from './tabs/propertyDetailsManagement/detail/PropertyManagementTabView';
 
@@ -122,10 +123,6 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
     composedPropertyState?.pid?.toString() ??
     composedPropertyState?.apiWrapper?.response?.pid?.toString();
 
-  const retrievedPin =
-    composedPropertyState?.pin?.toString() ??
-    composedPropertyState?.apiWrapper?.response?.pin?.toString();
-
   const retrievedPlanNumber =
     composedPropertyState?.planNumber?.toString() ??
     composedPropertyState?.apiWrapper?.response?.planNumber?.toString();
@@ -159,23 +156,6 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
       key: InventoryTabNames.plan,
       name: 'Plan',
     });
-  }
-
-  if (exists(composedPropertyState.composedProperty?.crownTenureFeatures)) {
-    tabViews.push({
-      content: (
-        <CrownDetailsTabView
-          crownFeatures={composedPropertyState.composedProperty?.crownTenureFeatures}
-        />
-      ),
-      key: InventoryTabNames.crown,
-      name: 'Crown',
-    });
-
-    // Show crown land by default when no other information was found
-    if (exists(retrievedPin) && !exists(retrievedPid)) {
-      defaultTab = InventoryTabNames.crown;
-    }
   }
 
   tabViews.push({
@@ -247,6 +227,86 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
     defaultTab = InventoryTabNames.management;
   }
 
+  if (exists(composedPropertyState?.composedProperty)) {
+    const composedProperty = composedPropertyState?.composedProperty;
+    if (composedProperty?.parcelMapFeatureCollection?.features?.length > 0) {
+      tabViews.push({
+        content: (
+          <LayerTabContainer
+            composedProperty={composedPropertyState?.composedProperty}
+            activeTab={InventoryTabNames.pmbc}
+            View={LayerTabView}
+          />
+        ),
+        key: InventoryTabNames.pmbc,
+        name: 'PMBC',
+      });
+    }
+    if (
+      composedProperty?.pimsGeoserverFeatureCollection?.features?.length > 0 &&
+      !exists(composedProperty?.id)
+    ) {
+      tabViews.push({
+        content: (
+          <LayerTabContainer
+            composedProperty={composedPropertyState?.composedProperty}
+            activeTab={InventoryTabNames.pims}
+            View={LayerTabView}
+          />
+        ),
+        key: InventoryTabNames.pims,
+        name: 'PIMS',
+      });
+    }
+    if (
+      composedProperty?.crownInclusionFeatures?.length +
+        composedProperty?.crownInventoryFeatures?.length +
+        composedProperty?.crownLeaseFeatures?.length +
+        composedProperty?.crownLeaseFeatures?.length +
+        composedProperty?.crownLicenseFeatures?.length +
+        composedProperty?.crownTenureFeatures?.length >
+      0
+    ) {
+      tabViews.push({
+        content: (
+          <LayerTabContainer
+            composedProperty={composedPropertyState?.composedProperty}
+            activeTab={InventoryTabNames.crown}
+            View={LayerTabView}
+          />
+        ),
+        key: InventoryTabNames.crown,
+        name: 'Crown',
+      });
+    }
+    if (composedProperty?.highwayFeatures?.length > 0) {
+      tabViews.push({
+        content: (
+          <LayerTabContainer
+            composedProperty={composedPropertyState?.composedProperty}
+            activeTab={InventoryTabNames.highway}
+            View={LayerTabView}
+          />
+        ),
+        key: InventoryTabNames.highway,
+        name: 'HWY',
+      });
+    }
+    if (composedProperty?.municipalityFeatures?.length > 0) {
+      tabViews.push({
+        content: (
+          <LayerTabContainer
+            composedProperty={composedPropertyState?.composedProperty}
+            activeTab={InventoryTabNames.other}
+            View={LayerTabView}
+          />
+        ),
+        key: InventoryTabNames.other,
+        name: 'Other',
+      });
+    }
+  }
+
   if (exists(composedPropertyState.apiWrapper?.response) && hasClaim(Claims.DOCUMENT_VIEW)) {
     tabViews.push({
       content: (
@@ -294,7 +354,6 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
     }
     return () => setFullWidthSideBar(false);
   }, [activeTab, setFullWidthSideBar]);
-
   return (
     <InventoryTabs
       loading={composedPropertyState.composedLoading ?? LeaseAssociationInfo.loading ?? false}

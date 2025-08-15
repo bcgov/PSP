@@ -2,8 +2,10 @@ import { Feature, Geometry } from 'geojson';
 import { chain } from 'lodash';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { Button } from '@/components/common/buttons';
 import { MapFeatureData } from '@/components/common/mapFSM/models';
 import { Scrollable } from '@/components/common/Scrollable/Scrollable';
 import { Section } from '@/components/common/Section/Section';
@@ -15,7 +17,7 @@ import {
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
 import { exists } from '@/utils';
-import { isStrataCommonProperty } from '@/utils/propertyUtils';
+import { isStrataCommonProperty, pidFormatter } from '@/utils/propertyUtils';
 
 export interface ISearchViewProps {
   onFilterChange: (filter: IPropertyFilter) => void;
@@ -32,6 +34,8 @@ interface PropertyProjection<T> {
 }
 
 export const SearchView: React.FC<ISearchViewProps> = props => {
+  const history = useHistory();
+
   const groupedFeatures = chain(props.searchResult?.fullyAttributedFeatures.features)
     .groupBy(feature => feature?.properties?.PLAN_NUMBER)
     .map(
@@ -76,9 +80,16 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
 
   const pimsPropertyProjections = pimsGroupedFeatures.value().flatMap(x => x) ?? [];
 
+  const onOpenPropertyList = () => {
+    history.push('/properties/list');
+  };
+
   return (
     <>
       <StyledWrapper>
+        <Section>
+          <Button onClick={onOpenPropertyList}>Search PIMS information</Button>
+        </Section>
         <Section>
           <PropertyFilter
             defaultFilter={{ ...defaultPropertyFilter }}
@@ -99,15 +110,15 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
           </StyledScrollable>
         </Section>
         <Section header="Results (PIMS)" isCollapsable initiallyExpanded>
-          <Scrollable className="pb-4">
+          <StyledScrollable className="pb-4">
             {pimsPropertyProjections.map((property, index) => (
               <StyledRow key={`feature-${property.pid}-${index}`} index={index}>
                 {property.isStrataLot && <Col>Common Property ({property.plan})</Col>}
-                {property.pid && <Col>PID: {property.pid} </Col>}
+                {property.pid && <Col>PID: {pidFormatter(property.pid)} </Col>}
                 {property.pin && <Col>PIN: {property.pin} </Col>}
               </StyledRow>
             ))}
-          </Scrollable>
+          </StyledScrollable>
         </Section>
       </StyledWrapper>
     </>
