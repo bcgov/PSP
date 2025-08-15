@@ -1,19 +1,29 @@
 import { Feature, Geometry } from 'geojson';
 import { chain } from 'lodash';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Col, Row } from 'react-bootstrap';
+import { FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
+import AcquisitionIcon from '@/assets/images/acquisition-icon.svg?react';
+import DispositionIcon from '@/assets/images/disposition-icon.svg?react';
+import LeaseIcon from '@/assets/images/lease-icon.svg?react';
+import ManagementIcon from '@/assets/images/management-icon.svg?react';
+import ResearchIcon from '@/assets/images/research-icon.svg?react';
 import { Button } from '@/components/common/buttons';
 import { MapFeatureData } from '@/components/common/mapFSM/models';
+import MoreOptionsMenu, { MenuOption } from '@/components/common/MoreOptionsMenu';
 import { Scrollable } from '@/components/common/Scrollable/Scrollable';
 import { Section } from '@/components/common/Section/Section';
+import { SimpleSectionHeader } from '@/components/common/SimpleSectionHeader';
+import { Claims } from '@/constants';
 import { PropertyFilter } from '@/features/properties/filter';
 import {
   defaultPropertyFilter,
   IPropertyFilter,
 } from '@/features/properties/filter/IPropertyFilter';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
 import { exists } from '@/utils';
@@ -23,6 +33,13 @@ export interface ISearchViewProps {
   onFilterChange: (filter: IPropertyFilter) => void;
   propertyFilter: IPropertyFilter;
   searchResult: MapFeatureData;
+  canAddToOpenFile?: boolean;
+  onCreateResearchFile: () => void;
+  onCreateAcquisitionFile: () => void;
+  onCreateDispositionFile: () => void;
+  onCreateLeaseFile: () => void;
+  onCreateManagementFile: () => void;
+  onAddToOpenFile: () => void;
 }
 
 interface PropertyProjection<T> {
@@ -35,6 +52,7 @@ interface PropertyProjection<T> {
 
 export const SearchView: React.FC<ISearchViewProps> = props => {
   const history = useHistory();
+  const keycloak = useKeycloakWrapper();
 
   const groupedFeatures = chain(props.searchResult?.fullyAttributedFeatures.features)
     .groupBy(feature => feature?.properties?.PLAN_NUMBER)
@@ -84,6 +102,66 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
     history.push('/properties/list');
   };
 
+  const menuOptions: MenuOption[] = useMemo(() => {
+    const options: MenuOption[] = [];
+
+    if (keycloak.hasClaim(Claims.RESEARCH_ADD)) {
+      options.push({
+        label: 'Create Research File',
+        onClick: props.onCreateResearchFile,
+        icon: <ResearchIcon width="1.5rem" height="1.5rem" fill="currentColor" />,
+      });
+    }
+    if (keycloak.hasClaim(Claims.ACQUISITION_ADD)) {
+      options.push({
+        label: 'Create Acquisition File',
+        onClick: props.onCreateAcquisitionFile,
+        icon: <AcquisitionIcon width="1.5rem" height="1.5rem" fill="currentColor" />,
+      });
+    }
+    if (keycloak.hasClaim(Claims.MANAGEMENT_ADD)) {
+      options.push({
+        label: 'Create Management File',
+        onClick: props.onCreateManagementFile,
+        icon: <ManagementIcon width="1.5rem" height="1.5rem" fill="currentColor" />,
+      });
+    }
+    if (keycloak.hasClaim(Claims.LEASE_ADD)) {
+      options.push({
+        label: 'Create Lease File',
+        onClick: props.onCreateLeaseFile,
+        icon: <LeaseIcon width="1.5rem" height="1.5rem" fill="currentColor" />,
+      });
+    }
+    if (keycloak.hasClaim(Claims.DISPOSITION_ADD)) {
+      options.push({
+        label: 'Create Disposition File',
+        onClick: props.onCreateDispositionFile,
+        icon: <DispositionIcon width="1.5rem" height="1.5rem" fill="currentColor" />,
+      });
+    }
+
+    options.push({
+      label: 'Add to Open File',
+      onClick: props.onAddToOpenFile,
+      icon: props.canAddToOpenFile ? <FaPlus size="1.5rem" /> : undefined,
+      disabled: !props.canAddToOpenFile,
+      tooltip: 'A file must be open and in "edit property" mode',
+      separator: true, // Add a separator before the "Add to Open File" option
+    });
+
+    return options;
+  }, [
+    keycloak,
+    props.canAddToOpenFile,
+    props.onAddToOpenFile,
+    props.onCreateAcquisitionFile,
+    props.onCreateDispositionFile,
+    props.onCreateLeaseFile,
+    props.onCreateManagementFile,
+    props.onCreateResearchFile,
+  ]);
+
   return (
     <>
       <StyledWrapper>
@@ -98,7 +176,15 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
             useGeocoder
           />
         </Section>
-        <Section header="Results (PMBC)" isCollapsable initiallyExpanded>
+        <Section
+          header={
+            <SimpleSectionHeader title="Results (PMBC)">
+              <MoreOptionsMenu options={menuOptions} />
+            </SimpleSectionHeader>
+          }
+          isCollapsable
+          initiallyExpanded
+        >
           <StyledScrollable className="pb-4">
             {propertyProjections.map((property, index) => (
               <StyledRow key={`feature-${property.pid}-${index}`} index={index}>

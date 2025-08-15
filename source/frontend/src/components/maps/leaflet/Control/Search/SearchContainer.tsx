@@ -1,11 +1,13 @@
 import { dequal } from 'dequal';
 import { LatLngLiteral } from 'leaflet';
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
+import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator';
 import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
-import { exists } from '@/utils';
+import { exists, getFeatureBoundedCenter } from '@/utils';
 
 import { ISearchViewProps } from './SearchView';
 
@@ -22,9 +24,13 @@ export const SearchContainer: React.FC<ISearchContainerProps> = ({ View }) => {
     mapFeatureData,
     mapMarkLocation,
     mapClearLocationMark,
+    prepareForCreation,
+    isEditPropertiesMode,
   } = useMapStateMachine();
 
   const [propertySearchFilter, setPropertySearchFilter] = useState<IPropertyFilter | null>(null);
+
+  const pathGenerator = usePathGenerator();
 
   useEffect(() => {
     if (propertySearchFilter !== null && !dequal(mapSearchCriteria, propertySearchFilter)) {
@@ -58,11 +64,69 @@ export const SearchContainer: React.FC<ISearchContainerProps> = ({ View }) => {
     }
   };
 
+  // Convert to an object that can be consumed by the file creation process
+  const selectedFeatureDatasets = useMemo<SelectedFeatureDataset[]>(() => {
+    return (
+      mapFeatureData?.fullyAttributedFeatures.features.map<SelectedFeatureDataset>(pmbcParcel => {
+        const center = getFeatureBoundedCenter(pmbcParcel);
+        return {
+          parcelFeature: pmbcParcel,
+          pimsFeature: null,
+          location: { lat: center[1], lng: center[0] },
+          regionFeature: null,
+          fileLocation: null,
+          districtFeature: null,
+          municipalityFeature: null,
+          selectingComponentId: null,
+        };
+      }) ?? []
+    );
+  }, [mapFeatureData?.fullyAttributedFeatures?.features]);
+
+  const onCreateResearchFile = useCallback(() => {
+    prepareForCreation(selectedFeatureDatasets);
+    pathGenerator.newFile('research');
+  }, [pathGenerator, prepareForCreation, selectedFeatureDatasets]);
+
+  const onCreateAcquisitionFile = useCallback(() => {
+    prepareForCreation(selectedFeatureDatasets);
+    pathGenerator.newFile('acquisition');
+  }, [pathGenerator, prepareForCreation, selectedFeatureDatasets]);
+
+  const onCreateDispositionFile = useCallback(() => {
+    prepareForCreation(selectedFeatureDatasets);
+    pathGenerator.newFile('disposition');
+  }, [pathGenerator, prepareForCreation, selectedFeatureDatasets]);
+
+  const onCreateLeaseFile = useCallback(() => {
+    prepareForCreation(selectedFeatureDatasets);
+    pathGenerator.newFile('lease');
+  }, [pathGenerator, prepareForCreation, selectedFeatureDatasets]);
+
+  const onCreateManagementFile = useCallback(() => {
+    prepareForCreation(selectedFeatureDatasets);
+    pathGenerator.newFile('management');
+  }, [pathGenerator, prepareForCreation, selectedFeatureDatasets]);
+
+  const onAddToOpenFile = useCallback(() => {
+    // If in edit properties mode, prepare the parcel for addition to an open file
+    if (isEditPropertiesMode) {
+      prepareForCreation(selectedFeatureDatasets);
+    }
+  }, [isEditPropertiesMode, prepareForCreation, selectedFeatureDatasets]);
+
   return (
     <View
       propertyFilter={propertySearchFilter}
       onFilterChange={handleMapFilterChange}
       searchResult={mapFeatureData}
+      canAddToOpenFile={isEditPropertiesMode}
+      onCreateResearchFile={onCreateResearchFile}
+      onCreateAcquisitionFile={onCreateAcquisitionFile}
+      onCreateDispositionFile={onCreateDispositionFile}
+      onCreateLeaseFile={onCreateLeaseFile}
+      onCreateManagementFile={onCreateManagementFile}
+      onAddToOpenFile={onAddToOpenFile}
     />
   );
 };
