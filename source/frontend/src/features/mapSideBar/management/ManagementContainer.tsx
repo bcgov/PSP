@@ -67,6 +67,8 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
   const query = useQuery();
   const matchFile = useRouteMatch<{ id: string }>();
   const isEditing = query.get('edit') === 'true';
+  const urlPathWrapper = usePathGenerator();
+  const tabMatch = useRouteMatch<{ detailType: string; id: string }>(`${match.path}/:tab`);
 
   const setIsEditing = (value: boolean) => {
     if (value) {
@@ -149,6 +151,14 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
 
   const pathGenerator = usePathGenerator();
 
+  const stripEditFromPath = () => {
+    if (!tabMatch) {
+      return;
+    }
+
+    urlPathWrapper.showDetails('management', managementFileId, FileTabType.FILE_DETAILS, false);
+  };
+
   const onSelectFileSummary = () => {
     if (!exists(managementFile)) {
       return;
@@ -226,10 +236,12 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
       formikRef.current?.resetForm();
     }
     setIsEditing(false);
+    stripEditFromPath();
   };
 
   const onSuccess = (refreshProperties?: boolean, refreshFile?: boolean) => {
     setIsEditing(false);
+    stripEditFromPath();
     fetchLastUpdatedBy();
     if (refreshFile) {
       fetchManagementFile();
