@@ -48,6 +48,7 @@ export const Section: React.FC<
                     title={`expand-${title ?? 'section'}`}
                     onClick={(event: React.MouseEvent<SVGElement>) => {
                       event.preventDefault();
+                      event.stopPropagation();
                       setIsCollapsed(!isCollapsed);
                     }}
                   />
@@ -57,6 +58,7 @@ export const Section: React.FC<
                     title={`collapse-${title ?? 'section'}`}
                     onClick={(event: React.MouseEvent<SVGElement>) => {
                       event.preventDefault();
+                      event.stopPropagation();
                       setIsCollapsed(!isCollapsed);
                     }}
                   />
