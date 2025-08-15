@@ -26,6 +26,8 @@ import { ApiGen_CodeTypes_GeoJsonTypes } from '@/models/api/generated/ApiGen_Cod
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Geometry } from '@/models/api/generated/ApiGen_Concepts_Geometry';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import { MOT_DistrictBoundary_Feature_Properties } from '@/models/layers/motDistrictBoundary';
+import { MOT_RegionalBoundary_Feature_Properties } from '@/models/layers/motRegionalBoundary';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { enumFromValue, exists, formatApiAddress, pidFormatter } from '@/utils';
 
@@ -486,3 +488,81 @@ export const areSelectedFeaturesEqual = (
 export const arePropertyFormsEqual = (lhs: PropertyForm, rhs: PropertyForm): boolean => {
   return areSelectedFeaturesEqual(lhs.toFeatureDataset(), rhs.toFeatureDataset());
 };
+
+export interface RegionDistrictResult {
+  regionResult: Feature<Geometry, MOT_RegionalBoundary_Feature_Properties>;
+  districtResult: Feature<Geometry, MOT_DistrictBoundary_Feature_Properties>;
+}
+
+export function featureSetToLatLngKey(featureSet: SelectedFeatureDataset | null | undefined) {
+  if (exists(featureSet.location)) {
+    const latLng: LatLngLiteral = {
+      lat: featureSet.location.lat,
+      lng: featureSet.location.lng,
+    };
+
+    const key = `${latLng.lat}-${latLng.lng}`;
+
+    return key;
+  }
+  return '0-0';
+}
+
+/**
+ * Fetches region and district results for a list of properties.
+ * @param properties The properties to search for region and district.
+ * @param regionSearch Function to search for the region.
+ * @param districtSearch Function to search for the district.
+ * @returns A Map where keys are lat-lng strings and values are RegionDistrictResult objects.
+ */
+export async function getRegionAndDistrictsResults(
+  properties: SelectedFeatureDataset[],
+  regionSearch: (
+    latlng: LatLngLiteral,
+    geometryName?: string | undefined,
+    spatialReferenceId?: number | undefined,
+  ) => Promise<Feature<Geometry, MOT_RegionalBoundary_Feature_Properties> | undefined>,
+  districtSearch: (
+    latlng: LatLngLiteral,
+    geometryName?: string | undefined,
+    spatialReferenceId?: number | undefined,
+  ) => Promise<Feature<Geometry, MOT_DistrictBoundary_Feature_Properties> | undefined>,
+): Promise<Map<string, RegionDistrictResult>> {
+  const latLngMap = new Map<string, LatLngLiteral>();
+
+  for (const property of properties) {
+    if (!exists(property?.location?.lat) || !exists(property?.location?.lng)) {
+      continue;
+    }
+
+    const latLng: LatLngLiteral = {
+      lat: property.location.lat,
+      lng: property.location.lng,
+    };
+
+    const key = featureSetToLatLngKey(property);
+
+    if (!latLngMap.has(key)) {
+      latLngMap.set(key, latLng);
+    }
+  }
+
+  // Prepare all parallel tasks
+  const entries = Array.from(latLngMap.entries()).map(([key, latLng]) =>
+    Promise.all([regionSearch(latLng, 'SHAPE'), districtSearch(latLng, 'SHAPE')]).then(
+      ([regionResult, districtResult]): [string, RegionDistrictResult] => [
+        key,
+        {
+          regionResult: regionResult ?? null,
+          districtResult: districtResult ?? null,
+        },
+      ],
+    ),
+  );
+
+  // Resolve in parallel
+  const results = await Promise.all(entries);
+
+  // Convert back into a Map
+  return new Map(results);
+}
