@@ -16,7 +16,11 @@ class ManagementFileDetails {
     this.sharedModal = new SharedModal(page);
   }
   async navigateManagementMainMenu() {
-    clickAndWaitFor(this.page, "div[data-testid='nav-tooltip-management'] a", "div[data-testid='side-tray']");
+    clickAndWaitFor(
+      this.page,
+      "div[data-testid='nav-tooltip-management'] a",
+      "div[data-testid='side-tray']"
+    );
   }
 
   async createManagementFileLink() {
@@ -44,7 +48,9 @@ class ManagementFileDetails {
   async saveManagementFile() {
     clickSaveButton(this.page);
 
-    while ((await this.page.locator("div[class='modal-content']").count()) > 0) {
+    while (
+      (await this.page.locator("div[class='modal-content']").count()) > 0
+    ) {
       const header = await this.sharedModal.mainModalHeader();
       const content = await this.sharedModal.mainModalContent();
 
@@ -88,7 +94,9 @@ class ManagementFileDetails {
   }
 
   async createMinimumManagementFileDetails(managementFile) {
-    await this.page.locator("#input-fileName").fill(managementFile.ManagementName);
+    await this.page
+      .locator("#input-fileName")
+      .fill(managementFile.ManagementName);
     await this.page
       .locator("#input-purposeTypeCode")
       .selectOption({ label: managementFile.ManagementPurpose });
@@ -104,7 +112,12 @@ class ManagementFileDetails {
 
     //Project
     if (managementFile.ManagementMinistryProject !== null) {
-      fillTypeahead(this.page, "input[id='typeahead-project']", managementFile.ManagementMinistryProject, "div[id='typeahead-project']");
+      fillTypeahead(
+        this.page,
+        "input[id='typeahead-project']",
+        managementFile.ManagementMinistryProject,
+        "div[id='typeahead-project']"
+      );
     }
 
     // Product
@@ -124,7 +137,9 @@ class ManagementFileDetails {
     // MANAGEMENT DETAILS
     // File Name
     if (managementFile.ManagementName !== null) {
-      await this.page.locator("#input-fileName").fill(managementFile.ManagementName);
+      await this.page
+        .locator("#input-fileName")
+        .fill(managementFile.ManagementName);
     }
 
     // Historical File Number
@@ -152,14 +167,20 @@ class ManagementFileDetails {
     if (managementFile.ManagementTeam.length > 0) {
       // Delete all existing members
       while (
-        (await this.page.locator("//div[contains(text(),'Management Team')]/parent::div/parent::h2/following-sibling::div/div").count()) > 0
+        (await this.page
+          .locator(
+            "//div[contains(text(),'Management Team')]/parent::div/parent::h2/following-sibling::div/div"
+          )
+          .count()) > 0
       ) {
         await this.sharedTeamMembers.deleteFirstStaffMember();
       }
 
       // Add each team member
       for (let i = 0; i < managementFile.ManagementTeam.length; i++) {
-        await this.sharedTeamMembers.addMgmtTeamMembers(managementFile.ManagementTeam[i]);
+        await this.sharedTeamMembers.addMgmtTeamMembers(
+          managementFile.ManagementTeam[i]
+        );
       }
     }
   }
@@ -233,7 +254,9 @@ class ManagementFileDetails {
     await expect(
       this.page.locator('h2:has-text("Management Details")')
     ).toBeVisible();
-    await expect(this.page.locator("label:has-text('File name')").nth(1)).toBeVisible();
+    await expect(
+      this.page.locator("label:has-text('File name')").nth(1)
+    ).toBeVisible();
     await expect(this.page.locator("#input-fileName")).toBeVisible();
     await expect(
       this.page.locator("label:has-text('Historical file number')")
@@ -247,38 +270,49 @@ class ManagementFileDetails {
     await expect(this.page.locator("#input-additionalDetails")).toBeVisible();
 
     // Management Team
-    await expect(this.page.locator('h2:has-text("Management Team")')).toBeVisible();
+    await expect(
+      this.page.locator('h2:has-text("Management Team")')
+    ).toBeVisible();
     await expect(this.page.getByTestId("add-team-member")).toBeVisible();
   }
 
   async validateManagementDetailsViewForm(managementFile) {
-    expect(
-      this.page.locator("h1:has-text('Management File')")
-    ).toBeVisible();
+    expect(this.page.locator("h1:has-text('Management File')")).toBeVisible();
 
     //Status
     expect(this.page.locator("label:has-text('Status')")).toBeVisible();
-    const actualStatus = (await this.page.getByTestId("management-status").textContent())?.trim() || "";
+    const actualStatus =
+      (
+        await this.page.getByTestId("management-status").textContent()
+      )?.trim() || "";
     const expectedStatus = managementFile.ManagementStatus?.trim() || "";
     expect(actualStatus).toEqual(expectedStatus);
 
     //Project
     expect(this.page.locator("h2:has-text('Project')")).toBeVisible();
 
-    expect(this.page.locator("label:has-text('Ministry project')").nth(1)).toBeVisible();
+    expect(
+      this.page.locator("label:has-text('Ministry project')").nth(1)
+    ).toBeVisible();
     const actualProject =
       (
         await this.page.getByTestId("management-project").textContent()
       )?.trim() || "";
-    const expectedProject = (managementFile.ManagementMinistryProjectCode + " - " + managementFile.ManagementMinistryProject)?.trim() || "";
+    const expectedProject =
+      (
+        managementFile.ManagementMinistryProjectCode +
+        " - " +
+        managementFile.ManagementMinistryProject
+      )?.trim() || "";
     expect(actualProject).toEqual(expectedProject);
 
-    expect(this.page.getByText("Product:", {exact: true})).toBeVisible();
+    expect(this.page.getByText("Product:", { exact: true })).toBeVisible();
     const actualProduct =
       (
         await this.page.getByTestId("management-product").textContent()
       )?.trim() || "";
-    const expectedProduct = managementFile.ManagementMinistryProduct?.trim() || "";
+    const expectedProduct =
+      managementFile.ManagementMinistryProduct?.trim() || "";
     expect(actualProduct).toEqual(expectedProduct);
 
     expect(this.page.locator("label:has-text('Funding')")).toBeVisible();
@@ -286,7 +320,8 @@ class ManagementFileDetails {
       (
         await this.page.getByTestId("management-funding").textContent()
       )?.trim() || "";
-    const expectedFunding = managementFile.ManagementMinistryFunding?.trim() || "";
+    const expectedFunding =
+      managementFile.ManagementMinistryFunding?.trim() || "";
     expect(actualFunding).toEqual(expectedFunding);
 
     //Management Details
@@ -309,7 +344,8 @@ class ManagementFileDetails {
           .getByTestId("management-legacy-file-number")
           .textContent()
       )?.trim() || "";
-    const expectedHistorical = managementFile.ManagementHistoricalFile?.trim() || "";
+    const expectedHistorical =
+      managementFile.ManagementHistoricalFile?.trim() || "";
     expect(actualHistorical).toEqual(expectedHistorical);
 
     expect(this.page.locator("label:has-text('Purpose')")).toBeVisible();
@@ -329,7 +365,8 @@ class ManagementFileDetails {
           .getByTestId("management-additional-details")
           .textContent()
       )?.trim() || "";
-    const expectedDetails = managementFile.ManagementAdditionalDetails?.trim() || "";
+    const expectedDetails =
+      managementFile.ManagementAdditionalDetails?.trim() || "";
     expect(actualDetails).toEqual(expectedDetails);
 
     //Management Team

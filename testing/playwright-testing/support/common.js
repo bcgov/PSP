@@ -11,17 +11,22 @@ function clickSaveButton(page) {
 async function cancelAction(page) {
   page.getByTestId("cancel-button").click();
 
-  if (await page.locator("div[class='modal-content']").count() > 0) {
-  const titleLocator = page.locator('div.modal-title.h4').last();
-  await expect(titleLocator).toHaveText("Confirm Changes");
+  if ((await page.locator("div[class='modal-content']").count()) > 0) {
+    const titleLocator = page.locator("div.modal-title.h4").last();
+    await expect(titleLocator).toHaveText("Confirm Changes");
 
-  const content = await page.locator("div[class='modal-body']").last().textContent();
+    const content = await page
+      .locator("div[class='modal-body']")
+      .last()
+      .textContent();
 
-  expect(content).toContain("If you choose to cancel now, your changes will not be saved.");
-  expect(content).toContain("Do you want to proceed?");
+    expect(content).toContain(
+      "If you choose to cancel now, your changes will not be saved."
+    );
+    expect(content).toContain("Do you want to proceed?");
 
-  await page.getByTestId("ok-modal-button").click();
-}
+    await page.getByTestId("ok-modal-button").click();
+  }
 }
 
 function getViewFieldListContent(page, element) {
@@ -72,11 +77,16 @@ function splitStringToArray(listToString) {
   return result;
 }
 
-async function clickAndWaitFor(page, clickSelector, waitSelector, options = {}) {
+async function clickAndWaitFor(
+  page,
+  clickSelector,
+  waitSelector,
+  options = {}
+) {
   const {
     maxRetries = 3,
     clickDelay = 2000, // ms delay before retry click
-    timeout = 5000    // time to wait for expected element before retry
+    timeout = 5000, // time to wait for expected element before retry
   } = options;
 
   let lastError;
@@ -109,18 +119,20 @@ async function fillTypeahead(page, selector, text, optionSelector) {
   const input = page.locator(selector);
 
   // Clear and type slowly to mimic human typing
-  await input.fill('');
+  await input.fill("");
   for (const char of text) {
     await input.type(char, { delay: 50 });
   }
 
   // Wait for dropdown to appear
   const menuLocator = page.locator(optionSelector);
-  await menuLocator.waitFor({ state: 'visible' });
+  await menuLocator.waitFor({ state: "visible" });
 
-   // Find the matching option
-  const option = menuLocator.locator(`a[role='option']`, { hasText: text }).first();
-  await option.waitFor({ state: 'visible' });
+  // Find the matching option
+  const option = menuLocator
+    .locator(`a[role='option']`, { hasText: text })
+    .first();
+  await option.waitFor({ state: "visible" });
 
   // Click the option
   await option.click({ force: true });

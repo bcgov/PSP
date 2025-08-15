@@ -584,40 +584,106 @@ class SharedActivities {
     //Activity List
     await expect(this.page.getByText("Activity List")).toBeVisible();
     await expect(this.page.getByTestId("add-activity-button")).toBeVisible();
-    await expect(this.page.locator("//p[contains(text(),' You can attach a document after creating the activity. Create, then edit and attach a file if needed.')]")).toBeVisible();
+    await expect(
+      this.page.locator(
+        "//p[contains(text(),' You can attach a document after creating the activity. Create, then edit and attach a file if needed.')]"
+      )
+    ).toBeVisible();
     await expect(this.page.getByTestId("mgmt-activity-list")).toBeVisible();
-    await expect(this.page.getByTestId("mgmt-activity-list", {text: "Activity type"})).toBeVisible();
-    await expect(this.page.getByTestId("mgmt-activity-list", {text: "Activity sub-type"})).toBeVisible();
-    await expect(this.page.getByTestId("mgmt-activity-list", {text: "Activity status"})).toBeVisible();
-    await expect(this.page.getByTestId("mgmt-activity-list", {text: "Commencement"})).toBeVisible();
-    await expect(this.page.getByTestId("mgmt-activity-list", {text: "Actions"})).toBeVisible();
+    await expect(
+      this.page.getByTestId("mgmt-activity-list", { text: "Activity type" })
+    ).toBeVisible();
+    await expect(
+      this.page.getByTestId("mgmt-activity-list", { text: "Activity sub-type" })
+    ).toBeVisible();
+    await expect(
+      this.page.getByTestId("mgmt-activity-list", { text: "Activity status" })
+    ).toBeVisible();
+    await expect(
+      this.page.getByTestId("mgmt-activity-list", { text: "Commencement" })
+    ).toBeVisible();
+    await expect(
+      this.page.getByTestId("mgmt-activity-list", { text: "Actions" })
+    ).toBeVisible();
 
     //Ad-Hoc Activity List
     await expect(this.page.getByText("Ad-hoc Activities List")).toBeVisible();
-    await expect(this.page.getByTestId("tooltip-icon-property-file-activity-summary")).toBeVisible();
-    await expect(this.page.locator("//div[contains(text(),'Ad-hoc Activities List')]/parent::div/parent::div/parent::div/following-sibling::div")).toBeVisible();
-    await expect(this.page.getByTestId("adhoc-activity-list-readonly", {text: "Activity type"})).toBeVisible();
-    await expect(this.page.getByTestId("adhoc-activity-list-readonly", {text: "Activity sub-type"})).toBeVisible();
-    await expect(this.page.getByTestId("adhoc-activity-list-readonly", {text: "Activity status"})).toBeVisible();
-    await expect(this.page.getByTestId("adhoc-activity-list-readonly", {text: "Commencement"})).toBeVisible();
-    await expect(this.page.getByTestId("adhoc-activity-list-readonly", {text: "Navigation"})).toBeVisible();
+    await expect(
+      this.page.getByTestId("tooltip-icon-property-file-activity-summary")
+    ).toBeVisible();
+    await expect(
+      this.page.locator(
+        "//div[contains(text(),'Ad-hoc Activities List')]/parent::div/parent::div/parent::div/following-sibling::div"
+      )
+    ).toBeVisible();
+    await expect(
+      this.page.getByTestId("adhoc-activity-list-readonly", {
+        text: "Activity type",
+      })
+    ).toBeVisible();
+    await expect(
+      this.page.getByTestId("adhoc-activity-list-readonly", {
+        text: "Activity sub-type",
+      })
+    ).toBeVisible();
+    await expect(
+      this.page.getByTestId("adhoc-activity-list-readonly", {
+        text: "Activity status",
+      })
+    ).toBeVisible();
+    await expect(
+      this.page.getByTestId("adhoc-activity-list-readonly", {
+        text: "Commencement",
+      })
+    ).toBeVisible();
+    await expect(
+      this.page.getByTestId("adhoc-activity-list-readonly", {
+        text: "Navigation",
+      })
+    ).toBeVisible();
 
-    await expect(this.page.locator("//div[contains(text(),'No property management activities found')]")).toBe(2)
+    await expect(
+      this.page.locator(
+        "//div[contains(text(),'No property management activities found')]"
+      )
+    ).toBe(2);
   }
 
   async viewLastActivityFromList() {
-    await this.page.locator("//div[@data-testid='mgmt-activity-list']/following-sibling::div/div/ul[@class='pagination']/li[3]").click();
+    await this.page
+      .locator(
+        "//div[@data-testid='mgmt-activity-list']/following-sibling::div/div/ul[@class='pagination']/li[3]"
+      )
+      .click();
   }
 
   async viewLastActivityButton() {
-    await this.page.locator("div[data-testid='mgmt-activity-list'] div[class='tr-wrapper']:last-child button[title='property-activity view details']").click();
+    await this.page
+      .locator(
+        "div[data-testid='mgmt-activity-list'] div[class='tr-wrapper']:last-child button[title='property-activity view details']"
+      )
+      .click();
   }
 
   async verifyLastInsertedMgmtActivityTable(activity) {
-    await expect(this.page.locator("div[data-testid='mgmt-activity-list'] div[class='tr-wrapper']:last-child div[role='cell']:nth-child(1)")).toHaveTextContent(activity.PropertyActivityType);
+    await expect(
+      this.page.locator(
+        "div[data-testid='mgmt-activity-list'] div[class='tr-wrapper']:last-child div[role='cell']:nth-child(1)"
+      )
+    ).toHaveTextContent(activity.PropertyActivityType);
     //await expect(this.page.locator("div[data-testid='mgmt-activity-list'] div[class='tr-wrapper']:last-child div[role='cell']:nth-child(2)")).toHaveTextContent(activity.PropertyActivitySubType);
-    await expect(this.page.locator("div[data-testid='mgmt-activity-list'] div[class='tr-wrapper']:last-child div[role='cell']:nth-child(3)")).toHaveTextContent(activity.PropertyActivityStatus);
-    await expect(this.page.locator("div[data-testid='mgmt-activity-list'] div[class='tr-wrapper']:last-child div[role='cell']:nth-child(4)")).toHaveTextContent(transformDateFormat(activity.PropertyActivityRequestedCommenceDate));
+    await expect(
+      this.page.locator(
+        "div[data-testid='mgmt-activity-list'] div[class='tr-wrapper']:last-child div[role='cell']:nth-child(3)"
+      )
+    ).toHaveTextContent(activity.PropertyActivityStatus);
+    await expect(
+      this.page.locator(
+        "div[data-testid='mgmt-activity-list'] div[class='tr-wrapper']:last-child div[role='cell']:nth-child(4)"
+      )
+    ).toHaveTextContent(
+      transformDateFormat(activity.PropertyActivityRequestedCommenceDate)
+    );
   }
 
   async addInvoice(invoice, index) {

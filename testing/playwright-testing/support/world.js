@@ -1,14 +1,14 @@
-import * as dotenv from 'dotenv';
-import { setWorldConstructor } from '@cucumber/cucumber';
+import * as dotenv from "dotenv";
+import { setWorldConstructor } from "@cucumber/cucumber";
 import { launchBrowser } from "../utils/browserSetup.js";
 
 // Import your page objects
 import LoginPage from "./pages/LoginPage.js";
 import ManagementFileDetails from "./pages/ManagementFileDetails.js";
 import Notes from "./pages/Notes.js";
-import SearchManagementFiles from"./pages/SearchManagementFiles.js";
+import SearchManagementFiles from "./pages/SearchManagementFiles.js";
 import SharedActivities from "./pages/SharedActivities.js";
-import SharedFileProperties from"./pages/SharedFileProperties.js";
+import SharedFileProperties from "./pages/SharedFileProperties.js";
 
 // Load environment variables from .env
 dotenv.config();

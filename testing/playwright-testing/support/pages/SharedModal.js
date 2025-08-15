@@ -12,13 +12,18 @@ class SharedModal {
   }
 
   async mainModalHeader() {
-    await this.page.locator("div[class='modal-header'] div[class='modal-title h4']").waitFor({ state: 'visible' });
-    const title = await this.page.locator('div.modal-title.h4').textContent();
+    await this.page
+      .locator("div[class='modal-header'] div[class='modal-title h4']")
+      .waitFor({ state: "visible" });
+    const title = await this.page.locator("div.modal-title.h4").textContent();
     return title;
   }
 
   async secondaryModalHeader() {
-    return await this.page.locator("div[class='modal-title h4']").nth(1).textContent();
+    return await this.page
+      .locator("div[class='modal-title h4']")
+      .nth(1)
+      .textContent();
   }
 
   async mainModalContent() {
@@ -26,7 +31,10 @@ class SharedModal {
   }
 
   async secondaryModalContent() {
-    return await this.page.locator("div[class='modal-body']").nth(1).textContent();
+    return await this.page
+      .locator("div[class='modal-body']")
+      .nth(1)
+      .textContent();
   }
 
   async mainModalClickOKBttn() {

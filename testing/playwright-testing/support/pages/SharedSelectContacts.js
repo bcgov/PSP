@@ -9,7 +9,9 @@ class SharedSelectContact {
   async selectContact(contactSearchName, contactType) {
     switch (contactType) {
       case "Individual":
-        await this.page.locator('input[name="searchBy"][value="persons"]').check();
+        await this.page
+          .locator('input[name="searchBy"][value="persons"]')
+          .check();
         break;
       case "Organization":
         await this.page

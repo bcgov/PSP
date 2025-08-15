@@ -262,13 +262,15 @@ class SharedFileProperties {
     await this.page.getByRole("tab", { name: "Search" }).isVisible();
 
     //Select a Property Details
-    await this.page.getByRole("label", {hasText: "PID:"}).isVisible();
-    await this.page.getByRole("label", {hasText: "PIN:"}).isVisible();
-    await this.page.getByRole("label", {hasText: "Plan #:"}).isVisible();
-    await this.page.getByRole("label", {hasText: "Address:"}).isVisible();
-    await this.page.getByRole("label", {hasText: "Region:"}).isVisible();
-    await this.page.getByRole("label", {hasText: "District:"}).isVisible();
-    await this.page.getByRole("label", {hasText: "Legal Description:"}).isVisible();
+    await this.page.getByRole("label", { hasText: "PID:" }).isVisible();
+    await this.page.getByRole("label", { hasText: "PIN:" }).isVisible();
+    await this.page.getByRole("label", { hasText: "Plan #:" }).isVisible();
+    await this.page.getByRole("label", { hasText: "Address:" }).isVisible();
+    await this.page.getByRole("label", { hasText: "Region:" }).isVisible();
+    await this.page.getByRole("label", { hasText: "District:" }).isVisible();
+    await this.page
+      .getByRole("label", { hasText: "Legal Description:" })
+      .isVisible();
 
     //Selected Properties section
     await this.page.getByText("Selected properties").isVisible();

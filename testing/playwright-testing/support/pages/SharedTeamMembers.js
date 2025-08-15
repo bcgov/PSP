@@ -46,7 +46,10 @@ class SharedTeamMembers {
     const countMembersIdx =
       (await this.page.locator("div[data-testid^='teamMemberRow']").count()) -
       1;
-    const escaped = await this.page.evaluate((str) => CSS.escape(str), `${countMembersIdx}`);
+    const escaped = await this.page.evaluate(
+      (str) => CSS.escape(str),
+      `${countMembersIdx}`
+    );
     const contactTypeselects = this.page.locator(
       "select[id^='input-team.'][id$='.teamProfileTypeCode']"
     );
@@ -59,7 +62,6 @@ class SharedTeamMembers {
       teamMember.TeamMemberContactName,
       teamMember.TeamMemberContactType
     );
-
 
     if (
       await this.page

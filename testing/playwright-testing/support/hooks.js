@@ -14,8 +14,12 @@ Before(async function () {
   const password = getUserCredential("USER1_PASSWORD");
 
   await this.loginPage.login(username, password);
-  await this.page.getByTestId("filter-backdrop-loading").waitFor({ state: 'hidden', timeout: 20000 });
-  await this.page.locator("#layersControlButton").waitFor({ state: 'visible', timeout: 20000 });
+  await this.page
+    .getByTestId("filter-backdrop-loading")
+    .waitFor({ state: "hidden", timeout: 20000 });
+  await this.page
+    .locator("#layersControlButton")
+    .waitFor({ state: "visible", timeout: 20000 });
 });
 
 After(async function () {

@@ -1,6 +1,9 @@
 const { Given, When, Then } = require("@cucumber/cucumber");
 const mgmFiles = require("../../data/managementFiles.json");
-const { splitStringToArray, clickCancelButton } = require("../../support/common.js");
+const {
+  splitStringToArray,
+  clickCancelButton,
+} = require("../../support/common.js");
 const { expect } = require("@playwright/test");
 
 let managementFile;
@@ -73,7 +76,9 @@ When(
 
     //Search for an existing Management File
     await this.searchManagementFiles.navigateToSearchManagement();
-    await this.searchManagementFiles.filterManagementFiles({mgmtfile: managementFileCode});
+    await this.searchManagementFiles.filterManagementFiles({
+      mgmtfile: managementFileCode,
+    });
     await this.searchManagementFiles.selectFirstOption();
 
     //Update existing Management file
@@ -84,7 +89,7 @@ When(
 
     //Cancel changes
     clickCancelButton(this.page);
-    await this.managementFileDetails.cancel
+    await this.managementFileDetails.cancel;
 
     //Edit Management File
     await this.managementFileDetails.updateManagementFileButton();
@@ -96,7 +101,8 @@ When(
     this.managementFileDetails.saveManagementFile();
 
     //Get Mangement File code
-    managementFileCode = await this.managementFileDetails.getManagementFileCode();
+    managementFileCode =
+      await this.managementFileDetails.getManagementFileCode();
 
     //Validate View File Details View Mode
     await this.managementFileDetails.validateManagementDetailsViewForm(
@@ -394,7 +400,9 @@ Then(
   "A new Management file is created or updated successfully",
   async function () {
     await this.searchManagementFiles.navigateToSearchManagement();
-    await this.searchManagementFiles.filterManagementFiles({mgmtfile: managementFileCode});
+    await this.searchManagementFiles.filterManagementFiles({
+      mgmtfile: managementFileCode,
+    });
     expect(this.searchManagementFiles.searchFoundResults()).toBeTruthy();
   }
 );
