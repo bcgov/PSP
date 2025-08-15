@@ -19,6 +19,7 @@ export const ManagementFileActivitiesListView: React.FunctionComponent<
         ...createActivityTableColumns(),
         activityActionColumn(canEditActivities, onView, onDelete),
       ]}
+      dataTestId="mgmt-activity-list"
     ></ManagementActivitiesList>
   );
 };

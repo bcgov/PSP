@@ -1,8 +1,8 @@
 [
   {
     "Test Case Description": "New Acquisition File to test Details",
-    "ManagementStatus": "Hold",
-    "ManagementMinistryProjectCode": 5500100.0,
+    "ManagementStatus": "Draft",
+    "ManagementMinistryProjectCode": "5500100",
     "ManagementMinistryProject": "Darrell Bay Ferry Terminal",
     "ManagementMinistryProduct": "5500100-01 Darrell Bay Ferry Terminal Prod 1",
     "ManagementMinistryFunding": "Federal",
@@ -32,8 +32,8 @@
   },
   {
     "Test Case Description": "Update Acquisition File Details",
-    "ManagementStatus": "Cancelled",
-    "ManagementMinistryProjectCode": 5504830.0,
+    "ManagementStatus": "Active",
+    "ManagementMinistryProjectCode": "5504830",
     "ManagementMinistryProject": "SOUTH FRASER PERIMETER ROAD",
     "ManagementMinistryProduct": "04830 SOUTH FRASER PERIMETER ROAD",
     "ManagementMinistryFunding": "TI Corp",
@@ -88,7 +88,7 @@
   },
   {
     "Test Case Description": "Update Acquisition File Properties",
-    "ManagementStatus": "Hold",
+    "ManagementStatus": "Active",
     "ManagementMinistryProjectCode": null,
     "ManagementMinistryProject": null,
     "ManagementMinistryProduct": null,

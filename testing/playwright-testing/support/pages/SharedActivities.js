@@ -1,9 +1,24 @@
-const { SharedSelectContact } = require("./SharedSelectContacts");
+const SharedSelectContact = require("./SharedSelectContacts");
+const {
+  getViewFieldListContent,
+  transformDateFormat,
+  transformCurrencyFormat,
+  clickCancelButton,
+  clickSaveButton,
+} = require("../../support/common.js");
 
 class SharedActivities {
   constructor(page) {
     this.page = page;
     this.sharedSelectContacts = new SharedSelectContact(page);
+  }
+
+  async navigateActivitiesTab() {
+    await this.page.locator("a[data-rb-event-key='activities']").click();
+  }
+
+  async addActivityBttn() {
+    await this.page.getByTestId("add-activity-button").click();
   }
 
   async updateSelectedActivityBttn() {
@@ -169,7 +184,15 @@ class SharedActivities {
     }
   }
 
+  async saveActivity() {
+    clickSaveButton(this.page);
+    await expect(
+      this.page.locator("button[title='Edit property activity']")
+    ).toBeVisible();
+  }
+
   async cancelPropertyManagement() {
+    clickCancelButton(this.page);
     await expect(
       this.page.locator("div[class='modal-header'] div[class='modal-title h4']")
     ).toHaveTextContent("Confirm Changes");
@@ -202,242 +225,442 @@ class SharedActivities {
       )
     ).toHaveTextContent(activity.PropertyActivityType);
 
-    AssertTrueIsDisplayed(managementActSubTypeLabel);
-    if (activity.PropertyActivitySubTypeList.First() != "") {
-      var subTypesUI = GetViewFieldListContent(managementActSubTypeContents);
-      Assert.True(
-        Enumerable.SequenceEqual(
-          subTypesUI,
-          activity.PropertyActivitySubTypeList
+    await this.page
+      .locator("//label[contains(text(),'Sub-type')]")
+      .toBeVisible();
+    if ((await activity.PropertyActivitySubTypeList.count()) > 0) {
+      let subTypesUI = await getViewFieldListContent(
+        this.page,
+        "#multiselectContainerReact"
+      );
+      await expect([...subTypesUI]).toEqual(
+        [...activity.PropertyActivitySubTypeList].sort()
+      );
+    }
+
+    await expect(
+      this.page.getByRole("label").filter({ hasText: "Activity status" })
+    ).toBeVisible();
+    await expect(
+      this.page.locator(
+        "//label[contains(text(),'Activity status')]/parent::div/following-sibling::div"
+      )
+    ).toHaveTextContent(activity.PropertyActivityStatus);
+
+    if (activityType == "Management File") {
+      await expect(
+        this.page.getByRole("label").filter({ hasText: "Commencement" })
+      ).toBeVisible();
+      await expect(
+        this.page.locator(
+          "//label[contains(text(),'Activity status')]/parent::div/following-sibling::div"
         )
-      );
-    }
-
-    AssertTrueIsDisplayed(managementActStatusLabel);
-    AssertTrueContentEquals(
-      managementActStatusContent,
-      activity.PropertyActivityStatus
-    );
-
-    if (activityType == "Management File") {
-      AssertTrueIsDisplayed(managementActCommencementLabel);
-      AssertTrueContentEquals(
-        managementActCommencementContent,
-        TransformDateFormat(activity.PropertyActivityRequestedCommenceDate)
+      ).toHaveTextContent(activity.PropertyActivityStatus);
+      await expect(
+        this.page.locator(
+          "//label[contains(text(),'Commencement')]/parent::div/following-sibling::div"
+        )
+      ).toHaveTextContent(
+        transformDateFormat(activity.PropertyActivityRequestedCommenceDate)
       );
     } else {
-      AssertTrueIsDisplayed(managementActRequestAddedDateLabel);
-      AssertTrueContentEquals(
-        managementActRequestAddedDateContent,
-        TransformDateFormat(activity.PropertyActivityRequestedCommenceDate)
+      await expect(
+        this.page.getByRole("label").filter({ hasText: "Requested added date" })
+      ).toBeVisible();
+      await expect(
+        this.page.locator(
+          "//label[contains(text(),'Requested added date')]/parent::div/following-sibling::div"
+        )
+      ).toHaveTextContent(
+        transformDateFormat(activity.PropertyActivityRequestedCommenceDate)
       );
     }
 
-    if (activity.PropertyActivityCompletionDate != "") {
-      AssertTrueIsDisplayed(managementActCompletionDateLabel);
-      AssertTrueContentEquals(
-        managementActCompletionDateContent,
-        TransformDateFormat(activity.PropertyActivityCompletionDate)
+    if (activity.PropertyActivityCompletionDate != null) {
+      await expect(
+        this.page.getByRole("label").filter({ hasText: "Completion" })
+      ).toBeVisible();
+      await expect(
+        this.page.locator(
+          "//label[contains(text(),'Completion date')]/parent::div/following-sibling::div"
+        )
+      ).toHaveTextContent(
+        transformDateFormat(activity.PropertyActivityCompletionDate)
       );
     }
 
-    AssertTrueIsDisplayed(managementActDescriptionLabel);
-    AssertTrueContentEquals(
-      managementActDescriptionContent,
-      activity.PropertyActivityDescription
-    );
+    await expect(
+      this.page.locator(
+        "//div[contains(text(),'Activity Details')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Description')]"
+      )
+    ).toBeVisible();
+    await expect(
+      this.page.locator(
+        "//div[contains(text(),'Activity Details')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Description')]/parent::div/following-sibling::div"
+      )
+    ).toHaveTextContent(activity.PropertyActivityDescription);
 
-    AssertTrueIsDisplayed(managementActMinistryContactLabel);
-    //  if (activity.PropertyActivityMinistryContactList.First() != "")
-    //      for (int i = 0; i < activity.PropertyActivityMinistryContactList.Count; i++)
-    //          Assert.Equal(webDriver.FindElements(managementActMinistryContactContent)[i].Text, activity.PropertyActivityMinistryContactList[i]);
+    await expect(
+      this.page.getByRole("label").filter({ hasText: "Ministry contacts" })
+    ).toBeVisible();
+    if ((await activity.PropertyActivityMinistryContactList.count()) > 0) {
+      await activity.PropertyActivityMinistryContactList.forEach(
+        (ministryContact, index) => {
+          expect(
+            this.page
+              .locator(
+                "//label[contains(text(),'Ministry contacts')]/parent::div/following-sibling::div/a/span"
+              )
+              .nth(index + 1)
+          ).toHaveTextContent(ministryContact);
+        }
+      );
+    }
 
     if (activityType == "Management File") {
-      AssertTrueIsDisplayed(managementActContactManagerLabel);
-      AssertTrueIsDisplayed(managementActContactManagerTooltip);
-      if (activity.PropertyActivityRequestorContactMngr != "")
-        AssertTrueContentEquals(
-          managementActContactManagerContent,
-          activity.PropertyActivityRequestorContactMngr
-        );
+      await expect(
+        this.page.getByRole("label").filter({ hasText: "Contact manager" })
+      ).toBeVisible();
+      await expect(
+        this.page.getByTestId("tooltip-icon-section-field-tooltip")
+      ).toBeVisible();
+
+      if (activity.PropertyActivityRequestorContactMngr != null) {
+        await expect(
+          this.page.locator(
+            "//label[contains(text(),'Contact manager')]/parent::div/following-sibling::div"
+          )
+        ).toHaveTextContent(activity.PropertyActivityRequestorContactMngr);
+      }
     } else {
-      AssertTrueIsDisplayed(managementActRequestorLabel);
-      AssertTrueIsDisplayed(managementActRequestorTooltip);
-      if (activity.PropertyActivityRequestorContactMngr != "")
-        AssertTrueContentEquals(
-          managementActRequestorContent,
-          activity.PropertyActivityRequestorContactMngr
-        );
+      await expect(
+        this.page.getByRole("label").filter({ hasText: "Requestor" })
+      ).toBeVisible();
+      await expect(
+        this.page.getByTestId("tooltip-icon-section-field-tooltip")
+      ).toBeVisible();
+
+      if (activity.PropertyActivityRequestorContactMngr != "") {
+        await expect(
+          this.page.locator(
+            "//label[contains(text(),'Requestor')]/parent::div/following-sibling::div"
+          )
+        ).toHaveTextContent(activity.PropertyActivityRequestorContactMngr);
+      }
     }
 
-    //  if (activityType == "Management File")
-    //  {
-    //      AssertTrueIsDisplayed(managementActDetailsActivityExternalContactsLabel);
-    //      if (activity.PropertyActivityInvolvedPartiesExtContactsList.First() != "")
-    //         //  for (int i = 0; i < activity.PropertyActivityInvolvedPartiesExtContactsList.Count; i++)
-    //         //      Assert.Equal(webDriver.FindElements(managementActDetailsActivityExternalContactsCount)[i].Text, activity.PropertyActivityInvolvedPartiesExtContactsList[i]);
-    //  }
-    //  else
-    //  {
-    //      AssertTrueIsDisplayed(managementActInvolvedPartiesLabel);
-    //      if (activity.PropertyActivityInvolvedPartiesExtContactsList.First() != "")
-    //         //  for (int i = 0; i < activity.PropertyActivityInvolvedPartiesExtContactsList.Count; i++)
-    //         //      Assert.Equal(webDriver.FindElements(managementActInvolvedPartiesContent)[i].Text, activity.PropertyActivityInvolvedPartiesExtContactsList[i]);
-    //  }
+    if (activityType == "Management File") {
+      await expect(
+        this.page.getByRole("label").filter({ hasText: "External contacts" })
+      ).toBeVisible();
+      if (activity.PropertyActivityInvolvedPartiesExtContactsList.count() > 0) {
+        activity.PropertyActivityInvolvedPartiesExtContactsList.forEach(
+          (involvedParty, index) => {
+            expect(
+              this.page
+                .locator(
+                  "//label[contains(text(),'External contacts')]/parent::div/following-sibling::div/a"
+                )
+                .nth(index + 1)
+            ).toHaveTextContent(involvedParty);
+          }
+        );
+      }
+    } else {
+      await expect(
+        this.page.getByRole("label").filter({ hasText: "Involved parties" })
+      ).toBeVisible();
+      if (activity.PropertyActivityInvolvedPartiesExtContactsList.count() > 0) {
+        await activity.PropertyActivityInvolvedPartiesExtContactsList.forEach(
+          (involvedParty, index) => {
+            expect(
+              this.page
+                .locator(
+                  "//label[contains(text(),'Involved parties')]/parent::div/following-sibling::div/a/span"
+                )
+                .nth(index + 1)
+            ).toHaveTextContent(involvedParty);
+          }
+        );
+      }
+    }
 
-    AssertTrueIsDisplayed(managementActServiceProviderLabel);
-    if (activity.PropertyActivityServiceProvider != "")
-      AssertTrueContentEquals(
-        managementActServiceProviderContent,
-        activity.PropertyActivityServiceProvider
-      );
+    await expect(
+      this.page.getByRole("label").filter({ hasText: "Service provider" })
+    ).toBeVisible();
+    if (activity.PropertyActivityServiceProvider != null) {
+      expect(
+        this.page.locator(
+          "//label[contains(text(),'Service provider')]/parent::div/following-sibling::div/a/span"
+        )
+      ).toHaveTextContent(activity.PropertyActivityServiceProvider);
+    }
 
     //Invoices section
-    AssertTrueIsDisplayed(managementActInvoiceTotalsSubtitle);
+    await expect(this.page.getByText("Invoices Total")).toBeVisible();
 
-    AssertTrueIsDisplayed(managementActInvoiceTotalPretaxLabel);
-    AssertTrueContentEquals(
-      managementActInvoiceTotalPretaxContent,
-      TransformCurrencyFormat(activity.ManagementPropertyActivityTotalPreTax)
+    await expect(
+      this.page.locator(
+        "//div[contains(text(),'Invoices Total')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Total (before tax)')]/parent::div/following-sibling::div"
+      )
+    ).toBeVisible();
+    await expect(
+      this.page.locator(
+        "//div[contains(text(),'Invoices Total')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Total (before tax)')]/parent::div/following-sibling::div"
+      )
+    ).toHaveTextContent(
+      transformCurrencyFormat(activity.ManagementPropertyActivityTotalPreTax)
     );
 
-    AssertTrueIsDisplayed(managementActInvoiceTotalGSTLabel);
-    AssertTrueContentEquals(
-      managementActInvoiceTotalGSTContent,
-      TransformCurrencyFormat(activity.ManagementPropertyActivityTotalGST)
+    await expect(
+      this.page.locator(
+        "//div[contains(text(),'Invoices Total')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'GST amount')]"
+      )
+    ).toBeVisible();
+    await expect(
+      this.page.locator(
+        "//div[contains(text(),'Invoices Total')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'GST amount')]/parent::div/following-sibling::div"
+      )
+    ).toHaveTextContent(
+      transformCurrencyFormat(activity.ManagementPropertyActivityTotalGST)
     );
 
-    AssertTrueIsDisplayed(managementActInvoiceTotalPSTLabel);
-    AssertTrueContentEquals(
-      managementActInvoiceTotalPSTContent,
-      TransformCurrencyFormat(activity.ManagementPropertyActivityTotalPST)
+    await expect(
+      this.page.locator(
+        "//div[contains(text(),'Invoices Total')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'PST amount')]"
+      )
+    ).toBeVisible();
+    await expect(
+      this.page.locator(
+        "//div[contains(text(),'Invoices Total')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'PST amount')]/parent::div/following-sibling::div"
+      )
+    ).toHaveTextContent(
+      transformCurrencyFormat(activity.ManagementPropertyActivityTotalPST)
     );
 
-    AssertTrueIsDisplayed(managementActInvoiceGrandTotalLabel);
-    AssertTrueContentEquals(
-      managementActInvoiceGrandTotalContent,
-      TransformCurrencyFormat(activity.ManagementPropertyActivityGrandTotal)
+    await expect(
+      this.page.locator(
+        "//div[contains(text(),'Invoices Total')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Total amount')]"
+      )
+    ).toBeVisible();
+    await expect(
+      this.page.locator(
+        "//div[contains(text(),'Invoices Total')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Total amount')]/parent::div/following-sibling::div"
+      )
+    ).toHaveTextContent(
+      transformCurrencyFormat(activity.ManagementPropertyActivityGrandTotal)
     );
   }
 
-  async VerifyCreateActivityInitForm(activityType, propsCount) {
+  async verifyCreateActivityInitForm(activityType, propsCount) {
     //Selected Properties
     if (activityType == "Management File") {
-      AssertTrueIsDisplayed(managementActFilePropertiesTitle);
-      AssertTrueIsDisplayed(managementActFileSelectedPropsLabel);
-      Assert.Equal(
-        webDriver.FindElements(managementActFilePropertiesCount).Count,
-        propsCount
-      );
+      await expect(this.page.getByText("Select File Properties")).toBeVisible();
+      await expect(
+        this.page.locator(
+          "div[data-testid='selectableFileProperties'] div[class='tr-wrapper']"
+        )
+      )
+        .count()
+        .toBe(propsCount);
     }
+
     //Activity Details
-    AssertTrueIsDisplayed(managementActivityDetailsTitle);
-    AssertTrueIsDisplayed(managementActTypeLabel);
-    AssertTrueIsDisplayed(managementActTypeInput);
-    AssertTrueIsDisplayed(managementActSubTypeLabel);
-    AssertTrueIsDisplayed(managementActSubTypeSelect);
-    AssertTrueIsDisplayed(managementActStatusLabel);
-    AssertTrueIsDisplayed(managementActStatusInput);
-
-    if (activityType == "Management File")
-      AssertTrueIsDisplayed(managementActCommencementLabel);
-    else AssertTrueIsDisplayed(managementActRequestAddedDateLabel);
-    AssertTrueIsDisplayed(managementActRequestAddedCommenceDateInput);
-
-    AssertTrueIsDisplayed(managementActCompletionDateLabel);
-    AssertTrueIsDisplayed(managementActCompletionDateInput);
-    AssertTrueIsDisplayed(managementActDescriptionLabel);
-    AssertTrueIsDisplayed(managementActDescriptionInput);
-
-    AssertTrueIsDisplayed(managementActMinistryContactLabel);
-    AssertTrueIsDisplayed(managementActMinistryContactInput);
-    AssertTrueIsDisplayed(managementActMinistryContactBttn);
-    AssertTrueIsDisplayed(managementActMinistryContactAddContactLink);
+    await expect(this.page.getByText("Activity Details")).toBeVisible();
+    await expect(
+      this.page.getByRole("label").filter({ hasText: "Activity type" })
+    ).toBeVisible();
+    await expect(this.page.locator("#input-activityTypeCode")).toBeVisible();
+    await expect(
+      this.page.getByRole("label").filter({ hasText: "Sub-type(s)" })
+    ).toBeVisible();
+    await expect(
+      this.page.locator("#multiselect-activitySubtypeCodes")
+    ).toBeVisible();
+    await expect(
+      this.page.getByRole("label").filter({ hasText: "Activity status" })
+    ).toBeVisible();
+    await expect(this.page.locator("#input-activityStatusCode")).toBeVisible();
 
     if (activityType == "Management File") {
-      AssertTrueIsDisplayed(managementActContactManagerLabel);
-      AssertTrueIsDisplayed(managementActContactManagerTooltip);
-      AssertTrueIsDisplayed(managementActContactManagerContent);
+      await expect(
+        this.page.getByRole("label").filter({ hasText: "Commencement" })
+      ).toBeVisible();
     } else {
-      AssertTrueIsDisplayed(managementActRequestorLabel);
-      AssertTrueIsDisplayed(managementActRequestorTooltip);
-      AssertTrueIsDisplayed(managementActRequestorInput);
+      await expect(
+        this.page.getByRole("label").filter({ hasText: "Requested added date" })
+      ).toBeVisible();
+    }
+    await expect(this.page.locator("#datepicker-requestedDate")).toBeVisible();
+
+    await expect(
+      this.page.getByRole("label").filter({ hasText: "Completion" })
+    ).toBeVisible();
+    await expect(this.page.locator("#datepicker-completionDate")).toBeVisible();
+    await expect(
+      this.page.getByRole("label").filter({ hasText: "Description" })
+    ).toBeVisible();
+    await expect(this.page.locator("#input-description")).toBeVisible();
+
+    await expect(
+      this.page.getByRole("label").filter({ hasText: "Ministry contacts" })
+    ).toBeVisible();
+    await expect(
+      this.page.locator("#input-ministryContacts[0].id")
+    ).toBeVisible();
+    await expect(
+      this.page.getByTestId("ministry-contacts-add-link")
+    ).toBeVisible();
+
+    if (activityType == "Management File") {
+      await expect(
+        this.page.getByRole("label").filter({ hasText: "Contact manager" })
+      ).toBeVisible();
+      await expect(
+        this.page.getByTestId("tooltip-icon-section-field-tooltip")
+      ).toBeVisible();
+      await expect(
+        this.page.locator(
+          "//label[contains(text(),'Contact manager')]/parent::div/following-sibling::div"
+        )
+      ).toBeVisible();
+    } else {
+      await expect(
+        this.page.getByRole("label").filter({ hasText: "Requestor" })
+      ).toBeVisible();
+      await expect(
+        this.page.getByTestId("tooltip-icon-section-field-tooltip")
+      ).toBeVisible();
+      await expect(this.page.locator("#input-requestedSource")).toBeVisible();
     }
 
     if (activityType == "Management File") {
-      AssertTrueIsDisplayed(managementActDetailsActivityExternalContactsLabel);
-      AssertTrueIsDisplayed(managementActDetailsActivityExternalContactsInput);
-      AssertTrueIsDisplayed(
-        managementActDetailsActivityExternalContactsAddBttn
-      );
+      await expect(
+        this.page.getByRole("label").filter({ hasText: "External contacts" })
+      ).toBeVisible();
+      await expect(
+        this.page.locator("#input-involvedParties[0].id")
+      ).toBeVisible();
     } else {
-      AssertTrueIsDisplayed(managementActInvolvedPartiesLabel);
-      AssertTrueIsDisplayed(managementActInvolvedPartiesInput);
-      AssertTrueIsDisplayed(managementActInvolvedPartiesExtContactsBttn);
-      AssertTrueIsDisplayed(
-        managementActInvolvedPartiesExtContactsAddContactLink
-      );
+      await expect(
+        this.page.getByRole("label").filter({ hasText: "Involved parties" })
+      ).toBeVisible();
+      //await expect(this.page.locator("#input-requestedSource")).toBeVisible();
+      //await expect(this.page.getByTestId("tooltip-icon-section-field-tooltip")).toBeVisible();
+      //await expect(this.page.getByTestId("tooltip-icon-section-field-tooltip")).toBeVisible();
     }
 
-    AssertTrueIsDisplayed(managementActServiceProviderLabel);
-    AssertTrueIsDisplayed(managementActServiceProviderInput);
-    AssertTrueIsDisplayed(managementActServiceProviderBttn);
+    await expect(
+      this.page.getByRole("label").filter({ hasText: "Service provider" })
+    ).toBeVisible();
+    await expect(this.page.locator("#input-serviceProvider.id")).toBeVisible();
 
     //Invoice
-    AssertTrueIsDisplayed(managementAddInvoiceBttn);
-    AssertTrueIsDisplayed(managementInvoicesTotalSubtitle);
-    AssertTrueIsDisplayed(managementActPretaxAmountLabel);
-    AssertTrueIsDisplayed(managementActPretaxAmountInput);
-    AssertTrueIsDisplayed(managementActGSTAmountLabel);
-    AssertTrueIsDisplayed(managementActGSTAmountInput);
-    AssertTrueIsDisplayed(managementActPSTAmountLabel);
-    AssertTrueIsDisplayed(managementActPSTAmountInput);
-    AssertTrueIsDisplayed(managementActTotalAmountLabel);
-    AssertTrueIsDisplayed(managementActTotalAmountInput);
+    await expect(this.page.getByTestId("add-invoice-button")).toBeVisible();
+    await expect(this.page.getByText("Invoices Total")).toBeVisible();
+    await expect(
+      this.page.getByRole("label").filter({ hasText: "Total (before tax)" })
+    ).toBeVisible();
+    await expect(this.page.locator("#input-pretaxAmount")).toBeVisible();
+    await expect(
+      this.page.getByRole("label").filter({ hasText: "Total (before tax)" })
+    ).toBeVisible();
+    await expect(this.page.locator("#input-pretaxAmount")).toBeVisible();
+    await expect(
+      this.page.getByRole("label").filter({ hasText: "GST amount" })
+    ).toBeVisible();
+    await expect(this.page.locator("#input-gstAmount")).toBeVisible();
+    await expect(
+      this.page.getByRole("label").filter({ hasText: "PST amount" })
+    ).toBeVisible();
+    await expect(this.page.locator("#input-pstAmount")).toBeVisible();
+    await expect(
+      this.page.getByRole("label").filter({ hasText: "Total amount" })
+    ).toBeVisible();
+    await expect(this.page.locator("#input-totalAmount")).toBeVisible();
+  }
+
+  async verifyMgmtActivitiesInitListsView() {
+    //Activity List
+    await expect(this.page.getByText("Activity List")).toBeVisible();
+    await expect(this.page.getByTestId("add-activity-button")).toBeVisible();
+    await expect(this.page.locator("//p[contains(text(),' You can attach a document after creating the activity. Create, then edit and attach a file if needed.')]")).toBeVisible();
+    await expect(this.page.getByTestId("mgmt-activity-list")).toBeVisible();
+    await expect(this.page.getByTestId("mgmt-activity-list", {text: "Activity type"})).toBeVisible();
+    await expect(this.page.getByTestId("mgmt-activity-list", {text: "Activity sub-type"})).toBeVisible();
+    await expect(this.page.getByTestId("mgmt-activity-list", {text: "Activity status"})).toBeVisible();
+    await expect(this.page.getByTestId("mgmt-activity-list", {text: "Commencement"})).toBeVisible();
+    await expect(this.page.getByTestId("mgmt-activity-list", {text: "Actions"})).toBeVisible();
+
+    //Ad-Hoc Activity List
+    await expect(this.page.getByText("Ad-hoc Activities List")).toBeVisible();
+    await expect(this.page.getByTestId("tooltip-icon-property-file-activity-summary")).toBeVisible();
+    await expect(this.page.locator("//div[contains(text(),'Ad-hoc Activities List')]/parent::div/parent::div/parent::div/following-sibling::div")).toBeVisible();
+    await expect(this.page.getByTestId("adhoc-activity-list-readonly", {text: "Activity type"})).toBeVisible();
+    await expect(this.page.getByTestId("adhoc-activity-list-readonly", {text: "Activity sub-type"})).toBeVisible();
+    await expect(this.page.getByTestId("adhoc-activity-list-readonly", {text: "Activity status"})).toBeVisible();
+    await expect(this.page.getByTestId("adhoc-activity-list-readonly", {text: "Commencement"})).toBeVisible();
+    await expect(this.page.getByTestId("adhoc-activity-list-readonly", {text: "Navigation"})).toBeVisible();
+
+    await expect(this.page.locator("//div[contains(text(),'No property management activities found')]")).toBe(2)
+  }
+
+  async viewLastActivityFromList() {
+    await this.page.locator("//div[@data-testid='mgmt-activity-list']/following-sibling::div/div/ul[@class='pagination']/li[3]").click();
+  }
+
+  async viewLastActivityButton() {
+    await this.page.locator("div[data-testid='mgmt-activity-list'] div[class='tr-wrapper']:last-child button[title='property-activity view details']").click();
+  }
+
+  async verifyLastInsertedMgmtActivityTable(activity) {
+    await expect(this.page.locator("div[data-testid='mgmt-activity-list'] div[class='tr-wrapper']:last-child div[role='cell']:nth-child(1)")).toHaveTextContent(activity.PropertyActivityType);
+    //await expect(this.page.locator("div[data-testid='mgmt-activity-list'] div[class='tr-wrapper']:last-child div[role='cell']:nth-child(2)")).toHaveTextContent(activity.PropertyActivitySubType);
+    await expect(this.page.locator("div[data-testid='mgmt-activity-list'] div[class='tr-wrapper']:last-child div[role='cell']:nth-child(3)")).toHaveTextContent(activity.PropertyActivityStatus);
+    await expect(this.page.locator("div[data-testid='mgmt-activity-list'] div[class='tr-wrapper']:last-child div[role='cell']:nth-child(4)")).toHaveTextContent(transformDateFormat(activity.PropertyActivityRequestedCommenceDate));
   }
 
   async addInvoice(invoice, index) {
-    Wait();
-    webDriver.FindElement(managementAddInvoiceBttn).Click();
+    await this.page.getByTestId("add-invoice-button").click();
 
-    Wait();
-    webDriver
-      .FindElement(By.Id("input-invoices." + index + ".invoiceNum"))
-      .SendKeys(invoice.PropertyActivityInvoiceNumber);
+    await this.page
+      .locator("${#input-invoices." + index + ".invoiceNum}")
+      .fill(invoice.PropertyActivityInvoiceNumber);
+    await this.page
+      .locator("${#datepicker-invoices." + index + ".invoiceDateTime}")
+      .fill(invoice.PropertyActivityInvoiceDate);
+    await this.page
+      .locator("${#datepicker-invoices." + index + ".invoiceDateTime}")
+      .press("Enter");
 
-    webDriver
-      .FindElement(By.Id("datepicker-invoices." + index + ".invoiceDateTime"))
-      .SendKeys(invoice.PropertyActivityInvoiceDate);
-    webDriver
-      .FindElement(By.Id("datepicker-invoices." + index + ".invoiceDateTime"))
-      .SendKeys(Keys.Enter);
+    await this.page
+      .locator("${#input-invoices." + index + ".description}")
+      .fill(invoice.PropertyActivityInvoiceDescription);
 
-    webDriver
-      .FindElement(By.Id("input-invoices." + index + ".description"))
-      .SendKeys(invoice.PropertyActivityInvoiceDescription);
+    await this.page
+      .locator("${#input-invoices." + index + ".pretaxAmount}")
+      .fill("");
+    await this.page
+      .locator("${#input-invoices." + index + ".pretaxAmount}")
+      .fill(invoice.PropertyActivityInvoicePretaxAmount);
 
-    CleanUpCurrencyInput(By.Id("input-invoices." + index + ".pretaxAmount"));
-    SendKeysToCurrencyInput(
-      By.Id("input-invoices." + index + ".pretaxAmount"),
-      invoice.PropertyActivityInvoicePretaxAmount
-    );
-
-    ChooseSpecificSelectOption(
-      By.Id("input-invoices." + index + ".isPstRequired"),
-      invoice.PropertyActivityInvoicePSTApplicable
-    );
-
-    AssertTrueElementValueEquals(
-      By.Id("input-invoices." + index + ".gstAmount"),
-      TransformCurrencyFormat(invoice.PropertyActivityInvoiceGSTAmount)
-    );
-
-    if (invoice.PropertyActivityInvoicePSTAmount != "0.00")
-      AssertTrueElementValueEquals(
-        By.Id("input-invoices." + index + ".pstAmount"),
-        TransformCurrencyFormat(invoice.PropertyActivityInvoicePSTAmount)
+    await this.page
+      .locator("${#input-invoices." + index + ".isPstRequired}")
+      .selectOption({ label: invoice.PropertyActivityInvoicePSTApplicable });
+    await this.page
+      .locator("${#input-invoices." + index + ".gstAmount}")
+      .toHaveValue(
+        transformCurrencyFormat(invoice.PropertyActivityInvoiceGSTAmount)
       );
+
+    if (invoice.PropertyActivityInvoicePSTAmount != "0.00") {
+      await this.page
+        .locator("${#input-invoices." + index + ".pstAmount}")
+        .toHaveValue(
+          transformCurrencyFormat(invoice.PropertyActivityInvoicePSTAmount)
+        );
+    }
   }
 }
 
-module.exports = { SharedActivities };
+module.exports = SharedActivities;

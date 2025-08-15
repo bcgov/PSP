@@ -1,3 +1,5 @@
+const { expect } = require("@playwright/test");
+
 class Notes {
   constructor(page) {
     this.page = page;
@@ -34,10 +36,10 @@ class Notes {
     if ((await this.page.locator("div[class='modal-content']").count()) == 2) {
       await expect(
         this.page.locator("div[class='modal-title h4']").last()
-      ).toHaveTextContent("Confirm Changes");
+      ).toHaveText("Confirm Changes");
       await expect(
         this.page.locator("div[class='modal-body'] p").last()
-      ).toHaveTextContent(
+      ).toHaveText(
         "If you choose to cancel now, your changes will not be saved."
       );
       await expect(
@@ -150,9 +152,9 @@ class Notes {
   async verifyAutomaticNotes(fileType, fromStatus, toStatus) {
     await expect(
       this.page.locator(
-        "div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper'] div:nth-child(1) div:nth-child(1)"
+        "div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper'] div:first-child div[role='cell']:first-child"
       )
-    ).toHaveTextContent(
+    ).toHaveText(
       fileType + " status changed from " + fromStatus + " to " + toStatus
     );
   }
@@ -164,9 +166,9 @@ class Notes {
   ) {
     await expect(
       this.page.locator(
-        "div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper'] div:nth-child(1) div:nth-child(1)"
+        "div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper'] div:first-child div[role='cell']:first-child"
       )
-    ).toHaveTextContent(
+    ).toHaveText(
       "Compensation Requisition with # " +
         compensationNbr +
         ", changed status from '" +
@@ -178,4 +180,4 @@ class Notes {
   }
 }
 
-module.exports = { Notes };
+module.exports = Notes;

@@ -52,6 +52,8 @@ const ManagementActivitiesListView: React.FunctionComponent<IManagementActivitie
             addButtonIcon={<BiListPlus size={'2.5rem'} />}
             onButtonAction={onCreate}
             isAddEnabled={canEditActivities}
+            button-data-testId="add-activity-button"
+            title-data-testId="ad-hoc activities"
           />
         ) : (
           'Activities List'
@@ -67,6 +69,7 @@ const ManagementActivitiesListView: React.FunctionComponent<IManagementActivitie
           ...createActivityTableColumns(),
           activityActionColumn(canEditActivities, onView, onDelete),
         ]}
+        dataTestId="adhoc-activity-list"
       ></ManagementActivitiesList>
     </Section>
   );
