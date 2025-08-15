@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 import { FormikProps } from 'formik';
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
-import { generatePath, matchPath, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
+import { matchPath, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
@@ -65,7 +65,6 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
   const history = useHistory();
   const match = useRouteMatch();
   const query = useQuery();
-  const matchFile = useRouteMatch<{ id: string }>();
   const isEditing = query.get('edit') === 'true';
   const urlPathWrapper = usePathGenerator();
   const tabMatch = useRouteMatch<{ detailType: string; id: string }>(`${match.path}/:tab`);
@@ -76,17 +75,7 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
     } else {
       query.delete('edit');
     }
-
-    if (value) {
-      history.push({ search: query.toString() });
-    } else {
-      // Not Editing => Return to file Details
-      const path = generatePath(matchFile.path, {
-        id: matchFile.params.id,
-        detailType: FileTabType.FILE_DETAILS,
-      });
-      history.push({ pathname: path, search: query.toString() });
-    }
+    history.push({ search: query.toString() });
   };
 
   const isPropertySelector = useMemo(
