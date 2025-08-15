@@ -152,6 +152,7 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
         onSuccess(response.id);
       }
     } finally {
+      mapMachine.processCreation();
       formikRef.current?.setSubmitting(false);
     }
   };

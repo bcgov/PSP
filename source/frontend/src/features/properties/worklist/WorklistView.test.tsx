@@ -13,6 +13,7 @@ describe('WorklistView', () => {
   const onCreateDispositionFile = vi.fn();
   const onCreateLeaseFile = vi.fn();
   const onCreateManagementFile = vi.fn();
+  const onAddToOpenFile = vi.fn();
 
   beforeEach(() => {
     cleanup();
@@ -35,6 +36,7 @@ describe('WorklistView', () => {
         onCreateDispositionFile={onCreateDispositionFile}
         onCreateLeaseFile={onCreateLeaseFile}
         onCreateManagementFile={onCreateManagementFile}
+        onAddToOpenFile={onAddToOpenFile}
       />,
       {
         useMockAuthentication: true,

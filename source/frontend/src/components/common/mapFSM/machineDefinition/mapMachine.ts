@@ -649,6 +649,7 @@ export const mapMachine = createMachine<MachineContext>({
     activeLayers: initialEnabledLayers,
     mapLayersToRefresh: new Set(),
     currentMapBounds: null,
+    isEditPropertiesMode: false,
   },
 
   // State definitions
@@ -697,6 +698,17 @@ export const mapMachine = createMachine<MachineContext>({
               _,
               event: AnyEventObject & { selectedFeatures: SelectedFeatureDataset[] },
             ) => event.selectedFeatures,
+          }),
+        },
+        PROCESS_CREATION: {
+          actions: assign({
+            selectedFeatures: () => [],
+          }),
+        },
+        SET_EDIT_PROPERTIES_MODE: {
+          actions: assign({
+            isEditPropertiesMode: (_, event: AnyEventObject & { isEditPropertiesMode: boolean }) =>
+              event.isEditPropertiesMode,
           }),
         },
         DEFAULT_MAP_LAYERS: {

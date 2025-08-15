@@ -16,7 +16,7 @@ export interface IWorklistNotifier {
   warn: (msg: string) => void;
 }
 
-interface IWorklistContext {
+export interface IWorklistContext {
   parcels: ParcelDataset[];
   selectedId: string | null;
   select: (id: string) => void;

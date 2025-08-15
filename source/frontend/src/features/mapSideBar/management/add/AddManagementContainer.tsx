@@ -165,6 +165,7 @@ const AddManagementContainer: React.FC<IAddManagementContainerProps> = ({
         handleSuccess(response);
       }
     } finally {
+      mapMachine.processCreation();
       formikHelpers?.setSubmitting(false);
     }
   };

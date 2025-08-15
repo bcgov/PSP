@@ -1,23 +1,37 @@
 import { geoJSON } from 'leaflet';
-import { SyntheticEvent, useCallback, useEffect, useMemo, useState } from 'react';
-import React from 'react';
+import React, { SyntheticEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaEye, FaMinus, FaPlus, FaSearchPlus, FaWindowClose } from 'react-icons/fa';
 import styled from 'styled-components';
 
+import AcquisitionIcon from '@/assets/images/acquisition-icon.svg?react';
+import DispositionIcon from '@/assets/images/disposition-icon.svg?react';
+import LeaseIcon from '@/assets/images/lease-icon.svg?react';
+import ManagementIcon from '@/assets/images/management-icon.svg?react';
+import ResearchIcon from '@/assets/images/research-icon.svg?react';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import MoreOptionsMenu, { MenuOption } from '@/components/common/MoreOptionsMenu';
 import { SectionField } from '@/components/common/Section/SectionField';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
+import { Claims } from '@/constants';
 import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { useLtsa } from '@/hooks/useLtsa';
 import { exists, firstOrNull, isValidString, pidFormatter } from '@/utils';
 import { formatNames } from '@/utils/personUtils';
 
 export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () => {
+  const keycloak = useKeycloakWrapper();
   const [ownerNames, setOwnerNames] = useState('');
-  const { requestFlyToBounds, requestFlyToLocation, mapLocationFeatureDataset } =
-    useMapStateMachine();
+
+  const {
+    requestFlyToBounds,
+    requestFlyToLocation,
+    mapLocationFeatureDataset,
+    prepareForCreation,
+    isEditPropertiesMode,
+  } = useMapStateMachine();
 
   const pathGenerator = usePathGenerator();
 
@@ -27,7 +41,6 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
   );
 
   const { ltsaRequestWrapper } = useLtsa();
-
   const getLtsaExecute = ltsaRequestWrapper.execute;
 
   const hasMultipleProperties = useMemo(
@@ -98,6 +111,123 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
     mapMachine.closeQuickInfo();
   }, [mapMachine]);
 
+  // Convert to an object that can be consumed by the file creation process
+  const selectedFeatureDataset = useMemo(() => {
+    return {
+      selectingComponentId: mapLocationFeatureDataset?.selectingComponentId ?? null,
+      location: mapLocationFeatureDataset?.location,
+      fileLocation: mapLocationFeatureDataset?.fileLocation ?? null,
+      parcelFeature: firstOrNull(mapLocationFeatureDataset?.parcelFeatures),
+      pimsFeature: firstOrNull(mapLocationFeatureDataset?.pimsFeatures),
+      regionFeature: mapLocationFeatureDataset?.regionFeature ?? null,
+      districtFeature: mapLocationFeatureDataset?.districtFeature ?? null,
+      municipalityFeature: firstOrNull(mapLocationFeatureDataset?.municipalityFeatures),
+      isActive: true,
+      displayOrder: 0,
+    };
+  }, [
+    mapLocationFeatureDataset?.selectingComponentId,
+    mapLocationFeatureDataset?.location,
+    mapLocationFeatureDataset?.fileLocation,
+    mapLocationFeatureDataset?.parcelFeatures,
+    mapLocationFeatureDataset?.pimsFeatures,
+    mapLocationFeatureDataset?.regionFeature,
+    mapLocationFeatureDataset?.districtFeature,
+    mapLocationFeatureDataset?.municipalityFeatures,
+  ]);
+
+  const onCreateResearchFile = useCallback(() => {
+    prepareForCreation([selectedFeatureDataset]);
+    pathGenerator.newFile('research');
+  }, [pathGenerator, prepareForCreation, selectedFeatureDataset]);
+
+  const onCreateAcquisitionFile = useCallback(() => {
+    prepareForCreation([selectedFeatureDataset]);
+    pathGenerator.newFile('acquisition');
+  }, [pathGenerator, prepareForCreation, selectedFeatureDataset]);
+
+  const onCreateDispositionFile = useCallback(() => {
+    prepareForCreation([selectedFeatureDataset]);
+    pathGenerator.newFile('disposition');
+  }, [pathGenerator, prepareForCreation, selectedFeatureDataset]);
+
+  const onCreateLeaseFile = useCallback(() => {
+    prepareForCreation([selectedFeatureDataset]);
+    pathGenerator.newFile('lease');
+  }, [pathGenerator, prepareForCreation, selectedFeatureDataset]);
+
+  const onCreateManagementFile = useCallback(() => {
+    prepareForCreation([selectedFeatureDataset]);
+    pathGenerator.newFile('management');
+  }, [pathGenerator, prepareForCreation, selectedFeatureDataset]);
+
+  const onAddToOpenFile = useCallback(() => {
+    // If in edit properties mode, prepare the parcel for addition to an open file
+    if (isEditPropertiesMode) {
+      prepareForCreation([selectedFeatureDataset]);
+    }
+  }, [isEditPropertiesMode, prepareForCreation, selectedFeatureDataset]);
+
+  const menuOptions: MenuOption[] = useMemo(() => {
+    const options: MenuOption[] = [];
+
+    if (keycloak.hasClaim(Claims.RESEARCH_ADD)) {
+      options.push({
+        label: 'Create Research File',
+        onClick: onCreateResearchFile,
+        icon: <ResearchIcon width="1.5rem" height="1.5rem" fill="currentColor" />,
+      });
+    }
+    if (keycloak.hasClaim(Claims.ACQUISITION_ADD)) {
+      options.push({
+        label: 'Create Acquisition File',
+        onClick: onCreateAcquisitionFile,
+        icon: <AcquisitionIcon width="1.5rem" height="1.5rem" fill="currentColor" />,
+      });
+    }
+    if (keycloak.hasClaim(Claims.MANAGEMENT_ADD)) {
+      options.push({
+        label: 'Create Management File',
+        onClick: onCreateManagementFile,
+        icon: <ManagementIcon width="1.5rem" height="1.5rem" fill="currentColor" />,
+      });
+    }
+    if (keycloak.hasClaim(Claims.LEASE_ADD)) {
+      options.push({
+        label: 'Create Lease File',
+        onClick: onCreateLeaseFile,
+        icon: <LeaseIcon width="1.5rem" height="1.5rem" fill="currentColor" />,
+      });
+    }
+    if (keycloak.hasClaim(Claims.DISPOSITION_ADD)) {
+      options.push({
+        label: 'Create Disposition File',
+        onClick: onCreateDispositionFile,
+        icon: <DispositionIcon width="1.5rem" height="1.5rem" fill="currentColor" />,
+      });
+    }
+
+    options.push({
+      label: 'Add to Open File',
+      onClick: onAddToOpenFile,
+      icon: isEditPropertiesMode ? <FaPlus size="1.5rem" /> : undefined,
+      disabled: !isEditPropertiesMode,
+      tooltip: 'A file must be open and in "edit property" mode',
+      separator: true, // Add a separator before the "Add to Open File" option
+    });
+
+    return options;
+  }, [
+    isEditPropertiesMode,
+    keycloak,
+    onAddToOpenFile,
+    onCreateAcquisitionFile,
+    onCreateDispositionFile,
+    onCreateLeaseFile,
+    onCreateManagementFile,
+    onCreateResearchFile,
+  ]);
+
   return (
     <StyledContainer isMinimized={isMinimized} isVisible={isVisible}>
       <LoadingBackdrop show={mapMachine.isLoading} parentScreen />
@@ -114,7 +244,9 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
             </TooltipWrapper>
           )}
         </Col>
-        <Col xs="1">...</Col>
+        <Col xs="1" className="pl-2">
+          <MoreOptionsMenu variant="dark" options={menuOptions} />
+        </Col>
         <Col xs="1"></Col>
         <Col xs="6" className="text-center">
           Property

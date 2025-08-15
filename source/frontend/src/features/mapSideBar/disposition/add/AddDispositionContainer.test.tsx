@@ -2,6 +2,10 @@ import { FormikHelpers, FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
 import { createRef } from 'react';
 
+import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
+import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvider';
+import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import {
   act,
   createAxiosError,
@@ -10,9 +14,6 @@ import {
   RenderOptions,
 } from '@/utils/test-utils';
 
-import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
-import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvider';
-import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { SideBarContextProvider } from '../../context/sidebarContext';
 import { DispositionFormModel } from '../models/DispositionFormModel';
 import AddDispositionContainer, { IAddDispositionContainerProps } from './AddDispositionContainer';
@@ -66,6 +67,7 @@ describe('Add Disposition Container component', () => {
 
   beforeEach(() => {
     viewProps = undefined;
+    mockCreateDispositionFile.execute.mockResolvedValue(mockDispositionFileResponse());
   });
 
   afterEach(() => {
@@ -77,7 +79,7 @@ describe('Add Disposition Container component', () => {
     expect(getByText(/Content Rendered/)).toBeVisible();
   });
 
-  it('calls onSuccess when the Disposition is saved successfully', async () => {
+  it('calls onCancel when the form is cancelled', async () => {
     await setup();
 
     await act(async () => {
@@ -85,6 +87,30 @@ describe('Add Disposition Container component', () => {
     });
 
     expect(onClose).toHaveBeenCalled();
+  });
+
+  it('calls onSuccess when the Disposition is saved successfully', async () => {
+    const testMockMachine: IMapStateMachineContext = {
+      ...mapMachineBaseMock,
+      processCreation: vi.fn(),
+      refreshMapProperties: vi.fn(),
+    };
+    const formikHelpers: Partial<FormikHelpers<DispositionFormModel>> = {
+      setSubmitting: vi.fn(),
+      resetForm: vi.fn(),
+    };
+    await setup({ mockMapMachine: testMockMachine });
+
+    await act(async () => {
+      viewProps?.onSubmit(
+        new DispositionFormModel(1, 'NUMBER', 1),
+        formikHelpers as FormikHelpers<DispositionFormModel>,
+      );
+    });
+
+    expect(onSuccess).toHaveBeenCalled();
+    expect(testMockMachine.processCreation).toHaveBeenCalled();
+    expect(testMockMachine.refreshMapProperties).toHaveBeenCalled();
   });
 
   it(`triggers the modal for contractor not in team (400 - Error)`, async () => {

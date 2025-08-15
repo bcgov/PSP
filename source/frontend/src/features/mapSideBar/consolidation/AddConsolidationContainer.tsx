@@ -144,6 +144,7 @@ const AddConsolidationContainer: React.FC<IAddConsolidationContainerProps> = ({
         handleSuccess(response);
       }
     } finally {
+      mapMachine.processCreation();
       formikHelpers?.setSubmitting(false);
     }
   };

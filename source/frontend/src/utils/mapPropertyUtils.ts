@@ -20,7 +20,7 @@ import { IMapProperty } from '@/components/propertySelector/models';
 import { AreaUnitTypes } from '@/constants';
 import { DistrictCodes } from '@/constants/districtCodes';
 import { RegionCodes } from '@/constants/regionCodes';
-import { AddressForm } from '@/features/mapSideBar/shared/models';
+import { AddressForm, PropertyForm } from '@/features/mapSideBar/shared/models';
 import { ParcelDataset } from '@/features/properties/worklist/models';
 import { ApiGen_CodeTypes_GeoJsonTypes } from '@/models/api/generated/ApiGen_CodeTypes_GeoJsonTypes';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
@@ -463,3 +463,26 @@ export function sortFileProperties<T extends ApiGen_Concepts_FileProperty>(
   }
   return null;
 }
+
+export const areSelectedFeaturesEqual = (
+  lhs: SelectedFeatureDataset,
+  rhs: SelectedFeatureDataset,
+) => {
+  const lhsName = getPropertyName(featuresetToMapProperty(lhs));
+  const rhsName = getPropertyName(featuresetToMapProperty(rhs));
+  if (
+    (lhsName.label === rhsName.label &&
+      lhsName.label !== NameSourceType.NONE &&
+      lhsName.label !== NameSourceType.PLAN) ||
+    (lhsName.label === NameSourceType.PLAN &&
+      lhs.location.lat === rhs.location.lat &&
+      lhs.location.lng === rhs.location.lng)
+  ) {
+    return lhsName.value === rhsName.value;
+  }
+  return false;
+};
+
+export const arePropertyFormsEqual = (lhs: PropertyForm, rhs: PropertyForm): boolean => {
+  return areSelectedFeaturesEqual(lhs.toFeatureDataset(), rhs.toFeatureDataset());
+};
