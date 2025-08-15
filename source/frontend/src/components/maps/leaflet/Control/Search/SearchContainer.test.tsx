@@ -1,3 +1,6 @@
+import { Claims } from '@/constants';
+import { useGeographicNamesRepository } from '@/hooks/useGeographicNamesRepository';
+import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
@@ -10,9 +13,7 @@ import {
   userEvent,
 } from '@/utils/test-utils';
 
-import { useGeographicNamesRepository } from '@/hooks/useGeographicNamesRepository';
 import { SearchContainer } from './SearchContainer';
-import { mockLookups } from '@/mocks/lookups.mock';
 import { SearchView } from './SearchView';
 
 vi.mock('@/hooks/useGeographicNamesRepository');
@@ -29,7 +30,7 @@ vi.mocked(useGeographicNamesRepository).mockReturnValue({
   searchName: mockSearchName,
 });
 
-describe('MapSearch component', () => {
+describe('SearchContainer component', () => {
   afterEach(cleanup);
 
   const setup = async (renderOptions: RenderOptions = {}) => {
@@ -38,6 +39,14 @@ describe('MapSearch component', () => {
         [lookupCodesSlice.name]: { lookupCodes: mockLookups },
       },
       ...renderOptions,
+      useMockAuthentication: true,
+      claims: renderOptions.claims ?? [
+        Claims.RESEARCH_ADD,
+        Claims.ACQUISITION_ADD,
+        Claims.DISPOSITION_ADD,
+        Claims.LEASE_ADD,
+        Claims.MANAGEMENT_ADD,
+      ],
     });
     // wait for useEffects
     await act(async () => {});
