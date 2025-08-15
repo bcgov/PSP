@@ -10,6 +10,7 @@ import { FaFileAlt, FaFileExcel, FaTimes } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import { StyledIconButton } from '@/components/common/buttons';
+import { SectionField } from '@/components/common/Section/SectionField';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import { Table } from '@/components/Table';
 import { TableSort } from '@/components/Table/TableSort';
@@ -159,21 +160,28 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
 
   return (
     <Container fluid className="PropertyListView">
-      <Container fluid className="filter-container border-bottom">
-        <StyledFilterContainer fluid className="px-0">
-          <PropertyFilter
-            useGeocoder={false}
-            propertyFilter={filter}
-            defaultFilter={defaultPropertyFilter}
-            onChange={handleFilterChange}
-            sort={sort}
-            onSorting={setSort}
-            toggle={SearchToggleOption.List}
-          />
-        </StyledFilterContainer>
-      </Container>
       <div className="mt-5 mx-5">
-        <StyledPageHeader>Search Results</StyledPageHeader>
+        <StyledPageHeader>PIMS Property Search</StyledPageHeader>
+        <Row className="pb-2">
+          <Col xs="10">
+            <StyledFilterBox className="p-3">
+              <SectionField label="Search By" labelWidth={{ xs: '1' }}>
+                <StyledFilterContainer fluid className="px-0">
+                  <PropertyFilter
+                    useGeocoder={false}
+                    propertyFilter={filter}
+                    defaultFilter={defaultPropertyFilter}
+                    onChange={handleFilterChange}
+                    sort={sort}
+                    onSorting={setSort}
+                    toggle={SearchToggleOption.List}
+                  />
+                </StyledFilterContainer>
+              </SectionField>
+            </StyledFilterBox>
+          </Col>
+          <Col></Col>
+        </Row>
         <Row>
           <Col xs="10">
             <StyledFilterBox className="p-3">
@@ -250,7 +258,6 @@ const StyledFilterContainer = styled(Container)`
 
   grid-area: filter;
   background-color: $filter-background-color;
-  box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.2);
   z-index: 500;
   .map-filter-bar {
     align-items: center;

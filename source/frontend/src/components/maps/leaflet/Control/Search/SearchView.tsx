@@ -2,8 +2,10 @@ import { Feature, Geometry } from 'geojson';
 import { chain } from 'lodash';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
+import { Button } from '@/components/common/buttons';
 import { MapFeatureData } from '@/components/common/mapFSM/models';
 import { Scrollable } from '@/components/common/Scrollable/Scrollable';
 import { Section } from '@/components/common/Section/Section';
@@ -32,6 +34,8 @@ interface PropertyProjection<T> {
 }
 
 export const SearchView: React.FC<ISearchViewProps> = props => {
+  const history = useHistory();
+
   const groupedFeatures = chain(props.searchResult?.fullyAttributedFeatures.features)
     .groupBy(feature => feature?.properties?.PLAN_NUMBER)
     .map(
@@ -76,9 +80,16 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
 
   const pimsPropertyProjections = pimsGroupedFeatures.value().flatMap(x => x) ?? [];
 
+  const onOpenPropertyList = () => {
+    history.push('/properties/list');
+  };
+
   return (
     <>
       <StyledWrapper>
+        <Section>
+          <Button onClick={onOpenPropertyList}>Search PIMS information</Button>
+        </Section>
         <Section>
           <PropertyFilter
             defaultFilter={{ ...defaultPropertyFilter }}
