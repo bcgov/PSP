@@ -7,7 +7,13 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator';
 import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
-import { exists, getFeatureBoundedCenter } from '@/utils';
+import { useAdminBoundaryMapLayer } from '@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer';
+import {
+  exists,
+  featureSetToLatLngKey,
+  getFeatureBoundedCenter,
+  getRegionAndDistrictsResults,
+} from '@/utils';
 
 import { ISearchViewProps } from './SearchView';
 
@@ -31,6 +37,8 @@ export const SearchContainer: React.FC<ISearchContainerProps> = ({ View }) => {
   const [propertySearchFilter, setPropertySearchFilter] = useState<IPropertyFilter | null>(null);
 
   const pathGenerator = usePathGenerator();
+
+  const { findDistrict, findRegion } = useAdminBoundaryMapLayer();
 
   useEffect(() => {
     if (propertySearchFilter !== null && !dequal(mapSearchCriteria, propertySearchFilter)) {
@@ -64,8 +72,8 @@ export const SearchContainer: React.FC<ISearchContainerProps> = ({ View }) => {
     }
   };
 
-  // Convert to an object that can be consumed by the file creation process
-  const selectedFeatureDatasets = useMemo<SelectedFeatureDataset[]>(() => {
+  // Base dataset (no region/district yet)
+  const baseDatasets = useMemo<SelectedFeatureDataset[]>(() => {
     return (
       mapFeatureData?.fullyAttributedFeatures.features.map<SelectedFeatureDataset>(pmbcParcel => {
         const center = getFeatureBoundedCenter(pmbcParcel);
@@ -83,6 +91,50 @@ export const SearchContainer: React.FC<ISearchContainerProps> = ({ View }) => {
     );
   }, [mapFeatureData?.fullyAttributedFeatures?.features]);
 
+  // Enrich dataset with region/district info
+  const [selectedFeatureDatasets, setSelectedFeatureDatasets] = useState<SelectedFeatureDataset[]>(
+    [],
+  );
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function fetchRegions() {
+      if (baseDatasets.length === 0) {
+        setSelectedFeatureDatasets([]);
+        return;
+      }
+
+      const results = await getRegionAndDistrictsResults(baseDatasets, findRegion, findDistrict);
+
+      if (cancelled) return;
+
+      const enriched = baseDatasets.map(dataset => {
+        const key = featureSetToLatLngKey(dataset);
+        if (results.has(key)) {
+          const { regionResult, districtResult } = results.get(key)!;
+          return {
+            ...dataset,
+            regionFeature: regionResult,
+            districtFeature: districtResult,
+          };
+        } else {
+          return dataset;
+        }
+      });
+
+      setSelectedFeatureDatasets(enriched);
+    }
+
+    fetchRegions();
+
+    // Cleanup function to avoid state updates if component unmounts
+    return () => {
+      cancelled = true;
+    };
+  }, [baseDatasets, findDistrict, findRegion]);
+
+  // Actions for creating new files
   const onCreateResearchFile = useCallback(() => {
     prepareForCreation(selectedFeatureDatasets);
     pathGenerator.newFile('research');
