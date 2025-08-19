@@ -5,12 +5,13 @@ import TooltipWrapper from './TooltipWrapper';
 
 interface IOverflowTextProps {
   fullText?: string;
+  valueTestId?: string | null;
 }
 
 /** Creates a dynamic tooltip that displays over text when that text is overflowing and displaying an ellipsis via textOverflow css property */
 const OverflowTip: React.FunctionComponent<
   React.PropsWithChildren<IOverflowTextProps & React.HTMLAttributes<HTMLDivElement>>
-> = ({ fullText, className, children }) => {
+> = ({ fullText, className, valueTestId, children }) => {
   // Define state and function to update the value
   const [hoverStatus, setHover] = useState(false);
   const textElementRef = useRef<HTMLDivElement>();
@@ -33,10 +34,14 @@ const OverflowTip: React.FunctionComponent<
   return (
     <TooltipWrapper
       tooltipId={`tooltip-title`}
-      trigger="hover"
+      trigger={['hover', 'focus']}
       tooltip={hoverStatus ? fullText : ''}
     >
-      <StyledOverflowDiv className={className} ref={textElementRef as any}>
+      <StyledOverflowDiv
+        className={className}
+        ref={textElementRef as any}
+        data-testid={valueTestId}
+      >
         {children ?? fullText}
       </StyledOverflowDiv>
     </TooltipWrapper>

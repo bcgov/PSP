@@ -12,7 +12,6 @@ import { EditPropertiesIcon } from '@/components/common/buttons/EditPropertiesBu
 import { LinkButton } from '@/components/common/buttons/LinkButton';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import OverflowTip from '@/components/common/OverflowTip';
-import { Underline } from '@/components/common/styles';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import {
@@ -189,7 +188,7 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
                             ) : (
                               <OverflowTip
                                 fullText={propertyName.value}
-                                style={{ textDecoration: Underline }}
+                                valueTestId={`menu-item-property-${index}`}
                               ></OverflowTip>
                             )}
                           </OverflowTip>

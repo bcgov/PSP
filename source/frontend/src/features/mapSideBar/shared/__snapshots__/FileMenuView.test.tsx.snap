@@ -439,6 +439,7 @@ exports[`FileMenuView component > matches snapshot 1`] = `
         >
           <div
             class="c8"
+            data-testid="menu-item-property-0"
           >
             023-214-937
           </div>
@@ -490,6 +491,7 @@ exports[`FileMenuView component > matches snapshot 1`] = `
         >
           <div
             class="c8"
+            data-testid="menu-item-property-1"
           >
             024-996-777
           </div>
