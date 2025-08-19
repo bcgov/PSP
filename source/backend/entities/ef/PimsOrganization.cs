@@ -181,13 +181,13 @@ public partial class PimsOrganization
     public virtual ICollection<PimsManagementFileTeam> PimsManagementFileTeams { get; set; } = new List<PimsManagementFileTeam>();
 
     [InverseProperty("Organization")]
+    public virtual ICollection<PimsMgmtActInvolvedParty> PimsMgmtActInvolvedParties { get; set; } = new List<PimsMgmtActInvolvedParty>();
+
+    [InverseProperty("Organization")]
     public virtual ICollection<PimsOrganizationAddress> PimsOrganizationAddresses { get; set; } = new List<PimsOrganizationAddress>();
 
     [InverseProperty("Organization")]
     public virtual ICollection<PimsPersonOrganization> PimsPersonOrganizations { get; set; } = new List<PimsPersonOrganization>();
-
-    [InverseProperty("Organization")]
-    public virtual ICollection<PimsPropActInvolvedParty> PimsPropActInvolvedParties { get; set; } = new List<PimsPropActInvolvedParty>();
 
     [InverseProperty("Organization")]
     public virtual ICollection<PimsPropertyContact> PimsPropertyContacts { get; set; } = new List<PimsPropertyContact>();

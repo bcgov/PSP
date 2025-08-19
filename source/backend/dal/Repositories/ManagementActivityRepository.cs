@@ -100,12 +100,12 @@ namespace Pims.Dal.Repositories
 
             if (!string.IsNullOrWhiteSpace(filter.ActivityTypeCode))
             {
-                predicate = predicate.And(x => x.PropMgmtActivityTypeCode == filter.ActivityTypeCode);
+                predicate = predicate.And(x => x.MgmtActivityTypeCode == filter.ActivityTypeCode);
             }
 
             if (!string.IsNullOrWhiteSpace(filter.ActivityStatusCode))
             {
-                predicate = predicate.And(x => x.PropMgmtActivityStatusTypeCode == filter.ActivityStatusCode);
+                predicate = predicate.And(x => x.MgmtActivityStatusTypeCode == filter.ActivityStatusCode);
             }
 
             if (!string.IsNullOrWhiteSpace(filter.ProjectNameOrNumber))
@@ -114,10 +114,10 @@ namespace Pims.Dal.Repositories
             }
 
             var query = Context.PimsManagementActivities.AsNoTracking()
-                .Include(s => s.PropMgmtActivityStatusTypeCodeNavigation)
-                .Include(t => t.PropMgmtActivityTypeCodeNavigation)
-                .Include(st => st.PimsPropActivityMgmtActivities)
-                    .ThenInclude(x => x.PropMgmtActivitySubtypeCodeNavigation)
+                .Include(s => s.MgmtActivityStatusTypeCodeNavigation)
+                .Include(t => t.MgmtActivityTypeCodeNavigation)
+                .Include(st => st.PimsMgmtActivityActivitySubtyps)
+                    .ThenInclude(x => x.MgmtActivitySubtypeCodeNavigation)
                 .Include(pp => pp.PimsManagementActivityProperties)
                     .ThenInclude(p => p.Property)
                         .ThenInclude(a => a.Address)
@@ -135,11 +135,11 @@ namespace Pims.Dal.Repositories
 
                 if (field == "ActivityStatus")
                 {
-                    query = direction == "asc" ? query.OrderBy(c => c.PropMgmtActivityStatusTypeCodeNavigation.Description) : query.OrderByDescending(c => c.PropMgmtActivityStatusTypeCodeNavigation.Description);
+                    query = direction == "asc" ? query.OrderBy(c => c.MgmtActivityStatusTypeCodeNavigation.Description) : query.OrderByDescending(c => c.MgmtActivityStatusTypeCodeNavigation.Description);
                 }
                 else if (field == "ActivityType")
                 {
-                    query = direction == "asc" ? query.OrderBy(c => c.PropMgmtActivityTypeCodeNavigation.Description) : query.OrderByDescending(c => c.PropMgmtActivityTypeCodeNavigation.Description);
+                    query = direction == "asc" ? query.OrderBy(c => c.MgmtActivityTypeCodeNavigation.Description) : query.OrderByDescending(c => c.MgmtActivityTypeCodeNavigation.Description);
                 }
                 else if (field == "FileName")
                 {
@@ -166,10 +166,10 @@ namespace Pims.Dal.Repositories
         public IList<PimsManagementActivity> GetActivitiesByProperty(long propertyId)
         {
             List<PimsManagementActivity> activities = Context.PimsManagementActivities.AsNoTracking()
-                    .Include(pa => pa.PropMgmtActivityTypeCodeNavigation)
-                    .Include(pa => pa.PimsPropActivityMgmtActivities)
-                        .ThenInclude(st => st.PropMgmtActivitySubtypeCodeNavigation)
-                    .Include(pa => pa.PropMgmtActivityStatusTypeCodeNavigation)
+                    .Include(pa => pa.MgmtActivityTypeCodeNavigation)
+                    .Include(st => st.PimsMgmtActivityActivitySubtyps)
+                        .ThenInclude(st => st.MgmtActivitySubtypeCodeNavigation)
+                    .Include(pa => pa.MgmtActivityStatusTypeCodeNavigation)
                     .Include(pa => pa.PimsManagementActivityProperties)
                     .Where(pa => pa.PimsManagementActivityProperties.Any(x => x.PropertyId == propertyId))
                     .ToList();
@@ -185,10 +185,10 @@ namespace Pims.Dal.Repositories
         public IList<PimsManagementActivity> GetActivitiesByManagementFile(long managementFileId)
         {
             List<PimsManagementActivity> activities = Context.PimsManagementActivities.AsNoTracking()
-                    .Include(pa => pa.PropMgmtActivityTypeCodeNavigation)
-                    .Include(pa => pa.PimsPropActivityMgmtActivities)
-                        .ThenInclude(st => st.PropMgmtActivitySubtypeCodeNavigation)
-                    .Include(pa => pa.PropMgmtActivityStatusTypeCodeNavigation)
+                    .Include(pa => pa.MgmtActivityTypeCodeNavigation)
+                    .Include(pa => pa.PimsMgmtActivityActivitySubtyps)
+                        .ThenInclude(st => st.MgmtActivitySubtypeCodeNavigation)
+                    .Include(pa => pa.MgmtActivityStatusTypeCodeNavigation)
                     .Include(pa => pa.PimsManagementActivityProperties)
                     .Where(pa => pa.ManagementFileId == managementFileId)
                     .OrderByDescending(x => x.RequestAddedDt)
@@ -205,10 +205,10 @@ namespace Pims.Dal.Repositories
         public IList<PimsManagementActivity> GetActivitiesByPropertyIds(IEnumerable<long> propertyIds)
         {
             var activities = Context.PimsManagementActivities.AsNoTracking()
-                    .Include(pa => pa.PropMgmtActivityTypeCodeNavigation)
-                    .Include(pa => pa.PimsPropActivityMgmtActivities)
-                        .ThenInclude(st => st.PropMgmtActivitySubtypeCodeNavigation)
-                    .Include(pa => pa.PropMgmtActivityStatusTypeCodeNavigation)
+                    .Include(pa => pa.MgmtActivityTypeCodeNavigation)
+                    .Include(st => st.PimsMgmtActivityActivitySubtyps)
+                        .ThenInclude(stt => stt.MgmtActivitySubtypeCodeNavigation)
+                    .Include(pa => pa.MgmtActivityStatusTypeCodeNavigation)
                     .Include(pa => pa.PimsManagementActivityProperties)
                     .ThenInclude(ppa => ppa.Property)
                     .Where(pa => pa.PimsManagementActivityProperties.Any(ppa => propertyIds.Contains(ppa.PropertyId)))
@@ -227,15 +227,15 @@ namespace Pims.Dal.Repositories
         {
             var activity = Context.PimsManagementActivities
                 .Include(a => a.PimsManagementActivityProperties)
-                .Include(a => a.PimsPropertyActivityInvoices)
-                .Include(a => a.PropMgmtActivityTypeCodeNavigation)
-                .Include(pa => pa.PimsPropActivityMgmtActivities)
-                    .ThenInclude(st => st.PropMgmtActivitySubtypeCodeNavigation)
-                .Include(a => a.PropMgmtActivityStatusTypeCodeNavigation)
-                .Include(a => a.PimsPropActMinContacts)
-                .Include(a => a.PimsPropActInvolvedParties)
+                .Include(a => a.PimsManagementActivityInvoices)
+                .Include(a => a.MgmtActivityTypeCodeNavigation)
+                .Include(pa => pa.PimsMgmtActivityActivitySubtyps)
+                    .ThenInclude(st => st.MgmtActivitySubtypeCodeNavigation)
+                .Include(a => a.MgmtActivityStatusTypeCodeNavigation)
+                .Include(a => a.PimsMgmtActMinContacts)
+                .Include(a => a.PimsMgmtActInvolvedParties)
                 .AsNoTracking()
-                .FirstOrDefault(p => p.PimsManagementActivityId == activityId) ?? throw new KeyNotFoundException();
+                .FirstOrDefault(p => p.ManagementActivityId == activityId) ?? throw new KeyNotFoundException();
             return activity;
         }
 
@@ -263,19 +263,19 @@ namespace Pims.Dal.Repositories
             managementActivity.ThrowIfNull(nameof(managementActivity));
 
             var existingManagementActivities = Context.PimsManagementActivities
-                .FirstOrDefault(p => p.PimsManagementActivityId == managementActivity.PimsManagementActivityId) ?? throw new KeyNotFoundException();
+                .FirstOrDefault(p => p.ManagementActivityId == managementActivity.ManagementActivityId) ?? throw new KeyNotFoundException();
 
             // update direct relationships - PimsPropActMinContact, PimsPropActInvolvedParty, PimsPropertyActivityInvoice
-            Context.UpdateChild<PimsManagementActivity, long, PimsPropActMinContact, long>(
-                o => o.PimsPropActMinContacts, existingManagementActivities.PimsManagementActivityId, managementActivity.PimsPropActMinContacts.ToArray());
-            Context.UpdateChild<PimsManagementActivity, long, PimsPropActInvolvedParty, long>(
-                o => o.PimsPropActInvolvedParties, existingManagementActivities.PimsManagementActivityId, managementActivity.PimsPropActInvolvedParties.ToArray());
-            Context.UpdateChild<PimsManagementActivity, long, PimsPropertyActivityInvoice, long>(
-                o => o.PimsPropertyActivityInvoices, existingManagementActivities.PimsManagementActivityId, managementActivity.PimsPropertyActivityInvoices.ToArray());
+            Context.UpdateChild<PimsManagementActivity, long, PimsMgmtActMinContact, long>(
+                o => o.PimsMgmtActMinContacts, existingManagementActivities.ManagementActivityId, managementActivity.PimsMgmtActMinContacts.ToArray());
+            Context.UpdateChild<PimsManagementActivity, long, PimsMgmtActInvolvedParty, long>(
+                o => o.PimsMgmtActInvolvedParties, existingManagementActivities.ManagementActivityId, managementActivity.PimsMgmtActInvolvedParties.ToArray());
+            Context.UpdateChild<PimsManagementActivity, long, PimsManagementActivityInvoice, long>(
+                o => o.PimsManagementActivityInvoices, existingManagementActivities.ManagementActivityId, managementActivity.PimsManagementActivityInvoices.ToArray());
             Context.UpdateChild<PimsManagementActivity, long, PimsManagementActivityProperty, long>(
-                o => o.PimsManagementActivityProperties, existingManagementActivities.PimsManagementActivityId, managementActivity.PimsManagementActivityProperties.ToArray());
-            Context.UpdateChild<PimsManagementActivity, long, PimsPropActivityMgmtActivity, long>(
-                o => o.PimsPropActivityMgmtActivities, existingManagementActivities.PimsManagementActivityId, managementActivity.PimsPropActivityMgmtActivities.ToArray());
+                o => o.PimsManagementActivityProperties, existingManagementActivities.ManagementActivityId, managementActivity.PimsManagementActivityProperties.ToArray());
+            Context.UpdateChild<PimsManagementActivity, long, PimsMgmtActivityActivitySubtyp, long>(
+                o => o.PimsMgmtActivityActivitySubtyps, existingManagementActivities.ManagementActivityId, managementActivity.PimsMgmtActivityActivitySubtyps.ToArray());
 
             // update main entity - PimsManagementActivity
             Context.Entry(existingManagementActivities).CurrentValues.SetValues(managementActivity);
@@ -292,22 +292,22 @@ namespace Pims.Dal.Repositories
         {
             var managementActivity = Context.PimsManagementActivities
                 .Include(pa => pa.PimsManagementActivityProperties)
-                .Include(st => st.PimsPropActivityMgmtActivities)
-                .Include(mamc => mamc.PimsPropActMinContacts)
-                .Include(maip => maip.PimsPropActInvolvedParties)
-                .Include(mai => mai.PimsPropertyActivityInvoices)
-                .FirstOrDefault(x => x.PimsManagementActivityId == activityId);
+                .Include(st => st.PimsMgmtActivityActivitySubtyps)
+                .Include(mamc => mamc.PimsMgmtActMinContacts)
+                .Include(maip => maip.PimsMgmtActInvolvedParties)
+                .Include(mai => mai.PimsManagementActivityInvoices)
+                .FirstOrDefault(x => x.ManagementActivityId == activityId);
 
             if (managementActivity is null)
             {
                 return true;
             }
 
-            Context.PimsPropertyActivityInvoices.RemoveRange(managementActivity.PimsPropertyActivityInvoices);
-            Context.PimsPropActMinContacts.RemoveRange(managementActivity.PimsPropActMinContacts);
-            Context.PimsPropActInvolvedParties.RemoveRange(managementActivity.PimsPropActInvolvedParties);
+            Context.PimsManagementActivityInvoices.RemoveRange(managementActivity.PimsManagementActivityInvoices);
+            Context.PimsMgmtActMinContacts.RemoveRange(managementActivity.PimsMgmtActMinContacts);
+            Context.PimsMgmtActInvolvedParties.RemoveRange(managementActivity.PimsMgmtActInvolvedParties);
             Context.PimsManagementActivityProperties.RemoveRange(managementActivity.PimsManagementActivityProperties);
-            Context.PimsPropActivityMgmtActivities.RemoveRange(managementActivity.PimsPropActivityMgmtActivities);
+            Context.PimsMgmtActivityActivitySubtyps.RemoveRange(managementActivity.PimsMgmtActivityActivitySubtyps);
 
             Context.PimsManagementActivities.Remove(managementActivity);
 

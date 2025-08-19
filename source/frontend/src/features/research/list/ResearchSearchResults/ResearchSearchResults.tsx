@@ -43,7 +43,7 @@ const columns: ColumnWithProps<ResearchSearchResultModel>[] = [
     maxWidth: 20,
   },
   {
-    Header: 'MOTI Region',
+    Header: 'MOTT region',
     accessor: 'fileProperties',
     align: 'right',
     clickable: true,

@@ -1338,6 +1338,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                       >
                         <div
                           class="c12 form-section"
+                          data-testid="property-search-selector-section"
                         >
                           <h2
                             class="c13"
@@ -1863,7 +1864,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                   <label
                     class="c14"
                   >
-                    MOTI contact:
+                    MOTT contact:
                   </label>
                 </div>
                 <div
@@ -1892,7 +1893,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                   <label
                     class="c14"
                   >
-                    MOTI region:
+                    MOTT region:
                   </label>
                 </div>
                 <div

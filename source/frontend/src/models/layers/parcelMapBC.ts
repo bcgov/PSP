@@ -1,3 +1,5 @@
+import { Geometry } from 'geojson';
+
 export type stringDate = string;
 
 // ParcelMap BC Parcel Fabric
@@ -35,7 +37,7 @@ export interface PMBC_FullyAttributed_Feature_Properties {
   readonly WHEN_UPDATED: stringDate | null;
   readonly FEATURE_AREA_SQM: number | null;
   readonly FEATURE_LENGTH_M: number | null;
-  //readonly SHAPE: sdo_geometry | null;
+  readonly SHAPE: Geometry | null;
   readonly OBJECTID: number | null;
   readonly SE_ANNO_CAD_DATA: Blob | null;
 }
@@ -72,7 +74,7 @@ export const emptyPmbcParcel: PMBC_FullyAttributed_Feature_Properties = {
   WHEN_UPDATED: null,
   FEATURE_AREA_SQM: null,
   FEATURE_LENGTH_M: null,
-
+  SHAPE: null,
   OBJECTID: null,
   SE_ANNO_CAD_DATA: null,
 };

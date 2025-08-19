@@ -1,6 +1,7 @@
 import { CSSProperties } from 'react';
 import { Breadcrumb as BsBreadcrumb, Col } from 'react-bootstrap';
 import { FaWindowClose } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
 import { LoadingBackdropProps } from '@/components/common/LoadingBackdrop';
@@ -272,4 +273,9 @@ export const StyledIconWrapper = styled.div`
   justify-content: center;
   align-items: center;
   font-family: 'BCSans-Bold';
+`;
+
+export const StyledLink = styled(Link)`
+  padding: 0 0.4rem;
+  display: block;
 `;

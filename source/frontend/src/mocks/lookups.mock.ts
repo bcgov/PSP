@@ -4291,35 +4291,35 @@ export const mockLookups: ILookupCode[] = [
     name: 'Cancelled',
     isDisabled: false,
     displayOrder: 0,
-    type: 'PimsPropMgmtActivityStatusType',
+    type: 'PimsMgmtActivityStatusType',
   },
   {
     id: 'COMPLETED',
     name: 'Completed',
     isDisabled: false,
     displayOrder: 0,
-    type: 'PimsPropMgmtActivityStatusType',
+    type: 'PimsMgmtActivityStatusType',
   },
   {
     id: 'INPROGRESS',
     name: 'In-progress',
     isDisabled: false,
     displayOrder: 0,
-    type: 'PimsPropMgmtActivityStatusType',
+    type: 'PimsMgmtActivityStatusType',
   },
   {
     id: 'NOTSTARTED',
     name: 'Not started',
     isDisabled: false,
     displayOrder: 0,
-    type: 'PimsPropMgmtActivityStatusType',
+    type: 'PimsMgmtActivityStatusType',
   },
   {
     id: 'ONHOLD',
     name: 'On Hold',
     isDisabled: false,
     displayOrder: 0,
-    type: 'PimsPropMgmtActivityStatusType',
+    type: 'PimsMgmtActivityStatusType',
   },
   {
     id: 'ACCESS',
@@ -4327,7 +4327,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Access',
     isDisabled: false,
     displayOrder: 1,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'ACCOMMAGREE',
@@ -4335,7 +4335,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Accommodation Agreement',
     isDisabled: false,
     displayOrder: 2,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'AGRILANDRES',
@@ -4343,7 +4343,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Agricultural Land Reserves (ALR)',
     isDisabled: false,
     displayOrder: 4,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'APPRAISAL',
@@ -4351,7 +4351,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Appraisal',
     isDisabled: false,
     displayOrder: 5,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'ARBORIST',
@@ -4359,7 +4359,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Danger tree removal/arborist report',
     isDisabled: false,
     displayOrder: 11,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'BYLAWINFRAC',
@@ -4367,7 +4367,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'By-Law Infraction',
     isDisabled: false,
     displayOrder: 8,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'COMPLAINT',
@@ -4375,7 +4375,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Issue/complaint',
     isDisabled: false,
     displayOrder: 33,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'CONSULTREC',
@@ -4383,7 +4383,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Consultation Record',
     isDisabled: false,
     displayOrder: 9,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'CONTRACTOR',
@@ -4391,7 +4391,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'MoTT contractor/consultant',
     isDisabled: false,
     displayOrder: 39,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'CORRESPOND',
@@ -4399,7 +4399,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Correspondence',
     isDisabled: false,
     displayOrder: 10,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'DEMOLITION',
@@ -4407,7 +4407,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Demolition',
     isDisabled: false,
     displayOrder: 12,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'DEVELOPMENT',
@@ -4415,7 +4415,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Development',
     isDisabled: false,
     displayOrder: 13,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'ELECTRICAL',
@@ -4423,7 +4423,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Electrical',
     isDisabled: false,
     displayOrder: 14,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'ELECTRICITYBILL',
@@ -4431,7 +4431,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Electricity',
     isDisabled: false,
     displayOrder: 15,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'ELEVATOR',
@@ -4439,7 +4439,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Elevator',
     isDisabled: false,
     displayOrder: 16,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'ENCAMPMENT',
@@ -4447,7 +4447,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Encampment',
     isDisabled: false,
     displayOrder: 17,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'ENGINEERiNG',
@@ -4455,7 +4455,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Engineering',
     isDisabled: false,
     displayOrder: 18,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'ENGINEERRVW',
@@ -4463,7 +4463,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Engineering review',
     isDisabled: false,
     displayOrder: 19,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'ENVIRONMENT',
@@ -4471,7 +4471,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Environmental',
     isDisabled: false,
     displayOrder: 20,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'EXPRINTEREST',
@@ -4479,7 +4479,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Expression of Interest',
     isDisabled: false,
     displayOrder: 21,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'FIRESAFETY',
@@ -4487,7 +4487,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Fire Safety',
     isDisabled: false,
     displayOrder: 22,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'GARBAGEDUMP',
@@ -4495,7 +4495,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Garbage/Dumping',
     isDisabled: false,
     displayOrder: 23,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'GARBAGERECYCLING',
@@ -4503,7 +4503,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Garbage/Recycling',
     isDisabled: false,
     displayOrder: 24,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'GASBILL',
@@ -4511,7 +4511,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Gas',
     isDisabled: false,
     displayOrder: 25,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'GENINQUIRY',
@@ -4519,7 +4519,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'General Inquiry',
     isDisabled: false,
     displayOrder: 26,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'GEOTECH',
@@ -4527,7 +4527,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Geotechnical',
     isDisabled: false,
     displayOrder: 27,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'HEATINGFUEL',
@@ -4535,7 +4535,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Heating Fuel',
     isDisabled: false,
     displayOrder: 28,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'HVAC',
@@ -4543,7 +4543,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'HVAC',
     isDisabled: false,
     displayOrder: 29,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'INTERNAL',
@@ -4551,7 +4551,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Internal',
     isDisabled: false,
     displayOrder: 30,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'INTERNET',
@@ -4559,7 +4559,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Internet',
     isDisabled: false,
     displayOrder: 31,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'INTERNETBILL',
@@ -4567,7 +4567,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Internet',
     isDisabled: false,
     displayOrder: 32,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'JANITORIAL',
@@ -4575,7 +4575,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Janitorial',
     isDisabled: false,
     displayOrder: 34,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'LANDSCAPING',
@@ -4583,7 +4583,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Landscaping',
     isDisabled: false,
     displayOrder: 36,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'LANDUSEPLAN',
@@ -4591,7 +4591,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Land Use Planning',
     isDisabled: false,
     displayOrder: 35,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'LEGALSURVEY',
@@ -4599,7 +4599,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Legal Survey',
     isDisabled: false,
     displayOrder: 37,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'LIGHTING',
@@ -4607,7 +4607,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Lighting',
     isDisabled: false,
     displayOrder: 38,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'LL_BUILDGLAND',
@@ -4615,7 +4615,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Building/Land',
     isDisabled: false,
     displayOrder: 6,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'LL_PREMISES',
@@ -4623,7 +4623,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Premises',
     isDisabled: false,
     displayOrder: 45,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'MUNIPROPTAX',
@@ -4631,7 +4631,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Municipal property taxes',
     isDisabled: false,
     displayOrder: 40,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'OTHERCONS',
@@ -4639,7 +4639,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Other',
     isDisabled: false,
     displayOrder: 41,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'OTHERTAX',
@@ -4647,7 +4647,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Other',
     isDisabled: false,
     displayOrder: 42,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'PARKINGLOT',
@@ -4655,7 +4655,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Parking Lot',
     isDisabled: false,
     displayOrder: 43,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'PERMITS',
@@ -4663,7 +4663,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Permits',
     isDisabled: false,
     displayOrder: 44,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'PROPADMIN',
@@ -4671,7 +4671,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Administration',
     isDisabled: false,
     displayOrder: 3,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'PUBLIC',
@@ -4679,7 +4679,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Public',
     isDisabled: false,
     displayOrder: 47,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'RESURFACING',
@@ -4687,7 +4687,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Resurfacing',
     isDisabled: false,
     displayOrder: 48,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'RIPARIAN',
@@ -4695,7 +4695,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Riparian restoration',
     isDisabled: false,
     displayOrder: 49,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'SECURITY',
@@ -4703,7 +4703,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Security',
     isDisabled: false,
     displayOrder: 50,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'SEWERWATERBILL',
@@ -4711,7 +4711,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Sewer and Water',
     isDisabled: false,
     displayOrder: 51,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'SIGNAGE',
@@ -4719,7 +4719,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Signage',
     isDisabled: false,
     displayOrder: 52,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'SITEINSPECT',
@@ -4727,7 +4727,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Site Inspection',
     isDisabled: false,
     displayOrder: 53,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'SNOWREMOVAL',
@@ -4735,7 +4735,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Snow Removal',
     isDisabled: false,
     displayOrder: 54,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'STRENOFCLAIM',
@@ -4743,7 +4743,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Strength of Claim Assessment',
     isDisabled: false,
     displayOrder: 55,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'SUBDIVISION',
@@ -4751,7 +4751,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Sub-Division',
     isDisabled: false,
     displayOrder: 56,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'TELEPHONE',
@@ -4759,7 +4759,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Telephone',
     isDisabled: false,
     displayOrder: 57,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'TELEPHONEBILL',
@@ -4767,7 +4767,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Telephone',
     isDisabled: false,
     displayOrder: 58,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'TN_BUILDGLAND',
@@ -4775,7 +4775,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Building/Land',
     isDisabled: false,
     displayOrder: 7,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'TN_PREMISES',
@@ -4783,7 +4783,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Premises',
     isDisabled: false,
     displayOrder: 46,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'TRESPASS',
@@ -4791,7 +4791,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Trespass',
     isDisabled: false,
     displayOrder: 59,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'TRESTLEMTC',
@@ -4799,7 +4799,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Trestle maintenance/rehabilitation',
     isDisabled: false,
     displayOrder: 60,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'VANDALISM',
@@ -4807,7 +4807,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Vandalism',
     isDisabled: false,
     displayOrder: 61,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'VEGETATION',
@@ -4815,7 +4815,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Vegetation brushing',
     isDisabled: false,
     displayOrder: 62,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'WATERANDSEWER',
@@ -4823,7 +4823,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Water and Sewer',
     isDisabled: false,
     displayOrder: 64,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'WATERTAX',
@@ -4831,7 +4831,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Water',
     isDisabled: false,
     displayOrder: 63,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'WINDOWCLEAN',
@@ -4839,7 +4839,7 @@ export const mockLookups: ILookupCode[] = [
     name: 'Window Cleaning',
     isDisabled: false,
     displayOrder: 65,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: 'ZONING',
@@ -4847,91 +4847,91 @@ export const mockLookups: ILookupCode[] = [
     name: 'Zoning',
     isDisabled: false,
     displayOrder: 66,
-    type: 'PimsPropMgmtActivitySubtype',
+    type: 'PimsMgmtActivitySubtype',
   },
   {
     id: '1STNTNCONSULT',
     name: 'First Nations Consultation',
     isDisabled: false,
     displayOrder: 2,
-    type: 'PimsPropMgmtActivityType',
+    type: 'PimsMgmtActivityType',
   },
   {
     id: 'APPLICPERMIT',
     name: 'Applications/Permits',
     isDisabled: false,
     displayOrder: 1,
-    type: 'PimsPropMgmtActivityType',
+    type: 'PimsMgmtActivityType',
   },
   {
     id: 'CONSULTATION',
     name: 'Consultation (other)',
     isDisabled: false,
     displayOrder: 1,
-    type: 'PimsPropMgmtActivityType',
+    type: 'PimsMgmtActivityType',
   },
   {
     id: 'INCDNTISSUE',
     name: 'Incident and Issues',
     isDisabled: false,
     displayOrder: 3,
-    type: 'PimsPropMgmtActivityType',
+    type: 'PimsMgmtActivityType',
   },
   {
     id: 'INQUIRY',
     name: 'Inquiry',
     isDisabled: false,
     displayOrder: 4,
-    type: 'PimsPropMgmtActivityType',
+    type: 'PimsMgmtActivityType',
   },
   {
     id: 'INVESTRPT',
     name: 'Investigation/Report',
     isDisabled: false,
     displayOrder: 5,
-    type: 'PimsPropMgmtActivityType',
+    type: 'PimsMgmtActivityType',
   },
   {
     id: 'LANDLORDIMPRV',
     name: "Landlord's Improvements",
     isDisabled: false,
     displayOrder: 6,
-    type: 'PimsPropMgmtActivityType',
+    type: 'PimsMgmtActivityType',
   },
   {
     id: 'PROPERTYMGMT',
     name: 'Property Management',
     isDisabled: false,
     displayOrder: 8,
-    type: 'PimsPropMgmtActivityType',
+    type: 'PimsMgmtActivityType',
   },
   {
     id: 'PROPERTYMTC',
     name: 'Property Maintenance',
     isDisabled: false,
     displayOrder: 7,
-    type: 'PimsPropMgmtActivityType',
+    type: 'PimsMgmtActivityType',
   },
   {
     id: 'TAXESLEVIES',
     name: 'Taxes and Levies',
     isDisabled: false,
     displayOrder: 9,
-    type: 'PimsPropMgmtActivityType',
+    type: 'PimsMgmtActivityType',
   },
   {
     id: 'TENANTIMPROV',
     name: "Tenant's Improvements",
     isDisabled: false,
     displayOrder: 10,
-    type: 'PimsPropMgmtActivityType',
+    type: 'PimsMgmtActivityType',
   },
   {
     id: 'UTILITYBILL',
     name: 'Utility bills',
     isDisabled: false,
     displayOrder: 11,
-    type: 'PimsPropMgmtActivityType',
+    type: 'PimsMgmtActivityType',
   },
   {
     id: 'BCTFA',

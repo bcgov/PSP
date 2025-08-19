@@ -14,7 +14,7 @@ import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { IBcAssessmentSummary } from '@/models/layers/bcAssesment';
 import {
-  EmptyPropertyLocation,
+  emptyPropertyLocation,
   PIMS_Property_Location_View,
 } from '@/models/layers/pimsPropertyLocationView';
 import {
@@ -192,7 +192,7 @@ export class PropertyForm {
       selectingComponentId: null,
       pimsFeature: {
         properties: {
-          ...EmptyPropertyLocation,
+          ...emptyPropertyLocation,
           PROPERTY_ID: this.apiId,
           PID: this.pid ? +this.pid.replaceAll(/-/g, '') : null,
           PID_PADDED: this?.pid?.padStart(9, '0'),

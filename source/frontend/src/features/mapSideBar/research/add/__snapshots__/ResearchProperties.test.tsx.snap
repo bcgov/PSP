@@ -749,6 +749,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
               >
                 <div
                   class="c0 form-section"
+                  data-testid="property-search-selector-section"
                 >
                   <h2
                     class="c1"
@@ -1201,6 +1202,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
             >
               <button
                 class="c14 Button btn btn-link"
+                data-testid="zoom-to-property-0"
                 type="button"
               >
                 <div
@@ -1228,6 +1230,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
             >
               <button
                 class="c14 Button c22 btn btn-primary"
+                data-testid="move-pin-location-0"
                 title="move-pin-location"
                 type="button"
               >
@@ -1255,7 +1258,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
             >
               <button
                 class="c14 Button c23 btn btn-link"
-                data-testid="remove-button"
+                data-testid="delete-property-0"
                 type="button"
               >
                 <div
@@ -1397,6 +1400,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
             >
               <button
                 class="c14 Button btn btn-link"
+                data-testid="zoom-to-property-1"
                 type="button"
               >
                 <div
@@ -1424,6 +1428,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
             >
               <button
                 class="c14 Button c22 btn btn-primary"
+                data-testid="move-pin-location-1"
                 title="move-pin-location"
                 type="button"
               >
@@ -1451,7 +1456,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
             >
               <button
                 class="c14 Button c23 btn btn-link"
-                data-testid="remove-button"
+                data-testid="delete-property-1"
                 type="button"
               >
                 <div

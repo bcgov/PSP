@@ -435,13 +435,16 @@ exports[`UpdateNoteContainer component > renders as expected 1`] = `
             >
               <div
                 class="mr-2 col-md-2"
+                data-testid="notes-created-label"
               >
                 Created:
               </div>
               <div
                 class="col"
               >
-                <span>
+                <span
+                  data-testid="notes-created-date"
+                >
                   <strong>
                     Jul 20, 2022
                   </strong>
@@ -464,13 +467,16 @@ exports[`UpdateNoteContainer component > renders as expected 1`] = `
             >
               <div
                 class="mr-2 col-md-2"
+                data-testid="notes-updated-label"
               >
                 Last updated:
               </div>
               <div
                 class="col"
               >
-                <span>
+                <span
+                  data-testid="notes-updated-date"
+                >
                   <strong>
                     Jul 20, 2022
                   </strong>

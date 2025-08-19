@@ -39,7 +39,7 @@ namespace Pims.Api.Services
 
         Task<ExternalResponse<string>> DeleteLeaseDocumentAsync(PimsLeaseDocument leaseDocument);
 
-        Task<ExternalResponse<string>> DeleteManagementActivityDocumentAsync(PimsPropertyActivityDocument managementActivityDocument);
+        Task<ExternalResponse<string>> DeleteManagementActivityDocumentAsync(PimsMgmtActivityDocument managementActivityDocument);
 
         Task<ExternalResponse<string>> DeleteManagementFileDocumentAsync(PimsManagementFileDocument managementFileDocument);
 

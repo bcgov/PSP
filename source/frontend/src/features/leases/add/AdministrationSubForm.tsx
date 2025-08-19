@@ -117,12 +117,12 @@ const AdministrationSubForm: React.FunctionComponent<
         title="Help with choosing the agreement Program, Type and Purpose"
         guideBody={guideBodyContent()}
       ></FormGuideContainer>
-      <SectionField label="MOTI contact" labelWidth={{ xs: 3 }} contentWidth={{ xs: 6 }}>
+      <SectionField label="MOTT contact" labelWidth={{ xs: 3 }} contentWidth={{ xs: 6 }}>
         <InlineInput field="motiName" />
       </SectionField>
 
       <SectionField
-        label="MOTI region"
+        label="MOTT region"
         labelWidth={{ xs: 3 }}
         contentWidth={{ xs: 'auto' }}
         required

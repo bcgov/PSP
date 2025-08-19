@@ -278,8 +278,8 @@ describe('mapPropertyUtils', () => {
 
   it.each([
     [
-      { ...getMockSelectedFeatureDataset(), pimsFeature: { properties: { PID: '1234' } } as any },
-      '1234',
+      { ...getMockSelectedFeatureDataset(), pimsFeature: { properties: { PID_PADDED: '123-456-789' } } as any },
+      '123-456-789',
     ],
     [
       {

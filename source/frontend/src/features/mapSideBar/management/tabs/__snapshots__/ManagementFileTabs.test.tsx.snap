@@ -88,6 +88,11 @@ exports[`ManagementFileTabs component > matches snapshot 1`] = `
   border-radius: 0.5rem;
 }
 
+.c10 {
+  padding: 0 0.4rem;
+  display: block;
+}
+
 .c6.required::before {
   content: '*';
   position: absolute;
@@ -100,8 +105,10 @@ exports[`ManagementFileTabs component > matches snapshot 1`] = `
 }
 
 .c8 {
-  display: grid;
-  grid-template-columns: 1fr 0.5fr;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
@@ -117,9 +124,16 @@ exports[`ManagementFileTabs component > matches snapshot 1`] = `
   margin: 0;
 }
 
-.c10 {
-  padding: 0 0.4rem;
-  display: block;
+.c8 .primary-column {
+  -webkit-flex: 1 1 0;
+  -ms-flex: 1 1 0;
+  flex: 1 1 0;
+}
+
+.c8 .secondary-column {
+  -webkit-flex: 0.5 1 0;
+  -ms-flex: 0.5 1 0;
+  flex: 0.5 1 0;
 }
 
 <div
@@ -204,145 +218,6 @@ exports[`ManagementFileTabs component > matches snapshot 1`] = `
                 >
                   Draft
                 </div>
-              </div>
-            </div>
-          </div>
-          <div
-            class="c4 form-section"
-          >
-            <h2
-              class="c7"
-            >
-              <div
-                class="no-gutters row"
-              >
-                <div
-                  class="align-content-end col"
-                >
-                  <div
-                    class="c8 no-gutters row"
-                  >
-                    <div
-                      class="align-items-end col-auto"
-                    >
-                      Management Contact
-                    </div>
-                    <div
-                      class="my-1 col-auto"
-                    />
-                  </div>
-                </div>
-                <div
-                  class="pl-2 d-flex align-items-end col-auto"
-                >
-                  <svg
-                    class="c9"
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 24 24"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <title>
-                      collapse-section
-                    </title>
-                    <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />
-                    <path
-                      d="m7 14 5-5 5 5z"
-                    />
-                  </svg>
-                </div>
-              </div>
-            </h2>
-            <div
-              class="collapse show"
-            >
-              <div
-                class="table"
-                data-testid="ManagementFileContactsContactsTable"
-                role="table"
-              >
-                <div
-                  class="thead thead-light"
-                >
-                  <div
-                    class="tr"
-                    role="row"
-                    style="display: flex; flex: 1 0 auto; min-width: 210px;"
-                  >
-                    <div
-                      class="th"
-                      colspan="1"
-                      role="columnheader"
-                      style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                    >
-                      <div
-                        class="sortable-column"
-                      >
-                        Contact
-                      </div>
-                    </div>
-                    <div
-                      class="th"
-                      colspan="1"
-                      role="columnheader"
-                      style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                    >
-                      <div
-                        class="sortable-column"
-                      >
-                        Primary Contact
-                      </div>
-                    </div>
-                    <div
-                      class="th"
-                      colspan="1"
-                      role="columnheader"
-                      style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                    >
-                      <div
-                        class="sortable-column"
-                      >
-                        Purpose
-                      </div>
-                    </div>
-                    <div
-                      class="th"
-                      colspan="1"
-                      role="columnheader"
-                      style="box-sizing: border-box; flex: 25 0 auto; min-width: 30px; width: 25px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                    >
-                      <div
-                        class="sortable-column"
-                      >
-                        Actions
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="no-rows-message"
-                >
-                  No contacts found
-                </div>
-              </div>
-              <div
-                class="row"
-              >
-                <div
-                  class="align-self-center col-auto"
-                />
-                <div
-                  class="ml-auto align-self-center col-auto"
-                />
-                <div
-                  class="align-self-center col-auto"
-                />
               </div>
             </div>
           </div>
@@ -516,6 +391,142 @@ exports[`ManagementFileTabs component > matches snapshot 1`] = `
                 >
                   ADDITIONAL DETAILS
                 </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="c4 form-section"
+          >
+            <h2
+              class="c7"
+            >
+              <div
+                class="no-gutters row"
+              >
+                <div
+                  class="align-content-end col"
+                >
+                  <div
+                    class="c8 no-gutters row"
+                  >
+                    <div
+                      class="align-items-end primary-column col-auto"
+                    >
+                      Management Contact
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="pl-2 d-flex align-items-end col-auto"
+                >
+                  <svg
+                    class="c9"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <title>
+                      collapse-section
+                    </title>
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="m7 14 5-5 5 5z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </h2>
+            <div
+              class="collapse show"
+            >
+              <div
+                class="table"
+                data-testid="ManagementFileContactsContactsTable"
+                role="table"
+              >
+                <div
+                  class="thead thead-light"
+                >
+                  <div
+                    class="tr"
+                    role="row"
+                    style="display: flex; flex: 1 0 auto; min-width: 210px;"
+                  >
+                    <div
+                      class="th"
+                      colspan="1"
+                      role="columnheader"
+                      style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    >
+                      <div
+                        class="sortable-column"
+                      >
+                        Contact
+                      </div>
+                    </div>
+                    <div
+                      class="th"
+                      colspan="1"
+                      role="columnheader"
+                      style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    >
+                      <div
+                        class="sortable-column"
+                      >
+                        Primary Contact
+                      </div>
+                    </div>
+                    <div
+                      class="th"
+                      colspan="1"
+                      role="columnheader"
+                      style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    >
+                      <div
+                        class="sortable-column"
+                      >
+                        Purpose
+                      </div>
+                    </div>
+                    <div
+                      class="th"
+                      colspan="1"
+                      role="columnheader"
+                      style="box-sizing: border-box; flex: 25 0 auto; min-width: 30px; width: 25px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    >
+                      <div
+                        class="sortable-column"
+                      >
+                        Actions
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="no-rows-message"
+                >
+                  No contacts found
+                </div>
+              </div>
+              <div
+                class="row"
+              >
+                <div
+                  class="align-self-center col-auto"
+                />
+                <div
+                  class="ml-auto align-self-center col-auto"
+                />
+                <div
+                  class="align-self-center col-auto"
+                />
               </div>
             </div>
           </div>

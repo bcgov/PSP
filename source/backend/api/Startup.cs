@@ -187,7 +187,7 @@ namespace Pims.Api
                     {
                         ValidateIssuerSigningKey = true,
                         ValidateIssuer = true,
-                        ValidAudiences = new List<string> { Configuration["Keycloak:ValidAudience"] },
+                        ValidAudiences = Configuration.GetSection("Keycloak:ValidAudiences").Get<string[]>(),
                         ValidateAudience = true,
                         ValidateLifetime = true,
                         ValidAlgorithms = new List<string>() { "RS256" },

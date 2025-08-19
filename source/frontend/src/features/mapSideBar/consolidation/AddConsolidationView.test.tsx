@@ -122,7 +122,7 @@ describe('Add Consolidation View', () => {
         PropertyForm.fromMapProperty(testProperty).toFeatureDataset(),
       ]);
     });
-    expect(getPrimaryAddressByPid).toHaveBeenCalledWith(testProperty.pid.replaceAll('-', ''));
+    expect(getPrimaryAddressByPid).toHaveBeenCalledWith(testProperty.pid);
   });
 
   it('does not call for address if property has no pid', async () => {

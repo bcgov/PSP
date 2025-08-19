@@ -64,7 +64,7 @@ const ResearchHeader: React.FunctionComponent<
           {researchFile?.fileName}
         </HeaderField>
         <HeaderField
-          label="MOTI region:"
+          label="MOTT region:"
           labelWidth={{ xs: leftColumnLabel }}
           contentWidth={{ xs: 9 }}
         >

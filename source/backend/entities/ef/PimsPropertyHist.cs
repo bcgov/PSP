@@ -161,6 +161,10 @@ public partial class PimsPropertyHist
     [StringLength(100)]
     public string ReserveName { get; set; }
 
+    [Column("GLOBAL_UID")]
+    [StringLength(254)]
+    public string GlobalUid { get; set; }
+
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
 

@@ -528,7 +528,7 @@ exports[`AddResearchForm component > renders as expected 1`] = `
               Name of the area
             </li>
             <li>
-              Name of the MoTI highway district
+              Name of the MOTT highway district
             </li>
             <li>
               Name of the enquirer
@@ -838,6 +838,7 @@ exports[`AddResearchForm component > renders as expected 1`] = `
                 >
                   <div
                     class="c1 form-section"
+                    data-testid="property-search-selector-section"
                   >
                     <h2
                       class="c8"

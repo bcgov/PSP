@@ -340,19 +340,19 @@ namespace Pims.Dal.Repositories
             return Context.PimsPaymentItemTypes.AsNoTracking().ToArray();
         }
 
-        public IEnumerable<PimsPropMgmtActivityStatusType> GetAllPropMgmtActivityStatusTypes()
+        public IEnumerable<PimsMgmtActivityStatusType> GetAllMgmtActivityStatusTypes()
         {
-            return Context.PimsPropMgmtActivityStatusTypes.AsNoTracking().ToArray();
+            return Context.PimsMgmtActivityStatusTypes.AsNoTracking().ToArray();
         }
 
-        public IEnumerable<PimsPropMgmtActivitySubtype> GetAllPropMgmtActivitySubtypes()
+        public IEnumerable<PimsMgmtActivitySubtype> GetAllMgmtActivitySubtypes()
         {
-            return Context.PimsPropMgmtActivitySubtypes.AsNoTracking().ToArray();
+            return Context.PimsMgmtActivitySubtypes.AsNoTracking().ToArray();
         }
 
-        public IEnumerable<PimsPropMgmtActivityType> GetAllPropMgmtActivityTypes()
+        public IEnumerable<PimsMgmtActivityType> GetAllMgmtActivityTypes()
         {
-            return Context.PimsPropMgmtActivityTypes.AsNoTracking().ToArray();
+            return Context.PimsMgmtActivityTypes.AsNoTracking().ToArray();
         }
 
         public IEnumerable<PimsAgreementStatusType> GetAllAgreementStatusTypes()

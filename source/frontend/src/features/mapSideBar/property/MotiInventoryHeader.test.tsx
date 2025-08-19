@@ -19,11 +19,17 @@ const defaultComposedProperty: ComposedProperty = {
   pimsProperty: undefined,
   propertyAssociations: undefined,
   parcelMapFeatureCollection: undefined,
-  geoserverFeatureCollection: undefined,
+  pimsGeoserverFeatureCollection: undefined,
   bcAssessmentSummary: undefined,
   crownTenureFeatures: undefined,
   planNumber: undefined,
   spcpOrder: undefined,
+  crownInclusionFeatures: undefined,
+  crownInventoryFeatures: undefined,
+  crownLeaseFeatures: undefined,
+  crownLicenseFeatures: undefined,
+  highwayFeatures: undefined,
+  municipalityFeatures: undefined,
 };
 
 vi.mock('@/hooks/repositories/useHistoricalNumberRepository');
@@ -141,7 +147,7 @@ describe('MotiInventoryHeader component', () => {
     const result = await setup({
       composedProperty: {
         ...defaultComposedProperty,
-        geoserverFeatureCollection: {
+        pimsGeoserverFeatureCollection: {
           type: 'FeatureCollection',
           features: [testProperty],
         },

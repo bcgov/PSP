@@ -22,7 +22,7 @@ const ProjectHeader: React.FunctionComponent<React.PropsWithChildren<IProjectHea
         <HeaderField label="Project:" labelWidth={{ xs: 3 }} contentWidth={{ xs: 9 }}>
           {project?.code} {project?.description}
         </HeaderField>
-        <HeaderField label="MoTI region:" labelWidth={{ xs: 3 }} contentWidth={{ xs: 9 }}>
+        <HeaderField label="MOTT region:" labelWidth={{ xs: 3 }} contentWidth={{ xs: 9 }}>
           {project?.regionCode?.description}
         </HeaderField>
       </StyledLeftHeaderPane>

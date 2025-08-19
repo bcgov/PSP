@@ -26,8 +26,8 @@ public partial class PimsManagementActivityPropertyHist
     [Column("PROPERTY_ID")]
     public long PropertyId { get; set; }
 
-    [Column("PIMS_MANAGEMENT_ACTIVITY_ID")]
-    public long PimsManagementActivityId { get; set; }
+    [Column("MANAGEMENT_ACTIVITY_ID")]
+    public long ManagementActivityId { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }

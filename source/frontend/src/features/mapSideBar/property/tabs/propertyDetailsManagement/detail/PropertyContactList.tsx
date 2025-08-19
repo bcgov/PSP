@@ -5,7 +5,7 @@ import { CellProps } from 'react-table';
 
 import { LinkButton } from '@/components/common/buttons/LinkButton';
 import { RemoveIconButton } from '@/components/common/buttons/RemoveButton';
-import { StyledLink } from '@/components/maps/leaflet/LayerPopup/styles';
+import { StyledLink } from '@/components/common/styles';
 import { ColumnWithProps, Table } from '@/components/Table';
 import Claims from '@/constants/claims';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';

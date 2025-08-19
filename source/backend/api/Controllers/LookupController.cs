@@ -114,9 +114,9 @@ namespace Pims.Api.Controllers
                 var agreementStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAgreementStatusTypes());
                 var interestHolderInterestTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllInterestHolderInterestTypes());
                 var expropriationPaymentItemTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllExpropriationPaymentItemTypes());
-                var mgmtActivityStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropMgmtActivityStatusTypes());
-                var mgmtActivitySubtypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropMgmtActivitySubtypes());
-                var mgmtActivityTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropMgmtActivityTypes());
+                var mgmtActivityStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllMgmtActivityStatusTypes());
+                var mgmtActivitySubtypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllMgmtActivitySubtypes());
+                var mgmtActivityTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllMgmtActivityTypes());
                 var dispositionStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionStatusTypes());
                 var dispositionFileFundingTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionFileFundingTypes());
                 var dispositionFileStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionFileStatusTypes());

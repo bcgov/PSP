@@ -602,6 +602,7 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
           >
             <div
               class="c3 form-section"
+              data-testid="property-search-selector-section"
             >
               <h2
                 class="c10"
@@ -1258,7 +1259,7 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
         <div
           class="align-content-end col"
         >
-          Selected properties
+          Selected Properties
         </div>
       </div>
     </h2>
@@ -1405,6 +1406,7 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
         >
           <button
             class="c8 Button btn btn-link"
+            data-testid="zoom-to-property-0"
             type="button"
           >
             <div
@@ -1432,6 +1434,7 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
         >
           <button
             class="c8 Button c9 btn btn-primary"
+            data-testid="move-pin-location-0"
             title="move-pin-location"
             type="button"
           >
@@ -1459,7 +1462,7 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
         >
           <button
             class="c8 Button c10 btn btn-link"
-            data-testid="remove-button"
+            data-testid="delete-property-0"
             type="button"
           >
             <div
@@ -1601,6 +1604,7 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
         >
           <button
             class="c8 Button btn btn-link"
+            data-testid="zoom-to-property-1"
             type="button"
           >
             <div
@@ -1628,6 +1632,7 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
         >
           <button
             class="c8 Button c9 btn btn-primary"
+            data-testid="move-pin-location-1"
             title="move-pin-location"
             type="button"
           >
@@ -1655,7 +1660,7 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
         >
           <button
             class="c8 Button c10 btn btn-link"
-            data-testid="remove-button"
+            data-testid="delete-property-1"
             type="button"
           >
             <div

@@ -16,9 +16,9 @@ export const config: ITenantConfig2 = {
       imageWithText: '/tenants/MOTI/PIMS-logo-with-text.png',
     },
     login: {
-      title: 'MOTI Property Information Management System (PIMS)',
+      title: 'MOTT Property Information Management System (PIMS)',
       heading:
-        'PIMS enables users to track and manage information relating to the property interests of the MOTI and BCTFA.',
+        'PIMS enables users to track and manage information relating to the property interests of the MOTT and BCTFA.',
       body: 'By signing in you acknowledge that not all data included within has been vetted for completeness and accuracy. Please exercise caution by verifying information prior to relying on it.',
       backgroundImage: '/tenants/MOTI/background-image.jpg',
     },

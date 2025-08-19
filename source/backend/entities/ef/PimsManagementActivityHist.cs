@@ -20,13 +20,13 @@ public partial class PimsManagementActivityHist
     [Column("END_DATE_HIST", TypeName = "datetime")]
     public DateTime? EndDateHist { get; set; }
 
-    [Column("PIMS_MANAGEMENT_ACTIVITY_ID")]
-    public long PimsManagementActivityId { get; set; }
+    [Column("MANAGEMENT_ACTIVITY_ID")]
+    public long ManagementActivityId { get; set; }
 
     [Required]
-    [Column("PROP_MGMT_ACTIVITY_STATUS_TYPE_CODE")]
+    [Column("MGMT_ACTIVITY_STATUS_TYPE_CODE")]
     [StringLength(20)]
-    public string PropMgmtActivityStatusTypeCode { get; set; }
+    public string MgmtActivityStatusTypeCode { get; set; }
 
     [Column("SERVICE_PROVIDER_PERSON_ID")]
     public long? ServiceProviderPersonId { get; set; }
@@ -37,9 +37,9 @@ public partial class PimsManagementActivityHist
     [Column("MANAGEMENT_FILE_ID")]
     public long? ManagementFileId { get; set; }
 
-    [Column("PROP_MGMT_ACTIVITY_TYPE_CODE")]
+    [Column("MGMT_ACTIVITY_TYPE_CODE")]
     [StringLength(20)]
-    public string PropMgmtActivityTypeCode { get; set; }
+    public string MgmtActivityTypeCode { get; set; }
 
     [Column("REQUEST_ADDED_DT")]
     public DateOnly RequestAddedDt { get; set; }

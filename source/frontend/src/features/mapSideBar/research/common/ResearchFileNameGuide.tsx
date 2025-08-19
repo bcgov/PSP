@@ -14,7 +14,7 @@ export const ResearchFileNameGuide: FunctionComponent<PropsWithChildren<unknown>
         <ul>
           <li>Ministry project name</li>
           <li>Name of the area</li>
-          <li>Name of the MoTI highway district</li>
+          <li>Name of the MOTT highway district</li>
           <li>Name of the enquirer</li>
           <li>Legal description</li>
         </ul>

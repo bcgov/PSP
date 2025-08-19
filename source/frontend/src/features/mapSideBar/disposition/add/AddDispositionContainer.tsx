@@ -6,12 +6,12 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvider';
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
-import { useInitialMapSelectorProperties } from '@/hooks/useInitialMapSelectorProperties';
+import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
 import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { exists, featuresetToMapProperty, isValidId } from '@/utils';
+import { exists, firstOrNull, isValidId } from '@/utils';
 
 import { PropertyForm } from '../../shared/models';
 import { DispositionFormModel } from '../models/DispositionFormModel';
@@ -30,8 +30,6 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({
 }) => {
   const [isFormValid, setIsFormValid] = useState<boolean>(true);
   const formikRef = useRef<FormikProps<DispositionFormModel>>(null);
-  const mapMachine = useMapStateMachine();
-  const selectedFeatureDataset = mapMachine.selectedFeatureDataset;
 
   const { setModalContent, setDisplayModal } = useModalContext();
   const { execute: getPropertyAssociations } = usePropertyAssociations();
@@ -57,25 +55,35 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({
     [getPropertyAssociations],
   );
 
+  const mapMachine = useMapStateMachine();
+  const selectedFeatureDatasets = mapMachine.selectedFeatures ?? [];
+
+  // Get PropertyForms with addresses for all selected features
+  const { featuresWithAddresses, bcaLoading } =
+    useFeatureDatasetsWithAddresses(selectedFeatureDatasets);
+
   const initialForm = useMemo(() => {
     const dispositionForm = new DispositionFormModel();
     // support creating a new disposition file from the map popup
-    if (selectedFeatureDataset !== null) {
-      const property = PropertyForm.fromMapProperty(
-        featuresetToMapProperty(selectedFeatureDataset),
-      );
-      dispositionForm.fileProperties = [property];
-      // auto-select file region based upon the location of the property
-      dispositionForm.regionCode =
-        property.regionName !== 'Cannot determine' ? property.region?.toString() ?? null : null;
+    if (featuresWithAddresses?.length > 0) {
+      dispositionForm.fileProperties = featuresWithAddresses.map(obj => {
+        const property = PropertyForm.fromFeatureDataset(obj.feature);
+        if (exists(obj.address)) {
+          property.address = obj.address;
+        }
+        return property;
+      });
+      // auto-select file region based upon the location of the first property added to the file
+      const firstProperty = firstOrNull(dispositionForm.fileProperties);
+      if (exists(firstProperty)) {
+        dispositionForm.regionCode =
+          firstProperty.regionName !== 'Cannot determine'
+            ? firstProperty.region?.toString() ?? null
+            : null;
+      }
     }
     return dispositionForm;
-  }, [selectedFeatureDataset]);
-
-  const { bcaLoading, initialProperty } = useInitialMapSelectorProperties(selectedFeatureDataset);
-  if (initialForm?.fileProperties.length && initialProperty) {
-    initialForm.fileProperties[0].address = initialProperty.address;
-  }
+  }, [featuresWithAddresses]);
 
   // Require user confirmation before adding a property to file
   // This is the flow for Map Marker -> right-click -> create Disposition File
@@ -83,14 +91,19 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({
     const runAsync = async () => {
       if (exists(initialForm) && exists(formikRef.current) && needsUserConfirmation) {
         if (initialForm.fileProperties.length > 0) {
-          const formProperty = initialForm.fileProperties[0];
-          if (await confirmBeforeAdd(formProperty)) {
+          // Check all properties for confirmation
+          const needsConfirmation = await Promise.all(
+            initialForm.fileProperties.map(formProperty => confirmBeforeAdd(formProperty)),
+          );
+          if (needsConfirmation.some(confirm => confirm)) {
             setModalContent({
               variant: 'warning',
               title: 'User Override Required',
               message: (
                 <>
-                  <p>This property has already been added to one or more disposition files.</p>
+                  <p>
+                    One or more properties have already been added to one or more disposition files.
+                  </p>
                   <p>Do you want to acknowledge and proceed?</p>
                 </>
               ),
@@ -121,14 +134,7 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({
     };
 
     runAsync();
-  }, [
-    confirmBeforeAdd,
-    initialForm,
-    needsUserConfirmation,
-    setDisplayModal,
-    setModalContent,
-    bcaLoading,
-  ]);
+  }, [confirmBeforeAdd, initialForm, needsUserConfirmation, setDisplayModal, setModalContent]);
 
   const handleCancel = useCallback(() => onClose(), [onClose]);
 
@@ -168,6 +174,7 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({
         handleSuccess(response);
       }
     } finally {
+      mapMachine.processCreation();
       formikHelpers?.setSubmitting(false);
     }
   };

@@ -1,9 +1,11 @@
 import { FieldArray, useFormikContext } from 'formik';
 import { LatLngLiteral } from 'leaflet';
 import isNumber from 'lodash/isNumber';
+import { useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { Section } from '@/components/common/Section/Section';
 import MapSelectorContainer from '@/components/propertySelector/MapSelectorContainer';
@@ -24,6 +26,20 @@ const ResearchProperties: React.FC<IResearchPropertiesProps> = ({ confirmBeforeA
   const { values } = useFormikContext<ResearchForm>();
   const { getPrimaryAddressByPid, bcaLoading } = useBcaAddress();
   const { setModalContent, setDisplayModal } = useModalContext();
+
+  const { setEditPropertiesMode } = useMapStateMachine();
+
+  useEffect(() => {
+    setEditPropertiesMode(true);
+  }, [setEditPropertiesMode]);
+
+  useEffect(() => {
+    // Set the map state machine to edit properties mode so that the map selector knows what mode it is in.
+    setEditPropertiesMode(true);
+    return () => {
+      setEditPropertiesMode(false);
+    };
+  }, [setEditPropertiesMode]);
 
   return (
     <Section header="Properties to include in this file:">

@@ -1103,6 +1103,7 @@ exports[`ManagementActivityEditForm component > renders as expected 1`] = `
                   </div>
                   <button
                     class="c16 Button btn btn-link"
+                    data-testid="ministry-contacts-add-link"
                     type="button"
                   >
                     <div
@@ -1246,6 +1247,7 @@ exports[`ManagementActivityEditForm component > renders as expected 1`] = `
                   </div>
                   <button
                     class="c16 Button btn btn-link"
+                    data-testid="external-contacts-add-link"
                     type="button"
                   >
                     <div
@@ -1357,6 +1359,7 @@ exports[`ManagementActivityEditForm component > renders as expected 1`] = `
                     >
                       <button
                         class="c16 Button c18 c19 btn btn-primary"
+                        data-testid="add-invoice-button"
                         type="button"
                       >
                         <div

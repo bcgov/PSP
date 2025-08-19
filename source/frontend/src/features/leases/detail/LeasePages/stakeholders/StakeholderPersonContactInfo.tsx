@@ -3,7 +3,7 @@ import { FaExternalLinkAlt } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import { SectionField } from '@/components/common/Section/SectionField';
-import { StyledLink } from '@/components/maps/leaflet/LayerPopup/styles';
+import { StyledLink } from '@/components/common/styles';
 import { LeaseFormModel } from '@/features/leases/models';
 import { withNameSpace } from '@/utils/formUtils';
 

@@ -71,7 +71,7 @@ export const columns: ColumnWithProps<DispositionSearchResultModel>[] = [
     maxWidth: 40,
   },
   {
-    Header: 'MOTI Region',
+    Header: 'MOTT region',
     accessor: 'region',
     align: 'left',
     maxWidth: 20,

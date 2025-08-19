@@ -18,6 +18,7 @@ import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { exists, isValidId, sortFileProperties, stripTrailingSlash } from '@/utils';
 
 import { SideBarContext } from '../context/sidebarContext';
+import { FileTabType } from '../shared/detail/FileTabs';
 import { PropertyForm } from '../shared/models';
 import usePathGenerator from '../shared/sidebarPathGenerator';
 import { IManagementViewProps } from './ManagementView';
@@ -65,6 +66,8 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
   const match = useRouteMatch();
   const query = useQuery();
   const isEditing = query.get('edit') === 'true';
+  const urlPathWrapper = usePathGenerator();
+  const tabMatch = useRouteMatch<{ detailType: string; id: string }>(`${match.path}/:tab`);
 
   const setIsEditing = (value: boolean) => {
     if (value) {
@@ -107,7 +110,7 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
     }
   }, [managementFileId, getLastUpdatedBy, setLastUpdatedBy]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (
       !exists(lastUpdatedBy) ||
       managementFileId !== lastUpdatedBy.parentId ||
@@ -136,6 +139,14 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
   const close = useCallback(() => onClose && onClose(), [onClose]);
 
   const pathGenerator = usePathGenerator();
+
+  const stripEditFromPath = () => {
+    if (!tabMatch) {
+      return;
+    }
+
+    urlPathWrapper.showDetails('management', managementFileId, FileTabType.FILE_DETAILS, false);
+  };
 
   const onSelectFileSummary = () => {
     if (!exists(managementFile)) {
@@ -214,10 +225,12 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
       formikRef.current?.resetForm();
     }
     setIsEditing(false);
+    stripEditFromPath();
   };
 
   const onSuccess = (refreshProperties?: boolean, refreshFile?: boolean) => {
     setIsEditing(false);
+    stripEditFromPath();
     fetchLastUpdatedBy();
     if (refreshFile) {
       fetchManagementFile();

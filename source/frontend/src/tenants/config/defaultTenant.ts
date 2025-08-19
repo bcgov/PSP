@@ -32,7 +32,11 @@ const CROWN_LAND_INVENTORY_LAYER_URL =
   'https://openmaps.gov.bc.ca/geo/pub/WHSE_TANTALIS.TA_CROWN_INVENTORY_SVW/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_TANTALIS.TA_CROWN_INVENTORY_SVW';
 const CROWN_LAND_INCLUSIONS_LAYER_URL =
   'https://openmaps.gov.bc.ca/geo/pub/WHSE_TANTALIS.TA_CROWN_INCLUSIONS_SVW/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_TANTALIS.TA_CROWN_INCLUSIONS_SVW';
+const CROWN_LAND_SURVEYED_PARCELS_URL =
+  'https://openmaps.gov.bc.ca/geo/pub/WHSE_TANTALIS.TA_SURVEY_PARCELS_SVW/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_TANTALIS.TA_SURVEY_PARCELS_SVW';
 
+const INTERNAL_FULLY_ATTRIBUTED_PARCELS_LAYER_URL =
+  '/ogs-internal/ows?service=wfs&request=GetFeature&typeName=PMBC_PARCEL_POLYGON_FABRIC&outputformat=json&version=2.0.0&srsName=EPSG:4326';
 /**
  * Default tenant configuration.
  */
@@ -55,8 +59,10 @@ export const defaultTenant: ITenantConfig2 = {
   layers: {},
   propertiesUrl:
     'ogs-internal/ows?service=wfs&request=GetFeature&typeName=PIMS_PROPERTY_LOCATION_VW&outputformat=json&srsName=EPSG:4326&version=2.0.0&',
+  propertiesBoundaryUrl:
+    'ogs-internal/ows?service=wfs&request=GetFeature&typeName=PIMS_PROPERTY_BOUNDARY_VW&outputformat=json&srsName=EPSG:4326&version=2.0.0&',
   minimalPropertiesUrl:
-    'ogs-internal/ows?service=wfs&request=GetFeature&typeName=PIMS_PROPERTY_LOCATION_LITE_VW&outputformat=json&srsName=EPSG:4326&version=2.0.0&',
+    'ogs-internal/ows?service=wfs&request=GetFeature&typeName=PIMS_PROPERTY_LITE_VW&outputformat=json&srsName=EPSG:4326&version=2.0.0',
   //NOTE: The fully attributed parcel layer does not work locally unless the SITEMINDER cookie SameSite=None; is set manually in the browser.
   parcelMapFullyAttributed: {
     url: 'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows',
@@ -65,6 +71,7 @@ export const defaultTenant: ITenantConfig2 = {
   electoralLayerUrl: ELECTORAL_LAYER_URL,
   municipalLayerUrl: MUNICIPALITY_LAYER_URL,
   fullyAttributedParcelsLayerUrl: PARCELS_LAYER_URL,
+  internalFullyAttributedParcelsLayerUrl: INTERNAL_FULLY_ATTRIBUTED_PARCELS_LAYER_URL,
   regionalLayerUrl: REGIONAL_LAYER_URL,
   motiRegionLayerUrl: MOTI_REGION_LAYER_URL,
   hwyDistrictLayerUrl: HWY_DISTRICT_LAYER_URL,
@@ -77,6 +84,7 @@ export const defaultTenant: ITenantConfig2 = {
   crownLandLeasesUrl: CROWN_LAND_LEASES_LAYER_URL,
   crownLandInventoryUrl: CROWN_LAND_INVENTORY_LAYER_URL,
   crownLandInclusionsUrl: CROWN_LAND_INCLUSIONS_LAYER_URL,
+  crownLandSurveyedParcelsUrl: CROWN_LAND_SURVEYED_PARCELS_URL,
   bcAssessment: {
     url: 'https://delivery.apps.gov.bc.ca/ext/sgw/geo.bca',
     names: {
@@ -109,6 +117,70 @@ export const defaultTenant: ITenantConfig2 = {
     CDOGS:
       'The DevExchange Document Generation Service is experiencing service degradation, you will be unable to generate form documents (ie. H120, H1005) until resolved.',
   },
+  landTitleDistricts: [
+    'ALL',
+    'ALBERNI DISTRICT',
+    'BARCLAY DISTRICT',
+    'BRIGHT DISTRICT',
+    'CAMERON DISTRICT',
+    'CARIBOO DISTRICT',
+    'CASSIAR DISTRICT',
+    'CEDAR DISTRICT',
+    'CHEMAINUS DISTRICT',
+    'CLAYOQUOT DISTRICT',
+    'COMIAKEN DISTRICT',
+    'COMOX DISTRICT',
+    'COWICHAN DISTRICT',
+    'COWICHAN LAKE DISTRICT',
+    'CRANBERRY DISTRICT',
+    'DOUGLAS DISTRICT',
+    'DUNSMUIR DISTRICT',
+    'ESQUIMALT DISTRICT',
+    'GOLDSTREAM DISTRICT',
+    'HELMCKEN DISTRICT',
+    'HIGHLAND DISTRICT',
+    'KDYD',
+    'KOOTENAY DISTRICT',
+    'LAKE DISTRICT',
+    'LILLOOET DISTRICT',
+    'MALAHAT DISTRICT',
+    'METCHOSIN DISTRICT',
+    'MOUNTAIN DISTRICT',
+    'N SALTSPRING IS - COWICHAN DIST',
+    'NANAIMO DISTRICT',
+    'NANOOSE DISTRICT',
+    'NELSON DISTRICT',
+    'NEW WESTMINSTER DISTRICT',
+    'NEWCASTLE DISTRICT',
+    'NOOTKA DISTRICT',
+    'NORTH SAANICH DISTRICT',
+    'ODYD',
+    'OTTER DISTRICT',
+    'OYSTER DISTRICT',
+    'PEACE RIVER DISTRICT',
+    'QUAMICHAN DISTRICT',
+    'QUEEN CHARLOTTE DISTRICT',
+    'RANGE 1 COAST DISTRICT',
+    'RANGE 2 COAST DISTRICT',
+    'RANGE 3 COAST DISTRICT',
+    'RANGE 4 COAST DISTRICT',
+    'RANGE 5 COAST DISTRICT',
+    'RENFREW DISTRICT',
+    'RUPERT DISTRICT',
+    'S SALTSPRING IS - COWICHAN DIST',
+    'SAHTLAM DISTRICT',
+    'SAYWARD DISTRICT',
+    'SDYD',
+    'SEYMOUR DISTRICT',
+    'SHAWNIGAN DISTRICT',
+    'SOMENOS DISTRICT',
+    'SOOKE DISTRICT',
+    'SOUTH SAANICH DISTRICT',
+    'TEXADA ISLAND DISTRICT',
+    'VICTORIA DISTRICT',
+    'WELLINGTON DISTRICT',
+    'YDYD',
+  ],
 };
 
 export default defaultTenant;

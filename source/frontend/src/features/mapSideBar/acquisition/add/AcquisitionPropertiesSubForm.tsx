@@ -121,7 +121,7 @@ export const AcquisitionPropertiesSubForm: React.FunctionComponent<IAcquisitionP
                 />
               </Col>
             </Row>
-            <Section header="Selected properties">
+            <Section header="Selected Properties">
               <SelectedPropertyHeaderRow />
               {formikProps.values.properties.map((property, index) => (
                 <SelectedPropertyRow

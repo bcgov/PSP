@@ -906,7 +906,7 @@ exports[`UpdateLeaseForm component > renders as expected 1`] = `
             <label
               class="c3"
             >
-              MOTI contact:
+              MOTT contact:
             </label>
           </div>
           <div
@@ -935,7 +935,7 @@ exports[`UpdateLeaseForm component > renders as expected 1`] = `
             <label
               class="c3"
             >
-              MOTI region:
+              MOTT region:
             </label>
           </div>
           <div

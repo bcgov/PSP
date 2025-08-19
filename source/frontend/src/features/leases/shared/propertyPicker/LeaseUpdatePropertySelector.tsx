@@ -2,7 +2,7 @@ import { AxiosError } from 'axios';
 import { FieldArray, FieldArrayRenderProps, Formik, FormikProps } from 'formik';
 import { geoJSON, LatLngLiteral } from 'leaflet';
 import isNumber from 'lodash/isNumber';
-import { useCallback, useContext, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { PiCornersOut } from 'react-icons/pi';
 import { toast } from 'react-toastify';
@@ -28,12 +28,14 @@ import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
 import { useProperties } from '@/hooks/repositories/useProperties';
 import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeaseRepository';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
+import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
 import { getCancelModalProps } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_PropertyView } from '@/models/api/generated/ApiGen_Concepts_PropertyView';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import {
+  arePropertyFormsEqual,
   exists,
   isLatLngInFeatureSetBoundary,
   isValidId,
@@ -72,11 +74,80 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
 
   const { getCompleteLease } = useLeaseDetail(lease?.id ?? undefined);
 
-  const mapMachine = useMapStateMachine();
+  const {
+    requestFlyToBounds,
+    refreshMapProperties,
+    setEditPropertiesMode,
+    selectedFeatures,
+    processCreation,
+  } = useMapStateMachine();
 
   const withUserOverride = useApiUserOverride<
     (userOverrideCodes: UserOverrideCode[]) => Promise<any | void>
   >('Failed to update Lease File Properties');
+
+  useEffect(() => {
+    // Set the map state machine to edit properties mode so that the map selector knows what mode it is in.
+    setEditPropertiesMode(true);
+    return () => {
+      setEditPropertiesMode(false);
+    };
+  }, [setEditPropertiesMode]);
+
+  // Get FormLeaseProperties with addresses for all selected features
+  const { featuresWithAddresses } = useFeatureDatasetsWithAddresses(selectedFeatures ?? []);
+
+  // Convert SelectedFeatureDataset to FormLeaseProperty
+  const leasePropertyForms = useMemo<FormLeaseProperty[]>(
+    () =>
+      featuresWithAddresses.map(obj => {
+        const formProperty = FormLeaseProperty.fromFeatureDataset(obj.feature);
+        if (exists(obj.address)) {
+          formProperty.property.address = obj.address;
+        }
+        return formProperty;
+      }),
+    [featuresWithAddresses],
+  );
+
+  const addPropertiesToCurrentFile = useCallback(
+    (
+      formikRef: React.RefObject<FormikProps<LeaseFormModel>>,
+      leasePropertyForms: FormLeaseProperty[],
+    ) => {
+      const existingProperties = formikRef.current?.values?.properties ?? [];
+      const uniqueProperties = leasePropertyForms.filter(newProperty => {
+        return !existingProperties.some(existingProperty =>
+          arePropertyFormsEqual(existingProperty.property, newProperty.property),
+        );
+      });
+
+      const duplicatesSkipped = leasePropertyForms.length - uniqueProperties.length;
+
+      // If there are unique properties, add them to the formik values
+      if (uniqueProperties.length > 0) {
+        formikRef.current?.setFieldValue('properties', [
+          ...existingProperties,
+          ...uniqueProperties,
+        ]);
+        formikRef.current?.setFieldTouched('properties', true);
+        toast.success(`Added ${uniqueProperties.length} new property(s) to the file.`);
+      }
+
+      if (duplicatesSkipped > 0) {
+        toast.warn(`Skipped ${duplicatesSkipped} duplicate property(s).`);
+      }
+    },
+    [],
+  );
+
+  // This effect is used to update the file properties when "add to open file" is clicked in the worklist.
+  useEffect(() => {
+    if (exists(formikRef.current) && leasePropertyForms.length > 0) {
+      addPropertiesToCurrentFile(formikRef, leasePropertyForms);
+      processCreation();
+    }
+  }, [addPropertiesToCurrentFile, formikRef, processCreation, leasePropertyForms]);
 
   const addProperties = useCallback((properties: FormLeaseProperty[]) => {
     const formikProps = formikRef.current;
@@ -113,6 +184,10 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
       ownership: '',
       coordinates: null,
       name: '',
+      section: '',
+      township: '',
+      range: '',
+      district: '',
     };
 
     const result = await getProperties.execute(params);
@@ -128,7 +203,7 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
       const bounds = geoJSON(locations).getBounds();
 
       if (exists(bounds) && bounds.isValid()) {
-        mapMachine.requestFlyToBounds(bounds);
+        requestFlyToBounds(bounds);
       }
     }
   };
@@ -302,7 +377,7 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
             }
             formikRef.current?.resetForm();
             await getCompleteLease();
-            mapMachine.refreshMapProperties();
+            refreshMapProperties();
             pathSolver.showFile('lease', lease.id);
           }
         });

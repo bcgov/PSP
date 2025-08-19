@@ -740,7 +740,7 @@ namespace Pims.Api.Test.Services
             var result = service.CreateActivity(activity);
 
             // Assert
-            activity.PropMgmtActivityStatusTypeCode.Should().Be("NOTSTARTED");
+            activity.MgmtActivityStatusTypeCode.Should().Be("NOTSTARTED");
             repository.Verify(x => x.Create(It.IsAny<PimsManagementActivity>()), Times.Once);
         }
 
@@ -819,20 +819,20 @@ namespace Pims.Api.Test.Services
             // Act
             var result = service.UpdateActivity(new PimsManagementActivity()
             {
-                PimsManagementActivityId = 10,
+                ManagementActivityId = 10,
                 PimsManagementActivityProperties = new List<PimsManagementActivityProperty>()
                 {
                     new PimsManagementActivityProperty()
                     {
                         ManagementActivityPropertyId = 100,
                         PropertyId = 1,
-                        PimsManagementActivityId = 10,
+                        ManagementActivityId = 10,
                     },
                     new PimsManagementActivityProperty()
                     {
                         ManagementActivityPropertyId = 101,
                         PropertyId = 1,
-                        PimsManagementActivityId = 11,
+                        ManagementActivityId = 11,
                     }
                 }
             });
@@ -888,7 +888,7 @@ namespace Pims.Api.Test.Services
             var propertyManagementActivity = EntityHelper.CreateManagementActivity(10);
 
             repository.Setup(x => x.GetActivity(It.IsAny<long>())).Returns(propertyManagementActivity);
-            documentService.Setup(x => x.GetFileDocuments<PimsPropertyActivityDocument>(It.IsAny<FileType>(), It.IsAny<long>())).Returns(new List<PimsPropertyActivityDocument>() { new PimsPropertyActivityDocument() });
+            documentService.Setup(x => x.GetFileDocuments<PimsMgmtActivityDocument>(It.IsAny<FileType>(), It.IsAny<long>())).Returns(new List<PimsMgmtActivityDocument>() { new PimsMgmtActivityDocument() });
 
 
             // Act
@@ -911,7 +911,7 @@ namespace Pims.Api.Test.Services
 
             repository.Setup(x => x.GetActivity(It.IsAny<long>())).Returns(propertyManagementActivity);
             repository.Setup(x => x.TryDelete(It.IsAny<long>())).Returns(true);
-            documentService.Setup(x => x.GetFileDocuments<PimsPropertyActivityDocument>(It.IsAny<FileType>(), It.IsAny<long>())).Returns(new List<PimsPropertyActivityDocument>());
+            documentService.Setup(x => x.GetFileDocuments<PimsMgmtActivityDocument>(It.IsAny<FileType>(), It.IsAny<long>())).Returns(new List<PimsMgmtActivityDocument>());
 
             // Act
             var result = service.DeleteActivity(1);

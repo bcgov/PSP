@@ -667,7 +667,7 @@ exports[`AccessRequestContainer component > makes a request based on the access 
         <label
           class="c0"
         >
-          MoTI Region:
+          MOTT region:
         </label>
       </div>
       <div
@@ -684,7 +684,7 @@ exports[`AccessRequestContainer component > makes a request based on the access 
             <option
               value=""
             >
-              Select MoTI Region
+              Select MOTT region
             </option>
             <option
               class="option"
@@ -1470,7 +1470,7 @@ exports[`AccessRequestContainer component > makes a request when no id is provid
         <label
           class="c0"
         >
-          MoTI Region:
+          MOTT region:
         </label>
       </div>
       <div
@@ -1487,7 +1487,7 @@ exports[`AccessRequestContainer component > makes a request when no id is provid
             <option
               value=""
             >
-              Select MoTI Region
+              Select MOTT region
             </option>
             <option
               class="option"

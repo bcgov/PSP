@@ -480,7 +480,7 @@ exports[`Note Results Table > matches snapshot 1`] = `
             >
               <button
                 class="c4 Button c5 btn btn-primary"
-                data-testid="view-button"
+                data-testid="view-note-0"
                 title="View Note"
                 type="button"
               >
@@ -549,7 +549,7 @@ exports[`Note Results Table > matches snapshot 1`] = `
             >
               <button
                 class="c4 Button c5 btn btn-primary"
-                data-testid="view-button"
+                data-testid="view-note-1"
                 title="View Note"
                 type="button"
               >
@@ -618,7 +618,7 @@ exports[`Note Results Table > matches snapshot 1`] = `
             >
               <button
                 class="c4 Button c5 btn btn-primary"
-                data-testid="view-button"
+                data-testid="view-note-2"
                 title="View Note"
                 type="button"
               >
@@ -687,7 +687,7 @@ exports[`Note Results Table > matches snapshot 1`] = `
             >
               <button
                 class="c4 Button c5 btn btn-primary"
-                data-testid="view-button"
+                data-testid="view-note-3"
                 title="View Note"
                 type="button"
               >

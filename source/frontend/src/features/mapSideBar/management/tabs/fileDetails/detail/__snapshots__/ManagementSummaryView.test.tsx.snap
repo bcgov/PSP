@@ -37,6 +37,11 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
   flex-wrap: nowrap;
 }
 
+.c8 {
+  padding: 0 0.4rem;
+  display: block;
+}
+
 .c7 {
   float: right;
   cursor: pointer;
@@ -80,8 +85,10 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
 }
 
 .c6 {
-  display: grid;
-  grid-template-columns: 1fr 0.5fr;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
@@ -97,9 +104,16 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
   margin: 0;
 }
 
-.c8 {
-  padding: 0 0.4rem;
-  display: block;
+.c6 .primary-column {
+  -webkit-flex: 1 1 0;
+  -ms-flex: 1 1 0;
+  flex: 1 1 0;
+}
+
+.c6 .secondary-column {
+  -webkit-flex: 0.5 1 0;
+  -ms-flex: 0.5 1 0;
+  flex: 0.5 1 0;
 }
 
 .c10 {
@@ -165,17 +179,187 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
           <div
             class="align-content-end col"
           >
+            Project
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-5"
+          >
+            <label
+              class="c3"
+            >
+              Ministry project:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+            data-testid="management-project"
+          >
+            00048 - CLAIMS
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-5"
+          >
+            <label
+              class="c3"
+            >
+              Product:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+            data-testid="management-product"
+          >
+            00055 AVALANCHE  &  PROGRAM REVIEW
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-5"
+          >
+            <label
+              class="c3"
+            >
+              Funding:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+            data-testid="management-funding"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="c2 form-section"
+    >
+      <h2
+        class="c5"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="align-content-end col"
+          >
+            Management Details
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-5"
+          >
+            <label
+              class="c3"
+            >
+              Management file name:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+            data-testid="management-file-name"
+          >
+            Test Management File
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-5"
+          >
+            <label
+              class="c3"
+            >
+              Historical file number:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+            data-testid="management-legacy-file-number"
+          >
+            legacyfile321
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-5"
+          >
+            <label
+              class="c3"
+            >
+              Purpose:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+            data-testid="management-purpose"
+          >
+            Engineering
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-5"
+          >
+            <label
+              class="c3"
+            >
+              Additional details:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+            data-testid="management-additional-details"
+          >
+            ADDITIONAL DETAILS
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c2 form-section"
+    >
+      <h2
+        class="c5"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="align-content-end col"
+          >
             <div
               class="c6 no-gutters row"
             >
               <div
-                class="align-items-end col-auto"
+                class="align-items-end primary-column col-auto"
               >
                 Management Contact
               </div>
-              <div
-                class="my-1 col-auto"
-              />
             </div>
           </div>
           <div
@@ -520,179 +704,6 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
                 </a>
               </li>
             </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="c2 form-section"
-    >
-      <h2
-        class="c5"
-      >
-        <div
-          class="no-gutters row"
-        >
-          <div
-            class="align-content-end col"
-          >
-            Project
-          </div>
-        </div>
-      </h2>
-      <div
-        class="collapse show"
-      >
-        <div
-          class="pb-2 row"
-        >
-          <div
-            class="pr-0 text-left col-5"
-          >
-            <label
-              class="c3"
-            >
-              Ministry project:
-            </label>
-          </div>
-          <div
-            class="c4 text-left col"
-            data-testid="management-project"
-          >
-            00048 - CLAIMS
-          </div>
-        </div>
-        <div
-          class="pb-2 row"
-        >
-          <div
-            class="pr-0 text-left col-5"
-          >
-            <label
-              class="c3"
-            >
-              Product:
-            </label>
-          </div>
-          <div
-            class="c4 text-left col"
-            data-testid="management-product"
-          >
-            00055 AVALANCHE  &  PROGRAM REVIEW
-          </div>
-        </div>
-        <div
-          class="pb-2 row"
-        >
-          <div
-            class="pr-0 text-left col-5"
-          >
-            <label
-              class="c3"
-            >
-              Funding:
-            </label>
-          </div>
-          <div
-            class="c4 text-left col"
-            data-testid="management-funding"
-          />
-        </div>
-      </div>
-    </div>
-    <div
-      class="c2 form-section"
-    >
-      <h2
-        class="c5"
-      >
-        <div
-          class="no-gutters row"
-        >
-          <div
-            class="align-content-end col"
-          >
-            Management Details
-          </div>
-        </div>
-      </h2>
-      <div
-        class="collapse show"
-      >
-        <div
-          class="pb-2 row"
-        >
-          <div
-            class="pr-0 text-left col-5"
-          >
-            <label
-              class="c3"
-            >
-              Management file name:
-            </label>
-          </div>
-          <div
-            class="c4 text-left col"
-            data-testid="management-file-name"
-          >
-            Test Management File
-          </div>
-        </div>
-        <div
-          class="pb-2 row"
-        >
-          <div
-            class="pr-0 text-left col-5"
-          >
-            <label
-              class="c3"
-            >
-              Historical file number:
-            </label>
-          </div>
-          <div
-            class="c4 text-left col"
-            data-testid="management-legacy-file-number"
-          >
-            legacyfile321
-          </div>
-        </div>
-        <div
-          class="pb-2 row"
-        >
-          <div
-            class="pr-0 text-left col-5"
-          >
-            <label
-              class="c3"
-            >
-              Purpose:
-            </label>
-          </div>
-          <div
-            class="c4 text-left col"
-            data-testid="management-purpose"
-          >
-            Engineering
-          </div>
-        </div>
-        <div
-          class="pb-2 row"
-        >
-          <div
-            class="pr-0 text-left col-5"
-          >
-            <label
-              class="c3"
-            >
-              Additional details:
-            </label>
-          </div>
-          <div
-            class="c4 text-left col"
-            data-testid="management-additional-details"
-          >
-            ADDITIONAL DETAILS
           </div>
         </div>
       </div>

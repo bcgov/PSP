@@ -424,7 +424,7 @@ exports[`AddProjectForm component > renders as expected 1`] = `
               <label
                 class="c3"
               >
-                MoTI region:
+                MOTT region:
               </label>
             </div>
             <div
@@ -1277,7 +1277,7 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
               <label
                 class="c3"
               >
-                MoTI region:
+                MOTT region:
               </label>
             </div>
             <div

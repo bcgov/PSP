@@ -105,7 +105,7 @@ describe('PropertyFileContainer component', () => {
 
   it('renders as expected', async () => {
     // Need to mock toasts or snapshots will change with each test run
-    vi.spyOn(toast, 'success').mockReturnValue(1);
+    vi.spyOn(toast, 'error').mockReturnValue(1);
     const { asFragment } = await setup();
     expect(asFragment()).toMatchSnapshot();
     vi.restoreAllMocks();
@@ -119,7 +119,7 @@ describe('PropertyFileContainer component', () => {
   it('passes on the expected BASE tabs', async () => {
     await setup();
 
-    expect(viewProps?.tabViews).toHaveLength(4);
+    expect(viewProps?.tabViews).toHaveLength(5);
     expect(viewProps?.tabViews[0].key).toBe(InventoryTabNames.title);
     expect(viewProps?.tabViews[1].key).toBe(InventoryTabNames.value);
     expect(viewProps?.tabViews[2].key).toBe(InventoryTabNames.property);
@@ -144,12 +144,13 @@ describe('PropertyFileContainer component', () => {
       customTabs: [{ key: InventoryTabNames.research, name: 'research', content: <></> }],
     });
 
-    expect(viewProps?.tabViews).toHaveLength(5);
+    expect(viewProps?.tabViews).toHaveLength(6);
     expect(viewProps?.tabViews[0].key).toBe(InventoryTabNames.title);
     expect(viewProps?.tabViews[1].key).toBe(InventoryTabNames.value);
     expect(viewProps?.tabViews[2].key).toBe(InventoryTabNames.research);
     expect(viewProps?.tabViews[3].key).toBe(InventoryTabNames.property);
     expect(viewProps?.tabViews[4].key).toBe(InventoryTabNames.pims);
+    expect(viewProps?.tabViews[5].key).toBe(InventoryTabNames.highway);
   });
 
   it('shows the crown tab if the property has a TANTALIS record', async () => {
@@ -160,12 +161,13 @@ describe('PropertyFileContainer component', () => {
       .reply(200, getMockCrownTenuresLayerResponse());
     await setup();
 
-    expect(viewProps?.tabViews).toHaveLength(5);
+    expect(viewProps?.tabViews).toHaveLength(6);
     expect(viewProps?.tabViews[0].key).toBe(InventoryTabNames.title);
-    expect(viewProps?.tabViews[1].key).toBe(InventoryTabNames.crown);
-    expect(viewProps?.tabViews[2].key).toBe(InventoryTabNames.value);
-    expect(viewProps?.tabViews[3].key).toBe(InventoryTabNames.property);
-    expect(viewProps?.tabViews[4].key).toBe(InventoryTabNames.pims);
+    expect(viewProps?.tabViews[1].key).toBe(InventoryTabNames.value);
+    expect(viewProps?.tabViews[2].key).toBe(InventoryTabNames.property);
+    expect(viewProps?.tabViews[3].key).toBe(InventoryTabNames.pims);
+    expect(viewProps?.tabViews[4].key).toBe(InventoryTabNames.crown);
+    expect(viewProps?.tabViews[5].key).toBe(InventoryTabNames.highway);
   });
 
   it('does not call lease endpoints when user does not have lease permissions', async () => {

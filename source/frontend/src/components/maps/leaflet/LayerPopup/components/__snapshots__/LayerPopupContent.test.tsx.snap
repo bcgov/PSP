@@ -1,9 +1,0 @@
-// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
-
-exports[`Layer Popup Content > Renders correctly 1`] = `
-<DocumentFragment>
-  <b>
-    No layer information at this location
-  </b>
-</DocumentFragment>
-`;

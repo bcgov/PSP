@@ -12,6 +12,7 @@ import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, cleanup, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import MotiInventoryContainer, { IMotiInventoryContainerProps } from './MotiInventoryContainer';
+import { mockFAParcelLayerResponse } from '@/mocks/faParcelLayerResponse.mock';
 
 const mockAxios = new MockAdapter(axios);
 const history = createMemoryHistory();
@@ -109,7 +110,7 @@ describe('MotiInventoryContainer component', () => {
 
   it('requests LTSA data by pid', async () => {
     const { queryByTestId } = setup({
-      id: 1,
+      id: undefined,
       pid: '9212434',
       onClose,
     });
@@ -124,7 +125,7 @@ describe('MotiInventoryContainer component', () => {
 
   it('requests BC Assessment data by pid', async () => {
     const { queryByTestId } = setup({
-      id: 1,
+      id: undefined,
       pid: '9212434',
       onClose,
     });
@@ -150,7 +151,7 @@ describe('MotiInventoryContainer component', () => {
         location: { lng: -120.69195885, lat: 50.25163372 },
         fileLocation: null,
         pimsFeatures: null,
-        parcelFeatures: null,
+        parcelFeatures: mockFAParcelLayerResponse.features as any,
         regionFeature: null,
         districtFeature: null,
         municipalityFeatures: null,
@@ -165,7 +166,7 @@ describe('MotiInventoryContainer component', () => {
     };
 
     const { findByText, queryByTestId } = setup({
-      id: 1,
+      id: undefined,
       onClose,
       mockMapMachine: testMockMachine,
     });
@@ -174,7 +175,7 @@ describe('MotiInventoryContainer component', () => {
       expect(queryByTestId('filter-backdrop-loading')).toBeNull();
     });
 
-    expect(await findByText(/Crown Details/i)).toBeInTheDocument();
+    expect(await findByText(/Crown Land Tenures/i)).toBeInTheDocument();
     expect(mockAxios.history.get.length).toBeGreaterThanOrEqual(1);
     expect(
       mockAxios.history.get.some(x =>

@@ -200,7 +200,7 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
         <SectionField label="Legal description">
           <TextArea field="landLegalDescription" />
         </SectionField>
-        <SectionField label="MOTI region">
+        <SectionField label="MOTT region">
           <Select
             field="regionTypeCode"
             options={regionOptions}

@@ -1071,7 +1071,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             var exception = act.Should().Throw<UserOverrideException>();
-            exception.WithMessage("You have added one or more properties to the disposition file that are not in the MoTI Inventory. Do you want to proceed?");
+            exception.WithMessage("You have added one or more properties to the disposition file that are not in the MOTT Inventory. Do you want to proceed?");
         }
 
         [Fact]

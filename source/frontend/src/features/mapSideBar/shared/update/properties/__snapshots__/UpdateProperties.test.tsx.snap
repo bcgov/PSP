@@ -926,6 +926,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                   >
                     <div
                       class="c13 form-section"
+                      data-testid="property-search-selector-section"
                     >
                       <h2
                         class="c20"
@@ -1381,6 +1382,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                 >
                   <button
                     class="c4 Button btn btn-link"
+                    data-testid="zoom-to-property-0"
                     type="button"
                   >
                     <div
@@ -1408,6 +1410,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                 >
                   <button
                     class="c4 Button c30 btn btn-primary"
+                    data-testid="move-pin-location-0"
                     title="move-pin-location"
                     type="button"
                   >
@@ -1435,7 +1438,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                 >
                   <button
                     class="c4 Button c31 btn btn-link"
-                    data-testid="remove-button"
+                    data-testid="delete-property-0"
                     type="button"
                   >
                     <div

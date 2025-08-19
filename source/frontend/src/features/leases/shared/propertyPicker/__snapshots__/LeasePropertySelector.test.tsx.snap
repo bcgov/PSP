@@ -764,6 +764,7 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
               >
                 <div
                   class="c0 form-section"
+                  data-testid="property-search-selector-section"
                 >
                   <h2
                     class="c1"
@@ -1302,7 +1303,7 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
             >
               <button
                 class="c14 Button c22 btn btn-link"
-                data-testid="remove-button"
+                data-testid="delete-property-0"
                 type="button"
               >
                 <div
@@ -1609,7 +1610,7 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
             >
               <button
                 class="c14 Button c22 btn btn-link"
-                data-testid="remove-button"
+                data-testid="delete-property-1"
                 type="button"
               >
                 <div

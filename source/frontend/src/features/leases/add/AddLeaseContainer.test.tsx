@@ -2,8 +2,10 @@ import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
 
 import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
+import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
 import { getMockPolygon } from '@/mocks/geometries.mock';
+import { getMockApiLease } from '@/mocks/lease.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { ApiGen_CodeTypes_LeaseAccountTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseAccountTypes';
@@ -29,6 +31,7 @@ import {
 
 import { useAddLease } from '../hooks/useAddLease';
 import AddLeaseContainer, { IAddLeaseContainerProps } from './AddLeaseContainer';
+import AddLeaseForm from './AddLeaseForm';
 
 const retrieveUserInfo = vi.fn();
 vi.mock('@/hooks/repositories/useUserInfoRepository');
@@ -85,14 +88,22 @@ const onSuccess = vi.fn();
 
 describe('AddLeaseContainer component', () => {
   // render component under test
-  const setup = (renderOptions: RenderOptions & Partial<IAddLeaseContainerProps> = {}) => {
-    const utils = render(<AddLeaseContainer onClose={onClose} onSuccess={onSuccess} />, {
-      ...renderOptions,
-      store: storeState,
-      useMockAuthentication: true,
-      mockMapMachine: renderOptions.mockMapMachine,
-      history,
-    });
+  const setup = async (renderOptions: RenderOptions & Partial<IAddLeaseContainerProps> = {}) => {
+    const utils = render(
+      <SideBarContextProvider>
+        <AddLeaseContainer onClose={onClose} onSuccess={onSuccess} View={AddLeaseForm} />
+      </SideBarContextProvider>,
+      {
+        ...renderOptions,
+        store: storeState,
+        useMockAuthentication: true,
+        mockMapMachine: renderOptions.mockMapMachine,
+        history,
+      },
+    );
+
+    // wait for the component to finish loading
+    await act(async () => {});
 
     return {
       ...utils,
@@ -102,18 +113,19 @@ describe('AddLeaseContainer component', () => {
     };
   };
 
-  afterEach(() => {
+  beforeEach(() => {
     vi.clearAllMocks();
+    addLease.mockResolvedValue(getMockApiLease());
   });
 
   it('renders as expected', async () => {
     const { asFragment, findByText } = await setup({});
-    await findByText(/MOTI contact/i);
+    await findByText(/MOTT contact/i);
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('cancels the form', async () => {
-    const { getCloseButton } = setup({});
+    const { getCloseButton } = await setup({});
 
     await act(async () => selectOptions('regionId', '1'));
     await act(async () => userEvent.click(getCloseButton()));
@@ -122,7 +134,7 @@ describe('AddLeaseContainer component', () => {
   });
 
   it('requires confirmation when navigating away', async () => {
-    const { getByTitle } = setup({});
+    const { getByTitle } = await setup({});
 
     await act(async () => selectOptions('regionId', '1'));
 
@@ -133,7 +145,15 @@ describe('AddLeaseContainer component', () => {
   });
 
   it('saves the form with minimal data', async () => {
-    const { getByText, getPurposeMultiSelect, container } = setup({});
+    const testMockMachine: IMapStateMachineContext = {
+      ...mapMachineBaseMock,
+      processCreation: vi.fn(),
+      refreshMapProperties: vi.fn(),
+    };
+
+    const { getByText, getPurposeMultiSelect, container } = await setup({
+      mockMapMachine: testMockMachine,
+    });
 
     await act(async () => selectOptions('statusTypeCode', ApiGen_CodeTypes_LeaseStatusTypes.DRAFT));
     await act(async () =>
@@ -170,6 +190,8 @@ describe('AddLeaseContainer component', () => {
     await act(async () => userEvent.click(getByText(/Save/i)));
 
     expect(addLease).toHaveBeenCalledWith(leaseData, []);
+    expect(testMockMachine.processCreation).toHaveBeenCalled();
+    expect(onSuccess).toHaveBeenCalled();
   });
 
   it('triggers the confirm popup', async () => {
@@ -179,7 +201,7 @@ describe('AddLeaseContainer component', () => {
       }),
     );
 
-    const { getByText, findByText, getPurposeMultiSelect, container } = setup({});
+    const { getByText, findByText, getPurposeMultiSelect, container } = await setup({});
 
     await act(async () => selectOptions('statusTypeCode', ApiGen_CodeTypes_LeaseStatusTypes.DRAFT));
     await act(async () =>
@@ -223,7 +245,7 @@ describe('AddLeaseContainer component', () => {
       }),
     );
 
-    const { getByText, getPurposeMultiSelect, getByTestId, container } = setup({});
+    const { getByText, getPurposeMultiSelect, getByTestId, container } = await setup({});
 
     await act(async () => selectOptions('statusTypeCode', ApiGen_CodeTypes_LeaseStatusTypes.DRAFT));
     await act(async () =>
@@ -276,25 +298,35 @@ describe('AddLeaseContainer component', () => {
   it('should pre-populate the region if a property is selected', async () => {
     const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
-      selectedFeatureDataset: {
-        location: { lng: -120.69195885, lat: 50.25163372 },
-        fileLocation: null,
-        pimsFeature: null,
-        parcelFeature: null,
-        regionFeature: {
-          type: 'Feature',
-          properties: { ...emptyRegion, REGION_NUMBER: 1, REGION_NAME: 'South Coast Region' },
-          geometry: getMockPolygon(),
+      selectedFeatures: [
+        {
+          location: { lng: -120.69195885, lat: 50.25163372 },
+          fileLocation: null,
+          pimsFeature: null,
+          parcelFeature: null,
+          regionFeature: {
+            type: 'Feature',
+            properties: { ...emptyRegion, REGION_NUMBER: 1, REGION_NAME: 'South Coast Region' },
+            geometry: getMockPolygon(),
+          },
+          districtFeature: null,
+          selectingComponentId: null,
+          municipalityFeature: null,
         },
-        districtFeature: null,
-        selectingComponentId: null,
-        municipalityFeature: null,
-      },
+      ],
     };
 
-    const { findByDisplayValue } = setup({ mockMapMachine: testMockMachine });
+    const { findByDisplayValue } = await setup({ mockMapMachine: testMockMachine });
     const text = await findByDisplayValue(/South Coast Region/i);
     expect(text).toBeVisible();
+  });
+
+  it('resets the "draft" markers when the file is opened', async () => {
+    const testMockMachine: IMapStateMachineContext = {
+      ...mapMachineBaseMock,
+    };
+    await setup({ mockMapMachine: testMockMachine });
+    expect(testMockMachine.setFilePropertyLocations).toHaveBeenCalledWith([]);
   });
 });
 

@@ -2,7 +2,7 @@ import axios, { AxiosError } from 'axios';
 import { FieldArray, Formik, FormikProps } from 'formik';
 import { geoJSON, LatLngLiteral } from 'leaflet';
 import isNumber from 'lodash/isNumber';
-import { useContext, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { PiCornersOut } from 'react-icons/pi';
 import { toast } from 'react-toastify';
@@ -19,10 +19,17 @@ import SelectedPropertyRow from '@/components/propertySelector/selectedPropertyL
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
+import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { exists, isLatLngInFeatureSetBoundary, isValidId, latLngLiteralToGeometry } from '@/utils';
+import {
+  arePropertyFormsEqual,
+  exists,
+  isLatLngInFeatureSetBoundary,
+  isValidId,
+  latLngLiteralToGeometry,
+} from '@/utils';
 
 import { AddressForm, FileForm, PropertyForm } from '../../models';
 import SidebarFooter from '../../SidebarFooter';
@@ -54,7 +61,68 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
   const { setModalContent, setDisplayModal } = useModalContext();
   const { resetFilePropertyLocations } = useContext(SideBarContext);
   const { getPrimaryAddressByPid, bcaLoading } = useBcaAddress();
-  const mapMachine = useMapStateMachine();
+  const { requestFlyToBounds, setEditPropertiesMode, selectedFeatures, processCreation } =
+    useMapStateMachine();
+
+  useEffect(() => {
+    // Set the map state machine to edit properties mode so that the map selector knows what mode it is in.
+    setEditPropertiesMode(true);
+    return () => {
+      setEditPropertiesMode(false);
+    };
+  }, [setEditPropertiesMode]);
+
+  // Get PropertyForms with addresses for all selected features
+  const { featuresWithAddresses } = useFeatureDatasetsWithAddresses(selectedFeatures ?? []);
+
+  // Convert SelectedFeatureDataset to PropertyForm
+  const propertyForms = useMemo(
+    () =>
+      featuresWithAddresses.map(obj => {
+        const property = PropertyForm.fromFeatureDataset(obj.feature);
+        if (exists(obj.address)) {
+          property.address = obj.address;
+        }
+        return property;
+      }),
+    [featuresWithAddresses],
+  );
+
+  const addPropertiesToCurrentFile = useCallback(
+    (formikRef: React.RefObject<FormikProps<FileForm>>, propertyForms: PropertyForm[]) => {
+      const existingProperties = formikRef.current?.values?.properties ?? [];
+      const uniqueProperties = propertyForms.filter(newProperty => {
+        return !existingProperties.some(existingProperty =>
+          arePropertyFormsEqual(existingProperty, newProperty),
+        );
+      });
+
+      const duplicatesSkipped = propertyForms.length - uniqueProperties.length;
+
+      // If there are unique properties, add them to the formik values
+      if (uniqueProperties.length > 0) {
+        formikRef.current?.setFieldValue('properties', [
+          ...existingProperties,
+          ...uniqueProperties,
+        ]);
+        formikRef.current?.setFieldTouched('properties', true);
+        toast.success(`Added ${uniqueProperties.length} new property(s) to the file.`);
+      }
+
+      if (duplicatesSkipped > 0) {
+        toast.warn(`Skipped ${duplicatesSkipped} duplicate property(s).`);
+      }
+    },
+    [],
+  );
+
+  // This effect is used to update the file properties when "add to open file" is clicked in the worklist.
+  useEffect(() => {
+    if (exists(formikRef.current) && propertyForms.length > 0) {
+      addPropertiesToCurrentFile(formikRef, propertyForms);
+      processCreation();
+    }
+  }, [addPropertiesToCurrentFile, formikRef, processCreation, propertyForms]);
 
   const fitBoundaries = () => {
     const fileProperties = formikRef?.current?.values?.properties;
@@ -66,7 +134,7 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
       const bounds = geoJSON(locations).getBounds();
 
       if (exists(bounds) && bounds.isValid()) {
-        mapMachine.requestFlyToBounds(bounds);
+        requestFlyToBounds(bounds);
       }
     }
   };

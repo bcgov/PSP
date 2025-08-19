@@ -10,8 +10,8 @@ import { getMockResearchFile } from '@/mocks/researchFile.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
-import UpdateProperties, { IUpdatePropertiesProps } from './UpdateProperties';
 import { createRef } from 'react';
+import UpdateProperties, { IUpdatePropertiesProps } from './UpdateProperties';
 
 const mockAxios = new MockAdapter(axios);
 
@@ -33,7 +33,10 @@ const updateFileProperties = vi.fn();
 
 describe('UpdateProperties component', () => {
   // render component under test
-  const setup = (props: Partial<IUpdatePropertiesProps>, renderOptions: RenderOptions = {}) => {
+  const setup = async (
+    props: Partial<IUpdatePropertiesProps>,
+    renderOptions: RenderOptions = {},
+  ) => {
     const utils = render(
       <SideBarContextProvider>
         <UpdateProperties
@@ -55,6 +58,9 @@ describe('UpdateProperties component', () => {
       },
     );
 
+    // Wait for effects to complete
+    await act(async () => {});
+
     return {
       ...utils,
     };
@@ -70,13 +76,13 @@ describe('UpdateProperties component', () => {
   });
 
   it('renders as expected', async () => {
-    setup({});
+    await setup({});
     await act(async () => {});
     expect(document.body).toMatchSnapshot();
   });
 
   it('renders a row with an address', async () => {
-    const { getByText } = setup({
+    const { getByText } = await setup({
       file: {
         ...getMockResearchFile(),
         fileProperties: [
@@ -133,7 +139,7 @@ describe('UpdateProperties component', () => {
   });
 
   it('save button displays modal', async () => {
-    const { getByText } = setup({});
+    const { getByText } = await setup({});
     const saveButton = getByText('Save');
     await act(async () => userEvent.click(saveButton));
 
@@ -144,7 +150,7 @@ describe('UpdateProperties component', () => {
 
   it('saving and confirming the modal saves the properties', async () => {
     updateFileProperties.mockResolvedValue(getMockResearchFile());
-    const { getByText } = setup({});
+    const { getByText } = await setup({});
     const saveButton = getByText('Save');
     await act(async () => userEvent.click(saveButton));
 
@@ -163,7 +169,7 @@ describe('UpdateProperties component', () => {
       isAxiosError: true,
       code: '409',
     } as Partial<AxiosError>);
-    const { getByText } = setup({});
+    const { getByText } = await setup({});
     const saveButton = getByText('Save');
     await act(async () => userEvent.click(saveButton));
 
@@ -177,7 +183,7 @@ describe('UpdateProperties component', () => {
   });
 
   it('cancel button cancels component if no actions taken', async () => {
-    const { getByText } = setup({});
+    const { getByText } = await setup({});
     const cancelButton = getByText('Cancel');
     await act(async () => userEvent.click(cancelButton));
 
@@ -185,7 +191,7 @@ describe('UpdateProperties component', () => {
   });
 
   it('cancel button displays modal', async () => {
-    const { getByText, container } = setup({});
+    const { getByText, container } = await setup({});
 
     await fillInput(container, 'properties.0.name', 'test property name');
 
@@ -199,7 +205,7 @@ describe('UpdateProperties component', () => {
 
   it('cancelling and confirming the modal hides this component', async () => {
     updateFileProperties.mockResolvedValue(getMockResearchFile());
-    const { getByText, container } = setup({});
+    const { getByText, container } = await setup({});
 
     await fillInput(container, 'properties.0.name', 'test property name');
 
@@ -219,9 +225,9 @@ describe('UpdateProperties component', () => {
   it('removes property index if canRemove returns true', async () => {
     updateFileProperties.mockResolvedValue(getMockResearchFile());
     const canRemove = vi.fn().mockResolvedValue(true);
-    const { getByTestId, getByText } = setup({ canRemove });
+    const { getByTestId, getByText } = await setup({ canRemove });
 
-    const removeButton = getByTestId('remove-button');
+    const removeButton = getByTestId('delete-property-0');
     await act(async () => userEvent.click(removeButton));
 
     await waitFor(() => {
@@ -233,9 +239,9 @@ describe('UpdateProperties component', () => {
   it('displays warning modal if canRemove returns false', async () => {
     updateFileProperties.mockResolvedValue(getMockResearchFile());
     const canRemove = vi.fn().mockResolvedValue(false);
-    const { getByTestId } = setup({ canRemove });
+    const { getByTestId } = await setup({ canRemove });
 
-    const removeButton = getByTestId('remove-button');
+    const removeButton = getByTestId('delete-property-0');
     await act(async () => userEvent.click(removeButton));
 
     await waitFor(() => {

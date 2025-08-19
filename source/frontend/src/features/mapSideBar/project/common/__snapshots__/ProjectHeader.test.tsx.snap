@@ -125,7 +125,7 @@ exports[`ProjectHeader component > renders as expected 1`] = `
           <label
             class="c2"
           >
-            MoTI region:
+            MOTT region:
           </label>
         </div>
         <div

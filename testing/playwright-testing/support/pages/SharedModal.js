@@ -11,20 +11,30 @@ class SharedModal {
     return await this.page.locator("div[class='modal-content']").count();
   }
 
-  async mainModalHeaderContent() {
-    return await this.page.locator("div.modal-title.h4").textContent();
+  async mainModalHeader() {
+    await this.page
+      .locator("div[class='modal-header'] div[class='modal-title h4']")
+      .waitFor({ state: "visible" });
+    const title = await this.page.locator("div.modal-title.h4").textContent();
+    return title;
   }
 
   async secondaryModalHeader() {
-    return await this.page.locator("div.modal-title.h4").nth(1).textContent();
+    return await this.page
+      .locator("div[class='modal-title h4']")
+      .nth(1)
+      .textContent();
   }
 
   async mainModalContent() {
-    return this.page.locator("div.modal-body").textContent();
+    return this.page.locator("div[class='modal-body']").textContent();
   }
 
   async secondaryModalContent() {
-    return await this.page.locator("div.modal-body").nth(1).textContent();
+    return await this.page
+      .locator("div[class='modal-body']")
+      .nth(1)
+      .textContent();
   }
 
   async mainModalClickOKBttn() {
@@ -88,4 +98,4 @@ class SharedModal {
   }
 }
 
-module.exports = { SharedModal };
+module.exports = SharedModal;

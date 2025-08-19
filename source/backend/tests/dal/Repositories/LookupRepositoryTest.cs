@@ -930,7 +930,7 @@ namespace Pims.Dal.Tests.Repositories
         }
 
         [Fact]
-        public void LookupRepository_GetAllPropMgmtActivityStatusTypes_ReturnsCorrectType()
+        public void LookupRepository_GetAllMgmtActivityStatusTypes_ReturnsCorrectType()
         {
             // Arrange
             var helper = new TestHelper();
@@ -940,14 +940,14 @@ namespace Pims.Dal.Tests.Repositories
             var lookupRepository = helper.CreateRepository<LookupRepository>(user);
 
             // Act
-            var result = lookupRepository.GetAllPropMgmtActivityStatusTypes();
+            var result = lookupRepository.GetAllMgmtActivityStatusTypes();
 
             // Assert
-            Assert.IsType<PimsPropMgmtActivityStatusType[]>(result);
+            Assert.IsType<PimsMgmtActivityStatusType[]>(result);
         }
 
         [Fact]
-        public void LookupRepository_GetAllPropMgmtActivitySubtypes_ReturnsCorrectType()
+        public void LookupRepository_GetAllMgmtActivitySubtypes_ReturnsCorrectType()
         {
             // Arrange
             var helper = new TestHelper();
@@ -957,14 +957,14 @@ namespace Pims.Dal.Tests.Repositories
             var lookupRepository = helper.CreateRepository<LookupRepository>(user);
 
             // Act
-            var result = lookupRepository.GetAllPropMgmtActivitySubtypes();
+            var result = lookupRepository.GetAllMgmtActivitySubtypes();
 
             // Assert
-            Assert.IsType<PimsPropMgmtActivitySubtype[]>(result);
+            Assert.IsType<PimsMgmtActivitySubtype[]>(result);
         }
 
         [Fact]
-        public void LookupRepository_GetAllPropMgmtActivityTypes_ReturnsCorrectType()
+        public void LookupRepository_GetAllMgmtActivityTypes_ReturnsCorrectType()
         {
             // Arrange
             var helper = new TestHelper();
@@ -974,10 +974,10 @@ namespace Pims.Dal.Tests.Repositories
             var lookupRepository = helper.CreateRepository<LookupRepository>(user);
 
             // Act
-            var result = lookupRepository.GetAllPropMgmtActivityTypes();
+            var result = lookupRepository.GetAllMgmtActivityTypes();
 
             // Assert
-            Assert.IsType<PimsPropMgmtActivityType[]>(result);
+            Assert.IsType<PimsMgmtActivityType[]>(result);
         }
 
         [Fact]

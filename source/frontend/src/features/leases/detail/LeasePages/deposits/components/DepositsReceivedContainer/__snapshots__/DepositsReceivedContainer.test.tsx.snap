@@ -32,8 +32,10 @@ exports[`DepositsReceivedContainer component > renders as expected 1`] = `
 }
 
 .c2 {
-  display: grid;
-  grid-template-columns: 1fr 0.5fr;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-pack: justify;
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
@@ -47,6 +49,18 @@ exports[`DepositsReceivedContainer component > renders as expected 1`] = `
 
 .c2 .btn {
   margin: 0;
+}
+
+.c2 .primary-column {
+  -webkit-flex: 1 1 0;
+  -ms-flex: 1 1 0;
+  flex: 1 1 0;
+}
+
+.c2 .secondary-column {
+  -webkit-flex: 0.5 1 0;
+  -ms-flex: 0.5 1 0;
+  flex: 0.5 1 0;
 }
 
 <div
@@ -65,13 +79,10 @@ exports[`DepositsReceivedContainer component > renders as expected 1`] = `
             class="c2 no-gutters row"
           >
             <div
-              class="align-items-end col-auto"
+              class="align-items-end primary-column col-auto"
             >
               Deposits Received
             </div>
-            <div
-              class="my-1 col-auto"
-            />
           </div>
         </div>
       </div>

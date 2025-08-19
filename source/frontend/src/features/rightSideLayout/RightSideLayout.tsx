@@ -29,7 +29,14 @@ const RightSideLayout: React.FC<React.PropsWithChildren<IRightSideLayoutProps>> 
             tooltipId={`close-sidebar-tooltip-${title?.toLocaleLowerCase()}`}
             tooltip={closeTooltipText}
           >
-            <CloseIcon title="close" onClick={toggle} />
+            <CloseIcon
+              title="close"
+              onClick={e => {
+                e.preventDefault();
+                e.stopPropagation();
+                toggle();
+              }}
+            />
           </TooltipWrapper>
         </StyledHeader>
         <StyledContent>{children}</StyledContent>
@@ -42,14 +49,11 @@ export default RightSideLayout;
 
 export const StyledMapSideBar = styled.div<{ show: boolean }>`
   display: flex;
-  flex-flow: column;
-  position: relative;
-  margin: 0;
-  min-height: 5.2rem;
-  height: calc(100vh - 7.2rem - 4.8rem);
+  flex-direction: column;
+  height: calc(100vh - 7.2rem - 4.8rem - 28rem);
   max-width: ${props => (props.show ? `34.1rem` : `0`)};
   width: ${props => (props.show ? `100%` : `0`)};
-  margin-left: ${props => (props.show ? `-1rem` : `0`)};
+  margin-left: ${props => (props.show ? `1rem` : `0`)};
   background-color: ${props => props.theme.bcTokens.surfaceColorFormsDefault};
   visibility: ${props => (props.show ? `visible` : `hidden`)};
   opacity: ${props => (props.show ? 1 : 0)};
@@ -57,7 +61,7 @@ export const StyledMapSideBar = styled.div<{ show: boolean }>`
   box-shadow: -0.2rem 0.1rem 0.4rem rgba(0, 0, 0, 0.2);
   transition: all 1s ease-in-out;
   z-index: 1000;
-  overflow: hidden;
+  overflow: auto;
 `;
 
 const StyledHeader = styled.div`

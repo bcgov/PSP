@@ -123,6 +123,9 @@ describe('AcquisitionView component', () => {
       },
     );
 
+    // Wait for effects to complete
+    await act(async () => {});
+
     return {
       ...utils,
       getCloseButton: () => utils.getByTitle('close'),

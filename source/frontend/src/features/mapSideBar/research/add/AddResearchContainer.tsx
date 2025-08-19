@@ -9,7 +9,7 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
-import { useInitialMapSelectorProperties } from '@/hooks/useInitialMapSelectorProperties';
+import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
 import { useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
@@ -20,22 +20,23 @@ import SidebarFooter from '../../shared/SidebarFooter';
 import { StyledFormWrapper } from '../../shared/styles';
 import { useAddResearch } from '../hooks/useAddResearch';
 import { AddResearchFileYupSchema } from './AddResearchFileYupSchema';
-import AddResearchForm from './AddResearchForm';
+import { IAddResearchFormProps } from './AddResearchForm';
 import { ResearchForm } from './models';
 
 export interface IAddResearchContainerProps {
   onClose: () => void;
   onSuccess: (newResearchId: number) => void;
+  View: React.FC<IAddResearchFormProps>;
 }
 
 export const AddResearchContainer: React.FunctionComponent<IAddResearchContainerProps> = props => {
-  const { onClose } = props;
+  const { onClose, onSuccess, View } = props;
   const history = useHistory();
   const formikRef = useRef<FormikProps<ResearchForm>>(null);
   const mapMachine = useMapStateMachine();
-  const selectedFeatureDataset = mapMachine.selectedFeatureDataset;
   const { setModalContent, setDisplayModal } = useModalContext();
   const { execute: getPropertyAssociations } = usePropertyAssociations();
+  const { addResearchFile } = useAddResearch();
 
   const [needsUserConfirmation, setNeedsUserConfirmation] = useState<boolean>(true);
 
@@ -55,19 +56,27 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
     [getPropertyAssociations],
   );
 
+  const selectedFeatureDatasets = mapMachine.selectedFeatures ?? [];
+
+  // Get PropertyForms with addresses for all selected features
+  const { featuresWithAddresses, bcaLoading } =
+    useFeatureDatasetsWithAddresses(selectedFeatureDatasets);
+
+  // Memoize the initial form with all properties
   const initialForm = useMemo(() => {
     const researchForm = new ResearchForm();
-    if (selectedFeatureDataset) {
-      researchForm.properties = [PropertyForm.fromFeatureDataset(selectedFeatureDataset)];
+    if (featuresWithAddresses?.length > 0) {
+      researchForm.properties = featuresWithAddresses.map(obj => {
+        const property = PropertyForm.fromFeatureDataset(obj.feature);
+        if (exists(obj.address)) {
+          property.address = obj.address;
+        }
+        return property;
+      });
     }
     return researchForm;
-  }, [selectedFeatureDataset]);
+  }, [featuresWithAddresses]);
 
-  const { addResearchFile } = useAddResearch();
-  const { bcaLoading, initialProperty } = useInitialMapSelectorProperties(selectedFeatureDataset);
-  if (initialForm?.properties.length && initialProperty) {
-    initialForm.properties[0].address = initialProperty.address;
-  }
   const withUserOverride = useApiUserOverride<
     (userOverrideCodes: UserOverrideCode[]) => Promise<any | void>
   >('Failed to add Research File');
@@ -78,21 +87,26 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
     const runAsync = async () => {
       if (exists(initialForm) && exists(formikRef.current) && needsUserConfirmation) {
         if (initialForm.properties.length > 0) {
-          const formProperty = initialForm.properties[0];
-          if (await confirmBeforeAdd(formProperty)) {
+          // Check all properties for confirmation
+          const needsConfirmation = await Promise.all(
+            initialForm.properties.map(formProperty => confirmBeforeAdd(formProperty)),
+          );
+          if (needsConfirmation.some(confirm => confirm)) {
             setModalContent({
               variant: 'warning',
               title: 'User Override Required',
               message: (
                 <>
-                  <p>This property has already been added to one or more research files.</p>
+                  <p>
+                    One or more properties have already been added to one or more research files.
+                  </p>
                   <p>Do you want to acknowledge and proceed?</p>
                 </>
               ),
               okButtonText: 'Yes',
               cancelButtonText: 'No',
               handleOk: () => {
-                // allow the property to be added to the file being created
+                // allow the properties to be added to the file being created
                 formikRef.current.resetForm();
                 formikRef.current.setFieldValue('properties', initialForm.properties);
                 setDisplayModal(false);
@@ -135,9 +149,10 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
         }
         mapMachine.refreshMapProperties();
         formikRef.current?.resetForm({ values: ResearchForm.fromApi(response) });
-        props.onSuccess(response.id);
+        onSuccess(response.id);
       }
     } finally {
+      mapMachine.processCreation();
       formikRef.current?.setSubmitting(false);
     }
   };
@@ -158,6 +173,7 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
     <Formik<ResearchForm>
       innerRef={formikRef}
       initialValues={initialForm}
+      enableReinitialize
       onSubmit={async (values: ResearchForm) => {
         const researchFile: ApiGen_Concepts_ResearchFile = values.toApi();
         return withUserOverride((userOverrideCodes: UserOverrideCode[]) =>
@@ -182,7 +198,7 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
           onClose={cancelFunc}
         >
           <StyledFormWrapper>
-            <AddResearchForm confirmBeforeAdd={confirmBeforeAdd} />
+            <View confirmBeforeAdd={confirmBeforeAdd} />
           </StyledFormWrapper>
           <ConfirmNavigation navigate={history.push} shouldBlockNavigation={checkState} />
         </MapSideBarLayout>

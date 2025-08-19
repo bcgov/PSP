@@ -432,6 +432,17 @@ export const layerDefinitions: LayerDefinition[] = [
     maxZoom: MAP_MAX_ZOOM,
   },
   {
+    layerIdentifier: 'crownSurveyParcels',
+    layers: 'pub:WHSE_TANTALIS.TA_SURVEY_PARCELS_SVW',
+    url: 'https://openmaps.gov.bc.ca/geo/pub/WHSE_TANTALIS.TA_SURVEY_PARCELS_SVW/ows?',
+    transparent: true,
+    format: 'image/png',
+    zIndex: 5,
+    id: 'crownSurveyPlans',
+    maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+    maxZoom: MAP_MAX_ZOOM,
+  },
+  {
     layerIdentifier: 'gazettedHighway',
     url: 'ogs-internal/ows?',
     transparent: true,

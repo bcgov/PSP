@@ -5,8 +5,7 @@ import styled from 'styled-components';
 
 import { LinkButton } from '@/components/common/buttons/LinkButton';
 import { RemoveIconButton } from '@/components/common/buttons/RemoveButton';
-import { InlineFlexDiv } from '@/components/common/styles';
-import { StyledLink } from '@/components/maps/leaflet/LayerPopup/styles';
+import { InlineFlexDiv, StyledLink } from '@/components/common/styles';
 import { ColumnWithProps, Table } from '@/components/Table';
 import Claims from '@/constants/claims';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';

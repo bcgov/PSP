@@ -11,13 +11,10 @@ exports[`AdvancedFilterBar > renders as expected 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-flex-flow: column;
-  -ms-flex-flow: column;
-  flex-flow: column;
-  position: relative;
-  margin: 0;
-  min-height: 5.2rem;
-  height: calc(100vh - 7.2rem - 4.8rem);
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  height: calc(100vh - 7.2rem - 4.8rem - 28rem);
   max-width: 0;
   width: 0;
   margin-left: 0;
@@ -29,7 +26,7 @@ exports[`AdvancedFilterBar > renders as expected 1`] = `
   -webkit-transition: all 1s ease-in-out;
   transition: all 1s ease-in-out;
   z-index: 1000;
-  overflow: hidden;
+  overflow: auto;
 }
 
 .c1 {

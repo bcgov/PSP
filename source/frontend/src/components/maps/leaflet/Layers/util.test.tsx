@@ -9,7 +9,7 @@ import {
 } from '@/constants/index';
 import { toCqlFilterValue } from '@/hooks/layer-api/layerUtils';
 import {
-  EmptyPropertyLocation,
+  emptyPropertyLocation,
   PIMS_Property_Location_View,
 } from '@/models/layers/pimsPropertyLocationView';
 
@@ -35,7 +35,7 @@ describe('mapUtils tests', () => {
           type: 'Point',
           coordinates: [1, 2],
         },
-        properties: { ...EmptyPropertyLocation, PROPERTY_ID: 1, IS_OTHER_INTEREST: true },
+        properties: { ...emptyPropertyLocation, PROPERTY_ID: 1, IS_OTHER_INTEREST: true },
       };
       const latlng: LatLngExpression = { lat: 1, lng: 2 };
 
@@ -104,7 +104,7 @@ describe('mapUtils tests', () => {
         getMarkerIcon(
           {
             ...feature,
-            properties: { ...EmptyPropertyLocation, PROPERTY_ID: 1, IS_OWNED: true },
+            properties: { ...emptyPropertyLocation, PROPERTY_ID: 1, IS_OWNED: true },
           },
           false,
         ),
@@ -116,7 +116,7 @@ describe('mapUtils tests', () => {
           {
             ...feature,
             properties: {
-              ...EmptyPropertyLocation,
+              ...emptyPropertyLocation,
               PROPERTY_ID: 1,
               HAS_ACTIVE_RESEARCH_FILE: true,
             },
@@ -130,7 +130,7 @@ describe('mapUtils tests', () => {
         getMarkerIcon(
           {
             ...feature,
-            properties: { ...EmptyPropertyLocation, PROPERTY_ID: 1, IS_OTHER_INTEREST: true },
+            properties: { ...emptyPropertyLocation, PROPERTY_ID: 1, IS_OTHER_INTEREST: true },
           },
           false,
         ),
@@ -141,7 +141,7 @@ describe('mapUtils tests', () => {
         getMarkerIcon(
           {
             ...feature,
-            properties: { ...EmptyPropertyLocation, PROPERTY_ID: 1, IS_DISPOSED: true },
+            properties: { ...emptyPropertyLocation, PROPERTY_ID: 1, IS_DISPOSED: true },
           },
           false,
           true,
@@ -154,7 +154,7 @@ describe('mapUtils tests', () => {
           {
             ...feature,
             properties: {
-              ...EmptyPropertyLocation,
+              ...emptyPropertyLocation,
               PROPERTY_ID: 1,
               IS_OWNED: true,
               HAS_ACTIVE_ACQUISITION_FILE: true,
@@ -170,7 +170,7 @@ describe('mapUtils tests', () => {
           {
             ...feature,
             properties: {
-              ...EmptyPropertyLocation,
+              ...emptyPropertyLocation,
               PROPERTY_ID: 1,
               IS_OWNED: null,
               HAS_ACTIVE_ACQUISITION_FILE: null,

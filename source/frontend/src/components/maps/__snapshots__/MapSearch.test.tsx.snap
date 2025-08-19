@@ -282,13 +282,14 @@ exports[`MapSearch component > renders as expected 1`] = `
 .c1 {
   padding-right: 0 !important;
   border-right: 0 !important;
+  min-width: 17rem;
 }
 
 .c3 {
   padding-left: 0 !important;
 }
 
-.c3 .form-control {
+.c3 input:first-child {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
@@ -415,6 +416,13 @@ exports[`MapSearch component > renders as expected 1`] = `
                 value="coordinates"
               >
                 Lat/Long
+              </option>
+              <option
+                class="option"
+                data-testid="select-option-surveyParcel"
+                value="surveyParcel"
+              >
+                Survey Parcel
               </option>
             </select>
           </div>

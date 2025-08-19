@@ -13,7 +13,7 @@ import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { emptyRegion } from '@/models/layers/motRegionalBoundary';
 import { emptyPmbcParcel } from '@/models/layers/parcelMapBC';
-import { EmptyPropertyLocation } from '@/models/layers/pimsPropertyLocationView';
+import { emptyPropertyLocation } from '@/models/layers/pimsPropertyLocationView';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import * as mapUtils from '@/utils/mapPropertyUtils';
 import { act, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
@@ -155,7 +155,7 @@ describe('LeasePropertySelector component', () => {
       pimsFeatures: [
         {
           type: 'Feature',
-          properties: { ...EmptyPropertyLocation, PROPERTY_ID: 1, PID: 1 },
+          properties: { ...emptyPropertyLocation, PROPERTY_ID: 1, PID: 1 },
           geometry: getMockPolygon(),
         },
       ],
@@ -297,7 +297,7 @@ describe('LeasePropertySelector component', () => {
       pimsFeatures: [
         {
           type: 'Feature',
-          properties: { ...EmptyPropertyLocation, PROPERTY_ID: 1 },
+          properties: { ...emptyPropertyLocation, PROPERTY_ID: 1 },
           geometry: getMockPolygon(),
         },
       ],

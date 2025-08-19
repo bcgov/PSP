@@ -1,8 +1,8 @@
 [
   {
     "Test Case Description": "New Acquisition File to test Details",
-    "ManagementStatus": "Hold",
-    "ManagementMinistryProjectCode": 5500100.0,
+    "ManagementStatus": "Draft",
+    "ManagementMinistryProjectCode": "5500100",
     "ManagementMinistryProject": "Darrell Bay Ferry Terminal",
     "ManagementMinistryProduct": "5500100-01 Darrell Bay Ferry Terminal Prod 1",
     "ManagementMinistryFunding": "Federal",
@@ -32,8 +32,8 @@
   },
   {
     "Test Case Description": "Update Acquisition File Details",
-    "ManagementStatus": "Cancelled",
-    "ManagementMinistryProjectCode": 5504830.0,
+    "ManagementStatus": "Active",
+    "ManagementMinistryProjectCode": "5504830",
     "ManagementMinistryProject": "SOUTH FRASER PERIMETER ROAD",
     "ManagementMinistryProduct": "04830 SOUTH FRASER PERIMETER ROAD",
     "ManagementMinistryFunding": "TI Corp",
@@ -55,7 +55,7 @@
     "ManagementDigitalDocuments": []
   },
   {
-    "Test Case Description": "New Acquisition File to test Properties",
+    "Test Case Description": "New Management File to test Properties",
     "ManagementStatus": "Active",
     "ManagementMinistryProjectCode": null,
     "ManagementMinistryProject": null,
@@ -69,26 +69,28 @@
     "ManagementSearchProperties": {
       "Test Case Description": "MF Add Properties",
       "PID": "002-256-525",
-      "PIN": 90172682.0,
+      "PIN": "90172682",
       "Address": "949 patullo",
       "PlanNumber": "LMP38274",
       "LegalDescription": "BLOCK A DISTRICT LOT 5186 GROUP 1 NEW WESTMINSTER DISTRICT",
       "MultiplePIDS": null,
-      "LatitudeDegree": 49.0,
-      "LatitudeMinutes": 16.0,
-      "LatitudeSeconds": 19.01,
-      "LatitudeDirection": "N",
-      "LongitudeDegree": 123.0,
-      "LongitudeMinutes": 8.0,
-      "LongitudeSeconds": 8.304,
-      "LongitudeDirection": "W"
+      "LatitudeLongitude": {
+        "LatitudeDegree": 49.0,
+        "LatitudeMinutes": 16.0,
+        "LatitudeSeconds": 19.01,
+        "LatitudeDirection": "N",
+        "LongitudeDegree": 123.0,
+        "LongitudeMinutes": 8.0,
+        "LongitudeSeconds": 8.304,
+        "LongitudeDirection": "W"
+      }
     },
     "ManagementActivity": [],
     "ManagementDigitalDocuments": []
   },
   {
-    "Test Case Description": "Update Acquisition File Properties",
-    "ManagementStatus": "Hold",
+    "Test Case Description": "Update Management File Properties",
+    "ManagementStatus": "Active",
     "ManagementMinistryProjectCode": null,
     "ManagementMinistryProject": null,
     "ManagementMinistryProduct": null,

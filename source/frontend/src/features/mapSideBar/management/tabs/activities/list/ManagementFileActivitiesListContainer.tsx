@@ -72,6 +72,7 @@ const ManagementFileActivitiesListContainer: React.FunctionComponent<
       isLoading={loading || deletingActivity}
       propertyActivities={propertyActivities}
       canEditActivities={canEditActivities}
+      addActivityButtonText="Add an Activity"
       setSort={setSort}
       sort={sort}
       onCreate={onCreate}

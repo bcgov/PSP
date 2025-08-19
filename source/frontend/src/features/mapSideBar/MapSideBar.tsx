@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { SideBarType } from '@/components/common/mapFSM/machineDefinition/types';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { Backdrop } from '@/components/common/styles';
+import { exists } from '@/utils';
 
 import MapRouter from './router/MapRouter';
 
@@ -77,7 +78,7 @@ const StyledMapSideBar = styled.div<{ sideBarState: IMapSideBarViewState }>`
   overflow: hidden;
   transition: 1s;
   ${({ sideBarState }) => {
-    if (sideBarState.isOpen) {
+    if (exists(sideBarState) && sideBarState.isOpen) {
       if (sideBarState.isCollapsed) {
         return `
           min-width: 7.4rem;

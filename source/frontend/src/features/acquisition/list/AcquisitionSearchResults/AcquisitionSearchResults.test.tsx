@@ -61,7 +61,7 @@ describe('Acquisition Search Results Table', () => {
     expect(getByText('Historical file #')).toBeVisible();
   });
 
-    it('displays Owner', async () => {
+  it('displays Owner', async () => {
     const { getByText, findAllByText } = setup({ results: [] });
 
     await findAllByText('No matching results can be found. Try widening your search criteria.');

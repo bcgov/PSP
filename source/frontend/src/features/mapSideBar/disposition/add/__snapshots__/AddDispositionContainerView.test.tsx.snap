@@ -735,7 +735,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                             aria-hidden="true"
                             class="rbt-input-hint"
                             readonly=""
-                            style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.54); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%;"
+                            style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.54); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%; border-style: inset inset inset inset; border-width: 2px 2px 2px 2px; line-height: normal; padding: 1px 1px 1px 1px;"
                             tabindex="-1"
                             value=""
                           />
@@ -1197,6 +1197,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                         >
                           <div
                             class="c13 form-section"
+                            data-testid="property-search-selector-section"
                           >
                             <h2
                               class="c14"
@@ -1508,7 +1509,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                           <div
                             class="col-11"
                           >
-                            Selected properties
+                            Selected Properties
                           </div>
                           <div
                             class="col"

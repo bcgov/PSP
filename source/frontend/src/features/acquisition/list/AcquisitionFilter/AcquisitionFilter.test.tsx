@@ -73,7 +73,7 @@ describe('Acquisition Filter', () => {
     );
   });
 
-    it('searches by acquisition file Owner name', async () => {
+  it('searches by acquisition file Owner name', async () => {
     const { container, searchButton } = setup();
 
     fillInput(container, 'ownerName', 'DOE');

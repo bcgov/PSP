@@ -113,7 +113,7 @@ const EditUserForm: React.FunctionComponent<React.PropsWithChildren<IEditUserFor
             </TooltipWrapper>
           </SectionField>
 
-          <SectionField label="MoTI Region(s)" required labelWidth={{ xs: 2 }}>
+          <SectionField label="MOTT region(s)" required labelWidth={{ xs: 2 }}>
             <Multiselect<ILookupCode, ApiGen_Base_CodeType<number>>
               placeholder=""
               field="regions"

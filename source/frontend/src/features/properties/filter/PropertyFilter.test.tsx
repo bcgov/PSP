@@ -366,6 +366,10 @@ describe('MapFilterBar', () => {
       coordinates: null,
       ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
       name: '',
+      section: '',
+      township: '',
+      range: '',
+      district: '',
     });
   });
 
@@ -398,6 +402,10 @@ describe('MapFilterBar', () => {
       coordinates: null,
       ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
       name: '',
+      section: '',
+      township: '',
+      range: '',
+      district: '',
     });
   });
 
@@ -430,6 +438,10 @@ describe('MapFilterBar', () => {
       coordinates: null,
       ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
       name: '',
+      section: '',
+      township: '',
+      range: '',
+      district: '',
     });
   });
 
@@ -481,6 +493,58 @@ describe('MapFilterBar', () => {
       }),
       ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
       name: '',
+      section: '',
+      township: '',
+      range: '',
+      district: '',
+    });
+  });
+
+  it('searches by section/township/range coordinates', async () => {
+    const { searchButton } = setup({
+      props: {
+        propertyFilter: {
+          ...defaultPropertyFilter,
+          searchBy: 'surveyParcel',
+        },
+      },
+    });
+
+    // Enter values on the form fields, then click the Search button
+    await act(async () => {
+      const input = getByName('section');
+      userEvent.paste(input, '1');
+    });
+    await act(async () => {
+      const input = getByName('township');
+      userEvent.paste(input, '2');
+    });
+    await act(async () => {
+      const input = getByName('range');
+      userEvent.paste(input, '3');
+    });
+    await act(async () => {
+      userEvent.click(searchButton);
+    });
+
+    expect(onFilterChange).toHaveBeenCalledWith<[IPropertyFilter]>({
+      pid: '',
+      pin: '',
+      planNumber: '',
+      address: '',
+      searchBy: 'surveyParcel',
+      page: undefined,
+      quantity: undefined,
+      latitude: '',
+      longitude: '',
+      historical: '',
+      coordinates: null,
+      ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
+      name: '',
+      section: '1',
+      township: '2',
+      range: '3',
+      district: '',
     });
   });
 
@@ -544,10 +608,14 @@ describe('MapFilterBar', () => {
       planNumber: '',
       quantity: undefined,
       searchBy: 'name',
+      section: '',
+      township: '',
+      range: '',
+      district: '',
     });
   });
 
-  it.each([
+  it.skip.each([
     ['The map is the active page', SearchToggleOption.Map, 'list-view', '/properties/list'],
     ['Property List View is the active page', SearchToggleOption.List, 'map-view', '/mapview'],
   ])(

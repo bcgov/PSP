@@ -71,7 +71,7 @@ export default defineConfig({
          default-src 'self'; \
          script-src 'self' blob: 'sha256-8ZgGo/nOlaDknQkDUYiedLuFRSGJwIz6LAzsOrNxhmU='; \
          connect-src 'self' http://localhost:*/ https://collector-3cd915-dev.apps.silver.devops.gov.bc.ca/ https://www.arcgis.com/sharing/rest/ https://tiles.arcgis.com/ https://maps.gov.bc.ca/arcgis/rest/ https://server.arcgisonline.com/ArcGIS/rest/ https://dev.loginproxy.gov.bc.ca/ https://dev-pims.th.gov.bc.ca/api/ https://openmaps.gov.bc.ca/ https://delivery.apps.gov.bc.ca/ https://apps.gov.bc.ca/ https://maps.th.gov.bc.ca/ https://gov.bc.ca/ https://dev-maps.th.gov.bc.ca/; \
-         img-src 'self' data: blob: https://openmaps.gov.bc.ca/ https://maps.gov.bc.ca/ https://server.arcgisonline.com/ https://gov.bc.ca/ https://maps.th.gov.bc.ca/ https://dev-maps.th.gov.bc.ca; \
+         img-src 'self' data: blob: https://openmaps.gov.bc.ca/ https://maps.gov.bc.ca/ https://server.arcgisonline.com/ https://gov.bc.ca/ https://maps.th.gov.bc.ca/ https://dev-maps.th.gov.bc.ca https://openmaps.gov.bc.ca/; \
          style-src 'self' 'unsafe-inline'; \
          form-action 'self'; \
          font-src 'self'; \

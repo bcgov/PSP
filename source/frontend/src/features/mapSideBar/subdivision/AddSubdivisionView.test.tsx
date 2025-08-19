@@ -112,7 +112,7 @@ describe('Add Subdivision View', () => {
         PropertyForm.fromMapProperty(testProperty).toFeatureDataset(),
       ]);
     });
-    expect(getPrimaryAddressByPid).toHaveBeenCalledWith('123456789');
+    expect(getPrimaryAddressByPid).toHaveBeenCalledWith('123-456-789');
   });
 
   it('does not call for address if property has no pid', async () => {
@@ -197,7 +197,7 @@ describe('Add Subdivision View', () => {
       ]);
     });
 
-    expect(getPrimaryAddressByPid).toHaveBeenCalledWith(testProperty.pid.replaceAll('-', ''));
+    expect(getPrimaryAddressByPid).toHaveBeenCalledWith(testProperty.pid);
 
     expect(queryByDisplayValue('1.12')).toBeNull();
     expect(queryByDisplayValue('1.123')).toBeNull();

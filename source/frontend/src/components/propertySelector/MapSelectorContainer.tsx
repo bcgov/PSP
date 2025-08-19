@@ -6,9 +6,9 @@ import { Button } from '@/components/common/buttons';
 import { useMapProperties } from '@/hooks/repositories/useMapProperties';
 import { isValidId } from '@/utils';
 import {
+  areSelectedFeaturesEqual,
   featuresetToMapProperty,
   getPropertyName,
-  NameSourceType,
   pidFromFeatureSet,
   pinFromFeatureSet,
 } from '@/utils/mapPropertyUtils';
@@ -134,6 +134,7 @@ export const MapSelectorContainer: FunctionComponent<IMapSelectorContainerProps>
             );
             setSearchSelectedProperties([]);
           }}
+          data-testid="add-selected-properties-button"
         >
           Add to selection
         </Button>
@@ -149,7 +150,11 @@ const addProperties = async (
 ) => {
   const propertiesToAdd: SelectedFeatureDataset[] = [];
   newProperties.forEach((property: SelectedFeatureDataset) => {
-    if (!selectedProperties.some(selectedProperty => isSameProperty(selectedProperty, property))) {
+    if (
+      !selectedProperties.some(selectedProperty =>
+        areSelectedFeaturesEqual(selectedProperty, property),
+      )
+    ) {
       propertiesToAdd.push(property);
     } else {
       toast.warn(
@@ -162,22 +167,6 @@ const addProperties = async (
   if (propertiesToAdd.length > 0) {
     await addCallback(propertiesToAdd);
   }
-};
-
-const isSameProperty = (lhs: SelectedFeatureDataset, rhs: SelectedFeatureDataset) => {
-  const lhsName = getPropertyName(featuresetToMapProperty(lhs));
-  const rhsName = getPropertyName(featuresetToMapProperty(rhs));
-  if (
-    (lhsName.label === rhsName.label &&
-      lhsName.label !== NameSourceType.NONE &&
-      lhsName.label !== NameSourceType.PLAN) ||
-    (lhsName.label === NameSourceType.PLAN &&
-      lhs.location.lat === rhs.location.lat &&
-      lhs.location.lng === rhs.location.lng)
-  ) {
-    return lhsName.value === rhsName.value;
-  }
-  return false;
 };
 
 export default MapSelectorContainer;

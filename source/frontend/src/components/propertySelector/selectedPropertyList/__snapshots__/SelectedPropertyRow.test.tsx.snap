@@ -437,6 +437,7 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
     >
       <button
         class="c5 Button btn btn-link"
+        data-testid="zoom-to-property-0"
         type="button"
       >
         <div
@@ -464,6 +465,7 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
     >
       <button
         class="c5 Button c6 btn btn-primary"
+        data-testid="move-pin-location-0"
         title="move-pin-location"
         type="button"
       >
@@ -491,7 +493,7 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
     >
       <button
         class="c5 Button c7 btn btn-link"
-        data-testid="remove-button"
+        data-testid="delete-property-0"
         type="button"
       >
         <div

@@ -260,6 +260,7 @@ exports[`PropertySearchSelectorFormView component > renders as expected when pro
 
 <div
     class="c0 form-section"
+    data-testid="property-search-selector-section"
   >
     <h2
       class="c1"

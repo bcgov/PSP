@@ -75,10 +75,10 @@ export const DetailAdministration: React.FunctionComponent<
         <SectionField label="Effective date" labelWidth={{ xs: 3 }}>
           {prettyFormatDate(responsibilityDate)}
         </SectionField>
-        <SectionField label="MOTI contact" labelWidth={{ xs: 3 }}>
+        <SectionField label="MOTT contact" labelWidth={{ xs: 3 }}>
           {lease.motiName}
         </SectionField>
-        <SectionField label="MOTI region" labelWidth={{ xs: 3 }}>
+        <SectionField label="MOTT region" labelWidth={{ xs: 3 }}>
           {lease.region?.description}
         </SectionField>
         <SectionField

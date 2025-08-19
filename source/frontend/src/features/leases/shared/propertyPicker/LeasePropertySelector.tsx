@@ -85,6 +85,10 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
       ownership: '',
       coordinates: null,
       name: '',
+      section: '',
+      township: '',
+      range: '',
+      district: '',
     };
 
     const result = await getProperties.execute(params);

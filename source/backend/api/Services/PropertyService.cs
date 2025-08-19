@@ -270,9 +270,9 @@ namespace Pims.Api.Services
             _logger.LogInformation("Creating property Activity...");
             _user.ThrowIfNotAllAuthorized(Permissions.ManagementAdd, Permissions.PropertyEdit);
 
-            if (managementActivity.PropMgmtActivityStatusTypeCode == null)
+            if (managementActivity.MgmtActivityStatusTypeCode == null)
             {
-                managementActivity.PropMgmtActivityStatusTypeCode = "NOTSTARTED";
+                managementActivity.MgmtActivityStatusTypeCode = ManagementActivityStatusTypes.NOTSTARTED.ToString();
             }
 
             var managementActivityResult = _managementActivityRepository.Create(managementActivity);
@@ -315,12 +315,12 @@ namespace Pims.Api.Services
 
             var propertyManagementActivity = _managementActivityRepository.GetActivity(activityId);
 
-            if (!propertyManagementActivity.PropMgmtActivityStatusTypeCode.Equals(ManagementActivityStatusTypeCode.NOTSTARTED.ToString()))
+            if (!propertyManagementActivity.MgmtActivityStatusTypeCode.Equals(ManagementActivityStatusTypeCode.NOTSTARTED.ToString()))
             {
                 throw new BadRequestException($"PropertyManagementActivity can not be deleted given it has already started");
             }
 
-            var activityDocuments = _documentFileService.GetFileDocuments<PimsPropertyActivityDocument>(FileType.ManagementActivity, activityId);
+            var activityDocuments = _documentFileService.GetFileDocuments<PimsMgmtActivityDocument>(FileType.ManagementActivity, activityId);
             if (activityDocuments.Count > 0)
             {
                 throw new BadRequestException($"PropertyManagementActivity can not be deleted. There is at least one document related to it.");

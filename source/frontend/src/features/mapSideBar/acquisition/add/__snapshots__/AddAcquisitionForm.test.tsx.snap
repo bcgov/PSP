@@ -1617,6 +1617,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                 >
                   <div
                     class="c1 form-section"
+                    data-testid="property-search-selector-section"
                   >
                     <h2
                       class="c2"
@@ -1922,7 +1923,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
               <div
                 class="align-content-end col"
               >
-                Selected properties
+                Selected Properties
               </div>
             </div>
           </h2>
@@ -4272,6 +4273,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
                 >
                   <div
                     class="c1 form-section"
+                    data-testid="property-search-selector-section"
                   >
                     <h2
                       class="c2"
@@ -4577,7 +4579,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
               <div
                 class="align-content-end col"
               >
-                Selected properties
+                Selected Properties
               </div>
             </div>
           </h2>
