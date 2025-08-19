@@ -36,9 +36,7 @@ exports[`PropertySearchPidSelector component > renders correctly 1`] = `
 }
 
 .c3.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c3.btn:hover {

@@ -36,9 +36,7 @@ exports[`ReceivedDepositForm component > renders as expected 1`] = `
 }
 
 .c5.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c5.btn:hover {
@@ -565,9 +563,7 @@ exports[`ReceivedDepositForm component > renders with data as expected 1`] = `
 }
 
 .c5.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c5.btn:hover {

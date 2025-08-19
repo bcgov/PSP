@@ -41,9 +41,7 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
 }
 
 .c14.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c14.btn:hover {
@@ -926,9 +924,7 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
 }
 
 .c8.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c8.btn:hover {
@@ -1229,9 +1225,20 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
 }
 
 .c6 {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  margin: 0.15rem;
+  witdh: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
+  line-break: break-all;
 }
 
 .c4 {

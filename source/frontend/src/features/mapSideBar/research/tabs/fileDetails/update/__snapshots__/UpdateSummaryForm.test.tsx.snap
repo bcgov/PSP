@@ -36,9 +36,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
 }
 
 .c10.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c10.btn:hover {

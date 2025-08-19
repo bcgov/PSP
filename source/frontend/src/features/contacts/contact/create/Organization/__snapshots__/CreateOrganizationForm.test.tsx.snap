@@ -36,9 +36,7 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
 }
 
 .c8.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c8.btn:hover {
@@ -1589,9 +1587,7 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
 }
 
 .c2.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c2.btn:hover {

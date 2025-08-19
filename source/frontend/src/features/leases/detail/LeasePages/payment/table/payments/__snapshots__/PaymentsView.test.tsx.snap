@@ -36,9 +36,7 @@ exports[`PaymentsView component > renders as expected 1`] = `
 }
 
 .c4.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c4.btn:hover {
@@ -401,9 +399,7 @@ exports[`PaymentsView component > renders with data as expected 1`] = `
 }
 
 .c4.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c4.btn:hover {

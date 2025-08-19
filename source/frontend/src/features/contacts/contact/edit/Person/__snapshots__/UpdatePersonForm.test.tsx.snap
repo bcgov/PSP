@@ -36,9 +36,7 @@ exports[`UpdatePersonForm > renders as expected 1`] = `
 }
 
 .c10.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c10.btn:hover {
@@ -1809,9 +1807,7 @@ exports[`UpdatePersonForm > renders as expected 1`] = `
 }
 
 .c2.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c2.btn:hover {

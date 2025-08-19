@@ -44,9 +44,7 @@ exports[`Add Consolidation View > matches snapshot 1`] = `
 }
 
 .c5.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c5.btn:hover {

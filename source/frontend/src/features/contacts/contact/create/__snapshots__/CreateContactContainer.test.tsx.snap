@@ -44,9 +44,7 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
 }
 
 .c17.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c17.btn:hover {

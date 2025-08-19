@@ -36,9 +36,7 @@ exports[`DocumentFilterForm component > renders as expected 1`] = `
 }
 
 .c1.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c1.btn:hover {
@@ -469,9 +467,7 @@ exports[`DocumentFilterForm component > renders with data as expected 1`] = `
 }
 
 .c1.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c1.btn:hover {
