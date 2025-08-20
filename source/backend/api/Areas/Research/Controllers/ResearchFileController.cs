@@ -55,7 +55,7 @@ namespace Pims.Api.Areas.ResearchFile.Controllers
         /// Gets the specified research file.
         /// </summary>
         /// <returns></returns>
-        [HttpGet("unsafe/{id:string}")]
+        [HttpGet("unsafe/{id}")]
         [HasPermission(Permissions.ResearchFileView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ResearchFileModel), 200)]
