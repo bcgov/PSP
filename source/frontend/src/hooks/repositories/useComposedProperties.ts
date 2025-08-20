@@ -165,13 +165,13 @@ export const useComposedProperties = ({
         } else {
           setRetrievedBoundary(
             point([
-              propertyResponse?.location.coordinate?.x,
-              propertyResponse?.location.coordinate?.y,
+              propertyResponse?.location?.coordinate?.x,
+              propertyResponse?.location?.coordinate?.y,
             ]).geometry,
           );
         }
       } else if (!exists(retrievedBoundary) && parcelResponse?.features?.length > 0) {
-        setRetrievedBoundary(firstOrNull(parcelResponse?.features).geometry);
+        setRetrievedBoundary(firstOrNull(parcelResponse?.features)?.geometry);
       }
     }
   }, [id, propertyResponse, parcelResponse]);

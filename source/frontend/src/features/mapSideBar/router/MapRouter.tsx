@@ -304,6 +304,19 @@ export const MapRouter: React.FunctionComponent = memo(() => {
         title={'Property Information - Non Inventory'}
       />
       <AppRoute
+        path={`/mapview/sidebar/location/lat/:lat/lng/:lng`}
+        customRender={({ match }) => {
+          return (
+            <MotiInventoryContainer
+              onClose={onClose}
+              location={{ lat: match.params.lat, lng: match.params.lng }}
+            />
+          );
+        }}
+        key={'LatLngLocation'}
+        title={'Map Location Information'}
+      />
+      <AppRoute
         path={`/mapview/sidebar/lease/new`}
         customRender={() => (
           <AddLeaseContainer

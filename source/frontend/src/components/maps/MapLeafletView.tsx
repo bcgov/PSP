@@ -44,6 +44,7 @@ import WorklistControl from './leaflet/Control/WorklistControl/WorklistControl';
 import { ZoomOutButton } from './leaflet/Control/ZoomOut/ZoomOutButton';
 import { LocationPopupContainer } from './leaflet/LayerPopup/LocationPopupContainer';
 import { FilePropertiesLayer } from './leaflet/Layers/FilePropertiesLayer';
+import HighwayParcelsLayer from './leaflet/Layers/HighwayParcelsLayer';
 import { LeafletLayerListener } from './leaflet/Layers/LeafletLayerListener';
 import MapsearchParcelsLayer from './leaflet/Layers/MapsearchParcelsLayer';
 import { MarkerLayer } from './leaflet/Layers/MarkerLayer';
@@ -321,8 +322,12 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
           <WorklistMapClickMonitor />
         </Pane>
 
-        <Pane name="searchlistParcels" style={{ zIndex: 500 }}>
+        <Pane name="searchlistParcels" style={{ zIndex: 400 }}>
           <MapsearchParcelsLayer />
+        </Pane>
+
+        <Pane name="highwaylistParcels" style={{ zIndex: 300 }}>
+          <HighwayParcelsLayer />
         </Pane>
 
         {/* Client-side "layer" to highlight file property boundaries (when in the context of a file) */}

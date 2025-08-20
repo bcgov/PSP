@@ -9,6 +9,7 @@ import thunk from 'redux-thunk';
 import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
 import {
   MarkerSelected,
+  emptyHighwayFeatures,
   emptyPimsBoundaryFeatureCollection,
   emptyPimsLocationFeatureCollection,
   emptyPimsLocationLiteFeatureCollection,
@@ -194,6 +195,7 @@ describe('MapContainer', () => {
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
         fullyAttributedFeatures: emptyPmbcFeatureCollection,
         surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
+        highwayPlanFeatures: emptyHighwayFeatures,
       },
     };
     if (
@@ -297,6 +299,7 @@ describe('MapContainer', () => {
           pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
           fullyAttributedFeatures: emptyPmbcFeatureCollection,
           surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
+          highwayPlanFeatures: emptyHighwayFeatures,
         },
       },
     });
@@ -321,6 +324,7 @@ describe('MapContainer', () => {
           pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
           fullyAttributedFeatures: emptyPmbcFeatureCollection,
           surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
+          highwayPlanFeatures: emptyHighwayFeatures,
         },
       },
     });
@@ -395,6 +399,7 @@ describe('MapContainer', () => {
           pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
           fullyAttributedFeatures: emptyPmbcFeatureCollection,
           surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
+          highwayPlanFeatures: emptyHighwayFeatures,
         },
       },
     });
@@ -429,6 +434,7 @@ describe('MapContainer', () => {
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
         fullyAttributedFeatures: emptyPmbcFeatureCollection,
         surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
+        highwayPlanFeatures: emptyHighwayFeatures,
       },
     };
 
@@ -469,6 +475,7 @@ describe('MapContainer', () => {
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
         fullyAttributedFeatures: emptyPmbcFeatureCollection,
         surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
+        highwayPlanFeatures: emptyHighwayFeatures,
       },
     };
 
@@ -515,6 +522,7 @@ describe('MapContainer', () => {
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
         fullyAttributedFeatures: emptyPmbcFeatureCollection,
         surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
+        highwayPlanFeatures: emptyHighwayFeatures,
       },
       isFiltering: false,
     };
@@ -552,6 +560,7 @@ describe('MapContainer', () => {
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
         fullyAttributedFeatures: emptyPmbcFeatureCollection,
         surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
+        highwayPlanFeatures: emptyHighwayFeatures,
       },
       activePimsPropertyIds: activeIds,
       isFiltering: true,
@@ -600,6 +609,7 @@ describe('MapContainer', () => {
         pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
         fullyAttributedFeatures: emptyPmbcFeatureCollection,
         surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
+        highwayPlanFeatures: emptyHighwayFeatures,
       },
       activePimsPropertyIds: activeIds,
       isFiltering: true,

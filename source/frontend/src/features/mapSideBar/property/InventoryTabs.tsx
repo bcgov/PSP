@@ -48,6 +48,8 @@ export const InventoryTabs: React.FunctionComponent<
     id: string;
     researchId: string;
     filePropertyId: string;
+    lat: string;
+    lng: string;
   }>();
   return (
     <TabView
@@ -73,6 +75,13 @@ export const InventoryTabs: React.FunctionComponent<
             menuIndex: match.params.menuIndex,
             researchId: match.params.researchId,
             filePropertyId: match.params.filePropertyId,
+            tab,
+          });
+          history.push(path);
+        } else if (match.path.includes('location')) {
+          const path = generatePath(match.path, {
+            lat: match.params.lat,
+            lng: match.params.lng,
             tab,
           });
           history.push(path);

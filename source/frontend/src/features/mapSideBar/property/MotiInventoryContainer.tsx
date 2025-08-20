@@ -1,4 +1,7 @@
+import { point } from '@turf/turf';
 import { FormikProps } from 'formik';
+import { Geometry } from 'geojson';
+import { LatLngLiteral } from 'leaflet';
 import React, { useEffect, useRef, useState } from 'react';
 import { generatePath, useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
@@ -19,6 +22,7 @@ export interface IMotiInventoryContainerProps {
   id?: number;
   pid?: string;
   pin?: string;
+  location?: LatLngLiteral;
   onClose: () => void;
 }
 
@@ -40,6 +44,14 @@ export const MotiInventoryContainer: React.FunctionComponent<
   const selectedFeatureData = mapMachine.mapLocationFeatureDataset;
 
   const formikRef = useRef<FormikProps<any>>(null);
+  let boundary: Geometry = null;
+  if (exists(props.id)) {
+    boundary = firstOrNull(selectedFeatureData?.pimsFeatures)?.geometry;
+  } else if (exists(props.pid || props.pin)) {
+    boundary = firstOrNull(selectedFeatureData?.parcelFeatures)?.geometry;
+  } else if (exists(props.location?.lng) && exists(props.location?.lat)) {
+    boundary = point([props.location?.lng, props.location?.lat])?.geometry;
+  }
   const composedPropertyState = useComposedProperties({
     id: props.id,
     pid:
@@ -47,9 +59,7 @@ export const MotiInventoryContainer: React.FunctionComponent<
         ? undefined
         : Number(props.pid),
     pin: pinParser(props?.pin),
-    boundary: exists(props.id)
-      ? firstOrNull(selectedFeatureData?.pimsFeatures)?.geometry
-      : firstOrNull(selectedFeatureData?.parcelFeatures)?.geometry,
+    boundary: boundary,
     propertyTypes: propertyTabData,
   });
 

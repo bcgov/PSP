@@ -15,7 +15,7 @@ export const ParcelListView: React.FC<IParcelListViewProps> = ({ parcels }) => {
   }
 
   return (
-    <StyledContainer className="p-3">
+    <StyledContainer>
       <StyledHeader>
         <StyledSpan>
           {parcels.length}

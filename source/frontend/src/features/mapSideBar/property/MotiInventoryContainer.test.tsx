@@ -30,6 +30,7 @@ describe('MotiInventoryContainer component', () => {
         onClose={renderOptions.onClose}
         pid={renderOptions.pid}
         id={renderOptions.id}
+        location={renderOptions.location}
       />,
       {
         ...renderOptions,
@@ -167,6 +168,7 @@ describe('MotiInventoryContainer component', () => {
 
     const { findByText, queryByTestId } = setup({
       id: undefined,
+      location: { lng: -120.69195885, lat: 50.25163372 },
       onClose,
       mockMapMachine: testMockMachine,
     });

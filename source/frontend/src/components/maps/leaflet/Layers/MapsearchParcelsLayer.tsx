@@ -10,7 +10,7 @@ import { exists } from '@/utils';
 export const MapsearchParcelsLayer: React.FunctionComponent = () => {
   const { mapFeatureData } = useMapStateMachine();
 
-  // For now, lat/long properties in the worklist will not display on the map
+  // For now, lat/long properties in the search list result will not display on the map
   // Ignore properties without a valid boundary
   const validParcels = useMemo<Feature<Geometry, PMBC_FullyAttributed_Feature_Properties>[]>(
     () => (mapFeatureData?.fullyAttributedFeatures.features ?? []).filter(p => exists(p?.geometry)),
