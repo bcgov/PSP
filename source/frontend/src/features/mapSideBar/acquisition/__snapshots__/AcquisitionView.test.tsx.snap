@@ -1079,6 +1079,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                   >
                     <div
                       class="c30"
+                      data-testid="menu-item-property-0"
                     >
                       023-214-937
                     </div>
@@ -1130,6 +1131,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                   >
                     <div
                       class="c30"
+                      data-testid="menu-item-property-1"
                     >
                       024-996-777
                     </div>

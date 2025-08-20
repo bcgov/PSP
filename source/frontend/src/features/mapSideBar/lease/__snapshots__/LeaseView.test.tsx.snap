@@ -1106,6 +1106,7 @@ exports[`LeaseView component > renders as expected 1`] = `
                   >
                     <div
                       class="c29"
+                      data-testid="menu-item-property-0"
                     >
                       009-381-783
                     </div>

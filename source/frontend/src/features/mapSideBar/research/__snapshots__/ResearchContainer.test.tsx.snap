@@ -1060,6 +1060,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                     >
                       <div
                         class="c30"
+                        data-testid="menu-item-property-0"
                       >
                         123-456-789
                       </div>

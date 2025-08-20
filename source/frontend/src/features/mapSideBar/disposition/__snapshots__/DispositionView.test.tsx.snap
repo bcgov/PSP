@@ -1044,6 +1044,7 @@ exports[`DispositionView component > renders as expected 1`] = `
                   >
                     <div
                       class="c30"
+                      data-testid="menu-item-property-0"
                     >
                       013-852-752
                     </div>
