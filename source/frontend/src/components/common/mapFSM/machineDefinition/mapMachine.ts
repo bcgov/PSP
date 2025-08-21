@@ -429,7 +429,7 @@ const sideBarStates = {
 };
 
 const rightSideBarStates = {
-  initial: 'closed',
+  initial: 'searchVisible',
   states: {
     closed: {
       on: {

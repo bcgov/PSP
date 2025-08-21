@@ -51,6 +51,11 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
     [mapLocationFeatureDataset?.parcelFeatures?.length],
   );
 
+  const isEmpty = useMemo(
+    () => mapLocationFeatureDataset?.parcelFeatures?.length === 0,
+    [mapLocationFeatureDataset?.parcelFeatures?.length],
+  );
+
   const getOwnerInfo = useCallback(
     async (pid: string) => {
       if (isValidString(pid)) {
@@ -277,7 +282,7 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
           Property
         </Col>
         <Col xs="1">
-          <TooltipWrapper tooltipId={`property-quick-info-zoom`} tooltip={'Zoom to property'}>
+          <TooltipWrapper tooltipId={`property-quick-info-zoom`} tooltip={'Zoom to location'}>
             <StyledIconWrapper>
               <FaSearchPlus
                 size={18}
@@ -331,7 +336,8 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
       </StyledHeaderRow>
       {!isMinimized && isLoading === false && (
         <>
-          {!hasMultipleProperties && (
+          {isEmpty && <div className="pt-8">No property found in this location</div>}
+          {!hasMultipleProperties && !isEmpty && (
             <StyledInfoWrapper>
               <Row noGutters>
                 <Col>
