@@ -60,12 +60,13 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
     async (pid: string) => {
       if (isValidString(pid)) {
         const ltsaOrders = await getLtsaExecute(pid);
-        const titleOwners = ltsaOrders.titleOrders
-          .flatMap(x => x?.orderedProduct?.fieldedData?.ownershipGroups)
-          .flatMap(x => x?.titleOwners)
-          .filter(exists);
+        const titleOwners = ltsaOrders?.titleOrders
+          ?.flatMap(x => x?.orderedProduct?.fieldedData?.ownershipGroups)
+          ?.flatMap(x => x?.titleOwners)
+          ?.filter(exists);
 
-        const names = titleOwners.map(x => formatNames([x.givenName, x.lastNameOrCorpName1]));
+        const names =
+          titleOwners?.map(x => formatNames([x.givenName, x.lastNameOrCorpName1])) ?? [];
         setOwnerNames(names.join(', '));
       }
     },

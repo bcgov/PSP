@@ -62,7 +62,7 @@ export const usePimsHighwayLayer = () => {
     ) => {
       const featureCollection = await findMultipleWhereContainsBoundaryWrappedExecute(
         boundary,
-        geometryName,
+        geometryName ?? 'GEOMETRY',
         spatialReferenceId,
       );
 
