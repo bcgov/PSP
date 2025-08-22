@@ -197,6 +197,11 @@ namespace Pims.Api.Services
                         existingProperty.PropertyName = incomingManagementProperty.PropertyName;
                         needsUpdate = true;
                     }
+                    if (existingProperty.DisplayOrder != incomingManagementProperty.DisplayOrder)
+                    {
+                        existingProperty.DisplayOrder = incomingManagementProperty.DisplayOrder;
+                        needsUpdate = true;
+                    }
 
                     if (incomingManagementProperty.IsActive != existingProperty.IsActive)
                     {

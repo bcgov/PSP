@@ -533,6 +533,11 @@ namespace Pims.Api.Services
                         existingProperty.PropertyName = incomingDispositionProperty.PropertyName;
                         needsUpdate = true;
                     }
+                    if (existingProperty.DisplayOrder != incomingDispositionProperty.DisplayOrder)
+                    {
+                        existingProperty.DisplayOrder = incomingDispositionProperty.DisplayOrder;
+                        needsUpdate = true;
+                    }
 
                     var incomingGeom = incomingDispositionProperty.Location;
                     var existingGeom = existingProperty.Location;

@@ -346,6 +346,11 @@ namespace Pims.Api.Services
                         existingFileProperty.PropertyName = incomingAcquisitionProperty.PropertyName;
                         needsUpdate = true;
                     }
+                    if (existingFileProperty.DisplayOrder != incomingAcquisitionProperty.DisplayOrder)
+                    {
+                        existingFileProperty.DisplayOrder = incomingAcquisitionProperty.DisplayOrder;
+                        needsUpdate = true;
+                    }
 
                     var incomingGeom = incomingAcquisitionProperty.Location;
                     var existingGeom = existingFileProperty.Location;
