@@ -174,6 +174,19 @@ export const getMockApiProperties: () => ApiGen_Concepts_Property[] = () => [
   },
 ];
 
+export const getMockApiPropertyFile = (): ApiGen_Concepts_FileProperty => ({
+  id: 1,
+  fileId: 1,
+  isActive: null,
+  file: mockAcquisitionFileResponse(),
+  propertyName: 'test property name',
+  propertyId: 1,
+  property: getMockApiProperty(),
+  displayOrder: null,
+  location: null,
+  rowVersion: null,
+});
+
 export const getMockApiPropertyFiles = (): ApiGen_Concepts_FileProperty[] => [
   {
     id: 1,

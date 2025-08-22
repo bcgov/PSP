@@ -1,11 +1,15 @@
+import { feature } from '@turf/turf';
 import { FormikHelpers, FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
 import { createRef } from 'react';
 
 import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
 import { useManagementFileRepository } from '@/hooks/repositories/useManagementFileRepository';
+import { getMockFullyAttributedParcel } from '@/mocks/faParcelLayerResponse.mock';
+import { getMockPolygon } from '@/mocks/geometries.mock';
 import { mockManagementFileResponse } from '@/mocks/managementFiles.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
+import { emptyRegion } from '@/models/layers/motRegionalBoundary';
 import {
   act,
   createAxiosError,
@@ -115,6 +119,86 @@ describe('Add Management Container component', () => {
     expect(onSuccess).toHaveBeenCalled();
     expect(testMockMachine.processCreation).toHaveBeenCalled();
     expect(testMockMachine.refreshMapProperties).toHaveBeenCalled();
+  });
+
+  it('should preserve the order of properties when saving', async () => {
+    const testMockMachine: IMapStateMachineContext = {
+      ...mapMachineBaseMock,
+      selectedFeatures: [
+        {
+          location: { lng: -120.69195885, lat: 50.25163372 },
+          fileLocation: null,
+          pimsFeature: null,
+          parcelFeature: getMockFullyAttributedParcel('111-111-111'),
+          regionFeature: feature(getMockPolygon(), {
+            ...emptyRegion,
+            REGION_NUMBER: 1,
+            REGION_NAME: 'South Coast Region',
+          }),
+          districtFeature: null,
+          selectingComponentId: null,
+          municipalityFeature: null,
+        },
+        {
+          location: { lng: -120.69195885, lat: 50.25163372 },
+          fileLocation: null,
+          pimsFeature: null,
+          parcelFeature: getMockFullyAttributedParcel('222-222-222'),
+          regionFeature: feature(getMockPolygon(), {
+            ...emptyRegion,
+            REGION_NUMBER: 1,
+            REGION_NAME: 'South Coast Region',
+          }),
+          districtFeature: null,
+          selectingComponentId: null,
+          municipalityFeature: null,
+        },
+        {
+          location: { lng: -120.69195885, lat: 50.25163372 },
+          fileLocation: null,
+          pimsFeature: null,
+          parcelFeature: getMockFullyAttributedParcel('333-333-333'),
+          regionFeature: feature(getMockPolygon(), {
+            ...emptyRegion,
+            REGION_NUMBER: 1,
+            REGION_NAME: 'South Coast Region',
+          }),
+          districtFeature: null,
+          selectingComponentId: null,
+          municipalityFeature: null,
+        },
+      ],
+    };
+    await setup({ mockMapMachine: testMockMachine });
+
+    expect(viewProps?.managementInitialValues.fileProperties).toHaveLength(3);
+
+    await act(async () => {
+      await viewProps?.onSubmit(viewProps?.managementInitialValues, {
+        setSubmitting: vi.fn(),
+        resetForm: vi.fn(),
+      } as unknown as FormikHelpers<ManagementFormModel>);
+    });
+
+    expect(mockCreateManagementFile.execute).toHaveBeenCalledWith(
+      expect.objectContaining({
+        fileProperties: expect.arrayContaining([
+          expect.objectContaining({
+            property: expect.objectContaining({ pid: 111111111 }),
+            displayOrder: 0,
+          }),
+          expect.objectContaining({
+            property: expect.objectContaining({ pid: 222222222 }),
+            displayOrder: 1,
+          }),
+          expect.objectContaining({
+            property: expect.objectContaining({ pid: 333333333 }),
+            displayOrder: 2,
+          }),
+        ]),
+      }),
+      [],
+    );
   });
 
   it('calls setSubmitting(false) after submit', async () => {

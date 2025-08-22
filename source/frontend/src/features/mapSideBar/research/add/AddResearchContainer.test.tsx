@@ -5,7 +5,9 @@ import thunk from 'redux-thunk';
 
 import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
 import { usePimsPropertyRepository } from '@/hooks/repositories/usePimsPropertyRepository';
+import { getMockFullyAttributedParcel } from '@/mocks/faParcelLayerResponse.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
+import { getMockResearchFile } from '@/mocks/researchFile.mock';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import {
   RenderOptions,
@@ -17,7 +19,6 @@ import {
   userEvent,
 } from '@/utils/test-utils';
 
-import { getMockResearchFile } from '@/mocks/researchFile.mock';
 import { SideBarContextProvider } from '../../context/sidebarContext';
 import { useAddResearch } from '../hooks/useAddResearch';
 import AddResearchContainer, { IAddResearchContainerProps } from './AddResearchContainer';
@@ -167,6 +168,73 @@ describe('AddResearchContainer component', () => {
     expect(onSuccess).toHaveBeenCalled();
     expect(testMockMachine.processCreation).toHaveBeenCalled();
     expect(testMockMachine.refreshMapProperties).toHaveBeenCalled();
+  });
+
+  it('should preserve the order of properties when saving', async () => {
+    const { getNameTextbox, getSaveButton } = await setup({
+      mockMapMachine: {
+        ...mapMachineBaseMock,
+        selectedFeatures: [
+          {
+            location: { lng: -120.69195885, lat: 50.25163372 },
+            fileLocation: null,
+            pimsFeature: null,
+            parcelFeature: getMockFullyAttributedParcel('111-111-111'),
+            regionFeature: null,
+            districtFeature: null,
+            selectingComponentId: null,
+            municipalityFeature: null,
+          },
+          {
+            location: { lng: -120.69195885, lat: 50.25163372 },
+            fileLocation: null,
+            pimsFeature: null,
+            parcelFeature: getMockFullyAttributedParcel('222-222-222'),
+            regionFeature: null,
+            districtFeature: null,
+            selectingComponentId: null,
+            municipalityFeature: null,
+          },
+          {
+            location: { lng: -120.69195885, lat: 50.25163372 },
+            fileLocation: null,
+            pimsFeature: null,
+            parcelFeature: getMockFullyAttributedParcel('333-333-333'),
+            regionFeature: null,
+            districtFeature: null,
+            selectingComponentId: null,
+            municipalityFeature: null,
+          },
+        ],
+      },
+    });
+
+    expect(await screen.findByText('PID: 111-111-111')).toBeVisible();
+    expect(await screen.findByText('PID: 222-222-222')).toBeVisible();
+    expect(await screen.findByText('PID: 333-333-333')).toBeVisible();
+
+    await act(async () => userEvent.paste(getNameTextbox(), 'Test Value'));
+    await act(async () => userEvent.click(getSaveButton()));
+
+    expect(mockAddResearchFile).toHaveBeenCalledWith(
+      expect.objectContaining({
+        fileProperties: expect.arrayContaining([
+          expect.objectContaining({
+            property: expect.objectContaining({ pid: 111111111 }),
+            displayOrder: 0,
+          }),
+          expect.objectContaining({
+            property: expect.objectContaining({ pid: 222222222 }),
+            displayOrder: 1,
+          }),
+          expect.objectContaining({
+            property: expect.objectContaining({ pid: 333333333 }),
+            displayOrder: 2,
+          }),
+        ]),
+      }),
+      [],
+    );
   });
 
   it('resets the "draft" markers when the file is opened', async () => {
