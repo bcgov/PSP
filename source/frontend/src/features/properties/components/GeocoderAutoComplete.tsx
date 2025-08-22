@@ -61,6 +61,7 @@ export const GeocoderAutoComplete: React.FC<
       async (val: string, abort: boolean) => {
         if (!abort) {
           const addresses = (await searchAddress(val)) || [];
+          console.log(addresses);
           setOptions(addresses);
         }
       },
@@ -113,7 +114,13 @@ export const GeocoderAutoComplete: React.FC<
 
   return (
     <div className="GeocoderAutoComplete">
-      <ClickAwayListener onClickAway={() => setOptions([])}>
+      <ClickAwayListener
+        onClickAway={e => {
+          if (e.type === 'click') {
+            setOptions([]);
+          }
+        }}
+      >
         <Form.Group
           controlId={`input-${field}`}
           className={classNames(required ? 'required' : '', outerClassName)}

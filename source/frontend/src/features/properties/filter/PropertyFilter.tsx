@@ -110,7 +110,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
       {({ isSubmitting, setFieldValue, values, resetForm, isValid }) => (
         <Form>
           <Row noGutters>
-            <Col xs="auto">
+            <Col xs="12">
               <Select
                 field="searchBy"
                 options={searchOptions}
@@ -135,7 +135,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                 }}
               />
             </Col>
-            <Col>
+            <Col xs="12">
               {values.searchBy === 'pid' && (
                 <Input field="pid" placeholder="Enter a PID" displayErrorTooltips></Input>
               )}
