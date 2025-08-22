@@ -399,7 +399,7 @@ exports[`Property list view > matches snapshot 1`] = `
                       class="row no-gutters"
                     >
                       <div
-                        class="col-auto"
+                        class="col-12"
                       >
                         <div
                           class="idir-input-group form-group"
@@ -448,7 +448,7 @@ exports[`Property list view > matches snapshot 1`] = `
                         </div>
                       </div>
                       <div
-                        class="col"
+                        class="col-12"
                       >
                         <div
                           class="input form-group"
