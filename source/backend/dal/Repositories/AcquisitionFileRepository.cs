@@ -932,7 +932,7 @@ namespace Pims.Dal.Repositories
                 predicate = predicate.And(ownerBuilder);
             }
 
-            predicate = predicate.And(acq => regions.Contains(acq.RegionCode));
+            predicate = predicate.And(acq => regions.Contains(acq.RegionCode) || acq.RegionCode == 4);
 
             if (contractorPersonId is not null)
             {

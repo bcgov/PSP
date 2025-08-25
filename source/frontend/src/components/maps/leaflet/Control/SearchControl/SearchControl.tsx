@@ -1,5 +1,4 @@
-import L from 'leaflet';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { FaSearch } from 'react-icons/fa';
 import styled from 'styled-components';
 
@@ -11,6 +10,8 @@ const SearchIcon = styled(FaSearch)`
 `;
 
 export type ISearchControl = {
+  /** whether the button should be displayed as active  */
+  active?: boolean;
   /** set the slide out as open or closed */
   onToggle: () => void;
 };
@@ -19,31 +20,31 @@ export type ISearchControl = {
  * Component to display the layers control on the map
  * @example ./LayersControl.md
  */
-const LayersControl: React.FC<React.PropsWithChildren<ISearchControl>> = ({ onToggle }) => {
-  useEffect(() => {
-    const elem = L.DomUtil.get('layersContainer');
-    if (elem) {
-      L.DomEvent.on(elem, 'mousewheel', L.DomEvent.stopPropagation);
-    }
-  });
-
+const SearchControl: React.FC<React.PropsWithChildren<ISearchControl>> = ({ active, onToggle }) => {
   return (
     <TooltipWrapper tooltipId="search-control-id" tooltip="Search Controls">
-      <SearchButton id="searchControlButton" variant="outline-secondary" onClick={onToggle}>
+      <SearchButton
+        id="searchControlButton"
+        variant="outline-secondary"
+        $active={active}
+        onClick={onToggle}
+      >
         <SearchIcon />
       </SearchButton>
     </TooltipWrapper>
   );
 };
 
-export default LayersControl;
+export default SearchControl;
 
-const SearchButton = styled(Button)`
+const SearchButton = styled(Button)<{ $active?: boolean }>`
   &.btn {
     width: 5.2rem;
     height: 5.2rem;
-    background-color: #fff;
-    color: ${({ theme }) => theme.bcTokens.surfaceColorPrimaryButtonDefault};
+    background-color: ${({ theme, $active }) =>
+      $active ? theme.bcTokens.surfaceColorPrimaryButtonDefault : '#FFFFFF'};
+    color: ${({ theme, $active }) =>
+      $active ? '#FFFFFF' : theme.bcTokens.surfaceColorPrimaryButtonDefault};
     border-color: ${({ theme }) => theme.bcTokens.surfaceColorPrimaryButtonDefault};
     box-shadow: -0.2rem 0.1rem 0.4rem rgba(0, 0, 0, 0.2);
 

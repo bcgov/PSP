@@ -36,9 +36,7 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
 }
 
 .c15.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c15.btn:hover {

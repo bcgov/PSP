@@ -1,6 +1,7 @@
 import { AxiosError } from 'axios';
+import { dequal } from 'dequal';
 import { FormikHelpers, FormikProps } from 'formik';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -11,6 +12,7 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
+import { useEnrichWithPimsFeatures } from '@/hooks/useEnrichWithPimsFeatures';
 import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
 import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
@@ -40,15 +42,36 @@ export const AddLeaseContainer: React.FunctionComponent<
   const {
     addLease: { execute: addLease, loading: addLeaseLoading },
   } = useAddLease();
+  const {
+    datasets,
+    loading: pimsFeatureLoading,
+    enrichWithPimsFeatures,
+  } = useEnrichWithPimsFeatures();
+
   const [isValid, setIsValid] = useState<boolean>(true);
 
   // Support creating a new lease file from the worklist/quick-info
   const mapMachine = useMapStateMachine();
-  const selectedFeatureDatasets = mapMachine.selectedFeatures ?? [];
+  const prevSelectedRef = useRef<typeof mapMachine.selectedFeatures>();
+
+  // track whether we've already shown the confirmation modal for this session
+  const hasWarnedRef = useRef(false);
+
+  // Enrich selected features with PIMS features
+  // This will add pimsFeature to each SelectedFeatureDataset if it exists
+  useEffect(() => {
+    if (
+      mapMachine.selectedFeatures?.length > 0 &&
+      !dequal(prevSelectedRef.current, mapMachine.selectedFeatures)
+    ) {
+      hasWarnedRef.current = false; // reset the warning for new selection
+      prevSelectedRef.current = mapMachine.selectedFeatures;
+      enrichWithPimsFeatures(mapMachine.selectedFeatures);
+    }
+  }, [mapMachine.selectedFeatures, enrichWithPimsFeatures]);
 
   // Get PropertyForms with addresses for all selected features
-  const { featuresWithAddresses, bcaLoading } =
-    useFeatureDatasetsWithAddresses(selectedFeatureDatasets);
+  const { featuresWithAddresses, bcaLoading } = useFeatureDatasetsWithAddresses(datasets);
 
   const initialForm = useMemo<LeaseFormModel>(() => {
     const leaseForm = getDefaultFormLease();
@@ -74,6 +97,39 @@ export const AddLeaseContainer: React.FunctionComponent<
 
     return leaseForm;
   }, [featuresWithAddresses]);
+
+  // Require user confirmation before adding non-inventory properties to a lease.
+  useEffect(() => {
+    if (exists(initialForm.properties) && exists(formikRef.current) && !hasWarnedRef.current) {
+      const needsWarning = initialForm.properties.some(
+        formProperty => exists(formProperty.property) && !isValidId(formProperty.property.apiId),
+      );
+      if (needsWarning) {
+        hasWarnedRef.current = true; // mark as shown
+
+        setModalContent({
+          variant: 'info',
+          title: 'Not inventory property',
+          message:
+            'You have selected a property not previously in the inventory. Do you want to add this property to the lease?',
+          okButtonText: 'Add',
+          cancelButtonText: 'Cancel',
+          handleOk: () => {
+            // allow the PIMS properties to be added to the lease being created
+            setDisplayModal(false);
+            formikRef.current?.setFieldValue('properties', initialForm.properties);
+          },
+          handleCancel: () => {
+            // clear out the properties array as the user did not agree to the popup
+            initialForm.properties.splice(0, initialForm.properties.length);
+            formikRef.current?.setFieldValue('properties', []);
+            setDisplayModal(false);
+          },
+        });
+        setDisplayModal(true);
+      }
+    }
+  }, [initialForm.properties, setDisplayModal, setModalContent]);
 
   const saveLeaseFile = async (
     leaseFormModel: LeaseFormModel,
@@ -118,14 +174,15 @@ export const AddLeaseContainer: React.FunctionComponent<
   };
 
   const handleCancel = useCallback(() => {
+    mapMachine.processCreation();
     onClose();
-  }, [onClose]);
+  }, [mapMachine, onClose]);
 
   const checkState = useCallback(() => {
     return formikRef?.current?.dirty && !formikRef?.current?.isSubmitting;
   }, [formikRef]);
 
-  const loading = addLeaseLoading || bcaLoading;
+  const loading = addLeaseLoading || bcaLoading || pimsFeatureLoading;
 
   return (
     <MapSideBarLayout

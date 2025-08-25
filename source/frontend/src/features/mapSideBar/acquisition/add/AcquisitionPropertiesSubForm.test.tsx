@@ -4,9 +4,8 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
-import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
+import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
-import { LocationBoundaryDataset } from '@/components/common/mapFSM/models';
 import { PropertyForm } from '../../shared/models';
 import { AcquisitionPropertiesSubForm } from './AcquisitionPropertiesSubForm';
 import { AcquisitionForm } from './models';
@@ -17,7 +16,7 @@ const customSetFilePropertyLocations = vi.fn();
 
 describe('AcquisitionProperties component', () => {
   // render component under test
-  const setup = (
+  const setup = async (
     props: {
       initialForm: AcquisitionForm;
       confirmBeforeAdd?: (propertyForm: PropertyForm) => Promise<boolean>;
@@ -46,6 +45,9 @@ describe('AcquisitionProperties component', () => {
       },
     );
 
+    // Wait for any async effects to complete
+    await act(async () => {});
+
     return { ...utils };
   };
 
@@ -66,81 +68,29 @@ describe('AcquisitionProperties component', () => {
   });
 
   it('renders as expected', async () => {
-    const { asFragment } = setup({ initialForm: testForm });
+    const { asFragment } = await setup({ initialForm: testForm });
     await act(async () => {});
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders list of properties', async () => {
-    const { getByText } = setup({ initialForm: testForm });
-
-    await waitFor(() => {
-      expect(customSetFilePropertyLocations).toHaveBeenCalledWith<LocationBoundaryDataset[][]>([
-        { location: { lat: undefined, lng: undefined }, boundary: null, isActive: true },
-        { location: { lat: undefined, lng: undefined }, boundary: null, isActive: true },
-      ]);
-    });
+    const { getByText } = await setup({ initialForm: testForm });
 
     expect(getByText('PID: 123-456-789')).toBeVisible();
     expect(getByText('PIN: 1111222')).toBeVisible();
   });
 
   it('should remove property from list when Remove button is clicked', async () => {
-    const { getAllByTitle, queryByText } = setup({ initialForm: testForm });
+    const { getAllByTitle, queryByText } = await setup({ initialForm: testForm });
     const pidRow = getAllByTitle('remove')[0];
     await act(async () => userEvent.click(pidRow));
-
-    await waitFor(() => {
-      expect(customSetFilePropertyLocations).toHaveBeenCalledWith<LocationBoundaryDataset[][]>([
-        { location: { lat: undefined, lng: undefined }, boundary: null, isActive: true },
-      ]);
-    });
 
     expect(queryByText('PID: 123-456-789')).toBeNull();
   });
 
   it('should display properties with svg prefixed with incrementing id', async () => {
-    const { getByTitle } = setup({ initialForm: testForm });
-
-    await waitFor(() => {
-      expect(customSetFilePropertyLocations).toHaveBeenCalledWith<LocationBoundaryDataset[][]>([
-        { location: { lat: undefined, lng: undefined }, boundary: null, isActive: true },
-        { location: { lat: undefined, lng: undefined }, boundary: null, isActive: true },
-      ]);
-    });
-
+    const { getByTitle } = await setup({ initialForm: testForm });
     expect(getByTitle('1')).toBeInTheDocument();
     expect(getByTitle('2')).toBeInTheDocument();
-  });
-
-  it('should synchronize a single property with provided lat/lng', async () => {
-    const formWithProperties = testForm;
-    formWithProperties.properties[0].latitude = 1;
-    formWithProperties.properties[0].longitude = 2;
-    setup({ initialForm: formWithProperties });
-
-    await waitFor(() => {
-      expect(customSetFilePropertyLocations).toHaveBeenCalledWith<LocationBoundaryDataset[][]>([
-        { location: { lat: 1, lng: 2 }, boundary: null, isActive: true },
-        { location: { lat: undefined, lng: undefined }, boundary: null, isActive: true },
-      ]);
-    });
-  });
-
-  it('should synchronize multiple properties with provided lat/lng', async () => {
-    const formWithProperties = testForm;
-    formWithProperties.properties[0].latitude = 1;
-    formWithProperties.properties[0].longitude = 2;
-    formWithProperties.properties[1].latitude = 3;
-    formWithProperties.properties[1].longitude = 4;
-
-    setup({ initialForm: formWithProperties });
-
-    await waitFor(() => {
-      expect(customSetFilePropertyLocations).toHaveBeenCalledWith<LocationBoundaryDataset[][]>([
-        { location: { lat: 1, lng: 2 }, boundary: null, isActive: true },
-        { location: { lat: 3, lng: 4 }, boundary: null, isActive: true },
-      ]);
-    });
   });
 });

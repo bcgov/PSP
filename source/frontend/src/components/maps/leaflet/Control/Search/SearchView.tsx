@@ -30,6 +30,8 @@ import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocatio
 import { exists } from '@/utils';
 import { isStrataCommonProperty } from '@/utils/propertyUtils';
 
+import { HighwayListView } from './HighwayList';
+
 export interface ISearchViewProps {
   onFilterChange: (filter: IPropertyFilter) => void;
   propertyFilter: IPropertyFilter;
@@ -207,6 +209,10 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
         >
           <ParcelListContainer View={ParcelListView} parcels={pimsPropertyProjections} />
         </Section>
+        {exists(props.searchResult?.highwayPlanFeatures) &&
+          props.searchResult.highwayPlanFeatures.features.length > 0 && (
+            <HighwayListView searchResult={props.searchResult} />
+          )}
       </StyledWrapper>
     </>
   );

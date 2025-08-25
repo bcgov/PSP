@@ -36,9 +36,7 @@ exports[`CreatePersonForm > renders as expected 1`] = `
 }
 
 .c9.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c9.btn:hover {
@@ -1734,9 +1732,7 @@ exports[`CreatePersonForm > renders as expected 1`] = `
 }
 
 .c2.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c2.btn:hover {

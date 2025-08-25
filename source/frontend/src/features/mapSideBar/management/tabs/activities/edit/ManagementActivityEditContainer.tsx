@@ -71,17 +71,19 @@ export const ManagementActivityEditContainer: React.FunctionComponent<
       const defaultModel = new ManagementActivityFormModel(null, managementFileId);
       defaultModel.activityStatusCode = 'NOTSTARTED';
       defaultModel.requestedDate = getCurrentIsoDate();
-      defaultModel.selectedProperties = (castedFile?.fileProperties ?? []).map(x => {
-        return {
-          id: x.id,
-          fileId: castedFile?.id,
-          propertyName: x.propertyName,
-          location: x.location,
-          displayOrder: x.displayOrder,
-          property: x.property,
-          propertyId: x.propertyId,
-        } as ApiGen_Concepts_FileProperty;
-      });
+      defaultModel.selectedProperties = (castedFile?.fileProperties ?? [])
+        .filter(x => x.isActive !== false)
+        .map(x => {
+          return {
+            id: x.id,
+            fileId: castedFile.id,
+            propertyName: x.propertyName,
+            location: x.location,
+            displayOrder: x.displayOrder,
+            property: x.property,
+            propertyId: x.propertyId,
+          } as ApiGen_Concepts_FileProperty;
+        });
 
       setInitialValues(defaultModel);
     }

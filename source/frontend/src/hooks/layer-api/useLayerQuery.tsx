@@ -49,6 +49,15 @@ export interface IUserLayerQuery {
    */
   findByPlanNumber: (planNumber: string, allBy?: boolean) => Promise<FeatureCollection | undefined>;
   findByPlanNumberLoading: boolean;
+  /**
+   * function to find GeoJSON shape matching the passed planNumber matching on the SURVE_PLAN field.
+   * @param planNumber
+   */
+  findBySurveyPlanNumber: (
+    planNumber: string,
+    allBy?: boolean,
+  ) => Promise<FeatureCollection | undefined>;
+  findBySurveyPlanNumberLoading: boolean;
 
   /**
    * Function to query spatial layers and return layer metadata for the supplied location (x, y)
@@ -312,6 +321,17 @@ export const useLayerQuery = (
     requestName: 'planNumber',
   });
 
+  const { execute: findBySurveyPlanNumber, loading: findBySurveyPlanNumberLoading } =
+    useApiRequestWrapper({
+      requestFunction: useCallback(
+        async (planNumber: string, allBy?: boolean): Promise<AxiosResponse<FeatureCollection>> => {
+          return executeWfs({ SURVEY_PLAN: planNumber }, allBy);
+        },
+        [executeWfs],
+      ),
+      requestName: 'surveyPlanNumber',
+    });
+
   const findOneMetadataByLocation = useCallback(
     async (
       latlng: LatLngLiteral,
@@ -341,6 +361,8 @@ export const useLayerQuery = (
     findByPinLoading,
     findByPlanNumber,
     findByPlanNumberLoading,
+    findBySurveyPlanNumber,
+    findBySurveyPlanNumberLoading,
     findOneMetadataByLocation,
     findOneWhereContainsWrapped,
     findMultipleWhereContainsWrapped,

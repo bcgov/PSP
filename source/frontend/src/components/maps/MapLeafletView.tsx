@@ -29,7 +29,7 @@ import { useWorklistContext } from '@/features/properties/worklist/context/Workl
 import WorklistMapClickMonitor from '@/features/properties/worklist/WorklistMapClickMonitor';
 import RightSideContainer from '@/features/rightSideLayout/RightSideContainer';
 import { useTenant } from '@/tenants';
-import { exists, firstOrNull } from '@/utils';
+import { exists, firstOrNull, isEmptyMapFeatureData } from '@/utils';
 
 import { defaultBounds, defaultLatLng } from './constants';
 import BasemapToggle, { BasemapToggleEvent } from './leaflet/Control/BaseMapToggle/BasemapToggle';
@@ -44,6 +44,7 @@ import WorklistControl from './leaflet/Control/WorklistControl/WorklistControl';
 import { ZoomOutButton } from './leaflet/Control/ZoomOut/ZoomOutButton';
 import { LocationPopupContainer } from './leaflet/LayerPopup/LocationPopupContainer';
 import { FilePropertiesLayer } from './leaflet/Layers/FilePropertiesLayer';
+import HighwayParcelsLayer from './leaflet/Layers/HighwayParcelsLayer';
 import { LeafletLayerListener } from './leaflet/Layers/LeafletLayerListener';
 import MapsearchParcelsLayer from './leaflet/Layers/MapsearchParcelsLayer';
 import { MarkerLayer } from './leaflet/Layers/MarkerLayer';
@@ -149,6 +150,11 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
     mapMachineRequestedFitBounds,
     zoom,
   ]);
+
+  const isSearchActive = useMemo(
+    () => !isEmptyMapFeatureData(mapMachine.mapFeatureData),
+    [mapMachine.mapFeatureData],
+  );
 
   const {
     mapLocationFeatureDataset,
@@ -293,7 +299,7 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
           <Row noGutters className="flex-nowrap">
             <Col xs="auto">
               <LayersControl onToggle={mapMachine.toggleMapLayerControl} />
-              <SearchControl onToggle={mapMachine.toggleMapSearchControl} />
+              <SearchControl active={isSearchActive} onToggle={mapMachine.toggleMapSearchControl} />
               <WorklistControl
                 active={isWorklistActive}
                 onToggle={mapMachine.toggleWorkListControl}
@@ -321,8 +327,12 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
           <WorklistMapClickMonitor />
         </Pane>
 
-        <Pane name="searchlistParcels" style={{ zIndex: 500 }}>
+        <Pane name="searchlistParcels" style={{ zIndex: 400 }}>
           <MapsearchParcelsLayer />
+        </Pane>
+
+        <Pane name="highwaylistParcels" style={{ zIndex: 300 }}>
+          <HighwayParcelsLayer />
         </Pane>
 
         {/* Client-side "layer" to highlight file property boundaries (when in the context of a file) */}

@@ -13,7 +13,7 @@ import { chain, compact, isNumber } from 'lodash';
 import polylabel from 'polylabel';
 import { toast } from 'react-toastify';
 
-import { LocationBoundaryDataset } from '@/components/common/mapFSM/models';
+import { LocationBoundaryDataset, MapFeatureData } from '@/components/common/mapFSM/models';
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { ONE_HUNDRED_METER_PRECISION } from '@/components/maps/constants';
 import { IMapProperty } from '@/components/propertySelector/models';
@@ -494,6 +494,21 @@ export const areSelectedFeaturesEqual = (
     return lhsName.value === rhsName.value;
   }
   return false;
+};
+
+export const isEmptyFeatureCollection = (collection: FeatureCollection) => {
+  return !(exists(collection?.features) && collection.features.length > 0);
+};
+
+export const isEmptyMapFeatureData = (mapFeatureData: MapFeatureData) => {
+  return (
+    isEmptyFeatureCollection(mapFeatureData.pimsLocationFeatures) &&
+    //isEmptyFeatureCollection(mapFeatureData.pimsLocationLiteFeatures) && TODO: For now this is loading always. Investigate if it needs to be removed completly
+    isEmptyFeatureCollection(mapFeatureData.pimsBoundaryFeatures) &&
+    isEmptyFeatureCollection(mapFeatureData.fullyAttributedFeatures) &&
+    isEmptyFeatureCollection(mapFeatureData.surveyedParcelsFeatures) &&
+    isEmptyFeatureCollection(mapFeatureData.highwayPlanFeatures)
+  );
 };
 
 export const arePropertyFormsEqual = (lhs: PropertyForm, rhs: PropertyForm): boolean => {

@@ -1,6 +1,7 @@
 import { SideBarType } from '@/components/common/mapFSM/machineDefinition/types';
 import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
 import {
+  emptyHighwayFeatures,
   emptyPimsBoundaryFeatureCollection,
   emptyPimsLocationFeatureCollection,
   emptyPimsLocationLiteFeatureCollection,
@@ -19,6 +20,7 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
     pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
     fullyAttributedFeatures: emptyPmbcFeatureCollection,
     surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
+    highwayPlanFeatures: emptyHighwayFeatures,
   },
   mapSideBarViewState: {
     isCollapsed: false,

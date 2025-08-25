@@ -20,8 +20,6 @@ export const WorklistMapClickMonitor: React.FunctionComponent<unknown> = () => {
       // Loop over the location featurecollection, adding it to the worklist if the parcelFeature is not there already
       const worklistParcels: ParcelDataset[] = [];
 
-      debugger;
-
       if (exists(worklistLocationFeatureDataset.fullyAttributedFeatures)) {
         const pmbcParcels =
           worklistLocationFeatureDataset.fullyAttributedFeatures?.features

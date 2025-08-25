@@ -31,13 +31,13 @@ const ButtonsDefinition: Dictionary<StateDefinition> = {
     component: <FilterContentContainer View={FilterContentForm} />,
   },
   layers: {
-    title: 'View Layer By:',
+    title: 'Map Layers:',
     tooltipText: 'Close Map Layers',
     testDataId: 'map-layers-sidebar',
     component: <LayersMenu />,
   },
   search: {
-    title: 'Search by',
+    title: 'Search',
     tooltipText: 'Close search',
     testDataId: 'search-sidebar',
     component: <SearchContainer View={SearchView} />,

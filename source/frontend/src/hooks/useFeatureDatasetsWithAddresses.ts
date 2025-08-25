@@ -18,7 +18,7 @@ export const useFeatureDatasetsWithAddresses = (features: SelectedFeatureDataset
   useEffect(() => {
     let isMounted = true;
     const fetchAddresses = async () => {
-      if (!exists(features)) {
+      if (!exists(features) || features.length === 0) {
         setResults([]);
         return;
       }

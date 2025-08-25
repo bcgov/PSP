@@ -25,6 +25,8 @@ export const usePimsHighwayLayer = () => {
       execute: findMultipleWhereContainsBoundaryWrappedExecute,
       loading: findMultipleHighwayWhereContainsBoundaryWrappedLoading,
     },
+    findBySurveyPlanNumber: findBySurveyPlanNumberApi,
+    findBySurveyPlanNumberLoading: findBySurveyPlanNumberApiLoadingApi,
   } = useLayerQuery(highwayLayerUrl, true);
 
   const findMultipleHighway = useCallback(
@@ -77,6 +79,23 @@ export const usePimsHighwayLayer = () => {
     [findMultipleWhereContainsBoundaryWrappedExecute],
   );
 
+  const findBySurveyPlanNumber = useCallback(
+    async (planNumber: string, allBy?: boolean) => {
+      const featureCollection = await findBySurveyPlanNumberApi(planNumber, allBy);
+
+      // TODO: Enhance useLayerQuery to allow generics to match the Property types
+      const forceCasted = featureCollection as FeatureCollection<
+        Geometry,
+        ISS_ProvincialPublicHighway
+      >;
+
+      return forceCasted !== undefined && forceCasted?.features?.length > 0
+        ? forceCasted
+        : undefined;
+    },
+    [findBySurveyPlanNumberApi],
+  );
+
   return useMemo(
     () => ({
       findMultipleHighway: findMultipleHighway,
@@ -85,8 +104,12 @@ export const usePimsHighwayLayer = () => {
       findMultipleHighwayBoundary: findMultipleHighwayBoundary,
       findMultipleHighwayWhereContainsBoundaryWrappedLoading:
         findMultipleHighwayWhereContainsBoundaryWrappedLoading,
+      findBySurveyPlanNumber,
+      findBySurveyPlanNumberLoading: findBySurveyPlanNumberApiLoadingApi,
     }),
     [
+      findBySurveyPlanNumber,
+      findBySurveyPlanNumberApiLoadingApi,
       findMultipleHighway,
       findMultipleHighwayBoundary,
       findMultipleHighwayWhereContainsBoundaryWrappedLoading,

@@ -36,9 +36,7 @@ exports[`Disposition List View > matches snapshot 1`] = `
 }
 
 .c11.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c11.btn:hover {

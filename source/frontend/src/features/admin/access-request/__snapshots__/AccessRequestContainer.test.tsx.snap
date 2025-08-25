@@ -42,9 +42,7 @@ exports[`AccessRequestContainer component > makes a request based on the access 
 }
 
 .c5.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c5.btn:hover {
@@ -845,9 +843,7 @@ exports[`AccessRequestContainer component > makes a request when no id is provid
 }
 
 .c5.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c5.btn:hover {

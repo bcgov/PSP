@@ -36,9 +36,7 @@ exports[`MapContainer > Renders the map 1`] = `
 }
 
 .c4.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c4.btn:hover {
@@ -427,8 +425,8 @@ exports[`MapContainer > Renders the map 1`] = `
 .c9.btn {
   width: 5.2rem;
   height: 5.2rem;
-  background-color: #fff;
-  color: #013366;
+  background-color: #013366;
+  color: #FFFFFF;
   border-color: #013366;
   box-shadow: -0.2rem 0.1rem 0.4rem rgba(0,0,0,0.2);
 }
@@ -667,7 +665,11 @@ exports[`MapContainer > Renders the map 1`] = `
             />
             <div
               class="leaflet-pane leaflet-searchlistParcels-pane"
-              style="z-index: 500;"
+              style="z-index: 400;"
+            />
+            <div
+              class="leaflet-pane leaflet-highwaylistParcels-pane"
+              style="z-index: 300;"
             />
             <div
               class="leaflet-pane leaflet-fileProperties-pane"

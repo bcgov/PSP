@@ -3,6 +3,7 @@ import { LatLngBounds, LatLngLiteral } from 'leaflet';
 
 import { TANTALIS_CrownSurveyParcels_Feature_Properties } from '@/models/layers/crownLand';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
+import { ISS_ProvincialPublicHighway } from '@/models/layers/pimsHighwayLayer';
 import {
   PIMS_Property_Boundary_View,
   PIMS_Property_Location_Lite_View,
@@ -32,6 +33,7 @@ export interface MapFeatureData {
     Geometry,
     TANTALIS_CrownSurveyParcels_Feature_Properties
   >;
+  readonly highwayPlanFeatures: FeatureCollection<Geometry, ISS_ProvincialPublicHighway>;
 }
 
 export interface RequestedFlyTo {
@@ -88,6 +90,10 @@ export const emptySurveyedParcelsFeatures: FeatureCollection<
   type: 'FeatureCollection',
   features: [],
 };
+export const emptyHighwayFeatures: FeatureCollection<Geometry, ISS_ProvincialPublicHighway> = {
+  type: 'FeatureCollection',
+  features: [],
+};
 
 export const emptyFeatureData: MapFeatureData = {
   pimsLocationFeatures: emptyPimsLocationFeatureCollection,
@@ -95,4 +101,5 @@ export const emptyFeatureData: MapFeatureData = {
   pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
   fullyAttributedFeatures: emptyPmbcFeatureCollection,
   surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
+  highwayPlanFeatures: emptyHighwayFeatures,
 };

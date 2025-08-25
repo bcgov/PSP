@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 
 import ResearchFileIcon from '@/assets/images/research-icon.svg?react';
 import ConfirmNavigation from '@/components/common/ConfirmNavigation';
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
@@ -198,6 +199,7 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
           onClose={cancelFunc}
         >
           <StyledFormWrapper>
+            <LoadingBackdrop show={bcaLoading} parentScreen={true} />
             <View confirmBeforeAdd={confirmBeforeAdd} />
           </StyledFormWrapper>
           <ConfirmNavigation navigate={history.push} shouldBlockNavigation={checkState} />

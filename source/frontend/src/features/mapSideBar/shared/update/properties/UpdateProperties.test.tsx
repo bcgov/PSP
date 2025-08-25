@@ -92,6 +92,10 @@ describe('UpdateProperties component', () => {
             propertyId: 443,
             property: {
               ...getMockApiProperty(),
+              pid: undefined,
+              pin: undefined,
+              latitude: undefined,
+              longitude: undefined,
               id: 443,
               anomalies: [],
               tenures: [],

@@ -278,7 +278,10 @@ describe('mapPropertyUtils', () => {
 
   it.each([
     [
-      { ...getMockSelectedFeatureDataset(), pimsFeature: { properties: { PID_PADDED: '123-456-789' } } as any },
+      {
+        ...getMockSelectedFeatureDataset(),
+        pimsFeature: { properties: { PID_PADDED: '123-456-789' } } as any,
+      },
       '123-456-789',
     ],
     [

@@ -1,7 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { FieldArray, Formik, FormikProps } from 'formik';
-import { geoJSON, LatLngLiteral } from 'leaflet';
-import isNumber from 'lodash/isNumber';
+import { geoJSON } from 'leaflet';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { PiCornersOut } from 'react-icons/pi';
@@ -11,27 +10,19 @@ import { LinkButton } from '@/components/common/buttons/LinkButton';
 import GenericModal from '@/components/common/GenericModal';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { Section } from '@/components/common/Section/Section';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
-import MapSelectorContainer from '@/components/propertySelector/MapSelectorContainer';
+import SelectedPropertyHeaderRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyHeaderRow';
 import SelectedPropertyRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyRow';
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
-import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
 import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import {
-  arePropertyFormsEqual,
-  exists,
-  isLatLngInFeatureSetBoundary,
-  isValidId,
-  latLngLiteralToGeometry,
-} from '@/utils';
+import { arePropertyFormsEqual, exists, isValidId, latLngLiteralToGeometry } from '@/utils';
 
-import { AddressForm, FileForm, PropertyForm } from '../../models';
+import { FileForm, PropertyForm } from '../../models';
 import SidebarFooter from '../../SidebarFooter';
 import { UpdatePropertiesYupSchema } from './UpdatePropertiesYupSchema';
 
@@ -60,7 +51,6 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
   const [isValid, setIsValid] = useState<boolean>(true);
   const { setModalContent, setDisplayModal } = useModalContext();
   const { resetFilePropertyLocations } = useContext(SideBarContext);
-  const { getPrimaryAddressByPid, bcaLoading } = useBcaAddress();
   const { requestFlyToBounds, setEditPropertiesMode, selectedFeatures, processCreation } =
     useMapStateMachine();
 
@@ -73,7 +63,9 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
   }, [setEditPropertiesMode]);
 
   // Get PropertyForms with addresses for all selected features
-  const { featuresWithAddresses } = useFeatureDatasetsWithAddresses(selectedFeatures ?? []);
+  const { featuresWithAddresses, bcaLoading } = useFeatureDatasetsWithAddresses(
+    selectedFeatures ?? [],
+  );
 
   // Convert SelectedFeatureDataset to PropertyForm
   const propertyForms = useMemo(
@@ -207,13 +199,6 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
     }
   };
 
-  const defaultConfirmBeforeAddMessage = (
-    <>
-      <p>This property has already been added to one or more files.</p>
-      <p>Do you want to acknowledge and proceed?</p>
-    </>
-  );
-
   return (
     <>
       <LoadingBackdrop show={bcaLoading} />
@@ -240,111 +225,45 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
         >
           {formikProps => (
             <FieldArray name="properties">
-              {({ push, remove, replace }) => (
-                <>
-                  <Row className="py-3 no-gutters">
-                    <Col>
-                      <MapSelectorContainer
-                        addSelectedProperties={(newProperties: SelectedFeatureDataset[]) => {
-                          newProperties.reduce(async (promise, property) => {
-                            return promise.then(async () => {
-                              const formProperty = PropertyForm.fromFeatureDataset(property);
-                              if (formProperty.pid) {
-                                const bcaSummary = await getPrimaryAddressByPid(
-                                  formProperty.pid,
-                                  30000,
-                                );
-                                formProperty.address = bcaSummary?.address
-                                  ? AddressForm.fromBcaAddress(bcaSummary?.address)
-                                  : undefined;
-                              }
-
-                              if (await props.confirmBeforeAdd(formProperty)) {
-                                // Require user confirmation before adding property to file
-                                setModalContent({
-                                  variant: 'warning',
-                                  title: 'User Override Required',
-                                  message:
-                                    props.confirmBeforeAddMessage ?? defaultConfirmBeforeAddMessage,
-                                  okButtonText: 'Yes',
-                                  cancelButtonText: 'No',
-                                  handleOk: () => {
-                                    push(formProperty);
-                                    setDisplayModal(false);
-                                  },
-                                  handleCancel: () => setDisplayModal(false),
-                                });
-                                setDisplayModal(true);
-                              } else {
-                                // No confirmation needed - just add the property to the file
-                                push(formProperty);
-                              }
-                            });
-                          }, Promise.resolve());
-                        }}
-                        repositionSelectedProperty={(
-                          featureset: SelectedFeatureDataset,
-                          latLng: LatLngLiteral,
-                          index: number | null,
-                        ) => {
-                          // As long as the marker is repositioned within the boundary of the originally selected property simply reposition the marker without further notification.
-                          if (
-                            isNumber(index) &&
-                            index >= 0 &&
-                            isLatLngInFeatureSetBoundary(latLng, featureset)
-                          ) {
-                            const formProperty = formikProps.values.properties[index];
-                            const updatedFormProperty = new PropertyForm(formProperty);
-                            updatedFormProperty.fileLocation = latLng;
-
-                            // Find property within formik values and reposition it based on incoming file marker position
-                            replace(index, updatedFormProperty);
-                          }
-                        }}
-                        modifiedProperties={formikProps.values.properties.map(p =>
-                          p.toFeatureDataset(),
-                        )}
-                      />
-                    </Col>
-                  </Row>
-                  <Section
-                    header={
-                      <Row>
-                        <Col xs="11">Selected Properties</Col>
-                        <Col>
-                          <TooltipWrapper
-                            tooltip="Fit map to the file properties"
-                            tooltipId="property-selector-tooltip"
-                          >
-                            <LinkButton title="Fit boundaries button" onClick={fitBoundaries}>
-                              <PiCornersOut size={18} className="mr-2" />
-                            </LinkButton>
-                          </TooltipWrapper>
-                        </Col>
-                      </Row>
-                    }
-                  >
-                    {formikProps.values.properties.map((property, index) => (
-                      <SelectedPropertyRow
-                        key={`property.${property.latitude}-${property.longitude}-${property.pid}-${property.apiId}`}
-                        onRemove={async () => {
-                          if (!property.apiId || (await props.canRemove(property.apiId))) {
-                            remove(index);
-                          } else {
-                            setShowAssociatedEntityWarning(true);
-                          }
-                        }}
-                        nameSpace={`properties.${index}`}
-                        index={index}
-                        property={property.toFeatureDataset()}
-                        showDisable={props.disableProperties}
-                      />
-                    ))}
-                    {formikProps.values.properties.length === 0 && (
-                      <span>No Properties selected</span>
-                    )}
-                  </Section>
-                </>
+              {({ remove }) => (
+                <Section
+                  header={
+                    <Row>
+                      <Col xs="11">Selected Properties</Col>
+                      <Col>
+                        <TooltipWrapper
+                          tooltip="Fit map to the file properties"
+                          tooltipId="property-selector-tooltip"
+                        >
+                          <LinkButton title="Fit boundaries button" onClick={fitBoundaries}>
+                            <PiCornersOut size={18} className="mr-2" />
+                          </LinkButton>
+                        </TooltipWrapper>
+                      </Col>
+                    </Row>
+                  }
+                >
+                  <SelectedPropertyHeaderRow />
+                  {formikProps.values.properties.map((property, index) => (
+                    <SelectedPropertyRow
+                      key={`property.${property.latitude}-${property.longitude}-${property.pid}-${property.apiId}`}
+                      onRemove={async () => {
+                        if (!property.apiId || (await props.canRemove(property.apiId))) {
+                          remove(index);
+                        } else {
+                          setShowAssociatedEntityWarning(true);
+                        }
+                      }}
+                      nameSpace={`properties.${index}`}
+                      index={index}
+                      property={property.toFeatureDataset()}
+                      showDisable={props.disableProperties}
+                    />
+                  ))}
+                  {formikProps.values.properties.length === 0 && (
+                    <span>No Properties selected</span>
+                  )}
+                </Section>
               )}
             </FieldArray>
           )}

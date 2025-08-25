@@ -11,6 +11,7 @@ import { RestrictedEditControl } from '@/components/common/buttons';
 import { EditPropertiesIcon } from '@/components/common/buttons/EditPropertiesButton';
 import { LinkButton } from '@/components/common/buttons/LinkButton';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import OverflowTip from '@/components/common/OverflowTip';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import {
@@ -147,10 +148,10 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
                     .map((fileProperty: ApiGen_Concepts_FileProperty, index: number) => {
                       const propertyName = getFilePropertyName(fileProperty);
                       return (
-                        <StyledRow
+                        <StyledPropertyRowWrapper
                           key={`menu-item-row-${fileProperty?.id ?? index}`}
                           data-testid={`menu-item-row-${fileProperty?.id ?? index}`}
-                          className={cx('no-gutters', {
+                          className={cx({
                             selected: currentFilePropertyId === fileProperty?.id,
                           })}
                           onClick={() => {
@@ -159,10 +160,11 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
                             }
                           }}
                         >
-                          <Col xs="1">
+                          <div>
                             {currentFilePropertyId === fileProperty?.id && <FaCaretRight />}
-                          </Col>
-                          <Col xs="auto" className="pr-2">
+                          </div>
+
+                          <div>
                             {fileProperty?.isActive !== false ? (
                               <StyledIconWrapper
                                 className={cx({
@@ -176,17 +178,22 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
                                 {sortedProperties.indexOf(fileProperty) + 1}
                               </StyledDisabledIconWrapper>
                             )}
-                          </Col>
-                          <Col>
+                          </div>
+
+                          <OverflowTip>
                             {currentFilePropertyId === fileProperty?.id ? (
-                              <span title="View">{propertyName.value}</span>
-                            ) : (
-                              <LinkButton data-testid={`menu-item-property-${index}`} title="View">
+                              <OverflowTip fullText={propertyName.value}>
                                 {propertyName.value}
-                              </LinkButton>
+                              </OverflowTip>
+                            ) : (
+                              <OverflowTip
+                                fullText={propertyName.value}
+                                valueTestId={`menu-item-property-${index}`}
+                              ></OverflowTip>
                             )}
-                          </Col>
-                          <Col xs="auto">
+                          </OverflowTip>
+
+                          <StyledPropertyRowZoom>
                             <LinkButton
                               onClick={(event: React.MouseEvent<SVGElement>) => {
                                 event.stopPropagation();
@@ -197,8 +204,8 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
                             >
                               <FaSearchPlus size={18} className="mr-2" />
                             </LinkButton>
-                          </Col>
-                        </StyledRow>
+                          </StyledPropertyRowZoom>
+                        </StyledPropertyRowWrapper>
                       );
                     })}
                 </React.Fragment>
@@ -232,6 +239,7 @@ const StyledDisabledIconWrapper = styled.div`
 `;
 
 export const StyledMenuWrapper = styled.div`
+  display: flex;
   flex: 1;
   text-align: left;
   padding: 0px;
@@ -239,7 +247,6 @@ export const StyledMenuWrapper = styled.div`
   width: 100%;
   color: ${props => props.theme.css.linkColor};
 
-  display: flex;
   flex-direction: column;
 `;
 
@@ -259,6 +266,23 @@ const StyledRow = styled(Row)`
   div.Button__value {
     font-size: 1.4rem;
   }
+`;
+
+const StyledPropertyRowWrapper = styled.div`
+  display: flex;
+  &.selected {
+    font-weight: bold;
+    cursor: default;
+  }
+
+  font-size: 1.4rem;
+  font-weight: normal;
+  cursor: pointer;
+  padding-bottom: 0.5rem;
+`;
+
+const StyledPropertyRowZoom = styled.div`
+  align-self: flex-end;
 `;
 
 const StyledIconWrapper = styled.div`

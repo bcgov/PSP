@@ -48,7 +48,6 @@ export const MultiplePropertyPopupView: React.FC<
   };
 
   const onAddAllToWorklist = () => {
-    debugger;
     const worklistDataSet: WorklistLocationFeatureDataset = {
       fullyAttributedFeatures: {
         features: featureDataset.parcelFeatures,

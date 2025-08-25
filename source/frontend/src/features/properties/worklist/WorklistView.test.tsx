@@ -21,7 +21,9 @@ describe('WorklistView', () => {
   const setup = (renderOptions: RenderOptions & { props?: Partial<IWorklistViewProps> } = {}) => {
     return render(
       <WorklistView
-        parcels={renderOptions.props?.parcels ?? [getMockWorklistParcel('parcel-1', { PID: '123456789' })]}
+        parcels={
+          renderOptions.props?.parcels ?? [getMockWorklistParcel('parcel-1', { PID: '123456789' })]
+        }
         onRemove={onRemove}
         onClearAll={onClearAll}
         onCreateAcquisitionFile={onCreateAcquisitionFile}
@@ -29,7 +31,8 @@ describe('WorklistView', () => {
         onCreateDispositionFile={onCreateDispositionFile}
         onCreateLeaseFile={onCreateLeaseFile}
         onCreateManagementFile={onCreateManagementFile}
-        onAddToOpenFile={onAddToOpenFile} />,
+        onAddToOpenFile={onAddToOpenFile}
+      />,
       {
         useMockAuthentication: true,
         ...renderOptions,

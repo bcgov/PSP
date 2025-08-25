@@ -5,10 +5,12 @@ import { toast } from 'react-toastify';
 import { IGeoSearchParams } from '@/constants/API';
 import { useCrownLandLayer } from '@/hooks/repositories/mapLayer/useCrownLandLayer';
 import { useFullyAttributedParcelMapLayer } from '@/hooks/repositories/mapLayer/useFullyAttributedParcelMapLayer';
+import { usePimsHighwayLayer } from '@/hooks/repositories/mapLayer/useHighwayLayer';
 import { usePimsPropertyLayer } from '@/hooks/repositories/mapLayer/usePimsPropertyLayer';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { useModalContext } from '@/hooks/useModalContext';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
+import { ISS_ProvincialPublicHighway } from '@/models/layers/pimsHighwayLayer';
 import {
   emptyPropertyLocation,
   PIMS_Property_Lite_View,
@@ -18,6 +20,7 @@ import { exists } from '@/utils';
 
 import {
   emptyFeatureData,
+  emptyHighwayFeatures,
   emptyPimsBoundaryFeatureCollection,
   emptyPimsLocationFeatureCollection,
   emptyPimsLocationLiteFeatureCollection,
@@ -28,6 +31,7 @@ import {
 
 export const useMapSearch = () => {
   const fullyAttributedService = useFullyAttributedParcelMapLayer();
+  const highwayService = usePimsHighwayLayer();
   const pimsPropertyLayerService = usePimsPropertyLayer();
   const crownLandService = useCrownLandLayer();
 
@@ -40,6 +44,7 @@ export const useMapSearch = () => {
   const pmbcServiceFindByPin = fullyAttributedService.findByPin;
   const pmbcServiceFindByPid = fullyAttributedService.findByPid;
   const pmbcServiceFindByPlanNumber = fullyAttributedService.findByPlanNumber;
+  const highwayServiceFindByPlanNumber = highwayService.findBySurveyPlanNumber;
 
   const pmbcServiceFindOne = fullyAttributedService.findOne;
   const pimsPropertyLayerServiceFindOne = pimsPropertyLayerService.findOneByBoundary;
@@ -105,12 +110,21 @@ export const useMapSearch = () => {
             >
           | undefined = undefined;
 
+        let findByHighwayPlanNumberTask:
+          | Promise<FeatureCollection<Geometry, ISS_ProvincialPublicHighway> | undefined>
+          | undefined = undefined;
+
         const loadPropertiesTask = loadPimsProperties(filter);
 
         const forceExactMatch = true;
 
         if (filter?.SURVEY_PLAN_NUMBER) {
           findByPlanNumberTask = pmbcServiceFindByPlanNumber(
+            filter?.SURVEY_PLAN_NUMBER,
+            forceExactMatch,
+          );
+
+          findByHighwayPlanNumberTask = highwayServiceFindByPlanNumber(
             filter?.SURVEY_PLAN_NUMBER,
             forceExactMatch,
           );
@@ -139,6 +153,8 @@ export const useMapSearch = () => {
           setDisplayModal(true);
         }
         const planNumberPmbcData = await findByPlanNumberTask;
+
+        const planHighwayData = await findByHighwayPlanNumberTask;
 
         const validFeatures = planNumberInventoryData?.features?.filter(
           feature => !!feature?.geometry,
@@ -176,6 +192,7 @@ export const useMapSearch = () => {
                 features: validPmbcFeatures,
               }
             : emptyPmbcFeatureCollection,
+          highwayPlanFeatures: planHighwayData,
           surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
         };
 
@@ -192,7 +209,14 @@ export const useMapSearch = () => {
 
       return result;
     },
-    [pmbcServiceFindByPlanNumber, loadPimsProperties, logout, setDisplayModal, setModalContent],
+    [
+      loadPimsProperties,
+      pmbcServiceFindByPlanNumber,
+      highwayServiceFindByPlanNumber,
+      setModalContent,
+      setDisplayModal,
+      logout,
+    ],
   );
 
   const searchByHistorical = useCallback(
@@ -243,6 +267,7 @@ export const useMapSearch = () => {
             pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
             fullyAttributedFeatures: emptyPmbcFeatureCollection,
             surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
+            highwayPlanFeatures: emptyHighwayFeatures,
           };
 
           if (validFeatures.length === 0) {
@@ -287,6 +312,7 @@ export const useMapSearch = () => {
                 features: validCrownSurveyFeatures,
               }
             : emptySurveyedParcelsFeatures,
+          highwayPlanFeatures: emptyHighwayFeatures,
         };
 
         if (response?.features?.length === 0) {
@@ -386,6 +412,7 @@ export const useMapSearch = () => {
               }
             : emptyPmbcFeatureCollection,
           surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
+          highwayPlanFeatures: emptyHighwayFeatures,
         };
 
         if (validPmbcFeatures.length === 0 && validPimsFeatures.length === 0) {
@@ -459,6 +486,7 @@ export const useMapSearch = () => {
           pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
           fullyAttributedFeatures: emptyPmbcFeatureCollection,
           surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
+          highwayPlanFeatures: emptyHighwayFeatures,
         };
       } else {
         result = {
@@ -467,6 +495,7 @@ export const useMapSearch = () => {
           pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
           fullyAttributedFeatures: emptyPmbcFeatureCollection,
           surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
+          highwayPlanFeatures: emptyHighwayFeatures,
         };
       }
     } catch (error) {

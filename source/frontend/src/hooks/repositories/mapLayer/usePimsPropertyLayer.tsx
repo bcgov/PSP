@@ -12,6 +12,7 @@ import {
   PIMS_Property_Lite_View,
 } from '@/models/layers/pimsPropertyLocationView';
 import { TenantContext } from '@/tenants';
+import { exists } from '@/utils';
 
 /**
  * API wrapper to centralize all AJAX requests to WFS endpoints for the pims property location.
@@ -116,6 +117,25 @@ export const usePimsPropertyLayer = () => {
     [findMultipleWhereContainsWrappedExecute],
   );
 
+  const findOneByPidOrPin = useCallback(
+    async (pid?: string, pin?: string) => {
+      if (!exists(pid) && !exists(pin)) {
+        return undefined;
+      }
+
+      const params: IGeoSearchParams = {
+        PID: pid,
+        PIN: pin,
+      };
+      const featureCollection = await loadPropertyLayer.execute(params);
+
+      return exists(featureCollection) && featureCollection.features?.length > 0
+        ? featureCollection.features[0]
+        : undefined;
+    },
+    [loadPropertyLayer],
+  );
+
   return useMemo(
     () => ({
       loadPropertyLayer,
@@ -124,11 +144,13 @@ export const usePimsPropertyLayer = () => {
       findAllByBoundaryLoading: findMultipleWhereContainsWrappedLoading,
       findOneByBoundary,
       findOneByBoundaryLoading: findOneWhereContainsWrappedLoading,
+      findOneByPidOrPin,
     }),
     [
       findAllByBoundary,
       findMultipleWhereContainsWrappedLoading,
       findOneByBoundary,
+      findOneByPidOrPin,
       findOneWhereContainsWrappedLoading,
       loadPropertyLayer,
       loadPropertyLocationOnlyMinimal,

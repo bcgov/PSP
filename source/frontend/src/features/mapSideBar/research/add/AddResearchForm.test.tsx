@@ -7,10 +7,10 @@ import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { fakeText, fillInput, render, RenderOptions } from '@/utils/test-utils';
 
+import { PropertyForm } from '../../shared/models';
 import { AddResearchFileYupSchema } from './AddResearchFileYupSchema';
 import AddResearchForm from './AddResearchForm';
 import { ResearchForm } from './models';
-import { PropertyForm } from '../../shared/models';
 
 const history = createMemoryHistory();
 
@@ -55,7 +55,7 @@ describe('AddResearchForm component', () => {
     const initialValues = new ResearchForm();
     const { asFragment, findByText } = setup({ initialValues });
 
-    expect(await findByText(/No results found for your search criteria./i)).toBeVisible();
+    expect(await findByText(/Name this research file/i)).toBeVisible();
     expect(asFragment()).toMatchSnapshot();
   });
 
@@ -63,7 +63,7 @@ describe('AddResearchForm component', () => {
     const initialValues = new ResearchForm();
     const { getByPlaceholderText, findByText } = setup({ initialValues });
 
-    expect(await findByText(/No results found for your search criteria./i)).toBeVisible();
+    expect(await findByText(/Name this research file/i)).toBeVisible();
     const fileName = getByPlaceholderText(/Road name - Descriptive text/i);
     expect(fileName).toBeInTheDocument();
   });
@@ -72,7 +72,7 @@ describe('AddResearchForm component', () => {
     const initialValues = new ResearchForm();
     setup({ initialValues });
 
-    expect(await screen.findByText(/No results found for your search criteria./i)).toBeVisible();
+    expect(await screen.findByText(/Name this research file/i)).toBeVisible();
     expect(screen.getByText(`Help with choosing a name`)).toBeInTheDocument();
   });
 
@@ -80,7 +80,7 @@ describe('AddResearchForm component', () => {
     const initialValues = new ResearchForm();
     const { container, findByText } = setup({ initialValues });
 
-    expect(await findByText(/No results found for your search criteria./i)).toBeVisible();
+    expect(await findByText(/Name this research file/i)).toBeVisible();
 
     // name is required
     await fillInput(container, 'name', '');

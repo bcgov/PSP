@@ -68,7 +68,7 @@ jobs:
           namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
       - name: Display the maintenance page instead of the app
         run: |
-          ./tools/cicd/maintenance/maintenance.sh prod on
+          APPLICATION_NAME=pims-app-prod ./tools/cicd/maintenance/maintenance.sh prod on
       - name: call scripts to deploy api and frontend
         run: |
           [[ -z ${{github.event.inputs.OVERRIDE_VERSION}} ]] && RELEASE_VERSION=${{steps.previoustag.outputs.tag}}-master || RELEASE_VERSION=${{github.event.inputs.OVERRIDE_VERSION}}-master

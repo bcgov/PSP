@@ -239,10 +239,8 @@ describe('LeaseView component', () => {
 
   it('should display the Property Selector according to routing', async () => {
     history.replace(`/mapview/sidebar/lease/1/property/selector`);
-    const { getByRole } = await setup();
-    const tab = getByRole('tab', { name: /Locate on Map/i });
-    expect(tab).toBeVisible();
-    expect(tab).toHaveClass('active');
+    const { getByText } = await setup();
+    expect(getByText(/Property selection/i)).toBeVisible();
   });
 
   it('should display the Property Details tab according to routing', async () => {

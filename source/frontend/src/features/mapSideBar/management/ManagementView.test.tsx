@@ -31,10 +31,10 @@ import {
   waitForEffects,
 } from '@/utils/test-utils';
 
+import { useManagementFileRepository } from '@/hooks/repositories/useManagementFileRepository';
 import { ApiGen_CodeTypes_ManagementFileStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_ManagementFileStatusTypes';
 import { toTypeCode } from '@/utils/formUtils';
 import ManagementView, { IManagementViewProps } from './ManagementView';
-import { useManagementFileRepository } from '@/hooks/repositories/useManagementFileRepository';
 
 // mock auth library
 
@@ -256,7 +256,7 @@ describe('ManagementView component', () => {
 
   it(`should redirect to the File Details page when accessing a non-existing property index`, async () => {
     history.replace(`/mapview/sidebar/management/1/property/99999`);
-    const { getByRole, findByText } = await setup();
+    const { getByRole } = await setup();
     const tab = getByRole('tab', { name: /File details/i });
     expect(tab).toBeVisible();
     expect(tab).toHaveClass('active');
@@ -264,10 +264,8 @@ describe('ManagementView component', () => {
 
   it('should display the Property Selector according to routing', async () => {
     history.replace(`/mapview/sidebar/management/1/property/selector`);
-    const { getByRole } = await setup();
-    const tab = getByRole('tab', { name: /Locate on Map/i });
-    expect(tab).toBeVisible();
-    expect(tab).toHaveClass('active');
+    const { getByText } = await setup();
+    expect(getByText(/Property selection/i)).toBeVisible();
   });
 
   it('should display the Property Details tab according to routing', async () => {

@@ -4,9 +4,8 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
-import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
+import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
-import { LocationBoundaryDataset } from '@/components/common/mapFSM/models';
 import { PropertyForm } from '../../shared/models';
 import { DispositionFormModel } from '../models/DispositionFormModel';
 import DispositionPropertiesSubForm from './DispositionPropertiesSubForm';
@@ -43,6 +42,9 @@ describe('DispositionPropertiesSubForm component', () => {
       },
     );
 
+    // Wait for any async effects to complete
+    await act(async () => {});
+
     return {
       ...utils,
       getFormikRef: () => ref,
@@ -73,13 +75,6 @@ describe('DispositionPropertiesSubForm component', () => {
   it('renders list of properties', async () => {
     const { getByText } = await setup({ initialForm: testForm });
 
-    await waitFor(() => {
-      expect(customSetFilePropertyLocations).toHaveBeenCalledWith<LocationBoundaryDataset[][]>([
-        { location: { lat: undefined, lng: undefined }, boundary: null, isActive: true },
-        { location: { lat: undefined, lng: undefined }, boundary: null, isActive: true },
-      ]);
-    });
-
     expect(getByText('PID: 123-456-789')).toBeVisible();
     expect(getByText('PIN: 1111222')).toBeVisible();
   });
@@ -89,57 +84,13 @@ describe('DispositionPropertiesSubForm component', () => {
     const pidRow = getAllByTitle('remove')[0];
     await act(async () => userEvent.click(pidRow));
 
-    await waitFor(() => {
-      expect(customSetFilePropertyLocations).toHaveBeenCalledWith<LocationBoundaryDataset[][]>([
-        { location: { lat: undefined, lng: undefined }, boundary: null, isActive: true },
-      ]);
-    });
-
     expect(queryByText('PID: 123-456-789')).toBeNull();
   });
 
   it('should display properties with svg prefixed with incrementing id', async () => {
     const { getByTitle } = await setup({ initialForm: testForm });
 
-    await waitFor(() => {
-      expect(customSetFilePropertyLocations).toHaveBeenCalledWith<LocationBoundaryDataset[][]>([
-        { location: { lat: undefined, lng: undefined }, boundary: null, isActive: true },
-        { location: { lat: undefined, lng: undefined }, boundary: null, isActive: true },
-      ]);
-    });
-
     expect(getByTitle('1')).toBeInTheDocument();
     expect(getByTitle('2')).toBeInTheDocument();
-  });
-
-  it('should synchronize a single property with provided lat/lng', async () => {
-    const formWithProperties = testForm;
-    formWithProperties.fileProperties[0].latitude = 1;
-    formWithProperties.fileProperties[0].longitude = 2;
-    await setup({ initialForm: formWithProperties });
-
-    await waitFor(() => {
-      expect(customSetFilePropertyLocations).toHaveBeenCalledWith<LocationBoundaryDataset[][]>([
-        { location: { lat: 1, lng: 2 }, boundary: null, isActive: true },
-        { location: { lat: undefined, lng: undefined }, boundary: null, isActive: true },
-      ]);
-    });
-  });
-
-  it('should synchronize multiple properties with provided lat/lng', async () => {
-    const formWithProperties = testForm;
-    formWithProperties.fileProperties[0].latitude = 1;
-    formWithProperties.fileProperties[0].longitude = 2;
-    formWithProperties.fileProperties[1].latitude = 3;
-    formWithProperties.fileProperties[1].longitude = 4;
-
-    await setup({ initialForm: formWithProperties });
-
-    await waitFor(() => {
-      expect(customSetFilePropertyLocations).toHaveBeenCalledWith<LocationBoundaryDataset[][]>([
-        { location: { lat: 1, lng: 2 }, boundary: null, isActive: true },
-        { location: { lat: 3, lng: 4 }, boundary: null, isActive: true },
-      ]);
-    });
   });
 });

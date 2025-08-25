@@ -36,9 +36,7 @@ exports[`Contact List View > matches snapshot 1`] = `
 }
 
 .c14.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c14.btn:hover {

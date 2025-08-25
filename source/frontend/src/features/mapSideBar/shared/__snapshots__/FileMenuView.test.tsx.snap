@@ -36,9 +36,7 @@ exports[`FileMenuView component > matches snapshot 1`] = `
 }
 
 .c2.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c2.btn:hover {
@@ -214,7 +212,28 @@ exports[`FileMenuView component > matches snapshot 1`] = `
   margin-right: 0;
 }
 
+.c8 {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  margin: 0.15rem;
+  witdh: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
+  line-break: break-all;
+}
+
 .c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -223,10 +242,6 @@ exports[`FileMenuView component > matches snapshot 1`] = `
   margin: 0px;
   width: 100%;
   color: var(--surface-color-primary-button-default);
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -250,6 +265,28 @@ exports[`FileMenuView component > matches snapshot 1`] = `
 }
 
 .c6 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 1.4rem;
+  font-weight: normal;
+  cursor: pointer;
+  padding-bottom: 0.5rem;
+}
+
+.c6.selected {
+  font-weight: bold;
+  cursor: default;
+}
+
+.c9 {
+  -webkit-align-self: flex-end;
+  -ms-flex-item-align: end;
+  align-self: flex-end;
+}
+
+.c7 {
   background-color: #fcba19;
   font-size: 1.5rem;
   border-radius: 50%;
@@ -271,7 +308,7 @@ exports[`FileMenuView component > matches snapshot 1`] = `
   align-items: center;
 }
 
-.c6.selected {
+.c7.selected {
   background-color: #FCBA19;
 }
 
@@ -386,39 +423,29 @@ exports[`FileMenuView component > matches snapshot 1`] = `
     >
       Active
       <div
-        class="c1 no-gutters row"
+        class="c6"
         data-testid="menu-item-row-1"
       >
-        <div
-          class="col-1"
-        />
-        <div
-          class="pr-2 col-auto"
-        >
+        <div />
+        <div>
           <div
-            class="c6"
+            class="c7"
           >
             1
           </div>
         </div>
         <div
-          class="col"
+          class="c8"
         >
-          <button
-            class="c2 Button btn btn-link"
+          <div
+            class="c8"
             data-testid="menu-item-property-0"
-            title="View"
-            type="button"
           >
-            <div
-              class="Button__value"
-            >
-              023-214-937
-            </div>
-          </button>
+            023-214-937
+          </div>
         </div>
         <div
-          class="col-auto"
+          class="c9"
         >
           <button
             class="c2 Button btn btn-link"
@@ -448,39 +475,29 @@ exports[`FileMenuView component > matches snapshot 1`] = `
         </div>
       </div>
       <div
-        class="c1 no-gutters row"
+        class="c6"
         data-testid="menu-item-row-2"
       >
-        <div
-          class="col-1"
-        />
-        <div
-          class="pr-2 col-auto"
-        >
+        <div />
+        <div>
           <div
-            class="c6"
+            class="c7"
           >
             2
           </div>
         </div>
         <div
-          class="col"
+          class="c8"
         >
-          <button
-            class="c2 Button btn btn-link"
+          <div
+            class="c8"
             data-testid="menu-item-property-1"
-            title="View"
-            type="button"
           >
-            <div
-              class="Button__value"
-            >
-              024-996-777
-            </div>
-          </button>
+            024-996-777
+          </div>
         </div>
         <div
-          class="col-auto"
+          class="c9"
         >
           <button
             class="c2 Button btn btn-link"

@@ -52,9 +52,7 @@ exports[`LeaseView component > renders as expected 1`] = `
 }
 
 .c4.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c4.btn:hover {
@@ -343,7 +341,7 @@ exports[`LeaseView component > renders as expected 1`] = `
   align-items: end;
 }
 
-.c29 {
+.c32 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -360,32 +358,32 @@ exports[`LeaseView component > renders as expected 1`] = `
   overflow-y: auto;
 }
 
-.c30 {
+.c33 {
   height: 100%;
 }
 
-.c30 .tab-content {
+.c33 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
   overflow-y: auto;
   background-color: #f2f2f2;
 }
 
-.c30 .tab-content .tab-pane {
+.c33 .tab-content .tab-pane {
   position: relative;
 }
 
-.c31 {
+.c34 {
   background-color: white;
   color: var(--surface-color-primary-button-default);
   font-size: 1.4rem;
   border-color: transparent;
 }
 
-.c31 .nav-tabs {
+.c34 .nav-tabs {
   height: auto;
 }
 
-.c31 .nav-item {
+.c34 .nav-item {
   color: var(--surface-color-primary-button-default);
   min-width: 5rem;
   padding: 0.1rem 1.3rem;
@@ -393,7 +391,7 @@ exports[`LeaseView component > renders as expected 1`] = `
   margin-left: 0.1rem;
 }
 
-.c31 .nav-item:hover {
+.c34 .nav-item:hover {
   color: #f2f2f2;
   background-color: #1e5189;
   border-color: transparent;
@@ -403,7 +401,7 @@ exports[`LeaseView component > renders as expected 1`] = `
   text-shadow: 0.1rem 0 0 currentColor;
 }
 
-.c31 .nav-item.active {
+.c34 .nav-item.active {
   border-radius: 0.4rem;
   color: #f2f2f2;
   background-color: #053662;
@@ -411,11 +409,11 @@ exports[`LeaseView component > renders as expected 1`] = `
   text-shadow: 0.1rem 0 0 currentColor;
 }
 
-.c33 {
+.c36 {
   text-align: right;
 }
 
-.c32 {
+.c35 {
   height: 100%;
   overflow-y: auto;
   grid-area: leasecontent;
@@ -430,7 +428,7 @@ exports[`LeaseView component > renders as expected 1`] = `
   background-color: #f2f2f2;
 }
 
-.c34 {
+.c37 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -448,23 +446,43 @@ exports[`LeaseView component > renders as expected 1`] = `
   align-items: center;
 }
 
+.c29 {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  margin: 0.15rem;
+  witdh: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
+  line-break: break-all;
+}
+
 .c20 {
   height: 100%;
 }
 
 .c21 {
-  overflow: auto;
   height: 100%;
   width: 22rem;
 }
 
-.c28 {
+.c31 {
   overflow: auto;
   height: 100%;
   width: 100%;
 }
 
 .c22 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -473,10 +491,6 @@ exports[`LeaseView component > renders as expected 1`] = `
   margin: 0px;
   width: 100%;
   color: var(--surface-color-primary-button-default);
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -500,6 +514,28 @@ exports[`LeaseView component > renders as expected 1`] = `
 }
 
 .c27 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 1.4rem;
+  font-weight: normal;
+  cursor: pointer;
+  padding-bottom: 0.5rem;
+}
+
+.c27.selected {
+  font-weight: bold;
+  cursor: default;
+}
+
+.c30 {
+  -webkit-align-self: flex-end;
+  -ms-flex-item-align: end;
+  align-self: flex-end;
+}
+
+.c28 {
   background-color: #fcba19;
   font-size: 1.5rem;
   border-radius: 50%;
@@ -521,7 +557,7 @@ exports[`LeaseView component > renders as expected 1`] = `
   align-items: center;
 }
 
-.c27.selected {
+.c28.selected {
   background-color: #FCBA19;
 }
 
@@ -1054,39 +1090,29 @@ exports[`LeaseView component > renders as expected 1`] = `
               >
                 Active
                 <div
-                  class="c23 no-gutters row"
+                  class="c27"
                   data-testid="menu-item-row-387"
                 >
-                  <div
-                    class="col-1"
-                  />
-                  <div
-                    class="pr-2 col-auto"
-                  >
+                  <div />
+                  <div>
                     <div
-                      class="c27"
+                      class="c28"
                     >
                       1
                     </div>
                   </div>
                   <div
-                    class="col"
+                    class="c29"
                   >
-                    <button
-                      class="c4 Button btn btn-link"
+                    <div
+                      class="c29"
                       data-testid="menu-item-property-0"
-                      title="View"
-                      type="button"
                     >
-                      <div
-                        class="Button__value"
-                      >
-                        009-381-783
-                      </div>
-                    </button>
+                      009-381-783
+                    </div>
                   </div>
                   <div
-                    class="col-auto"
+                    class="c30"
                   >
                     <button
                       class="c4 Button btn btn-link"
@@ -1119,16 +1145,16 @@ exports[`LeaseView component > renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="c28 col"
+            class="c31 col"
           >
             <div
-              class="c29"
+              class="c32"
             >
               <div
-                class="c30"
+                class="c33"
               >
                 <nav
-                  class="c31 nav nav-tabs"
+                  class="c34 nav nav-tabs"
                   role="tablist"
                 >
                   <a
@@ -1222,13 +1248,13 @@ exports[`LeaseView component > renders as expected 1`] = `
                     role="tabpanel"
                   >
                     <div
-                      class="c32"
+                      class="c35"
                     >
                       <div
-                        class="c33 mr-3 my-1"
+                        class="c36 mr-3 my-1"
                       >
                         <div
-                          class="c34"
+                          class="c37"
                         >
                           <span
                             class="tooltip-icon"

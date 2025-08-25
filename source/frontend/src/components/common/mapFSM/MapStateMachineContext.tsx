@@ -171,6 +171,13 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         } else if (exists(parcelFeature?.properties?.PIN)) {
           const parsedPin = pinParser(parcelFeature.properties.PIN);
           history.push(`/mapview/sidebar/non-inventory-property/pin/${parsedPin}`);
+        } else if (
+          exists(selectedFeatureData?.location?.lat) &&
+          exists(selectedFeatureData?.location?.lng)
+        ) {
+          history.push(
+            `/mapview/sidebar/location/lat/${selectedFeatureData?.location?.lat}/lng/${selectedFeatureData?.location?.lng}`,
+          );
         }
       },
     },
