@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Pims.Api.Models.Base;
 using Pims.Api.Models.Concepts.ManagementActivity;
 using Pims.Api.Models.Concepts.ManagementFile;
@@ -23,6 +24,12 @@ namespace Pims.Api.Models.Concepts.Property
         public IList<ManagementActivitySubTypeModel> ActivitySubTypeCodes { get; set; }
 
         public CodeTypeModel<string> ActivityStatusTypeCode { get; set; }
+
+        public long? RequestorPersonId { get; set; }
+
+        public long? RequestorOrganizationId { get; set; }
+
+        public long? RequestorPrimaryContactId { get; set; }
 
         public DateOnly RequestAddedDateOnly { get; set; }
 

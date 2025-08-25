@@ -1379,7 +1379,7 @@ public partial class PimsBaseContext : DbContext
                 .HasDefaultValue((short)1)
                 .HasComment("Acquisition file number suffix");
             entity.Property(e => e.FundingOther).HasComment("Description of other funding type.");
-            entity.Property(e => e.LegacyFileNumber).HasComment("Legacy formatted file number assigned to the acquisition file.  Format follows YY-XXXXXX-ZZ where YY = MoTI region number, XXXXXX = generated integer sequence number,  and ZZ = file suffix number (defaulting to '01').   Required due to some files having t");
+            entity.Property(e => e.LegacyFileNumber).HasComment("Legacy formatted file number assigned to the acquisition file.  Format follows YY-XXXXXX-ZZ where YY = MoTT region number, XXXXXX = generated integer sequence number,  and ZZ = file suffix number (defaulting to '01').   Required due to some files having t");
             entity.Property(e => e.LegacyStakeholder).HasComment("Legacy stakeholders imported from PAIMS.");
             entity.Property(e => e.OtherSubfileInterestType).HasComment("If the user selects ?Other? then they will need to provide a subfile type description, which will be displayed as 'Other - <description>");
             entity.Property(e => e.PaimsAcquisitionFileId).HasComment("Legacy Acquisition File ID from the PAIMS system.");
@@ -5076,7 +5076,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.LeaseProgramTypeCode).HasComment("Foreign key to the PIMS_LEASE_PROGRAM_TYPE table.");
             entity.Property(e => e.LeaseResponsibilityTypeCode).HasComment("Foreign key to the PIMS_LEASE_RESPONSIBILITY_TYPE table.");
             entity.Property(e => e.LeaseStatusTypeCode).HasComment("Foreign key to the PIMS_LEASE_STATUS_TYPE table.");
-            entity.Property(e => e.MotiContact).HasComment("Contact of the MoTI person associated with the lease");
+            entity.Property(e => e.MotiContact).HasComment("Contact of the MoTT person associated with the lease");
             entity.Property(e => e.OrigExpiryDate).HasComment("Original expiry date of the lease/license");
             entity.Property(e => e.OrigStartDate).HasComment("Original start date of the lease/license");
             entity.Property(e => e.OtherLeaseLicenseType).HasComment("Description of a non-standard lease/license type");
@@ -6372,6 +6372,9 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.MgmtActivityTypeCode).HasComment("Foreign key of the associated management activity type (PIMS_PROP_MGMT_ACTIVITY_TYPE).");
             entity.Property(e => e.RequestAddedDt).HasComment("Date the request for a property management activity was added");
             entity.Property(e => e.RequestSource).HasComment("Source of the management activity request.");
+            entity.Property(e => e.RequestorOrganizationId).HasComment("Foreign key to_PIMS_ORGANIZATION table.");
+            entity.Property(e => e.RequestorPersonId).HasComment("Foreign key to_PIMS_PERSON table.");
+            entity.Property(e => e.RequestorPrimaryContactId).HasComment("Primary contact for the organization.  Foreign key to_PIMS_PERSON table.");
             entity.Property(e => e.ServiceProviderOrgId).HasComment("Foreign key of the organization as a service provider.");
             entity.Property(e => e.ServiceProviderPersonId).HasComment("Foreign key of the person as a service provider.");
 
@@ -6600,7 +6603,7 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.FileName).HasComment("Unique name given to the management file.");
             entity.Property(e => e.FilePurpose).HasComment("Free text description of the file's purpose.");
-            entity.Property(e => e.LegacyFileNum).HasComment("Legacy formatted file number assigned to the acquisition file.  Format follows YY-XXXXXX-ZZ where YY = MoTI region number, XXXXXX = generated integer sequence number,  and ZZ = file suffix number (defaulting to '01').   Required due to some files having t");
+            entity.Property(e => e.LegacyFileNum).HasComment("Legacy formatted file number assigned to the acquisition file.  Format follows YY-XXXXXX-ZZ where YY = MoTT region number, XXXXXX = generated integer sequence number,  and ZZ = file suffix number (defaulting to '01').   Required due to some files having t");
             entity.Property(e => e.ManagementFilePurposeTypeCode).HasComment("Foreign key to the PIMS_MANAGEMENT_FILE_PURPOSE_TYPE table.");
             entity.Property(e => e.ManagementFileStatusTypeCode).HasComment("Foreign key to the PIMS_MANAGEMENT_FILE_STATUS_TYPE table.");
             entity.Property(e => e.ProductId).HasComment("Foreign key to the PIMS_PRODUCT table.");
@@ -9530,7 +9533,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_PROPERTY_TENURE_TYPE", tb =>
                 {
-                    tb.HasComment("A code table to store property tenure codes. Tenure is defined as : \"The act, right, manner or term of holding something(as a landed property)\" In this case, tenure is required on Properties to indicate MoTI's legal tenure on the property. The land parcel");
+                    tb.HasComment("A code table to store property tenure codes. Tenure is defined as : \"The act, right, manner or term of holding something(as a landed property)\" In this case, tenure is required on Properties to indicate MoTT's legal tenure on the property. The land parcel");
                     tb.HasTrigger("PIMS_PRPTNR_I_S_I_TR");
                     tb.HasTrigger("PIMS_PRPTNR_I_S_U_TR");
                 });
