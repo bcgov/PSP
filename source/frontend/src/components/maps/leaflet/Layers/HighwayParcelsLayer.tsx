@@ -12,10 +12,10 @@ export const HighwayParcelsLayer: React.FunctionComponent = () => {
 
   // For now, lat/long properties in the highway list will not display on the map
   // Ignore properties without a valid boundary
-  const validParcels = useMemo<Feature<Geometry, ISS_ProvincialPublicHighway>[]>(
-    () => (mapFeatureData?.highwayPlanFeatures.features ?? []).filter(p => exists(p?.geometry)),
-    [mapFeatureData?.highwayPlanFeatures.features],
-  );
+  const validParcels = useMemo<Feature<Geometry, ISS_ProvincialPublicHighway>[]>(() => {
+    const features = mapFeatureData?.highwayPlanFeatures.features ?? [];
+    return features.filter(p => exists(p?.geometry)) ?? [];
+  }, [mapFeatureData]);
 
   return (
     <React.Fragment>
