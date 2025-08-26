@@ -5,14 +5,16 @@ import { noop } from 'lodash';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import Form from 'react-bootstrap/Form';
+import { FaExternalLinkAlt } from 'react-icons/fa';
 import { MdArrowDropDown, MdArrowRight } from 'react-icons/md';
 import styled from 'styled-components';
 
 import variables from '@/assets/scss/_variables.module.scss';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { Section } from '@/components/common/Section/Section';
-import { exists } from '@/utils';
+import { exists, isValidString } from '@/utils';
 
+import { useConfiguredMapLayers } from '../../Layers/useConfiguredMapLayers';
 import { layersMenuTree } from './LayersMenuLayout';
 import {
   getChildrenIds,
@@ -145,6 +147,13 @@ const MenuItem: React.FC<React.PropsWithChildren<{ entry: LayerMenuItem; level: 
   level,
 }) => {
   const { values, setFieldValue } = useFormikContext<LayersFormModel>();
+  const configuredLayers = useConfiguredMapLayers();
+
+  // find corresponding layerDefinition
+  const layerDefinition = useMemo(
+    () => configuredLayers.find(ld => ld.layerIdentifier === entry.layerDefinitionId),
+    [configuredLayers, entry.layerDefinitionId],
+  );
 
   const onChange = () => {
     if (values.layers.has(entry.layerDefinitionId)) {
@@ -171,9 +180,20 @@ const MenuItem: React.FC<React.PropsWithChildren<{ entry: LayerMenuItem; level: 
         checked={isChecked}
         onChange={onChange}
         label={
-          <>
-            {exists(color) && <StyledLayerColor color={color} />} {label}
-          </>
+          <LabelWrapper>
+            {exists(color) && <StyledLayerColor color={color} />}{' '}
+            {isValidString(layerDefinition?.legendUrl) ? (
+              <LegendLink
+                href={layerDefinition.legendUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {label} <FaExternalLinkAlt className="external-icon" />
+              </LegendLink>
+            ) : (
+              label
+            )}
+          </LabelWrapper>
         }
       />
     </StyledLayerNode>
@@ -229,6 +249,7 @@ const StyledParentNode = styled.div<{ level: number }>`
       font-weight: bold;
       color: ${variables.textColor};
     }
+  }
 `;
 
 const StyledLayerNode = styled.div<{ level: number }>`
@@ -242,6 +263,7 @@ const StyledLayerNode = styled.div<{ level: number }>`
     label {
       font-weight: normal;
     }
+  }
 `;
 
 const StyledOpenedIcon = styled(MdArrowDropDown)`
@@ -258,16 +280,18 @@ const StyledFormGroup = styled(Form.Group)`
   font-size: 1.4rem;
   .form-check {
     display: flex;
-    align-items: center;
+    align-items: flex-start; /* <-- align checkbox and label at the top */
     padding-left: 0rem;
+
     input {
       padding-left: 0rem;
-      margin-top: 0rem;
+      margin-top: 0.3rem;
     }
 
     label {
       display: flex;
-      align-items: center;
+      flex-wrap: wrap;
+      align-items: flex-start;
       padding-left: 1.8rem;
       margin-left: 0rem;
     }
@@ -280,4 +304,32 @@ const StyledLayerColor = styled.div<{ color: string }>`
   background-color: ${({ color }) => color};
   margin-right: 0.5rem;
   padding-right: 1.4rem;
+  margin-top: 0.3rem;
+`;
+
+const LabelWrapper = styled.span`
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+  flex: 1;
+  min-width: 0; /* allow text to break correctly when long words are present */
+`;
+
+const LegendLink = styled.a`
+  text-decoration: underline;
+  display: inline;
+  word-break: break-word;
+
+  &:hover {
+    text-decoration: none;
+  }
+
+  .external-icon {
+    display: inline-block;
+    flex-shrink: 0; /* prevent squishing */
+    width: 1.2rem;
+    height: 1.2rem;
+    margin-left: 0.3rem;
+    vertical-align: text-bottom;
+  }
 `;
