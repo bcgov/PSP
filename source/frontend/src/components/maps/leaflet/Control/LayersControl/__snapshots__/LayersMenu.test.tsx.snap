@@ -21,16 +21,16 @@ exports[`LayersMenu View > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c8 {
+.c9 {
   padding-left: 0rem;
   padding-bottom: 0.5rem;
 }
 
-.c8 .form-check input {
+.c9 .form-check input {
   margin-left: -0.3rem;
 }
 
-.c8 .form-check label {
+.c9 .form-check label {
   font-weight: bold;
 }
 
@@ -47,7 +47,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
   font-weight: normal;
 }
 
-.c9 {
+.c10 {
   font-size: 2.4rem;
   margin: -0.5rem;
 }
@@ -61,16 +61,16 @@ exports[`LayersMenu View > renders as expected 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+  -webkit-align-items: flex-start;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
   padding-left: 0rem;
 }
 
 .c0 .form-check input {
   padding-left: 0rem;
-  margin-top: 0rem;
+  margin-top: 0.3rem;
 }
 
 .c0 .form-check label {
@@ -78,44 +78,67 @@ exports[`LayersMenu View > renders as expected 1`] = `
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  -webkit-align-items: flex-start;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
   padding-left: 1.8rem;
   margin-left: 0rem;
-}
-
-.c4 {
-  width: 1.4rem;
-  height: 1.4rem;
-  background-color: #3388ff;
-  margin-right: 0.5rem;
-  padding-right: 1.4rem;
 }
 
 .c5 {
   width: 1.4rem;
   height: 1.4rem;
-  background-color: #42814A;
+  background-color: #3388ff;
   margin-right: 0.5rem;
   padding-right: 1.4rem;
+  margin-top: 0.3rem;
 }
 
 .c6 {
   width: 1.4rem;
   height: 1.4rem;
-  background-color: #FC802D;
+  background-color: #42814A;
   margin-right: 0.5rem;
   padding-right: 1.4rem;
+  margin-top: 0.3rem;
 }
 
 .c7 {
   width: 1.4rem;
   height: 1.4rem;
+  background-color: #FC802D;
+  margin-right: 0.5rem;
+  padding-right: 1.4rem;
+  margin-top: 0.3rem;
+}
+
+.c8 {
+  width: 1.4rem;
+  height: 1.4rem;
   background-color: #555555;
   margin-right: 0.5rem;
   padding-right: 1.4rem;
+  margin-top: 0.3rem;
+}
+
+.c4 {
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-align-items: flex-start;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
+  gap: 0.4rem;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  min-width: 0;
 }
 
 <form
@@ -159,11 +182,15 @@ exports[`LayersMenu View > renders as expected 1`] = `
                 for="research"
                 title=""
               >
-                <div
+                <span
                   class="c4"
-                  color="#3388ff"
-                />
-                 Research
+                >
+                  <div
+                    class="c5"
+                    color="#3388ff"
+                  />
+                   Research
+                </span>
               </label>
             </div>
           </div>
@@ -183,11 +210,15 @@ exports[`LayersMenu View > renders as expected 1`] = `
                 for="acquisition"
                 title=""
               >
-                <div
-                  class="c5"
-                  color="#42814A"
-                />
-                 Acquisition
+                <span
+                  class="c4"
+                >
+                  <div
+                    class="c6"
+                    color="#42814A"
+                  />
+                   Acquisition
+                </span>
               </label>
             </div>
           </div>
@@ -207,11 +238,15 @@ exports[`LayersMenu View > renders as expected 1`] = `
                 for="management"
                 title=""
               >
-                <div
-                  class="c6"
-                  color="#FC802D"
-                />
-                 Management
+                <span
+                  class="c4"
+                >
+                  <div
+                    class="c7"
+                    color="#FC802D"
+                  />
+                   Management
+                </span>
               </label>
             </div>
           </div>
@@ -231,16 +266,20 @@ exports[`LayersMenu View > renders as expected 1`] = `
                 for="disposition"
                 title=""
               >
-                <div
-                  class="c7"
-                  color="#555555"
-                />
-                 Disposition
+                <span
+                  class="c4"
+                >
+                  <div
+                    class="c8"
+                    color="#555555"
+                  />
+                   Disposition
+                </span>
               </label>
             </div>
           </div>
           <div
-            class="c8"
+            class="c9"
           >
             <div
               class="row no-gutters"
@@ -249,7 +288,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
                 class="col-1"
               >
                 <svg
-                  class="c9"
+                  class="c10"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -290,7 +329,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="c8"
+            class="c9"
           >
             <div
               class="row no-gutters"
@@ -299,7 +338,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
                 class="col-1"
               >
                 <svg
-                  class="c9"
+                  class="c10"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -376,12 +415,16 @@ exports[`LayersMenu View > renders as expected 1`] = `
                 for="pmbc_parcel_pid"
                 title=""
               >
-                 Parcels PID
+                <span
+                  class="c4"
+                >
+                   Parcels PID
+                </span>
               </label>
             </div>
           </div>
           <div
-            class="c8"
+            class="c9"
           >
             <div
               class="row no-gutters"
@@ -390,7 +433,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
                 class="col-1"
               >
                 <svg
-                  class="c9"
+                  class="c10"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -431,7 +474,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="c8"
+            class="c9"
           >
             <div
               class="row no-gutters"
@@ -440,7 +483,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
                 class="col-1"
               >
                 <svg
-                  class="c9"
+                  class="c10"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -481,7 +524,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="c8"
+            class="c9"
           >
             <div
               class="row no-gutters"
@@ -490,7 +533,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
                 class="col-1"
               >
                 <svg
-                  class="c9"
+                  class="c10"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -531,7 +574,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="c8"
+            class="c9"
           >
             <div
               class="row no-gutters"
@@ -540,7 +583,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
                 class="col-1"
               >
                 <svg
-                  class="c9"
+                  class="c10"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -581,7 +624,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="c8"
+            class="c9"
           >
             <div
               class="row no-gutters"
@@ -590,7 +633,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
                 class="col-1"
               >
                 <svg
-                  class="c9"
+                  class="c10"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -631,7 +674,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="c8"
+            class="c9"
           >
             <div
               class="row no-gutters"
@@ -640,7 +683,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
                 class="col-1"
               >
                 <svg
-                  class="c9"
+                  class="c10"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -681,7 +724,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="c8"
+            class="c9"
           >
             <div
               class="row no-gutters"
@@ -690,7 +733,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
                 class="col-1"
               >
                 <svg
-                  class="c9"
+                  class="c10"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
