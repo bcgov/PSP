@@ -176,10 +176,10 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
   return (
     <>
       <StyledWrapper>
-        <Section>
+        <Section className="my-0">
           <Button onClick={onOpenPropertyList}>Search PIMS information</Button>
         </Section>
-        <Section>
+        <Section className="my-0 pt-0">
           <PropertyFilter
             defaultFilter={{ ...defaultPropertyFilter }}
             propertyFilter={props.propertyFilter}
@@ -188,6 +188,7 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
           />
         </Section>
         <Section
+          className="my-0 py-0"
           header={
             <SimpleSectionHeader title="Results (PMBC)">
               <MoreOptionsMenu options={menuOptions} ariaLabel="search pmbc results more options" />
@@ -199,6 +200,7 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
           <ParcelListContainer View={ParcelListView} parcels={propertyProjections} />
         </Section>
         <Section
+          className="my-0 py-0"
           header={
             <SimpleSectionHeader title="Results (PIMS)">
               <MoreOptionsMenu options={menuOptions} ariaLabel="search pims results more options" />

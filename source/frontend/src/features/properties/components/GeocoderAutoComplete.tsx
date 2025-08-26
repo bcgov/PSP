@@ -113,7 +113,13 @@ export const GeocoderAutoComplete: React.FC<
 
   return (
     <div className="GeocoderAutoComplete">
-      <ClickAwayListener onClickAway={() => setOptions([])}>
+      <ClickAwayListener
+        onClickAway={e => {
+          if (e.type === 'click') {
+            setOptions([]);
+          }
+        }}
+      >
         <Form.Group
           controlId={`input-${field}`}
           className={classNames(required ? 'required' : '', outerClassName)}

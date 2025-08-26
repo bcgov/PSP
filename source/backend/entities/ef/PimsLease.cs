@@ -138,7 +138,7 @@ public partial class PimsLease
     public string LeaseNotes { get; set; }
 
     /// <summary>
-    /// Contact of the MoTI person associated with the lease
+    /// Contact of the MoTT person associated with the lease
     /// </summary>
     [Column("MOTI_CONTACT")]
     [StringLength(200)]

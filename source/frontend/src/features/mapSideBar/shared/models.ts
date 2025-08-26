@@ -18,6 +18,7 @@ import {
   PIMS_Property_Location_View,
 } from '@/models/layers/pimsPropertyLocationView';
 import {
+  applyDisplayOrder,
   enumFromValue,
   exists,
   formatApiAddress,
@@ -46,7 +47,7 @@ export class FileForm {
     return {
       id: this.id ?? 0,
       fileName: this.name,
-      fileProperties: this.properties.map(x => x.toFilePropertyApi(this.id)),
+      fileProperties: applyDisplayOrder(this.properties.map(x => x.toFilePropertyApi(this.id))),
       fileNumber: null,
       fileStatusTypeCode: null,
       totalAllowableCompensation: null,

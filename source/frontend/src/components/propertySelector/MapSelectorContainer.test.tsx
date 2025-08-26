@@ -10,10 +10,10 @@ import { mockFAParcelLayerResponse, mockGeocoderOptions } from '@/mocks/index.mo
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { act, fillInput, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
+import { PropertyForm } from '@/features/mapSideBar/shared/models';
+import { IMapStateMachineContext } from '../common/mapFSM/MapStateMachineContext';
 import MapSelectorContainer, { IMapSelectorContainerProps } from './MapSelectorContainer';
 import { IMapProperty } from './models';
-import { IMapStateMachineContext } from '../common/mapFSM/MapStateMachineContext';
-import { PropertyForm } from '@/features/mapSideBar/shared/models';
 
 const mockStore = configureMockStore([thunk]);
 
@@ -150,7 +150,6 @@ describe('MapSelectorContainer component', () => {
       {
         parcelFeature: {
           type: 'Feature',
-          geometry_name: 'SHAPE',
           id: 'PMBC_PARCEL_POLYGON_FABRIC.551',
           geometry: {
             type: 'Polygon',
@@ -175,10 +174,12 @@ describe('MapSelectorContainer component', () => {
             PLAN_NUMBER: 'NO_PLAN',
             PIN: null,
             PID: '9727493',
+            PID_FORMATTED: '009-727-493',
             PID_NUMBER: 9727493,
             SOURCE_PARCEL_ID: null,
             PARCEL_STATUS: 'ACTIVE',
             PARCEL_CLASS: 'SUBDIVISION',
+            PARCEL_FABRIC_POLY_ID: 5156389,
             OWNER_TYPE: 'CROWN PROVINCIAL',
             PARCEL_START_DATE: null,
             SURVEY_DESIGNATION_1: 'PART 13',
@@ -201,6 +202,7 @@ describe('MapSelectorContainer component', () => {
             FEATURE_LENGTH_M: 702,
             OBJECTID: 551,
             SE_ANNO_CAD_DATA: null,
+            SHAPE: null,
           },
           bbox: [-123.4627, 48.7652, -123.46, 48.7672],
         },

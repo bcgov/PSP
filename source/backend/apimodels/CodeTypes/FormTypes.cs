@@ -21,17 +21,20 @@ namespace Pims.Api.Models.CodeTypes
         [EnumMember(Value = "FORM9")]
         FORM9,
 
+        [EnumMember(Value = "FORM12")]
+        FORM12,
+
         [EnumMember(Value = "H0074")]
         H0074,
 
         [EnumMember(Value = "H0443")]
         H0443,
 
-        [EnumMember(Value = "H1005A")]
-        H1005A,
-
         [EnumMember(Value = "H1005")]
         H1005,
+
+        [EnumMember(Value = "H1005A")]
+        H1005A,
 
         [EnumMember(Value = "H120")]
         H120,
@@ -39,8 +42,14 @@ namespace Pims.Api.Models.CodeTypes
         [EnumMember(Value = "H179A")]
         H179A,
 
+        [EnumMember(Value = "H179FSPART")]
+        H179FSPART,
+
         [EnumMember(Value = "H179P")]
         H179P,
+
+        [EnumMember(Value = "H179PTO")]
+        H179PTO,
 
         [EnumMember(Value = "H179T")]
         H179T,

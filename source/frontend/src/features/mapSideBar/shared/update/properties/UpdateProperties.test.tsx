@@ -1,16 +1,25 @@
-import { act, screen, waitFor } from '@testing-library/react';
 import axios, { AxiosError } from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import { createRef } from 'react';
 
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import { getMockApiAddress } from '@/mocks/address.mock';
+import { getMockFullyAttributedParcel } from '@/mocks/faParcelLayerResponse.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { getMockApiProperty } from '@/mocks/properties.mock';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
+import { getMockApiProperty, getMockApiPropertyFile } from '@/mocks/properties.mock';
 import { getMockResearchFile } from '@/mocks/researchFile.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
+import {
+  act,
+  fillInput,
+  render,
+  RenderOptions,
+  screen,
+  userEvent,
+  waitFor,
+} from '@/utils/test-utils';
 
-import { createRef } from 'react';
 import UpdateProperties, { IUpdatePropertiesProps } from './UpdateProperties';
 
 const mockAxios = new MockAdapter(axios);
@@ -161,11 +170,94 @@ describe('UpdateProperties component', () => {
     const saveConfirmButton = await screen.findByTitle('ok-modal');
     await act(async () => userEvent.click(saveConfirmButton));
 
-    await waitFor(() => {
-      expect(updateFileProperties).toHaveBeenCalled();
-      expect(setIsShowingPropertySelector).toHaveBeenCalledWith(false);
-      expect(onSuccess).toHaveBeenCalled();
-    });
+    expect(updateFileProperties).toHaveBeenCalled();
+    expect(setIsShowingPropertySelector).toHaveBeenCalledWith(false);
+    expect(onSuccess).toHaveBeenCalled();
+  });
+
+  it('should preserve the order of properties when saving', async () => {
+    updateFileProperties.mockResolvedValue(getMockResearchFile());
+    const { getByText } = await setup(
+      {
+        file: {
+          ...getMockResearchFile(),
+          fileProperties: [
+            {
+              ...getMockApiPropertyFile(),
+              // existing property
+              property: { ...getMockApiProperty(), pid: 123456789, id: 1 },
+            },
+          ],
+        },
+      },
+      {
+        mockMapMachine: {
+          ...mapMachineBaseMock,
+          // properties to be added to the current file via the map state machine (ie working list, etc)
+          selectedFeatures: [
+            {
+              location: { lng: -120.69195885, lat: 50.25163372 },
+              fileLocation: null,
+              pimsFeature: null,
+              parcelFeature: getMockFullyAttributedParcel('111-111-111'),
+              regionFeature: null,
+              districtFeature: null,
+              selectingComponentId: null,
+              municipalityFeature: null,
+            },
+            {
+              location: { lng: -120.69195885, lat: 50.25163372 },
+              fileLocation: null,
+              pimsFeature: null,
+              parcelFeature: getMockFullyAttributedParcel('222-222-222'),
+              regionFeature: null,
+              districtFeature: null,
+              selectingComponentId: null,
+              municipalityFeature: null,
+            },
+            {
+              location: { lng: -120.69195885, lat: 50.25163372 },
+              fileLocation: null,
+              pimsFeature: null,
+              parcelFeature: getMockFullyAttributedParcel('333-333-333'),
+              regionFeature: null,
+              districtFeature: null,
+              selectingComponentId: null,
+              municipalityFeature: null,
+            },
+          ],
+        },
+      },
+    );
+    const saveButton = getByText('Save');
+    await act(async () => userEvent.click(saveButton));
+
+    const saveConfirmButton = await screen.findByTitle('ok-modal');
+    await act(async () => userEvent.click(saveConfirmButton));
+
+    expect(updateFileProperties).toHaveBeenCalledWith(
+      expect.objectContaining({
+        fileProperties: expect.arrayContaining([
+          expect.objectContaining({
+            property: expect.objectContaining({ pid: 123456789 }),
+            displayOrder: 0,
+          }),
+          expect.objectContaining({
+            property: expect.objectContaining({ pid: 111111111 }),
+            displayOrder: 1,
+          }),
+          expect.objectContaining({
+            property: expect.objectContaining({ pid: 222222222 }),
+            displayOrder: 2,
+          }),
+          expect.objectContaining({
+            property: expect.objectContaining({ pid: 333333333 }),
+            displayOrder: 3,
+          }),
+        ]),
+      }),
+      [],
+    );
   });
 
   it('if the update fails with a 409 the associated entities modal is displayed', async () => {

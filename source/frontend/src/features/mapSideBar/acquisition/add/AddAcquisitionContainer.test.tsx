@@ -1,9 +1,12 @@
+import { feature } from '@turf/turf';
 import { createMemoryHistory } from 'history';
 
 import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
+import { getMockFullyAttributedParcel } from '@/mocks/faParcelLayerResponse.mock';
+import { getMockPolygon } from '@/mocks/geometries.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
@@ -414,6 +417,100 @@ describe('AddAcquisitionContainer component', () => {
     const expectedValues = formValues.toApi();
     expect(addAcquisitionFileApi.execute).toHaveBeenCalledWith(expectedValues, []);
     expect(onSuccess).toHaveBeenCalledWith(1);
+  });
+
+  it('should preserve the order of properties when saving', async () => {
+    let testObj: any = undefined;
+    const testMockMachine: IMapStateMachineContext = {
+      ...mapMachineBaseMock,
+      selectedFeatures: [
+        {
+          location: { lng: -120.69195885, lat: 50.25163372 },
+          fileLocation: null,
+          pimsFeature: null,
+          parcelFeature: getMockFullyAttributedParcel('111-111-111'),
+          regionFeature: feature(getMockPolygon(), {
+            ...emptyRegion,
+            REGION_NUMBER: 1,
+            REGION_NAME: 'South Coast Region',
+          }),
+          districtFeature: null,
+          selectingComponentId: null,
+          municipalityFeature: null,
+        },
+        {
+          location: { lng: -120.69195885, lat: 50.25163372 },
+          fileLocation: null,
+          pimsFeature: null,
+          parcelFeature: getMockFullyAttributedParcel('222-222-222'),
+          regionFeature: feature(getMockPolygon(), {
+            ...emptyRegion,
+            REGION_NUMBER: 1,
+            REGION_NAME: 'South Coast Region',
+          }),
+          districtFeature: null,
+          selectingComponentId: null,
+          municipalityFeature: null,
+        },
+        {
+          location: { lng: -120.69195885, lat: 50.25163372 },
+          fileLocation: null,
+          pimsFeature: null,
+          parcelFeature: getMockFullyAttributedParcel('333-333-333'),
+          regionFeature: feature(getMockPolygon(), {
+            ...emptyRegion,
+            REGION_NUMBER: 1,
+            REGION_NAME: 'South Coast Region',
+          }),
+          districtFeature: null,
+          selectingComponentId: null,
+          municipalityFeature: null,
+        },
+      ],
+    };
+
+    await act(async () => {
+      testObj = await setup(DEFAULT_PROPS, { mockMapMachine: testMockMachine });
+    });
+
+    const {
+      getSaveButton,
+      getNameTextbox,
+      getAcquisitionTypeDropdown,
+      getRegionDropdown,
+      getFundingTypeDropdown,
+      getFundingOtherTextbox,
+    } = testObj;
+
+    await act(async () => {
+      userEvent.paste(getNameTextbox(), formValues.fileName as string);
+      userEvent.selectOptions(getAcquisitionTypeDropdown(), formValues.acquisitionType as string);
+      userEvent.selectOptions(getRegionDropdown(), formValues.region as string);
+      userEvent.selectOptions(getFundingTypeDropdown(), formValues.fundingTypeCode as string);
+      userEvent.paste(getFundingOtherTextbox(), formValues.fundingTypeOtherDescription);
+    });
+
+    await act(async () => userEvent.click(getSaveButton()));
+
+    expect(addAcquisitionFileApi.execute).toHaveBeenCalledWith(
+      expect.objectContaining({
+        fileProperties: expect.arrayContaining([
+          expect.objectContaining({
+            property: expect.objectContaining({ pid: 111111111 }),
+            displayOrder: 0,
+          }),
+          expect.objectContaining({
+            property: expect.objectContaining({ pid: 222222222 }),
+            displayOrder: 1,
+          }),
+          expect.objectContaining({
+            property: expect.objectContaining({ pid: 333333333 }),
+            displayOrder: 2,
+          }),
+        ]),
+      }),
+      [],
+    );
   });
 
   describe('Sub-interest file', () => {

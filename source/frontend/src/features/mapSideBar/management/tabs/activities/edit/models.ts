@@ -19,6 +19,9 @@ export class ManagementActivityFormModel {
   completionDate = '';
   description = '';
   requestedSource = '';
+  requestorPersonId: number | null;
+  requestorOrganizationId: number | null;
+  requestorPrimaryContactId: number | null;
   ministryContacts: (IContactSearchResult | null)[] = [null];
   involvedParties: (IContactSearchResult | null)[] = [null];
   serviceProvider: IContactSearchResult | null = null;
@@ -48,6 +51,9 @@ export class ManagementActivityFormModel {
       activityTypeCode: toTypeCodeNullable(this.activityTypeCode),
       activitySubTypeCodes: this.activitySubtypeCodes?.map(x => x.toApi(this.id)) ?? [],
       activityStatusTypeCode: toTypeCodeNullable(this.activityStatusCode),
+      requestorPersonId: this.requestorPersonId,
+      requestorOrganizationId: this.requestorOrganizationId,
+      requestorPrimaryContactId: this.requestorPrimaryContactId,
       requestAddedDateOnly: this.requestedDate,
       completionDateOnly: emptyStringtoNullable(this.completionDate),
       description: this.description,
