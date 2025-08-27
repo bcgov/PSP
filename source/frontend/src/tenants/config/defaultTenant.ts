@@ -2,8 +2,8 @@ import { ITenantConfig2 } from '@/hooks/pims-api/interfaces/ITenantConfig';
 
 const MUNICIPALITY_LAYER_URL =
   'https://openmaps.gov.bc.ca/geo/pub/WHSE_LEGAL_ADMIN_BOUNDARIES.ABMS_MUNICIPALITIES_SP/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_LEGAL_ADMIN_BOUNDARIES.ABMS_MUNICIPALITIES_SP';
-const PARCELS_LAYER_URL =
-  'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/wfs?service=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW';
+const FULLY_ATTRIBUTED_PARCELS_LAYER_URL =
+  'https://apps.gov.bc.ca/ext/sgw/geo.allgov?service=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_FA_SVW';
 const ELECTORAL_LAYER_URL =
   'https://openmaps.gov.bc.ca/geo/pub/WHSE_ADMIN_BOUNDARIES.EBC_ELECTORAL_DISTS_BS10_SVW/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_ADMIN_BOUNDARIES.EBC_ELECTORAL_DISTS_BS10_SVW';
 const REGIONAL_LAYER_URL =
@@ -37,6 +37,7 @@ const CROWN_LAND_SURVEYED_PARCELS_URL =
 
 const INTERNAL_FULLY_ATTRIBUTED_PARCELS_LAYER_URL =
   '/ogs-internal/ows?service=wfs&request=GetFeature&typeName=PMBC_PARCEL_POLYGON_FABRIC&outputformat=json&version=2.0.0&srsName=EPSG:4326';
+
 /**
  * Default tenant configuration.
  */
@@ -64,13 +65,13 @@ export const defaultTenant: ITenantConfig2 = {
   minimalPropertiesUrl:
     'ogs-internal/ows?service=wfs&request=GetFeature&typeName=PIMS_PROPERTY_LITE_VW&outputformat=json&srsName=EPSG:4326&version=2.0.0',
   //NOTE: The fully attributed parcel layer does not work locally unless the SITEMINDER cookie SameSite=None; is set manually in the browser.
+  fullyAttributedParcelsLayerUrl: FULLY_ATTRIBUTED_PARCELS_LAYER_URL,
   parcelMapFullyAttributed: {
-    url: 'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows',
-    layers: 'pub:WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW',
+    url: 'https://apps.gov.bc.ca/ext/sgw/geo.allgov',
+    layers: 'WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_FA_SVW',
   },
   electoralLayerUrl: ELECTORAL_LAYER_URL,
   municipalLayerUrl: MUNICIPALITY_LAYER_URL,
-  fullyAttributedParcelsLayerUrl: PARCELS_LAYER_URL,
   internalFullyAttributedParcelsLayerUrl: INTERNAL_FULLY_ATTRIBUTED_PARCELS_LAYER_URL,
   regionalLayerUrl: REGIONAL_LAYER_URL,
   motiRegionLayerUrl: MOTI_REGION_LAYER_URL,
