@@ -49,6 +49,8 @@ Ltsa__MyLtsaUsername=
 Ltsa__MyLtsaUserPassword=
 Ltsa__IntegratorUsername=
 Ltsa__IntegratorPassword=
+Ltsa__ClientId=
+Ltsa__ClientSecret=
 
 Mayan__BaseUri=http://localhost:7080/api/v4
 Mayan__ConnectionUser=admin

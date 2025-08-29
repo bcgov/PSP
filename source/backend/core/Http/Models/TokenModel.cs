@@ -1,3 +1,4 @@
+using RTools_NTS.Util;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text.Json.Serialization;
@@ -9,22 +10,63 @@ namespace Pims.Core.Http.Models
     /// </summary>
     public class TokenModel
     {
-
-        public TokenModel()
-        {
-        }
+        private string _accessToken;
+        private string _refreshToken;
+        private JwtSecurityTokenHandler _handler;
 
         public TokenModel(string jwtToken, string refreshToken)
         {
-            var handler = new JwtSecurityTokenHandler();
-            var decodedJwtToken = handler.ReadJwtToken(jwtToken);
-            var decodedRefreshToken = handler.ReadJwtToken(jwtToken);
+            _accessToken = jwtToken;
+            _refreshToken = refreshToken;
+        }
 
-            AccessToken = jwtToken;
-            ExpiresIn = decodedJwtToken.ValidTo.Subtract(DateTime.UtcNow).Seconds;
-            RefreshExpiresIn = decodedRefreshToken.ValidTo.Subtract(DateTime.UtcNow).Seconds;
-            RefreshToken = refreshToken;
-            TokenType = decodedJwtToken.Header.Typ;
+        public void InvalidateToken()
+        {
+            _accessToken = null;
+            _refreshToken = null;
+        }
+
+        public void RenewToken(string jwtToken, string refreshToken)
+        {
+            _accessToken = jwtToken;
+            _refreshToken = refreshToken;
+        }
+
+        private JwtSecurityTokenHandler GetHandler()
+        {
+            _handler ??= new JwtSecurityTokenHandler();
+
+            return _handler;
+        }
+
+        private int? GetExpiresIn()
+        {
+            if (_accessToken is null)
+            {
+                return null;
+            }
+
+            return GetHandler().ReadJwtToken(_accessToken).ValidTo.Subtract(DateTime.UtcNow).Seconds;
+        }
+
+        private int? GetRefreshExpiresIn()
+        {
+            if (_refreshToken is null)
+            {
+                return null;
+            }
+
+            return GetHandler().ReadJwtToken(_refreshToken).ValidTo.Subtract(DateTime.UtcNow).Seconds;
+        }
+
+        private string GetTokeyType()
+        {
+            if (_accessToken is null)
+            {
+                return null;
+            }
+
+            return GetHandler().ReadJwtToken(_accessToken).Header.Typ;
         }
 
         #region Properties
@@ -33,31 +75,31 @@ namespace Pims.Core.Http.Models
         /// get/set - The access token.
         /// </summary>
         [JsonPropertyName("access_token")]
-        public string AccessToken { get; set; }
-
-        /// <summary>
-        /// get/set - When the access token expires.
-        /// </summary>
-        [JsonPropertyName("expires_in")]
-        public int ExpiresIn { get; set; }
-
-        /// <summary>
-        /// get/set - When the refresh token expires.
-        /// </summary>
-        [JsonPropertyName("refresh_expires_in")]
-        public int RefreshExpiresIn { get; set; }
+        public string AccessToken => _accessToken;
 
         /// <summary>
         /// get/set - The refresh token.
         /// </summary>
         [JsonPropertyName("refresh_token")]
-        public string RefreshToken { get; set; }
+        public string RefreshToken => _refreshToken;
+
+        /// <summary>
+        /// get/set - When the access token expires.
+        /// </summary>
+        [JsonPropertyName("expires_in")]
+        public int? ExpiresIn => GetExpiresIn();
+
+        /// <summary>
+        /// get/set - When the refresh token expires.
+        /// </summary>
+        [JsonPropertyName("refresh_expires_in")]
+        public int? RefreshExpiresIn => GetRefreshExpiresIn();
 
         /// <summary>
         /// get/set - The access token type.
         /// </summary>
         [JsonPropertyName("token_type")]
-        public string TokenType { get; set; }
+        public string TokenType => GetTokeyType();
 
         /// <summary>
         /// get/set - The session state ID.

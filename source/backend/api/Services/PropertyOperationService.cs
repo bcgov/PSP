@@ -32,7 +32,7 @@ namespace Pims.Api.Services
 
         public IList<PimsPropertyOperation> GetOperationsForProperty(long propertyId)
         {
-            this._logger.LogInformation("Getting operations for property with id {propertyId}", propertyId);
+           _logger.LogInformation("Getting operations for property with id {propertyId}", propertyId);
             this._user.ThrowIfNotAuthorized(Permissions.PropertyView);
 
             var propertyOperations = _repository.GetByPropertyId(propertyId);
