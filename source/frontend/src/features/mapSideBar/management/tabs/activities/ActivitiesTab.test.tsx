@@ -1,7 +1,7 @@
 
 import Claims from '@/constants/claims';
 
-import { act, cleanup, getByTestId, getMockRepositoryObj, render, RenderOptions, userEvent, waitForEffects } from '@/utils/test-utils';
+import { cleanup, getMockRepositoryObj, render, RenderOptions, waitForEffects } from '@/utils/test-utils';
 import ActivitiesTab, { IActivitiesTabProps } from './ActivitiesTab';
 import { mockManagementFileResponse } from '@/mocks/managementFiles.mock';
 import { ApiGen_CodeTypes_ManagementFileStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_ManagementFileStatusTypes';
@@ -90,9 +90,8 @@ describe('ManagementSummaryView component', () => {
         ...mockManagementFileResponse(),
         fileStatusTypeCode: toTypeCode(fileStatus),
       };
-      const mockFileStatusSolver = new ManagementStatusUpdateSolver(mockManagementFile);
 
-      const { queryByTitle, queryByTestId } = await setup({
+      const { queryByTestId } = await setup({
         props: {
           managementFile: mockManagementFile,
         },
