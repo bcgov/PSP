@@ -6,14 +6,7 @@ EXPOSE 5001 5000
 # Copy csproj and restore as distinct layers
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY scheduler scheduler/
-COPY scheduler/Directory.Build.props ./
-COPY core core/
-COPY apimodels apimodels/
-COPY entities entities/
-COPY core.api core.api/
-COPY keycloak keycloak/
-COPY scheduler/*.csproj scheduler/
+COPY . .
 
 RUN dotnet restore scheduler/Pims.Scheduler.csproj
 ENV PATH="$PATH:/root/.dotnet/tools"

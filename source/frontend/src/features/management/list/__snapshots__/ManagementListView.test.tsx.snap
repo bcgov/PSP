@@ -269,11 +269,11 @@ exports[`Management List View > matches snapshot 1`] = `
   height: 1.6rem;
 }
 
-.c16 {
+.c17 {
   margin-top: 0.3rem;
 }
 
-.c17 {
+.c18 {
   min-width: 5rem;
   max-width: 5rem;
   margin-left: 1rem;
@@ -282,11 +282,11 @@ exports[`Management List View > matches snapshot 1`] = `
   padding: 0;
 }
 
-.c17:-moz-read-only {
+.c18:-moz-read-only {
   background: white;
 }
 
-.c17:read-only {
+.c18:read-only {
   background: white;
 }
 
@@ -362,6 +362,26 @@ exports[`Management List View > matches snapshot 1`] = `
 }
 
 .c15 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: 8px;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  color: inherit;
+}
+
+.c15:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c16 {
   border-radius: 0.4rem;
 }
 
@@ -1107,9 +1127,25 @@ exports[`Management List View > matches snapshot 1`] = `
                 title=""
               >
                 <a
+                  class="c15"
                   href="/mapview/sidebar/management/1"
+                  rel="noopener noreferrer"
+                  target="_blank"
                 >
                   M-1
+                  <svg
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                    />
+                  </svg>
                 </a>
               </div>
               <div
@@ -1164,7 +1200,7 @@ exports[`Management List View > matches snapshot 1`] = `
                   class="w-100"
                 >
                   <div
-                    class="c15 mx-0 my-2 border border-secondary row"
+                    class="c16 mx-0 my-2 border border-secondary row"
                   >
                     <div
                       class="col-md-12"
@@ -1229,19 +1265,19 @@ exports[`Management List View > matches snapshot 1`] = `
                 class="d-flex"
               >
                 <span
-                  class="c16"
+                  class="c17"
                 >
                   Show
                 </span>
                 <input
-                  class="c17 form-control"
+                  class="c18 form-control"
                   data-testid="input-page-size"
                   readonly=""
                   type="number"
                   value="10"
                 />
                 <span
-                  class="c16"
+                  class="c17"
                 >
                   Entries
                 </span>

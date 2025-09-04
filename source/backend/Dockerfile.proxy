@@ -6,13 +6,7 @@ EXPOSE 5001 5000
 # Copy csproj and restore as distinct layers
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY proxy proxy/
-COPY proxy/Directory.Build.props proxy/
-COPY api api/
-COPY core core/
-COPY core.api core.api/
-COPY keycloak keycloak/
-COPY proxy/*.csproj proxy/
+COPY . .
 
 RUN dotnet restore proxy/Pims.Proxy.csproj
 ENV PATH="$PATH:/root/.dotnet/tools"
