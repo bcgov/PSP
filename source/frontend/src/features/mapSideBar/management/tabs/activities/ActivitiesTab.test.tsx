@@ -6,8 +6,6 @@ import ActivitiesTab, { IActivitiesTabProps } from './ActivitiesTab';
 import { mockManagementFileResponse } from '@/mocks/managementFiles.mock';
 import { ApiGen_CodeTypes_ManagementFileStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_ManagementFileStatusTypes';
 import { toTypeCode } from '@/utils/formUtils';
-import ManagementStatusUpdateSolver from '../fileDetails/detail/ManagementStatusUpdateSolver';
-
 
 const mockManagementFileApi = mockManagementFileResponse();
 
