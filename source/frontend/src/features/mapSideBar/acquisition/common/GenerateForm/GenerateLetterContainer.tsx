@@ -1,5 +1,7 @@
-import { useCallback, useState } from 'react';
+import { FormikProps } from 'formik/dist/types';
+import { useCallback, useMemo, useRef, useState } from 'react';
 
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { InterestHolderType } from '@/constants/interestHolderTypes';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
@@ -7,24 +9,30 @@ import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHol
 import { useModalManagement } from '@/hooks/useModalManagement';
 import { ApiGen_CodeTypes_FormTypes } from '@/models/api/generated/ApiGen_CodeTypes_FormTypes';
 import { Api_GenerateOwner } from '@/models/generate/GenerateOwner';
-import { exists } from '@/utils/utils';
+import { exists } from '@/utils';
 
-import { FormDocumentEntry } from './formDocumentEntry';
-import { IGenerateFormViewProps } from './GenerateFormView';
-import { useGenerateH0443 } from './hooks/useGenerateH0443';
-import { useGenerateLetter } from './hooks/useGenerateLetter';
+import GenerateItemView from './GenerateItemView';
+import GenerateLetterRecipientsModal from './modals/GenerateLetterRecipientsModal';
 import { LetterRecipientModel, RecipientType } from './modals/models/LetterRecipientModel';
+import { LetterRecipientsForm } from './modals/models/LetterRecipientsForm';
 
-export interface IGenerateFormContainerProps {
+export interface IGenerateLetterContainerProps {
   acquisitionFileId: number;
-  View: React.FunctionComponent<React.PropsWithChildren<IGenerateFormViewProps>>;
+  onGenerate: (recipients: Api_GenerateOwner[]) => void;
 }
 
-const GenerateFormContainer: React.FunctionComponent<
-  React.PropsWithChildren<IGenerateFormContainerProps>
-> = ({ acquisitionFileId, View }) => {
+const GenerateLetterContainer: React.FunctionComponent<
+  React.PropsWithChildren<IGenerateLetterContainerProps>
+> = ({ acquisitionFileId, onGenerate }) => {
+  const [isGenerateLetterModalOpened, openGenerateLetterModal, closeGenerateLetterModal] =
+    useModalManagement();
+
   const [fullRecipientsList, setFullRecipientsList] = useState<LetterRecipientModel[]>([]);
+
+  const formikRef = useRef<FormikProps<LetterRecipientsForm>>(null);
+
   const { getPersonConcept, getOrganizationConcept } = useApiContacts();
+
   const {
     getAcquisitionFile: { execute: getAcquisitionFile },
     getAcquisitionOwners: {
@@ -32,8 +40,7 @@ const GenerateFormContainer: React.FunctionComponent<
       loading: loadingAcquisitionFileOwners,
     },
   } = useAcquisitionProvider();
-  const [isGenerateLetterModalOpened, openGenerateLetterModal, closeGenerateLetterModal] =
-    useModalManagement();
+
   const {
     getAcquisitionInterestHolders: {
       execute: fetchInterestHolders,
@@ -98,60 +105,54 @@ const GenerateFormContainer: React.FunctionComponent<
     }
 
     setFullRecipientsList(generateRecipientsList);
-    openGenerateLetterModal();
   }, [
     acquisitionFileId,
     fetchInterestHolders,
     getAcquisitionFile,
     getOrganizationConcept,
     getPersonConcept,
-    openGenerateLetterModal,
     retrieveAcquisitionFileOwners,
   ]);
 
-  const generateLetter = useGenerateLetter();
-  const generateH0443 = useGenerateH0443();
-  const onGenerateClick = (formType: ApiGen_CodeTypes_FormTypes) => {
-    switch (formType) {
-      case ApiGen_CodeTypes_FormTypes.LETTER:
-        fetchAllRecipients();
-        break;
-      case ApiGen_CodeTypes_FormTypes.H0443:
-        generateH0443(acquisitionFileId);
-        break;
-      default:
-        console.error('Form Document type not recognized');
-    }
-  };
+  const handleGenerateClick = useCallback(() => {
+    fetchAllRecipients();
+    openGenerateLetterModal();
+  }, [fetchAllRecipients, openGenerateLetterModal]);
 
   const handleGenerateLetterCancel = (): void => {
     closeGenerateLetterModal();
   };
 
   const handleGenerateLetterOk = (recipients: Api_GenerateOwner[]): void => {
-    generateLetter(acquisitionFileId, recipients);
+    onGenerate(recipients);
     closeGenerateLetterModal();
   };
 
-  const generateDocumentEntries: FormDocumentEntry[] = [
-    { formType: ApiGen_CodeTypes_FormTypes.LETTER, text: 'Generate Letter' },
-    { formType: ApiGen_CodeTypes_FormTypes.H0443, text: 'Conditions of Entry (H0443)' },
-  ];
+  const isLoading = useMemo(
+    () => loadingAcquisitionFileOwners || loadingInterestHolders,
+    [loadingAcquisitionFileOwners, loadingInterestHolders],
+  );
 
   return (
-    <View
-      formEntries={generateDocumentEntries}
-      onGenerateClick={onGenerateClick}
-      isLoading={loadingAcquisitionFileOwners || loadingInterestHolders}
-      letterRecipientsInitialValues={fullRecipientsList}
-      openGenerateLetterModal={isGenerateLetterModalOpened}
-      onGenerateLetterCancel={handleGenerateLetterCancel}
-      onGenerateLetterOk={handleGenerateLetterOk}
-    />
+    <>
+      <LoadingBackdrop show={isLoading} />
+      <GenerateItemView
+        label="Generate Letter"
+        formType={ApiGen_CodeTypes_FormTypes.LETTER}
+        onGenerate={handleGenerateClick}
+      />
+      <GenerateLetterRecipientsModal
+        isOpened={isGenerateLetterModalOpened}
+        recipientList={fullRecipientsList}
+        onCancelClick={handleGenerateLetterCancel}
+        onGenerateLetterOk={handleGenerateLetterOk}
+        formikRef={formikRef}
+      />
+    </>
   );
 };
 
-export default GenerateFormContainer;
+export default GenerateLetterContainer;
 
 const getInterestTypeString = (codeType: string): RecipientType => {
   let interestString: RecipientType = 'HLDR';

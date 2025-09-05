@@ -4,24 +4,17 @@ import { act } from 'react-dom/test-utils';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
-import {
-  IMapStateMachineContext,
-  MapStateMachineProvider,
-} from '@/components/common/mapFSM/MapStateMachineContext';
-import { render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
+import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
+import { getMockSelectedFeatureDataset } from '@/mocks/featureset.mock';
+import { render, RenderOptions, userEvent } from '@/utils/test-utils';
 
+import { PropertyForm } from '../../shared/models';
 import { ResearchForm } from './models';
 import ResearchProperties from './ResearchProperties';
-import { PropertyForm } from '../../shared/models';
 
 const mockStore = configureMockStore([thunk]);
 
-const testForm = new ResearchForm();
-testForm.name = 'Test name';
-testForm.properties = [
-  PropertyForm.fromMapProperty({ pid: '123-456-789' }),
-  PropertyForm.fromMapProperty({ pin: '1111222' }),
-];
+let testForm: ResearchForm;
 
 const store = mockStore({});
 const setDraftProperties = vi.fn();
@@ -52,8 +45,36 @@ describe('ResearchProperties component', () => {
     };
   };
 
+  beforeEach(() => {
+    const mockFeatureSet = getMockSelectedFeatureDataset();
+    testForm = new ResearchForm();
+    testForm.name = 'Test name';
+    testForm.properties = [
+      PropertyForm.fromFeatureDataset({
+        ...mockFeatureSet,
+        pimsFeature: {
+          ...mockFeatureSet.pimsFeature,
+          properties: {
+            ...mockFeatureSet.pimsFeature?.properties,
+            PID_PADDED: '123-456-789',
+          },
+        },
+      }),
+      PropertyForm.fromFeatureDataset({
+        ...mockFeatureSet,
+        pimsFeature: {
+          ...mockFeatureSet.pimsFeature,
+          properties: {
+            ...mockFeatureSet.pimsFeature?.properties,
+            PIN: 1111222,
+          },
+        },
+      }),
+    ];
+  });
+
   afterEach(() => {
-    vi.resetAllMocks();
+    vi.clearAllMocks();
     setDraftProperties.mockReset();
   });
 

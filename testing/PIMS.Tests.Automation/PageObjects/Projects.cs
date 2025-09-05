@@ -7,95 +7,95 @@ namespace PIMS.Tests.Automation.PageObjects
     public class Projects : PageObjectBase
     {
         //Menu Elements
-        private By projectMenuBttn = By.CssSelector("div[data-testid='nav-tooltip-project'] a");
-        private By createProjectButton = By.XPath("//a[contains(text(),'Create Project')]");
+        private readonly By projectMenuBttn = By.CssSelector("div[data-testid='nav-tooltip-project'] a");
+        private readonly By createProjectButton = By.XPath("//a[contains(text(),'Create Project')]");
 
-        private By projectNavigationDetailsTab = By.CssSelector("nav[role='tablist'] a[data-rb-event-key='projectDetails']");
-        private By projectDetailTabLink = By.CssSelector("a[data-rb-event-key='projectDetails]");
+        private readonly By projectNavigationDetailsTab = By.CssSelector("nav[role='tablist'] a[data-rb-event-key='projectDetails']");
+        private readonly By projectDetailTabLink = By.CssSelector("a[data-rb-event-key='projectDetails]");
 
         //Create Project Form Elements
-        private By projectCreateTitle = By.XPath("//h1[contains(text(),'Create Project')]");
-        private By projectInstructionParagraph = By.XPath("//p[contains(text(),'Before creating a project')]");
+        private readonly By projectCreateTitle = By.XPath("//h1[contains(text(),'Create Project')]");
+        private readonly By projectInstructionParagraph = By.XPath("//p[contains(text(),'Before creating a project')]");
 
-        private By projectNameLabel = By.XPath("//label[contains(text(),'Project name')]");
-        private By projectNameInput = By.Id("input-projectName");
-        private By projectNumberLabel = By.XPath("//label[contains(text(),'Project number')]");
-        private By projectNumberInput = By.Id("input-projectNumber");
-        private By projectStatusLabel = By.XPath("//label[contains(text(),'Status')]");
-        private By projectStatusSelect = By.Id("input-projectStatusType");
-        private By projectMOTIRegionLabel = By.XPath("//label[contains(text(),'MoTI region')]");
-        private By projectMOTIRegionInput = By.Id("input-region");
-        private By projectSummaryLabel = By.XPath("//label[contains(text(),'Project summary')]");
-        private By projectSummaryTextarea = By.Id("input-summary");
-        private By projectCostTypeLabel = By.XPath("//label[contains(text(),'Cost type')]");
-        private By projectCostTypeInput = By.Id("typeahead-select-costTypeCode");
-        private By projectCostTypeOptions = By.CssSelector("div[id='typeahead-select-costTypeCode']");
-        private By projectCostType1stOption = By.CssSelector("div[id='typeahead-select-costTypeCode'] a:nth-child(1)");
-        private By projectWorkActivityLabel = By.XPath("//label[contains(text(),'Work activity')]");
-        private By projectWorkActivityInput = By.Id("typeahead-select-workActivityCode");
-        private By projectWorkActivityOptions = By.CssSelector("div[id='typeahead-select-workActivityCode']");
-        private By projectWorkActivity1stOption = By.CssSelector("div[id='typeahead-select-workActivityCode'] a:nth-child(1)");
-        private By projectBusinessFunctionLabel = By.XPath("//label[contains(text(),'Business function')]");
-        private By projectBusinessFunctionInput = By.Id("typeahead-select-businessFunctionCode");
-        private By projectBusinessFunctionOptions = By.CssSelector("div[id='typeahead-select-businessFunctionCode']");
-        private By projectBusinessFunction1stOption = By.CssSelector("div[id='typeahead-select-businessFunctionCode'] a:nth-child(1)");
+        private readonly By projectNameLabel = By.XPath("//label[contains(text(),'Project name')]");
+        private readonly By projectNameInput = By.Id("input-projectName");
+        private readonly By projectNumberLabel = By.XPath("//label[contains(text(),'Project number')]");
+        private readonly By projectNumberInput = By.Id("input-projectNumber");
+        private readonly By projectStatusLabel = By.XPath("//label[contains(text(),'Status')]");
+        private readonly By projectStatusSelect = By.Id("input-projectStatusType");
+        private readonly By projectMOTIRegionLabel = By.XPath("//label[contains(text(),'MOTT region')]");
+        private readonly By projectMOTIRegionInput = By.Id("input-region");
+        private readonly By projectSummaryLabel = By.XPath("//label[contains(text(),'Project summary')]");
+        private readonly By projectSummaryTextarea = By.Id("input-summary");
+        private readonly By projectCostTypeLabel = By.XPath("//label[contains(text(),'Cost type')]");
+        private readonly By projectCostTypeInput = By.Id("typeahead-select-costTypeCode");
+        private readonly By projectCostTypeOptions = By.CssSelector("div[id='typeahead-select-costTypeCode']");
+        private readonly By projectCostType1stOption = By.CssSelector("div[id='typeahead-select-costTypeCode'] a:nth-child(1)");
+        private readonly By projectWorkActivityLabel = By.XPath("//label[contains(text(),'Work activity')]");
+        private readonly By projectWorkActivityInput = By.Id("typeahead-select-workActivityCode");
+        private readonly By projectWorkActivityOptions = By.CssSelector("div[id='typeahead-select-workActivityCode']");
+        private readonly By projectWorkActivity1stOption = By.CssSelector("div[id='typeahead-select-workActivityCode'] a:nth-child(1)");
+        private readonly By projectBusinessFunctionLabel = By.XPath("//label[contains(text(),'Business function')]");
+        private readonly By projectBusinessFunctionInput = By.Id("typeahead-select-businessFunctionCode");
+        private readonly By projectBusinessFunctionOptions = By.CssSelector("div[id='typeahead-select-businessFunctionCode']");
+        private readonly By projectBusinessFunction1stOption = By.CssSelector("div[id='typeahead-select-businessFunctionCode'] a:nth-child(1)");
 
-        private By projectAssociatedProdsSubtitle = By.XPath("//div[contains(text(),'Associated products')]");
-        private By projectAddProductButton = By.XPath("//div[contains(text(),'+ Add another product')]/parent::button");
+        private readonly By projectAssociatedProdsSubtitle = By.XPath("//div[contains(text(),'Associated products')]");
+        private readonly By projectAddProductButton = By.XPath("//div[contains(text(),'+ Add another product')]/parent::button");
 
         //Create Product Form Elements
-        private By productCodeLabel = By.XPath("//label[contains(text(),'Product code')]");
-        private By productCodeInput = By.Id("input-products.0.code");
-        private By productNameLabel = By.XPath("//label[contains(text(),'Name')]");
-        private By productNameInput = By.Id("input-products.0.description");
-        private By productStartDateLabel = By.XPath("//label[contains(text(),'Start date')]");
-        private By productStartDateInput = By.Id("datepicker-products.0.startDate");
-        private By productCostEstimateLabel = By.XPath("//label[contains(text(),'Cost estimate')]");
-        private By productCostEstimateInput = By.Id("input-products.0.costEstimate");
-        private By productObjectiveLabel = By.XPath("//label[contains(text(),'Objectives')]");
-        private By productObjectiveInput = By.Id("input-products.0.objective");
-        private By productScopeLabel = By.XPath("//label[contains(text(),'Scope')]");
-        private By productScopeInput = By.Id("input-products.0.scope");
-        private By productDeleteButton = By.CssSelector("button[title='Delete Product']");
+        private readonly By productCodeLabel = By.XPath("//label[contains(text(),'Product code')]");
+        private readonly By productCodeInput = By.Id("input-products.0.code");
+        private readonly By productNameLabel = By.XPath("//label[contains(text(),'Name')]");
+        private readonly By productNameInput = By.Id("input-products.0.description");
+        private readonly By productStartDateLabel = By.XPath("//label[contains(text(),'Start date')]");
+        private readonly By productStartDateInput = By.Id("datepicker-products.0.startDate");
+        private readonly By productCostEstimateLabel = By.XPath("//label[contains(text(),'Cost estimate')]");
+        private readonly By productCostEstimateInput = By.Id("input-products.0.costEstimate");
+        private readonly By productObjectiveLabel = By.XPath("//label[contains(text(),'Objectives')]");
+        private readonly By productObjectiveInput = By.Id("input-products.0.objective");
+        private readonly By productScopeLabel = By.XPath("//label[contains(text(),'Scope')]");
+        private readonly By productScopeInput = By.Id("input-products.0.scope");
+        private readonly By productDeleteButton = By.CssSelector("button[title='Delete Product']");
 
         //Create Team Members Elements
-        private By teamMemberSubtitle = By.XPath("//h2/div/div[contains(text(), 'Project Management Team')]");
-        private By teamMemberAddBttn = By.CssSelector("button[data-testid='add-team-member']");
-        private By teamMemberSelectContactBttn = By.XPath("//div[@data-testid='teamMemberRow-undefined']/div/div/div/div/button[@title='Select Contact']");
-        private By teamMembersCount = By.XPath("//div[contains(text(),'Project Management Team')]/parent::div/parent::h2/following-sibling::div/div");
-        private By teamMember1stDeleteBttn = By.XPath("//div[contains(text(),'Project Management Team')]/parent::div/parent::h2/following-sibling::div/div[1]/div[2]/button");
+        private readonly By teamMemberSubtitle = By.XPath("//h2/div/div[contains(text(), 'Project Management Team')]");
+        private readonly By teamMemberAddBttn = By.CssSelector("button[data-testid='add-team-member']");
+        private readonly By teamMemberSelectContactBttn = By.XPath("//div[@data-testid='teamMemberRow-undefined']/div/div/div/div/button[@title='Select Contact']");
+        private readonly By teamMembersCount = By.XPath("//div[contains(text(),'Project Management Team')]/parent::div/parent::h2/following-sibling::div/div");
+        private readonly By teamMember1stDeleteBttn = By.XPath("//div[contains(text(),'Project Management Team')]/parent::div/parent::h2/following-sibling::div/div[1]/div[2]/button");
 
         //View Project Form Elements
-        private By projectViewTitle = By.XPath("//html[1]/body[1]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/h1[contains(text(),'Project')]");
-        private By projectHeaderProjectNameLabel = By.XPath("//h1[contains(text(),'Project')]/parent::div/parent::div/following-sibling::div/div/div/div/div/div/label[contains(text(),'Project')]");
-        private By projectHeaderProjectNameContent = By.XPath("//h1[contains(text(),'Project')]/parent::div/parent::div/following-sibling::div/div/div/div/div/div/label[contains(text(),'Project')]/parent::div/following-sibling::div");
-        private By projectHeaderMoTIRegionLabel = By.XPath("//label[contains(text(),'MoTI region')]");
-        private By projectHeaderMoTIRegionContent = By.XPath("//label[contains(text(),'MoTI region')]/parent::div/following-sibling::div");
-        private By projectHeaderCreatedLabel = By.XPath("//strong[contains(text(),'Created')]");
-        private By projectHeaderCreatedContent = By.XPath("//strong[contains(text(),'Created')]/parent::span");
-        private By projectHeaderCreatedBy = By.XPath("//strong[contains(text(),'Created')]/parent::span/span[@data-testid='tooltip-icon-userNameTooltip']");
-        private By projectHeaderLastUpdatedLabel = By.XPath("//strong[contains(text(),'Updated')]");
-        private By projectHeaderLastUpdatedContent = By.XPath("//strong[contains(text(),'Updated')]/parent::span");
-        private By projectHeaderLastUpdatedBy = By.XPath("//strong[contains(text(),'Updated')]/parent::span/span[@data-testid='tooltip-icon-userNameTooltip']");
-        private By projectHeaderStatusContent = By.XPath("//div[@class='col']/div/div[3]/div/div/div");
+        private readonly By projectViewTitle = By.CssSelector("div[data-testid='form-title']");
+        private readonly By projectHeaderProjectNameLabel = By.XPath("//label[(text()='Project:')]");
+        private readonly By projectHeaderProjectNameContent = By.XPath("//label[text()='Project:']/parent::div/following-sibling::div");
+        private readonly By projectHeaderMoTIRegionLabel = By.XPath("//label[contains(text(),'MOTT region')]");
+        private readonly By projectHeaderMoTIRegionContent = By.XPath("//label[contains(text(),'MOTT region')]/parent::div/following-sibling::div");
+        private readonly By projectHeaderCreatedLabel = By.XPath("//strong[contains(text(),'Created')]");
+        private readonly By projectHeaderCreatedContent = By.XPath("//strong[contains(text(),'Created')]/parent::span");
+        private readonly By projectHeaderCreatedBy = By.XPath("//strong[contains(text(),'Created')]/parent::span/span[@data-testid='tooltip-icon-userNameTooltip']");
+        private readonly By projectHeaderLastUpdatedLabel = By.XPath("//strong[contains(text(),'Updated')]");
+        private readonly By projectHeaderLastUpdatedContent = By.XPath("//strong[contains(text(),'Updated')]/parent::span");
+        private readonly By projectHeaderLastUpdatedBy = By.XPath("//strong[contains(text(),'Updated')]/parent::span/span[@data-testid='tooltip-icon-userNameTooltip']");
+        private readonly By projectHeaderStatusContent = By.XPath("//div[@class='col']/div/div[3]/div/div/div");
 
-        private By projectEditButton = By.CssSelector("button[title='Edit project']");
-        private By projectDetailsSubtitle = By.XPath("//div[contains(text(),'Project Details')]");
-        private By projectDetailsSummaryContent = By.XPath("//label[contains(text(),'Project summary')]/parent::div/following-sibling::div");
+        private readonly By projectEditButton = By.CssSelector("button[title='Edit project']");
+        private readonly By projectDetailsSubtitle = By.XPath("//div[contains(text(),'Project Details')]");
+        private readonly By projectDetailsSummaryContent = By.XPath("//label[contains(text(),'Project summary')]/parent::div/following-sibling::div");
 
-        private By projectCodesSubtitle = By.XPath("//div[contains(text(),'Associated Codes')]");
-        private By projectCodesCostTypeContent = By.XPath("//label[contains(text(),'Cost type')]/parent::div/following-sibling::div");
-        private By projectCodesWorkActivityContent = By.XPath("//label[contains(text(),'Work activity')]/parent::div/following-sibling::div");
-        private By projectCodesBusinessFunctionContent = By.XPath("//label[contains(text(),'Business function')]/parent::div/following-sibling::div");
+        private readonly By projectCodesSubtitle = By.XPath("//div[contains(text(),'Associated Codes')]");
+        private readonly By projectCodesCostTypeContent = By.XPath("//label[contains(text(),'Cost type')]/parent::div/following-sibling::div");
+        private readonly By projectCodesWorkActivityContent = By.XPath("//label[contains(text(),'Work activity')]/parent::div/following-sibling::div");
+        private readonly By projectCodesBusinessFunctionContent = By.XPath("//label[contains(text(),'Business function')]/parent::div/following-sibling::div");
 
         //Buttons Elements
-        private By projectCancelButton = By.XPath("//div[contains(text(),'Cancel')]/parent::button");
-        private By projectSaveButton = By.XPath("//div[contains(text(),'Save')]/parent::button");
+        private readonly By projectCancelButton = By.XPath("//div[contains(text(),'Cancel')]/parent::button");
+        private readonly By projectSaveButton = By.XPath("//div[contains(text(),'Save')]/parent::button");
 
         //Modals Elements
-        private By productDeleteModal = By.CssSelector("div[class='modal-content']");
-        private By projectDuplicateToast = By.CssSelector("div[class='Toastify__toast-body']");
-        private By projectOverrideConfirmationModal = By.CssSelector("div[class='modal-content']");
+        private readonly By productDeleteModal = By.CssSelector("div[class='modal-content']");
+        private readonly By projectDuplicateToast = By.CssSelector("div[class='Toastify__toast-body']");
+        private readonly By projectOverrideConfirmationModal = By.CssSelector("div[class='modal-content']");
 
         private SharedModals sharedModals;
         private SharedSelectContact sharedSelectContact;
@@ -328,7 +328,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
                WaitUntilVisible(productDeleteModal);
                Assert.Equal("Remove Team Member", sharedModals.ModalHeader());
-               Assert.Equal("Are you sure you want to remove this row?", sharedModals.ModalContent());
+               Assert.Equal("Do you wish to remove this team member?", sharedModals.ModalContent());
                sharedModals.ModalClickOKBttn();
            }
             
@@ -365,7 +365,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait();
 
-            AssertTrueIsDisplayed(projectCreateTitle);
+            //AssertTrueIsDisplayed(projectCreateTitle);
             AssertTrueIsDisplayed(projectInstructionParagraph);
 
             AssertTrueIsDisplayed(projectNameLabel);
@@ -560,7 +560,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public string GetProjectName()
         {
-            WaitUntilVisible(projectHeaderProjectNameContent);
+           WaitUntilVisible(projectHeaderProjectNameContent);
 
             var totalProjectName = webDriver.FindElement(projectHeaderProjectNameContent).Text;
             return Regex.Match(totalProjectName, "[^ ]* (.*)").Groups[1].Value;

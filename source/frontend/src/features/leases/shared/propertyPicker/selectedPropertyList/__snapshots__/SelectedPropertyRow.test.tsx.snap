@@ -426,8 +426,8 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
       >
         <input
           class="form-control"
-          id="input-name"
-          name="name"
+          id="input-properties.0.name"
+          name="properties.0.name"
           style="word-break: break-all;"
           value=""
         />
@@ -465,6 +465,7 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
     >
       <button
         class="c4 Button btn btn-link"
+        data-testid="zoom-to-property-0"
         type="button"
       >
         <div

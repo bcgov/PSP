@@ -24,15 +24,17 @@ class Notes {
     await this.page.getByTestId("view-note-1").click();
   }
 
-  async editNote(note) {
+  async editNoteButton() {
     await this.page.locator("button[aria-label='edit']").click();
+  }
 
+  async editNote(note) {
     await this.page.getByTestId("note-field").fill("");
     await this.page.getByTestId("note-field").fill(note);
   }
 
   async saveNote() {
-    clickSaveButton(this.page);
+    await this.page.getByTestId("ok-modal-button").click();
   }
 
   async cancelNote() {
@@ -43,61 +45,86 @@ class Notes {
         this.page.locator("div[class='modal-title h4']").last()
       ).toHaveText("Confirm Changes");
       await expect(
-        this.page.locator("div[class='modal-body'] p").last()
+        this.page.locator("div[class='modal-body'] p").first()
       ).toHaveText(
         "If you choose to cancel now, your changes will not be saved."
       );
       await expect(
         this.page.locator("div[class='modal-body'] p").last()
-      ).toHaveTextContent("Do you want to proceed?");
+      ).toHaveText("Do you want to proceed?");
 
-      await this.page.getByTestId("cancel-modal-button").last().click();
+      await this.page.getByTestId("ok-modal-button").last().click();
     }
   }
 
-  async deleteSecondNote() {
+  async deleteLastSecondNote() {
     await this.page.getByTestId("remove-note-1").click();
 
-    await expect(
-      this.page.locator("div[class='modal-title h4']")
-    ).toHaveTextContent("Delete Note");
-    await expect(
-      this.page.locator("div[class='modal-body']")
-    ).toHaveTextContent("Are you sure you want to delete this note?");
-    await expect(this.page.getByTestId("ok-modal-button")).click();
+    await expect(this.page.locator("div[class='modal-title h4']")).toHaveText(
+      "Delete Note"
+    );
+    expect(this.page.locator("div[class='modal-body']")).toHaveText(
+      "Are you sure you want to delete this note?"
+    );
+    await this.page.getByTestId("ok-modal-button").click();
   }
 
   async verifyNotesAddNew() {
-    await expect(
-      this.page.locator("div[class='modal-title h4']")
-    ).toHaveTextContent("Notes");
-    await expect(
-      this.page.locator("label[for='input-note.note']")
-    ).toHaveTextContent("Type a note:");
+    const titleText =
+      (
+        await this.page.locator("div[class='modal-title h4']").textContent()
+      )?.trim() || "";
+    expect(titleText).toEqual("Notes");
+
+    const subtitleText =
+      (
+        await this.page.locator("label[for='input-note.note']").textContent()
+      )?.trim() || "";
+    expect(subtitleText).toEqual("Type a note:");
+
     await expect(this.page.getByTestId("note-field")).toBeVisible();
     await expect(this.page.getByTestId("cancel-modal-button")).toBeVisible();
-    await expect(this.page.getByTest("ok-modal-button")).toBeVisible();
+    await expect(this.page.getByTestId("ok-modal-button")).toBeVisible();
   }
 
   async verifyNotesEditForm() {
-    expect(this.page.getByTestId("notes-created-label")).toBeVisible();
-    expect(this.page.getByTestId("notes-created-date")).toBeVisible();
-    expect(this.page.getByTestId("notes-updated-label")).toBeVisible();
-    expect(this.page.getByTestId("notes-updated-date")).toBeVisible();
-    await expect(
-      this.page
-        .locator(
-          "div[class='modal-body'] span[data-testid='tooltip-icon-userNameTooltip']"
-        )
-        .count()
-    ).toBe(2);
+    expect(
+      this.page.locator("//div[normalize-space()='Created:']")
+    ).toBeVisible();
+    expect(
+      this.page.locator(
+        "//div[normalize-space()='Created:']/following-sibling::div/span/strong"
+      )
+    ).toBeVisible();
+    expect(
+      this.page.locator("//div[normalize-space()='Last updated:']")
+    ).toBeVisible();
+    expect(
+      this.page.locator(
+        "//div[normalize-space()='Last updated:']/following-sibling::div/span/strong"
+      )
+    ).toBeVisible();
 
-    await expect(
-      this.page.locator("label[for='input-note.note']")
-    ).toHaveTextContent("Type a note:");
+    await this.page
+      .locator("div[class='modal-body']")
+      .waitFor({ state: "visible" });
+    const username = await this.page
+      .locator(
+        "div[class='modal-body'] span[data-testid='tooltip-icon-userNameTooltip']"
+      )
+      .count();
+
+    expect(username).toBe(2);
+
+    const labelText =
+      (
+        await this.page.locator("label[for='input-note']").textContent()
+      )?.trim() || "";
+    expect(labelText).toEqual("Type a note:");
+
     expect(this.page.getByTestId("note-field")).toBeVisible();
     expect(this.page.getByTestId("cancel-modal-button")).toBeVisible();
-    expect(this.page.getByTest("ok-modal-button")).toBeVisible();
+    expect(this.page.getByTestId("ok-modal-button")).toBeVisible();
   }
 
   async verifyNotesTabListView() {
@@ -105,27 +132,35 @@ class Notes {
       .getByTestId("notes-header")
       .textContent();
     expect(notesHeader).toEqual("Notes");
-    await expect(this.page.getByTestId("note-add-button")).toBeVisible();
+    expect(this.page.getByTestId("note-add-button")).toBeVisible();
 
     await expect(
-      this.page.locator(
-        "//div[@data-testid='notesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Note')]"
-      )
+      this.page
+        .locator(
+          "//div[@data-testid='notesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Note')]"
+        )
+        .first()
     ).toBeVisible();
     await expect(
-      this.page.locator(
-        "//div[@data-testid='notesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Created date')]"
-      )
+      this.page
+        .locator(
+          "//div[@data-testid='notesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Created date')]"
+        )
+        .first()
     ).toBeVisible();
     await expect(
-      this.page.locator(
-        "//div[@data-testid='notesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Last updated by')]"
-      )
+      this.page
+        .locator(
+          "//div[@data-testid='notesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Last updated by')]"
+        )
+        .first()
     ).toBeVisible();
     await expect(
-      this.page.locator(
-        "//div[@data-testid='notesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Actions')]"
-      )
+      this.page
+        .locator(
+          "//div[@data-testid='notesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Actions')]"
+        )
+        .first()
     ).toBeVisible();
 
     if (
@@ -136,23 +171,32 @@ class Notes {
         .count()) > 0
     ) {
       await expect(
-        this.page.locator(
-          "//div[@data-testid='notesTable']/div[@class='tbody']"
-        )
+        this.page
+          .locator("//div[@data-testid='notesTable']/div[@class='tbody']")
+          .first()
       ).toBeVisible();
     } else {
       await expect(
-        this.page.locator("//div[contains(text(),'No matching Notes found')]")
+        this.page
+          .locator("//div[contains(text(),'No matching Notes found')]")
+          .first()
       ).toBeVisible();
     }
   }
 
   async notesTabCount() {
-    return await this.page
+    await this.page
+      .locator(
+        "//div[@data-testid='notesTable']/div[@class='tbody']/div[@class='tr-wrapper']"
+      )
+      .first()
+      .waitFor({ state: "visible" });
+    const totalRecords = this.page
       .locator(
         "//div[@data-testid='notesTable']/div[@class='tbody']/div[@class='tr-wrapper']"
       )
       .count();
+    return totalRecords;
   }
 
   async verifyAutomaticNotes(fileType, fromStatus, toStatus) {

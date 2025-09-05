@@ -17,13 +17,13 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By researchFileEditButton = By.CssSelector("button[title='Edit research file']");
 
         //Research Create Init Elements
-        private readonly By researchFileCreateHeader = By.XPath("//h1[contains(text(),'Create Research File')]");
+        private readonly By researchFileCreateHeader = By.XPath("//div[@data-testid='form-title']");
         private readonly By researchFileNameLabel = By.XPath("//strong[contains(text(),'Name this research file')]");
         private readonly By researchFileHelpNameTooltip = By.XPath("//div[contains(text(),'Help with choosing a name')]");
 
         //Research File Tabs and File Summary Elements
-        private readonly By researchFileSummaryBttn = By.CssSelector("div[data-testid='menu-item-row-0'] div button[title='File Details']");
-        private readonly By researchFileSummaryBttnPlaceholder = By.CssSelector("div[data-testid='menu-item-row-0'] div span[title='File Details']");
+        private readonly By researchFileSummaryBttn = By.CssSelector("div[data-testid='menu-item-summary'] div button[title='File Details']");
+        private readonly By researchFileSummaryBttnPlaceholder = By.CssSelector("div[data-testid='menu-item-summary'] div span[title='File Details']");
         private readonly By researchFileDetailsTab = By.CssSelector("a[data-rb-event-key='fileDetails']");
         private readonly By researchFileDocumentsTab = By.CssSelector("a[data-rb-event-key='documents']");
         private readonly By researchFileNotesTab = By.CssSelector("a[data-rb-event-key='notes']");
@@ -54,12 +54,12 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Research File View Form Elements
         //Header
-        private readonly By researchFileViewTitle = By.XPath("//h1[contains(text(),'Research File')]");
-        private readonly By researchFileHeaderNbrLabel = By.XPath("(//label[contains(text(),'File #')])[1]");
+        private readonly By researchFileViewTitle = By.XPath("(//div[@data-testid='form-title'])[1]");
+        private readonly By researchFileHeaderNbrLabel = By.XPath("//label[normalize-space()='File #:']");
         private readonly By researchFileHeaderNbrContent = By.XPath("(//label[contains(text(),'File #')]/parent::div/following-sibling::div)[1]");
         private readonly By researchFileHeaderNameLabel = By.XPath("//label[contains(text(),'File name')]");
         private readonly By researchFileHeaderNameContent = By.XPath("//label[contains(text(),'File name')]/parent::div/following-sibling::div");
-        private readonly By researchFileHeaderMOTIRegionLabel = By.XPath("//label[contains(text(),'MOTI region')]");
+        private readonly By researchFileHeaderMOTIRegionLabel = By.XPath("//label[contains(text(),'MOTT region')]");
         private readonly By researchFileHeaderMOTIRegionContent = By.XPath("//label[contains(text(),'MOTI region')]/parent::div/following-sibling::div");
         private readonly By researchFileHeaderDistrictLabel = By.XPath("//label[contains(text(),'Ministry district')]");
         private readonly By researchFileHeaderDistrictContent = By.XPath("//label[contains(text(),'Ministry district')]/parent::div/following-sibling::div");

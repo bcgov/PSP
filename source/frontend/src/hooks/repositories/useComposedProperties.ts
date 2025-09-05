@@ -15,6 +15,7 @@ import {
   TANTALIS_CrownLandLicenses_Feature_Properties,
   TANTALIS_CrownLandTenures_Feature_Properties,
 } from '@/models/layers/crownLand';
+import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { ISS_ProvincialPublicHighway } from '@/models/layers/pimsHighwayLayer';
 import { useTenant } from '@/tenants/useTenant';
 import { exists, firstOrNull, isPlanNumberSPCP, isValidId } from '@/utils';
@@ -151,7 +152,10 @@ export const useComposedProperties = ({
     : planNumber?.toString();
 
   const propertyResponse = getPropertyWrapper?.response;
-  const parcelResponse = findParcelByWrapper?.response;
+  const parcelResponse = findParcelByWrapper?.response as
+    | FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties>
+    | undefined;
+
   useDeepCompareEffect(() => {
     if (
       !getPropertyWrapper.loading &&
@@ -334,7 +338,7 @@ export const useComposedProperties = ({
       spcpOrder: getStrataPlanCommonProperty.response,
       pimsProperty: getPropertyWrapper.response,
       propertyAssociations: getPropertyAssociationsWrapper.response,
-      parcelMapFeatureCollection: findParcelByWrapper.response,
+      parcelMapFeatureCollection: parcelResponse,
       pimsGeoserverFeatureCollection:
         getPropertyWfsWrapper.response ?? getPropertyByBoundaryWfsWrapper.response,
       bcAssessmentSummary: getSummaryWrapper.response,
@@ -359,6 +363,7 @@ export const useComposedProperties = ({
     highwayResponse,
     municipalityResponse,
     getPropertyByBoundaryWfsWrapper.response,
+    parcelResponse,
   ]);
 
   return useMemo(

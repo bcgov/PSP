@@ -1,10 +1,18 @@
-import { Col, Form as BsForm, Row } from 'react-bootstrap';
+import { Col, Form, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { SelectProperty } from '@/components/common/mapping/SelectProperty';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { featuresetToMapProperty, pidFormatter } from '@/utils';
+import { DistrictCodes, RegionCodes } from '@/constants';
+import {
+  addressFromFeatureSet,
+  isNumber,
+  pidFormatter,
+  pidFromFeatureSet,
+  pinFromFeatureSet,
+  planFromFeatureSet,
+} from '@/utils';
 
 export interface IPropertyMapSelectorSubFormProps {
   onClickDraftMarker: () => void;
@@ -14,16 +22,24 @@ export interface IPropertyMapSelectorSubFormProps {
 export const PropertyMapSelectorSubForm: React.FunctionComponent<
   React.PropsWithChildren<IPropertyMapSelectorSubFormProps>
 > = ({ onClickDraftMarker, selectedProperty }) => {
-  const selectedMapProperty = featuresetToMapProperty(selectedProperty);
-  const pid = selectedMapProperty?.pid;
-  const pin = selectedMapProperty?.pin;
-  const planNumber = selectedMapProperty?.planNumber;
-  const legalDescription = selectedMapProperty?.legalDescription;
-  const address = selectedMapProperty?.address;
-  const region = selectedMapProperty?.region;
-  const regionName = selectedMapProperty?.regionName;
-  const district = selectedMapProperty?.district;
-  const districtName = selectedMapProperty?.districtName;
+  const pid = pidFromFeatureSet(selectedProperty);
+  const pin = pinFromFeatureSet(selectedProperty);
+  const planNumber = planFromFeatureSet(selectedProperty);
+  const legalDescription =
+    selectedProperty?.pimsFeature?.properties?.LAND_LEGAL_DESCRIPTION ??
+    selectedProperty?.parcelFeature?.properties?.LEGAL_DESCRIPTION ??
+    '';
+  const address = addressFromFeatureSet(selectedProperty);
+  const region = isNumber(selectedProperty?.regionFeature?.properties?.REGION_NUMBER)
+    ? selectedProperty?.regionFeature?.properties?.REGION_NUMBER
+    : RegionCodes.Unknown;
+  const regionName = selectedProperty?.regionFeature?.properties?.REGION_NAME ?? 'Cannot determine';
+  const district = isNumber(selectedProperty?.districtFeature?.properties?.DISTRICT_NUMBER)
+    ? selectedProperty?.districtFeature?.properties?.DISTRICT_NUMBER
+    : DistrictCodes.Unknown;
+  const districtName =
+    selectedProperty?.districtFeature?.properties?.DISTRICT_NAME ?? 'Cannot determine';
+
   return (
     <StyledFormRow>
       <Col md={4}>
@@ -45,7 +61,7 @@ export const PropertyMapSelectorSubForm: React.FunctionComponent<
         </SectionField>
         <Row>
           <Col md={12}>
-            <BsForm.Label>Legal Description:</BsForm.Label>
+            <Form.Label>Legal Description:</Form.Label>
           </Col>
           <Col md={12}>{legalDescription}</Col>
         </Row>
