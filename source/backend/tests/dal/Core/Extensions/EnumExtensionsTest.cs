@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.Serialization;
 using FluentAssertions;
 using Pims.Core.Extensions;
 using Xunit;
@@ -52,6 +53,33 @@ namespace Pims.Api.Test.Core.Extensions
             result.Should().Be(expectedResult);
         }
         #endregion
+
+        [Fact]
+        public void Enum_GetValueFromEnumMember_Success()
+        {
+            // Arrange
+            var value = "A";
+
+            // Act
+            var result = EnumExtensions.GetValueFromEnumMember<TestEnum2>(value);
+
+            // Assert
+            result.Should().Be(TestEnum2.Alpha);
+        }
+
+        [Fact]
+        public void Enum_GetValueFromEnumMember_Failure()
+        {
+            // Arrange
+            var value = "Z";
+
+            // Act
+            var result = EnumExtensions.GetValueFromEnumMember<TestEnum2>(value);
+
+            // Assert
+            result.Should().Be(default);
+        }
+
         #endregion
 
         public enum TestEnum
@@ -59,6 +87,15 @@ namespace Pims.Api.Test.Core.Extensions
             Utf8,
             Binary,
             Hex,
+        }
+
+        public enum TestEnum2
+        {
+            [EnumMember(Value = "A")]
+            Alpha,
+
+            [EnumMember(Value = "O")]
+            Omega
         }
     }
 }
