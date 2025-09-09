@@ -1,6 +1,8 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Reflection;
+using System.Runtime.Serialization;
 using Pims.Core.Security;
 
 namespace Pims.Core.Extensions
@@ -62,6 +64,28 @@ namespace Pims.Core.Extensions
             var attribute = (DisplayAttribute)enumValueMemberInfo.GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault();
             return attribute.Name;
         }
+
+        public static T GetValueFromEnumMember<T>(string value)
+            where T : Enum
+        {
+            var enumType = typeof(T);
+            if (!enumType.GetTypeInfo().IsEnum)
+            {
+                throw new InvalidOperationException("Not an Enum");
+            }
+
+            foreach (var name in Enum.GetNames(enumType))
+            {
+                var attr = enumType.GetRuntimeField(name).GetCustomAttribute<EnumMemberAttribute>(true);
+                if (attr != null && attr.Value == value)
+                {
+                    return (T)Enum.Parse(enumType, name);
+                }
+            }
+
+            return default(T);
+        }
+
         #endregion
     }
 }
