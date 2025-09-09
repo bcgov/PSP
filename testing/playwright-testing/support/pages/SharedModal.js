@@ -84,9 +84,7 @@ class SharedModal {
 
   async cancelActionModal() {
     if (await this.isModalContainerVisible()) {
-      await expect(this.mainModalContent()).resolves.toBe(
-        "Confirm Changes"
-      );
+      await expect(this.mainModalContent()).resolves.toBe("Confirm Changes");
       await expect(this.mainModalContent()).resolves.toBe(
         "If you choose to cancel now, your changes will not be saved."
       );

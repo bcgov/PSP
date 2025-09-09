@@ -1,8 +1,5 @@
 const { expect } = require("@playwright/test");
-const {
-  clickAndWaitFor,
-  fillTypeahead,
-} = require("../../support/common.js");
+const { clickAndWaitFor, fillTypeahead } = require("../../support/common.js");
 
 class ManagementFileDetails {
   constructor(page) {
