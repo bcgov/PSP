@@ -39,10 +39,14 @@ vi.mock('react-visibility-sensor', () => {
   };
 });
 
-let viewProps: React.PropsWithChildren<IGenerateFormViewProps>= {} as any;
+let viewProps: React.PropsWithChildren<IGenerateFormViewProps> = {} as any;
 const GenerateFormViewStub = (props: IGenerateFormViewProps) => {
   viewProps = props;
-  return <>Generate Form View Rendered<div >{viewProps.children}</div></>;
+  return (
+    <>
+      Generate Form View Rendered<div>{viewProps.children}</div>
+    </>
+  );
 };
 const DEFAULT_PROPS: IGenerateFormContainerProps = {
   acquisitionFileId: 1,
