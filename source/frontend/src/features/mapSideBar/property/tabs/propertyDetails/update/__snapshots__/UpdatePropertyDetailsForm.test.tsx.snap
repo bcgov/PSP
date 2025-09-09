@@ -1840,7 +1840,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                       class="chip  false false"
                       style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em; white-space: normal;"
                     >
-                      Highway/Road established by
+                      Highway/Road
                       <i
                         class="custom-close"
                       >
@@ -1864,7 +1864,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                       class="chip  false false"
                       style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em; white-space: normal;"
                     >
-                      Adjacent Land type
+                      Statutory Right of Way (SRW) - BCTFA
                       <i
                         class="custom-close"
                       >
@@ -1928,11 +1928,6 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                       <li
                         class="option    "
                       >
-                        Highway/Road
-                      </li>
-                      <li
-                        class="option    "
-                      >
                         Indian Reserve (IR)
                       </li>
                       <li
@@ -1959,11 +1954,6 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                         class="option    "
                       >
                         Special Use Permit (SUP)
-                      </li>
-                      <li
-                        class="option    "
-                      >
-                        Statutory Right of Way (SRW) - BCTFA
                       </li>
                       <li
                         class="option    "

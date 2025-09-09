@@ -15,9 +15,9 @@ import { UserNameTooltip } from '@/components/common/UserNameTooltip';
 import AreaContainer from '@/components/measurements/AreaContainer';
 import VolumeContainer from '@/components/measurements/VolumeContainer';
 import * as API from '@/constants/API';
-import { PropertyTenureTypes } from '@/constants/index';
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
+import { ApiGen_CodeTypes_PropertyTenureTypes } from '@/models/api/generated/ApiGen_CodeTypes_PropertyTenureTypes';
 import { useTenant } from '@/tenants/useTenant';
 import { prettyFormatUTCDate } from '@/utils';
 import { stringToBoolean } from '@/utils/formUtils';
@@ -66,10 +66,12 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
   const tenureStatus = getIn(values, 'tenures') as PropertyTenureFormModel[];
 
   // show/hide conditionals
-  const isHighwayRoad = tenureStatus?.some(obj => obj.typeCode === PropertyTenureTypes.HighwayRoad);
+  const isHighwayRoad = tenureStatus?.some(
+    obj => obj?.typeCode === ApiGen_CodeTypes_PropertyTenureTypes.HWYROAD,
+  );
 
   const isIndianReserve = tenureStatus?.some(
-    obj => obj.typeCode === PropertyTenureTypes.IndianReserve,
+    obj => obj?.typeCode === ApiGen_CodeTypes_PropertyTenureTypes.IRESERVE,
   );
   const isVolumetricParcel = stringToBoolean(getIn(values, 'isVolumetricParcel'));
   // area measurements table inputs
@@ -265,29 +267,31 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
             options={tenureOptions}
           />
         </SectionField>
-        <SectionField label="Provincial public hwy">
-          <Select field="pphStatusTypeCode" options={pphTypeOptions} />
-          {values?.pphStatusUpdateTimestamp && (
-            <p className="text-right font-italic">
-              PPH status last updated by{' '}
-              <UserNameTooltip
-                userName={values?.pphStatusUpdateUserid}
-                userGuid={values?.pphStatusUpdateUserGuid}
-              />{' '}
-              on {prettyFormatUTCDate(values?.pphStatusUpdateTimestamp)}
-            </p>
-          )}
-        </SectionField>
         {isHighwayRoad && (
-          <SectionField label="Highway / Road Details">
-            <Multiselect
-              field="roadTypes"
-              displayValue="typeDescription"
-              placeholder=""
-              hidePlaceholder
-              options={roadTypeOptions}
-            />
-          </SectionField>
+          <>
+            <SectionField label="Provincial public hwy">
+              <Select field="pphStatusTypeCode" options={pphTypeOptions} />
+              {values?.pphStatusUpdateTimestamp && (
+                <p className="text-right font-italic">
+                  PPH status last updated by{' '}
+                  <UserNameTooltip
+                    userName={values?.pphStatusUpdateUserid}
+                    userGuid={values?.pphStatusUpdateUserGuid}
+                  />{' '}
+                  on {prettyFormatUTCDate(values?.pphStatusUpdateTimestamp)}
+                </p>
+              )}
+            </SectionField>
+            <SectionField label="Highway / Road Details">
+              <Multiselect
+                field="roadTypes"
+                displayValue="typeDescription"
+                placeholder=""
+                hidePlaceholder
+                options={roadTypeOptions}
+              />
+            </SectionField>
+          </>
         )}
       </Section>
 
