@@ -111,7 +111,7 @@ namespace Pims.Ltsa
             }
             catch (JsonException ex)
             {
-               _logger.LogError("Failed to process LTSA json: {ex}", ex);
+               _logger.LogError(ex, "Failed to process LTSA json: {Msg}", ex.Message);
                 throw new LtsaException(ex.Message, HttpStatusCode.InternalServerError);
             }
         }
@@ -178,7 +178,7 @@ namespace Pims.Ltsa
             }
             catch (JsonException ex)
             {
-               _logger.LogError("Failed to process LTSA json: {ex}", ex);
+               _logger.LogError(ex, "Failed to process LTSA json: {Msg}", ex.Message);
                 throw new LtsaException(ex.Message, HttpStatusCode.InternalServerError);
             }
         }
@@ -314,7 +314,7 @@ namespace Pims.Ltsa
             }
             catch (JsonException ex)
             {
-                _logger.LogError($"Failed to process LTSA json: {ex}", ex);
+                _logger.LogError(ex, "Failed to process LTSA json: {Msg}", ex.Message);
                 throw new LtsaException(ex.Message, HttpStatusCode.InternalServerError);
             }
         }
