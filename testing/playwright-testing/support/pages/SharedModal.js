@@ -84,7 +84,7 @@ class SharedModal {
 
   async cancelActionModal() {
     if (await this.isModalContainerVisible()) {
-      await expect(this.mainModalHeaderContent()).resolves.toBe(
+      await expect(this.mainModalContent()).resolves.toBe(
         "Confirm Changes"
       );
       await expect(this.mainModalContent()).resolves.toBe(
@@ -93,7 +93,7 @@ class SharedModal {
       await expect(this.mainModalContent()).resolves.toContain(
         "Do you want to proceed?"
       );
-      await this.modalClickOKBttn();
+      await this.mainModalClickOKBttn();
     }
   }
 }

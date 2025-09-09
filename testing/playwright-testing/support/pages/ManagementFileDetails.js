@@ -1,9 +1,5 @@
-const SharedFileProperties = require("./SharedFileProperties");
-const SharedTeamMembers = require("./SharedTeamMembers");
-const SharedModal = require("./SharedModal");
 const { expect } = require("@playwright/test");
 const {
-  clickSaveButton,
   clickAndWaitFor,
   fillTypeahead,
 } = require("../../support/common.js");
@@ -11,9 +7,6 @@ const {
 class ManagementFileDetails {
   constructor(page) {
     this.page = page;
-    this.sharedFileProperties = new SharedFileProperties(page);
-    this.sharedTeamMembers = new SharedTeamMembers(page);
-    this.sharedModal = new SharedModal(page);
   }
   async navigateManagementMainMenu() {
     clickAndWaitFor(
