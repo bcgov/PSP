@@ -74,7 +74,7 @@ describe('MapSelectorContainer component', () => {
 
   beforeEach(() => {
     mockAxios
-      .onGet(new RegExp('WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW'))
+      .onGet(new RegExp('typeNames=WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_FA_SVW'))
       .reply(200, mockFAParcelLayerResponse)
       .onGet(new RegExp('tools/geocoder/nearest*'))
       .reply(200, mockGeocoderOptions[0]);

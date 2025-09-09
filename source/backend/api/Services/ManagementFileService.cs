@@ -107,7 +107,7 @@ namespace Pims.Api.Services
             ValidateName(managementFile);
 
             ManagementFileStatusTypes? currentManagementStatus = GetCurrentManagementStatus(managementFile.Internal_Id);
-            ManagementFileStatusTypes newManagementStatus = (ManagementFileStatusTypes)Enum.Parse(typeof(ManagementFileStatusTypes), managementFile.ManagementFileStatusTypeCode);
+            ManagementFileStatusTypes newManagementStatus = Core.Extensions.EnumExtensions.GetValueFromEnumMember<ManagementFileStatusTypes>(managementFile.ManagementFileStatusTypeCode);
             ValidateStatus(currentManagementStatus, newManagementStatus);
 
             ValidateVersion(id, managementFile.ConcurrencyControlNumber);
@@ -520,7 +520,7 @@ namespace Pims.Api.Services
                 return currentManagementFileStatus;
             }
 
-            return currentManagementFileStatus;
+            return Core.Extensions.EnumExtensions.GetValueFromEnumMember<ManagementFileStatusTypes>(currentManagementFile.ManagementFileStatusTypeCode);
         }
 
     }
