@@ -11,6 +11,7 @@ using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
 using System.Threading;
 using System.Threading.Tasks;
+using DocumentFormat.OpenXml.Drawing;
 using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -110,7 +111,7 @@ namespace Pims.Ltsa
             }
             catch (JsonException ex)
             {
-               _logger.LogError("Failed to process LTSA json: ", ex);
+               _logger.LogError("Failed to process LTSA json: {ex}", ex);
                 throw new LtsaException(ex.Message, HttpStatusCode.InternalServerError);
             }
         }
@@ -177,7 +178,7 @@ namespace Pims.Ltsa
             }
             catch (JsonException ex)
             {
-               _logger.LogError("Failed to process LTSA json: ", ex);
+               _logger.LogError("Failed to process LTSA json: {ex}", ex);
                 throw new LtsaException(ex.Message, HttpStatusCode.InternalServerError);
             }
         }
@@ -220,44 +221,33 @@ namespace Pims.Ltsa
             {
                 try
                 {
-                    //token.InvalidateToken(); // remove any existing token details so that the authpolicy will fetch a new token if this auth request fails.
-
-                    var request = new HttpRequestMessage(HttpMethod.Post, Options.TokenEndpoint)
-                    {
-                        Content = new FormUrlEncodedContent(new Dictionary<string, string>
+                    var parameters = new Dictionary<string, string>
                         {
-                            ["grant_type"] = "refresh_token",
-                            ["client_id"] = Options.ClientId,
-                            ["client_secret"] = Options.ClientSecret,
-                            ["refresh_token"] = token.RefreshToken
-                        })
+                        ["grant_type"] = "refresh_token",
+                        ["client_id"] = Options.ClientId,
+                        ["client_secret"] = Options.ClientSecret,
+                        ["refresh_token"] = token.RefreshToken,
                     };
 
+                    using var request = new HttpRequestMessage(HttpMethod.Post, Options.TokenEndpoint);
+                    request.Headers.Add("Accept", "application/json");
+                    request.Content = new FormUrlEncodedContent(parameters);
+                    var tokenResponse = await client.SendAsync(request, cancellationToken);
+                    tokenResponse.EnsureSuccessStatusCode();
 
-                    //var stringContent = JsonSerializer.Serialize(refreshToken, _jsonSerializerOptions);
-                    //var content = new StringContent(stringContent.ToString(), Encoding.UTF8, "application/json");
-                    //var response = await _authPolicy.ExecuteAsync(async () => await client.PostAsync(Options.AuthUrl.AppendToURL(Options.RefreshEndpoint), content));
-                    //var tokens = JsonSerializer.Deserialize<AuthResponseTokens>(await response.Content.ReadAsStringAsync(), _jsonSerializerOptions);
+                    var tokenStr = await tokenResponse.Content.ReadAsStringAsync(cancellationToken);
+                    AuthResponseTokens newToken = JsonSerializer.Deserialize<AuthResponseTokens>(tokenStr, LtsaSerializerOptions);
 
-                    var response = await client.SendAsync(request, cancellationToken);
-
-                    if (!response.IsSuccessStatusCode)
-                    {
-                        token.InvalidateToken(); // fallback to password flow next time
-                        throw new InvalidOperationException("Failed to refresh token");
-                    }
-
-                    var payload = await response.Content.ReadFromJsonAsync<OAuthTokenResponse>(cancellationToken: cancellationToken);
-                    token.RenewToken(payload.AccessToken, payload.RefreshToken);
+                    token.RenewToken(newToken.AccessToken, newToken.RefreshToken);
                 }
                 catch (HttpClientRequestException ex)
                 {
-                    _logger.LogError(ex, $"Failed to send/receive auth refresh request: ${Options.AuthUrl}");
+                    _logger.LogError(ex, "Failed to send/receive auth refresh request: {AuthUrl}", Options.AuthUrl);
                     throw new LtsaException(ex.Message, ex, ex.StatusCode.Value);
                 }
                 catch (JsonException ex)
                 {
-                    _logger.LogError(ex, $"Failed to parse refresh token JSON response");
+                    _logger.LogError(ex, "Failed to parse refresh token JSON response");
                     throw new LtsaException(ex.Message, HttpStatusCode.InternalServerError);
                 }
                 catch (InvalidOperationException)
@@ -324,7 +314,7 @@ namespace Pims.Ltsa
             }
             catch (JsonException ex)
             {
-                _logger.LogError($"Failed to process LTSA json:", ex);
+                _logger.LogError($"Failed to process LTSA json: {ex}", ex);
                 throw new LtsaException(ex.Message, HttpStatusCode.InternalServerError);
             }
         }
@@ -336,7 +326,7 @@ namespace Pims.Ltsa
         /// <returns></returns>
         public async Task<TitleSummariesResponse> GetTitleSummariesAsync(int pid)
         {
-            var url = Options.HostUri.AppendToURL(new string[] { Options.TitleSummariesEndpoint, $"?filter=parcelIdentifier:{pid}" });
+            var url = Options.HostUri.AppendToURL(Options.TitleSummariesEndpoint, $"?filter=parcelIdentifier:{pid}");
             return await GetAsync<TitleSummariesResponse>(url);
         }
 

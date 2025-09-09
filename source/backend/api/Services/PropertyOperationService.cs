@@ -32,11 +32,10 @@ namespace Pims.Api.Services
 
         public IList<PimsPropertyOperation> GetOperationsForProperty(long propertyId)
         {
-           _logger.LogInformation("Getting operations for property with id {propertyId}", propertyId);
-            this._user.ThrowIfNotAuthorized(Permissions.PropertyView);
+           _logger.LogInformation("Getting operations for property with id {PropertyId}", propertyId);
+           _user.ThrowIfNotAuthorized(Permissions.PropertyView);
 
-            var propertyOperations = _repository.GetByPropertyId(propertyId);
-            return propertyOperations;
+           return _repository.GetByPropertyId(propertyId);
         }
 
         public IEnumerable<PimsPropertyOperation> SubdivideProperty(IEnumerable<PimsPropertyOperation> operations)
