@@ -57,10 +57,6 @@ export const MarkerLayer: React.FC<React.PropsWithChildren<InventoryLayerProps>>
     [mapMachine.mapMarkedLocation],
   );
 
-  if (zoom < minZoom) {
-    return null;
-  }
-
   return (
     <>
       <PointClusterer
