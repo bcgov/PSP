@@ -4,8 +4,8 @@ function getUserCredential(envKey) {
   return process.env[envKey];
 }
 
-function clickSaveButton(page) {
-  page.getByTestId("save-button").click();
+function clickSaveButton(page, waitElement) {
+  clickAndWaitFor(page, "button[data-testid='save-button']", waitElement);
 }
 
 async function cancelAction(page) {
@@ -93,16 +93,17 @@ async function clickAndWaitFor(
 
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
-      await page.click(clickSelector, { force: true });
+      await page.click(clickSelector, { force: false });
 
       // Wait for the target element to appear
       await page.waitForSelector(waitSelector, { timeout });
-      return; // Success — exit function
+      console.log("Success -" + clickSelector);
+      return;
     } catch (err) {
       lastError = err;
 
       if (attempt < maxRetries) {
-        console.warn(
+        console.log(
           `Attempt ${attempt} failed. Retrying click on "${clickSelector}"...`
         );
         await page.waitForTimeout(clickDelay);
@@ -121,7 +122,7 @@ async function fillTypeahead(page, selector, text, optionSelector) {
   // Clear and type slowly to mimic human typing
   await input.fill("");
   for (const char of text) {
-    await input.type(char, { delay: 50 });
+    await input.type(char, { delay: 10 });
   }
 
   // Wait for dropdown to appear

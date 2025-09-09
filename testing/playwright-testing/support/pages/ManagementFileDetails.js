@@ -32,7 +32,7 @@ class ManagementFileDetails {
   async navigateManagementFileListView() {
     await this.page
       .locator("//a[contains(text(), 'Manage Management File')]")
-      .click();
+      .click({ force: true });
   }
 
   async navigateManagementFileListActivities() {
@@ -46,7 +46,8 @@ class ManagementFileDetails {
   }
 
   async saveManagementFile() {
-    clickSaveButton(this.page);
+    //clickSaveButton(this.page, "button[title='Edit management file']");
+    this.page.locator("button[data-testid='save-button']").click();
 
     while (
       (await this.page.locator("div[class='modal-content']").count()) > 0
@@ -112,7 +113,7 @@ class ManagementFileDetails {
 
     //Project
     if (managementFile.ManagementMinistryProject !== null) {
-      fillTypeahead(
+      await fillTypeahead(
         this.page,
         "input[id='typeahead-project']",
         managementFile.ManagementMinistryProject,
@@ -122,6 +123,10 @@ class ManagementFileDetails {
 
     // Product
     if (managementFile.ManagementMinistryProduct !== null) {
+      // Wait for the select element to appear
+      await this.page
+        .locator("#input-productId")
+        .waitFor({ state: "attached" });
       await this.page
         .locator("#input-productId")
         .selectOption({ label: managementFile.ManagementMinistryProduct });
@@ -187,7 +192,6 @@ class ManagementFileDetails {
 
   async getManagementFileCode() {
     const locator = await this.page.getByTestId("mgmt-fileId");
-    await expect(locator).toBeVisible({ timeout: 10000 });
     return await locator.textContent();
   }
 

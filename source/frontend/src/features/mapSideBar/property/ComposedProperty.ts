@@ -12,6 +12,7 @@ import {
   TANTALIS_CrownLandTenures_Feature_Properties,
 } from '@/models/layers/crownLand';
 import { WHSE_Municipalities_Feature_Properties } from '@/models/layers/municipalities';
+import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { ISS_ProvincialPublicHighway } from '@/models/layers/pimsHighwayLayer';
 
 export interface ComposedProperty {
@@ -23,7 +24,9 @@ export interface ComposedProperty {
   spcpOrder: SpcpOrder | undefined;
   pimsProperty: ApiGen_Concepts_Property | undefined;
   propertyAssociations: ApiGen_Concepts_PropertyAssociations | undefined;
-  parcelMapFeatureCollection: FeatureCollection<Geometry, GeoJsonProperties> | undefined; // TODO: These need to be strongly typed
+  parcelMapFeatureCollection:
+    | FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties>
+    | undefined;
   pimsGeoserverFeatureCollection: FeatureCollection<Geometry, GeoJsonProperties> | undefined; // TODO: These need to be strongly typed
   bcAssessmentSummary: IBcAssessmentSummary | undefined;
   crownTenureFeatures: Feature<Geometry, TANTALIS_CrownLandTenures_Feature_Properties>[];

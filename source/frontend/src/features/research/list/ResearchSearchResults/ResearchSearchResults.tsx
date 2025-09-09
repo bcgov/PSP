@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
-import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 
+import { ExternalLink } from '@/components/common/ExternalLink';
 import { ColumnWithProps, renderTypeCode, Table } from '@/components/Table';
 import { UtcDateCell } from '@/components/Table/DateCell';
 import { TableSort } from '@/components/Table/TableSort';
@@ -25,9 +25,9 @@ const columns: ColumnWithProps<ResearchSearchResultModel>[] = [
       const { hasClaim } = useKeycloakWrapper();
       if (hasClaim(Claims.RESEARCH_VIEW)) {
         return (
-          <Link to={`/mapview/sidebar/research/${props.row.original.id}`}>
+          <ExternalLink to={`/mapview/sidebar/research/${props.row.original.id}`}>
             {props.row.original.rfileNumber}
-          </Link>
+          </ExternalLink>
         );
       }
       return stringToFragment(props.row.original.rfileNumber);

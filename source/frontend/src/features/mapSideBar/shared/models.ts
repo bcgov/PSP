@@ -3,7 +3,6 @@ import { LatLngLiteral } from 'leaflet';
 import { isNumber } from 'lodash';
 
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
-import { IMapProperty } from '@/components/propertySelector/models';
 import { AreaUnitTypes, DistrictCodes, RegionCodes } from '@/constants';
 import { ApiGen_CodeTypes_GeoJsonTypes } from '@/models/api/generated/ApiGen_CodeTypes_GeoJsonTypes';
 import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
@@ -100,28 +99,6 @@ export class PropertyForm {
     Object.assign(this, baseModel);
   }
 
-  public static fromMapProperty(model: IMapProperty): PropertyForm {
-    return new PropertyForm({
-      apiId: model.propertyId,
-      pid: model.pid,
-      pin: isValidId(Number(model.pin)) ? model.pin : undefined,
-      latitude: model.latitude,
-      longitude: model.longitude,
-      fileLocation: model.fileLocation,
-      polygon: model.polygon,
-      planNumber: model.planNumber,
-      region: model.region,
-      regionName: model.regionName,
-      district: model.district,
-      districtName: model.districtName,
-      legalDescription: model.legalDescription,
-      formattedAddress: model.address,
-      landArea: model.landArea,
-      areaUnit: model.areaUnit,
-      isActive: model.isActive !== false ? 'true' : 'false',
-    });
-  }
-
   public static fromFeatureDataset(model: SelectedFeatureDataset): PropertyForm {
     // TODO: Make it work with multiple properties
     const pimsFeature = model?.pimsFeature;
@@ -166,25 +143,6 @@ export class PropertyForm {
       isActive: model.isActive !== false ? 'true' : 'false',
       displayOrder: model.displayOrder,
     });
-  }
-
-  public toMapProperty(): IMapProperty {
-    return {
-      pid: this.pid,
-      pin: isValidId(Number(this.pin)) ? this.pin : null,
-      latitude: this.latitude,
-      longitude: this.longitude,
-      fileLocation: this.fileLocation,
-      planNumber: this.planNumber,
-      polygon: this.polygon,
-      region: this.region,
-      regionName: this.regionName,
-      district: this.district,
-      districtName: this.districtName,
-      legalDescription: this.legalDescription,
-      address: this.address ? formatApiAddress(this.address.toApi()) : this.formattedAddress,
-      isActive: this.isActive !== 'false',
-    };
   }
 
   public toFeatureDataset(): SelectedFeatureDataset {

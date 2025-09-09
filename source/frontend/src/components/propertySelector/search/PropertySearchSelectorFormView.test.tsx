@@ -2,10 +2,8 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import { mockPropertyLayerSearchResponse } from '@/mocks/filterData.mock';
-import { mapFeatureToProperty } from '@/utils/mapPropertyUtils';
 import { act, fillInput, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
-import { IMapProperty } from '../models';
 import { defaultLayerFilter } from './LayerFilter';
 import {
   IPropertySearchSelectorFormViewProps,

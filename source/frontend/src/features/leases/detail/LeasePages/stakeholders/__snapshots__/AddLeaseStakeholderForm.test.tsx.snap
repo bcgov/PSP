@@ -6,7 +6,7 @@ exports[`AddLeaseTenantForm component > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c4.btn {
+  .c3.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,17 +35,17 @@ exports[`AddLeaseTenantForm component > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c4.btn .Button__value {
+.c3.btn .Button__value {
   width: auto;
 }
 
-.c4.btn:hover {
+.c3.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c4.btn:focus {
+.c3.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -53,31 +53,31 @@ exports[`AddLeaseTenantForm component > renders as expected 1`] = `
   box-shadow: none;
 }
 
-.c4.btn.btn-primary {
+.c3.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c4.btn.btn-primary:hover,
-.c4.btn.btn-primary:active,
-.c4.btn.btn-primary:focus {
+.c3.btn.btn-primary:hover,
+.c3.btn.btn-primary:active,
+.c3.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c4.btn.btn-secondary {
+.c3.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c4.btn.btn-secondary:hover,
-.c4.btn.btn-secondary:active,
-.c4.btn.btn-secondary:focus {
+.c3.btn.btn-secondary:hover,
+.c3.btn.btn-secondary:active,
+.c3.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c4.btn.btn-info {
+.c3.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -85,66 +85,66 @@ exports[`AddLeaseTenantForm component > renders as expected 1`] = `
   padding-right: 0.6rem;
 }
 
-.c4.btn.btn-info:hover,
-.c4.btn.btn-info:active,
-.c4.btn.btn-info:focus {
+.c3.btn.btn-info:hover,
+.c3.btn.btn-info:active,
+.c3.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c4.btn.btn-light {
+.c3.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c4.btn.btn-light:hover,
-.c4.btn.btn-light:active,
-.c4.btn.btn-light:focus {
+.c3.btn.btn-light:hover,
+.c3.btn.btn-light:active,
+.c3.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c4.btn.btn-dark {
+.c3.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c4.btn.btn-dark:hover,
-.c4.btn.btn-dark:active,
-.c4.btn.btn-dark:focus {
+.c3.btn.btn-dark:hover,
+.c3.btn.btn-dark:active,
+.c3.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c4.btn.btn-danger {
+.c3.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c4.btn.btn-danger:hover,
-.c4.btn.btn-danger:active,
-.c4.btn.btn-danger:focus {
+.c3.btn.btn-danger:hover,
+.c3.btn.btn-danger:active,
+.c3.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c4.btn.btn-warning {
+.c3.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c4.btn.btn-warning:hover,
-.c4.btn.btn-warning:active,
-.c4.btn.btn-warning:focus {
+.c3.btn.btn-warning:hover,
+.c3.btn.btn-warning:active,
+.c3.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c4.btn.btn-link {
+.c3.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -168,9 +168,9 @@ exports[`AddLeaseTenantForm component > renders as expected 1`] = `
   text-decoration: underline;
 }
 
-.c4.btn.btn-link:hover,
-.c4.btn.btn-link:active,
-.c4.btn.btn-link:focus {
+.c3.btn.btn-link:hover,
+.c3.btn.btn-link:active,
+.c3.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -180,15 +180,15 @@ exports[`AddLeaseTenantForm component > renders as expected 1`] = `
   outline: none;
 }
 
-.c4.btn.btn-link:disabled,
-.c4.btn.btn-link.disabled {
+.c3.btn.btn-link:disabled,
+.c3.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c4.btn:disabled,
-.c4.btn:disabled:hover {
+.c3.btn:disabled,
+.c3.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -200,49 +200,49 @@ exports[`AddLeaseTenantForm component > renders as expected 1`] = `
   cursor: not-allowed;
 }
 
-.c4.Button .Button__icon {
+.c3.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c4.Button--icon-only:focus {
+.c3.Button--icon-only:focus {
   outline: none;
 }
 
-.c4.Button--icon-only .Button__icon {
+.c3.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c8 {
+.c7 {
   margin-top: 3rem;
   font-size: 1.4rem;
 }
 
-.c8 .table .tr .td:first-of-type,
-.c8 .table .tr .td:nth-of-type(2),
-.c8 .table .tr .th:first-of-type,
-.c8 .table .tr .th:nth-of-type(2) {
+.c7 .table .tr .td:first-of-type,
+.c7 .table .tr .td:nth-of-type(2),
+.c7 .table .tr .th:first-of-type,
+.c7 .table .tr .th:nth-of-type(2) {
   border-left: 0;
   border-right: 0;
   padding: 0;
 }
 
-.c9 {
+.c8 {
   font-size: 1.4rem;
   color: #42814A;
 }
 
-.c5.btn.btn-primary,
-.c5.btn.btn-primary:active {
+.c4.btn.btn-primary,
+.c4.btn.btn-primary:active {
   background-color: #42814A;
 }
 
-.c5.btn.btn-primary:hover,
-.c5.btn.btn-primary:focus {
+.c4.btn.btn-primary:hover,
+.c4.btn.btn-primary:focus {
   background-color: #2e8540;
   outline-color: #2e8540;
 }
 
-.c6.c6 {
+.c5.c5 {
   display: inline-block;
   margin-left: 1.5rem;
   margin-bottom: 0.5rem;
@@ -269,39 +269,7 @@ exports[`AddLeaseTenantForm component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c3 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-align-items: end;
-  -webkit-box-align: end;
-  -ms-flex-align: end;
-  align-items: end;
-  min-height: 4.5rem;
-}
-
-.c3 .btn {
-  margin: 0;
-}
-
-.c3 .primary-column {
-  -webkit-flex: 1 1 0;
-  -ms-flex: 1 1 0;
-  flex: 1 1 0;
-}
-
-.c3 .secondary-column {
-  -webkit-flex: 0.5 1 0;
-  -ms-flex: 0.5 1 0;
-  flex: 0.5 1 0;
-}
-
-.c7 {
+.c6 {
   margin-top: 3rem;
   text-align: left;
 }
@@ -322,18 +290,18 @@ exports[`AddLeaseTenantForm component > renders as expected 1`] = `
             class="align-content-end col"
           >
             <div
-              class="c3 no-gutters row"
+              class="no-gutters justify-content-between align-items-end row"
             >
               <div
-                class="align-items-end primary-column col-auto"
+                class="my-1 col-auto"
               >
                 Tenants
               </div>
               <div
-                class=" my-1 secondary-column col-auto"
+                class="col-auto"
               >
                 <button
-                  class="c4 Button c5 c6 btn btn-primary"
+                  class="c3 Button c4 c5 btn btn-primary"
                   type="button"
                 >
                   <div
@@ -373,16 +341,16 @@ exports[`AddLeaseTenantForm component > renders as expected 1`] = `
           , then you will be able to see them on the "Add a Tenant" list.
         </span>
         <div
-          class="c7"
+          class="c6"
         >
           <div
             class="p-0 m-0 container"
           >
             <div
-              class="c8"
+              class="c7"
             >
               <p
-                class="c9"
+                class="c8"
               >
                 0 Tenant(s) associated with this Lease/Licence
               </p>

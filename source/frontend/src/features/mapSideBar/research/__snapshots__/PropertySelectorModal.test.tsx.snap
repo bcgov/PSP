@@ -1,0 +1,544 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`PropertySelectorModal modal > renders as expected 1`] = `
+.c7.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c7.btn .Button__value {
+  width: auto;
+}
+
+.c7.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c7.btn:focus {
+  outline-width: 2px;
+  outline-style: solid;
+  outline-color: #2E5DD7;
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+.c7.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c7.btn.btn-primary:hover,
+.c7.btn.btn-primary:active,
+.c7.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
+.c7.btn.btn-secondary {
+  color: #013366;
+  background: none;
+  border-color: #013366;
+}
+
+.c7.btn.btn-secondary:hover,
+.c7.btn.btn-secondary:active,
+.c7.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c7.btn.btn-info {
+  color: #9F9D9C;
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c7.btn.btn-info:hover,
+.c7.btn.btn-info:active,
+.c7.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
+  background: none;
+}
+
+.c7.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
+  border: none;
+}
+
+.c7.btn.btn-light:hover,
+.c7.btn.btn-light:active,
+.c7.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
+.c7.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
+  border: none;
+}
+
+.c7.btn.btn-dark:hover,
+.c7.btn.btn-dark:active,
+.c7.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c7.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c7.btn.btn-danger:hover,
+.c7.btn.btn-danger:active,
+.c7.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c7.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c7.btn.btn-warning:hover,
+.c7.btn.btn-warning:active,
+.c7.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
+}
+
+.c7.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--surface-color-primary-button-default);
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c7.btn.btn-link:hover,
+.c7.btn.btn-link:active,
+.c7.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c7.btn.btn-link:disabled,
+.c7.btn.btn-link.disabled {
+  color: #9F9D9C;
+  background: none;
+  pointer-events: none;
+}
+
+.c7.btn:disabled,
+.c7.btn:disabled:hover {
+  color: #9F9D9C;
+  background-color: #EDEBE9;
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.c7.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c7.Button--icon-only:focus {
+  outline: none;
+}
+
+.c7.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c2 {
+  width: 0.8rem;
+}
+
+.c6 {
+  min-width: 2.4rem;
+}
+
+.c5 {
+  padding: 0px;
+  margin: 0px;
+  margin-left: 1.6rem;
+  margin-right: 1.6rem;
+}
+
+.c0 .modal-header {
+  height: 4.8rem;
+  padding-left: 1.6rem;
+  padding-right: 1.6rem;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  color: #FFFFFF;
+  background-color: #053662;
+  cursor: default;
+}
+
+.c0 .modal-header .modal-title {
+  font-family: BcSans-Bold;
+  font-size: 2.2rem;
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+}
+
+.c0 .modal-header .modal-close-btn {
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.c0 .modal-header .close {
+  margin-left: auto;
+  color: white;
+  opacity: 1;
+  font-size: 3rem;
+  font-weight: 10;
+  text-shadow: none;
+  font-family: 'Helvetica Narrow';
+}
+
+.c0 .modal-body {
+  padding-top: 2.4rem;
+  padding-bottom: 2.4rem;
+  padding-left: 1.6rem;
+  padding-right: 1.6rem;
+}
+
+.c0 .modal-footer {
+  border: 0px;
+  padding-top: 3.6rem;
+  padding-bottom: 3.6rem;
+  padding-left: 1.6rem;
+  padding-right: 3.6rem;
+}
+
+.c0 .modal-footer .button-wrap {
+  margin: 0px;
+  padding: 0px;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c0 .modal-footer .button-wrap .Button {
+  min-width: 9.5rem;
+  height: 3.9rem;
+}
+
+.c0 .close {
+  color: black;
+}
+
+.c0 .modal-xl {
+  max-width: 100rem;
+}
+
+.c0 .modal-l {
+  max-width: 75rem;
+}
+
+.c0 .modal-m {
+  max-width: 60rem;
+}
+
+.c0 .modal-s {
+  max-width: 40rem;
+}
+
+.c0.info-variant .modal-header {
+  color: #053662;
+  background-color: #d9eaf7;
+}
+
+.c0.info-variant .modal-close-btn {
+  color: #474543;
+  cursor: pointer;
+}
+
+.c0.error-variant .modal-header {
+  color: #CE3E39;
+  background-color: #f2dede;
+}
+
+.c0.error-variant .modal-close-btn {
+  color: #474543;
+  cursor: pointer;
+}
+
+.c0.warning-variant .modal-header {
+  color: #6c4a00;
+  background-color: #fef1d8;
+}
+
+.c0.warning-variant .modal-close-btn {
+  color: #474543;
+  cursor: pointer;
+}
+
+.c4 {
+  text-align: center;
+  font-style: italic;
+}
+
+.c1 {
+  min-width: 70rem;
+}
+
+.c1 .modal-body {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.c1 .modal-footer {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.c3 {
+  border: 0.1rem solid #606060;
+  border-radius: 0.5rem;
+  max-height: 180px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 0.5rem 1.5rem;
+}
+
+.c3 .form-check input {
+  margin-top: 0.6rem;
+}
+
+.c3 .form-group label {
+  font-family: BcSans-Bold;
+  line-height: 1.5rem;
+  color: #474543;
+}
+
+.c3 .form-group label span.type {
+  font-size: 1.5rem;
+  font-family: BCSans-Italic;
+  font-style: italic;
+  margin-left: 0.5rem;
+  width: 100%;
+}
+
+<body
+  class="modal-open"
+  style="padding-right: 0px;"
+>
+  <div
+    aria-hidden="true"
+  >
+    <div
+      class="Toastify"
+    />
+    <div />
+    <div />
+  </div>
+  <div
+    class="fade modal-backdrop show"
+  />
+  <div
+    aria-modal="true"
+    class="fade c0 c1 info-variant modal show"
+    role="dialog"
+    style="display: block;"
+    tabindex="-1"
+  >
+    <div
+      class="modal-dialog modal-m c1 info-variant"
+      variant="info"
+    >
+      <div
+        class="modal-content"
+      >
+        <div
+          class="modal-header"
+        >
+          <div
+            class="header-icon"
+          >
+            <svg
+              fill="currentColor"
+              height="22"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 512 512"
+              width="22"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M504 256c0 136.997-111.043 248-248 248S8 392.997 8 256C8 119.083 119.043 8 256 8s248 111.083 248 248zm-248 50c-25.405 0-46 20.595-46 46s20.595 46 46 46 46-20.595 46-46-20.595-46-46-46zm-43.673-165.346l7.418 136c.347 6.364 5.609 11.346 11.982 11.346h48.546c6.373 0 11.635-4.982 11.982-11.346l7.418-136c.375-6.874-5.098-12.654-11.982-12.654h-63.383c-6.884 0-12.356 5.78-11.981 12.654z"
+              />
+            </svg>
+          </div>
+          <span
+            class="c2"
+          />
+          <div
+            class="modal-title h4"
+          >
+            Generate Form 12
+          </div>
+          <div
+            class="modal-close-btn"
+          >
+            <svg
+              fill="currentColor"
+              height="24"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 512 512"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
+              />
+            </svg>
+          </div>
+        </div>
+        <div
+          class="modal-body"
+          style="white-space: pre-line;"
+        >
+          <p>
+            Select the properties that should be included in this Form 12 notice
+          </p>
+          <p>
+            <strong>
+              Available properties in this file:
+            </strong>
+          </p>
+          <div
+            class="c3"
+          >
+            <div
+              class="form-group"
+            />
+            <div
+              class="c4 m-4"
+            >
+              No Properties availiable
+            </div>
+          </div>
+        </div>
+        <hr
+          class="c5"
+        />
+        <div
+          class="modal-footer"
+        >
+          <div
+            class="button-wrap"
+          >
+            <span
+              class="c6"
+            />
+            <button
+              class="c7 Button btn btn-secondary"
+              data-testid="cancel-modal-button"
+              title="cancel-modal"
+              type="button"
+            >
+              <div
+                class="Button__value"
+              >
+                Cancel
+              </div>
+            </button>
+            <span
+              class="c6"
+            />
+            <button
+              class="c7 Button btn btn-primary"
+              data-testid="ok-modal-button"
+              title="ok-modal"
+              type="button"
+            >
+              <div
+                class="Button__value"
+              >
+                Continue
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;

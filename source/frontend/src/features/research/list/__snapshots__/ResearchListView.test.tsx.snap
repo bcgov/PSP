@@ -291,11 +291,11 @@ exports[`Research List View > matches snapshot 1`] = `
   height: 1.6rem;
 }
 
-.c19 {
+.c20 {
   margin-top: 0.3rem;
 }
 
-.c20 {
+.c21 {
   min-width: 5rem;
   max-width: 5rem;
   margin-left: 1rem;
@@ -304,11 +304,11 @@ exports[`Research List View > matches snapshot 1`] = `
   padding: 0;
 }
 
-.c20:-moz-read-only {
+.c21:-moz-read-only {
   background: white;
 }
 
-.c20:read-only {
+.c21:read-only {
   background: white;
 }
 
@@ -378,6 +378,26 @@ exports[`Research List View > matches snapshot 1`] = `
 
 .c6 .idir-input-group .input-group-prepend select {
   width: 16rem;
+}
+
+.c19 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: 8px;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  color: inherit;
+}
+
+.c19:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c4 {
@@ -1293,9 +1313,25 @@ exports[`Research List View > matches snapshot 1`] = `
                 title=""
               >
                 <a
+                  class="c19"
                   href="/mapview/sidebar/research/1"
+                  rel="noopener noreferrer"
+                  target="_blank"
                 >
                   R100-100-100
+                  <svg
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                    />
+                  </svg>
                 </a>
               </div>
               <div
@@ -1369,9 +1405,25 @@ exports[`Research List View > matches snapshot 1`] = `
                 title=""
               >
                 <a
+                  class="c19"
                   href="/mapview/sidebar/research/2"
+                  rel="noopener noreferrer"
+                  target="_blank"
                 >
                   R100-100-101
+                  <svg
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                    />
+                  </svg>
                 </a>
               </div>
               <div
@@ -1443,9 +1495,25 @@ exports[`Research List View > matches snapshot 1`] = `
                 title=""
               >
                 <a
+                  class="c19"
                   href="/mapview/sidebar/research/3"
+                  rel="noopener noreferrer"
+                  target="_blank"
                 >
                   R100-100-102
+                  <svg
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                    />
+                  </svg>
                 </a>
               </div>
               <div
@@ -1517,9 +1585,25 @@ exports[`Research List View > matches snapshot 1`] = `
                 title=""
               >
                 <a
+                  class="c19"
                   href="/mapview/sidebar/research/4"
+                  rel="noopener noreferrer"
+                  target="_blank"
                 >
                   R100-100-103
+                  <svg
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                    />
+                  </svg>
                 </a>
               </div>
               <div
@@ -1591,9 +1675,25 @@ exports[`Research List View > matches snapshot 1`] = `
                 title=""
               >
                 <a
+                  class="c19"
                   href="/mapview/sidebar/research/5"
+                  rel="noopener noreferrer"
+                  target="_blank"
                 >
                   R100-100-104
+                  <svg
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                    />
+                  </svg>
                 </a>
               </div>
               <div
@@ -1678,19 +1778,19 @@ exports[`Research List View > matches snapshot 1`] = `
                 class="d-flex"
               >
                 <span
-                  class="c19"
+                  class="c20"
                 >
                   Show
                 </span>
                 <input
-                  class="c20 form-control"
+                  class="c21 form-control"
                   data-testid="input-page-size"
                   readonly=""
                   type="number"
                   value="10"
                 />
                 <span
-                  class="c19"
+                  class="c20"
                 >
                   Entries
                 </span>

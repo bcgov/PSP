@@ -569,7 +569,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.False(searchDispositionFiles.SearchFoundResults());
 
             //Look for the last created Disposition File
-            searchDispositionFiles.FilterDispositionFiles("", dispositionFile.DispositionFileName, "", dispositionFile.DispositionFileStatus, dispositionFile.DispositionStatus, dispositionFile.DispositionType);
+            searchDispositionFiles.FilterDispositionFiles(name: dispositionFile.DispositionFileName, status: dispositionFile.DispositionFileStatus, dispStatus: dispositionFile.DispositionStatus, type: dispositionFile.DispositionType);
         }
 
         [StepDefinition(@"A new Disposition file is created successfully")]

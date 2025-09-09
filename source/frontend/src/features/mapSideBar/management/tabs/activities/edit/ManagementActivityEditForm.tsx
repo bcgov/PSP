@@ -227,7 +227,7 @@ export const ManagementActivityEditForm: React.FunctionComponent<
                           />
                         </SectionField>
                         <SectionField
-                          label="Contact manager"
+                          label="Requestor"
                           contentWidth={{ xs: 7 }}
                           tooltip="Document the source of the request by entering the name of the person, organization or other entity from which the request has been received"
                         >

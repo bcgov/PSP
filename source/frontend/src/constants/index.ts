@@ -16,8 +16,6 @@ export * from './propertyAreaUnitTypes';
 export * from './propertyDataSourceTypes';
 export * from './propertyServiceFileTypes';
 export * from './propertyStatusTypes';
-export * from './propertyTenureTypes';
-export * from './propertyTypes';
 export * from './regionCodes';
 export * from './roles';
 export * from './userTypes';

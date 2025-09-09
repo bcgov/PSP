@@ -6,7 +6,7 @@ exports[`compensation list view > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c7.btn {
+  .c6.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,17 +35,17 @@ exports[`compensation list view > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c7.btn .Button__value {
+.c6.btn .Button__value {
   width: auto;
 }
 
-.c7.btn:hover {
+.c6.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c7.btn:focus {
+.c6.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -53,31 +53,31 @@ exports[`compensation list view > renders as expected 1`] = `
   box-shadow: none;
 }
 
-.c7.btn.btn-primary {
+.c6.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c7.btn.btn-primary:hover,
-.c7.btn.btn-primary:active,
-.c7.btn.btn-primary:focus {
+.c6.btn.btn-primary:hover,
+.c6.btn.btn-primary:active,
+.c6.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c7.btn.btn-secondary {
+.c6.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c7.btn.btn-secondary:hover,
-.c7.btn.btn-secondary:active,
-.c7.btn.btn-secondary:focus {
+.c6.btn.btn-secondary:hover,
+.c6.btn.btn-secondary:active,
+.c6.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c7.btn.btn-info {
+.c6.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -85,66 +85,66 @@ exports[`compensation list view > renders as expected 1`] = `
   padding-right: 0.6rem;
 }
 
-.c7.btn.btn-info:hover,
-.c7.btn.btn-info:active,
-.c7.btn.btn-info:focus {
+.c6.btn.btn-info:hover,
+.c6.btn.btn-info:active,
+.c6.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c7.btn.btn-light {
+.c6.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c7.btn.btn-light:hover,
-.c7.btn.btn-light:active,
-.c7.btn.btn-light:focus {
+.c6.btn.btn-light:hover,
+.c6.btn.btn-light:active,
+.c6.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c7.btn.btn-dark {
+.c6.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c7.btn.btn-dark:hover,
-.c7.btn.btn-dark:active,
-.c7.btn.btn-dark:focus {
+.c6.btn.btn-dark:hover,
+.c6.btn.btn-dark:active,
+.c6.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c7.btn.btn-danger {
+.c6.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c7.btn.btn-danger:hover,
-.c7.btn.btn-danger:active,
-.c7.btn.btn-danger:focus {
+.c6.btn.btn-danger:hover,
+.c6.btn.btn-danger:active,
+.c6.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c7.btn.btn-warning {
+.c6.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c7.btn.btn-warning:hover,
-.c7.btn.btn-warning:active,
-.c7.btn.btn-warning:focus {
+.c6.btn.btn-warning:hover,
+.c6.btn.btn-warning:active,
+.c6.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c7.btn.btn-link {
+.c6.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -168,9 +168,9 @@ exports[`compensation list view > renders as expected 1`] = `
   text-decoration: underline;
 }
 
-.c7.btn.btn-link:hover,
-.c7.btn.btn-link:active,
-.c7.btn.btn-link:focus {
+.c6.btn.btn-link:hover,
+.c6.btn.btn-link:active,
+.c6.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -180,15 +180,15 @@ exports[`compensation list view > renders as expected 1`] = `
   outline: none;
 }
 
-.c7.btn.btn-link:disabled,
-.c7.btn.btn-link.disabled {
+.c6.btn.btn-link:disabled,
+.c6.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c7.btn:disabled,
-.c7.btn:disabled:hover {
+.c6.btn:disabled,
+.c6.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -200,66 +200,66 @@ exports[`compensation list view > renders as expected 1`] = `
   cursor: not-allowed;
 }
 
-.c7.Button .Button__icon {
+.c6.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c7.Button--icon-only:focus {
+.c6.Button--icon-only:focus {
   outline: none;
 }
 
-.c7.Button--icon-only .Button__icon {
+.c6.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c8.c8.btn {
+.c7.c7.btn {
   background-color: unset;
   border: none;
 }
 
-.c8.c8.btn:hover,
-.c8.c8.btn:focus,
-.c8.c8.btn:active {
+.c7.c7.btn:hover,
+.c7.c7.btn:focus,
+.c7.c7.btn:active {
   background-color: unset;
   outline: none;
   box-shadow: none;
 }
 
-.c8.c8.btn svg {
+.c7.c7.btn svg {
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
 
-.c8.c8.btn svg:hover {
+.c7.c7.btn svg:hover {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
 }
 
-.c8.c8.btn.btn-primary svg {
+.c7.c7.btn.btn-primary svg {
   color: #013366;
 }
 
-.c8.c8.btn.btn-primary svg:hover {
+.c7.c7.btn.btn-primary svg:hover {
   color: #013366;
 }
 
-.c8.c8.btn.btn-light svg {
+.c7.c7.btn.btn-light svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c8.c8.btn.btn-light svg:hover {
+.c7.c7.btn.btn-light svg:hover {
   color: #CE3E39;
 }
 
-.c8.c8.btn.btn-info svg {
+.c7.c7.btn.btn-info svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c8.c8.btn.btn-info svg:hover {
+.c7.c7.btn.btn-info svg:hover {
   color: var(--surface-color-primary-button-hover);
 }
 
-.c6 {
+.c5 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -297,47 +297,15 @@ exports[`compensation list view > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c5.required::before {
+.c4.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c4 {
-  font-weight: bold;
-}
-
 .c3 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-align-items: end;
-  -webkit-box-align: end;
-  -ms-flex-align: end;
-  align-items: end;
-  min-height: 4.5rem;
-}
-
-.c3 .btn {
-  margin: 0;
-}
-
-.c3 .primary-column {
-  -webkit-flex: 1 1 0;
-  -ms-flex: 1 1 0;
-  flex: 1 1 0;
-}
-
-.c3 .secondary-column {
-  -webkit-flex: 0.5 1 0;
-  -ms-flex: 0.5 1 0;
-  flex: 0.5 1 0;
+  font-weight: bold;
 }
 
 .c1 > {
@@ -365,7 +333,7 @@ exports[`compensation list view > renders as expected 1`] = `
   margin-right: 2.2rem;
 }
 
-.c9 {
+.c8 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -396,10 +364,10 @@ exports[`compensation list view > renders as expected 1`] = `
           class="align-content-end col"
         >
           <div
-            class="c3 no-gutters row"
+            class="no-gutters justify-content-between align-items-end row"
           >
             <div
-              class="align-items-end primary-column col-auto"
+              class="my-1 col-auto"
             >
               Compensation Requisitions
             </div>
@@ -417,7 +385,7 @@ exports[`compensation list view > renders as expected 1`] = `
           class="pr-0 text-left col-8"
         >
           <label
-            class="c4"
+            class="c3"
           >
             <svg
               class="mr-4"
@@ -459,14 +427,14 @@ exports[`compensation list view > renders as expected 1`] = `
           </label>
         </div>
         <div
-          class="c5 text-right d-flex justify-content-end col"
+          class="c4 text-right d-flex justify-content-end col"
         >
           <div
-            class="c6"
+            class="c5"
           >
             $0.00
             <button
-              class="c7 Button c8 btn btn-primary"
+              class="c6 Button c7 btn btn-primary"
               data-testid="edit-button"
               title="edit"
               type="button"
@@ -494,7 +462,7 @@ exports[`compensation list view > renders as expected 1`] = `
       </div>
       <hr />
       <div
-        class="c9"
+        class="c8"
       >
         <svg
           class="mr-4 mt-2"
@@ -517,7 +485,7 @@ exports[`compensation list view > renders as expected 1`] = `
             class="pr-0 text-left col-8"
           >
             <label
-              class="c4"
+              class="c3"
             >
               Total payments made on the main file:
               <span>
@@ -545,7 +513,7 @@ exports[`compensation list view > renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c5 text-right col"
+            class="c4 text-right col"
             data-testid="payment-total-main-file"
           >
             $0.00
@@ -553,7 +521,7 @@ exports[`compensation list view > renders as expected 1`] = `
         </div>
       </div>
       <div
-        class="c9"
+        class="c8"
       >
         <svg
           class="mr-4 mt-1"
@@ -576,7 +544,7 @@ exports[`compensation list view > renders as expected 1`] = `
             class="pr-0 text-left col-8"
           >
             <label
-              class="c4"
+              class="c3"
             >
               Total payments made on main file and all sub-files:
               <span>
@@ -604,7 +572,7 @@ exports[`compensation list view > renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c5 text-right col"
+            class="c4 text-right col"
             data-testid="payment-total-subfiles"
           >
             $0.00
@@ -613,7 +581,7 @@ exports[`compensation list view > renders as expected 1`] = `
       </div>
       <hr />
       <div
-        class="c9"
+        class="c8"
       >
         <svg
           class="mr-4 mt-2"
@@ -636,7 +604,7 @@ exports[`compensation list view > renders as expected 1`] = `
             class="pr-0 text-left col-9"
           >
             <label
-              class="c4"
+              class="c3"
             >
               Drafts:
               <span>
@@ -664,7 +632,7 @@ exports[`compensation list view > renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c5 text-right col"
+            class="c4 text-right col"
             data-testid="payment-total-drafts"
           >
             $0.00

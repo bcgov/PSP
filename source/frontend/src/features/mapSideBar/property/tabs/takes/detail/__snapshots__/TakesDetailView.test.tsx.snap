@@ -16,7 +16,7 @@ exports[`TakesDetailView component > renders as expected 1`] = `
   margin-bottom: 2.4rem;
 }
 
-.c9 {
+.c8 {
   float: right;
   cursor: pointer;
   font-size: 3.2rem;
@@ -27,7 +27,7 @@ exports[`TakesDetailView component > renders as expected 1`] = `
   padding-top: 1rem;
 }
 
-.c8 {
+.c7 {
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
@@ -42,7 +42,7 @@ exports[`TakesDetailView component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c7 {
+.c6 {
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
@@ -59,39 +59,7 @@ exports[`TakesDetailView component > renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c6 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-align-items: end;
-  -webkit-box-align: end;
-  -ms-flex-align: end;
-  align-items: end;
-  min-height: 4.5rem;
-}
-
-.c6 .btn {
-  margin: 0;
-}
-
-.c6 .primary-column {
-  -webkit-flex: 1 1 0;
-  -ms-flex: 1 1 0;
-  flex: 1 1 0;
-}
-
-.c6 .secondary-column {
-  -webkit-flex: 0.5 1 0;
-  -ms-flex: 0.5 1 0;
-  flex: 0.5 1 0;
-}
-
-.c12 {
+.c11 {
   max-width: 25rem;
   padding: 1rem;
   background-color: #f2f2f2;
@@ -99,7 +67,7 @@ exports[`TakesDetailView component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c13 {
+.c12 {
   max-width: 25rem;
   padding: 1rem;
   background-color: #f2f2f2;
@@ -107,14 +75,14 @@ exports[`TakesDetailView component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c10.form-section {
+.c9.form-section {
   margin-left: 0;
   margin-right: 0;
   padding-left: 0;
   padding-right: 0;
 }
 
-.c11 {
+.c10 {
   border: 0.1rem solid lightgrey;
   border-radius: 0.5rem;
 }
@@ -236,21 +204,21 @@ exports[`TakesDetailView component > renders as expected 1`] = `
           class="c2 mb-8"
         >
           <div
-            class="c6 no-gutters row"
+            class="no-gutters justify-content-between align-items-end row"
           >
             <div
-              class="align-items-end primary-column col-auto"
+              class="my-1 col-auto"
             >
               Takes
             </div>
           </div>
         </h2>
         <div
-          class="c7 form-section"
+          class="c6 form-section"
           data-testid="take-0"
         >
           <h2
-            class="c8"
+            class="c7"
           >
             <div
               class="no-gutters row"
@@ -296,7 +264,7 @@ exports[`TakesDetailView component > renders as expected 1`] = `
                 class="pl-2 d-flex align-items-end col-auto"
               >
                 <svg
-                  class="c9"
+                  class="c8"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -411,10 +379,10 @@ exports[`TakesDetailView component > renders as expected 1`] = `
               />
             </div>
             <div
-              class="c1 form-section c10"
+              class="c1 form-section c9"
             >
               <h2
-                class="c8"
+                class="c7"
               >
                 <div
                   class="no-gutters row"
@@ -430,7 +398,7 @@ exports[`TakesDetailView component > renders as expected 1`] = `
                 class="collapse show"
               >
                 <div
-                  class="c1 form-section c11"
+                  class="c1 form-section c10"
                 >
                   <div
                     class="collapse show"
@@ -497,7 +465,7 @@ exports[`TakesDetailView component > renders as expected 1`] = `
                             class="col"
                           >
                             <div
-                              class="c12"
+                              class="c11"
                             >
                               <div
                                 class="row"
@@ -533,7 +501,7 @@ exports[`TakesDetailView component > renders as expected 1`] = `
                             class="col"
                           >
                             <div
-                              class="c13"
+                              class="c12"
                             >
                               <div
                                 class="row"
@@ -611,7 +579,7 @@ exports[`TakesDetailView component > renders as expected 1`] = `
                   </div>
                 </div>
                 <div
-                  class="c1 form-section c11"
+                  class="c1 form-section c10"
                 >
                   <div
                     class="collapse show"
@@ -656,7 +624,7 @@ exports[`TakesDetailView component > renders as expected 1`] = `
                             class="col"
                           >
                             <div
-                              class="c12"
+                              class="c11"
                             >
                               <div
                                 class="row"
@@ -692,7 +660,7 @@ exports[`TakesDetailView component > renders as expected 1`] = `
                             class="col"
                           >
                             <div
-                              class="c13"
+                              class="c12"
                             >
                               <div
                                 class="row"
@@ -748,7 +716,7 @@ exports[`TakesDetailView component > renders as expected 1`] = `
                   </div>
                 </div>
                 <div
-                  class="c1 form-section c11"
+                  class="c1 form-section c10"
                 >
                   <div
                     class="collapse show"
@@ -811,7 +779,7 @@ exports[`TakesDetailView component > renders as expected 1`] = `
                             class="col"
                           >
                             <div
-                              class="c12"
+                              class="c11"
                             >
                               <div
                                 class="row"
@@ -847,7 +815,7 @@ exports[`TakesDetailView component > renders as expected 1`] = `
                             class="col"
                           >
                             <div
-                              class="c13"
+                              class="c12"
                             >
                               <div
                                 class="row"
@@ -903,7 +871,7 @@ exports[`TakesDetailView component > renders as expected 1`] = `
                   </div>
                 </div>
                 <div
-                  class="c1 form-section c11"
+                  class="c1 form-section c10"
                 >
                   <div
                     class="collapse show"
@@ -948,7 +916,7 @@ exports[`TakesDetailView component > renders as expected 1`] = `
                             class="col"
                           >
                             <div
-                              class="c12"
+                              class="c11"
                             >
                               <div
                                 class="row"
@@ -984,7 +952,7 @@ exports[`TakesDetailView component > renders as expected 1`] = `
                             class="col"
                           >
                             <div
-                              class="c13"
+                              class="c12"
                             >
                               <div
                                 class="row"
@@ -1040,7 +1008,7 @@ exports[`TakesDetailView component > renders as expected 1`] = `
                   </div>
                 </div>
                 <div
-                  class="c1 form-section c11"
+                  class="c1 form-section c10"
                 >
                   <div
                     class="collapse show"
@@ -1085,7 +1053,7 @@ exports[`TakesDetailView component > renders as expected 1`] = `
                             class="col"
                           >
                             <div
-                              class="c12"
+                              class="c11"
                             >
                               <div
                                 class="row"
@@ -1121,7 +1089,7 @@ exports[`TakesDetailView component > renders as expected 1`] = `
                             class="col"
                           >
                             <div
-                              class="c13"
+                              class="c12"
                             >
                               <div
                                 class="row"
@@ -1179,10 +1147,10 @@ exports[`TakesDetailView component > renders as expected 1`] = `
               </div>
             </div>
             <div
-              class="c1 form-section c10"
+              class="c1 form-section c9"
             >
               <h2
-                class="c8"
+                class="c7"
               >
                 <div
                   class="no-gutters row"
@@ -1198,7 +1166,7 @@ exports[`TakesDetailView component > renders as expected 1`] = `
                 class="collapse show"
               >
                 <div
-                  class="c1 form-section c11"
+                  class="c1 form-section c10"
                 >
                   <div
                     class="collapse show"
@@ -1243,7 +1211,7 @@ exports[`TakesDetailView component > renders as expected 1`] = `
                             class="col"
                           >
                             <div
-                              class="c12"
+                              class="c11"
                             >
                               <div
                                 class="row"
@@ -1279,7 +1247,7 @@ exports[`TakesDetailView component > renders as expected 1`] = `
                             class="col"
                           >
                             <div
-                              class="c13"
+                              class="c12"
                             >
                               <div
                                 class="row"

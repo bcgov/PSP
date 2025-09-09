@@ -4,10 +4,10 @@ import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFe
 import { Section } from '@/components/common/Section/Section';
 import { Table } from '@/components/Table';
 import { IGeocoderResponse } from '@/hooks/pims-api/interfaces/IGeocoder';
-import { featuresetToMapProperty, getPropertyName } from '@/utils/mapPropertyUtils';
+import { getPropertyNameFromSelectedFeatureSet } from '@/utils/mapPropertyUtils';
 import { isStrataCommonProperty } from '@/utils/propertyUtils';
 
-import { ILayerSearchCriteria, IMapProperty } from '../models';
+import { ILayerSearchCriteria } from '../models';
 import LayerFilter from './LayerFilter';
 import mapPropertyColumns from './mapPropertyColumns';
 
@@ -41,14 +41,14 @@ export const PropertySearchSelectorFormView: React.FunctionComponent<
   onAddressSelect,
 }) => {
   const selectedData = selectedProperties.map<IIdentifiedSelectedFeatureDataset>(x => {
-    return { ...x, id: generatePropertyId(featuresetToMapProperty(x)) };
+    return { ...x, id: generatePropertyId(x) };
   });
 
   const identifiedSearchResults = useMemo(
     () =>
       searchResults
         .map<IIdentifiedSelectedFeatureDataset>(x => {
-          return { ...x, id: generatePropertyId(featuresetToMapProperty(x)) };
+          return { ...x, id: generatePropertyId(x) };
         })
         .sort((a, b) => {
           const aIsStrataLot = isStrataCommonProperty(a?.parcelFeature);
@@ -61,9 +61,11 @@ export const PropertySearchSelectorFormView: React.FunctionComponent<
     [searchResults],
   );
 
-  function generatePropertyId(mapProperty: IMapProperty): string {
-    const propertyName = getPropertyName(mapProperty);
-    return `${propertyName.label}-${propertyName.value}-${mapProperty.latitude}-${mapProperty.longitude}`;
+  function generatePropertyId(mapProperty: SelectedFeatureDataset): string {
+    const propertyName = getPropertyNameFromSelectedFeatureSet(mapProperty);
+    return `${propertyName.label}-${propertyName.value}-${mapProperty.location?.lat ?? 0}-${
+      mapProperty.location?.lng ?? 0
+    }`;
   }
 
   return (

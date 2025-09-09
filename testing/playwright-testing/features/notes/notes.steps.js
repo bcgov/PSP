@@ -11,23 +11,23 @@ Given(
     notesList = splitStringToArray(notesData[rowNbr].Notes);
 
     //Navigate to the Notes Tab
-    this.notes.navigateNotesTab();
-    this.notes.verifyNotesTabListView();
+    await this.notes.navigateNotesTab();
+    await this.notes.verifyNotesTabListView();
 
     //Create a new note
-    this.notes.createNotesTabButton();
-    this.notes.verifyNotesAddNew();
-    this.notes.addNewNoteDetails(notesList[0]);
+    await this.notes.createNotesTabButton();
+    await this.notes.verifyNotesAddNew();
+    await this.notes.addNewNoteDetails(notesList[0]);
 
     //Cancel new note
-    this.notes.cancelNote();
+    await this.notes.cancelNote();
 
     //Create a new note
-    notesList.forEach((note) => {
-      this.notes.createNotesTabButton();
-      this.notes.addNewNoteDetails(note);
-      this.notes.saveNote();
-    });
+    for (const note of notesList) {
+      await this.notes.createNotesTabButton();
+      await this.notes.addNewNoteDetails(note);
+      await this.notes.saveNote();
+    }
   }
 );
 
@@ -37,33 +37,35 @@ When(
     notesList = splitStringToArray(notesData[rowNbr].Notes);
 
     //Navigate to the Notes Tab
-    this.notes.navigateNotesTab();
+    await this.notes.navigateNotesTab();
 
     //Edit note
-    this.notes.viewSecondNoteDetails();
-    this.notes.verifyNotesEditForm();
-    this.notes.editNote(notesList[0]);
+    await this.notes.viewSecondNoteDetails();
+    await this.notes.editNoteButton();
+    await this.notes.verifyNotesEditForm();
+    await this.notes.editNote(notesList[0]);
 
     //Cancel note's update
-    this.notes.cancelNote();
+    await this.notes.cancelNote();
 
     //Edit note
-    this.notes.viewSecondNoteDetails();
-    this.notes.editNote(notesList[0]);
+    await this.notes.viewSecondNoteDetails();
+    await this.notes.editNoteButton();
+    await this.notes.editNote(notesList[0]);
 
     //Save changes
-    this.notes.saveNote();
+    await this.notes.saveNote();
 
     //Verify Pagination on the list view
-    this.sharedPagination.choosePaginationOption(5);
+    await this.sharedPagination.choosePaginationOption(5);
     const notesCount5 = await this.notes.notesTabCount();
     expect(notesCount5).toBe(5);
 
-    this.sharedPagination.choosePaginationOption(10);
+    await this.sharedPagination.choosePaginationOption(10);
     const notesCount10 = await this.notes.notesTabCount();
     expect(notesCount10).toBe(10);
 
     //Delete Note
-    this.notes.deleteLastSecondNote();
+    await this.notes.deleteLastSecondNote();
   }
 );

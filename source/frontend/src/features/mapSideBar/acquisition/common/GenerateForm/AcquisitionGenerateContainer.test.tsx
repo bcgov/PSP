@@ -1,23 +1,23 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
-import { FormDocumentType } from '@/constants/formDocumentTypes';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, render, RenderOptions, waitFor } from '@/utils/test-utils';
+import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
-import GenerateFormContainer, { IGenerateFormContainerProps } from './GenerateFormContainer';
+import AcquisitionGenerateContainer, {
+  IGenerateFormContainerProps,
+} from './AcquisitionGenerateContainer';
 import { IGenerateFormViewProps } from './GenerateFormView';
 import { useGenerateH0443 } from './hooks/useGenerateH0443';
 import { useGenerateLetter } from './hooks/useGenerateLetter';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 
 const mockAxios = new MockAdapter(axios);
-const generateLetterFn = vi.fn();
-const generateH0443Fn = vi.fn();
+const generateLetterFn = vi.fn().mockResolvedValue({});
+const generateH0443Fn = vi.fn().mockResolvedValue({});
 
 // mock auth library
 
@@ -39,10 +39,14 @@ vi.mock('react-visibility-sensor', () => {
   };
 });
 
-let viewProps: IGenerateFormViewProps = {} as any;
+let viewProps: React.PropsWithChildren<IGenerateFormViewProps> = {} as any;
 const GenerateFormViewStub = (props: IGenerateFormViewProps) => {
   viewProps = props;
-  return <>Generate Form View Rendered</>;
+  return (
+    <>
+      Generate Form View Rendered<div>{viewProps.children}</div>
+    </>
+  );
 };
 const DEFAULT_PROPS: IGenerateFormContainerProps = {
   acquisitionFileId: 1,
@@ -62,7 +66,7 @@ describe('GenerateFormContainer component', () => {
           fileType: ApiGen_CodeTypes_FileTypes.Acquisition,
         }}
       >
-        <GenerateFormContainer {...props} View={GenerateFormViewStub} />
+        <AcquisitionGenerateContainer {...props} View={GenerateFormViewStub} />
       </SideBarContextProvider>,
       {
         store: {
@@ -93,9 +97,13 @@ describe('GenerateFormContainer component', () => {
   });
 
   it('calls document H0443 generation', async () => {
-    vi.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
+    const { getAllByText } = setup();
+    const generateButton = getAllByText('Conditions of Entry (H0443)')[0];
 
-    await act(async () => viewProps.onGenerateClick(FormDocumentType.H0443));
+    await act(async () => {
+      userEvent.click(generateButton);
+    });
+
     await waitFor(async () => {
       expect(generateLetterFn).toHaveBeenCalledTimes(0);
       expect(generateH0443Fn).toHaveBeenCalledTimes(1);
@@ -103,19 +111,16 @@ describe('GenerateFormContainer component', () => {
   });
 
   it('opens document letter generation modal', async () => {
-    vi.spyOn(global, 'confirm' as any).mockReturnValueOnce(true);
+    const { getAllByText } = setup();
+    const letterButton = getAllByText('Generate Letter')[0];
 
-    await act(async () => viewProps.onGenerateClick(FormDocumentType.LETTER));
+    await act(async () => {
+      userEvent.click(letterButton);
+    });
+
     await waitFor(async () => {
       expect(generateLetterFn).toHaveBeenCalledTimes(0);
       expect(generateH0443Fn).toHaveBeenCalledTimes(0);
-    });
-  });
-
-  it('generates the documment letter on confirmation', async () => {
-    await act(async () => viewProps.onGenerateLetterOk([]));
-    await waitFor(async () => {
-      expect(generateLetterFn).toHaveBeenCalledTimes(1);
     });
   });
 });

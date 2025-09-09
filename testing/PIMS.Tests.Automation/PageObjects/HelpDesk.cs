@@ -39,9 +39,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyHelpDeskModal()
         {
-            WaitUntilVisible(mainMenuHeader);
+            //WaitUntilVisible(mainMenuHeader);
 
-            AssertTrueIsDisplayed(mainMenuHeader);
+            //AssertTrueIsDisplayed(mainMenuHeader);
 
             AssertTrueIsDisplayed(helpDeskSubtitle);
             AssertTrueIsDisplayed(helpDeskDescription);

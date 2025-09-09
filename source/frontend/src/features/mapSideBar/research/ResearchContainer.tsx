@@ -307,7 +307,7 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
       canRemove={canRemove}
       onSuccess={onSuccess}
       isFormValid={isValid}
-    ></View>
+    />
   );
 };
 

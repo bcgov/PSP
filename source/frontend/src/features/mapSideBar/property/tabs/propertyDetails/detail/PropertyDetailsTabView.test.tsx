@@ -1,21 +1,22 @@
+import { AxiosResponse } from 'axios';
 import { createMemoryHistory } from 'history';
 
-import { Claims, PropertyTenureTypes } from '@/constants/index';
+import { Claims } from '@/constants/index';
+import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
+import { useApiPropertyOperation } from '@/hooks/pims-api/useApiPropertyOperation';
+import { usePimsPropertyRepository } from '@/hooks/repositories/usePimsPropertyRepository';
+import { IResponseWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { getEmptyAddress } from '@/mocks/address.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { ApiGen_CodeTypes_PropertyTenureTypes } from '@/models/api/generated/ApiGen_CodeTypes_PropertyTenureTypes';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { getEmptyBaseAudit, getEmptyProperty } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 import { RenderOptions, act, render } from '@/utils/test-utils';
 
-import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
-import { useApiPropertyOperation } from '@/hooks/pims-api/useApiPropertyOperation';
 import { PropertyDetailsTabView } from './PropertyDetailsTabView';
 import { toFormValues } from './PropertyDetailsTabView.helpers';
-import { usePimsPropertyRepository } from '@/hooks/repositories/usePimsPropertyRepository';
-import { IResponseWrapper } from '@/hooks/util/useApiRequestWrapper';
-import { AxiosResponse } from 'axios';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -52,7 +53,9 @@ vi.mocked(useApiProperties).mockImplementation(
 
 describe('PropertyDetailsTabView component', () => {
   // render component under test
-  const setup = (renderOptions: RenderOptions & { property?: ApiGen_Concepts_Property } = {}) => {
+  const setup = async (
+    renderOptions: RenderOptions & { property?: ApiGen_Concepts_Property } = {},
+  ) => {
     const { property, ...rest } = renderOptions;
     const formValues = toFormValues(property);
     const component = render(<PropertyDetailsTabView property={formValues} loading={false} />, {
@@ -63,6 +66,8 @@ describe('PropertyDetailsTabView component', () => {
       history,
     });
 
+    await act(async () => {});
+
     return { ...component };
   };
 
@@ -71,14 +76,12 @@ describe('PropertyDetailsTabView component', () => {
   });
 
   it.skip('renders as expected when provided valid data object', async () => {
-    const { asFragment } = setup({ property: mockPropertyInfo });
-    await act(async () => {});
+    const { asFragment } = await setup({ property: mockPropertyInfo });
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('does not throw an exception for an invalid data object', async () => {
-    const { getByText } = setup({ property: {} as ApiGen_Concepts_Property });
-    await act(async () => {});
+    const { getByText } = await setup({ property: {} as ApiGen_Concepts_Property });
     expect(getByText(/property attributes/i)).toBeVisible();
   });
 
@@ -87,7 +90,7 @@ describe('PropertyDetailsTabView component', () => {
       ...mockPropertyInfo,
       tenures: [
         {
-          propertyTenureTypeCode: toTypeCodeNullable(PropertyTenureTypes.HighwayRoad),
+          propertyTenureTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_PropertyTenureTypes.HWYROAD),
           id: 0,
           propertyId: mockPropertyInfo.id,
           ...getEmptyBaseAudit(),
@@ -95,9 +98,9 @@ describe('PropertyDetailsTabView component', () => {
       ],
     };
 
-    const { getByText } = setup({ property });
-    await act(async () => {});
+    const { getByText } = await setup({ property });
     expect(getByText('Highway / Road Details:')).toBeVisible();
+    expect(getByText('Provincial public hwy:')).toBeVisible();
   });
 
   it('does not show highway/road multi-select when tenure status is not Highway/Road', async () => {
@@ -105,7 +108,7 @@ describe('PropertyDetailsTabView component', () => {
       ...mockPropertyInfo,
       tenures: [
         {
-          propertyTenureTypeCode: toTypeCodeNullable(PropertyTenureTypes.Unknown),
+          propertyTenureTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_PropertyTenureTypes.UNKNOWN),
           id: 0,
           propertyId: mockPropertyInfo.id,
           ...getEmptyBaseAudit(),
@@ -113,9 +116,9 @@ describe('PropertyDetailsTabView component', () => {
       ],
     };
 
-    const { queryByText } = setup({ property });
-    await act(async () => {});
+    const { queryByText } = await setup({ property });
     expect(queryByText('Highway / Road Details:')).toBeNull();
+    expect(queryByText('Provincial public hwy:')).toBeNull();
   });
 
   it('shows first nations information when tenure status is Indian Reserve', async () => {
@@ -123,7 +126,7 @@ describe('PropertyDetailsTabView component', () => {
       ...mockPropertyInfo,
       tenures: [
         {
-          propertyTenureTypeCode: toTypeCodeNullable(PropertyTenureTypes.IndianReserve),
+          propertyTenureTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_PropertyTenureTypes.IRESERVE),
           id: 0,
           propertyId: mockPropertyInfo.id,
           ...getEmptyBaseAudit(),
@@ -131,8 +134,7 @@ describe('PropertyDetailsTabView component', () => {
       ],
     };
 
-    const { getByText } = setup({ property });
-    await act(async () => {});
+    const { getByText } = await setup({ property });
     expect(getByText(/First Nations Information/i)).toBeVisible();
   });
 
@@ -141,8 +143,7 @@ describe('PropertyDetailsTabView component', () => {
       ...mockPropertyInfo,
     };
 
-    const { queryByText } = setup({ property });
-    await act(async () => {});
+    const { queryByText } = await setup({ property });
     expect(queryByText(/First Nations Information/i)).toBeNull();
   });
 
@@ -152,19 +153,25 @@ describe('PropertyDetailsTabView component', () => {
       isVolumetricParcel: true,
     };
 
-    const { getByText } = setup({ property });
-    await act(async () => {});
+    const { getByText } = await setup({ property });
     expect(getByText(/Volume/)).toBeVisible();
   });
 
-  it('shows Provincial public hwy field', async () => {
+  it('shows Provincial public hwy field - only when tenure status is Highway/Road', async () => {
     const property: ApiGen_Concepts_Property = {
       ...mockPropertyInfo,
+      tenures: [
+        {
+          propertyTenureTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_PropertyTenureTypes.HWYROAD),
+          id: 0,
+          propertyId: mockPropertyInfo.id,
+          ...getEmptyBaseAudit(),
+        },
+      ],
       pphStatusTypeCode: 'NONPPH',
     };
 
-    const { getByText } = setup({ property });
-    await act(async () => {});
+    const { getByText } = await setup({ property });
     expect(getByText(/Non-Provincial Public Highway/i)).toBeVisible();
   });
 
@@ -174,8 +181,7 @@ describe('PropertyDetailsTabView component', () => {
       isVolumetricParcel: false,
     };
 
-    const { queryByText } = setup({ property });
-    await act(async () => {});
+    const { queryByText } = await setup({ property });
     expect(queryByText(/Volume/)).toBeNull();
   });
 
@@ -184,8 +190,7 @@ describe('PropertyDetailsTabView component', () => {
       ...mockPropertyInfo,
     };
 
-    const { getByText } = setup({ property });
-    await act(async () => {});
+    const { getByText } = await setup({ property });
     expect(getByText(/456 Souris Street/i)).toBeVisible();
   });
 
@@ -195,8 +200,7 @@ describe('PropertyDetailsTabView component', () => {
     };
     property.address = null;
 
-    const { getByText } = setup({ property });
-    await act(async () => {});
+    const { getByText } = await setup({ property });
     expect(getByText(/Property address not available/i)).toBeVisible();
   });
 
@@ -204,8 +208,7 @@ describe('PropertyDetailsTabView component', () => {
     const property: ApiGen_Concepts_Property = {
       ...mockPropertyInfo,
     };
-    const { getByTitle, queryByTestId } = setup({ property, claims: [Claims.PROPERTY_EDIT] });
-    await act(async () => {});
+    const { getByTitle, queryByTestId } = await setup({ property, claims: [Claims.PROPERTY_EDIT] });
     expect(getByTitle(/Edit property details/)).toBeVisible();
     expect(queryByTestId('tooltip-icon-property-retired-tooltip')).toBeNull();
   });
@@ -215,7 +218,6 @@ describe('PropertyDetailsTabView component', () => {
       ...mockPropertyInfo,
     };
     const { queryByTitle } = await setup({ property, claims: [] });
-    await act(async () => {});
     expect(queryByTitle(/Edit property details/)).toBeNull();
   });
 
@@ -225,7 +227,6 @@ describe('PropertyDetailsTabView component', () => {
       isRetired: true,
     };
     const { queryByTitle, getByTestId } = await setup({ property, claims: [Claims.PROPERTY_EDIT] });
-    await act(async () => {});
     expect(queryByTitle(/Edit property details/)).toBeNull();
     expect(getByTestId('tooltip-icon-property-retired-tooltip')).toBeInTheDocument();
   });

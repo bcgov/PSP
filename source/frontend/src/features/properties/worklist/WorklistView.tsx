@@ -127,8 +127,14 @@ export const WorklistView: React.FC<IWorklistViewProps> = ({
         <MoreOptionsMenu options={menuOptions} ariaLabel="worklist more options" />
       </StyledHeader>
       <ScrollArea>
-        {parcels.map(p => (
-          <ParcelItem key={p.id} parcel={p} onRemove={onRemove} canAddToWorklist={false} />
+        {parcels.map((p, index) => (
+          <ParcelItem
+            key={p.id}
+            parcel={p}
+            onRemove={onRemove}
+            canAddToWorklist={false}
+            parcelIndex={index}
+          />
         ))}
       </ScrollArea>
     </StyledContainer>

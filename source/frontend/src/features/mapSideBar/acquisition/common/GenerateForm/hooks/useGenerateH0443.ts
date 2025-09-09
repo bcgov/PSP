@@ -1,10 +1,10 @@
-import { FormDocumentType } from '@/constants/formDocumentTypes';
 import { createFileDownload } from '@/features/documents/DownloadDocumentButton';
 import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useProperties } from '@/hooks/repositories/useProperties';
 import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
+import { ApiGen_CodeTypes_FormTypes } from '@/models/api/generated/ApiGen_CodeTypes_FormTypes';
 import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 import { Api_GenerateOwner } from '@/models/generate/GenerateOwner';
 import { Api_GeneratePerson } from '@/models/generate/GeneratePerson';
@@ -108,7 +108,7 @@ export const useGenerateH0443 = () => {
       }
 
       const generatedFile = await generate({
-        templateType: FormDocumentType.H0443,
+        templateType: ApiGen_CodeTypes_FormTypes.H0443,
         templateData: h0443Data,
         convertToType: null,
       });

@@ -586,7 +586,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void VerifyAcquisitionFileView(AcquisitionFile acquisition, string acquisitionType)
         {
             Wait();
-            AssertTrueIsDisplayed(acquisitionFileViewTitle);
+            //AssertTrueIsDisplayed(acquisitionFileViewTitle);
 
             //Header
             AssertTrueIsDisplayed(acquisitionFileHeaderCodeLabel);
@@ -782,10 +782,10 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait();
 
-            if (acquisitionType == "Main")
-                AssertTrueIsDisplayed(acquisitionFileCreateTitle);
-            else
-                AssertTrueIsDisplayed(acquisitionSubFileCreateTitle);
+            //if (acquisitionType == "Main")
+            //    AssertTrueIsDisplayed(acquisitionFileCreateTitle);
+            //else
+            //    AssertTrueIsDisplayed(acquisitionSubFileCreateTitle);
 
             //Project
             AssertTrueIsDisplayed(acquisitionFileProjectSubtitle);

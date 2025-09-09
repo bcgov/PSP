@@ -22,7 +22,7 @@ import { StyledFormWrapper } from '../shared/styles';
 import { useFilePropertyIdFromUrl } from '../shared/usePropertyIndexFromUrl';
 import LeaseHeader from './common/LeaseHeader';
 import { LeaseContainerState } from './LeaseContainer';
-import LeaseGenerateContainer from './LeaseGenerateFormContainer';
+import LeaseGenerateContainer from './LeaseGenerateContainer';
 import ViewSelector from './ViewSelector';
 
 export interface ILeaseViewProps {
