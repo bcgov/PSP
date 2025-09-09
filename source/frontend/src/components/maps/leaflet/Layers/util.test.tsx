@@ -1,19 +1,12 @@
 import { DivIcon, LatLngExpression, Marker } from 'leaflet';
 import { ClusterFeature, ClusterProperties } from 'supercluster';
 
-import {
-  PropertyAreaUnitTypes,
-  PropertyDataSourceTypes,
-  PropertyStatusTypes,
-  PropertyTenureTypes,
-} from '@/constants/index';
 import { toCqlFilterValue } from '@/hooks/layer-api/layerUtils';
 import {
   emptyPropertyLocation,
   PIMS_Property_Location_View,
 } from '@/models/layers/pimsPropertyLocationView';
 
-import { createPoints } from '../../MapView.test';
 import { ICluster } from '../../types';
 import {
   createClusterMarker,
@@ -24,7 +17,7 @@ import {
   pointToLayer,
   propertyOfInterestIcon,
 } from './util';
-import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+
 describe('mapUtils tests', () => {
   describe('pointToLayer function', () => {
     it('converts a feature and latlng expression into a layer', () => {

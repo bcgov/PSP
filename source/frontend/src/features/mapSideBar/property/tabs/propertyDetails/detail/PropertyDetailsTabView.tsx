@@ -18,10 +18,11 @@ import TooltipIcon from '@/components/common/TooltipIcon';
 import AreaContainer from '@/components/measurements/AreaContainer';
 import VolumeContainer from '@/components/measurements/VolumeContainer';
 import * as API from '@/constants/API';
-import { Claims, PropertyTenureTypes } from '@/constants/index';
+import { Claims } from '@/constants/index';
 import { useQuery } from '@/hooks/use-query';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { ApiGen_CodeTypes_PropertyTenureTypes } from '@/models/api/generated/ApiGen_CodeTypes_PropertyTenureTypes';
 import { exists } from '@/utils';
 import { booleanToYesNoUnknownString, stringToBoolean } from '@/utils/formUtils';
 import { getPrettyLatLng } from '@/utils/mapPropertyUtils';
@@ -60,8 +61,12 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
   const history = useHistory();
 
   // show/hide conditionals
-  const isHighwayRoad = tenureStatus?.some(obj => obj?.id === PropertyTenureTypes.HighwayRoad);
-  const isIndianReserve = tenureStatus?.some(obj => obj?.id === PropertyTenureTypes.IndianReserve);
+  const isHighwayRoad = tenureStatus?.some(
+    obj => obj?.id === ApiGen_CodeTypes_PropertyTenureTypes.HWYROAD,
+  );
+  const isIndianReserve = tenureStatus?.some(
+    obj => obj?.id === ApiGen_CodeTypes_PropertyTenureTypes.IRESERVE,
+  );
   const isVolumetricParcel = stringToBoolean(property?.isVolumetricParcel || '');
   const propertyIsRetired = exists(property) && property.isRetired;
 
@@ -159,21 +164,23 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
             style={readOnlyMultiSelectStyle}
           />
         </SectionField>
-        <SectionField label="Provincial public hwy">
-          {pphStatusTypeCodeDesc ?? 'Unknown'}
-        </SectionField>
         {isHighwayRoad && (
-          <SectionField label="Highway / Road Details">
-            <Multiselect
-              disable
-              disablePreSelectedValues
-              hidePlaceholder
-              placeholder=""
-              selectedValues={roadType}
-              displayValue="description"
-              style={readOnlyMultiSelectStyle}
-            />
-          </SectionField>
+          <>
+            <SectionField label="Provincial public hwy">
+              {pphStatusTypeCodeDesc ?? 'Unknown'}
+            </SectionField>
+            <SectionField label="Highway / Road Details">
+              <Multiselect
+                disable
+                disablePreSelectedValues
+                hidePlaceholder
+                placeholder=""
+                selectedValues={roadType}
+                displayValue="description"
+                style={readOnlyMultiSelectStyle}
+              />
+            </SectionField>
+          </>
         )}
       </Section>
 
