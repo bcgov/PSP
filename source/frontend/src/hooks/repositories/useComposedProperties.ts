@@ -1,12 +1,14 @@
 import { point } from '@turf/turf';
 import { AxiosResponse } from 'axios';
 import { Feature, FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { ComposedProperty } from '@/features/mapSideBar/property/ComposedProperty';
 import { LtsaOrders, SpcpOrder } from '@/interfaces/ltsaModels';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { ApiGen_Concepts_PropertyAssociations } from '@/models/api/generated/ApiGen_Concepts_PropertyAssociations';
+import { ADM_IndianReserveBands_Feature_Properties } from '@/models/layers/admIndianReserveBands';
+import { WHSE_AgriculturalLandReservePoly_Feature_Properties } from '@/models/layers/alcAgriculturalReserve';
 import { IBcAssessmentSummary } from '@/models/layers/bcAssesment';
 import {
   TANTALIS_CrownLandInclusions_Feature_Properties,
@@ -15,6 +17,7 @@ import {
   TANTALIS_CrownLandLicenses_Feature_Properties,
   TANTALIS_CrownLandTenures_Feature_Properties,
 } from '@/models/layers/crownLand';
+import { EBC_ELECTORAL_DISTS_BS10_SVW_Feature_Properties } from '@/models/layers/electoralBoundaries';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { ISS_ProvincialPublicHighway } from '@/models/layers/pimsHighwayLayer';
 import { useTenant } from '@/tenants/useTenant';
@@ -25,11 +28,12 @@ import { IWfsGetAllFeaturesOptions } from '../layer-api/useWfsLayer';
 import { useLtsa } from '../useLtsa';
 import { IResponseWrapper } from '../util/useApiRequestWrapper';
 import useDeepCompareCallback from '../util/useDeepCompareCallback';
-import useDeepCompareEffect from '../util/useDeepCompareEffect';
 import { WHSE_Municipalities_Feature_Properties } from './../../models/layers/municipalities';
+import { useAdminBoundaryMapLayer } from './mapLayer/useAdminBoundaryMapLayer';
 import { useCrownLandLayer } from './mapLayer/useCrownLandLayer';
 import { useFullyAttributedParcelMapLayer } from './mapLayer/useFullyAttributedParcelMapLayer';
 import { usePimsHighwayLayer } from './mapLayer/useHighwayLayer';
+import { useIndianReserveBandMapLayer } from './mapLayer/useIndianReserveBandMapLayer';
 import { useLegalAdminBoundariesMapLayer } from './mapLayer/useLegalAdminBoundariesMapLayer';
 import { useBcAssessmentLayer } from './useBcAssessmentLayer';
 import { usePimsPropertyRepository } from './usePimsPropertyRepository';
@@ -50,6 +54,9 @@ export enum PROPERTY_TYPES {
   CROWN_SURVEYS = 'CROWN_SURVEYS',
   HIGHWAYS = 'HIGHWAY',
   MUNICIPALITY = 'MUNICIPALITY',
+  ALR = 'ALR',
+  FIRST_NATION = 'FIRST_NATION',
+  ELECTORAL = 'ELECTORAL',
 }
 
 export default interface ComposedPropertyState {
@@ -81,6 +88,11 @@ export default interface ComposedPropertyState {
   >;
   composedLoading: boolean;
   composedProperty: ComposedProperty;
+  highwayLoading: boolean;
+  municipalityLoading: boolean;
+  electoralLoading: boolean;
+  alrLoading: boolean;
+  firstNationsLoading: boolean;
 }
 
 export interface IUseComposedPropertiesProps {
@@ -113,8 +125,18 @@ export const useComposedProperties = ({
   const { getSummaryWrapper } = useBcAssessmentLayer(bcAssessment.url, bcAssessment.names);
   const { findMultipleHighwayBoundary, findMultipleHighwayWhereContainsWrappedLoading } =
     usePimsHighwayLayer();
-  const { findMultipleMunicipalityBoundary, findMultipleMunicipalBoundaryLoading } =
-    useLegalAdminBoundariesMapLayer();
+  const {
+    findMultipleMunicipalityBoundary,
+    findMultipleAgriculturalReserveBoundary,
+    findMultipleAgriculturalReserveLoading,
+    findMultipleMunicipalBoundaryLoading,
+  } = useLegalAdminBoundariesMapLayer();
+  const { findElectoralDistrictBoundary, findElectoralDistrictBoundaryLoading } =
+    useAdminBoundaryMapLayer();
+  const {
+    findMultipleBoundary: findMultipleFirstNationsBoundary,
+    findMultipleBoundaryLoading: findMultipleFirstNationsBoundaryLoading,
+  } = useIndianReserveBandMapLayer();
 
   const {
     findMultipleCrownLandTenure,
@@ -142,6 +164,15 @@ export const useComposedProperties = ({
   const [municipalityResponse, setMunicipalityResponse] = useState<
     Feature<Geometry, WHSE_Municipalities_Feature_Properties>[] | undefined
   >();
+  const [alrResponse, setAlrResponse] = useState<
+    Feature<Geometry, WHSE_AgriculturalLandReservePoly_Feature_Properties>[] | undefined
+  >();
+  const [electoralResponse, setElectoralResponse] = useState<
+    Feature<Geometry, EBC_ELECTORAL_DISTS_BS10_SVW_Feature_Properties>[] | undefined
+  >();
+  const [firstNationsResponse, setFirstNationsResponse] = useState<
+    Feature<Geometry, ADM_IndianReserveBands_Feature_Properties>[] | undefined
+  >();
   const [retrievedBoundary, setRetrievedBoundary] = useState<Geometry>(boundary);
 
   // overwrite pid/pin/plan if the id is set, as that implies that the user explicitly clicked on a PIMS property.
@@ -151,34 +182,41 @@ export const useComposedProperties = ({
     ? getPropertyWrapper?.response?.planNumber?.toString()
     : planNumber?.toString();
 
-  const propertyResponse = getPropertyWrapper?.response;
-  const parcelResponse = findParcelByWrapper?.response as
+  const getPimsProperty = getPropertyWrapper.execute;
+  const getParcelMapParcel = findParcelByWrapper.execute;
+  const parcelResponse = findParcelByWrapper.response as
     | FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties>
     | undefined;
 
-  useDeepCompareEffect(() => {
-    if (
-      !getPropertyWrapper.loading &&
-      !findParcelByWrapper.loading &&
-      exists(propertyResponse) &&
-      exists(parcelResponse)
-    ) {
-      if (exists(id)) {
-        if (exists(propertyResponse?.boundary)) {
-          setRetrievedBoundary(propertyResponse?.boundary);
-        } else {
-          setRetrievedBoundary(
-            point([
-              propertyResponse?.location?.coordinate?.x,
-              propertyResponse?.location?.coordinate?.y,
-            ]).geometry,
-          );
-        }
-      } else if (!exists(retrievedBoundary) && parcelResponse?.features?.length > 0) {
-        setRetrievedBoundary(firstOrNull(parcelResponse?.features)?.geometry);
+  const getBoundaries = useCallback(async () => {
+    if (exists(id)) {
+      const result = await getPimsProperty(id);
+      if (exists(result?.boundary)) {
+        setRetrievedBoundary(result?.boundary);
+      } else if (exists(result?.location)) {
+        setRetrievedBoundary(
+          point([result?.location?.coordinate?.x, result?.location?.coordinate?.y]).geometry,
+        );
+      }
+    } else if (exists(pid)) {
+      if (exists(pid)) {
+        const result = await getParcelMapParcel(
+          { PID_NUMBER: pid.toString() },
+          { forceExactMatch: true },
+        );
+        setRetrievedBoundary(firstOrNull(result?.features)?.geometry);
+      } else if (exists(pin)) {
+        const result = await getParcelMapParcel({ PIN: pin.toString() }, { forceExactMatch: true });
+        setRetrievedBoundary(firstOrNull(result?.features)?.geometry);
       }
     }
-  }, [id, propertyResponse, parcelResponse]);
+  }, [id, pid, getPimsProperty, pin, getParcelMapParcel]);
+
+  useEffect(() => {
+    if (!retrievedBoundary) {
+      getBoundaries();
+    }
+  }, [retrievedBoundary, getBoundaries]);
 
   const [composedProperty, setComposedProperty] = useState<ComposedProperty>({
     pid: undefined,
@@ -199,6 +237,9 @@ export const useComposedProperties = ({
     crownInventoryFeatures: undefined,
     highwayFeatures: undefined,
     municipalityFeatures: undefined,
+    firstNationFeatures: undefined,
+    electoralFeatures: undefined,
+    alrFeatures: undefined,
   });
 
   const typeCheckWrapper = useDeepCompareCallback(
@@ -272,6 +313,9 @@ export const useComposedProperties = ({
           crownInventory,
           highway,
           municipality,
+          alr,
+          firstNations,
+          electoral,
         ] = await Promise.all([
           propertyTypes.includes(PROPERTY_TYPES.CROWN_TENURES)
             ? findMultipleCrownLandTenure(retrievedBoundary)
@@ -294,6 +338,15 @@ export const useComposedProperties = ({
           propertyTypes.includes(PROPERTY_TYPES.MUNICIPALITY)
             ? findMultipleMunicipalityBoundary(retrievedBoundary)
             : Promise.resolve(undefined),
+          propertyTypes.includes(PROPERTY_TYPES.ALR)
+            ? findMultipleAgriculturalReserveBoundary(retrievedBoundary, 'GEOMETRY')
+            : Promise.resolve(undefined),
+          propertyTypes.includes(PROPERTY_TYPES.FIRST_NATION)
+            ? findMultipleFirstNationsBoundary(retrievedBoundary, 'GEOMETRY')
+            : Promise.resolve(undefined),
+          propertyTypes.includes(PROPERTY_TYPES.ELECTORAL)
+            ? findElectoralDistrictBoundary(retrievedBoundary)
+            : Promise.resolve(undefined),
         ]);
         setCrownResponse({
           crownTenureFeatures: crownTenures ?? [],
@@ -304,6 +357,9 @@ export const useComposedProperties = ({
         });
         setHighwayResponse(highway);
         setMunicipalityResponse(municipality);
+        setAlrResponse(alr?.features);
+        setFirstNationsResponse(firstNations?.features);
+        setElectoralResponse(electoral?.features);
       })();
     }
   }, [
@@ -326,6 +382,9 @@ export const useComposedProperties = ({
     findMultipleHighwayBoundary,
     setHighwayResponse,
     findMultipleMunicipalityBoundary,
+    findMultipleAgriculturalReserveBoundary,
+    findMultipleFirstNationsBoundary,
+    findElectoralDistrictBoundary,
   ]);
 
   useEffect(() => {
@@ -345,6 +404,9 @@ export const useComposedProperties = ({
       ...crownResponse,
       highwayFeatures: highwayResponse,
       municipalityFeatures: municipalityResponse,
+      electoralFeatures: electoralResponse,
+      alrFeatures: alrResponse,
+      firstNationFeatures: firstNationsResponse,
     });
   }, [
     setComposedProperty,
@@ -364,6 +426,9 @@ export const useComposedProperties = ({
     municipalityResponse,
     getPropertyByBoundaryWfsWrapper.response,
     parcelResponse,
+    electoralResponse,
+    alrResponse,
+    firstNationsResponse,
   ]);
 
   return useMemo(
@@ -397,6 +462,9 @@ export const useComposedProperties = ({
         findMultipleCrownLandTenureLoading,
       highwayLoading: findMultipleHighwayWhereContainsWrappedLoading,
       municipalityLoading: findMultipleMunicipalBoundaryLoading,
+      electoralLoading: findElectoralDistrictBoundaryLoading,
+      alrLoading: findMultipleAgriculturalReserveLoading,
+      firstNationsLoading: findMultipleFirstNationsBoundaryLoading,
     }),
     [
       id,
@@ -421,6 +489,9 @@ export const useComposedProperties = ({
       findMultipleCrownLandTenureLoading,
       findMultipleHighwayWhereContainsWrappedLoading,
       findMultipleMunicipalBoundaryLoading,
+      findElectoralDistrictBoundaryLoading,
+      findMultipleAgriculturalReserveLoading,
+      findMultipleFirstNationsBoundaryLoading,
     ],
   );
 };

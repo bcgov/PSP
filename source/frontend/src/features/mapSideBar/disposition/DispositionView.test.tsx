@@ -23,6 +23,10 @@ import { act, cleanup, render, RenderOptions, userEvent } from '@/utils/test-uti
 import { http, HttpResponse } from 'msw';
 import { createRef } from 'react';
 import DispositionView, { IDispositionViewProps } from './DispositionView';
+import { usePropertyOperationRepository } from '@/hooks/repositories/usePropertyOperationRepository';
+import { AxiosResponse } from 'axios';
+import { ApiGen_Concepts_PropertyOperation } from '@/models/api/generated/ApiGen_Concepts_PropertyOperation';
+import { IResponseWrapper } from '@/hooks/util/useApiRequestWrapper';
 
 // mock auth library
 
@@ -90,6 +94,14 @@ vi.mocked(useProjectProvider).mockReturnValue({
 } as unknown as ReturnType<typeof useProjectProvider>);
 
 vi.mock('@/hooks/repositories/useHistoricalNumberRepository');
+
+const mockGetPropertyOperations = vi.fn();
+vi.mock('@/hooks/repositories/usePropertyOperationRepository');
+vi.mocked(usePropertyOperationRepository).mockReturnValue({
+  getPropertyOperations: { execute: mockGetPropertyOperations } as unknown as IResponseWrapper<
+    (propertyId: number) => Promise<AxiosResponse<ApiGen_Concepts_PropertyOperation[], any>>
+  >,
+} as unknown as ReturnType<typeof usePropertyOperationRepository>);
 
 const DEFAULT_PROPS: IDispositionViewProps = {
   onClose,

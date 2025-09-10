@@ -15,7 +15,12 @@ import { useTenant } from '@/tenants';
 export const useLegalAdminBoundariesMapLayer = () => {
   const { alrLayerUrl, municipalLayerUrl } = useTenant();
 
-  const { findMultipleWhereContainsWrapped: findOneAlrWrapped_ } = useLayerQuery(alrLayerUrl);
+  const {
+    findMultipleWhereContainsWrapped: findOneAlrWrapped_,
+    findMultipleWhereContainsBoundaryWrapped: findMultipleAlrBoundaryWrapped_,
+  } = useLayerQuery(alrLayerUrl);
+  const findMultipleAlrBoundaryWrappedExecute = findMultipleAlrBoundaryWrapped_.execute;
+  const findMultipleAlrBoundaryWrappedLoading = findMultipleAlrBoundaryWrapped_.loading;
   const findOneAlrWrappedExecute = findOneAlrWrapped_.execute;
   const findOneAlrWrappedLoading = findOneAlrWrapped_.loading;
 
@@ -51,6 +56,21 @@ export const useLegalAdminBoundariesMapLayer = () => {
         : undefined;
     },
     [findOneAlrWrappedExecute],
+  );
+
+  const findMultipleAgriculturalReserveBoundary = useCallback(
+    async (boundary: Geometry, geometryName?: string, spatialReferenceId?: number) => {
+      const featureCollection = await findMultipleAlrBoundaryWrappedExecute(
+        boundary,
+        geometryName,
+        spatialReferenceId,
+      );
+
+      return featureCollection as
+        | FeatureCollection<Geometry, WHSE_AgriculturalLandReservePoly_Feature_Properties>
+        | undefined;
+    },
+    [findMultipleAlrBoundaryWrappedExecute],
   );
 
   const findOneMunicipality = useCallback(
@@ -114,6 +134,8 @@ export const useLegalAdminBoundariesMapLayer = () => {
     () => ({
       findOneAgriculturalReserve,
       findOneAgriculturalReserveLoading: findOneAlrWrappedLoading,
+      findMultipleAgriculturalReserveBoundary,
+      findMultipleAgriculturalReserveLoading: findMultipleAlrBoundaryWrappedLoading,
       findMultipleMunicipality,
       findMultipleMunicipalLoading: findMultipleMunicipalWrappedLoading,
       findMultipleMunicipalityBoundary,
@@ -124,6 +146,8 @@ export const useLegalAdminBoundariesMapLayer = () => {
     [
       findOneAgriculturalReserve,
       findOneAlrWrappedLoading,
+      findMultipleAgriculturalReserveBoundary,
+      findMultipleAlrBoundaryWrappedLoading,
       findMultipleMunicipality,
       findMultipleMunicipalWrappedLoading,
       findMultipleMunicipalityBoundary,

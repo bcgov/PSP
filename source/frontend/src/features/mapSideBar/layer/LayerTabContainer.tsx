@@ -7,13 +7,16 @@ import { exists } from '@/utils';
 import { ComposedProperty } from '../property/ComposedProperty';
 import { InventoryTabNames } from '../property/InventoryTabs';
 import {
+  alrLayerConfig,
+  electoralLayerConfig,
+  firstNationsLayerConfig,
   getDynamicFeatureConfig,
-  highwayLayerConfig,
   municipalityLayerConfig,
   parcelLayerConfig,
   pimsLayerConfig,
 } from './constants';
 import { ContentConfig } from './LayerContent';
+import { ILayerTabCollapsedViewProps } from './LayerTabCollapsedView';
 import { ILayerTabViewProps } from './LayerTabView';
 
 export interface LayerData {
@@ -23,12 +26,17 @@ export interface LayerData {
   data: GeoJsonProperties;
   config: ContentConfig;
   tab: InventoryTabNames;
+  group?: string;
 }
+
+type LayerTabViewComponent =
+  | React.FunctionComponent<React.PropsWithChildren<ILayerTabViewProps>>
+  | React.FunctionComponent<React.PropsWithChildren<ILayerTabCollapsedViewProps>>;
 
 interface ILayerTabContainer {
   composedProperty: ComposedProperty | null;
   activeTab: InventoryTabNames;
-  View: React.FunctionComponent<React.PropsWithChildren<ILayerTabViewProps>>;
+  View: LayerTabViewComponent;
 }
 
 // Helper to build LayerData objects
@@ -39,6 +47,7 @@ function buildLayerData({
   config,
   dynamicConfig = false,
   totalCount,
+  group,
 }: {
   features?: Feature[];
   titlePrefix: string;
@@ -46,6 +55,7 @@ function buildLayerData({
   config: ContentConfig;
   dynamicConfig?: boolean;
   totalCount?: number;
+  group?: string;
 }): LayerData[] {
   if (!exists(features) || !features?.length) return [];
   return features.map((feature, index) => ({
@@ -60,6 +70,7 @@ function buildLayerData({
     feature,
     config: dynamicConfig ? getDynamicFeatureConfig(feature) : config,
     tab,
+    group,
   }));
 }
 
@@ -69,14 +80,15 @@ export const LayerTabContainer: React.FC<React.PropsWithChildren<ILayerTabContai
   View,
 }) => {
   const [activePage, setActivePage] = useState<number>(0);
+  const [activeGroupedPages, setActiveGroupedPages] = useState<Record<string, number>>({});
 
   useEffect(() => {
     setActivePage(0); // reset the page whenever the tab changes.
+    setActiveGroupedPages({}); // reset grouped pages as well
   }, [activeTab]);
 
   const layersData = useMemo(() => {
     if (!composedProperty) return [];
-
     const crownFeaturesTotal =
       (composedProperty.crownTenureFeatures?.length || 0) +
       (composedProperty.crownLeaseFeatures?.length || 0) +
@@ -111,6 +123,7 @@ export const LayerTabContainer: React.FC<React.PropsWithChildren<ILayerTabContai
         tab: InventoryTabNames.crown,
         config: {},
         dynamicConfig: true,
+        totalCount: crownFeaturesTotal,
       }),
       ...buildLayerData({
         features: composedProperty.crownLeaseFeatures,
@@ -118,6 +131,7 @@ export const LayerTabContainer: React.FC<React.PropsWithChildren<ILayerTabContai
         tab: InventoryTabNames.crown,
         config: {},
         dynamicConfig: true,
+        totalCount: crownFeaturesTotal,
       }),
       ...buildLayerData({
         features: composedProperty.crownInventoryFeatures,
@@ -125,6 +139,7 @@ export const LayerTabContainer: React.FC<React.PropsWithChildren<ILayerTabContai
         tab: InventoryTabNames.crown,
         config: {},
         dynamicConfig: true,
+        totalCount: crownFeaturesTotal,
       }),
       ...buildLayerData({
         features: composedProperty.crownInclusionFeatures,
@@ -132,25 +147,57 @@ export const LayerTabContainer: React.FC<React.PropsWithChildren<ILayerTabContai
         tab: InventoryTabNames.crown,
         config: {},
         dynamicConfig: true,
+        totalCount: crownFeaturesTotal,
       }),
       ...buildLayerData({
         features: composedProperty.municipalityFeatures,
         titlePrefix: 'Municipality Information',
         tab: InventoryTabNames.other,
         config: municipalityLayerConfig,
+        group: 'municipality',
+      }),
+      ...buildLayerData({
+        features: composedProperty.alrFeatures,
+        titlePrefix: 'ALR Information',
+        tab: InventoryTabNames.other,
+        config: alrLayerConfig,
+        group: 'alr',
+      }),
+      ...buildLayerData({
+        features: composedProperty.firstNationFeatures,
+
+        titlePrefix: 'First Nations Information',
+        tab: InventoryTabNames.other,
+        config: firstNationsLayerConfig,
+        group: 'first_nations',
+      }),
+      ...buildLayerData({
+        features: composedProperty.electoralFeatures,
+        titlePrefix: 'Electoral District Information',
+        tab: InventoryTabNames.other,
+        config: electoralLayerConfig,
+        group: 'electoral',
       }),
       ...buildLayerData({
         features: composedProperty.highwayFeatures,
         titlePrefix: 'Highway Research',
         tab: InventoryTabNames.highway,
-        config: highwayLayerConfig,
+        config: {},
+        dynamicConfig: true,
       }),
     ];
   }, [composedProperty]);
 
   const activeLayersData = layersData.filter(ld => ld.tab === activeTab);
 
+  // Always pass all props, both views will ignore unused ones
   return (
-    <View layersData={activeLayersData} activePage={activePage} setActivePage={setActivePage} />
+    <View
+      layersData={activeLayersData}
+      activePage={activePage}
+      setActivePage={setActivePage}
+      activeGroupedPages={activeGroupedPages}
+      setActiveGroupedPages={setActiveGroupedPages}
+    />
   );
 };
