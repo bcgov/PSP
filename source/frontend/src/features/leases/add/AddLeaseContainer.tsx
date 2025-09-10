@@ -130,11 +130,13 @@ export const AddLeaseContainer: React.FunctionComponent<
 
     if (featuresWithAddresses?.length > 0) {
       // auto-select file region based upon the location of the property
-      const firstProperty = firstOrNull(leaseForm.properties);
+      const firstProperty = firstOrNull(
+        featuresWithAddresses?.map(f => PropertyForm.fromFeatureDataset(f.feature)),
+      );
       if (exists(firstProperty)) {
         leaseForm.regionId =
-          firstProperty.property?.regionName !== 'Cannot determine'
-            ? firstProperty.property?.region?.toString()
+          firstProperty?.regionName !== 'Cannot determine'
+            ? firstProperty?.region?.toString()
             : undefined;
       }
     }
