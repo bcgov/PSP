@@ -13,7 +13,7 @@ import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvi
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
 import { useQuery } from '@/hooks/use-query';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
-import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
+import { useEditPropertiesNotifier } from '@/hooks/useEditPropertiesNotifier';
 import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
@@ -64,37 +64,30 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
   }, [getAcquisitionFile, parentAcquisitionFile, parentId]);
 
   const mapMachine = useMapStateMachine();
-  const selectedFeatureDatasets = mapMachine.selectedFeatures ?? [];
 
-  // Get PropertyForms with addresses for all selected features
-  const { featuresWithAddresses, bcaLoading } =
-    useFeatureDatasetsWithAddresses(selectedFeatureDatasets);
+  const { featuresWithAddresses, bcaLoading } = useEditPropertiesNotifier(formikRef, 'properties');
 
-  const initialForm = useMemo(() => {
-    const acquisitionForm = exists(parentAcquisitionFile)
-      ? AcquisitionForm.fromParentFileApi(parentAcquisitionFile)
-      : new AcquisitionForm();
+  useEffect(() => {
+    if (featuresWithAddresses?.length > 0 && !isSubFile && !formikRef?.current?.values?.region) {
+      const firstPropertyFeature = firstOrNull(featuresWithAddresses)?.feature;
 
-    if (featuresWithAddresses?.length > 0 && !isSubFile) {
-      acquisitionForm.properties = featuresWithAddresses.map(obj => {
-        const property = PropertyForm.fromFeatureDataset(obj.feature);
-        if (exists(obj.address)) {
-          property.address = obj.address;
-        }
-        return property;
-      });
-
-      const firstProperty = firstOrNull(acquisitionForm.properties);
-      if (exists(firstProperty)) {
-        acquisitionForm.region =
+      if (exists(firstPropertyFeature)) {
+        const firstProperty = PropertyForm.fromFeatureDataset(firstPropertyFeature);
+        formikRef?.current?.setFieldValue(
+          'region',
           firstProperty.regionName !== 'Cannot determine'
             ? firstProperty.region?.toString()
-            : undefined;
+            : undefined,
+        );
       }
     }
+  }, [featuresWithAddresses, isSubFile]);
 
-    return acquisitionForm;
-  }, [parentAcquisitionFile, featuresWithAddresses, isSubFile]);
+  const initialForm = useMemo(() => {
+    return exists(parentAcquisitionFile)
+      ? AcquisitionForm.fromParentFileApi(parentAcquisitionFile)
+      : new AcquisitionForm();
+  }, [parentAcquisitionFile]);
 
   const handleSave = async () => {
     // Sets the formik field `isValid` to false at start

@@ -22,6 +22,7 @@ import { SideBarContextProvider } from '../../context/sidebarContext';
 import { DispositionFormModel } from '../models/DispositionFormModel';
 import AddDispositionContainer, { IAddDispositionContainerProps } from './AddDispositionContainer';
 import { IAddDispositionContainerViewProps } from './AddDispositionContainerView';
+import { PropertyForm } from '../../shared/models';
 
 const history = createMemoryHistory();
 
@@ -120,64 +121,61 @@ describe('Add Disposition Container component', () => {
   it('should preserve the order of properties when saving', async () => {
     const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
-      selectedFeatures: [
-        {
-          location: { lng: -120.69195885, lat: 50.25163372 },
-          fileLocation: null,
-          pimsFeature: null,
-          parcelFeature: getMockFullyAttributedParcel('111-111-111'),
-          regionFeature: feature(getMockPolygon(), {
-            ...emptyRegion,
-            REGION_NUMBER: 1,
-            REGION_NAME: 'South Coast Region',
-          }),
-          districtFeature: null,
-          selectingComponentId: null,
-          municipalityFeature: null,
-        },
-        {
-          location: { lng: -120.69195885, lat: 50.25163372 },
-          fileLocation: null,
-          pimsFeature: null,
-          parcelFeature: getMockFullyAttributedParcel('222-222-222'),
-          regionFeature: feature(getMockPolygon(), {
-            ...emptyRegion,
-            REGION_NUMBER: 1,
-            REGION_NAME: 'South Coast Region',
-          }),
-          districtFeature: null,
-          selectingComponentId: null,
-          municipalityFeature: null,
-        },
-        {
-          location: { lng: -120.69195885, lat: 50.25163372 },
-          fileLocation: null,
-          pimsFeature: null,
-          parcelFeature: getMockFullyAttributedParcel('333-333-333'),
-          regionFeature: feature(getMockPolygon(), {
-            ...emptyRegion,
-            REGION_NUMBER: 1,
-            REGION_NAME: 'South Coast Region',
-          }),
-          districtFeature: null,
-          selectingComponentId: null,
-          municipalityFeature: null,
-        },
-      ],
     };
+    const selectedFeatures = [
+      {
+        location: { lng: -120.69195885, lat: 50.25163372 },
+        fileLocation: null,
+        pimsFeature: null,
+        parcelFeature: getMockFullyAttributedParcel('111-111-111'),
+        regionFeature: feature(getMockPolygon(), {
+          ...emptyRegion,
+          REGION_NUMBER: 1,
+          REGION_NAME: 'South Coast Region',
+        }),
+        districtFeature: null,
+        selectingComponentId: null,
+        municipalityFeature: null,
+      },
+      {
+        location: { lng: -120.69195885, lat: 50.25163372 },
+        fileLocation: null,
+        pimsFeature: null,
+        parcelFeature: getMockFullyAttributedParcel('222-222-222'),
+        regionFeature: feature(getMockPolygon(), {
+          ...emptyRegion,
+          REGION_NUMBER: 1,
+          REGION_NAME: 'South Coast Region',
+        }),
+        districtFeature: null,
+        selectingComponentId: null,
+        municipalityFeature: null,
+      },
+      {
+        location: { lng: -120.69195885, lat: 50.25163372 },
+        fileLocation: null,
+        pimsFeature: null,
+        parcelFeature: getMockFullyAttributedParcel('333-333-333'),
+        regionFeature: feature(getMockPolygon(), {
+          ...emptyRegion,
+          REGION_NUMBER: 1,
+          REGION_NAME: 'South Coast Region',
+        }),
+        districtFeature: null,
+        selectingComponentId: null,
+        municipalityFeature: null,
+      },
+    ];
     const formikHelpers: Partial<FormikHelpers<DispositionFormModel>> = {
       setSubmitting: vi.fn(),
       resetForm: vi.fn(),
     };
     await setup({ mockMapMachine: testMockMachine });
 
-    expect(viewProps?.dispositionInitialValues.fileProperties).toHaveLength(3);
-
     await act(async () => {
-      viewProps?.onSubmit(
-        viewProps?.dispositionInitialValues,
-        formikHelpers as FormikHelpers<DispositionFormModel>,
-      );
+      const model = new DispositionFormModel();
+      model.fileProperties = selectedFeatures.map(sf => PropertyForm.fromFeatureDataset(sf));
+      viewProps?.onSubmit(model, formikHelpers as FormikHelpers<DispositionFormModel>);
     });
 
     expect(mockCreateDispositionFile.execute).toHaveBeenCalledWith(
