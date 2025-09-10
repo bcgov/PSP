@@ -6,7 +6,7 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvider';
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
-import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
+import { useEditPropertiesNotifier } from '@/hooks/useEditPropertiesNotifier';
 import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
@@ -56,44 +56,40 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({
   );
 
   const mapMachine = useMapStateMachine();
-  const selectedFeatureDatasets = mapMachine.selectedFeatures ?? [];
+  const { featuresWithAddresses, bcaLoading } = useEditPropertiesNotifier(
+    formikRef,
+    'fileProperties',
+  );
 
-  // Get PropertyForms with addresses for all selected features
-  const { featuresWithAddresses, bcaLoading } =
-    useFeatureDatasetsWithAddresses(selectedFeatureDatasets);
+  useEffect(() => {
+    if (featuresWithAddresses?.length > 0 && !formikRef?.current?.values?.regionCode) {
+      const firstPropertyFeature = firstOrNull(featuresWithAddresses)?.feature;
 
-  const initialForm = useMemo(() => {
-    const dispositionForm = new DispositionFormModel();
-    // support creating a new disposition file from the map popup
-    if (featuresWithAddresses?.length > 0) {
-      dispositionForm.fileProperties = featuresWithAddresses.map(obj => {
-        const property = PropertyForm.fromFeatureDataset(obj.feature);
-        if (exists(obj.address)) {
-          property.address = obj.address;
-        }
-        return property;
-      });
-      // auto-select file region based upon the location of the first property added to the file
-      const firstProperty = firstOrNull(dispositionForm.fileProperties);
-      if (exists(firstProperty)) {
-        dispositionForm.regionCode =
-          firstProperty.regionName !== 'Cannot determine'
-            ? firstProperty.region?.toString() ?? null
-            : null;
+      if (exists(firstPropertyFeature)) {
+        const firstProperty = PropertyForm.fromFeatureDataset(firstPropertyFeature);
+        formikRef?.current?.setFieldValue(
+          'regionCode',
+          firstProperty.regionName !== 'Cannot determine' ? firstProperty.region : undefined,
+        );
       }
     }
-    return dispositionForm;
   }, [featuresWithAddresses]);
+
+  const initialForm = useMemo(() => {
+    return new DispositionFormModel();
+  }, []);
 
   // Require user confirmation before adding a property to file
   // This is the flow for Map Marker -> right-click -> create Disposition File
   useEffect(() => {
     const runAsync = async () => {
-      if (exists(initialForm) && exists(formikRef.current) && needsUserConfirmation) {
-        if (initialForm.fileProperties.length > 0) {
+      const incomingProperties =
+        featuresWithAddresses?.map(f => PropertyForm.fromFeatureDataset(f.feature)) ?? [];
+      if (exists(incomingProperties) && exists(formikRef.current) && needsUserConfirmation) {
+        if (incomingProperties.length > 0) {
           // Check all properties for confirmation
           const needsConfirmation = await Promise.all(
-            initialForm.fileProperties.map(formProperty => confirmBeforeAdd(formProperty)),
+            incomingProperties.map(formProperty => confirmBeforeAdd(formProperty)),
           );
           if (needsConfirmation.some(confirm => confirm)) {
             setModalContent({
@@ -112,16 +108,16 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({
               handleOk: () => {
                 // allow the property to be added to the file being created
                 formikRef.current.resetForm();
-                formikRef.current.setFieldValue('fileProperties', initialForm.fileProperties);
+                formikRef.current.setFieldValue('properties', incomingProperties);
                 setDisplayModal(false);
                 // show the user confirmation modal only once when creating a file
                 setNeedsUserConfirmation(false);
               },
               handleCancel: () => {
                 // clear out the properties array as the user did not agree to the popup
-                initialForm.fileProperties.splice(0, initialForm.fileProperties.length);
+                incomingProperties.splice(0, incomingProperties.length);
                 formikRef.current.resetForm();
-                formikRef.current.setFieldValue('fileProperties', initialForm.fileProperties);
+                formikRef.current.setFieldValue('properties', incomingProperties);
                 setDisplayModal(false);
                 // show the user confirmation modal only once when creating a file
                 setNeedsUserConfirmation(false);
@@ -134,7 +130,14 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({
     };
 
     runAsync();
-  }, [confirmBeforeAdd, initialForm, needsUserConfirmation, setDisplayModal, setModalContent]);
+  }, [
+    confirmBeforeAdd,
+    featuresWithAddresses,
+    initialForm,
+    needsUserConfirmation,
+    setDisplayModal,
+    setModalContent,
+  ]);
 
   const handleCancel = useCallback(() => onClose(), [onClose]);
 
