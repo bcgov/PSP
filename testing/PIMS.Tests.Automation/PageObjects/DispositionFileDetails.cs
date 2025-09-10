@@ -7,121 +7,121 @@ namespace PIMS.Tests.Automation.PageObjects
     public class DispositionFileDetails : PageObjectBase
     {
         //Disposition Files Menu Elements
-        private By menuDispositionButton = By.XPath("//body/div[@id='root']/div[2]/div[1]/div[1]/div[@data-testid='nav-tooltip-disposition']/a");
-        private By createDispositionFileButton = By.XPath("//a[contains(text(),'Create a Disposition File')]");
+        private readonly By menuDispositionButton = By.XPath("//body/div[@id='root']/div[2]/div[1]/div[1]/div[@data-testid='nav-tooltip-disposition']/a");
+        private readonly By createDispositionFileButton = By.XPath("//a[contains(text(),'Create a Disposition File')]");
 
-        private By dispositionFileSummaryBttn = By.XPath("//div[contains(text(),'File Summary')]");
-        private By dispositionFileDetailsTab = By.XPath("//a[contains(text(),'File Details')]");
+        private readonly By dispositionFileSummaryBttn = By.XPath("//div[contains(text(),'File Summary')]");
+        private readonly By dispositionFileDetailsTab = By.XPath("//a[contains(text(),'File Details')]");
 
         //Disposition Edit Details button
-        private By dispositionFileEditButton = By.CssSelector("button[title='Edit disposition file']");
+        private readonly By dispositionFileEditButton = By.CssSelector("button[title='Edit disposition file']");
 
         //Disposition File Details View and Create Forms Elements
-        private By dispositionFileViewTitle = By.XPath("//html[1]/body[1]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/h1[contains(text(),'Disposition File')]");
-        private By dispositionFileMainFormDiv = By.XPath("//h1[contains(text(),'Create Disposition File')]/parent::div/parent::div/parent::div/parent::div");
+        private readonly By dispositionFileViewTitle = By.XPath("//div[@data-testid='form-title']");
+        private readonly By dispositionFileMainFormDiv = By.XPath("//h1[contains(text(),'Create Disposition File')]/parent::div/parent::div/parent::div/parent::div");
 
-        private By dispositionFileCreateTitle = By.XPath("//*[contains(text(),'Create Disposition File')]");
-        private By dispositionFileCloseFormBttn = By.XPath("//h1[contains(text(),'Disposition File')]/parent::div/following-sibling::div/*[3]");
+        private readonly By dispositionFileCreateTitle = By.XPath("//div[@data-testid='form-title']");
+        private readonly By dispositionFileCloseFormBttn = By.XPath("//h1[contains(text(),'Disposition File')]/parent::div/following-sibling::div/*[3]");
 
-        private By dispositionFileHeaderCodeLabel = By.XPath("//label[contains(text(), 'File:')]");
-        private By dispositionFileHeaderCodeContent = By.XPath("//label[contains(text(), 'File:')]/parent::div/following-sibling::div");
-        private By dispositionFileHistoricalLabel = By.XPath("//label[contains(text(), 'Historical file')]");
-        private By dispositionFileHistoricalContent = By.XPath("//label[contains(text(), 'Historical file')]/parent::div/following-sibling::div/div/span");
-        private By dispositionFileHeaderCreatedDateLabel = By.XPath("//strong[contains(text(), 'Created')]");
-        private By dispositionFileHeaderCreatedDateContent = By.XPath("//strong[contains(text(), 'Created')]/parent::span");
-        private By dispositionFileHeaderCreatedByContent = By.XPath("//strong[contains(text(),'Created')]/parent::span/span[@id='userNameTooltip']/strong");
-        private By dispositionFileHeaderLastUpdateLabel = By.XPath("//strong[contains(text(), 'Updated')]");
-        private By dispositionFileHeaderLastUpdateContent = By.XPath("//strong[contains(text(), 'Updated')]/parent::span");
-        private By dispositionFileHeaderLastUpdateByContent = By.XPath("//strong[contains(text(), 'Updated')]/parent::span/span[@id='userNameTooltip']/strong");
-        private By dispositionFileHeaderStatusContent = By.XPath("//b[contains(text(),'File')]/parent::span/following-sibling::div");
+        private readonly By dispositionFileHeaderCodeLabel = By.XPath("//label[contains(text(), 'File:')]");
+        private readonly By dispositionFileHeaderCodeContent = By.XPath("//label[contains(text(), 'File:')]/parent::div/following-sibling::div");
+        private readonly By dispositionFileHistoricalLabel = By.XPath("//label[contains(text(), 'Historical file')]");
+        private readonly By dispositionFileHistoricalContent = By.XPath("//label[contains(text(), 'Historical file')]/parent::div/following-sibling::div/div/span");
+        private readonly By dispositionFileHeaderCreatedDateLabel = By.XPath("//strong[contains(text(), 'Created')]");
+        private readonly By dispositionFileHeaderCreatedDateContent = By.XPath("//strong[contains(text(), 'Created')]/parent::span");
+        private readonly By dispositionFileHeaderCreatedByContent = By.XPath("//strong[contains(text(),'Created')]/parent::span/span[@id='userNameTooltip']/strong");
+        private readonly By dispositionFileHeaderLastUpdateLabel = By.XPath("//strong[contains(text(), 'Updated')]");
+        private readonly By dispositionFileHeaderLastUpdateContent = By.XPath("//strong[contains(text(), 'Updated')]/parent::span");
+        private readonly By dispositionFileHeaderLastUpdateByContent = By.XPath("//strong[contains(text(), 'Updated')]/parent::span/span[@id='userNameTooltip']/strong");
+        private readonly By dispositionFileHeaderStatusContent = By.XPath("//b[contains(text(),'File')]/parent::span/following-sibling::div");
 
-        private By dispositionFileStatusSelect = By.Id("input-fileStatusTypeCode");
-        private By dispositionFileProjectSubtitle = By.XPath("//h2/div/div[contains(text(), 'Project')]");
-        private By dispositionFileProjectLabel = By.XPath("//div[@class='collapse show']/div/div/label[contains(text(),'Ministry project')]");
-        private By dispositionFileProjectInput = By.CssSelector("input[id='typeahead-project']");
-        private By dispositionFileProject1stOption = By.CssSelector("div[id='typeahead-project'] a");
-        private By dispositionFileProjectContent = By.XPath("//div[@class='collapse show']/div/div/label[contains(text(),'Ministry project')]/parent::div/following-sibling::div");
-        private By dispositionFileProjectProductLabel = By.XPath("//label[contains(text(),'Product')]");
-        private By dispositionFileProjectProductSelect = By.Id("input-productId");
-        private By dispositionFileProjectProductContent = By.XPath("//label[contains(text(),'Product')]/parent::div/following-sibling::div");
-        private By dispositionFileProjectFundingLabel = By.XPath("//label[contains(text(),'Funding')]");
-        private By dispositionFileProjectFundingInput = By.Id("input-fundingTypeCode");
-        private By dispositionFileProjectFundingContent = By.XPath("//label[contains(text(),'Funding')]/parent::div/following-sibling::div");
-        private By dispositionFileProjectOtherFundingLabel = By.XPath("//label[contains(text(),'Other funding')]");
-        private By dispositionFileProjectOtherFundingInput = By.Id("input-fundingTypeOtherDescription");
-        private By dispositionFileProjectOtherFundingContent = By.XPath("//label[contains(text(),'Other funding')]/parent::div/following-sibling::div");
+        private readonly By dispositionFileStatusSelect = By.Id("input-fileStatusTypeCode");
+        private readonly By dispositionFileProjectSubtitle = By.XPath("(//div[contains(text(),'Project')])[1]");
+        private readonly By dispositionFileProjectLabel = By.XPath("//label[normalize-space()='Ministry project:']");
+        private readonly By dispositionFileProjectInput = By.CssSelector("input[id='typeahead-project']");
+        private readonly By dispositionFileProject1stOption = By.CssSelector("div[id='typeahead-project'] a");
+        private readonly By dispositionFileProjectContent = By.XPath("//div[@class='collapse show']/div/div/label[contains(text(),'Ministry project')]/parent::div/following-sibling::div");
+        private readonly By dispositionFileProjectProductLabel = By.XPath("//label[contains(text(),'Product')]");
+        private readonly By dispositionFileProjectProductSelect = By.Id("input-productId");
+        private readonly By dispositionFileProjectProductContent = By.XPath("//label[contains(text(),'Product')]/parent::div/following-sibling::div");
+        private readonly By dispositionFileProjectFundingLabel = By.XPath("//label[contains(text(),'Funding')]");
+        private readonly By dispositionFileProjectFundingInput = By.Id("input-fundingTypeCode");
+        private readonly By dispositionFileProjectFundingContent = By.XPath("//label[contains(text(),'Funding')]/parent::div/following-sibling::div");
+        private readonly By dispositionFileProjectOtherFundingLabel = By.XPath("//label[contains(text(),'Other funding')]");
+        private readonly By dispositionFileProjectOtherFundingInput = By.Id("input-fundingTypeOtherDescription");
+        private readonly By dispositionFileProjectOtherFundingContent = By.XPath("//label[contains(text(),'Other funding')]/parent::div/following-sibling::div");
 
-        private By dispositionFileScheduleSubtitle = By.XPath("//div[contains(text(),'Schedule')]");
-        private By dispositionFileScheduleAssignedDateLabel = By.XPath("//label[contains(text(),'Assigned date')]");
-        private By dispositionFileAssignedDateInput = By.Id("datepicker-assignedDate");
-        private By dispositionFileScheduleAssignedDateContent = By.XPath("//label[contains(text(),'Assigned date')]/parent::div/following-sibling::div");
-        private By dispositionFileScheduleCompletedDateLabel = By.XPath("//label[contains(text(),'Disposition completed date')]");
-        private By dispositionFileCompletedDateLabelInput = By.Id("datepicker-completionDate");
-        private By dispositionFileScheduleCompletedDateContent = By.XPath("//label[contains(text(),'sition completed date')]/parent::div/following-sibling::div");
+        private readonly By dispositionFileScheduleSubtitle = By.XPath("//div[contains(text(),'Schedule')]");
+        private readonly By dispositionFileScheduleAssignedDateLabel = By.XPath("//label[contains(text(),'Assigned date')]");
+        private readonly By dispositionFileAssignedDateInput = By.Id("datepicker-assignedDate");
+        private readonly By dispositionFileScheduleAssignedDateContent = By.XPath("//label[contains(text(),'Assigned date')]/parent::div/following-sibling::div");
+        private readonly By dispositionFileScheduleCompletedDateLabel = By.XPath("//label[contains(text(),'Disposition completed date')]");
+        private readonly By dispositionFileCompletedDateLabelInput = By.Id("datepicker-completionDate");
+        private readonly By dispositionFileScheduleCompletedDateContent = By.XPath("//label[contains(text(),'sition completed date')]/parent::div/following-sibling::div");
 
-        private By dispositionFileDetailsSubtitle = By.XPath("//div[contains(text(),'Disposition Details')]");
+        private readonly By dispositionFileDetailsSubtitle = By.XPath("//div[contains(text(),'Disposition Details')]");
 
-        private By dispositionFileDetailsNameLabel = By.XPath("//label[contains(text(),'Disposition file name')]");
-        private By dispositionFileDetailsNameContent = By.XPath("//label[contains(text(),'Disposition file name')]/parent::div/following-sibling::div");
-        private By dispositionFileDetailsNameInput = By.Id("input-fileName");
+        private readonly By dispositionFileDetailsNameLabel = By.XPath("//label[contains(text(),'Disposition file name')]");
+        private readonly By dispositionFileDetailsNameContent = By.XPath("//label[contains(text(),'Disposition file name')]/parent::div/following-sibling::div");
+        private readonly By dispositionFileDetailsNameInput = By.Id("input-fileName");
 
-        private By dispositionFileDetailsReferenceNumberLabel = By.XPath("//label[contains(text(),'Reference number')]");
-        private By dispositionFileDetailsReferenceNumberTooltip = By.XPath("//label[contains(text(),'Reference number')]/span/span[@data-testid='tooltip-icon-section-field-tooltip']");
-        private By dispositionFileDetailsReferenceNumberContent = By.XPath("//label[contains(text(),'Reference number')]/parent::div/following-sibling::div");
-        private By dispositionFileDetailsReferenceNumberInput = By.Id("input-referenceNumber");
+        private readonly By dispositionFileDetailsReferenceNumberLabel = By.XPath("//label[contains(text(),'Reference number')]");
+        private readonly By dispositionFileDetailsReferenceNumberTooltip = By.XPath("//label[contains(text(),'Reference number')]/span/span[@data-testid='tooltip-icon-section-field-tooltip']");
+        private readonly By dispositionFileDetailsReferenceNumberContent = By.XPath("//label[contains(text(),'Reference number')]/parent::div/following-sibling::div");
+        private readonly By dispositionFileDetailsReferenceNumberInput = By.Id("input-referenceNumber");
        
-        private By dispositionFileDetailsStatusLabel = By.XPath("//label[contains(text(),'Disposition status')]");
-        private By dispositionFileDetailsStatusContent = By.XPath("//label[contains(text(),'Disposition status')]/parent::div/following-sibling::div");
-        private By dispositionFileDetailsStatusSelect = By.Id("input-dispositionStatusTypeCode");
+        private readonly By dispositionFileDetailsStatusLabel = By.XPath("//label[contains(text(),'Disposition status')]");
+        private readonly By dispositionFileDetailsStatusContent = By.XPath("//label[contains(text(),'Disposition status')]/parent::div/following-sibling::div");
+        private readonly By dispositionFileDetailsStatusSelect = By.Id("input-dispositionStatusTypeCode");
         
-        private By dispositionFileDetailsTypeLabel = By.XPath("//label[contains(text(),'Disposition type')]");
-        private By dispositionFileDetailsTypeContent = By.XPath("//label[contains(text(),'Disposition type')]/parent::div/following-sibling::div");
-        private By dispositionFileDetailsTypeSelect = By.Id("input-dispositionTypeCode");
+        private readonly By dispositionFileDetailsTypeLabel = By.XPath("//label[contains(text(),'Disposition type')]");
+        private readonly By dispositionFileDetailsTypeContent = By.XPath("//label[contains(text(),'Disposition type')]/parent::div/following-sibling::div");
+        private readonly By dispositionFileDetailsTypeSelect = By.Id("input-dispositionTypeCode");
 
-        private By dispositionFileDetailsOtherTransferTypeLabel = By.XPath("//label[contains(text(),'Other (disposition type)')]");
-        private By dispositionFileDetailsOtherTransferTypeContent = By.XPath("//label[contains(text(),'Other (disposition type)')]/parent::div/following-sibling::div");
-        private By dispositionFileDetailsOtherTransferTypeInput = By.Id("input-dispositionTypeOther");
+        private readonly By dispositionFileDetailsOtherTransferTypeLabel = By.XPath("//label[contains(text(),'Other (disposition type)')]");
+        private readonly By dispositionFileDetailsOtherTransferTypeContent = By.XPath("//label[contains(text(),'Other (disposition type)')]/parent::div/following-sibling::div");
+        private readonly By dispositionFileDetailsOtherTransferTypeInput = By.Id("input-dispositionTypeOther");
 
-        private By dispositionFileDetailsInitiatingDocumentLabel = By.XPath("//label[contains(text(),'Initiating document')]");
-        private By dispositionFileDetailsInitiatingDocumentContent = By.XPath("(//label[contains(text(),'Initiating document')]/parent::div/following-sibling::div)[1]");
-        private By dispositionFileDetailsInitiatingDocumentSelect = By.Id("input-initiatingDocumentTypeCode");
+        private readonly By dispositionFileDetailsInitiatingDocumentLabel = By.XPath("//label[contains(text(),'Initiating document')]");
+        private readonly By dispositionFileDetailsInitiatingDocumentContent = By.XPath("(//label[contains(text(),'Initiating document')]/parent::div/following-sibling::div)[1]");
+        private readonly By dispositionFileDetailsInitiatingDocumentSelect = By.Id("input-initiatingDocumentTypeCode");
 
-        private By dispositionFileDetailsOtherInitiatingDocumentLabel = By.XPath("//label[contains(text(),'Other (initiating document)')]");
-        private By dispositionFileDetailsInitiatingDocumentTooltip = By.XPath("(//label[contains(text(),'Initiating document')]/span/span[@data-testid='tooltip-icon-section-field-tooltip'])[1]");
-        private By dispositionFileDetailsOtherInitiatingDocumentContent = By.XPath("//label[contains(text(),'Other (initiating document)')]/parent::div/following-sibling::div");
-        private By dispositionFileDetailsOtherInitiatingDocumentInput = By.Id("input-initiatingDocumentTypeOther");
+        private readonly By dispositionFileDetailsOtherInitiatingDocumentLabel = By.XPath("//label[contains(text(),'Other (initiating document)')]");
+        private readonly By dispositionFileDetailsInitiatingDocumentTooltip = By.XPath("(//label[contains(text(),'Initiating document')]/span/span[@data-testid='tooltip-icon-section-field-tooltip'])[1]");
+        private readonly By dispositionFileDetailsOtherInitiatingDocumentContent = By.XPath("//label[contains(text(),'Other (initiating document)')]/parent::div/following-sibling::div");
+        private readonly By dispositionFileDetailsOtherInitiatingDocumentInput = By.Id("input-initiatingDocumentTypeOther");
 
-        private By dispositionFileDetailsInitiatingDocumentDateLabel = By.XPath("//label[contains(text(),'Initiating document date')]");
-        private By dispositionFileDetailsInitiatingDocumentDateContent = By.XPath("//label[contains(text(),'Initiating document date')]/parent::div/following-sibling::div");
-        private By dispositionFileDetailsInitiatingDocumentDateInput = By.Id("datepicker-initiatingDocumentDate");
+        private readonly By dispositionFileDetailsInitiatingDocumentDateLabel = By.XPath("//label[contains(text(),'Initiating document date')]");
+        private readonly By dispositionFileDetailsInitiatingDocumentDateContent = By.XPath("//label[contains(text(),'Initiating document date')]/parent::div/following-sibling::div");
+        private readonly By dispositionFileDetailsInitiatingDocumentDateInput = By.Id("datepicker-initiatingDocumentDate");
 
-        private By dispositionFileDetailsPhysicalFileLabel = By.XPath("//label[contains(text(),'Physical file status')]");
-        private By dispositionFileDetailsPhysicalFileContent = By.XPath("//label[contains(text(),'Physical file status')]/parent::div/following-sibling::div");
-        private By dispositionFileDetailsPhysicalFileSelect = By.Id("input-physicalFileStatusTypeCode");
+        private readonly By dispositionFileDetailsPhysicalFileLabel = By.XPath("//label[contains(text(),'Physical file status')]");
+        private readonly By dispositionFileDetailsPhysicalFileContent = By.XPath("//label[contains(text(),'Physical file status')]/parent::div/following-sibling::div");
+        private readonly By dispositionFileDetailsPhysicalFileSelect = By.Id("input-physicalFileStatusTypeCode");
 
-        private By dispositionFileDetailsInitiatingBranchLabel = By.XPath("//label[contains(text(),'Initiating branch')]");
-        private By dispositionFileDetailsInitiatingBranchContent = By.XPath("//label[contains(text(),'Initiating branch')]/parent::div/following-sibling::div");
-        private By dispositionFileDetailsInitiatingBranchSelect = By.Id("input-initiatingBranchTypeCode");
+        private readonly By dispositionFileDetailsInitiatingBranchLabel = By.XPath("//label[contains(text(),'Initiating branch')]");
+        private readonly By dispositionFileDetailsInitiatingBranchContent = By.XPath("//label[contains(text(),'Initiating branch')]/parent::div/following-sibling::div");
+        private readonly By dispositionFileDetailsInitiatingBranchSelect = By.Id("input-initiatingBranchTypeCode");
 
-        private By dispositionFileDetailsMOTIRegionLabel = By.XPath("//label[contains(text(),'Ministry region')]");
-        private By dispositionFileDetailsMOTIRegionContent = By.XPath("//label[contains(text(),'Ministry region')]/parent::div/following-sibling::div");
-        private By dispositionFileDetailsMOTIRegionSelect = By.Id("input-regionCode");
+        private readonly By dispositionFileDetailsMOTIRegionLabel = By.XPath("//label[contains(text(),'Ministry region')]");
+        private readonly By dispositionFileDetailsMOTIRegionContent = By.XPath("//label[contains(text(),'Ministry region')]/parent::div/following-sibling::div");
+        private readonly By dispositionFileDetailsMOTIRegionSelect = By.Id("input-regionCode");
 
         //Invalid Error messages elements
-        private By dispositionFileNameInvalidMessage = By.XPath("//div[contains(text(),'Disposition file name must be at most 200 characters')]");
-        private By dispositionFileReferenceNumberInvalidMessage = By.XPath("//div[contains(text(),'Disposition reference number must be at most 200 characters')]");
+        private readonly By dispositionFileNameInvalidMessage = By.XPath("//div[contains(text(),'Disposition file name must be at most 200 characters')]");
+        private readonly By dispositionFileReferenceNumberInvalidMessage = By.XPath("//div[contains(text(),'Disposition reference number must be at most 200 characters')]");
 
         //Team members static elements
-        private By dispositionFileTeamSubtitle = By.XPath("//div[contains(text(),'Disposition Team')]");
+        private readonly By dispositionFileTeamSubtitle = By.XPath("//div[contains(text(),'Disposition Team')]");
 
-        private By dispositionFileAddAnotherMemberLink = By.CssSelector("button[data-testid='add-team-member']");
-        private By dispositionFileTeamMembersGroup = By.XPath("//div[contains(text(),'Disposition Team')]/parent::div/parent::h2/following-sibling::div/div[@class='py-3 row']");
-        private By dispositionFileTeamFirstMemberDeleteBttn = By.XPath("//div[contains(text(),'Disposition Team')]/parent::div/parent::h2/following-sibling::div/div[@class='py-3 row'][1]/div[3]/button");
-        private By dispositionFileTeamInvalidTeamMemberMessage = By.XPath("//div[contains(text(),'Select a team member')]");
-        private By dispositionFileTeamInvalidProfileMessage = By.XPath("//div[contains(text(),'Select a profile')]");
+        private readonly By dispositionFileAddAnotherMemberLink = By.CssSelector("button[data-testid='add-team-member']");
+        private readonly By dispositionFileTeamMembersGroup = By.XPath("//div[contains(text(),'Disposition Team')]/parent::div/parent::h2/following-sibling::div/div[@class='py-3 row']");
+        private readonly By dispositionFileTeamFirstMemberDeleteBttn = By.XPath("//div[contains(text(),'Disposition Team')]/parent::div/parent::h2/following-sibling::div/div[@class='py-3 row'][1]/div[3]/button");
+        private readonly By dispositionFileTeamInvalidTeamMemberMessage = By.XPath("//div[contains(text(),'Select a team member')]");
+        private readonly By dispositionFileTeamInvalidProfileMessage = By.XPath("//div[contains(text(),'Select a profile')]");
 
         //Acquisition File Confirmation Modal Elements
-        private By dispositionFileConfirmationModal = By.CssSelector("div[class='modal-content']");
+        private readonly By dispositionFileConfirmationModal = By.CssSelector("div[class='modal-content']");
 
         private SharedSelectContact sharedSelectContact;
         private SharedFileProperties sharedFileProperties;
@@ -447,18 +447,18 @@ namespace PIMS.Tests.Automation.PageObjects
             return webDriver.FindElements(dispositionFileMainFormDiv).Count();
         }
 
-        //public string GetDispositionFileName()
-        //{
-        //    //WaitUntilVisible(dispositionFileHeaderCodeContent);
+        public string GetDispositionFileName()
+        {
+            WaitUntilVisible(dispositionFileHeaderCodeContent);
 
-        //    //var totalFileName = webDriver.FindElement(dispositionFileHeaderCodeContent).Text;
-        //    //return Regex.Match(totalFileName, "^[^ ]+").Value;
+            var totalFileName = webDriver.FindElement(dispositionFileHeaderCodeContent).Text;
+            return Regex.Match(totalFileName, "^[^ ]+").Value;
 
-        //}
+        }
 
         public void VerifyDispositionFileInitCreate()
         {
-            //AssertTrueIsDisplayed(dispositionFileCreateTitle);
+            AssertTrueIsDisplayed(dispositionFileCreateTitle);
 
             //Project
             AssertTrueIsDisplayed(dispositionFileProjectSubtitle);

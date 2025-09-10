@@ -506,6 +506,7 @@ exports[`WorklistView > matches snapshot with multiple parcels 1`] = `
     >
       <div
         class="c6 c7 row"
+        data-testid="search-property-0"
       >
         <div
           class="c8 col"
@@ -600,6 +601,7 @@ exports[`WorklistView > matches snapshot with multiple parcels 1`] = `
       </div>
       <div
         class="c6 c7 row"
+        data-testid="search-property-1"
       >
         <div
           class="c8 col"

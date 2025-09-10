@@ -1,7 +1,7 @@
 /* eslint-disable no-template-curly-in-string */
 import * as Yup from 'yup';
 
-import { PropertyTenureTypes } from '@/constants/index';
+import { ApiGen_CodeTypes_PropertyTenureTypes } from '@/models/api/generated/ApiGen_CodeTypes_PropertyTenureTypes';
 import { exists } from '@/utils';
 import { stringToBoolean } from '@/utils/formUtils';
 
@@ -17,7 +17,7 @@ export const UpdatePropertyDetailsYupSchema = Yup.object().shape({
   ),
   roadTypes: Yup.array().when('tenures', {
     is: (tenureArray: PropertyTenureFormModel[]) =>
-      tenureArray?.some(obj => obj.typeCode === PropertyTenureTypes.HighwayRoad),
+      tenureArray?.some(obj => obj?.typeCode === ApiGen_CodeTypes_PropertyTenureTypes.HWYROAD),
     then: Yup.array()
       .min(1, `Highway/Road is required if tenure status includes 'Highway/Road'`)
       .required(),

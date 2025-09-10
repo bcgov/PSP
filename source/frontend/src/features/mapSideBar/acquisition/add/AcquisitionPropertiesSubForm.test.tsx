@@ -3,6 +3,7 @@ import noop from 'lodash/noop';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
+import { getMockSelectedFeatureDataset } from '@/mocks/featureset.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
@@ -54,11 +55,30 @@ describe('AcquisitionProperties component', () => {
   let testForm: AcquisitionForm;
 
   beforeEach(() => {
+    const mockFeatureSet = getMockSelectedFeatureDataset();
     testForm = new AcquisitionForm();
     testForm.fileName = 'Test name';
     testForm.properties = [
-      PropertyForm.fromMapProperty({ pid: '123-456-789' }),
-      PropertyForm.fromMapProperty({ pin: '1111222' }),
+      PropertyForm.fromFeatureDataset({
+        ...mockFeatureSet,
+        pimsFeature: {
+          ...mockFeatureSet.pimsFeature,
+          properties: {
+            ...mockFeatureSet.pimsFeature?.properties,
+            PID_PADDED: '123-456-789',
+          },
+        },
+      }),
+      PropertyForm.fromFeatureDataset({
+        ...mockFeatureSet,
+        pimsFeature: {
+          ...mockFeatureSet.pimsFeature,
+          properties: {
+            ...mockFeatureSet.pimsFeature?.properties,
+            PIN: 1111222,
+          },
+        },
+      }),
     ];
   });
 

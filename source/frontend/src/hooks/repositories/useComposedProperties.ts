@@ -18,6 +18,7 @@ import {
   TANTALIS_CrownLandTenures_Feature_Properties,
 } from '@/models/layers/crownLand';
 import { EBC_ELECTORAL_DISTS_BS10_SVW_Feature_Properties } from '@/models/layers/electoralBoundaries';
+import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { ISS_ProvincialPublicHighway } from '@/models/layers/pimsHighwayLayer';
 import { useTenant } from '@/tenants/useTenant';
 import { exists, firstOrNull, isPlanNumberSPCP, isValidId } from '@/utils';
@@ -183,6 +184,9 @@ export const useComposedProperties = ({
 
   const getPimsProperty = getPropertyWrapper.execute;
   const getParcelMapParcel = findParcelByWrapper.execute;
+  const parcelResponse = findParcelByWrapper.response as
+    | FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties>
+    | undefined;
 
   const getBoundaries = useCallback(async () => {
     if (exists(id)) {
@@ -393,7 +397,7 @@ export const useComposedProperties = ({
       spcpOrder: getStrataPlanCommonProperty.response,
       pimsProperty: getPropertyWrapper.response,
       propertyAssociations: getPropertyAssociationsWrapper.response,
-      parcelMapFeatureCollection: findParcelByWrapper.response,
+      parcelMapFeatureCollection: parcelResponse,
       pimsGeoserverFeatureCollection:
         getPropertyWfsWrapper.response ?? getPropertyByBoundaryWfsWrapper.response,
       bcAssessmentSummary: getSummaryWrapper.response,
@@ -421,6 +425,7 @@ export const useComposedProperties = ({
     highwayResponse,
     municipalityResponse,
     getPropertyByBoundaryWfsWrapper.response,
+    parcelResponse,
     electoralResponse,
     alrResponse,
     firstNationsResponse,

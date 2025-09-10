@@ -8,6 +8,7 @@ import { FormLeaseProperty, getDefaultFormLease, LeaseFormModel } from '@/featur
 import { getMockPolygon } from '@/mocks/geometries.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
+import { getMockApiProperty } from '@/mocks/properties.mock';
 import { emptyRegion } from '@/models/layers/motRegionalBoundary';
 import { emptyPmbcParcel } from '@/models/layers/parcelMapBC';
 import { emptyPropertyLocation } from '@/models/layers/pimsPropertyLocationView';
@@ -69,17 +70,45 @@ describe('LeasePropertySelector component', () => {
     testForm = getDefaultFormLease();
     testForm.lFileNo = 'Test name';
     testForm.properties = [
-      FormLeaseProperty.fromMapProperty({
-        pid: '123-456-789',
-        latitude: 44,
-        longitude: -77,
-        fileLocation: { lat: 44, lng: -77 },
+      FormLeaseProperty.fromApi({
+        id: 1,
+        location: { coordinate: { y: 44, x: -77 } },
+        fileId: 1,
+        file: null,
+        isActive: null,
+        leaseArea: 0,
+        areaUnitType: null,
+        propertyName: null,
+        displayOrder: null,
+        rowVersion: 1,
+        propertyId: 1,
+        property: {
+          ...getMockApiProperty(),
+          pid: 123456789,
+          latitude: 44,
+          longitude: -77,
+        },
       }),
-      FormLeaseProperty.fromMapProperty({
-        pin: '1111222',
-        latitude: 44,
-        longitude: -77,
-        fileLocation: { lat: 44, lng: -77 },
+      FormLeaseProperty.fromApi({
+        id: 2,
+        location: { coordinate: { y: 44, x: -77 } },
+        fileId: 1,
+        file: null,
+        isActive: null,
+        leaseArea: 0,
+        areaUnitType: null,
+        propertyName: null,
+        displayOrder: null,
+        rowVersion: 1,
+        propertyId: 2,
+        property: {
+          ...getMockApiProperty(),
+          id: 2,
+          pin: 1111222,
+          pid: null,
+          latitude: 44,
+          longitude: -77,
+        },
       }),
     ];
   });

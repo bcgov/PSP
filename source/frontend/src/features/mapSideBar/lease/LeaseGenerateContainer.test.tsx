@@ -1,5 +1,5 @@
 import { getEmptyLease } from '@/models/defaultInitializers';
-import LeaseGenerateContainer, { ILeaseGenerateContainerProps } from './LeaseGenerateFormContainer';
+import LeaseGenerateContainer, { ILeaseGenerateContainerProps } from './LeaseGenerateContainer';
 import { act, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 import { Claims } from '@/constants';
 import { ApiGen_CodeTypes_LeaseLicenceTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseLicenceTypes';
@@ -9,7 +9,7 @@ import { ApiGen_CodeTypes_LeasePaymentReceivableTypes } from '@/models/api/gener
 import GenerateFormView from '../acquisition/common/GenerateForm/GenerateFormView';
 import { useGenerateLicenceOfOccupation } from '../acquisition/common/GenerateForm/hooks/useGenerateLicenceOfOccupation';
 
-const onGenerate = vi.fn();
+const onGenerate = vi.fn().mockResolvedValue({});
 vi.mock('../acquisition/common/GenerateForm/hooks/useGenerateLicenceOfOccupation');
 vi.mocked(useGenerateLicenceOfOccupation).mockReturnValue(onGenerate);
 

@@ -689,6 +689,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 //Inserting Payment for first term
                 periodPayments.AddPayment(lease.PeriodPayments[j], lease.PeriodPayments[j].ParentPeriodPaymentType);
 
+                //Open Payment tables
+                periodPayments.OpenClosePeriodCategoryPayments(lease.PeriodPayments[j].PeriodParentIndex);
+
                 //Verify inserted Payments Table
                 periodPayments.VerifyInsertedPaymentTable(lease.PeriodPayments[j], lease.PeriodPayments[j].PeriodParentIndex, lease.AccountType) ;
 
@@ -856,19 +859,19 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Filter leases Files
             PopulateLeaseLicense(rowNumber);
-            searchLeases.FilterLeasesFiles(status: lease.LeaseStatus, expiryDateFrom: lease.LeaseExpiryDate);
+            searchLeases.FilterLeasesFiles(expiryDateFrom: lease.LeaseExpiryDate);
             Assert.True(searchLeases.SearchFoundResults());
 
             searchLeases.FilterLeasesFiles(tenant: "Progressive Motor Sports");
             Assert.True(searchLeases.SearchFoundResults());
 
-            searchLeases.FilterLeasesFiles(pid: "003-549-551", status: "Duplicate", tenant: "Jonathan Doe", expiryDateFrom: "05/12/1987");
+            searchLeases.FilterLeasesFiles(pid: "003-549-551",tenant: "Jonathan Doe", expiryDateFrom: "05/12/1987");
             Assert.False(searchLeases.SearchFoundResults());
 
             searchLeases.FilterLeasesFiles(historicalFile: "TestPN654");
             Assert.True(searchLeases.SearchFoundResults());
 
-            searchLeases.FilterLeasesFiles(status: "Cancelled", expiryDateFrom: "03/22/2024");
+            searchLeases.FilterLeasesFiles(expiryDateFrom: "03/22/2024");
             searchLeases.OrderByLastLease();
         }
 

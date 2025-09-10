@@ -82,7 +82,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait(2000);
             webDriver.FindElement(searchLicenseLFileInput).SendKeys(lFile);
-            webDriver.FindElement(searchLicenseActiveStatusDeleteBttn).Click();
+            //webDriver.FindElement(searchLicenseActiveStatusDeleteBttn).Click();
             FocusAndClick(searchLicenseSearchButton);
         }
 

@@ -346,7 +346,7 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
   overflow-y: auto;
 }
 
-.c22 {
+.c24 {
   position: -webkit-sticky;
   position: sticky;
   padding-top: 2rem;
@@ -410,13 +410,21 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c21 {
+.c23 {
   font-size: 1.6rem;
   color: #9F9D9C;
   border-bottom: 0.2rem solid #606060;
   margin-bottom: 0.9rem;
   padding-bottom: 0.25rem;
   font-family: 'BcSans-Bold';
+}
+
+.c22 {
+  font-weight: normal;
+}
+
+.c21 {
+  font-weight: bold;
 }
 
 .c14 input.form-control {
@@ -718,9 +726,105 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
                 class="collapse show"
               >
                 <div
-                  class="py-2"
+                  class="c15"
                 >
-                  Select one or more properties that you want to include in this research file. You can choose a location from the map, or search by other criteria.
+                  <div
+                    class="c16 no-gutters row"
+                  >
+                    <div
+                      class="col"
+                    >
+                      <svg
+                        class="c17"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                        />
+                      </svg>
+                      New workflow
+                    </div>
+                    <div
+                      class="col-1"
+                    >
+                      <svg
+                        class="c18"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M0 0h24v24H0z"
+                          fill="none"
+                        />
+                        <path
+                          d="m7 10 5 5 5-5z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="c19 collapse"
+                >
+                  <ol>
+                    <li
+                      class="c21"
+                    >
+                      <div>
+                        Find a Property
+                      </div>
+                      <div
+                        class="c22"
+                      >
+                        Navigate to an area of the map OR use 
+                        <button
+                          class="c4 Button p-0 d-inline-block btn btn-link"
+                          type="button"
+                        >
+                          <div
+                            class="Button__value"
+                          >
+                            Search
+                          </div>
+                        </button>
+                      </div>
+                    </li>
+                    <li
+                      class="c21"
+                    >
+                      <div>
+                        Select a property
+                      </div>
+                      <div
+                        class="c22"
+                      >
+                        Click on the map and the selection will be highlighed
+                      </div>
+                    </li>
+                    <li
+                      class="c21"
+                    >
+                      <div>
+                        Add it to this file
+                      </div>
+                      <div
+                        class="c22"
+                      >
+                        Click "Add selected" property button when it appears below
+                      </div>
+                    </li>
+                  </ol>
                 </div>
                 <div
                   class="c13 form-section"
@@ -742,7 +846,7 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
                     class="collapse show"
                   >
                     <div
-                      class="c21 no-gutters row"
+                      class="c23 no-gutters row"
                     >
                       <div
                         class="col-md-3"
@@ -789,7 +893,7 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
         class=""
       >
         <div
-          class="c22 justify-content-end pt-4 p-0 no-gutters row"
+          class="c24 justify-content-end pt-4 p-0 no-gutters row"
         >
           <div
             class="pr-3 col-auto"

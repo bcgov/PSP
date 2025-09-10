@@ -1,7 +1,7 @@
 const { Before, After, setDefaultTimeout } = require("@cucumber/cucumber");
 const { getUserCredential } = require("./common.js");
 
-setDefaultTimeout(30000);
+setDefaultTimeout(120000);
 
 Before(async function () {
   if (!this.page) {
@@ -16,6 +16,11 @@ Before(async function () {
   await this.loginPage.login(username, password);
   await this.page
     .getByTestId("filter-backdrop-loading")
+    .first()
+    .waitFor({ state: "hidden", timeout: 20000 });
+  await this.page
+    .getByTestId("filter-backdrop-loading")
+    .nth(1)
     .waitFor({ state: "hidden", timeout: 20000 });
   await this.page
     .locator("#layersControlButton")

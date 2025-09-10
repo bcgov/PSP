@@ -7,6 +7,7 @@ import SelectedPropertyHeaderRow from '@/components/propertySelector/selectedPro
 import SelectedPropertyRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyRow';
 
 import { PropertyForm } from '../../shared/models';
+import { AddPropertiesGuide } from './AddPropertiesGuide';
 import { ResearchForm } from './models';
 
 export interface IResearchPropertiesProps {
@@ -32,11 +33,7 @@ const ResearchProperties: React.FC<IResearchPropertiesProps> = () => {
 
   return (
     <Section header="Properties to include in this file:">
-      <div className="py-2">
-        Select one or more properties that you want to include in this research file. You can choose
-        a location from the map, or search by other criteria.
-      </div>
-
+      <AddPropertiesGuide />
       <FieldArray name="properties">
         {({ remove }) => (
           <Section header="Selected properties">

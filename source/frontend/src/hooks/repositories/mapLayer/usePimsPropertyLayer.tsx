@@ -59,7 +59,7 @@ export const usePimsPropertyLayer = () => {
   const loadPropertyLocationOnlyMinimal = useApiRequestWrapper({
     requestFunction: useCallback(() => {
       return CustomAxios().get<FeatureCollection<Geometry, PIMS_Property_Lite_View>>(
-        minimalPropertiesUrl + `cql_filter= BOUNDARY IS NULL AND LOCATION IS NOT NULL`,
+        minimalPropertiesUrl + `&cql_filter= BOUNDARY IS NULL AND LOCATION IS NOT NULL`,
       );
     }, [minimalPropertiesUrl]),
     requestName: 'LOAD_PROPERTIES_MINIMAL',
