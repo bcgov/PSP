@@ -27,7 +27,7 @@ export class Api_GenerateForm12 {
     });
 
     const firstProperty = firstOrNull(this.properties);
-    this.first_property_plan_number = firstProperty.plan_number;
+    this.first_property_plan_number = firstProperty?.plan_number;
 
     const totalSqm = this.properties.reduce(
       (accumulator, current) => accumulator + current.area_sqm ?? 0,
