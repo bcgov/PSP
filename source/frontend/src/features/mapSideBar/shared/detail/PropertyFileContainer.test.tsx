@@ -35,7 +35,7 @@ const ActivityView = (props: IInventoryTabsProps) => {
 
 const DEFAULT_PROPS: IPropertyFileContainerProps = {
   View: ActivityView,
-  fileProperty: (getMockResearchFile().properties ?? [])[0],
+  fileProperty: (getMockResearchFile().fileProperties ?? [])[0],
   setEditing: noop,
   customTabs: [],
   defaultTab: InventoryTabNames.property,
@@ -67,7 +67,7 @@ describe('PropertyFileContainer component', () => {
   beforeEach(() => {
     mockAxios
       .onGet('properties/495')
-      .reply(200, (getMockResearchFile().properties ?? [])[0].property);
+      .reply(200, (getMockResearchFile().fileProperties ?? [])[0].property);
     mockAxios
       .onGet(new RegExp('ogs-internal/ows.*'))
       .reply(200, getMockPimsLocationViewLayerResponse());

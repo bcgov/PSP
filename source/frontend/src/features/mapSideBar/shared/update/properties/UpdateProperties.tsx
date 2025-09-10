@@ -78,7 +78,7 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
   // This effect is used to update the file properties when "add to open file" is clicked in the worklist.
   useEffect(() => {
     if (exists(formikRef.current) && propertyForms.length > 0) {
-      addPropertiesToCurrentFile(formikRef, 'fileProperties', propertyForms, noop);
+      addPropertiesToCurrentFile(formikRef, 'properties', propertyForms, noop);
       processCreation();
     }
   }, [formikRef, processCreation, propertyForms]);
