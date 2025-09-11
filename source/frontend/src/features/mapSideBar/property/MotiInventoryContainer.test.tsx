@@ -51,35 +51,29 @@ describe('MotiInventoryContainer component', () => {
       .reply(200, { features: [{ properties: { FOLIO_ID: 1, ROLL_NUMBER: 1 } }] });
 
     // Parcel Map layer
-    mockAxios
-      .onGet(
-        new RegExp(
-          'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_FA_SVW/ows*',
-        ),
-      )
-      .reply(200, {
-        features: [
-          {
-            properties: {},
-            geometry: {
-              type: 'Polygon',
-              coordinates: [
-                [
-                  [-120.69195885, 50.25163372],
-                  [-120.69176022, 50.2588544],
-                  [-120.69725103, 50.25889407],
-                  [-120.70326422, 50.25893724],
-                  [-120.70352697, 50.25172245],
-                  [-120.70287648, 50.25171749],
-                  [-120.70200152, 50.25171082],
-                  [-120.69622707, 50.2516666],
-                  [-120.69195885, 50.25163372],
-                ],
+    mockAxios.onGet(new RegExp('https://apps.gov.bc.ca/ext/sgw/geo.allgov*')).reply(200, {
+      features: [
+        {
+          properties: {},
+          geometry: {
+            type: 'Polygon',
+            coordinates: [
+              [
+                [-120.69195885, 50.25163372],
+                [-120.69176022, 50.2588544],
+                [-120.69725103, 50.25889407],
+                [-120.70326422, 50.25893724],
+                [-120.70352697, 50.25172245],
+                [-120.70287648, 50.25171749],
+                [-120.70200152, 50.25171082],
+                [-120.69622707, 50.2516666],
+                [-120.69195885, 50.25163372],
               ],
-            },
+            ],
           },
-        ],
-      });
+        },
+      ],
+    });
 
     // LTSA api
     mockAxios.onPost(new RegExp('/tools/ltsa/all*')).reply(200, getMockLtsaResponse());

@@ -29,11 +29,16 @@ export const useAdminBoundaryMapLayer = () => {
   const findOneWhereContainsDistrictExecute = findOneWhereContainsDistrictWrapped.execute;
   const findOneWhereContainsDistrictLoading = findOneWhereContainsDistrictWrapped.loading;
 
-  const { findMultipleWhereContainsWrapped: findOneWhereContainsWrappedElectoral } = useLayerQuery(
-    tenant.electoralLayerUrl,
-  );
+  const {
+    findMultipleWhereContainsWrapped: findOneWhereContainsWrappedElectoral,
+    findMultipleWhereContainsBoundaryWrapped: findOneWhereContainsBoundaryWrappedElectoral,
+  } = useLayerQuery(tenant.electoralLayerUrl);
   const findOneWhereContainsElectoralExecute = findOneWhereContainsWrappedElectoral.execute;
   const findOneWhereContainsElectoralLoading = findOneWhereContainsWrappedElectoral.loading;
+  const findMultipleWhereContainsElectoralExecute =
+    findOneWhereContainsBoundaryWrappedElectoral.execute;
+  const findMultipleWhereContainsElectoralLoading =
+    findOneWhereContainsBoundaryWrappedElectoral.loading;
 
   const findRegion = useCallback(
     async (latlng: LatLngLiteral, geometryName = 'SHAPE', spatialReferenceId = 4326) => {
@@ -94,22 +99,41 @@ export const useAdminBoundaryMapLayer = () => {
     [findOneWhereContainsElectoralExecute],
   );
 
+  const findElectoralDistrictBoundary = useCallback(
+    async (boundary: Geometry, geometryName?: string, spatialReferenceId?: number) => {
+      const featureCollection = await findMultipleWhereContainsElectoralExecute(
+        boundary,
+        geometryName,
+        spatialReferenceId,
+      );
+
+      return featureCollection as
+        | FeatureCollection<Geometry, EBC_ELECTORAL_DISTS_BS10_SVW_Feature_Properties>
+        | undefined;
+    },
+    [findMultipleWhereContainsElectoralExecute],
+  );
+
   return useMemo(
     () => ({
       findRegion,
       findDistrict,
       findElectoralDistrict,
+      findElectoralDistrictBoundary,
       findRegionLoading: findOneWhereContainsRegionLoading,
       findDistrictLoading: findOneWhereContainsDistrictLoading,
       findElectoralDistrictLoading: findOneWhereContainsElectoralLoading,
+      findElectoralDistrictBoundaryLoading: findMultipleWhereContainsElectoralLoading,
     }),
     [
       findRegion,
       findDistrict,
       findElectoralDistrict,
+      findElectoralDistrictBoundary,
       findOneWhereContainsRegionLoading,
       findOneWhereContainsDistrictLoading,
       findOneWhereContainsElectoralLoading,
+      findMultipleWhereContainsElectoralLoading,
     ],
   );
 };

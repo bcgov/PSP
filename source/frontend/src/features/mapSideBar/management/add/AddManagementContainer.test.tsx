@@ -23,6 +23,7 @@ import { SideBarContextProvider } from '../../context/sidebarContext';
 import { ManagementFormModel } from '../models/ManagementFormModel';
 import AddManagementContainer, { IAddManagementContainerProps } from './AddManagementContainer';
 import { IAddManagementContainerViewProps } from './AddManagementContainerView';
+import { PropertyForm } from '../../shared/models';
 
 const history = createMemoryHistory();
 
@@ -124,57 +125,57 @@ describe('Add Management Container component', () => {
   it('should preserve the order of properties when saving', async () => {
     const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
-      selectedFeatures: [
-        {
-          location: { lng: -120.69195885, lat: 50.25163372 },
-          fileLocation: null,
-          pimsFeature: null,
-          parcelFeature: getMockFullyAttributedParcel('111-111-111'),
-          regionFeature: feature(getMockPolygon(), {
-            ...emptyRegion,
-            REGION_NUMBER: 1,
-            REGION_NAME: 'South Coast Region',
-          }),
-          districtFeature: null,
-          selectingComponentId: null,
-          municipalityFeature: null,
-        },
-        {
-          location: { lng: -120.69195885, lat: 50.25163372 },
-          fileLocation: null,
-          pimsFeature: null,
-          parcelFeature: getMockFullyAttributedParcel('222-222-222'),
-          regionFeature: feature(getMockPolygon(), {
-            ...emptyRegion,
-            REGION_NUMBER: 1,
-            REGION_NAME: 'South Coast Region',
-          }),
-          districtFeature: null,
-          selectingComponentId: null,
-          municipalityFeature: null,
-        },
-        {
-          location: { lng: -120.69195885, lat: 50.25163372 },
-          fileLocation: null,
-          pimsFeature: null,
-          parcelFeature: getMockFullyAttributedParcel('333-333-333'),
-          regionFeature: feature(getMockPolygon(), {
-            ...emptyRegion,
-            REGION_NUMBER: 1,
-            REGION_NAME: 'South Coast Region',
-          }),
-          districtFeature: null,
-          selectingComponentId: null,
-          municipalityFeature: null,
-        },
-      ],
     };
+    const selectedFeatures = [
+      {
+        location: { lng: -120.69195885, lat: 50.25163372 },
+        fileLocation: null,
+        pimsFeature: null,
+        parcelFeature: getMockFullyAttributedParcel('111-111-111'),
+        regionFeature: feature(getMockPolygon(), {
+          ...emptyRegion,
+          REGION_NUMBER: 1,
+          REGION_NAME: 'South Coast Region',
+        }),
+        districtFeature: null,
+        selectingComponentId: null,
+        municipalityFeature: null,
+      },
+      {
+        location: { lng: -120.69195885, lat: 50.25163372 },
+        fileLocation: null,
+        pimsFeature: null,
+        parcelFeature: getMockFullyAttributedParcel('222-222-222'),
+        regionFeature: feature(getMockPolygon(), {
+          ...emptyRegion,
+          REGION_NUMBER: 1,
+          REGION_NAME: 'South Coast Region',
+        }),
+        districtFeature: null,
+        selectingComponentId: null,
+        municipalityFeature: null,
+      },
+      {
+        location: { lng: -120.69195885, lat: 50.25163372 },
+        fileLocation: null,
+        pimsFeature: null,
+        parcelFeature: getMockFullyAttributedParcel('333-333-333'),
+        regionFeature: feature(getMockPolygon(), {
+          ...emptyRegion,
+          REGION_NUMBER: 1,
+          REGION_NAME: 'South Coast Region',
+        }),
+        districtFeature: null,
+        selectingComponentId: null,
+        municipalityFeature: null,
+      },
+    ];
     await setup({ mockMapMachine: testMockMachine });
 
-    expect(viewProps?.managementInitialValues.fileProperties).toHaveLength(3);
-
     await act(async () => {
-      await viewProps?.onSubmit(viewProps?.managementInitialValues, {
+      const model = new ManagementFormModel();
+      model.fileProperties = selectedFeatures?.map(sf => PropertyForm.fromFeatureDataset(sf));
+      await viewProps?.onSubmit(model, {
         setSubmitting: vi.fn(),
         resetForm: vi.fn(),
       } as unknown as FormikHelpers<ManagementFormModel>);

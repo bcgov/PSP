@@ -1,7 +1,8 @@
 import axios, { AxiosError } from 'axios';
-import { FieldArray, Formik, FormikProps } from 'formik';
+import { FieldArray, Formik, FormikProps, getIn } from 'formik';
 import { geoJSON } from 'leaflet';
-import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import noop from 'lodash/noop';
+import { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { PiCornersOut } from 'react-icons/pi';
 import { toast } from 'react-toastify';
@@ -16,6 +17,7 @@ import SelectedPropertyHeaderRow from '@/components/propertySelector/selectedPro
 import SelectedPropertyRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyRow';
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
+import { useEditPropertiesMode } from '@/hooks/useEditPropertiesMode';
 import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
@@ -51,16 +53,9 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
   const [isValid, setIsValid] = useState<boolean>(true);
   const { setModalContent, setDisplayModal } = useModalContext();
   const { resetFilePropertyLocations } = useContext(SideBarContext);
-  const { requestFlyToBounds, setEditPropertiesMode, selectedFeatures, processCreation } =
-    useMapStateMachine();
+  const { requestFlyToBounds, selectedFeatures, processCreation } = useMapStateMachine();
 
-  useEffect(() => {
-    // Set the map state machine to edit properties mode so that the map selector knows what mode it is in.
-    setEditPropertiesMode(true);
-    return () => {
-      setEditPropertiesMode(false);
-    };
-  }, [setEditPropertiesMode]);
+  useEditPropertiesMode();
 
   // Get PropertyForms with addresses for all selected features
   const { featuresWithAddresses, bcaLoading } = useFeatureDatasetsWithAddresses(
@@ -80,41 +75,13 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
     [featuresWithAddresses],
   );
 
-  const addPropertiesToCurrentFile = useCallback(
-    (formikRef: React.RefObject<FormikProps<FileForm>>, propertyForms: PropertyForm[]) => {
-      const existingProperties = formikRef.current?.values?.properties ?? [];
-      const uniqueProperties = propertyForms.filter(newProperty => {
-        return !existingProperties.some(existingProperty =>
-          arePropertyFormsEqual(existingProperty, newProperty),
-        );
-      });
-
-      const duplicatesSkipped = propertyForms.length - uniqueProperties.length;
-
-      // If there are unique properties, add them to the formik values
-      if (uniqueProperties.length > 0) {
-        formikRef.current?.setFieldValue('properties', [
-          ...existingProperties,
-          ...uniqueProperties,
-        ]);
-        formikRef.current?.setFieldTouched('properties', true);
-        toast.success(`Added ${uniqueProperties.length} new property(s) to the file.`);
-      }
-
-      if (duplicatesSkipped > 0) {
-        toast.warn(`Skipped ${duplicatesSkipped} duplicate property(s).`);
-      }
-    },
-    [],
-  );
-
   // This effect is used to update the file properties when "add to open file" is clicked in the worklist.
   useEffect(() => {
     if (exists(formikRef.current) && propertyForms.length > 0) {
-      addPropertiesToCurrentFile(formikRef, propertyForms);
+      addPropertiesToCurrentFile(formikRef, 'properties', propertyForms, noop);
       processCreation();
     }
-  }, [addPropertiesToCurrentFile, formikRef, processCreation, propertyForms]);
+  }, [formikRef, processCreation, propertyForms]);
 
   const fitBoundaries = () => {
     const fileProperties = formikRef?.current?.values?.properties;
@@ -308,3 +275,34 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
 };
 
 export default UpdateProperties;
+
+export const addPropertiesToCurrentFile = <T extends { [key: string]: any }>(
+  formikRef: React.RefObject<FormikProps<T>>,
+  fieldName: keyof T,
+  propertyForms: PropertyForm[],
+  notifyAddComplete: () => void,
+) => {
+  const existingProperties = getIn(formikRef?.current?.values, fieldName as string) ?? [];
+  const uniqueProperties = propertyForms.filter(newProperty => {
+    return !existingProperties.some((existingProperty: PropertyForm) =>
+      arePropertyFormsEqual(existingProperty, newProperty),
+    );
+  });
+
+  const duplicatesSkipped = propertyForms.length - uniqueProperties.length;
+
+  // If there are unique properties, add them to the formik values
+  if (uniqueProperties.length > 0) {
+    formikRef.current?.setFieldValue(fieldName as string, [
+      ...existingProperties,
+      ...uniqueProperties,
+    ]);
+    formikRef.current?.setFieldTouched(fieldName as string, true);
+    toast.success(`Added ${uniqueProperties.length} new property(s) to the file.`);
+  }
+
+  if (duplicatesSkipped > 0) {
+    toast.warn(`Skipped ${duplicatesSkipped} duplicate property(s).`);
+  }
+  notifyAddComplete();
+};

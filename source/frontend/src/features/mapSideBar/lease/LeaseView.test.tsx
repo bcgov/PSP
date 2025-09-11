@@ -31,6 +31,10 @@ import { getUserMock } from '@/mocks/user.mock';
 import { LeasePageNames } from './LeaseContainer';
 import LeaseView, { ILeaseViewProps } from './LeaseView';
 import { LeaseFileTabNames } from './detail/LeaseFileTabs';
+import { usePropertyOperationRepository } from '@/hooks/repositories/usePropertyOperationRepository';
+import { IResponseWrapper } from '@/hooks/util/useApiRequestWrapper';
+import { ApiGen_Concepts_PropertyOperation } from '@/models/api/generated/ApiGen_Concepts_PropertyOperation';
+import { AxiosResponse } from 'axios';
 
 vi.mock('@/hooks/repositories/useNoteRepository');
 vi.mock('@/hooks/pims-api/useApiNotes');
@@ -91,6 +95,14 @@ vi.mocked(useApiUsers, { partial: true }).mockReturnValue({
 
 vi.mock('@/features/leases/hooks/useLeaseDetail');
 let useLeaseDetailMock: ReturnType<typeof useLeaseDetail>;
+
+const mockGetPropertyOperations = vi.fn();
+vi.mock('@/hooks/repositories/usePropertyOperationRepository');
+vi.mocked(usePropertyOperationRepository).mockReturnValue({
+  getPropertyOperations: { execute: mockGetPropertyOperations } as unknown as IResponseWrapper<
+    (propertyId: number) => Promise<AxiosResponse<ApiGen_Concepts_PropertyOperation[], any>>
+  >,
+} as unknown as ReturnType<typeof usePropertyOperationRepository>);
 
 const history = createMemoryHistory();
 
