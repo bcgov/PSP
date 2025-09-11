@@ -18,8 +18,6 @@ namespace Pims.Ltsa
         /// <returns></returns>
         public static IServiceCollection AddLtsaService(this IServiceCollection services, IConfigurationSection section)
         {
-
-
             return services
                 .Configure<Configuration.LtsaOptions>(section)
                 .AddSingleton<ILtsaService, LtsaService>()
