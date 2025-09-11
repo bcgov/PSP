@@ -23,7 +23,7 @@ class SharedSelectContact {
     }
 
     await this.page.locator("#input-summary").fill(contactSearchName);
-    await this.page.locator("#search-button").click();
+    await this.page.getByRole("button", { name: "search" }).click();
 
     await this.page
       .locator('input[type="radio"][name="table-radio"]')

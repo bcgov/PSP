@@ -1,14 +1,9 @@
 import { polygon } from '@turf/turf';
-import { Feature, FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
+import { Feature, Geometry } from 'geojson';
 import { LatLngLiteral } from 'leaflet';
 
+import { LocationBoundaryDataset } from '@/components/common/mapFSM/models';
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
-import { IMapProperty } from '@/components/propertySelector/models';
-import { AreaUnitTypes } from '@/constants';
-import {
-  mockFAParcelLayerResponse,
-  mockFAParcelLayerResponseMultiPolygon,
-} from '@/mocks/faParcelLayerResponse.mock';
 import { getMockSelectedFeatureDataset } from '@/mocks/featureset.mock';
 import { getEmptyFileProperty } from '@/mocks/fileProperty.mock';
 import { getMockLatLng, getMockLocation, getMockPolygon } from '@/mocks/geometries.mock';
@@ -18,17 +13,13 @@ import { getEmptyProperty } from '@/models/defaultInitializers';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
 
-import { LocationBoundaryDataset } from '@/components/common/mapFSM/models';
 import {
-  featuresetToMapProperty,
-  featuresToIdentifiedMapProperty,
   filePropertyToLocationBoundaryDataset,
   getFilePropertyName,
   getLatLng,
   getPrettyLatLng,
-  getPropertyName,
+  getPropertyNameFromSelectedFeatureSet,
   isLatLngInFeatureSetBoundary,
-  latLngFromMapProperty,
   latLngToApiLocation,
   locationFromFileProperty,
   NameSourceType,
@@ -37,81 +28,163 @@ import {
   PropertyName,
 } from './mapPropertyUtils';
 
-const expectedMapProperty = {
-  address: '',
-  areaUnit: 'M2',
-  district: 2,
-  districtName: 'Vancouver Island',
-  landArea: 647.4646,
-  latitude: 48.432802005,
-  longitude: -123.310041775,
-  legalDescription: undefined,
-  name: undefined,
-  pid: '000002500',
-  pin: undefined,
-  planNumber: 'VIP3881',
-  polygon: {
-    coordinates: [[[-123.31014591, 48.43274258]]],
-    type: 'Polygon',
-  },
-  fileLocation: {
-    lat: 48.432802005,
-    lng: -123.310041775,
-  },
-  propertyId: undefined,
-  region: 1,
-  regionName: 'South Coast',
-} as IMapProperty;
-
 describe('mapPropertyUtils', () => {
   it.each([
     [{}, { label: NameSourceType.NONE, value: '' }],
-    [{ pid: undefined }, { label: NameSourceType.NONE, value: '' }],
-    [{ pid: '' }, { label: NameSourceType.NONE, value: '' }],
-    [{ pid: '0' }, { label: NameSourceType.NONE, value: '' }],
-    [{ pid: '000-000-001' }, { label: NameSourceType.PID, value: '000-000-001' }],
     [
       {
-        pid: '000-000-001',
-        pin: '1',
-        planNumber: 'PB1000',
-        latitude: 1,
-        longitude: 1,
-        address: '1234 fake st',
+        ...getMockSelectedFeatureDataset(),
+        location: null,
+        pimsFeature: {} as any,
+        parcelFeature: { properties: { PID: undefined } } as any,
+      },
+      { label: NameSourceType.NONE, value: '' },
+    ],
+    [
+      {
+        ...getMockSelectedFeatureDataset(),
+        location: null,
+        pimsFeature: {} as any,
+        parcelFeature: { properties: { PID: '' } } as any,
+      },
+      { label: NameSourceType.NONE, value: '' },
+    ],
+    [
+      {
+        ...getMockSelectedFeatureDataset(),
+        pimsFeature: {} as any,
+        parcelFeature: { properties: { PID: '000-000-001' } } as any,
       },
       { label: NameSourceType.PID, value: '000-000-001' },
     ],
-    [{ pin: undefined }, { label: NameSourceType.NONE, value: '' }],
-    [{ pin: '' }, { label: NameSourceType.NONE, value: '' }],
-    [{ pin: '0' }, { label: NameSourceType.NONE, value: '' }],
-    [{ pin: '1' }, { label: NameSourceType.PIN, value: '1' }],
     [
-      { pin: '1', planNumber: 'PB1000', latitude: 1, longitude: 1, address: '1234 fake st' },
+      {
+        ...getMockSelectedFeatureDataset(),
+        pimsFeature: {} as any,
+        parcelFeature: {
+          properties: {
+            PID: '000-000-001',
+            PIN: 1,
+            PLAN_NUMBER: 'PB1000',
+          },
+        } as any,
+      },
+      { label: NameSourceType.PID, value: '000-000-001' },
+    ],
+    [
+      {
+        ...getMockSelectedFeatureDataset(),
+        location: null,
+        pimsFeature: {} as any,
+        parcelFeature: { properties: { PIN: undefined } } as any,
+      },
+      { label: NameSourceType.NONE, value: '' },
+    ],
+    [
+      {
+        ...getMockSelectedFeatureDataset(),
+        location: null,
+        pimsFeature: {} as any,
+        parcelFeature: { properties: { PIN: '' } } as any,
+      },
+      { label: NameSourceType.NONE, value: '' },
+    ],
+    [
+      {
+        ...getMockSelectedFeatureDataset(),
+        pimsFeature: {} as any,
+        parcelFeature: { properties: { PIN: 111112 } } as any,
+      },
+      { label: NameSourceType.PIN, value: '111112' },
+    ],
+    [
+      {
+        ...getMockSelectedFeatureDataset(),
+        pimsFeature: {} as any,
+        parcelFeature: {
+          properties: {
+            PIN: 1,
+            PLAN_NUMBER: 'PB1000',
+          },
+        } as any,
+      },
       { label: NameSourceType.PIN, value: '1' },
     ],
-    [{ planNumber: undefined }, { label: NameSourceType.NONE, value: '' }],
-    [{ planNumber: '' }, { label: NameSourceType.NONE, value: '' }],
-    [{ planNumber: '1' }, { label: NameSourceType.PLAN, value: '1' }],
     [
-      { planNumber: 'PB1000', latitude: 1, longitude: 1, address: '1234 fake st' },
+      {
+        ...getMockSelectedFeatureDataset(),
+        location: null,
+        pimsFeature: {} as any,
+        parcelFeature: { properties: { PLAN_NUMBER: undefined } } as any,
+      },
+      { label: NameSourceType.NONE, value: '' },
+    ],
+    [
+      {
+        ...getMockSelectedFeatureDataset(),
+        location: null,
+        pimsFeature: {} as any,
+        parcelFeature: { properties: { PLAN_NUMBER: '' } } as any,
+      },
+      { label: NameSourceType.NONE, value: '' },
+    ],
+    [
+      {
+        ...getMockSelectedFeatureDataset(),
+        pimsFeature: {} as any,
+        parcelFeature: { properties: { PLAN_NUMBER: '1' } } as any,
+      },
+      { label: NameSourceType.PLAN, value: '1' },
+    ],
+    [
+      {
+        ...getMockSelectedFeatureDataset(),
+        pimsFeature: {} as any,
+        parcelFeature: { properties: { PLAN_NUMBER: 'PB1000' } } as any,
+      },
       { label: NameSourceType.PLAN, value: 'PB1000' },
     ],
     [
-      { latitude: undefined, longitude: undefined },
-      { label: NameSourceType.NONE, value: '' },
-    ],
-    [{ planNumber: '' }, { label: NameSourceType.NONE, value: '' }],
-    [
-      { latitude: 1, longitude: 2, address: '1234 fake st' },
+      {
+        ...getMockSelectedFeatureDataset(),
+        location: { lat: 1, lng: 2 },
+        fileLocation: null,
+        pimsFeature: {} as any,
+        parcelFeature: {} as any,
+      },
       { label: NameSourceType.LOCATION, value: '2.000000, 1.000000' },
     ],
-    [{ address: undefined }, { label: NameSourceType.NONE, value: '' }],
-    [{ address: '' }, { label: NameSourceType.NONE, value: '' }],
-    [{ address: '1234 fake st' }, { label: NameSourceType.ADDRESS, value: '1234 fake st' }],
+    [
+      {
+        ...getMockSelectedFeatureDataset(),
+        location: null,
+        pimsFeature: { properties: { STREET_ADDRESS_1: undefined } } as any,
+        parcelFeature: {} as any,
+      },
+      { label: NameSourceType.NONE, value: '' },
+    ],
+    [
+      {
+        ...getMockSelectedFeatureDataset(),
+        location: null,
+        pimsFeature: { properties: { STREET_ADDRESS_1: '' } } as any,
+        parcelFeature: {} as any,
+      },
+      { label: NameSourceType.NONE, value: '' },
+    ],
+    [
+      {
+        ...getMockSelectedFeatureDataset(),
+        location: null,
+        pimsFeature: { properties: { STREET_ADDRESS_1: '1234 fake st' } } as any,
+        parcelFeature: {} as any,
+      },
+      { label: NameSourceType.ADDRESS, value: '1234 fake st' },
+    ],
   ])(
-    'getPropertyName test with source %o expecting %o',
-    (mapProperty: IMapProperty, expectedName: PropertyName) => {
-      const actualName = getPropertyName(mapProperty);
+    'getPropertyNameFromSelectedFeatureSet test with source %o expecting %o',
+    (featureSet: SelectedFeatureDataset, expectedName: PropertyName) => {
+      const actualName = getPropertyNameFromSelectedFeatureSet(featureSet);
       expect(actualName.label).toEqual(expectedName.label);
       expect(actualName.value).toEqual(expectedName.value);
     },
@@ -172,107 +245,6 @@ describe('mapPropertyUtils', () => {
       const fileName = getFilePropertyName(mapProperty, skipName);
       expect(fileName.label).toEqual(expectedName.label);
       expect(fileName.value).toEqual(expectedName.value);
-    },
-  );
-
-  it.each([
-    [{ type: 'FeatureCollection', features: [] } as FeatureCollection, undefined, []],
-    [
-      mockFAParcelLayerResponse,
-      undefined,
-      [
-        {
-          address: undefined,
-          areaUnit: AreaUnitTypes.SquareMeters,
-          district: undefined,
-          districtName: undefined,
-          landArea: 29217,
-          latitude: 48.76613749999999,
-          legalDescription:
-            'THAT PART OF SECTION 13, RANGE 1, SOUTH SALT SPRING ISLAND, COWICHAN DISTRICT',
-          longitude: -123.46163749999998,
-          name: undefined,
-          pid: '9727493',
-          pin: undefined,
-          planNumber: 'NO_PLAN',
-          propertyId: undefined,
-          region: undefined,
-          regionName: undefined,
-          fileLocation: {
-            lat: 48.76613749999999,
-            lng: -123.46163749999998,
-          },
-        },
-      ],
-    ],
-    [
-      mockFAParcelLayerResponseMultiPolygon,
-      undefined,
-      [
-        {
-          address: undefined,
-          areaUnit: AreaUnitTypes.SquareMeters,
-          district: undefined,
-          districtName: undefined,
-          landArea: 29217,
-          latitude: 48.76613749999999,
-          legalDescription:
-            'THAT PART OF SECTION 13, RANGE 1, SOUTH SALT SPRING ISLAND, COWICHAN DISTRICT',
-          longitude: -123.46163749999998,
-          name: undefined,
-          pid: '9727493',
-          pin: undefined,
-          planNumber: 'NO_PLAN',
-          propertyId: undefined,
-          region: undefined,
-          regionName: undefined,
-          fileLocation: {
-            lat: 48.76613749999999,
-            lng: -123.46163749999998,
-          },
-        },
-      ],
-    ],
-  ])(
-    'featuresToIdentifiedMapProperty test with feature values %o and address %o and expected map properties %o',
-    (
-      values: FeatureCollection<Geometry, GeoJsonProperties> | undefined,
-      address?: string,
-      expected?: IMapProperty[],
-    ) => {
-      const mapProperties = featuresToIdentifiedMapProperty(values, address);
-      expect(mapProperties).toEqual(expected);
-    },
-  );
-
-  it.each([
-    [getMockSelectedFeatureDataset(), '', expectedMapProperty],
-    [{ ...getMockSelectedFeatureDataset(), pimsFeatures: {} as any }, '', expectedMapProperty],
-    [
-      { ...getMockSelectedFeatureDataset(), parcelFeature: {} as any },
-      '',
-      {
-        ...expectedMapProperty,
-        pid: undefined,
-        planNumber: undefined,
-        polygon: undefined,
-        landArea: 0,
-      },
-    ],
-    [
-      { ...getMockSelectedFeatureDataset(), pimsFeatures: {} as any },
-      'address',
-      { ...expectedMapProperty, address: 'address' },
-    ],
-  ])(
-    'featuresetToMapProperty test with feature set %o address %o expectedPropertyFile %o',
-    (
-      featureSet: SelectedFeatureDataset,
-      address: string = 'unknown',
-      expectedPropertyFile?: IMapProperty,
-    ) => {
-      const mapProperty = featuresetToMapProperty(featureSet, address);
-      expect(mapProperty).toEqual(expectedPropertyFile);
     },
   );
 
@@ -407,21 +379,6 @@ describe('mapPropertyUtils', () => {
     ) => {
       const apiGeometry = latLngToApiLocation(latitude, longitude);
       expect(apiGeometry).toEqual(expectedValue);
-    },
-  );
-
-  it.each([
-    [{ fileLocation: { lat: 4, lng: 5 } }, { lat: 4, lng: 5 }],
-    [
-      { latitude: 4, longitude: 5 },
-      { lat: 4, lng: 5 },
-    ],
-    [undefined, { lat: 0, lng: 0 }],
-  ])(
-    'latLngFromMapProperty test with file property %o - expected %o',
-    (mapProperty: IMapProperty | undefined | null, expectedValue: LatLngLiteral | null) => {
-      const latLng = latLngFromMapProperty(mapProperty);
-      expect(latLng).toEqual(expectedValue);
     },
   );
 

@@ -13,7 +13,7 @@ import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { ApiGen_Concepts_PropertyOperation } from '@/models/api/generated/ApiGen_Concepts_PropertyOperation';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { exists, featuresetToMapProperty, firstOrNull, isValidString } from '@/utils';
+import { exists, firstOrNull, isValidString } from '@/utils';
 
 import { AddressForm, PropertyForm } from '../shared/models';
 import { ConsolidationFormModel } from './AddConsolidationModel';
@@ -61,10 +61,7 @@ const AddConsolidationContainer: React.FC<IAddConsolidationContainerProps> = ({
 
     async function loadInitialProperty() {
       if (selectedFeatureDataset !== null) {
-        // TODO: this is an odd conversion. the feature set should map directly to a Pims Property
-        const propertyForm = PropertyForm.fromMapProperty(
-          featuresetToMapProperty(selectedFeatureDataset),
-        );
+        const propertyForm = PropertyForm.fromFeatureDataset(selectedFeatureDataset);
         if (isValidString(propertyForm.pid)) {
           const pimsFeature = selectedFeatureDataset.pimsFeature;
           propertyForm.address = pimsFeature?.properties

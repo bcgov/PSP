@@ -10,15 +10,17 @@ import ConfirmNavigation from '@/components/common/ConfirmNavigation';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
+import { PropertyForm } from '@/features/mapSideBar/shared/models';
 import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
+import { useEditPropertiesMode } from '@/hooks/useEditPropertiesMode';
 import { useEnrichWithPimsFeatures } from '@/hooks/useEnrichWithPimsFeatures';
 import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
 import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { exists, firstOrNull, isValidId } from '@/utils';
+import { arePropertyFormsEqual, exists, firstOrNull, isValidId } from '@/utils';
 
 import { useAddLease } from '../hooks/useAddLease';
 import { FormLeaseProperty, getDefaultFormLease, LeaseFormModel } from '../models';
@@ -52,7 +54,11 @@ export const AddLeaseContainer: React.FunctionComponent<
 
   // Support creating a new lease file from the worklist/quick-info
   const mapMachine = useMapStateMachine();
+  const selectedFeatureDatasets = mapMachine.selectedFeatures;
   const prevSelectedRef = useRef<typeof mapMachine.selectedFeatures>();
+  const processCreation = mapMachine.processCreation;
+
+  useEditPropertiesMode();
 
   // track whether we've already shown the confirmation modal for this session
   const hasWarnedRef = useRef(false);
@@ -61,36 +67,76 @@ export const AddLeaseContainer: React.FunctionComponent<
   // This will add pimsFeature to each SelectedFeatureDataset if it exists
   useEffect(() => {
     if (
-      mapMachine.selectedFeatures?.length > 0 &&
-      !dequal(prevSelectedRef.current, mapMachine.selectedFeatures)
+      selectedFeatureDatasets?.length > 0 &&
+      !dequal(prevSelectedRef.current, selectedFeatureDatasets)
     ) {
       hasWarnedRef.current = false; // reset the warning for new selection
-      prevSelectedRef.current = mapMachine.selectedFeatures;
-      enrichWithPimsFeatures(mapMachine.selectedFeatures);
+      prevSelectedRef.current = selectedFeatureDatasets;
+      enrichWithPimsFeatures(selectedFeatureDatasets);
     }
-  }, [mapMachine.selectedFeatures, enrichWithPimsFeatures]);
+  }, [selectedFeatureDatasets, enrichWithPimsFeatures]);
 
   // Get PropertyForms with addresses for all selected features
-  const { featuresWithAddresses, bcaLoading } = useFeatureDatasetsWithAddresses(datasets);
+  const { featuresWithAddresses, bcaLoading } = useFeatureDatasetsWithAddresses(datasets ?? []);
+
+  // Convert SelectedFeatureDataset to PropertyForm
+  const propertyForms = useMemo(
+    () =>
+      featuresWithAddresses.map(obj => {
+        const property = PropertyForm.fromFeatureDataset(obj.feature);
+        if (exists(obj.address)) {
+          property.address = obj.address;
+        }
+        return property;
+      }),
+    [featuresWithAddresses],
+  );
+  // This effect is used to update the file properties when "add to open file" is clicked in the worklist.
+  useEffect(() => {
+    if (exists(formikRef.current) && propertyForms.length > 0) {
+      const existingProperties =
+        formikRef.current?.values?.properties?.map(lp => lp?.property) ?? [];
+      const uniqueProperties = propertyForms.filter(newProperty => {
+        return !existingProperties.some(existingProperty =>
+          arePropertyFormsEqual(existingProperty, newProperty),
+        );
+      });
+
+      const duplicatesSkipped = propertyForms.length - uniqueProperties.length;
+
+      // If there are unique properties, add them to the formik values
+      if (uniqueProperties.length > 0) {
+        const allProperties = [...existingProperties, ...uniqueProperties].map(obj => {
+          const leaseProperty = FormLeaseProperty.fromFeatureDataset(obj.toFeatureDataset());
+          if (exists(obj.address) && exists(leaseProperty.property)) {
+            leaseProperty.property.address = obj.address;
+          }
+          return leaseProperty;
+        });
+        formikRef.current?.setFieldValue('properties', allProperties);
+        formikRef.current?.setFieldTouched('properties', true);
+        toast.success(`Added ${uniqueProperties.length} new property(s) to the file.`);
+      }
+
+      if (duplicatesSkipped > 0) {
+        toast.warn(`Skipped ${duplicatesSkipped} duplicate property(s).`);
+      }
+      processCreation();
+    }
+  }, [processCreation, propertyForms]);
 
   const initialForm = useMemo<LeaseFormModel>(() => {
     const leaseForm = getDefaultFormLease();
 
     if (featuresWithAddresses?.length > 0) {
-      leaseForm.properties = featuresWithAddresses.map(obj => {
-        const leaseProperty = FormLeaseProperty.fromFeatureDataset(obj.feature);
-        if (exists(obj.address) && exists(leaseProperty.property)) {
-          leaseProperty.property.address = obj.address;
-        }
-        return leaseProperty;
-      });
-
       // auto-select file region based upon the location of the property
-      const firstProperty = firstOrNull(leaseForm.properties);
+      const firstProperty = firstOrNull(
+        featuresWithAddresses?.map(f => PropertyForm.fromFeatureDataset(f.feature)),
+      );
       if (exists(firstProperty)) {
         leaseForm.regionId =
-          firstProperty.property?.regionName !== 'Cannot determine'
-            ? firstProperty.property?.region?.toString()
+          firstProperty?.regionName !== 'Cannot determine'
+            ? firstProperty?.region?.toString()
             : undefined;
       }
     }

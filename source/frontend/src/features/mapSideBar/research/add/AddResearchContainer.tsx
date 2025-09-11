@@ -10,7 +10,7 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
-import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
+import { useEditPropertiesNotifier } from '@/hooks/useEditPropertiesNotifier';
 import { useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
@@ -57,26 +57,13 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
     [getPropertyAssociations],
   );
 
-  const selectedFeatureDatasets = mapMachine.selectedFeatures ?? [];
-
   // Get PropertyForms with addresses for all selected features
-  const { featuresWithAddresses, bcaLoading } =
-    useFeatureDatasetsWithAddresses(selectedFeatureDatasets);
+  const { bcaLoading } = useEditPropertiesNotifier(formikRef, 'properties');
 
   // Memoize the initial form with all properties
   const initialForm = useMemo(() => {
-    const researchForm = new ResearchForm();
-    if (featuresWithAddresses?.length > 0) {
-      researchForm.properties = featuresWithAddresses.map(obj => {
-        const property = PropertyForm.fromFeatureDataset(obj.feature);
-        if (exists(obj.address)) {
-          property.address = obj.address;
-        }
-        return property;
-      });
-    }
-    return researchForm;
-  }, [featuresWithAddresses]);
+    return new ResearchForm();
+  }, []);
 
   const withUserOverride = useApiUserOverride<
     (userOverrideCodes: UserOverrideCode[]) => Promise<any | void>

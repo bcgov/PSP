@@ -1,8 +1,8 @@
 import { chain, uniqBy } from 'lodash';
-import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 
 import ExpandableTextList from '@/components/common/ExpandableTextList';
+import { ExternalLink } from '@/components/common/ExternalLink';
 import ExpandableFileProperties from '@/components/common/List/ExpandableFileProperties';
 import { ColumnWithProps, renderTypeCode } from '@/components/Table';
 import { Claims } from '@/constants/claims';
@@ -38,9 +38,9 @@ export const columns: ColumnWithProps<AcquisitionSearchResultModel>[] = [
       const { hasClaim } = useKeycloakWrapper();
       if (hasClaim(Claims.ACQUISITION_VIEW)) {
         return (
-          <Link to={`/mapview/sidebar/acquisition/${props.row.original.id}`}>
+          <ExternalLink to={`/mapview/sidebar/acquisition/${props.row.original.id}`}>
             {props.row.original.fileNumber}
-          </Link>
+          </ExternalLink>
         );
       }
       return stringToFragment(props.row.original.fileNumber);

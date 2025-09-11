@@ -1,0 +1,13 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`LayerTabCollapsedView > matches snapshot (empty layersData) 1`] = `
+<div>
+  <div
+    class="Toastify"
+  />
+  <div />
+  <p>
+    No Layer Data exists.
+  </p>
+</div>
+`;

@@ -57,7 +57,7 @@ exports[`ManagementFileTabs component > matches snapshot 1`] = `
   text-shadow: 0.1rem 0 0 currentColor;
 }
 
-.c9 {
+.c8 {
   float: right;
   cursor: pointer;
   font-size: 3.2rem;
@@ -88,7 +88,7 @@ exports[`ManagementFileTabs component > matches snapshot 1`] = `
   border-radius: 0.5rem;
 }
 
-.c10 {
+.c9 {
   padding: 0 0.4rem;
   display: block;
 }
@@ -102,38 +102,6 @@ exports[`ManagementFileTabs component > matches snapshot 1`] = `
 
 .c5 {
   font-weight: bold;
-}
-
-.c8 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-align-items: end;
-  -webkit-box-align: end;
-  -ms-flex-align: end;
-  align-items: end;
-  min-height: 4.5rem;
-}
-
-.c8 .btn {
-  margin: 0;
-}
-
-.c8 .primary-column {
-  -webkit-flex: 1 1 0;
-  -ms-flex: 1 1 0;
-  flex: 1 1 0;
-}
-
-.c8 .secondary-column {
-  -webkit-flex: 0.5 1 0;
-  -ms-flex: 0.5 1 0;
-  flex: 0.5 1 0;
 }
 
 <div
@@ -407,10 +375,10 @@ exports[`ManagementFileTabs component > matches snapshot 1`] = `
                   class="align-content-end col"
                 >
                   <div
-                    class="c8 no-gutters row"
+                    class="no-gutters justify-content-between align-items-end row"
                   >
                     <div
-                      class="align-items-end primary-column col-auto"
+                      class="my-1 col-auto"
                     >
                       Management Contact
                     </div>
@@ -420,7 +388,7 @@ exports[`ManagementFileTabs component > matches snapshot 1`] = `
                   class="pl-2 d-flex align-items-end col-auto"
                 >
                   <svg
-                    class="c9"
+                    class="c8"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -566,7 +534,7 @@ exports[`ManagementFileTabs component > matches snapshot 1`] = `
                   data-testid="management-team-member-0"
                 >
                   <a
-                    class="c10"
+                    class="c9"
                     href="/contact/P6"
                     rel="noopener noreferrer"
                     target="_blank"
@@ -608,7 +576,7 @@ exports[`ManagementFileTabs component > matches snapshot 1`] = `
                   data-testid="management-team-member-1"
                 >
                   <a
-                    class="c10"
+                    class="c9"
                     href="/contact/P6"
                     rel="noopener noreferrer"
                     target="_blank"

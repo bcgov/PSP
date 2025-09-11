@@ -280,7 +280,7 @@ exports[`ManagementView component > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c44 {
+.c43 {
   padding: 0 0.4rem;
   display: block;
 }
@@ -439,7 +439,7 @@ exports[`ManagementView component > renders as expected 1`] = `
   overflow-y: auto;
 }
 
-.c43 {
+.c42 {
   float: right;
   cursor: pointer;
   font-size: 3.2rem;
@@ -479,38 +479,6 @@ exports[`ManagementView component > renders as expected 1`] = `
 
 .c39 {
   font-weight: bold;
-}
-
-.c42 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-align-items: end;
-  -webkit-box-align: end;
-  -ms-flex-align: end;
-  align-items: end;
-  min-height: 4.5rem;
-}
-
-.c42 .btn {
-  margin: 0;
-}
-
-.c42 .primary-column {
-  -webkit-flex: 1 1 0;
-  -ms-flex: 1 1 0;
-  flex: 1 1 0;
-}
-
-.c42 .secondary-column {
-  -webkit-flex: 0.5 1 0;
-  -ms-flex: 0.5 1 0;
-  flex: 0.5 1 0;
 }
 
 .c30 {
@@ -1452,10 +1420,10 @@ exports[`ManagementView component > renders as expected 1`] = `
                               class="align-content-end col"
                             >
                               <div
-                                class="c42 no-gutters row"
+                                class="no-gutters justify-content-between align-items-end row"
                               >
                                 <div
-                                  class="align-items-end primary-column col-auto"
+                                  class="my-1 col-auto"
                                 >
                                   Management Contact
                                 </div>
@@ -1465,7 +1433,7 @@ exports[`ManagementView component > renders as expected 1`] = `
                               class="pl-2 d-flex align-items-end col-auto"
                             >
                               <svg
-                                class="c43"
+                                class="c42"
                                 fill="currentColor"
                                 height="1em"
                                 stroke="currentColor"
@@ -1611,7 +1579,7 @@ exports[`ManagementView component > renders as expected 1`] = `
                               data-testid="management-team-member-0"
                             >
                               <a
-                                class="c44"
+                                class="c43"
                                 href="/contact/P6"
                                 rel="noopener noreferrer"
                                 target="_blank"
@@ -1653,7 +1621,7 @@ exports[`ManagementView component > renders as expected 1`] = `
                               data-testid="management-team-member-1"
                             >
                               <a
-                                class="c44"
+                                class="c43"
                                 href="/contact/P6"
                                 rel="noopener noreferrer"
                                 target="_blank"

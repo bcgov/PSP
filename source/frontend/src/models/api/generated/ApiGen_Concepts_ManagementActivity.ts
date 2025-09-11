@@ -23,6 +23,9 @@ export interface ApiGen_Concepts_ManagementActivity extends ApiGen_Base_BaseAudi
   activityTypeCode: ApiGen_Base_CodeType<string> | null;
   activitySubTypeCodes: ApiGen_Concepts_ManagementActivitySubType[] | null;
   activityStatusTypeCode: ApiGen_Base_CodeType<string> | null;
+  requestorPersonId: number | null;
+  requestorOrganizationId: number | null;
+  requestorPrimaryContactId: number | null;
   requestAddedDateOnly: UtcIsoDate;
   completionDateOnly: UtcIsoDate | null;
   description: string | null;

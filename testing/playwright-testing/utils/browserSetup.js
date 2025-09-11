@@ -10,7 +10,9 @@ if (fs.existsSync(USER_DATA_DIR)) {
 
 async function launchBrowser() {
   const context = await chromium.launchPersistentContext(USER_DATA_DIR, {
+    viewport: { width: 1550, height: 900 },
     headless: false,
+    slowMo: 1000,
     args: [
       "--no-first-run",
       "--no-default-browser-check",
@@ -22,7 +24,7 @@ async function launchBrowser() {
       "--disable-sync",
       "--disable-translate",
       "--disable-features=DefaultBrowserPrompt,TranslateUI",
-      "--window-size=1920,1080",
+      "--start-maximized",
       "--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Firefox/91.0 Safari/537.36",
     ],
   });

@@ -1,8 +1,10 @@
+import { FaExternalLinkAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
 
 import ExpandableTextList from '@/components/common/ExpandableTextList';
+import { ExternalLink } from '@/components/common/ExternalLink';
 import ExpandableFileProperties from '@/components/common/List/ExpandableFileProperties';
 import { ColumnWithProps } from '@/components/Table';
 import { Claims } from '@/constants/claims';
@@ -26,18 +28,22 @@ export const columns: ColumnWithProps<ManagementActivitySearchResultModel>[] = [
 
       if (hasClaim(Claims.MANAGEMENT_VIEW) && props.row.original.managementFileId) {
         return (
-          <StyledLink
+          <ExternalLink
             to={`/mapview/sidebar/management/${props.row.original.managementFileId}/activities/${props.row.original.id}`}
           >
             {props.row.original.description}
-          </StyledLink>
+          </ExternalLink>
         );
       } else if (props.row.original.activivityProperty?.propertyId) {
         return (
           <StyledLink
             to={`/mapview/sidebar/property/${props.row.original.activivityProperty.propertyId}/management/activity/${props.row.original.id}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
           >
             {props.row.original.description}
+            <FaExternalLinkAlt />
           </StyledLink>
         );
       } else {

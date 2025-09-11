@@ -479,7 +479,9 @@ exports[`MapSelectorContainer component > renders as expected when provided no p
                   </div>
                   <div
                     class="c9 text-left col"
-                  />
+                  >
+                    000-002-500
+                  </div>
                 </div>
                 <div
                   class="pb-2 row"
@@ -511,7 +513,9 @@ exports[`MapSelectorContainer component > renders as expected when provided no p
                   </div>
                   <div
                     class="c9 text-left col"
-                  />
+                  >
+                    VIP3881
+                  </div>
                 </div>
                 <div
                   class="pb-2 row"
@@ -543,7 +547,9 @@ exports[`MapSelectorContainer component > renders as expected when provided no p
                   </div>
                   <div
                     class="c9 text-left col"
-                  />
+                  >
+                    1 - South Coast
+                  </div>
                 </div>
                 <div
                   class="pb-2 row"
@@ -559,7 +565,9 @@ exports[`MapSelectorContainer component > renders as expected when provided no p
                   </div>
                   <div
                     class="c9 text-left col"
-                  />
+                  >
+                    2 - Vancouver Island
+                  </div>
                 </div>
                 <div
                   class="row"

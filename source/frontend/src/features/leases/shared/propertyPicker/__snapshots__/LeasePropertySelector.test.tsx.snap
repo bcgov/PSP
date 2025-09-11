@@ -624,6 +624,7 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
             >
               <button
                 class="c2 Button btn btn-link"
+                data-testid="zoom-to-property-0"
                 type="button"
               >
                 <div
@@ -931,6 +932,7 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
             >
               <button
                 class="c2 Button btn btn-link"
+                data-testid="zoom-to-property-1"
                 type="button"
               >
                 <div

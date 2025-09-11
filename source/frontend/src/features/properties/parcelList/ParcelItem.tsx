@@ -26,9 +26,10 @@ export interface IParcelItemProps {
   canAddToWorklist: boolean;
   parcel: ParcelDataset;
   onRemove: (id: string) => void | null;
+  parcelIndex: number;
 }
 
-export function ParcelItem({ parcel, onRemove, canAddToWorklist }: IParcelItemProps) {
+export function ParcelItem({ parcel, onRemove, canAddToWorklist, parcelIndex }: IParcelItemProps) {
   const propertyName = getPropertyNameFromSelectedFeatureSet(parcel.toSelectedFeatureDataset());
   let propertyIdentifier = '';
   switch (propertyName.label) {
@@ -217,7 +218,7 @@ export function ParcelItem({ parcel, onRemove, canAddToWorklist }: IParcelItemPr
   ]);
 
   return (
-    <StyledRow>
+    <StyledRow data-testid={`search-property-${parcelIndex}`}>
       <StyledPidCol
         onClick={e => {
           e.preventDefault();

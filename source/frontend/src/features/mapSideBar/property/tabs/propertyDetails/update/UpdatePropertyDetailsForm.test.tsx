@@ -5,12 +5,14 @@ import { createMemoryHistory } from 'history';
 
 import { getEmptyAddress } from '@/mocks/address.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { ApiGen_CodeTypes_PropertyTenureTypes } from '@/models/api/generated/ApiGen_CodeTypes_PropertyTenureTypes';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { getEmptyBaseAudit, getEmptyProperty } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { render, RenderOptions, waitForEffects } from '@/utils/test-utils';
-import { useTenant } from '@/tenants/useTenant';
 import defaultTenant from '@/tenants/config/defaultTenant';
+import { useTenant } from '@/tenants/useTenant';
+import { toTypeCodeNullable } from '@/utils/formUtils';
+import { act, render, RenderOptions } from '@/utils/test-utils';
 
 import { UpdatePropertyDetailsFormModel } from './models';
 import { UpdatePropertyDetailsForm } from './UpdatePropertyDetailsForm';
@@ -61,8 +63,8 @@ const fakeProperty: ApiGen_Concepts_Property = {
       id: 453,
       propertyId: 205,
       propertyTenureTypeCode: {
-        id: 'HWYROAD',
-        description: 'Highway/Road established by',
+        id: ApiGen_CodeTypes_PropertyTenureTypes.HWYROAD,
+        description: 'Highway/Road',
         isDisabled: false,
         displayOrder: null,
       },
@@ -72,8 +74,8 @@ const fakeProperty: ApiGen_Concepts_Property = {
       id: 454,
       propertyId: 205,
       propertyTenureTypeCode: {
-        id: 'ADJLAND',
-        description: 'Adjacent Land type',
+        id: ApiGen_CodeTypes_PropertyTenureTypes.SRWBCTFA,
+        description: 'Statutory Right of Way (SRW) - BCTFA',
         isDisabled: false,
         displayOrder: null,
       },
@@ -212,6 +214,8 @@ describe('UpdatePropertyDetailsForm component', () => {
       },
     );
 
+    await act(async () => {});
+
     return {
       ...utils,
     };
@@ -248,7 +252,6 @@ describe('UpdatePropertyDetailsForm component', () => {
 
     initialValues.address.provinceStateId = null;
     const { container } = await setup({ initialValues });
-    waitForEffects();
 
     const province = container.querySelector(`select[name='address.provinceStateId']`);
     expect(province).toHaveValue('2');
@@ -259,7 +262,6 @@ describe('UpdatePropertyDetailsForm component', () => {
 
     initialValues.address.provinceStateId = null;
     const { container } = await setup({ initialValues });
-    await waitForEffects();
 
     const province = container.querySelector(`select[name='address.provinceStateId']`);
     expect(province).toHaveValue('1');
@@ -270,9 +272,48 @@ describe('UpdatePropertyDetailsForm component', () => {
 
     initialValues.address.provinceStateId = null;
     const { container } = await setup({ initialValues });
-    await waitForEffects();
 
     const province = container.querySelector(`select[name='address.provinceStateId']`);
     expect(province).toHaveValue('1');
+  });
+
+  it('shows the highway/road multi-select when tenure status is Highway/Road', async () => {
+    const property: ApiGen_Concepts_Property = {
+      ...fakeProperty,
+      tenures: [
+        {
+          propertyTenureTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_PropertyTenureTypes.HWYROAD),
+          id: 0,
+          propertyId: fakeProperty.id,
+          ...getEmptyBaseAudit(),
+        },
+      ],
+    };
+
+    const { getByText } = await setup({
+      initialValues: UpdatePropertyDetailsFormModel.fromApi(property),
+    });
+    expect(getByText('Highway / Road Details:')).toBeVisible();
+    expect(getByText('Provincial public hwy:')).toBeVisible();
+  });
+
+  it('hides the highway/road multi-select when tenure status is not Highway/Road', async () => {
+    const property: ApiGen_Concepts_Property = {
+      ...fakeProperty,
+      tenures: [
+        {
+          propertyTenureTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_PropertyTenureTypes.UNKNOWN),
+          id: 0,
+          propertyId: fakeProperty.id,
+          ...getEmptyBaseAudit(),
+        },
+      ],
+    };
+
+    const { queryByText } = await setup({
+      initialValues: UpdatePropertyDetailsFormModel.fromApi(property),
+    });
+    expect(queryByText('Highway / Road Details:')).toBeNull();
+    expect(queryByText('Provincial public hwy:')).toBeNull();
   });
 });

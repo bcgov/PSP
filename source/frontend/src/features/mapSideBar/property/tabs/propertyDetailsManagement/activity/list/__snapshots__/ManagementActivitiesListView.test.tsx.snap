@@ -6,7 +6,7 @@ exports[`Activities list view > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c10.btn {
+  .c9.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,17 +35,17 @@ exports[`Activities list view > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c10.btn .Button__value {
+.c9.btn .Button__value {
   width: auto;
 }
 
-.c10.btn:hover {
+.c9.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c10.btn:focus {
+.c9.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -53,31 +53,31 @@ exports[`Activities list view > renders as expected 1`] = `
   box-shadow: none;
 }
 
-.c10.btn.btn-primary {
+.c9.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c10.btn.btn-primary:hover,
-.c10.btn.btn-primary:active,
-.c10.btn.btn-primary:focus {
+.c9.btn.btn-primary:hover,
+.c9.btn.btn-primary:active,
+.c9.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c10.btn.btn-secondary {
+.c9.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c10.btn.btn-secondary:hover,
-.c10.btn.btn-secondary:active,
-.c10.btn.btn-secondary:focus {
+.c9.btn.btn-secondary:hover,
+.c9.btn.btn-secondary:active,
+.c9.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c10.btn.btn-info {
+.c9.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -85,66 +85,66 @@ exports[`Activities list view > renders as expected 1`] = `
   padding-right: 0.6rem;
 }
 
-.c10.btn.btn-info:hover,
-.c10.btn.btn-info:active,
-.c10.btn.btn-info:focus {
+.c9.btn.btn-info:hover,
+.c9.btn.btn-info:active,
+.c9.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c10.btn.btn-light {
+.c9.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c10.btn.btn-light:hover,
-.c10.btn.btn-light:active,
-.c10.btn.btn-light:focus {
+.c9.btn.btn-light:hover,
+.c9.btn.btn-light:active,
+.c9.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c10.btn.btn-dark {
+.c9.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c10.btn.btn-dark:hover,
-.c10.btn.btn-dark:active,
-.c10.btn.btn-dark:focus {
+.c9.btn.btn-dark:hover,
+.c9.btn.btn-dark:active,
+.c9.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c10.btn.btn-danger {
+.c9.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c10.btn.btn-danger:hover,
-.c10.btn.btn-danger:active,
-.c10.btn.btn-danger:focus {
+.c9.btn.btn-danger:hover,
+.c9.btn.btn-danger:active,
+.c9.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c10.btn.btn-warning {
+.c9.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c10.btn.btn-warning:hover,
-.c10.btn.btn-warning:active,
-.c10.btn.btn-warning:focus {
+.c9.btn.btn-warning:hover,
+.c9.btn.btn-warning:active,
+.c9.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c10.btn.btn-link {
+.c9.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -168,9 +168,9 @@ exports[`Activities list view > renders as expected 1`] = `
   text-decoration: underline;
 }
 
-.c10.btn.btn-link:hover,
-.c10.btn.btn-link:active,
-.c10.btn.btn-link:focus {
+.c9.btn.btn-link:hover,
+.c9.btn.btn-link:active,
+.c9.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -180,15 +180,15 @@ exports[`Activities list view > renders as expected 1`] = `
   outline: none;
 }
 
-.c10.btn.btn-link:disabled,
-.c10.btn.btn-link.disabled {
+.c9.btn.btn-link:disabled,
+.c9.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c10.btn:disabled,
-.c10.btn:disabled:hover {
+.c9.btn:disabled,
+.c9.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -200,66 +200,66 @@ exports[`Activities list view > renders as expected 1`] = `
   cursor: not-allowed;
 }
 
-.c10.Button .Button__icon {
+.c9.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c10.Button--icon-only:focus {
+.c9.Button--icon-only:focus {
   outline: none;
 }
 
-.c10.Button--icon-only .Button__icon {
+.c9.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c11.c11.btn {
+.c10.c10.btn {
   background-color: unset;
   border: none;
 }
 
-.c11.c11.btn:hover,
-.c11.c11.btn:focus,
-.c11.c11.btn:active {
+.c10.c10.btn:hover,
+.c10.c10.btn:focus,
+.c10.c10.btn:active {
   background-color: unset;
   outline: none;
   box-shadow: none;
 }
 
-.c11.c11.btn svg {
+.c10.c10.btn svg {
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
 
-.c11.c11.btn svg:hover {
+.c10.c10.btn svg:hover {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
 }
 
-.c11.c11.btn.btn-primary svg {
+.c10.c10.btn.btn-primary svg {
   color: #013366;
 }
 
-.c11.c11.btn.btn-primary svg:hover {
+.c10.c10.btn.btn-primary svg:hover {
   color: #013366;
 }
 
-.c11.c11.btn.btn-light svg {
+.c10.c10.btn.btn-light svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c11.c11.btn.btn-light svg:hover {
+.c10.c10.btn.btn-light svg:hover {
   color: #CE3E39;
 }
 
-.c11.c11.btn.btn-info svg {
+.c10.c10.btn.btn-info svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c11.c11.btn.btn-info svg:hover {
+.c10.c10.btn.btn-info svg:hover {
   color: var(--surface-color-primary-button-hover);
 }
 
-.c3 {
+.c2 {
   float: right;
   cursor: pointer;
   font-size: 3.2rem;
@@ -280,7 +280,7 @@ exports[`Activities list view > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c4 {
+.c3 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -299,21 +299,21 @@ exports[`Activities list view > renders as expected 1`] = `
   margin-left: 0.5rem;
 }
 
-.c6 {
-  width: 1.6rem;
-  height: 1.6rem;
-}
-
 .c5 {
   width: 1.6rem;
   height: 1.6rem;
 }
 
-.c12 {
+.c4 {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.c11 {
   margin-top: 0.3rem;
 }
 
-.c13 {
+.c12 {
   min-width: 5rem;
   max-width: 5rem;
   margin-left: 1rem;
@@ -322,15 +322,15 @@ exports[`Activities list view > renders as expected 1`] = `
   padding: 0;
 }
 
-.c13:-moz-read-only {
+.c12:-moz-read-only {
   background: white;
 }
 
-.c13:read-only {
+.c12:read-only {
   background: white;
 }
 
-.c8 {
+.c7 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -340,51 +340,19 @@ exports[`Activities list view > renders as expected 1`] = `
   flex-wrap: nowrap;
 }
 
-.c2 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-align-items: end;
-  -webkit-box-align: end;
-  -ms-flex-align: end;
-  align-items: end;
-  min-height: 4.5rem;
-}
-
-.c2 .btn {
-  margin: 0;
-}
-
-.c2 .primary-column {
-  -webkit-flex: 1 1 0;
-  -ms-flex: 1 1 0;
-  flex: 1 1 0;
-}
-
-.c2 .secondary-column {
-  -webkit-flex: 0.5 1 0;
-  -ms-flex: 0.5 1 0;
-  flex: 0.5 1 0;
-}
-
-.c9 {
+.c8 {
   -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
 }
 
-.c9 > * {
+.c8 > * {
   margin: 0.5rem;
   padding: 0 !important;
 }
 
-.c7 {
+.c6 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -412,10 +380,10 @@ exports[`Activities list view > renders as expected 1`] = `
           class="align-content-end col"
         >
           <div
-            class="c2 no-gutters row"
+            class="no-gutters justify-content-between align-items-end row"
           >
             <div
-              class="align-items-end primary-column col-auto"
+              class="my-1 col-auto"
               data-testid="ad-hoc activities"
             >
               Activities List
@@ -426,7 +394,7 @@ exports[`Activities list view > renders as expected 1`] = `
           class="pl-2 d-flex align-items-end col-auto"
         >
           <svg
-            class="c3"
+            class="c2"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -476,11 +444,11 @@ exports[`Activities list view > renders as expected 1`] = `
               >
                 Activity type
                 <div
-                  class="c4"
+                  class="c3"
                   data-testid="sort-column-activityType"
                 >
                   <svg
-                    class="c5"
+                    class="c4"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -495,7 +463,7 @@ exports[`Activities list view > renders as expected 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c6"
+                    class="c5"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -522,11 +490,11 @@ exports[`Activities list view > renders as expected 1`] = `
               >
                 Activity sub-type
                 <div
-                  class="c4"
+                  class="c3"
                   data-testid="sort-column-activitySubTypes"
                 >
                   <svg
-                    class="c5"
+                    class="c4"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -541,7 +509,7 @@ exports[`Activities list view > renders as expected 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c6"
+                    class="c5"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -568,11 +536,11 @@ exports[`Activities list view > renders as expected 1`] = `
               >
                 Activity status
                 <div
-                  class="c4"
+                  class="c3"
                   data-testid="sort-column-activityStatusType"
                 >
                   <svg
-                    class="c5"
+                    class="c4"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -587,7 +555,7 @@ exports[`Activities list view > renders as expected 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c6"
+                    class="c5"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -614,11 +582,11 @@ exports[`Activities list view > renders as expected 1`] = `
               >
                 Commencement
                 <div
-                  class="c4"
+                  class="c3"
                   data-testid="sort-column-requestedAddedDate"
                 >
                   <svg
-                    class="c5"
+                    class="c4"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -633,7 +601,7 @@ exports[`Activities list view > renders as expected 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c6"
+                    class="c5"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -690,7 +658,7 @@ exports[`Activities list view > renders as expected 1`] = `
                 title=""
               >
                 <div
-                  class="c7"
+                  class="c6"
                 />
               </div>
               <div
@@ -714,10 +682,10 @@ exports[`Activities list view > renders as expected 1`] = `
                 title=""
               >
                 <div
-                  class="c8 c9"
+                  class="c7 c8"
                 >
                   <button
-                    class="c10 Button c11 btn btn-primary"
+                    class="c9 Button c10 btn btn-primary"
                     data-testid="activity-view-1"
                     title="property-activity view details"
                     type="button"
@@ -767,7 +735,7 @@ exports[`Activities list view > renders as expected 1`] = `
                 title=""
               >
                 <div
-                  class="c7"
+                  class="c6"
                 />
               </div>
               <div
@@ -791,10 +759,10 @@ exports[`Activities list view > renders as expected 1`] = `
                 title=""
               >
                 <div
-                  class="c8 c9"
+                  class="c7 c8"
                 >
                   <button
-                    class="c10 Button c11 btn btn-primary"
+                    class="c9 Button c10 btn btn-primary"
                     data-testid="activity-view-2"
                     title="property-activity view details"
                     type="button"
@@ -849,19 +817,19 @@ exports[`Activities list view > renders as expected 1`] = `
                 class="d-flex"
               >
                 <span
-                  class="c12"
+                  class="c11"
                 >
                   Show
                 </span>
                 <input
-                  class="c13 form-control"
+                  class="c12 form-control"
                   data-testid="input-page-size"
                   readonly=""
                   type="number"
                   value="10"
                 />
                 <span
-                  class="c12"
+                  class="c11"
                 >
                   Entries
                 </span>

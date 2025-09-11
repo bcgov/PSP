@@ -33,7 +33,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By userManagerHeaderPositionColumn = By.XPath("//div[@data-testid='usersTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Position')]");
         private By userManagerHeaderOrderByPositionBttn = By.CssSelector("div[data-testid='sort-column-position']");
         private By userManagerHeaderRolesColumn = By.XPath("//div[@data-testid='usersTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Roles')]");
-        private By userManagerHeaderRegionColumn = By.XPath("//div[@data-testid='usersTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'MoTI region(s)')]");
+        private By userManagerHeaderRegionColumn = By.XPath("//div[@data-testid='usersTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'MOTT region(s)')]");
         private By userManagerHeaderLastLoginColumn = By.XPath("//div[@data-testid='usersTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Last login')]");
 
         //Table 1st Result by Column Elements

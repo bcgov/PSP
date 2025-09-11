@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { Claims, NoteTypes } from '@/constants';
-import { usePropertyDetails } from '@/features/mapSideBar/hooks/usePropertyDetails';
 import {
   IInventoryTabsProps,
   InventoryTabNames,
@@ -26,12 +25,13 @@ import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
-import { exists, isPlanNumberSPCP, isValidId } from '@/utils';
+import { exists, firstOrNull, isPlanNumberSPCP, isValidId } from '@/utils';
 
 import { LayerTabContainer } from '../../layer/LayerTabContainer';
 import { LayerTabView } from '../../layer/LayerTabView';
 import { getLeaseInfo, LeaseAssociationInfo } from '../../property/PropertyContainer';
 import LtsaPlanTabView from '../../property/tabs/ltsa/LtsaPlanTabView';
+import { toFormValues } from '../../property/tabs/propertyDetails/detail/PropertyDetailsTabView.helpers';
 import { PropertyManagementTabView } from '../../property/tabs/propertyDetailsManagement/detail/PropertyManagementTabView';
 import PropertyResearchTabView from '../../property/tabs/propertyResearch/detail/PropertyResearchTabView';
 import ResearchStatusUpdateSolver from '../../research/tabs/fileDetails/ResearchStatusUpdateSolver';
@@ -98,10 +98,6 @@ export const PropertyFileContainer: React.FunctionComponent<
       hasClaim,
     ],
   );
-
-  // After API property object has been received, we query relevant map layers to find
-  // additional information which we store in a different model (IPropertyDetailsForm)
-  const propertyViewForm = usePropertyDetails(composedProperties.apiWrapper?.response);
 
   const tabViews: TabInventoryView[] = [];
   const ltsaWrapper = composedProperties.ltsaWrapper;
@@ -180,8 +176,20 @@ export const PropertyFileContainer: React.FunctionComponent<
     tabViews.push({
       content: (
         <PropertyDetailsTabView
-          property={propertyViewForm}
-          loading={composedProperties?.apiWrapper?.loading ?? false}
+          property={{
+            ...toFormValues(props.fileProperty.property),
+            electoralDistrict: firstOrNull(composedProperties?.composedProperty?.electoralFeatures),
+            isALR: composedProperties?.composedProperty?.alrFeatures?.length > 0,
+            firstNations: {
+              bandName:
+                firstOrNull(composedProperties?.composedProperty?.firstNationFeatures)?.properties
+                  .BAND_NAME || '',
+              reserveName:
+                firstOrNull(composedProperties?.composedProperty?.firstNationFeatures)?.properties
+                  .ENGLISH_NAME || '',
+            },
+          }}
+          loading={composedProperties?.composedLoading ?? false}
         />
       ),
       key: InventoryTabNames.property,

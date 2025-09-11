@@ -6,7 +6,7 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import { useManagementFileRepository } from '@/hooks/repositories/useManagementFileRepository';
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
-import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
+import { useEditPropertiesNotifier } from '@/hooks/useEditPropertiesNotifier';
 import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
@@ -55,36 +55,28 @@ const AddManagementContainer: React.FC<IAddManagementContainerProps> = ({
   );
 
   const mapMachine = useMapStateMachine();
-  const selectedFeatureDatasets = mapMachine.selectedFeatures ?? [];
 
-  // Get PropertyForms with addresses for all selected features
-  const { featuresWithAddresses, bcaLoading } =
-    useFeatureDatasetsWithAddresses(selectedFeatureDatasets);
+  const { featuresWithAddresses, bcaLoading } = useEditPropertiesNotifier(
+    formikRef,
+    'fileProperties',
+  );
 
   const initialForm = useMemo(() => {
     const managementForm = new ManagementFormModel();
-    // support creating a new management file from the map popup
-    if (featuresWithAddresses?.length > 0) {
-      managementForm.fileProperties = featuresWithAddresses.map(obj => {
-        const property = PropertyForm.fromFeatureDataset(obj.feature);
-        if (exists(obj.address)) {
-          property.address = obj.address;
-        }
-        return property;
-      });
-    }
     return managementForm;
-  }, [featuresWithAddresses]);
+  }, []);
 
   // Require user confirmation before adding a property to file
   // This is the flow for Map Marker -> right-click -> create Management File
   useEffect(() => {
     const runAsync = async () => {
-      if (exists(initialForm) && exists(formikRef.current) && needsUserConfirmation) {
-        if (initialForm.fileProperties.length > 0) {
+      const incomingProperties =
+        featuresWithAddresses?.map(f => PropertyForm.fromFeatureDataset(f.feature)) ?? [];
+      if (exists(incomingProperties) && exists(formikRef.current) && needsUserConfirmation) {
+        if (incomingProperties.length > 0) {
           // Check all properties for confirmation
           const needsConfirmation = await Promise.all(
-            initialForm.fileProperties.map(formProperty => confirmBeforeAdd(formProperty)),
+            incomingProperties.map(formProperty => confirmBeforeAdd(formProperty)),
           );
           if (needsConfirmation.some(confirm => confirm)) {
             setModalContent({
@@ -103,16 +95,16 @@ const AddManagementContainer: React.FC<IAddManagementContainerProps> = ({
               handleOk: () => {
                 // allow the property to be added to the file being created
                 formikRef.current.resetForm();
-                formikRef.current.setFieldValue('fileProperties', initialForm.fileProperties);
+                formikRef.current.setFieldValue('properties', incomingProperties);
                 setDisplayModal(false);
                 // show the user confirmation modal only once when creating a file
                 setNeedsUserConfirmation(false);
               },
               handleCancel: () => {
                 // clear out the properties array as the user did not agree to the popup
-                initialForm.fileProperties.splice(0, initialForm.fileProperties.length);
+                incomingProperties.splice(0, incomingProperties.length);
                 formikRef.current.resetForm();
-                formikRef.current.setFieldValue('fileProperties', initialForm.fileProperties);
+                formikRef.current.setFieldValue('properties', incomingProperties);
                 setDisplayModal(false);
                 // show the user confirmation modal only once when creating a file
                 setNeedsUserConfirmation(false);
@@ -125,7 +117,13 @@ const AddManagementContainer: React.FC<IAddManagementContainerProps> = ({
     };
 
     runAsync();
-  }, [confirmBeforeAdd, initialForm, needsUserConfirmation, setDisplayModal, setModalContent]);
+  }, [
+    confirmBeforeAdd,
+    featuresWithAddresses,
+    needsUserConfirmation,
+    setDisplayModal,
+    setModalContent,
+  ]);
 
   const handleCancel = useCallback(() => onClose(), [onClose]);
 

@@ -366,6 +366,8 @@ export const layerDefinitions: LayerDefinition[] = [
     styles: '7943',
     maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
     maxZoom: MAP_MAX_ZOOM,
+    legendUrl:
+      'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows?service=WMS&version=1.3.0&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer=pub%3AWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&style=7943',
   },
   {
     layerIdentifier: 'pmbc_parcel_by_owner',
@@ -377,6 +379,8 @@ export const layerDefinitions: LayerDefinition[] = [
     styles: '6616',
     maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
     maxZoom: MAP_MAX_ZOOM,
+    legendUrl:
+      'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows?service=WMS&version=1.3.0&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer=pub%3AWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&style=6616',
   },
   {
     layerIdentifier: 'bctfa_property',

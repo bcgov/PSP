@@ -20,6 +20,7 @@ describe('ParcelItem component', () => {
         }
         onRemove={onRemove}
         canAddToWorklist={renderOptions.props?.canAddToWorklist ?? true}
+        parcelIndex={0}
       />,
       { ...renderOptions },
     );

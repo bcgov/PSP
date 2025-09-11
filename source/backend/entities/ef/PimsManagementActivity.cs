@@ -55,6 +55,24 @@ public partial class PimsManagementActivity
     public string MgmtActivityTypeCode { get; set; }
 
     /// <summary>
+    /// Foreign key to_PIMS_PERSON table.
+    /// </summary>
+    [Column("REQUESTOR_PERSON_ID")]
+    public long? RequestorPersonId { get; set; }
+
+    /// <summary>
+    /// Foreign key to_PIMS_ORGANIZATION table.
+    /// </summary>
+    [Column("REQUESTOR_ORGANIZATION_ID")]
+    public long? RequestorOrganizationId { get; set; }
+
+    /// <summary>
+    /// Primary contact for the organization.  Foreign key to_PIMS_PERSON table.
+    /// </summary>
+    [Column("REQUESTOR_PRIMARY_CONTACT_ID")]
+    public long? RequestorPrimaryContactId { get; set; }
+
+    /// <summary>
     /// Date the request for a property management activity was added
     /// </summary>
     [Column("REQUEST_ADDED_DT")]

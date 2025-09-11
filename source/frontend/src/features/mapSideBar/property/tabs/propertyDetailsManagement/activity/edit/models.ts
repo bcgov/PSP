@@ -113,6 +113,9 @@ export class PropertyActivityFormModel {
   activitySubtypeCodes: ManagementActivitySubTypeModel[] = [];
   activityStatusCode = '';
   requestedDate = '';
+  requestorPersonId: number | null;
+  requestorOrganizationId: number | null;
+  requestorPrimaryContactId: number | null;
   completionDate = '';
   description = '';
   ministryContacts: (IContactSearchResult | null)[] = [null];
@@ -139,6 +142,9 @@ export class PropertyActivityFormModel {
       activitySubTypeCodes: this.activitySubtypeCodes?.map(x => x.toApi(this.id)) ?? [],
       activityStatusTypeCode: toTypeCodeNullable(this.activityStatusCode),
       requestAddedDateOnly: this.requestedDate,
+      requestorPersonId: this.requestorPersonId,
+      requestorOrganizationId: this.requestorOrganizationId,
+      requestorPrimaryContactId: this.requestorPrimaryContactId,
       completionDateOnly: emptyStringtoNullable(this.completionDate),
       description: this.description,
       requestSource: this.requestedSource,

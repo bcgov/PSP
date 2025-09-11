@@ -7,8 +7,7 @@ import { useMapProperties } from '@/hooks/repositories/useMapProperties';
 import { isValidId } from '@/utils';
 import {
   areSelectedFeaturesEqual,
-  featuresetToMapProperty,
-  getPropertyName,
+  getPropertyNameFromSelectedFeatureSet,
   pidFromFeatureSet,
   pinFromFeatureSet,
 } from '@/utils/mapPropertyUtils';
@@ -109,8 +108,8 @@ export const MapSelectorContainer: FunctionComponent<IMapSelectorContainerProps>
               lastSelectedProperty
                 ? modifiedMapProperties.find(
                     p =>
-                      getPropertyName(featuresetToMapProperty(p)).value ===
-                      getPropertyName(featuresetToMapProperty(lastSelectedProperty)).value,
+                      getPropertyNameFromSelectedFeatureSet(p).value ===
+                      getPropertyNameFromSelectedFeatureSet(lastSelectedProperty).value,
                   )
                 : undefined // use the property from the modified properties list from the parent, for consistency.
             }

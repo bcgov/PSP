@@ -15,10 +15,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Lease Header Elements
         private readonly By licenseHeaderNbrLabel = By.XPath("//label[contains(text(),'Lease/Licence #')]");
-        private readonly By licenseHeaderNbrContent = By.XPath("//h1[contains(text(),'Lease / Licence')]/parent::div/parent::div/following-sibling::div/div/div/div/div/div[1]/div[2]/span[1]");
+        private readonly By licenseHeaderNbrContent = By.XPath("//span[@class='pr-4']");
         private readonly By licenseHeaderAccountType = By.XPath("//label[contains(text(),'Lease/Licence #')]/parent::div/following-sibling::div/span[2]");
-        private readonly By licenseHeaderProperty = By.XPath("//h1[contains(text(),'Lease / Licence')]/parent::div/parent::div/following-sibling::div[2]/div[1]/div/div/div/div[2]/div/label[contains(text(),'Property')]");
-        private readonly By licenseHeaderPropertyContent = By.XPath("//h1[contains(text(),'Lease / Licence')]/parent::div/parent::div/following-sibling::div[2]/div[1]/div/div/div/div[2]/div/label[contains(text(),'Property')]/parent::div/following-sibling::div/span");
+        private readonly By licenseHeaderProperty = By.XPath("//label[normalize-space()='Property:']");
+        private readonly By licenseHeaderPropertyContent = By.XPath("(//div[@class='pl-1 text-left col-8'])[2]/span");
         private readonly By licenseHeaderTenantLabel = By.XPath("//label[contains(text(),'Tenant')]");
         private readonly By licenseHeaderPayeeLabel = By.XPath("//label[contains(text(),'Payee')]");
         private readonly By licenseHeaderStartDateLabel = By.XPath("//h1/parent::div/parent::div/following-sibling::div[2]/div/div/div/div/div[4]/div/label[contains(text(),'Commencement')]");
@@ -38,7 +38,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By licenseHeaderExpiredFlag = By.XPath("//label[contains(text(),'Commencement')]/parent::div/following-sibling::div[4]/div");
 
         //Create/View Lease Details Elements
-        private readonly By licenseCreateTitle = By.XPath("//html[1]/body[1]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/h1[contains(text(),'Create Lease/Licence')]");
+        private readonly By licenseCreateTitle = By.XPath("//div[@data-testid='form-title']");
 
         private readonly By licenseDetailsCreateSubtitle = By.XPath("//h2/div/div[contains(text(),'Original Agreement')]");
 
@@ -92,10 +92,10 @@ namespace PIMS.Tests.Automation.PageObjects
         //Create/View Administration Elements
         private readonly By licenseDetailsAdmSubtitle = By.XPath("//div[contains(text(),'Administration')]/parent::div/parent::h2");
         private readonly By licenseDetailsAdmHelpTooltip = By.XPath("//div[contains(text(),'Help with choosing the agreement Program, Type and Purpose')]");
-        private readonly By licenseDetailsMotiContactLabel = By.XPath("//label[contains(text(),'MOTI contact')]");
+        private readonly By licenseDetailsMotiContactLabel = By.XPath("//label[contains(text(),'MOTT contact')]");
         private readonly By licenseDetailsMotiContactInput = By.Id("input-motiName");
-        private readonly By licenseDetailsMotiContactContent = By.XPath("//label[contains(text(),'MOTI contact')]/parent::div/following-sibling::div");
-        private readonly By licenseDetailsMotiRegionLabel = By.XPath("//label[contains(text(),'MOTI region')]");
+        private readonly By licenseDetailsMotiContactContent = By.XPath("//label[contains(text(),'MOTT contact')]/parent::div/following-sibling::div");
+        private readonly By licenseDetailsMotiRegionLabel = By.XPath("//label[contains(text(),'MOTT region')]");
         private readonly By licenseDetailsMotiRegionSelector = By.Id("input-regionId");
         private readonly By licenseDetailsProgramViewLabel = By.XPath("//label[contains(text(),'Program')]");
         private readonly By licenseDetailsProgramContent = By.XPath("//label[contains(text(),'Program')]/parent::div/following-sibling::div");

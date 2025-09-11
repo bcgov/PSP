@@ -125,6 +125,10 @@ const getTemplateTypeFromAgreementType = (agreementType: string | null): string 
       return ApiGen_CodeTypes_FormTypes.H179T.toString();
     case ApiGen_CodeTypes_AgreementTypes.H0074:
       return ApiGen_CodeTypes_FormTypes.H0074.toString();
+    case ApiGen_CodeTypes_AgreementTypes.H179FSPART:
+      return ApiGen_CodeTypes_FormTypes.H179FSPART.toString();
+    case ApiGen_CodeTypes_AgreementTypes.H179PTO:
+      return ApiGen_CodeTypes_FormTypes.H179PTO.toString();
     default:
       throw Error(`Unable to find form type for agreement type: ${agreementType}`);
   }
