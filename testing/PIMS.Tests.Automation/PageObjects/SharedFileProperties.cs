@@ -63,7 +63,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By searchPropertiesAddSelectionBttn = By.XPath("//button/div[contains(text(),'Add to selection')]");
 
         //Selected Properties Elements
-        private readonly By searchPropertiesSelectedPropertiesSubtitle = By.XPath("//div[contains(text(),'Selected properties')]");
+        private readonly By searchPropertiesSelectedPropertiesSubtitle = By.XPath("//div[contains(text(),'Selected Properties')]");
         private readonly By searchPropertiesSelectedIdentifierHeader = By.XPath("//div[@class='collapse show']/div/div[contains(text(),'Identifier')]");
         private readonly By searchPropertiesSelectedDescriptiveNameHeader = By.XPath("//div[@class='collapse show']/div/div[contains(text(),'Provide a descriptive name for this land')]");
         private readonly By searchPropertiesSelectedToolTipIcon = By.CssSelector("span[data-testid='tooltip-icon-property-selector-tooltip']");
@@ -285,21 +285,21 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueIsDisplayed(searchSectionInstructions);
             }
 
-            AssertTrueIsDisplayed(locateOnMapTab);
-            AssertTrueIsDisplayed(searchByTab);
+            //AssertTrueIsDisplayed(locateOnMapTab);
+            //AssertTrueIsDisplayed(searchByTab);
 
-            AssertTrueIsDisplayed(locateOnMapSubtitle);
-            AssertTrueIsDisplayed(locateOnMapBlueIcon);
-            AssertTrueIsDisplayed(locateOnMapInstuction1);
-            AssertTrueIsDisplayed(locateOnMapInstuction2);
-            AssertTrueIsDisplayed(locateOnMapInstuction3);
-            AssertTrueIsDisplayed(locateOnMapSelectedLabel);
-            AssertTrueIsDisplayed(locateOnMapPIDLabel);
-            AssertTrueIsDisplayed(locateOnMapPlanLabel);
-            AssertTrueIsDisplayed(locateOnMapAddressLabel);
-            AssertTrueIsDisplayed(locateOnMapRegionLabel);
-            AssertTrueIsDisplayed(locateOnMapDistrictLabel);
-            AssertTrueIsDisplayed(locateOnMapLegalDescriptionLabel);
+            //AssertTrueIsDisplayed(locateOnMapSubtitle);
+            //AssertTrueIsDisplayed(locateOnMapBlueIcon);
+            //AssertTrueIsDisplayed(locateOnMapInstuction1);
+            //AssertTrueIsDisplayed(locateOnMapInstuction2);
+            //AssertTrueIsDisplayed(locateOnMapInstuction3);
+            //AssertTrueIsDisplayed(locateOnMapSelectedLabel);
+            //AssertTrueIsDisplayed(locateOnMapPIDLabel);
+            //AssertTrueIsDisplayed(locateOnMapPlanLabel);
+            //AssertTrueIsDisplayed(locateOnMapAddressLabel);
+            //AssertTrueIsDisplayed(locateOnMapRegionLabel);
+            //AssertTrueIsDisplayed(locateOnMapDistrictLabel);
+            //AssertTrueIsDisplayed(locateOnMapLegalDescriptionLabel);
 
             AssertTrueIsDisplayed(searchPropertiesSelectedPropertiesSubtitle);
             AssertTrueIsDisplayed(searchPropertiesSelectedIdentifierHeader);

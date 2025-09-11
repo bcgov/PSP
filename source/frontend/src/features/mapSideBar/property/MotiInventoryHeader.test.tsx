@@ -30,6 +30,9 @@ const defaultComposedProperty: ComposedProperty = {
   crownLicenseFeatures: undefined,
   highwayFeatures: undefined,
   municipalityFeatures: undefined,
+  firstNationFeatures: undefined,
+  alrFeatures: undefined,
+  electoralFeatures: undefined,
 };
 
 vi.mock('@/hooks/repositories/useHistoricalNumberRepository');

@@ -258,6 +258,7 @@ export const useLayerQuery = (
             boundary,
           )})`,
         );
+
         return data;
       },
       [authenticated, withCredentials, baseAllUrl],

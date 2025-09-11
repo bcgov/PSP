@@ -14,14 +14,13 @@ import useAxiosApi from './useApi';
 export const useApiHealth = () => {
   const api = useAxiosApi();
 
-  return React.useMemo(
-    () =>
-      ({
-        getVersion: () => api.get<IApiVersion>('health/env'),
-        getLive: () => api.get<IHealthLive>('health/live'),
-        getReady: () => api.get<IHealthReady>('health/ready'),
-        getSystemCheck: () => api.get<ISystemCheck>('health/system'),
-      } as IApiHealth),
+  return React.useMemo<IApiHealth>(
+    () => ({
+      getVersion: () => api.get<IApiVersion>('health/env'),
+      getLive: () => api.get<IHealthLive>('health/live'),
+      getReady: () => api.get<IHealthReady>('health/ready'),
+      getSystemCheck: () => api.get<ISystemCheck>('health/system'),
+    }),
     [api],
   );
 };

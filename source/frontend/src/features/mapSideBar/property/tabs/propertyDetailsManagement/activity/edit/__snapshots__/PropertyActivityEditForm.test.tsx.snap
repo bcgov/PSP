@@ -980,7 +980,7 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
                   <label
                     class="c9"
                   >
-                    Contact manager:
+                    Requestor:
                     <span>
                       <span
                         class="tooltip-icon"

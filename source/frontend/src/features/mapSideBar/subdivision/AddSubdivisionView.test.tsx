@@ -2,18 +2,16 @@ import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
 import { createRef } from 'react';
 
+import { IMapSelectorContainerProps } from '@/components/propertySelector/MapSelectorContainer';
+import { PropertySelectorPidSearchContainerProps } from '@/components/propertySelector/search/PropertySelectorPidSearchContainer';
 import Claims from '@/constants/claims';
+import { getMockSelectedFeatureDataset } from '@/mocks/featureset.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { getMockApiProperty } from '@/mocks/properties.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes/lookupCodesSlice';
-import { render, RenderOptions, screen, userEvent, act } from '@/utils/test-utils';
+import { act, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 import { SubdivisionFormModel } from './AddSubdivisionModel';
 import AddSubdivisionView, { IAddSubdivisionViewProps } from './AddSubdivisionView';
-import { PropertySelectorPidSearchContainerProps } from '@/components/propertySelector/search/PropertySelectorPidSearchContainer';
-import { IMapSelectorContainerProps } from '@/components/propertySelector/MapSelectorContainer';
-import { IMapProperty } from '@/components/propertySelector/models';
-import { getMockApiProperty } from '@/mocks/properties.mock';
-import { AreaUnitTypes } from '@/constants';
-import { PropertyForm } from '../shared/models';
 
 const history = createMemoryHistory();
 
@@ -89,37 +87,46 @@ describe('Add Subdivision View', () => {
     vi.clearAllMocks();
   });
 
-  const testProperty: IMapProperty = {
-    propertyId: 123,
-    pid: '123-456-789',
-    planNumber: 'SPS22411',
-    address: 'Test address 123',
-    region: 1,
-    regionName: 'South Coast',
-    district: 5,
-    districtName: 'Okanagan-Shuswap',
-  };
-
   it('matches snapshot', async () => {
     const { asFragment } = await setup();
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('calls getPrimaryAddressByPid when destination property is activated', async () => {
+    const mockFeatureSet = getMockSelectedFeatureDataset();
     await setup();
     await act(async () => {
       mapSelectorProps.addSelectedProperties([
-        PropertyForm.fromMapProperty(testProperty).toFeatureDataset(),
+        {
+          ...mockFeatureSet,
+          pimsFeature: {
+            ...mockFeatureSet.pimsFeature,
+            properties: {
+              ...mockFeatureSet.pimsFeature?.properties,
+              PID_PADDED: '123-456-789',
+            },
+          },
+        },
       ]);
     });
     expect(getPrimaryAddressByPid).toHaveBeenCalledWith('123-456-789');
   });
 
   it('does not call for address if property has no pid', async () => {
+    const mockFeatureSet = getMockSelectedFeatureDataset();
     await setup();
     await act(async () => {
       mapSelectorProps.addSelectedProperties([
-        PropertyForm.fromMapProperty({ ...testProperty, pid: undefined }).toFeatureDataset(),
+        {
+          ...mockFeatureSet,
+          pimsFeature: {
+            ...mockFeatureSet.pimsFeature,
+            properties: {
+              ...mockFeatureSet.pimsFeature?.properties,
+              PID_PADDED: undefined,
+            },
+          },
+        },
       ]);
     });
     const text = await screen.findByText('Selected property must have a PID');
@@ -137,12 +144,13 @@ describe('Add Subdivision View', () => {
   });
 
   it('selected source property can be removed', async () => {
+    const initialFormModel = new SubdivisionFormModel();
+    initialFormModel.sourceProperty = { ...getMockApiProperty(), pid: 111111111 };
+    initialFormModel.destinationProperties = [];
+
     const { getByTitle, queryByText } = await setup({
       props: {
-        subdivisionInitialValues: {
-          sourceProperty: { ...getMockApiProperty(), pid: 111 - 111 - 111 },
-          destinationProperties: [],
-        } as unknown as SubdivisionFormModel,
+        subdivisionInitialValues: initialFormModel,
       },
     });
 
@@ -154,11 +162,12 @@ describe('Add Subdivision View', () => {
   });
 
   it('selected destination properties can be removed', async () => {
+    const initialFormModel = new SubdivisionFormModel();
+    initialFormModel.destinationProperties = [{ ...getMockApiProperty(), pid: 111111111 }];
+
     const { getByTitle, queryByText } = await setup({
       props: {
-        subdivisionInitialValues: {
-          destinationProperties: [{ ...getMockApiProperty(), pid: 111 - 111 - 111 }],
-        } as unknown as SubdivisionFormModel,
+        subdivisionInitialValues: initialFormModel,
       },
     });
 
@@ -170,34 +179,33 @@ describe('Add Subdivision View', () => {
   });
 
   it('property area only has at most 4 digits', async () => {
+    const mockFeatureSet = getMockSelectedFeatureDataset();
     const initialFormModel = new SubdivisionFormModel();
     getPrimaryAddressByPid.mockImplementation(() => Promise.resolve(undefined));
+
     const { queryByDisplayValue } = await setup({
       props: {
         subdivisionInitialValues: initialFormModel,
       },
     });
 
-    const mapProperty: IMapProperty = {
-      propertyId: 123,
-      pid: '123-456-789',
-      planNumber: 'SPS22411',
-      address: 'Test address 123',
-      region: 1,
-      regionName: 'Some test region',
-      district: 5,
-      districtName: 'Okanagan-Shuswap',
-      areaUnit: AreaUnitTypes.SquareMeters,
-      landArea: 1.12345,
-    };
-
     await act(async () => {
       mapSelectorProps.addSelectedProperties([
-        PropertyForm.fromMapProperty(mapProperty).toFeatureDataset(),
+        {
+          ...mockFeatureSet,
+          pimsFeature: {
+            ...mockFeatureSet.pimsFeature,
+            properties: {
+              ...mockFeatureSet.pimsFeature?.properties,
+              PID_PADDED: '123-456-789',
+              LAND_AREA: 1.12345,
+            },
+          },
+        },
       ]);
     });
 
-    expect(getPrimaryAddressByPid).toHaveBeenCalledWith(testProperty.pid);
+    expect(getPrimaryAddressByPid).toHaveBeenCalledWith('123-456-789');
 
     expect(queryByDisplayValue('1.12')).toBeNull();
     expect(queryByDisplayValue('1.123')).toBeNull();

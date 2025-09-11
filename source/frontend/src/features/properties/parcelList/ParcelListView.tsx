@@ -22,8 +22,14 @@ export const ParcelListView: React.FC<IParcelListViewProps> = ({ parcels }) => {
           {parcels.length > 1 ? ' properties' : ' property'}
         </StyledSpan>
       </StyledHeader>
-      {parcels.map(p => (
-        <ParcelItem key={p.id} parcel={p} onRemove={null} canAddToWorklist={true} />
+      {parcels.map((p, index) => (
+        <ParcelItem
+          key={p.id}
+          parcel={p}
+          onRemove={null}
+          canAddToWorklist={true}
+          parcelIndex={index}
+        />
       ))}
     </StyledContainer>
   );

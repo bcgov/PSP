@@ -2,10 +2,10 @@ import moment from 'moment';
 import { useCallback } from 'react';
 import { Tooltip } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
 
+import { ExternalLink } from '@/components/common/ExternalLink';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { ColumnWithProps, renderTypeCode, Table } from '@/components/Table';
 import { TableSort } from '@/components/Table/TableSort';
@@ -30,9 +30,9 @@ const columns: ColumnWithProps<ApiGen_Concepts_Lease>[] = [
     width: 10,
     maxWidth: 20,
     Cell: (props: CellProps<ApiGen_Concepts_Lease>) => (
-      <Link to={`/mapview/sidebar/lease/${props.row.original.id}`}>
+      <ExternalLink to={`/mapview/sidebar/lease/${props.row.original.id}`}>
         {props.row.original.lFileNo}
-      </Link>
+      </ExternalLink>
     ),
   },
   {

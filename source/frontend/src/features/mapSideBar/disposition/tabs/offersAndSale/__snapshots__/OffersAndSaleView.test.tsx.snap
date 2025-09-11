@@ -78,7 +78,7 @@ exports[`Disposition Offer Detail View component > renders as expected 1`] = `
       </p>
     </div>
   </div>
-  .c3 {
+  .c2 {
   float: right;
   cursor: pointer;
   font-size: 3.2rem;
@@ -99,38 +99,6 @@ exports[`Disposition Offer Detail View component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c2 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-align-items: end;
-  -webkit-box-align: end;
-  -ms-flex-align: end;
-  align-items: end;
-  min-height: 4.5rem;
-}
-
-.c2 .btn {
-  margin: 0;
-}
-
-.c2 .primary-column {
-  -webkit-flex: 1 1 0;
-  -ms-flex: 1 1 0;
-  flex: 1 1 0;
-}
-
-.c2 .secondary-column {
-  -webkit-flex: 0.5 1 0;
-  -ms-flex: 0.5 1 0;
-  flex: 0.5 1 0;
-}
-
 <div
     class="c0 form-section"
   >
@@ -144,10 +112,10 @@ exports[`Disposition Offer Detail View component > renders as expected 1`] = `
           class="align-content-end col"
         >
           <div
-            class="c2 no-gutters row"
+            class="no-gutters justify-content-between align-items-end row"
           >
             <div
-              class="align-items-end primary-column col-auto"
+              class="my-1 col-auto"
             >
               Offers
             </div>
@@ -157,7 +125,7 @@ exports[`Disposition Offer Detail View component > renders as expected 1`] = `
           class="pl-2 d-flex align-items-end col-auto"
         >
           <svg
-            class="c3"
+            class="c2"
             fill="currentColor"
             height="1em"
             stroke="currentColor"

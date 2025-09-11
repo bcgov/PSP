@@ -84,6 +84,43 @@ export const municipalityLayerConfig: ContentConfig = {
   },
 };
 
+export const firstNationsLayerConfig: ContentConfig = {
+  BAND_NAME: {
+    label: 'First Nations Band Name',
+    display: (data: { [key: string]: any }) => `${data.BAND_NAME}`,
+  },
+  BAND_NUMBER: {
+    label: 'First Nations Band Number',
+    display: (data: { [key: string]: any }) => `${data.BAND_NUMBER}`,
+  },
+  ENGLISH_NAME: {
+    label: 'First Nations Band English Name',
+    display: (data: { [key: string]: any }) => `${data.ENGLISH_NAME}`,
+  },
+};
+
+export const electoralLayerConfig: ContentConfig = {
+  ELECTORAL_DISTRICT_ID: {
+    label: 'Electoral District Id',
+    display: (data: { [key: string]: any }) => `${data.ELECTORAL_DISTRICT_ID}`,
+  },
+  ED_NAME: {
+    label: 'Electoral District Name',
+    display: (data: { [key: string]: any }) => `${data.ED_NAME}`,
+  },
+  FEATURE_AREA_SQM: {
+    label: 'Electoral District Size (square meteres)',
+    display: (data: { [key: string]: any }) => `${data.FEATURE_AREA_SQM} m2`,
+  },
+};
+
+export const alrLayerConfig: ContentConfig = {
+  STATUS: {
+    label: 'Agricultural Land Reserve Status',
+    display: (data: { [key: string]: any }) => `${data.STATUS}`,
+  },
+};
+
 export const pimsLayerConfig: ContentConfig = {
   PROPERTY_ID: {
     label: 'Hyperlink',

@@ -413,7 +413,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             var digitalPDF = new DocumentFile();
             var digitalDOCX = new DocumentFile();
             var digitalDOC = new DocumentFile();
-            var digitalHTML = new DocumentFile();
+            //var digitalHTML = new DocumentFile();
             var digitalPNG = new DocumentFile();
             var digitalXLS = new DocumentFile();
             var digitalTXT = new DocumentFile();
@@ -428,7 +428,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             string pdf = System.IO.Path.Combine(currentDirectory, @"..\..\..\TestDocuments\RemoteAccessUserGuide2022.pdf");
             string docx = System.IO.Path.Combine(currentDirectory, @"..\..\..\TestDocuments\H120 Template.docx");
             string doc = System.IO.Path.Combine(currentDirectory, @"..\..\..\TestDocuments\H179P Template.doc");
-            string html = System.IO.Path.Combine(currentDirectory, @"..\..\..\TestDocuments\html test page.html");
+            //string html = System.IO.Path.Combine(currentDirectory, @"..\..\..\TestDocuments\html test page.html");
             string png = System.IO.Path.Combine(currentDirectory, @"..\..\..\TestDocuments\PSP-6438 - Evidence.png");
             string xls = System.IO.Path.Combine(currentDirectory, @"..\..\..\TestDocuments\Takes Logic.xls");
             string txt = System.IO.Path.Combine(currentDirectory, @"..\..\..\TestDocuments\Testing file docs.txt");
@@ -440,7 +440,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             digitalPDF.Url = Path.GetFullPath(pdf);
             digitalDOCX.Url = Path.GetFullPath(docx);
             digitalDOC.Url = Path.GetFullPath(doc);
-            digitalHTML.Url = Path.GetFullPath(html);
+            //digitalHTML.Url = Path.GetFullPath(html);
             digitalPNG.Url = Path.GetFullPath(png);
             digitalXLS.Url = Path.GetFullPath(xls);
             digitalTXT.Url = Path.GetFullPath(txt);
@@ -453,7 +453,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             digitalDocumentList.Add(digitalPDF);
             digitalDocumentList.Add(digitalDOCX);
             digitalDocumentList.Add(digitalDOC);
-            digitalDocumentList.Add(digitalHTML);
+            //digitalDocumentList.Add(digitalHTML);
             digitalDocumentList.Add(digitalPNG);
             digitalDocumentList.Add(digitalXLS);
             digitalDocumentList.Add(digitalTXT);

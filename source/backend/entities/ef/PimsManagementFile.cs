@@ -69,7 +69,7 @@ public partial class PimsManagementFile
     public string FileName { get; set; }
 
     /// <summary>
-    /// Legacy formatted file number assigned to the acquisition file.  Format follows YY-XXXXXX-ZZ where YY = MoTI region number, XXXXXX = generated integer sequence number,  and ZZ = file suffix number (defaulting to &apos;01&apos;).   Required due to some files having t
+    /// Legacy formatted file number assigned to the acquisition file.  Format follows YY-XXXXXX-ZZ where YY = MoTT region number, XXXXXX = generated integer sequence number,  and ZZ = file suffix number (defaulting to &apos;01&apos;).   Required due to some files having t
     /// </summary>
     [Column("LEGACY_FILE_NUM")]
     [StringLength(100)]

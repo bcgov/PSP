@@ -6,7 +6,7 @@ exports[`PropertyContactListView component > renders as expected when provided v
     class="Toastify"
   />
   <div />
-  .c3.btn {
+  .c2.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,17 +35,17 @@ exports[`PropertyContactListView component > renders as expected when provided v
   cursor: pointer;
 }
 
-.c3.btn .Button__value {
+.c2.btn .Button__value {
   width: auto;
 }
 
-.c3.btn:hover {
+.c2.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c3.btn:focus {
+.c2.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -53,31 +53,31 @@ exports[`PropertyContactListView component > renders as expected when provided v
   box-shadow: none;
 }
 
-.c3.btn.btn-primary {
+.c2.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c3.btn.btn-primary:hover,
-.c3.btn.btn-primary:active,
-.c3.btn.btn-primary:focus {
+.c2.btn.btn-primary:hover,
+.c2.btn.btn-primary:active,
+.c2.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c3.btn.btn-secondary {
+.c2.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c3.btn.btn-secondary:hover,
-.c3.btn.btn-secondary:active,
-.c3.btn.btn-secondary:focus {
+.c2.btn.btn-secondary:hover,
+.c2.btn.btn-secondary:active,
+.c2.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c3.btn.btn-info {
+.c2.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -85,66 +85,66 @@ exports[`PropertyContactListView component > renders as expected when provided v
   padding-right: 0.6rem;
 }
 
-.c3.btn.btn-info:hover,
-.c3.btn.btn-info:active,
-.c3.btn.btn-info:focus {
+.c2.btn.btn-info:hover,
+.c2.btn.btn-info:active,
+.c2.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c3.btn.btn-light {
+.c2.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c3.btn.btn-light:hover,
-.c3.btn.btn-light:active,
-.c3.btn.btn-light:focus {
+.c2.btn.btn-light:hover,
+.c2.btn.btn-light:active,
+.c2.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c3.btn.btn-dark {
+.c2.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c3.btn.btn-dark:hover,
-.c3.btn.btn-dark:active,
-.c3.btn.btn-dark:focus {
+.c2.btn.btn-dark:hover,
+.c2.btn.btn-dark:active,
+.c2.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c3.btn.btn-danger {
+.c2.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c3.btn.btn-danger:hover,
-.c3.btn.btn-danger:active,
-.c3.btn.btn-danger:focus {
+.c2.btn.btn-danger:hover,
+.c2.btn.btn-danger:active,
+.c2.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c3.btn.btn-warning {
+.c2.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c3.btn.btn-warning:hover,
-.c3.btn.btn-warning:active,
-.c3.btn.btn-warning:focus {
+.c2.btn.btn-warning:hover,
+.c2.btn.btn-warning:active,
+.c2.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c3.btn.btn-link {
+.c2.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -168,9 +168,9 @@ exports[`PropertyContactListView component > renders as expected when provided v
   text-decoration: underline;
 }
 
-.c3.btn.btn-link:hover,
-.c3.btn.btn-link:active,
-.c3.btn.btn-link:focus {
+.c2.btn.btn-link:hover,
+.c2.btn.btn-link:active,
+.c2.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -180,15 +180,15 @@ exports[`PropertyContactListView component > renders as expected when provided v
   outline: none;
 }
 
-.c3.btn.btn-link:disabled,
-.c3.btn.btn-link.disabled {
+.c2.btn.btn-link:disabled,
+.c2.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c3.btn:disabled,
-.c3.btn:disabled:hover {
+.c2.btn:disabled,
+.c2.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -200,82 +200,82 @@ exports[`PropertyContactListView component > renders as expected when provided v
   cursor: not-allowed;
 }
 
-.c3.Button .Button__icon {
+.c2.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c3.Button--icon-only:focus {
+.c2.Button--icon-only:focus {
   outline: none;
 }
 
-.c3.Button--icon-only .Button__icon {
+.c2.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c8.c8.btn {
+.c7.c7.btn {
   background-color: unset;
   border: none;
 }
 
-.c8.c8.btn:hover,
-.c8.c8.btn:focus,
-.c8.c8.btn:active {
+.c7.c7.btn:hover,
+.c7.c7.btn:focus,
+.c7.c7.btn:active {
   background-color: unset;
   outline: none;
   box-shadow: none;
 }
 
-.c8.c8.btn svg {
+.c7.c7.btn svg {
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
 
-.c8.c8.btn svg:hover {
+.c7.c7.btn svg:hover {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
 }
 
-.c8.c8.btn.btn-primary svg {
+.c7.c7.btn.btn-primary svg {
   color: #013366;
 }
 
-.c8.c8.btn.btn-primary svg:hover {
+.c7.c7.btn.btn-primary svg:hover {
   color: #013366;
 }
 
-.c8.c8.btn.btn-light svg {
+.c7.c7.btn.btn-light svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c8.c8.btn.btn-light svg:hover {
+.c7.c7.btn.btn-light svg:hover {
   color: #CE3E39;
 }
 
-.c8.c8.btn.btn-info svg {
+.c7.c7.btn.btn-info svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c8.c8.btn.btn-info svg:hover {
+.c7.c7.btn.btn-info svg:hover {
   color: var(--surface-color-primary-button-hover);
 }
 
-.c9.c9.btn.btn-primary {
+.c8.c8.btn.btn-primary {
   -webkit-text-decoration: none;
   text-decoration: none;
   line-height: unset;
 }
 
-.c9.c9.btn.btn-primary svg {
+.c8.c8.btn.btn-primary svg {
   color: #aaaaaa !important;
 }
 
-.c9.c9.btn.btn-primary .text {
+.c8.c8.btn.btn-primary .text {
   display: none;
 }
 
-.c9.c9.btn.btn-primary svg:hover,
-.c9.c9.btn.btn-primary svg:active,
-.c9.c9.btn.btn-primary svg:focus {
+.c8.c8.btn.btn-primary svg:hover,
+.c8.c8.btn.btn-primary svg:active,
+.c8.c8.btn.btn-primary svg:focus {
   color: #d8292f !important;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -285,18 +285,18 @@ exports[`PropertyContactListView component > renders as expected when provided v
   flex-direction: row;
 }
 
-.c9.c9.btn.btn-primary svg:hover .text,
-.c9.c9.btn.btn-primary svg:active .text,
-.c9.c9.btn.btn-primary svg:focus .text {
+.c8.c8.btn.btn-primary svg:hover .text,
+.c8.c8.btn.btn-primary svg:active .text,
+.c8.c8.btn.btn-primary svg:focus .text {
   display: inline;
   line-height: 2rem;
 }
 
-.c10 {
+.c9 {
   margin-top: 0.3rem;
 }
 
-.c11 {
+.c10 {
   min-width: 5rem;
   max-width: 5rem;
   margin-left: 1rem;
@@ -305,38 +305,38 @@ exports[`PropertyContactListView component > renders as expected when provided v
   padding: 0;
 }
 
-.c11:-moz-read-only {
+.c10:-moz-read-only {
   background: white;
 }
 
-.c11:read-only {
+.c10:read-only {
   background: white;
 }
 
-.c4.btn.btn-primary,
-.c4.btn.btn-primary:active {
+.c3.btn.btn-primary,
+.c3.btn.btn-primary:active {
   background-color: #42814A;
 }
 
-.c4.btn.btn-primary:hover,
-.c4.btn.btn-primary:focus {
+.c3.btn.btn-primary:hover,
+.c3.btn.btn-primary:focus {
   background-color: #2e8540;
   outline-color: #2e8540;
 }
 
-.c5.c5 {
+.c4.c4 {
   display: inline-block;
   margin-left: 1.5rem;
   margin-bottom: 0.5rem;
   float: right;
 }
 
-.c7 {
+.c6 {
   padding: 0 0.4rem;
   display: block;
 }
 
-.c6 {
+.c5 {
   float: right;
   cursor: pointer;
   font-size: 3.2rem;
@@ -357,38 +357,6 @@ exports[`PropertyContactListView component > renders as expected when provided v
   border-radius: 0.5rem;
 }
 
-.c2 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-align-items: end;
-  -webkit-box-align: end;
-  -ms-flex-align: end;
-  align-items: end;
-  min-height: 4.5rem;
-}
-
-.c2 .btn {
-  margin: 0;
-}
-
-.c2 .primary-column {
-  -webkit-flex: 1 1 0;
-  -ms-flex: 1 1 0;
-  flex: 1 1 0;
-}
-
-.c2 .secondary-column {
-  -webkit-flex: 0.5 1 0;
-  -ms-flex: 0.5 1 0;
-  flex: 0.5 1 0;
-}
-
 <div
     class="c0 form-section"
   >
@@ -402,18 +370,18 @@ exports[`PropertyContactListView component > renders as expected when provided v
           class="align-content-end col"
         >
           <div
-            class="c2 no-gutters row"
+            class="no-gutters justify-content-between align-items-end row"
           >
             <div
-              class="align-items-end primary-column col-auto"
+              class="my-1 col-auto"
             >
               Property Contact
             </div>
             <div
-              class=" my-1 secondary-column col-auto"
+              class="col-auto"
             >
               <button
-                class="c3 Button c4 c5 btn btn-primary"
+                class="c2 Button c3 c4 btn btn-primary"
                 type="button"
               >
                 <div
@@ -442,7 +410,7 @@ exports[`PropertyContactListView component > renders as expected when provided v
           class="pl-2 d-flex align-items-end col-auto"
         >
           <svg
-            class="c6"
+            class="c5"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -550,7 +518,7 @@ exports[`PropertyContactListView component > renders as expected when provided v
                 title=""
               >
                 <a
-                  class="c7"
+                  class="c6"
                   href="/contact/P1"
                   rel="noopener noreferrer"
                   target="_blank"
@@ -587,7 +555,7 @@ exports[`PropertyContactListView component > renders as expected when provided v
                     class="col"
                   >
                     <button
-                      class="c3 Button Button--icon-only btn btn-link"
+                      class="c2 Button Button--icon-only btn btn-link"
                       type="button"
                     >
                       <div
@@ -610,7 +578,7 @@ exports[`PropertyContactListView component > renders as expected when provided v
                     </button>
                   </div>
                   <button
-                    class="c3 Button c8 c9 btn btn-primary"
+                    class="c2 Button c7 c8 btn btn-primary"
                     data-testid="contact-delete-0"
                     title="Delete contact"
                     type="button"
@@ -665,19 +633,19 @@ exports[`PropertyContactListView component > renders as expected when provided v
                 class="d-flex"
               >
                 <span
-                  class="c10"
+                  class="c9"
                 >
                   Show
                 </span>
                 <input
-                  class="c11 form-control"
+                  class="c10 form-control"
                   data-testid="input-page-size"
                   readonly=""
                   type="number"
                   value="10"
                 />
                 <span
-                  class="c10"
+                  class="c9"
                 >
                   Entries
                 </span>

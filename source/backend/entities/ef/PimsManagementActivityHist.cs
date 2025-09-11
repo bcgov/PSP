@@ -41,6 +41,15 @@ public partial class PimsManagementActivityHist
     [StringLength(20)]
     public string MgmtActivityTypeCode { get; set; }
 
+    [Column("REQUESTOR_PERSON_ID")]
+    public long? RequestorPersonId { get; set; }
+
+    [Column("REQUESTOR_ORGANIZATION_ID")]
+    public long? RequestorOrganizationId { get; set; }
+
+    [Column("REQUESTOR_PRIMARY_CONTACT_ID")]
+    public long? RequestorPrimaryContactId { get; set; }
+
     [Column("REQUEST_ADDED_DT")]
     public DateOnly RequestAddedDt { get; set; }
 

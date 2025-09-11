@@ -35,7 +35,7 @@ import { useFilePropertyIdFromUrl } from '../shared/usePropertyIndexFromUrl';
 import { AcquisitionContainerState } from './AcquisitionContainer';
 import { isAcquisitionFile } from './add/models';
 import AcquisitionHeader from './common/AcquisitionHeader';
-import GenerateFormContainer from './common/GenerateForm/GenerateFormContainer';
+import AcquisitionGenerateContainer from './common/GenerateForm/AcquisitionGenerateContainer';
 import GenerateFormView from './common/GenerateForm/GenerateFormView';
 import { AcquisitionRouter } from './router/AcquisitionRouter';
 import AcquisitionFileStatusUpdateSolver from './tabs/fileDetails/detail/AcquisitionFileStatusUpdateSolver';
@@ -174,7 +174,10 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
                     onSelectProperty={onSelectProperty}
                     onEditProperties={onEditProperties}
                   >
-                    <GenerateFormContainer acquisitionFileId={file.id} View={GenerateFormView} />
+                    <AcquisitionGenerateContainer
+                      acquisitionFileId={file.id}
+                      View={GenerateFormView}
+                    />
                   </FileMenuView>
                 )}
               </>

@@ -1,8 +1,8 @@
 import { chain } from 'lodash';
-import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 
 import ExpandableTextList from '@/components/common/ExpandableTextList';
+import { ExternalLink } from '@/components/common/ExternalLink';
 import ExpandableFileProperties from '@/components/common/List/ExpandableFileProperties';
 import { ColumnWithProps } from '@/components/Table';
 import { Claims } from '@/constants/claims';
@@ -35,9 +35,9 @@ export const columns: ColumnWithProps<DispositionSearchResultModel>[] = [
       const { hasClaim } = useKeycloakWrapper();
       if (hasClaim(Claims.DISPOSITION_VIEW)) {
         return (
-          <Link to={`/mapview/sidebar/disposition/${props.row.original.id}`}>
+          <ExternalLink to={`/mapview/sidebar/disposition/${props.row.original.id}`}>
             D-{props.row.original.fileNumber}
-          </Link>
+          </ExternalLink>
         );
       }
       return stringToFragment(props.row.original.fileNumber);
