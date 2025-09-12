@@ -8,7 +8,7 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionListHeader } from '@/components/common/SectionListHeader';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { Claims } from '@/constants';
-import { EnumAcquisitionFileType } from '@/constants/acquisitionFileType';
+import { ApiGen_CodeTypes_AcquisitionFileTypeTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionFileTypeTypes';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_ExpropriationPayment } from '@/models/api/generated/ApiGen_Concepts_ExpropriationPayment';
 
@@ -118,7 +118,7 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
         ModalView={ExpropriationEventModal}
       />
 
-      {acquisitionFileTypeCode === EnumAcquisitionFileType.SECTN6 && (
+      {acquisitionFileTypeCode === ApiGen_CodeTypes_AcquisitionFileTypeTypes.SECTN6 && (
         <Section
           isCollapsable
           initiallyExpanded
@@ -146,7 +146,7 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
         </Section>
       )}
 
-      {acquisitionFileTypeCode === EnumAcquisitionFileType.SECTN6 && (
+      {acquisitionFileTypeCode === ApiGen_CodeTypes_AcquisitionFileTypeTypes.SECTN6 && (
         <Section
           isCollapsable
           initiallyExpanded={false}
@@ -210,7 +210,7 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
         ))}
       </Section>
 
-      {acquisitionFileTypeCode === EnumAcquisitionFileType.SECTN6 && (
+      {acquisitionFileTypeCode === ApiGen_CodeTypes_AcquisitionFileTypeTypes.SECTN6 && (
         <Section
           isCollapsable
           initiallyExpanded={false}

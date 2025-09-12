@@ -27,6 +27,9 @@ namespace Pims.Api.Models.CodeTypes
         [EnumMember(Value = "H0074")]
         H0074,
 
+        [EnumMember(Value = "H0224")]
+        H0224,
+
         [EnumMember(Value = "H0443")]
         H0443,
 
@@ -53,6 +56,9 @@ namespace Pims.Api.Models.CodeTypes
 
         [EnumMember(Value = "H179T")]
         H179T,
+
+        [EnumMember(Value = "H179FS")]
+        H179FS,
 
         [EnumMember(Value = "LETTER")]
         LETTER,

@@ -1,7 +1,5 @@
-import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
 
-import { EnumAcquisitionFileType } from '@/constants/acquisitionFileType';
 import Claims from '@/constants/claims';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useExpropriationEventRepository } from '@/hooks/repositories/useExpropriationEventRepository';
@@ -23,6 +21,7 @@ import {
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { getMockContactOrganizationWithOnePerson } from '@/mocks/contacts.mock';
 import { useGenerateExpropriationForm1 } from '../../common/GenerateForm/hooks/useGenerateExpropriationForm1';
+import { ApiGen_CodeTypes_AcquisitionFileTypeTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionFileTypeTypes';
 
 const history = createMemoryHistory();
 
@@ -129,7 +128,7 @@ describe('Expropriation Tab Container View', () => {
 
   it('shows the sections for Acquisition file type "Section 3"', async () => {
     const { queryByTestId } = await setup({
-      props: { acquisitionFile: getMockExpropriationFile(EnumAcquisitionFileType.SECTN3) },
+      props: { acquisitionFile: getMockExpropriationFile(ApiGen_CodeTypes_AcquisitionFileTypeTypes.SECTN3) },
     });
 
     expect(queryByTestId('form-1-section')).not.toBeInTheDocument();
@@ -141,7 +140,7 @@ describe('Expropriation Tab Container View', () => {
   it('displays tooltip instead of add button when file in final status', async () => {
     const { queryByTestId, queryByText } = await setup({
       props: {
-        acquisitionFile: getMockExpropriationFile(EnumAcquisitionFileType.SECTN3),
+        acquisitionFile: getMockExpropriationFile(ApiGen_CodeTypes_AcquisitionFileTypeTypes.SECTN3),
         isFileFinalStatus: true,
       },
     });
