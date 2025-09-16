@@ -290,7 +290,7 @@ namespace Pims.Ltsa
 
             try
             {
-               var parameters = new Dictionary<string, string>
+                var parameters = new Dictionary<string, string>
                 {
                    { "client_id", Options.ClientId },
                    { "client_secret", Options.ClientSecret },
