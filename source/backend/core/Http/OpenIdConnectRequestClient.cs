@@ -128,14 +128,9 @@ namespace Pims.Core.Http
                 {
                     JsonElement root = document.RootElement;
                     string access = root.GetProperty("access_token").GetString();
-                    if (root.TryGetProperty("refresh_token",  out JsonElement refresh))
-                    {
-                        _accessToken = new Models.TokenModel(access, refresh.GetString());
-                    }
-                    else
-                    {
-                        _accessToken = new Models.TokenModel(access, null);
-                    }
+                    string refresh = root.TryGetProperty("refresh_token", out JsonElement refreshNode) ? refreshNode.ToString() : null;
+
+                    _accessToken = new Models.TokenModel(access, refresh);
                 }
 
                 return $"Bearer {_accessToken.AccessToken}";
@@ -191,7 +186,7 @@ namespace Pims.Core.Http
                     { "audience", audience },
                 };
                 var form = new FormUrlEncodedContent(p);
-                form.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/x-www-form-urlencoded");
+                form.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
                 tokenMessage.Content = form;
                 return await this.Client.SendAsync(tokenMessage, cancellation);
             });
@@ -234,7 +229,7 @@ namespace Pims.Core.Http
                     { "refresh_token", refreshToken },
                 };
                 var form = new FormUrlEncodedContent(p);
-                form.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/x-www-form-urlencoded");
+                form.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
                 tokenMessage.Content = form;
                 return await this.Client.SendAsync(tokenMessage, cancellation);
             });
