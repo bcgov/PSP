@@ -9,6 +9,8 @@ export class ManagementActivityFilterModel {
   activityStatusCode = '';
   activityTypeCode = '';
   projectNameOrNumber = '';
+  managementFileStatusCode = '';
+  managementFilePurposeCode = '';
 
   toApi(): Api_ManagementActivityFilter {
     return {
@@ -20,6 +22,8 @@ export class ManagementActivityFilterModel {
       activityStatusCode: this.activityStatusCode,
       activityTypeCode: this.activityTypeCode,
       projectNameOrNumber: this.projectNameOrNumber,
+      managementFileStatusCode: this.managementFileStatusCode,
+      managementFilePurposeCode: this.managementFilePurposeCode,
     };
   }
 
@@ -33,6 +37,8 @@ export class ManagementActivityFilterModel {
     newModel.activityStatusCode = base.activityStatusCode ?? '';
     newModel.activityTypeCode = base.activityTypeCode ?? '';
     newModel.projectNameOrNumber = base.projectNameOrNumber ?? '';
+    newModel.managementFileStatusCode = base.managementFileStatusCode ?? '';
+    newModel.managementFilePurposeCode = base.managementFilePurposeCode ?? '';
 
     return newModel;
   }

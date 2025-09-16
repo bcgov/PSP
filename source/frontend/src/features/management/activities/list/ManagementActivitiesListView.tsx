@@ -10,7 +10,12 @@ import { StyledIconButton } from '@/components/common/buttons/IconButton';
 import * as CommonStyled from '@/components/common/styles';
 import { PaddedScrollable } from '@/components/common/styles';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
-import { MGMT_ACTIVITY_STATUS_TYPES, MGMT_ACTIVITY_TYPES } from '@/constants/API';
+import {
+  MANAGEMENT_FILE_PURPOSE_TYPES,
+  MANAGEMENT_FILE_STATUS_TYPES,
+  MGMT_ACTIVITY_STATUS_TYPES,
+  MGMT_ACTIVITY_TYPES,
+} from '@/constants/API';
 import { useApiManagementActivities } from '@/hooks/pims-api/useApiManagementActivities';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { useSearch } from '@/hooks/useSearch';
@@ -40,6 +45,14 @@ export const ManagementActivitiesListView: React.FC<unknown> = () => {
 
   const activityTypesOptions = lookupCodes
     .getByType(MGMT_ACTIVITY_TYPES)
+    .map(c => mapLookupCode(c));
+
+  const managementFileStatusOptions = lookupCodes
+    .getByType(MANAGEMENT_FILE_STATUS_TYPES)
+    .map(c => mapLookupCode(c));
+
+  const managementPurposeOptions = lookupCodes
+    .getByType(MANAGEMENT_FILE_PURPOSE_TYPES)
     .map(c => mapLookupCode(c));
 
   const { exportManagementActivities } = useManagementActivityExport();
@@ -114,21 +127,27 @@ export const ManagementActivitiesListView: React.FC<unknown> = () => {
                 setFilter={changeFilter}
                 activityStatusOptions={activityStatusOptions}
                 activityTypesOptions={activityTypesOptions}
+                fileStatusOptions={managementFileStatusOptions}
+                managementPurposeOptions={managementPurposeOptions}
               />
             </Col>
             <Col md="auto" className="px-0">
-              <TooltipWrapper tooltipId="export-to-excel" tooltip="Export to Excel">
-                <StyledIconButton onClick={() => fetch('excel')}>
-                  <FaFileExcel data-testid="excel-icon" size={36} />
-                </StyledIconButton>
-              </TooltipWrapper>
-            </Col>
-            <Col md="auto" className="px-0">
-              <TooltipWrapper tooltipId="export-to-excel" tooltip="Export to CSV">
-                <StyledIconButton onClick={() => fetch('csv')}>
-                  <FaFileAlt data-testid="csv-icon" size={36} />
-                </StyledIconButton>
-              </TooltipWrapper>
+              <Row>
+                <Col xl="6">
+                  <TooltipWrapper tooltipId="export-to-excel" tooltip="Export to Excel">
+                    <StyledIconButton onClick={() => fetch('excel')}>
+                      <FaFileExcel data-testid="excel-icon" size={36} />
+                    </StyledIconButton>
+                  </TooltipWrapper>
+                </Col>
+                <Col xl="6">
+                  <TooltipWrapper tooltipId="export-to-excel" tooltip="Export to CSV">
+                    <StyledIconButton onClick={() => fetch('csv')}>
+                      <FaFileAlt data-testid="csv-icon" size={36} />
+                    </StyledIconButton>
+                  </TooltipWrapper>
+                </Col>
+              </Row>
             </Col>
           </Row>
         </CommonStyled.PageToolbar>
