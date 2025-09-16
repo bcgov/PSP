@@ -1,7 +1,6 @@
-import { isEmpty } from 'lodash';
 import { useCallback, useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaFileAlt, FaFileExcel } from 'react-icons/fa';
+import { FaFileExcel } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
@@ -21,8 +20,7 @@ import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { useSearch } from '@/hooks/useSearch';
 import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 import { Api_ManagementActivityFilter } from '@/models/api/ManagementActivityFilter';
-import { generateMultiSortCriteria, mapLookupCode } from '@/utils';
-import { toFilteredApiPaginateParams } from '@/utils/CommonFunctions';
+import { mapLookupCode } from '@/utils';
 
 import { useManagementActivityExport } from '../../hooks/useManagementActivityExport';
 import { ManagementActivityFilterModel } from '../models/ManagementActivityFilterModel';
@@ -55,22 +53,17 @@ export const ManagementActivitiesListView: React.FC<unknown> = () => {
     .getByType(MANAGEMENT_FILE_PURPOSE_TYPES)
     .map(c => mapLookupCode(c));
 
-  const { exportManagementActivities } = useManagementActivityExport();
+  const {
+    generateManagementActivitiesOverviewReport: { execute: getOverviewReport },
+    generateManagementActivitiesInvoiceReport: { execute: getInvoicesReport },
+  } = useManagementActivityExport();
 
-  /**
-   * @param {'csv' | 'excel'} accept Whether the fetch is for type of CSV or EXCEL
-   * @param {boolean} getAllFields Enable this field to generate report with additional fields. For SRES only.
-   */
-  const fetch = (accept: 'csv' | 'excel') => {
-    // Call API with appropriate search parameters
-    const query = toFilteredApiPaginateParams<Api_ManagementActivityFilter>(
-      currentPage,
-      pageSize,
-      sort && !isEmpty(sort) ? generateMultiSortCriteria(sort) : undefined,
-      filter,
-    );
+  const generateActivitiesOverviewReport = async (values: Api_ManagementActivityFilter) => {
+    await getOverviewReport(values);
+  };
 
-    exportManagementActivities(query, accept);
+  const generateActivitiesInvoiceReport = async (values: Api_ManagementActivityFilter) => {
+    await getInvoicesReport(values);
   };
 
   const {
@@ -133,19 +126,29 @@ export const ManagementActivitiesListView: React.FC<unknown> = () => {
             </Col>
             <Col md="auto" className="px-0">
               <Row>
-                <Col xl="6">
-                  <TooltipWrapper tooltipId="export-to-excel" tooltip="Export to Excel">
-                    <StyledIconButton onClick={() => fetch('excel')}>
+                <Col className="d-flex align-items-center">
+                  <TooltipWrapper
+                    tooltipId="export-to-excel-overview-report"
+                    tooltip="Export to Excel"
+                  >
+                    <StyledIconButton onClick={() => generateActivitiesOverviewReport(filter)}>
                       <FaFileExcel data-testid="excel-icon" size={36} />
                     </StyledIconButton>
                   </TooltipWrapper>
+                  <span>Activity overview</span>
                 </Col>
-                <Col xl="6">
-                  <TooltipWrapper tooltipId="export-to-excel" tooltip="Export to CSV">
-                    <StyledIconButton onClick={() => fetch('csv')}>
-                      <FaFileAlt data-testid="csv-icon" size={36} />
+              </Row>
+              <Row>
+                <Col className="d-flex align-items-center">
+                  <TooltipWrapper
+                    tooltipId="export-to-excel-invoice-report"
+                    tooltip="Export to Excel"
+                  >
+                    <StyledIconButton onClick={() => generateActivitiesInvoiceReport(filter)}>
+                      <FaFileExcel data-testid="excel-icon" size={36} />
                     </StyledIconButton>
                   </TooltipWrapper>
+                  <span>Invoice report</span>
                 </Col>
               </Row>
             </Col>
