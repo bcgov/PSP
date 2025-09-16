@@ -85,9 +85,9 @@ namespace Pims.Ltsa
                 return await _authPolicy.ExecuteAsync(async (context) =>
                 {
                     var token = (TokenModel)context["access_token"];
-                    if (token != null)
+                    if (token is not null)
                     {
-                        client.DefaultRequestHeaders?.Add("Authorization", $"Bearer {token?.AccessToken}");
+                        client.DefaultRequestHeaders?.Add("Authorization", $"Bearer {token.AccessToken}");
                     }
 
                     var response = await client.GetAsync(url);
@@ -142,10 +142,9 @@ namespace Pims.Ltsa
                     var token = (TokenModel)context["access_token"];
 
                     using var request = new HttpRequestMessage(HttpMethod.Post, url);
-                    //request.Headers.Add("Accept", "application/json");
-                    if (token != null)
+                    if (token is not null)
                     {
-                        request.Headers.Add("Authorization", $"Bearer {token?.AccessToken}");
+                        request.Headers.Add("Authorization", $"Bearer {token.AccessToken}");
                     }
 
                     var stringContent = JsonSerializer.Serialize(data, _jsonSerializerOptions);
