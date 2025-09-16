@@ -75,7 +75,7 @@ namespace Pims.Api.Areas.Reports.Controllers
         [Produces(ContentTypes.CONTENTTYPECSV, ContentTypes.CONTENTTYPEEXCELX)]
         [ProducesResponseType(200)]
         [SwaggerOperation(Tags = new[] { "management-activities", "report" })]
-        public IActionResult ExportManagementActivities([FromBody]ManagementActivityFilterModel filter, bool all = false)
+        public IActionResult ExportManagementActivities([FromBody] ManagementActivityFilterModel filter, bool all = false)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -87,7 +87,7 @@ namespace Pims.Api.Areas.Reports.Controllers
             filter.ThrowBadRequestIfNull($"The request must include a filter.");
             if (!filter.IsValid())
             {
-                throw new BadRequestException("Lease filter must contain valid values.");
+                throw new BadRequestException("Management activity filter must contain valid values.");
             }
 
             var acceptHeader = (string)Request.Headers["Accept"];
