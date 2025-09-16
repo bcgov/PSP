@@ -87,7 +87,7 @@ namespace Pims.Ltsa
                     var token = (TokenModel)context["access_token"];
                     if (token != null)
                     {
-                        client?.DefaultRequestHeaders?.Add("Authorization", $"Bearer {token?.AccessToken}");
+                        client.DefaultRequestHeaders?.Add("Authorization", $"Bearer {token?.AccessToken}");
                     }
 
                     var response = await client.GetAsync(url);
