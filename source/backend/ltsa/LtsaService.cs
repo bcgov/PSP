@@ -87,7 +87,7 @@ namespace Pims.Ltsa
                     var token = (TokenModel)context["access_token"];
                     if (token != null)
                     {
-                        client?.DefaultRequestHeaders?.Add("X-Authorization", $"Bearer {token?.AccessToken}");
+                        client?.DefaultRequestHeaders?.Add("Authorization", $"Bearer {token?.AccessToken}");
                     }
 
                     var response = await client.GetAsync(url);
@@ -137,18 +137,22 @@ namespace Pims.Ltsa
 
             try
             {
-                var stringContent = JsonSerializer.Serialize(data, _jsonSerializerOptions);
-                var content = new StringContent(stringContent.ToString(), Encoding.UTF8, "application/json");
-
                 var response = await _authPolicy.ExecuteAsync(async (context) =>
                 {
                     var token = (TokenModel)context["access_token"];
+
+                    using var request = new HttpRequestMessage(HttpMethod.Post, url);
+                    //request.Headers.Add("Accept", "application/json");
                     if (token != null)
                     {
-                        client?.DefaultRequestHeaders?.Add("X-Authorization", $"Bearer {token?.AccessToken}");
+                        request.Headers.Add("Authorization", $"Bearer {token?.AccessToken}");
                     }
 
-                    var response = await client.PostAsync(url, content);
+                    var stringContent = JsonSerializer.Serialize(data, _jsonSerializerOptions);
+                    var content = new StringContent(stringContent, Encoding.UTF8, "application/json");
+                    request.Content = content;
+
+                    var response = await client.SendAsync(request);
                     if (!response.IsSuccessStatusCode)
                     {
                         throw new HttpClientRequestException(response);
@@ -286,7 +290,7 @@ namespace Pims.Ltsa
 
             try
             {
-                var parameters = new Dictionary<string, string>
+               var parameters = new Dictionary<string, string>
                 {
                    { "client_id", Options.ClientId },
                    { "client_secret", Options.ClientSecret },

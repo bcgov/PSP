@@ -4,7 +4,10 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Threading;
 using System.Threading.Tasks;
+using DocumentFormat.OpenXml.Math;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Pims.Core.Exceptions;
@@ -19,12 +22,9 @@ namespace Pims.Core.Http
     /// </summary>
     public class OpenIdConnectRequestClient : HttpRequestClient, IOpenIdConnectRequestClient
     {
-        #region Variables
-        public Models.TokenModel AccessToken
-        {
-            get { return _accessToken; }
-        }
+        private static readonly JsonSerializerOptions SerializerOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower, UnmappedMemberHandling = JsonUnmappedMemberHandling.Skip };
 
+        #region Variables
         private readonly JwtSecurityTokenHandler _tokenHandler;
         private Models.TokenModel _accessToken = null;
         #endregion
@@ -40,6 +40,7 @@ namespace Pims.Core.Http
         /// get - The configuration options.
         /// </summary>
         public OpenIdConnectOptions OpenIdConnectOptions { get; }
+
         #endregion
 
         #region Constructors
@@ -126,8 +127,22 @@ namespace Pims.Core.Http
             // Extract the JWT token to use when making the request.
             if (response.IsSuccessStatusCode)
             {
-                using var responseStream = await response.Content.ReadAsStreamAsync();
-                _accessToken = await responseStream.DeserializeAsync<Models.TokenModel>();
+                var tokenStr = await response.Content.ReadAsStringAsync();
+
+                using (JsonDocument document = JsonDocument.Parse(tokenStr))
+                {
+                    JsonElement root = document.RootElement;
+                    string access = root.GetProperty("access_token").GetString();
+                    if (root.TryGetProperty("refresh_token",  out JsonElement refresh))
+                    {
+                        _accessToken = new Models.TokenModel(access, refresh.GetString());
+                    }
+                    else
+                    {
+                        _accessToken = new Models.TokenModel(access, null);
+                    }
+                }
+
                 return $"Bearer {_accessToken.AccessToken}";
             }
             else
