@@ -4,10 +4,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading;
 using System.Threading.Tasks;
-using DocumentFormat.OpenXml.Math;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Pims.Core.Exceptions;
@@ -22,8 +19,6 @@ namespace Pims.Core.Http
     /// </summary>
     public class OpenIdConnectRequestClient : HttpRequestClient, IOpenIdConnectRequestClient
     {
-        private static readonly JsonSerializerOptions SerializerOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower, UnmappedMemberHandling = JsonUnmappedMemberHandling.Skip };
-
         #region Variables
         private readonly JwtSecurityTokenHandler _tokenHandler;
         private Models.TokenModel _accessToken = null;
