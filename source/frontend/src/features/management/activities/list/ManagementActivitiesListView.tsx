@@ -1,3 +1,4 @@
+import fileDownload from 'js-file-download';
 import { useCallback, useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaFileExcel } from 'react-icons/fa';
@@ -17,6 +18,7 @@ import {
 } from '@/constants/API';
 import { useApiManagementActivities } from '@/hooks/pims-api/useApiManagementActivities';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { useModalContext } from '@/hooks/useModalContext';
 import { useSearch } from '@/hooks/useSearch';
 import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 import { Api_ManagementActivityFilter } from '@/models/api/ManagementActivityFilter';
@@ -33,6 +35,7 @@ import ManagementActivitySearchResults from './searchResults/ManagementActivitie
  */
 export const ManagementActivitiesListView: React.FC<unknown> = () => {
   const { getManagementActivitiesPagedApi } = useApiManagementActivities();
+  const { setModalContent, setDisplayModal } = useModalContext();
 
   // lookup codes to filter management list
   const lookupCodes = useLookupCodeHelpers();
@@ -54,8 +57,16 @@ export const ManagementActivitiesListView: React.FC<unknown> = () => {
     .map(c => mapLookupCode(c));
 
   const {
-    generateManagementActivitiesOverviewReport: { execute: getOverviewReport },
-    generateManagementActivitiesInvoiceReport: { execute: getInvoicesReport },
+    generateManagementActivitiesOverviewReport: {
+      execute: getOverviewReport,
+      status: overviewStatus,
+      response: dataOverviewReport,
+    },
+    generateManagementActivitiesInvoiceReport: {
+      execute: getInvoicesReport,
+      status: invoiceStatus,
+      response: dataInvoicesReport,
+    },
   } = useManagementActivityExport();
 
   const generateActivitiesOverviewReport = async (values: Api_ManagementActivityFilter) => {
@@ -65,6 +76,36 @@ export const ManagementActivitiesListView: React.FC<unknown> = () => {
   const generateActivitiesInvoiceReport = async (values: Api_ManagementActivityFilter) => {
     await getInvoicesReport(values);
   };
+
+  useEffect(() => {
+    if (overviewStatus === 204) {
+      setModalContent({
+        variant: 'error',
+        title: 'Warning',
+        message: 'There is no data for the input parameters you entered.',
+        okButtonText: 'Close',
+        handleOk: () => setDisplayModal(false),
+      });
+      setDisplayModal(true);
+    } else if (dataOverviewReport && overviewStatus === 200) {
+      fileDownload(dataOverviewReport, `Management_Activities_Overview_Report.xlsx`);
+    }
+  }, [dataOverviewReport, overviewStatus, setDisplayModal, setModalContent]);
+
+  useEffect(() => {
+    if (invoiceStatus === 204) {
+      setModalContent({
+        variant: 'error',
+        title: 'Warning',
+        message: 'There is no data for the input parameters you entered.',
+        okButtonText: 'Close',
+        handleOk: () => setDisplayModal(false),
+      });
+      setDisplayModal(true);
+    } else if (dataInvoicesReport && invoiceStatus === 200) {
+      fileDownload(dataInvoicesReport, `Management_Activities_Invoice_Report.xlsx`);
+    }
+  }, [dataInvoicesReport, invoiceStatus, setDisplayModal, setModalContent]);
 
   const {
     results,
