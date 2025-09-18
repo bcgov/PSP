@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios';
-import { FieldArray, Formik, FormikProps, getIn } from 'formik';
+import { FieldArray, Formik, FormikProps } from 'formik';
 import { geoJSON } from 'leaflet';
 import noop from 'lodash/noop';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
@@ -25,13 +25,8 @@ import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithA
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import {
-  arePropertyFormsEqual,
-  exists,
-  firstOrNull,
-  isValidId,
-  latLngLiteralToGeometry,
-} from '@/utils';
+import { exists, firstOrNull, isValidId, latLngLiteralToGeometry } from '@/utils';
+import { addPropertiesToCurrentFile } from '@/utils/propertyUtils';
 
 import { FileForm, PropertyForm } from '../../models';
 import SidebarFooter from '../../SidebarFooter';
@@ -327,37 +322,6 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
 };
 
 export default UpdateProperties;
-
-export const addPropertiesToCurrentFile = <T extends { [key: string]: any }>(
-  formikRef: React.RefObject<FormikProps<T>>,
-  fieldName: keyof T,
-  propertyForms: PropertyForm[],
-  notifyAddComplete: () => void,
-) => {
-  const existingProperties = getIn(formikRef?.current?.values, fieldName as string) ?? [];
-  const uniqueProperties = propertyForms.filter(newProperty => {
-    return !existingProperties.some((existingProperty: PropertyForm) =>
-      arePropertyFormsEqual(existingProperty, newProperty),
-    );
-  });
-
-  const duplicatesSkipped = propertyForms.length - uniqueProperties.length;
-
-  // If there are unique properties, add them to the formik values
-  if (uniqueProperties.length > 0) {
-    formikRef.current?.setFieldValue(fieldName as string, [
-      ...existingProperties,
-      ...uniqueProperties,
-    ]);
-    formikRef.current?.setFieldTouched(fieldName as string, true);
-    toast.success(`Added ${uniqueProperties.length} new property(s) to the file.`);
-  }
-
-  if (duplicatesSkipped > 0) {
-    toast.warn(`Skipped ${duplicatesSkipped} duplicate property(s).`);
-  }
-  notifyAddComplete();
-};
 
 const StyledButtonWrapper = styled.div`
   margin: 0 1.6rem;

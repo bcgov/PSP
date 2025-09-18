@@ -42,7 +42,7 @@ const FormGuideView: FunctionComponent<PropsWithChildren<IFormGuideViewProps>> =
 export default FormGuideView;
 
 const StyledComponentWrapper = styled.div`
-  margin: 1.6rem 1.6rem 0 1.6rem;
+  margin: 0 1.6rem 0 1.6rem;
   padding: 1.6rem;
   text-align: left;
   text-underline-offset: 2px;
