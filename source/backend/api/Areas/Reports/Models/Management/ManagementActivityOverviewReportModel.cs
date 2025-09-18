@@ -3,7 +3,7 @@ using System.ComponentModel;
 
 namespace Pims.Api.Areas.Reports.Models.Management
 {
-    public class ManagementActivityReportModel
+    public class ManagementActivityOverviewReportModel
     {
 
         [DisplayName("Management File Name")]

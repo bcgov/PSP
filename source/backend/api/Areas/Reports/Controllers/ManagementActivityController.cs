@@ -74,15 +74,14 @@ namespace Pims.Api.Areas.Reports.Controllers
                 throw new BadRequestException($"Invalid HTTP request header 'Accept:{acceptHeader}'.");
             }
 
-            var allManagementActivities = _managementActivityService.GetPage((ManagementActivityFilter)filter, true);
-            if (allManagementActivities is null || allManagementActivities.Items.Count == 0)
+            var allManagementActivities = _managementActivityService.SearchManagementActivities((ManagementActivityFilter)filter);
+            if (allManagementActivities is null || allManagementActivities.Count == 0)
             {
                 // Return 204 "No Content" to signal the frontend that we did not find any matching records.
                 return NoContent();
             }
 
-            // TODO: Update to include additional fields as required.
-            var flatActivities = _mapper.Map<IEnumerable<ManagementActivityReportModel>>(allManagementActivities);
+            var flatActivities = _mapper.Map<IEnumerable<ManagementActivityOverviewReportModel>>(allManagementActivities);
 
             return ReportHelper.GenerateExcel(flatActivities, "Management Activities Overview");
         }
@@ -128,7 +127,7 @@ namespace Pims.Api.Areas.Reports.Controllers
             }
 
             // TODO: Update to use invoice specific model when available.
-            var flatActivities = _mapper.Map<IEnumerable<ManagementActivityReportModel>>(allManagementActivities);
+            var flatActivities = _mapper.Map<IEnumerable<ManagementActivityOverviewReportModel>>(allManagementActivities);
 
             return ReportHelper.GenerateExcel(flatActivities, "Management Activity Invoices");
         }
