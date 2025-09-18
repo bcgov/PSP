@@ -345,6 +345,8 @@ exports[`UpdateProperties component > renders as expected 1`] = `
 }
 
 .c20 {
+  margin: 0;
+  padding: 1.6rem;
   font-size: 1.6rem;
   color: #9F9D9C;
   border-bottom: 0.2rem solid #606060;
@@ -476,7 +478,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
 }
 
 .c10 {
-  margin: 1.6rem 1.6rem 0 1.6rem;
+  margin: 0 1.6rem 0 1.6rem;
   padding: 1.6rem;
   text-align: left;
   text-underline-offset: 2px;

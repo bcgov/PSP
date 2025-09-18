@@ -346,6 +346,16 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
   overflow-y: auto;
 }
 
+.c25 {
+  position: -webkit-sticky;
+  position: sticky;
+  padding-top: 2rem;
+  bottom: 0;
+  border-top: 2px solid #e5e5e5;
+  background: white;
+  z-index: 10;
+}
+
 .c21 {
   font-weight: bold;
   color: var(--theme-blue-100);
@@ -361,27 +371,8 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c24 {
-  font-size: 1.6rem;
-  color: #9F9D9C;
-  border-bottom: 0.2rem solid #606060;
-  margin-bottom: 0.9rem;
-  padding-bottom: 0.25rem;
-  font-family: 'BcSans-Bold';
-}
-
-.c25 {
-  position: -webkit-sticky;
-  position: sticky;
-  padding-top: 2rem;
-  bottom: 0;
-  border-top: 2px solid #e5e5e5;
-  background: white;
-  z-index: 10;
-}
-
 .c15 {
-  margin: 1.6rem 1.6rem 0 1.6rem;
+  margin: 0 1.6rem 0 1.6rem;
   padding: 1.6rem;
   text-align: left;
   text-underline-offset: 2px;
@@ -428,6 +419,17 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
 
 .c17 {
   cursor: pointer;
+}
+
+.c24 {
+  margin: 0;
+  padding: 1.6rem;
+  font-size: 1.6rem;
+  color: #9F9D9C;
+  border-bottom: 0.2rem solid #606060;
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.25rem;
+  font-family: 'BcSans-Bold';
 }
 
 .c23 {

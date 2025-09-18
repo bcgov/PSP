@@ -385,7 +385,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
 }
 
 .c5 {
-  margin: 1.6rem 1.6rem 0 1.6rem;
+  margin: 0 1.6rem 0 1.6rem;
   padding: 1.6rem;
   text-align: left;
   text-underline-offset: 2px;
