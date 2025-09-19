@@ -10,8 +10,8 @@ namespace Pims.Api.Areas.Reports.Models.Management
         [CsvHelper.Configuration.Attributes.Name("Management File Name")]
         public string ManagementFileName { get; set; }
 
-        [DisplayName("Management File Number")]
-        [CsvHelper.Configuration.Attributes.Name("Management File Number")]
+        [DisplayName("Historical File Number")]
+        [CsvHelper.Configuration.Attributes.Name("Historical File Number")]
         public string LegacyFileNum { get; set; }
 
         [DisplayName("Type")]
