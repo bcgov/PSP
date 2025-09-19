@@ -63,7 +63,7 @@
       }
     ],
     "Owners": [
-          {
+      {
         "Test Case Description": "Complete new AF",
         "OwnerContactType": "Individual",
         "OwnerIsPrimary": false,
@@ -149,7 +149,7 @@
     "AcquisitionSubfileInterest": null,
     "AcquisitionSubfileInterestOther": null,
     "AcquisitionMOTIRegion": "Northern Region",
-    "AcquisitionTeams":[
+    "AcquisitionTeams": [
       {
         "Test Case Description": "Edit existing AF",
         "TeamMemberRole": "Property agent",
@@ -657,62 +657,98 @@
     "AcquisitionFileChecklist": {
       "Test Case Description": "Create a new AF with Checklist",
       "AcqFileInitiation": [
-        {"title": "Pre-acquisition title", "status": "Incomplete"},
-        {"title": "BC Assessment", "status": "Not applicable"},
-        {"title": "Company search", "status": "Complete"},
-        {"title": "Land Title documents or plans", "status": "Incomplete"},
-        {"title": "Property Acquisition (PA) Plan", "status": "Not applicable"}
+        { "title": "Pre-acquisition title", "status": "Incomplete" },
+        { "title": "BC Assessment", "status": "Not applicable" },
+        { "title": "Company search", "status": "Complete" },
+        { "title": "Land Title documents or plans", "status": "Incomplete" },
+        {
+          "title": "Property Acquisition (PA) Plan",
+          "status": "Not applicable"
+        }
       ],
       "AcqActiveFileManagement": [
-        {"title": "Photos", "status": "Incomplete"},
-        {"title": "Appraisals and reviews", "status": "Not applicable"},
-        {"title": "Legal survey(s)", "status": "Complete"},
-        {"title": "Other reports", "status": "Incomplete"},
-        {"title": "Record of negotiation", "status": "Not applicable"},
-        {"title": "Copies of correspondence", "status": "Incomplete"},
-        {"title": "Spending Authority Approval(s) - SAA", "status": "Not applicable"},
-        {"title": "Final agreements with owner(s)", "status": "Complete"},
-        {"title": "H120(s) processed for compensation", "status": "Incomplete"},
-        {"title": "Instructions or documents sent to lawyer", "status": "Not applicable"},
-        {"title": "Copy of owners' compensation cheque(s)", "status": "Incomplete"},
-        {"title": "Conditions of Entry (H0443)", "status": "Not applicable"},
-        {"title": "Conveyance closing documents", "status": "Complete"},
-        {"title": "Registered Plan", "status": "Incomplete"},
-        {"title": "ALC order", "status": "Not applicable"},
-        {"title": "Copy of new title", "status": "Incomplete"},
-        {"title": "BCTFA notified", "status": "Not applicable"}
+        { "title": "Photos", "status": "Incomplete" },
+        { "title": "Appraisals and reviews", "status": "Not applicable" },
+        { "title": "Legal survey(s)", "status": "Complete" },
+        { "title": "Other reports", "status": "Incomplete" },
+        { "title": "Record of negotiation", "status": "Not applicable" },
+        { "title": "Copies of correspondence", "status": "Incomplete" },
+        {
+          "title": "Spending Authority Approval(s) - SAA",
+          "status": "Not applicable"
+        },
+        { "title": "Final agreements with owner(s)", "status": "Complete" },
+        {
+          "title": "H120(s) processed for compensation",
+          "status": "Incomplete"
+        },
+        {
+          "title": "Instructions or documents sent to lawyer",
+          "status": "Not applicable"
+        },
+        {
+          "title": "Copy of owners' compensation cheque(s)",
+          "status": "Incomplete"
+        },
+        { "title": "Conditions of Entry (H0443)", "status": "Not applicable" },
+        { "title": "Conveyance closing documents", "status": "Complete" },
+        { "title": "Registered Plan", "status": "Incomplete" },
+        { "title": "ALC order", "status": "Not applicable" },
+        { "title": "Copy of new title", "status": "Incomplete" },
+        { "title": "BCTFA notified", "status": "Not applicable" }
       ],
       "AcqCrownLand": [
-        {"title": "Crown Land research", "status": "Not applicable"},
-        {"title": "Submit Crown Land tenure application", "status": "Incomplete"},
-        {"title": "Crown grant package", "status": "Not applicable"}
+        { "title": "Crown Land research", "status": "Not applicable" },
+        {
+          "title": "Submit Crown Land tenure application",
+          "status": "Incomplete"
+        },
+        { "title": "Crown grant package", "status": "Not applicable" }
       ],
       "AcqSection3Agreement": [
-        {"title": "Notice of Advanced Payment (Form 8)", "status": "Incomplete"},
-        {"title": "Release of Claims", "status": "Not applicable"},
-        {"title": "Conveyance letter", "status": "Incomplete"},
-        {"title": "Copy of Expropriation Act", "status": "Not applicable"},
-        {"title": "Signed Section 3 Agreement", "status": "Not applicable"},
-        {"title": "Title and charges", "status": "Complete"},
-        {"title": "Current year property assessment", "status": "Incomplete"},
-        {"title": "Copy of cheque to owner(s)", "status": "Not applicable"},
-        {"title": "Copy of appraisal to owner(s)", "status": "Incomplete"}
+        {
+          "title": "Notice of Advanced Payment (Form 8)",
+          "status": "Incomplete"
+        },
+        { "title": "Release of Claims", "status": "Not applicable" },
+        { "title": "Conveyance letter", "status": "Incomplete" },
+        { "title": "Copy of Expropriation Act", "status": "Not applicable" },
+        { "title": "Signed Section 3 Agreement", "status": "Not applicable" },
+        { "title": "Title and charges", "status": "Complete" },
+        { "title": "Current year property assessment", "status": "Incomplete" },
+        { "title": "Copy of cheque to owner(s)", "status": "Not applicable" },
+        { "title": "Copy of appraisal to owner(s)", "status": "Incomplete" }
       ],
       "AcqSection6Expropriation": [
-        {"title": "Copy of offer(s) extended to owner(s)", "status": "Not applicable"},
-        {"title": "Copy of expropriation approval packages", "status": "Complete"},
-        {"title": "Notice of Expropriation (Form 1)", "status": "Incomplete"},
-        {"title": "Approval of Expropriation (Form 5)", "status": "Not applicable"},
-        {"title": "Notice of Advanced Payment (Form 8)", "status": "Incomplete"},
-        {"title": "Vesting Notice (Form 9)", "status": "Not applicable"},
-        {"title": "Copies of Affidavits of Service", "status": "Complete"},
-        {"title": "Copy of cheque to owner(s)", "status": "Incomplete"},
-        {"title": "Copy of appraisal to owner(s)", "status": "Not applicable"},
-        {"title": "Release of Claims", "status": "Incomplete"},
-        {"title": "Copy of Easement", "status": "Not applicable"}
+        {
+          "title": "Copy of offer(s) extended to owner(s)",
+          "status": "Not applicable"
+        },
+        {
+          "title": "Copy of expropriation approval packages",
+          "status": "Complete"
+        },
+        { "title": "Notice of Expropriation (Form 1)", "status": "Incomplete" },
+        {
+          "title": "Approval of Expropriation (Form 5)",
+          "status": "Not applicable"
+        },
+        {
+          "title": "Notice of Advanced Payment (Form 8)",
+          "status": "Incomplete"
+        },
+        { "title": "Vesting Notice (Form 9)", "status": "Not applicable" },
+        { "title": "Copies of Affidavits of Service", "status": "Complete" },
+        { "title": "Copy of cheque to owner(s)", "status": "Incomplete" },
+        {
+          "title": "Copy of appraisal to owner(s)",
+          "status": "Not applicable"
+        },
+        { "title": "Release of Claims", "status": "Incomplete" },
+        { "title": "Copy of Easement", "status": "Not applicable" }
       ],
       "AcquisitionCompletion": [
-        {"title": "File data entered into PIMS", "status": "Not applicable"}
+        { "title": "File data entered into PIMS", "status": "Not applicable" }
       ]
     },
     "Agreements": [],
@@ -773,7 +809,7 @@
   {
     "Test Case Description": "New Acquisition File to test Notes",
     "AcquisitionStatus": "Active",
-     "AcquisitionProjCode": null,
+    "AcquisitionProjCode": null,
     "AcquisitionProject": null,
     "AcquisitionProjProductCode": null,
     "AcquisitionProjProduct": null,
@@ -1162,7 +1198,7 @@
     "AcquisitionEstimatedDate": null,
     "AcquisitionPossesionDate": null,
     "AcquisitionFileName": "Automated Acquisition File - Compensation",
-     "HistoricalFileNumber": null,
+    "HistoricalFileNumber": null,
     "PhysicalFileStatus": null,
     "PhysicalFileDetails": null,
     "AcquisitionType": "Section 6 Expropriation",
@@ -1249,7 +1285,7 @@
       }
     ],
     "Owners": [
-       {
+      {
         "Test Case Description": "AF with Compensation",
         "OwnerContactType": "Individual",
         "OwnerIsPrimary": true,
@@ -1492,7 +1528,7 @@
     "AcquisitionCompensationSubfilesMainFileTotal": null,
     "AcquisitionCompensationDraftTotal": null,
     "ExpropriationDateHistories": [
-       {
+      {
         "Test Case Description": "Create AF with Expropriation",
         "ExpropriationDateHistoryOwner": "Abdullah Sumeli (Owner's Solicitor)",
         "ExpropriationDateHistoryOwnerDisplay": "Abdullah Sumeli",
@@ -1766,62 +1802,92 @@
     "AcquisitionFileChecklist": {
       "Test Case Description": "Minimum AF Checklist",
       "AcqFileInitiation": [
-        {"title": "Pre-acquisition title", "status": "Complete"},
-        {"title": "BC Assessment", "status": "Incomplete"},
-        {"title": "Company search", "status": "Incomplete"},
-        {"title": "Land Title documents or plans", "status": "Incomplete"},
-        {"title": "Property Acquisition (PA) Plan", "status": "Incomplete"}
+        { "title": "Pre-acquisition title", "status": "Complete" },
+        { "title": "BC Assessment", "status": "Incomplete" },
+        { "title": "Company search", "status": "Incomplete" },
+        { "title": "Land Title documents or plans", "status": "Incomplete" },
+        { "title": "Property Acquisition (PA) Plan", "status": "Incomplete" }
       ],
       "AcqActiveFileManagement": [
-        {"title": "Photos", "status": "Incomplete"},
-        {"title": "Appraisals and reviews", "status": "Incomplete"},
-        {"title": "Legal survey(s)", "status": "Incomplete"},
-        {"title": "Other reports", "status": "Incomplete"},
-        {"title": "Record of negotiation", "status": "Incomplete"},
-        {"title": "Copies of correspondence", "status": "Incomplete"},
-        {"title": "Spending Authority Approval(s) - SAA", "status": "Incomplete"},
-        {"title": "Final agreements with owner(s)", "status": "Incomplete"},
-        {"title": "H120(s) processed for compensation", "status": "Incomplete"},
-        {"title": "Instructions or documents sent to lawyer", "status": "Incomplete"},
-        {"title": "Copy of owners' compensation cheque(s)", "status": "Incomplete"},
-        {"title": "Conditions of Entry (H0443)", "status": "Incomplete"},
-        {"title": "Conveyance closing documents", "status": "Incomplete"},
-        {"title": "Registered Plan", "status": "Incomplete"},
-        {"title": "ALC order", "status": "Incomplete"},
-        {"title": "Copy of new title", "status": "Incomplete"},
-        {"title": "BCTFA notified", "status": "Incomplete"}
+        { "title": "Photos", "status": "Incomplete" },
+        { "title": "Appraisals and reviews", "status": "Incomplete" },
+        { "title": "Legal survey(s)", "status": "Incomplete" },
+        { "title": "Other reports", "status": "Incomplete" },
+        { "title": "Record of negotiation", "status": "Incomplete" },
+        { "title": "Copies of correspondence", "status": "Incomplete" },
+        {
+          "title": "Spending Authority Approval(s) - SAA",
+          "status": "Incomplete"
+        },
+        { "title": "Final agreements with owner(s)", "status": "Incomplete" },
+        {
+          "title": "H120(s) processed for compensation",
+          "status": "Incomplete"
+        },
+        {
+          "title": "Instructions or documents sent to lawyer",
+          "status": "Incomplete"
+        },
+        {
+          "title": "Copy of owners' compensation cheque(s)",
+          "status": "Incomplete"
+        },
+        { "title": "Conditions of Entry (H0443)", "status": "Incomplete" },
+        { "title": "Conveyance closing documents", "status": "Incomplete" },
+        { "title": "Registered Plan", "status": "Incomplete" },
+        { "title": "ALC order", "status": "Incomplete" },
+        { "title": "Copy of new title", "status": "Incomplete" },
+        { "title": "BCTFA notified", "status": "Incomplete" }
       ],
       "AcqCrownLand": [
-        {"title": "Crown Land research", "status": "Incomplete"},
-        {"title": "Submit Crown Land tenure application", "status": "Incomplete"},
-        {"title": "Crown grant package", "status": "Incomplete"}
+        { "title": "Crown Land research", "status": "Incomplete" },
+        {
+          "title": "Submit Crown Land tenure application",
+          "status": "Incomplete"
+        },
+        { "title": "Crown grant package", "status": "Incomplete" }
       ],
       "AcqSection3Agreement": [
-        {"title": "Notice of Advanced Payment (Form 8)", "status": "Incomplete"},
-        {"title": "Release of Claims", "status": "Incomplete"},
-        {"title": "Conveyance letter", "status": "Incomplete"},
-        {"title": "Copy of Expropriation Act", "status": "Incomplete"},
-        {"title": "Signed Section 3 Agreement", "status": "Incomplete"},
-        {"title": "Title and charges", "status": "Incomplete"},
-        {"title": "Current year property assessment", "status": "Incomplete"},
-        {"title": "Copy of cheque to owner(s)", "status": "Incomplete"},
-        {"title": "Copy of appraisal to owner(s)", "status": "Incomplete"}
+        {
+          "title": "Notice of Advanced Payment (Form 8)",
+          "status": "Incomplete"
+        },
+        { "title": "Release of Claims", "status": "Incomplete" },
+        { "title": "Conveyance letter", "status": "Incomplete" },
+        { "title": "Copy of Expropriation Act", "status": "Incomplete" },
+        { "title": "Signed Section 3 Agreement", "status": "Incomplete" },
+        { "title": "Title and charges", "status": "Incomplete" },
+        { "title": "Current year property assessment", "status": "Incomplete" },
+        { "title": "Copy of cheque to owner(s)", "status": "Incomplete" },
+        { "title": "Copy of appraisal to owner(s)", "status": "Incomplete" }
       ],
       "AcqSection6Expropriation": [
-        {"title": "Copy of offer(s) extended to owner(s)", "status": "Incomplete"},
-        {"title": "Copy of expropriation approval packages", "status": "Incomplete"},
-        {"title": "Notice of Expropriation (Form 1)", "status": "Incomplete"},
-        {"title": "Approval of Expropriation (Form 5)", "status": "Incomplete"},
-        {"title": "Notice of Advanced Payment (Form 8)", "status": "Incomplete"},
-        {"title": "Vesting Notice (Form 9)", "status": "Incomplete"},
-        {"title": "Copies of Affidavits of Service", "status": "Incomplete"},
-        {"title": "Copy of cheque to owner(s)", "status": "Incomplete"},
-        {"title": "Copy of appraisal to owner(s)", "status": "Incomplete"},
-        {"title": "Release of Claims", "status": "Incomplete"},
-        {"title": "Copy of Easement", "status": "Incomplete"}
+        {
+          "title": "Copy of offer(s) extended to owner(s)",
+          "status": "Incomplete"
+        },
+        {
+          "title": "Copy of expropriation approval packages",
+          "status": "Incomplete"
+        },
+        { "title": "Notice of Expropriation (Form 1)", "status": "Incomplete" },
+        {
+          "title": "Approval of Expropriation (Form 5)",
+          "status": "Incomplete"
+        },
+        {
+          "title": "Notice of Advanced Payment (Form 8)",
+          "status": "Incomplete"
+        },
+        { "title": "Vesting Notice (Form 9)", "status": "Incomplete" },
+        { "title": "Copies of Affidavits of Service", "status": "Incomplete" },
+        { "title": "Copy of cheque to owner(s)", "status": "Incomplete" },
+        { "title": "Copy of appraisal to owner(s)", "status": "Incomplete" },
+        { "title": "Release of Claims", "status": "Incomplete" },
+        { "title": "Copy of Easement", "status": "Incomplete" }
       ],
       "AcquisitionCompletion": [
-        {"title": "File data entered into PIMS", "status": "Incomplete"}
+        { "title": "File data entered into PIMS", "status": "Incomplete" }
       ]
     },
     "Agreements": [
@@ -2092,15 +2158,15 @@
     "AcquisitionSubfileInterest": null,
     "AcquisitionSubfileInterestOther": null,
     "AcquisitionMOTIRegion": "Southern Interior Region",
-   "AcquisitionTeams": [
-    {
-      "Test Case Description": "AF Minimum",
-      "TeamMemberRole": "MoTI Solicitor",
-      "TeamMemberContactName": "Joe Ellicott",
-      "TeamMemberContactType": "Individual",
-      "TeamMemberPrimaryContact": null
-    }
-   ],
+    "AcquisitionTeams": [
+      {
+        "Test Case Description": "AF Minimum",
+        "TeamMemberRole": "MoTI Solicitor",
+        "TeamMemberContactName": "Joe Ellicott",
+        "TeamMemberContactType": "Individual",
+        "TeamMemberPrimaryContact": null
+      }
+    ],
     "Owners": [
       {
         "Test Case Description": "AF Minimum",
@@ -2221,7 +2287,7 @@
     "AcquisitionSubfileInterest": "Crossing Permit",
     "AcquisitionSubfileInterestOther": null,
     "AcquisitionMOTIRegion": "Southern Interior Region",
-    "AcquisitionTeams":[
+    "AcquisitionTeams": [
       {
         "Test Case Description": "Complete new AF",
         "TeamMemberRole": "MoTI Solicitor",
@@ -2286,22 +2352,22 @@
     "OwnerRepresentative": "Alla Nadia Svirskaya",
     "OwnerComment": "Inserting owners comments on a subfile",
     "AcqSearchProperties": {
-        "Test Case Description": "AF Subfiles",
-        "PID": "015-007-740",
-        "PIN": null,
-        "Address": null,
-        "PlanNumber": null,
-        "LegalDescription": null,
-        "MultiplePIDS": null,
-        "Coordinates": {
-          "LatitudeDegree": null,
-          "LatitudeMinutes": null,
-          "LatitudeSeconds": null,
-          "LatitudeDirection": null,
-          "LongitudeDegree": null,
-          "LongitudeMinutes": null,
-          "LongitudeSeconds": null,
-          "LongitudeDirection": null
+      "Test Case Description": "AF Subfiles",
+      "PID": "015-007-740",
+      "PIN": null,
+      "Address": null,
+      "PlanNumber": null,
+      "LegalDescription": null,
+      "MultiplePIDS": null,
+      "Coordinates": {
+        "LatitudeDegree": null,
+        "LatitudeMinutes": null,
+        "LatitudeSeconds": null,
+        "LatitudeDirection": null,
+        "LongitudeDegree": null,
+        "LongitudeMinutes": null,
+        "LongitudeSeconds": null,
+        "LongitudeDirection": null
       }
     },
     "Takes": [],
@@ -2408,7 +2474,7 @@
         "CompensationDetailedRemarks": "Testing subfiles with compensations and totals",
         "ActivitiesStartRow": 12,
         "ActivitiesCount": 1
-  }
+      }
     ],
     "AcquisitionCompensationTotalAllowableAmount": 100000,
     "AcquisitionCompensationMainFileTotal": 12500.0,
