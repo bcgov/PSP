@@ -162,58 +162,28 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Navigate to Properties for Disposition File
             sharedFileProperties.NavigateToAddPropertiesToFile();
 
-            //Navigate to Add Properties by search and verify Add Properties UI/UX
-            sharedFileProperties.NavigateToSearchTab();
-            sharedFileProperties.VerifySearchPropertiesFeature();
-
-            //Search for a property by PID
-            if (dispositionFile.DispositionSearchProperties.PID != "")
-            {
-                sharedFileProperties.SelectPropertyByPID(dispositionFile.DispositionSearchProperties.PID);
-                sharedFileProperties.SelectFirstOptionFromSearch();
-            }
-
-            //Search for a property by PIN
-            if (dispositionFile.DispositionSearchProperties.PIN != "")
-            {
-                sharedFileProperties.SelectPropertyByPIN(dispositionFile.DispositionSearchProperties.PIN);
-                sharedFileProperties.SelectFirstOptionFromSearch();
-            }
-
             //Search for a property by Plan
             if (dispositionFile.DispositionSearchProperties.PlanNumber != "")
             {
-                sharedFileProperties.SelectPropertyByPlan(dispositionFile.DispositionSearchProperties.PlanNumber);
-                sharedFileProperties.SelectFirstOptionFromSearch();
+                searchProperties.SearchProperty(plan: dispositionFile.DispositionSearchProperties.PlanNumber);
+                searchProperties.SelectFirstPMBCResult();
+                searchProperties.ResetPropertySearch();
             }
 
-            //Search for a property by Address
-            if (dispositionFile.DispositionSearchProperties.Address != "")
+            //Search for a property by Historic File
+            if (dispositionFile.DispositionSearchProperties.HistoricFile != "")
             {
-                sharedFileProperties.SelectPropertyByAddress(dispositionFile.DispositionSearchProperties.Address);
-                sharedFileProperties.SelectFirstOptionFromSearch();
+                searchProperties.SearchProperty(historicFile: dispositionFile.DispositionSearchProperties.HistoricFile);
+                searchProperties.SelectFirstPIMSResult();
+                searchProperties.ResetPropertySearch();
             }
 
-            //Search for a property by Legal Description
-            if (dispositionFile.DispositionSearchProperties.LegalDescription != "")
+            //Search for a property by POI Name
+            if (dispositionFile.DispositionSearchProperties.POIName != "")
             {
-                sharedFileProperties.SelectPropertyByLegalDescription(dispositionFile.DispositionSearchProperties.LegalDescription);
-                sharedFileProperties.SelectFirstOptionFromSearch();
-            }
-
-            //Search for a property by Latitude and Longitude
-            if (dispositionFile.DispositionSearchProperties.LatitudeLongitude.LatitudeDegree != "")
-            {
-                sharedFileProperties.SelectPropertyByLongLant(dispositionFile.DispositionSearchProperties.LatitudeLongitude);
-                sharedFileProperties.SelectFirstOptionFromSearch();
-                sharedFileProperties.ResetSearch();
-            }
-
-            //Search for a duplicate property
-            if (dispositionFile.DispositionSearchProperties.PID != "")
-            {
-                sharedFileProperties.SelectPropertyByPID(dispositionFile.DispositionSearchProperties.PID);
-                sharedFileProperties.SelectFirstOptionFromSearch();
+                searchProperties.SearchProperty(POIName: dispositionFile.DispositionSearchProperties.POIName);
+                searchProperties.SelectFoundPinAddToFile();
+                searchProperties.ResetPropertySearch();
             }
 
             //Save Research File
@@ -235,10 +205,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Navigate to Edit Disposition File's Properties
             sharedFileProperties.NavigateToAddPropertiesToFile();
 
-            //Search for a property by PIN
-            sharedFileProperties.NavigateToSearchTab();
-            sharedFileProperties.SelectPropertyByPID(dispositionFile.DispositionSearchProperties.PID);
-            sharedFileProperties.SelectFirstOptionFromSearch();
+            //Search for a property by Latitude and Longitude
+            searchProperties.SearchProperty(coordinates: dispositionFile.DispositionSearchProperties.LatitudeLongitude);
+            searchProperties.SelectFirstPMBCResult();
+            searchProperties.ResetPropertySearch();
 
             //Delete last Property
             sharedFileProperties.DeleteLastPropertyFromFile();
@@ -397,10 +367,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Search for a property
             PopulateDispositionFile(rowNumber);
-            searchProperties.SearchPropertyByPID(dispositionFile.DispositionSearchProperties.PID);
+            searchProperties.SearchProperty(PID: dispositionFile.DispositionSearchProperties.PID);
 
             //Select Found Pin on map
-            searchProperties.SelectFoundPin();
+            searchProperties.SelectFoundPinAddToFile();
 
             //Close Property Information Modal
             propertyInformation.HideLeftSideForms();
@@ -422,10 +392,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.Equal(0, dispositionFileDetails.IsCreateDispositionFileFormVisible());
 
             //Search for a property
-            searchProperties.SearchPropertyByPID(dispositionFile.DispositionSearchProperties.PID);
+            searchProperties.SearchProperty(PID: dispositionFile.DispositionSearchProperties.PID);
 
             //Select Found Pin on map
-            searchProperties.SelectFoundPin();
+            searchProperties.SelectFoundPinAddToFile();
 
             //Open elipsis option
             propertyInformation.OpenMoreOptionsPopUp();
@@ -441,10 +411,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
             dispositionFileDetails.CancelDispositionFile();
 
             //Search for a property
-            searchProperties.SearchPropertyByPID(dispositionFile.DispositionSearchProperties.PID);
+            searchProperties.SearchProperty(PID: dispositionFile.DispositionSearchProperties.PID);
 
             //Select Found Pin on map
-            searchProperties.SelectFoundPin();
+            searchProperties.SelectFoundPinAddToFile();
 
             //Open elipsis option
             propertyInformation.OpenMoreOptionsPopUp();
@@ -612,7 +582,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Select all properties ownership types and look for the property
             searchProperties.IncludeAllPropertyOwnershipSearch();
-            searchProperties.SearchPropertyByPID(dispositionFile.DispositionSearchProperties.PID);
+            searchProperties.SearchProperty(PID: dispositionFile.DispositionSearchProperties.PID);
 
             //Verify Property is associated to the Disposition File is disposed
             Assert.Equal("Disposed", searchProperties.FirstPropertyOwnership());
@@ -685,7 +655,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 dispositionFile.DispositionSearchProperties.PIN = ExcelDataContext.ReadData(dispositionFile.DispositionSearchPropertiesIndex, "PIN");
                 dispositionFile.DispositionSearchProperties.Address = ExcelDataContext.ReadData(dispositionFile.DispositionSearchPropertiesIndex, "Address");
                 dispositionFile.DispositionSearchProperties.PlanNumber = ExcelDataContext.ReadData(dispositionFile.DispositionSearchPropertiesIndex, "PlanNumber");
-                dispositionFile.DispositionSearchProperties.LegalDescription = ExcelDataContext.ReadData(dispositionFile.DispositionSearchPropertiesIndex, "LegalDescription");
+                dispositionFile.DispositionSearchProperties.HistoricFile = ExcelDataContext.ReadData(dispositionFile.DispositionSearchPropertiesIndex, "HistoricFile");
+                dispositionFile.DispositionSearchProperties.POIName = ExcelDataContext.ReadData(dispositionFile.DispositionSearchPropertiesIndex, "POIName");
                 dispositionFile.DispositionSearchProperties.LatitudeLongitude.LatitudeDegree = ExcelDataContext.ReadData(dispositionFile.DispositionSearchPropertiesIndex, "LatitudeDegree");
                 dispositionFile.DispositionSearchProperties.LatitudeLongitude.LatitudeMinutes = ExcelDataContext.ReadData(dispositionFile.DispositionSearchPropertiesIndex, "LatitudeMinutes");
                 dispositionFile.DispositionSearchProperties.LatitudeLongitude.LatitudeSeconds = ExcelDataContext.ReadData(dispositionFile.DispositionSearchPropertiesIndex, "LatitudeSeconds");
@@ -694,6 +665,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 dispositionFile.DispositionSearchProperties.LatitudeLongitude.LongitudeMinutes = ExcelDataContext.ReadData(dispositionFile.DispositionSearchPropertiesIndex, "LongitudeMinutes");
                 dispositionFile.DispositionSearchProperties.LatitudeLongitude.LongitudeSeconds = ExcelDataContext.ReadData(dispositionFile.DispositionSearchPropertiesIndex, "LongitudeSeconds");
                 dispositionFile.DispositionSearchProperties.LatitudeLongitude.LongitudeDirection = ExcelDataContext.ReadData(dispositionFile.DispositionSearchPropertiesIndex, "LongitudeDirection");
+                dispositionFile.DispositionSearchProperties.SurveyParcel.District = ExcelDataContext.ReadData(dispositionFile.DispositionSearchPropertiesIndex, "SurveyDistrict");
+                dispositionFile.DispositionSearchProperties.SurveyParcel.Section = ExcelDataContext.ReadData(dispositionFile.DispositionSearchPropertiesIndex, "SurveySection");
+                dispositionFile.DispositionSearchProperties.SurveyParcel.Township = ExcelDataContext.ReadData(dispositionFile.DispositionSearchPropertiesIndex, "SurveyTownship");
+                dispositionFile.DispositionSearchProperties.SurveyParcel.Range = ExcelDataContext.ReadData(dispositionFile.DispositionSearchPropertiesIndex, "SurveyRange");
             }
 
             //Disposition File Checklist

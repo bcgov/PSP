@@ -56,8 +56,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I create a new Acquisition File from row number (.*)")]
         public void CreateAcquisitionFile(int rowNumber)
         {
-            /* TEST COVERAGE: PSP-4163, PSP-4164, PSP-4165, PSP-4323, PSP-4472, PSP-4553 */
-
             //Login to PIMS
             loginSteps.Idir(userName);
 
@@ -81,8 +79,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I navigate and create a new Acquisition File from row number (.*)")]
         public void NavigateCreateAcquisitionFile(int rowNumber)
         {
-            /* TEST COVERAGE: PSP-4163, PSP-4164, PSP-4165, PSP-4323, PSP-4472, PSP-4553 */
-
             //Navigate to Acquisition File
             PopulateAcquisitionFile(rowNumber);
             acquisitionFilesDetails.NavigateToCreateNewAcquisitionFile();
@@ -103,8 +99,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I add additional information to the Acquisition File Details")]
         public void AddAdditionalInfoAcquisitionFile()
         {
-            /* TEST COVERAGE:  PSP-4469, PSP-4471, PSP-4553, PSP-5308, PSP-5590, PSP-5634, PSP-5637, PSP-5790, PSP-5979, PSP-6041 */
-
             //Enter to Edit mode of Acquisition File
             acquisitionFilesDetails.EditAcquisitionFileBttn();
 
@@ -195,75 +189,36 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Navigate to Properties for Acquisition File
             sharedFileProperties.NavigateToAddPropertiesToFile();
 
-            //Navigate to Add Properties by search and verify Add Properties UI/UX
-            sharedFileProperties.NavigateToSearchTab();
-            sharedFileProperties.VerifySearchPropertiesFeature();
-
             //Search for a property by PID
             if (acquisitionFile.AcquisitionSearchProperties.PID != "")
             {
-                sharedFileProperties.SelectPropertyByPID(acquisitionFile.AcquisitionSearchProperties.PID);
-                sharedFileProperties.SelectFirstOptionFromSearch();
-                sharedFileProperties.ResetSearch();
+                searchProperties.SearchProperty(PID: acquisitionFile.AcquisitionSearchProperties.PID);
+                searchProperties.SelectFirstPMBCResult();
+                searchProperties.ResetPropertySearch();
             }
 
             //Search for a property by PIN
             if (acquisitionFile.AcquisitionSearchProperties.PIN != "")
             {
-                sharedFileProperties.SelectPropertyByPIN(acquisitionFile.AcquisitionSearchProperties.PIN);
-                sharedFileProperties.SelectFirstOptionFromSearch();
-                sharedFileProperties.ResetSearch();
-            }
-
-            //Search for a property by Plan
-            if (acquisitionFile.AcquisitionSearchProperties.PlanNumber != "")
-            {
-                sharedFileProperties.SelectPropertyByPlan(acquisitionFile.AcquisitionSearchProperties.PlanNumber);
-                sharedFileProperties.SelectFirstOptionFromSearch();
-                sharedFileProperties.ResetSearch();
+                searchProperties.SearchProperty(PIN: acquisitionFile.AcquisitionSearchProperties.PIN);
+                searchProperties.SelectFirstPMBCResult();
+                searchProperties.ResetPropertySearch();
             }
 
             //Search for a property by Address
             if (acquisitionFile.AcquisitionSearchProperties.Address != "")
             {
-                sharedFileProperties.SelectPropertyByAddress(acquisitionFile.AcquisitionSearchProperties.Address);
-                sharedFileProperties.SelectFirstOptionFromSearch();
-                sharedFileProperties.ResetSearch();
-            }
-
-            //Search for a property by Legal Description
-            if (acquisitionFile.AcquisitionSearchProperties.LegalDescription != "")
-            {
-                sharedFileProperties.SelectPropertyByLegalDescription(acquisitionFile.AcquisitionSearchProperties.LegalDescription);
-                sharedFileProperties.SelectFirstOptionFromSearch();
-                sharedFileProperties.ResetSearch();
-            }
-
-            //Search for a property by Latitude and Longitude
-            if (acquisitionFile.AcquisitionSearchProperties.LatitudeLongitude.LatitudeDegree != "")
-            {
-                sharedFileProperties.SelectPropertyByLongLant(acquisitionFile.AcquisitionSearchProperties.LatitudeLongitude);
-                sharedFileProperties.SelectFirstOptionFromSearch();
-                sharedFileProperties.ResetSearch();
-            }
-
-            //Search for Multiple PIDs
-            if (acquisitionFile.AcquisitionSearchProperties.MultiplePIDS.First() != "")
-            {
-                foreach (string prop in acquisitionFile.AcquisitionSearchProperties.MultiplePIDS)
-                {
-                    sharedFileProperties.SelectPropertyByPID(prop);
-                    sharedFileProperties.SelectFirstOptionFromSearch();
-                    sharedFileProperties.ResetSearch();
-                }
+                searchProperties.SearchProperty(address: acquisitionFile.AcquisitionSearchProperties.Address);
+                searchProperties.SelectFoundPinAddToFile();
+                searchProperties.ResetPropertySearch();
             }
 
             //Search for a duplicate property
             if (acquisitionFile.AcquisitionSearchProperties.PID != "")
             {
-                sharedFileProperties.SelectPropertyByPID(acquisitionFile.AcquisitionSearchProperties.PID);
-                sharedFileProperties.SelectFirstOptionFromSearch();
-                sharedFileProperties.ResetSearch();
+                searchProperties.SearchProperty(PID: acquisitionFile.AcquisitionSearchProperties.PID);
+                searchProperties.SelectFirstPMBCResult();
+                searchProperties.ResetPropertySearch();
             }
 
             //Save Research File
@@ -285,10 +240,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Navigate to Edit Acquisition File's Properties
             sharedFileProperties.NavigateToAddPropertiesToFile();
 
-            //Search for a property by Legal Description
-            sharedFileProperties.NavigateToSearchTab();
-            sharedFileProperties.SelectPropertyByLegalDescription(acquisitionFile.AcquisitionSearchProperties.LegalDescription);
-            sharedFileProperties.SelectFirstOptionFromSearch();
+            //Search for a property by PID
+            searchProperties.SearchProperty(PID: acquisitionFile.AcquisitionSearchProperties.PID);
+            searchProperties.SelectFirstPMBCResult();
+            searchProperties.ResetPropertySearch();
 
             //Save changes
             sharedFileProperties.SaveFileProperties();
@@ -917,10 +872,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Search for a property
             PopulateAcquisitionFile(rowNumber);
-            searchProperties.SearchPropertyByPID(acquisitionFile.AcquisitionSearchProperties.PID);
+            searchProperties.SearchProperty(PID: acquisitionFile.AcquisitionSearchProperties.PID);
 
             //Select Found Pin on map
-            searchProperties.SelectFoundPin();
+            searchProperties.SelectFoundPinAddToFile();
 
             //Close Left Side Forms
             propertyInformation.HideLeftSideForms();
@@ -942,10 +897,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.Equal(0, acquisitionFilesDetails.IsCreateAcquisitionFileFormVisible());
 
             //Search for a property
-            searchProperties.SearchPropertyByPID(acquisitionFile.AcquisitionSearchProperties.PID);
+            searchProperties.SearchProperty(PID: acquisitionFile.AcquisitionSearchProperties.PID);
 
             //Select Found Pin on map
-            searchProperties.SelectFoundPin();
+            searchProperties.SelectFoundPinAddToFile();
 
             //Open elipsis option
             propertyInformation.OpenMoreOptionsPopUp();
@@ -958,10 +913,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFilesDetails.CancelAcquisitionFile();
 
             //Search for a property
-            searchProperties.SearchPropertyByPID(acquisitionFile.AcquisitionSearchProperties.PID);
+            searchProperties.SearchProperty(PID: acquisitionFile.AcquisitionSearchProperties.PID);
 
             //Select Found Pin on map
-            searchProperties.SelectFoundPin();
+            searchProperties.SelectFoundPinAddToFile();
 
             //Open elipsis option
             propertyInformation.OpenMoreOptionsPopUp();
@@ -1244,7 +1199,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 acquisitionFile.AcquisitionSearchProperties.PIN = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "PIN");
                 acquisitionFile.AcquisitionSearchProperties.Address = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "Address");
                 acquisitionFile.AcquisitionSearchProperties.PlanNumber = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "PlanNumber");
-                acquisitionFile.AcquisitionSearchProperties.LegalDescription = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "LegalDescription");
+                acquisitionFile.AcquisitionSearchProperties.HistoricFile = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "HistoricFile");
+                acquisitionFile.AcquisitionSearchProperties.POIName = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "POIName");
                 acquisitionFile.AcquisitionSearchProperties.MultiplePIDS = genericSteps.PopulateLists(ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "MultiplePIDS"));
                 acquisitionFile.AcquisitionSearchProperties.LatitudeLongitude.LatitudeDegree = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "LatitudeDegree");
                 acquisitionFile.AcquisitionSearchProperties.LatitudeLongitude.LatitudeMinutes = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "LatitudeMinutes");
@@ -1254,6 +1210,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 acquisitionFile.AcquisitionSearchProperties.LatitudeLongitude.LongitudeMinutes = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "LongitudeMinutes");
                 acquisitionFile.AcquisitionSearchProperties.LatitudeLongitude.LongitudeSeconds = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "LongitudeSeconds");
                 acquisitionFile.AcquisitionSearchProperties.LatitudeLongitude.LongitudeDirection = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "LongitudeDirection");
+                acquisitionFile.AcquisitionSearchProperties.SurveyParcel.District = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "SurveyDistrict");
+                acquisitionFile.AcquisitionSearchProperties.SurveyParcel.Township = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "SurveyTownship");
+                acquisitionFile.AcquisitionSearchProperties.SurveyParcel.Range = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "SurveyRange");
             }
 
             //Acquisition's Properties' Takes

@@ -2,7 +2,6 @@
 using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
-using PIMS.Tests.Automation.PageObjects;
 
 namespace PIMS.Tests.Automation.StepDefinitions
 {
@@ -103,59 +102,31 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Add Additional information to the lease
             leaseDetails.NavigateToAddPropertiesLeasesFile();
 
-            //Add Several Properties
-            //Verify UI/UX from Search By Component
-            sharedFileProperties.NavigateToSearchTab();
-            sharedFileProperties.VerifySearchPropertiesFeature();
-
-            //Search for a property by PID
-            if (lease.SearchProperties.PID != "")
-            {
-                sharedFileProperties.SelectPropertyByPID(lease.SearchProperties.PID);
-                sharedFileProperties.SelectFirstOptionFromSearch();
-            }
-
-            //Search for a property by PIN
-            if (lease.SearchProperties.PIN != "")
-            {
-                sharedFileProperties.SelectPropertyByPIN(lease.SearchProperties.PIN);
-                sharedFileProperties.SelectFirstOptionFromSearch();
-            }
-
-            //Search for a property by Address
-            if (lease.SearchProperties.Address != "")
-            {
-                sharedFileProperties.SelectPropertyByAddress(lease.SearchProperties.Address);
-                sharedFileProperties.SelectFirstOptionFromSearch();
-            }
-
-            //Search for a property by Legal Description
-            if (lease.SearchProperties.LegalDescription != "")
-            {
-                sharedFileProperties.SelectPropertyByLegalDescription(lease.SearchProperties.LegalDescription);
-                sharedFileProperties.SelectFirstOptionFromSearch();
-            }
-
-            //Search for a property by Plan
-            if (lease.SearchProperties.PlanNumber != "")
-            {
-                sharedFileProperties.SelectPropertyByPlan(lease.SearchProperties.PlanNumber);
-                sharedFileProperties.SelectFirstOptionFromSearch();
-            }
-
             //Search for a property by Latitude and Longitude
-            if (lease.SearchProperties.LatitudeLongitude.LatitudeDegree != "")
+            if (lease.SearchProperties.LatitudeLongitude != null)
             {
-                sharedFileProperties.SelectPropertyByLongLant(lease.SearchProperties.LatitudeLongitude);
-                sharedFileProperties.SelectFirstOptionFromSearch();
-                sharedFileProperties.ResetSearch();
+                searchProperties.SearchProperty(coordinates: lease.SearchProperties.LatitudeLongitude);
+                searchProperties.SelectFirstPMBCResult();
+                searchProperties.ResetPropertySearch();
             }
 
-            //Search for a duplicate property
-            if (lease.SearchProperties.PID != "")
+            //Search for a property by Survey Parcel
+            if (lease.SearchProperties.SurveyParcel != null)
             {
-                sharedFileProperties.SelectPropertyByPID(lease.SearchProperties.PID);
-                sharedFileProperties.SelectFirstOptionFromSearch();
+                searchProperties.SearchProperty(surveyParcel: lease.SearchProperties.SurveyParcel);
+                searchProperties.SelectFirstPMBCResult();
+                searchProperties.ResetPropertySearch();
+            }
+
+            //Search for Multiple PIDs
+            if (lease.SearchProperties.MultiplePIDS.First() != "")
+            {
+                foreach (string prop in lease.SearchProperties.MultiplePIDS)
+                {
+                    searchProperties.SearchProperty(PID: prop);
+                    searchProperties.SelectFirstPMBCResult();
+                    searchProperties.ResetPropertySearch();
+                }
             }
 
             //Update Properties
@@ -297,8 +268,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I insert Checklist information to a Lease")]
         public void CreateChecklist()
         {
-            /* TEST COVERAGE: PSP-5899, PSP-5900, PSP-5904, PSP-5921 */
-
             //Navigate to Checklist Tab
             checklist.NavigateChecklistTab();
 
@@ -321,8 +290,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I add Tenants to the Lease")]
         public void CreateTenants()
         {
-            /* TEST COVERAGE: PSP-3492, PSP-3494, PSP-3495, PSP-3496, PSP-3498, PSP-3499 */
-
             //TENANTS
             //Navigate to Tenants
             tenant.NavigateToStakeholderSection(lease.AccountType);
@@ -746,10 +713,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Look for a Inventory Property
             PopulateLeaseLicense(rowNumber);
-            searchProperties.SearchPropertyByPID(lease.SearchProperties.PID);
+            searchProperties.SearchProperty(PID: lease.SearchProperties.PID);
 
             //Choose the given result
-            searchProperties.SelectFoundPin();
+            searchProperties.SelectFoundPinAddToFile();
 
             //Close Main Information Window
             propertyInformation.HideLeftSideForms();
@@ -1096,7 +1063,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 lease.SearchProperties.PIN = ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "PIN");
                 lease.SearchProperties.Address = ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "Address");
                 lease.SearchProperties.PlanNumber = ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "PlanNumber");
-                lease.SearchProperties.LegalDescription = ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "LegalDescription");
+                lease.SearchProperties.HistoricFile = ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "HistoricFile");
+                lease.SearchProperties.POIName = ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "POIName");
                 lease.SearchProperties.LatitudeLongitude.LatitudeDegree = ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "LatitudeDegree");
                 lease.SearchProperties.LatitudeLongitude.LatitudeMinutes = ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "LatitudeMinutes");
                 lease.SearchProperties.LatitudeLongitude.LatitudeSeconds = ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "LatitudeSeconds");
@@ -1105,6 +1073,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 lease.SearchProperties.LatitudeLongitude.LongitudeMinutes = ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "LongitudeMinutes");
                 lease.SearchProperties.LatitudeLongitude.LongitudeSeconds = ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "LongitudeSeconds");
                 lease.SearchProperties.LatitudeLongitude.LongitudeDirection = ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "LongitudeDirection");
+                lease.SearchProperties.SurveyParcel.District = ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "SurveyDistrict");
+                lease.SearchProperties.SurveyParcel.Section = ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "SurveySection");
+                lease.SearchProperties.SurveyParcel.Township = ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "SurveyTownship");
+                lease.SearchProperties.SurveyParcel.Range = ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "SurveyRange");
             }
 
             lease.LeasePropertyDetailsStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "LeasePropertyDetailsStartRow"));
