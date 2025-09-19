@@ -1,3 +1,4 @@
+import { Feature, Geometry } from 'geojson';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
@@ -15,10 +16,17 @@ import { StyledFiller } from '@/components/common/HeaderField/styles';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { InlineFlexDiv } from '@/components/common/styles';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
-import { IMapProperty } from '@/components/propertySelector/models';
 import { ComposedProperty } from '@/features/mapSideBar/property/ComposedProperty';
-import { exists, formatApiAddress, pidFormatter } from '@/utils';
-import { mapFeatureToProperty } from '@/utils/mapPropertyUtils';
+import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
+import {
+  exists,
+  firstOrNull,
+  formatApiAddress,
+  getFeatureBoundedCenter,
+  pidFormatter,
+  pinFromFullyAttributedFeature,
+  planFromFullyAttributedFeature,
+} from '@/utils';
 
 import HistoricalNumbersContainer from '../shared/header/HistoricalNumberContainer';
 import { HistoricalNumberSectionView } from '../shared/header/HistoricalNumberSectionView';
@@ -34,14 +42,18 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
   const geoserverMapData = props.composedProperty.pimsGeoserverFeatureCollection;
   const apiProperty = props.composedProperty.pimsProperty;
 
-  let property: IMapProperty | null = null;
+  let pmbcParcel: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties> | null = null;
 
   if (exists(parcelMapData?.features[0])) {
-    property = mapFeatureToProperty(parcelMapData?.features[0]);
+    pmbcParcel = firstOrNull(parcelMapData?.features);
   }
 
   const pid = pidFormatter(props.composedProperty.pid);
-  const pin = props.composedProperty?.pin ?? apiProperty?.pin ?? property?.pin ?? '-';
+  const pin =
+    props.composedProperty?.pin ??
+    apiProperty?.pin ??
+    pinFromFullyAttributedFeature(pmbcParcel) ??
+    '-';
 
   const isLoading = props.isLoading;
 
@@ -69,9 +81,10 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
   if (exists(apiProperty)) {
     latitude = apiProperty.latitude ?? null;
     longitude = apiProperty.longitude ?? null;
-  } else if (exists(property)) {
-    latitude = property.latitude ?? null;
-    longitude = property.longitude ?? null;
+  } else if (exists(pmbcParcel)) {
+    const center = getFeatureBoundedCenter(pmbcParcel);
+    latitude = center[1] ?? null;
+    longitude = center[0] ?? null;
   }
 
   const hasLocation = exists(longitude) && exists(latitude);
@@ -93,7 +106,7 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
             {exists(apiProperty?.address) ? formatApiAddress(apiProperty!.address) : '-'}
           </HeaderField>
           <HeaderField label="Plan #:" labelWidth={{ xs: 3 }} contentWidth={{ xs: 9 }}>
-            {property?.planNumber}
+            {planFromFullyAttributedFeature(pmbcParcel)}
           </HeaderField>
           {exists(apiProperty) && (
             <HistoricalNumbersContainer

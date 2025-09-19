@@ -101,7 +101,13 @@ export const GeocoderAutoComplete: React.FC<
       return (
         <ul className="suggestionList">
           {options.map((x: IGeocoderResponse, index: number) => (
-            <li key={index} onClick={() => suggestionSelected(x)}>
+            <li
+              key={index}
+              onClick={e => {
+                suggestionSelected(x);
+                e.stopPropagation();
+              }}
+            >
               {x.fullAddress}
             </li>
           ))}

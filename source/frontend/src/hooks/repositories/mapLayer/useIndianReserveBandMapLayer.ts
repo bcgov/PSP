@@ -14,10 +14,16 @@ import { useTenant } from '@/tenants';
 export const useIndianReserveBandMapLayer = () => {
   const { reservesLayerUrl } = useTenant();
 
-  const { findMultipleWhereContainsWrapped: findOneWhereContainsWrapped } =
-    useLayerQuery(reservesLayerUrl);
+  const {
+    findMultipleWhereContainsWrapped: findOneWhereContainsWrapped,
+    findMultipleWhereContainsBoundaryWrapped,
+  } = useLayerQuery(reservesLayerUrl);
   const findOneWhereContainsWrappedExecute = findOneWhereContainsWrapped.execute;
   const findOneWhereContainsWrappedLoading = findOneWhereContainsWrapped.loading;
+  const findMultipleWhereContainsBoundaryWrappedExecute =
+    findMultipleWhereContainsBoundaryWrapped.execute;
+  const findMultipleWhereContainsBoundaryWrappedLoading =
+    findMultipleWhereContainsBoundaryWrapped.loading;
 
   const findOne = useCallback(
     async (latlng: LatLngLiteral, geometryName?: string, spatialReferenceId?: number) => {
@@ -38,11 +44,34 @@ export const useIndianReserveBandMapLayer = () => {
     [findOneWhereContainsWrappedExecute],
   );
 
+  const findMultipleBoundary = useCallback(
+    async (boundary: Geometry, geometryName?: string, spatialReferenceId?: number) => {
+      const featureCollection = await findMultipleWhereContainsBoundaryWrappedExecute(
+        boundary,
+        geometryName,
+        spatialReferenceId,
+      );
+
+      // TODO: Enhance useLayerQuery to allow generics to match the Property types
+      return featureCollection as
+        | FeatureCollection<Geometry, ADM_IndianReserveBands_Feature_Properties>
+        | undefined;
+    },
+    [findMultipleWhereContainsBoundaryWrappedExecute],
+  );
+
   return useMemo(
     () => ({
       findOne,
       findOneLoading: findOneWhereContainsWrappedLoading,
+      findMultipleBoundary,
+      findMultipleBoundaryLoading: findMultipleWhereContainsBoundaryWrappedLoading,
     }),
-    [findOne, findOneWhereContainsWrappedLoading],
+    [
+      findMultipleBoundary,
+      findMultipleWhereContainsBoundaryWrappedLoading,
+      findOne,
+      findOneWhereContainsWrappedLoading,
+    ],
   );
 };

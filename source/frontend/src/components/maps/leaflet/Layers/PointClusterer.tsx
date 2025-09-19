@@ -107,7 +107,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
 
       return {
         type: mapMachine.mapFeatureData.pimsLocationLiteFeatures.type,
-        features: displayableFeatures,
+        features: zoom > minZoom ? displayableFeatures : [],
       };
     }, [
       mapMachine.activePimsPropertyIds,
@@ -115,6 +115,8 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
       mapMachine.mapFeatureData?.pimsLocationLiteFeatures?.features,
       mapMachine.showDisposed,
       mapMachine.showRetired,
+      minZoom,
+      zoom,
     ]);
 
   const pimsBoundaryFeatures = mapMachine.mapFeatureData?.pimsBoundaryFeatures;
@@ -135,6 +137,15 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
       );
     const pimsBoundaryPoints =
       featureCollectionResponseToPointFeature<PIMS_Property_Boundary_View>(pimsBoundaryFeatures);
+    return [...pimsLocationPoints, ...pimsBoundaryPoints];
+  }, [pimsLocationFeatures, pimsBoundaryFeatures]);
+
+  const searchPoints: Supercluster.PointFeature<
+    | PIMS_Property_Location_Lite_View
+    | PIMS_Property_Boundary_View
+    | PMBC_FullyAttributed_Feature_Properties
+    | TANTALIS_CrownSurveyParcels_Feature_Properties
+  >[] = useMemo(() => {
     const pmbcPoints =
       featureCollectionResponseToPointFeature<PMBC_FullyAttributed_Feature_Properties>(
         pmbcFeatures,
@@ -143,8 +154,8 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
       featureCollectionResponseToPointFeature<TANTALIS_CrownSurveyParcels_Feature_Properties>(
         surveyedParcelsFeatures,
       );
-    return [...pimsLocationPoints, ...pimsBoundaryPoints, ...pmbcPoints, ...crownPoints];
-  }, [pimsLocationFeatures, pimsBoundaryFeatures, pmbcFeatures, surveyedParcelsFeatures]);
+    return [...pmbcPoints, ...crownPoints];
+  }, [pmbcFeatures, surveyedParcelsFeatures]);
 
   // get clusters
   // clusters are an array of GeoJSON Feature objects, but some of them
@@ -272,10 +283,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
             );
           } else {
             const clusterFeature = cluster as PointFeature<
-              | PIMS_Property_Location_Lite_View
-              | PIMS_Property_Boundary_View
-              | PMBC_FullyAttributed_Feature_Properties
-              | TANTALIS_CrownSurveyParcels_Feature_Properties
+              PIMS_Property_Location_Lite_View | PIMS_Property_Boundary_View
             >;
 
             const isSelected =
@@ -292,6 +300,29 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
               />
             );
           }
+        })}
+        {(searchPoints ?? []).map((point, index) => {
+          // every cluster point has coordinates
+          const [longitude, latitude] = point.geometry.coordinates;
+
+          // Only clusters have the cluster property, if so we have a cluster to render
+          const clusterFeature = point as PointFeature<
+            PMBC_FullyAttributed_Feature_Properties | TANTALIS_CrownSurveyParcels_Feature_Properties
+          >;
+
+          const isSelected =
+            selectedMarker !== null ? clusterFeature.id === selectedMarker?.clusterId : false;
+
+          const latlng = { lat: latitude, lng: longitude };
+
+          return (
+            <SinglePropertyMarker
+              key={index}
+              pointFeature={clusterFeature}
+              markerPosition={latlng}
+              isSelected={isSelected}
+            />
+          );
         })}
         {/**
          * Render markers from a spiderfied cluster click
@@ -320,7 +351,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
         ))}
       </FeatureGroup>
     );
-  }, [clusters, selectedMarker, spider.lines, spider.markers, zoomOrSpiderfy]);
+  }, [clusters, selectedMarker, spider.lines, spider.markers, zoomOrSpiderfy, searchPoints]);
   return renderedPoints;
 };
 

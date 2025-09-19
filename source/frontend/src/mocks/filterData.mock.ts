@@ -3,9 +3,9 @@ import {
   AccessRequestStatus,
   PropertyDataSourceTypes,
   PropertyStatusTypes,
-  PropertyTenureTypes,
 } from '@/constants/index';
 import { BillingInfo, LtsaOrders, OrderParent } from '@/interfaces/ltsaModels';
+import { ApiGen_CodeTypes_PropertyTenureTypes } from '@/models/api/generated/ApiGen_CodeTypes_PropertyTenureTypes';
 import { ApiGen_Concepts_AccessRequest } from '@/models/api/generated/ApiGen_Concepts_AccessRequest';
 import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
 import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
@@ -583,7 +583,7 @@ export const mockApiProperty: ApiGen_Concepts_Property = {
     {
       id: 1,
       propertyId: 1,
-      propertyTenureTypeCode: toTypeCode(PropertyTenureTypes.HighwayRoad),
+      propertyTenureTypeCode: toTypeCode(ApiGen_CodeTypes_PropertyTenureTypes.HWYROAD),
       ...getEmptyBaseAudit(),
     },
   ],

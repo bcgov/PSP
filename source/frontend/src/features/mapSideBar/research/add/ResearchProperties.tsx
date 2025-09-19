@@ -1,12 +1,12 @@
 import { FieldArray, useFormikContext } from 'formik';
-import { useEffect } from 'react';
 
-import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { Section } from '@/components/common/Section/Section';
 import SelectedPropertyHeaderRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyHeaderRow';
 import SelectedPropertyRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyRow';
+import { useEditPropertiesMode } from '@/hooks/useEditPropertiesMode';
 
 import { PropertyForm } from '../../shared/models';
+import { AddPropertiesGuide } from './AddPropertiesGuide';
 import { ResearchForm } from './models';
 
 export interface IResearchPropertiesProps {
@@ -16,27 +16,11 @@ export interface IResearchPropertiesProps {
 const ResearchProperties: React.FC<IResearchPropertiesProps> = () => {
   const { values } = useFormikContext<ResearchForm>();
 
-  const { setEditPropertiesMode } = useMapStateMachine();
-
-  useEffect(() => {
-    setEditPropertiesMode(true);
-  }, [setEditPropertiesMode]);
-
-  useEffect(() => {
-    // Set the map state machine to edit properties mode so that the map selector knows what mode it is in.
-    setEditPropertiesMode(true);
-    return () => {
-      setEditPropertiesMode(false);
-    };
-  }, [setEditPropertiesMode]);
+  useEditPropertiesMode();
 
   return (
     <Section header="Properties to include in this file:">
-      <div className="py-2">
-        Select one or more properties that you want to include in this research file. You can choose
-        a location from the map, or search by other criteria.
-      </div>
-
+      <AddPropertiesGuide />
       <FieldArray name="properties">
         {({ remove }) => (
           <Section header="Selected properties">

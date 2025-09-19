@@ -239,7 +239,7 @@ describe('UpdateProperties component', () => {
       expect.objectContaining({
         fileProperties: expect.arrayContaining([
           expect.objectContaining({
-            property: expect.objectContaining({ pid: 123456789 }),
+            property: expect.objectContaining({ id: 1 }),
             displayOrder: 0,
           }),
           expect.objectContaining({
@@ -256,7 +256,7 @@ describe('UpdateProperties component', () => {
           }),
         ]),
       }),
-      [],
+      expect.any(Array),
     );
   });
 

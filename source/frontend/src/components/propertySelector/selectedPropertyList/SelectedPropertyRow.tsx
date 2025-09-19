@@ -15,7 +15,7 @@ import OverflowTip from '@/components/common/OverflowTip';
 import DraftCircleNumber from '@/components/propertySelector/selectedPropertyList/DraftCircleNumber';
 import { exists } from '@/utils';
 import { withNameSpace } from '@/utils/formUtils';
-import { featuresetToMapProperty, getPropertyName, NameSourceType } from '@/utils/mapPropertyUtils';
+import { getPropertyNameFromSelectedFeatureSet, NameSourceType } from '@/utils/mapPropertyUtils';
 
 import DisabledDraftCircleNumber from './DisabledDraftCircleNumber';
 
@@ -51,7 +51,7 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
     }
   }, [mapMachine, property.pimsFeature.geometry]);
 
-  const propertyName = getPropertyName(featuresetToMapProperty(property));
+  const propertyName = getPropertyNameFromSelectedFeatureSet(property);
   let propertyIdentifier = '';
   switch (propertyName.label) {
     case NameSourceType.PID:

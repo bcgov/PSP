@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { AddressForm, PropertyForm } from '@/features/mapSideBar/shared/models';
 import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
-import { featuresetToMapProperty, pidFromFeatureSet } from '@/utils/mapPropertyUtils';
+import { pidFromFeatureSet } from '@/utils/mapPropertyUtils';
 
 export const useInitialMapSelectorProperties = (selectedFeature: SelectedFeatureDataset | null) => {
   const { getPrimaryAddressByPid, bcaLoading } = useBcaAddress();
@@ -24,7 +24,7 @@ export const useInitialMapSelectorProperties = (selectedFeature: SelectedFeature
     initialProperty:
       selectedFeature !== null
         ? {
-            ...PropertyForm.fromMapProperty(featuresetToMapProperty(selectedFeature)),
+            ...PropertyForm.fromFeatureDataset(selectedFeature),
             address: bcaAddress,
           }
         : null,

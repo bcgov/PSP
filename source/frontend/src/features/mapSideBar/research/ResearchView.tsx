@@ -13,6 +13,7 @@ import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_Fil
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { exists, stripTrailingSlash } from '@/utils';
 
+import GenerateFormView from '../acquisition/common/GenerateForm/GenerateFormView';
 import { SideBarContext } from '../context/sidebarContext';
 import FilePropertyRouter from '../router/FilePropertyRouter';
 import { FileTabType } from '../shared/detail/FileTabs';
@@ -23,6 +24,7 @@ import { StyledFormWrapper } from '../shared/styles';
 import UpdateProperties from '../shared/update/properties/UpdateProperties';
 import { useFilePropertyIdFromUrl } from '../shared/usePropertyIndexFromUrl';
 import ResearchHeader from './common/ResearchHeader';
+import ResearchGenerateContainer from './ResearchGenerateContainer';
 import ResearchRouter from './ResearchRouter';
 import ResearchStatusUpdateSolver from './tabs/fileDetails/ResearchStatusUpdateSolver';
 
@@ -128,7 +130,9 @@ const ResearchView: React.FunctionComponent<IResearchViewProps> = ({
                 onSelectFileSummary={onSelectFileSummary}
                 onSelectProperty={onSelectProperty}
                 onEditProperties={onEditProperties}
-              />
+              >
+                <ResearchGenerateContainer researchFile={researchFile} View={GenerateFormView} />
+              </FileMenuView>
             }
             bodyComponent={
               <StyledFormWrapper>
