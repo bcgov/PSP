@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -81,9 +82,9 @@ namespace Pims.Api.Areas.Reports.Controllers
                 return NoContent();
             }
 
-            var flatActivities = _mapper.Map<IEnumerable<ManagementActivityOverviewReportModel>>(allManagementActivities);
+            var reportActivities = allManagementActivities.Select(a => new ManagementActivityOverviewReportModel(a));
 
-            return ReportHelper.GenerateExcel(flatActivities, "Management Activities Overview");
+            return ReportHelper.GenerateExcel(reportActivities, "Management Activities Overview");
         }
 
         /// <summary>
