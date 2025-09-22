@@ -113,6 +113,16 @@ namespace Pims.Dal.Repositories
                 predicate = predicate.And(x => EF.Functions.Like(x.ManagementFile.Project.Code, $"%{filter.ProjectNameOrNumber}%") || EF.Functions.Like(x.ManagementFile.Project.Description, $"%{filter.ProjectNameOrNumber}%"));
             }
 
+            if (!string.IsNullOrWhiteSpace(filter.ManagementFileStatusCode))
+            {
+                predicate = predicate.And(x => x.ManagementFile.ManagementFileStatusTypeCode == filter.ManagementFileStatusCode);
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.ManagementFilePurposeCode))
+            {
+                predicate = predicate.And(x => x.ManagementFile.ManagementFilePurposeTypeCode == filter.ManagementFilePurposeCode);
+            }
+
             return predicate;
         }
 
