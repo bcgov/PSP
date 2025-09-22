@@ -286,6 +286,8 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
 }
 
 .c7 {
+  margin: 0;
+  padding: 1.6rem;
   font-size: 1.6rem;
   color: #9F9D9C;
   border-bottom: 0.2rem solid #606060;
@@ -2297,6 +2299,8 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
 }
 
 .c8 {
+  margin: 0;
+  padding: 1.6rem;
   font-size: 1.6rem;
   color: #9F9D9C;
   border-bottom: 0.2rem solid #606060;

@@ -6,7 +6,7 @@ exports[`AddResearchForm component > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c9.btn {
+  .c10.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,17 +35,17 @@ exports[`AddResearchForm component > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c9.btn .Button__value {
+.c10.btn .Button__value {
   width: auto;
 }
 
-.c9.btn:hover {
+.c10.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c9.btn:focus {
+.c10.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -53,31 +53,31 @@ exports[`AddResearchForm component > renders as expected 1`] = `
   box-shadow: none;
 }
 
-.c9.btn.btn-primary {
+.c10.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c9.btn.btn-primary:hover,
-.c9.btn.btn-primary:active,
-.c9.btn.btn-primary:focus {
+.c10.btn.btn-primary:hover,
+.c10.btn.btn-primary:active,
+.c10.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c9.btn.btn-secondary {
+.c10.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c9.btn.btn-secondary:hover,
-.c9.btn.btn-secondary:active,
-.c9.btn.btn-secondary:focus {
+.c10.btn.btn-secondary:hover,
+.c10.btn.btn-secondary:active,
+.c10.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c9.btn.btn-info {
+.c10.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -85,66 +85,66 @@ exports[`AddResearchForm component > renders as expected 1`] = `
   padding-right: 0.6rem;
 }
 
-.c9.btn.btn-info:hover,
-.c9.btn.btn-info:active,
-.c9.btn.btn-info:focus {
+.c10.btn.btn-info:hover,
+.c10.btn.btn-info:active,
+.c10.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c9.btn.btn-light {
+.c10.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c9.btn.btn-light:hover,
-.c9.btn.btn-light:active,
-.c9.btn.btn-light:focus {
+.c10.btn.btn-light:hover,
+.c10.btn.btn-light:active,
+.c10.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c9.btn.btn-dark {
+.c10.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c9.btn.btn-dark:hover,
-.c9.btn.btn-dark:active,
-.c9.btn.btn-dark:focus {
+.c10.btn.btn-dark:hover,
+.c10.btn.btn-dark:active,
+.c10.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c9.btn.btn-danger {
+.c10.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c9.btn.btn-danger:hover,
-.c9.btn.btn-danger:active,
-.c9.btn.btn-danger:focus {
+.c10.btn.btn-danger:hover,
+.c10.btn.btn-danger:active,
+.c10.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c9.btn.btn-warning {
+.c10.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c9.btn.btn-warning:hover,
-.c9.btn.btn-warning:active,
-.c9.btn.btn-warning:focus {
+.c10.btn.btn-warning:hover,
+.c10.btn.btn-warning:active,
+.c10.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c9.btn.btn-link {
+.c10.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -168,9 +168,9 @@ exports[`AddResearchForm component > renders as expected 1`] = `
   text-decoration: underline;
 }
 
-.c9.btn.btn-link:hover,
-.c9.btn.btn-link:active,
-.c9.btn.btn-link:focus {
+.c10.btn.btn-link:hover,
+.c10.btn.btn-link:active,
+.c10.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -180,15 +180,15 @@ exports[`AddResearchForm component > renders as expected 1`] = `
   outline: none;
 }
 
-.c9.btn.btn-link:disabled,
-.c9.btn.btn-link.disabled {
+.c10.btn.btn-link:disabled,
+.c10.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c9.btn:disabled,
-.c9.btn:disabled:hover {
+.c10.btn:disabled,
+.c10.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -200,19 +200,19 @@ exports[`AddResearchForm component > renders as expected 1`] = `
   cursor: not-allowed;
 }
 
-.c9.Button .Button__icon {
+.c10.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c9.Button--icon-only:focus {
+.c10.Button--icon-only:focus {
   outline: none;
 }
 
-.c9.Button--icon-only .Button__icon {
+.c10.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c8 {
+.c9 {
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
@@ -228,6 +228,17 @@ exports[`AddResearchForm component > renders as expected 1`] = `
 }
 
 .c3 {
+  margin: 0 1.6rem 0 1.6rem;
+  padding: 1.6rem;
+  text-align: left;
+  text-underline-offset: 2px;
+}
+
+.c3 button {
+  font-size: 14px;
+}
+
+.c4 {
   font-size: 16px;
   color: #1a5a96;
   font-style: italic;
@@ -238,7 +249,7 @@ exports[`AddResearchForm component > renders as expected 1`] = `
   margin-bottom: 1rem;
 }
 
-.c7 {
+.c8 {
   padding: 1.5rem 1.8rem;
   border-radius: 4px;
   background-color: #f0f7fc;
@@ -250,23 +261,25 @@ exports[`AddResearchForm component > renders as expected 1`] = `
   line-height: 24px;
 }
 
-.c6 {
+.c7 {
   float: right;
   cursor: pointer;
   color: #1a5a96;
   font-size: 2.8rem;
 }
 
-.c5 {
+.c6 {
   margin-right: 1.5rem;
   font-size: 1.3rem;
 }
 
-.c4 {
+.c5 {
   cursor: pointer;
 }
 
-.c12 {
+.c13 {
+  margin: 0;
+  padding: 1.6rem;
   font-size: 1.6rem;
   color: #9F9D9C;
   border-bottom: 0.2rem solid #606060;
@@ -275,11 +288,11 @@ exports[`AddResearchForm component > renders as expected 1`] = `
   font-family: 'BcSans-Bold';
 }
 
-.c11 {
+.c12 {
   font-weight: normal;
 }
 
-.c10 {
+.c11 {
   font-weight: bold;
 }
 
@@ -336,87 +349,91 @@ exports[`AddResearchForm component > renders as expected 1`] = `
           class="c3"
         >
           <div
-            class="c4 no-gutters row"
+            class="c4"
           >
             <div
-              class="col"
+              class="c5 no-gutters row"
             >
-              <svg
-                class="c5"
-                fill="currentColor"
-                height="1em"
-                stroke="currentColor"
-                stroke-width="0"
-                viewBox="0 0 512 512"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
+              <div
+                class="col"
               >
-                <path
-                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                />
-              </svg>
-              Help with choosing a name
-            </div>
-            <div
-              class="col-1"
-            >
-              <svg
-                class="c6"
-                fill="currentColor"
-                height="1em"
-                stroke="currentColor"
-                stroke-width="0"
-                viewBox="0 0 24 24"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
+                <svg
+                  class="c6"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 512 512"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                  />
+                </svg>
+                Help with choosing a name
+              </div>
+              <div
+                class="col-1"
               >
-                <path
-                  d="M0 0h24v24H0z"
-                  fill="none"
-                />
-                <path
-                  d="m7 10 5 5 5-5z"
-                />
-              </svg>
+                <svg
+                  class="c7"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="m7 10 5 5 5-5z"
+                  />
+                </svg>
+              </div>
             </div>
           </div>
-        </div>
-        <div
-          class="c7 collapse"
-        >
-          <p
-            class="mb-4"
+          <div
+            class="c8 collapse"
           >
-            Provide a predictable research file name that will be easy to search for. Recommended format is to use the road name(s) followed by some descriptive text that may include (but not limited to) one or more of the following:
-          </p>
-          <ul>
-            <li>
-              Ministry project name
-            </li>
-            <li>
-              Name of the area
-            </li>
-            <li>
-              Name of the MOTT highway district
-            </li>
-            <li>
-              Name of the enquirer
-            </li>
-            <li>
-              Legal description
-            </li>
-          </ul>
-          <p
-            class="mb-4 mt-3"
-          >
-            If the road name is not available /applicable, the descriptive text should make the research file easy to search for in the future
-          </p>
-          <p>
-            <b>
-              Note:
-            </b>
-             This name does not need to be entirely unique, as a unique file number will be generated for your research file when you save it.
-          </p>
+            <p
+              class="mb-4"
+            >
+              Provide a predictable research file name that will be easy to search for. Recommended format is to use the road name(s) followed by some descriptive text that may include (but not limited to) one or more of the following:
+            </p>
+            <ul>
+              <li>
+                Ministry project name
+              </li>
+              <li>
+                Name of the area
+              </li>
+              <li>
+                Name of the MOTT highway district
+              </li>
+              <li>
+                Name of the enquirer
+              </li>
+              <li>
+                Legal description
+              </li>
+            </ul>
+            <p
+              class="mb-4 mt-3"
+            >
+              If the road name is not available /applicable, the descriptive text should make the research file easy to search for in the future
+            </p>
+            <p>
+              <b>
+                Note:
+              </b>
+               This name does not need to be entirely unique, as a unique file number will be generated for your research file when you save it.
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -424,7 +441,7 @@ exports[`AddResearchForm component > renders as expected 1`] = `
       class="c1 form-section"
     >
       <h2
-        class="c8"
+        class="c9"
       >
         <div
           class="no-gutters row"
@@ -440,7 +457,7 @@ exports[`AddResearchForm component > renders as expected 1`] = `
         class="collapse show"
       >
         <button
-          class="c9 Button btn btn-link"
+          class="c10 Button btn btn-link"
           data-testid="add-project"
           type="button"
         >
@@ -456,7 +473,7 @@ exports[`AddResearchForm component > renders as expected 1`] = `
       class="c1 form-section"
     >
       <h2
-        class="c8"
+        class="c9"
       >
         <div
           class="no-gutters row"
@@ -475,108 +492,112 @@ exports[`AddResearchForm component > renders as expected 1`] = `
           class="c3"
         >
           <div
-            class="c4 no-gutters row"
+            class="c4"
           >
             <div
-              class="col"
+              class="c5 no-gutters row"
             >
-              <svg
-                class="c5"
-                fill="currentColor"
-                height="1em"
-                stroke="currentColor"
-                stroke-width="0"
-                viewBox="0 0 512 512"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
+              <div
+                class="col"
               >
-                <path
-                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                />
-              </svg>
-              New workflow
-            </div>
-            <div
-              class="col-1"
-            >
-              <svg
-                class="c6"
-                fill="currentColor"
-                height="1em"
-                stroke="currentColor"
-                stroke-width="0"
-                viewBox="0 0 24 24"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
+                <svg
+                  class="c6"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 512 512"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                  />
+                </svg>
+                New workflow
+              </div>
+              <div
+                class="col-1"
               >
-                <path
-                  d="M0 0h24v24H0z"
-                  fill="none"
-                />
-                <path
-                  d="m7 10 5 5 5-5z"
-                />
-              </svg>
+                <svg
+                  class="c7"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="m7 10 5 5 5-5z"
+                  />
+                </svg>
+              </div>
             </div>
           </div>
-        </div>
-        <div
-          class="c7 collapse"
-        >
-          <ol>
-            <li
-              class="c10"
-            >
-              <div>
-                Find a Property
-              </div>
-              <div
+          <div
+            class="c8 collapse"
+          >
+            <ol>
+              <li
                 class="c11"
               >
-                Navigate to an area of the map OR use 
-                <button
-                  class="c9 Button p-0 d-inline-block btn btn-link"
-                  type="button"
+                <div>
+                  Find a Property
+                </div>
+                <div
+                  class="c12"
                 >
-                  <div
-                    class="Button__value"
+                  Navigate to an area of the map OR use 
+                  <button
+                    class="c10 Button d-inline-block btn btn-link"
+                    type="button"
                   >
-                    Search
-                  </div>
-                </button>
-              </div>
-            </li>
-            <li
-              class="c10"
-            >
-              <div>
-                Select a property
-              </div>
-              <div
+                    <div
+                      class="Button__value"
+                    >
+                      Search
+                    </div>
+                  </button>
+                </div>
+              </li>
+              <li
                 class="c11"
               >
-                Click on the map and the selection will be highlighed
-              </div>
-            </li>
-            <li
-              class="c10"
-            >
-              <div>
-                Add it to this file
-              </div>
-              <div
+                <div>
+                  Select a property
+                </div>
+                <div
+                  class="c12"
+                >
+                  Click on the map and the selection will be highlighed
+                </div>
+              </li>
+              <li
                 class="c11"
               >
-                Click "Add selected" property button when it appears below
-              </div>
-            </li>
-          </ol>
+                <div>
+                  Add it to this file
+                </div>
+                <div
+                  class="c12"
+                >
+                  Click "Add selected" property button when it appears below
+                </div>
+              </li>
+            </ol>
+          </div>
         </div>
         <div
           class="c1 form-section"
         >
           <h2
-            class="c8"
+            class="c9"
           >
             <div
               class="no-gutters row"
@@ -592,7 +613,7 @@ exports[`AddResearchForm component > renders as expected 1`] = `
             class="collapse show"
           >
             <div
-              class="c12 no-gutters row"
+              class="c13 no-gutters row"
             >
               <div
                 class="col-md-3"

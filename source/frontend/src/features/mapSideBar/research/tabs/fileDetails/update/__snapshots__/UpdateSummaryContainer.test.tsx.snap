@@ -6,7 +6,7 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
     class="Toastify"
   />
   <div />
-  .c12.btn {
+  .c13.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,17 +35,17 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
   cursor: pointer;
 }
 
-.c12.btn .Button__value {
+.c13.btn .Button__value {
   width: auto;
 }
 
-.c12.btn:hover {
+.c13.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c12.btn:focus {
+.c13.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -53,31 +53,31 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
   box-shadow: none;
 }
 
-.c12.btn.btn-primary {
+.c13.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c12.btn.btn-primary:hover,
-.c12.btn.btn-primary:active,
-.c12.btn.btn-primary:focus {
+.c13.btn.btn-primary:hover,
+.c13.btn.btn-primary:active,
+.c13.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c12.btn.btn-secondary {
+.c13.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c12.btn.btn-secondary:hover,
-.c12.btn.btn-secondary:active,
-.c12.btn.btn-secondary:focus {
+.c13.btn.btn-secondary:hover,
+.c13.btn.btn-secondary:active,
+.c13.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c12.btn.btn-info {
+.c13.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -85,66 +85,66 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
   padding-right: 0.6rem;
 }
 
-.c12.btn.btn-info:hover,
-.c12.btn.btn-info:active,
-.c12.btn.btn-info:focus {
+.c13.btn.btn-info:hover,
+.c13.btn.btn-info:active,
+.c13.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c12.btn.btn-light {
+.c13.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c12.btn.btn-light:hover,
-.c12.btn.btn-light:active,
-.c12.btn.btn-light:focus {
+.c13.btn.btn-light:hover,
+.c13.btn.btn-light:active,
+.c13.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c12.btn.btn-dark {
+.c13.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c12.btn.btn-dark:hover,
-.c12.btn.btn-dark:active,
-.c12.btn.btn-dark:focus {
+.c13.btn.btn-dark:hover,
+.c13.btn.btn-dark:active,
+.c13.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c12.btn.btn-danger {
+.c13.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c12.btn.btn-danger:hover,
-.c12.btn.btn-danger:active,
-.c12.btn.btn-danger:focus {
+.c13.btn.btn-danger:hover,
+.c13.btn.btn-danger:active,
+.c13.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c12.btn.btn-warning {
+.c13.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c12.btn.btn-warning:hover,
-.c12.btn.btn-warning:active,
-.c12.btn.btn-warning:focus {
+.c13.btn.btn-warning:hover,
+.c13.btn.btn-warning:active,
+.c13.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c12.btn.btn-link {
+.c13.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -168,9 +168,9 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
   text-decoration: underline;
 }
 
-.c12.btn.btn-link:hover,
-.c12.btn.btn-link:active,
-.c12.btn.btn-link:focus {
+.c13.btn.btn-link:hover,
+.c13.btn.btn-link:active,
+.c13.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -180,15 +180,15 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
   outline: none;
 }
 
-.c12.btn.btn-link:disabled,
-.c12.btn.btn-link.disabled {
+.c13.btn.btn-link:disabled,
+.c13.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c12.btn:disabled,
-.c12.btn:disabled:hover {
+.c13.btn:disabled,
+.c13.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -200,32 +200,32 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
   cursor: not-allowed;
 }
 
-.c12.Button .Button__icon {
+.c13.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c12.Button--icon-only:focus {
+.c13.Button--icon-only:focus {
   outline: none;
 }
 
-.c12.Button--icon-only .Button__icon {
+.c13.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c13.c13.btn {
+.c14.c14.btn {
   color: #aaaaaa;
   -webkit-text-decoration: none;
   text-decoration: none;
   line-height: unset;
 }
 
-.c13.c13.btn .text {
+.c14.c14.btn .text {
   display: none;
 }
 
-.c13.c13.btn:hover,
-.c13.c13.btn:active,
-.c13.c13.btn:focus {
+.c14.c14.btn:hover,
+.c14.c14.btn:active,
+.c14.c14.btn:focus {
   color: #d8292f;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -239,9 +239,9 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
   flex-direction: row;
 }
 
-.c13.c13.btn:hover .text,
-.c13.c13.btn:active .text,
-.c13.c13.btn:focus .text {
+.c14.c14.btn:hover .text,
+.c14.c14.btn:active .text,
+.c14.c14.btn:focus .text {
   display: inline;
   line-height: 2rem;
 }
@@ -263,11 +263,11 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
   overflow-y: auto;
 }
 
-.c11 button.close {
+.c12 button.close {
   font-size: 2.4rem;
 }
 
-.c14 .react-datepicker__calendar-icon {
+.c15 .react-datepicker__calendar-icon {
   width: 2.4rem;
   height: 3rem;
   margin-top: 0.5rem;
@@ -277,19 +277,19 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
   pointer-events: none;
 }
 
-.c14 .react-datepicker__view-calendar-icon input {
+.c15 .react-datepicker__view-calendar-icon input {
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c16.c16.form-control.is-valid {
+.c17.c17.form-control.is-valid {
   background-image: none;
 }
 
-.c16.c16.form-control.is-invalid {
+.c17.c17.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
-.c15 {
+.c16 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -300,13 +300,13 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
   align-items: baseline;
 }
 
-.c15 .form-label {
+.c16 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
 }
 
-.c20 {
+.c21 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -316,7 +316,7 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
   flex-wrap: nowrap;
 }
 
-.c17 {
+.c18 {
   position: relative;
   border-radius: 0.4rem;
   padding-top: 0.8rem;
@@ -329,11 +329,11 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
   cursor: default;
 }
 
-.c17.is-invalid {
+.c18.is-invalid {
   border: #CE3E39 solid 0.1rem;
 }
 
-.c18.c18.btn {
+.c19.c19.btn {
   position: absolute;
   top: calc(50% - 1.4rem);
   padding-top: 0.8rem;
@@ -347,20 +347,20 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
   line-height: unset;
 }
 
-.c18.c18.btn .text {
+.c19.c19.btn .text {
   display: none;
 }
 
-.c18.c18.btn:hover,
-.c18.c18.btn:active,
-.c18.c18.btn:focus {
+.c19.c19.btn:hover,
+.c19.c19.btn:active,
+.c19.c19.btn:focus {
   color: #CE3E39;
   -webkit-text-decoration: none;
   text-decoration: none;
   opacity: unset;
 }
 
-.c19.form-group {
+.c20.form-group {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -368,7 +368,7 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
   margin-bottom: 0;
 }
 
-.c19.form-group .radio-group {
+.c20.form-group .radio-group {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -381,7 +381,7 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
   column-gap: unset;
 }
 
-.c19.form-group .radio-group .form-check {
+.c20.form-group .radio-group .form-check {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -396,15 +396,15 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
   justify-content: center;
 }
 
-.c19.form-group .radio-group .form-check .form-check-input {
+.c20.form-group .radio-group .form-check .form-check-input {
   margin-left: 0;
 }
 
-.c19.form-group .radio-group .form-check-label {
+.c20.form-group .radio-group .form-check-label {
   margin-left: 1rem;
 }
 
-.c19 .form-label {
+.c20 .form-label {
   margin-bottom: unset;
 }
 
@@ -440,6 +440,17 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
 }
 
 .c6 {
+  margin: 0 1.6rem 0 1.6rem;
+  padding: 1.6rem;
+  text-align: left;
+  text-underline-offset: 2px;
+}
+
+.c6 button {
+  font-size: 14px;
+}
+
+.c7 {
   font-size: 16px;
   color: #1a5a96;
   font-style: italic;
@@ -450,7 +461,7 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
   margin-bottom: 1rem;
 }
 
-.c10 {
+.c11 {
   padding: 1.5rem 1.8rem;
   border-radius: 4px;
   background-color: #f0f7fc;
@@ -462,19 +473,19 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
   line-height: 24px;
 }
 
-.c9 {
+.c10 {
   float: right;
   cursor: pointer;
   color: #1a5a96;
   font-size: 2.8rem;
 }
 
-.c8 {
+.c9 {
   margin-right: 1.5rem;
   font-size: 1.3rem;
 }
 
-.c7 {
+.c8 {
   cursor: pointer;
 }
 
@@ -593,87 +604,91 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
             class="c6"
           >
             <div
-              class="c7 no-gutters row"
+              class="c7"
             >
               <div
-                class="col"
+                class="c8 no-gutters row"
               >
-                <svg
-                  class="c8"
-                  fill="currentColor"
-                  height="1em"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 512 512"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
+                <div
+                  class="col"
                 >
-                  <path
-                    d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                  />
-                </svg>
-                Help with choosing a name
-              </div>
-              <div
-                class="col-1"
-              >
-                <svg
-                  class="c9"
-                  fill="currentColor"
-                  height="1em"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 24 24"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
+                  <svg
+                    class="c9"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                  Help with choosing a name
+                </div>
+                <div
+                  class="col-1"
                 >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
-                    d="m7 10 5 5 5-5z"
-                  />
-                </svg>
+                  <svg
+                    class="c10"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="m7 10 5 5 5-5z"
+                    />
+                  </svg>
+                </div>
               </div>
             </div>
-          </div>
-          <div
-            class="c10 collapse"
-          >
-            <p
-              class="mb-4"
+            <div
+              class="c11 collapse"
             >
-              Provide a predictable research file name that will be easy to search for. Recommended format is to use the road name(s) followed by some descriptive text that may include (but not limited to) one or more of the following:
-            </p>
-            <ul>
-              <li>
-                Ministry project name
-              </li>
-              <li>
-                Name of the area
-              </li>
-              <li>
-                Name of the MOTT highway district
-              </li>
-              <li>
-                Name of the enquirer
-              </li>
-              <li>
-                Legal description
-              </li>
-            </ul>
-            <p
-              class="mb-4 mt-3"
-            >
-              If the road name is not available /applicable, the descriptive text should make the research file easy to search for in the future
-            </p>
-            <p>
-              <b>
-                Note:
-              </b>
-               This name does not need to be entirely unique, as a unique file number will be generated for your research file when you save it.
-            </p>
+              <p
+                class="mb-4"
+              >
+                Provide a predictable research file name that will be easy to search for. Recommended format is to use the road name(s) followed by some descriptive text that may include (but not limited to) one or more of the following:
+              </p>
+              <ul>
+                <li>
+                  Ministry project name
+                </li>
+                <li>
+                  Name of the area
+                </li>
+                <li>
+                  Name of the MOTT highway district
+                </li>
+                <li>
+                  Name of the enquirer
+                </li>
+                <li>
+                  Legal description
+                </li>
+              </ul>
+              <p
+                class="mb-4 mt-3"
+              >
+                If the road name is not available /applicable, the descriptive text should make the research file easy to search for in the future
+              </p>
+              <p>
+                <b>
+                  Note:
+                </b>
+                 This name does not need to be entirely unique, as a unique file number will be generated for your research file when you save it.
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -718,7 +733,7 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
                   class="col-9"
                 >
                   <div
-                    class="c11 form-group"
+                    class="c12 form-group"
                     data-testid="typeahead-researchFileProjects[0].project"
                   >
                     <div
@@ -778,7 +793,7 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
                   class="p-0 m-0 col-auto"
                 >
                   <button
-                    class="c12 Button c13 btn btn-link"
+                    class="c13 Button c14 btn btn-link"
                     data-testid="remove-button"
                     type="button"
                   >
@@ -818,7 +833,7 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
             </div>
           </div>
           <button
-            class="c12 Button btn btn-link"
+            class="c13 Button btn btn-link"
             data-testid="add-project"
             type="button"
           >
@@ -1016,7 +1031,7 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
               class="c5 text-left col"
             >
               <div
-                class="c14 c15 form-group"
+                class="c15 c16 form-group"
               >
                 <div
                   class="react-datepicker-wrapper d-block"
@@ -1035,7 +1050,7 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
                     </svg>
                     <input
                       autocomplete="off"
-                      class="c16 form-control date-picker"
+                      class="c17 form-control date-picker"
                       id="datepicker-requestDate"
                       name="requestDate"
                       placeholder="MMM DD, YYYY"
@@ -1171,11 +1186,11 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
                     class="col"
                   >
                     <div
-                      class="c17"
+                      class="c18"
                     >
                       Dairy Queen Forever! Property Management
                       <button
-                        class="c12 Button c18 btn btn-link"
+                        class="c13 Button c19 btn btn-link"
                         type="button"
                       >
                         <div
@@ -1222,7 +1237,7 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
                     class="pl-0 col-auto"
                   >
                     <button
-                      class="c12 Button Button--icon-only px-2 btn btn-primary"
+                      class="c13 Button Button--icon-only px-2 btn btn-primary"
                       type="button"
                     >
                       <div
@@ -1314,7 +1329,7 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
               class="c5 text-left col"
             >
               <div
-                class="c14 c15 form-group"
+                class="c15 c16 form-group"
               >
                 <div
                   class="react-datepicker-wrapper d-block"
@@ -1333,7 +1348,7 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
                     </svg>
                     <input
                       autocomplete="off"
-                      class="c16 form-control date-picker"
+                      class="c17 form-control date-picker"
                       id="datepicker-researchCompletionDate"
                       name="researchCompletionDate"
                       placeholder="MMM DD, YYYY"
@@ -1411,13 +1426,13 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
               class="c5 text-left col"
             >
               <div
-                class="c19 form-group"
+                class="c20 form-group"
               >
                 <div
                   class="radio-group"
                 >
                   <div
-                    class="c20"
+                    class="c21"
                   >
                     <div
                       class="form-check"
@@ -1440,7 +1455,7 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
                     </label>
                   </div>
                   <div
-                    class="c20"
+                    class="c21"
                   >
                     <div
                       class="form-check"
