@@ -26,16 +26,15 @@ import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithA
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { exists, firstOrNull, isValidId, latLngLiteralToGeometry } from '@/utils';
-import { addPropertiesToCurrentFile } from '@/utils/propertyUtils';
 import {
-  arePropertyFormsEqual,
   exists,
+  firstOrNull,
   isLatLngInFeatureSetBoundary,
   isNumber,
   isValidId,
   latLngLiteralToGeometry,
 } from '@/utils';
+import { addPropertiesToCurrentFile } from '@/utils/propertyUtils';
 
 import { FileForm, PropertyForm } from '../../models';
 import SidebarFooter from '../../SidebarFooter';
@@ -247,7 +246,7 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
           >
             {formikProps => (
               <FieldArray name="properties">
-              {({ remove, replace }) => (
+                {({ remove, replace }) => (
                   <Section
                     header={
                       <Row>
@@ -265,40 +264,40 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
                       </Row>
                     }
                   >
-                  <Row className="py-3 no-gutters">
-                    <Col>
-                      <MapClickMonitor
-                        selectedComponentId={null}
-                        addProperty={noop}
-                        repositionProperty={(
-                          featureset: SelectedFeatureDataset,
-                          latLng: LatLngLiteral,
-                          index: number | null,
-                        ) => {
-                          // As long as the marker is repositioned within the boundary of the originally selected property simply reposition the marker without further notification.
-                          if (
-                            isNumber(index) &&
-                            index >= 0 &&
-                            isLatLngInFeatureSetBoundary(latLng, featureset)
-                          ) {
-                            const formProperty = formikProps.values.properties[index];
-                            const updatedFormProperty = new PropertyForm(formProperty);
-                            updatedFormProperty.fileLocation = latLng;
+                    <Row className="py-3 no-gutters">
+                      <Col>
+                        <MapClickMonitor
+                          selectedComponentId={null}
+                          addProperty={noop}
+                          repositionProperty={(
+                            featureset: SelectedFeatureDataset,
+                            latLng: LatLngLiteral,
+                            index: number | null,
+                          ) => {
+                            // As long as the marker is repositioned within the boundary of the originally selected property simply reposition the marker without further notification.
+                            if (
+                              isNumber(index) &&
+                              index >= 0 &&
+                              isLatLngInFeatureSetBoundary(latLng, featureset)
+                            ) {
+                              const formProperty = formikProps.values.properties[index];
+                              const updatedFormProperty = new PropertyForm(formProperty);
+                              updatedFormProperty.fileLocation = latLng;
 
-                            // Find property within formik values and reposition it based on incoming file marker position
-                            replace(index, updatedFormProperty);
-                          } else if (!isLatLngInFeatureSetBoundary(latLng, featureset)) {
-                            toast.warn(
-                              'Please choose a location that is within the (highlighted) boundary of this property.',
-                            );
-                          }
-                        }}
-                        modifiedProperties={formikProps.values.properties.map(p =>
-                          p.toFeatureDataset(),
-                        )}
-                      />
-                    </Col>
-                  </Row>
+                              // Find property within formik values and reposition it based on incoming file marker position
+                              replace(index, updatedFormProperty);
+                            } else if (!isLatLngInFeatureSetBoundary(latLng, featureset)) {
+                              toast.warn(
+                                'Please choose a location that is within the (highlighted) boundary of this property.',
+                              );
+                            }
+                          }}
+                          modifiedProperties={formikProps.values.properties.map(p =>
+                            p.toFeatureDataset(),
+                          )}
+                        />
+                      </Col>
+                    </Row>
                     <SelectedPropertyHeaderRow />
                     {formikProps.values.properties.map((property, index) => (
                       <SelectedPropertyRow
