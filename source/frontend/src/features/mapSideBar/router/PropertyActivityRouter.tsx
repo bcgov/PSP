@@ -59,12 +59,6 @@ export const PropertyActivityRouter: React.FunctionComponent<
     history.push(backUrl);
   };
 
-  const match = matchPath<{ managementFileId: string; propertyFileId: string }>(location.pathname, {
-    path: '/mapview/sidebar/*property/:propertyId/management/activity/:activityId',
-    exact: true,
-    strict: false,
-  });
-
   return (
     <Switch>
       {loading && <LoadingBackdrop show></LoadingBackdrop>}
