@@ -30,7 +30,7 @@ export interface DispositionPropertiesSubFormProps {
 const DispositionPropertiesSubForm: React.FunctionComponent<DispositionPropertiesSubFormProps> = ({
   formikProps,
 }) => {
-  const localRef = useRef<FormikProps<DispositionFormModel>>(null);
+  const localRef = useRef<FormikProps<DispositionFormModel>>();
 
   const {
     selectedFeatures,
