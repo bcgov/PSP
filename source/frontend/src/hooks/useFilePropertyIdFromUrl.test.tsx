@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react-hooks';
-import { MemoryRouter, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import React from 'react';
 import { useFilePropertyIdFromUrl } from './useFilePropertyIdFromUrl';
 import { createMemoryHistory } from 'history';
