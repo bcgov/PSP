@@ -260,7 +260,7 @@ namespace Pims.Scheduler
             ConnectionMultiplexer redisConnection = ConnectionMultiplexer.Connect(Configuration.GetConnectionString("Redis"));
             services.AddHangfire(options =>
             {
-                options.UseSimpleAssemblyNameTypeSerializer().UseRecommendedSerializerSettings().UseRedisStorage(redisConnection).UseSerilogLogProvider().UseConsole();
+                options.UseSimpleAssemblyNameTypeSerializer().UseRecommendedSerializerSettings().UseRedisStorage(redisConnection, new() { SucceededListSize = 1000, DeletedListSize = 100 }).UseSerilogLogProvider().UseConsole();
             });
 
             BackgroundJobServerOptions hangfireOptions = Hangfire.Extensions.Configuration.ConfigurationExtensions.GetHangfireBackgroundJobServerOptions(this.Configuration);
