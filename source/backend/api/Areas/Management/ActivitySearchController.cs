@@ -21,7 +21,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace Pims.Api.Areas.Management.Controllers
 {
     /// <summary>
-    /// SearchController class, provides endpoints for searching management files.
+    /// ActivitySearchController class, provides endpoints for searching management file activities.
     /// </summary>
     [Authorize]
     [ApiController]
@@ -36,13 +36,13 @@ namespace Pims.Api.Areas.Management.Controllers
         private readonly ILogger _logger;
 
         /// <summary>
-        /// Creates a new instance of a SearchController class, initializes it with the specified arguments.
+        /// Creates a new instance of a ActivitySearchController class, initializes it with the specified arguments.
         /// </summary>
         /// <param name="managementActivityService"></param>
         /// <param name="mapper"></param>
         /// <param name="logger"></param>
         ///
-        public ActivitySearchController(IManagementActivityService managementActivityService, IMapper mapper, ILogger<SearchController> logger)
+        public ActivitySearchController(IManagementActivityService managementActivityService, IMapper mapper, ILogger<ActivitySearchController> logger)
         {
             _managementActivityService = managementActivityService;
             _mapper = mapper;
@@ -80,7 +80,7 @@ namespace Pims.Api.Areas.Management.Controllers
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "managementfile" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult GetManagementActivitiesPaged([FromBody]ManagementActivityFilterModel filter)
+        public IActionResult GetManagementActivitiesPaged([FromBody] ManagementActivityFilterModel filter)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",

@@ -1,11 +1,8 @@
 using System;
-using System.Collections.Generic;
-using MapsterMapper;
+using System.Linq;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Pims.Api.Areas.Management.Controllers;
 using Pims.Api.Areas.Management.Models;
 using Pims.Api.Areas.Reports.Models.Management;
 using Pims.Api.Helpers.Constants;
@@ -33,77 +30,57 @@ namespace Pims.Api.Areas.Reports.Controllers
     public class ManagementActivityController : ControllerBase
     {
         private readonly IManagementActivityService _managementActivityService;
-        private readonly IMapper _mapper;
         private readonly ILogger _logger;
 
-        public ManagementActivityController(IManagementActivityService managementActivityService, IMapper mapper, ILogger<ManagementActivityController> logger)
+        public ManagementActivityController(IManagementActivityService managementActivityService, ILogger<ManagementActivityController> logger)
         {
             _managementActivityService = managementActivityService;
-            _mapper = mapper;
             _logger = logger;
         }
 
         /// <summary>
-        /// Exports Management Activities as CSV or Excel file.
+        /// Generates the Management Activities Overview Report as an Excel file.
         /// Include 'Accept' header to request the appropriate export -
-        ///     ["text/csv", "application/application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"].
-        /// </summary>
-        /// <param name="all"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [HasPermission(Permissions.ManagementView)]
-        [Produces(ContentTypes.CONTENTTYPECSV, ContentTypes.CONTENTTYPEEXCELX)]
-        [ProducesResponseType(200)]
-        [SwaggerOperation(Tags = new[] { "management-activities", "report" })]
-        public IActionResult ExportManagementActivities(bool all = false)
-        {
-            var uri = new Uri(Request.GetDisplayUrl());
-            var query = Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(uri.Query);
-            return ExportManagementActivities(new ManagementActivityFilterModel(query), all);
-        }
-
-        /// <summary>
-        /// Exports Management Activities as CSV or Excel file.
-        /// Include 'Accept' header to request the appropriate export -
-        ///     ["text/csv", "application/application/vnd.ms-excel", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"].
+        ///     ["application/application/vnd.ms-excel"].
         /// </summary>
         /// <param name="filter"></param>
-        /// <param name="all"></param>
         /// <returns></returns>
-        [HttpPost("filter")]
+        [HttpPost("overview")]
         [HasPermission(Permissions.ManagementView)]
-        [Produces(ContentTypes.CONTENTTYPECSV, ContentTypes.CONTENTTYPEEXCELX)]
+        [Produces(ContentTypes.CONTENTTYPEEXCELX)]
         [ProducesResponseType(200)]
         [SwaggerOperation(Tags = new[] { "management-activities", "report" })]
-        public IActionResult ExportManagementActivities([FromBody]ManagementActivityFilterModel filter, bool all = false)
+        public IActionResult ExportManagementActivitiesOverview([FromBody] ManagementActivityFilterModel filter)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
-                nameof(ActivitySearchController),
-                nameof(ExportManagementActivities),
+                nameof(ManagementActivityController),
+                nameof(ExportManagementActivitiesOverview),
                 User.GetUsername(),
                 DateTime.Now);
 
             filter.ThrowBadRequestIfNull($"The request must include a filter.");
             if (!filter.IsValid())
             {
-                throw new BadRequestException("Lease filter must contain valid values.");
+                throw new BadRequestException("Management activity filter must contain valid values.");
             }
 
             var acceptHeader = (string)Request.Headers["Accept"];
-            if (acceptHeader != ContentTypes.CONTENTTYPECSV && acceptHeader != ContentTypes.CONTENTTYPEEXCEL && acceptHeader != ContentTypes.CONTENTTYPEEXCELX)
+            if (acceptHeader != ContentTypes.CONTENTTYPEEXCEL && acceptHeader != ContentTypes.CONTENTTYPEEXCELX)
             {
                 throw new BadRequestException($"Invalid HTTP request header 'Accept:{acceptHeader}'.");
             }
 
-            var allManagementActivities = _managementActivityService.GetPage((ManagementActivityFilter)filter, all);
-            var flatActivities = _mapper.Map<IEnumerable<ManagementActivityReportModel>>(allManagementActivities);
-
-            return acceptHeader.ToString() switch
+            var allManagementActivities = _managementActivityService.SearchManagementActivities((ManagementActivityFilter)filter);
+            if (allManagementActivities is null || allManagementActivities.Count == 0)
             {
-                ContentTypes.CONTENTTYPECSV => ReportHelper.GenerateCsv(flatActivities),
-                _ => ReportHelper.GenerateExcel(flatActivities, "ManagementActities")
-            };
+                // Return 204 "No Content" to signal the frontend that we did not find any matching records.
+                return NoContent();
+            }
+
+            var reportActivities = allManagementActivities.Select(a => new ManagementActivityOverviewReportModel(a));
+
+            return ReportHelper.GenerateExcel(reportActivities, "Management Activities Overview");
         }
     }
 }
