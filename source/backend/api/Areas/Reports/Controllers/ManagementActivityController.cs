@@ -1,7 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -32,13 +30,11 @@ namespace Pims.Api.Areas.Reports.Controllers
     public class ManagementActivityController : ControllerBase
     {
         private readonly IManagementActivityService _managementActivityService;
-        private readonly IMapper _mapper;
         private readonly ILogger _logger;
 
-        public ManagementActivityController(IManagementActivityService managementActivityService, IMapper mapper, ILogger<ManagementActivityController> logger)
+        public ManagementActivityController(IManagementActivityService managementActivityService, ILogger<ManagementActivityController> logger)
         {
             _managementActivityService = managementActivityService;
-            _mapper = mapper;
             _logger = logger;
         }
 
@@ -85,52 +81,6 @@ namespace Pims.Api.Areas.Reports.Controllers
             var reportActivities = allManagementActivities.Select(a => new ManagementActivityOverviewReportModel(a));
 
             return ReportHelper.GenerateExcel(reportActivities, "Management Activities Overview");
-        }
-
-        /// <summary>
-        /// Generates the Management Activity Invoices Report as an Excel file.
-        /// Include 'Accept' header to request the appropriate export -
-        ///     ["application/application/vnd.ms-excel"].
-        /// </summary>
-        /// <param name="filter"></param>
-        /// <returns></returns>
-        [HttpPost("invoices")]
-        [HasPermission(Permissions.ManagementView)]
-        [Produces(ContentTypes.CONTENTTYPEEXCELX)]
-        [ProducesResponseType(200)]
-        [SwaggerOperation(Tags = new[] { "management-activities", "report" })]
-        public IActionResult ExportManagementActivityInvoices([FromBody] ManagementActivityFilterModel filter)
-        {
-            _logger.LogInformation(
-                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
-                nameof(ManagementActivityController),
-                nameof(ExportManagementActivityInvoices),
-                User.GetUsername(),
-                DateTime.Now);
-
-            filter.ThrowBadRequestIfNull($"The request must include a filter.");
-            if (!filter.IsValid())
-            {
-                throw new BadRequestException("Management activity filter must contain valid values.");
-            }
-
-            var acceptHeader = (string)Request.Headers["Accept"];
-            if (acceptHeader != ContentTypes.CONTENTTYPEEXCEL && acceptHeader != ContentTypes.CONTENTTYPEEXCELX)
-            {
-                throw new BadRequestException($"Invalid HTTP request header 'Accept:{acceptHeader}'.");
-            }
-
-            var allManagementActivities = _managementActivityService.GetPage((ManagementActivityFilter)filter, true);
-            if (allManagementActivities is null || allManagementActivities.Items.Count == 0)
-            {
-                // Return 204 "No Content" to signal the frontend that we did not find any matching records.
-                return NoContent();
-            }
-
-            // TODO: Update to use invoice specific model when available.
-            var flatActivities = _mapper.Map<IEnumerable<ManagementActivityOverviewReportModel>>(allManagementActivities);
-
-            return ReportHelper.GenerateExcel(flatActivities, "Management Activity Invoices");
         }
     }
 }
