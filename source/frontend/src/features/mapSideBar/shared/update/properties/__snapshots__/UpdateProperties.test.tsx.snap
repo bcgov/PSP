@@ -780,6 +780,13 @@ exports[`UpdateProperties component > renders as expected 1`] = `
               class="collapse show"
             >
               <div
+                class="py-3 no-gutters row"
+              >
+                <div
+                  class="col"
+                />
+              </div>
+              <div
                 class="c20 no-gutters row"
               >
                 <div
