@@ -128,7 +128,9 @@ describe('Expropriation Tab Container View', () => {
 
   it('shows the sections for Acquisition file type "Section 3"', async () => {
     const { queryByTestId } = await setup({
-      props: { acquisitionFile: getMockExpropriationFile(ApiGen_CodeTypes_AcquisitionFileTypeTypes.SECTN3) },
+      props: {
+        acquisitionFile: getMockExpropriationFile(ApiGen_CodeTypes_AcquisitionFileTypeTypes.SECTN3),
+      },
     });
 
     expect(queryByTestId('form-1-section')).not.toBeInTheDocument();
