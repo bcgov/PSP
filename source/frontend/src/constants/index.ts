@@ -1,5 +1,4 @@
 export * from './accessStatus';
-export * from './areaUnitTypes';
 export * from './claims';
 export * from './countryCodes';
 export * from './districtCodes';

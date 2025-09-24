@@ -6,7 +6,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
     class="Toastify"
   />
   <div />
-  .c9.btn {
+  .c10.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,17 +35,17 @@ exports[`ResearchProperties component > renders as expected when provided no pro
   cursor: pointer;
 }
 
-.c9.btn .Button__value {
+.c10.btn .Button__value {
   width: auto;
 }
 
-.c9.btn:hover {
+.c10.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c9.btn:focus {
+.c10.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -53,31 +53,31 @@ exports[`ResearchProperties component > renders as expected when provided no pro
   box-shadow: none;
 }
 
-.c9.btn.btn-primary {
+.c10.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c9.btn.btn-primary:hover,
-.c9.btn.btn-primary:active,
-.c9.btn.btn-primary:focus {
+.c10.btn.btn-primary:hover,
+.c10.btn.btn-primary:active,
+.c10.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c9.btn.btn-secondary {
+.c10.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c9.btn.btn-secondary:hover,
-.c9.btn.btn-secondary:active,
-.c9.btn.btn-secondary:focus {
+.c10.btn.btn-secondary:hover,
+.c10.btn.btn-secondary:active,
+.c10.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c9.btn.btn-info {
+.c10.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -85,66 +85,66 @@ exports[`ResearchProperties component > renders as expected when provided no pro
   padding-right: 0.6rem;
 }
 
-.c9.btn.btn-info:hover,
-.c9.btn.btn-info:active,
-.c9.btn.btn-info:focus {
+.c10.btn.btn-info:hover,
+.c10.btn.btn-info:active,
+.c10.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c9.btn.btn-light {
+.c10.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c9.btn.btn-light:hover,
-.c9.btn.btn-light:active,
-.c9.btn.btn-light:focus {
+.c10.btn.btn-light:hover,
+.c10.btn.btn-light:active,
+.c10.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c9.btn.btn-dark {
+.c10.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c9.btn.btn-dark:hover,
-.c9.btn.btn-dark:active,
-.c9.btn.btn-dark:focus {
+.c10.btn.btn-dark:hover,
+.c10.btn.btn-dark:active,
+.c10.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c9.btn.btn-danger {
+.c10.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c9.btn.btn-danger:hover,
-.c9.btn.btn-danger:active,
-.c9.btn.btn-danger:focus {
+.c10.btn.btn-danger:hover,
+.c10.btn.btn-danger:active,
+.c10.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c9.btn.btn-warning {
+.c10.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c9.btn.btn-warning:hover,
-.c9.btn.btn-warning:active,
-.c9.btn.btn-warning:focus {
+.c10.btn.btn-warning:hover,
+.c10.btn.btn-warning:active,
+.c10.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c9.btn.btn-link {
+.c10.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -168,9 +168,9 @@ exports[`ResearchProperties component > renders as expected when provided no pro
   text-decoration: underline;
 }
 
-.c9.btn.btn-link:hover,
-.c9.btn.btn-link:active,
-.c9.btn.btn-link:focus {
+.c10.btn.btn-link:hover,
+.c10.btn.btn-link:active,
+.c10.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -180,15 +180,15 @@ exports[`ResearchProperties component > renders as expected when provided no pro
   outline: none;
 }
 
-.c9.btn.btn-link:disabled,
-.c9.btn.btn-link.disabled {
+.c10.btn.btn-link:disabled,
+.c10.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c9.btn:disabled,
-.c9.btn:disabled:hover {
+.c10.btn:disabled,
+.c10.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -200,66 +200,66 @@ exports[`ResearchProperties component > renders as expected when provided no pro
   cursor: not-allowed;
 }
 
-.c9.Button .Button__icon {
+.c10.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c9.Button--icon-only:focus {
+.c10.Button--icon-only:focus {
   outline: none;
 }
 
-.c9.Button--icon-only .Button__icon {
+.c10.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c16.c16.btn {
+.c17.c17.btn {
   background-color: unset;
   border: none;
 }
 
-.c16.c16.btn:hover,
-.c16.c16.btn:focus,
-.c16.c16.btn:active {
+.c17.c17.btn:hover,
+.c17.c17.btn:focus,
+.c17.c17.btn:active {
   background-color: unset;
   outline: none;
   box-shadow: none;
 }
 
-.c16.c16.btn svg {
+.c17.c17.btn svg {
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
 
-.c16.c16.btn svg:hover {
+.c17.c17.btn svg:hover {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
 }
 
-.c16.c16.btn.btn-primary svg {
+.c17.c17.btn.btn-primary svg {
   color: #013366;
 }
 
-.c16.c16.btn.btn-primary svg:hover {
+.c17.c17.btn.btn-primary svg:hover {
   color: #013366;
 }
 
-.c16.c16.btn.btn-light svg {
+.c17.c17.btn.btn-light svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c16.c16.btn.btn-light svg:hover {
+.c17.c17.btn.btn-light svg:hover {
   color: #CE3E39;
 }
 
-.c16.c16.btn.btn-info svg {
+.c17.c17.btn.btn-info svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c16.c16.btn.btn-info svg:hover {
+.c17.c17.btn.btn-info svg:hover {
   color: var(--surface-color-primary-button-hover);
 }
 
-.c17.c17.btn {
+.c18.c18.btn {
   font-size: 1.4rem;
   color: #aaaaaa;
   -webkit-text-decoration: none;
@@ -267,13 +267,13 @@ exports[`ResearchProperties component > renders as expected when provided no pro
   line-height: unset;
 }
 
-.c17.c17.btn .text {
+.c18.c18.btn .text {
   display: none;
 }
 
-.c17.c17.btn:hover,
-.c17.c17.btn:active,
-.c17.c17.btn:focus {
+.c18.c18.btn:hover,
+.c18.c18.btn:active,
+.c18.c18.btn:focus {
   color: #d8292f;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -287,9 +287,9 @@ exports[`ResearchProperties component > renders as expected when provided no pro
   flex-direction: row;
 }
 
-.c17.c17.btn:hover .text,
-.c17.c17.btn:active .text,
-.c17.c17.btn:focus .text {
+.c18.c18.btn:hover .text,
+.c18.c18.btn:active .text,
+.c18.c18.btn:focus .text {
   display: inline;
   line-height: 2rem;
 }
@@ -309,7 +309,9 @@ exports[`ResearchProperties component > renders as expected when provided no pro
   border-radius: 0.5rem;
 }
 
-.c10 {
+.c11 {
+  margin: 0;
+  padding: 1.6rem;
   font-size: 1.6rem;
   color: #9F9D9C;
   border-bottom: 0.2rem solid #606060;
@@ -318,7 +320,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
   font-family: 'BcSans-Bold';
 }
 
-.c15 {
+.c16 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -330,13 +332,13 @@ exports[`ResearchProperties component > renders as expected when provided no pro
   gap: 0.8rem;
 }
 
-.c15 .form-label {
+.c16 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
 }
 
-.c14 {
+.c15 {
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
@@ -353,20 +355,31 @@ exports[`ResearchProperties component > renders as expected when provided no pro
   line-break: break-all;
 }
 
-.c12 {
+.c13 {
   min-width: 3rem;
   min-height: 4.5rem;
 }
 
-.c13 {
+.c14 {
   font-size: 1.2rem;
 }
 
-.c11 {
+.c12 {
   min-height: 4.5rem;
 }
 
 .c2 {
+  margin: 0 1.6rem 0 1.6rem;
+  padding: 1.6rem;
+  text-align: left;
+  text-underline-offset: 2px;
+}
+
+.c2 button {
+  font-size: 14px;
+}
+
+.c3 {
   font-size: 16px;
   color: #1a5a96;
   font-style: italic;
@@ -377,7 +390,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
   margin-bottom: 1rem;
 }
 
-.c6 {
+.c7 {
   padding: 1.5rem 1.8rem;
   border-radius: 4px;
   background-color: #f0f7fc;
@@ -389,27 +402,27 @@ exports[`ResearchProperties component > renders as expected when provided no pro
   line-height: 24px;
 }
 
-.c5 {
+.c6 {
   float: right;
   cursor: pointer;
   color: #1a5a96;
   font-size: 2.8rem;
 }
 
-.c4 {
+.c5 {
   margin-right: 1.5rem;
   font-size: 1.3rem;
 }
 
-.c3 {
+.c4 {
   cursor: pointer;
 }
 
-.c8 {
+.c9 {
   font-weight: normal;
 }
 
-.c7 {
+.c8 {
   font-weight: bold;
 }
 
@@ -436,102 +449,106 @@ exports[`ResearchProperties component > renders as expected when provided no pro
         class="c2"
       >
         <div
-          class="c3 no-gutters row"
+          class="c3"
         >
           <div
-            class="col"
+            class="c4 no-gutters row"
           >
-            <svg
-              class="c4"
-              fill="currentColor"
-              height="1em"
-              stroke="currentColor"
-              stroke-width="0"
-              viewBox="0 0 512 512"
-              width="1em"
-              xmlns="http://www.w3.org/2000/svg"
+            <div
+              class="col"
             >
-              <path
-                d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-              />
-            </svg>
-            New workflow
-          </div>
-          <div
-            class="col-1"
-          >
-            <svg
-              class="c5"
-              fill="currentColor"
-              height="1em"
-              stroke="currentColor"
-              stroke-width="0"
-              viewBox="0 0 24 24"
-              width="1em"
-              xmlns="http://www.w3.org/2000/svg"
+              <svg
+                class="c5"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                />
+              </svg>
+              New workflow
+            </div>
+            <div
+              class="col-1"
             >
-              <path
-                d="M0 0h24v24H0z"
-                fill="none"
-              />
-              <path
-                d="m7 10 5 5 5-5z"
-              />
-            </svg>
+              <svg
+                class="c6"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="m7 10 5 5 5-5z"
+                />
+              </svg>
+            </div>
           </div>
         </div>
-      </div>
-      <div
-        class="c6 collapse"
-      >
-        <ol>
-          <li
-            class="c7"
-          >
-            <div>
-              Find a Property
-            </div>
-            <div
+        <div
+          class="c7 collapse"
+        >
+          <ol>
+            <li
               class="c8"
             >
-              Navigate to an area of the map OR use 
-              <button
-                class="c9 Button p-0 d-inline-block btn btn-link"
-                type="button"
+              <div>
+                Find a Property
+              </div>
+              <div
+                class="c9"
               >
-                <div
-                  class="Button__value"
+                Navigate to an area of the map OR use 
+                <button
+                  class="c10 Button d-inline-block btn btn-link"
+                  type="button"
                 >
-                  Search
-                </div>
-              </button>
-            </div>
-          </li>
-          <li
-            class="c7"
-          >
-            <div>
-              Select a property
-            </div>
-            <div
+                  <div
+                    class="Button__value"
+                  >
+                    Search
+                  </div>
+                </button>
+              </div>
+            </li>
+            <li
               class="c8"
             >
-              Click on the map and the selection will be highlighed
-            </div>
-          </li>
-          <li
-            class="c7"
-          >
-            <div>
-              Add it to this file
-            </div>
-            <div
+              <div>
+                Select a property
+              </div>
+              <div
+                class="c9"
+              >
+                Click on the map and the selection will be highlighed
+              </div>
+            </li>
+            <li
               class="c8"
             >
-              Click "Add selected" property button when it appears below
-            </div>
-          </li>
-        </ol>
+              <div>
+                Add it to this file
+              </div>
+              <div
+                class="c9"
+              >
+                Click "Add selected" property button when it appears below
+              </div>
+            </li>
+          </ol>
+        </div>
       </div>
       <div
         class="c0 form-section"
@@ -553,7 +570,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
           class="collapse show"
         >
           <div
-            class="c10 no-gutters row"
+            class="c11 no-gutters row"
           >
             <div
               class="col-md-3"
@@ -587,7 +604,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
             </div>
           </div>
           <div
-            class="c11 align-items-center mb-3 no-gutters row"
+            class="c12 align-items-center mb-3 no-gutters row"
           >
             <div
               class="col-md-3"
@@ -596,7 +613,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
                 class="mb-0 d-flex align-items-center"
               >
                 <svg
-                  class="c12"
+                  class="c13"
                   height="45"
                   id="Layer_2"
                   viewBox="0 0 20 30"
@@ -653,7 +670,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
                       </g>
                     </g>
                     <text
-                      class="c13"
+                      class="c14"
                       textLength="1.25rem"
                       x="7"
                       y="15"
@@ -666,7 +683,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
                   </title>
                 </svg>
                 <div
-                  class="c14 pl-3"
+                  class="c15 pl-3"
                 >
                   PID: 123-456-789
                 </div>
@@ -676,7 +693,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
               class="col-md-5"
             >
               <div
-                class="c15 mb-0 w-100 input form-group"
+                class="c16 mb-0 w-100 input form-group"
               >
                 <input
                   class="form-control"
@@ -691,7 +708,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
               class="col-auto"
             >
               <button
-                class="c9 Button btn btn-link"
+                class="c10 Button btn btn-link"
                 data-testid="zoom-to-property-0"
                 type="button"
               >
@@ -719,7 +736,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
               class="pl-3 col-md-1"
             >
               <button
-                class="c9 Button c16 btn btn-primary"
+                class="c10 Button c17 btn btn-primary"
                 data-testid="move-pin-location-0"
                 title="move-pin-location"
                 type="button"
@@ -747,7 +764,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
               class="col-md-1"
             >
               <button
-                class="c9 Button c17 btn btn-link"
+                class="c10 Button c18 btn btn-link"
                 data-testid="delete-property-0"
                 type="button"
               >
@@ -785,7 +802,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
             </div>
           </div>
           <div
-            class="c11 align-items-center mb-3 no-gutters row"
+            class="c12 align-items-center mb-3 no-gutters row"
           >
             <div
               class="col-md-3"
@@ -794,7 +811,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
                 class="mb-0 d-flex align-items-center"
               >
                 <svg
-                  class="c12"
+                  class="c13"
                   height="45"
                   id="Layer_2"
                   viewBox="0 0 20 30"
@@ -851,7 +868,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
                       </g>
                     </g>
                     <text
-                      class="c13"
+                      class="c14"
                       textLength="1.25rem"
                       x="7"
                       y="15"
@@ -864,7 +881,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
                   </title>
                 </svg>
                 <div
-                  class="c14 pl-3"
+                  class="c15 pl-3"
                 >
                   PIN: 1111222
                 </div>
@@ -874,7 +891,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
               class="col-md-5"
             >
               <div
-                class="c15 mb-0 w-100 input form-group"
+                class="c16 mb-0 w-100 input form-group"
               >
                 <input
                   class="form-control"
@@ -889,7 +906,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
               class="col-auto"
             >
               <button
-                class="c9 Button btn btn-link"
+                class="c10 Button btn btn-link"
                 data-testid="zoom-to-property-1"
                 type="button"
               >
@@ -917,7 +934,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
               class="pl-3 col-md-1"
             >
               <button
-                class="c9 Button c16 btn btn-primary"
+                class="c10 Button c17 btn btn-primary"
                 data-testid="move-pin-location-1"
                 title="move-pin-location"
                 type="button"
@@ -945,7 +962,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
               class="col-md-1"
             >
               <button
-                class="c9 Button c17 btn btn-link"
+                class="c10 Button c18 btn btn-link"
                 data-testid="delete-property-1"
                 type="button"
               >

@@ -18,7 +18,7 @@ const FormGuideView: FunctionComponent<PropsWithChildren<IFormGuideViewProps>> =
   toggleCollapse,
 }) => {
   return (
-    <>
+    <StyledComponentWrapper>
       <StyledSectionHeader>
         <StyledRow className="no-gutters" onClick={() => toggleCollapse()}>
           <Col>
@@ -35,11 +35,22 @@ const FormGuideView: FunctionComponent<PropsWithChildren<IFormGuideViewProps>> =
       <Collapse in={!isCollapsed}>
         <StyledSection>{guideBody}</StyledSection>
       </Collapse>
-    </>
+    </StyledComponentWrapper>
   );
 };
 
 export default FormGuideView;
+
+const StyledComponentWrapper = styled.div`
+  margin: 0 1.6rem 0 1.6rem;
+  padding: 1.6rem;
+  text-align: left;
+  text-underline-offset: 2px;
+
+  button {
+    font-size: 14px;
+  }
+`;
 
 const StyledSectionHeader = styled.div`
   font-size: 16px;

@@ -420,6 +420,8 @@ exports[`Add Subdivision View > matches snapshot 1`] = `
 }
 
 .c19 {
+  margin: 0;
+  padding: 1.6rem;
   font-size: 1.6rem;
   color: #9F9D9C;
   border-bottom: 0.2rem solid #606060;

@@ -246,7 +246,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
   border-color: #d8292f !important;
 }
 
-.c25 {
+.c28 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -258,7 +258,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
   gap: 0.8rem;
 }
 
-.c25 .form-label {
+.c28 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
@@ -373,7 +373,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
   align-items: end;
 }
 
-.c26 {
+.c29 {
   position: -webkit-sticky;
   position: sticky;
   padding-top: 2rem;
@@ -399,23 +399,14 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
 }
 
 .c19 {
-  font-size: 1.6rem;
-  color: #9F9D9C;
-  border-bottom: 0.2rem solid #606060;
-  margin-bottom: 0.9rem;
-  padding-bottom: 0.25rem;
-  font-family: 'BcSans-Bold';
+  margin: 0 1.6rem 0 1.6rem;
+  padding: 1.6rem;
+  text-align: left;
+  text-underline-offset: 2px;
 }
 
-.c15.required::before {
-  content: '*';
-  position: absolute;
-  top: 0.75rem;
-  left: 0rem;
-}
-
-.c14 {
-  font-weight: bold;
+.c19 button {
+  font-size: 14px;
 }
 
 .c20 {
@@ -455,6 +446,34 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
 
 .c21 {
   cursor: pointer;
+}
+
+.c26 {
+  font-weight: normal;
+}
+
+.c25 {
+  font-weight: bold;
+}
+
+.c27 {
+  font-size: 1.6rem;
+  color: #9F9D9C;
+  border-bottom: 0.2rem solid #606060;
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.25rem;
+  font-family: 'BcSans-Bold';
+}
+
+.c15.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c14 {
+  font-weight: bold;
 }
 
 .c11 {
@@ -981,6 +1000,111 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                 Select one or more properties that you want to include in this lease/licence file. You can choose a location from the map, or search by other criteria.
               </div>
               <div
+                class="c19"
+              >
+                <div
+                  class="c20"
+                >
+                  <div
+                    class="c21 no-gutters row"
+                  >
+                    <div
+                      class="col"
+                    >
+                      <svg
+                        class="c22"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                        />
+                      </svg>
+                      New workflow
+                    </div>
+                    <div
+                      class="col-1"
+                    >
+                      <svg
+                        class="c23"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M0 0h24v24H0z"
+                          fill="none"
+                        />
+                        <path
+                          d="m7 10 5 5 5-5z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="c24 collapse"
+                >
+                  <ol>
+                    <li
+                      class="c25"
+                    >
+                      <div>
+                        Find a Property
+                      </div>
+                      <div
+                        class="c26"
+                      >
+                        Navigate to an area of the map OR use 
+                        <button
+                          class="c4 Button d-inline-block btn btn-link"
+                          type="button"
+                        >
+                          <div
+                            class="Button__value"
+                          >
+                            Search
+                          </div>
+                        </button>
+                      </div>
+                    </li>
+                    <li
+                      class="c25"
+                    >
+                      <div>
+                        Select a property
+                      </div>
+                      <div
+                        class="c26"
+                      >
+                        Click on the map and the selection will be highlighed
+                      </div>
+                    </li>
+                    <li
+                      class="c25"
+                    >
+                      <div>
+                        Add it to this file
+                      </div>
+                      <div
+                        class="c26"
+                      >
+                        Click "Add selected" property button when it appears below
+                      </div>
+                    </li>
+                  </ol>
+                </div>
+              </div>
+              <div
                 class="c12 form-section"
               >
                 <h2
@@ -1036,7 +1160,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                   class="collapse show"
                 >
                   <div
-                    class="c19 no-gutters row"
+                    class="c27 no-gutters row"
                   >
                     <div
                       class="col-3"
@@ -1096,112 +1220,116 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
               class="collapse show"
             >
               <div
-                class="c20"
+                class="c19"
               >
                 <div
-                  class="c21 no-gutters row"
+                  class="c20"
                 >
                   <div
-                    class="col"
+                    class="c21 no-gutters row"
                   >
-                    <svg
-                      class="c22"
-                      fill="currentColor"
-                      height="1em"
-                      stroke="currentColor"
-                      stroke-width="0"
-                      viewBox="0 0 512 512"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
+                    <div
+                      class="col"
                     >
-                      <path
-                        d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                      />
-                    </svg>
-                    Help with choosing the agreement Program, Type and Purpose
-                  </div>
-                  <div
-                    class="col-1"
-                  >
-                    <svg
-                      class="c23"
-                      fill="currentColor"
-                      height="1em"
-                      stroke="currentColor"
-                      stroke-width="0"
-                      viewBox="0 0 24 24"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
+                      <svg
+                        class="c22"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                        />
+                      </svg>
+                      Help with choosing the agreement Program, Type and Purpose
+                    </div>
+                    <div
+                      class="col-1"
                     >
-                      <path
-                        d="M0 0h24v24H0z"
-                        fill="none"
-                      />
-                      <path
-                        d="m7 10 5 5 5-5z"
-                      />
-                    </svg>
+                      <svg
+                        class="c23"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M0 0h24v24H0z"
+                          fill="none"
+                        />
+                        <path
+                          d="m7 10 5 5 5-5z"
+                        />
+                      </svg>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div
-                class="c24 collapse"
-              >
-                <p
-                  class="mb-4"
+                <div
+                  class="c24 collapse"
                 >
-                  Select the appropriate drop-down options based on the intended use of the property. Program is broad level and is searchable. Type is the type of agreement; only certain document generation options will exist depending on what option you select. Purpose is a summary of the intended use.
-                </p>
-                <ul>
-                  <li>
-                    Program
-                  </li>
-                  <ul>
-                    <li>
-                      “Engineering” includes geotechnical, aggregate, environmental, survey and other engineering type uses.
-                    </li>
-                    <li>
-                      “Rail Trail” excludes trails that are not a historical rail corridor being used for multi-use trail purposes. Choose “Other” program and “Trail” purpose for other trail uses.
-                    </li>
-                  </ul>
-                  <li>
-                    Type
-                  </li>
-                  <p>
-                    Consult Legal Services if in doubt about the agreement type or agreement conditions.
+                  <p
+                    class="mb-4"
+                  >
+                    Select the appropriate drop-down options based on the intended use of the property. Program is broad level and is searchable. Type is the type of agreement; only certain document generation options will exist depending on what option you select. Purpose is a summary of the intended use.
                   </p>
                   <ul>
                     <li>
-                      If Amending Agreement is selected, request legal review if amending conditions other than expiry date and payment amounts.
+                      Program
                     </li>
+                    <ul>
+                      <li>
+                        “Engineering” includes geotechnical, aggregate, environmental, survey and other engineering type uses.
+                      </li>
+                      <li>
+                        “Rail Trail” excludes trails that are not a historical rail corridor being used for multi-use trail purposes. Choose “Other” program and “Trail” purpose for other trail uses.
+                      </li>
+                    </ul>
                     <li>
-                      Select “Building Lease (receivable)” if leasing both land and building(s).
+                      Type
                     </li>
+                    <p>
+                      Consult Legal Services if in doubt about the agreement type or agreement conditions.
+                    </p>
+                    <ul>
+                      <li>
+                        If Amending Agreement is selected, request legal review if amending conditions other than expiry date and payment amounts.
+                      </li>
+                      <li>
+                        Select “Building Lease (receivable)” if leasing both land and building(s).
+                      </li>
+                    </ul>
+                    <li>
+                      Purpose
+                    </li>
+                    <ul>
+                      <li>
+                        “Camping” includes tree planter camps and campgrounds.
+                      </li>
+                      <li>
+                        “Crossing” includes oil and gas crossings or crossings other than Railway Crossing.
+                      </li>
+                      <li>
+                        “Emergency Services” includes fire halls, ambulance services, RCMP or police stations, etc.
+                      </li>
+                      <li>
+                        “Historical” is for historical files where the purpose is unknown.
+                      </li>
+                      <li>
+                        “Marine Facility” is for facilities other than BC Ferries i.e. dock.
+                      </li>
+                      <li>
+                        “Staging Area” has the same meaning as laydown area.
+                      </li>
+                    </ul>
                   </ul>
-                  <li>
-                    Purpose
-                  </li>
-                  <ul>
-                    <li>
-                      “Camping” includes tree planter camps and campgrounds.
-                    </li>
-                    <li>
-                      “Crossing” includes oil and gas crossings or crossings other than Railway Crossing.
-                    </li>
-                    <li>
-                      “Emergency Services” includes fire halls, ambulance services, RCMP or police stations, etc.
-                    </li>
-                    <li>
-                      “Historical” is for historical files where the purpose is unknown.
-                    </li>
-                    <li>
-                      “Marine Facility” is for facilities other than BC Ferries i.e. dock.
-                    </li>
-                    <li>
-                      “Staging Area” has the same meaning as laydown area.
-                    </li>
-                  </ul>
-                </ul>
+                </div>
               </div>
               <div
                 class="pb-2 row"
@@ -1219,7 +1347,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                   class="c15 text-left col-6"
                 >
                   <div
-                    class="c25 input form-group"
+                    class="c28 input form-group"
                   >
                     <input
                       class="form-control"
@@ -2146,7 +2274,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
         class=""
       >
         <div
-          class="c26 justify-content-end pt-4 p-0 no-gutters row"
+          class="c29 justify-content-end pt-4 p-0 no-gutters row"
         >
           <div
             class="pr-3 col-auto"

@@ -409,30 +409,6 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   overflow-y: auto;
 }
 
-.c14 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
-.c13 {
-  margin: 1.6rem;
-  padding: 1.6rem;
-  background-color: white;
-  text-align: left;
-  border-radius: 0.5rem;
-}
-
-.c19 {
-  font-size: 1.6rem;
-  color: #9F9D9C;
-  border-bottom: 0.2rem solid #606060;
-  margin-bottom: 0.9rem;
-  padding-bottom: 0.25rem;
-  font-family: 'BcSans-Bold';
-}
-
 .c26 {
   position: -webkit-sticky;
   position: sticky;
@@ -506,6 +482,21 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   opacity: unset;
 }
 
+.c14 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
+}
+
+.c13 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
 .c16.required::before {
   content: '*';
   position: absolute;
@@ -515,6 +506,17 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
 
 .c15 {
   font-weight: bold;
+}
+
+.c19 {
+  margin: 0;
+  padding: 1.6rem;
+  font-size: 1.6rem;
+  color: #9F9D9C;
+  border-bottom: 0.2rem solid #606060;
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.25rem;
+  font-family: 'BcSans-Bold';
 }
 
 .c20 input.form-control {
@@ -3165,30 +3167,6 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
   overflow-y: auto;
 }
 
-.c14 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
-.c13 {
-  margin: 1.6rem;
-  padding: 1.6rem;
-  background-color: white;
-  text-align: left;
-  border-radius: 0.5rem;
-}
-
-.c20 {
-  font-size: 1.6rem;
-  color: #9F9D9C;
-  border-bottom: 0.2rem solid #606060;
-  margin-bottom: 0.9rem;
-  padding-bottom: 0.25rem;
-  font-family: 'BcSans-Bold';
-}
-
 .c24 {
   position: -webkit-sticky;
   position: sticky;
@@ -3217,6 +3195,21 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
   border: #CE3E39 solid 0.1rem;
 }
 
+.c14 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
+}
+
+.c13 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
 .c16.required::before {
   content: '*';
   position: absolute;
@@ -3226,6 +3219,17 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
 
 .c15 {
   font-weight: bold;
+}
+
+.c20 {
+  margin: 0;
+  padding: 1.6rem;
+  font-size: 1.6rem;
+  color: #9F9D9C;
+  border-bottom: 0.2rem solid #606060;
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.25rem;
+  font-family: 'BcSans-Bold';
 }
 
 .c21 input.form-control {
