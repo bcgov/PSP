@@ -62,10 +62,19 @@ export const ManagementActivitiesListView: React.FC<unknown> = () => {
       status: overviewStatus,
       response: dataOverviewReport,
     },
+    generateManagementActivitiesInvoiceReport: {
+      execute: getInvoicesReport,
+      status: invoiceStatus,
+      response: dataInvoicesReport,
+    },
   } = useManagementActivityExport();
 
   const generateActivitiesOverviewReport = async (values: Api_ManagementActivityFilter) => {
     await getOverviewReport(values);
+  };
+
+  const generateActivitiesInvoiceReport = async (values: Api_ManagementActivityFilter) => {
+    await getInvoicesReport(values);
   };
 
   useEffect(() => {
@@ -82,6 +91,21 @@ export const ManagementActivitiesListView: React.FC<unknown> = () => {
       fileDownload(dataOverviewReport, `Management_Activities_Overview_Report.xlsx`);
     }
   }, [dataOverviewReport, overviewStatus, setDisplayModal, setModalContent]);
+
+  useEffect(() => {
+    if (invoiceStatus === 204) {
+      setModalContent({
+        variant: 'error',
+        title: 'Warning',
+        message: 'There is no data for the input parameters you entered.',
+        okButtonText: 'Close',
+        handleOk: () => setDisplayModal(false),
+      });
+      setDisplayModal(true);
+    } else if (dataInvoicesReport && invoiceStatus === 200) {
+      fileDownload(dataInvoicesReport, `Management_Activities_Invoice_Report.xlsx`);
+    }
+  }, [dataInvoicesReport, invoiceStatus, setDisplayModal, setModalContent]);
 
   const {
     results,
@@ -153,6 +177,19 @@ export const ManagementActivitiesListView: React.FC<unknown> = () => {
                     </StyledIconButton>
                   </TooltipWrapper>
                   <span>Activity overview</span>
+                </Col>
+              </Row>
+              <Row>
+                <Col className="d-flex align-items-center">
+                  <TooltipWrapper
+                    tooltipId="export-to-excel-invoice-report"
+                    tooltip="Export to Excel"
+                  >
+                    <StyledIconButton onClick={() => generateActivitiesInvoiceReport(filter)}>
+                      <FaFileExcel data-testid="excel-icon" size={36} />
+                    </StyledIconButton>
+                  </TooltipWrapper>
+                  <span>Invoice report</span>
                 </Col>
               </Row>
             </Col>
