@@ -5,8 +5,8 @@ import { MdArrowDropDown, MdArrowRight } from 'react-icons/md';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { Table } from '@/components/Table';
-import { AreaUnitTypes } from '@/constants';
 import useDeepCompareMemo from '@/hooks/util/useDeepCompareMemo';
+import { ApiGen_CodeTypes_AreaUnitTypes } from '@/models/api/generated/ApiGen_CodeTypes_AreaUnitTypes';
 import { ApiGen_CodeTypes_PropertyOperationTypes } from '@/models/api/generated/ApiGen_CodeTypes_PropertyOperationTypes';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
@@ -49,7 +49,7 @@ export const OperationView: React.FunctionComponent<IOperationViewProps> = ({
       plan: property.planNumber?.toString() ?? '',
       status: property.isRetired ? 'Retired' : 'Active',
       area: property.landArea ?? 0,
-      areaUnitCode: property.areaUnit?.id ?? AreaUnitTypes.SquareMeters,
+      areaUnitCode: property.areaUnit?.id ?? ApiGen_CodeTypes_AreaUnitTypes.M2,
     };
   };
 

@@ -1,13 +1,13 @@
 import isNumber from 'lodash/isNumber';
 
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
-import { AreaUnitTypes } from '@/constants/index';
 import {
   fromApiOrganization,
   fromApiPerson,
   IAutocompletePrediction,
   IContactSearchResult,
 } from '@/interfaces';
+import { ApiGen_CodeTypes_AreaUnitTypes } from '@/models/api/generated/ApiGen_CodeTypes_AreaUnitTypes';
 import { ApiGen_CodeTypes_LeaseAccountTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseAccountTypes';
 import { ApiGen_CodeTypes_LeasePurposeTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePurposeTypes';
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
@@ -274,7 +274,7 @@ export class FormLeaseProperty {
   private constructor(leaseId?: number | null) {
     this.leaseId = leaseId ?? null;
     this.landArea = 0;
-    this.areaUnitTypeCode = AreaUnitTypes.SquareMeters;
+    this.areaUnitTypeCode = ApiGen_CodeTypes_AreaUnitTypes.M2;
   }
 
   public static fromFormLeaseProperty(baseModel?: Partial<FormLeaseProperty>): FormLeaseProperty {
@@ -289,7 +289,7 @@ export class FormLeaseProperty {
     model.rowVersion = apiPropertyLease.rowVersion ?? undefined;
     model.name = apiPropertyLease.propertyName ?? undefined;
     model.landArea = apiPropertyLease.leaseArea ?? 0;
-    model.areaUnitTypeCode = apiPropertyLease.areaUnitType?.id || AreaUnitTypes.SquareMeters;
+    model.areaUnitTypeCode = apiPropertyLease.areaUnitType?.id || ApiGen_CodeTypes_AreaUnitTypes.M2;
     model.displayOrder = apiPropertyLease.displayOrder;
     return model;
   }

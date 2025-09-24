@@ -1,7 +1,7 @@
-import { AreaUnitTypes } from '@/constants/index';
 import { fillInput, render, RenderOptions, waitFor } from '@/utils/test-utils';
 
 import { AreaForm, IAreaFormProps } from './AreaForm';
+import { ApiGen_CodeTypes_AreaUnitTypes } from '@/models/api/generated/ApiGen_CodeTypes_AreaUnitTypes';
 
 describe('LandMeasurementTable component', () => {
   // render component under test
@@ -52,7 +52,7 @@ describe('LandMeasurementTable component', () => {
       areaUnitTypeCode: undefined,
     });
     await fillInput(container, 'area-sq-meters', 15000);
-    await waitFor(() => expect(onChange).toBeCalledWith(15000, AreaUnitTypes.SquareMeters));
+    await waitFor(() => expect(onChange).toBeCalledWith(15000, ApiGen_CodeTypes_AreaUnitTypes.M2));
   });
 
   it('performs unit conversions when values are changed', async () => {

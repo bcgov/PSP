@@ -3,8 +3,8 @@ import styled from 'styled-components';
 
 import { SectionField } from '@/components/common/Section/SectionField';
 import AreaContainer from '@/components/measurements/AreaContainer';
-import { AreaUnitTypes } from '@/constants';
 import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
+import { ApiGen_CodeTypes_AreaUnitTypes } from '@/models/api/generated/ApiGen_CodeTypes_AreaUnitTypes';
 import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
 import { isValidId, pidFormatter } from '@/utils';
 
@@ -41,7 +41,7 @@ export const PropertyInformation: React.FunctionComponent<
       <SectionField label="Area included" labelWidth={{ xs: 3 }} className="py-4">
         <AreaContainer
           landArea={landArea}
-          unitCode={areaUnitType?.id ?? AreaUnitTypes.SquareMeters}
+          unitCode={areaUnitType?.id ?? ApiGen_CodeTypes_AreaUnitTypes.M2}
         />
       </SectionField>
       {!hideAddress ? (
