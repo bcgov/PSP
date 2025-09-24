@@ -82,5 +82,50 @@ namespace Pims.Api.Areas.Reports.Controllers
 
             return ReportHelper.GenerateExcel(reportActivities, "Management Activities Overview");
         }
+
+        /// <summary>
+        /// Generates the Management Activity Invoices Report as an Excel file.
+        /// Include 'Accept' header to request the appropriate export -
+        ///     ["application/application/vnd.ms-excel"].
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        [HttpPost("invoices")]
+        [HasPermission(Permissions.ManagementView)]
+        [Produces(ContentTypes.CONTENTTYPEEXCELX)]
+        [ProducesResponseType(200)]
+        [SwaggerOperation(Tags = new[] { "management-activities", "report" })]
+        public IActionResult ExportManagementActivityInvoices([FromBody] ManagementActivityFilterModel filter)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(ManagementActivityController),
+                nameof(ExportManagementActivityInvoices),
+                User.GetUsername(),
+                DateTime.Now);
+
+            filter.ThrowBadRequestIfNull($"The request must include a filter.");
+            if (!filter.IsValid())
+            {
+                throw new BadRequestException("Management activity filter must contain valid values.");
+            }
+
+            var acceptHeader = (string)Request.Headers["Accept"];
+            if (acceptHeader != ContentTypes.CONTENTTYPEEXCEL && acceptHeader != ContentTypes.CONTENTTYPEEXCELX)
+            {
+                throw new BadRequestException($"Invalid HTTP request header 'Accept:{acceptHeader}'.");
+            }
+
+            var allInvoices = _managementActivityService.SearchManagementActivityInvoices((ManagementActivityFilter)filter);
+            if (allInvoices is null || allInvoices.Count == 0)
+            {
+                // Return 204 "No Content" to signal the frontend that we did not find any matching records.
+                return NoContent();
+            }
+
+            var reportInvoices = allInvoices.Select(i => new ManagementActivityInvoicesReportModel(i));
+
+            return ReportHelper.GenerateExcel(reportInvoices, "Management Activity Invoices");
+        }
     }
 }
