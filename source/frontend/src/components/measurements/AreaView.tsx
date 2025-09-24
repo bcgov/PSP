@@ -1,6 +1,6 @@
 import { Col, Row } from 'react-bootstrap';
 
-import { AreaUnitTypes } from '@/constants/areaUnitTypes';
+import { ApiGen_CodeTypes_AreaUnitTypes } from '@/models/api/generated/ApiGen_CodeTypes_AreaUnitTypes';
 import { convertArea, formatNumber } from '@/utils';
 
 import { StyledGreenCol, StyledGreenGrey } from './styles';
@@ -11,10 +11,26 @@ interface IAreaViewProps {
 }
 
 const AreaView: React.FunctionComponent<IAreaViewProps> = props => {
-  const meters = convertArea(props.landArea || 0, props.unitCode || '', AreaUnitTypes.SquareMeters);
-  const feet = convertArea(props.landArea || 0, props.unitCode || '', AreaUnitTypes.SquareFeet);
-  const hectares = convertArea(props.landArea || 0, props.unitCode || '', AreaUnitTypes.Hectares);
-  const acres = convertArea(props.landArea || 0, props.unitCode || '', AreaUnitTypes.Acres);
+  const meters = convertArea(
+    props.landArea || 0,
+    props.unitCode || '',
+    ApiGen_CodeTypes_AreaUnitTypes.M2,
+  );
+  const feet = convertArea(
+    props.landArea || 0,
+    props.unitCode || '',
+    ApiGen_CodeTypes_AreaUnitTypes.FEET2,
+  );
+  const hectares = convertArea(
+    props.landArea || 0,
+    props.unitCode || '',
+    ApiGen_CodeTypes_AreaUnitTypes.HA,
+  );
+  const acres = convertArea(
+    props.landArea || 0,
+    props.unitCode || '',
+    ApiGen_CodeTypes_AreaUnitTypes.ACRE,
+  );
   return (
     <Row>
       <Col>

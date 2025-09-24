@@ -19,7 +19,7 @@ import { IMapSelectorContainerProps } from '@/components/propertySelector/MapSel
 import { StyledTabView } from '@/components/propertySelector/PropertySelectorTabsView';
 import { PropertySelectorPidSearchContainerProps } from '@/components/propertySelector/search/PropertySelectorPidSearchContainer';
 import PropertySearchSelectorPidFormView from '@/components/propertySelector/search/PropertySelectorPidSearchView';
-import { AreaUnitTypes } from '@/constants/areaUnitTypes';
+import { ApiGen_CodeTypes_AreaUnitTypes } from '@/models/api/generated/ApiGen_CodeTypes_AreaUnitTypes';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { convertArea, exists } from '@/utils';
 
@@ -165,10 +165,10 @@ const AddConsolidationView: React.FunctionComponent<
                             ? convertArea(
                                 formProperty.landArea,
                                 formProperty.areaUnit.toLocaleLowerCase(),
-                                AreaUnitTypes.SquareMeters,
+                                ApiGen_CodeTypes_AreaUnitTypes.M2,
                               )
                             : 0;
-                        formProperty.areaUnit = AreaUnitTypes.SquareMeters;
+                        formProperty.areaUnit = ApiGen_CodeTypes_AreaUnitTypes.M2;
                         if (formProperty.pid) {
                           formProperty.address = await getPrimaryAddressByPid(formProperty.pid);
                           allProperties.push(formProperty.toApi());
