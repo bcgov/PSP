@@ -8,7 +8,7 @@ import { InlineInput } from '@/components/common/form/styles';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import OverflowTip from '@/components/common/OverflowTip';
 import DraftCircleNumber from '@/components/propertySelector/selectedPropertyList/DraftCircleNumber';
-import { AreaUnitTypes } from '@/constants';
+import { ApiGen_CodeTypes_AreaUnitTypes } from '@/models/api/generated/ApiGen_CodeTypes_AreaUnitTypes';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import {
   convertArea,
@@ -31,7 +31,7 @@ export const SelectedOperationProperty: React.FunctionComponent<
   ISelectedOperationPropertyProps
 > = ({ property, getMarkerIndex, nameSpace, onRemove, isEditable }) => {
   const getAreaValue = (area: number, unit: string) => {
-    const sqm = convertArea(area, unit, AreaUnitTypes.SquareMeters);
+    const sqm = convertArea(area, unit, ApiGen_CodeTypes_AreaUnitTypes.M2);
     return formatNumber(sqm, 0, 4);
   };
 
