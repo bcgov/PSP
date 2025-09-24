@@ -184,77 +184,75 @@ export const AreaForm: React.FC<IAreaFormProps> = ({
   );
 
   return (
-    <>
-      <Row>
-        <Col>
-          <StyledGreenCol>
-            <Row className="pb-2">
-              <Col className="text-right">
-                <StyledInput
-                  name="area-sq-meters"
-                  aria-label="square metres"
-                  type="number"
-                  step=".01"
-                  value={isNaN(sqMeters) ? 0 : sqMeters}
-                  onChange={e =>
-                    handleInputChange(e.target.valueAsNumber, ApiGen_CodeTypes_AreaUnitTypes.M2)
-                  }
-                />
-              </Col>
-              <Col>sq. metres</Col>
-            </Row>
-            <Row>
-              <Col className="text-right">
-                <StyledInput
-                  name="area-hectares"
-                  aria-label="hectares"
-                  type="number"
-                  step=".01"
-                  value={isNaN(ha) ? 0 : ha}
-                  onChange={e =>
-                    handleInputChange(e.target.valueAsNumber, ApiGen_CodeTypes_AreaUnitTypes.HA)
-                  }
-                />
-              </Col>
-              <Col>hectares</Col>
-            </Row>
-          </StyledGreenCol>
-        </Col>
-        <Col>
-          <StyledGreenGrey>
-            <Row className="pb-2">
-              <Col className="text-right">
-                <StyledInput
-                  name="area-sq-feet"
-                  aria-label="square feet"
-                  type="number"
-                  step=".01"
-                  value={isNaN(sqFeet) ? 0 : sqFeet}
-                  onChange={e =>
-                    handleInputChange(e.target.valueAsNumber, ApiGen_CodeTypes_AreaUnitTypes.FEET2)
-                  }
-                />
-              </Col>
-              <Col>sq. feet</Col>
-            </Row>
-            <Row>
-              <Col className="text-right">
-                <StyledInput
-                  name="area-acres"
-                  aria-label="acres"
-                  type="number"
-                  step=".01"
-                  value={isNaN(acres) ? 0 : acres}
-                  onChange={e =>
-                    handleInputChange(e.target.valueAsNumber, ApiGen_CodeTypes_AreaUnitTypes.ACRE)
-                  }
-                />
-              </Col>
-              <Col>acres</Col>
-            </Row>
-          </StyledGreenGrey>
-        </Col>
-      </Row>
-    </>
+    <Row>
+      <Col>
+        <StyledGreenCol>
+          <Row className="pb-2">
+            <Col className="text-right">
+              <StyledInput
+                name="area-sq-meters"
+                aria-label="square metres"
+                type="number"
+                step=".01"
+                value={isNaN(sqMeters) ? 0 : sqMeters}
+                onChange={e =>
+                  handleInputChange(e.target.valueAsNumber, ApiGen_CodeTypes_AreaUnitTypes.M2)
+                }
+              />
+            </Col>
+            <Col>sq. metres</Col>
+          </Row>
+          <Row>
+            <Col className="text-right">
+              <StyledInput
+                name="area-hectares"
+                aria-label="hectares"
+                type="number"
+                step=".01"
+                value={isNaN(ha) ? 0 : ha}
+                onChange={e =>
+                  handleInputChange(e.target.valueAsNumber, ApiGen_CodeTypes_AreaUnitTypes.HA)
+                }
+              />
+            </Col>
+            <Col>hectares</Col>
+          </Row>
+        </StyledGreenCol>
+      </Col>
+      <Col>
+        <StyledGreenGrey>
+          <Row className="pb-2">
+            <Col className="text-right">
+              <StyledInput
+                name="area-sq-feet"
+                aria-label="square feet"
+                type="number"
+                step=".01"
+                value={isNaN(sqFeet) ? 0 : sqFeet}
+                onChange={e =>
+                  handleInputChange(e.target.valueAsNumber, ApiGen_CodeTypes_AreaUnitTypes.FEET2)
+                }
+              />
+            </Col>
+            <Col>sq. feet</Col>
+          </Row>
+          <Row>
+            <Col className="text-right">
+              <StyledInput
+                name="area-acres"
+                aria-label="acres"
+                type="number"
+                step=".01"
+                value={isNaN(acres) ? 0 : acres}
+                onChange={e =>
+                  handleInputChange(e.target.valueAsNumber, ApiGen_CodeTypes_AreaUnitTypes.ACRE)
+                }
+              />
+            </Col>
+            <Col>acres</Col>
+          </Row>
+        </StyledGreenGrey>
+      </Col>
+    </Row>
   );
 };
