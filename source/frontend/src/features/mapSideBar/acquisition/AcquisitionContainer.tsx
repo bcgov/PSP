@@ -382,7 +382,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
       formikRef={formikRef}
       isFormValid={isValid}
       error={error}
-    ></View>
+    />
   );
 };
 
