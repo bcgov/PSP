@@ -1,6 +1,6 @@
 import { Claims } from '@/constants';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { getMockPropertyManagementActivity } from '@/mocks/managementActivity.mock';
+import { getMockManagementActivity } from '@/mocks/managementActivity.mock';
 import { mockManagementFileResponse } from '@/mocks/managementFiles.mock';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
@@ -41,7 +41,7 @@ const storeState = {
 const mockManagementActivityFormValues: ManagementActivityFormModel =
   ManagementActivityFormModel.fromApi(
     {
-      ...getMockPropertyManagementActivity(1),
+      ...getMockManagementActivity(1),
       activityProperties: [],
     },
     mockManagementFileResponse().fileProperties,
@@ -100,7 +100,7 @@ describe('ManagementActivityEditForm component', () => {
 
   beforeEach(() => {
     initialValues = ManagementActivityFormModel.fromApi(
-      getMockPropertyManagementActivity(1),
+      getMockManagementActivity(1),
       mockManagementFileResponse().fileProperties,
     );
   });

@@ -1,6 +1,6 @@
 import { Claims } from '@/constants';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { getMockPropertyManagementActivity } from '@/mocks/managementActivity.mock';
+import { getMockManagementActivity } from '@/mocks/managementActivity.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, getByName, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
@@ -33,7 +33,7 @@ const onClose = vi.fn();
 
 const mockManagementActivityFormValues: PropertyActivityFormModel =
   PropertyActivityFormModel.fromApi({
-    ...getMockPropertyManagementActivity(1),
+    ...getMockManagementActivity(1),
   });
 
 describe('PropertyActivityEditForm component', () => {

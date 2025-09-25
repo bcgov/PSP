@@ -1,7 +1,7 @@
 import { Formik } from 'formik';
 
 import { mockLookups } from '@/mocks/lookups.mock';
-import { getMockPropertyManagementActivity } from '@/mocks/managementActivity.mock';
+import { getMockManagementActivity } from '@/mocks/managementActivity.mock';
 import { getMockManagementActivityInvoice } from '@/mocks/managementActivityInvoice.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
@@ -37,7 +37,7 @@ describe('EditPropertyActivity - InvoiceTotalsForm', () => {
 
   beforeEach(() => {
     initialValues = PropertyActivityFormModel.fromApi({
-      ...getMockPropertyManagementActivity(),
+      ...getMockManagementActivity(),
       invoices: [
         {
           ...getMockManagementActivityInvoice(),
