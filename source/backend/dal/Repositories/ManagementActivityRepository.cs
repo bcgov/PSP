@@ -229,7 +229,7 @@ namespace Pims.Dal.Repositories
 
             filter.ThrowIfNull(nameof(filter));
 
-            var query = Context.PimsManagementActivityInvoices.AsNoTracking()
+            var query = Context.PimsManagementActivityInvoices.AsNoTrackingWithIdentityResolution()
                 .Include(s => s.ManagementActivity.MgmtActivityStatusTypeCodeNavigation)
                 .Include(t => t.ManagementActivity.MgmtActivityTypeCodeNavigation)
                 .Include(st => st.ManagementActivity.PimsMgmtActivityActivitySubtyps)
