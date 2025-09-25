@@ -19,3 +19,4 @@ etl/**/obj
 *.database
 *.bak
 *._*
+tools/geoserver/geoserver_data/psp/mssql/*
