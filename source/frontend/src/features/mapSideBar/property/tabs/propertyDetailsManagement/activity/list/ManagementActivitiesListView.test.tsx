@@ -5,7 +5,8 @@ import { mockLookups } from '@/mocks/index.mock';
 import {
   mockGetManagementActivityList,
   mockGetPropertyManagementActivityNotStarted,
-} from '@/mocks/PropertyManagementActivity.mock';
+} from '@/mocks/managementActivity.mock';
+import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { fireEvent, render, RenderOptions, waitFor } from '@/utils/test-utils';
 
@@ -13,7 +14,6 @@ import ManagementActivitiesListView, {
   IManagementActivitiesListViewProps,
 } from './ManagementActivitiesListView';
 import { PropertyActivityRow } from './models/PropertyActivityRow';
-import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },

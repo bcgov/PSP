@@ -4,7 +4,8 @@ import { Mock } from 'vitest';
 import { Claims } from '@/constants';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import { useManagementActivityPropertyRepository } from '@/hooks/repositories/useManagementActivityPropertyRepository';
-import { getMockPropertyManagementActivity } from '@/mocks/PropertyManagementActivity.mock';
+import { getMockPropertyManagementActivity } from '@/mocks/managementActivity.mock';
+import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { act, render, RenderOptions, screen } from '@/utils/test-utils';
 
@@ -15,7 +16,6 @@ import {
 } from './PropertyActivityEditContainer';
 import { IPropertyActivityEditFormProps } from './PropertyActivityEditForm';
 import { PropertyActivityFormModel } from './models';
-import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 
 const history = createMemoryHistory();
 

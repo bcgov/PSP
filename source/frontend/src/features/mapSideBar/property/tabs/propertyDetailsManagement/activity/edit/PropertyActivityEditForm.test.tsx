@@ -1,6 +1,6 @@
 import { Claims } from '@/constants';
-import { getMockPropertyManagementActivity } from '@/mocks/PropertyManagementActivity.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { getMockPropertyManagementActivity } from '@/mocks/managementActivity.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, getByName, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 

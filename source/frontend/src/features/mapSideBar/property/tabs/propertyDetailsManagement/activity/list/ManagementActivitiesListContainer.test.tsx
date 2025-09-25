@@ -4,7 +4,7 @@ import { Claims } from '@/constants';
 import {
   mockGetManagementActivityList,
   mockGetPropertyManagementActivityNotStarted,
-} from '@/mocks/PropertyManagementActivity.mock';
+} from '@/mocks/managementActivity.mock';
 import { act, render, RenderOptions, screen, userEvent, waitFor } from '@/utils/test-utils';
 
 import PropertyManagementActivitiesListContainer, {

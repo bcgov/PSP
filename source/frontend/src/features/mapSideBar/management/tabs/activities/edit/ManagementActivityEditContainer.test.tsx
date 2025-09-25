@@ -4,9 +4,10 @@ import { Claims } from '@/constants';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import useActivityContactRetriever from '@/features/mapSideBar/property/tabs/propertyDetailsManagement/activity/hooks';
 import { useManagementActivityRepository } from '@/hooks/repositories/useManagementActivityRepository';
+import { getMockPropertyManagementActivity } from '@/mocks/managementActivity.mock';
 import { mockManagementFileResponse } from '@/mocks/managementFiles.mock';
-import { getMockPropertyManagementActivity } from '@/mocks/PropertyManagementActivity.mock';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
+import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { act, getMockRepositoryObj, render, RenderOptions, screen } from '@/utils/test-utils';
@@ -17,7 +18,6 @@ import {
 } from './ManagementActivityEditContainer';
 import { IManagementActivityEditFormProps } from './ManagementActivityEditForm';
 import { ManagementActivityFormModel } from './models';
-import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 
 const history = createMemoryHistory();
 
