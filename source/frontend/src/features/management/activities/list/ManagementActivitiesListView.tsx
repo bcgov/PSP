@@ -173,7 +173,7 @@ export const ManagementActivitiesListView: React.FC<unknown> = () => {
                     tooltip="Export to Excel"
                   >
                     <StyledIconButton onClick={() => generateActivitiesOverviewReport(filter)}>
-                      <FaFileExcel data-testid="excel-icon" size={36} />
+                      <FaFileExcel data-testid="excel-icon-overview" size={36} />
                     </StyledIconButton>
                   </TooltipWrapper>
                   <span>Activity overview</span>
@@ -186,7 +186,7 @@ export const ManagementActivitiesListView: React.FC<unknown> = () => {
                     tooltip="Export to Excel"
                   >
                     <StyledIconButton onClick={() => generateActivitiesInvoiceReport(filter)}>
-                      <FaFileExcel data-testid="excel-icon" size={36} />
+                      <FaFileExcel data-testid="excel-icon-invoices" size={36} />
                     </StyledIconButton>
                   </TooltipWrapper>
                   <span>Invoice report</span>
