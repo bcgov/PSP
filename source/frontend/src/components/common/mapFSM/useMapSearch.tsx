@@ -16,7 +16,7 @@ import {
   PIMS_Property_Lite_View,
   PIMS_Property_Location_View,
 } from '@/models/layers/pimsPropertyLocationView';
-import { exists } from '@/utils';
+import { exists, isValidId } from '@/utils';
 
 import {
   emptyFeatureData,
@@ -257,6 +257,40 @@ export const useMapSearch = () => {
             feature => !!feature?.geometry,
           );
 
+          let findByPinTask:
+            | Promise<
+                FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties> | undefined
+              >
+            | undefined = undefined;
+
+          let findByPidTask:
+            | Promise<
+                FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties> | undefined
+              >
+            | undefined = undefined;
+
+          validFeatures.forEach(x => {
+            const pid = x.properties.PID;
+            const pin = x.properties.PIN;
+            if (isValidId(pid)) {
+              findByPinTask = pmbcServiceFindByPid(pid.toString());
+            }
+            if (isValidId(pin)) {
+              findByPidTask = pmbcServiceFindByPin(pin.toString());
+            }
+          });
+
+          const [pinPmbcData, pidPmbcData] = await Promise.all([findByPinTask, findByPidTask]);
+
+          const attributedFeatures: FeatureCollection<
+            Geometry,
+            PMBC_FullyAttributed_Feature_Properties
+          > = {
+            type: 'FeatureCollection',
+            features: [...(pinPmbcData?.features || []), ...(pidPmbcData?.features || [])],
+            bbox: pinPmbcData?.bbox || pidPmbcData?.bbox,
+          };
+
           result = {
             pimsLocationFeatures: {
               type: historicalNumberInventoryData.type,
@@ -265,7 +299,7 @@ export const useMapSearch = () => {
             },
             pimsLocationLiteFeatures: emptyPimsLocationLiteFeatureCollection,
             pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-            fullyAttributedFeatures: emptyPmbcFeatureCollection,
+            fullyAttributedFeatures: attributedFeatures,
             surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
             highwayPlanFeatures: emptyHighwayFeatures,
           };
@@ -282,7 +316,14 @@ export const useMapSearch = () => {
 
       return result;
     },
-    [loadPimsProperties, setModalContent, setDisplayModal, logout],
+    [
+      loadPimsProperties,
+      setModalContent,
+      setDisplayModal,
+      logout,
+      pmbcServiceFindByPin,
+      pmbcServiceFindByPid,
+    ],
   );
 
   const searchBySurveyParcel = useCallback(
