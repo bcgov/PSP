@@ -72,7 +72,6 @@ export const PropertyActivityDetailContainer: React.FunctionComponent<
 
   return (
     <View
-      propertyId={propertyId}
       activity={loadedActivity}
       onClose={onClose}
       loading={getActivityLoading || isContactLoading}

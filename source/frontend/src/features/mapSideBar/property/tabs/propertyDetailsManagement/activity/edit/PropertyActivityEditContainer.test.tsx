@@ -192,6 +192,7 @@ describe('PropertyActivityEditContainer component', () => {
   });
 
   it('calls API to create new management activity and redirects to view screen', async () => {
+    history.location.pathname = '/mapview/sidebar/property/1/management/activity/1';
     const apiManagement = getMockPropertyManagementActivity(0);
     await setup();
     await act(async () => viewProps.onSave(apiManagement));
@@ -201,6 +202,7 @@ describe('PropertyActivityEditContainer component', () => {
   });
 
   it('calls API to update an existing management activity and redirects to view screen', async () => {
+    history.location.pathname = '/mapview/sidebar/property/1/management/activity/1';
     await setup();
     const apiManagement = getMockPropertyManagementActivity(1);
     await act(async () => viewProps.onSave(apiManagement));
@@ -210,6 +212,7 @@ describe('PropertyActivityEditContainer component', () => {
   });
 
   it('navigates back to the property management view screen when form is cancelled', async () => {
+    history.location.pathname = '/mapview/sidebar/property/1/management/activity/1';
     await setup();
     await act(async () => viewProps.onCancel());
 
