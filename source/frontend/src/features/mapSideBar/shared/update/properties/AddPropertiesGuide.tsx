@@ -46,7 +46,11 @@ export const AddPropertiesGuide: FunctionComponent<PropsWithChildren<unknown>> =
 
   return (
     <>
-      <FormGuideContainer title="New workflow" guideBody={guideBodyContent()}></FormGuideContainer>
+      <FormGuideContainer
+        title="New workflow"
+        guideBody={guideBodyContent()}
+        isCollapsedDefault={false}
+      ></FormGuideContainer>
     </>
   );
 };
