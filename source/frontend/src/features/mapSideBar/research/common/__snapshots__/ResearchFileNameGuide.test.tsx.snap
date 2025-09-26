@@ -109,7 +109,7 @@ exports[`ResearchFileNameGuide > renders as expected 1`] = `
       </div>
     </div>
     <div
-      class="c5 collapse"
+      class="c5 collapsing"
     >
       <p
         class="mb-4"

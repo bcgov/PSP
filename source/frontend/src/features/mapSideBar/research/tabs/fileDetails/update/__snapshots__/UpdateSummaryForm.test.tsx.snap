@@ -595,7 +595,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
             </div>
           </div>
           <div
-            class="c10 collapse"
+            class="c10 collapsing"
           >
             <p
               class="mb-4"

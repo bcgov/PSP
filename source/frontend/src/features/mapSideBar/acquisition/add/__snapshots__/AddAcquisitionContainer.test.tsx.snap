@@ -1730,14 +1730,14 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                                   fill="none"
                                 />
                                 <path
-                                  d="m7 10 5 5 5-5z"
+                                  d="m7 14 5-5 5 5z"
                                 />
                               </svg>
                             </div>
                           </div>
                         </div>
                         <div
-                          class="c25 collapse"
+                          class="c25 collapse show"
                         >
                           <ol>
                             <li
@@ -4613,14 +4613,14 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                                   fill="none"
                                 />
                                 <path
-                                  d="m7 10 5 5 5-5z"
+                                  d="m7 14 5-5 5 5z"
                                 />
                               </svg>
                             </div>
                           </div>
                         </div>
                         <div
-                          class="c26 collapse"
+                          class="c26 collapse show"
                         >
                           <ol>
                             <li

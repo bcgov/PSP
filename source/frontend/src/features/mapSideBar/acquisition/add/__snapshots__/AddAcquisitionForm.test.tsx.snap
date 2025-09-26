@@ -1397,14 +1397,14 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                           fill="none"
                         />
                         <path
-                          d="m7 10 5 5 5-5z"
+                          d="m7 14 5-5 5 5z"
                         />
                       </svg>
                     </div>
                   </div>
                 </div>
                 <div
-                  class="c13 collapse"
+                  class="c13 collapse show"
                 >
                   <ol>
                     <li
@@ -3580,14 +3580,14 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
                           fill="none"
                         />
                         <path
-                          d="m7 10 5 5 5-5z"
+                          d="m7 14 5-5 5 5z"
                         />
                       </svg>
                     </div>
                   </div>
                 </div>
                 <div
-                  class="c14 collapse"
+                  class="c14 collapse show"
                 >
                   <ol>
                     <li

@@ -546,14 +546,14 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
                     fill="none"
                   />
                   <path
-                    d="m7 10 5 5 5-5z"
+                    d="m7 14 5-5 5 5z"
                   />
                 </svg>
               </div>
             </div>
           </div>
           <div
-            class="c9 collapse"
+            class="c9 collapse show"
           >
             <ol>
               <li

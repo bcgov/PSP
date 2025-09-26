@@ -246,7 +246,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
   border-color: #d8292f !important;
 }
 
-.c28 {
+.c29 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -258,7 +258,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
   gap: 0.8rem;
 }
 
-.c28 .form-label {
+.c29 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
@@ -373,7 +373,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
   align-items: end;
 }
 
-.c29 {
+.c30 {
   position: -webkit-sticky;
   position: sticky;
   padding-top: 2rem;
@@ -430,6 +430,13 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
   -webkit-text-decoration: none solid rgb(49,49,50);
   text-decoration: none solid rgb(49,49,50);
   line-height: 24px;
+}
+
+.c28 {
+  float: right;
+  cursor: pointer;
+  color: #1a5a96;
+  font-size: 2.8rem;
 }
 
 .c23 {
@@ -1045,14 +1052,14 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                           fill="none"
                         />
                         <path
-                          d="m7 10 5 5 5-5z"
+                          d="m7 14 5-5 5 5z"
                         />
                       </svg>
                     </div>
                   </div>
                 </div>
                 <div
-                  class="c24 collapse"
+                  class="c24 collapse show"
                 >
                   <ol>
                     <li
@@ -1251,7 +1258,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                       class="col-1"
                     >
                       <svg
-                        class="c23"
+                        class="c28"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -1272,7 +1279,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                   </div>
                 </div>
                 <div
-                  class="c24 collapse"
+                  class="c24 collapsing"
                 >
                   <p
                     class="mb-4"
@@ -1347,7 +1354,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                   class="c15 text-left col-6"
                 >
                   <div
-                    class="c28 input form-group"
+                    class="c29 input form-group"
                   >
                     <input
                       class="form-control"
@@ -2274,7 +2281,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
         class=""
       >
         <div
-          class="c29 justify-content-end pt-4 p-0 no-gutters row"
+          class="c30 justify-content-end pt-4 p-0 no-gutters row"
         >
           <div
             class="pr-3 col-auto"
