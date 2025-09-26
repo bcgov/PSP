@@ -34,7 +34,7 @@ namespace Pims.Dal.Repositories
         #region Methods
 
         /// <summary>
-        /// Returns the total number of Management Actities in the database.
+        /// Returns the total number of Management Activities in the database.
         /// </summary>
         /// <returns></returns>
         public int Count()
