@@ -44,13 +44,14 @@ namespace Pims.Api.Areas.Reports.Controllers
         ///     ["application/application/vnd.ms-excel"].
         /// </summary>
         /// <param name="filter"></param>
+        /// <param name="acceptHeader"></param>
         /// <returns></returns>
         [HttpPost("overview")]
         [HasPermission(Permissions.ManagementView)]
         [Produces(ContentTypes.CONTENTTYPEEXCELX)]
         [ProducesResponseType(200)]
         [SwaggerOperation(Tags = new[] { "management-activities", "report" })]
-        public IActionResult ExportManagementActivitiesOverview([FromBody] ManagementActivityFilterModel filter)
+        public IActionResult ExportManagementActivitiesOverview([FromBody] ManagementActivityFilterModel filter, [FromHeader(Name = "Accept")] string acceptHeader)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -65,7 +66,6 @@ namespace Pims.Api.Areas.Reports.Controllers
                 throw new BadRequestException("Management activity filter must contain valid values.");
             }
 
-            var acceptHeader = (string)Request.Headers["Accept"];
             if (acceptHeader != ContentTypes.CONTENTTYPEEXCEL && acceptHeader != ContentTypes.CONTENTTYPEEXCELX)
             {
                 throw new BadRequestException($"Invalid HTTP request header 'Accept:{acceptHeader}'.");
@@ -89,13 +89,14 @@ namespace Pims.Api.Areas.Reports.Controllers
         ///     ["application/application/vnd.ms-excel"].
         /// </summary>
         /// <param name="filter"></param>
+        /// <param name="acceptHeader"></param>
         /// <returns></returns>
         [HttpPost("invoices")]
         [HasPermission(Permissions.ManagementView)]
         [Produces(ContentTypes.CONTENTTYPEEXCELX)]
         [ProducesResponseType(200)]
         [SwaggerOperation(Tags = new[] { "management-activities", "report" })]
-        public IActionResult ExportManagementActivityInvoices([FromBody] ManagementActivityFilterModel filter)
+        public IActionResult ExportManagementActivityInvoices([FromBody] ManagementActivityFilterModel filter, [FromHeader(Name = "Accept")] string acceptHeader)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -110,7 +111,6 @@ namespace Pims.Api.Areas.Reports.Controllers
                 throw new BadRequestException("Management activity filter must contain valid values.");
             }
 
-            var acceptHeader = (string)Request.Headers["Accept"];
             if (acceptHeader != ContentTypes.CONTENTTYPEEXCEL && acceptHeader != ContentTypes.CONTENTTYPEEXCELX)
             {
                 throw new BadRequestException($"Invalid HTTP request header 'Accept:{acceptHeader}'.");
