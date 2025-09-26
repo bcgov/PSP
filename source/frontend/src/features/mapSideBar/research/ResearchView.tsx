@@ -13,6 +13,7 @@ import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_Fil
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { exists, stripTrailingSlash } from '@/utils';
 
+import { useFilePropertyIdFromUrl } from '../../../hooks/useFilePropertyIdFromUrl';
 import GenerateFormView from '../acquisition/common/GenerateForm/GenerateFormView';
 import { SideBarContext } from '../context/sidebarContext';
 import FilePropertyRouter from '../router/FilePropertyRouter';
@@ -22,7 +23,6 @@ import { PropertyForm } from '../shared/models';
 import SidebarFooter from '../shared/SidebarFooter';
 import { StyledFormWrapper } from '../shared/styles';
 import UpdateProperties from '../shared/update/properties/UpdateProperties';
-import { useFilePropertyIdFromUrl } from '../shared/usePropertyIndexFromUrl';
 import ResearchHeader from './common/ResearchHeader';
 import ResearchGenerateContainer from './ResearchGenerateContainer';
 import ResearchRouter from './ResearchRouter';
@@ -78,7 +78,7 @@ const ResearchView: React.FunctionComponent<IResearchViewProps> = ({
 
   // Extract the zero-based property index from the current URL path.
   // It will be null if route is not matched
-  const currentFilePropertyId: number | null = useFilePropertyIdFromUrl();
+  const { filePropertyId: currentFilePropertyId } = useFilePropertyIdFromUrl();
   const statusSolver = new ResearchStatusUpdateSolver(researchFile);
 
   return (

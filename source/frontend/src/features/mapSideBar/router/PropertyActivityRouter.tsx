@@ -1,7 +1,9 @@
 import React from 'react';
 import { matchPath, Switch, useHistory, useLocation } from 'react-router';
 
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Claims } from '@/constants';
+import { useManagementPropertyIdFromUrl } from '@/hooks/useManagementPropertyIdFromUrl';
 import AppRoute from '@/utils/AppRoute';
 
 import { PropertyActivityDetailContainer } from '../property/tabs/propertyDetailsManagement/activity/detail/PropertyActivityDetailContainer';
@@ -18,27 +20,28 @@ export const PropertyActivityRouter: React.FunctionComponent<
 > = React.memo(props => {
   const location = useLocation();
   const history = useHistory();
+  const { propertyId: propertyIdFromFile, loading } = useManagementPropertyIdFromUrl();
 
   const matched = matchPath(location.pathname, {
-    path: '/mapview/sidebar/property/*/activity/*',
+    path: '/mapview/sidebar/*/activity/*',
     exact: true,
     strict: true,
   });
 
   const activityNewEnabled = matchPath(location.pathname, {
-    path: '/mapview/sidebar/property/*/management/activity/new',
+    path: '/mapview/sidebar/*/management/activity/new',
     exact: true,
     strict: true,
   });
 
   const activityEditEnabled = matchPath(location.pathname, {
-    path: '/mapview/sidebar/property/*/management/activity/*/edit',
+    path: '/mapview/sidebar/*/management/activity/*/edit',
     exact: true,
     strict: true,
   });
 
   const activityDetailEnabled = matchPath(location.pathname, {
-    path: '/mapview/sidebar/property/*/management/activity/*',
+    path: '/mapview/sidebar/*/management/activity/*',
     exact: true,
     strict: true,
   });
@@ -58,11 +61,12 @@ export const PropertyActivityRouter: React.FunctionComponent<
 
   return (
     <Switch>
+      {loading && <LoadingBackdrop show></LoadingBackdrop>}
       <AppRoute
-        path={`/mapview/sidebar/property/:propertyId/management/activity/new`}
+        path={`/mapview/sidebar/*property/:propertyId/management/activity/new`}
         customRender={({ match }) => (
           <PropertyActivityEditContainer
-            propertyId={Number(match.params.propertyId)}
+            propertyId={propertyIdFromFile ?? Number(match.params.propertyId)}
             onClose={onClose}
             viewEnabled={activityNewEnabled.isExact}
             View={PropertyActivityEditForm}
@@ -74,10 +78,10 @@ export const PropertyActivityRouter: React.FunctionComponent<
         title={'Activity New'}
       />
       <AppRoute
-        path={`/mapview/sidebar/property/:propertyId/management/activity/:activityId/edit`}
+        path={`/mapview/sidebar/*property/:propertyId/management/activity/:activityId/edit`}
         customRender={({ match }) => (
           <PropertyActivityEditContainer
-            propertyId={Number(match.params.propertyId)}
+            propertyId={propertyIdFromFile ?? Number(match.params.propertyId)}
             managementActivityId={Number(match.params.activityId)}
             onClose={onClose}
             viewEnabled={activityEditEnabled.isExact}
@@ -90,10 +94,10 @@ export const PropertyActivityRouter: React.FunctionComponent<
         title={'Activity Edit'}
       />
       <AppRoute
-        path={`/mapview/sidebar/property/:propertyId/management/activity/:activityId`}
+        path={`/mapview/sidebar/*property/:propertyId/management/activity/:activityId`}
         customRender={({ match }) => (
           <PropertyActivityDetailContainer
-            propertyId={Number(match.params.propertyId)}
+            propertyId={propertyIdFromFile ?? Number(match.params.propertyId)}
             managementActivityId={Number(match.params.activityId)}
             onClose={onClose}
             viewEnabled={activityDetailEnabled.isExact}
