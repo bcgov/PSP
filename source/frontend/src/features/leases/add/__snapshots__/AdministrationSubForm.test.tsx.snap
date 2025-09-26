@@ -194,7 +194,7 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="c7 collapse"
+          class="c7 collapsing"
         >
           <p
             class="mb-4"

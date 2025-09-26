@@ -653,7 +653,7 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
               </div>
             </div>
             <div
-              class="c11 collapse"
+              class="c11 collapsing"
             >
               <p
                 class="mb-4"
