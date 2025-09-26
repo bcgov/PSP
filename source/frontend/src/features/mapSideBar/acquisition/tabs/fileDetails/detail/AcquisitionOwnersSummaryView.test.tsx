@@ -5,8 +5,7 @@ import {
 import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 import { render, RenderOptions } from '@/utils/test-utils';
 
-import { IAcquisitionOwnersSummaryViewProps } from './AcquisitionOwnersSummaryContainer';
-import AcquisitionOwnersSummaryView from './AcquisitionOwnersSummaryView';
+import AcquisitionOwnersSummaryView, { IAcquisitionOwnersSummaryViewProps } from './AcquisitionOwnersSummaryView';
 
 const mockAcquisitionFile = mockAcquisitionFileResponse(1);
 

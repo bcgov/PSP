@@ -8,6 +8,8 @@ import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Conc
 import { IGenerateFormViewProps } from '../acquisition/common/GenerateForm/GenerateFormView';
 import GenerateItemView from '../acquisition/common/GenerateForm/GenerateItemView';
 import { useGenerateForm12 } from '../acquisition/common/GenerateForm/hooks/useGenerateForm12';
+import { useGenerateResearchNotice } from '../acquisition/common/GenerateForm/hooks/useGenerateResearchNotice';
+import NoticeGenerateContainer from '../shared/generateForm/NoticeGenerateContainer';
 import PropertySelectorModal from './PropertySelectorModal';
 
 export interface IResearchGenerateContainerProps {
@@ -18,7 +20,7 @@ export interface IResearchGenerateContainerProps {
 const ResearchGenerateContainer: React.FunctionComponent<
   React.PropsWithChildren<IResearchGenerateContainerProps>
 > = ({ researchFile, View }) => {
-  const [isModalOpen, openModal, closeModal] = useModalManagement();
+  const [isPropertyModalOpen, openPropertyModal, closePropertyModal] = useModalManagement();
   const [isGenerating, setIsGenerating] = useState(false);
   const generateForm12 = useGenerateForm12();
 
@@ -30,13 +32,18 @@ const ResearchGenerateContainer: React.FunctionComponent<
     [generateForm12],
   );
 
-  const handleGenerateClick = () => {
-    openModal();
+  const handleGenerateForm12Click = () => {
+    openPropertyModal();
   };
+  const generateNotice = useGenerateResearchNotice();
 
   const handleSelectedProperties = (selectedProperties: ApiGen_Concepts_FileProperty[]) => {
     onGenerate(selectedProperties);
-    closeModal();
+    closePropertyModal();
+  };
+
+  const handleSelectedNoticeEntries = () => {
+    generateNotice(researchFile?.id).finally(() => setIsGenerating(false));
   };
 
   return (
@@ -44,14 +51,15 @@ const ResearchGenerateContainer: React.FunctionComponent<
       <GenerateItemView
         label="Generate Form 12"
         formType={ApiGen_CodeTypes_FormTypes.FORM12}
-        onGenerate={handleGenerateClick}
+        onGenerate={handleGenerateForm12Click}
       />
       <PropertySelectorModal
-        isOpened={isModalOpen}
+        isOpened={isPropertyModalOpen}
         availiableProperties={researchFile?.fileProperties ?? []}
         onSelectOk={handleSelectedProperties}
-        onCancelClick={closeModal}
+        onCancelClick={closePropertyModal}
       />
+      <NoticeGenerateContainer onGenerate={handleSelectedNoticeEntries} />
     </View>
   );
 };
