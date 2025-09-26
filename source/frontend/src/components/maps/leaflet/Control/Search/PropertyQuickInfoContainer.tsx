@@ -59,8 +59,8 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
   );
 
   const isEmpty = useMemo(
-    () => mapLocationFeatureDataset?.parcelFeatures?.length === 0 && !exists(mapMarkedLocation),
-    [mapLocationFeatureDataset?.parcelFeatures?.length, mapMarkedLocation],
+    () => mapLocationFeatureDataset?.parcelFeatures?.length === 0,
+    [mapLocationFeatureDataset?.parcelFeatures?.length],
   );
 
   const getOwnerInfo = useCallback(
@@ -346,7 +346,7 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
       {!isMinimized && isLoading === false && (
         <>
           {isEmpty && <div className="pt-8">No property found in this location</div>}
-          {!hasMultipleProperties && !isEmpty && !exists(mapMarkedLocation) && (
+          {!hasMultipleProperties && !isEmpty && (
             <StyledInfoWrapper>
               <Row noGutters>
                 <Col>
@@ -373,7 +373,7 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
               </SectionField>
             </StyledInfoWrapper>
           )}
-          {!isEmpty && exists(mapMarkedLocation) && (
+          {isEmpty && exists(mapMarkedLocation) && (
             <StyledInfoWrapper>
               <SectionField label="Location">
                 {getPropertyNameFromSelectedFeatureSet(selectedFeatureDataset).value}
