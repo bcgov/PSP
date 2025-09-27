@@ -1,5 +1,6 @@
 import { AxiosResponse } from 'axios';
 import fileDownload from 'js-file-download';
+import { MockedFunction } from 'vitest';
 
 import { useApiManagementActivities } from '@/hooks/pims-api/useApiManagementActivities';
 import { useModalContext } from '@/hooks/useModalContext';
@@ -7,6 +8,7 @@ import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockManagementActivity } from '@/mocks/managementActivity.mock';
 import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
+import { Api_ManagementActivityFilter } from '@/models/api/ManagementActivityFilter';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
@@ -40,8 +42,13 @@ vi.mocked(useApiManagementActivities, { partial: true }).mockReturnValue({
   getManagementActivitiesPagedApi: getManagementActivitiesPagedApiFn,
 });
 
-const overviewExecuteFn = vi.fn();
-const invoiceExecuteFn = vi.fn();
+type ExecuteFn = (
+  filter: Partial<Api_ManagementActivityFilter>,
+) => Promise<AxiosResponse<Blob, any>>;
+
+const overviewExecuteFn = vi.fn() as MockedFunction<ExecuteFn>;
+const invoiceExecuteFn = vi.fn() as MockedFunction<ExecuteFn>;
+
 vi.mocked(useManagementActivityExport, { partial: true }).mockReturnValue({
   generateManagementActivitiesOverviewReport: {
     execute: overviewExecuteFn,
@@ -149,21 +156,18 @@ describe('ManagementActivitiesListView', () => {
   it('downloads overview report when response is 200', async () => {
     const results = mockPagedResults([]);
     getManagementActivitiesPagedApiFn.mockResolvedValue(results);
-
-    (useManagementActivityExport as jest.Mock).mockReturnValue({
-      generateManagementActivitiesOverviewReport: {
-        execute: overviewExecuteFn,
-        status: 200,
-        response: new Blob(['test']),
-      },
-      generateManagementActivitiesInvoiceReport: {
-        execute: invoiceExecuteFn,
-        status: 0,
-        response: undefined,
-      },
+    overviewExecuteFn.mockResolvedValue({
+      status: 200,
+      data: new Blob(['test']),
+      statusText: 'OK',
+      headers: {},
+      config: null,
     });
 
     await setup();
+
+    const button = screen.getByTestId('excel-icon-overview');
+    await act(async () => userEvent.click(button));
 
     expect(fileDownload).toHaveBeenCalledWith(
       expect.any(Blob),
@@ -174,21 +178,18 @@ describe('ManagementActivitiesListView', () => {
   it('downloads invoice report when response is 200', async () => {
     const results = mockPagedResults([]);
     getManagementActivitiesPagedApiFn.mockResolvedValue(results);
-
-    (useManagementActivityExport as jest.Mock).mockReturnValue({
-      generateManagementActivitiesOverviewReport: {
-        execute: overviewExecuteFn,
-        status: 0,
-        response: undefined,
-      },
-      generateManagementActivitiesInvoiceReport: {
-        execute: invoiceExecuteFn,
-        status: 200,
-        response: new Blob(['invoice']),
-      },
+    invoiceExecuteFn.mockResolvedValue({
+      status: 200,
+      data: new Blob(['invoice']),
+      statusText: 'OK',
+      headers: {},
+      config: null,
     });
 
     await setup();
+
+    const button = screen.getByTestId('excel-icon-invoices');
+    await act(async () => userEvent.click(button));
 
     expect(fileDownload).toHaveBeenCalledWith(
       expect.any(Blob),
@@ -197,23 +198,20 @@ describe('ManagementActivitiesListView', () => {
   });
 
   it('shows modal when report has no data (204) - overview report', async () => {
-    (useManagementActivityExport as jest.Mock).mockReturnValue({
-      generateManagementActivitiesOverviewReport: {
-        execute: overviewExecuteFn,
-        status: 204,
-        response: undefined,
-      },
-      generateManagementActivitiesInvoiceReport: {
-        execute: invoiceExecuteFn,
-        status: 0,
-        response: undefined,
-      },
-    });
-
     const results = mockPagedResults([]);
     getManagementActivitiesPagedApiFn.mockResolvedValue(results);
+    overviewExecuteFn.mockResolvedValue({
+      status: 204,
+      data: undefined,
+      statusText: 'OK',
+      headers: {},
+      config: null,
+    });
 
     await setup();
+
+    const button = screen.getByTestId('excel-icon-overview');
+    await act(async () => userEvent.click(button));
 
     expect(setModalContent).toHaveBeenCalledWith(
       expect.objectContaining({ message: expect.stringMatching(/no data/i) }),
@@ -222,23 +220,20 @@ describe('ManagementActivitiesListView', () => {
   });
 
   it('shows modal when report has no data (204) - invoices report', async () => {
-    (useManagementActivityExport as jest.Mock).mockReturnValue({
-      generateManagementActivitiesOverviewReport: {
-        execute: overviewExecuteFn,
-        status: 0,
-        response: undefined,
-      },
-      generateManagementActivitiesInvoiceReport: {
-        execute: invoiceExecuteFn,
-        status: 204,
-        response: undefined,
-      },
-    });
-
     const results = mockPagedResults([]);
     getManagementActivitiesPagedApiFn.mockResolvedValue(results);
+    invoiceExecuteFn.mockResolvedValue({
+      status: 204,
+      data: undefined,
+      statusText: 'OK',
+      headers: {},
+      config: null,
+    });
 
     await setup();
+
+    const button = screen.getByTestId('excel-icon-invoices');
+    await act(async () => userEvent.click(button));
 
     expect(setModalContent).toHaveBeenCalledWith(
       expect.objectContaining({ message: expect.stringMatching(/no data/i) }),
