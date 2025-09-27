@@ -215,7 +215,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.True(searchProperties.PropertiesPinMapFoundCount() == 1);
 
             //Click on the founf property
-            searchProperties.SelectFoundPinAddToFile();
+            searchProperties.SelectFound1stPropAddToFile();
         }
 
         [StepDefinition(@"I search for a property in the inventory by PID from row number (.*)")]
@@ -229,7 +229,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.SearchProperty(PID: searchProperty.PID);
 
             //Click on the found property
-            searchProperties.SelectFoundPinAddToFile();
+            searchProperties.SelectFirstPIMSResult();
         }
 
         [StepDefinition(@"I update a Property details from a file from row number (.*)")]
@@ -511,6 +511,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.True(pimsFiles.GetResearchFilesCount() > 0);
             Assert.True(pimsFiles.GetAcquisitionFilesCount() > 0);
             Assert.True(pimsFiles.GetLeasesCount() > 0);
+            Assert.True(pimsFiles.GetManagementFilesCount() > 0);
             Assert.True(pimsFiles.GetDispositionFilesCount() > 0);
         }
 
@@ -568,8 +569,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             property.Anomalies = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "PropertyAnomalies"));
 
             property.TenureStatus = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "PropertyTenureStatus"));
-            property.ProvincialPublicHwy = ExcelDataContext.ReadData(rowNumber, "PropertyProvincialPublicHwy");
-            property.HighwayEstablishedBy = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "PropertyHighwayEstablishedBy"));
+            //property.ProvincialPublicHwy = ExcelDataContext.ReadData(rowNumber, "PropertyProvincialPublicHwy");
+            //property.HighwayEstablishedBy = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "PropertyHighwayEstablishedBy"));
             property.SqrMeters = ExcelDataContext.ReadData(rowNumber, "PropertySqrMeters");
             property.IsVolumetric = bool.Parse(ExcelDataContext.ReadData(rowNumber, "PropertyIsVolumetric"));
             property.Volume = ExcelDataContext.ReadData(rowNumber, "PropertyVolume");

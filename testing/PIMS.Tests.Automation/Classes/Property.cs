@@ -20,8 +20,8 @@
         public string MunicipalZoning { get; set; } = null!;
         public List<string> Anomalies { get; set; } = new List<string>();
         public List<string> TenureStatus { get; set; } = new List<string>();
-        public string ProvincialPublicHwy { get; set; } = null!;
-        public List<string> HighwayEstablishedBy { get; set; } = new List<string>();
+        //public string ProvincialPublicHwy { get; set; } = null!;
+        //public List<string> HighwayEstablishedBy { get; set; } = new List<string>();
         public string SqrMeters { get; set; } = null!;
         public Boolean IsVolumetric { get; set; } = false;
         public string Volume { get; set; } = null!;

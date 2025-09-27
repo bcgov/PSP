@@ -109,7 +109,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By selectContactButton = By.CssSelector("div[class='pl-0 col-auto'] button");
 
         //Research File - Properties Elements
-        private readonly By researchProperty1stPropLink = By.CssSelector("div[data-testid='menu-item-row-1'] div:nth-child(3)");
+        private readonly By researchProperty1stPropLink = By.CssSelector("div[data-testid='menu-item-property-0']");
         private readonly By researchPropertyResearchEditBttn = By.CssSelector("button[title='Edit Property Research']");
         private readonly By researchPropertyNameInput = By.Id("input-propertyName");
         private readonly By researchPropertyPurposeSelect = By.Id("multiselect-propertyResearchPurposeTypes_input");
@@ -290,8 +290,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             //Pick Property
             Wait();
-            var elementIndex = index + 1;
-            By propertyLink = By.CssSelector("div[data-testid='menu-item-row-" + elementIndex + "'] div:nth-child(3)");
+            By propertyLink = By.CssSelector("div[data-testid='menu-item-property-" + index + "']");
             WaitUntilClickable(propertyLink);
             webDriver.FindElement(propertyLink).Click();
 
@@ -458,11 +457,11 @@ namespace PIMS.Tests.Automation.PageObjects
         public void EditPropertyResearchInfo(PropertyResearch propertyResearch, int index)
         {
             //Pick Property
-            var elementIndex = index + 1;
-            By propertyLink = By.CssSelector("div[data-testid='menu-item-row-" + elementIndex + "'] div:nth-child(3)");
+            By propertyLink = By.CssSelector("div[data-testid='menu-item-property-" + index + "']");
 
-            WaitUntilClickable(propertyLink);
-            webDriver.FindElement(propertyLink).Click();
+            Wait(2000);
+            if(webDriver.FindElements(propertyLink).Count > 0)
+                webDriver.FindElement(propertyLink).Click();
 
             //Add Property Research Information
             WaitUntilClickable(researchPropertyResearchEditBttn);

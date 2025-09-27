@@ -490,14 +490,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="11._Acquisition_File_from_Pin")]
+        [Xunit.SkippableFactAttribute(DisplayName="11._Acquisition_File_from_Land_Parcel")]
         [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
-        [Xunit.TraitAttribute("Description", "11._Acquisition_File_from_Pin")]
-        public async global::System.Threading.Tasks.Task _11__Acquisition_File_From_Pin()
+        [Xunit.TraitAttribute("Description", "11._Acquisition_File_from_Land_Parcel")]
+        public async global::System.Threading.Tasks.Task _11__Acquisition_File_From_Land_Parcel()
         {
             string[] tagsOfScenario = ((string[])(null));
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("11._Acquisition_File_from_Pin", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("11._Acquisition_File_from_Land_Parcel", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 73
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -630,40 +630,6 @@ this.ScenarioInitialize(scenarioInfo);
 #line hidden
 #line 97
  await testRunner.ThenAsync("Main Acquisition File totals are verified successfully from row number 22", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
-#line hidden
-            }
-            await this.ScenarioCleanupAsync();
-        }
-        
-        [Xunit.SkippableFactAttribute(DisplayName="15._Acquisition_File_Property_Takes_Logic")]
-        [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
-        [Xunit.TraitAttribute("Description", "15._Acquisition_File_Property_Takes_Logic")]
-        public async global::System.Threading.Tasks.Task _15__Acquisition_File_Property_Takes_Logic()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("15._Acquisition_File_Property_Takes_Logic", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 99
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                await this.ScenarioStartAsync();
-#line 100
- await testRunner.GivenAsync("I create a new Acquisition File from row number 19", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
-#line hidden
-#line 101
- await testRunner.WhenAsync("I add Properties to the Acquisition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 102
- await testRunner.AndAsync("I create Takes within Acquisition File\'s Properties", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 103
- await testRunner.ThenAsync("A new Acquisition file is created successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();

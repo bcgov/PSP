@@ -137,7 +137,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             if (managementFile.ManagementSearchProperties.Address != "")
             {
                 searchProperties.SearchProperty(address: managementFile.ManagementSearchProperties.Address);
-                searchProperties.SelectFoundPinAddToFile();
+                searchProperties.SelectFound1stPropAddToFile();
                 searchProperties.ResetPropertySearch();
             }
 

@@ -38,7 +38,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By takeRightOfWayHectaresInput = By.XPath("//input[@data-testid='radio-isnewhighwaydedication-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-hectares']");
         private By takeRightOfWayAcresInput = By.XPath("//input[@data-testid='radio-isnewhighwaydedication-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-acres']");
 
-        private By takeMOTIInventoryLabel = By.XPath("//label[contains(text(),'Is this being acquired for MoTI inventory? *')]");
+        private By takeMOTIInventoryLabel = By.XPath("//label[contains(text(),'Is this being acquired for MOTT inventory? *')]");
         private By takeMOTIInventoryBttnGroup = By.CssSelector("input[name='isAcquiredForInventory']");
 
         private By takeSRWLabel = By.XPath("//label[contains(text(),'Is there a new registered interest in land (SRW, Easement or Covenant)?')]");
@@ -423,8 +423,8 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueContentEquals(By.XPath("//div[@data-testid='take-" + index + "']/div/div/div/div/div/div/div/label[contains(text(),'Is there a new highway dedication?')]/parent::div/parent::div/parent::div/div/div/div/div/div/div/div[contains(text(),'sq. metres')]/preceding-sibling::div"), TransformAreaNumberFormat(take.IsNewHighwayDedicationArea));
 
             //MoTI Inventory
-            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='take-" + index + "']/div/div/div/div/div/div/div/label[contains(text(),'Is this being acquired for MoTI inventory?')]"));
-            AssertTrueContentEquals(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/div/div/div/div/label[contains(text(),'Is this being acquired for MoTI inventory')]/parent::div/following-sibling::div"), TransformBooleanFormat(take.IsMotiInventory));
+            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='take-" + index + "']/div/div/div/div/div/div/div/label[contains(text(),'Is this being acquired for MOTT inventory?')]"));
+            AssertTrueContentEquals(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/div/div/div/div/label[contains(text(),'Is this being acquired for MOTT inventory')]/parent::div/following-sibling::div"), TransformBooleanFormat(take.IsMotiInventory));
 
             //Interest in Land
             AssertTrueIsDisplayed(By.XPath("//div[@data-testid='take-" + index + "']/div/div/div/div/div/div/div/label[contains(text(),'Is there a new registered interest in land (SRW, Easement or Covenant)')]"));

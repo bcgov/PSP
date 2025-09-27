@@ -8,10 +8,10 @@ namespace PIMS.Tests.Automation.PageObjects
         private By mainMenuHelpDeskBttn = By.CssSelector("header div[class='nav-item'] div");
 
         //Modal Header
-        private By mainMenuHeader = By.XPath("//div[contains(text(),'Help Desk')]");
+        private By mainMenuHeader = By.CssSelector("div[class='modal-title h4']");
 
         //Modal Content
-        private By helpDeskSubtitle = By.XPath("//h3[contains(text(),'Get started with PIMS')]");
+        private By helpDeskSubtitle = By.CssSelector("div[class='modal-body'] h3:first-child");
         private By helpDeskDescription = By.XPath("//p[contains(text(),'This overview has useful tools that will support you to start using the application. You can also watch the video demos.')]");
         private By helpDeskPIMSResourcesLink = By.XPath("//a[contains(text(),'PIMS Training Materials')]");
 
@@ -20,7 +20,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By helpDeskUserInput = By.Id("input-user");
         private By helpDeskEmailLabel = By.XPath("//label[contains(text(),'Email')]");
         private By helpDeskEmailInput = By.Id("input-email");
-        private By helpDeskDescriptionLabel = By.XPath("//label[contains(text(),'Description')]");
+        private By helpDeskDescriptionLabel = By.XPath("//div[@class='modal-body']/div/form/div/div/label[contains(text(),'Description')]");
         private By helpDeskDescriptionInput = By.Id("input-description");
         private By helpDeskFooterQuestion = By.XPath("//p[contains(text(),'Do you want to proceed and send the email?')]");
 
@@ -39,11 +39,11 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyHelpDeskModal()
         {
-            //WaitUntilVisible(mainMenuHeader);
+            Wait();
 
-            //AssertTrueIsDisplayed(mainMenuHeader);
+            AssertTrueContentEquals(mainMenuHeader, "Help Desk");
 
-            AssertTrueIsDisplayed(helpDeskSubtitle);
+            AssertTrueContentEquals(helpDeskSubtitle, "Get started with PIMS");
             AssertTrueIsDisplayed(helpDeskDescription);
             AssertTrueIsDisplayed(helpDeskPIMSResourcesLink);
 
@@ -52,7 +52,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(helpDeskUserInput);
             AssertTrueIsDisplayed(helpDeskEmailLabel);
             AssertTrueIsDisplayed(helpDeskEmailInput);
-            AssertTrueIsDisplayed(helpDeskDescriptionLabel);
+            AssertTrueIsDisplayed(helpDeskDescriptionLabel);                           
             AssertTrueIsDisplayed(helpDeskDescriptionInput);
             AssertTrueIsDisplayed(helpDeskFooterQuestion);
 

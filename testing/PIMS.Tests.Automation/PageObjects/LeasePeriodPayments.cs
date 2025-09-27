@@ -1,5 +1,7 @@
-﻿using OpenQA.Selenium;
+﻿using AventStack.ExtentReports.Model;
+using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -462,20 +464,19 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueIsDisplayed(licensePaymentExpPaymentLabel);
                 AssertTrueIsDisplayed(licensePaymentExpPaymentTooltip);
                 AssertTrueElementValueEquals(licensePaymentExpPaymentInput, TransformCurrencyFormat(payment.PaymentExpectedPayment));
-                //ClearInput(licensePaymentExpPaymentInput);
-                //webDriver.FindElement(licensePaymentExpPaymentInput).SendKeys(payment.PaymentExpectedPayment);
 
                 //GST
                 AssertTrueIsDisplayed(licensePaymentGSTLabel);
-                //ClearInput(licensePaymentGSTInput);
             }
            
 
             //Save Button
             ButtonElement(licensePaymentSaveBttn);
+            OpenClosePeriodCategoryPayments(payment.PeriodParentIndex);
 
             Wait();
-            totalPaymentInPeriod = webDriver.FindElements(By.XPath("//b[contains(text(), 'Period "+ payment.PeriodParentIndex +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div/div")).Count;
+            totalPaymentInPeriod = webDriver.FindElements(By.CssSelector("div[data-testid='leasePaymentsTable'] div[class='tr-wrapper']:nth-child("+ payment.PeriodParentIndex +") div[data-testid='paymentsTable'] div[class='tr-wrapper']")).Count;
+            System.Diagnostics.Debug.WriteLine(totalPaymentInPeriod);
         }
 
         public void DeleteLastPeriod()
@@ -649,21 +650,19 @@ namespace PIMS.Tests.Automation.PageObjects
 
             WaitUntilVisible(By.XPath("//b[contains(text(), 'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']"));
 
-            AssertTrueContentEquals(By.XPath("//b[contains(text(),'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div["+ totalPaymentInPeriod +"]/div/div[1]"), TransformDateFormat(payment.PaymentSentDate));
-            AssertTrueContentEquals(By.XPath("//b[contains(text(),'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div["+ totalPaymentInPeriod +"]/div/div[2]"), payment.PaymentCategory);
-            AssertTrueContentEquals(By.XPath("//b[contains(text(),'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div["+ totalPaymentInPeriod +"]/div/div[3]"), payment.PaymentMethod);
-            AssertTrueContentEquals(By.XPath("//b[contains(text(),'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div["+ totalPaymentInPeriod +"]/div/div[4]"), TransformCurrencyFormat(payment.PaymentExpectedPayment));
+            AssertTrueContentEquals(By.CssSelector("div[data-testid='leasePaymentsTable'] div[class='tr-wrapper']:nth-child("+ periodIdx +") div[data-testid='paymentsTable'] div[class='tr-wrapper']:nth-child("+ totalPaymentInPeriod +") div[role='cell']:nth-child(1)"), TransformDateFormat(payment.PaymentSentDate));
+            AssertTrueContentEquals(By.CssSelector("div[data-testid='leasePaymentsTable'] div[class='tr-wrapper']:nth-child("+ periodIdx +") div[data-testid='paymentsTable'] div[class='tr-wrapper']:nth-child("+ totalPaymentInPeriod +") div[role='cell']:nth-child(2)"), payment.PaymentCategory);
+            AssertTrueContentEquals(By.CssSelector("div[data-testid='leasePaymentsTable'] div[class='tr-wrapper']:nth-child("+ periodIdx +") div[data-testid='paymentsTable'] div[class='tr-wrapper']:nth-child("+ totalPaymentInPeriod +") div[role='cell']:nth-child(3)"), payment.PaymentMethod);
+            AssertTrueContentEquals(By.CssSelector("div[data-testid='leasePaymentsTable'] div[class='tr-wrapper']:nth-child("+ periodIdx +") div[data-testid='paymentsTable'] div[class='tr-wrapper']:nth-child("+ totalPaymentInPeriod +") div[role='cell']:nth-child(4)"), TransformCurrencyFormat(payment.PaymentExpectedPayment));
 
             if (payment.PaymentIsGSTApplicable == "true")
-                AssertTrueContentEquals(By.XPath("//b[contains(text(),'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div["+ totalPaymentInPeriod +"]/div/div[5]"), TransformCurrencyFormat(payment.PaymentGST));
-            //else
-                //AssertTrueContentEquals(By.XPath("//b[contains(text(),'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div["+ totalPaymentInPeriod +"]/div/div[5]"), "-");
-
-            AssertTrueContentEquals(By.XPath("//b[contains(text(),'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div["+ totalPaymentInPeriod +"]/div/div[6]"),TransformCurrencyFormat(payment.PaymentTotalReceived));
-            AssertTrueContentEquals(By.XPath("//b[contains(text(),'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div["+ totalPaymentInPeriod +"]/div/div[7]"), payment.PaymentStatus);
-            AssertTrueIsDisplayed(By.XPath("//b[contains(text(),'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div["+ totalPaymentInPeriod +"]/div/div[8]/button[@title='Payment comments']"));
-            AssertTrueIsDisplayed(By.XPath("//b[contains(text(),'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div["+ totalPaymentInPeriod +"]/div/div[9]/div/button[@title='edit payment']"));
-            AssertTrueIsDisplayed(By.XPath("//b[contains(text(),'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div["+ totalPaymentInPeriod +"]/div/div[9]/div/button[@title='delete payment']"));
+                AssertTrueContentEquals(By.CssSelector("div[data-testid='leasePaymentsTable'] div[class='tr-wrapper']:nth-child("+ periodIdx +") div[data-testid='paymentsTable'] div[class='tr-wrapper']:nth-child("+ totalPaymentInPeriod +") div[role='cell']:nth-child(5)"), TransformCurrencyFormat(payment.PaymentGST));
+           
+            AssertTrueContentEquals(By.CssSelector("div[data-testid='leasePaymentsTable'] div[class='tr-wrapper']:nth-child("+ periodIdx +") div[data-testid='paymentsTable'] div[class='tr-wrapper']:nth-child("+ totalPaymentInPeriod +") div[role='cell']:nth-child(6)"),TransformCurrencyFormat(payment.PaymentTotalReceived));
+            AssertTrueContentEquals(By.CssSelector("div[data-testid='leasePaymentsTable'] div[class='tr-wrapper']:nth-child("+ periodIdx +") div[data-testid='paymentsTable'] div[class='tr-wrapper']:nth-child("+ totalPaymentInPeriod +") div[role='cell']:nth-child(7)"), payment.PaymentStatus);
+            AssertTrueIsDisplayed(By.CssSelector("div[data-testid='leasePaymentsTable'] div[class='tr-wrapper']:nth-child("+ periodIdx +") div[data-testid='paymentsTable'] div[class='tr-wrapper']:nth-child("+ totalPaymentInPeriod +") div[role='cell']:nth-child(8) button[title='Payment comments']"));
+            AssertTrueIsDisplayed(By.CssSelector("div[data-testid='leasePaymentsTable'] div[class='tr-wrapper']:nth-child("+ periodIdx +") div[data-testid='paymentsTable'] div[class='tr-wrapper']:nth-child("+ totalPaymentInPeriod +") div[role='cell']:nth-child(9) button[title='edit payment']"));
+            AssertTrueIsDisplayed(By.CssSelector("div[data-testid='leasePaymentsTable'] div[class='tr-wrapper']:nth-child("+ periodIdx +") div[data-testid='paymentsTable'] div[class='tr-wrapper']:nth-child("+ totalPaymentInPeriod +") div[role='cell']:nth-child(9) button[title='delete payment']"));
         }
 
         private static string ConcatenateDates(string startDate, string endDate)

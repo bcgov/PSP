@@ -545,7 +545,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
             <div
               class="align-content-end col"
             >
-              Selected properties
+              Selected Properties
             </div>
           </div>
         </h2>

@@ -39,7 +39,7 @@ Scenario: 06._Disposition_File_Notes
 	And  I edit a Note on the Notes Tab from row number 10
 	Then A new Disposition file is created successfully
 
-Scenario: 07._Disposition_File_from_PIN
+Scenario: 07._Disposition_File_from_Parcel
 	Given I create a Disposition File from a pin on map from row number 12
 	Then A new Disposition file is created successfully
 

@@ -29,6 +29,11 @@ namespace PIMS.Tests.Automation.PageObjects
         private By propertyDispositionTable = By.XPath("//div[contains(text(),'Disposition')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='associationFiles']");
         private By propertyDispositionExpandTableBttn = By.XPath("//div[contains(text(),'Disposition')]/parent::div/parent::div/parent::div/following-sibling::div/*[1]");
 
+        private By propertyManagementSubtitle = By.XPath("//div[contains(text(),'Management')]");
+        private By propertyManagementCountLabel = By.XPath("//div[contains(text(),'Management')]/following-sibling::div[@class='my-1 col-auto']/div");
+        private By propertyManagementTable = By.XPath("//div[contains(text(),'Management')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='associationFiles']");
+        private By propertyManagementExpandTableBttn = By.XPath("//div[contains(text(),'Management')]/parent::div/parent::div/parent::div/following-sibling::div/*[1]");
+
         public PropertyPIMSFiles(IWebDriver webDriver) : base(webDriver)
         {}
 
@@ -74,6 +79,15 @@ namespace PIMS.Tests.Automation.PageObjects
 
             AssertTrueIsDisplayed(propertyLeaseTable);
 
+            //Management Files
+            AssertTrueIsDisplayed(propertyManagementSubtitle);
+            AssertTrueIsDisplayed(propertyManagementCountLabel);
+
+            Wait();
+            webDriver.FindElement(propertyManagementExpandTableBttn).Click();
+
+            AssertTrueIsDisplayed(propertyManagementTable);
+
             //Disposition Files
             AssertTrueIsDisplayed(propertyDispositionFileSubtitle);
             AssertTrueIsDisplayed(propertyDispositionCountLabel);
@@ -106,6 +120,12 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilVisible(propertyDispositionCountLabel);
             return int.Parse(webDriver.FindElement(propertyDispositionCountLabel).Text);
+        }
+
+        public int GetManagementFilesCount()
+        {
+            WaitUntilVisible(propertyManagementCountLabel);
+            return int.Parse(webDriver.FindElement(propertyManagementCountLabel).Text);
         }
 
 

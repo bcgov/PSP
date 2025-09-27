@@ -1,8 +1,6 @@
 ﻿using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
-using PIMS.Tests.Automation.PageObjects;
-using System.Data;
 
 namespace PIMS.Tests.Automation.StepDefinitions
 {
@@ -166,7 +164,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             if (dispositionFile.DispositionSearchProperties.PlanNumber != "")
             {
                 searchProperties.SearchProperty(plan: dispositionFile.DispositionSearchProperties.PlanNumber);
-                searchProperties.SelectFirstPMBCResult();
+                searchProperties.SelectSecondPMBCResult();
                 searchProperties.ResetPropertySearch();
             }
 
@@ -174,7 +172,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             if (dispositionFile.DispositionSearchProperties.HistoricFile != "")
             {
                 searchProperties.SearchProperty(historicFile: dispositionFile.DispositionSearchProperties.HistoricFile);
-                searchProperties.SelectFirstPIMSResult();
+                searchProperties.SelectFirstPIMSResultToFile();
                 searchProperties.ResetPropertySearch();
             }
 
@@ -182,7 +180,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             if (dispositionFile.DispositionSearchProperties.POIName != "")
             {
                 searchProperties.SearchProperty(POIName: dispositionFile.DispositionSearchProperties.POIName);
-                searchProperties.SelectFoundPinAddToFile();
+                searchProperties.SelectFound1stPropAddToFile();
                 searchProperties.ResetPropertySearch();
             }
 
@@ -207,7 +205,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Search for a property by Latitude and Longitude
             searchProperties.SearchProperty(coordinates: dispositionFile.DispositionSearchProperties.LatitudeLongitude);
-            searchProperties.SelectFirstPMBCResult();
+            searchProperties.SelectFound1stPropAddToFile();
             searchProperties.ResetPropertySearch();
 
             //Delete last Property
@@ -370,7 +368,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.SearchProperty(PID: dispositionFile.DispositionSearchProperties.PID);
 
             //Select Found Pin on map
-            searchProperties.SelectFoundPinAddToFile();
+            searchProperties.SelectFound1stPropAddToFile();
 
             //Close Property Information Modal
             propertyInformation.HideLeftSideForms();
@@ -395,7 +393,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.SearchProperty(PID: dispositionFile.DispositionSearchProperties.PID);
 
             //Select Found Pin on map
-            searchProperties.SelectFoundPinAddToFile();
+            searchProperties.SelectFound1stPropAddToFile();
 
             //Open elipsis option
             propertyInformation.OpenMoreOptionsPopUp();
@@ -414,7 +412,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.SearchProperty(PID: dispositionFile.DispositionSearchProperties.PID);
 
             //Select Found Pin on map
-            searchProperties.SelectFoundPinAddToFile();
+            searchProperties.SelectFound1stPropAddToFile();
 
             //Open elipsis option
             propertyInformation.OpenMoreOptionsPopUp();

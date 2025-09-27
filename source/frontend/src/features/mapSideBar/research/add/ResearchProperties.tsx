@@ -23,7 +23,7 @@ const ResearchProperties: React.FC<IResearchPropertiesProps> = () => {
       <AddPropertiesGuide />
       <FieldArray name="properties">
         {({ remove }) => (
-          <Section header="Selected properties">
+          <Section header="Selected Properties">
             <SelectedPropertyHeaderRow />
             {values.properties.map((property, index) => (
               <SelectedPropertyRow

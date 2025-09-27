@@ -120,15 +120,15 @@ namespace PIMS.Tests.Automation.StepDefinitions
             if (researchFile.SearchProperties.Address != "")
             {
                 searchProperties.SearchProperty(address: researchFile.SearchProperties.Address);
-                searchProperties.SelectFoundPinAddToFile();
+                searchProperties.SelectFound1stPropAddToFile();
                 searchProperties.ResetPropertySearch();
             }
 
             //Search for a property by Latitude and Longitude
-            if (researchFile.SearchProperties.LatitudeLongitude != null)
+            if (researchFile.SearchProperties.LatitudeLongitude.LatitudeDegree != "")
             {
                 searchProperties.SearchProperty(coordinates: researchFile.SearchProperties.LatitudeLongitude);
-                searchProperties.SelectFirstPMBCResult();
+                searchProperties.SelectFound1stPropAddToFile();
                 searchProperties.ResetPropertySearch();
             }
 
@@ -140,6 +140,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             {
                 for (int i = 0; i < researchFile.PropertyResearchRowCount; i++)
                 {
+
                     researchFiles.AddPropertyResearchInfo(researchFile.PropertyResearch[i], i);
                     researchFiles.SaveResearchFile();
                     researchFiles.VerifyPropResearchTabFormView(researchFile.PropertyResearch[i]);
@@ -160,7 +161,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             researchFiles.NavigateToAddPropertiesReseachFile();
 
             searchProperties.SearchProperty(POIName: researchFile.SearchProperties.POIName);
-            searchProperties.SelectFoundPinAddToFile();
+            searchProperties.SelectFound1stPropAddToFile();
             searchProperties.ResetPropertySearch();
 
             //Cancel changes on a Property Detail on Research File
@@ -201,14 +202,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.SearchProperty(PID: researchFile.SearchProperties.PID);
 
             //Select found property on Map
-            searchProperties.SelectFoundPinAddToFile();
-
-            //Close Property Information Modal
-            propertyInformation.HideLeftSideForms();
-
-            //Open elipsis option
-            propertyInformation.OpenMoreOptionsPopUp();
-            propertyInformation.ChooseCreationOptionFromPin("Research File");
+            searchProperties.SelectFirstPMBCResult("Create Research");
 
             //Fill basic Research File information
             researchFiles.CreateResearchFile(researchFile);

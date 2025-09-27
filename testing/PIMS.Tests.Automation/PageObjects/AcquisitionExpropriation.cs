@@ -34,30 +34,30 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By expropriationHistoryAddEventModalSaveBttn = By.CssSelector("button[data-testid='ok-modal-button']");
 
         //Form 1 Elements
-        private readonly By form1Title = By.XPath("//div[@data-testid='form-1-section']/h2/div/div[contains(text(),'Form 1 - Notice of Expropriation')]");
+        private readonly By form1Title = By.XPath("//div[@data-testid='form-1-section']/h2/div/div/div/div[contains(text(),'Form 1 - Notice of Expropriation')]");
+        private readonly By form1GenerateBttn = By.XPath("//div[contains(text(),'Form 1 - Notice of Expropriation')]/following-sibling::div/button");
         private readonly By form1ExpandBttn = By.XPath("//div[@data-testid='form-1-section']/h2/div/div[2]");
-        private readonly By form1ExpAuthorityLabel = By.XPath("//div[@data-testid='form-1-section']/div/div/div/label[contains(text(),'Expropriation authority')]");
-        private readonly By form1ExpAuthorityInput = By.XPath("//div[@data-testid='form-1-section']/div/div/div/div/div/div/div/input[@id='input-expropriationAuthority.contact.id']/parent::div/parent::div");
-        private readonly By form1SelectContactBttn = By.XPath("//div[@data-testid='form-1-section']/div/div/div/div/div/div/button[@title='Select Contact']");
-        private readonly By form1ImpactPropertiesLabel = By.XPath("//div[@data-testid='form-1-section']/div/div/div/label[contains(text(),'Impacted properties')]");
-        private readonly By form1ImpactPropertiesTable = By.XPath("//div[@data-testid='form-1-section']/div/div/div/div/div[@data-testid='selectableFileProperties']");
-        private readonly By form1NatureInterestLabel = By.XPath("//div[@data-testid='form-1-section']/div/div/div/label[contains(text(),'Nature of interest')]");
+        private readonly By form1ExpAuthorityLabel = By.XPath("//div[@data-testid='form-1-section']/div/div/div/div/label[contains(text(),'Expropriation authority')]");
+        private readonly By form1ExpAuthorityInput = By.XPath("//div[@data-testid='form-1-section']/div/div/div/div/div/div/div/div[contains(text(),'Select from contacts')]");
+        private readonly By form1SelectContactBttn = By.XPath("//div[@data-testid='form-1-section']/div/div/div/div/div/div/div/button[@title='Select Contact']");
+        private readonly By form1ImpactPropertiesLabel = By.XPath("//div[@data-testid='form-1-section']/div/div/div/div/label[contains(text(),'Impacted properties')]");
+        private readonly By form1ImpactPropertiesTable = By.XPath("//div[@data-testid='form-1-section']/div/div/div/div/div/div[@data-testid='selectableFileProperties']");
+        private readonly By form1NatureInterestLabel = By.XPath("//div[@data-testid='form-1-section']/div/div/div/div/label[contains(text(),'Nature of interest')]");
         private readonly By form1NatureInterestInput = By.Id("input-landInterest");
-        private readonly By form1PurposeExpropLabel = By.XPath("//div[@data-testid='form-1-section']/div/div/div/label[contains(text(),'Purpose of expropriation')]");
+        private readonly By form1PurposeExpropLabel = By.XPath("//div[@data-testid='form-1-section']/div/div/div/div/label[contains(text(),'Purpose of expropriation')]");
         private readonly By form1PurposeExpropInput = By.Id("input-purpose");
-        private readonly By form1CancelBttn = By.XPath("//div[@data-testid='form-1-section']/div/div/div/button/div[contains(text(),'Cancel')]");
-        private readonly By form1GenerateBttn = By.XPath("//div[@data-testid='form-1-section']/div/div/div/button/div[contains(text(),'Generate')]");
+        private readonly By form1CancelBttn = By.XPath("//div[@data-testid='form-1-section']/div/div/div/div/button");
 
         //Form 5 Elements
-        private readonly By form5Title = By.XPath("//div[@data-testid='form-5-section']/h2/div/div[contains(text(),'Form 5 - Certificate of Approval of Expropriation')]");
+        private readonly By form5Title = By.XPath("//div[@data-testid='form-5-section']/h2/div/div/div/div[contains(text(),'Form 5 - Certificate of Approval of Expropriation')]");
+        private readonly By form5GenerateBttn = By.XPath("//div[contains(text(),'Form 5 - Certificate of Approval of Expropriation')]/following-sibling::div/button");
         private readonly By form5ExpandBttn = By.XPath("//div[@data-testid='form-5-section']/h2/div/div[2]/*");
-        private readonly By form5ExpAuthorityLabel = By.XPath("//div[@data-testid='form-5-section']/div/div/div/label[contains(text(),'Expropriation authority')]");
-        private readonly By form5ExpAuthorityInput = By.XPath("//div[@data-testid='form-5-section']/div/div/div/div/div/div/div/input[@id='input-expropriationAuthority.contact.id']/parent::div/parent::div");
-        private readonly By form5SelectContactBttn = By.XPath("//div[@data-testid='form-5-section']/div/div/div/div/div/div/button[@title='Select Contact']");
-        private readonly By form5ImpactPropertiesLabel = By.XPath("//div[@data-testid='form-5-section']/div/div/div/label[contains(text(),'Impacted properties')]");
-        private readonly By form5ImpactPropertiesTable = By.XPath("//div[@data-testid='form-5-section']/div/div/div/div/div[@data-testid='selectableFileProperties']");
-        private readonly By form5CancelBttn = By.XPath("//div[@data-testid='form-5-section']/div/div/div/button/div[contains(text(),'Cancel')]");
-        private readonly By form5GenerateBttn = By.XPath("//div[@data-testid='form-5-section']/div/div/div/button/div[contains(text(),'Generate')]");
+        private readonly By form5ExpAuthorityLabel = By.XPath("//div[@data-testid='form-5-section']/div/div/div/div/label[contains(text(),'Expropriation authority')]");
+        private readonly By form5ExpAuthorityInput = By.XPath("//div[@data-testid='form-5-section']/div/div/div/div/div/div/div/div[contains(text(),'Select from contacts')]");
+        private readonly By form5SelectContactBttn = By.XPath("//div[@data-testid='form-5-section']/div/div/div/div/div/div/div/button[@title='Select Contact']");
+        private readonly By form5ImpactPropertiesLabel = By.XPath("//div[@data-testid='form-5-section']/div/div/div/div/label[contains(text(),'Impacted properties')]");
+        private readonly By form5ImpactPropertiesTable = By.XPath("//div[@data-testid='form-5-section']/div/div/div/div/div/div[@data-testid='selectableFileProperties']");
+        private readonly By form5CancelBttn = By.XPath("//div[@data-testid='form-5-section']/div/div/div/div/button");
 
         //Form 8 Elements
         private readonly By form8Title = By.XPath("//div[@data-testid='form-8-section']/h2/div/div/div/div[contains(text(),'Form 8 - Notice of Advance Payment')]");
@@ -80,18 +80,17 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By form8PaymentsTotal = By.CssSelector("div[data-testid='paymentItems'] div[class='tbody'] div[class='tr-wrapper']");
 
         //Form 9 Elements
-        private readonly By form9Title = By.XPath("//div[@data-testid='form-9-section']/h2/div/div[contains(text(),'Form 9 - Vesting Notice')]");
+        private readonly By form9Title = By.XPath("//div[@data-testid='form-9-section']/h2/div/div/div/div/button");
+        private readonly By form9GenerateBttn = By.XPath("//div[contains(text(),'Form 9 - Vesting Notice')]/following-sibling::div/button");
         private readonly By form9ExpandBttn = By.XPath("//div[@data-testid='form-9-section']/h2/div/div[2]/*");
-        private readonly By form9ExpAuthorityLabel = By.XPath("//div[@data-testid='form-9-section']/div/div/div/label[contains(text(),'Expropriation authority')]");
-        private readonly By form9ExpAuthorityInput = By.XPath("//div[@data-testid='form-9-section']/div/div/div/div/div/div/div/input[@id='input-expropriationAuthority.contact.id']/parent::div/parent::div");
-        private readonly By form9SelectContactBttn = By.XPath("//div[@data-testid='form-9-section']/div/div/div/div/div/div/button[@title='Select Contact']");
-        private readonly By form9ImpactPropertiesLabel = By.XPath("//div[@data-testid='form-9-section']/div/div/div/label[contains(text(),'Impacted properties')]");
-        private readonly By form9ImpactPropertiesTable = By.XPath("//div[@data-testid='form-9-section']/div/div/div/div/div[@data-testid='selectableFileProperties']");
-        private readonly By form9ShownPlanLabel = By.XPath("//div[@data-testid='form-9-section']/div/div/div/label[contains(text(),'Shown on plan(s)')]");
+        private readonly By form9ExpAuthorityLabel = By.XPath("//div[@data-testid='form-9-section']/div/div/div/div/label[contains(text(),'Expropriation authority')]");
+        private readonly By form9ExpAuthorityInput = By.XPath("//div[@data-testid='form-9-section']/div/div/div/div/div/div/div/div[contains(text(),'Select from contacts')]");
+        private readonly By form9SelectContactBttn = By.CssSelector("div[data-testid='form-9-section'] button[title='Select Contact']");
+        private readonly By form9ImpactPropertiesLabel = By.XPath("//div[@data-testid='form-9-section']/div/div/div/div/label[contains(text(),'Impacted properties')]");
+        private readonly By form9ImpactPropertiesTable = By.CssSelector("div[data-testid='form-9-section'] div[data-testid='selectableFileProperties']");
+        private readonly By form9ShownPlanLabel = By.XPath("//div[@data-testid='form-9-section']/div/div/div/div/label[contains(text(),'Shown on plan(s)')]");
         private readonly By form9ShownPlanInput = By.Id("input-registeredPlanNumbers");
-        private readonly By form9CancelBttn = By.XPath("//div[@data-testid='form-9-section']/div/div/div/button/div[contains(text(),'Cancel')]");
-        private readonly By form9GenerateBttn = By.XPath("//div[@data-testid='form-9-section']/div/div/div/button/div[contains(text(),'Generate')]");
-
+        private readonly By form9CancelBttn = By.XPath("//div[@data-testid='form-9-section']/div/div/div/div/button");
 
         //Acquisition File Confirmation Modal Elements
         private readonly By acquisitionFileConfirmationModal = By.CssSelector("div[class='modal-content']");

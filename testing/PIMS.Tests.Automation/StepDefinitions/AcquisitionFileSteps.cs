@@ -144,8 +144,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I update the File details from an existing Acquisition File from row number (.*)")]
         public void UpdateFileDetails(int rowNumber)
         {
-            /* TEST COVERAGE: PSP-4331, PSP-4544, PSP-4545, PSP-5638, PSP-5639, PSP-5970, PSP-5979s */
-
             PopulateAcquisitionFile(rowNumber);
 
             //Search for an existing Acquisition File
@@ -184,8 +182,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I add Properties to the Acquisition File")]
         public void AddProperties()
        {
-            /* TEST COVERAGE: PSP-4163, PSP-4325, PSP-4326, PSP-4327, PSP-4328, PSP-4329, PSP-4334, PSP-4593, PSP-6268 */
-
             //Navigate to Properties for Acquisition File
             sharedFileProperties.NavigateToAddPropertiesToFile();
 
@@ -209,7 +205,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             if (acquisitionFile.AcquisitionSearchProperties.Address != "")
             {
                 searchProperties.SearchProperty(address: acquisitionFile.AcquisitionSearchProperties.Address);
-                searchProperties.SelectFoundPinAddToFile();
+                searchProperties.SelectFound1stPropAddToFile();
                 searchProperties.ResetPropertySearch();
             }
 
@@ -262,7 +258,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I create Takes within Acquisition File's Properties")]
         public void CreateTakes()
         {
-            /* TEST COVERAGE:  PSP-5892, PSP-5893, PSP-5896, PSP-5898 */
+            //Select 1st Property
+            sharedFileProperties.SelectFirstPropertyOptionFromFile();
 
             for (int i = 0; i < acquisitionFile.AcquisitionTakes.Count; i++)
             {
@@ -865,8 +862,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I create an Acquisition File from a pin on map from row number (.*)")]
         public void CreateAcquisitionFileFromPin(int rowNumber)
         {
-            /* TEST COVERAGE: PSP-1546, PSP-1556, PSP-4164, PSP-4165, PSP-4167, PSP-4472, PSP-4601, PSP-4704, PSP-5308  */
-
             //Login to PIMS
             loginSteps.Idir(userName);
 
@@ -874,18 +869,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             PopulateAcquisitionFile(rowNumber);
             searchProperties.SearchProperty(PID: acquisitionFile.AcquisitionSearchProperties.PID);
 
-            //Select Found Pin on map
-            searchProperties.SelectFoundPinAddToFile();
-
-            //Close Left Side Forms
-            propertyInformation.HideLeftSideForms();
-
-            //Open elipsis option
-            propertyInformation.OpenMoreOptionsPopUp();
-            propertyInformation.ChooseCreationOptionFromPin("Acquisition File");
-
-            //Open Left Side Forms
-            propertyInformation.ShowLeftSideForms();
+            //Select Found PID from PMBS Results
+            searchProperties.SelectFirstPMBCResult("Create Acquisition");
 
             //Validate Acquisition File Details Create Form
             acquisitionFilesDetails.VerifyAcquisitionFileCreate("Main");
@@ -899,28 +884,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Search for a property
             searchProperties.SearchProperty(PID: acquisitionFile.AcquisitionSearchProperties.PID);
 
-            //Select Found Pin on map
-            searchProperties.SelectFoundPinAddToFile();
-
-            //Open elipsis option
-            propertyInformation.OpenMoreOptionsPopUp();
-            propertyInformation.ChooseCreationOptionFromPin("Acquisition File");
-
-            //Fill basic Acquisition File information
-            acquisitionFilesDetails.CreateMinimumAcquisitionFile(acquisitionFile);
-
-            //Cancel Creation
-            acquisitionFilesDetails.CancelAcquisitionFile();
-
-            //Search for a property
-            searchProperties.SearchProperty(PID: acquisitionFile.AcquisitionSearchProperties.PID);
-
-            //Select Found Pin on map
-            searchProperties.SelectFoundPinAddToFile();
-
-            //Open elipsis option
-            propertyInformation.OpenMoreOptionsPopUp();
-            propertyInformation.ChooseCreationOptionFromPin("Acquisition File");
+            //Select Found PID from PMBS Results
+            searchProperties.SelectFirstPMBCResult("Create Acquisition");
 
             //Fill basic Acquisition File information
             acquisitionFilesDetails.CreateMinimumAcquisitionFile(acquisitionFile);
