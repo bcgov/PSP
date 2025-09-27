@@ -11,7 +11,7 @@ import { featuresetToLocationBoundaryDataset } from '@/utils/mapPropertyUtils';
 import { SelectedFeatureDataset } from '../common/mapFSM/useLocationFeatureLoader';
 
 interface IMapClickMonitorProps {
-  addProperty: (property: SelectedFeatureDataset) => void;
+  addProperty?: (property: SelectedFeatureDataset) => void;
   repositionProperty: (
     property: SelectedFeatureDataset,
     latLng: LatLngLiteral,
@@ -78,7 +78,7 @@ export const MapClickMonitor: React.FunctionComponent<IMapClickMonitorProps> = (
         return;
       }
 
-      addProperty(selectedFeature);
+      addProperty?.(selectedFeature);
     }
 
     if (

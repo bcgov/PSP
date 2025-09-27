@@ -53,7 +53,10 @@ export const PropertyActivityEditContainer: React.FunctionComponent<
   const fetchActivity = useCallback(
     async (propertyId: number, activityId: number) => {
       let formInitialValues: PropertyActivityFormModel;
-      const retrieved = await getActivity(propertyId, activityId);
+      let retrieved: ApiGen_Concepts_ManagementActivity = null;
+      if (isValidId(propertyId) && isValidId(activityId)) {
+        retrieved = await getActivity(propertyId, activityId);
+      }
       if (exists(retrieved)) {
         if (exists(retrieved.ministryContacts)) {
           for (let i = 0; i < retrieved.ministryContacts.length; i++) {
@@ -73,13 +76,14 @@ export const PropertyActivityEditContainer: React.FunctionComponent<
         formInitialValues.activityStatusCode =
           ApiGen_CodeTypes_ManagementActivityStatusTypes.NOTSTARTED;
       }
+
       setInitialValues(formInitialValues);
     },
     [fetchMinistryContacts, fetchPartiesContact, fetchProviderContact, getActivity],
   );
 
   useEffect(() => {
-    if (isValidId(propertyId) && initialValues === null) {
+    if (!exists(initialValues)) {
       fetchActivity(propertyId, managementActivityId);
     }
   }, [propertyId, managementActivityId, fetchActivity, initialValues]);
@@ -99,15 +103,15 @@ export const PropertyActivityEditContainer: React.FunctionComponent<
 
     if (exists(result)) {
       setStaleLastUpdatedBy(true);
-      history.push(`/mapview/sidebar/property/${propertyId}/management/activity/${result.id}`);
+      const backUrl = history.location.pathname.split('/activity')[0];
+      history.push(`${backUrl}/activity/${result.id}`);
     }
   };
 
   const onCancelClick = () => {
     if (isValidId(managementActivityId)) {
-      history.push(
-        `/mapview/sidebar/property/${propertyId}/management/activity/${managementActivityId}`,
-      );
+      const backUrl = history.location.pathname.split('/activity')[0];
+      history.push(`${backUrl}/activity/${managementActivityId}`);
     } else {
       onClose();
     }

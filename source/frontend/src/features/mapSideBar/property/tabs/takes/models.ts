@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
 
-import { AreaUnitTypes } from '@/constants/areaUnitTypes';
+import { ApiGen_CodeTypes_AreaUnitTypes } from '@/models/api/generated/ApiGen_CodeTypes_AreaUnitTypes';
 import { ApiGen_CodeTypes_LandActTypes } from '@/models/api/generated/ApiGen_CodeTypes_LandActTypes';
 import { ApiGen_Concepts_Take } from '@/models/api/generated/ApiGen_Concepts_Take';
 import { UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
@@ -94,18 +94,18 @@ export class TakeModel {
     this.isLeasePayable = base?.isLeasePayable ? 'true' : 'false';
     this.licenseToConstructArea = base?.licenseToConstructArea ?? 0;
     this.licenseToConstructAreaUnitTypeCode =
-      fromTypeCodeNullable(base?.areaUnitTypeCode) ?? AreaUnitTypes.SquareMeters.toString();
+      fromTypeCodeNullable(base?.areaUnitTypeCode) ?? ApiGen_CodeTypes_AreaUnitTypes.M2;
     this.landActArea = base?.landActArea ?? 0;
     this.landActAreaUnitTypeCode =
-      fromTypeCodeNullable(base?.areaUnitTypeCode) ?? AreaUnitTypes.SquareMeters.toString();
+      fromTypeCodeNullable(base?.areaUnitTypeCode) ?? ApiGen_CodeTypes_AreaUnitTypes.M2;
     this.surplusArea = base?.surplusArea ?? 0;
     this.surplusAreaUnitTypeCode =
-      fromTypeCodeNullable(base?.areaUnitTypeCode) ?? AreaUnitTypes.SquareMeters.toString();
+      fromTypeCodeNullable(base?.areaUnitTypeCode) ?? ApiGen_CodeTypes_AreaUnitTypes.M2;
     this.statutoryRightOfWayArea = base?.statutoryRightOfWayArea ?? 0;
     this.statutoryRightOfWayAreaUnitTypeCode =
-      fromTypeCodeNullable(base?.areaUnitTypeCode) ?? AreaUnitTypes.SquareMeters.toString();
+      fromTypeCodeNullable(base?.areaUnitTypeCode) ?? ApiGen_CodeTypes_AreaUnitTypes.M2;
     this.leasePayableAreaUnitTypeCode =
-      fromTypeCodeNullable(base?.areaUnitTypeCode) ?? AreaUnitTypes.SquareMeters.toString();
+      fromTypeCodeNullable(base?.areaUnitTypeCode) ?? ApiGen_CodeTypes_AreaUnitTypes.M2;
     this.takeTypeCode = fromTypeCodeNullable(base?.takeTypeCode);
     this.takeStatusTypeCode = fromTypeCodeNullable(base?.takeStatusTypeCode);
     this.takeSiteContamTypeCode = base?.takeSiteContamTypeCode
@@ -123,7 +123,7 @@ export class TakeModel {
     this.isAcquiredForInventory = base?.isAcquiredForInventory ? 'true' : 'false';
     this.newHighwayDedicationArea = base?.newHighwayDedicationArea ?? 0;
     this.newHighwayDedicationAreaUnitTypeCode =
-      fromTypeCodeNullable(base?.areaUnitTypeCode) ?? AreaUnitTypes.SquareMeters.toString();
+      fromTypeCodeNullable(base?.areaUnitTypeCode) ?? ApiGen_CodeTypes_AreaUnitTypes.M2;
     this.completionDt = base?.completionDt;
     this.appCreateTimestamp = base?.appCreateTimestamp ?? null;
   }
@@ -139,36 +139,36 @@ export class TakeModel {
         convertArea(
           parseFloat(this.newHighwayDedicationArea.toString()),
           this.newHighwayDedicationAreaUnitTypeCode,
-          AreaUnitTypes.SquareMeters.toString(),
+          ApiGen_CodeTypes_AreaUnitTypes.M2,
         ) || null,
       isAcquiredForInventory: this.isAcquiredForInventory === 'true',
       takeSiteContamTypeCode: toTypeCodeNullable(this.takeSiteContamTypeCode),
-      areaUnitTypeCode: toTypeCodeNullable(AreaUnitTypes.SquareMeters.toString()),
+      areaUnitTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_AreaUnitTypes.M2),
       takeTypeCode: toTypeCodeNullable(this.takeTypeCode),
       takeStatusTypeCode: toTypeCodeNullable(this.takeStatusTypeCode),
       licenseToConstructArea:
         convertArea(
           parseFloat(this.licenseToConstructArea.toString()),
           this.licenseToConstructAreaUnitTypeCode,
-          AreaUnitTypes.SquareMeters.toString(),
+          ApiGen_CodeTypes_AreaUnitTypes.M2,
         ) || null,
       landActArea:
         convertArea(
           parseFloat(this.landActArea.toString()),
           this.landActAreaUnitTypeCode,
-          AreaUnitTypes.SquareMeters.toString(),
+          ApiGen_CodeTypes_AreaUnitTypes.M2,
         ) || null,
       surplusArea:
         convertArea(
           parseFloat(this.surplusArea.toString()),
           this.surplusAreaUnitTypeCode,
-          AreaUnitTypes.SquareMeters.toString(),
+          ApiGen_CodeTypes_AreaUnitTypes.M2,
         ) || null,
       statutoryRightOfWayArea:
         convertArea(
           parseFloat(this.statutoryRightOfWayArea.toString()),
           this.statutoryRightOfWayAreaUnitTypeCode,
-          AreaUnitTypes.SquareMeters.toString(),
+          ApiGen_CodeTypes_AreaUnitTypes.M2,
         ) || null,
       srwEndDt: stringToNull(this.srwEndDt),
       ltcEndDt: stringToNull(this.ltcEndDt),
@@ -183,7 +183,7 @@ export class TakeModel {
         convertArea(
           parseFloat(this.leasePayableArea.toString()),
           this.leasePayableAreaUnitTypeCode,
-          AreaUnitTypes.SquareMeters.toString(),
+          ApiGen_CodeTypes_AreaUnitTypes.M2,
         ) || null,
       leasePayableEndDt: stringToNull(this.leasePayableEndDt),
       ...getEmptyBaseAudit(this.rowVersion),

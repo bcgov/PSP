@@ -44,10 +44,6 @@ const AdHocFileActivitiesSummaryContainer: React.FunctionComponent<
       propertyActivities={propertyActivities.filter(pa => !isValidId(pa.managementFileId))}
       setSort={setSort}
       sort={sort}
-      getNavigationUrl={(row: PropertyActivityRow) => ({
-        url: `/mapview/sidebar/property/${row.adHocPropertyId}/management/activity/${row.activityId}`,
-        title: row.adHocPropertyName,
-      })}
       canEditActivities={false}
     />
   );

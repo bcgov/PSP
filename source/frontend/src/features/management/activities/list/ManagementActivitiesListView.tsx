@@ -1,7 +1,7 @@
-import { isEmpty } from 'lodash';
+import fileDownload from 'js-file-download';
 import { useCallback, useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaFileAlt, FaFileExcel } from 'react-icons/fa';
+import { FaFileExcel } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
@@ -10,14 +10,19 @@ import { StyledIconButton } from '@/components/common/buttons/IconButton';
 import * as CommonStyled from '@/components/common/styles';
 import { PaddedScrollable } from '@/components/common/styles';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
-import { MGMT_ACTIVITY_STATUS_TYPES, MGMT_ACTIVITY_TYPES } from '@/constants/API';
+import {
+  MANAGEMENT_FILE_PURPOSE_TYPES,
+  MANAGEMENT_FILE_STATUS_TYPES,
+  MGMT_ACTIVITY_STATUS_TYPES,
+  MGMT_ACTIVITY_TYPES,
+} from '@/constants/API';
 import { useApiManagementActivities } from '@/hooks/pims-api/useApiManagementActivities';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { useModalContext } from '@/hooks/useModalContext';
 import { useSearch } from '@/hooks/useSearch';
 import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 import { Api_ManagementActivityFilter } from '@/models/api/ManagementActivityFilter';
-import { generateMultiSortCriteria, mapLookupCode } from '@/utils';
-import { toFilteredApiPaginateParams } from '@/utils/CommonFunctions';
+import { mapLookupCode } from '@/utils';
 
 import { useManagementActivityExport } from '../../hooks/useManagementActivityExport';
 import { ManagementActivityFilterModel } from '../models/ManagementActivityFilterModel';
@@ -30,6 +35,7 @@ import ManagementActivitySearchResults from './searchResults/ManagementActivitie
  */
 export const ManagementActivitiesListView: React.FC<unknown> = () => {
   const { getManagementActivitiesPagedApi } = useApiManagementActivities();
+  const { setModalContent, setDisplayModal } = useModalContext();
 
   // lookup codes to filter management list
   const lookupCodes = useLookupCodeHelpers();
@@ -42,23 +48,40 @@ export const ManagementActivitiesListView: React.FC<unknown> = () => {
     .getByType(MGMT_ACTIVITY_TYPES)
     .map(c => mapLookupCode(c));
 
-  const { exportManagementActivities } = useManagementActivityExport();
+  const managementFileStatusOptions = lookupCodes
+    .getByType(MANAGEMENT_FILE_STATUS_TYPES)
+    .map(c => mapLookupCode(c));
 
-  /**
-   * @param {'csv' | 'excel'} accept Whether the fetch is for type of CSV or EXCEL
-   * @param {boolean} getAllFields Enable this field to generate report with additional fields. For SRES only.
-   */
-  const fetch = (accept: 'csv' | 'excel') => {
-    // Call API with appropriate search parameters
-    const query = toFilteredApiPaginateParams<Api_ManagementActivityFilter>(
-      currentPage,
-      pageSize,
-      sort && !isEmpty(sort) ? generateMultiSortCriteria(sort) : undefined,
-      filter,
-    );
+  const managementPurposeOptions = lookupCodes
+    .getByType(MANAGEMENT_FILE_PURPOSE_TYPES)
+    .map(c => mapLookupCode(c));
 
-    exportManagementActivities(query, accept);
+  const {
+    generateManagementActivitiesOverviewReport: {
+      execute: getOverviewReport,
+      status: overviewStatus,
+      response: dataOverviewReport,
+    },
+  } = useManagementActivityExport();
+
+  const generateActivitiesOverviewReport = async (values: Api_ManagementActivityFilter) => {
+    await getOverviewReport(values);
   };
+
+  useEffect(() => {
+    if (overviewStatus === 204) {
+      setModalContent({
+        variant: 'error',
+        title: 'Warning',
+        message: 'There is no data for the input parameters you entered.',
+        okButtonText: 'Close',
+        handleOk: () => setDisplayModal(false),
+      });
+      setDisplayModal(true);
+    } else if (dataOverviewReport && overviewStatus === 200) {
+      fileDownload(dataOverviewReport, `Management_Activities_Overview_Report.xlsx`);
+    }
+  }, [dataOverviewReport, overviewStatus, setDisplayModal, setModalContent]);
 
   const {
     results,
@@ -114,21 +137,24 @@ export const ManagementActivitiesListView: React.FC<unknown> = () => {
                 setFilter={changeFilter}
                 activityStatusOptions={activityStatusOptions}
                 activityTypesOptions={activityTypesOptions}
+                fileStatusOptions={managementFileStatusOptions}
+                managementPurposeOptions={managementPurposeOptions}
               />
             </Col>
             <Col md="auto" className="px-0">
-              <TooltipWrapper tooltipId="export-to-excel" tooltip="Export to Excel">
-                <StyledIconButton onClick={() => fetch('excel')}>
-                  <FaFileExcel data-testid="excel-icon" size={36} />
-                </StyledIconButton>
-              </TooltipWrapper>
-            </Col>
-            <Col md="auto" className="px-0">
-              <TooltipWrapper tooltipId="export-to-excel" tooltip="Export to CSV">
-                <StyledIconButton onClick={() => fetch('csv')}>
-                  <FaFileAlt data-testid="csv-icon" size={36} />
-                </StyledIconButton>
-              </TooltipWrapper>
+              <Row>
+                <Col className="d-flex align-items-center">
+                  <TooltipWrapper
+                    tooltipId="export-to-excel-overview-report"
+                    tooltip="Export to Excel"
+                  >
+                    <StyledIconButton onClick={() => generateActivitiesOverviewReport(filter)}>
+                      <FaFileExcel data-testid="excel-icon" size={36} />
+                    </StyledIconButton>
+                  </TooltipWrapper>
+                  <span>Activity overview</span>
+                </Col>
+              </Row>
             </Col>
           </Row>
         </CommonStyled.PageToolbar>

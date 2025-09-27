@@ -31,7 +31,12 @@ namespace Pims.Dal.Helpers.Extensions
         public static string GetPropertyName(this IFilePropertyEntity fileProperty)
         {
             var property = fileProperty?.Property;
-            if(property == null)
+            return property.GetPropertyName();
+        }
+
+        public static string GetPropertyName(this PimsProperty property)
+        {
+            if (property == null)
             {
                 return string.Empty;
             }

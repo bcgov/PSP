@@ -3,9 +3,14 @@ import styled from 'styled-components';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { SectionField } from '@/components/common/Section/SectionField';
+import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 
 import { DetailAcquisitionFileOwner } from '../../../models/DetailAcquisitionFileOwner';
-import { IAcquisitionOwnersSummaryViewProps } from './AcquisitionOwnersSummaryContainer';
+
+export interface IAcquisitionOwnersSummaryViewProps {
+  ownersList?: ApiGen_Concepts_AcquisitionFileOwner[];
+  isLoading: boolean;
+}
 
 const AcquisitionOwnersSummaryView: React.FC<IAcquisitionOwnersSummaryViewProps> = ({
   isLoading,

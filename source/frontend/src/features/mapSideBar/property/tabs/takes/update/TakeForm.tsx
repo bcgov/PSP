@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
-import { AreaUnitTypes } from '@/constants/areaUnitTypes';
+import { ApiGen_CodeTypes_AreaUnitTypes } from '@/models/api/generated/ApiGen_CodeTypes_AreaUnitTypes';
 import { ApiGen_Concepts_Take } from '@/models/api/generated/ApiGen_Concepts_Take';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { toTypeCode } from '@/utils/formUtils';
@@ -40,7 +40,7 @@ export const emptyTake: ApiGen_Concepts_Take = {
   id: 0,
   description: '',
   newHighwayDedicationArea: null,
-  areaUnitTypeCode: toTypeCode(AreaUnitTypes.SquareMeters.toString()),
+  areaUnitTypeCode: toTypeCode(ApiGen_CodeTypes_AreaUnitTypes.M2),
   isAcquiredForInventory: null,
   isThereSurplus: null,
   isNewLicenseToConstruct: null,

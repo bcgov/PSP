@@ -6,7 +6,7 @@ import SelectedPropertyRow from '@/components/propertySelector/selectedPropertyL
 import { useEditPropertiesMode } from '@/hooks/useEditPropertiesMode';
 
 import { PropertyForm } from '../../shared/models';
-import { AddPropertiesGuide } from './AddPropertiesGuide';
+import { AddPropertiesGuide } from '../../shared/update/properties/AddPropertiesGuide';
 import { ResearchForm } from './models';
 
 export interface IResearchPropertiesProps {
