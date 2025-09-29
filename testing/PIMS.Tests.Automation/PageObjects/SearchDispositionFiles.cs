@@ -146,6 +146,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SelectLastOption()
         {
+            var originalWindowHandle = webDriver.CurrentWindowHandle;
+
             Wait(2000);
             WaitUntilClickable(searchDispositionOrderFileNumberBttn);
             webDriver.FindElement(searchDispositionOrderFileNumberBttn).Click();
@@ -153,8 +155,13 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait(2000);
             webDriver.FindElement(searchDispositionOrderFileNumberBttn).Click();
 
-            Wait(2000);
+            WaitUntilClickable(searchDispositionFile1stResultLink);
             webDriver.FindElement(searchDispositionFile1stResultLink).Click();
+
+            Wait();
+            var allWindowsHandle = webDriver.WindowHandles;
+            var newWindowHandle = allWindowsHandle.Where(handle => handle != originalWindowHandle).First();
+            webDriver.SwitchTo().Window(newWindowHandle);
 
             Wait();
             AssertTrueIsDisplayed(searchDispositionFileHeaderCode);

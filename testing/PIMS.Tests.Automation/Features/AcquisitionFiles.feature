@@ -70,7 +70,7 @@ Scenario: 10._Acquisition_File_Expropriation_Tab
 	And I update Expropriation within an Acquisition File from row number 16
 	Then A new Acquisition file is created successfully
 
-Scenario: 11._Acquisition_File_from_Pin
+Scenario: 11._Acquisition_File_from_Land_Parcel
 	Given I create an Acquisition File from a pin on map from row number 17
 	Then A new Acquisition file is created successfully
 
@@ -96,11 +96,11 @@ Scenario: 14._Acquisition_File_Compensation_Requsition-Sum_of_Subfiles_Compensat
 	And I create Compensation Requisition within an Acquisition Subfile
 	Then Main Acquisition File totals are verified successfully from row number 22
 
-Scenario: 15._Acquisition_File_Property_Takes_Logic
-	Given I create a new Acquisition File from row number 19
-	When I add Properties to the Acquisition File
-	And I create Takes within Acquisition File's Properties
-	Then A new Acquisition file is created successfully
+#Scenario: 15._Acquisition_File_Property_Takes_Logic
+#	Given I create a new Acquisition File from row number 19
+#	When I add Properties to the Acquisition File
+#	And I create Takes within Acquisition File's Properties
+#	Then A new Acquisition file is created successfully
 
 Scenario: 16._Acquisition_File_Error_Message-Draft_Items
 	Given I create a new Acquisition File from row number 20

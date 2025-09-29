@@ -1,19 +1,9 @@
-const SharedFileProperties = require("./SharedFileProperties");
-const SharedTeamMembers = require("./SharedTeamMembers");
-const SharedModal = require("./SharedModal");
 const { expect } = require("@playwright/test");
-const {
-  clickSaveButton,
-  clickAndWaitFor,
-  fillTypeahead,
-} = require("../../support/common.js");
+const { clickAndWaitFor, fillTypeahead } = require("../../support/common.js");
 
 class ManagementFileDetails {
   constructor(page) {
     this.page = page;
-    this.sharedFileProperties = new SharedFileProperties(page);
-    this.sharedTeamMembers = new SharedTeamMembers(page);
-    this.sharedModal = new SharedModal(page);
   }
   async navigateManagementMainMenu() {
     clickAndWaitFor(
@@ -105,14 +95,14 @@ class ManagementFileDetails {
 
   async updateManagementFileDetails(managementFile) {
     // Status
-    if (managementFile.ManagementStatus !== null) {
+    if (managementFile.ManagementStatus) {
       await this.page
         .locator("#input-fileStatusTypeCode")
         .selectOption({ label: managementFile.ManagementStatus });
     }
 
     //Project
-    if (managementFile.ManagementMinistryProject !== null) {
+    if (managementFile.ManagementMinistryProject) {
       await fillTypeahead(
         this.page,
         "input[id='typeahead-project']",
@@ -122,7 +112,7 @@ class ManagementFileDetails {
     }
 
     // Product
-    if (managementFile.ManagementMinistryProduct !== null) {
+    if (managementFile.ManagementMinistryProduct) {
       // Wait for the select element to appear
       await this.page
         .locator("#input-productId")
@@ -133,7 +123,7 @@ class ManagementFileDetails {
     }
 
     // Funding
-    if (managementFile.ManagementMinistryFunding !== null) {
+    if (managementFile.ManagementMinistryFunding) {
       await this.page
         .locator("#input-fundingTypeCode")
         .selectOption({ label: managementFile.ManagementMinistryFunding });
@@ -141,28 +131,28 @@ class ManagementFileDetails {
 
     // MANAGEMENT DETAILS
     // File Name
-    if (managementFile.ManagementName !== null) {
+    if (managementFile.ManagementName) {
       await this.page
         .locator("#input-fileName")
         .fill(managementFile.ManagementName);
     }
 
     // Historical File Number
-    if (managementFile.ManagementHistoricalFile !== null) {
+    if (managementFile.ManagementHistoricalFile) {
       await this.page
         .locator("#input-legacyFileNum")
         .fill(managementFile.ManagementHistoricalFile);
     }
 
     // Purpose
-    if (managementFile.ManagementPurpose !== null) {
+    if (managementFile.ManagementPurpose) {
       await this.page
         .locator("#input-purposeTypeCode")
         .selectOption({ label: managementFile.ManagementPurpose });
     }
 
     // Additional Details
-    if (managementFile.ManagementAdditionalDetails !== null) {
+    if (managementFile.ManagementAdditionalDetails) {
       await this.page
         .locator("#input-additionalDetails")
         .fill(managementFile.ManagementAdditionalDetails);

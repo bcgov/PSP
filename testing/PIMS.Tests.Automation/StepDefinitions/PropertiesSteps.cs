@@ -42,49 +42,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         }
 
-        [StepDefinition(@"I search for a Property in the Map by different filters from row number (.*)")]
-        public void SearchInventoryPropertyOnMap(int rowNumber)
-        {
-            /* TEST COVERAGE:  PSP-1546, PSP-5090, PSP-5091, PSP-5092, PSP-6693 */
-
-            //Login to PIMS
-            loginSteps.Idir(userName);
-
-            //Search for a valid Address with the Search Bar
-            PopulateSearchProperty(rowNumber);
-            //searchProperties.SearchPropertyByAddressMap(searchProperty.Address);
-
-            //Validate that the result gives only one pin
-            Assert.True(searchProperties.PropertiesMapFoundCount());
-
-            //Search for a valid Plan in Inventory
-            searchProperties.SearchPropertyByPlan(searchProperty.PlanNumber);
-
-            //Validate that the result gives only one pin
-            Assert.True(searchProperties.PropertiesClustersFoundCount() == 2);
-
-            //Search for a valid PIN in Inventory
-            searchProperties.SearchPropertyReset();
-            searchProperties.SearchPropertyByPIN(searchProperty.PIN);
-
-            //Validate that the result gives only one pin
-            Assert.True(searchProperties.PropertiesPinMapFoundCount() == 1);
-
-            //Search for a valid PID in Inventory
-            searchProperties.SearchPropertyReset();
-            searchProperties.SearchPropertyByPID(searchProperty.PID);
-
-            //Validate that the result gives only one pin
-            Assert.True(searchProperties.PropertiesPinMapFoundCount() == 1);
-
-            //Search for a valid Latitude/Longitude coordinates
-            searchProperties.SearchPropertyReset();
-            searchProperties.SearchPropertyByLatLong(searchProperty.LatitudeLongitude);
-
-            //Validate that the result gives only one pin
-            Assert.True(searchProperties.PropertiesMapFoundCount());
-        }
-
         [StepDefinition(@"I search for an Invalid Property from row number (.*)")]
         public void SearchInvalidPropertyOnMap(int rowNumber)
         {
@@ -95,7 +52,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Search for an invalid Address with the Search Bar
             PopulateSearchProperty(rowNumber);
-            searchProperties.SearchPropertyByPID(searchProperty.PID);
+            searchProperties.SearchProperty(PID: searchProperty.PID);
         }
 
         [StepDefinition(@"I review a Property's Information from row number (.*)")]
@@ -111,7 +68,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.NavigatePropertyListView();
 
             //Search for a property
-            searchProperties.SearchPropertyByPID(property.PID);
+            searchProperties.SearchProperty(PID: property.PID);
 
             //Select the first property from the list
             searchProperties.ChooseFirstPropertyFromList();
@@ -139,7 +96,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.NavigatePropertyListView();
 
             //Validate List View Elements
-            searchProperties.SearchPropertyReset();
+            searchProperties.ResetPropertySearch();
             searchProperties.ValidatePropertyListView();
 
             //Verify Pagination
@@ -203,22 +160,22 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.True(searchProperties.PropertiesListFoundCount() >= 1);
 
             //Search for a valid PIN in Inventory
-            searchProperties.SearchPropertyReset();
-            searchProperties.SearchPropertyByPIN(searchProperty.PIN);
+            searchProperties.ResetPropertySearch();
+            searchProperties.SearchProperty(PIN: searchProperty.PIN);
 
             //Validate that the result gives only one pin
             Assert.True(searchProperties.PropertiesListFoundCount() == 1);
 
             //Search for a valid PID in Inventory
-            searchProperties.SearchPropertyReset();
-            searchProperties.SearchPropertyByPID(searchProperty.PID);
+            searchProperties.ResetPropertySearch();
+            searchProperties.SearchProperty(PID: searchProperty.PID);
 
             //Validate that the result gives only one pin
             Assert.True(searchProperties.PropertiesListFoundCount() == 1);
 
             //Search for a valid Plan in Inventory
-            searchProperties.SearchPropertyReset();
-            searchProperties.SearchPropertyByPlan(searchProperty.PlanNumber);
+            searchProperties.ResetPropertySearch();
+            searchProperties.SearchProperty(plan: searchProperty.PlanNumber);
 
             //Validate that the result gives only one pin
             Assert.True(searchProperties.PropertiesListFoundCount() > 0);
@@ -235,8 +192,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.NavigatePropertyListView();
 
             //Search for a valid PID in Inventory
-            searchProperties.SearchPropertyReset();
-            searchProperties.SearchPropertyByPID(searchProperty.PID);
+            searchProperties.ResetPropertySearch();
+            searchProperties.SearchProperty(PID: searchProperty.PID);
 
             //Select found property
             searchProperties.SelectFirstFoundPropertyList();
@@ -252,13 +209,13 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Look for a non-inventory property
             PopulateSearchProperty(rowNumber);
-            searchProperties.SearchPropertyByPID(searchProperty.PID);
+            searchProperties.SearchProperty(PID: searchProperty.PID);
 
             //Validate that the result gives only one pin
             Assert.True(searchProperties.PropertiesPinMapFoundCount() == 1);
 
             //Click on the founf property
-            searchProperties.SelectFoundPin();
+            searchProperties.SelectFound1stPropAddToFile();
         }
 
         [StepDefinition(@"I search for a property in the inventory by PID from row number (.*)")]
@@ -269,10 +226,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Look for a non-inventory property
             PopulateSearchProperty(rowNumber);
-            searchProperties.SearchPropertyByPID(searchProperty.PID);
+            searchProperties.SearchProperty(PID: searchProperty.PID);
 
             //Click on the found property
-            searchProperties.SelectFoundPin();
+            searchProperties.SelectFirstPIMSResult();
         }
 
         [StepDefinition(@"I update a Property details from a file from row number (.*)")]
@@ -520,7 +477,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             /* TEST COVERAGE: PSP-1548 */
 
             //Validate that the result gives only one pin
-            Assert.False(searchProperties.PropertiesMapFoundCount());
+            searchProperties.NoPropertiesFound();
         }
 
         [StepDefinition(@"A Property Information is saved successfully")]
@@ -554,13 +511,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.True(pimsFiles.GetResearchFilesCount() > 0);
             Assert.True(pimsFiles.GetAcquisitionFilesCount() > 0);
             Assert.True(pimsFiles.GetLeasesCount() > 0);
+            Assert.True(pimsFiles.GetManagementFilesCount() > 0);
             Assert.True(pimsFiles.GetDispositionFilesCount() > 0);
         }
 
         [StepDefinition(@"Properties filters works successfully")]
         public void PropertySearchBarSuccess()
         {
-            searchProperties.SearchPropertyReset();
+            searchProperties.ResetPropertySearch();
         }
 
         [StepDefinition(@"Expected Active Lease status is displayed as ""(.*)"" successfully")]
@@ -611,8 +569,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             property.Anomalies = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "PropertyAnomalies"));
 
             property.TenureStatus = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "PropertyTenureStatus"));
-            property.ProvincialPublicHwy = ExcelDataContext.ReadData(rowNumber, "PropertyProvincialPublicHwy");
-            property.HighwayEstablishedBy = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "PropertyHighwayEstablishedBy"));
+            //property.ProvincialPublicHwy = ExcelDataContext.ReadData(rowNumber, "PropertyProvincialPublicHwy");
+            //property.HighwayEstablishedBy = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "PropertyHighwayEstablishedBy"));
             property.SqrMeters = ExcelDataContext.ReadData(rowNumber, "PropertySqrMeters");
             property.IsVolumetric = bool.Parse(ExcelDataContext.ReadData(rowNumber, "PropertyIsVolumetric"));
             property.Volume = ExcelDataContext.ReadData(rowNumber, "PropertyVolume");
@@ -647,7 +605,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperty.PIN = ExcelDataContext.ReadData(rowNumber, "PIN");
             searchProperty.Address = ExcelDataContext.ReadData(rowNumber, "Address");
             searchProperty.PlanNumber = ExcelDataContext.ReadData(rowNumber, "PlanNumber");
-            searchProperty.LegalDescription = ExcelDataContext.ReadData(rowNumber, "LegalDescription");
+            searchProperty.HistoricFile = ExcelDataContext.ReadData(rowNumber, "HistoricFile");
+            searchProperty.POIName = ExcelDataContext.ReadData(rowNumber, "POIName");
             searchProperty.MultiplePIDS = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "MultiplePIDS"));
             searchProperty.LatitudeLongitude.LatitudeDegree = ExcelDataContext.ReadData(rowNumber, "LatitudeDegree");
             searchProperty.LatitudeLongitude.LatitudeMinutes = ExcelDataContext.ReadData(rowNumber, "LatitudeMinutes");
@@ -657,6 +616,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperty.LatitudeLongitude.LongitudeMinutes = ExcelDataContext.ReadData(rowNumber, "LongitudeMinutes");
             searchProperty.LatitudeLongitude.LongitudeSeconds = ExcelDataContext.ReadData(rowNumber, "LongitudeSeconds");
             searchProperty.LatitudeLongitude.LongitudeDirection = ExcelDataContext.ReadData(rowNumber, "LongitudeDirection");
+            searchProperty.SurveyParcel.District = ExcelDataContext.ReadData(rowNumber, "SurveyDistrict");
+            searchProperty.SurveyParcel.Section = ExcelDataContext.ReadData(rowNumber, "SurveySection");
+            searchProperty.SurveyParcel.Township = ExcelDataContext.ReadData(rowNumber, "SurveyTownship");
+            searchProperty.SurveyParcel.Range = ExcelDataContext.ReadData(rowNumber, "SurveyRange");
         }
 
         private void PopulateManagementProperty(int rowNumber)

@@ -60,7 +60,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 //Prepare Documents' names string
                 for (var j = documentStartIdx; j <= documentEndIdx; j++)
                 {
-                    documentIdx = (documentIdx >= 11) ? 0 : documentIdx;
+                    documentIdx = (documentIdx >= 10) ? 0 : documentIdx;
                     var document = documentFiles.ElementAt(documentIdx);
 
                     documentURLs = (j + 1 > documentEndIdx) ? documentURLs + document.Url : documentURLs + document.Url + "\n";

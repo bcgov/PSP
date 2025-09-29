@@ -239,10 +239,10 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By documentViewPlanRevisionContent = By.XPath("//label[contains(text(),'Plan revision')]/parent::div/following-sibling::div");
         private readonly By documentViewPlanTypeContent = By.XPath("//label[contains(text(),'Plan type')]/parent::div/following-sibling::div");
         private readonly By documentViewProjectNumberContent = By.XPath("//label[contains(text(),'Project #')]/parent::div/following-sibling::div");
-        private readonly By documentViewProjectLabel = By.XPath("/label[contains(text(),'Project name')]");
-        private readonly By documentViewProjectContent = By.XPath("/label[contains(text(),'Project name')]/parent::div/following-sibling::div");
-        private readonly By documentViewPropertyIdentifierLabel = By.XPath("/label[contains(text(),'Property identifier')]");
-        private readonly By documentViewPropertyIdentifierContent = By.XPath("/label[contains(text(),'Property identifier')]/parent::div/following-sibling::div");
+        private readonly By documentViewProjectLabel = By.XPath("//label[contains(text(),'Project name')]");
+        private readonly By documentViewProjectContent = By.XPath("//label[contains(text(),'Project name')]/parent::div/following-sibling::div");
+        private readonly By documentViewPropertyIdentifierLabel = By.XPath("//label[contains(text(),'Property identifier')]");
+        private readonly By documentViewPropertyIdentifierContent = By.XPath("//label[contains(text(),'Property identifier')]/parent::div/following-sibling::div");
         private readonly By documentViewPublishedDateContent = By.XPath("//label[contains(text(),'Published date')]/parent::div/following-sibling::div");
         private readonly By documentViewReferenceAgencyContent = By.XPath("//label[contains(text(),'Reference/Agency Document #')]/parent::div/following-sibling::div");
         private readonly By documentViewReferenceLandsContent = By.XPath("//label[contains(text(),'Reference/Agency Lands file #')]/parent::div/following-sibling::div");

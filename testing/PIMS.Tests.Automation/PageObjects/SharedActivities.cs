@@ -353,11 +353,8 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(managementActSubTypeSelect);
             AssertTrueIsDisplayed(managementActStatusLabel);
             AssertTrueIsDisplayed(managementActStatusInput);
-
-            if (activityType == "Management File")
-                AssertTrueIsDisplayed(managementActCommencementLabel);
-            else
-                AssertTrueIsDisplayed(managementActRequestAddedDateLabel);
+            AssertTrueIsDisplayed(managementActCommencementLabel);
+            
             AssertTrueIsDisplayed(managementActRequestAddedCommenceDateInput);
 
             AssertTrueIsDisplayed(managementActCompletionDateLabel);
@@ -383,20 +380,9 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueIsDisplayed(managementActRequestorInput);
             }
 
-            if (activityType == "Management File")
-            {
-                AssertTrueIsDisplayed(managementActDetailsActivityExternalContactsLabel);
-                AssertTrueIsDisplayed(managementActDetailsActivityExternalContactsInput);
-                AssertTrueIsDisplayed(managementActDetailsActivityExternalContactsAddBttn); 
-            }
-            else
-            {
-                AssertTrueIsDisplayed(managementActInvolvedPartiesLabel);
-                AssertTrueIsDisplayed(managementActInvolvedPartiesInput);
-                AssertTrueIsDisplayed(managementActInvolvedPartiesExtContactsBttn);
-                AssertTrueIsDisplayed(managementActInvolvedPartiesExtContactsAddContactLink);
-            }
-
+            AssertTrueIsDisplayed(managementActDetailsActivityExternalContactsLabel);
+            AssertTrueIsDisplayed(managementActDetailsActivityExternalContactsInput);
+            AssertTrueIsDisplayed(managementActDetailsActivityExternalContactsAddBttn); 
             AssertTrueIsDisplayed(managementActServiceProviderLabel);
             AssertTrueIsDisplayed(managementActServiceProviderInput);
             AssertTrueIsDisplayed(managementActServiceProviderBttn);

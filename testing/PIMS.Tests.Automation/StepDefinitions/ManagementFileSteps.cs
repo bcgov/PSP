@@ -16,6 +16,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly SharedFileProperties sharedFileProperties = new SharedFileProperties(driver);
         private readonly SharedPagination sharedPagination = new SharedPagination(driver);
         private readonly SharedActivities sharedActivities = new SharedActivities(driver);
+        private readonly SearchProperties searchProperties = new SearchProperties(driver);
         private readonly Notes notes = new Notes(driver);
 
         private readonly string userName = "TRANPSP1";
@@ -79,7 +80,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Search for an existing Management File
             searchManagementFiles.NavigateToSearchManagement();
-            searchManagementFiles.FilterManagementFiles("", "", "", managementFileCode, "", "", "", "");
+            searchManagementFiles.FilterManagementFiles(mgmtfile: managementFileCode);
             searchManagementFiles.SelectFirstOption();
 
             //Update existing Acquisition file
@@ -116,75 +117,28 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Navigate to Properties for Management File
             sharedFileProperties.NavigateToAddPropertiesToFile();
 
-            //Navigate to Add Properties by search and verify Add Properties UI/UX
-            sharedFileProperties.NavigateToSearchTab();
-            sharedFileProperties.VerifySearchPropertiesFeature();
-
             //Search for a property by PID
             if (managementFile.ManagementSearchProperties.PID != "")
             {
-                sharedFileProperties.SelectPropertyByPID(managementFile.ManagementSearchProperties.PID);
-                sharedFileProperties.SelectFirstOptionFromSearch();
-                sharedFileProperties.ResetSearch();
+                searchProperties.SearchProperty(PID: managementFile.ManagementSearchProperties.PID);
+                searchProperties.SelectFirstPMBCResult();
+                searchProperties.ResetPropertySearch();
             }
 
             //Search for a property by PIN
             if (managementFile.ManagementSearchProperties.PIN != "")
             {
-                sharedFileProperties.SelectPropertyByPIN(managementFile.ManagementSearchProperties.PIN);
-                sharedFileProperties.SelectFirstOptionFromSearch();
-                sharedFileProperties.ResetSearch();
-            }
-
-            //Search for a property by Plan
-            if (managementFile.ManagementSearchProperties.PlanNumber != "")
-            {
-                sharedFileProperties.SelectPropertyByPlan(managementFile.ManagementSearchProperties.PlanNumber);
-                sharedFileProperties.SelectFirstOptionFromSearch();
-                sharedFileProperties.ResetSearch();
+                searchProperties.SearchProperty(PIN: managementFile.ManagementSearchProperties.PIN);
+                searchProperties.SelectFirstPMBCResult();
+                searchProperties.ResetPropertySearch();
             }
 
             //Search for a property by Address
             if (managementFile.ManagementSearchProperties.Address != "")
             {
-                sharedFileProperties.SelectPropertyByAddress(managementFile.ManagementSearchProperties.Address);
-                sharedFileProperties.SelectFirstOptionFromSearch();
-                sharedFileProperties.ResetSearch();
-            }
-
-            //Search for a property by Legal Description
-            if (managementFile.ManagementSearchProperties.LegalDescription != "")
-            {
-                sharedFileProperties.SelectPropertyByLegalDescription(managementFile.ManagementSearchProperties.LegalDescription);
-                sharedFileProperties.SelectFirstOptionFromSearch();
-                sharedFileProperties.ResetSearch();
-            }
-
-            //Search for a property by Latitude and Longitude
-            if (managementFile.ManagementSearchProperties.LatitudeLongitude.LatitudeDegree != "")
-            {
-                sharedFileProperties.SelectPropertyByLongLant(managementFile.ManagementSearchProperties.LatitudeLongitude);
-                sharedFileProperties.SelectFirstOptionFromSearch();
-                sharedFileProperties.ResetSearch();
-            }
-
-            //Search for Multiple PIDs
-            if (managementFile.ManagementSearchProperties.MultiplePIDS.First() != "")
-            {
-                foreach (string prop in managementFile.ManagementSearchProperties.MultiplePIDS)
-                {
-                    sharedFileProperties.SelectPropertyByPID(prop);
-                    sharedFileProperties.SelectFirstOptionFromSearch();
-                    sharedFileProperties.ResetSearch();
-                }
-            }
-
-            //Search for a duplicate property
-            if (managementFile.ManagementSearchProperties.PID != "")
-            {
-                sharedFileProperties.SelectPropertyByPID(managementFile.ManagementSearchProperties.PID);
-                sharedFileProperties.SelectFirstOptionFromSearch();
-                sharedFileProperties.ResetSearch();
+                searchProperties.SearchProperty(address: managementFile.ManagementSearchProperties.Address);
+                searchProperties.SelectFound1stPropAddToFile();
+                searchProperties.ResetPropertySearch();
             }
 
             //Save Research File
@@ -204,10 +158,13 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Navigate to Edit Management File's Properties
             sharedFileProperties.NavigateToAddPropertiesToFile();
 
-            //Search for a property by Legal Description
-            sharedFileProperties.NavigateToSearchTab();
-            sharedFileProperties.SelectPropertyByLegalDescription(managementFile.ManagementSearchProperties.LegalDescription);
-            sharedFileProperties.SelectFirstOptionFromSearch();
+            //Search for a property by PIN
+            if (managementFile.ManagementSearchProperties.PIN != "")
+            {
+                searchProperties.SearchProperty(PIN: managementFile.ManagementSearchProperties.PIN);
+                searchProperties.SelectFirstPMBCResult();
+                searchProperties.ResetPropertySearch();
+            }
 
             //Save changes
             sharedFileProperties.SaveFileProperties();
@@ -399,8 +356,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 managementFile.ManagementSearchProperties.PIN = ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "PIN");
                 managementFile.ManagementSearchProperties.Address = ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "Address");
                 managementFile.ManagementSearchProperties.PlanNumber = ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "PlanNumber");
-                managementFile.ManagementSearchProperties.LegalDescription = ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "LegalDescription");
-                managementFile.ManagementSearchProperties.MultiplePIDS = genericSteps.PopulateLists(ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "MultiplePIDS"));
+                managementFile.ManagementSearchProperties.HistoricFile = ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "HistoricFile");
+                managementFile.ManagementSearchProperties.POIName = ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "POIName");
                 managementFile.ManagementSearchProperties.LatitudeLongitude.LatitudeDegree = ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "LatitudeDegree");
                 managementFile.ManagementSearchProperties.LatitudeLongitude.LatitudeMinutes = ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "LatitudeMinutes");
                 managementFile.ManagementSearchProperties.LatitudeLongitude.LatitudeSeconds = ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "LatitudeSeconds");
@@ -409,6 +366,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 managementFile.ManagementSearchProperties.LatitudeLongitude.LongitudeMinutes = ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "LongitudeMinutes");
                 managementFile.ManagementSearchProperties.LatitudeLongitude.LongitudeSeconds = ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "LongitudeSeconds");
                 managementFile.ManagementSearchProperties.LatitudeLongitude.LongitudeDirection = ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "LongitudeDirection");
+                managementFile.ManagementSearchProperties.SurveyParcel.District = ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "SurveyDistrict");
+                managementFile.ManagementSearchProperties.SurveyParcel.Section = ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "SurveySection");
+                managementFile.ManagementSearchProperties.SurveyParcel.Township = ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "SurveyTownship");
+                managementFile.ManagementSearchProperties.SurveyParcel.Range = ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "SurveyRange");
 
             }
 

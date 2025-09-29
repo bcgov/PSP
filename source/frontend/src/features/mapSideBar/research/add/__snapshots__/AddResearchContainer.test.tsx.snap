@@ -866,7 +866,7 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
                       <div
                         class="align-content-end col"
                       >
-                        Selected properties
+                        Selected Properties
                       </div>
                     </div>
                   </h2>

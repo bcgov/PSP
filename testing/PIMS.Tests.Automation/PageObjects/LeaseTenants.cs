@@ -20,7 +20,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Tenant Add Tenant Modal Elements
         private readonly By stakeholderOrganizationRadioBttn = By.Id("input-organizations");
         private readonly By stakeholderSearchInput = By.Id("input-summary");
-        private readonly By tenantSearchBttn = By.Id("search-button");
+        private readonly By tenantSearchBttn = By.CssSelector("div[class='modal-body'] button[id='search-button']");
         private readonly By stakeholderFirstResultRadioBttn = By.CssSelector("div[data-testid='contactsTable'] div[class='tr-wrapper']:nth-child(1) div:nth-child(1) input");
         private readonly By stakeholderAddSelectedButton = By.XPath("//div[contains(text(), 'Select')]/parent::button[@title='ok-modal']");
 

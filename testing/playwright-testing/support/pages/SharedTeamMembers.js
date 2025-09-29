@@ -78,14 +78,14 @@ class SharedTeamMembers {
     let index = 1;
 
     for (let i = 0; i < teamMembers.length; i++) {
-      await expect(
+      expect(
         this.page
           .locator(
             `//div[@data-testid="teamMember[${i}]"]/preceding-sibling::div/label`
           )
           .textContent()
       ).toBe(teamMembers[i].TeamMemberRole + ":");
-      await expect(
+      expect(
         this.page.locator(`div[data-testid='teamMember[${i}]'] span`)
       ).toBe(teamMembers[i].TeamMemberContactName);
 
@@ -95,7 +95,7 @@ class SharedTeamMembers {
           .isVisible()
       ) {
         index++;
-        await expect(
+        expect(
           this.page.locator(`div[data-testid='primaryContact[${i}]'] span`)
         ).toBe(teamMembers[i].TeamMemberPrimaryContact);
       }

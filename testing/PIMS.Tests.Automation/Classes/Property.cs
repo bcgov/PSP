@@ -20,8 +20,8 @@
         public string MunicipalZoning { get; set; } = null!;
         public List<string> Anomalies { get; set; } = new List<string>();
         public List<string> TenureStatus { get; set; } = new List<string>();
-        public string ProvincialPublicHwy { get; set; } = null!;
-        public List<string> HighwayEstablishedBy { get; set; } = new List<string>();
+        //public string ProvincialPublicHwy { get; set; } = null!;
+        //public List<string> HighwayEstablishedBy { get; set; } = new List<string>();
         public string SqrMeters { get; set; } = null!;
         public Boolean IsVolumetric { get; set; } = false;
         public string Volume { get; set; } = null!;
@@ -66,9 +66,11 @@
         public string PIN { get; set; } = null!;
         public string Address { get; set; } = null!;
         public string PlanNumber { get; set; } = null!;
-        public string LegalDescription { get; set; } = null!;
-        public List<string> MultiplePIDS { get; set; } = new List<string>();
+        public string HistoricFile { get; set; } = null!;
+        public string POIName { get; set; } = null!;
         public PropertyLatitudeLongitude LatitudeLongitude { get; set; } = new PropertyLatitudeLongitude();
+        public SurveyParcel SurveyParcel { get; set; } = new SurveyParcel();
+        public List<string> MultiplePIDS { get; set; } = new List<string>();      
     }
 
     public class PropertyManagement
@@ -157,5 +159,13 @@
         public string LongitudeMinutes { get; set; } = null!;
         public string LongitudeSeconds { get; set; } = null!;
         public string LongitudeDirection { get; set; } = null!;
+    }
+
+    public class SurveyParcel
+    {
+        public string District { get; set; } = null!;
+        public string Section{ get; set; } = null!;
+        public string Township { get; set; } = null!;
+        public string Range { get; set; } = null!;
     }
 }

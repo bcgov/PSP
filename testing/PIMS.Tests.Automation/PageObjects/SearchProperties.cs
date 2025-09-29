@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 using PIMS.Tests.Automation.Classes;
 
 namespace PIMS.Tests.Automation.PageObjects
@@ -14,6 +15,12 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By searchPropertyByPINInput = By.Id("input-pin");
         private readonly By searchPropertyByAddressInput = By.Id("input-address");
         private readonly By searchPropertyByPlanInput = By.Id("input-planNumber");
+        private readonly By searchPropertyByHistoricalFileInput = By.Id("input-historical");
+        private readonly By searchPropertyByPOINameInput = By.Id("input-name");
+        private readonly By searchSurveyDistricSelect = By.Id("input-district");
+        private readonly By searchSurveySectionInput = By.Id("input-section");
+        private readonly By searchSurveyTownshipInput = By.Id("input-township");
+        private readonly By searchSurveyRangeInput = By.Id("input-range");
 
         private readonly By searchPropertyByLatDegreesInput = By.Id("number-input-coordinates.latitude.degrees");
         private readonly By searchPropertyByLatMinsInput = By.Id("number-input-coordinates.latitude.minutes");
@@ -30,12 +37,34 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By searchPropertySearchBttn = By.Id("search-button");
         private readonly By searchPropertyResetBttn = By.Id("reset-button");
 
-        private readonly By searchPropertyListViewIcon = By.CssSelector("button[title='list-view']");
+        private readonly By searchPropertyPOINameOptionList = By.CssSelector("input[data-testid='geographic-name-input']");
+        private readonly By searchPropertyPOINameFirstOption = By.XPath("//input[@data-testid='geographic-name-input']/following-sibling::ul/li[1]");
+
+        private readonly By search1stPMBCResult = By.XPath("//div[text()='Results (PMBC)']/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div[@data-testid='search-property-0']/div[1]/div");
+        private readonly By search1stPMBCResultEllipsisBttn = By.XPath("//div[text()='Results (PMBC)']/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div[@data-testid='search-property-0']/div[2]/div/div/button");
+        private readonly By search2ndPMBCResult = By.XPath("//div[text()='Results (PMBC)']/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div[@data-testid='search-property-1']/div[1]/div");
+        private readonly By search2ndPMBCResultEllipsisBttn = By.XPath("//div[text()='Results (PMBC)']/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div[@data-testid='search-property-1']/div[2]/div/div/button");
+
+
+        private readonly By search1stPMBCResultCreateResearchOption = By.CssSelector("div[data-testid='more-options-menu'] a[aria-label='Create Research File']");
+        private readonly By search1stPMBCResultCreateAcquisitionOption = By.CssSelector("div[data-testid='more-options-menu'] a[aria-label='Create Acquisition File']");
+        private readonly By search1stPMBCResultCreateManagementOption = By.CssSelector("div[data-testid='more-options-menu'] a[aria-label='Create Management File']");
+        private readonly By search1stPMBCResultCreateLeaseOption = By.CssSelector("div[data-testid='more-options-menu'] a[aria-label='Create Lease File']");
+        private readonly By search1stPMBCResultCreateDispositionOption = By.CssSelector("div[data-testid='more-options-menu'] a[aria-label='Create Disposition File']");
+        private readonly By search1stPMBCResultAddToFileOption = By.CssSelector("div[data-testid='more-options-menu'] a[aria-label='Add to Open File']");
+
+        private readonly By search1stPIMSResult = By.XPath("//div[text()='Results (PIMS)']/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div[@data-testid='search-property-0']/div[1]/div");
+        private readonly By search1stPIMSResultEllipsisBttn = By.XPath("//div[text()='Results (PIMS)']/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div[@data-testid='search-property-0']/div[2]/div/div/button");
+
+        private readonly By searchPropertyMoreOptionsBttn = By.XPath("//div[text()='Property']/preceding-sibling::div/div/button");
+        private readonly By searchPropertyAddToFileOption = By.XPath("//div[text()='Property']/preceding-sibling::div/div[@class='show dropdown']/div[@data-testid='more-options-menu']/a[@aria-label='Add to Open File']");
+
+        private readonly By searchProperty1stPinOnMap = By.CssSelector("div[class='leaflet-pane leaflet-marker-pane'] img:first-child");
+
+        private readonly By searchPropertyListViewBttn = By.XPath("//div[text()='Search PIMS information']/parent::button");
 
         //Map Pin element
-        private readonly By searchPropertyFoundLocationPin = By.XPath("//div[@class='leaflet-pane leaflet-marker-pane']/img[1]");
-        private readonly By searchPropertyFoundLocationPopup = By.CssSelector("div[class='leaflet-popup-content']");
-        private readonly By searchPropertyFoundCluster = By.CssSelector("div[class='leaflet-marker-icon marker-cluster marker-cluster-small leaflet-zoom-animated leaflet-interactive']");
+        private readonly By searchPropertyFoundLocationPin = By.CssSelector("div[class='leaflet-pane leaflet-marker-pane'] img:first-child");
 
         //Properties List View Elements
         private readonly By searchPropertyViewByInput = By.Id("properties-selector_input");
@@ -66,7 +95,9 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By searchPropertyListPaginationMenuBttn = By.CssSelector("div[class='Menu-button']");
         private readonly By searchPropertyListPagination = By.CssSelector("ul[class='pagination']");
 
-        private SharedModals sharedModals;
+        private readonly By searchPropertyConfirmationModal = By.CssSelector("div[class='modal-content']");
+
+        private readonly SharedModals sharedModals;
 
         public SearchProperties(IWebDriver webDriver) : base(webDriver)
         {
@@ -79,44 +110,81 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(homePageBttn).Click();
         }
 
-        public void SearchPropertyByPID(string PID)
+        public void SearchProperty(string PID = "", string PIN = "", string address = "", string plan = "", string historicFile = "", string POIName = "",
+            PropertyLatitudeLongitude? coordinates = null, SurveyParcel? surveyParcel = null)
         {
             Wait();
 
-            WaitUntilClickable(searchPropertyTypeSelect);
-            ChooseSpecificSelectOption(searchPropertyTypeSelect, "PID");
-            ClearInput(searchPropertyByPIDInput);
-            webDriver.FindElement(searchPropertyByPIDInput).SendKeys(PID);
-            FocusAndClick(searchPropertySearchBttn);
+            if (PID != "")
+            {
+                ChooseSpecificSelectOption(searchPropertyTypeSelect, "PID");
+                ClearInput(searchPropertyByPIDInput);
+                webDriver.FindElement(searchPropertyByPIDInput).SendKeys(PID);
+            }
 
-            WaitUntilSpinnerDisappear();
-        }
+            if (PIN != "")
+            {
+                ChooseSpecificSelectOption(searchPropertyTypeSelect, "PIN");
+                ClearInput(searchPropertyByPINInput);
+                webDriver.FindElement(searchPropertyByPINInput).SendKeys(PIN);
+            }
 
-        public void SearchPropertyByPIN(string PIN)
-        {
-            Wait();
+            if (address != "")
+            {
+                ChooseSpecificSelectOption(searchPropertyTypeSelect, "Address");
+                webDriver.FindElement(searchPropertyByAddressInput).SendKeys(address);
 
-            WaitUntilClickable(searchPropertyTypeSelect);
-            ChooseSpecificSelectOption(searchPropertyTypeSelect, "PIN");
-            ClearInput(searchPropertyByPINInput);
-            webDriver.FindElement(searchPropertyByPINInput).SendKeys(PIN);
-            FocusAndClick(searchPropertySearchBttn);
+                WaitUntilVisible(searchPropertyAddressSuggestionsGroup);
+                FocusAndClick(searchPropertyAddressSuggestions1stOption);
+            }
 
-            WaitUntilSpinnerDisappear();
-        }
+            if (plan != "")
+            {
+                ChooseSpecificSelectOption(searchPropertyTypeSelect, "Plan #");
+                webDriver.FindElement(searchPropertyByPlanInput).SendKeys(plan);
+            }
 
-        public void SearchPropertyByAddressMap(string address)
-        {
-            Wait();
+            if (historicFile != "")
+            {
+                ChooseSpecificSelectOption(searchPropertyTypeSelect, "Historical File #");
+                webDriver.FindElement(searchPropertyByHistoricalFileInput).SendKeys(historicFile);
+                
+            }
 
-            WaitUntilClickable(searchPropertyTypeSelect);
-            ChooseSpecificSelectOption(searchPropertyTypeSelect, "Address");
-            webDriver.FindElement(searchPropertyByAddressInput).SendKeys(address);
+            if (POIName != "")
+            {
+                ChooseSpecificSelectOption(searchPropertyTypeSelect, "POI Name");
+                webDriver.FindElement(searchPropertyByPOINameInput).SendKeys(POIName);
 
-            WaitUntilVisible(searchPropertyAddressSuggestionsGroup);
-            FocusAndClick(searchPropertyAddressSuggestions1stOption);
+                Wait();
+                WaitUntilVisible(searchPropertyPOINameFirstOption);
+                webDriver.FindElement(searchPropertyPOINameFirstOption).Click();
+            }
 
-            WaitUntilClickable(searchPropertySearchBttn);
+            if (coordinates != null)
+            {
+                ChooseSpecificSelectOption(searchPropertyTypeSelect, "Lat/Long");
+
+                webDriver.FindElement(searchPropertyByLatDegreesInput).SendKeys(coordinates.LatitudeDegree);
+                webDriver.FindElement(searchPropertyByLatMinsInput).SendKeys(coordinates.LatitudeMinutes);
+                webDriver.FindElement(searchPropertyByLatSecsInput).SendKeys(coordinates.LatitudeSeconds);
+                webDriver.FindElement(searchPropertyByLatDirectionSelect).SendKeys(coordinates.LatitudeDirection);
+
+                webDriver.FindElement(searchPropertyByLongDegreesInput).SendKeys(coordinates.LongitudeDegree);
+                webDriver.FindElement(searchPropertyByLongMinsInput).SendKeys(coordinates.LongitudeMinutes);
+                webDriver.FindElement(searchPropertyByLongSecsInput).SendKeys(coordinates.LongitudeSeconds);
+                webDriver.FindElement(searchPropertyByLongDirectionSelect).SendKeys(coordinates.LongitudeDirection);
+            }
+
+            if (surveyParcel != null)
+            {
+                ChooseSpecificSelectOption(searchPropertyTypeSelect, "Survey Parcel");
+                ChooseSpecificSelectOption(searchSurveyDistricSelect, surveyParcel.District);
+                webDriver.FindElement(searchSurveySectionInput).SendKeys(surveyParcel.Section);
+                webDriver.FindElement(searchSurveyTownshipInput).SendKeys(surveyParcel.Township);
+                webDriver.FindElement(searchSurveyRangeInput).SendKeys(surveyParcel.Range);
+            }
+            
             webDriver.FindElement(searchPropertySearchBttn).Click();
             WaitUntilSpinnerDisappear();
         }
@@ -133,40 +201,6 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilTableSpinnerDisappear();
         }
 
-        public void SearchPropertyByPlan(string plan)
-        {
-            Wait();
-
-            WaitUntilClickable(searchPropertyTypeSelect);
-            ChooseSpecificSelectOption(searchPropertyTypeSelect, "Plan #");
-            webDriver.FindElement(searchPropertyByPlanInput).SendKeys(plan);
-
-            FocusAndClick(searchPropertySearchBttn);
-            WaitUntilSpinnerDisappear();
-        }
-
-        public void SearchPropertyByLatLong(PropertyLatitudeLongitude coordinates)
-        {
-            Wait();
-
-            WaitUntilClickable(searchPropertyTypeSelect);
-            ChooseSpecificSelectOption(searchPropertyTypeSelect, "Lat/Long");
-
-            webDriver.FindElement(searchPropertyByLatDegreesInput).SendKeys(coordinates.LatitudeDegree);
-            webDriver.FindElement(searchPropertyByLatMinsInput).SendKeys(coordinates.LatitudeMinutes);
-            webDriver.FindElement(searchPropertyByLatSecsInput).SendKeys(coordinates.LatitudeSeconds);
-            webDriver.FindElement(searchPropertyByLatDirectionSelect).SendKeys(coordinates.LatitudeDirection);
-
-            webDriver.FindElement(searchPropertyByLongDegreesInput).SendKeys(coordinates.LongitudeDegree);
-            webDriver.FindElement(searchPropertyByLongMinsInput).SendKeys(coordinates.LongitudeMinutes);
-            webDriver.FindElement(searchPropertyByLongSecsInput).SendKeys(coordinates.LongitudeSeconds);
-            webDriver.FindElement(searchPropertyByLongDirectionSelect).SendKeys(coordinates.LongitudeDirection);
-
-            WaitUntilClickable(searchPropertySearchBttn);
-            webDriver.FindElement(searchPropertySearchBttn).Click();
-            WaitUntilSpinnerDisappear();
-        }
-
         public void IncludeAllPropertyOwnershipSearch()
         {
             Wait();
@@ -177,7 +211,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(searchPropertyViewByFirstOption).Click();
         }
 
-        public void SearchPropertyReset()
+        public void ResetPropertySearch()
         {
             Wait();
             WaitUntilClickable(searchPropertyResetBttn);
@@ -186,17 +220,30 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilSpinnerDisappear();
         }
 
-        public void SelectFoundPin()
+        public void SelectFound1stPropAddToFile()
         {
+            WaitUntilPropertySpinnerDisappear();
+            webDriver.FindElement(searchPropertyMoreOptionsBttn).Click();
+
+            WaitUntilVisible(searchPropertyAddToFileOption);
+            webDriver.FindElement(searchPropertyAddToFileOption).Click();
+
             Wait();
+            if (webDriver.FindElements(searchPropertyConfirmationModal).Count > 0 && sharedModals.ModalContent().Contains("You have selected a property not previously in the inventory"))
+            {
+                Assert.Equal("Not inventory property", sharedModals.ModalHeader());
+                Assert.Contains("You have selected a property not previously in the inventory. Do you want to add this property to the lease?", sharedModals.ModalContent());
+                sharedModals.ModalClickOKBttn();
+            }
+        }
 
-            while (webDriver.FindElements(searchPropertyFoundCluster).Count > 0)
-                FocusAndClick(searchPropertyFoundCluster);
+        public void SelectFound2ndPropAddToFile()
+        {
+            WaitUntilPropertySpinnerDisappear();
+            webDriver.FindElement(searchPropertyMoreOptionsBttn).Click();
 
-            if (webDriver.FindElements(searchPropertyFoundLocationPopup).Count == 1)
-                FocusAndClick(searchPropertyFoundLocationPopup);
-            else
-                FocusAndClick(searchPropertyFoundLocationPin);
+            WaitUntilVisible(searchPropertyAddToFileOption);
+            webDriver.FindElement(searchPropertyAddToFileOption).Click();
         }
 
         public void SelectFirstFoundPropertyList()
@@ -205,10 +252,90 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(searchPropertyListContent1stViewTabBttn).Click();
         }
 
+        public void SelectFirstPMBCResult(string action = "")
+        {
+            Wait();
+            Actions hoverAction = new Actions(webDriver);
+            hoverAction.MoveToElement(webDriver.FindElement(search1stPMBCResult)).MoveToElement(webDriver.FindElement(search1stPMBCResultEllipsisBttn)).Click().Build().Perform();
+
+            switch (action)
+            {
+                case "Create Research":
+                    webDriver.FindElement(search1stPMBCResultCreateResearchOption).Click();
+                    break;
+                case "Create Acquisition":
+                    webDriver.FindElement(search1stPMBCResultCreateAcquisitionOption).Click();
+                    break;
+                case "Create Management":
+                    webDriver.FindElement(search1stPMBCResultCreateManagementOption).Click();
+                    break;
+                case "Create Lease":
+                    webDriver.FindElement(search1stPMBCResultCreateLeaseOption).Click();
+                    break;
+                case "Create Disposition":
+                    webDriver.FindElement(search1stPMBCResultCreateDispositionOption).Click();
+                    break;
+                default:
+                    webDriver.FindElement(search1stPMBCResultAddToFileOption).Click();
+                    break;
+            }
+
+            Wait();
+            if (webDriver.FindElements(searchPropertyConfirmationModal).Count > 0 && sharedModals.ModalContent().Contains("You have selected a property not previously in the inventory"))
+            {
+                Assert.Equal("Not inventory property", sharedModals.ModalHeader());
+                Assert.Contains("You have selected a property not previously in the inventory. Do you want to add this property to the lease?", sharedModals.ModalContent());
+                sharedModals.ModalClickOKBttn();
+            }
+        }
+
+        public void SelectSecondPMBCResult(string action = "")
+        {
+            Wait();
+            Actions hoverAction = new Actions(webDriver);
+            hoverAction.MoveToElement(webDriver.FindElement(search2ndPMBCResult)).MoveToElement(webDriver.FindElement(search2ndPMBCResultEllipsisBttn)).Click().Build().Perform();
+
+            switch (action)
+            {
+                case "Create Research":
+                    webDriver.FindElement(search1stPMBCResultCreateResearchOption).Click();
+                    break;
+                case "Create Acquisition":
+                    webDriver.FindElement(search1stPMBCResultCreateAcquisitionOption).Click();
+                    break;
+                case "Create Management":
+                    webDriver.FindElement(search1stPMBCResultCreateManagementOption).Click();
+                    break;
+                case "Create Lease":
+                    webDriver.FindElement(search1stPMBCResultCreateLeaseOption).Click();
+                    break;
+                case "Create Disposition":
+                    webDriver.FindElement(search1stPMBCResultCreateDispositionOption).Click();
+                    break;
+                default:
+                    webDriver.FindElement(search1stPMBCResultAddToFileOption).Click();
+                    break;
+            }
+        }
+
+        public void SelectFirstPIMSResultToFile()
+        {
+            Wait();
+            Actions action = new Actions(webDriver);
+            action.MoveToElement(webDriver.FindElement(search1stPIMSResult)).MoveToElement(webDriver.FindElement(search1stPIMSResultEllipsisBttn)).Click().Build().Perform();
+            webDriver.FindElement(search1stPMBCResultAddToFileOption).Click();
+        }
+
+        public void SelectFirstPIMSResult()
+        {
+            Wait();
+            webDriver.FindElement(search1stPIMSResult).Click();
+        }
+
         public void NavigatePropertyListView()
         {
             Wait(10000);
-            webDriver.FindElement(searchPropertyListViewIcon).Click();
+            webDriver.FindElement(searchPropertyListViewBttn).Click();
         }
 
         public void ChooseFirstPropertyFromList()
@@ -287,12 +414,6 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(searchPropertyListPagination);
         }
 
-        public Boolean PropertiesMapFoundCount()
-        {
-            Wait();
-            return webDriver.FindElements(searchPropertyFoundLocationPopup).Count == 1;
-        }
-
         public int PropertiesPinMapFoundCount()
         {
             Wait();
@@ -305,10 +426,9 @@ namespace PIMS.Tests.Automation.PageObjects
             return webDriver.FindElements(searchPropertyListContent).Count();
         }
 
-        public int PropertiesClustersFoundCount()
+        public void NoPropertiesFound()
         {
-            Wait();
-            return webDriver.FindElements(searchPropertyFoundCluster).Count();
+            Assert.True(sharedModals.ToastifyText() == "No search result found");
         }
     }
 }

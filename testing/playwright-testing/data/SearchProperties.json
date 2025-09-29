@@ -266,44 +266,6 @@
     }
   },
   {
-    "Test Case Description": "AF Add Properties",
-    "PID": "010-764-135",
-    "PIN": 1821391.0,
-    "Address": "1818 Cornwell",
-    "PlanNumber": "NWP24768",
-    "LegalDescription": "THE SOUTH WEST 1/4 OF DISTRICT LOT 7195 CARIBOO DISTRICT",
-    "MultiplePIDS": null,
-    "Coordinates": {
-      "LatitudeDegree": null,
-      "LatitudeMinutes": null,
-      "LatitudeSeconds": null,
-      "LatitudeDirection": null,
-      "LongitudeDegree": null,
-      "LongitudeMinutes": null,
-      "LongitudeSeconds": null,
-      "LongitudeDirection": null
-    }
-  },
-  {
-    "Test Case Description": "AF Edit Existing",
-    "PID": "026-594-358",
-    "PIN": null,
-    "Address": null,
-    "PlanNumber": null,
-    "LegalDescription": "LOT 21 AND AN UNDIVIDED 1/24TH SHARE IN LOT 1 SECTION 32",
-    "MultiplePIDS": null,
-    "Coordinates": {
-      "LatitudeDegree": null,
-      "LatitudeMinutes": null,
-      "LatitudeSeconds": null,
-      "LatitudeDirection": null,
-      "LongitudeDegree": null,
-      "LongitudeMinutes": null,
-      "LongitudeSeconds": null,
-      "LongitudeDirection": null
-    }
-  },
-  {
     "Test Case Description": "AF Minimum Fields",
     "PID": "015-210-995",
     "PIN": null,
