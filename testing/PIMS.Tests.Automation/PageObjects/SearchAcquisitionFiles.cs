@@ -108,14 +108,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
             Wait();
             var allWindowsHandle = webDriver.WindowHandles;
-            foreach (var handle in allWindowsHandle)
-            {
-                if (handle != originalWindowHandle)
-                {
-                    webDriver.SwitchTo().Window(handle);
-                    break;
-                }
-            }
+            var newWindowHandle = allWindowsHandle.Where(handle => handle != originalWindowHandle).First();
+            webDriver.SwitchTo().Window(newWindowHandle);
+                
+            
             WaitUntilClickable(searchAcquisitionFileHeaderCode);
             AssertTrueIsDisplayed(searchAcquisitionFileHeaderCode);
         }

@@ -6,33 +6,33 @@ namespace PIMS.Tests.Automation.PageObjects
     public class PropertyPIMSFiles : PageObjectBase
     {
         //PIMS Files Elements
-        private By propertyPimsFilesLinkTab = By.XPath("//a[contains(text(),'PIMS Files')]");
-        private By propertyPimsFiles = By.XPath("//div[contains(text(),'This property is associated with the following files')]");
+        private readonly By propertyPimsFilesLinkTab = By.XPath("//a[contains(text(),'PIMS Files')]");
+        private readonly By propertyPimsFiles = By.XPath("//div[contains(text(),'This property is associated with the following files')]");
 
-        private By propertyResearchFileSubtitle = By.XPath("//div[contains(text(),'Research')]");
-        private By propertyResearchCountLabel = By.XPath("//div[contains(text(),'Research')]/following-sibling::div[@class='my-1 col-auto']/div");
-        private By propertyResearchTable = By.XPath("//div[contains(text(),'Research')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='associationFiles']");
-        private By propertyResearchExpandTableBttn = By.XPath("//div[contains(text(),'Research')]/parent::div/parent::div/parent::div/following-sibling::div/*[1]");
+        private readonly By propertyResearchFileSubtitle = By.XPath("//div[contains(text(),'Research')]");
+        private readonly By propertyResearchCountLabel = By.XPath("//div[contains(text(),'Research')]/following-sibling::div[@class='my-1 col-auto']/div");
+        private readonly By propertyResearchTable = By.XPath("//div[contains(text(),'Research')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='associationFiles']");
+        private readonly By propertyResearchExpandTableBttn = By.XPath("//div[contains(text(),'Research')]/parent::div/parent::div/parent::div/following-sibling::div/*[1]");
 
-        private By propertyAcquisitionFileSubtitle = By.XPath("//div[contains(text(),'Acquisition')]");
-        private By propertyAcquisitionCountLabel = By.XPath("//div[contains(text(),'Acquisition')]/following-sibling::div[@class='my-1 col-auto']/div");
-        private By propertyAcquisitionTable = By.XPath("//div[contains(text(),'Acquisition')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='associationFiles']");
-        private By propertyAcquisitionExpandTableBttn = By.XPath("//div[contains(text(),'Acquisition')]/parent::div/parent::div/parent::div/following-sibling::div/*[1]");
+        private readonly By propertyAcquisitionFileSubtitle = By.XPath("//div[contains(text(),'Acquisition')]");
+        private readonly By propertyAcquisitionCountLabel = By.XPath("//div[contains(text(),'Acquisition')]/following-sibling::div[@class='my-1 col-auto']/div");
+        private readonly By propertyAcquisitionTable = By.XPath("//div[contains(text(),'Acquisition')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='associationFiles']");
+        private readonly By propertyAcquisitionExpandTableBttn = By.XPath("//div[contains(text(),'Acquisition')]/parent::div/parent::div/parent::div/following-sibling::div/*[1]");
 
-        private By propertyLeasesSubtitle = By.XPath("//div[contains(text(),'Leases/Licences')]");
-        private By propertyLeaseCountLabel = By.XPath("//div[contains(text(),'Leases/Licences')]/following-sibling::div[@class='my-1 col-auto']/div");
-        private By propertyLeaseTable = By.XPath("//div[contains(text(),'Leases/Licences')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='associationFiles']");
-        private By propertyLeaseExpandTableBttn = By.XPath("//div[contains(text(),'Leases/Licences')]/parent::div/parent::div/parent::div/following-sibling::div/*[1]");
+        private readonly By propertyLeasesSubtitle = By.XPath("//div[contains(text(),'Leases/Licences')]");
+        private readonly By propertyLeaseCountLabel = By.XPath("//div[contains(text(),'Leases/Licences')]/following-sibling::div[@class='my-1 col-auto']/div");
+        private readonly By propertyLeaseTable = By.XPath("//div[contains(text(),'Leases/Licences')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='associationFiles']");
+        private readonly By propertyLeaseExpandTableBttn = By.XPath("//div[contains(text(),'Leases/Licences')]/parent::div/parent::div/parent::div/following-sibling::div/*[1]");
 
-        private By propertyDispositionFileSubtitle = By.XPath("//div[contains(text(),'Disposition')]");
-        private By propertyDispositionCountLabel = By.XPath("//div[contains(text(),'Disposition')]/following-sibling::div[@class='my-1 col-auto']/div");
-        private By propertyDispositionTable = By.XPath("//div[contains(text(),'Disposition')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='associationFiles']");
-        private By propertyDispositionExpandTableBttn = By.XPath("//div[contains(text(),'Disposition')]/parent::div/parent::div/parent::div/following-sibling::div/*[1]");
+        private readonly By propertyDispositionFileSubtitle = By.XPath("//div[contains(text(),'Disposition')]");
+        private readonly By propertyDispositionCountLabel = By.XPath("//div[contains(text(),'Disposition')]/following-sibling::div[@class='my-1 col-auto']/div");
+        private readonly By propertyDispositionTable = By.XPath("//div[contains(text(),'Disposition')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='associationFiles']");
+        private readonly By propertyDispositionExpandTableBttn = By.XPath("//div[contains(text(),'Disposition')]/parent::div/parent::div/parent::div/following-sibling::div/*[1]");
 
-        private By propertyManagementSubtitle = By.XPath("//div[contains(text(),'Management')]");
-        private By propertyManagementCountLabel = By.XPath("//div[contains(text(),'Management')]/following-sibling::div[@class='my-1 col-auto']/div");
-        private By propertyManagementTable = By.XPath("//div[contains(text(),'Management')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='associationFiles']");
-        private By propertyManagementExpandTableBttn = By.XPath("//div[contains(text(),'Management')]/parent::div/parent::div/parent::div/following-sibling::div/*[1]");
+        private readonly By propertyManagementSubtitle = By.XPath("//div[contains(text(),'Management')]");
+        private readonly By propertyManagementCountLabel = By.XPath("//div[contains(text(),'Management')]/following-sibling::div[@class='my-1 col-auto']/div");
+        private readonly By propertyManagementTable = By.XPath("//div[contains(text(),'Management')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='associationFiles']");
+        private readonly By propertyManagementExpandTableBttn = By.XPath("//div[contains(text(),'Management')]/parent::div/parent::div/parent::div/following-sibling::div/*[1]");
 
         public PropertyPIMSFiles(IWebDriver webDriver) : base(webDriver)
         {}
