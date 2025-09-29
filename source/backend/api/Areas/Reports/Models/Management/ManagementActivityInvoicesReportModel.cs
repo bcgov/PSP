@@ -134,7 +134,7 @@ namespace Pims.Api.Areas.Reports.Models.Management
 
         private static string GetPropertiesAsString(PimsManagementActivity activity)
         {
-            if (activity.PimsManagementActivityProperties is not null)
+            if (activity?.PimsManagementActivityProperties is not null)
             {
                 return string.Join("|", activity.PimsManagementActivityProperties
                         .Where(fp => fp?.Property != null)
