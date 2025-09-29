@@ -2,7 +2,6 @@ import React, { useContext, useEffect } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { EnumAcquisitionFileType } from '@/constants/acquisitionFileType';
 import * as API from '@/constants/API';
 import { Claims } from '@/constants/claims';
 import { NoteTypes } from '@/constants/noteTypes';
@@ -10,6 +9,7 @@ import { FileTabs, FileTabType, TabFileView } from '@/features/mapSideBar/shared
 import NoteListContainer from '@/features/notes/list/NoteListContainer';
 import NoteListView from '@/features/notes/list/NoteListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { ApiGen_CodeTypes_AcquisitionFileTypeTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionFileTypeTypes';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
@@ -112,8 +112,8 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
 
   if (
     acquisitionFile?.id &&
-    (acquisitionFile.acquisitionTypeCode?.id === EnumAcquisitionFileType.SECTN3 ||
-      acquisitionFile.acquisitionTypeCode?.id === EnumAcquisitionFileType.SECTN6)
+    (acquisitionFile.acquisitionTypeCode?.id === ApiGen_CodeTypes_AcquisitionFileTypeTypes.SECTN3 ||
+      acquisitionFile.acquisitionTypeCode?.id === ApiGen_CodeTypes_AcquisitionFileTypeTypes.SECTN6)
   ) {
     tabViews.push({
       content: (

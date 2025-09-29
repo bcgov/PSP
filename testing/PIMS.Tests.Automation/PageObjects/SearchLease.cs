@@ -147,8 +147,15 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SelectFirstOption()
         {
+            var originalWindowHandle = webDriver.CurrentWindowHandle;
+
             WaitUntilClickable(searchLicense1stResultLink);
             webDriver.FindElement(searchLicense1stResultLink).Click();
+
+            Wait();
+            var allWindowsHandle = webDriver.WindowHandles;
+            var newWindowHandle = allWindowsHandle.Where(handle => handle != originalWindowHandle).First();
+            webDriver.SwitchTo().Window(newWindowHandle);
 
             WaitUntilVisible(searchLicenseFileHeaderCode);
             Assert.True(webDriver.FindElement(searchLicenseFileHeaderCode).Displayed);
@@ -334,8 +341,8 @@ namespace PIMS.Tests.Automation.PageObjects
             if(lease.Program != "")
                 AssertTrueContentEquals(searchLicense1stResultProgramContent, lease.Program);
 
-            //if(lease.LeaseTenants.Count > 0)
-            //    Assert.NotEmpty(webDriver.FindElements(searchLicense1stResultTenantsContent));
+            if(lease.LeaseTenants.Count > 0)
+                Assert.NotEmpty(webDriver.FindElements(searchLicense1stResultTenantsContent));
 
             if (lease.SearchPropertiesIndex!= 0)
                 Assert.True(webDriver.FindElements(searchLicense1stResultPropertiesContent).Count > 0);

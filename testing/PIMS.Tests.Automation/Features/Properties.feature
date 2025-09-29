@@ -28,8 +28,7 @@ Scenario: 04._Property_Management_Activity_Digital_Documents
 	Then Property Management Tab has been updated successfully
 
 Scenario: 05._Properties_Map_and_List_Filters
-	Given I search for a Property in the Map by different filters from row number 9
-	When I search for a Property in the Properties List by different filters from row number 29
+	Given I search for a Property in the Properties List by different filters from row number 29
 	Then Properties filters works successfully
 
 Scenario: 06._Non-Inventory_Property_Information

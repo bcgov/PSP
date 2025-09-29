@@ -6,7 +6,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
     class="Toastify"
   />
   <div />
-  .c10.btn {
+  .c11.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,17 +35,17 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
   cursor: pointer;
 }
 
-.c10.btn .Button__value {
+.c11.btn .Button__value {
   width: auto;
 }
 
-.c10.btn:hover {
+.c11.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c10.btn:focus {
+.c11.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -53,31 +53,31 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
   box-shadow: none;
 }
 
-.c10.btn.btn-primary {
+.c11.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c10.btn.btn-primary:hover,
-.c10.btn.btn-primary:active,
-.c10.btn.btn-primary:focus {
+.c11.btn.btn-primary:hover,
+.c11.btn.btn-primary:active,
+.c11.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c10.btn.btn-secondary {
+.c11.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c10.btn.btn-secondary:hover,
-.c10.btn.btn-secondary:active,
-.c10.btn.btn-secondary:focus {
+.c11.btn.btn-secondary:hover,
+.c11.btn.btn-secondary:active,
+.c11.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c10.btn.btn-info {
+.c11.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -85,66 +85,66 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
   padding-right: 0.6rem;
 }
 
-.c10.btn.btn-info:hover,
-.c10.btn.btn-info:active,
-.c10.btn.btn-info:focus {
+.c11.btn.btn-info:hover,
+.c11.btn.btn-info:active,
+.c11.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c10.btn.btn-light {
+.c11.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c10.btn.btn-light:hover,
-.c10.btn.btn-light:active,
-.c10.btn.btn-light:focus {
+.c11.btn.btn-light:hover,
+.c11.btn.btn-light:active,
+.c11.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c10.btn.btn-dark {
+.c11.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c10.btn.btn-dark:hover,
-.c10.btn.btn-dark:active,
-.c10.btn.btn-dark:focus {
+.c11.btn.btn-dark:hover,
+.c11.btn.btn-dark:active,
+.c11.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c10.btn.btn-danger {
+.c11.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c10.btn.btn-danger:hover,
-.c10.btn.btn-danger:active,
-.c10.btn.btn-danger:focus {
+.c11.btn.btn-danger:hover,
+.c11.btn.btn-danger:active,
+.c11.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c10.btn.btn-warning {
+.c11.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c10.btn.btn-warning:hover,
-.c10.btn.btn-warning:active,
-.c10.btn.btn-warning:focus {
+.c11.btn.btn-warning:hover,
+.c11.btn.btn-warning:active,
+.c11.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c10.btn.btn-link {
+.c11.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -168,9 +168,9 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
   text-decoration: underline;
 }
 
-.c10.btn.btn-link:hover,
-.c10.btn.btn-link:active,
-.c10.btn.btn-link:focus {
+.c11.btn.btn-link:hover,
+.c11.btn.btn-link:active,
+.c11.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -180,15 +180,15 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
   outline: none;
 }
 
-.c10.btn.btn-link:disabled,
-.c10.btn.btn-link.disabled {
+.c11.btn.btn-link:disabled,
+.c11.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c10.btn:disabled,
-.c10.btn:disabled:hover {
+.c11.btn:disabled,
+.c11.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -200,19 +200,19 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
   cursor: not-allowed;
 }
 
-.c10.Button .Button__icon {
+.c11.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c10.Button--icon-only:focus {
+.c11.Button--icon-only:focus {
   outline: none;
 }
 
-.c10.Button--icon-only .Button__icon {
+.c11.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c11 .react-datepicker__calendar-icon {
+.c12 .react-datepicker__calendar-icon {
   width: 2.4rem;
   height: 3rem;
   margin-top: 0.5rem;
@@ -222,19 +222,19 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
   pointer-events: none;
 }
 
-.c11 .react-datepicker__view-calendar-icon input {
+.c12 .react-datepicker__view-calendar-icon input {
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c13.c13.form-control.is-valid {
+.c14.c14.form-control.is-valid {
   background-image: none;
 }
 
-.c13.c13.form-control.is-invalid {
+.c14.c14.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
-.c12 {
+.c13 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -245,13 +245,13 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
   align-items: baseline;
 }
 
-.c12 .form-label {
+.c13 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
 }
 
-.c17 {
+.c18 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -261,7 +261,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
   flex-wrap: nowrap;
 }
 
-.c14 {
+.c15 {
   position: relative;
   border-radius: 0.4rem;
   padding-top: 0.8rem;
@@ -274,11 +274,11 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
   cursor: default;
 }
 
-.c14.is-invalid {
+.c15.is-invalid {
   border: #CE3E39 solid 0.1rem;
 }
 
-.c15.c15.btn {
+.c16.c16.btn {
   position: absolute;
   top: calc(50% - 1.4rem);
   padding-top: 0.8rem;
@@ -292,20 +292,20 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
   line-height: unset;
 }
 
-.c15.c15.btn .text {
+.c16.c16.btn .text {
   display: none;
 }
 
-.c15.c15.btn:hover,
-.c15.c15.btn:active,
-.c15.c15.btn:focus {
+.c16.c16.btn:hover,
+.c16.c16.btn:active,
+.c16.c16.btn:focus {
   color: #CE3E39;
   -webkit-text-decoration: none;
   text-decoration: none;
   opacity: unset;
 }
 
-.c16.form-group {
+.c17.form-group {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -313,7 +313,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
   margin-bottom: 0;
 }
 
-.c16.form-group .radio-group {
+.c17.form-group .radio-group {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -326,7 +326,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
   column-gap: unset;
 }
 
-.c16.form-group .radio-group .form-check {
+.c17.form-group .radio-group .form-check {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -341,15 +341,15 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
   justify-content: center;
 }
 
-.c16.form-group .radio-group .form-check .form-check-input {
+.c17.form-group .radio-group .form-check .form-check-input {
   margin-left: 0;
 }
 
-.c16.form-group .radio-group .form-check-label {
+.c17.form-group .radio-group .form-check-label {
   margin-left: 1rem;
 }
 
-.c16 .form-label {
+.c17 .form-label {
   margin-bottom: unset;
 }
 
@@ -385,6 +385,17 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
 }
 
 .c5 {
+  margin: 0 1.6rem 0 1.6rem;
+  padding: 1.6rem;
+  text-align: left;
+  text-underline-offset: 2px;
+}
+
+.c5 button {
+  font-size: 14px;
+}
+
+.c6 {
   font-size: 16px;
   color: #1a5a96;
   font-style: italic;
@@ -395,7 +406,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
   margin-bottom: 1rem;
 }
 
-.c9 {
+.c10 {
   padding: 1.5rem 1.8rem;
   border-radius: 4px;
   background-color: #f0f7fc;
@@ -407,19 +418,19 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
   line-height: 24px;
 }
 
-.c8 {
+.c9 {
   float: right;
   cursor: pointer;
   color: #1a5a96;
   font-size: 2.8rem;
 }
 
-.c7 {
+.c8 {
   margin-right: 1.5rem;
   font-size: 1.3rem;
 }
 
-.c6 {
+.c7 {
   cursor: pointer;
 }
 
@@ -535,87 +546,91 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
           class="c5"
         >
           <div
-            class="c6 no-gutters row"
+            class="c6"
           >
             <div
-              class="col"
+              class="c7 no-gutters row"
             >
-              <svg
-                class="c7"
-                fill="currentColor"
-                height="1em"
-                stroke="currentColor"
-                stroke-width="0"
-                viewBox="0 0 512 512"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
+              <div
+                class="col"
               >
-                <path
-                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                />
-              </svg>
-              Help with choosing a name
-            </div>
-            <div
-              class="col-1"
-            >
-              <svg
-                class="c8"
-                fill="currentColor"
-                height="1em"
-                stroke="currentColor"
-                stroke-width="0"
-                viewBox="0 0 24 24"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
+                <svg
+                  class="c8"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 512 512"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                  />
+                </svg>
+                Help with choosing a name
+              </div>
+              <div
+                class="col-1"
               >
-                <path
-                  d="M0 0h24v24H0z"
-                  fill="none"
-                />
-                <path
-                  d="m7 10 5 5 5-5z"
-                />
-              </svg>
+                <svg
+                  class="c9"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="m7 10 5 5 5-5z"
+                  />
+                </svg>
+              </div>
             </div>
           </div>
-        </div>
-        <div
-          class="c9 collapse"
-        >
-          <p
-            class="mb-4"
+          <div
+            class="c10 collapsing"
           >
-            Provide a predictable research file name that will be easy to search for. Recommended format is to use the road name(s) followed by some descriptive text that may include (but not limited to) one or more of the following:
-          </p>
-          <ul>
-            <li>
-              Ministry project name
-            </li>
-            <li>
-              Name of the area
-            </li>
-            <li>
-              Name of the MOTT highway district
-            </li>
-            <li>
-              Name of the enquirer
-            </li>
-            <li>
-              Legal description
-            </li>
-          </ul>
-          <p
-            class="mb-4 mt-3"
-          >
-            If the road name is not available /applicable, the descriptive text should make the research file easy to search for in the future
-          </p>
-          <p>
-            <b>
-              Note:
-            </b>
-             This name does not need to be entirely unique, as a unique file number will be generated for your research file when you save it.
-          </p>
+            <p
+              class="mb-4"
+            >
+              Provide a predictable research file name that will be easy to search for. Recommended format is to use the road name(s) followed by some descriptive text that may include (but not limited to) one or more of the following:
+            </p>
+            <ul>
+              <li>
+                Ministry project name
+              </li>
+              <li>
+                Name of the area
+              </li>
+              <li>
+                Name of the MOTT highway district
+              </li>
+              <li>
+                Name of the enquirer
+              </li>
+              <li>
+                Legal description
+              </li>
+            </ul>
+            <p
+              class="mb-4 mt-3"
+            >
+              If the road name is not available /applicable, the descriptive text should make the research file easy to search for in the future
+            </p>
+            <p>
+              <b>
+                Note:
+              </b>
+               This name does not need to be entirely unique, as a unique file number will be generated for your research file when you save it.
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -639,7 +654,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
         class="collapse show"
       >
         <button
-          class="c10 Button btn btn-link"
+          class="c11 Button btn btn-link"
           data-testid="add-project"
           type="button"
         >
@@ -837,7 +852,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
             class="c4 text-left col"
           >
             <div
-              class="c11 c12 form-group"
+              class="c12 c13 form-group"
             >
               <div
                 class="react-datepicker-wrapper d-block"
@@ -856,7 +871,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
                   </svg>
                   <input
                     autocomplete="off"
-                    class="c13 form-control date-picker"
+                    class="c14 form-control date-picker"
                     id="datepicker-requestDate"
                     name="requestDate"
                     placeholder="MMM DD, YYYY"
@@ -992,11 +1007,11 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
                   class="col"
                 >
                   <div
-                    class="c14"
+                    class="c15"
                   >
                     Dairy Queen Forever! Property Management
                     <button
-                      class="c10 Button c15 btn btn-link"
+                      class="c11 Button c16 btn btn-link"
                       type="button"
                     >
                       <div
@@ -1043,7 +1058,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
                   class="pl-0 col-auto"
                 >
                   <button
-                    class="c10 Button Button--icon-only px-2 btn btn-primary"
+                    class="c11 Button Button--icon-only px-2 btn btn-primary"
                     type="button"
                   >
                     <div
@@ -1135,7 +1150,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
             class="c4 text-left col"
           >
             <div
-              class="c11 c12 form-group"
+              class="c12 c13 form-group"
             >
               <div
                 class="react-datepicker-wrapper d-block"
@@ -1154,7 +1169,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
                   </svg>
                   <input
                     autocomplete="off"
-                    class="c13 form-control date-picker"
+                    class="c14 form-control date-picker"
                     id="datepicker-researchCompletionDate"
                     name="researchCompletionDate"
                     placeholder="MMM DD, YYYY"
@@ -1232,13 +1247,13 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
             class="c4 text-left col"
           >
             <div
-              class="c16 form-group"
+              class="c17 form-group"
             >
               <div
                 class="radio-group"
               >
                 <div
-                  class="c17"
+                  class="c18"
                 >
                   <div
                     class="form-check"
@@ -1261,7 +1276,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
                   </label>
                 </div>
                 <div
-                  class="c17"
+                  class="c18"
                 >
                   <div
                     class="form-check"

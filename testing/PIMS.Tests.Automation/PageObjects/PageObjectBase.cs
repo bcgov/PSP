@@ -12,6 +12,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         protected By loadingSpinner = By.CssSelector("div[data-testid='filter-backdrop-loading']");
         protected By tableLoadingSpinner = By.CssSelector("div[class='table-loading'] div[class='spinner-border']");
+        protected By propertiesSpinner = By.CssSelector("div[data-testid='filter-backdrop-loading']");
         protected By saveButton = By.XPath("//button/div[contains(text(),'Save')]");
         protected By cancelButton = By.XPath("//button/div[contains(text(),'Cancel')]");
 
@@ -27,6 +28,11 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             wait.Until(ExpectedConditions.InvisibilityOfElementLocated(loadingSpinner));
             Wait();
+        }
+
+        protected void WaitUntilPropertySpinnerDisappear()
+        {
+            wait.Until(ExpectedConditions.InvisibilityOfElementLocated(propertiesSpinner));
         }
 
         protected void WaitUntilTableSpinnerDisappear()

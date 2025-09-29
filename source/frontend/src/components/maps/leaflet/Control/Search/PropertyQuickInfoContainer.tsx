@@ -260,7 +260,7 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
   }, [ltsaRequestWrapper.loading, mapMachine.isLoading]);
 
   return (
-    <StyledContainer isMinimized={isMinimized} isVisible={isVisible}>
+    <StyledContainer isMinimized={isMinimized} isVisible={isVisible} data-testid="quick-info">
       <LoadingBackdrop show={isLoading} parentScreen />
       <StyledHeaderRow noGutters>
         <Col xs="1">
@@ -301,6 +301,7 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
           <TooltipWrapper
             tooltipId={`property-quick-info-toggle`}
             tooltip={'Toggle Quick Property Information'}
+            key={`property-quick-info-toggle-${isMinimized}`}
           >
             <StyledIconWrapper
               onClick={(event: SyntheticEvent) => {

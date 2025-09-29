@@ -101,11 +101,19 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SelectFirstOption()
         {
+            var originalWindowHandle = webDriver.CurrentWindowHandle;
+
             WaitUntilClickable(searchAcquisitionFile1stResultLink);
             webDriver.FindElement(searchAcquisitionFile1stResultLink).Click();
 
+            Wait();
+            var allWindowsHandle = webDriver.WindowHandles;
+            var newWindowHandle = allWindowsHandle.Where(handle => handle != originalWindowHandle).First();
+            webDriver.SwitchTo().Window(newWindowHandle);
+                
+            
             WaitUntilClickable(searchAcquisitionFileHeaderCode);
-            Assert.True(webDriver.FindElement(searchAcquisitionFileHeaderCode).Displayed);
+            AssertTrueIsDisplayed(searchAcquisitionFileHeaderCode);
         }
 
         public void FilterAcquisitionFiles(string pid = "", string pin = "", string address = "", string name = "", string teamMember = "", string status = "", string project = "")

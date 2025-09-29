@@ -335,14 +335,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="07._Disposition_File_from_PIN")]
+        [Xunit.SkippableFactAttribute(DisplayName="07._Disposition_File_from_Parcel")]
         [Xunit.TraitAttribute("FeatureTitle", "DispositionFiles")]
-        [Xunit.TraitAttribute("Description", "07._Disposition_File_from_PIN")]
-        public async global::System.Threading.Tasks.Task _07__Disposition_File_From_PIN()
+        [Xunit.TraitAttribute("Description", "07._Disposition_File_from_Parcel")]
+        public async global::System.Threading.Tasks.Task _07__Disposition_File_From_Parcel()
         {
             string[] tagsOfScenario = ((string[])(null));
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("07._Disposition_File_from_PIN", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("07._Disposition_File_from_Parcel", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 42
 this.ScenarioInitialize(scenarioInfo);
 #line hidden

@@ -22,6 +22,7 @@ import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_C
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { stripTrailingSlash } from '@/utils';
 
+import { useFilePropertyIdFromUrl } from '../../../hooks/useFilePropertyIdFromUrl';
 import { SideBarContext } from '../context/sidebarContext';
 import { InventoryTabNames } from '../property/InventoryTabs';
 import FilePropertyRouter from '../router/FilePropertyRouter';
@@ -31,7 +32,6 @@ import { PropertyForm } from '../shared/models';
 import SidebarFooter from '../shared/SidebarFooter';
 import { StyledFormWrapper } from '../shared/styles';
 import UpdateProperties from '../shared/update/properties/UpdateProperties';
-import { useFilePropertyIdFromUrl } from '../shared/usePropertyIndexFromUrl';
 import { AcquisitionContainerState } from './AcquisitionContainer';
 import { isAcquisitionFile } from './add/models';
 import AcquisitionHeader from './common/AcquisitionHeader';
@@ -110,7 +110,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
 
   // Extract the zero-based property index from the current URL path.
   // It will be null if route is not matched
-  const currentFilePropertyId: number | null = useFilePropertyIdFromUrl();
+  const { filePropertyId: currentFilePropertyId } = useFilePropertyIdFromUrl();
   const statusSolver = new AcquisitionFileStatusUpdateSolver(acquisitionFile.fileStatusTypeCode);
 
   return (

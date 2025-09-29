@@ -889,6 +889,7 @@ exports[`MapContainer > Renders the map 1`] = `
               >
                 <div
                   class="c13"
+                  data-testid="quick-info"
                 >
                   <div
                     class="c14 row no-gutters"

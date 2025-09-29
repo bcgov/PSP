@@ -33,9 +33,9 @@ namespace Pims.Geocoder
         {
             this.Options = options.Value;
             this.Client = client;
-            if (!string.IsNullOrWhiteSpace(this.Options.Key))
+            if (!string.IsNullOrWhiteSpace(Options.Key))
             {
-                client.Client.DefaultRequestHeaders.Add("apikey", this.Options.Key);
+                client.Client.DefaultRequestHeaders.Add("apikey", Options.Key);
             }
         }
 
@@ -62,7 +62,7 @@ namespace Pims.Geocoder
         /// <returns></returns>
         public async Task<FeatureCollectionModel> GetSiteAddressesAsync(AddressesParameters parameters, string outputFormat = "json")
         {
-            var uri = new Uri(GenerateUrl(this.Options.Sites.AddressesUrl, outputFormat));
+            var uri = new Uri(GenerateUrl(Options.Sites.AddressesUrl, outputFormat));
             var url = QueryHelpers.AddQueryString(uri.AbsoluteUri, parameters.ToQueryStringDictionary());
             return await this.Client.GetAsync<FeatureCollectionModel>(url);
         }
@@ -75,7 +75,7 @@ namespace Pims.Geocoder
         /// <returns></returns>
         public async Task<FeatureModel> GetNearestSiteAsync(NearestParameters parameters, string outputFormat = "json")
         {
-            var uri = new Uri(GenerateUrl(this.Options.Sites.NearestUrl, outputFormat));
+            var uri = new Uri(GenerateUrl(Options.Sites.NearestUrl, outputFormat));
             var url = QueryHelpers.AddQueryString(uri.AbsoluteUri, parameters.ToQueryStringDictionary());
             return await this.Client.GetAsync<FeatureModel>(url);
         }
@@ -92,7 +92,7 @@ namespace Pims.Geocoder
         /// <returns></returns>
         public async Task<FeatureCollectionModel> GetNearSitesAsync(NearParameters parameters, string outputFormat = "json")
         {
-            var uri = new Uri(GenerateUrl(this.Options.Sites.NearUrl, outputFormat));
+            var uri = new Uri(GenerateUrl(Options.Sites.NearUrl, outputFormat));
             var url = QueryHelpers.AddQueryString(uri.AbsoluteUri, parameters.ToQueryStringDictionary());
             return await this.Client.GetAsync<FeatureCollectionModel>(url);
         }
@@ -107,7 +107,7 @@ namespace Pims.Geocoder
         /// <returns></returns>
         public async Task<SitePidsResponseModel> GetPids(Guid siteId, string outputFormat = "json")
         {
-            var endpoint = this.Options.Parcels.PidsUrl.Replace("{siteId}", siteId.ToString());
+            var endpoint = Options.Parcels.PidsUrl.Replace("{siteId}", siteId.ToString());
             var uri = new Uri(GenerateUrl(endpoint, outputFormat));
             return await this.Client.GetAsync<SitePidsResponseModel>(uri);
         }
@@ -120,7 +120,7 @@ namespace Pims.Geocoder
         /// <returns></returns>
         private string GenerateUrl(string endpoint, string outputFormat = "json")
         {
-            var host = this.Options.HostUri;
+            var host = Options.HostUri;
             return $"{host}{endpoint.Replace("{outputFormat}", outputFormat)}";
         }
         #endregion

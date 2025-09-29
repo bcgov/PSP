@@ -1,6 +1,8 @@
 {
   "Ltsa": {
     "HostUri": "https://tduat-x42b.ltsa.ca/titledirect/search/api",
-    "AuthUrl": "https://appsuat.ltsa.ca/iam/api/auth"
+    "AuthUrl": "https://appsuat.ltsa.ca/iam/api/auth",
+    "AuthorizationEndpoint": "https://idtest.ltsa.ca/realms/integrator-uat/protocol/openid-connect/auth",
+    "TokenEndpoint": "https://idtest.ltsa.ca/realms/integrator-uat/protocol/openid-connect/token"
   }
 }

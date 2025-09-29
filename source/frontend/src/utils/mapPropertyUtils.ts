@@ -380,6 +380,9 @@ export const isEmptyMapFeatureData = (mapFeatureData: MapFeatureData) => {
 };
 
 export const arePropertyFormsEqual = (lhs: PropertyForm, rhs: PropertyForm): boolean => {
+  if (!exists(lhs) || !exists(rhs)) {
+    return exists(lhs) === exists(rhs);
+  }
   return areSelectedFeaturesEqual(lhs.toFeatureDataset(), rhs.toFeatureDataset());
 };
 

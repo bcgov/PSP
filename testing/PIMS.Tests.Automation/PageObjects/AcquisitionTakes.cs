@@ -6,84 +6,84 @@ namespace PIMS.Tests.Automation.PageObjects
     public class AcquisitionTakes : PageObjectBase
     {
         //Tab and Edit elements
-        private By takesTabLink = By.CssSelector("a[data-rb-event-key='takes']");
-        private By takesAddButton = By.CssSelector("h2 button");
+        private readonly By takesTabLink = By.CssSelector("a[data-rb-event-key='takes']");
+        private readonly By takesAddButton = By.CssSelector("h2 button");
 
         //Initial View Elements
-        private By takesTitle = By.XPath("//h2[contains(text(),'Takes')]");
-        private By takesForThisPropertyCurrentFileLabel = By.XPath("//label[contains(text(),'Takes for this property in the current file')]");
-        private By takesForThisPropertyCurrentFileContent = By.XPath("//label[contains(text(),'Takes for this property in the current file')]/parent::div/following-sibling::div");
-        private By takesForThisPropertyOtherFileLabel = By.XPath("//label[contains(text(),'Takes for this property in other files')]");
-        private By takesForThisPropertyOtherFileContent = By.XPath("//label[contains(text(),'Takes for this property in other files')]/parent::div/following-sibling::div");
+        private readonly By takesTitle = By.XPath("//h2[contains(text(),'Takes')]");
+        private readonly By takesForThisPropertyCurrentFileLabel = By.XPath("//label[contains(text(),'Takes for this property in the current file')]");
+        private readonly By takesForThisPropertyCurrentFileContent = By.XPath("//label[contains(text(),'Takes for this property in the current file')]/parent::div/following-sibling::div");
+        private readonly By takesForThisPropertyOtherFileLabel = By.XPath("//label[contains(text(),'Takes for this property in other files')]");
+        private readonly By takesForThisPropertyOtherFileContent = By.XPath("//label[contains(text(),'Takes for this property in other files')]/parent::div/following-sibling::div");
 
         //Initial View Create Form
-        private By takeNewSubtitle = By.XPath("//h2/div/div[contains(text(),'New Take')]");
-        private By takeTypeLabel = By.XPath("//label[contains(text(),'Take type')]");
-        private By takeTypeSelect = By.Id("input-takeTypeCode");
-        private By takeStatusLabel = By.XPath("//label[contains(text(),'Take status')]");
-        private By takeStatusSelect = By.Id("input-takeStatusTypeCode");
-        private By takeCompletionDateLabel = By.XPath("//label[contains(text(),'Completion date')]");
-        private By takeCompletionDateInput = By.Id("datepicker-completionDt");
-        private By takeSiteContaminationLabel = By.XPath("//label[contains(text(),'Site contamination')]");
-        private By takeSiteContaminationSelect = By.Id("input-takeSiteContamTypeCode");
-        private By takeDescriptionLabel = By.XPath("//label[contains(text(),'Description of this Take')]");
-        private By takeDescriptionInput = By.Id("input-description");
+        private readonly By takeNewSubtitle = By.XPath("//h2/div/div[contains(text(),'New Take')]");
+        private readonly By takeTypeLabel = By.XPath("//label[contains(text(),'Take type')]");
+        private readonly By takeTypeSelect = By.Id("input-takeTypeCode");
+        private readonly By takeStatusLabel = By.XPath("//label[contains(text(),'Take status')]");
+        private readonly By takeStatusSelect = By.Id("input-takeStatusTypeCode");
+        private readonly By takeCompletionDateLabel = By.XPath("//label[contains(text(),'Completion date')]");
+        private readonly By takeCompletionDateInput = By.Id("datepicker-completionDt");
+        private readonly By takeSiteContaminationLabel = By.XPath("//label[contains(text(),'Site contamination')]");
+        private readonly By takeSiteContaminationSelect = By.Id("input-takeSiteContamTypeCode");
+        private readonly By takeDescriptionLabel = By.XPath("//label[contains(text(),'Description of this Take')]");
+        private readonly By takeDescriptionInput = By.Id("input-description");
 
-        private By takeAreaSubtitle = By.XPath("//h2/div/div[contains(text(),'Area')]");
+        private readonly By takeAreaSubtitle = By.XPath("//h2/div/div[contains(text(),'Area')]");
 
-        private By takeRightOfWayLabel = By.XPath("//label[contains(text(),'Is there a new highway dedication?')]");
-        private By takeRightOfWayRadioBttnGroup = By.CssSelector("input[name='isNewHighwayDedication']");
-        private By takeRightOfWaySqMetresInput = By.XPath("//input[@data-testid='radio-isnewhighwaydedication-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-sq-meters']");
-        private By takeRightOfWaySqFeetInput = By.XPath("//input[@data-testid='radio-isnewhighwaydedication-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-sq-feet']");
-        private By takeRightOfWayHectaresInput = By.XPath("//input[@data-testid='radio-isnewhighwaydedication-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-hectares']");
-        private By takeRightOfWayAcresInput = By.XPath("//input[@data-testid='radio-isnewhighwaydedication-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-acres']");
+        private readonly By takeRightOfWayLabel = By.XPath("//label[contains(text(),'Is there a new highway dedication?')]");
+        private readonly By takeRightOfWayRadioBttnGroup = By.CssSelector("input[name='isNewHighwayDedication']");
+        private readonly By takeRightOfWaySqMetresInput = By.XPath("//input[@data-testid='radio-isnewhighwaydedication-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-sq-meters']");
+        private readonly By takeRightOfWaySqFeetInput = By.XPath("//input[@data-testid='radio-isnewhighwaydedication-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-sq-feet']");
+        private readonly By takeRightOfWayHectaresInput = By.XPath("//input[@data-testid='radio-isnewhighwaydedication-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-hectares']");
+        private readonly By takeRightOfWayAcresInput = By.XPath("//input[@data-testid='radio-isnewhighwaydedication-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-acres']");
 
-        private By takeMOTIInventoryLabel = By.XPath("//label[contains(text(),'Is this being acquired for MoTI inventory? *')]");
-        private By takeMOTIInventoryBttnGroup = By.CssSelector("input[name='isAcquiredForInventory']");
+        private readonly By takeMOTIInventoryLabel = By.XPath("//label[contains(text(),'Is this being acquired for MOTT inventory? *')]");
+        private readonly By takeMOTIInventoryBttnGroup = By.CssSelector("input[name='isAcquiredForInventory']");
 
-        private By takeSRWLabel = By.XPath("//label[contains(text(),'Is there a new registered interest in land (SRW, Easement or Covenant)?')]");
-        private By takeSRWRadioBttnGroup = By.CssSelector("input[name='isNewInterestInSrw']");
-        private By takeSRWSqMetresInput = By.XPath("//input[@data-testid='radio-isnewinterestinsrw-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-sq-meters']");
-        private By takeSRWSqFeetInput = By.XPath("//input[@data-testid='radio-isnewinterestinsrw-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-sq-feet']");
-        private By takeSRWSqHectaresInput = By.XPath("//input[@data-testid='radio-isnewinterestinsrw-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-hectares']");
-        private By takeSRWSqAcresInput = By.XPath("//input[@data-testid='radio-isnewinterestinsrw-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-acres']");
-        private By takeSRWEndDateInput = By.Id("datepicker-srwEndDt");
+        private readonly By takeSRWLabel = By.XPath("//label[contains(text(),'Is there a new registered interest in land (SRW, Easement or Covenant)?')]");
+        private readonly By takeSRWRadioBttnGroup = By.CssSelector("input[name='isNewInterestInSrw']");
+        private readonly By takeSRWSqMetresInput = By.XPath("//input[@data-testid='radio-isnewinterestinsrw-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-sq-meters']");
+        private readonly By takeSRWSqFeetInput = By.XPath("//input[@data-testid='radio-isnewinterestinsrw-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-sq-feet']");
+        private readonly By takeSRWSqHectaresInput = By.XPath("//input[@data-testid='radio-isnewinterestinsrw-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-hectares']");
+        private readonly By takeSRWSqAcresInput = By.XPath("//input[@data-testid='radio-isnewinterestinsrw-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-acres']");
+        private readonly By takeSRWEndDateInput = By.Id("datepicker-srwEndDt");
 
-        private By takeLandActLabel = By.XPath("//label[contains(text(),'Is there a new Land Act tenure?')]");
-        private By takeLandActRadioBttnGroup = By.CssSelector("input[name='isNewLandAct']");
-        private By takeLandActTypeSelect = By.Id("input-landActTypeCode");
-        private By takeLandActSqMetresInput = By.XPath("//input[@data-testid='radio-isnewlandact-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-sq-meters']");
-        private By takeLandActSqFeetInput = By.XPath("//input[@data-testid='radio-isnewlandact-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-sq-feet']");
-        private By takeLandActHectaresInput = By.XPath("//input[@data-testid='radio-isnewlandact-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-hectares']");
-        private By takeLandActAcresInput = By.XPath("//input[@data-testid='radio-isnewlandact-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-acres']");
-        private By takeLandActEndDateInput = By.Id("datepicker-landActEndDt");
+        private readonly By takeLandActLabel = By.XPath("//label[contains(text(),'Is there a new Land Act tenure?')]");
+        private readonly By takeLandActRadioBttnGroup = By.CssSelector("input[name='isNewLandAct']");
+        private readonly By takeLandActTypeSelect = By.Id("input-landActTypeCode");
+        private readonly By takeLandActSqMetresInput = By.XPath("//input[@data-testid='radio-isnewlandact-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-sq-meters']");
+        private readonly By takeLandActSqFeetInput = By.XPath("//input[@data-testid='radio-isnewlandact-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-sq-feet']");
+        private readonly By takeLandActHectaresInput = By.XPath("//input[@data-testid='radio-isnewlandact-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-hectares']");
+        private readonly By takeLandActAcresInput = By.XPath("//input[@data-testid='radio-isnewlandact-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-acres']");
+        private readonly By takeLandActEndDateInput = By.Id("datepicker-landActEndDt");
 
-        private By takeLicenseConstructLabel = By.XPath("//label[contains(text(),'Is there a new Licence for Construction Access (TLCA/LTC)?')]");
-        private By takeLicenseConstructRadioBttnGroup = By.CssSelector("input[name='isNewLicenseToConstruct']");
-        private By takeLicenseConstructSqMetresInput = By.XPath("//input[@data-testid='radio-isnewlicensetoconstruct-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-sq-meters']");
-        private By takeLicenseConstructSqFeetInput = By.XPath("//input[@data-testid='radio-isnewlicensetoconstruct-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-sq-feet']");
-        private By takeLicenseConstructHectaresInput = By.XPath("//input[@data-testid='radio-isnewlicensetoconstruct-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-hectares']");
-        private By takeLicenseConstructAcresInput = By.XPath("//input[@data-testid='radio-isnewlicensetoconstruct-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-acres']");
-        private By takeLicenseConstructEndDateInput = By.Id("datepicker-ltcEndDt");
+        private readonly By takeLicenseConstructLabel = By.XPath("//label[contains(text(),'Is there a new Licence for Construction Access (TLCA/LTC)?')]");
+        private readonly By takeLicenseConstructRadioBttnGroup = By.CssSelector("input[name='isNewLicenseToConstruct']");
+        private readonly By takeLicenseConstructSqMetresInput = By.XPath("//input[@data-testid='radio-isnewlicensetoconstruct-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-sq-meters']");
+        private readonly By takeLicenseConstructSqFeetInput = By.XPath("//input[@data-testid='radio-isnewlicensetoconstruct-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-sq-feet']");
+        private readonly By takeLicenseConstructHectaresInput = By.XPath("//input[@data-testid='radio-isnewlicensetoconstruct-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-hectares']");
+        private readonly By takeLicenseConstructAcresInput = By.XPath("//input[@data-testid='radio-isnewlicensetoconstruct-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-acres']");
+        private readonly By takeLicenseConstructEndDateInput = By.Id("datepicker-ltcEndDt");
 
-        private By takeLeaseLabel = By.XPath("//label[contains(text(),'Is there a Lease (Payable)?')]");
-        private By takeLeaseRadioBttnGroup = By.CssSelector("input[name='isLeasePayable']");
-        private By takeLeaseSqMetresInput = By.XPath("//input[@data-testid='radio-isleasepayable-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-sq-meters']");
-        private By takeLeaseSqFeetInput = By.XPath("//input[@data-testid='radio-isleasepayable-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-sq-feet']");
-        private By takeLeaseHectaresInput = By.XPath("//input[@data-testid='radio-isleasepayable-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-hectares']");
-        private By takeLeaseAcresInput = By.XPath("//input[@data-testid='radio-isleasepayable-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-acres']");
-        private By takeLeaseEndDateInput = By.Id("datepicker-leasePayableEndDt");
+        private readonly By takeLeaseLabel = By.XPath("//label[contains(text(),'Is there a Lease (Payable)?')]");
+        private readonly By takeLeaseRadioBttnGroup = By.CssSelector("input[name='isLeasePayable']");
+        private readonly By takeLeaseSqMetresInput = By.XPath("//input[@data-testid='radio-isleasepayable-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-sq-meters']");
+        private readonly By takeLeaseSqFeetInput = By.XPath("//input[@data-testid='radio-isleasepayable-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-sq-feet']");
+        private readonly By takeLeaseHectaresInput = By.XPath("//input[@data-testid='radio-isleasepayable-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-hectares']");
+        private readonly By takeLeaseAcresInput = By.XPath("//input[@data-testid='radio-isleasepayable-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-acres']");
+        private readonly By takeLeaseEndDateInput = By.Id("datepicker-leasePayableEndDt");
 
-        private By takeSurplusSubtitle = By.XPath("//h2/div/div[contains(text(),'Surplus')]");
-        private By takeSurplusLabel = By.XPath("//label[contains(text(),'Is there a Surplus?')]");
-        private By takeSurplusRadioBttnGroup = By.CssSelector("input[name='isThereSurplus']");
-        private By takeSurplusSqMetresInput = By.XPath("//input[@data-testid='radio-istheresurplus-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-sq-meters']");
-        private By takeSurplusSqFeetInput = By.XPath("//input[@data-testid='radio-istheresurplus-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-sq-feet']");
-        private By takeSurplusHectaresInput = By.XPath("//input[@data-testid='radio-istheresurplus-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-hectares']");
-        private By takeSurplusAcresInput = By.XPath("//input[@data-testid='radio-istheresurplus-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-acres']");
+        private readonly By takeSurplusSubtitle = By.XPath("//h2/div/div[contains(text(),'Surplus')]");
+        private readonly By takeSurplusLabel = By.XPath("//label[contains(text(),'Is there a Surplus?')]");
+        private readonly By takeSurplusRadioBttnGroup = By.CssSelector("input[name='isThereSurplus']");
+        private readonly By takeSurplusSqMetresInput = By.XPath("//input[@data-testid='radio-istheresurplus-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-sq-meters']");
+        private readonly By takeSurplusSqFeetInput = By.XPath("//input[@data-testid='radio-istheresurplus-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-sq-feet']");
+        private readonly By takeSurplusHectaresInput = By.XPath("//input[@data-testid='radio-istheresurplus-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-hectares']");
+        private readonly By takeSurplusAcresInput = By.XPath("//input[@data-testid='radio-istheresurplus-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-acres']");
 
         //Acquisition File Confirmation Modal Elements
-        private By acquisitionFileConfirmationModal = By.CssSelector("div[class='modal-content']");
+        private readonly By acquisitionFileConfirmationModal = By.CssSelector("div[class='modal-content']");
 
         private SharedModals sharedModals;
 
@@ -423,8 +423,8 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueContentEquals(By.XPath("//div[@data-testid='take-" + index + "']/div/div/div/div/div/div/div/label[contains(text(),'Is there a new highway dedication?')]/parent::div/parent::div/parent::div/div/div/div/div/div/div/div[contains(text(),'sq. metres')]/preceding-sibling::div"), TransformAreaNumberFormat(take.IsNewHighwayDedicationArea));
 
             //MoTI Inventory
-            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='take-" + index + "']/div/div/div/div/div/div/div/label[contains(text(),'Is this being acquired for MoTI inventory?')]"));
-            AssertTrueContentEquals(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/div/div/div/div/label[contains(text(),'Is this being acquired for MoTI inventory')]/parent::div/following-sibling::div"), TransformBooleanFormat(take.IsMotiInventory));
+            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='take-" + index + "']/div/div/div/div/div/div/div/label[contains(text(),'Is this being acquired for MOTT inventory?')]"));
+            AssertTrueContentEquals(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/div/div/div/div/label[contains(text(),'Is this being acquired for MOTT inventory')]/parent::div/following-sibling::div"), TransformBooleanFormat(take.IsMotiInventory));
 
             //Interest in Land
             AssertTrueIsDisplayed(By.XPath("//div[@data-testid='take-" + index + "']/div/div/div/div/div/div/div/label[contains(text(),'Is there a new registered interest in land (SRW, Easement or Covenant)')]"));

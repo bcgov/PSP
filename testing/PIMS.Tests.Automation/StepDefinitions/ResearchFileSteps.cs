@@ -105,53 +105,31 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I add Properties to a Research File")]
         public void ResearchFileProperties()
         {
-            /* TEST COVERAGE: PSP-3595, PSP-3596, PSP-3597, PSP-3598, PSP-3600, PSP-3721, PSP-3849, PSP-4333, PSP-6303 */
-
             //Navigate to Edit Research File
             researchFiles.NavigateToAddPropertiesReseachFile();
 
-            //Verify UI/ UX from Search By Component
-            sharedFileProperties.NavigateToSearchTab();
-            sharedFileProperties.VerifySearchPropertiesFeature();
-
-            //Search for a property by PID
-            if (researchFile.SearchProperties.PID != "")
-            {
-                sharedFileProperties.SelectPropertyByPID(researchFile.SearchProperties.PID);
-                sharedFileProperties.SelectFirstOptionFromSearch();
-            }
             //Search for a property by PIN
             if (researchFile.SearchProperties.PIN != "")
             {
-                sharedFileProperties.SelectPropertyByPIN(researchFile.SearchProperties.PIN);
-                sharedFileProperties.SelectFirstOptionFromSearch();
+                searchProperties.SearchProperty(PIN: researchFile.SearchProperties.PIN);
+                searchProperties.SelectFirstPMBCResult();
+                searchProperties.ResetPropertySearch();
             }
-            //Search for a property by Plan
-            if (researchFile.SearchProperties.PlanNumber != "")
-            {
-                sharedFileProperties.SelectPropertyByPlan(researchFile.SearchProperties.PlanNumber);
-                sharedFileProperties.SelectFirstOptionFromSearch();
-            }
+
             //Search for a property by Address
             if (researchFile.SearchProperties.Address != "")
             {
-                sharedFileProperties.SelectPropertyByAddress(researchFile.SearchProperties.Address);
-                sharedFileProperties.SelectFirstOptionFromSearch();
-            }
-
-            //Search for a property by Legal Description
-            if (researchFile.SearchProperties.LegalDescription != "")
-            {
-                sharedFileProperties.SelectPropertyByLegalDescription(researchFile.SearchProperties.LegalDescription);
-                sharedFileProperties.SelectFirstOptionFromSearch();
+                searchProperties.SearchProperty(address: researchFile.SearchProperties.Address);
+                searchProperties.SelectFound1stPropAddToFile();
+                searchProperties.ResetPropertySearch();
             }
 
             //Search for a property by Latitude and Longitude
             if (researchFile.SearchProperties.LatitudeLongitude.LatitudeDegree != "")
             {
-                sharedFileProperties.SelectPropertyByLongLant(researchFile.SearchProperties.LatitudeLongitude);
-                sharedFileProperties.SelectFirstOptionFromSearch();
-                sharedFileProperties.ResetSearch();
+                searchProperties.SearchProperty(coordinates: researchFile.SearchProperties.LatitudeLongitude);
+                searchProperties.SelectFound1stPropAddToFile();
+                searchProperties.ResetPropertySearch();
             }
 
             //Save Research File
@@ -162,6 +140,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             {
                 for (int i = 0; i < researchFile.PropertyResearchRowCount; i++)
                 {
+
                     researchFiles.AddPropertyResearchInfo(researchFile.PropertyResearch[i], i);
                     researchFiles.SaveResearchFile();
                     researchFiles.VerifyPropResearchTabFormView(researchFile.PropertyResearch[i]);
@@ -181,24 +160,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
             PopulateResearchFile(rowNumber);
             researchFiles.NavigateToAddPropertiesReseachFile();
 
-            //Add existing property again
-            sharedFileProperties.NavigateToSearchTab();
-
-            sharedFileProperties.VerifySearchPropertiesFeature();
-            sharedFileProperties.SelectPropertyByPID(researchFile.SearchProperties.PID);
-            sharedFileProperties.SelectFirstOptionFromSearch();
-
-            //Search for a property by PIN
-            sharedFileProperties.SelectPropertyByPIN(researchFile.SearchProperties.PIN);
-
-            //Verify PID doesn't exist
-            Assert.Equal("No results found for your search criteria.", sharedFileProperties.noRowsResultsMessageFromSearch());
-
-            //Search for a property by Legal Description
-            sharedFileProperties.SelectPropertyByLegalDescription(researchFile.SearchProperties.LegalDescription);
-
-            //Verify more than 15 properties found result
-            //Assert.True(sharedFileProperties.noRowsResultsMessage().Equals("Too many results (more than 15) match this criteria. Please refine your search."));
+            searchProperties.SearchProperty(POIName: researchFile.SearchProperties.POIName);
+            searchProperties.SelectFound1stPropAddToFile();
+            searchProperties.ResetPropertySearch();
 
             //Cancel changes on a Property Detail on Research File
             researchFiles.CancelResearchFile();
@@ -235,17 +199,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Search for a property
             PopulateResearchFile(rowNumber);
-            searchProperties.SearchPropertyByPID(researchFile.SearchProperties.PID);
+            searchProperties.SearchProperty(PID: researchFile.SearchProperties.PID);
 
             //Select found property on Map
-            searchProperties.SelectFoundPin();
-
-            //Close Property Information Modal
-            propertyInformation.HideLeftSideForms();
-
-            //Open elipsis option
-            propertyInformation.OpenMoreOptionsPopUp();
-            propertyInformation.ChooseCreationOptionFromPin("Research File");
+            searchProperties.SelectFirstPMBCResult("Create Research");
 
             //Fill basic Research File information
             researchFiles.CreateResearchFile(researchFile);
@@ -434,7 +391,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 researchFile.SearchProperties.PIN = ExcelDataContext.ReadData(researchFile.SearchPropertiesIndex, "PIN");
                 researchFile.SearchProperties.Address = ExcelDataContext.ReadData(researchFile.SearchPropertiesIndex, "Address");
                 researchFile.SearchProperties.PlanNumber = ExcelDataContext.ReadData(researchFile.SearchPropertiesIndex, "PlanNumber");
-                researchFile.SearchProperties.LegalDescription = ExcelDataContext.ReadData(researchFile.SearchPropertiesIndex, "LegalDescription");
+                researchFile.SearchProperties.HistoricFile = ExcelDataContext.ReadData(researchFile.SearchPropertiesIndex, "HistoricFile");
+                researchFile.SearchProperties.POIName = ExcelDataContext.ReadData(researchFile.SearchPropertiesIndex, "POIName");
                 researchFile.SearchProperties.LatitudeLongitude.LatitudeDegree = ExcelDataContext.ReadData(researchFile.SearchPropertiesIndex, "LatitudeDegree");
                 researchFile.SearchProperties.LatitudeLongitude.LatitudeMinutes = ExcelDataContext.ReadData(researchFile.SearchPropertiesIndex, "LatitudeMinutes");
                 researchFile.SearchProperties.LatitudeLongitude.LatitudeSeconds = ExcelDataContext.ReadData(researchFile.SearchPropertiesIndex, "LatitudeSeconds");
@@ -443,6 +401,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 researchFile.SearchProperties.LatitudeLongitude.LongitudeMinutes = ExcelDataContext.ReadData(researchFile.SearchPropertiesIndex, "LongitudeMinutes");
                 researchFile.SearchProperties.LatitudeLongitude.LongitudeSeconds = ExcelDataContext.ReadData(researchFile.SearchPropertiesIndex, "LongitudeSeconds");
                 researchFile.SearchProperties.LatitudeLongitude.LongitudeDirection = ExcelDataContext.ReadData(researchFile.SearchPropertiesIndex, "LongitudeDirection");
+                researchFile.SearchProperties.SurveyParcel.District = ExcelDataContext.ReadData(researchFile.SearchPropertiesIndex, "SurveyDistrict");
+                researchFile.SearchProperties.SurveyParcel.Section = ExcelDataContext.ReadData(researchFile.SearchPropertiesIndex, "SurveySection");
+                researchFile.SearchProperties.SurveyParcel.Township = ExcelDataContext.ReadData(researchFile.SearchPropertiesIndex, "SurveyTownship");
+                researchFile.SearchProperties.SurveyParcel.Range = ExcelDataContext.ReadData(researchFile.SearchPropertiesIndex, "SurveyRange");
             }
             if (researchFile.PropertyResearchRowCount != 0 && researchFile.PropertyResearchRowStart != 0)
             {

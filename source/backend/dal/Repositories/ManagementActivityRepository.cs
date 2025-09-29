@@ -60,7 +60,7 @@ namespace Pims.Dal.Repositories
             return new Paged<PimsManagementActivity>(pageItems, filter.Page, filter.Quantity, query.Count());
         }
 
-        private IQueryable<PimsManagementActivity> GetCommonManagementActivityQuery(ManagementActivityFilter filter)
+        private static ExpressionStarter<PimsManagementActivity> GetCommonActivityFilterPredicate(ManagementActivityFilter filter)
         {
             var predicate = PredicateBuilder.New<PimsManagementActivity>(act => true);
 
@@ -113,6 +113,23 @@ namespace Pims.Dal.Repositories
                 predicate = predicate.And(x => EF.Functions.Like(x.ManagementFile.Project.Code, $"%{filter.ProjectNameOrNumber}%") || EF.Functions.Like(x.ManagementFile.Project.Description, $"%{filter.ProjectNameOrNumber}%"));
             }
 
+            if (!string.IsNullOrWhiteSpace(filter.ManagementFileStatusCode))
+            {
+                predicate = predicate.And(x => x.ManagementFile.ManagementFileStatusTypeCode == filter.ManagementFileStatusCode);
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.ManagementFilePurposeCode))
+            {
+                predicate = predicate.And(x => x.ManagementFile.ManagementFilePurposeTypeCode == filter.ManagementFilePurposeCode);
+            }
+
+            return predicate;
+        }
+
+        private IQueryable<PimsManagementActivity> GetCommonManagementActivityQuery(ManagementActivityFilter filter)
+        {
+            var predicate = GetCommonActivityFilterPredicate(filter);
+
             var query = Context.PimsManagementActivities.AsNoTracking()
                 .Include(s => s.MgmtActivityStatusTypeCodeNavigation)
                 .Include(t => t.MgmtActivityTypeCodeNavigation)
@@ -156,6 +173,55 @@ namespace Pims.Dal.Repositories
             }
 
             return query;
+        }
+
+        public IList<PimsManagementActivity> SearchManagementActivities(ManagementActivityFilter filter)
+        {
+            using var scope = Logger.QueryScope();
+
+            filter.ThrowIfNull(nameof(filter));
+
+            var query = Context.PimsManagementActivities.AsNoTracking()
+                .Include(s => s.MgmtActivityStatusTypeCodeNavigation)
+                .Include(t => t.MgmtActivityTypeCodeNavigation)
+                .Include(st => st.PimsMgmtActivityActivitySubtyps)
+                    .ThenInclude(x => x.MgmtActivitySubtypeCodeNavigation)
+                .Include(sp => sp.ServiceProviderPerson)
+                .Include(sp => sp.ServiceProviderOrg)
+                .Include(mc => mc.PimsMgmtActMinContacts)
+                    .ThenInclude(c => c.Person)
+                .Include(ip => ip.PimsMgmtActInvolvedParties)
+                    .ThenInclude(c => c.Person)
+                .Include(ip => ip.PimsMgmtActInvolvedParties)
+                    .ThenInclude(c => c.Organization)
+                .Include(i => i.PimsManagementActivityInvoices)
+                .Include(pp => pp.PimsManagementActivityProperties)
+                    .ThenInclude(p => p.Property)
+                        .ThenInclude(a => a.Address)
+                .Include(f => f.ManagementFile)
+                    .ThenInclude(fp => fp.PimsManagementFileProperties)
+                        .ThenInclude(p => p.Property)
+                            .ThenInclude(a => a.Address)
+                .Include(f => f.ManagementFile)
+                    .ThenInclude(ft => ft.AcquisitionFundingTypeCodeNavigation)
+                .Include(f => f.ManagementFile)
+                    .ThenInclude(pt => pt.ManagementFilePurposeTypeCodeNavigation)
+                .Include(f => f.ManagementFile)
+                    .ThenInclude(pt => pt.ManagementFileStatusTypeCodeNavigation)
+                .Include(f => f.ManagementFile)
+                    .ThenInclude(c => c.PimsManagementFileContacts)
+                        .ThenInclude(p => p.Person)
+                .Include(f => f.ManagementFile)
+                    .ThenInclude(o => o.PimsManagementFileContacts)
+                        .ThenInclude(o => o.Organization)
+                .Include(f => f.ManagementFile)
+                    .ThenInclude(o => o.PimsManagementFileContacts)
+                        .ThenInclude(o => o.PrimaryContact)
+                ;
+
+            var predicate = GetCommonActivityFilterPredicate(filter);
+
+            return query.Where(predicate).ToList();
         }
 
         /// <summary>

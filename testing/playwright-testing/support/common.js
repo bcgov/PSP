@@ -139,6 +139,26 @@ async function fillTypeahead(page, selector, text, optionSelector) {
   await option.click({ force: true });
 }
 
+async function textEqualsIfNotEmpty(page, selector, value) {
+  if (value && value.trim() !== "") {
+    await expect(page.locator(selector)).toHaveText(value);
+  }
+}
+
+async function textNotEmpty(page, selector) {
+  const text = await page.textContent(selector);
+  expect(text.trim().length).toBeGreaterThan(0);
+}
+
+async function listEquals(page, baseXpath, values) {
+  for (let i = 0; i < values.length; i++) {
+    if (values[i] && values[i].trim() !== "") {
+      const locator = page.locator(`${baseXpath}//span[${i + 1}]`);
+      await expect(locator).toHaveText(values[i]);
+    }
+  }
+}
+
 module.exports = {
   getUserCredential,
   clickSaveButton,
@@ -149,4 +169,7 @@ module.exports = {
   splitStringToArray,
   clickAndWaitFor,
   fillTypeahead,
+  textEqualsIfNotEmpty,
+  textNotEmpty,
+  listEquals,
 };

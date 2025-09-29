@@ -7,8 +7,8 @@ import {
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import AcquisitionOwnersSummaryContainer, {
-  IAcquisitionOwnersSummaryViewProps,
 } from './AcquisitionOwnersSummaryContainer';
+import { IAcquisitionOwnersSummaryViewProps } from './AcquisitionOwnersSummaryView';
 
 const mockApi = {
   error: undefined,

@@ -86,6 +86,9 @@ export const useGenerateForm12 = () => {
         propertyAssociations: undefined,
         pimsGeoserverFeatureCollection: undefined,
         bcAssessmentSummary: undefined,
+        firstNationFeatures: undefined,
+        alrFeatures: undefined,
+        electoralFeatures: undefined,
       };
       return composed;
     });

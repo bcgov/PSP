@@ -6,12 +6,7 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  <div
-    class="py-2"
-  >
-    Select one or more properties that you want to include in this acquisition. You can choose a location from the map, or search by other criteria.
-  </div>
-  .c8.btn {
+  .c11.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -40,17 +35,17 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c8.btn .Button__value {
+.c11.btn .Button__value {
   width: auto;
 }
 
-.c8.btn:hover {
+.c11.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c8.btn:focus {
+.c11.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -58,31 +53,31 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
   box-shadow: none;
 }
 
-.c8.btn.btn-primary {
+.c11.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c8.btn.btn-primary:hover,
-.c8.btn.btn-primary:active,
-.c8.btn.btn-primary:focus {
+.c11.btn.btn-primary:hover,
+.c11.btn.btn-primary:active,
+.c11.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c8.btn.btn-secondary {
+.c11.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c8.btn.btn-secondary:hover,
-.c8.btn.btn-secondary:active,
-.c8.btn.btn-secondary:focus {
+.c11.btn.btn-secondary:hover,
+.c11.btn.btn-secondary:active,
+.c11.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c8.btn.btn-info {
+.c11.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -90,66 +85,66 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
   padding-right: 0.6rem;
 }
 
-.c8.btn.btn-info:hover,
-.c8.btn.btn-info:active,
-.c8.btn.btn-info:focus {
+.c11.btn.btn-info:hover,
+.c11.btn.btn-info:active,
+.c11.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c8.btn.btn-light {
+.c11.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c8.btn.btn-light:hover,
-.c8.btn.btn-light:active,
-.c8.btn.btn-light:focus {
+.c11.btn.btn-light:hover,
+.c11.btn.btn-light:active,
+.c11.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c8.btn.btn-dark {
+.c11.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c8.btn.btn-dark:hover,
-.c8.btn.btn-dark:active,
-.c8.btn.btn-dark:focus {
+.c11.btn.btn-dark:hover,
+.c11.btn.btn-dark:active,
+.c11.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c8.btn.btn-danger {
+.c11.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c8.btn.btn-danger:hover,
-.c8.btn.btn-danger:active,
-.c8.btn.btn-danger:focus {
+.c11.btn.btn-danger:hover,
+.c11.btn.btn-danger:active,
+.c11.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c8.btn.btn-warning {
+.c11.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c8.btn.btn-warning:hover,
-.c8.btn.btn-warning:active,
-.c8.btn.btn-warning:focus {
+.c11.btn.btn-warning:hover,
+.c11.btn.btn-warning:active,
+.c11.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c8.btn.btn-link {
+.c11.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -173,9 +168,9 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
   text-decoration: underline;
 }
 
-.c8.btn.btn-link:hover,
-.c8.btn.btn-link:active,
-.c8.btn.btn-link:focus {
+.c11.btn.btn-link:hover,
+.c11.btn.btn-link:active,
+.c11.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -185,15 +180,15 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
   outline: none;
 }
 
-.c8.btn.btn-link:disabled,
-.c8.btn.btn-link.disabled {
+.c11.btn.btn-link:disabled,
+.c11.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c8.btn:disabled,
-.c8.btn:disabled:hover {
+.c11.btn:disabled,
+.c11.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -205,66 +200,66 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
   cursor: not-allowed;
 }
 
-.c8.Button .Button__icon {
+.c11.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c8.Button--icon-only:focus {
+.c11.Button--icon-only:focus {
   outline: none;
 }
 
-.c8.Button--icon-only .Button__icon {
+.c11.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c9.c9.btn {
+.c18.c18.btn {
   background-color: unset;
   border: none;
 }
 
-.c9.c9.btn:hover,
-.c9.c9.btn:focus,
-.c9.c9.btn:active {
+.c18.c18.btn:hover,
+.c18.c18.btn:focus,
+.c18.c18.btn:active {
   background-color: unset;
   outline: none;
   box-shadow: none;
 }
 
-.c9.c9.btn svg {
+.c18.c18.btn svg {
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
 
-.c9.c9.btn svg:hover {
+.c18.c18.btn svg:hover {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
 }
 
-.c9.c9.btn.btn-primary svg {
+.c18.c18.btn.btn-primary svg {
   color: #013366;
 }
 
-.c9.c9.btn.btn-primary svg:hover {
+.c18.c18.btn.btn-primary svg:hover {
   color: #013366;
 }
 
-.c9.c9.btn.btn-light svg {
+.c18.c18.btn.btn-light svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c9.c9.btn.btn-light svg:hover {
+.c18.c18.btn.btn-light svg:hover {
   color: #CE3E39;
 }
 
-.c9.c9.btn.btn-info svg {
+.c18.c18.btn.btn-info svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c9.c9.btn.btn-info svg:hover {
+.c18.c18.btn.btn-info svg:hover {
   color: var(--surface-color-primary-button-hover);
 }
 
-.c10.c10.btn {
+.c19.c19.btn {
   font-size: 1.4rem;
   color: #aaaaaa;
   -webkit-text-decoration: none;
@@ -272,13 +267,13 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
   line-height: unset;
 }
 
-.c10.c10.btn .text {
+.c19.c19.btn .text {
   display: none;
 }
 
-.c10.c10.btn:hover,
-.c10.c10.btn:active,
-.c10.c10.btn:focus {
+.c19.c19.btn:hover,
+.c19.c19.btn:active,
+.c19.c19.btn:focus {
   color: #d8292f;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -292,38 +287,14 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
   flex-direction: row;
 }
 
-.c10.c10.btn:hover .text,
-.c10.c10.btn:active .text,
-.c10.c10.btn:focus .text {
+.c19.c19.btn:hover .text,
+.c19.c19.btn:active .text,
+.c19.c19.btn:focus .text {
   display: inline;
   line-height: 2rem;
 }
 
-.c1 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
-.c0 {
-  margin: 1.6rem;
-  padding: 1.6rem;
-  background-color: white;
-  text-align: left;
-  border-radius: 0.5rem;
-}
-
-.c2 {
-  font-size: 1.6rem;
-  color: #9F9D9C;
-  border-bottom: 0.2rem solid #606060;
-  margin-bottom: 0.9rem;
-  padding-bottom: 0.25rem;
-  font-family: 'BcSans-Bold';
-}
-
-.c7 {
+.c17 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -335,13 +306,39 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
   gap: 0.8rem;
 }
 
-.c7 .form-label {
+.c17 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
 }
 
-.c6 {
+.c2 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
+}
+
+.c1 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c12 {
+  margin: 0;
+  padding: 1.6rem;
+  font-size: 1.6rem;
+  color: #9F9D9C;
+  border-bottom: 0.2rem solid #606060;
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.25rem;
+  font-family: 'BcSans-Bold';
+}
+
+.c16 {
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
@@ -358,466 +355,649 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
   line-break: break-all;
 }
 
-.c4 {
+.c14 {
   min-width: 3rem;
   min-height: 4.5rem;
 }
 
-.c5 {
+.c15 {
   font-size: 1.2rem;
 }
 
-.c3 {
+.c13 {
   min-height: 4.5rem;
 }
 
+.c3 {
+  margin: 0 1.6rem 0 1.6rem;
+  padding: 1.6rem;
+  text-align: left;
+  text-underline-offset: 2px;
+}
+
+.c3 button {
+  font-size: 14px;
+}
+
+.c4 {
+  font-size: 16px;
+  color: #1a5a96;
+  font-style: italic;
+  font-weight: bold;
+  -webkit-text-decoration: none solid rgb(26,90,150);
+  text-decoration: none solid rgb(26,90,150);
+  line-height: 24px;
+  margin-bottom: 1rem;
+}
+
+.c8 {
+  padding: 1.5rem 1.8rem;
+  border-radius: 4px;
+  background-color: #f0f7fc;
+  margin-bottom: 2rem;
+  font-size: 14px;
+  color: #053662;
+  -webkit-text-decoration: none solid rgb(49,49,50);
+  text-decoration: none solid rgb(49,49,50);
+  line-height: 24px;
+}
+
+.c7 {
+  float: right;
+  cursor: pointer;
+  color: #1a5a96;
+  font-size: 2.8rem;
+}
+
+.c6 {
+  margin-right: 1.5rem;
+  font-size: 1.3rem;
+}
+
+.c5 {
+  cursor: pointer;
+}
+
+.c10 {
+  font-weight: normal;
+}
+
+.c9 {
+  font-weight: bold;
+}
+
+.c0 {
+  margin: 0 1.6rem 0 1.6rem;
+  padding: 0 1.6rem 0 1.6rem;
+  text-align: left;
+  text-underline-offset: 2px;
+}
+
+.c0 button {
+  font-size: 14px;
+}
+
 <div
-    class="c0 form-section"
+    class="c0"
   >
-    <h2
-      class="c1"
-    >
-      <div
-        class="no-gutters row"
-      >
-        <div
-          class="align-content-end col"
-        >
-          Selected Properties
-        </div>
-      </div>
-    </h2>
     <div
-      class="collapse show"
+      class="py-2"
     >
-      <div
-        class="c2 no-gutters row"
+      Select one or more properties that you want to include in this acquisition. You can choose a location from the map, or search by other criteria.
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c2"
       >
         <div
-          class="col-md-3"
+          class="no-gutters row"
         >
-          Identifier
+          <div
+            class="align-content-end col"
+          >
+            Selected Properties
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="c3"
+        >
+          <div
+            class="c4"
+          >
+            <div
+              class="c5 no-gutters row"
+            >
+              <div
+                class="col"
+              >
+                <svg
+                  class="c6"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 512 512"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                  />
+                </svg>
+                New workflow
+              </div>
+              <div
+                class="col-1"
+              >
+                <svg
+                  class="c7"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="m7 14 5-5 5 5z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div
+            class="c8 collapse show"
+          >
+            <ol>
+              <li
+                class="c9"
+              >
+                <div>
+                  Find a Property
+                </div>
+                <div
+                  class="c10"
+                >
+                  Navigate to an area of the map OR use 
+                  <button
+                    class="c11 Button d-inline-block btn btn-link"
+                    type="button"
+                  >
+                    <div
+                      class="Button__value"
+                    >
+                      Search
+                    </div>
+                  </button>
+                </div>
+              </li>
+              <li
+                class="c9"
+              >
+                <div>
+                  Select a property
+                </div>
+                <div
+                  class="c10"
+                >
+                  Click on the map and the selection will be highlighed
+                </div>
+              </li>
+              <li
+                class="c9"
+              >
+                <div>
+                  Add it to this file
+                </div>
+                <div
+                  class="c10"
+                >
+                  Click "Add selected" property button when it appears below
+                </div>
+              </li>
+            </ol>
+          </div>
         </div>
         <div
-          class="col-md-9"
+          class="c12 no-gutters row"
         >
-          Provide a descriptive name for this land
-          <span
-            class="tooltip-icon"
-            data-testid="tooltip-icon-property-selector-tooltip"
-            id="property-selector-tooltip"
+          <div
+            class="col-md-3"
           >
-            <svg
+            Identifier
+          </div>
+          <div
+            class="col-md-9"
+          >
+            Provide a descriptive name for this land
+            <span
               class="tooltip-icon"
-              fill="currentColor"
-              height="1em"
-              stroke="currentColor"
-              stroke-width="0"
-              viewBox="0 0 512 512"
-              width="1em"
-              xmlns="http://www.w3.org/2000/svg"
+              data-testid="tooltip-icon-property-selector-tooltip"
+              id="property-selector-tooltip"
             >
-              <path
-                d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-              />
-            </svg>
-          </span>
-        </div>
-      </div>
-      <div
-        class="c3 align-items-center mb-3 no-gutters row"
-      >
-        <div
-          class="col-md-3"
-        >
-          <div
-            class="mb-0 d-flex align-items-center"
-          >
-            <svg
-              class="c4"
-              height="45"
-              id="Layer_2"
-              viewBox="0 0 20 30"
-              width="30"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <defs>
-                <style />
-              </defs>
-              <g
-                id="PDF_preview"
+              <svg
+                class="tooltip-icon"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  class="cls-1"
-                  d="M.02,9.77c.4,7.19,9.81,20.23,9.81,20.23,0,0,9.14-13.08,9.43-20.23C19.79-3.33-.7-3.19,.02,9.77Zm9.61,5.13c-3.31,0-6-2.69-6-6S6.32,2.91,9.63,2.91s6,2.69,6,6-2.68,6-6,6Z"
-                  fill="#2a81cb"
+                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
                 />
-              </g>
+              </svg>
+            </span>
+          </div>
+        </div>
+        <div
+          class="c13 align-items-center mb-3 no-gutters row"
+        >
+          <div
+            class="col-md-3"
+          >
+            <div
+              class="mb-0 d-flex align-items-center"
+            >
               <svg
-                height="16"
-                overflow="visible"
-                preserveAspectRatio="none"
-                version="1.2"
-                viewBox="0 0 22 21"
-                width="16"
-                x="2"
+                class="c14"
+                height="45"
+                id="Layer_2"
+                viewBox="0 0 20 30"
+                width="30"
                 xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                y="2"
               >
+                <defs>
+                  <style />
+                </defs>
                 <g
-                  transform="translate(1, 1)"
+                  id="PDF_preview"
                 >
-                  <defs>
-                    <path
-                      d="M9.5 0 C14.743192732693075 0 19 4.25680726730706 19 9.5 C19 14.74319273269294 14.743192732693075 19 9.5 19 C4.256807267306925 19 0 14.74319273269294 0 9.5 C0 4.25680726730706 4.256807267306925 0 9.5 0 Z"
-                      id="path-1648484224573577"
-                      vector-effect="non-scaling-stroke"
-                    />
-                  </defs>
-                  <g
-                    transform="translate(0, 0)"
-                  >
-                    <path
-                      class="path-2"
-                      d="M9.5 0 C14.743192732693075 0 19 4.25680726730706 19 9.5 C19 14.74319273269294 14.743192732693075 19 9.5 19 C4.256807267306925 19 0 14.74319273269294 0 9.5 C0 4.25680726730706 4.256807267306925 0 9.5 0 Z"
-                      fill="rgb(252, 186, 25)"
-                      stroke="rgb(255, 255, 255)"
-                      stroke-linecap="butt"
-                      stroke-linejoin="miter"
-                      stroke-width="1"
-                      vector-effect="non-scaling-stroke"
-                    />
-                  </g>
+                  <path
+                    class="cls-1"
+                    d="M.02,9.77c.4,7.19,9.81,20.23,9.81,20.23,0,0,9.14-13.08,9.43-20.23C19.79-3.33-.7-3.19,.02,9.77Zm9.61,5.13c-3.31,0-6-2.69-6-6S6.32,2.91,9.63,2.91s6,2.69,6,6-2.68,6-6,6Z"
+                    fill="#2a81cb"
+                  />
                 </g>
-                <text
-                  class="c5"
-                  textLength="1.25rem"
-                  x="7"
-                  y="15"
+                <svg
+                  height="16"
+                  overflow="visible"
+                  preserveAspectRatio="none"
+                  version="1.2"
+                  viewBox="0 0 22 21"
+                  width="16"
+                  x="2"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  y="2"
                 >
+                  <g
+                    transform="translate(1, 1)"
+                  >
+                    <defs>
+                      <path
+                        d="M9.5 0 C14.743192732693075 0 19 4.25680726730706 19 9.5 C19 14.74319273269294 14.743192732693075 19 9.5 19 C4.256807267306925 19 0 14.74319273269294 0 9.5 C0 4.25680726730706 4.256807267306925 0 9.5 0 Z"
+                        id="path-1648484224573577"
+                        vector-effect="non-scaling-stroke"
+                      />
+                    </defs>
+                    <g
+                      transform="translate(0, 0)"
+                    >
+                      <path
+                        class="path-2"
+                        d="M9.5 0 C14.743192732693075 0 19 4.25680726730706 19 9.5 C19 14.74319273269294 14.743192732693075 19 9.5 19 C4.256807267306925 19 0 14.74319273269294 0 9.5 C0 4.25680726730706 4.256807267306925 0 9.5 0 Z"
+                        fill="rgb(252, 186, 25)"
+                        stroke="rgb(255, 255, 255)"
+                        stroke-linecap="butt"
+                        stroke-linejoin="miter"
+                        stroke-width="1"
+                        vector-effect="non-scaling-stroke"
+                      />
+                    </g>
+                  </g>
+                  <text
+                    class="c15"
+                    textLength="1.25rem"
+                    x="7"
+                    y="15"
+                  >
+                    1
+                  </text>
+                </svg>
+                <title>
                   1
-                </text>
-              </svg>
-              <title>
-                1
-              </title>
-            </svg>
-            <div
-              class="c6 pl-3"
-            >
-              PID: 123-456-789
-            </div>
-          </div>
-        </div>
-        <div
-          class="col-md-5"
-        >
-          <div
-            class="c7 mb-0 w-100 input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-properties.0.name"
-              name="properties.0.name"
-              style="word-break: break-all;"
-              value=""
-            />
-          </div>
-        </div>
-        <div
-          class="col-auto"
-        >
-          <button
-            class="c8 Button btn btn-link"
-            data-testid="zoom-to-property-0"
-            type="button"
-          >
-            <div
-              class="Button__value"
-            >
-              <svg
-                class="ml-4"
-                fill="currentColor"
-                height="18"
-                stroke="currentColor"
-                stroke-width="0"
-                viewBox="0 0 512 512"
-                width="18"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M304 192v32c0 6.6-5.4 12-12 12h-56v56c0 6.6-5.4 12-12 12h-32c-6.6 0-12-5.4-12-12v-56h-56c-6.6 0-12-5.4-12-12v-32c0-6.6 5.4-12 12-12h56v-56c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v56h56c6.6 0 12 5.4 12 12zm201 284.7L476.7 505c-9.4 9.4-24.6 9.4-33.9 0L343 405.3c-4.5-4.5-7-10.6-7-17V372c-35.3 27.6-79.7 44-128 44C93.1 416 0 322.9 0 208S93.1 0 208 0s208 93.1 208 208c0 48.3-16.4 92.7-44 128h16.3c6.4 0 12.5 2.5 17 7l99.7 99.7c9.3 9.4 9.3 24.6 0 34zM344 208c0-75.2-60.8-136-136-136S72 132.8 72 208s60.8 136 136 136 136-60.8 136-136z"
-                />
-              </svg>
-            </div>
-          </button>
-        </div>
-        <div
-          class="pl-3 col-md-1"
-        >
-          <button
-            class="c8 Button c9 btn btn-primary"
-            data-testid="move-pin-location-0"
-            title="move-pin-location"
-            type="button"
-          >
-            <div
-              class="Button__value"
-            >
-              <svg
-                fill="currentColor"
-                height="22"
-                stroke="currentColor"
-                stroke-width="0"
-                viewBox="0 0 24 24"
-                width="22"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M11 11V5.82843L9.17157 7.65685L7.75736 6.24264L12 2L16.2426 6.24264L14.8284 7.65685L13 5.82843V11H18.1716L16.3431 9.17157L17.7574 7.75736L22 12L17.7574 16.2426L16.3431 14.8284L18.1716 13H13V18.1716L14.8284 16.3431L16.2426 17.7574L12 22L7.75736 17.7574L9.17157 16.3431L11 18.1716V13H5.82843L7.65685 14.8284L6.24264 16.2426L2 12L6.24264 7.75736L7.65685 9.17157L5.82843 11H11Z"
-                />
-              </svg>
-            </div>
-          </button>
-        </div>
-        <div
-          class="col-md-1"
-        >
-          <button
-            class="c8 Button c10 btn btn-link"
-            data-testid="delete-property-0"
-            type="button"
-          >
-            <div
-              class="Button__value"
-            >
-              <svg
-                fill="currentColor"
-                height="2rem"
-                stroke="currentColor"
-                stroke-width="0"
-                viewBox="0 0 24 24"
-                width="2rem"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <title>
-                  remove
                 </title>
-                <path
-                  d="M0 0h24v24H0z"
-                  fill="none"
-                />
-                <path
-                  d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                />
               </svg>
-               
-              <span
-                class="text"
+              <div
+                class="c16 pl-3"
               >
-                Remove
-              </span>
+                PID: 123-456-789
+              </div>
             </div>
-          </button>
+          </div>
+          <div
+            class="col-md-5"
+          >
+            <div
+              class="c17 mb-0 w-100 input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-properties.0.name"
+                name="properties.0.name"
+                style="word-break: break-all;"
+                value=""
+              />
+            </div>
+          </div>
+          <div
+            class="col-auto"
+          >
+            <button
+              class="c11 Button btn btn-link"
+              data-testid="zoom-to-property-0"
+              type="button"
+            >
+              <div
+                class="Button__value"
+              >
+                <svg
+                  class="ml-4"
+                  fill="currentColor"
+                  height="18"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 512 512"
+                  width="18"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M304 192v32c0 6.6-5.4 12-12 12h-56v56c0 6.6-5.4 12-12 12h-32c-6.6 0-12-5.4-12-12v-56h-56c-6.6 0-12-5.4-12-12v-32c0-6.6 5.4-12 12-12h56v-56c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v56h56c6.6 0 12 5.4 12 12zm201 284.7L476.7 505c-9.4 9.4-24.6 9.4-33.9 0L343 405.3c-4.5-4.5-7-10.6-7-17V372c-35.3 27.6-79.7 44-128 44C93.1 416 0 322.9 0 208S93.1 0 208 0s208 93.1 208 208c0 48.3-16.4 92.7-44 128h16.3c6.4 0 12.5 2.5 17 7l99.7 99.7c9.3 9.4 9.3 24.6 0 34zM344 208c0-75.2-60.8-136-136-136S72 132.8 72 208s60.8 136 136 136 136-60.8 136-136z"
+                  />
+                </svg>
+              </div>
+            </button>
+          </div>
+          <div
+            class="pl-3 col-md-1"
+          >
+            <button
+              class="c11 Button c18 btn btn-primary"
+              data-testid="move-pin-location-0"
+              title="move-pin-location"
+              type="button"
+            >
+              <div
+                class="Button__value"
+              >
+                <svg
+                  fill="currentColor"
+                  height="22"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="22"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M11 11V5.82843L9.17157 7.65685L7.75736 6.24264L12 2L16.2426 6.24264L14.8284 7.65685L13 5.82843V11H18.1716L16.3431 9.17157L17.7574 7.75736L22 12L17.7574 16.2426L16.3431 14.8284L18.1716 13H13V18.1716L14.8284 16.3431L16.2426 17.7574L12 22L7.75736 17.7574L9.17157 16.3431L11 18.1716V13H5.82843L7.65685 14.8284L6.24264 16.2426L2 12L6.24264 7.75736L7.65685 9.17157L5.82843 11H11Z"
+                  />
+                </svg>
+              </div>
+            </button>
+          </div>
+          <div
+            class="col-md-1"
+          >
+            <button
+              class="c11 Button c19 btn btn-link"
+              data-testid="delete-property-0"
+              type="button"
+            >
+              <div
+                class="Button__value"
+              >
+                <svg
+                  fill="currentColor"
+                  height="2rem"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="2rem"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    remove
+                  </title>
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                  />
+                </svg>
+                 
+                <span
+                  class="text"
+                >
+                  Remove
+                </span>
+              </div>
+            </button>
+          </div>
         </div>
-      </div>
-      <div
-        class="c3 align-items-center mb-3 no-gutters row"
-      >
         <div
-          class="col-md-3"
+          class="c13 align-items-center mb-3 no-gutters row"
         >
           <div
-            class="mb-0 d-flex align-items-center"
+            class="col-md-3"
           >
-            <svg
-              class="c4"
-              height="45"
-              id="Layer_2"
-              viewBox="0 0 20 30"
-              width="30"
-              xmlns="http://www.w3.org/2000/svg"
+            <div
+              class="mb-0 d-flex align-items-center"
             >
-              <defs>
-                <style />
-              </defs>
-              <g
-                id="PDF_preview"
-              >
-                <path
-                  class="cls-1"
-                  d="M.02,9.77c.4,7.19,9.81,20.23,9.81,20.23,0,0,9.14-13.08,9.43-20.23C19.79-3.33-.7-3.19,.02,9.77Zm9.61,5.13c-3.31,0-6-2.69-6-6S6.32,2.91,9.63,2.91s6,2.69,6,6-2.68,6-6,6Z"
-                  fill="#2a81cb"
-                />
-              </g>
               <svg
-                height="16"
-                overflow="visible"
-                preserveAspectRatio="none"
-                version="1.2"
-                viewBox="0 0 22 21"
-                width="16"
-                x="2"
+                class="c14"
+                height="45"
+                id="Layer_2"
+                viewBox="0 0 20 30"
+                width="30"
                 xmlns="http://www.w3.org/2000/svg"
-                xmlns:xlink="http://www.w3.org/1999/xlink"
-                y="2"
               >
+                <defs>
+                  <style />
+                </defs>
                 <g
-                  transform="translate(1, 1)"
+                  id="PDF_preview"
                 >
-                  <defs>
-                    <path
-                      d="M9.5 0 C14.743192732693075 0 19 4.25680726730706 19 9.5 C19 14.74319273269294 14.743192732693075 19 9.5 19 C4.256807267306925 19 0 14.74319273269294 0 9.5 C0 4.25680726730706 4.256807267306925 0 9.5 0 Z"
-                      id="path-1648484224573577"
-                      vector-effect="non-scaling-stroke"
-                    />
-                  </defs>
-                  <g
-                    transform="translate(0, 0)"
-                  >
-                    <path
-                      class="path-2"
-                      d="M9.5 0 C14.743192732693075 0 19 4.25680726730706 19 9.5 C19 14.74319273269294 14.743192732693075 19 9.5 19 C4.256807267306925 19 0 14.74319273269294 0 9.5 C0 4.25680726730706 4.256807267306925 0 9.5 0 Z"
-                      fill="rgb(252, 186, 25)"
-                      stroke="rgb(255, 255, 255)"
-                      stroke-linecap="butt"
-                      stroke-linejoin="miter"
-                      stroke-width="1"
-                      vector-effect="non-scaling-stroke"
-                    />
-                  </g>
+                  <path
+                    class="cls-1"
+                    d="M.02,9.77c.4,7.19,9.81,20.23,9.81,20.23,0,0,9.14-13.08,9.43-20.23C19.79-3.33-.7-3.19,.02,9.77Zm9.61,5.13c-3.31,0-6-2.69-6-6S6.32,2.91,9.63,2.91s6,2.69,6,6-2.68,6-6,6Z"
+                    fill="#2a81cb"
+                  />
                 </g>
-                <text
-                  class="c5"
-                  textLength="1.25rem"
-                  x="7"
-                  y="15"
+                <svg
+                  height="16"
+                  overflow="visible"
+                  preserveAspectRatio="none"
+                  version="1.2"
+                  viewBox="0 0 22 21"
+                  width="16"
+                  x="2"
+                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                  y="2"
                 >
-                  2
-                </text>
-              </svg>
-              <title>
-                2
-              </title>
-            </svg>
-            <div
-              class="c6 pl-3"
-            >
-              PIN: 1111222
-            </div>
-          </div>
-        </div>
-        <div
-          class="col-md-5"
-        >
-          <div
-            class="c7 mb-0 w-100 input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-properties.1.name"
-              name="properties.1.name"
-              style="word-break: break-all;"
-              value=""
-            />
-          </div>
-        </div>
-        <div
-          class="col-auto"
-        >
-          <button
-            class="c8 Button btn btn-link"
-            data-testid="zoom-to-property-1"
-            type="button"
-          >
-            <div
-              class="Button__value"
-            >
-              <svg
-                class="ml-4"
-                fill="currentColor"
-                height="18"
-                stroke="currentColor"
-                stroke-width="0"
-                viewBox="0 0 512 512"
-                width="18"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M304 192v32c0 6.6-5.4 12-12 12h-56v56c0 6.6-5.4 12-12 12h-32c-6.6 0-12-5.4-12-12v-56h-56c-6.6 0-12-5.4-12-12v-32c0-6.6 5.4-12 12-12h56v-56c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v56h56c6.6 0 12 5.4 12 12zm201 284.7L476.7 505c-9.4 9.4-24.6 9.4-33.9 0L343 405.3c-4.5-4.5-7-10.6-7-17V372c-35.3 27.6-79.7 44-128 44C93.1 416 0 322.9 0 208S93.1 0 208 0s208 93.1 208 208c0 48.3-16.4 92.7-44 128h16.3c6.4 0 12.5 2.5 17 7l99.7 99.7c9.3 9.4 9.3 24.6 0 34zM344 208c0-75.2-60.8-136-136-136S72 132.8 72 208s60.8 136 136 136 136-60.8 136-136z"
-                />
-              </svg>
-            </div>
-          </button>
-        </div>
-        <div
-          class="pl-3 col-md-1"
-        >
-          <button
-            class="c8 Button c9 btn btn-primary"
-            data-testid="move-pin-location-1"
-            title="move-pin-location"
-            type="button"
-          >
-            <div
-              class="Button__value"
-            >
-              <svg
-                fill="currentColor"
-                height="22"
-                stroke="currentColor"
-                stroke-width="0"
-                viewBox="0 0 24 24"
-                width="22"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M11 11V5.82843L9.17157 7.65685L7.75736 6.24264L12 2L16.2426 6.24264L14.8284 7.65685L13 5.82843V11H18.1716L16.3431 9.17157L17.7574 7.75736L22 12L17.7574 16.2426L16.3431 14.8284L18.1716 13H13V18.1716L14.8284 16.3431L16.2426 17.7574L12 22L7.75736 17.7574L9.17157 16.3431L11 18.1716V13H5.82843L7.65685 14.8284L6.24264 16.2426L2 12L6.24264 7.75736L7.65685 9.17157L5.82843 11H11Z"
-                />
-              </svg>
-            </div>
-          </button>
-        </div>
-        <div
-          class="col-md-1"
-        >
-          <button
-            class="c8 Button c10 btn btn-link"
-            data-testid="delete-property-1"
-            type="button"
-          >
-            <div
-              class="Button__value"
-            >
-              <svg
-                fill="currentColor"
-                height="2rem"
-                stroke="currentColor"
-                stroke-width="0"
-                viewBox="0 0 24 24"
-                width="2rem"
-                xmlns="http://www.w3.org/2000/svg"
-              >
+                  <g
+                    transform="translate(1, 1)"
+                  >
+                    <defs>
+                      <path
+                        d="M9.5 0 C14.743192732693075 0 19 4.25680726730706 19 9.5 C19 14.74319273269294 14.743192732693075 19 9.5 19 C4.256807267306925 19 0 14.74319273269294 0 9.5 C0 4.25680726730706 4.256807267306925 0 9.5 0 Z"
+                        id="path-1648484224573577"
+                        vector-effect="non-scaling-stroke"
+                      />
+                    </defs>
+                    <g
+                      transform="translate(0, 0)"
+                    >
+                      <path
+                        class="path-2"
+                        d="M9.5 0 C14.743192732693075 0 19 4.25680726730706 19 9.5 C19 14.74319273269294 14.743192732693075 19 9.5 19 C4.256807267306925 19 0 14.74319273269294 0 9.5 C0 4.25680726730706 4.256807267306925 0 9.5 0 Z"
+                        fill="rgb(252, 186, 25)"
+                        stroke="rgb(255, 255, 255)"
+                        stroke-linecap="butt"
+                        stroke-linejoin="miter"
+                        stroke-width="1"
+                        vector-effect="non-scaling-stroke"
+                      />
+                    </g>
+                  </g>
+                  <text
+                    class="c15"
+                    textLength="1.25rem"
+                    x="7"
+                    y="15"
+                  >
+                    2
+                  </text>
+                </svg>
                 <title>
-                  remove
+                  2
                 </title>
-                <path
-                  d="M0 0h24v24H0z"
-                  fill="none"
-                />
-                <path
-                  d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                />
               </svg>
-               
-              <span
-                class="text"
+              <div
+                class="c16 pl-3"
               >
-                Remove
-              </span>
+                PIN: 1111222
+              </div>
             </div>
-          </button>
+          </div>
+          <div
+            class="col-md-5"
+          >
+            <div
+              class="c17 mb-0 w-100 input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-properties.1.name"
+                name="properties.1.name"
+                style="word-break: break-all;"
+                value=""
+              />
+            </div>
+          </div>
+          <div
+            class="col-auto"
+          >
+            <button
+              class="c11 Button btn btn-link"
+              data-testid="zoom-to-property-1"
+              type="button"
+            >
+              <div
+                class="Button__value"
+              >
+                <svg
+                  class="ml-4"
+                  fill="currentColor"
+                  height="18"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 512 512"
+                  width="18"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M304 192v32c0 6.6-5.4 12-12 12h-56v56c0 6.6-5.4 12-12 12h-32c-6.6 0-12-5.4-12-12v-56h-56c-6.6 0-12-5.4-12-12v-32c0-6.6 5.4-12 12-12h56v-56c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v56h56c6.6 0 12 5.4 12 12zm201 284.7L476.7 505c-9.4 9.4-24.6 9.4-33.9 0L343 405.3c-4.5-4.5-7-10.6-7-17V372c-35.3 27.6-79.7 44-128 44C93.1 416 0 322.9 0 208S93.1 0 208 0s208 93.1 208 208c0 48.3-16.4 92.7-44 128h16.3c6.4 0 12.5 2.5 17 7l99.7 99.7c9.3 9.4 9.3 24.6 0 34zM344 208c0-75.2-60.8-136-136-136S72 132.8 72 208s60.8 136 136 136 136-60.8 136-136z"
+                  />
+                </svg>
+              </div>
+            </button>
+          </div>
+          <div
+            class="pl-3 col-md-1"
+          >
+            <button
+              class="c11 Button c18 btn btn-primary"
+              data-testid="move-pin-location-1"
+              title="move-pin-location"
+              type="button"
+            >
+              <div
+                class="Button__value"
+              >
+                <svg
+                  fill="currentColor"
+                  height="22"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="22"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M11 11V5.82843L9.17157 7.65685L7.75736 6.24264L12 2L16.2426 6.24264L14.8284 7.65685L13 5.82843V11H18.1716L16.3431 9.17157L17.7574 7.75736L22 12L17.7574 16.2426L16.3431 14.8284L18.1716 13H13V18.1716L14.8284 16.3431L16.2426 17.7574L12 22L7.75736 17.7574L9.17157 16.3431L11 18.1716V13H5.82843L7.65685 14.8284L6.24264 16.2426L2 12L6.24264 7.75736L7.65685 9.17157L5.82843 11H11Z"
+                  />
+                </svg>
+              </div>
+            </button>
+          </div>
+          <div
+            class="col-md-1"
+          >
+            <button
+              class="c11 Button c19 btn btn-link"
+              data-testid="delete-property-1"
+              type="button"
+            >
+              <div
+                class="Button__value"
+              >
+                <svg
+                  fill="currentColor"
+                  height="2rem"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="2rem"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    remove
+                  </title>
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                  />
+                </svg>
+                 
+                <span
+                  class="text"
+                >
+                  Remove
+                </span>
+              </div>
+            </button>
+          </div>
         </div>
       </div>
     </div>

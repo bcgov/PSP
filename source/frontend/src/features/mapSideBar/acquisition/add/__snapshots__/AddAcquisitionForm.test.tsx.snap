@@ -6,7 +6,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
     class="Toastify"
   />
   <div />
-  .c9.btn {
+  .c16.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,17 +35,17 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
   cursor: pointer;
 }
 
-.c9.btn .Button__value {
+.c16.btn .Button__value {
   width: auto;
 }
 
-.c9.btn:hover {
+.c16.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c9.btn:focus {
+.c16.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -53,31 +53,31 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
   box-shadow: none;
 }
 
-.c9.btn.btn-primary {
+.c16.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c9.btn.btn-primary:hover,
-.c9.btn.btn-primary:active,
-.c9.btn.btn-primary:focus {
+.c16.btn.btn-primary:hover,
+.c16.btn.btn-primary:active,
+.c16.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c9.btn.btn-secondary {
+.c16.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c9.btn.btn-secondary:hover,
-.c9.btn.btn-secondary:active,
-.c9.btn.btn-secondary:focus {
+.c16.btn.btn-secondary:hover,
+.c16.btn.btn-secondary:active,
+.c16.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c9.btn.btn-info {
+.c16.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -85,66 +85,66 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
   padding-right: 0.6rem;
 }
 
-.c9.btn.btn-info:hover,
-.c9.btn.btn-info:active,
-.c9.btn.btn-info:focus {
+.c16.btn.btn-info:hover,
+.c16.btn.btn-info:active,
+.c16.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c9.btn.btn-light {
+.c16.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c9.btn.btn-light:hover,
-.c9.btn.btn-light:active,
-.c9.btn.btn-light:focus {
+.c16.btn.btn-light:hover,
+.c16.btn.btn-light:active,
+.c16.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c9.btn.btn-dark {
+.c16.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c9.btn.btn-dark:hover,
-.c9.btn.btn-dark:active,
-.c9.btn.btn-dark:focus {
+.c16.btn.btn-dark:hover,
+.c16.btn.btn-dark:active,
+.c16.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c9.btn.btn-danger {
+.c16.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c9.btn.btn-danger:hover,
-.c9.btn.btn-danger:active,
-.c9.btn.btn-danger:focus {
+.c16.btn.btn-danger:hover,
+.c16.btn.btn-danger:active,
+.c16.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c9.btn.btn-warning {
+.c16.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c9.btn.btn-warning:hover,
-.c9.btn.btn-warning:active,
-.c9.btn.btn-warning:focus {
+.c16.btn.btn-warning:hover,
+.c16.btn.btn-warning:active,
+.c16.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c9.btn.btn-link {
+.c16.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -168,9 +168,9 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
   text-decoration: underline;
 }
 
-.c9.btn.btn-link:hover,
-.c9.btn.btn-link:active,
-.c9.btn.btn-link:focus {
+.c16.btn.btn-link:hover,
+.c16.btn.btn-link:active,
+.c16.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -180,15 +180,15 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
   outline: none;
 }
 
-.c9.btn.btn-link:disabled,
-.c9.btn.btn-link.disabled {
+.c16.btn.btn-link:disabled,
+.c16.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c9.btn:disabled,
-.c9.btn:disabled:hover {
+.c16.btn:disabled,
+.c16.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -200,15 +200,15 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
   cursor: not-allowed;
 }
 
-.c9.Button .Button__icon {
+.c16.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c9.Button--icon-only:focus {
+.c16.Button--icon-only:focus {
   outline: none;
 }
 
-.c9.Button--icon-only .Button__icon {
+.c16.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
@@ -234,14 +234,14 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
   border-color: #d8292f !important;
 }
 
-.c10 {
+.c19 {
   color: #474543;
   font-size: 1.6rem;
   -webkit-text-decoration: none;
   text-decoration: none;
 }
 
-.c11 {
+.c20 {
   position: relative;
   border-radius: 0.4rem;
   padding-top: 0.8rem;
@@ -255,7 +255,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
   cursor: pointer;
 }
 
-.c11.is-invalid {
+.c20.is-invalid {
   border: #CE3E39 solid 0.1rem;
 }
 
@@ -285,7 +285,9 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
   font-weight: bold;
 }
 
-.c7 {
+.c17 {
+  margin: 0;
+  padding: 1.6rem;
   font-size: 1.6rem;
   color: #9F9D9C;
   border-bottom: 0.2rem solid #606060;
@@ -294,7 +296,76 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
   font-family: 'BcSans-Bold';
 }
 
-.c8 input.form-control {
+.c8 {
+  margin: 0 1.6rem 0 1.6rem;
+  padding: 1.6rem;
+  text-align: left;
+  text-underline-offset: 2px;
+}
+
+.c8 button {
+  font-size: 14px;
+}
+
+.c9 {
+  font-size: 16px;
+  color: #1a5a96;
+  font-style: italic;
+  font-weight: bold;
+  -webkit-text-decoration: none solid rgb(26,90,150);
+  text-decoration: none solid rgb(26,90,150);
+  line-height: 24px;
+  margin-bottom: 1rem;
+}
+
+.c13 {
+  padding: 1.5rem 1.8rem;
+  border-radius: 4px;
+  background-color: #f0f7fc;
+  margin-bottom: 2rem;
+  font-size: 14px;
+  color: #053662;
+  -webkit-text-decoration: none solid rgb(49,49,50);
+  text-decoration: none solid rgb(49,49,50);
+  line-height: 24px;
+}
+
+.c12 {
+  float: right;
+  cursor: pointer;
+  color: #1a5a96;
+  font-size: 2.8rem;
+}
+
+.c11 {
+  margin-right: 1.5rem;
+  font-size: 1.3rem;
+}
+
+.c10 {
+  cursor: pointer;
+}
+
+.c15 {
+  font-weight: normal;
+}
+
+.c14 {
+  font-weight: bold;
+}
+
+.c7 {
+  margin: 0 1.6rem 0 1.6rem;
+  padding: 0 1.6rem 0 1.6rem;
+  text-align: left;
+  text-underline-offset: 2px;
+}
+
+.c7 button {
+  font-size: 14px;
+}
+
+.c18 input.form-control {
   min-width: 50rem;
   max-width: 100%;
 }
@@ -1254,66 +1325,175 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
         class="collapse show"
       >
         <div
-          class="py-2"
+          class="c7"
         >
-          Select one or more properties that you want to include in this acquisition. You can choose a location from the map, or search by other criteria.
-        </div>
-        <div
-          class="c1 form-section"
-        >
-          <h2
-            class="c2"
-          >
-            <div
-              class="no-gutters row"
-            >
-              <div
-                class="align-content-end col"
-              >
-                Selected Properties
-              </div>
-            </div>
-          </h2>
           <div
-            class="collapse show"
+            class="py-2"
           >
-            <div
-              class="c7 no-gutters row"
+            Select one or more properties that you want to include in this acquisition. You can choose a location from the map, or search by other criteria.
+          </div>
+          <div
+            class="c1 form-section"
+          >
+            <h2
+              class="c2"
             >
               <div
-                class="col-md-3"
+                class="no-gutters row"
               >
-                Identifier
+                <div
+                  class="align-content-end col"
+                >
+                  Selected Properties
+                </div>
+              </div>
+            </h2>
+            <div
+              class="collapse show"
+            >
+              <div
+                class="c8"
+              >
+                <div
+                  class="c9"
+                >
+                  <div
+                    class="c10 no-gutters row"
+                  >
+                    <div
+                      class="col"
+                    >
+                      <svg
+                        class="c11"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                        />
+                      </svg>
+                      New workflow
+                    </div>
+                    <div
+                      class="col-1"
+                    >
+                      <svg
+                        class="c12"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M0 0h24v24H0z"
+                          fill="none"
+                        />
+                        <path
+                          d="m7 14 5-5 5 5z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="c13 collapse show"
+                >
+                  <ol>
+                    <li
+                      class="c14"
+                    >
+                      <div>
+                        Find a Property
+                      </div>
+                      <div
+                        class="c15"
+                      >
+                        Navigate to an area of the map OR use 
+                        <button
+                          class="c16 Button d-inline-block btn btn-link"
+                          type="button"
+                        >
+                          <div
+                            class="Button__value"
+                          >
+                            Search
+                          </div>
+                        </button>
+                      </div>
+                    </li>
+                    <li
+                      class="c14"
+                    >
+                      <div>
+                        Select a property
+                      </div>
+                      <div
+                        class="c15"
+                      >
+                        Click on the map and the selection will be highlighed
+                      </div>
+                    </li>
+                    <li
+                      class="c14"
+                    >
+                      <div>
+                        Add it to this file
+                      </div>
+                      <div
+                        class="c15"
+                      >
+                        Click "Add selected" property button when it appears below
+                      </div>
+                    </li>
+                  </ol>
+                </div>
               </div>
               <div
-                class="col-md-9"
+                class="c17 no-gutters row"
               >
-                Provide a descriptive name for this land
-                <span
-                  class="tooltip-icon"
-                  data-testid="tooltip-icon-property-selector-tooltip"
-                  id="property-selector-tooltip"
+                <div
+                  class="col-md-3"
                 >
-                  <svg
+                  Identifier
+                </div>
+                <div
+                  class="col-md-9"
+                >
+                  Provide a descriptive name for this land
+                  <span
                     class="tooltip-icon"
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 512 512"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
+                    data-testid="tooltip-icon-property-selector-tooltip"
+                    id="property-selector-tooltip"
                   >
-                    <path
-                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                    />
-                  </svg>
-                </span>
+                    <svg
+                      class="tooltip-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                      />
+                    </svg>
+                  </span>
+                </div>
               </div>
+              <span>
+                No Properties selected
+              </span>
             </div>
-            <span>
-              No Properties selected
-            </span>
           </div>
         </div>
       </div>
@@ -1353,7 +1533,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
             class="c4 required text-left col"
           >
             <div
-              class="c8 input form-group"
+              class="c18 input form-group"
             >
               <input
                 class="form-control"
@@ -1404,7 +1584,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
             class="c4 text-left col"
           >
             <div
-              class="c8 input form-group"
+              class="c18 input form-group"
             >
               <input
                 class="form-control"
@@ -1775,7 +1955,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
         class="collapse show"
       >
         <button
-          class="c9 Button btn btn-link"
+          class="c16 Button btn btn-link"
           data-testid="add-team-member"
           type="button"
         >
@@ -1808,12 +1988,12 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
         class="collapse show"
       >
         <p
-          class="c10"
+          class="c19"
         >
           Each property in this sub-file should be impacted by the sub-interest(s) in this section
         </p>
         <button
-          class="c9 Button btn btn-link"
+          class="c16 Button btn btn-link"
           data-testid="add-file-owner"
           type="button"
         >
@@ -1849,7 +2029,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                   class="col"
                 >
                   <div
-                    class="c11"
+                    class="c20"
                   >
                     Select from contacts
                   </div>
@@ -1870,7 +2050,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                   class="pl-0 col-auto"
                 >
                   <button
-                    class="c9 Button Button--icon-only px-2 btn btn-primary"
+                    class="c16 Button Button--icon-only px-2 btn btn-primary"
                     title="Select Contact"
                     type="button"
                   >
@@ -1923,7 +2103,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                   class="col"
                 >
                   <div
-                    class="c11"
+                    class="c20"
                   >
                     Select from contacts
                   </div>
@@ -1944,7 +2124,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                   class="pl-0 col-auto"
                 >
                   <button
-                    class="c9 Button Button--icon-only px-2 btn btn-primary"
+                    class="c16 Button Button--icon-only px-2 btn btn-primary"
                     title="Select Contact"
                     type="button"
                   >
@@ -2013,7 +2193,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c10.btn {
+  .c17.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -2042,17 +2222,17 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c10.btn .Button__value {
+.c17.btn .Button__value {
   width: auto;
 }
 
-.c10.btn:hover {
+.c17.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c10.btn:focus {
+.c17.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -2060,31 +2240,31 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
   box-shadow: none;
 }
 
-.c10.btn.btn-primary {
+.c17.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c10.btn.btn-primary:hover,
-.c10.btn.btn-primary:active,
-.c10.btn.btn-primary:focus {
+.c17.btn.btn-primary:hover,
+.c17.btn.btn-primary:active,
+.c17.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c10.btn.btn-secondary {
+.c17.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c10.btn.btn-secondary:hover,
-.c10.btn.btn-secondary:active,
-.c10.btn.btn-secondary:focus {
+.c17.btn.btn-secondary:hover,
+.c17.btn.btn-secondary:active,
+.c17.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c10.btn.btn-info {
+.c17.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -2092,66 +2272,66 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
   padding-right: 0.6rem;
 }
 
-.c10.btn.btn-info:hover,
-.c10.btn.btn-info:active,
-.c10.btn.btn-info:focus {
+.c17.btn.btn-info:hover,
+.c17.btn.btn-info:active,
+.c17.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c10.btn.btn-light {
+.c17.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c10.btn.btn-light:hover,
-.c10.btn.btn-light:active,
-.c10.btn.btn-light:focus {
+.c17.btn.btn-light:hover,
+.c17.btn.btn-light:active,
+.c17.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c10.btn.btn-dark {
+.c17.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c10.btn.btn-dark:hover,
-.c10.btn.btn-dark:active,
-.c10.btn.btn-dark:focus {
+.c17.btn.btn-dark:hover,
+.c17.btn.btn-dark:active,
+.c17.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c10.btn.btn-danger {
+.c17.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c10.btn.btn-danger:hover,
-.c10.btn.btn-danger:active,
-.c10.btn.btn-danger:focus {
+.c17.btn.btn-danger:hover,
+.c17.btn.btn-danger:active,
+.c17.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c10.btn.btn-warning {
+.c17.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c10.btn.btn-warning:hover,
-.c10.btn.btn-warning:active,
-.c10.btn.btn-warning:focus {
+.c17.btn.btn-warning:hover,
+.c17.btn.btn-warning:active,
+.c17.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c10.btn.btn-link {
+.c17.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -2175,9 +2355,9 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
   text-decoration: underline;
 }
 
-.c10.btn.btn-link:hover,
-.c10.btn.btn-link:active,
-.c10.btn.btn-link:focus {
+.c17.btn.btn-link:hover,
+.c17.btn.btn-link:active,
+.c17.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -2187,15 +2367,15 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
   outline: none;
 }
 
-.c10.btn.btn-link:disabled,
-.c10.btn.btn-link.disabled {
+.c17.btn.btn-link:disabled,
+.c17.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c10.btn:disabled,
-.c10.btn:disabled:hover {
+.c17.btn:disabled,
+.c17.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -2207,15 +2387,15 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
   cursor: not-allowed;
 }
 
-.c10.Button .Button__icon {
+.c17.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c10.Button--icon-only:focus {
+.c17.Button--icon-only:focus {
   outline: none;
 }
 
-.c10.Button--icon-only .Button__icon {
+.c17.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
@@ -2245,14 +2425,14 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
   border-color: #d8292f !important;
 }
 
-.c11 {
+.c20 {
   color: #474543;
   font-size: 1.6rem;
   -webkit-text-decoration: none;
   text-decoration: none;
 }
 
-.c12 {
+.c21 {
   position: relative;
   border-radius: 0.4rem;
   padding-top: 0.8rem;
@@ -2266,7 +2446,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c12.is-invalid {
+.c21.is-invalid {
   border: #CE3E39 solid 0.1rem;
 }
 
@@ -2296,7 +2476,9 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c8 {
+.c18 {
+  margin: 0;
+  padding: 1.6rem;
   font-size: 1.6rem;
   color: #9F9D9C;
   border-bottom: 0.2rem solid #606060;
@@ -2305,7 +2487,76 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
   font-family: 'BcSans-Bold';
 }
 
-.c9 input.form-control {
+.c9 {
+  margin: 0 1.6rem 0 1.6rem;
+  padding: 1.6rem;
+  text-align: left;
+  text-underline-offset: 2px;
+}
+
+.c9 button {
+  font-size: 14px;
+}
+
+.c10 {
+  font-size: 16px;
+  color: #1a5a96;
+  font-style: italic;
+  font-weight: bold;
+  -webkit-text-decoration: none solid rgb(26,90,150);
+  text-decoration: none solid rgb(26,90,150);
+  line-height: 24px;
+  margin-bottom: 1rem;
+}
+
+.c14 {
+  padding: 1.5rem 1.8rem;
+  border-radius: 4px;
+  background-color: #f0f7fc;
+  margin-bottom: 2rem;
+  font-size: 14px;
+  color: #053662;
+  -webkit-text-decoration: none solid rgb(49,49,50);
+  text-decoration: none solid rgb(49,49,50);
+  line-height: 24px;
+}
+
+.c13 {
+  float: right;
+  cursor: pointer;
+  color: #1a5a96;
+  font-size: 2.8rem;
+}
+
+.c12 {
+  margin-right: 1.5rem;
+  font-size: 1.3rem;
+}
+
+.c11 {
+  cursor: pointer;
+}
+
+.c16 {
+  font-weight: normal;
+}
+
+.c15 {
+  font-weight: bold;
+}
+
+.c8 {
+  margin: 0 1.6rem 0 1.6rem;
+  padding: 0 1.6rem 0 1.6rem;
+  text-align: left;
+  text-underline-offset: 2px;
+}
+
+.c8 button {
+  font-size: 14px;
+}
+
+.c19 input.form-control {
   min-width: 50rem;
   max-width: 100%;
 }
@@ -3257,66 +3508,175 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
         class="collapse show"
       >
         <div
-          class="py-2"
+          class="c8"
         >
-          Select one or more properties that you want to include in this acquisition. You can choose a location from the map, or search by other criteria.
-        </div>
-        <div
-          class="c1 form-section"
-        >
-          <h2
-            class="c2"
-          >
-            <div
-              class="no-gutters row"
-            >
-              <div
-                class="align-content-end col"
-              >
-                Selected Properties
-              </div>
-            </div>
-          </h2>
           <div
-            class="collapse show"
+            class="py-2"
           >
-            <div
-              class="c8 no-gutters row"
+            Select one or more properties that you want to include in this acquisition. You can choose a location from the map, or search by other criteria.
+          </div>
+          <div
+            class="c1 form-section"
+          >
+            <h2
+              class="c2"
             >
               <div
-                class="col-md-3"
+                class="no-gutters row"
               >
-                Identifier
+                <div
+                  class="align-content-end col"
+                >
+                  Selected Properties
+                </div>
+              </div>
+            </h2>
+            <div
+              class="collapse show"
+            >
+              <div
+                class="c9"
+              >
+                <div
+                  class="c10"
+                >
+                  <div
+                    class="c11 no-gutters row"
+                  >
+                    <div
+                      class="col"
+                    >
+                      <svg
+                        class="c12"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                        />
+                      </svg>
+                      New workflow
+                    </div>
+                    <div
+                      class="col-1"
+                    >
+                      <svg
+                        class="c13"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 24 24"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M0 0h24v24H0z"
+                          fill="none"
+                        />
+                        <path
+                          d="m7 14 5-5 5 5z"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="c14 collapse show"
+                >
+                  <ol>
+                    <li
+                      class="c15"
+                    >
+                      <div>
+                        Find a Property
+                      </div>
+                      <div
+                        class="c16"
+                      >
+                        Navigate to an area of the map OR use 
+                        <button
+                          class="c17 Button d-inline-block btn btn-link"
+                          type="button"
+                        >
+                          <div
+                            class="Button__value"
+                          >
+                            Search
+                          </div>
+                        </button>
+                      </div>
+                    </li>
+                    <li
+                      class="c15"
+                    >
+                      <div>
+                        Select a property
+                      </div>
+                      <div
+                        class="c16"
+                      >
+                        Click on the map and the selection will be highlighed
+                      </div>
+                    </li>
+                    <li
+                      class="c15"
+                    >
+                      <div>
+                        Add it to this file
+                      </div>
+                      <div
+                        class="c16"
+                      >
+                        Click "Add selected" property button when it appears below
+                      </div>
+                    </li>
+                  </ol>
+                </div>
               </div>
               <div
-                class="col-md-9"
+                class="c18 no-gutters row"
               >
-                Provide a descriptive name for this land
-                <span
-                  class="tooltip-icon"
-                  data-testid="tooltip-icon-property-selector-tooltip"
-                  id="property-selector-tooltip"
+                <div
+                  class="col-md-3"
                 >
-                  <svg
+                  Identifier
+                </div>
+                <div
+                  class="col-md-9"
+                >
+                  Provide a descriptive name for this land
+                  <span
                     class="tooltip-icon"
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 512 512"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
+                    data-testid="tooltip-icon-property-selector-tooltip"
+                    id="property-selector-tooltip"
                   >
-                    <path
-                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                    />
-                  </svg>
-                </span>
+                    <svg
+                      class="tooltip-icon"
+                      fill="currentColor"
+                      height="1em"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 512 512"
+                      width="1em"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                      />
+                    </svg>
+                  </span>
+                </div>
               </div>
+              <span>
+                No Properties selected
+              </span>
             </div>
-            <span>
-              No Properties selected
-            </span>
           </div>
         </div>
       </div>
@@ -3356,7 +3716,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
             class="c4 required text-left col"
           >
             <div
-              class="c9 input form-group"
+              class="c19 input form-group"
             >
               <input
                 class="form-control"
@@ -3407,7 +3767,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
             class="c4 text-left col"
           >
             <div
-              class="c9 input form-group"
+              class="c19 input form-group"
             >
               <input
                 class="form-control"
@@ -3660,7 +4020,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
         class="collapse show"
       >
         <button
-          class="c10 Button btn btn-link"
+          class="c17 Button btn btn-link"
           data-testid="add-team-member"
           type="button"
         >
@@ -3693,12 +4053,12 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
         class="collapse show"
       >
         <p
-          class="c11"
+          class="c20"
         >
           Each property in this file should be owned by the owner(s) in this section
         </p>
         <button
-          class="c10 Button btn btn-link"
+          class="c17 Button btn btn-link"
           data-testid="add-file-owner"
           type="button"
         >
@@ -3734,7 +4094,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
                   class="col"
                 >
                   <div
-                    class="c12"
+                    class="c21"
                   >
                     Select from contacts
                   </div>
@@ -3755,7 +4115,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
                   class="pl-0 col-auto"
                 >
                   <button
-                    class="c10 Button Button--icon-only px-2 btn btn-primary"
+                    class="c17 Button Button--icon-only px-2 btn btn-primary"
                     title="Select Contact"
                     type="button"
                   >
@@ -3808,7 +4168,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
                   class="col"
                 >
                   <div
-                    class="c12"
+                    class="c21"
                   >
                     Select from contacts
                   </div>
@@ -3829,7 +4189,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
                   class="pl-0 col-auto"
                 >
                   <button
-                    class="c10 Button Button--icon-only px-2 btn btn-primary"
+                    class="c17 Button Button--icon-only px-2 btn btn-primary"
                     title="Select Contact"
                     type="button"
                   >

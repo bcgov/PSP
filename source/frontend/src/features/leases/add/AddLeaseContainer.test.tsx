@@ -32,6 +32,11 @@ import {
 import { useAddLease } from '../hooks/useAddLease';
 import AddLeaseContainer, { IAddLeaseContainerProps } from './AddLeaseContainer';
 import AddLeaseForm from './AddLeaseForm';
+import { PIMS_Property_Boundary_View } from '@/models/layers/pimsPropertyLocationView';
+import { Feature, Geometry } from 'geojson';
+import { usePimsPropertyLayer } from '@/hooks/repositories/mapLayer/usePimsPropertyLayer';
+import { getMockFullyAttributedParcel } from '@/mocks/faParcelLayerResponse.mock';
+import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
 
 const retrieveUserInfo = vi.fn();
 vi.mock('@/hooks/repositories/useUserInfoRepository');
@@ -65,6 +70,19 @@ vi.mocked(useAddLease).mockReturnValue({
     status: 200,
   },
 });
+
+const findOneByPidOrPinFn = vi.fn();
+
+vi.mock('@/hooks/repositories/mapLayer/usePimsPropertyLayer');
+vi.mocked(usePimsPropertyLayer).mockReturnValue({
+  findOneByPidOrPin: findOneByPidOrPinFn,
+} as any);
+
+vi.mock('@/features/properties/map/hooks/useBcaAddress');
+const getPrimaryAddressByPidFn = vi.fn();
+vi.mocked(useBcaAddress).mockReturnValue({
+  getPrimaryAddressByPid: getPrimaryAddressByPidFn,
+} as any);
 
 // Need to mock this library for unit tests
 vi.mock('react-visibility-sensor', () => {
@@ -303,7 +321,7 @@ describe('AddLeaseContainer component', () => {
           location: { lng: -120.69195885, lat: 50.25163372 },
           fileLocation: null,
           pimsFeature: null,
-          parcelFeature: null,
+          parcelFeature: getMockFullyAttributedParcel('1'),
           regionFeature: {
             type: 'Feature',
             properties: { ...emptyRegion, REGION_NUMBER: 1, REGION_NAME: 'South Coast Region' },
@@ -315,6 +333,13 @@ describe('AddLeaseContainer component', () => {
         },
       ],
     };
+    findOneByPidOrPinFn.mockResolvedValue({
+      type: 'Feature',
+      properties: { REGION_NAME: 1, PID_PADDED: 1 } as any,
+      geometry: getMockPolygon(),
+    } as Feature<Geometry, PIMS_Property_Boundary_View>);
+
+    getPrimaryAddressByPidFn.mockResolvedValue({ address: '1234 fake st' });
 
     const { findByDisplayValue } = await setup({ mockMapMachine: testMockMachine });
     const text = await findByDisplayValue(/South Coast Region/i);
