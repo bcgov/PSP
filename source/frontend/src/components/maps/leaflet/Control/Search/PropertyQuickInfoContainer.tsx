@@ -301,6 +301,7 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
           <TooltipWrapper
             tooltipId={`property-quick-info-toggle`}
             tooltip={'Toggle Quick Property Information'}
+            key={`property-quick-info-toggle-${isMinimized}`}
           >
             <StyledIconWrapper
               onClick={(event: SyntheticEvent) => {
