@@ -3,11 +3,12 @@ import { Alert } from 'react-bootstrap';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { AccessRequestStatus } from '@/constants/accessStatus';
+import { EmailContactMethods } from '@/constants/contactMethodType';
 import { useAccessRequests } from '@/hooks/pims-api/useAccessRequests';
 import useKeycloakWrapper, { IUserInfo } from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_AccessRequest } from '@/models/api/generated/ApiGen_Concepts_AccessRequest';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
-import { isValidId } from '@/utils';
+import { firstOrNull, isValidId } from '@/utils';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 
 import { AccessRequestForm as AccessRequestFormComponent } from './AccessRequestForm';
@@ -63,7 +64,10 @@ export const AccessRequestContainer: React.FunctionComponent<
     roleId: response?.roleId ?? null,
     regionCode: toTypeCodeNullable(response?.regionCode?.id),
   });
-  initialValues.email = keycloak.email ?? '';
+  const emails = response?.user?.person?.contactMethods?.filter(contactMethod =>
+    EmailContactMethods.includes(contactMethod?.contactMethodType?.id),
+  );
+  initialValues.email = firstOrNull(emails)?.value;
 
   if (!isValidId(accessRequestId) && !response) {
     initialValues.email = keycloak.email ?? '';
