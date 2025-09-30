@@ -9,5 +9,7 @@ namespace Pims.Api.Services
         Paged<PimsManagementActivity> GetPage(ManagementActivityFilter filter, bool? all = false);
 
         IList<PimsManagementActivity> SearchManagementActivities(ManagementActivityFilter filter);
+
+        IList<PimsManagementActivityInvoice> SearchManagementActivityInvoices(ManagementActivityFilter filter);
     }
 }

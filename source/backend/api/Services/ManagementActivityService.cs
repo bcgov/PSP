@@ -41,5 +41,13 @@ namespace Pims.Api.Services
 
             return _managementActivityRepository.SearchManagementActivities(filter);
         }
+
+        public IList<PimsManagementActivityInvoice> SearchManagementActivityInvoices(ManagementActivityFilter filter)
+        {
+            _logger.LogInformation("Searching all management activity invoices matching the filter: {filter} ", filter);
+            _user.ThrowIfNotAuthorized(Permissions.ManagementView);
+
+            return _managementActivityRepository.SearchManagementActivityInvoices(filter);
+        }
     }
 }
