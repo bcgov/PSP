@@ -418,6 +418,7 @@ exports[`AccessRequestContainer component > makes a request based on the access 
             placeholder="devin.smith@gov.bc.ca"
             readonly=""
             style="word-break: break-all;"
+            title=""
             type="email"
             value=""
           />
