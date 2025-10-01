@@ -67,7 +67,7 @@ export const AccessRequestContainer: React.FunctionComponent<
   const emails = response?.user?.person?.contactMethods?.filter(contactMethod =>
     EmailContactMethods.includes(contactMethod?.contactMethodType?.id),
   );
-  initialValues.email = firstOrNull(emails)?.value;
+  initialValues.email = firstOrNull(emails)?.value ?? '';
 
   if (!isValidId(accessRequestId) && !response) {
     initialValues.email = keycloak.email ?? '';
