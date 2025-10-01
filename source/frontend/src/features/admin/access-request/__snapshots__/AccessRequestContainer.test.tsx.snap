@@ -415,12 +415,11 @@ exports[`AccessRequestContainer component > makes a request based on the access 
             class="form-control"
             id="input-email"
             name="email"
-            placeholder="test@test.com"
+            placeholder="devin.smith@gov.bc.ca"
             readonly=""
             style="word-break: break-all;"
-            title="test@test.com"
             type="email"
-            value="test@test.com"
+            value=""
           />
         </div>
       </div>
