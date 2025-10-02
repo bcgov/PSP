@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.Extensions.Options;
@@ -110,7 +111,7 @@ namespace Pims.Core.Extensions
         /// <returns></returns>
         public static string GetFirstName(this ClaimsPrincipal user)
         {
-            var value = user?.FindFirstValue(ClaimTypes.GivenName);
+            var value = user?.FindFirstValue(JwtRegisteredClaimNames.GivenName) ?? user?.FindFirstValue(ClaimTypes.GivenName);
             return value;
         }
 
@@ -121,7 +122,7 @@ namespace Pims.Core.Extensions
         /// <returns></returns>
         public static string GetLastName(this ClaimsPrincipal user)
         {
-            var value = user?.FindFirstValue(ClaimTypes.Surname);
+            var value = user?.FindFirstValue(JwtRegisteredClaimNames.FamilyName) ?? user?.FindFirstValue(ClaimTypes.Surname);
             return value;
         }
 
@@ -132,7 +133,7 @@ namespace Pims.Core.Extensions
         /// <returns></returns>
         public static string GetEmail(this ClaimsPrincipal user)
         {
-            var value = user?.FindFirstValue(ClaimTypes.Email);
+            var value = user?.FindFirstValue(JwtRegisteredClaimNames.Email) ?? user?.FindFirstValue(ClaimTypes.Email);
             return value;
         }
 

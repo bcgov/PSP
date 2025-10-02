@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using Pims.Api.Models.Base;
 using Pims.Api.Models.Concepts.ManagementActivity;
 using Pims.Api.Models.Concepts.ManagementFile;

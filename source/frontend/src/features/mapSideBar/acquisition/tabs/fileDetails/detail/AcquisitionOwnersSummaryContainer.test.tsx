@@ -6,8 +6,7 @@ import {
 } from '@/mocks/acquisitionFiles.mock';
 import { render, RenderOptions } from '@/utils/test-utils';
 
-import AcquisitionOwnersSummaryContainer, {
-} from './AcquisitionOwnersSummaryContainer';
+import AcquisitionOwnersSummaryContainer from './AcquisitionOwnersSummaryContainer';
 import { IAcquisitionOwnersSummaryViewProps } from './AcquisitionOwnersSummaryView';
 
 const mockApi = {

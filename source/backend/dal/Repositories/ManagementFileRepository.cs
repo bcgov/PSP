@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
-using Pims.Core.Security;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
@@ -287,7 +286,7 @@ namespace Pims.Dal.Repositories
                 .FirstOrDefault(x => x.ManagementFileId == managementFileId) ?? throw new KeyNotFoundException();
 
             Context.Entry(existingFile).CurrentValues.SetValues(managementFile);
-            Context.UpdateChild<PimsManagementFile, long, PimsManagementFileTeam, long>( x => x.PimsManagementFileTeams, managementFile.Internal_Id, managementFile.PimsManagementFileTeams.ToArray());
+            Context.UpdateChild<PimsManagementFile, long, PimsManagementFileTeam, long>(x => x.PimsManagementFileTeams, managementFile.Internal_Id, managementFile.PimsManagementFileTeams.ToArray());
 
             return existingFile;
         }
