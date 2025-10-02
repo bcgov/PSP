@@ -48,6 +48,7 @@ import HighwayParcelsLayer from './leaflet/Layers/HighwayParcelsLayer';
 import { LeafletLayerListener } from './leaflet/Layers/LeafletLayerListener';
 import MapsearchParcelsLayer from './leaflet/Layers/MapsearchParcelsLayer';
 import { MarkerLayer } from './leaflet/Layers/MarkerLayer';
+import WorklistMarkersLayer from './leaflet/Layers/WorklistMarkersLayer';
 import WorklistParcelsLayer from './leaflet/Layers/WorklistParcelsLayer';
 import { MapEvents } from './leaflet/MapEvents/MapEvents';
 import * as Styled from './leaflet/styles';
@@ -105,6 +106,7 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
       if (isCtrlKeyPressed) {
         mapMachine.worklistMapClick(latlng);
       } else {
+        mapMachine.mapMarkLocation(latlng);
         mapMachine.mapClick(latlng);
       }
     }, doubleClickInterval ?? 250);
@@ -323,6 +325,7 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
         />
 
         <Pane name="worklistParcels" style={{ zIndex: 500 }}>
+          <WorklistMarkersLayer />
           <WorklistParcelsLayer />
           <WorklistMapClickMonitor />
         </Pane>
