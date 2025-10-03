@@ -15,6 +15,8 @@ namespace Pims.Dal.Repositories
 
         IList<PimsManagementActivity> SearchManagementActivities(ManagementActivityFilter filter);
 
+        IList<PimsManagementActivityInvoice> SearchManagementActivityInvoices(ManagementActivityFilter filter);
+
         IList<PimsManagementActivity> GetActivitiesByProperty(long propertyId);
 
         PimsManagementActivity GetActivity(long activityId);

@@ -124,15 +124,7 @@ namespace Pims.Api.Areas.Reports.Models.Management
 
         private static string GetPropertiesAsString(PimsManagementActivity activity)
         {
-            if (activity.ManagementFile is not null && activity.ManagementFile.PimsManagementFileProperties is not null)
-            {
-                return string.Join("|", activity.ManagementFile.PimsManagementFileProperties
-                        .Where(fp => fp?.Property != null)
-                        .Select(fp => fp.Property.GetPropertyName())
-                        .Where(s => !string.IsNullOrWhiteSpace(s))
-                        .Distinct());
-            }
-            else if (activity.PimsManagementActivityProperties is not null)
+            if (activity.PimsManagementActivityProperties is not null)
             {
                 return string.Join("|", activity.PimsManagementActivityProperties
                         .Where(fp => fp?.Property != null)

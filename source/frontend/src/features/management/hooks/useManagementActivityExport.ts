@@ -13,26 +13,32 @@ export const useManagementActivityExport = () => {
   } = useApiManagementActivities();
 
   const generateManagementActivitiesOverviewReport = useApiRequestWrapper<
-    (filter: Api_ManagementActivityFilter) => Promise<AxiosResponse<Blob, any>>
+    (filter: Api_ManagementActivityFilter) => Promise<AxiosResponse<AxiosResponse<Blob, any>>>
   >({
     requestFunction: useCallback(
       async (filter: Api_ManagementActivityFilter) =>
         await generateManagementActivitiesOverviewReportApi(filter),
       [generateManagementActivitiesOverviewReportApi],
-    ),
+    ) as unknown as (
+      filter: Api_ManagementActivityFilter,
+    ) => Promise<AxiosResponse<AxiosResponse<Blob, any>>>,
     requestName: 'GenerateManagementActivitiesOverviewReport',
+    rawResponse: true,
     onError: useAxiosErrorHandler('Failed to load Management Activities Overview Report'),
   });
 
   const generateManagementActivitiesInvoiceReport = useApiRequestWrapper<
-    (filter: Api_ManagementActivityFilter) => Promise<AxiosResponse<Blob, any>>
+    (filter: Api_ManagementActivityFilter) => Promise<AxiosResponse<AxiosResponse<Blob, any>>>
   >({
     requestFunction: useCallback(
       async (filter: Api_ManagementActivityFilter) =>
         await generateManagementActivitiesInvoiceReportApi(filter),
       [generateManagementActivitiesInvoiceReportApi],
-    ),
+    ) as unknown as (
+      filter: Api_ManagementActivityFilter,
+    ) => Promise<AxiosResponse<AxiosResponse<Blob, any>>>,
     requestName: 'GenerateManagementActivitiesInvoiceReport',
+    rawResponse: true,
     onError: useAxiosErrorHandler('Failed to load Management Activities Invoice Report'),
   });
 
