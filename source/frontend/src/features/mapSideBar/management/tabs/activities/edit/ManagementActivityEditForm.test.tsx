@@ -1,7 +1,8 @@
 import { Claims } from '@/constants';
-import { getMockPropertyManagementActivity } from '@/mocks/PropertyManagementActivity.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { getMockManagementActivity } from '@/mocks/managementActivity.mock';
 import { mockManagementFileResponse } from '@/mocks/managementFiles.mock';
+import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
@@ -20,7 +21,6 @@ import {
   ManagementActivityEditForm,
 } from './ManagementActivityEditForm';
 import { ManagementActivityFormModel } from './models';
-import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 
 // Need to mock this library for unit tests
 vi.mock('react-visibility-sensor', () => {
@@ -41,7 +41,7 @@ const storeState = {
 const mockManagementActivityFormValues: ManagementActivityFormModel =
   ManagementActivityFormModel.fromApi(
     {
-      ...getMockPropertyManagementActivity(1),
+      ...getMockManagementActivity(1),
       activityProperties: [],
     },
     mockManagementFileResponse().fileProperties,
@@ -100,7 +100,7 @@ describe('ManagementActivityEditForm component', () => {
 
   beforeEach(() => {
     initialValues = ManagementActivityFormModel.fromApi(
-      getMockPropertyManagementActivity(1),
+      getMockManagementActivity(1),
       mockManagementFileResponse().fileProperties,
     );
   });
