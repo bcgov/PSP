@@ -20,7 +20,13 @@ import { Claims } from '@/constants';
 import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { useLtsa } from '@/hooks/useLtsa';
-import { exists, firstOrNull, isValidString, pidFormatter } from '@/utils';
+import {
+  exists,
+  firstOrNull,
+  getPropertyNameFromSelectedFeatureSet,
+  isValidString,
+  pidFormatter,
+} from '@/utils';
 import { formatNames } from '@/utils/personUtils';
 
 export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () => {
@@ -34,6 +40,7 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
     prepareForCreation,
     worklistAdd,
     isEditPropertiesMode,
+    mapMarkedLocation,
   } = useMapStateMachine();
 
   const pathGenerator = usePathGenerator();
@@ -363,6 +370,13 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
               </SectionField>
               <SectionField label={'Legal Description'} labelWidth={{ xs: 12 }}>
                 {locationInfo?.LEGAL_DESCRIPTION ?? '-'}
+              </SectionField>
+            </StyledInfoWrapper>
+          )}
+          {isEmpty && exists(mapMarkedLocation) && (
+            <StyledInfoWrapper>
+              <SectionField label="Location">
+                {getPropertyNameFromSelectedFeatureSet(selectedFeatureDataset).value}
               </SectionField>
             </StyledInfoWrapper>
           )}
