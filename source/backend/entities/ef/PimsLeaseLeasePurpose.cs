@@ -13,20 +13,20 @@ namespace Pims.Dal.Entities;
 public partial class PimsLeaseLeasePurpose
 {
     /// <summary>
-    /// PK Generated surrogate primary key
+    /// System-generated unique surrogate primary key.
     /// </summary>
     [Key]
     [Column("LEASE_LEASE_PURPOSE_ID")]
     public long LeaseLeasePurposeId { get; set; }
 
     /// <summary>
-    /// FK Foreign key to the PIMS_LEASE table.
+    /// Foreign key to the PIMS_LEASE table.
     /// </summary>
     [Column("LEASE_ID")]
     public long LeaseId { get; set; }
 
     /// <summary>
-    /// FK Foreign key to the PIMS_LEASE_PURPOSE_TYPE table.
+    /// Foreign key to the PIMS_LEASE_PURPOSE_TYPE table.
     /// </summary>
     [Required]
     [Column("LEASE_PURPOSE_TYPE_CODE")]
@@ -53,7 +53,7 @@ public partial class PimsLeaseLeasePurpose
     public DateTime AppCreateTimestamp { get; set; }
 
     /// <summary>
-    /// The user account that created the record.
+    /// The user that created the record.
     /// </summary>
     [Required]
     [Column("APP_CREATE_USERID")]
@@ -61,13 +61,13 @@ public partial class PimsLeaseLeasePurpose
     public string AppCreateUserid { get; set; }
 
     /// <summary>
-    /// The GUID of the user account that created the record.
+    /// GUID of the user that created the record.
     /// </summary>
     [Column("APP_CREATE_USER_GUID")]
     public Guid? AppCreateUserGuid { get; set; }
 
     /// <summary>
-    /// The directory of the user account that created the record.
+    /// User directory of the user that created the record.
     /// </summary>
     [Required]
     [Column("APP_CREATE_USER_DIRECTORY")]
@@ -75,13 +75,13 @@ public partial class PimsLeaseLeasePurpose
     public string AppCreateUserDirectory { get; set; }
 
     /// <summary>
-    /// The date and time the user updated the record.
+    /// The date and time the record was updated by the user.
     /// </summary>
     [Column("APP_LAST_UPDATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime AppLastUpdateTimestamp { get; set; }
 
     /// <summary>
-    /// The user account that updated the record.
+    /// The user that updated the record.
     /// </summary>
     [Required]
     [Column("APP_LAST_UPDATE_USERID")]
@@ -89,13 +89,13 @@ public partial class PimsLeaseLeasePurpose
     public string AppLastUpdateUserid { get; set; }
 
     /// <summary>
-    /// The GUID of the user account that updated the record.
+    /// GUID of the user that updated the record.
     /// </summary>
     [Column("APP_LAST_UPDATE_USER_GUID")]
     public Guid? AppLastUpdateUserGuid { get; set; }
 
     /// <summary>
-    /// The directory of the user account that updated the record.
+    /// User directory of the user that updated the record.
     /// </summary>
     [Required]
     [Column("APP_LAST_UPDATE_USER_DIRECTORY")]

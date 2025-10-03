@@ -29,7 +29,7 @@ public partial class PimsLeaseChklstSectionType
     public string Description { get; set; }
 
     /// <summary>
-    /// Specifies the order that the lease &amp; license checklist sections are presented to the user.
+    /// Designates a preferred presentation order of the code descriptions.
     /// </summary>
     [Column("DISPLAY_ORDER")]
     public int? DisplayOrder { get; set; }
@@ -47,7 +47,7 @@ public partial class PimsLeaseChklstSectionType
     public DateOnly? ExpiryDate { get; set; }
 
     /// <summary>
-    /// Indicates if the code is currently active.
+    /// Indicates if the record is disabled and therefore not selectable or displayed.
     /// </summary>
     [Column("IS_DISABLED")]
     public bool IsDisabled { get; set; }

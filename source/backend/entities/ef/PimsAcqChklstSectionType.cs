@@ -13,7 +13,7 @@ namespace Pims.Dal.Entities;
 public partial class PimsAcqChklstSectionType
 {
     /// <summary>
-    /// Checklist section code value.
+    /// Code value of the checklist section code type.
     /// </summary>
     [Key]
     [Column("ACQ_CHKLST_SECTION_TYPE_CODE")]
@@ -21,7 +21,7 @@ public partial class PimsAcqChklstSectionType
     public string AcqChklstSectionTypeCode { get; set; }
 
     /// <summary>
-    /// Checklist section descriptive text presented to the user.
+    /// Description of the checklist section code type.
     /// </summary>
     [Required]
     [Column("DESCRIPTION")]
@@ -29,7 +29,7 @@ public partial class PimsAcqChklstSectionType
     public string Description { get; set; }
 
     /// <summary>
-    /// Specifies the order that the checklist sections are presented to the user.
+    /// Designates a preferred presentation order of the code descriptions.
     /// </summary>
     [Column("DISPLAY_ORDER")]
     public int? DisplayOrder { get; set; }
