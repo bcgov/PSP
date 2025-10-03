@@ -549,6 +549,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   -webkit-align-self: flex-end;
   -ms-flex-item-align: end;
   align-self: flex-end;
+  margin-right: 2rem;
 }
 
 .c29 {
@@ -1029,7 +1030,6 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                   >
                     <button
                       class="c4 Button btn btn-link"
-                      data-testid="fit-file-properties-boundaries"
                       title="Fit boundaries button"
                       type="button"
                     >
@@ -1037,7 +1037,6 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                         class="Button__value"
                       >
                         <svg
-                          class="mr-2"
                           fill="currentColor"
                           height="18"
                           stroke="currentColor"
@@ -1089,15 +1088,13 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                   >
                     <button
                       class="c4 Button btn btn-link"
-                      data-testid="menu-item-zoom-0"
-                      title="Zoom to property"
+                      title="Fit boundaries button"
                       type="button"
                     >
                       <div
                         class="Button__value"
                       >
                         <svg
-                          class="mr-2"
                           fill="currentColor"
                           height="18"
                           stroke="currentColor"
@@ -1141,15 +1138,13 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                   >
                     <button
                       class="c4 Button btn btn-link"
-                      data-testid="menu-item-zoom-1"
-                      title="Zoom to property"
+                      title="Fit boundaries button"
                       type="button"
                     >
                       <div
                         class="Button__value"
                       >
                         <svg
-                          class="mr-2"
                           fill="currentColor"
                           height="18"
                           stroke="currentColor"

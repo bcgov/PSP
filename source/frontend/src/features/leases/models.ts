@@ -300,6 +300,12 @@ export class FormLeaseProperty {
     return model;
   }
 
+  public static fromPropertyForm(propertyForm: PropertyForm): FormLeaseProperty {
+    const model = new FormLeaseProperty();
+    model.property = new PropertyForm(propertyForm);
+    return model;
+  }
+
   public static toApi(formLeaseProperty: FormLeaseProperty): ApiGen_Concepts_PropertyLease | null {
     if (!exists(formLeaseProperty?.property)) {
       return null;

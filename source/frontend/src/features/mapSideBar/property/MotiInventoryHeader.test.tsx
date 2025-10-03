@@ -2,11 +2,10 @@ import { Feature, Geometry } from 'geojson';
 
 import { useHistoricalNumberRepository } from '@/hooks/repositories/useHistoricalNumberRepository';
 import { getMockPimsLocationViewLayerResponse } from '@/mocks/data.mock';
-import { mockFAParcelLayerResponse } from '@/mocks/faParcelLayerResponse.mock';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { getEmptyProperty } from '@/models/defaultInitializers';
 import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
-import { act, render, RenderOptions, RenderResult, userEvent } from '@/utils/test-utils';
+import { act, render, RenderOptions, RenderResult } from '@/utils/test-utils';
 
 import { ComposedProperty } from './ComposedProperty';
 import { IMotiInventoryHeaderProps, MotiInventoryHeader } from './MotiInventoryHeader';
@@ -53,7 +52,6 @@ vi.mocked(useHistoricalNumberRepository).mockReturnValue({
   },
 });
 
-const onZoom = vi.fn();
 describe('MotiInventoryHeader component', () => {
   const setup = async (
     renderOptions: RenderOptions & IMotiInventoryHeaderProps = {
@@ -65,17 +63,12 @@ describe('MotiInventoryHeader component', () => {
     const result = render(
       <MotiInventoryHeader
         composedProperty={renderOptions.composedProperty}
-        onZoom={onZoom}
         isLoading={renderOptions.isLoading}
       />,
     );
     await act(async () => {});
     return result;
   };
-
-  afterEach(() => {
-    onZoom.mockClear();
-  });
 
   it('renders as expected', async () => {
     const result = await setup();
@@ -159,47 +152,6 @@ describe('MotiInventoryHeader component', () => {
     });
     // DISPOSED indicator is shown
     expect(result.getByText(/disposed/i)).toBeVisible();
-  });
-
-  it('allows zooming in to the active PIMS property', async () => {
-    const testProperty: ApiGen_Concepts_Property = { latitude: 1, longitude: 1 } as any;
-
-    const { getByTitle } = await setup({
-      composedProperty: {
-        ...defaultComposedProperty,
-        pimsProperty: testProperty,
-      },
-      isLoading: false,
-    });
-    const zoomButton = getByTitle('Zoom into parcel');
-    await act(async () => userEvent.click(zoomButton));
-    expect(onZoom).toHaveBeenCalled();
-  });
-
-  it('allows zooming in to the active PMBC parcel feature', async () => {
-    const { getByTitle } = await setup({
-      composedProperty: {
-        ...defaultComposedProperty,
-        parcelMapFeatureCollection: mockFAParcelLayerResponse,
-      },
-      isLoading: false,
-    });
-    const zoomButton = getByTitle('Zoom into parcel');
-    await act(async () => userEvent.click(zoomButton));
-    expect(onZoom).toHaveBeenCalled();
-  });
-
-  it('does not allow property zooming if no property is visible', async () => {
-    const { queryByText } = await setup({
-      composedProperty: {
-        ...defaultComposedProperty,
-        pimsProperty: undefined,
-      },
-      isLoading: false,
-    });
-
-    expect(queryByText('Zoom into parcel')).not.toBeInTheDocument();
-    expect(onZoom).not.toHaveBeenCalled();
   });
 
   it('displays PIN', async () => {

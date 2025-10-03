@@ -70,20 +70,6 @@ describe('SelectedPropertyRow component', () => {
     expect(onRemove).toHaveBeenCalled();
   });
 
-  it('calls map machine when reposition button is clicked', async () => {
-    await setup();
-    const moveButton = screen.getByTitle('move-pin-location');
-    await act(async () => userEvent.click(moveButton));
-    expect(mapMachineBaseMock.startReposition).toHaveBeenCalled();
-  });
-
-  it('calls map machine when Zoom button is clicked', async () => {
-    await setup({ props: { property: getMockSelectedFeatureDataset() } });
-    const zoomButton = screen.getByTestId('zoom-to-property-0');
-    await act(async () => userEvent.click(zoomButton));
-    expect(mapMachineBaseMock.requestFlyToBounds).toHaveBeenCalled();
-  });
-
   it('displays pid', async () => {
     const mockFeatureSet = getMockSelectedFeatureDataset();
     mockFeatureSet.parcelFeature = {} as any;

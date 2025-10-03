@@ -547,6 +547,7 @@ exports[`DispositionView component > renders as expected 1`] = `
   -webkit-align-self: flex-end;
   -ms-flex-item-align: end;
   align-self: flex-end;
+  margin-right: 2rem;
 }
 
 .c29 {
@@ -993,8 +994,8 @@ exports[`DispositionView component > renders as expected 1`] = `
                     class="col-auto"
                   >
                     <button
-                      class="c4 Button btn btn-link"
-                      data-testid="fit-file-properties-boundaries"
+                      class="c4 Button Button--disabled btn btn-link"
+                      disabled=""
                       title="Fit boundaries button"
                       type="button"
                     >
@@ -1002,7 +1003,6 @@ exports[`DispositionView component > renders as expected 1`] = `
                         class="Button__value"
                       >
                         <svg
-                          class="mr-2"
                           fill="currentColor"
                           height="18"
                           stroke="currentColor"
@@ -1053,16 +1053,15 @@ exports[`DispositionView component > renders as expected 1`] = `
                     class="c31"
                   >
                     <button
-                      class="c4 Button btn btn-link"
-                      data-testid="menu-item-zoom-0"
-                      title="Zoom to property"
+                      class="c4 Button Button--disabled btn btn-link"
+                      disabled=""
+                      title="Fit boundaries button"
                       type="button"
                     >
                       <div
                         class="Button__value"
                       >
                         <svg
-                          class="mr-2"
                           fill="currentColor"
                           height="18"
                           stroke="currentColor"

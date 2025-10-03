@@ -1,18 +1,15 @@
 import { AxiosError } from 'axios';
 import { dequal } from 'dequal';
 import { FieldArray, FieldArrayRenderProps, Formik, FormikProps } from 'formik';
-import { geoJSON } from 'leaflet';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { PiCornersOut } from 'react-icons/pi';
 import { toast } from 'react-toastify';
 
-import { LinkButton } from '@/components/common/buttons';
 import GenericModal, { ModalProps } from '@/components/common/GenericModal';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { Section } from '@/components/common/Section/Section';
-import TooltipWrapper from '@/components/common/TooltipWrapper';
+import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
 import { ModalContext } from '@/contexts/modalContext';
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
@@ -27,7 +24,7 @@ import { getCancelModalProps } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { arePropertyFormsEqual, exists, isValidId, latLngLiteralToGeometry } from '@/utils';
+import { arePropertyFormsEqual, exists, isValidId } from '@/utils';
 
 import { useLeaseDetail } from '../../hooks/useLeaseDetail';
 import { FormLeaseProperty, LeaseFormModel } from '../../models';
@@ -63,13 +60,8 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
 
   const { getCompleteLease } = useLeaseDetail(lease?.id ?? undefined);
 
-  const {
-    requestFlyToBounds,
-    refreshMapProperties,
-    setEditPropertiesMode,
-    selectedFeatures,
-    processCreation,
-  } = useMapStateMachine();
+  const { refreshMapProperties, setEditPropertiesMode, selectedFeatures, processCreation } =
+    useMapStateMachine();
   const prevSelectedRef = useRef<typeof selectedFeatures>();
 
   const withUserOverride = useApiUserOverride<
@@ -175,21 +167,6 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
       }
     }
   }, [addPropertiesToCurrentFile, formikRef, leasePropertyForms, setModalContent, setDisplayModal]);
-
-  const fitBoundaries = () => {
-    const fileProperties = formikRef?.current?.values?.properties;
-
-    if (exists(fileProperties)) {
-      const locations = fileProperties.map(
-        p => p?.property?.polygon ?? latLngLiteralToGeometry(p?.property?.fileLocation),
-      );
-      const bounds = geoJSON(locations).getBounds();
-
-      if (exists(bounds) && bounds.isValid()) {
-        requestFlyToBounds(bounds);
-      }
-    }
-  };
 
   const cancelRemove = useCallback(() => {
     setDisplayModal(false);
@@ -353,14 +330,10 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
                       <Row>
                         <Col xs="11">Selected Properties</Col>
                         <Col>
-                          <TooltipWrapper
-                            tooltip="Fit map to the file properties"
-                            tooltipId="property-selector-tooltip"
-                          >
-                            <LinkButton title="Fit boundaries button" onClick={fitBoundaries}>
-                              <PiCornersOut size={18} className="mr-2" />
-                            </LinkButton>
-                          </TooltipWrapper>
+                          <ZoomToLocation
+                            icon={ZoomIconType.area}
+                            formProperties={formikProps.values.properties.map(lp => lp.property)}
+                          />
                         </Col>
                       </Row>
                     }

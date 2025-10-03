@@ -118,17 +118,12 @@ export const MotiInventoryContainer: React.FunctionComponent<
     push(path, { search: query.toString() });
   };
 
-  const handleZoom = (latitude: number, longitude: number) => {
-    mapMachine.requestFlyToLocation({ lat: latitude, lng: longitude });
-  };
-
   return (
     <MapSideBarLayout
       title="Property Information"
       header={
         <MotiInventoryHeader
           composedProperty={composedPropertyState.composedProperty}
-          onZoom={handleZoom}
           isLoading={composedPropertyState.apiWrapper?.loading}
         />
       }

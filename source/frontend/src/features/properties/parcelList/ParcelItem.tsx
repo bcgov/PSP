@@ -1,8 +1,6 @@
-import { geoJSON } from 'leaflet';
 import { useCallback, useMemo } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaPlus } from 'react-icons/fa';
-import { FaSearchPlus } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import AcquisitionIcon from '@/assets/images/acquisition-icon.svg?react';
@@ -10,11 +8,12 @@ import DispositionIcon from '@/assets/images/disposition-icon.svg?react';
 import LeaseIcon from '@/assets/images/lease-icon.svg?react';
 import ManagementIcon from '@/assets/images/management-icon.svg?react';
 import ResearchIcon from '@/assets/images/research-icon.svg?react';
-import { LinkButton, RemoveIconButton } from '@/components/common/buttons';
+import { RemoveIconButton } from '@/components/common/buttons';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { WorklistLocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import MoreOptionsMenu, { MenuOption } from '@/components/common/MoreOptionsMenu';
 import OverflowTip from '@/components/common/OverflowTip';
+import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
 import { Claims } from '@/constants';
 import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
@@ -46,44 +45,12 @@ export function ParcelItem({ parcel, onRemove, canAddToWorklist, parcelIndex }: 
       break;
   }
 
-  const {
-    requestFlyToBounds,
-    requestFlyToLocation,
-    prepareForCreation,
-    isEditPropertiesMode,
-    worklistAdd,
-    setSelectedLocation,
-  } = useMapStateMachine();
+  const { prepareForCreation, isEditPropertiesMode, worklistAdd, setSelectedLocation } =
+    useMapStateMachine();
 
   const canAddToOpenFile = isEditPropertiesMode;
 
   const pathGenerator = usePathGenerator();
-
-  const handleZoom = useCallback(() => {
-    if (exists(parcel.pmbcFeature)) {
-      const bounds = geoJSON(parcel.pmbcFeature).getBounds();
-      if (exists(bounds) && bounds.isValid()) {
-        requestFlyToBounds(bounds);
-      } else if (exists(parcel.location)) {
-        requestFlyToLocation(parcel.location);
-      }
-    } else if (exists(parcel.pimsFeature)) {
-      const bounds = geoJSON(parcel.pimsFeature).getBounds();
-      if (exists(bounds) && bounds.isValid()) {
-        requestFlyToBounds(bounds);
-      } else if (exists(parcel.location)) {
-        requestFlyToLocation(parcel.location);
-      }
-    } else if (exists(parcel.location)) {
-      requestFlyToLocation(parcel.location);
-    }
-  }, [
-    parcel.location,
-    parcel.pimsFeature,
-    parcel.pmbcFeature,
-    requestFlyToBounds,
-    requestFlyToLocation,
-  ]);
 
   const handleSelect = useCallback(() => {
     setSelectedLocation(parcel.toLocationFeatureDataset());
@@ -230,16 +197,7 @@ export function ParcelItem({ parcel, onRemove, canAddToWorklist, parcelIndex }: 
       </StyledPidCol>
       <StyledButtonCol>
         <ButtonContainer>
-          <LinkButton
-            title="Zoom to parcel"
-            onClick={e => {
-              e.preventDefault();
-              e.stopPropagation();
-              handleZoom();
-            }}
-          >
-            <FaSearchPlus size={18} />
-          </LinkButton>
+          <ZoomToLocation icon={ZoomIconType.single} parcelDataset={parcel} />
           {exists(onRemove) && (
             <RemoveIconButton
               title="Delete parcel from list"

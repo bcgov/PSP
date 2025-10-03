@@ -1,22 +1,20 @@
 import { FieldArray, FieldArrayRenderProps, FormikProps } from 'formik';
-import { geoJSON } from 'leaflet';
 import noop from 'lodash/noop';
 import { useCallback, useContext, useEffect, useMemo, useRef } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { PiCornersOut } from 'react-icons/pi';
 import styled from 'styled-components';
 
-import { Button, LinkButton } from '@/components/common/buttons';
+import { Button } from '@/components/common/buttons';
 import { ModalProps } from '@/components/common/GenericModal';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { Section } from '@/components/common/Section/Section';
-import TooltipWrapper from '@/components/common/TooltipWrapper';
+import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
 import { ModalContext } from '@/contexts/modalContext';
 import { PropertyForm } from '@/features/mapSideBar/shared/models';
 import AddPropertiesGuide from '@/features/mapSideBar/shared/update/properties/AddPropertiesGuide';
 import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
-import { exists, firstOrNull, latLngLiteralToGeometry } from '@/utils';
+import { exists, firstOrNull } from '@/utils';
 import { addPropertiesToCurrentFile } from '@/utils/propertyUtils';
 
 import { LeaseFormModel } from '../../models';
@@ -30,18 +28,12 @@ interface LeasePropertySelectorProp {
 export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelectorProp> = ({
   formikProps,
 }) => {
-  const { values } = formikProps;
   const localRef = useRef<FormikProps<LeaseFormModel>>(null);
 
   const { setModalContent, setDisplayModal } = useContext(ModalContext);
 
-  const {
-    requestFlyToBounds,
-    selectedFeatures,
-    processCreation,
-    mapLocationFeatureDataset,
-    prepareForCreation,
-  } = useMapStateMachine();
+  const { selectedFeatures, processCreation, mapLocationFeatureDataset, prepareForCreation } =
+    useMapStateMachine();
 
   const { featuresWithAddresses } = useFeatureDatasetsWithAddresses(selectedFeatures ?? []);
 
@@ -70,21 +62,6 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
     mapLocationFeatureDataset?.districtFeature,
     mapLocationFeatureDataset?.municipalityFeatures,
   ]);
-
-  const fitBoundaries = () => {
-    const fileProperties = values.properties;
-
-    if (exists(fileProperties)) {
-      const locations = fileProperties
-        .map(p => p?.property?.polygon ?? latLngLiteralToGeometry(p?.property?.fileLocation))
-        .filter(exists);
-      const bounds = geoJSON(locations).getBounds();
-
-      if (exists(bounds) && bounds.isValid()) {
-        requestFlyToBounds(bounds);
-      }
-    }
-  };
 
   // Convert SelectedFeatureDataset to PropertyForm
   const propertyForms = useMemo(
@@ -172,14 +149,10 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
                 <Row>
                   <Col xs="11">Selected Properties</Col>
                   <Col>
-                    <TooltipWrapper
-                      tooltip="Fit map to the file properties"
-                      tooltipId="property-selector-tooltip"
-                    >
-                      <LinkButton title="Fit boundaries button" onClick={fitBoundaries}>
-                        <PiCornersOut size={18} className="mr-2" />
-                      </LinkButton>
-                    </TooltipWrapper>
+                    <ZoomToLocation
+                      icon={ZoomIconType.area}
+                      formProperties={formikProps?.values?.properties?.map(lf => lf?.property)}
+                    />
                   </Col>
                 </Row>
               }
@@ -187,7 +160,7 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
               <SelectedPropertyHeaderRow />
               {formikProps.values.properties.map((leaseProperty, index) => {
                 const property = leaseProperty?.property;
-                if (property !== undefined) {
+                if (exists(property)) {
                   return (
                     <SelectedPropertyRow
                       formikProps={formikProps}

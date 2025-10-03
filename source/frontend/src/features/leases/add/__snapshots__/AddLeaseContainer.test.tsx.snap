@@ -1135,7 +1135,8 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                           class="col"
                         >
                           <button
-                            class="c4 Button btn btn-link"
+                            class="c4 Button Button--disabled btn btn-link"
+                            disabled=""
                             title="Fit boundaries button"
                             type="button"
                           >
@@ -1143,7 +1144,6 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                               class="Button__value"
                             >
                               <svg
-                                class="mr-2"
                                 fill="currentColor"
                                 height="18"
                                 stroke="currentColor"

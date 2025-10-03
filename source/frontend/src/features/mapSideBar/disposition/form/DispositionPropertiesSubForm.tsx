@@ -1,21 +1,18 @@
 import { FieldArray, FormikProps } from 'formik';
-import { geoJSON } from 'leaflet';
 import { noop } from 'lodash';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { PiCornersOut } from 'react-icons/pi';
 import styled from 'styled-components';
 
 import { Button } from '@/components/common/buttons';
-import { LinkButton } from '@/components/common/buttons/LinkButton';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { Section } from '@/components/common/Section/Section';
-import TooltipWrapper from '@/components/common/TooltipWrapper';
+import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
 import SelectedPropertyHeaderRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyHeaderRow';
 import SelectedPropertyRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyRow';
 import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
-import { exists, firstOrNull, latLngLiteralToGeometry } from '@/utils';
+import { exists, firstOrNull } from '@/utils';
 import { addPropertiesToCurrentFile } from '@/utils/propertyUtils';
 
 import { PropertyForm } from '../../shared/models';
@@ -32,13 +29,8 @@ const DispositionPropertiesSubForm: React.FunctionComponent<DispositionPropertie
 }) => {
   const localRef = useRef<FormikProps<DispositionFormModel>>();
 
-  const {
-    selectedFeatures,
-    processCreation,
-    mapLocationFeatureDataset,
-    prepareForCreation,
-    requestFlyToBounds,
-  } = useMapStateMachine();
+  const { selectedFeatures, processCreation, mapLocationFeatureDataset, prepareForCreation } =
+    useMapStateMachine();
 
   const selectedFeatureDataset = useMemo<SelectedFeatureDataset>(() => {
     return {
@@ -80,19 +72,6 @@ const DispositionPropertiesSubForm: React.FunctionComponent<DispositionPropertie
     [featuresWithAddresses],
   );
 
-  const fitBoundaries = () => {
-    const fileProperties = formikProps.values.fileProperties;
-
-    if (exists(fileProperties)) {
-      const locations = fileProperties.map(
-        p => p?.polygon ?? latLngLiteralToGeometry(p?.fileLocation),
-      );
-      const bounds = geoJSON(locations).getBounds();
-
-      requestFlyToBounds(bounds);
-    }
-  };
-
   const handleAddToSelection = useCallback(() => {
     prepareForCreation([selectedFeatureDataset]);
   }, [prepareForCreation, selectedFeatureDataset]);
@@ -118,14 +97,10 @@ const DispositionPropertiesSubForm: React.FunctionComponent<DispositionPropertie
               <Row>
                 <Col xs="11">Selected Properties</Col>
                 <Col>
-                  <TooltipWrapper
-                    tooltip="Fit map to the file properties"
-                    tooltipId="property-selector-tooltip"
-                  >
-                    <LinkButton title="Fit boundaries button" onClick={fitBoundaries}>
-                      <PiCornersOut size={18} className="mr-2" />
-                    </LinkButton>
-                  </TooltipWrapper>
+                  <ZoomToLocation
+                    icon={ZoomIconType.area}
+                    formProperties={formikProps?.values?.fileProperties}
+                  />
                 </Col>
               </Row>
             }

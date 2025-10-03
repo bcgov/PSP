@@ -461,18 +461,18 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
       </button>
     </div>
     <div
-      class="col-auto"
+      class="pr-2 col-auto"
     >
       <button
-        class="c4 Button btn btn-link"
-        data-testid="zoom-to-property-0"
+        class="c4 Button Button--disabled btn btn-link"
+        disabled=""
+        title="Fit boundaries button"
         type="button"
       >
         <div
           class="Button__value"
         >
           <svg
-            class="mr-5"
             fill="currentColor"
             height="18"
             stroke="currentColor"
@@ -489,7 +489,7 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
       </button>
     </div>
     <div
-      class="col-md-2"
+      class="pl-3 col-md-1"
     >
       <button
         class="c4 Button c6 btn btn-link"
