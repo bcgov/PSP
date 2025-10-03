@@ -29,13 +29,13 @@ public partial class PimsExpropOwnerHistoryType
     public string Description { get; set; }
 
     /// <summary>
-    /// Display order of the codes.
+    /// Designates a preferred presentation order of the code descriptions.
     /// </summary>
     [Column("DISPLAY_ORDER")]
     public int? DisplayOrder { get; set; }
 
     /// <summary>
-    /// Indicates if the code value is inactive.
+    /// Indicates if the record is disabled and therefore not selectable or displayed.
     /// </summary>
     [Column("IS_DISABLED")]
     public bool? IsDisabled { get; set; }

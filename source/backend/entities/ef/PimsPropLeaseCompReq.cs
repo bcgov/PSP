@@ -16,7 +16,7 @@ namespace Pims.Dal.Entities;
 public partial class PimsPropLeaseCompReq
 {
     /// <summary>
-    /// Generated surrogate primary key
+    /// System-generated unique surrogate primary key.
     /// </summary>
     [Key]
     [Column("PROP_LEASE_COMP_REQ_ID")]
@@ -35,13 +35,13 @@ public partial class PimsPropLeaseCompReq
     public long CompensationRequisitionId { get; set; }
 
     /// <summary>
-    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any
+    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
     /// </summary>
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
 
     /// <summary>
-    /// The date and time the record was created by the user.
+    /// The date and time the user created the record.
     /// </summary>
     [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime AppCreateTimestamp { get; set; }

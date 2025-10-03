@@ -14,7 +14,7 @@ namespace Pims.Dal.Entities;
 public partial class PimsAcqChklstItemType
 {
     /// <summary>
-    /// Checklist item code value.
+    /// Code value of the checklist item code type.
     /// </summary>
     [Key]
     [Column("ACQ_CHKLST_ITEM_TYPE_CODE")]
@@ -22,7 +22,7 @@ public partial class PimsAcqChklstItemType
     public string AcqChklstItemTypeCode { get; set; }
 
     /// <summary>
-    /// Section to which the item belongs.
+    /// Description of the checklist item code type.
     /// </summary>
     [Required]
     [Column("ACQ_CHKLST_SECTION_TYPE_CODE")]
@@ -51,7 +51,7 @@ public partial class PimsAcqChklstItemType
     public bool? IsRequired { get; set; }
 
     /// <summary>
-    /// Specifies the order that the checklist items are presented to the user.
+    /// Designates a preferred presentation order of the code descriptions.
     /// </summary>
     [Column("DISPLAY_ORDER")]
     public int? DisplayOrder { get; set; }
@@ -68,20 +68,35 @@ public partial class PimsAcqChklstItemType
     [Column("EXPIRY_DATE")]
     public DateOnly? ExpiryDate { get; set; }
 
+    /// <summary>
+    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
+    /// </summary>
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
 
+    /// <summary>
+    /// The date and time the record was created.
+    /// </summary>
     [Column("DB_CREATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime DbCreateTimestamp { get; set; }
 
+    /// <summary>
+    /// The user or proxy account that created the record.
+    /// </summary>
     [Required]
     [Column("DB_CREATE_USERID")]
     [StringLength(30)]
     public string DbCreateUserid { get; set; }
 
+    /// <summary>
+    /// The date and time the record was created or last updated.
+    /// </summary>
     [Column("DB_LAST_UPDATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime DbLastUpdateTimestamp { get; set; }
 
+    /// <summary>
+    /// The user or proxy account that created or last updated the record.
+    /// </summary>
     [Required]
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]

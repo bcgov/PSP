@@ -24,7 +24,7 @@ public partial class PimsPrfPropResearchPurposeTypHist
     public long PrfPropResearchPurposeId { get; set; }
 
     [Column("PROPERTY_RESEARCH_FILE_ID")]
-    public long? PropertyResearchFileId { get; set; }
+    public long PropertyResearchFileId { get; set; }
 
     [Required]
     [Column("PROP_RESEARCH_PURPOSE_TYPE_CODE")]

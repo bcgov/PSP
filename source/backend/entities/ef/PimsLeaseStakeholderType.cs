@@ -35,13 +35,13 @@ public partial class PimsLeaseStakeholderType
     public bool? IsPayableRelated { get; set; }
 
     /// <summary>
-    /// Indicates if the code is currently active.
+    /// Indicates if the record is disabled and therefore not selectable or displayed.
     /// </summary>
     [Column("IS_DISABLED")]
     public bool IsDisabled { get; set; }
 
     /// <summary>
-    /// Specifies a specific order to visually present the code.
+    /// Designates a preferred presentation order of the code descriptions.
     /// </summary>
     [Column("DISPLAY_ORDER")]
     public int? DisplayOrder { get; set; }
