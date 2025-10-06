@@ -932,6 +932,7 @@ exports[`MapContainer > Renders the map 1`] = `
                     />
                     <div
                       class="text-center col-6"
+                      data-testid="quick-info-header"
                     >
                       Property
                     </div>
