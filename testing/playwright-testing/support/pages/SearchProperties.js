@@ -114,20 +114,35 @@ class SearchProperties {
   }
 
   async verifySearchControlForm() {
-    const searchPropertiesSidebar = await this.page.getByTestId("search-sidebar");
+    const searchPropertiesSidebar = await this.page.getByTestId(
+      "search-sidebar"
+    );
     expect(searchPropertiesSidebar).toBeVisible();
 
-    const searchTitle = await this.page.locator("div[data-testid='search-sidebar'] p").textContent();
+    const searchTitle = await this.page
+      .locator("div[data-testid='search-sidebar'] p")
+      .textContent();
     expect(searchTitle).toEqual("Search");
 
-    const pimsPropsListBttn = await this.page.locator("//button/div[text()='Search PIMS information']");
+    const pimsPropsListBttn = await this.page.locator(
+      "//button/div[text()='Search PIMS information']"
+    );
     expect(pimsPropsListBttn).toBeVisible();
 
     const searchPropsTypesSelect = await this.page.locator("#input-searchBy");
     expect(searchPropsTypesSelect).toBeVisible();
 
-    const searchPropsAllOptions = searchPropsTypesSelect.locator('option');
-    await expect(searchPropsAllOptions).toHaveText(['PID', 'PIN', 'Address', 'Plan #', 'Historical File #', 'POI Name', 'Lat/Long', 'Survey Parcel']);
+    const searchPropsAllOptions = searchPropsTypesSelect.locator("option");
+    await expect(searchPropsAllOptions).toHaveText([
+      "PID",
+      "PIN",
+      "Address",
+      "Plan #",
+      "Historical File #",
+      "POI Name",
+      "Lat/Long",
+      "Survey Parcel",
+    ]);
 
     const searchPIDText = await this.page.locator("#input-searchBy");
     expect(searchPIDText).toBeVisible();
@@ -138,16 +153,24 @@ class SearchProperties {
     const resetButton = await this.page.getByTestId("reset-button");
     expect(resetButton).toBeVisible();
 
-    const PMBCResultsTitle = await this.page.locator("//div[text()='Results (PMBC)']");
+    const PMBCResultsTitle = await this.page.locator(
+      "//div[text()='Results (PMBC)']"
+    );
     expect(PMBCResultsTitle).toBeVisible();
 
-    const PMBCResultsMoreOptions = await this.page.locator("div[aria-label='search pmbc results more options']");
+    const PMBCResultsMoreOptions = await this.page.locator(
+      "div[aria-label='search pmbc results more options']"
+    );
     expect(PMBCResultsMoreOptions).toBeVisible();
 
-    const PIMSResultsTitle = await this.page.locator("//div[text()='Results (PIMS)']");
+    const PIMSResultsTitle = await this.page.locator(
+      "//div[text()='Results (PIMS)']"
+    );
     expect(PMBCResultsTitle).toBeVisible();
 
-    const PIMSResultsMoreOptions = await this.page.locator("div[aria-label='search pims results more options']");
+    const PIMSResultsMoreOptions = await this.page.locator(
+      "div[aria-label='search pims results more options']"
+    );
     expect(PIMSResultsMoreOptions).toBeVisible();
   }
 
@@ -158,7 +181,9 @@ class SearchProperties {
     const quickInfoViewIcon = this.page.getByTestId("view-property-icon");
     expect(quickInfoViewIcon).toBeVisible();
 
-    const quickInfoMorOptions = this.page.getByTestId("quick-info-more-options");
+    const quickInfoMorOptions = this.page.getByTestId(
+      "quick-info-more-options"
+    );
     expect(quickInfoMorOptions).toBeVisible();
 
     const quickInfoHeader = this.page.getByTestId("quick-info-header");
