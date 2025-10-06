@@ -163,6 +163,7 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
       }),
     [featuresWithAddresses],
   );
+
   // This effect is used to update the file properties when "add to open file" is clicked in the worklist.
   useEffect(() => {
     if (exists(formikRef.current) && propertyForms.length > 0 && !hasWarnedRef.current) {
@@ -192,8 +193,16 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
         // If no warning is needed, simply add the properties to the current file.
         addPropertiesToCurrentFile(formikRef, propertyForms);
       }
+      processCreation();
     }
-  }, [formikRef, propertyForms, setModalContent, setDisplayModal, addPropertiesToCurrentFile]);
+  }, [
+    formikRef,
+    propertyForms,
+    setModalContent,
+    setDisplayModal,
+    addPropertiesToCurrentFile,
+    processCreation,
+  ]);
 
   const fitBoundaries = () => {
     const fileProperties = formikRef?.current?.values?.properties;
@@ -338,13 +347,6 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
   }, [prepareForCreation, selectedFeatureDataset]);
 
   useEffect(() => {
-    if (exists(formikRef.current) && propertyForms.length > 0) {
-      addPropertiesToCurrentFile(formikRef, propertyForms);
-      processCreation();
-    }
-  }, [addPropertiesToCurrentFile, formikRef, processCreation, propertyForms]);
-
-  useEffect(() => {
     // Set the map state machine to edit properties mode so that the map selector knows what mode it is in.
     setEditPropertiesMode(true);
     return () => {
@@ -386,52 +388,53 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
               render={arrayHelpers => {
                 arrayHelpersRef.current = arrayHelpers;
                 return (
-                  <Section
-                    header={
-                      <Row>
-                        <Col xs="11">Selected Properties</Col>
-                        <Col>
-                          <TooltipWrapper
-                            tooltip="Fit map to the file properties"
-                            tooltipId="property-selector-tooltip"
-                          >
-                            <LinkButton title="Fit boundaries button" onClick={fitBoundaries}>
-                              <PiCornersOut size={18} className="mr-2" />
-                            </LinkButton>
-                          </TooltipWrapper>
-                        </Col>
-                      </Row>
-                    }
-                  >
+                  <>
                     <AddPropertiesGuide />
                     {exists(selectedFeatureDataset?.parcelFeature) && (
                       <StyledButtonWrapper>
                         <Button onClick={handleAddToSelection}>Add selected property</Button>
                       </StyledButtonWrapper>
                     )}
-
-                    <SelectedPropertyHeaderRow />
-                    {formikProps.values.properties.map((leaseProperty, index) => {
-                      const property = leaseProperty?.property;
-                      if (property !== undefined) {
-                        return (
-                          <SelectedPropertyRow
-                            formikProps={formikProps}
-                            key={`property.${property.latitude}-${property.longitude}-${property.pid}-${property.apiId}`}
-                            onRemove={() => onRemoveClick(index)}
-                            nameSpace={`properties.${index}`}
-                            index={index}
-                            property={property.toFeatureDataset()}
-                            showSeparator={index < formikProps.values.properties.length - 1}
-                          />
-                        );
+                    <Section
+                      header={
+                        <Row>
+                          <Col xs="11">Selected Properties</Col>
+                          <Col>
+                            <TooltipWrapper
+                              tooltip="Fit map to the file properties"
+                              tooltipId="property-selector-tooltip"
+                            >
+                              <LinkButton title="Fit boundaries button" onClick={fitBoundaries}>
+                                <PiCornersOut size={18} className="mr-2" />
+                              </LinkButton>
+                            </TooltipWrapper>
+                          </Col>
+                        </Row>
                       }
-                      return <></>;
-                    })}
-                    {formikProps.values.properties.length === 0 && (
-                      <span>No Properties selected</span>
-                    )}
-                  </Section>
+                    >
+                      <SelectedPropertyHeaderRow />
+                      {formikProps.values.properties.map((leaseProperty, index) => {
+                        const property = leaseProperty?.property;
+                        if (property !== undefined) {
+                          return (
+                            <SelectedPropertyRow
+                              formikProps={formikProps}
+                              key={`property.${property.latitude}-${property.longitude}-${property.pid}-${property.apiId}`}
+                              onRemove={() => onRemoveClick(index)}
+                              nameSpace={`properties.${index}`}
+                              index={index}
+                              property={property.toFeatureDataset()}
+                              showSeparator={index < formikProps.values.properties.length - 1}
+                            />
+                          );
+                        }
+                        return <></>;
+                      })}
+                      {formikProps.values.properties.length === 0 && (
+                        <span>No Properties selected</span>
+                      )}
+                    </Section>
+                  </>
                 );
               }}
             />
