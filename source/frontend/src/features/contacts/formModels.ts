@@ -609,13 +609,13 @@ export const getDefaultContact = (organization?: {
   return null;
 };
 
-function isEmail(
+export function isEmail(
   contactMethod?: IEditableContactMethodForm,
 ): contactMethod is IEditableContactMethodForm {
   return exists(contactMethod) && EmailContactMethods.includes(contactMethod.contactMethodTypeCode);
 }
 
-function isPhone(
+export function isPhone(
   contactMethod?: IEditableContactMethodForm,
 ): contactMethod is IEditableContactMethodForm {
   return exists(contactMethod) && PhoneContactMethods.includes(contactMethod.contactMethodTypeCode);
