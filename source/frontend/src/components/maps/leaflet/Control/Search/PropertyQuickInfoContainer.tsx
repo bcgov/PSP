@@ -269,21 +269,29 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
               tooltipId={`property-quick-info-view-property`}
               tooltip={'View Property Information'}
             >
-              <StyledIconWrapper>
+              <StyledIconWrapper data-testid="view-property-icon">
                 <FaEye size={18} title="Zoom map" onClick={onViewPropertyInfo} />
               </StyledIconWrapper>
             </TooltipWrapper>
           )}
         </Col>
         <Col xs="1" className="pl-2">
-          <MoreOptionsMenu variant="dark" options={menuOptions} />
+          <MoreOptionsMenu
+            variant="dark"
+            options={menuOptions}
+            data-testid="quick-info-more-options"
+          />
         </Col>
         <Col xs="1"></Col>
-        <Col xs="6" className="text-center">
+        <Col xs="6" className="text-center" data-testid="quick-info-header">
           Property
         </Col>
         <Col xs="1">
-          <TooltipWrapper tooltipId={`property-quick-info-zoom`} tooltip={'Zoom to location'}>
+          <TooltipWrapper
+            tooltipId={`property-quick-info-zoom`}
+            tooltip={'Zoom to location'}
+            data-testid="zoom-to-location"
+          >
             <StyledIconWrapper>
               <FaSearchPlus
                 size={18}

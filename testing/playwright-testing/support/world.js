@@ -12,6 +12,12 @@ import SharedFileProperties from "./pages/SharedFileProperties.js";
 import SharedPagination from "./pages/SharedPagination.js";
 import SearchProperties from "./pages/SearchProperties.js";
 import SharedModal from "./pages/SharedModal.js";
+import HelpDesk from "./pages/HelpDesk.js";
+import MapLayers from "./pages/MapLayers.js";
+import WorkLists from "./pages/WorkLists.js";
+import Projects from "./pages/Projects.js";
+import ResearchFiles from "./pages/ResearchFiles.js";
+import AcquisitionDetails from "./pages/AcquisitionDetails.js";
 
 // Load environment variables from .env
 dotenv.config();
@@ -33,6 +39,12 @@ class CustomWorld {
     this.sharedPagination = null;
     this.searchProperties = null;
     this.sharedModal = null;
+    this.helpDesk = null;
+    this.mapLayers = null;
+    this.workLists = null;
+    this.projects = null;
+    this.researchFiles = null;
+    this.acquisitionDetails = null;
   }
 
   async openBrowser() {
@@ -51,6 +63,12 @@ class CustomWorld {
     this.sharedPagination = new SharedPagination(this.page);
     this.searchProperties = new SearchProperties(this.page);
     this.sharedModal = new SharedModal(this.page);
+    this.helpDesk = new HelpDesk(this.page);
+    this.mapLayers = new MapLayers(this.page);
+    this.workLists = new WorkLists(this.page);
+    this.projects = new Projects(this.page);
+    this.researchFiles = new ResearchFiles(this.page);
+    this.acquisitionDetails = new AcquisitionDetails(this.page);
   }
 
   async closeBrowser() {

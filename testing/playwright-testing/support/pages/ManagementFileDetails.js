@@ -84,6 +84,10 @@ class ManagementFileDetails {
     }
   }
 
+  async cancelManagementFile() {
+    await this.page.locator("//div[contains(text(),'Cancel')]/parent::button").click();
+  }
+
   async createMinimumManagementFileDetails(managementFile) {
     await this.page
       .locator("#input-fileName")
@@ -379,5 +383,4 @@ class ManagementFileDetails {
     // }
   }
 }
-
 module.exports = ManagementFileDetails;
