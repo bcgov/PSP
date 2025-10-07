@@ -16,7 +16,7 @@ import {
   PIMS_Property_Lite_View,
   PIMS_Property_Location_View,
 } from '@/models/layers/pimsPropertyLocationView';
-import { exists, isValidId } from '@/utils';
+import { exists, firstOrNull, isValidId } from '@/utils';
 
 import {
   emptyFeatureData,
@@ -257,38 +257,42 @@ export const useMapSearch = () => {
             feature => !!feature?.geometry,
           );
 
-          let findByPinTask:
+          const findByPinTask:
             | Promise<
                 FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties> | undefined
-              >
-            | undefined = undefined;
+              >[]
+            | undefined = [];
 
-          let findByPidTask:
+          const findByPidTask:
             | Promise<
                 FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties> | undefined
-              >
-            | undefined = undefined;
+              >[]
+            | undefined = [];
 
           validFeatures.forEach(x => {
             const pid = x.properties.PID;
             const pin = x.properties.PIN;
             if (isValidId(pid)) {
-              findByPinTask = pmbcServiceFindByPid(pid.toString());
+              findByPidTask.push(pmbcServiceFindByPid(pid.toString()));
             }
             if (isValidId(pin)) {
-              findByPidTask = pmbcServiceFindByPin(pin.toString());
+              findByPinTask.push(pmbcServiceFindByPin(pin.toString()));
             }
           });
 
-          const [pinPmbcData, pidPmbcData] = await Promise.all([findByPinTask, findByPidTask]);
+          const pidPmbcData = await Promise.all(findByPidTask);
+          const pinPmbcData = await Promise.all(findByPinTask);
 
           const attributedFeatures: FeatureCollection<
             Geometry,
             PMBC_FullyAttributed_Feature_Properties
           > = {
             type: 'FeatureCollection',
-            features: [...(pinPmbcData?.features || []), ...(pidPmbcData?.features || [])],
-            bbox: pinPmbcData?.bbox || pidPmbcData?.bbox,
+            features: [
+              ...(pidPmbcData?.flatMap(x => x?.features) || []),
+              ...(pinPmbcData?.flatMap(x => x?.features) || []),
+            ],
+            bbox: firstOrNull(pidPmbcData)?.bbox || firstOrNull(pinPmbcData)?.bbox,
           };
 
           result = {
@@ -311,7 +315,8 @@ export const useMapSearch = () => {
           }
         }
       } catch (error) {
-        toast.error((error as Error).message, { autoClose: 7000 });
+        debugger;
+        toast.error((error as Error).message + 'here is johny', { autoClose: 7000 });
       }
 
       return result;
