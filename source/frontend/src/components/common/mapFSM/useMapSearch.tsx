@@ -315,8 +315,7 @@ export const useMapSearch = () => {
           }
         }
       } catch (error) {
-        debugger;
-        toast.error((error as Error).message + 'here is johny', { autoClose: 7000 });
+        toast.error((error as Error).message, { autoClose: 7000 });
       }
 
       return result;

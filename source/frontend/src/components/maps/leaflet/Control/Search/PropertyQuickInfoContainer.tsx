@@ -46,7 +46,9 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
       return parcelMapFeature;
     } else if (exists(pimsMapFeature)) {
       const foundFullyAttributed = mapFeatureData.fullyAttributedFeatures?.features.find(
-        fa => fa.properties?.PID_NUMBER === pimsMapFeature.PID,
+        fa =>
+          (exists(fa.properties?.PID_NUMBER) && fa.properties.PID_NUMBER === pimsMapFeature.PID) ||
+          (exists(fa.properties?.PIN) && fa.properties.PIN === pimsMapFeature.PIN),
       );
       return foundFullyAttributed?.properties ?? null;
     }
