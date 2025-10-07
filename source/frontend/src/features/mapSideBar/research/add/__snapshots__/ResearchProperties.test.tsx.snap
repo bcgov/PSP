@@ -294,6 +294,24 @@ exports[`ResearchProperties component > renders as expected when provided no pro
   line-height: 2rem;
 }
 
+.c16 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.c16 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
 .c1 {
   font-weight: bold;
   color: var(--theme-blue-100);
@@ -318,24 +336,6 @@ exports[`ResearchProperties component > renders as expected when provided no pro
   margin-bottom: 0.9rem;
   padding-bottom: 0.25rem;
   font-family: 'BcSans-Bold';
-}
-
-.c16 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: baseline;
-  -webkit-box-align: baseline;
-  -ms-flex-align: baseline;
-  align-items: baseline;
-  gap: 0.8rem;
-}
-
-.c16 .form-label {
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
 }
 
 .c15 {
