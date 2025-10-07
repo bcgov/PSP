@@ -82,7 +82,7 @@ describe('PropertyActivityEditForm component', () => {
   it('validates form values before submitting the form', async () => {
     setup();
 
-    await act(async () => userEvent.paste(getByName('requestedSource'), 'Lorem Ipsum'));
+    await act(async () => userEvent.paste(getByName('completionDate'), '2023-12-31'));
     const save = screen.getByText('Save');
     await act(async () => userEvent.click(save));
 

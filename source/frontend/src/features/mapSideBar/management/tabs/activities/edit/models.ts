@@ -8,7 +8,7 @@ import { ApiGen_Concepts_ManagementActivityProperty } from '@/models/api/generat
 import { ApiGen_Concepts_ManagementFileProperty } from '@/models/api/generated/ApiGen_Concepts_ManagementFileProperty';
 import { ApiGen_Concepts_PropertyMinistryContact } from '@/models/api/generated/ApiGen_Concepts_PropertyMinistryContact';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
-import { exists, isValidIsoDateTime } from '@/utils';
+import { exists, isNumber, isValidIsoDateTime } from '@/utils';
 import { emptyStringtoNullable, toTypeCodeNullable } from '@/utils/formUtils';
 
 export class ManagementActivityFormModel {
@@ -19,9 +19,8 @@ export class ManagementActivityFormModel {
   completionDate = '';
   description = '';
   requestedSource = '';
-  requestorPersonId: number | null;
-  requestorOrganizationId: number | null;
-  requestorPrimaryContactId: number | null;
+  requestorOrgPrimaryContact = '';
+  requestor: IContactSearchResult | null = null;
   ministryContacts: (IContactSearchResult | null)[] = [null];
   involvedParties: (IContactSearchResult | null)[] = [null];
   serviceProvider: IContactSearchResult | null = null;
@@ -51,20 +50,24 @@ export class ManagementActivityFormModel {
       activityTypeCode: toTypeCodeNullable(this.activityTypeCode),
       activitySubTypeCodes: this.activitySubtypeCodes?.map(x => x.toApi(this.id)) ?? [],
       activityStatusTypeCode: toTypeCodeNullable(this.activityStatusCode),
-      requestorPersonId: this.requestorPersonId,
-      requestorOrganizationId: this.requestorOrganizationId,
-      requestorPrimaryContactId: this.requestorPrimaryContactId,
+      requestorPersonId: this.requestor?.personId ?? null,
+      requestorPerson: null,
+      requestorOrganizationId: this.requestor?.organizationId ?? null,
+      requestorOrganization: null,
+      requestorPrimaryContactId:
+        !!this.requestorOrgPrimaryContact && isNumber(+this.requestorOrgPrimaryContact)
+          ? Number(this.requestorOrgPrimaryContact)
+          : null,
+      requestorPrimaryContact: null,
       requestAddedDateOnly: this.requestedDate,
       completionDateOnly: emptyStringtoNullable(this.completionDate),
       description: this.description,
       requestSource: this.requestedSource,
-
       isDisabled: false,
       serviceProviderOrgId: this.serviceProvider?.organizationId ?? null,
       serviceProviderOrg: null,
       serviceProviderPersonId: this.serviceProvider?.personId ?? null,
       serviceProviderPerson: null,
-
       involvedParties: this.involvedParties
         .filter(exists)
         .map<ApiGen_Concepts_ManagementActivityInvolvedParty>(x => {
@@ -144,6 +147,14 @@ export class ManagementActivityFormModel {
       model.serviceProviderPerson,
       model.serviceProviderOrg,
     );
+    formModel.requestor = fromApiPersonOrApiOrganization(
+      model.requestorPerson,
+      model.requestorOrganization,
+    );
+
+    if (model?.requestorPrimaryContactId) {
+      formModel.requestorOrgPrimaryContact = model.requestorPrimaryContactId.toString();
+    }
     formModel.invoices = model.invoices?.map(i => ActivityInvoiceFormModel.fromApi(i)) ?? [];
     formModel.activityProperties =
       model.activityProperties?.map(p => ActivityPropertyFormModel.fromApi(p)) ?? [];
@@ -154,6 +165,7 @@ export class ManagementActivityFormModel {
           y => y.fileId === formModel.managementFileId && y.propertyId === x.propertyId,
         ) ?? null;
 
+      console.log(model.requestorPrimaryContact);
       return {
         id: matchProperty ? matchProperty.id : 0,
         fileId: formModel.managementFileId,
