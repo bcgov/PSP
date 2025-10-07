@@ -61,7 +61,6 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
   const { getCompleteLease } = useLeaseDetail(lease?.id ?? undefined);
 
   const {
-    requestFlyToBounds,
     refreshMapProperties,
     setEditPropertiesMode,
     selectedFeatures,
