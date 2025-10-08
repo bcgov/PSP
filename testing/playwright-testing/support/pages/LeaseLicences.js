@@ -1,7 +1,5 @@
 const { expect } = require("@playwright/test");
-const {
-  clickAndWaitFor
-} = require("../../support/common.js");
+const { clickAndWaitFor } = require("../../support/common.js");
 
 class LeaseLicence {
   constructor(page) {

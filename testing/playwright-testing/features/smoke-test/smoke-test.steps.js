@@ -140,13 +140,10 @@ When("I verify the Lease and Licences List View", async function () {
   await this.leaseLicence.verifyLeaseListView();
 });
 
-When(
-  "I verify the Lease and Licences Create Form fields",
-  async function () {
-    await this.navigateCreateLease();
-    await this.verifyCreateLeaseForm();
-  }
-);
+When("I verify the Lease and Licences Create Form fields", async function () {
+  await this.navigateCreateLease();
+  await this.verifyCreateLeaseForm();
+});
 
 Then(
   "The Lease and Licences section is rendered successfully",
