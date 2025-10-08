@@ -10,7 +10,6 @@ import NoteListView from '@/features/notes/list/NoteListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
-import { ApiGen_CodeTypes_LeaseAccountTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseAccountTypes';
 import { ApiGen_CodeTypes_LeasePaymentReceivableTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePaymentReceivableTypes';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 
@@ -44,11 +43,11 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
   const tabViews: LeaseTabFileView[] = [];
   const { hasClaim } = useKeycloakWrapper();
   const stakeholderPageName =
-    lease?.paymentReceivableType?.id === ApiGen_CodeTypes_LeaseAccountTypes.RCVBL
+    lease?.paymentReceivableType?.id === ApiGen_CodeTypes_LeasePaymentReceivableTypes.RCVBL
       ? LeaseFileTabNames.tenant
       : LeaseFileTabNames.payee;
   const stakeHolderTypeName =
-    lease?.paymentReceivableType?.id === ApiGen_CodeTypes_LeaseAccountTypes.RCVBL
+    lease?.paymentReceivableType?.id === ApiGen_CodeTypes_LeasePaymentReceivableTypes.RCVBL
       ? 'Tenant'
       : 'Payee';
   const statusSolver = new LeaseStatusUpdateSolver(lease?.fileStatusTypeCode);

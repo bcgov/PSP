@@ -8,7 +8,7 @@ import {
   IContactSearchResult,
 } from '@/interfaces';
 import { ApiGen_CodeTypes_AreaUnitTypes } from '@/models/api/generated/ApiGen_CodeTypes_AreaUnitTypes';
-import { ApiGen_CodeTypes_LeaseAccountTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseAccountTypes';
+import { ApiGen_CodeTypes_LeasePaymentReceivableTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePaymentReceivableTypes';
 import { ApiGen_CodeTypes_LeasePurposeTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePurposeTypes';
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
@@ -414,7 +414,7 @@ export const getDefaultFormLease: () => LeaseFormModel = () =>
     hasDigitalLicense: null,
     hasPhysicalLicense: null,
     fileStatusTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_LeaseStatusTypes.DRAFT),
-    paymentReceivableType: toTypeCodeNullable(ApiGen_CodeTypes_LeaseAccountTypes.RCVBL),
+    paymentReceivableType: toTypeCodeNullable(ApiGen_CodeTypes_LeasePaymentReceivableTypes.RCVBL),
     leasePurposes: [],
     programType: null,
     type: null,
