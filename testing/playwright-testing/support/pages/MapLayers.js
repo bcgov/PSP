@@ -1,5 +1,4 @@
 const { expect } = require("@playwright/test");
-const { clickAndWaitFor } = require("../../support/common.js");
 
 class MapLayers {
   constructor(page) {

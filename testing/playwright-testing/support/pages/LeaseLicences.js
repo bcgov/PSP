@@ -1,10 +1,6 @@
 const { expect } = require("@playwright/test");
 const {
-  clickAndWaitFor,
-  fillTypeahead,
-  textEqualsIfNotEmpty,
-  textNotEmpty,
-  listEquals,
+  clickAndWaitFor
 } = require("../../support/common.js");
 
 class LeaseLicence {
@@ -252,7 +248,7 @@ class LeaseLicence {
     await expect(this.page.locator("ul[class='pagination']")).toBeVisible();
   }
 
-  async cancelCreateResearchFile() {
+  async cancelCreateLeaseFile() {
     await this.page
       .locator("//div[contains(text(),'Cancel')]/parent::button")
       .click();

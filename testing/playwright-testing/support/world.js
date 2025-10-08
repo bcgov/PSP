@@ -18,6 +18,7 @@ import WorkLists from "./pages/WorkLists.js";
 import Projects from "./pages/Projects.js";
 import ResearchFiles from "./pages/ResearchFiles.js";
 import AcquisitionDetails from "./pages/AcquisitionDetails.js";
+import LeaseLicence from "./pages/LeaseLicences.js";
 
 // Load environment variables from .env
 dotenv.config();
@@ -45,6 +46,7 @@ class CustomWorld {
     this.projects = null;
     this.researchFiles = null;
     this.acquisitionDetails = null;
+    this.leaseLicence = null;
   }
 
   async openBrowser() {
@@ -69,6 +71,7 @@ class CustomWorld {
     this.projects = new Projects(this.page);
     this.researchFiles = new ResearchFiles(this.page);
     this.acquisitionDetails = new AcquisitionDetails(this.page);
+    this.leaseLicence = new LeaseLicence(this.page);
   }
 
   async closeBrowser() {

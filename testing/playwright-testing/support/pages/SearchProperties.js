@@ -166,7 +166,7 @@ class SearchProperties {
     const PIMSResultsTitle = await this.page.locator(
       "//div[text()='Results (PIMS)']"
     );
-    expect(PMBCResultsTitle).toBeVisible();
+    expect(PIMSResultsTitle).toBeVisible();
 
     const PIMSResultsMoreOptions = await this.page.locator(
       "div[aria-label='search pims results more options']"

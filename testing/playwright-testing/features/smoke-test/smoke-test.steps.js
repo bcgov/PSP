@@ -132,16 +132,25 @@ Then(
   }
 );
 
-Given("I navigate to the Lease and Licences Page", async function () {});
+Given("I navigate to the Lease and Licences Page", async function () {
+  await this.leaseLicence.navigateLeaseListView();
+});
 
-When("I verify the Lease and Licences List View", async function () {});
+When("I verify the Lease and Licences List View", async function () {
+  await this.leaseLicence.verifyLeaseListView();
+});
 
 When(
   "I verify the Lease and Licences Create Form fields",
-  async function () {}
+  async function () {
+    await this.navigateCreateLease();
+    await this.verifyCreateLeaseForm();
+  }
 );
 
 Then(
   "The Lease and Licences section is rendered successfully",
-  async function () {}
+  async function () {
+    await this.leaseLicence.cancelCreateLeaseFile();
+  }
 );
