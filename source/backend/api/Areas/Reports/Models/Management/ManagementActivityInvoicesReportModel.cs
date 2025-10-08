@@ -104,7 +104,7 @@ namespace Pims.Api.Areas.Reports.Models.Management
             LegacyFileNum = GetNullableString(invoice.ManagementActivity?.ManagementFile?.LegacyFileNum);
             Funding = GetNullableString(invoice.ManagementActivity?.ManagementFile?.AcquisitionFundingTypeCodeNavigation?.Description);
             Purpose = GetNullableString(invoice.ManagementActivity?.ManagementFile?.ManagementFilePurposeTypeCodeNavigation?.Description);
-            CreatedBy = GetNullableString(invoice.ManagementActivity?.ManagementFile?.AppCreateUserid);
+            CreatedBy = GetNullableString(invoice.AppCreateUserid);
             PropertyContacts = GetPropertyContactsAsString(invoice.ManagementActivity?.ManagementFile?.PimsManagementFileContacts);
             ManagementFileStatus = GetNullableString(invoice.ManagementActivity?.ManagementFile?.ManagementFileStatusTypeCodeNavigation?.Description);
             ActivityType = GetNullableString(invoice.ManagementActivity?.MgmtActivityTypeCodeNavigation?.Description);
