@@ -91,6 +91,7 @@ export const AddLeaseContainer: React.FunctionComponent<
       }),
     [featuresWithAddresses],
   );
+
   // This effect is used to update the file properties when "add to open file" is clicked in the worklist.
   useEffect(() => {
     if (exists(formikRef.current) && propertyForms.length > 0) {
