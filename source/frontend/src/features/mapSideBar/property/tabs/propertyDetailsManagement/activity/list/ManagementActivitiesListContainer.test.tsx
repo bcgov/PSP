@@ -107,4 +107,18 @@ describe('ManagementActivitiesListContainer component', () => {
 
     expect(mockDeleteApi.execute).toHaveBeenCalledTimes(1);
   });
+
+  it('getNavigationUrl returns correct title and url', async () => {
+    mockGetApi.execute.mockResolvedValue(getMockManagementActivityList());
+    await setup({});
+
+    // ensure viewProps populated
+    await act(async () => {});
+
+    const fakeRow = { managementFileId: 10, activityId: 5 } as any;
+    const nav = viewProps.getNavigationUrl(fakeRow);
+
+    expect(nav.title).toBe('M-10');
+    expect(nav.url).toBe('/mapview/sidebar/management/10/activities/5');
+  });
 });
