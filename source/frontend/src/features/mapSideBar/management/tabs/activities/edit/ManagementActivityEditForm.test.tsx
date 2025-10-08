@@ -120,18 +120,18 @@ describe('ManagementActivityEditForm component', () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
-  // it('validates required fields before submitting the form', async () => {
-  //   await setup();
-  //   await waitForEffects();
+  it('validates required fields before submitting the form', async () => {
+    await setup();
+    await waitForEffects();
 
-  //   await act(async () => {
-  //     userEvent.type(getByName('completionDate'), '2005-03-15', { delay: 100 });
-  //   });
-  //   const save = screen.getByText('Save');
-  //   await act(async () => userEvent.click(save));
+    await act(async () => {
+      userEvent.type(getByName('completionDate'), '2005-03-15', { delay: 100 });
+    });
+    const save = screen.getByText('Save');
+    await act(async () => userEvent.click(save));
 
-  //   expect(await screen.findByText(/Description is required/i)).toBeVisible();
-  // });
+    expect(await screen.findByText(/Description is required/i)).toBeVisible();
+  });
 
   it('validates that completion date is required when status is set to COMPLETED', async () => {
     await setup();
