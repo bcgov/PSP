@@ -121,6 +121,7 @@ describe('ManagementActivityEditForm component', () => {
   });
 
   it('validates required fields before submitting the form', async () => {
+    vi.spyOn(console, 'error').mockImplementation(() => {});
     await setup();
     await waitForEffects();
 
