@@ -78,6 +78,11 @@ namespace Pims.Api.Areas.Lease.Models.Search
         /// get/set - The organization id of the lease team member.
         /// </summary>
         public int? LeaseTeamOrganizationId { get; set; }
+
+        /// <summary>
+        /// get/set - Filter to return only receivable leases.
+        /// </summary>
+        public bool? IsReceivable { get; set; }
         #endregion
 
         #region Constructors
@@ -113,6 +118,7 @@ namespace Pims.Api.Areas.Lease.Models.Search
             this.Details = filter.GetStringValue(nameof(this.Details));
             this.LeaseTeamPersonId = filter.GetIntNullValue(nameof(this.LeaseTeamPersonId));
             this.LeaseTeamOrganizationId = filter.GetIntNullValue(nameof(this.LeaseTeamOrganizationId));
+            this.IsReceivable = filter.GetValue<bool?>(nameof(this.IsReceivable));
             this.Sort = filter.GetStringArrayValue(nameof(this.Sort));
         }
         #endregion
@@ -144,6 +150,7 @@ namespace Pims.Api.Areas.Lease.Models.Search
                 Details = model.Details,
                 LeaseTeamOrganizationId = model.LeaseTeamOrganizationId,
                 LeaseTeamPersonId = model.LeaseTeamPersonId,
+                IsReceivable = model.IsReceivable,
 
                 Sort = model.Sort,
             };

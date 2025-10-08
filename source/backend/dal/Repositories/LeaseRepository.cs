@@ -1124,9 +1124,17 @@ namespace Pims.Dal.Repositories
                     EF.Functions.Like(pl.Property.Address.MunicipalityName, $"%{filter.Address}%"))));
             }
 
-            if (filter.IsReceivable == true)
+            // Allow filtering by "payable" or "receivable" leases.
+            if (filter.IsReceivable.HasValue)
             {
-                predicateBuilder = predicateBuilder.And(l => l.LeasePayRvblTypeCode == "RCVBL");
+                if (filter.IsReceivable.Value)
+                {
+                    predicateBuilder = predicateBuilder.And(l => l.LeasePayRvblTypeCode == "RCVBL");
+                }
+                else
+                {
+                    predicateBuilder = predicateBuilder.And(l => l.LeasePayRvblTypeCode != "RCVBL");
+                }
             }
 
             if (filter.NotInStatus.Count > 0)
