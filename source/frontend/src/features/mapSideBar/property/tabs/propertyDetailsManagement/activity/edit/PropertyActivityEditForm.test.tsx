@@ -82,7 +82,9 @@ describe('PropertyActivityEditForm component', () => {
   it('validates form values before submitting the form', async () => {
     setup();
 
-    await act(async () => userEvent.paste(getByName('completionDate'), '2023-12-31'));
+    await act(async () => {
+      userEvent.type(getByName('completionDate'), '2005-03-15', { delay: 100 });
+    });
     const save = screen.getByText('Save');
     await act(async () => userEvent.click(save));
 
