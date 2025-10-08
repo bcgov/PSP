@@ -124,7 +124,9 @@ describe('ManagementActivityEditForm component', () => {
     await setup();
     await waitForEffects();
 
-    await act(async () => userEvent.paste(getByName('completionDate'), '2024-12-12'));
+    await act(async () => {
+      userEvent.type(getByName('requestedDate'), '2024-10-10', { delay: 100 });
+    });
     const save = screen.getByText('Save');
     await act(async () => userEvent.click(save));
 
