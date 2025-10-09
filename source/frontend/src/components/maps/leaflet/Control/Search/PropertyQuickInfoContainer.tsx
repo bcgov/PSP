@@ -264,10 +264,14 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
           )}
         </Col>
         <Col xs="1" className="pl-2">
-          <MoreOptionsMenu variant="dark" options={menuOptions} />
+          <MoreOptionsMenu
+            variant="dark"
+            options={menuOptions}
+            data-testid="quick-info-more-options"
+          />
         </Col>
         <Col xs="1"></Col>
-        <Col xs="6" className="text-center">
+        <Col xs="6" className="text-center" data-testid="quick-info-header">
           Property
         </Col>
         <Col xs="1">
