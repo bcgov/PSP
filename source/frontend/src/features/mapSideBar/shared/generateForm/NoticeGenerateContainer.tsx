@@ -70,9 +70,11 @@ const NoticeGenerateContainer: React.FunctionComponent<
   const handleGenerateClick = useCallback(() => {
     if (isValidId(acquisitionFileId)) {
       featchAcquisitionTeam();
+      openModal();
+    } else {
+      onGenerate([], null, null);
     }
-    openModal();
-  }, [acquisitionFileId, featchAcquisitionTeam, openModal]);
+  }, [acquisitionFileId, featchAcquisitionTeam, onGenerate, openModal]);
 
   const handleCancelClick = () => {
     closeModal();
