@@ -25,7 +25,7 @@ export const FilePropertiesLayer: React.FunctionComponent = () => {
 
   const draftPoints = useMemo<LocationBoundaryDataset[]>(() => {
     return (filePropertyLocations ?? []).filter(
-      dp => exists(dp?.location) && exists(dp.location.lat) && exists(dp.location.lng),
+      dp => exists(dp?.location?.lat) && exists(dp?.location?.lng),
     );
   }, [filePropertyLocations]);
 

@@ -1,61 +1,32 @@
-import { Feature, Geometry } from 'geojson';
-import { geoJSON } from 'leaflet';
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaSearchPlus } from 'react-icons/fa';
 import styled from 'styled-components';
 
-import { LinkButton } from '@/components/common/buttons';
-import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { MapFeatureData } from '@/components/common/mapFSM/models';
 import OverflowTip from '@/components/common/OverflowTip';
 import { Section } from '@/components/common/Section/Section';
 import { SimpleSectionHeader } from '@/components/common/SimpleSectionHeader';
-import { ISS_ProvincialPublicHighway } from '@/models/layers/pimsHighwayLayer';
-import { exists } from '@/utils';
+import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
 
 export interface IHighwayListViewProps {
   searchResult: MapFeatureData;
 }
 
 export const HighwayListView: React.FC<IHighwayListViewProps> = props => {
-  const { requestFlyToBounds } = useMapStateMachine();
-
-  const handleZoom = useCallback(
-    (feature: Feature<Geometry, ISS_ProvincialPublicHighway>) => {
-      if (exists(feature)) {
-        const bounds = geoJSON(feature).getBounds();
-        if (exists(bounds) && bounds.isValid()) {
-          requestFlyToBounds(bounds);
-        }
-      }
-    },
-    [requestFlyToBounds],
-  );
-
   return (
     <Section
       header={<SimpleSectionHeader title="Highway Results" />}
       isCollapsable
       initiallyExpanded
     >
-      {props.searchResult?.highwayPlanFeatures?.features?.map(p => (
-        <StyledRow key={p.properties.UNIQUE_ID}>
+      {props.searchResult?.highwayPlanFeatures?.features?.map(feature => (
+        <StyledRow key={feature.properties.UNIQUE_ID}>
           <StyledNameCol>
-            <StyledOverflowTip fullText={`Plan#: ${p.properties.SURVEY_PLAN}`} />
+            <StyledOverflowTip fullText={`Plan#: ${feature.properties.SURVEY_PLAN}`} />
           </StyledNameCol>
           <StyledButtonCol>
             <ButtonContainer>
-              <LinkButton
-                title="Zoom to parcel"
-                onClick={e => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  handleZoom(p);
-                }}
-              >
-                <FaSearchPlus size={18} />
-              </LinkButton>
+              <ZoomToLocation icon={ZoomIconType.single} featureCollection={[feature]} />
             </ButtonContainer>
           </StyledButtonCol>
         </StyledRow>
