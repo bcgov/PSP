@@ -12,7 +12,9 @@ class LeaseLicence {
       "div[data-testid='nav-tooltip-leases&licences'] a",
       "div[data-testid='side-tray']"
     );
-    await this.page.locator("//a[text()='Create a Lease/Licence File']").click();
+    await this.page
+      .locator("//a[text()='Create a Lease/Licence File']")
+      .click();
   }
 
   async navigateLeaseListView() {
@@ -177,9 +179,7 @@ class LeaseLicence {
     await expect(this.page.locator("#input-searchBy")).toBeVisible();
     await expect(this.page.locator("#input-lFileNo")).toBeVisible();
     await expect(this.page.locator("#properties-selector_input")).toBeVisible();
-    await expect(
-      this.page.locator("#search_input")
-    ).toBeVisible();
+    await expect(this.page.locator("#search_input")).toBeVisible();
     await expect(this.page.locator("#status-selector")).toBeVisible();
     await expect(this.page.locator("#input-tenantName")).toBeVisible();
     await expect(
@@ -188,9 +188,7 @@ class LeaseLicence {
     await expect(
       this.page.locator("#datepicker-expiryStartDate")
     ).toBeVisible();
-    await expect(
-      this.page.locator("#input-regionType")
-    ).toBeVisible();
+    await expect(this.page.locator("#input-regionType")).toBeVisible();
     await expect(this.page.locator("#datepicker-expiryEndDate")).toBeVisible();
     await expect(this.page.locator("#input-details")).toBeVisible();
     await expect(this.page.locator("#search-button")).toBeVisible();
@@ -199,9 +197,7 @@ class LeaseLicence {
     await expect(
       this.page.locator("//div[contains(text(),'L-File Number')]")
     ).toBeVisible();
-    await expect(
-      this.page.getByTestId("sort-column-lFileNo")
-    ).toBeVisible();
+    await expect(this.page.getByTestId("sort-column-lFileNo")).toBeVisible();
     await expect(
       this.page.locator("//div[contains(text(),'Expiry Date')]")
     ).toBeVisible();
@@ -209,7 +205,9 @@ class LeaseLicence {
     await expect(
       this.page.locator("//div[contains(text(),'Program Name')]")
     ).toBeVisible();
-    await expect(this.page.getByTestId("sort-column-programName")).toBeVisible();
+    await expect(
+      this.page.getByTestId("sort-column-programName")
+    ).toBeVisible();
     await expect(
       this.page.locator("//div[contains(text(),'Tenant Names')]")
     ).toBeVisible();
@@ -226,9 +224,11 @@ class LeaseLicence {
       this.page.getByTestId("sort-column-fileStatusTypeCode")
     ).toBeVisible();
 
-    const leasesFileCount = await this.page.locator(
-      "div[data-testid='leasesTable'] div[class='tbody'] div[class='tr-wrapper']"
-    ).count();
+    const leasesFileCount = await this.page
+      .locator(
+        "div[data-testid='leasesTable'] div[class='tbody'] div[class='tr-wrapper']"
+      )
+      .count();
     expect(leasesFileCount).toBeGreaterThan(0);
 
     await expect(this.page.getByTestId("input-page-size")).toBeVisible();

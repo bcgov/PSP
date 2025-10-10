@@ -29,7 +29,9 @@ class AdminTools {
       "div[data-testid='nav-tooltip-admintools'] a",
       "div[data-testid='side-tray']"
     );
-    await this.page.locator("//a[text()='Manage Form Document Templates']").click();
+    await this.page
+      .locator("//a[text()='Manage Form Document Templates']")
+      .click();
   }
 
   async navigateFinancialCodes() {
@@ -38,7 +40,9 @@ class AdminTools {
       "div[data-testid='nav-tooltip-admintools'] a",
       "div[data-testid='side-tray']"
     );
-    await this.page.locator("//a[text()='Manage Project and Financial Codes']").click();
+    await this.page
+      .locator("//a[text()='Manage Project and Financial Codes']")
+      .click();
   }
 
   async navigateBCFTAOwnershipPage() {
@@ -47,7 +51,9 @@ class AdminTools {
       "div[data-testid='nav-tooltip-admintools'] a",
       "div[data-testid='side-tray']"
     );
-    await this.page.locator("//a[text()='Manage BCTFA Property Ownership']").click();
+    await this.page
+      .locator("//a[text()='Manage BCTFA Property Ownership']")
+      .click();
   }
 
   async navigateHome() {
@@ -58,9 +64,7 @@ class AdminTools {
     await expect(
       this.page.locator("//h1/span[contains(text(),'User Management')]")
     ).toBeVisible();
-    await expect(
-      this.page.locator("//div[text()='Search By:']")
-    ).toBeVisible();
+    await expect(this.page.locator("//div[text()='Search By:']")).toBeVisible();
     await expect(this.page.locator("#input-role")).toBeVisible();
     await expect(this.page.locator("#input-region")).toBeVisible();
     await expect(
@@ -108,9 +112,11 @@ class AdminTools {
       this.page.locator("//div[contains(text(),'Last login')]")
     ).toBeVisible();
 
-    const usersCount = await this.page.locator(
-      "div[data-testid='usersTable'] div[class='tbody'] div[class='tr-wrapper']"
-    ).count();
+    const usersCount = await this.page
+      .locator(
+        "div[data-testid='usersTable'] div[class='tbody'] div[class='tr-wrapper']"
+      )
+      .count();
     expect(usersCount).toBeGreaterThan(0);
 
     await expect(this.page.getByTestId("input-page-size")).toBeVisible();
@@ -273,9 +279,11 @@ class AdminTools {
     ).toBeVisible();
     await expect(this.page.getByTestId("sort-column-expiryDate")).toBeVisible();
 
-    const financialCodesCount = await this.page.locator(
-      "div[data-testid='FinancialCodeTable'] div[class='tbody'] div[class='tr-wrapper']"
-    ).count();
+    const financialCodesCount = await this.page
+      .locator(
+        "div[data-testid='FinancialCodeTable'] div[class='tbody'] div[class='tr-wrapper']"
+      )
+      .count();
     expect(financialCodesCount).toBeGreaterThan(0);
 
     await expect(this.page.getByTestId("input-page-size")).toBeVisible();
@@ -286,8 +294,7 @@ class AdminTools {
     await this.page.locator("h1 button").click();
 
     expect(
-      await this.page
-        .locator("//h1[text()='Create Financial Code']")
+      await this.page.locator("//h1[text()='Create Financial Code']")
     ).toBeVisible();
     expect(
       await this.page.locator("//label[text()='Code type']")
@@ -342,14 +349,16 @@ class AdminTools {
       this.page.locator("//div[text()='Update BCTFA Ownership']")
     ).toBeVisible();
     await expect(
-      this.page.locator("//div[text()='Upload a csv file, that contains the list of all PIDs currently owned by BCTFA, as provided by LTSA. Uploading this file here will update the BCTFA ownership layer within PIMS to reflect the PIDS listed in the uploaded file.']")
+      this.page.locator(
+        "//div[text()='Upload a csv file, that contains the list of all PIDs currently owned by BCTFA, as provided by LTSA. Uploading this file here will update the BCTFA ownership layer within PIMS to reflect the PIDS listed in the uploaded file.']"
+      )
     ).toBeVisible();
     await expect(
-      this.page.locator("//div[contains(text(),'Drag files here to attach or')]")
+      this.page.locator(
+        "//div[contains(text(),'Drag files here to attach or')]"
+      )
     ).toBeVisible();
-    await expect(
-      this.page.locator("//label[text()='Browse']")
-    ).toBeVisible();
+    await expect(this.page.locator("//label[text()='Browse']")).toBeVisible();
     await expect(this.page.getByTestId("upload-input")).toBeHidden();
   }
 }

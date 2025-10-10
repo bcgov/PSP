@@ -64,7 +64,9 @@ class ContactManager {
     await expect(this.page.locator("#typeahead-organization")).toBeVisible();
 
     await expect(
-      this.page.locator("//h2/div/div/div/span[contains(text(),'Contact Info')]")
+      this.page.locator(
+        "//h2/div/div/div/span[contains(text(),'Contact Info')]"
+      )
     ).toBeVisible();
     await expect(
       this.page.getByTestId("tooltip-icon-contactInfoToolTip")
@@ -76,9 +78,13 @@ class ContactManager {
       this.page.locator("input[id='input-emailContactMethods.0.value']")
     ).toBeVisible();
     await expect(
-      this.page.locator("select[id='input-emailContactMethods.0.contactMethodTypeCode']")
+      this.page.locator(
+        "select[id='input-emailContactMethods.0.contactMethodTypeCode']"
+      )
     ).toBeVisible();
-    await expect(this.page.getByTestId("input[id='email-remove-button-0']")).toBeVisible();
+    await expect(
+      this.page.getByTestId("input[id='email-remove-button-0']")
+    ).toBeVisible();
     await expect(this.page.getByTestId("#add-email-button")).toBeVisible();
     await expect(
       this.page.locator("//label[contains(text(),'Phone')]")
@@ -87,9 +93,13 @@ class ContactManager {
       this.page.locator("input[id='input-phoneContactMethods.0.value']")
     ).toBeVisible();
     await expect(
-      this.page.locator("select[id='input-emailContactMethods.0.contactMethodTypeCode']")
+      this.page.locator(
+        "select[id='input-emailContactMethods.0.contactMethodTypeCode']"
+      )
     ).toBeVisible();
-    await expect(this.page.getByTestId("input[id='phone-delete-button-0']")).toBeVisible();
+    await expect(
+      this.page.getByTestId("input[id='phone-delete-button-0']")
+    ).toBeVisible();
     await expect(this.page.getByTestId("#add-phone-button")).toBeVisible();
 
     await expect(
@@ -198,9 +208,7 @@ class ContactManager {
     await expect(this.page.locator("//span[text()='Contacts']")).toBeVisible();
     await expect(this.page.locator("h1 button")).toBeVisible();
 
-    await expect(
-      this.page.locator("//b[text()='Search by:']")
-    ).toBeVisible();
+    await expect(this.page.locator("//b[text()='Search by:']")).toBeVisible();
     await expect(this.page.locator("#input-organizations")).toBeVisible();
     await expect(
       this.page.locator("//span[text()=' Organizations']")
@@ -210,9 +218,7 @@ class ContactManager {
       this.page.locator("//span[text()=' Individuals']")
     ).toBeVisible();
     await expect(this.page.locator("#input-all")).toBeVisible();
-    await expect(
-      this.page.locator("//span[text()=' All']")
-    ).toBeVisible();
+    await expect(this.page.locator("//span[text()=' All']")).toBeVisible();
     await expect(this.page.locator("#input-summary")).toBeVisible();
     await expect(
       this.page.locator("label[for='input-municipality']")
@@ -262,9 +268,11 @@ class ContactManager {
       this.page.locator("//div[contains(text(),'Edit/View')]")
     ).toBeVisible();
 
-    const contactsCount = await this.page.locator(
-      "div[data-testid='contactsTable'] div[class='tbody'] div[class='tr-wrapper']"
-    ).count();
+    const contactsCount = await this.page
+      .locator(
+        "div[data-testid='contactsTable'] div[class='tbody'] div[class='tr-wrapper']"
+      )
+      .count();
     expect(contactsCount).toBeGreaterThan(0);
 
     await expect(this.page.getByTestId("input-page-size")).toBeVisible();

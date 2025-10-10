@@ -100,9 +100,7 @@ class DispositionFiles {
       this.page.locator("//label[contains(text(),'Disposition type')]")
     ).toBeVisible();
     await expect(this.page.locator("#input-dispositionTypeCode")).toBeVisible();
-    await expect(
-      this.page.getByText("Initiating document:")
-    ).toBeVisible();
+    await expect(this.page.getByText("Initiating document:")).toBeVisible();
     await expect(
       this.page.locator("#input-initiatingDocumentTypeCode")
     ).toBeVisible();
@@ -203,9 +201,11 @@ class DispositionFiles {
       this.page.getByTestId("sort-column-dispositionFileStatusTypeCode")
     ).toBeVisible();
 
-    const dispositionFileCount = await this.page.locator(
-      "div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']"
-    ).count();
+    const dispositionFileCount = await this.page
+      .locator(
+        "div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']"
+      )
+      .count();
     expect(dispositionFileCount).toBeGreaterThan(0);
 
     await expect(this.page.getByTestId("input-page-size")).toBeVisible();
