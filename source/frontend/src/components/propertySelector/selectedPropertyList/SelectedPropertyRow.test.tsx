@@ -70,6 +70,13 @@ describe('SelectedPropertyRow component', () => {
     expect(onRemove).toHaveBeenCalled();
   });
 
+  it('calls map machine when reposition button is clicked', async () => {
+    await setup();
+    const moveButton = screen.getByTitle('move-pin-location');
+    await act(async () => userEvent.click(moveButton));
+    expect(mapMachineBaseMock.startReposition).toHaveBeenCalled();
+  });
+
   it('displays pid', async () => {
     const mockFeatureSet = getMockSelectedFeatureDataset();
     mockFeatureSet.parcelFeature = {} as any;

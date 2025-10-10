@@ -257,7 +257,7 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
               tooltipId={`property-quick-info-view-property`}
               tooltip={'View Property Information'}
             >
-              <StyledIconWrapper>
+              <StyledIconWrapper data-testid="view-property-icon">
                 <FaEye size={18} title="Show Property Info" onClick={onViewPropertyInfo} />
               </StyledIconWrapper>
             </TooltipWrapper>
