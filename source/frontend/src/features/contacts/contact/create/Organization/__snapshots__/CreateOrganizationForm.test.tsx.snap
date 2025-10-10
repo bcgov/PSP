@@ -558,7 +558,7 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
                     >
                       <button
                         class="c8 Button c9 btn btn-link"
-                        data-testid="remove-button"
+                        data-testid="email-remove-button-0"
                         type="button"
                       >
                         <div
@@ -597,6 +597,7 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
                 </div>
                 <button
                   class="c8 Button btn btn-link"
+                  data-testid="add-email-button"
                   type="button"
                 >
                   <div
@@ -700,7 +701,7 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
                   >
                     <button
                       class="c8 Button c9 btn btn-link"
-                      data-testid="remove-button"
+                      data-testid="phone-delete-button-0"
                       type="button"
                     >
                       <div
@@ -738,6 +739,7 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
                 </div>
                 <button
                   class="c8 Button btn btn-link"
+                  data-testid="add-phone-button"
                   type="button"
                 >
                   <div

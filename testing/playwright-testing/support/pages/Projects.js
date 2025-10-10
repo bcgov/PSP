@@ -12,7 +12,7 @@ class Projects {
       "div[data-testid='nav-tooltip-project'] a",
       "div[data-testid='side-tray']"
     );
-    this.page.locator("a[text()='Create Project']").click();
+    await this.page.locator("//a[text()='Create Project']").click();
   }
 
   async navigateProjectListView() {
@@ -21,7 +21,7 @@ class Projects {
       "div[data-testid='nav-tooltip-project'] a",
       "div[data-testid='side-tray']"
     );
-    this.page.locator("a[text()='Manage Projects']").click();
+    await this.page.locator("//a[text()='Manage Projects']").click();
   }
 
   async verifyProjectsListView() {
@@ -36,13 +36,20 @@ class Projects {
 
     const regionSelect = await this.page.locator("#input-projectRegionCode");
     expect(regionSelect).toBeVisible();
-    const regionOptions = await regionSelect.locator("option");
-    expect(regionOptions).toHaveCountGreaterThan(0);
+
+    await expect.poll(async () => {
+      return await regionSelect.locator("option").count();
+    }, {
+      timeout: 1000,
+    }).toBeGreaterThan(0);
 
     const statusSelect = await this.page.locator("#input-projectStatusCode");
     expect(statusSelect).toBeVisible();
-    const statusOptions = await statusSelect.locator("option");
-    expect(statusOptions).toHaveCountGreaterThan(0);
+    await expect.poll(async() => {
+      return await statusSelect.locator("option").count();
+    }, {
+      timeout: 1000,
+    }).toBeGreaterThan(0);
 
     await expect(this.page.getByTestId("search")).toBeVisible();
     await expect(this.page.getByTestId("reset-button")).toBeVisible();
@@ -77,7 +84,7 @@ class Projects {
       "div[data-testid='projectsTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(5)"
     );
     await expect(projectLastUpdateColumn).toBeVisible();
-    await expect(projectLastUpdateColumn).toHaveText("Last updadted by");
+    await expect(projectLastUpdateColumn).toHaveText("Last updated by");
 
     const projectUpdateDateColumn = await this.page.locator(
       "div[data-testid='projectsTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(6)"
@@ -85,10 +92,13 @@ class Projects {
     await expect(projectUpdateDateColumn).toBeVisible();
     await expect(projectUpdateDateColumn).toHaveText("Updated date");
 
-    const projectsCountTable = await this.page.locator(
+    await expect.poll(async() => {
+      return await this.page.locator(
       "div[data-testid='projectsTable'] div[class='tbody'] div[class='tr-wrapper']"
-    );
-    await expect(projectsCountTable).toHaveCountGreaterThan(0);
+      ).count();
+    }, {
+      timeout: 1000,
+    }).toBeGreaterThan(0);
 
     await expect(this.page.getByTestId("input-page-size")).toBeVisible();
     await expect(this.page.locator("ul[class='pagination']")).toBeVisible();

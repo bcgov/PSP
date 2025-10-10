@@ -1,3 +1,5 @@
+const { expect } = require("@playwright/test");
+
 class SearchProperties {
   constructor(page) {
     this.page = page;
@@ -92,7 +94,7 @@ class SearchProperties {
   async selectNthSearchResult(index) {
     await this.page
       .locator(
-        `div[data-testid="search-property-${index}"] div:nth-child(1) div`
+        `div[data-testid="search-property-${index}"]`
       )
       .click();
   }
@@ -159,7 +161,7 @@ class SearchProperties {
     expect(PMBCResultsTitle).toBeVisible();
 
     const PMBCResultsMoreOptions = await this.page.locator(
-      "div[aria-label='search pmbc results more options']"
+      "button[aria-label='search pmbc results more options']"
     );
     expect(PMBCResultsMoreOptions).toBeVisible();
 
@@ -169,7 +171,7 @@ class SearchProperties {
     expect(PIMSResultsTitle).toBeVisible();
 
     const PIMSResultsMoreOptions = await this.page.locator(
-      "div[aria-label='search pims results more options']"
+      "button[aria-label='search pims results more options']"
     );
     expect(PIMSResultsMoreOptions).toBeVisible();
   }
