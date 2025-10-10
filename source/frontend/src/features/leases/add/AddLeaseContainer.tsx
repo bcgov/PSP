@@ -108,8 +108,7 @@ export const AddLeaseContainer: React.FunctionComponent<
       // If there are unique properties, add them to the formik values
       if (uniqueProperties.length > 0) {
         const allProperties = [...existingProperties, ...uniqueProperties].map(obj => {
-          const leaseProperty = new FormLeaseProperty();
-          leaseProperty.property = obj;
+          const leaseProperty = FormLeaseProperty.fromPropertyForm(obj);
           if (exists(obj.address) && exists(leaseProperty.property)) {
             leaseProperty.property.address = obj.address;
           }

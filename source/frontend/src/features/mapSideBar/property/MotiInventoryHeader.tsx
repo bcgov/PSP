@@ -2,11 +2,9 @@ import { Feature, Geometry } from 'geojson';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
-import { FaSearchPlus } from 'react-icons/fa';
 import { HiCube } from 'react-icons/hi2';
 import styled from 'styled-components';
 
-import { StyledIconButton } from '@/components/common/buttons';
 import {
   HeaderContentCol,
   HeaderField,
@@ -15,14 +13,13 @@ import {
 import { StyledFiller } from '@/components/common/HeaderField/styles';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { InlineFlexDiv } from '@/components/common/styles';
-import TooltipWrapper from '@/components/common/TooltipWrapper';
+import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
 import { ComposedProperty } from '@/features/mapSideBar/property/ComposedProperty';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import {
   exists,
   firstOrNull,
   formatApiAddress,
-  getFeatureBoundedCenter,
   pidFormatter,
   pinFromFullyAttributedFeature,
   planFromFullyAttributedFeature,
@@ -34,7 +31,6 @@ import { HistoricalNumberSectionView } from '../shared/header/HistoricalNumberSe
 export interface IMotiInventoryHeaderProps {
   isLoading: boolean;
   composedProperty: ComposedProperty;
-  onZoom?: (latitude: number, longitude: number) => void;
 }
 
 export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderProps> = props => {
@@ -74,20 +70,6 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
     }
     return false;
   }, [geoserverMapData?.features]);
-
-  let latitude: number | null = null;
-  let longitude: number | null = null;
-
-  if (exists(apiProperty)) {
-    latitude = apiProperty.latitude ?? null;
-    longitude = apiProperty.longitude ?? null;
-  } else if (exists(pmbcParcel)) {
-    const center = getFeatureBoundedCenter(pmbcParcel);
-    latitude = center[1] ?? null;
-    longitude = center[0] ?? null;
-  }
-
-  const hasLocation = exists(longitude) && exists(latitude);
 
   return (
     <HeaderMaxWidthHeight>
@@ -132,18 +114,11 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
           </StyledFiller>
         </Col>
         <Col xs="auto" className="d-flex p-0 align-items-center justify-content-end">
-          {hasLocation && (
-            <TooltipWrapper tooltipId="property-zoom-map" tooltip="Zoom into parcel">
-              <StyledIconButton
-                variant="info"
-                disabled={!props.onZoom}
-                title="Zoom into parcel"
-                onClick={() => props?.onZoom && props?.onZoom(latitude, longitude)}
-              >
-                <FaSearchPlus size={22} />
-              </StyledIconButton>
-            </TooltipWrapper>
-          )}
+          <ZoomToLocation
+            icon={ZoomIconType.single}
+            featureCollection={[pmbcParcel]}
+            pimsProperties={[apiProperty]}
+          />
         </Col>
       </Row>
       <StyledDivider />
