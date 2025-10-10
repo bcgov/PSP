@@ -37,19 +37,29 @@ class Projects {
     const regionSelect = await this.page.locator("#input-projectRegionCode");
     expect(regionSelect).toBeVisible();
 
-    await expect.poll(async () => {
-      return await regionSelect.locator("option").count();
-    }, {
-      timeout: 1000,
-    }).toBeGreaterThan(0);
+    await expect
+      .poll(
+        async () => {
+          return await regionSelect.locator("option").count();
+        },
+        {
+          timeout: 1000,
+        }
+      )
+      .toBeGreaterThan(0);
 
     const statusSelect = await this.page.locator("#input-projectStatusCode");
     expect(statusSelect).toBeVisible();
-    await expect.poll(async() => {
-      return await statusSelect.locator("option").count();
-    }, {
-      timeout: 1000,
-    }).toBeGreaterThan(0);
+    await expect
+      .poll(
+        async () => {
+          return await statusSelect.locator("option").count();
+        },
+        {
+          timeout: 1000,
+        }
+      )
+      .toBeGreaterThan(0);
 
     await expect(this.page.getByTestId("search")).toBeVisible();
     await expect(this.page.getByTestId("reset-button")).toBeVisible();
@@ -92,13 +102,20 @@ class Projects {
     await expect(projectUpdateDateColumn).toBeVisible();
     await expect(projectUpdateDateColumn).toHaveText("Updated date");
 
-    await expect.poll(async() => {
-      return await this.page.locator(
-      "div[data-testid='projectsTable'] div[class='tbody'] div[class='tr-wrapper']"
-      ).count();
-    }, {
-      timeout: 1000,
-    }).toBeGreaterThan(0);
+    await expect
+      .poll(
+        async () => {
+          return await this.page
+            .locator(
+              "div[data-testid='projectsTable'] div[class='tbody'] div[class='tr-wrapper']"
+            )
+            .count();
+        },
+        {
+          timeout: 1000,
+        }
+      )
+      .toBeGreaterThan(0);
 
     await expect(this.page.getByTestId("input-page-size")).toBeVisible();
     await expect(this.page.locator("ul[class='pagination']")).toBeVisible();

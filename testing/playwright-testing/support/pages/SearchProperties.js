@@ -93,9 +93,7 @@ class SearchProperties {
 
   async selectNthSearchResult(index) {
     await this.page
-      .locator(
-        `div[data-testid="search-property-${index}"]`
-      )
+      .locator(`div[data-testid="search-property-${index}"]`)
       .click();
   }
 

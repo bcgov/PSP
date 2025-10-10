@@ -152,81 +152,87 @@ Then(
   }
 );
 
-Given("I navigate to the Disposition Files Page", async function(){
+Given("I navigate to the Disposition Files Page", async function () {
   await this.dispositionFile.navigateDispositionListView();
 });
 
-When("I verify the Disposition Files List View", async function(){
+When("I verify the Disposition Files List View", async function () {
   await this.dispositionFile.verifyDispositionListView();
 });
 
-When ("I verify the Disposition Files Create Form fields", async function(){
+When("I verify the Disposition Files Create Form fields", async function () {
   await this.dispositionFile.navigateCreateDisposition();
   await this.dispositionFile.verifyCreateDispositionForm();
 });
 
-Then ("The Disposition Files section is rendered successfully", async function(){
-  await this.dispositionFile.cancelCreateDispositionFile();
-});
+Then(
+  "The Disposition Files section is rendered successfully",
+  async function () {
+    await this.dispositionFile.cancelCreateDispositionFile();
+  }
+);
 
-Given("I navigate to the Contact Manager Page", async function(){
+Given("I navigate to the Contact Manager Page", async function () {
   await this.contactManager.navigateContactsListView();
 });
 
-When("I verify the Contact Manager List View", async function(){
+When("I verify the Contact Manager List View", async function () {
   await this.contactManager.verifyDispositionListView();
 });
 
-When("I verify the Contact Manager Create Form fields", async function(){
+When("I verify the Contact Manager Create Form fields", async function () {
   await this.contactManager.navigateCreateContact();
   await this.contactManager.verifyCreateContactForm();
 });
 
-Then("The Contact Manager section is rendered successfully", async function(){
+Then("The Contact Manager section is rendered successfully", async function () {
   await this.contactManager.cancelCreateContact();
 });
 
-Given("I navigate to the Admin Users Page", async function(){
+Given("I navigate to the Admin Users Page", async function () {
   await this.adminTools.navigateAdminUsers();
 });
 
-When("I verify the Admin Users List View", async function(){
+When("I verify the Admin Users List View", async function () {
   await this.adminTools.verifyManageUsersListView();
 });
 
-When("I verify the Manage Users request list view", async function(){
+When("I verify the Manage Users request list view", async function () {
   await this.adminTools.navigateAdminUserRequests();
   await this.adminTools.verifyUserRequestsListView();
 });
 
-Given("I navigate to the Admin CDOGS Templates Page", async function(){
+Given("I navigate to the Admin CDOGS Templates Page", async function () {
   await this.adminTools.navigateCDOGS();
 });
 
-When("I verify the Admin CDOGS Templates List View", async function(){
+When("I verify the Admin CDOGS Templates List View", async function () {
   await this.adminTools.verifyCDOGSUploadPage();
 });
 
-Given("I navigate to the Admin Financial Codes Page", async function(){
+Given("I navigate to the Admin Financial Codes Page", async function () {
   await this.adminTools.navigateFinancialCodes();
 });
 
-When("I verify the Admin Financial Codes List View", async function(){
+When("I verify the Admin Financial Codes List View", async function () {
   await this.adminTools.verifyFinancialCodesListView();
 });
 
-When("I verify the Admin Financial Codes Create Form fields", async function(){
-  await this.adminTools.verifyFinancialCodeCreateForm();
-});
+When(
+  "I verify the Admin Financial Codes Create Form fields",
+  async function () {
+    await this.adminTools.verifyFinancialCodeCreateForm();
+  }
+);
 
-Given("I navigate to the Admin BCFTA Ownership Page", async function(){
+Given("I navigate to the Admin BCFTA Ownership Page", async function () {
   await this.adminTools.navigateBCFTAOwnershipPage();
 });
 
-When("I verify Admin BCFTA Ownership Page", async function(){
+When("I verify Admin BCFTA Ownership Page", async function () {
   await this.adminTools.verifyBCFTAPage();
 });
 
-Then("The Admin Tools section is rendered successfully", async function(){
+Then("The Admin Tools section is rendered successfully", async function () {
   await this.adminTools.navigateHome();
 });
