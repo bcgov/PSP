@@ -15,8 +15,14 @@ import TooltipWrapper from '@/components/common/TooltipWrapper';
 import { ModalContext } from '@/contexts/modalContext';
 import { PropertyForm } from '@/features/mapSideBar/shared/models';
 import AddPropertiesGuide from '@/features/mapSideBar/shared/update/properties/AddPropertiesGuide';
+import useDraftMarkerSynchronizer from '@/hooks/useDraftMarkerSynchronizer';
 import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
-import { exists, firstOrNull, latLngLiteralToGeometry } from '@/utils';
+import {
+  exists,
+  featuresetToLocationBoundaryDataset,
+  firstOrNull,
+  latLngLiteralToGeometry,
+} from '@/utils';
 import { addPropertiesToCurrentFile } from '@/utils/propertyUtils';
 
 import { LeaseFormModel } from '../../models';
@@ -42,6 +48,10 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
     mapLocationFeatureDataset,
     prepareForCreation,
   } = useMapStateMachine();
+
+  useDraftMarkerSynchronizer(
+    values.properties.map(p => featuresetToLocationBoundaryDataset(p.property.toFeatureDataset())),
+  );
 
   const { featuresWithAddresses } = useFeatureDatasetsWithAddresses(selectedFeatures ?? []);
 

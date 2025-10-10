@@ -9,8 +9,10 @@ import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFe
 import { Section } from '@/components/common/Section/Section';
 import SelectedPropertyHeaderRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyHeaderRow';
 import SelectedPropertyRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyRow';
+import useDraftMarkerSynchronizer from '@/hooks/useDraftMarkerSynchronizer';
 import { useEditPropertiesMode } from '@/hooks/useEditPropertiesMode';
 import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
+import { featuresetToLocationBoundaryDataset } from '@/utils';
 import { addPropertiesToCurrentFile } from '@/utils/propertyUtils';
 import { exists, firstOrNull } from '@/utils/utils';
 
@@ -29,6 +31,10 @@ const ResearchProperties: React.FC<IResearchPropertiesProps> = () => {
 
   const { selectedFeatures, processCreation, mapLocationFeatureDataset, prepareForCreation } =
     useMapStateMachine();
+
+  useDraftMarkerSynchronizer(
+    values.properties.map(p => featuresetToLocationBoundaryDataset(p.toFeatureDataset())),
+  );
 
   const selectedFeatureDataset = useMemo<SelectedFeatureDataset>(() => {
     return {
