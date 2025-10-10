@@ -9,6 +9,7 @@ import { AddLeaseTeamSubForm } from './AddLeaseTeamSubform';
 import { AddLeaseTeamYupSchema } from './AddLeaseTeamYupSchema';
 import { AddLeaseYupSchema } from './AddLeaseYupSchema';
 import AdministrationSubForm from './AdministrationSubForm';
+import FeeDeterminationSubForm from './FeeDeterminationSubForm';
 import LeaseDetailSubForm from './LeaseDetailSubForm';
 
 export interface IAddLeaseFormProps {
@@ -49,6 +50,7 @@ const AddLeaseForm: React.FunctionComponent<React.PropsWithChildren<IAddLeaseFor
                 </div>
               )}
             </Section>
+            <FeeDeterminationSubForm formikProps={formikProps} />
           </>
         )}
       </Formik>

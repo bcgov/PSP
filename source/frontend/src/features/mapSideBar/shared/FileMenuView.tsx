@@ -1,27 +1,18 @@
 import cx from 'classnames';
-import { geoJSON, latLngBounds } from 'leaflet';
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaCaretRight, FaSearchPlus } from 'react-icons/fa';
-import { PiCornersOut } from 'react-icons/pi';
+import { FaCaretRight } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import { RestrictedEditControl } from '@/components/common/buttons';
 import { EditPropertiesIcon } from '@/components/common/buttons/EditPropertiesButton';
 import { LinkButton } from '@/components/common/buttons/LinkButton';
-import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import OverflowTip from '@/components/common/OverflowTip';
+import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
-import {
-  boundaryFromFileProperty,
-  exists,
-  getFilePropertyName,
-  getLatLng,
-  locationFromFileProperty,
-  sortFileProperties,
-} from '@/utils';
+import { exists, getFilePropertyName, sortFileProperties } from '@/utils';
 
 import { cannotEditMessage } from '../acquisition/common/constants';
 
@@ -50,35 +41,6 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
   // respect the order of properties as set by the user creating the file
   const sortedProperties = sortFileProperties(file?.fileProperties ?? []);
   const isSummary = useMemo(() => !exists(currentFilePropertyId), [currentFilePropertyId]);
-  const mapMachine = useMapStateMachine();
-
-  const fitBoundaries = () => {
-    const fileProperties = file?.fileProperties;
-
-    if (exists(fileProperties)) {
-      const locations = fileProperties
-        .map(fileProp => locationFromFileProperty(fileProp))
-        .map(geom => getLatLng(geom))
-        .filter(exists);
-      const bounds = latLngBounds(locations);
-
-      if (exists(bounds) && bounds.isValid()) {
-        mapMachine.requestFlyToBounds(bounds);
-      }
-    }
-  };
-
-  const onZoomToProperty = useCallback(
-    (property: ApiGen_Concepts_FileProperty) => {
-      const geom = boundaryFromFileProperty(property);
-      const bounds = geoJSON(geom).getBounds();
-
-      if (exists(bounds) && bounds.isValid()) {
-        mapMachine.requestFlyToBounds(bounds);
-      }
-    },
-    [mapMachine],
-  );
 
   const activeProperties = [];
   const inactiveProperties = [];
@@ -124,13 +86,7 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
             />
           </Col>
           <Col xs="auto">
-            <LinkButton
-              title="Fit boundaries button"
-              data-testid="fit-file-properties-boundaries"
-              onClick={fitBoundaries}
-            >
-              <PiCornersOut size={18} className="mr-2" />
-            </LinkButton>
+            <ZoomToLocation icon={ZoomIconType.area} pimsFileProperties={file?.fileProperties} />
           </Col>
         </Row>
       </StyledMenuHeaderWrapper>
@@ -194,16 +150,10 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
                           </OverflowTip>
 
                           <StyledPropertyRowZoom>
-                            <LinkButton
-                              onClick={(event: React.MouseEvent<SVGElement>) => {
-                                event.stopPropagation();
-                                onZoomToProperty(fileProperty);
-                              }}
-                              data-testid={`menu-item-zoom-${index}`}
-                              title="Zoom to property"
-                            >
-                              <FaSearchPlus size={18} className="mr-2" />
-                            </LinkButton>
+                            <ZoomToLocation
+                              icon={ZoomIconType.single}
+                              pimsProperties={[fileProperty?.property]}
+                            />
                           </StyledPropertyRowZoom>
                         </StyledPropertyRowWrapper>
                       );
@@ -283,6 +233,7 @@ const StyledPropertyRowWrapper = styled.div`
 
 const StyledPropertyRowZoom = styled.div`
   align-self: flex-end;
+  margin-right: 2rem;
 `;
 
 const StyledIconWrapper = styled.div`

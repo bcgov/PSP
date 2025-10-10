@@ -477,7 +477,6 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
                     class="Button__value"
                   >
                     <svg
-                      class="mr-2"
                       fill="currentColor"
                       height="18"
                       stroke="currentColor"
@@ -741,18 +740,17 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="col-auto"
+            class="ml-5 col-auto"
           >
             <button
               class="c3 Button btn btn-link"
-              data-testid="zoom-to-property-0"
+              title="Fit boundaries button"
               type="button"
             >
               <div
                 class="Button__value"
               >
                 <svg
-                  class="ml-4"
                   fill="currentColor"
                   height="18"
                   stroke="currentColor"
@@ -939,18 +937,17 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="col-auto"
+            class="ml-5 col-auto"
           >
             <button
               class="c3 Button btn btn-link"
-              data-testid="zoom-to-property-1"
+              title="Fit boundaries button"
               type="button"
             >
               <div
                 class="Button__value"
               >
                 <svg
-                  class="ml-4"
                   fill="currentColor"
                   height="18"
                   stroke="currentColor"

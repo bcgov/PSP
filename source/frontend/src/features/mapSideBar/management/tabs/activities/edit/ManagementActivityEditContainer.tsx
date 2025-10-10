@@ -32,6 +32,7 @@ export const ManagementActivityEditContainer: React.FunctionComponent<
     fetchMinistryContacts,
     fetchPartiesContact,
     fetchProviderContact,
+    fetchRequestorContact,
     isLoading: isContactLoading,
   } = useActivityContactRetriever();
 
@@ -61,6 +62,7 @@ export const ManagementActivityEditContainer: React.FunctionComponent<
           }
         }
         await fetchProviderContact(retrieved);
+        await fetchRequestorContact(retrieved);
 
         setInitialValues(
           ManagementActivityFormModel.fromApi(retrieved, castedFile?.fileProperties),
@@ -94,6 +96,7 @@ export const ManagementActivityEditContainer: React.FunctionComponent<
     fetchMinistryContacts,
     fetchPartiesContact,
     fetchProviderContact,
+    fetchRequestorContact,
     getManagementActivity,
     managementFileId,
   ]);

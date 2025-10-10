@@ -271,7 +271,7 @@ export class FormLeaseProperty {
   areaUnitTypeCode: string;
   displayOrder: number | null;
 
-  private constructor(leaseId?: number | null) {
+  constructor(leaseId?: number | null) {
     this.leaseId = leaseId ?? null;
     this.landArea = 0;
     this.areaUnitTypeCode = ApiGen_CodeTypes_AreaUnitTypes.M2;
@@ -297,6 +297,12 @@ export class FormLeaseProperty {
   public static fromFeatureDataset(mapProperty: SelectedFeatureDataset): FormLeaseProperty {
     const model = new FormLeaseProperty();
     model.property = PropertyForm.fromFeatureDataset(mapProperty);
+    return model;
+  }
+
+  public static fromPropertyForm(propertyForm: PropertyForm): FormLeaseProperty {
+    const model = new FormLeaseProperty();
+    model.property = new PropertyForm(propertyForm);
     return model;
   }
 

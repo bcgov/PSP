@@ -29,13 +29,13 @@ public partial class PimsConsultationOutcomeType
     public string Description { get; set; }
 
     /// <summary>
-    /// Onscreen display order of the code types.
+    /// Designates a preferred presentation order of the code descriptions.
     /// </summary>
     [Column("DISPLAY_ORDER")]
     public int? DisplayOrder { get; set; }
 
     /// <summary>
-    /// Indicates if the code type is active.
+    /// Indicates if the record is disabled and therefore not selectable or displayed.
     /// </summary>
     [Column("IS_DISABLED")]
     public bool IsDisabled { get; set; }

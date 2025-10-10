@@ -1,4 +1,5 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
+import { generatePath } from 'react-router-dom';
 
 import { TableSort } from '@/components/Table/TableSort';
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
@@ -45,6 +46,19 @@ const AdHocFileActivitiesSummaryContainer: React.FunctionComponent<
       setSort={setSort}
       sort={sort}
       canEditActivities={false}
+      getNavigationUrl={(activityRow: PropertyActivityRow) => {
+        const urlPattern = `/mapview/sidebar/property/:propertyId/:detailType/:subType/:detailId`;
+        const path = generatePath(urlPattern, {
+          propertyId: activityRow.adHocPropertyId,
+          detailType: 'management',
+          subType: 'activity',
+          detailId: activityRow.activityId,
+        });
+        return {
+          title: activityRow.adHocPropertyName,
+          url: path,
+        };
+      }}
     />
   );
 };
