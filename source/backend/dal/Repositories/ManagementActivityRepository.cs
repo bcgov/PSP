@@ -400,6 +400,8 @@ namespace Pims.Dal.Repositories
                 .Include(a => a.MgmtActivityStatusTypeCodeNavigation)
                 .Include(a => a.PimsMgmtActMinContacts)
                 .Include(a => a.PimsMgmtActInvolvedParties)
+                .Include(a => a.RequestorOrganization)
+                .Include(a => a.RequestorPerson)
                 .AsNoTracking()
                 .FirstOrDefault(p => p.ManagementActivityId == activityId) ?? throw new KeyNotFoundException();
             return activity;

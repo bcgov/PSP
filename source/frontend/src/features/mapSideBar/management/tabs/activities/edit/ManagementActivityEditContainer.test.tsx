@@ -28,6 +28,7 @@ const mockContactApi: ReturnType<typeof useActivityContactRetriever> = {
   fetchMinistryContacts: vi.fn(),
   fetchPartiesContact: vi.fn(),
   fetchProviderContact: vi.fn(),
+  fetchRequestorContact: vi.fn(),
   isLoading: false,
 };
 

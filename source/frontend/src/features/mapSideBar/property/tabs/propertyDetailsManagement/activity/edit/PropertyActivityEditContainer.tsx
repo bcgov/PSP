@@ -40,6 +40,7 @@ export const PropertyActivityEditContainer: React.FunctionComponent<
     fetchMinistryContacts,
     fetchPartiesContact,
     fetchProviderContact,
+    fetchRequestorContact,
     isLoading: isContactLoading,
   } = useActivityContactRetriever();
 
@@ -69,6 +70,7 @@ export const PropertyActivityEditContainer: React.FunctionComponent<
           }
         }
         await fetchProviderContact(retrieved);
+        await fetchRequestorContact(retrieved);
 
         formInitialValues = PropertyActivityFormModel.fromApi(retrieved);
       } else {
@@ -79,7 +81,13 @@ export const PropertyActivityEditContainer: React.FunctionComponent<
 
       setInitialValues(formInitialValues);
     },
-    [fetchMinistryContacts, fetchPartiesContact, fetchProviderContact, getActivity],
+    [
+      fetchMinistryContacts,
+      fetchPartiesContact,
+      fetchProviderContact,
+      fetchRequestorContact,
+      getActivity,
+    ],
   );
 
   useEffect(() => {

@@ -1,13 +1,14 @@
 import clsx from 'classnames';
 import { Formik, FormikProps } from 'formik';
 import React, { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
-import { Col } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import ReactVisibilitySensor from 'react-visibility-sensor';
 
 import { CancelConfirmationModal } from '@/components/common/CancelConfirmationModal';
-import { FastDatePicker, Input, Multiselect, Select } from '@/components/common/form';
+import { FastDatePicker, Multiselect, Select } from '@/components/common/form';
 import { ContactInputContainer } from '@/components/common/form/ContactInput/ContactInputContainer';
 import ContactInputView from '@/components/common/form/ContactInput/ContactInputView';
+import { PrimaryContactSelector } from '@/components/common/form/PrimaryContactSelector/PrimaryContactSelector';
 import { TextArea } from '@/components/common/form/TextArea';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
@@ -228,11 +229,33 @@ export const ManagementActivityEditForm: React.FunctionComponent<
                         </SectionField>
                         <SectionField
                           label="Requestor"
-                          contentWidth={{ xs: 7 }}
+                          contentWidth={{ xs: 8 }}
                           tooltip="Document the source of the request by entering the name of the person, organization or other entity from which the request has been received"
                         >
-                          <Input field="requestedSource" />
+                          <Row className="no-gutters pr-4 mr-2">
+                            <Col className="col-11">
+                              <ContactInputContainer
+                                field="requestor"
+                                View={ContactInputView}
+                                restrictContactType={RestrictContactType.ALL}
+                              />
+                            </Col>
+                          </Row>
                         </SectionField>
+
+                        {isValidId(formikProps.values.requestor?.organizationId) &&
+                          !isValidId(formikProps.values.requestor?.personId) && (
+                            <SectionField label="Primary contact" labelWidth={{ xl: 4 }}>
+                              <Row className="no-gutters pr-4 mr-17">
+                                <Col className="col-11">
+                                  <PrimaryContactSelector
+                                    field="requestorOrgPrimaryContact"
+                                    contactInfo={formikProps.values.requestor}
+                                  ></PrimaryContactSelector>
+                                </Col>
+                              </Row>
+                            </SectionField>
+                          )}
                         <SectionField label="External contacts" contentWidth={{ xs: 8 }}>
                           <ContactListForm
                             field="involvedParties"
@@ -241,12 +264,16 @@ export const ManagementActivityEditForm: React.FunctionComponent<
                             dataTestId="external-contacts-add-link"
                           />
                         </SectionField>
-                        <SectionField label="Service provider" contentWidth={{ xs: 7 }}>
-                          <ContactInputContainer
-                            field="serviceProvider"
-                            View={ContactInputView}
-                            restrictContactType={RestrictContactType.ALL}
-                          />
+                        <SectionField label="Service provider" contentWidth={{ xs: 8 }}>
+                          <Row className="no-gutters pr-4 mr-2">
+                            <Col className="col-11">
+                              <ContactInputContainer
+                                field="serviceProvider"
+                                View={ContactInputView}
+                                restrictContactType={RestrictContactType.ALL}
+                              />
+                            </Col>
+                          </Row>
                         </SectionField>
                       </Section>
                       <InvoiceListForm

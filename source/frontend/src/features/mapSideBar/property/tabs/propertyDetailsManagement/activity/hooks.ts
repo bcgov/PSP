@@ -64,10 +64,35 @@ const useActivityContactRetriever = () => {
     [getPerson, getOrganization],
   );
 
+  const fetchRequestorContact = useCallback(
+    async (c: ApiGen_Concepts_ManagementActivity) => {
+      if (isValidId(c.requestorPersonId)) {
+        const person = await getPerson(c.requestorPersonId);
+        if (person !== undefined) {
+          c.requestorPerson = person;
+        }
+      }
+      if (isValidId(c.requestorOrganizationId)) {
+        const organization = await getOrganization(c.requestorOrganizationId);
+        if (organization !== undefined) {
+          c.requestorOrganization = organization;
+        }
+      }
+      if (isValidId(c.requestorPrimaryContactId)) {
+        const primaryContact = await getPerson(c.requestorPrimaryContactId);
+        if (primaryContact !== undefined) {
+          c.requestorPrimaryContact = primaryContact;
+        }
+      }
+    },
+    [getPerson, getOrganization],
+  );
+
   return {
     fetchMinistryContacts,
     fetchPartiesContact,
     fetchProviderContact,
+    fetchRequestorContact,
     isLoading: loadingOrganization || loadingPerson,
   };
 };
