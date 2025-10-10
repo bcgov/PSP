@@ -79,7 +79,7 @@ const NoticeSelectorModal: React.FunctionComponent<
         <StyledModal
           variant="info"
           display={isOpened}
-          title="Generate Form 12"
+          title="Generate Notice of Entry"
           message={
             <>
               <p>Select who should receive this letter from the following list</p>
@@ -156,7 +156,11 @@ const NoticeSelectorModal: React.FunctionComponent<
                                   rel="noopener noreferrer"
                                   to={`/contact/P${teamMember?.personId}`}
                                 >
-                                  <span>{formatApiPersonNames(teamMember?.person)}</span>
+                                  <span>
+                                    {teamMember?.person
+                                      ? formatApiPersonNames(teamMember?.person)
+                                      : teamMember?.organization?.name ?? ''}
+                                  </span>
                                   <FaExternalLinkAlt className="ml-2" size="1rem" />
                                 </StyledLink>
                                 <StyledMemberRole>
@@ -210,7 +214,9 @@ const NoticeSelectorModal: React.FunctionComponent<
                                   rel="noopener noreferrer"
                                   to={`/contact/P${teamMember?.personId}`}
                                 >
-                                  <span>{formatApiPersonNames(teamMember?.person)}</span>
+                                  {teamMember?.person
+                                    ? formatApiPersonNames(teamMember?.person)
+                                    : teamMember?.organization?.name ?? ''}
                                   <FaExternalLinkAlt className="ml-2" size="1rem" />
                                 </StyledLink>
                                 <StyledMemberRole>

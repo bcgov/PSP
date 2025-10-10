@@ -4,7 +4,15 @@ import { phoneFormatter } from '@/utils/formUtils';
 
 import { ApiGen_Concepts_Organization } from '../api/generated/ApiGen_Concepts_Organization';
 import { Api_GenerateAddress } from './GenerateAddress';
-export class Api_GenerateOrganization {
+
+export interface Api_GenerateContact {
+  full_name_string: string;
+  address: Api_GenerateAddress | null;
+  email: string;
+  phone: string;
+}
+
+export class Api_GenerateOrganization implements Api_GenerateContact {
   name: string;
   alias: string;
   incorporation_number: string;
@@ -12,8 +20,9 @@ export class Api_GenerateOrganization {
   phone: string;
   full_name_string: string;
   address: Api_GenerateAddress | null;
+  title: string;
 
-  constructor(organization: ApiGen_Concepts_Organization | null | undefined) {
+  constructor(organization: ApiGen_Concepts_Organization | null | undefined, title?: string) {
     this.name = organization?.name ?? '';
     this.alias = organization?.alias ?? '';
     this.incorporation_number = organization?.incorporationNumber ?? '';
@@ -49,5 +58,6 @@ export class Api_GenerateOrganization {
       ? new Api_GenerateAddress(getApiPersonOrOrgMailingAddress(organization) ?? null)
       : null;
     this.full_name_string = `${this.name} (Inc. No. ${this.incorporation_number ?? ''})`;
+    this.title = title ?? '';
   }
 }

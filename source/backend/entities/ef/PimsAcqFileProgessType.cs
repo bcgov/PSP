@@ -29,7 +29,7 @@ public partial class PimsAcqFileProgessType
     public string Description { get; set; }
 
     /// <summary>
-    /// Indicates if the code value is inactive.
+    /// Indicates if the record is disabled and therefore not selectable or displayed.
     /// </summary>
     [Column("IS_DISABLED")]
     public bool IsDisabled { get; set; }

@@ -1,5 +1,5 @@
 import debounce from 'lodash/debounce';
-import { useCallback, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { LocationBoundaryDataset } from '@/components/common/mapFSM/models';
@@ -42,6 +42,10 @@ const useDraftMarkerSynchronizer = (modifiedProperties: LocationBoundaryDataset[
   useDeepCompareEffect(() => {
     synchronize(modifiedProperties);
   }, [modifiedProperties, synchronize]);
+
+  useEffect(() => {
+    return () => setFilePropertyLocations([]);
+  }, [setFilePropertyLocations]);
 };
 
 export default useDraftMarkerSynchronizer;

@@ -4,7 +4,7 @@ on:
   push:
     branches: [master, dev, test]
   pull_request:
-    branches: [master, dev, test]
+    branches: [master, dev, test, "5.14"]
 
 jobs:
   # JOB to run change detection
@@ -80,4 +80,3 @@ jobs:
           notification-summary: PIMS APP FAILED in ${{env.GIT_BRANCH}} environment
           notification-color: ff0000
           timezone: America/Los_Angeles
-
