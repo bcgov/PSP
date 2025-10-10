@@ -343,12 +343,10 @@ class AdminTools {
       this.page.getByRole("div").filter({ hasText: "Update BCTFA Ownership" })
     ).toBeVisible();
     await expect(
-      this.page
-        .getByRole("div")
-        .filter({
-          hasText:
-            "Upload a csv file, that contains the list of all PIDs currently owned by BCTFA, as provided by LTSA. Uploading this file here will update the BCTFA ownership layer within PIMS to reflect the PIDS listed in the uploaded file.",
-        })
+      this.page.getByRole("div").filter({
+        hasText:
+          "Upload a csv file, that contains the list of all PIDs currently owned by BCTFA, as provided by LTSA. Uploading this file here will update the BCTFA ownership layer within PIMS to reflect the PIDS listed in the uploaded file.",
+      })
     ).toBeVisible();
     await expect(
       this.page
