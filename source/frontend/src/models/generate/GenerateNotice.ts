@@ -34,27 +34,28 @@ export class Api_GenerateNotice {
     this.owners = owners?.map(owner => new Api_GenerateOwner(owner)) ?? [];
 
     // signing member
-    if (exists(signingTeamMember?.person))
+    if (exists(signingTeamMember?.person)) {
       this.signing_member = new Api_GeneratePerson(
         signingTeamMember?.person,
-        signingTeamMember?.teamProfileType.description,
+        signingTeamMember?.teamProfileType?.description,
       );
-    else if (exists(signingTeamMember?.organization))
+    } else if (exists(signingTeamMember?.organization)) {
       this.signing_member = new Api_GenerateOrganization(
         signingTeamMember?.organization,
-        signingTeamMember?.teamProfileType.description,
+        signingTeamMember?.teamProfileType?.description,
       );
+    }
 
     // responsible member
     if (exists(responsibleTeamMember?.person)) {
       this.responsible_member = new Api_GeneratePerson(
         responsibleTeamMember?.person,
-        responsibleTeamMember?.teamProfileType.description,
+        responsibleTeamMember?.teamProfileType?.description,
       );
     } else if (exists(responsibleTeamMember?.organization)) {
       this.responsible_member = new Api_GenerateOrganization(
         responsibleTeamMember?.organization,
-        responsibleTeamMember?.teamProfileType.description,
+        responsibleTeamMember?.teamProfileType?.description,
       );
     }
 

@@ -62,7 +62,6 @@ const NoticeGenerateContainer: React.FunctionComponent<
     responsibleTeamMember: ApiGen_Concepts_AcquisitionFileTeam | null,
     signingTeamMember: ApiGen_Concepts_AcquisitionFileTeam | null,
   ) => {
-    //onGenerate(selectedProperties);
     closeModal();
     onGenerate(selectedOwners, responsibleTeamMember, signingTeamMember);
   };
