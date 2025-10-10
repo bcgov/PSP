@@ -8,7 +8,7 @@ import { ApiGen_Concepts_ManagementActivityInvolvedParty } from '@/models/api/ge
 import { ApiGen_Concepts_ManagementActivityProperty } from '@/models/api/generated/ApiGen_Concepts_ManagementActivityProperty';
 import { ApiGen_Concepts_PropertyMinistryContact } from '@/models/api/generated/ApiGen_Concepts_PropertyMinistryContact';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
-import { exists, isNumber, isValidIsoDateTime } from '@/utils';
+import { exists, isNumber, isValidId, isValidIsoDateTime } from '@/utils';
 import { emptyStringtoNullable, toTypeCodeNullable } from '@/utils/formUtils';
 
 import { ManagementActivitySubTypeModel } from '../models/ManagementActivitySubType';
@@ -233,7 +233,7 @@ export class PropertyActivityFormModel {
         model.requestorOrganization,
       );
 
-      if (model?.requestorPrimaryContactId) {
+      if (isValidId(model.requestorPrimaryContactId)) {
         formModel.requestorOrgPrimaryContact = model.requestorPrimaryContactId.toString();
       }
       if (exists(model.involvedParties) && model.involvedParties.length > 0) {

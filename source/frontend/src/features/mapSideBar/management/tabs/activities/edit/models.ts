@@ -8,7 +8,7 @@ import { ApiGen_Concepts_ManagementActivityProperty } from '@/models/api/generat
 import { ApiGen_Concepts_ManagementFileProperty } from '@/models/api/generated/ApiGen_Concepts_ManagementFileProperty';
 import { ApiGen_Concepts_PropertyMinistryContact } from '@/models/api/generated/ApiGen_Concepts_PropertyMinistryContact';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
-import { exists, isNumber, isValidIsoDateTime } from '@/utils';
+import { exists, isNumber, isValidId, isValidIsoDateTime } from '@/utils';
 import { emptyStringtoNullable, toTypeCodeNullable } from '@/utils/formUtils';
 
 export class ManagementActivityFormModel {
@@ -152,7 +152,7 @@ export class ManagementActivityFormModel {
       model.requestorOrganization,
     );
 
-    if (model?.requestorPrimaryContactId) {
+    if (isValidId(model.requestorPrimaryContactId)) {
       formModel.requestorOrgPrimaryContact = model.requestorPrimaryContactId.toString();
     }
     formModel.invoices = model.invoices?.map(i => ActivityInvoiceFormModel.fromApi(i)) ?? [];
@@ -165,7 +165,6 @@ export class ManagementActivityFormModel {
           y => y.fileId === formModel.managementFileId && y.propertyId === x.propertyId,
         ) ?? null;
 
-      console.log(model.requestorPrimaryContact);
       return {
         id: matchProperty ? matchProperty.id : 0,
         fileId: formModel.managementFileId,
