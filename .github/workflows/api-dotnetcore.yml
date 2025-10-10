@@ -4,7 +4,9 @@ on:
   push:
     branches: [master, dev, test]
   pull_request:
-    branches: [master, dev, test, "5.14"]
+    branches: [master, dev, test]
+  merge_group:
+    types: [checks_requested]
 
 jobs:
   # JOB to run change detection
