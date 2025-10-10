@@ -111,8 +111,7 @@ Then(
 );
 
 Given("I navigate to the Management Files Page", async function () {
-  await this.managementFileDetails.navigateManagementMainMenu();
-  await this.managementFileDetails.navigateManagementFileListView();
+  await this.searchManagementFiles.navigateToSearchManagement();
 });
 
 When("I verify the Management Files List View", async function () {
@@ -141,8 +140,8 @@ When("I verify the Lease and Licences List View", async function () {
 });
 
 When("I verify the Lease and Licences Create Form fields", async function () {
-  await this.navigateCreateLease();
-  await this.verifyCreateLeaseForm();
+  await this.leaseLicence.navigateCreateLease();
+  await this.leaseLicence.verifyCreateLeaseForm();
 });
 
 Then(

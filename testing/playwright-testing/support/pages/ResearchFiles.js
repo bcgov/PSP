@@ -12,7 +12,7 @@ class ResearchFiles {
       "div[data-testid='nav-tooltip-research'] a",
       "div[data-testid='side-tray']"
     );
-    this.page.locator("a[text()='Create a Research File']").click();
+    await this.page.locator("//a[text()='Create a Research File']").click();
   }
 
   async navigateResearchListView() {
@@ -21,7 +21,7 @@ class ResearchFiles {
       "div[data-testid='nav-tooltip-research'] a",
       "div[data-testid='side-tray']"
     );
-    this.page.locator("a[text()='Manage Research Files']").click();
+    await this.page.locator("//a[text()='Manage Research Files']").click();
   }
 
   async verifyCreateResearchFileForm() {
@@ -83,7 +83,7 @@ class ResearchFiles {
     await expect(this.page.locator("h1 button")).toBeVisible();
 
     await expect(
-      this.page.locator("//string[text()='Search by:']")
+      this.page.locator("//strong[text()='Search by:']")
     ).toBeVisible();
     await expect(this.page.locator("#input-regionCode")).toBeVisible();
     await expect(this.page.locator("#input-researchSearchBy")).toBeVisible();
@@ -150,7 +150,7 @@ class ResearchFiles {
 
     const researchFileCount = await this.page.locator(
       "div[data-testid='researchFilesTable'] div[class='tbody'] div[class='tr-wrapper']"
-    );
+    ).count();
     expect(researchFileCount).toBeGreaterThan(0);
 
     await expect(this.page.getByTestId("input-page-size")).toBeVisible();

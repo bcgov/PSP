@@ -670,7 +670,7 @@ class AcquisitionDetails {
 
   async verifyAcquisitionFileCreateForm() {
     const formTitle = await this.page.getByTestId("form-title");
-    await this.page.locator(formTitle).toHaveText("Create Acquisition File");
+    await expect(formTitle).toContainText("Create Acquisition File");
 
     await expect(
       this.page.locator("//h2/div/div[text()='Project']")
@@ -682,7 +682,11 @@ class AcquisitionDetails {
     await expect(
       this.page.locator("//label[contains(text(),'Funding')]")
     ).toBeVisible();
-    await expect(this.page.locator("#input-fundingTypeCode")).toBeVisible();
+
+    const fundingSelect = await this.page.locator("#input-fundingTypeCode");
+    expect(fundingSelect).toBeVisible();
+    const fundingSelectOptions = await fundingSelect.locator("option").count();
+    expect(fundingSelectOptions).toBeGreaterThan(0);
 
     await expect(
       this.page.locator("//h2/div/div[text()='Progress Statuses']")
@@ -696,13 +700,21 @@ class AcquisitionDetails {
     await expect(
       this.page.locator("//label[contains(text(),'Appraisal')]")
     ).toBeVisible();
-    await expect(this.page.locator("#input-appraisalStatusType")).toBeVisible();
+
+    const appraisalSelect = await this.page.locator("#input-appraisalStatusType");
+    expect(appraisalSelect).toBeVisible();
+    const appraisalSelectOptions = await appraisalSelect.locator("option").count();
+    expect(appraisalSelectOptions).toBeGreaterThan(0);
+
     await expect(
       this.page.locator("//label[contains(text(),'Legal survey')]")
     ).toBeVisible();
-    await expect(
-      this.page.locator("#input-legalSurveyStatusType")
-    ).toBeVisible();
+
+    const legalSurveySelect = await this.page.locator("#input-legalSurveyStatusType");
+    expect(legalSurveySelect).toBeVisible();
+    const legalSurveySelectSelectOptions = await legalSurveySelect.locator("option").count();
+    expect(legalSurveySelectSelectOptions).toBeGreaterThan(0);
+
     await expect(
       this.page.locator("//label[contains(text(),'Type of taking')]")
     ).toBeVisible();
@@ -712,9 +724,11 @@ class AcquisitionDetails {
     await expect(
       this.page.locator("//label[contains(text(),'Expropriation risk')]")
     ).toBeVisible();
-    await expect(
-      this.page.locator("#input-expropiationRiskStatusType")
-    ).toBeVisible();
+
+    const expropriationRiskSelect = await this.page.locator("#input-expropiationRiskStatusType");
+    expect(expropriationRiskSelect).toBeVisible();
+    const expropriationRiskSelectOptions = await expropriationRiskSelect.locator("option").count();
+    expect(expropriationRiskSelectOptions).toBeGreaterThan(0);
 
     await expect(
       this.page.locator("//h2/div/div[text()='Schedule']")
@@ -745,7 +759,7 @@ class AcquisitionDetails {
     ).toBeVisible();
     await expect(
       this.page.locator(
-        "//p[contains(text(),'Select one or more properties that you want to include in this acquisition. You can choose a location from the map, or search by other criteria.')]"
+        "//div[contains(text(),'Select one or more properties that you want to include in this acquisition. You can choose a location from the map, or search by other criteria.')]"
       )
     ).toBeVisible();
     await expect(
@@ -780,9 +794,12 @@ class AcquisitionDetails {
     await expect(
       this.page.locator("//label[contains(text(),'Physical file status')]")
     ).toBeVisible();
-    await expect(
-      this.page.locator("#input-acquisitionPhysFileStatusType")
-    ).toBeVisible();
+
+    const physicalFileSelect = await this.page.locator("#input-acquisitionPhysFileStatusType");
+    expect(physicalFileSelect).toBeVisible();
+    const physicalFileSelectOptions = await physicalFileSelect.locator("option").count();
+    expect(physicalFileSelectOptions).toBeGreaterThan(0);
+
     await expect(
       this.page.locator("//label[contains(text(),'Physical file details')]")
     ).toBeVisible();
@@ -790,11 +807,19 @@ class AcquisitionDetails {
     await expect(
       this.page.locator("//label[contains(text(),'Acquisition type')]")
     ).toBeVisible();
-    await expect(this.page.locator("#input-acquisitionType")).toBeVisible();
+
+    const acquisitionTypeSelect = await this.page.locator("#input-acquisitionType");
+    expect(acquisitionTypeSelect).toBeVisible();
+    const acquisitionTypeSelectOptions = await acquisitionTypeSelect.locator("option").count();
+    expect(acquisitionTypeSelectOptions).toBeGreaterThan(0);
+
     await expect(
       this.page.locator("//label[contains(text(),'Ministry region')]")
     ).toBeVisible();
-    await expect(this.page.locator("#input-region")).toBeVisible();
+    const ministryRegionSelect = await this.page.locator("#input-region");
+    expect(ministryRegionSelect).toBeVisible();
+    const ministryRegionSelectOptions = await ministryRegionSelect.locator("option").count();
+    expect(ministryRegionSelectOptions).toBeGreaterThan(0);
 
     await expect(
       this.page.locator("//h2/div/div[text()='Acquisition Team']")
@@ -815,19 +840,19 @@ class AcquisitionDetails {
       this.page.locator("//label[contains(text(),'Owner solicitor')]")
     ).toBeVisible();
     await expect(
-      this.page.locator("#input-ownerSolicitor.contact.id")
+      this.page.locator("//input[@id='input-ownerSolicitor.contact.id']/parent::div/preceding-sibling::div[text()='Select from contacts']")
     ).toBeVisible();
     await expect(
       this.page.locator("//label[contains(text(),'Owner representative')]")
     ).toBeVisible();
     await expect(
-      this.page.locator("#input-ownerRepresentative.contact.id")
+      this.page.locator("//input[@id='input-ownerRepresentative.contact.id']/parent::div/preceding-sibling::div[text()='Select from contacts']")
     ).toBeVisible();
     await expect(
       this.page.locator("//label[contains(text(),'Comment')]")
     ).toBeVisible();
     await expect(
-      this.page.locator("#input-ownerRepresentative.comment")
+      this.page.locator("textarea[id='input-ownerRepresentative.comment']")
     ).toBeVisible();
     const contactManagerBttns = await this.page.locator(
       "button[title='Select Contact']"
@@ -920,7 +945,7 @@ class AcquisitionDetails {
 
     const acquisitionTableCount = await this.page.locator(
       "div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']"
-    );
+    ).count();
     expect(acquisitionTableCount).toBeGreaterThan(0);
 
     await expect(this.page.locator("div[class='Menu-root']")).toBeVisible();

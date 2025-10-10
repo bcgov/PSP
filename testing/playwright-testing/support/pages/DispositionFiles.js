@@ -12,7 +12,7 @@ class DispositionFiles {
       "div[data-testid='nav-tooltip-disposition'] a",
       "div[data-testid='side-tray']"
     );
-    this.page.locator("a[text()='Create a Disposition File']").click();
+    await this.page.locator("//a[text()='Create a Disposition File']").click();
   }
 
   async navigateDispositionListView() {
@@ -21,7 +21,7 @@ class DispositionFiles {
       "div[data-testid='nav-tooltip-disposition'] a",
       "div[data-testid='side-tray']"
     );
-    this.page.locator("a[text()='Manage Disposition Files']").click();
+    await this.page.locator("//a[text()='Manage Disposition Files']").click();
   }
 
   async verifyCreateDispositionForm() {
@@ -55,11 +55,11 @@ class DispositionFiles {
     ).toBeVisible();
     await expect(
       this.page.locator(
-        "//div[contains(text(),'Select one or more properties that you want to include in this disposition file. You can choose a location from the map, or search by other criteria.')]"
+        "//div[contains(text(),'Select one or more properties that you want to include in this disposition. You can choose a location from the map, or search by other criteria.')]"
       )
     ).toBeVisible();
     await expect(
-      this.page.locator("//h2/div/div[text()='Selected Properties']")
+      this.page.locator("//h2/div/div/div/div[text()='Selected Properties']")
     ).toBeVisible();
     await expect(
       this.page.locator("//div[contains(text(),'New workflow')]")
@@ -101,7 +101,7 @@ class DispositionFiles {
     ).toBeVisible();
     await expect(this.page.locator("#input-dispositionTypeCode")).toBeVisible();
     await expect(
-      this.page.locator("//label[contains(text(),'Initiating document')]")
+      this.page.getByText("Initiating document:")
     ).toBeVisible();
     await expect(
       this.page.locator("#input-initiatingDocumentTypeCode")
@@ -145,12 +145,12 @@ class DispositionFiles {
 
   async verifyDispositionListView() {
     await expect(
-      this.page.locator("//span[text()='Dipsosition Files']")
+      this.page.locator("//span[text()='Disposition Files']")
     ).toBeVisible();
     await expect(this.page.locator("h1 button")).toBeVisible();
 
     await expect(
-      this.page.locator("//string[text()='Search by:']")
+      this.page.locator("//strong[text()='Search by:']")
     ).toBeVisible();
     await expect(this.page.locator("#input-searchBy")).toBeVisible();
     await expect(this.page.locator("#input-address")).toBeVisible();
@@ -205,7 +205,7 @@ class DispositionFiles {
 
     const dispositionFileCount = await this.page.locator(
       "div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']"
-    );
+    ).count();
     expect(dispositionFileCount).toBeGreaterThan(0);
 
     await expect(this.page.getByTestId("input-page-size")).toBeVisible();

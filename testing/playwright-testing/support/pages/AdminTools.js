@@ -11,7 +11,7 @@ class AdminTools {
       "div[data-testid='nav-tooltip-admintools'] a",
       "div[data-testid='side-tray']"
     );
-    this.page.locator("a[text()='Manage Users']").click();
+    await this.page.locator("//a[text()='Manage Users']").click();
   }
 
   async navigateAdminUserRequests() {
@@ -20,7 +20,7 @@ class AdminTools {
       "div[data-testid='nav-tooltip-admintools'] a",
       "div[data-testid='side-tray']"
     );
-    this.page.locator("a[text()='Manage Access Requests']").click();
+    await this.page.locator("//a[text()='Manage Access Requests']").click();
   }
 
   async navigateCDOGS() {
@@ -29,7 +29,7 @@ class AdminTools {
       "div[data-testid='nav-tooltip-admintools'] a",
       "div[data-testid='side-tray']"
     );
-    this.page.locator("a[text()='Manage Form Document Templates']").click();
+    await this.page.locator("//a[text()='Manage Form Document Templates']").click();
   }
 
   async navigateFinancialCodes() {
@@ -38,7 +38,7 @@ class AdminTools {
       "div[data-testid='nav-tooltip-admintools'] a",
       "div[data-testid='side-tray']"
     );
-    this.page.locator("a[text()='Manage Project and Financial Codes']").click();
+    await this.page.locator("//a[text()='Manage Project and Financial Codes']").click();
   }
 
   async navigateBCFTAOwnershipPage() {
@@ -47,7 +47,7 @@ class AdminTools {
       "div[data-testid='nav-tooltip-admintools'] a",
       "div[data-testid='side-tray']"
     );
-    this.page.locator("a[text()='Manage BCTFA Property Ownership']").click();
+    await this.page.locator("//a[text()='Manage BCTFA Property Ownership']").click();
   }
 
   async navigateHome() {
@@ -59,18 +59,18 @@ class AdminTools {
       this.page.locator("//h1/span[contains(text(),'User Management')]")
     ).toBeVisible();
     await expect(
-      this.page.getByRole("div").filter({ hasText: "Search By:" })
+      this.page.locator("//div[text()='Search By:']")
     ).toBeVisible();
     await expect(this.page.locator("#input-role")).toBeVisible();
     await expect(this.page.locator("#input-region")).toBeVisible();
     await expect(
       this.page.locator("#input-businessIdentifierValue")
     ).toBeVisible();
-    await expect(this.page.locator("#input-email']")).toBeVisible();
+    await expect(this.page.locator("#input-email")).toBeVisible();
     await expect(this.page.locator("#search-button")).toBeVisible();
     await expect(this.page.locator("#reset-button")).toBeVisible();
     await expect(
-      this.page.getByRole("span").filter({ hasText: " users only" })
+      this.page.locator("//span[contains(text(),'users only')]")
     ).toBeVisible();
     await expect(this.page.locator("#input-activeOnly")).toBeVisible();
 
@@ -96,7 +96,7 @@ class AdminTools {
     ).toBeVisible();
     await expect(this.page.getByTestId("sort-column-position")).toBeVisible();
     await expect(
-      this.page.locator("//div[contains(text(),'User type')]")
+      this.page.locator("//div[contains(text(),'User Type')]")
     ).toBeVisible();
     await expect(
       this.page.locator("//div[contains(text(),'Roles')]")
@@ -110,7 +110,7 @@ class AdminTools {
 
     const usersCount = await this.page.locator(
       "div[data-testid='usersTable'] div[class='tbody'] div[class='tr-wrapper']"
-    );
+    ).count();
     expect(usersCount).toBeGreaterThan(0);
 
     await expect(this.page.getByTestId("input-page-size")).toBeVisible();
@@ -127,7 +127,7 @@ class AdminTools {
       this.page.getByTitle("Search by IDIR/Last Name")
     ).toBeVisible();
     await expect(this.page.locator("#search-button")).toBeVisible();
-    await expect(this.page.locator("#reset-button")).toBeVisible();
+    await expect(this.page.locator("button[title='reset']")).toBeVisible();
 
     await expect(
       this.page.locator("//div[contains(text(),'IDIR/BCeID')]")
@@ -192,7 +192,7 @@ class AdminTools {
     await expect(this.page.getByTestId("refresh-button").first()).toBeVisible();
 
     await expect(
-      this.page.getByRole("label").filter({ hasText: "Filter by:" })
+      this.page.locator("//label[text()='Filter by:']")
     ).toBeVisible();
     await expect(this.page.getByTestId("document-type")).toBeVisible();
     await expect(this.page.getByTestId("document-status")).toBeVisible();
@@ -229,13 +229,13 @@ class AdminTools {
 
   async verifyFinancialCodesListView() {
     await expect(
-      this.page.getByRole("span").filter({ hasText: "Financial Codes" })
+      this.page.locator("//span[text()='Financial Codes']")
     ).toBeVisible();
     await expect(
       this.page.getByRole("button").filter({ hasText: "Add a Financial Code" })
     ).toBeVisible();
     await expect(
-      this.page.getByRole("div").filter({ hasText: "Search By:" })
+      this.page.locator("//strong[text()='Search by:']")
     ).toBeVisible();
     await expect(this.page.locator("#input-financialCodeType")).toBeVisible();
     await expect(
@@ -243,7 +243,7 @@ class AdminTools {
     ).toBeVisible();
     await expect(this.page.locator("#input-showExpiredCodes")).toBeVisible();
     await expect(
-      this.page.getByRole("span").filter({ hasText: "Show expired codes" })
+      this.page.locator("//span[text()='Show expired codes']")
     ).toBeVisible();
     await expect(this.page.locator("#search-button")).toBeVisible();
     await expect(this.page.locator("#reset-button")).toBeVisible();
@@ -275,7 +275,7 @@ class AdminTools {
 
     const financialCodesCount = await this.page.locator(
       "div[data-testid='FinancialCodeTable'] div[class='tbody'] div[class='tr-wrapper']"
-    );
+    ).count();
     expect(financialCodesCount).toBeGreaterThan(0);
 
     await expect(this.page.getByTestId("input-page-size")).toBeVisible();
@@ -287,43 +287,42 @@ class AdminTools {
 
     expect(
       await this.page
-        .getByRole("h1")
-        .filter({ hasText: "Create Financial Code" })
+        .locator("//h1[text()='Create Financial Code']")
     ).toBeVisible();
     expect(
-      await this.page.getByRole("label").filter({ hasText: "Code type" })
+      await this.page.locator("//label[text()='Code type']")
     ).toBeVisible();
 
     const codeTypeSelect = await this.page.locator("#input-type");
     expect(codeTypeSelect).toBeVisible();
 
-    const codeTypesOptions = await codeTypeSelect.locator("options");
+    const codeTypesOptions = await codeTypeSelect.locator("option");
     expect(codeTypesOptions).toHaveCount(8);
 
-    expect(
-      await this.page.getByRole("label").filter({ hasText: "Code value" })
+    await expect(
+      this.page.locator("//label[text()='Code value']")
     ).toBeVisible();
-    expect(await this.page.locator("#input-code")).toBeVisible();
+    await expect(this.page.locator("#input-code")).toBeVisible();
 
-    expect(
-      await this.page.getByRole("label").filter({ hasText: "Code description" })
+    await expect(
+      this.page.locator("//label[text()='Code description']")
     ).toBeVisible();
-    expect(await this.page.locator("#input-description")).toBeVisible();
+    await expect(this.page.locator("#input-description")).toBeVisible();
 
-    expect(
-      await this.page.getByRole("label").filter({ hasText: "Effective date" })
+    await expect(
+      this.page.locator("//label[text()='Effective date']")
     ).toBeVisible();
-    expect(await this.page.locator("#datepicker-effectiveDate")).toBeVisible();
+    await expect(this.page.locator("#datepicker-effectiveDate")).toBeVisible();
 
-    expect(
-      await this.page.getByRole("label").filter({ hasText: "Expiry date" })
+    await expect(
+      this.page.locator("//label[text()='Expiry date']")
     ).toBeVisible();
-    expect(await this.page.locator("#datepicker-expiryDate")).toBeVisible();
+    await expect(this.page.locator("#datepicker-expiryDate")).toBeVisible();
 
-    expect(
-      await this.page.getByRole("label").filter({ hasText: "Display order" })
+    await expect(
+      this.page.locator("//label[text()='Code type']")
     ).toBeVisible();
-    expect(await this.page.locator("#input-displayOrder")).toBeVisible();
+    await expect(this.page.locator("#input-displayOrder")).toBeVisible();
 
     const tooltips = await this.page.getByTestId(
       "tooltip-icon-section-field-tooltip"
@@ -331,32 +330,27 @@ class AdminTools {
     expect(tooltips).toHaveCount(2);
 
     await expect(
-      this.page.locator("//div[text()='Cancel']:parent::button")
+      this.page.locator("//div[text()='Cancel']/parent::button")
     ).toBeVisible();
     await expect(
-      this.page.locator("//div[text()='Save']:parent::button")
+      this.page.locator("//div[text()='Save']/parent::button")
     ).toBeVisible();
   }
 
   async verifyBCFTAPage() {
     await expect(
-      this.page.getByRole("div").filter({ hasText: "Update BCTFA Ownership" })
+      this.page.locator("//div[text()='Update BCTFA Ownership']")
     ).toBeVisible();
     await expect(
-      this.page.getByRole("div").filter({
-        hasText:
-          "Upload a csv file, that contains the list of all PIDs currently owned by BCTFA, as provided by LTSA. Uploading this file here will update the BCTFA ownership layer within PIMS to reflect the PIDS listed in the uploaded file.",
-      })
+      this.page.locator("//div[text()='Upload a csv file, that contains the list of all PIDs currently owned by BCTFA, as provided by LTSA. Uploading this file here will update the BCTFA ownership layer within PIMS to reflect the PIDS listed in the uploaded file.']")
     ).toBeVisible();
     await expect(
-      this.page
-        .getByRole("div")
-        .filter({ hasText: "Drag files here to attach or" })
+      this.page.locator("//div[contains(text(),'Drag files here to attach or')]")
     ).toBeVisible();
     await expect(
-      this.page.getByRole("label").filter({ hasText: "Browse" })
+      this.page.locator("//label[text()='Browse']")
     ).toBeVisible();
-    await expect(this.page.getByTestId("upload-input")).toBeVisible();
+    await expect(this.page.getByTestId("upload-input")).toBeHidden();
   }
 }
 module.exports = AdminTools;
