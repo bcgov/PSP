@@ -121,10 +121,13 @@ describe('ManagementActivityEditForm component', () => {
   });
 
   it('validates required fields before submitting the form', async () => {
+    vi.spyOn(console, 'error').mockImplementation(() => {});
     await setup();
     await waitForEffects();
 
-    await act(async () => userEvent.paste(getByName('requestedSource'), 'Lorem Ipsum'));
+    await act(async () => {
+      userEvent.type(getByName('completionDate'), '2005-03-15', { delay: 100 });
+    });
     const save = screen.getByText('Save');
     await act(async () => userEvent.click(save));
 
