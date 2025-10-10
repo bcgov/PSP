@@ -13,8 +13,9 @@ import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
 import { ModalContext } from '@/contexts/modalContext';
 import { PropertyForm } from '@/features/mapSideBar/shared/models';
 import AddPropertiesGuide from '@/features/mapSideBar/shared/update/properties/AddPropertiesGuide';
+import useDraftMarkerSynchronizer from '@/hooks/useDraftMarkerSynchronizer';
 import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
-import { exists, firstOrNull } from '@/utils';
+import { exists, featuresetToLocationBoundaryDataset, firstOrNull } from '@/utils';
 import { addPropertiesToCurrentFile } from '@/utils/propertyUtils';
 
 import { LeaseFormModel } from '../../models';
@@ -28,12 +29,17 @@ interface LeasePropertySelectorProp {
 export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelectorProp> = ({
   formikProps,
 }) => {
+  const { values } = formikProps;
   const localRef = useRef<FormikProps<LeaseFormModel>>(null);
 
   const { setModalContent, setDisplayModal } = useContext(ModalContext);
 
   const { selectedFeatures, processCreation, mapLocationFeatureDataset, prepareForCreation } =
     useMapStateMachine();
+
+  useDraftMarkerSynchronizer(
+    values.properties.map(p => featuresetToLocationBoundaryDataset(p.property.toFeatureDataset())),
+  );
 
   const { featuresWithAddresses } = useFeatureDatasetsWithAddresses(selectedFeatures ?? []);
 

@@ -11,8 +11,9 @@ import { Section } from '@/components/common/Section/Section';
 import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
 import SelectedPropertyHeaderRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyHeaderRow';
 import SelectedPropertyRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyRow';
+import useDraftMarkerSynchronizer from '@/hooks/useDraftMarkerSynchronizer';
 import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
-import { exists, firstOrNull } from '@/utils';
+import { exists, featuresetToLocationBoundaryDataset, firstOrNull } from '@/utils';
 import { addPropertiesToCurrentFile } from '@/utils/propertyUtils';
 
 import { PropertyForm } from '../../shared/models';
@@ -31,6 +32,12 @@ const DispositionPropertiesSubForm: React.FunctionComponent<DispositionPropertie
 
   const { selectedFeatures, processCreation, mapLocationFeatureDataset, prepareForCreation } =
     useMapStateMachine();
+
+  useDraftMarkerSynchronizer(
+    formikProps.values.fileProperties.map(p =>
+      featuresetToLocationBoundaryDataset(p.toFeatureDataset()),
+    ),
+  );
 
   const selectedFeatureDataset = useMemo<SelectedFeatureDataset>(() => {
     return {

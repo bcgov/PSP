@@ -271,7 +271,7 @@ export class FormLeaseProperty {
   areaUnitTypeCode: string;
   displayOrder: number | null;
 
-  private constructor(leaseId?: number | null) {
+  constructor(leaseId?: number | null) {
     this.leaseId = leaseId ?? null;
     this.landArea = 0;
     this.areaUnitTypeCode = ApiGen_CodeTypes_AreaUnitTypes.M2;
