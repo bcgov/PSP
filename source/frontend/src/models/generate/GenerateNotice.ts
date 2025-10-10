@@ -8,6 +8,7 @@ import { ApiGen_Concepts_AcquisitionFileOwner } from '../api/generated/ApiGen_Co
 import { ApiGen_Concepts_AcquisitionFileTeam } from '../api/generated/ApiGen_Concepts_AcquisitionFileTeam';
 import { ApiGen_Concepts_Project } from '../api/generated/ApiGen_Concepts_Project';
 import { PMBC_FullyAttributed_Feature_Properties } from '../layers/parcelMapBC';
+import { Api_GenerateContact, Api_GenerateOrganization } from './GenerateOrganization';
 import { Api_GenerateOwner } from './GenerateOwner';
 import { Api_GeneratePerson } from './GeneratePerson';
 import { Api_GenerateProject } from './GenerateProject';
@@ -16,8 +17,8 @@ export class Api_GenerateNotice {
   date_generated: string;
 
   owners: Api_GenerateOwner[];
-  responsible_member: Api_GeneratePerson;
-  signing_member: Api_GeneratePerson;
+  responsible_member: Api_GenerateContact;
+  signing_member: Api_GenerateContact;
   project: Api_GenerateProject;
   properties: Api_GenerateProperty[];
 
@@ -31,14 +32,33 @@ export class Api_GenerateNotice {
     this.date_generated = moment().format('DD/M/YYYY');
     this.project = new Api_GenerateProject(project ?? null);
     this.owners = owners?.map(owner => new Api_GenerateOwner(owner)) ?? [];
-    this.signing_member = new Api_GeneratePerson(
-      signingTeamMember?.person,
-      signingTeamMember?.teamProfileType.description,
-    );
-    this.responsible_member = new Api_GeneratePerson(
-      responsibleTeamMember?.person,
-      responsibleTeamMember?.teamProfileType.description,
-    );
+
+    // signing member
+    if (exists(signingTeamMember?.person)) {
+      this.signing_member = new Api_GeneratePerson(
+        signingTeamMember?.person,
+        signingTeamMember?.teamProfileType?.description,
+      );
+    } else if (exists(signingTeamMember?.organization)) {
+      this.signing_member = new Api_GenerateOrganization(
+        signingTeamMember?.organization,
+        signingTeamMember?.teamProfileType?.description,
+      );
+    }
+
+    // responsible member
+    if (exists(responsibleTeamMember?.person)) {
+      this.responsible_member = new Api_GeneratePerson(
+        responsibleTeamMember?.person,
+        responsibleTeamMember?.teamProfileType?.description,
+      );
+    } else if (exists(responsibleTeamMember?.organization)) {
+      this.responsible_member = new Api_GenerateOrganization(
+        responsibleTeamMember?.organization,
+        responsibleTeamMember?.teamProfileType?.description,
+      );
+    }
+
     this.properties = properties.filter(exists).map(p => {
       const parcelMapFeatures =
         (
