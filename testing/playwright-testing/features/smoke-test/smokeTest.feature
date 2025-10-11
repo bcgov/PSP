@@ -67,23 +67,24 @@ Scenario: Contact Manager Section
 Scenario: Admin Users Section
     Given I navigate to the Admin Users Page
     When I verify the Admin Users List View
-    And I verify the Admin Users Create Form fields
-    Then The Admin Users section is rendered successfully
+    And I verify the Manage Users request list view
+    Then The Admin Tools section is rendered successfully
 
 Scenario: Admin CDOGS Templates Section
     Given I navigate to the Admin CDOGS Templates Page
     When I verify the Admin CDOGS Templates List View
-    Then The Admin CDOGS Templates section is rendered successfully
+    Then The Admin Tools section is rendered successfully
 
 Scenario: Admin Financial Codes Section
     Given I navigate to the Admin Financial Codes Page
     When I verify the Admin Financial Codes List View
     And I verify the Admin Financial Codes Create Form fields
-    Then The Admin Financial Codes section is rendered successfully
+    Then The Admin Tools section is rendered successfully
 
 Scenario: Admin Manage BCFTA Property Ownership Section
-    Given I navigate to the Admin Agencies Page
-    Then The Admin Agencies section is rendered successfully
+    Given I navigate to the Admin BCFTA Ownership Page
+    When I verify Admin BCFTA Ownership Page
+    Then The Admin Tools section is rendered successfully
 
 
 

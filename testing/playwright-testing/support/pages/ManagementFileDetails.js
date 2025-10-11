@@ -208,7 +208,33 @@ class ManagementFileDetails {
     await expect(this.page.locator("#input-fundingTypeCode")).toBeVisible();
 
     //Properties
-    await this.sharedFileProperties.verifyPropertiesToIncludeInFileInitForm();
+    await expect(
+      this.page.locator(
+        "//h2/div/div[text()='Properties to include in this file:']"
+      )
+    ).toBeVisible();
+    await expect(
+      this.page.locator(
+        "//div[contains(text(),'Select one or more properties that you want to include in this disposition. You can choose a location from the map, or search by other criteria.')]"
+      )
+    ).toBeVisible();
+    await expect(
+      this.page.locator("//h2/div/div[text()='Selected properties']")
+    ).toBeVisible();
+    await expect(
+      this.page.locator("//div[contains(text(),'New workflow')]")
+    ).toBeVisible();
+    await expect(
+      this.page.locator("//div[contains(text(),'Identifier')]")
+    ).toBeVisible();
+    await expect(
+      this.page.locator(
+        "//div[contains(text(),'Provide a descriptive name for this land')]"
+      )
+    ).toBeVisible();
+    await expect(
+      this.page.locator("//span[contains(text(),'No Properties selected')]")
+    ).toBeVisible();
 
     //Management Details
     await expect(

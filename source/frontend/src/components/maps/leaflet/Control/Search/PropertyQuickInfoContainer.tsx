@@ -250,7 +250,7 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
   return (
     <StyledContainer isMinimized={isMinimized} isVisible={isVisible} data-testid="quick-info">
       <LoadingBackdrop show={isLoading} parentScreen />
-      <StyledHeaderRow noGutters>
+      <StyledHeaderRow noGutters data-testid="quick-info-header">
         <Col xs="1">
           {showViewPropertyInfo && (
             <TooltipWrapper
@@ -267,11 +267,11 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
           <MoreOptionsMenu
             variant="dark"
             options={menuOptions}
-            data-testid="quick-info-more-options"
+            dataTestid="quick-info-more-options"
           />
         </Col>
         <Col xs="1"></Col>
-        <Col xs="6" className="text-center" data-testid="quick-info-header">
+        <Col xs="6" className="text-center">
           Property
         </Col>
         <Col xs="1">

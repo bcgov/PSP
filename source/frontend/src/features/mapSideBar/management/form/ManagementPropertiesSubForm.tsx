@@ -93,13 +93,13 @@ const ManagementPropertiesSubForm: React.FunctionComponent<ManagementPropertiesS
   return (
     <StyledComponentWrapper>
       <div className="py-2">
-        Select one or more properties that you want to include in this disposition. You can choose a
-        location from the map, or search by other criteria.
+        Select one or more properties that you want to include in this management file. You can
+        choose a location from the map, or search by other criteria.
       </div>
 
       <FieldArray name="fileProperties">
         {({ remove }) => (
-          <Section header="Selected properties">
+          <Section header="Selected Properties">
             <AddPropertiesGuide />
             {exists(selectedFeatureDataset?.parcelFeature) && (
               <StyledButtonWrapper>

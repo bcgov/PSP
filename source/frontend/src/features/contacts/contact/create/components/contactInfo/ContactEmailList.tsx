@@ -39,9 +39,13 @@ export const ContactEmailList: React.FunctionComponent<IContactEmailList> = ({
               key={`${field}.${index}`}
               namespace={`${field}.${index}`}
               onRemove={onRemove(array, index, arrayHelpers)}
+              index={index}
             />
           ))}
-          <LinkButton onClick={() => arrayHelpers.push(new IEditableContactMethodForm())}>
+          <LinkButton
+            onClick={() => arrayHelpers.push(new IEditableContactMethodForm())}
+            data-testid="add-email-button"
+          >
             + Add email address
           </LinkButton>
         </>

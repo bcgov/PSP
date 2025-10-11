@@ -12,7 +12,9 @@ class LeaseLicence {
       "div[data-testid='nav-tooltip-leases&licences'] a",
       "div[data-testid='side-tray']"
     );
-    this.page.locator("a[text()='Create a Lease/Licence File']").click();
+    await this.page
+      .locator("//a[text()='Create a Lease/Licence File']")
+      .click();
   }
 
   async navigateLeaseListView() {
@@ -21,7 +23,7 @@ class LeaseLicence {
       "div[data-testid='nav-tooltip-leases&licences'] a",
       "div[data-testid='side-tray']"
     );
-    this.page.locator("a[text()='Manage Lease/Licence Files']").click();
+    await this.page.locator("//a[text()='Manage Lease/Licence Files']").click();
   }
 
   async verifyCreateLeaseForm() {
@@ -77,7 +79,7 @@ class LeaseLicence {
       this.page.locator("//div[contains(text(),'New workflow')]")
     ).toBeVisible();
     await expect(
-      this.page.locator("//h2/div/div[text()='Selected Properties']")
+      this.page.locator("//h2/div/div/div/div[text()='Selected Properties']")
     ).toBeVisible();
     await expect(
       this.page.locator("//div[contains(text(),'Identifier')]")
@@ -167,80 +169,67 @@ class LeaseLicence {
 
   async verifyLeaseListView() {
     await expect(
-      this.page.locator("//span[text()='Research Files']")
+      this.page.locator("//span[text()='Leases & Licences']")
     ).toBeVisible();
     await expect(this.page.locator("h1 button")).toBeVisible();
 
     await expect(
-      this.page.locator("//string[text()='Search by:']")
+      this.page.locator("//strong[text()='Search by:']")
     ).toBeVisible();
-    await expect(this.page.locator("#input-regionCode")).toBeVisible();
-    await expect(this.page.locator("#input-researchSearchBy")).toBeVisible();
-    await expect(this.page.locator("#input-pid")).toBeVisible();
+    await expect(this.page.locator("#input-searchBy")).toBeVisible();
+    await expect(this.page.locator("#input-lFileNo")).toBeVisible();
+    await expect(this.page.locator("#properties-selector_input")).toBeVisible();
+    await expect(this.page.locator("#search_input")).toBeVisible();
+    await expect(this.page.locator("#status-selector")).toBeVisible();
+    await expect(this.page.locator("#input-tenantName")).toBeVisible();
     await expect(
-      this.page.locator("#input-researchFileStatusTypeCode")
-    ).toBeVisible();
-    await expect(this.page.locator("#input-roadOrAlias")).toBeVisible();
-    await expect(this.page.locator("#input-createOrUpdateRange")).toBeVisible();
-    await expect(
-      this.page.locator("#datepicker-updatedOnStartDate")
+      this.page.locator("//label[contains(text(),'Expiry date')]")
     ).toBeVisible();
     await expect(
-      this.page.locator("#datepicker-updatedOnEndDate")
+      this.page.locator("#datepicker-expiryStartDate")
     ).toBeVisible();
-    await expect(this.page.locator("#input-createOrUpdateBy")).toBeVisible();
-    await expect(this.page.locator("#input-appLastUpdateUserid")).toBeVisible();
+    await expect(this.page.locator("#input-regionType")).toBeVisible();
+    await expect(this.page.locator("#datepicker-expiryEndDate")).toBeVisible();
+    await expect(this.page.locator("#input-details")).toBeVisible();
     await expect(this.page.locator("#search-button")).toBeVisible();
     await expect(this.page.locator("#reset-button")).toBeVisible();
 
     await expect(
-      this.page.locator("//div[contains(text(),'File #')]")
+      this.page.locator("//div[contains(text(),'L-File Number')]")
+    ).toBeVisible();
+    await expect(this.page.getByTestId("sort-column-lFileNo")).toBeVisible();
+    await expect(
+      this.page.locator("//div[contains(text(),'Expiry Date')]")
+    ).toBeVisible();
+    await expect(this.page.getByTestId("sort-column-expiryDate")).toBeVisible();
+    await expect(
+      this.page.locator("//div[contains(text(),'Program Name')]")
     ).toBeVisible();
     await expect(
-      this.page.getByTestId("sort-column-rfileNumber")
+      this.page.getByTestId("sort-column-programName")
     ).toBeVisible();
     await expect(
-      this.page.locator("//div[contains(text(),'File name')]")
-    ).toBeVisible();
-    await expect(this.page.getByTestId("sort-column-name")).toBeVisible();
-    await expect(
-      this.page.locator("//div[contains(text(),'MOTT region')]")
+      this.page.locator("//div[contains(text(),'Tenant Names')]")
     ).toBeVisible();
     await expect(
-      this.page.locator("//div[contains(text(),'Created by')]")
+      this.page.locator("//div[contains(text(),'Properties')]")
     ).toBeVisible();
     await expect(
-      this.page.getByTestId("sort-column-appCreateUserid")
-    ).toBeVisible();
-    await expect(
-      this.page.locator("//div[contains(text(),'Created date')]")
-    ).toBeVisible();
-    await expect(
-      this.page.getByTestId("sort-column-appCreateTimestamp")
-    ).toBeVisible();
-    await expect(
-      this.page.locator("//div[contains(text(),'Last updated by')]")
-    ).toBeVisible();
-    await expect(
-      this.page.getByTestId("sort-column-appLastUpdateUserid")
-    ).toBeVisible();
-    await expect(
-      this.page.locator("//div[contains(text(),'Last updated date')]")
-    ).toBeVisible();
-    await expect(
-      this.page.getByTestId("sort-column-appLastUpdateTimestamp")
+      this.page.locator("//div[contains(text(),'Historical File #')]")
     ).toBeVisible();
     await expect(
       this.page.locator("//div[contains(text(),'Status')]")
     ).toBeVisible();
     await expect(
-      this.page.getByTestId("sort-column-researchFileStatusTypeCode")
+      this.page.getByTestId("sort-column-fileStatusTypeCode")
     ).toBeVisible();
 
-    const researchFileCount = await this.page.locator(
-      "div[data-testid='researchFilesTable'] div[class='tbody'] div[class='tr-wrapper']"
-    );
-    expect(researchFileCount).toBeGreaterThan(0);
+    const leasesFileCount = await this.page
+      .locator(
+        "div[data-testid='leasesTable'] div[class='tbody'] div[class='tr-wrapper']"
+      )
+      .count();
+    expect(leasesFileCount).toBeGreaterThan(0);
 
     await expect(this.page.getByTestId("input-page-size")).toBeVisible();
     await expect(this.page.locator("ul[class='pagination']")).toBeVisible();

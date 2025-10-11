@@ -14,6 +14,7 @@ export { useContactInfoHelpers };
 export interface IContactEmail {
   namespace?: string;
   onRemove?: () => void;
+  index: number;
 }
 
 /**
@@ -23,6 +24,7 @@ export interface IContactEmail {
 export const ContactEmail: React.FunctionComponent<React.PropsWithChildren<IContactEmail>> = ({
   namespace,
   onRemove,
+  index,
 }) => {
   const { emailTypes } = useContactInfoHelpers();
 
@@ -41,7 +43,11 @@ export const ContactEmail: React.FunctionComponent<React.PropsWithChildren<ICont
       <Col md={2} className="pl-0 pt-2">
         {onRemove && (
           <Stack justifyContent="flex-start" className="h-100">
-            <RemoveButton fontSize="1.3rem" onRemove={onRemove}></RemoveButton>
+            <RemoveButton
+              fontSize="1.3rem"
+              onRemove={onRemove}
+              data-testId={`email-remove-button-${index}`}
+            ></RemoveButton>
           </Stack>
         )}
       </Col>
