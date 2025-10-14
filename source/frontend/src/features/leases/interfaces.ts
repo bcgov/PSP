@@ -12,6 +12,7 @@ export interface ILeaseFilter {
   details: string;
   leaseTeamPersonId: number | null;
   leaseTeamOrganizationId: number | null;
+  isReceivable: boolean | null;
 }
 
 export interface ILeaseSearchBy {

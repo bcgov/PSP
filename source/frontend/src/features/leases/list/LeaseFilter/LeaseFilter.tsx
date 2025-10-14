@@ -6,7 +6,7 @@ import { FaTimes } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import { ResetButton, SearchButton } from '@/components/common/buttons';
-import { FastDatePicker, Form, Input } from '@/components/common/form';
+import { FastDatePicker, Form, Input, Select } from '@/components/common/form';
 import { UserRegionSelectContainer } from '@/components/common/form/UserRegionSelect/UserRegionSelectContainer';
 import { SelectInput } from '@/components/common/List/SelectInput';
 import { SectionField } from '@/components/common/Section/SectionField';
@@ -55,6 +55,7 @@ export const defaultFilter: ILeaseFilter = {
   details: '',
   leaseTeamOrganizationId: null,
   leaseTeamPersonId: null,
+  isReceivable: null,
 };
 
 /**
@@ -320,6 +321,21 @@ export const LeaseFilter: React.FunctionComponent<React.PropsWithChildren<ILease
                       </Col>
                     </Row>
                   </Col>
+                </Row>
+              </SectionField>
+              <SectionField label="" labelWidth={{ xl: '2' }}>
+                <Row>
+                  <Col>
+                    <Select
+                      options={[
+                        { value: 'null', label: 'All Account Types' },
+                        { value: 'false', label: 'Payable' },
+                        { value: 'true', label: 'Receivable' },
+                      ]}
+                      field="isReceivable"
+                    />
+                  </Col>
+                  <Col></Col>
                 </Row>
               </SectionField>
             </Col>
