@@ -8,6 +8,7 @@ using LinqKit;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Models.CodeTypes;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Core.Security;
@@ -1129,11 +1130,11 @@ namespace Pims.Dal.Repositories
             {
                 if (filter.IsReceivable.Value)
                 {
-                    predicateBuilder = predicateBuilder.And(l => l.LeasePayRvblTypeCode == "RCVBL");
+                    predicateBuilder = predicateBuilder.And(l => l.LeasePayRvblTypeCode == nameof(LeasePaymentReceivableTypes.RCVBL));
                 }
                 else
                 {
-                    predicateBuilder = predicateBuilder.And(l => l.LeasePayRvblTypeCode != "RCVBL");
+                    predicateBuilder = predicateBuilder.And(l => l.LeasePayRvblTypeCode != nameof(LeasePaymentReceivableTypes.RCVBL));
                 }
             }
 

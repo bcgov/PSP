@@ -164,7 +164,7 @@ namespace Pims.Api.Areas.Lease.Models.Search
         /// <returns></returns>
         public override bool IsValid()
         {
-            if (ExpiryStartDate.HasValue && ExpiryEndDate.HasValue && this.ExpiryStartDate > this.ExpiryEndDate)
+            if (ExpiryStartDate.HasValue && ExpiryEndDate.HasValue && ExpiryStartDate > ExpiryEndDate)
             {
                 return false;
             }
@@ -181,6 +181,9 @@ namespace Pims.Api.Areas.Lease.Models.Search
                 || ExpiryStartDate.HasValue
                 || ExpiryEndDate.HasValue
                 || RegionType.HasValue
+                || LeaseTeamPersonId.HasValue
+                || LeaseTeamOrganizationId.HasValue
+                || IsReceivable.HasValue
                 || !string.IsNullOrWhiteSpace(Details);
         }
         #endregion
