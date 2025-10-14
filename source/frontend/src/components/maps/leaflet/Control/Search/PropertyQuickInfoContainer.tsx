@@ -38,15 +38,30 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
     prepareForCreation,
     worklistAdd,
     isEditPropertiesMode,
+    mapFeatureData,
     mapMarkedLocation,
   } = useMapStateMachine();
 
   const pathGenerator = usePathGenerator();
 
-  const locationInfo = useMemo(
-    () => firstOrNull(mapLocationFeatureDataset?.parcelFeatures)?.properties,
-    [mapLocationFeatureDataset?.parcelFeatures],
-  );
+  const locationInfo = useMemo(() => {
+    const parcelMapFeature = firstOrNull(mapLocationFeatureDataset?.parcelFeatures)?.properties;
+    const pimsMapFeature = firstOrNull(mapLocationFeatureDataset?.pimsFeatures)?.properties;
+    if (exists(parcelMapFeature)) {
+      return parcelMapFeature;
+    } else if (exists(pimsMapFeature)) {
+      const foundFullyAttributed = mapFeatureData.fullyAttributedFeatures?.features.find(
+        fa =>
+          (exists(fa.properties?.PID_NUMBER) && fa.properties.PID_NUMBER === pimsMapFeature.PID) ||
+          (exists(fa.properties?.PIN) && fa.properties.PIN === pimsMapFeature.PIN),
+      );
+      return foundFullyAttributed?.properties ?? null;
+    }
+  }, [
+    mapFeatureData.fullyAttributedFeatures.features,
+    mapLocationFeatureDataset?.parcelFeatures,
+    mapLocationFeatureDataset?.pimsFeatures,
+  ]);
 
   const { ltsaRequestWrapper } = useLtsa();
   const getLtsaExecute = ltsaRequestWrapper.execute;
