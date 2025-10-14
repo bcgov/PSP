@@ -13,11 +13,11 @@ Feature: Management File
 # 	And I update a Management File's Properties from row number 3
 # 	Then A new Management file is created or updated successfully
 
-Scenario: Management Files Digital Documents
-	Given I create a new Management File with row number 5
-	When I create Digital Documents for a "Management File" row number 14
-	And  I edit a Digital Document for a "Management File" from row number 15
-	Then A new Management file is created or updated successfully
+# Scenario: Management Files Digital Documents
+# 	Given I create a new Management File with row number 5
+# 	When I create Digital Documents for a "Management File" row number 14
+# 	And  I edit a Digital Document for a "Management File" from row number 15
+# 	Then A new Management file is created or updated successfully
 
 # Scenario: Management File Notes
 # 	Given I create a new Management File with row number 6

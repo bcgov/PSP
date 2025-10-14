@@ -65,7 +65,7 @@ export const getUserColumns = (refresh: () => void): ColumnWithProps<FormUser>[]
     sortable: true,
   },
   {
-    Header: 'User Type',
+    Header: 'User type',
     accessor: 'userTypeCode',
     align: 'left',
     clickable: true,
