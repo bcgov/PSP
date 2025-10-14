@@ -29,6 +29,7 @@ namespace Pims.Api.Areas.Reports.Mapping.Lease
 
             dest.LFileNo = src.lease.LFileNo;
             dest.HistoricalFileNo = historicalString;
+            dest.AccountType = src.lease.LeasePayRvblTypeCodeNavigation?.Description; // payable OR receivable lease
             dest.MotiRegion = src.lease.RegionCodeNavigation?.RegionName;
             dest.AgreementCommencementDate = src.lease.OrigStartDate?.FilterSqlMinDate().ToNullableDateOnly();
             dest.AgreementExpiryDate = src.lease.OrigExpiryDate?.FilterSqlMinDate().ToNullableDateOnly();
