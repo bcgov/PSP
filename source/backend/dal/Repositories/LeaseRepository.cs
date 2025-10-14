@@ -887,6 +887,7 @@ namespace Pims.Dal.Repositories
                         .Include(l => l.LeaseProgramTypeCodeNavigation)
                         .Include(l => l.LeaseStatusTypeCodeNavigation)
                         .Include(l => l.LeaseLicenseTypeCodeNavigation)
+                        .Include(l => l.LeasePayRvblTypeCodeNavigation)
                         .Include(l => l.PimsLeaseStakeholders)
                             .ThenInclude(t => t.Person)
                         .Include(l => l.PimsLeaseStakeholders)
