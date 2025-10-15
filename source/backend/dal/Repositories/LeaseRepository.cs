@@ -1129,14 +1129,9 @@ namespace Pims.Dal.Repositories
             // Allow filtering by "payable" or "receivable" leases.
             if (filter.IsReceivable.HasValue)
             {
-                if (filter.IsReceivable.Value)
-                {
-                    predicateBuilder = predicateBuilder.And(l => l.LeasePayRvblTypeCode == nameof(LeasePaymentReceivableTypes.RCVBL));
-                }
-                else
-                {
-                    predicateBuilder = predicateBuilder.And(l => l.LeasePayRvblTypeCode != nameof(LeasePaymentReceivableTypes.RCVBL));
-                }
+                predicateBuilder = filter.IsReceivable.Value
+                    ? predicateBuilder.And(l => l.LeasePayRvblTypeCode == nameof(LeasePaymentReceivableTypes.RCVBL))
+                    : predicateBuilder.And(l => l.LeasePayRvblTypeCode != nameof(LeasePaymentReceivableTypes.RCVBL));
             }
 
             if (filter.NotInStatus.Count > 0)

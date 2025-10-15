@@ -103,7 +103,7 @@ describe('Lease and License List View', () => {
         ],
       },
     ]);
-    const { container, searchButton, findByText, getByTitle } = await setup();
+    const { container, searchButton, findByText } = await setup();
 
     await act(async () => {
       fillInput(container, 'searchBy', 'pid', 'select');
@@ -171,7 +171,7 @@ describe('Lease and License List View', () => {
         ],
       },
     ]);
-    const { container, searchButton, findByText, getByTitle } = await setup();
+    const { container, searchButton, findByText } = await setup();
 
     await act(async () => {
       fillInput(container, 'searchBy', 'pin', 'select');
