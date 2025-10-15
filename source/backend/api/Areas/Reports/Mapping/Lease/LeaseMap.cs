@@ -43,7 +43,7 @@ namespace Pims.Api.Areas.Reports.Mapping.Lease
             dest.CurrentPeriodStartDate = src.lease.GetCurrentPeriodStartDate()?.FilterSqlMinDate().ToNullableDateOnly();
             dest.CurrentTermEndDate = src.lease.GetCurrentPeriodEndDate()?.FilterSqlMinDate().ToNullableDateOnly();
             dest.ProgramName = src.lease.LeaseProgramTypeCodeNavigation?.GetTypeDescriptionOther(src.lease.OtherLeaseProgramType);
-            dest.PurposeTypes = string.Join(",", src.lease.PimsLeaseLeasePurposes?.Select(lp => lp.LeasePurposeTypeCodeNavigation.GetTypeDescriptionOther(lp.LeasePurposeTypeCodeNavigation.Description)));
+            dest.PurposeTypes = string.Join(",", src.lease.PimsLeaseLeasePurposes?.Select(lp => lp.LeasePurposeTypeCodeNavigation.GetTypeDescriptionOther(lp.LeasePurposeOtherDesc)));
             dest.StatusType = src.lease.LeaseStatusTypeCodeNavigation?.Description;
             dest.LeaseTypeName = src.lease.LeaseLicenseTypeCodeNavigation?.GetTypeDescriptionOther(src.lease.OtherLeaseLicenseType);
             dest.LeaseArea = src.property?.LeaseArea;
