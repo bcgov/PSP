@@ -17,6 +17,7 @@ import {
   render,
   screen,
   userEvent,
+  waitFor,
 } from '@/utils/test-utils';
 
 import { SideBarContextProvider } from '../../context/sidebarContext';
@@ -100,8 +101,9 @@ describe('AddResearchContainer component', () => {
 
   it('renders as expected', async () => {
     const { asFragment } = await setup();
-    await act(async () => {});
-    expect(asFragment()).toMatchSnapshot();
+    waitFor(async () => {
+      expect(asFragment()).toMatchSnapshot();
+    });
   });
 
   it('displays the currently selected property', async () => {
