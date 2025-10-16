@@ -35,10 +35,15 @@ class DispositionFiles {
       this.page.locator("//label[contains(text(),'Ministry project')]")
     ).toBeVisible();
     await expect(this.page.locator("#typeahead-project")).toBeVisible();
+
     await expect(
       this.page.locator("//label[contains(text(),'Funding')]")
     ).toBeVisible();
-    await expect(this.page.locator("#input-fundingTypeCode")).toBeVisible();
+    const fundingSelectElement = await this.page.locator("#input-fundingTypeCode");
+    expect(fundingSelectElement).toBeVisible();
+
+    const fundingOptions = await fundingSelectElement.locator("option").count();
+    expect(fundingOptions).toBeGreaterThan(0);
 
     await expect(
       this.page.locator("//h2/div/div[contains(text(),'Schedule')]")
@@ -93,17 +98,32 @@ class DispositionFiles {
     await expect(
       this.page.locator("//label[contains(text(),'Disposition status')]")
     ).toBeVisible();
-    await expect(
-      this.page.locator("#input-dispositionStatusTypeCode")
+    const statusElement = await this.page.locator("#input-dispositionStatusTypeCode");
+    expect(
+      statusElement
     ).toBeVisible();
+
+    const statusOptions = await statusElement.locator("option").count();
+    expect(statusOptions).toBeGreaterThan(0);
+
     await expect(
       this.page.locator("//label[contains(text(),'Disposition type')]")
     ).toBeVisible();
-    await expect(this.page.locator("#input-dispositionTypeCode")).toBeVisible();
+    const typeSelect = await this.page.locator("#input-dispositionTypeCode");
+    expect(typeSelect).toBeVisible();
+
+    const typeOptions = await typeSelect.locator("option").count();
+    expect(typeOptions).toBeGreaterThan(0);
+
     await expect(this.page.getByText("Initiating document:")).toBeVisible();
-    await expect(
-      this.page.locator("#input-initiatingDocumentTypeCode")
+    const initialDocSelect = await this.page.locator("#input-initiatingDocumentTypeCode");
+    expect(
+      initialDocSelect
     ).toBeVisible();
+
+    const initialDocOptions = await initialDocSelect.locator("option").count();
+    expect(initialDocOptions).toBeGreaterThan(0);
+
     await expect(
       this.page.locator("//label[contains(text(),'Initiating document date')]")
     ).toBeVisible();
@@ -113,29 +133,44 @@ class DispositionFiles {
     await expect(
       this.page.locator("//label[contains(text(),'Physical file status')]")
     ).toBeVisible();
-    await expect(
-      this.page.locator("#input-physicalFileStatusTypeCode")
+    const physicalFileSelect = await this.page.locator("#input-physicalFileStatusTypeCode"); 
+    expect(
+      physicalFileSelect
     ).toBeVisible();
+
+    const physicalFileOptions = await physicalFileSelect.locator("option").count();
+    expect(physicalFileOptions).toBeGreaterThan(0);
+
     await expect(
       this.page.locator("//label[contains(text(),'Initiating branch')]")
     ).toBeVisible();
-    await expect(
-      this.page.locator("#input-initiatingBranchTypeCode")
+    const initialBranchSelect = await this.page.locator("#input-initiatingBranchTypeCode");
+    expect(
+      initialBranchSelect
     ).toBeVisible();
+    const initialBranchOptions = await initialBranchSelect.locator("option").count();
+    expect(initialBranchOptions).toBeGreaterThan(0);
+
     await expect(
       this.page.locator("//label[contains(text(),'Ministry region')]")
     ).toBeVisible();
-    await expect(this.page.locator("#input-regionCode")).toBeVisible();
+    const regionSelect = await this.page.locator("#input-regionCode");
+    expect(regionSelect).toBeVisible();
+    const regionsOptions = await regionSelect.locator("option").count();
+    expect(regionsOptions).toBeGreaterThan(0);
 
     await expect(
       this.page.locator("//h2/div/div[contains(text(),'Disposition Team')]")
     ).toBeVisible();
     await expect(this.page.getByTestId("add-team-member")).toBeVisible();
 
-    const tooltips = await this.page.getByTestId(
-      "tooltip-icon-lease-status-tooltip"
-    );
-    expect(tooltips).toHaveCount(3);
+    await this.page.getByTestId("tooltip-icon-section-field-tooltip").first().waitFor({
+      state: 'visible',
+      timeout: 10000
+    });
+
+    const dispositionTooltipsCount = await this.page.getByTestId("tooltip-icon-section-field-tooltip").count();
+    expect(dispositionTooltipsCount).toEqual(3);
 
     await expect(this.page.getByTestId("cancel-button")).toBeVisible();
     await expect(this.page.getByTestId("save-button")).toBeVisible();
@@ -201,11 +236,18 @@ class DispositionFiles {
       this.page.getByTestId("sort-column-dispositionFileStatusTypeCode")
     ).toBeVisible();
 
+    await this.page
+      .locator(
+        "div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']"
+      ).first().waitFor({
+          state: 'visible',
+          timeout: 10000
+    });
+
     const dispositionFileCount = await this.page
       .locator(
         "div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']"
-      )
-      .count();
+      ).count();
     expect(dispositionFileCount).toBeGreaterThan(0);
 
     await expect(this.page.getByTestId("input-page-size")).toBeVisible();

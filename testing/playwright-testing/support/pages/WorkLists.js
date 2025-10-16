@@ -21,6 +21,8 @@ class WorkLists {
   }
 
   async verifyWorklistWithProps() {
+    this.page.locator("#worklistControlButton").click();
+
     await expect(
       this.page.locator("//p[contains(text(),'Working list')]")
     ).toBeVisible();

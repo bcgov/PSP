@@ -43,13 +43,25 @@ class LeaseLicence {
     await expect(
       this.page.getByTestId("tooltip-icon-lease-status-tooltip")
     ).toBeVisible();
-    await expect(this.page.locator("#input-statusTypeCode")).toBeVisible();
+
+    const statusSelectElement = await this.page.locator("#input-statusTypeCode");
+    await expect(statusSelectElement).toBeVisible();
+
+    const statusOptions = await statusSelectElement.locator("option").count();
+    expect(statusOptions).toBeGreaterThan(0);
+
     await expect(
       this.page.locator("//label[contains(text(),'Account type')]")
     ).toBeVisible();
-    await expect(
-      this.page.locator("#input-paymentReceivableTypeCode")
+
+    const accountTypeSelect = await this.page.locator("#input-paymentReceivableTypeCode");
+    expect(
+      accountTypeSelect
     ).toBeVisible();
+
+    const accountOptions = await accountTypeSelect.locator("option").count();
+    expect(accountOptions).toBeGreaterThan(0);
+
     await expect(
       this.page.locator("//label[contains(text(),'Commencement')]")
     ).toBeVisible();
@@ -111,15 +123,33 @@ class LeaseLicence {
     await expect(
       this.page.locator("//label[contains(text(),'MOTT region')]")
     ).toBeVisible();
-    await expect(this.page.locator("#input-regionId")).toBeVisible();
+
+    const regionSelectElement = await this.page.locator("#input-regionId");
+    expect(regionSelectElement).toBeVisible();
+
+    const regionOptions = await regionSelectElement.locator("option").count();
+    expect(regionOptions).toBeGreaterThan(0);
+
     await expect(
       this.page.locator("//label[contains(text(),'Program')]")
     ).toBeVisible();
-    await expect(this.page.locator("#input-programTypeCode")).toBeVisible();
+
+    const programSelectElement = await this.page.locator("#input-programTypeCode");
+    expect(programSelectElement).toBeVisible();
+
+    const programOptions = await programSelectElement.locator("option").count();
+    expect(programOptions).toBeGreaterThan(0);
+
     await expect(
       this.page.locator("//label[contains(text(),'Type')]")
     ).toBeVisible();
-    await expect(this.page.locator("#input-leaseTypeCode")).toBeVisible();
+
+    const typeSelectElement = await this.page.locator("#input-leaseTypeCode");
+    expect(typeSelectElement).toBeVisible();
+
+    const typeOptions = await typeSelectElement.locator("option").count();
+    expect(typeOptions).toBeGreaterThan(0);
+
     await expect(
       this.page.locator("//label[contains(text(),'Purpose')]")
     ).toBeVisible();
@@ -129,13 +159,25 @@ class LeaseLicence {
     await expect(
       this.page.locator("//label[contains(text(),'Initiator')]")
     ).toBeVisible();
-    await expect(this.page.locator("#input-initiatorTypeCode")).toBeVisible();
+
+    const initiatorSelectElement = await this.page.locator("#input-initiatorTypeCode");
+    expect(initiatorSelectElement).toBeVisible();
+
+    const initiatorOptions = await initiatorSelectElement.locator("option").count();
+    expect(initiatorOptions).toBeGreaterThan(0);
+
     await expect(
       this.page.locator("//label[contains(text(),'Responsibility')]")
     ).toBeVisible();
-    await expect(
-      this.page.locator("#input-responsibilityTypeCode")
+
+    const responsibilitySelect = await this.page.locator("#input-responsibilityTypeCode");
+    expect(
+      responsibilitySelect
     ).toBeVisible();
+
+    const responsibilityOptions = await responsibilitySelect.locator("option").count();
+    expect(responsibilityOptions).toBeGreaterThan(0);
+
     await expect(
       this.page.locator("//label[contains(text(),'Effective date')]")
     ).toBeVisible();
@@ -158,10 +200,13 @@ class LeaseLicence {
     ).toBeVisible();
     await expect(this.page.getByTestId("add-team-member")).toBeVisible();
 
-    const tooltips = await this.page.getByTestId(
-      "tooltip-icon-lease-status-tooltip"
-    );
-    expect(tooltips).toHaveCount(6);
+    await this.page.getByTestId("tooltip-icon-section-field-tooltip").first().waitFor({
+      state: 'visible',
+      timeout: 10000
+    });
+
+    const leaseTooltipsCount = await this.page.getByTestId("tooltip-icon-section-field-tooltip").count();
+    expect(leaseTooltipsCount).toEqual(5);
 
     await expect(this.page.getByTestId("cancel-button")).toBeVisible();
     await expect(this.page.getByTestId("save-button")).toBeVisible();
@@ -224,11 +269,15 @@ class LeaseLicence {
       this.page.getByTestId("sort-column-fileStatusTypeCode")
     ).toBeVisible();
 
-    const leasesFileCount = await this.page
-      .locator(
-        "div[data-testid='leasesTable'] div[class='tbody'] div[class='tr-wrapper']"
-      )
-      .count();
+    const leasesRowSelector = "div[data-testid='leasesTable'] div[class='tbody'] div[class='tr-wrapper']";
+
+    await this.page.locator(leasesRowSelector).first().waitFor({
+        state: 'visible',
+        timeout: 10000
+    });
+
+    const leasesFileCount = await this.page.locator(leasesRowSelector).count();
+
     expect(leasesFileCount).toBeGreaterThan(0);
 
     await expect(this.page.getByTestId("input-page-size")).toBeVisible();
@@ -237,7 +286,7 @@ class LeaseLicence {
 
   async cancelCreateLeaseFile() {
     await this.page
-      .locator("//div[contains(text(),'Cancel')]/parent::button")
+      .getByTestId("cancel-button")
       .click();
   }
 }

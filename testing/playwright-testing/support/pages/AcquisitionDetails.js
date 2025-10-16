@@ -969,11 +969,18 @@ class AcquisitionDetails {
       this.page.getByTestId("sort-column-acquisitionFileStatusTypeCode")
     ).toBeVisible();
 
-    const acquisitionTableCount = await this.page
+    await this.page
       .locator(
         "div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']"
-      )
-      .count();
+      ).first().waitFor({
+          state: 'visible',
+          timeout: 10000
+    });
+
+    const acquisitionTableCount =  await this.page
+      .locator(
+        "div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']"
+      ).count();
     expect(acquisitionTableCount).toBeGreaterThan(0);
 
     await expect(this.page.locator("div[class='Menu-root']")).toBeVisible();
