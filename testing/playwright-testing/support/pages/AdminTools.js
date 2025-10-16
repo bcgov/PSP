@@ -112,14 +112,17 @@ class AdminTools {
       this.page.locator("//div[contains(text(),'Last login')]")
     ).toBeVisible();
 
-    const usersRowSelector = "div[data-testid='usersTable'] div[class='tbody'] div[class='tr-wrapper']";
+    const usersRowSelector =
+      "div[data-testid='usersTable'] div[class='tbody'] div[class='tr-wrapper']";
 
     await this.page.locator(usersRowSelector).first().waitFor({
-        state: 'visible',
-        timeout: 10000
+      state: "visible",
+      timeout: 10000,
     });
 
-    const usersRowSelectorCount = await this.page.locator(usersRowSelector).count();
+    const usersRowSelectorCount = await this.page
+      .locator(usersRowSelector)
+      .count();
     expect(usersRowSelectorCount).toBeGreaterThan(0);
 
     await expect(this.page.getByTestId("input-page-size")).toBeVisible();
@@ -282,13 +285,12 @@ class AdminTools {
     ).toBeVisible();
     await expect(this.page.getByTestId("sort-column-expiryDate")).toBeVisible();
 
-    const financialCodesSelector = await this.page
-      .locator(
-        "div[data-testid='FinancialCodeTable'] div[class='tbody'] div[class='tr-wrapper']"
-      );
+    const financialCodesSelector = await this.page.locator(
+      "div[data-testid='FinancialCodeTable'] div[class='tbody'] div[class='tr-wrapper']"
+    );
     await financialCodesSelector.first().waitFor({
-          state: 'visible',
-          timeout: 10000
+      state: "visible",
+      timeout: 10000,
     });
 
     const financialCodesCount = await financialCodesSelector.count();

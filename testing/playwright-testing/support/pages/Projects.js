@@ -144,7 +144,9 @@ class Projects {
       this.page.locator("//label[contains(text(),'Status')]")
     ).toBeVisible();
 
-    const stausSelectElement = await this.page.locator("#input-projectStatusType");
+    const stausSelectElement = await this.page.locator(
+      "#input-projectStatusType"
+    );
     expect(stausSelectElement).toBeVisible();
 
     const statusOptions = await stausSelectElement.locator("option").count();

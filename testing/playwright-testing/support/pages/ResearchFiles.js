@@ -151,15 +151,18 @@ class ResearchFiles {
     await this.page
       .locator(
         "div[data-testid='researchFilesTable'] div[class='tbody'] div[class='tr-wrapper']"
-      ).first().waitFor({
-          state: 'visible',
-          timeout: 10000
-    });
+      )
+      .first()
+      .waitFor({
+        state: "visible",
+        timeout: 10000,
+      });
 
-    const researchFileCount =  await this.page
+    const researchFileCount = await this.page
       .locator(
         "div[data-testid='researchFilesTable'] div[class='tbody'] div[class='tr-wrapper']"
-      ).count();
+      )
+      .count();
     expect(researchFileCount).toBeGreaterThan(0);
 
     await expect(this.page.getByTestId("input-page-size")).toBeVisible();

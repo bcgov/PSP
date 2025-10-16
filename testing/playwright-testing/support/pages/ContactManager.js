@@ -82,17 +82,13 @@ class ContactManager {
     ).toBeVisible();
 
     const emailSelect = await this.page.locator(
-        "select[id='input-emailContactMethods.0.contactMethodTypeCode']"
-      );
-    expect(
-      emailSelect
-    ).toBeVisible();
+      "select[id='input-emailContactMethods.0.contactMethodTypeCode']"
+    );
+    expect(emailSelect).toBeVisible();
     const emailOptions = await emailSelect.locator("option").count();
     expect(emailOptions).toBeGreaterThan(0);
 
-    await expect(
-      this.page.getByTestId("email-remove-button-0")
-    ).toBeVisible();
+    await expect(this.page.getByTestId("email-remove-button-0")).toBeVisible();
     await expect(this.page.getByTestId("add-email-button")).toBeVisible();
     await expect(
       this.page.locator("//label[contains(text(),'Phone')]")
@@ -101,46 +97,48 @@ class ContactManager {
       this.page.locator("input[id='input-phoneContactMethods.0.value']")
     ).toBeVisible();
     const phoneTypeSelect = await this.page.locator(
-        "select[id='input-emailContactMethods.0.contactMethodTypeCode']"
-      );
-    expect(
-      phoneTypeSelect
-    ).toBeVisible();
+      "select[id='input-emailContactMethods.0.contactMethodTypeCode']"
+    );
+    expect(phoneTypeSelect).toBeVisible();
     const phoneOptions = await phoneTypeSelect.locator("option").count();
     expect(phoneOptions).toBeGreaterThan(0);
 
-    await expect(
-      this.page.getByTestId("phone-delete-button-0")
-    ).toBeVisible();
+    await expect(this.page.getByTestId("phone-delete-button-0")).toBeVisible();
     await expect(this.page.getByTestId("add-phone-button")).toBeVisible();
 
     //Mailing Address
     await expect(
-      this.page.locator("//h2/div/div/div/span[contains(text(),'Mailing Address')]")
+      this.page.locator(
+        "//h2/div/div/div/span[contains(text(),'Mailing Address')]"
+      )
     ).toBeVisible();
     await expect(
       this.page.locator("#input-useOrganizationAddress")
     ).toBeVisible();
     await expect(
-      this.page.locator("//label[text()='Use mailing address from organization']")
+      this.page.locator(
+        "//label[text()='Use mailing address from organization']"
+      )
     ).toBeVisible();
     await expect(
       this.page.locator("input[id='input-mailingAddress.streetAddress1']")
     ).toBeVisible();
-    const mailingCountrySelect = await this.page.locator("select[id='input-mailingAddress.countryId']");
-    expect(
-      mailingCountrySelect
-    ).toBeVisible();
-    const mailingCountryOptions = await mailingCountrySelect.locator("option").count();
+    const mailingCountrySelect = await this.page.locator(
+      "select[id='input-mailingAddress.countryId']"
+    );
+    expect(mailingCountrySelect).toBeVisible();
+    const mailingCountryOptions = await mailingCountrySelect
+      .locator("option")
+      .count();
     expect(mailingCountryOptions).toBeGreaterThan(0);
 
     await expect(
       this.page.locator("input[id='input-mailingAddress.municipality']")
     ).toBeVisible();
-    const provinceSelect = await this.page.locator("select[id='input-mailingAddress.provinceId']");
-    expect(
-      provinceSelect
-    ).toBeVisible();
+    const provinceSelect = await this.page.locator(
+      "select[id='input-mailingAddress.provinceId']"
+    );
+    expect(provinceSelect).toBeVisible();
 
     await expect(
       this.page.locator("input[id='input-mailingAddress.postal']")
@@ -153,20 +151,22 @@ class ContactManager {
     await expect(
       this.page.locator("input[id='input-propertyAddress.streetAddress1']")
     ).toBeVisible();
-    const propertyCountrySelect = await this.page.locator("select[id='input-propertyAddress.countryId']");
-    expect(
-      propertyCountrySelect
-    ).toBeVisible();
-    const propertyCountryOptions = await propertyCountrySelect.locator("option").count();
+    const propertyCountrySelect = await this.page.locator(
+      "select[id='input-propertyAddress.countryId']"
+    );
+    expect(propertyCountrySelect).toBeVisible();
+    const propertyCountryOptions = await propertyCountrySelect
+      .locator("option")
+      .count();
     expect(propertyCountryOptions).toBeGreaterThan(0);
 
     await expect(
       this.page.locator("input[id='input-propertyAddress.municipality']")
     ).toBeVisible();
-    const propertyProvinceSelect = await this.page.locator("select[id='input-propertyAddress.provinceId']");
-    expect(
-      propertyProvinceSelect
-    ).toBeVisible();
+    const propertyProvinceSelect = await this.page.locator(
+      "select[id='input-propertyAddress.provinceId']"
+    );
+    expect(propertyProvinceSelect).toBeVisible();
 
     await expect(
       this.page.locator("input[id='input-propertyAddress.postal']")
@@ -179,19 +179,21 @@ class ContactManager {
     await expect(
       this.page.locator("input[id='input-billingAddress.streetAddress1']")
     ).toBeVisible();
-    const billingCountrySelect = await this.page.locator("select[id='input-billingAddress.countryId']");
-    expect(
-      billingCountrySelect
-    ).toBeVisible();
-    const billingCountryOptions = await billingCountrySelect.locator("option").count();
+    const billingCountrySelect = await this.page.locator(
+      "select[id='input-billingAddress.countryId']"
+    );
+    expect(billingCountrySelect).toBeVisible();
+    const billingCountryOptions = await billingCountrySelect
+      .locator("option")
+      .count();
     expect(billingCountryOptions).toBeGreaterThan(0);
     await expect(
       this.page.locator("input[id='input-billingAddress.municipality']")
     ).toBeVisible();
-    const billingProvinceSelect = await this.page.locator("select[id='input-billingAddress.provinceId']");
-    expect(
-      billingProvinceSelect
-    ).toBeVisible();
+    const billingProvinceSelect = await this.page.locator(
+      "select[id='input-billingAddress.provinceId']"
+    );
+    expect(billingProvinceSelect).toBeVisible();
 
     await expect(
       this.page.locator("input[id='input-billingAddress.postal']")
@@ -227,8 +229,12 @@ class ContactManager {
     ).toBeVisible();
     await expect(this.page.locator("#input-comment")).toBeVisible();
 
-    await expect(this.page.locator("//div[text()='Cancel']/parent::button")).toBeVisible();
-    await expect(this.page.locator("//div[text()='Save']/parent::button")).toBeVisible();
+    await expect(
+      this.page.locator("//div[text()='Cancel']/parent::button")
+    ).toBeVisible();
+    await expect(
+      this.page.locator("//div[text()='Save']/parent::button")
+    ).toBeVisible();
   }
 
   async verifyDispositionListView() {
@@ -295,12 +301,21 @@ class ContactManager {
       this.page.locator("//div[contains(text(),'Edit/View')]")
     ).toBeVisible();
 
-    await this.page.locator("div[data-testid='contactsTable'] div[class='tbody'] div[class='tr-wrapper']").first().waitFor({
-      state: 'visible',
-      timeout: 10000
-    });
+    await this.page
+      .locator(
+        "div[data-testid='contactsTable'] div[class='tbody'] div[class='tr-wrapper']"
+      )
+      .first()
+      .waitFor({
+        state: "visible",
+        timeout: 10000,
+      });
 
-    const contactsCount = await this.page.locator("div[data-testid='contactsTable'] div[class='tbody'] div[class='tr-wrapper']").count();
+    const contactsCount = await this.page
+      .locator(
+        "div[data-testid='contactsTable'] div[class='tbody'] div[class='tr-wrapper']"
+      )
+      .count();
     expect(contactsCount).toBeGreaterThan(0);
 
     await expect(this.page.getByTestId("input-page-size")).toBeVisible();

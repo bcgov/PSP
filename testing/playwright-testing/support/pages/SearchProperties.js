@@ -103,7 +103,10 @@ class SearchProperties {
   }
 
   async addPropertyInfoToWorklist() {
-    await this.page.getByTestId('search-property-0').getByLabel('More options').click();
+    await this.page
+      .getByTestId("search-property-0")
+      .getByLabel("More options")
+      .click();
     await this.page.locator("a[aria-label='Add to Worklist']").click();
   }
 
@@ -175,26 +178,38 @@ class SearchProperties {
   }
 
   async verifyPropertyQuickInfo() {
-    const quickInfoLeaflet = await this.page.locator("div[data-testid='quick-info']");
-    expect(quickInfoLeaflet).toBeVisible({timeout: 120000});
+    const quickInfoLeaflet = await this.page.locator(
+      "div[data-testid='quick-info']"
+    );
+    expect(quickInfoLeaflet).toBeVisible({ timeout: 120000 });
 
-    const quickInfoViewIcon = await this.page.locator("div[data-testid='view-property-icon']");
-    expect(quickInfoViewIcon).toBeVisible({timeout: 120000});
+    const quickInfoViewIcon = await this.page.locator(
+      "div[data-testid='view-property-icon']"
+    );
+    expect(quickInfoViewIcon).toBeVisible({ timeout: 120000 });
 
-    const quickInfoMorOptions = await this.page.locator("button[data-testid='quick-info-more-options']");
-    expect(quickInfoMorOptions).toBeVisible({timeout: 120000});
+    const quickInfoMorOptions = await this.page.locator(
+      "button[data-testid='quick-info-more-options']"
+    );
+    expect(quickInfoMorOptions).toBeVisible({ timeout: 120000 });
 
     const quickInfoHeader = await this.page.getByTestId("quick-info-header");
-    expect(quickInfoHeader).toBeVisible({timeout: 120000});
+    expect(quickInfoHeader).toBeVisible({ timeout: 120000 });
 
-    const quickInfoZoom = await this.page.getByTestId('quick-info-header').getByRole('button', { name: 'Fit boundaries button' });
-    expect(quickInfoZoom).toBeVisible({timeout: 120000});
+    const quickInfoZoom = await this.page
+      .getByTestId("quick-info-header")
+      .getByRole("button", { name: "Fit boundaries button" });
+    expect(quickInfoZoom).toBeVisible({ timeout: 120000 });
 
-    const quickInfoMinimize = await this.page.getByTestId("*[data-testid='toggle-icon']");
-    expect(quickInfoMinimize).toBeVisible({timeout: 120000});
+    const quickInfoMinimize = await this.page.getByTestId(
+      "*[data-testid='toggle-icon']"
+    );
+    expect(quickInfoMinimize).toBeVisible({ timeout: 120000 });
 
-    const quickInfoCloseIcon = await this.page.locator("*[data-testid='close-icon']");
-    expect(quickInfoCloseIcon).toBeVisible({timeout: 120000});
+    const quickInfoCloseIcon = await this.page.locator(
+      "*[data-testid='close-icon']"
+    );
+    expect(quickInfoCloseIcon).toBeVisible({ timeout: 120000 });
   }
 }
 

@@ -206,7 +206,7 @@ class ManagementFileDetails {
       this.page.locator("label", { hasText: "Funding" })
     ).toBeVisible();
 
-    const fundingSelect = await this.page.locator("#input-fundingTypeCode")
+    const fundingSelect = await this.page.locator("#input-fundingTypeCode");
     expect(fundingSelect).toBeVisible();
 
     const fundingOptions = await fundingSelect.locator("option").count();
@@ -297,7 +297,9 @@ class ManagementFileDetails {
     await expect(this.page.locator("#input-legacyFileNum")).toBeVisible();
     await expect(this.page.locator("label:has-text('Purpose')")).toBeVisible();
 
-    const purposeSelectElement = await this.page.locator("#input-purposeTypeCode");
+    const purposeSelectElement = await this.page.locator(
+      "#input-purposeTypeCode"
+    );
     await expect(purposeSelectElement).toBeVisible();
 
     const purposeOptions = await purposeSelectElement.locator("option").count();

@@ -39,7 +39,9 @@ class DispositionFiles {
     await expect(
       this.page.locator("//label[contains(text(),'Funding')]")
     ).toBeVisible();
-    const fundingSelectElement = await this.page.locator("#input-fundingTypeCode");
+    const fundingSelectElement = await this.page.locator(
+      "#input-fundingTypeCode"
+    );
     expect(fundingSelectElement).toBeVisible();
 
     const fundingOptions = await fundingSelectElement.locator("option").count();
@@ -98,10 +100,10 @@ class DispositionFiles {
     await expect(
       this.page.locator("//label[contains(text(),'Disposition status')]")
     ).toBeVisible();
-    const statusElement = await this.page.locator("#input-dispositionStatusTypeCode");
-    expect(
-      statusElement
-    ).toBeVisible();
+    const statusElement = await this.page.locator(
+      "#input-dispositionStatusTypeCode"
+    );
+    expect(statusElement).toBeVisible();
 
     const statusOptions = await statusElement.locator("option").count();
     expect(statusOptions).toBeGreaterThan(0);
@@ -116,10 +118,10 @@ class DispositionFiles {
     expect(typeOptions).toBeGreaterThan(0);
 
     await expect(this.page.getByText("Initiating document:")).toBeVisible();
-    const initialDocSelect = await this.page.locator("#input-initiatingDocumentTypeCode");
-    expect(
-      initialDocSelect
-    ).toBeVisible();
+    const initialDocSelect = await this.page.locator(
+      "#input-initiatingDocumentTypeCode"
+    );
+    expect(initialDocSelect).toBeVisible();
 
     const initialDocOptions = await initialDocSelect.locator("option").count();
     expect(initialDocOptions).toBeGreaterThan(0);
@@ -133,22 +135,26 @@ class DispositionFiles {
     await expect(
       this.page.locator("//label[contains(text(),'Physical file status')]")
     ).toBeVisible();
-    const physicalFileSelect = await this.page.locator("#input-physicalFileStatusTypeCode"); 
-    expect(
-      physicalFileSelect
-    ).toBeVisible();
+    const physicalFileSelect = await this.page.locator(
+      "#input-physicalFileStatusTypeCode"
+    );
+    expect(physicalFileSelect).toBeVisible();
 
-    const physicalFileOptions = await physicalFileSelect.locator("option").count();
+    const physicalFileOptions = await physicalFileSelect
+      .locator("option")
+      .count();
     expect(physicalFileOptions).toBeGreaterThan(0);
 
     await expect(
       this.page.locator("//label[contains(text(),'Initiating branch')]")
     ).toBeVisible();
-    const initialBranchSelect = await this.page.locator("#input-initiatingBranchTypeCode");
-    expect(
-      initialBranchSelect
-    ).toBeVisible();
-    const initialBranchOptions = await initialBranchSelect.locator("option").count();
+    const initialBranchSelect = await this.page.locator(
+      "#input-initiatingBranchTypeCode"
+    );
+    expect(initialBranchSelect).toBeVisible();
+    const initialBranchOptions = await initialBranchSelect
+      .locator("option")
+      .count();
     expect(initialBranchOptions).toBeGreaterThan(0);
 
     await expect(
@@ -164,12 +170,17 @@ class DispositionFiles {
     ).toBeVisible();
     await expect(this.page.getByTestId("add-team-member")).toBeVisible();
 
-    await this.page.getByTestId("tooltip-icon-section-field-tooltip").first().waitFor({
-      state: 'visible',
-      timeout: 10000
-    });
+    await this.page
+      .getByTestId("tooltip-icon-section-field-tooltip")
+      .first()
+      .waitFor({
+        state: "visible",
+        timeout: 10000,
+      });
 
-    const dispositionTooltipsCount = await this.page.getByTestId("tooltip-icon-section-field-tooltip").count();
+    const dispositionTooltipsCount = await this.page
+      .getByTestId("tooltip-icon-section-field-tooltip")
+      .count();
     expect(dispositionTooltipsCount).toEqual(3);
 
     await expect(this.page.getByTestId("cancel-button")).toBeVisible();
@@ -239,15 +250,18 @@ class DispositionFiles {
     await this.page
       .locator(
         "div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']"
-      ).first().waitFor({
-          state: 'visible',
-          timeout: 10000
-    });
+      )
+      .first()
+      .waitFor({
+        state: "visible",
+        timeout: 10000,
+      });
 
     const dispositionFileCount = await this.page
       .locator(
         "div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']"
-      ).count();
+      )
+      .count();
     expect(dispositionFileCount).toBeGreaterThan(0);
 
     await expect(this.page.getByTestId("input-page-size")).toBeVisible();

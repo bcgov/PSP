@@ -44,7 +44,9 @@ class LeaseLicence {
       this.page.getByTestId("tooltip-icon-lease-status-tooltip")
     ).toBeVisible();
 
-    const statusSelectElement = await this.page.locator("#input-statusTypeCode");
+    const statusSelectElement = await this.page.locator(
+      "#input-statusTypeCode"
+    );
     await expect(statusSelectElement).toBeVisible();
 
     const statusOptions = await statusSelectElement.locator("option").count();
@@ -54,10 +56,10 @@ class LeaseLicence {
       this.page.locator("//label[contains(text(),'Account type')]")
     ).toBeVisible();
 
-    const accountTypeSelect = await this.page.locator("#input-paymentReceivableTypeCode");
-    expect(
-      accountTypeSelect
-    ).toBeVisible();
+    const accountTypeSelect = await this.page.locator(
+      "#input-paymentReceivableTypeCode"
+    );
+    expect(accountTypeSelect).toBeVisible();
 
     const accountOptions = await accountTypeSelect.locator("option").count();
     expect(accountOptions).toBeGreaterThan(0);
@@ -134,7 +136,9 @@ class LeaseLicence {
       this.page.locator("//label[contains(text(),'Program')]")
     ).toBeVisible();
 
-    const programSelectElement = await this.page.locator("#input-programTypeCode");
+    const programSelectElement = await this.page.locator(
+      "#input-programTypeCode"
+    );
     expect(programSelectElement).toBeVisible();
 
     const programOptions = await programSelectElement.locator("option").count();
@@ -160,22 +164,28 @@ class LeaseLicence {
       this.page.locator("//label[contains(text(),'Initiator')]")
     ).toBeVisible();
 
-    const initiatorSelectElement = await this.page.locator("#input-initiatorTypeCode");
+    const initiatorSelectElement = await this.page.locator(
+      "#input-initiatorTypeCode"
+    );
     expect(initiatorSelectElement).toBeVisible();
 
-    const initiatorOptions = await initiatorSelectElement.locator("option").count();
+    const initiatorOptions = await initiatorSelectElement
+      .locator("option")
+      .count();
     expect(initiatorOptions).toBeGreaterThan(0);
 
     await expect(
       this.page.locator("//label[contains(text(),'Responsibility')]")
     ).toBeVisible();
 
-    const responsibilitySelect = await this.page.locator("#input-responsibilityTypeCode");
-    expect(
-      responsibilitySelect
-    ).toBeVisible();
+    const responsibilitySelect = await this.page.locator(
+      "#input-responsibilityTypeCode"
+    );
+    expect(responsibilitySelect).toBeVisible();
 
-    const responsibilityOptions = await responsibilitySelect.locator("option").count();
+    const responsibilityOptions = await responsibilitySelect
+      .locator("option")
+      .count();
     expect(responsibilityOptions).toBeGreaterThan(0);
 
     await expect(
@@ -200,12 +210,17 @@ class LeaseLicence {
     ).toBeVisible();
     await expect(this.page.getByTestId("add-team-member")).toBeVisible();
 
-    await this.page.getByTestId("tooltip-icon-section-field-tooltip").first().waitFor({
-      state: 'visible',
-      timeout: 10000
-    });
+    await this.page
+      .getByTestId("tooltip-icon-section-field-tooltip")
+      .first()
+      .waitFor({
+        state: "visible",
+        timeout: 10000,
+      });
 
-    const leaseTooltipsCount = await this.page.getByTestId("tooltip-icon-section-field-tooltip").count();
+    const leaseTooltipsCount = await this.page
+      .getByTestId("tooltip-icon-section-field-tooltip")
+      .count();
     expect(leaseTooltipsCount).toEqual(5);
 
     await expect(this.page.getByTestId("cancel-button")).toBeVisible();
@@ -269,11 +284,12 @@ class LeaseLicence {
       this.page.getByTestId("sort-column-fileStatusTypeCode")
     ).toBeVisible();
 
-    const leasesRowSelector = "div[data-testid='leasesTable'] div[class='tbody'] div[class='tr-wrapper']";
+    const leasesRowSelector =
+      "div[data-testid='leasesTable'] div[class='tbody'] div[class='tr-wrapper']";
 
     await this.page.locator(leasesRowSelector).first().waitFor({
-        state: 'visible',
-        timeout: 10000
+      state: "visible",
+      timeout: 10000,
     });
 
     const leasesFileCount = await this.page.locator(leasesRowSelector).count();
@@ -285,9 +301,7 @@ class LeaseLicence {
   }
 
   async cancelCreateLeaseFile() {
-    await this.page
-      .getByTestId("cancel-button")
-      .click();
+    await this.page.getByTestId("cancel-button").click();
   }
 }
 

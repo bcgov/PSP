@@ -972,15 +972,18 @@ class AcquisitionDetails {
     await this.page
       .locator(
         "div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']"
-      ).first().waitFor({
-          state: 'visible',
-          timeout: 10000
-    });
+      )
+      .first()
+      .waitFor({
+        state: "visible",
+        timeout: 10000,
+      });
 
-    const acquisitionTableCount =  await this.page
+    const acquisitionTableCount = await this.page
       .locator(
         "div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']"
-      ).count();
+      )
+      .count();
     expect(acquisitionTableCount).toBeGreaterThan(0);
 
     await expect(this.page.locator("div[class='Menu-root']")).toBeVisible();

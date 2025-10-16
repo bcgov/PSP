@@ -26,7 +26,7 @@ class SearchManagementFiles {
       .click();
   }
 
-   async navigateToSearchActivitiesManagement() {
+  async navigateToSearchActivitiesManagement() {
     await clickAndWaitFor(
       this.page,
       "div[data-testid='nav-tooltip-project'] a",
@@ -433,9 +433,7 @@ class SearchManagementFiles {
     await this.page
       .locator("#input-activityStatusCode")
       .waitFor({ state: "visible" });
-    expect(
-      this.page.locator("#input-activityStatusCode")
-    ).toBeVisible();
+    expect(this.page.locator("#input-activityStatusCode")).toBeVisible();
 
     await this.page
       .locator("#input-activityTypeCode")
@@ -463,16 +461,26 @@ class SearchManagementFiles {
     await this.page.locator("#reset-button").waitFor({ status: "visible" });
     expect(this.page.locator("#reset-button")).toBeVisible();
 
-    await this.page.getByTestId("excel-icon-overview").waitFor({ status: "visible" });
+    await this.page
+      .getByTestId("excel-icon-overview")
+      .waitFor({ status: "visible" });
     expect(this.page.getByTestId("excel-icon-overview")).toBeVisible();
 
-    await this.page.locator("//span[text()='Activity overview']").waitFor({ status: "visible" });
-    expect(this.page.locator("//span[text()='Activity overview']")).toBeVisible();
+    await this.page
+      .locator("//span[text()='Activity overview']")
+      .waitFor({ status: "visible" });
+    expect(
+      this.page.locator("//span[text()='Activity overview']")
+    ).toBeVisible();
 
-    await this.page.getByTestId("excel-icon-invoices").waitFor({ status: "visible" });
+    await this.page
+      .getByTestId("excel-icon-invoices")
+      .waitFor({ status: "visible" });
     expect(this.page.getByTestId("excel-icon-invoices")).toBeVisible();
 
-      await this.page.locator("//span[text()='Invoice report']").waitFor({ status: "visible" });
+    await this.page
+      .locator("//span[text()='Invoice report']")
+      .waitFor({ status: "visible" });
     expect(this.page.locator("//span[text()='Invoice report']")).toBeVisible();
 
     //Search Management Column Headers
@@ -521,9 +529,7 @@ class SearchManagementFiles {
     await this.page
       .getByTestId("sort-column-activityType")
       .waitFor({ status: "visible" });
-    expect(
-      this.page.getByTestId("sort-column-activityType")
-    ).toBeVisible();
+    expect(this.page.getByTestId("sort-column-activityType")).toBeVisible();
 
     const subtypeColumn = await this.page.locator(
       "div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div:nth-child(6) div[class='sortable-column']"
@@ -538,9 +544,7 @@ class SearchManagementFiles {
     await this.page
       .getByTestId("sort-column-activityStatus")
       .waitFor({ status: "visible" });
-    expect(
-      this.page.getByTestId("sort-column-activityStatus")
-    ).toBeVisible();
+    expect(this.page.getByTestId("sort-column-activityStatus")).toBeVisible();
 
     //Search Management Pagination
     await this.page
