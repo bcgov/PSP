@@ -212,21 +212,6 @@ exports[`PaymentsView component > renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c1 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
-.c0 {
-  margin: 1.6rem;
-  padding: 1.6rem;
-  background-color: white;
-  text-align: left;
-  border-radius: 0.5rem;
-}
-
 .c6 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -253,6 +238,21 @@ exports[`PaymentsView component > renders as expected 1`] = `
   margin-left: 1.5rem;
   margin-bottom: 0.5rem;
   float: right;
+}
+
+.c1 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
+}
+
+.c0 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
 }
 
 .c7 {
@@ -543,21 +543,6 @@ exports[`PaymentsView component > renders with data as expected 1`] = `
   margin-right: 0;
 }
 
-.c1 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
-.c0 {
-  margin: 1.6rem;
-  padding: 1.6rem;
-  background-color: white;
-  text-align: left;
-  border-radius: 0.5rem;
-}
-
 .c6 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -584,6 +569,21 @@ exports[`PaymentsView component > renders with data as expected 1`] = `
   margin-left: 1.5rem;
   margin-bottom: 0.5rem;
   float: right;
+}
+
+.c1 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
+}
+
+.c0 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
 }
 
 .c7 {
@@ -954,21 +954,6 @@ exports[`PeriodsPaymentsContainer component > renders as expected 1`] = `
   line-height: 2rem;
 }
 
-.c2 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
-.c0 {
-  margin: 1.6rem;
-  padding: 1.6rem;
-  background-color: white;
-  text-align: left;
-  border-radius: 0.5rem;
-}
-
 .c6 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -995,6 +980,21 @@ exports[`PeriodsPaymentsContainer component > renders as expected 1`] = `
   margin-left: 1.5rem;
   margin-bottom: 0.5rem;
   float: right;
+}
+
+.c2 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
+}
+
+.c0 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
 }
 
 .c7 {
@@ -1844,21 +1844,6 @@ exports[`PeriodsPaymentsContainer component > renders with data as expected 1`] 
   line-height: 2rem;
 }
 
-.c2 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
-.c0 {
-  margin: 1.6rem;
-  padding: 1.6rem;
-  background-color: white;
-  text-align: left;
-  border-radius: 0.5rem;
-}
-
 .c6 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -1885,6 +1870,21 @@ exports[`PeriodsPaymentsContainer component > renders with data as expected 1`] 
   margin-left: 1.5rem;
   margin-bottom: 0.5rem;
   float: right;
+}
+
+.c2 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
+}
+
+.c0 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
 }
 
 .c7 {

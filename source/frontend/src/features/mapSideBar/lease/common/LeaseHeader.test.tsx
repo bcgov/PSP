@@ -1,12 +1,13 @@
+import { http, HttpResponse } from 'msw';
+
 import { getMockApiLease } from '@/mocks/lease.mock';
+import { server } from '@/mocks/msw/server';
+import { getUserMock } from '@/mocks/user.mock';
+import { ApiGen_CodeTypes_LeasePaymentReceivableTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePaymentReceivableTypes';
+import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 import { prettyFormatUTCDate } from '@/utils';
 import { act, render, RenderOptions } from '@/utils/test-utils';
 
-import { server } from '@/mocks/msw/server';
-import { getUserMock } from '@/mocks/user.mock';
-import { ApiGen_CodeTypes_LeaseAccountTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseAccountTypes';
-import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
-import { http, HttpResponse } from 'msw';
 import { ILeaseHeaderProps, LeaseHeader } from './LeaseHeader';
 
 describe('LeaseHeader component', () => {
@@ -100,7 +101,7 @@ describe('LeaseHeader component', () => {
       lease: {
         ...testLease,
         paymentReceivableType: {
-          id: ApiGen_CodeTypes_LeaseAccountTypes.RCVBL,
+          id: ApiGen_CodeTypes_LeasePaymentReceivableTypes.RCVBL,
           description: 'Receivable',
           displayOrder: null,
           isDisabled: false,
@@ -120,7 +121,7 @@ describe('LeaseHeader component', () => {
       lease: {
         ...testLease,
         paymentReceivableType: {
-          id: ApiGen_CodeTypes_LeaseAccountTypes.RCVBL,
+          id: ApiGen_CodeTypes_LeasePaymentReceivableTypes.RCVBL,
           description: 'Receivable',
           displayOrder: null,
           isDisabled: false,
@@ -139,7 +140,7 @@ describe('LeaseHeader component', () => {
       lease: {
         ...testLease,
         paymentReceivableType: {
-          id: ApiGen_CodeTypes_LeaseAccountTypes.PYBLBCTFA,
+          id: ApiGen_CodeTypes_LeasePaymentReceivableTypes.PYBLBCTFA,
           description: 'Payable (BCTFA as tenant)',
           displayOrder: null,
           isDisabled: false,
