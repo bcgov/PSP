@@ -659,7 +659,7 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
                     </div>
                   </div>
                   <div
-                    class="c20 collapsing"
+                    class="c20 collapse"
                   >
                     <p
                       class="mb-4"
@@ -814,7 +814,7 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
                         <div
                           class="c24"
                         >
-                          Navigate to an area of the map OR use 
+                          Navigate to an area of the map OR use
                           <button
                             class="c4 Button d-inline-block btn btn-link"
                             type="button"
@@ -962,3 +962,5 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
   </div>
 </DocumentFragment>
 `;
+
+exports[`AddResearchContainer component > renders as expected 2`] = `<DocumentFragment />`;
