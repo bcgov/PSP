@@ -100,7 +100,7 @@ class AdminTools {
     ).toBeVisible();
     await expect(this.page.getByTestId("sort-column-position")).toBeVisible();
     await expect(
-      this.page.locator("//div[contains(text(),'User Type')]")
+      this.page.locator("//div[contains(text(),'User type')]")
     ).toBeVisible();
     await expect(
       this.page.locator("//div[contains(text(),'Roles')]")
@@ -112,12 +112,18 @@ class AdminTools {
       this.page.locator("//div[contains(text(),'Last login')]")
     ).toBeVisible();
 
-    const usersCount = await this.page
-      .locator(
-        "div[data-testid='usersTable'] div[class='tbody'] div[class='tr-wrapper']"
-      )
+    const usersRowSelector =
+      "div[data-testid='usersTable'] div[class='tbody'] div[class='tr-wrapper']";
+
+    await this.page.locator(usersRowSelector).first().waitFor({
+      state: "visible",
+      timeout: 10000,
+    });
+
+    const usersRowSelectorCount = await this.page
+      .locator(usersRowSelector)
       .count();
-    expect(usersCount).toBeGreaterThan(0);
+    expect(usersRowSelectorCount).toBeGreaterThan(0);
 
     await expect(this.page.getByTestId("input-page-size")).toBeVisible();
     await expect(this.page.locator("ul[class='pagination']")).toBeVisible();
@@ -279,11 +285,15 @@ class AdminTools {
     ).toBeVisible();
     await expect(this.page.getByTestId("sort-column-expiryDate")).toBeVisible();
 
-    const financialCodesCount = await this.page
-      .locator(
-        "div[data-testid='FinancialCodeTable'] div[class='tbody'] div[class='tr-wrapper']"
-      )
-      .count();
+    const financialCodesSelector = await this.page.locator(
+      "div[data-testid='FinancialCodeTable'] div[class='tbody'] div[class='tr-wrapper']"
+    );
+    await financialCodesSelector.first().waitFor({
+      state: "visible",
+      timeout: 10000,
+    });
+
+    const financialCodesCount = await financialCodesSelector.count();
     expect(financialCodesCount).toBeGreaterThan(0);
 
     await expect(this.page.getByTestId("input-page-size")).toBeVisible();

@@ -282,13 +282,6 @@ class DigitalDocuments {
           "//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[5]/div/button[@data-testid='document-view-button']"
         )
         .isVisible();
-
-      if (isDetailsBttnVisible) {
-        console.log("Details button is now visible!");
-        break;
-      }
-
-      console.log("Details button not yet visible, retrying...");
       await this.page.waitForTimeout(refreshInterval);
     }
 

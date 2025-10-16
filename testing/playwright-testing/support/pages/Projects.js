@@ -143,11 +143,24 @@ class Projects {
     await expect(
       this.page.locator("//label[contains(text(),'Status')]")
     ).toBeVisible();
-    await expect(this.page.locator("#input-projectStatusType")).toBeVisible();
+
+    const stausSelectElement = await this.page.locator(
+      "#input-projectStatusType"
+    );
+    expect(stausSelectElement).toBeVisible();
+
+    const statusOptions = await stausSelectElement.locator("option").count();
+    expect(statusOptions).toBeGreaterThan(0);
+
     await expect(
       this.page.locator("//label[contains(text(),'MOTT region')]")
     ).toBeVisible();
-    await expect(this.page.locator("#input-region")).toBeVisible();
+    const regionSelectElement = await this.page.locator("#input-region");
+    expect(regionSelectElement).toBeVisible();
+
+    const regionOptions = await regionSelectElement.locator("option").count();
+    expect(regionOptions).toBeGreaterThan(0);
+
     await expect(
       this.page.locator("//label[contains(text(),'Project summary')]")
     ).toBeVisible();

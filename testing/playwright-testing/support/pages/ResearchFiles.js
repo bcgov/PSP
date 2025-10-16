@@ -148,6 +148,16 @@ class ResearchFiles {
       this.page.getByTestId("sort-column-researchFileStatusTypeCode")
     ).toBeVisible();
 
+    await this.page
+      .locator(
+        "div[data-testid='researchFilesTable'] div[class='tbody'] div[class='tr-wrapper']"
+      )
+      .first()
+      .waitFor({
+        state: "visible",
+        timeout: 10000,
+      });
+
     const researchFileCount = await this.page
       .locator(
         "div[data-testid='researchFilesTable'] div[class='tbody'] div[class='tr-wrapper']"

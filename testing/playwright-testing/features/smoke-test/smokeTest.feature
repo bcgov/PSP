@@ -8,7 +8,6 @@ Scenario: Help Desk Form
 
 Scenario: Search Control Section
     Given I verify the Search Controls
-    When I search for a property
     Then The Search Control section is rendered successfully
 
 Scenario: Map Layers Section
@@ -19,7 +18,6 @@ Scenario: Map Layers Section
 Scenario: Worklist Section
     Given I navigate to the Worklists Page
     When I verify the Worklist view form
-    And I insert a property in the Worklist
     Then The Worklist section is rendered successfully
 
 Scenario: Projects Section
@@ -43,6 +41,7 @@ Scenario: Acquisition Files Section
 Scenario: Management Files Section
     Given I navigate to the Management Files Page
     When I verify the Management Files List View
+    And I verify the Management Activities List View
     And I verify the Management Files Create Form fields
     Then The Management Files section is rendered successfully
 

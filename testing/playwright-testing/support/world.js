@@ -1,6 +1,6 @@
 import * as dotenv from "dotenv";
 import { setWorldConstructor } from "@cucumber/cucumber";
-import { launchBrowser } from "../utils/browserSetup.js";
+import { launchBrowser, createNewContext } from "../utils/browserSetup.js";
 
 // Import your page objects
 import LoginPage from "./pages/LoginPage.js";
@@ -56,12 +56,15 @@ class CustomWorld {
   }
 
   async openBrowser() {
-    const { browser, context, page } = await launchBrowser();
-    this.browser = browser;
-    this.context = context;
-    this.page = page;
+    const browserInstance = await launchBrowser();
+    this.browser = browserInstance; // Store the browser instance on the World object
 
-    // Initialize page objects here
+    const contextInstance = await createNewContext(this.browser);
+    this.context = contextInstance; // Store the context instance on the World object
+
+    this.page = await this.context.newPage();
+
+    // Initialize page objects
     this.loginPage = new LoginPage(this.page);
     this.managementFileDetails = new ManagementFileDetails(this.page);
     this.notes = new Notes(this.page);
@@ -84,6 +87,7 @@ class CustomWorld {
   }
 
   async closeBrowser() {
+    await this.context?.close();
     await this.browser?.close();
   }
 }

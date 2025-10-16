@@ -1,19 +1,20 @@
-const { Before, After, setDefaultTimeout } = require("@cucumber/cucumber");
-const { getUserCredential } = require("./common.js");
+// support/hooks.js
 
-setDefaultTimeout(120000);
+import { Before, After } from "@cucumber/cucumber";
+import { getUserCredential } from "./common.js";
 
-Before(async function () {
-  if (!this.page) {
-    await this.openBrowser();
-  }
+Before({ timeout: 60000 }, async function () {
+  await this.openBrowser();
 
+  // Login process before each test case
   await this.loginPage.navigate(global.baseURL);
 
   const username = getUserCredential("USER1_NAME");
   const password = getUserCredential("USER1_PASSWORD");
 
   await this.loginPage.login(username, password);
+
+  // Wait for App Stability
   await this.page
     .getByTestId("filter-backdrop-loading")
     .first()
@@ -27,6 +28,7 @@ Before(async function () {
     .waitFor({ state: "visible", timeout: 20000 });
 });
 
+// --- AFTER HOOK ---
 After(async function () {
-  //await this.closeBrowser();
+  await this.closeBrowser();
 });

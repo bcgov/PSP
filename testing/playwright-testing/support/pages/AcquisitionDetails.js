@@ -969,6 +969,16 @@ class AcquisitionDetails {
       this.page.getByTestId("sort-column-acquisitionFileStatusTypeCode")
     ).toBeVisible();
 
+    await this.page
+      .locator(
+        "div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']"
+      )
+      .first()
+      .waitFor({
+        state: "visible",
+        timeout: 10000,
+      });
+
     const acquisitionTableCount = await this.page
       .locator(
         "div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']"

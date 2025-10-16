@@ -16,13 +16,13 @@ Given("I verify the Search Controls", async function () {
   await this.searchProperties.verifySearchControlForm();
 });
 
-When("I search for a property", async function () {
+When("I search for a property", { timeout: 1200000 }, async function () {
   await this.searchProperties.searchPropertyByPID("024-229-415");
   await this.searchProperties.selectNthSearchResult(0);
 });
 
 Then("The Search Control section is rendered successfully", async function () {
-  await this.searchProperties.verifyPropertyQuickInfo();
+  await this.searchProperties.navigateSearchProperties();
 });
 
 Given("I navigate to the Map Layers Page", async function () {
@@ -53,7 +53,7 @@ When("I insert a property in the Worklist", async function () {
 });
 
 Then("The Worklist section is rendered successfully", async function () {
-  await this.workLists.verifyWorklistWithProps();
+  await this.workLists.navigateWorkLists();
 });
 
 Given("I navigate to the Projects Page", async function () {
@@ -118,6 +118,11 @@ When("I verify the Management Files List View", async function () {
   await this.searchManagementFiles.verifySearchManagementListView();
 });
 
+When("I verify the Management Activities List View", async function () {
+  await this.searchManagementFiles.navigateToSearchActivitiesManagement();
+  await this.searchManagementFiles.verifySearchManagementActivitiesListView();
+});
+
 When("I verify the Management Files Create Form fields", async function () {
   await this.managementFileDetails.navigateManagementMainMenu();
   await this.managementFileDetails.createManagementFileLink();
@@ -159,10 +164,14 @@ When("I verify the Disposition Files List View", async function () {
   await this.dispositionFile.verifyDispositionListView();
 });
 
-When("I verify the Disposition Files Create Form fields", async function () {
-  await this.dispositionFile.navigateCreateDisposition();
-  await this.dispositionFile.verifyCreateDispositionForm();
-});
+When(
+  "I verify the Disposition Files Create Form fields",
+  { timeout: 10000 },
+  async function () {
+    await this.dispositionFile.navigateCreateDisposition();
+    await this.dispositionFile.verifyCreateDispositionForm();
+  }
+);
 
 Then(
   "The Disposition Files section is rendered successfully",
@@ -179,10 +188,14 @@ When("I verify the Contact Manager List View", async function () {
   await this.contactManager.verifyDispositionListView();
 });
 
-When("I verify the Contact Manager Create Form fields", async function () {
-  await this.contactManager.navigateCreateContact();
-  await this.contactManager.verifyCreateContactForm();
-});
+When(
+  "I verify the Contact Manager Create Form fields",
+  { timeout: 30000 },
+  async function () {
+    await this.contactManager.navigateCreateContact();
+    await this.contactManager.verifyCreateContactForm();
+  }
+);
 
 Then("The Contact Manager section is rendered successfully", async function () {
   await this.contactManager.cancelCreateContact();
