@@ -17,6 +17,10 @@ namespace Pims.Api.Areas.Reports.Models.Lease
         [CsvHelper.Configuration.Attributes.Name("Historical File #")]
         public string HistoricalFileNo { get; set; }
 
+        [DisplayName("Account Type")]
+        [CsvHelper.Configuration.Attributes.Name("Account Type")]
+        public string AccountType { get; set; }
+
         [DisplayName("MoTI Region")]
         [CsvHelper.Configuration.Attributes.Name("MoTI Region")]
         public string MotiRegion { get; set; }
