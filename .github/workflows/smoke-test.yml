@@ -37,15 +37,11 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: 🚀 Run Cucumber Smoke Tests
-        # Use your custom command to run the smoke tests
-        # The --parallel 3 flag is suggested for efficiency, adjust based on stability
-        run: npx cucumber-js --tags @smokeTest --parallel 3 
+        run: npx cucumber-js --tags @smokeTest
 
       - name: 📝 Upload Test Report (Optional)
-        # If your cucumber setup generates an HTML or JSON report, upload it for review
         if: always() # Run this step even if the tests fail
         uses: actions/upload-artifact@v4
         with:
           name: cucumber-report
-          # Replace 'report/cucumber-report.html' with the actual path to your report file
           path: report/cucumber-report.html
