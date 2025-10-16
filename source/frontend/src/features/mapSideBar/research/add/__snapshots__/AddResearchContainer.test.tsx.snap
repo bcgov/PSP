@@ -659,7 +659,7 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
                     </div>
                   </div>
                   <div
-                    class="c20 collapse"
+                    class="c20 collapsing"
                   >
                     <p
                       class="mb-4"
