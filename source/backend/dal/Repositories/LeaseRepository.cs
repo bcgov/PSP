@@ -8,6 +8,7 @@ using LinqKit;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Models.CodeTypes;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Core.Security;
@@ -886,6 +887,7 @@ namespace Pims.Dal.Repositories
                         .Include(l => l.LeaseProgramTypeCodeNavigation)
                         .Include(l => l.LeaseStatusTypeCodeNavigation)
                         .Include(l => l.LeaseLicenseTypeCodeNavigation)
+                        .Include(l => l.LeasePayRvblTypeCodeNavigation)
                         .Include(l => l.PimsLeaseStakeholders)
                             .ThenInclude(t => t.Person)
                         .Include(l => l.PimsLeaseStakeholders)
@@ -1124,9 +1126,12 @@ namespace Pims.Dal.Repositories
                     EF.Functions.Like(pl.Property.Address.MunicipalityName, $"%{filter.Address}%"))));
             }
 
-            if (filter.IsReceivable == true)
+            // Allow filtering by "payable" or "receivable" leases.
+            if (filter.IsReceivable.HasValue)
             {
-                predicateBuilder = predicateBuilder.And(l => l.LeasePayRvblTypeCode == "RCVBL");
+                predicateBuilder = filter.IsReceivable.Value
+                    ? predicateBuilder.And(l => l.LeasePayRvblTypeCode == nameof(LeasePaymentReceivableTypes.RCVBL))
+                    : predicateBuilder.And(l => l.LeasePayRvblTypeCode != nameof(LeasePaymentReceivableTypes.RCVBL));
             }
 
             if (filter.NotInStatus.Count > 0)

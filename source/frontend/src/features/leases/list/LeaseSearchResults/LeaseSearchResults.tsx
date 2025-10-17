@@ -27,7 +27,7 @@ const columns: ColumnWithProps<ApiGen_Concepts_Lease>[] = [
     align: 'right',
     clickable: true,
     sortable: true,
-    width: 10,
+    width: 20,
     maxWidth: 20,
     Cell: (props: CellProps<ApiGen_Concepts_Lease>) => (
       <ExternalLink to={`/mapview/sidebar/lease/${props.row.original.id}`}>
@@ -40,7 +40,8 @@ const columns: ColumnWithProps<ApiGen_Concepts_Lease>[] = [
     accessor: 'expiryDate',
     align: 'left',
     sortable: true,
-    width: 20,
+    width: 25,
+    maxWidth: 25,
     Cell: (props: CellProps<ApiGen_Concepts_Lease>) => {
       const expiryDate = getCalculatedExpiry(
         props.row.original,
@@ -78,8 +79,8 @@ const columns: ColumnWithProps<ApiGen_Concepts_Lease>[] = [
     accessor: 'programName',
     align: 'left',
     sortable: true,
-    width: 40,
-    maxWidth: 80,
+    width: 30,
+    maxWidth: 60,
   },
   {
     Header: 'Tenant Names',
@@ -100,9 +101,18 @@ const columns: ColumnWithProps<ApiGen_Concepts_Lease>[] = [
     },
   },
   {
+    Header: 'Account Type',
+    align: 'left',
+    sortable: true,
+    width: 25,
+    maxWidth: 25,
+    accessor: 'paymentReceivableType',
+    Cell: renderTypeCode,
+  },
+  {
     Header: 'Properties',
     align: 'left',
-
+    width: 75,
     Cell: (props: CellProps<ApiGen_Concepts_Lease>) => {
       return (
         <LeaseProperties
