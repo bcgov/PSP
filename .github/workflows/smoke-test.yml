@@ -21,6 +21,10 @@ jobs:
   smoke-test:
     runs-on: ubuntu-22.04
 
+    defaults:
+      run:
+        working-directory: testing/playwright-testing
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -31,7 +35,7 @@ jobs:
           node-version: '20'
 
       - name: Install Dependencies
-        uses: npm ci
+        uses: npm install
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
