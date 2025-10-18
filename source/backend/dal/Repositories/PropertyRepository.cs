@@ -499,7 +499,9 @@ namespace Pims.Dal.Repositories
             {
                 predicate.And(p => p.PimsPropertyLeases.Any(pl => pl.Lease.ProjectId == filter.ProjectId) ||
                     p.PimsPropertyResearchFiles.Any(pr => pr.ResearchFile.PimsResearchFileProjects.Any(r => r.ProjectId == filter.ProjectId)) ||
-                    p.PimsPropertyAcquisitionFiles.Any(pa => pa.AcquisitionFile.ProjectId == filter.ProjectId));
+                    p.PimsPropertyAcquisitionFiles.Any(pa => pa.AcquisitionFile.ProjectId == filter.ProjectId) ||
+                    p.PimsDispositionFileProperties.Any(pd => pd.DispositionFile.ProjectId == filter.ProjectId) ||
+                    p.PimsManagementFileProperties.Any(pm => pm.ManagementFile.ProjectId == filter.ProjectId));
             }
 
             // Tenure Filters

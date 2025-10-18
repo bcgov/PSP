@@ -404,6 +404,13 @@ exports[`SearchContainer component > renders as expected 1`] = `
                   >
                     Survey Parcel
                   </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-project"
+                    value="project"
+                  >
+                    Project
+                  </option>
                 </select>
               </div>
             </div>
@@ -584,7 +591,7 @@ exports[`SearchContainer component > renders as expected 1`] = `
         class="collapse show"
       >
         <div
-          class="c1 form-section c7"
+          class="c1 form-section c7 p-0"
         >
           <div
             class="collapse show"
@@ -677,7 +684,7 @@ exports[`SearchContainer component > renders as expected 1`] = `
         class="collapse show"
       >
         <div
-          class="c1 form-section c7"
+          class="c1 form-section c7 p-0"
         >
           <div
             class="collapse show"

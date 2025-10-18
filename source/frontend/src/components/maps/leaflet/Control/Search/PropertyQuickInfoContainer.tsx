@@ -18,6 +18,7 @@ import TooltipWrapper from '@/components/common/TooltipWrapper';
 import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
 import { Claims } from '@/constants';
 import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator';
+import { useFullyAttributedParcelMapLayer } from '@/hooks/repositories/mapLayer/useFullyAttributedParcelMapLayer';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { useLtsa } from '@/hooks/useLtsa';
 import {
@@ -42,23 +43,53 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
     mapFeatureData,
   } = useMapStateMachine();
 
+  const { findByPid, findByPin } = useFullyAttributedParcelMapLayer();
+
   const pathGenerator = usePathGenerator();
 
-  const locationInfo = useMemo(() => {
-    const parcelMapFeature = firstOrNull(mapLocationFeatureDataset?.parcelFeatures)?.properties;
-    const pimsMapFeature = firstOrNull(mapLocationFeatureDataset?.pimsFeatures)?.properties;
-    if (exists(parcelMapFeature)) {
-      return parcelMapFeature;
-    } else if (exists(pimsMapFeature)) {
-      const foundFullyAttributed = mapFeatureData.fullyAttributedFeatures?.features.find(
-        fa =>
-          (exists(fa.properties?.PID_NUMBER) && fa.properties.PID_NUMBER === pimsMapFeature.PID) ||
-          (exists(fa.properties?.PIN) && fa.properties.PIN === pimsMapFeature.PIN),
-      );
-      return foundFullyAttributed?.properties ?? null;
-    }
+  // use state + effect to asynchronously resolve locationInfo
+  const [locationInfo, setLocationInfo] = useState<any>(null);
+  useEffect(() => {
+    const loadLocationInfo = async () => {
+      const parcelMapFeature = firstOrNull(mapLocationFeatureDataset?.parcelFeatures)?.properties;
+      const pimsMapFeature = firstOrNull(mapLocationFeatureDataset?.pimsFeatures)?.properties;
+
+      if (exists(parcelMapFeature)) {
+        setLocationInfo(parcelMapFeature);
+        return;
+      }
+
+      if (exists(pimsMapFeature)) {
+        const foundFullyAttributed = mapFeatureData.fullyAttributedFeatures?.features.find(
+          fa =>
+            (exists(fa.properties?.PID_NUMBER) &&
+              fa.properties.PID_NUMBER === pimsMapFeature.PID) ||
+            (exists(fa.properties?.PIN) && fa.properties.PIN === pimsMapFeature.PIN),
+        );
+
+        if (!exists(foundFullyAttributed)) {
+          if (exists(pimsMapFeature.PID)) {
+            const matchingPids = await findByPid(pimsMapFeature.PID_PADDED.toString(), true);
+            setLocationInfo(firstOrNull(matchingPids.features)?.properties ?? null);
+            return;
+          } else if (exists(pimsMapFeature.PIN)) {
+            const matchingPins = await findByPin(pimsMapFeature.PIN.toString(), true);
+            setLocationInfo(firstOrNull(matchingPins.features)?.properties ?? null);
+            return;
+          }
+        }
+        setLocationInfo(foundFullyAttributed?.properties ?? null);
+        return;
+      }
+
+      setLocationInfo(null);
+    };
+
+    loadLocationInfo();
   }, [
-    mapFeatureData.fullyAttributedFeatures.features,
+    findByPid,
+    findByPin,
+    mapFeatureData.fullyAttributedFeatures?.features,
     mapLocationFeatureDataset?.parcelFeatures,
     mapLocationFeatureDataset?.pimsFeatures,
   ]);
@@ -98,7 +129,9 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
   }, [getOwnerInfo, locationInfo?.PID]);
 
   const onViewPropertyInfo = useCallback(() => {
-    pathGenerator.showPropertyByPid(locationInfo.PID);
+    if (exists(locationInfo?.PID)) {
+      pathGenerator.showPropertyByPid(locationInfo.PID);
+    }
   }, [locationInfo?.PID, pathGenerator]);
 
   const showViewPropertyInfo = useMemo(

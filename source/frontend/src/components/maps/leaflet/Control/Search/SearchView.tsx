@@ -175,7 +175,11 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
 
   return (
     <>
-      <StyledWrapper>
+      <StyledWrapper
+        onClick={e => {
+          e.stopPropagation(); // prevent any clicks on the search sidebar from propogating to the map.
+        }}
+      >
         <Section className="my-0">
           <Button onClick={onOpenPropertyList}>Search PIMS information</Button>
         </Section>
