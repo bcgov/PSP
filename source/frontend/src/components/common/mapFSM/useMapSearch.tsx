@@ -338,14 +338,7 @@ export const useMapSearch = () => {
 
       return result;
     },
-    [
-      loadPimsProperties,
-      setModalContent,
-      setDisplayModal,
-      logout,
-      pmbcServiceFindByPin,
-      pmbcServiceFindByPid,
-    ],
+    [loadPimsProperties, setModalContent, setDisplayModal, logout],
   );
 
   const searchBySurveyParcel = useCallback(
