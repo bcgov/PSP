@@ -23,7 +23,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: testing/playwright-testing
+        working-directory: ./testing/playwright-testing
 
     steps:
       - name: Checkout repository
