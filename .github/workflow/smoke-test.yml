@@ -1,11 +1,6 @@
-# This workflow will build a .NET project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
-
 name: FT Smoke Test
 env:
   Base_url: ${{ vars.BASE_URL }}
-  CloseBrowserAfterEachTest: true
-  RunHeadless: true
   Users__0__User: ${{ secrets.USER_1_USERNAME }}
   Users__0__Password: ${{ secrets.USER_1_PASSWORD }}
   Users__1__User: ${{ secrets.USER_2_USERNAME }}
@@ -23,7 +18,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: testing/playwright-testing
+        working-directory: ./testing/playwright-testing
 
     steps:
       - name: Checkout repository
@@ -43,9 +38,9 @@ jobs:
       - name: 🚀 Run Cucumber Smoke Tests
         run: npx cucumber-js --tags @smokeTest
 
-      - name: 📝 Upload Test Report (Optional)
-        if: always() # Run this step even if the tests fail
-        uses: actions/upload-artifact@v4
-        with:
-          name: cucumber-report
-          path: report/cucumber-report.html
+      #- name: 📝 Upload Test Report
+       # if: always() # Run this step even if the tests fail
+       # uses: actions/upload-artifact@v4
+       # with:
+        #  name: cucumber-report
+        #  path: report/cucumber-report.html
