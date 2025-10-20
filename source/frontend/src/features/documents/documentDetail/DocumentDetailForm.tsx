@@ -5,11 +5,12 @@ import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
 import { Button } from '@/components/common/buttons/Button';
-import { Select, SelectOption } from '@/components/common/form';
+import { Input, Select, SelectOption } from '@/components/common/form';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import TooltipIcon from '@/components/common/TooltipIcon';
+import TooltipWrapper from '@/components/common/TooltipWrapper';
 import * as API from '@/constants/API';
 import Claims from '@/constants/claims';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
@@ -24,7 +25,6 @@ import { StyledH3, StyledScrollable } from '../commonStyles';
 import { ComposedDocument, DocumentUpdateFormData } from '../ComposedDocument';
 import { DocumentMetadataView } from '../DocumentMetadataView';
 import { StyledContainer } from '../list/styles';
-import DocumentDetailHeader from './DocumentDetailHeader';
 import { DocumentUpdateFormDataYupSchema } from './DocumentUpdateFormDataYupSchema';
 
 export interface IDocumentDetailFormProps {
@@ -93,7 +93,6 @@ export const DocumentDetailForm: React.FunctionComponent<
       <LoadingBackdrop show={props.isLoading} />
       {hasClaim(Claims.DOCUMENT_VIEW) && (
         <>
-          <DocumentDetailHeader document={props.document} />
           <Section
             noPadding
             header={
@@ -127,6 +126,14 @@ export const DocumentDetailForm: React.FunctionComponent<
               >
                 {formikProps => (
                   <>
+                    <SectionField label="File name" labelWidth={{ xs: 4 }} required>
+                      <TooltipWrapper
+                        tooltipId="file-name-tip"
+                        tooltip="Changing the document name is not supported."
+                      >
+                        <Input field="fileName" />
+                      </TooltipWrapper>
+                    </SectionField>
                     <SectionField label="Document type" labelWidth={{ xs: 4 }} required>
                       <Select
                         className="mb-0"

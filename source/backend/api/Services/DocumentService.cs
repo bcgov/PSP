@@ -301,6 +301,32 @@ namespace Pims.Api.Services
                 documentRepository.CommitTransaction();
             }
 
+            if (existingDocument.FileName != updateRequest.FileName)
+            {
+                var updateExtension = Path.GetExtension(updateRequest.FileName);
+                var existingExtension = Path.GetExtension(existingDocument.FileName);
+                if (updateExtension != existingExtension)
+                {
+                    throw new BadRequestException("Updating a document's extension is not supported.");
+                }
+                var currentMayanDocument = await documentStorageRepository.TryGetDocumentAsync(existingDocument.MayanId.Value);
+                if (currentMayanDocument.Status != ExternalResponseStatus.Success || currentMayanDocument?.Payload?.FileLatest?.Id == null)
+                {
+                    throw GetMayanResponseError(currentMayanDocument.Message);
+                }
+
+                currentMayanDocument.Payload.FileLatest.FileName = updateRequest.FileName;
+                ExternalResponse<FileLatestModel> result = await documentStorageRepository.TryUpdateDocumentFileAsync(existingDocument.MayanId.Value, currentMayanDocument.Payload.FileLatest.Id, currentMayanDocument.Payload.FileLatest);
+                if (result.Status != ExternalResponseStatus.Success)
+                {
+                    throw GetMayanResponseError(result.Message);
+                }
+
+                existingDocument.FileName = result.Payload.FileName;
+                documentRepository.Update(existingDocument);
+                documentRepository.CommitTransaction();
+            }
+
             existingDocument.DocumentStatusTypeCode = updateRequest.DocumentStatusCode;
             documentRepository.Update(existingDocument);
 
