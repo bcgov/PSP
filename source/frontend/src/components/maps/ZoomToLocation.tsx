@@ -82,7 +82,7 @@ export const ZoomToLocation: React.FunctionComponent<IUpdatePropertiesProps> = (
       if (exists(pmbcBounds) && pmbcBounds.isValid()) {
         propertyLocations.push(pmbcGeometry);
       }
-    } else if (exists(parcelDataset?.pimsFeature.geometry)) {
+    } else if (exists(parcelDataset?.pimsFeature?.geometry)) {
       const pimsFeatureGeometry = parcelDataset.pimsFeature.geometry;
       const pimsBounds = geoJSON(pimsFeatureGeometry)?.getBounds();
       if (exists(pimsBounds) && pimsBounds.isValid()) {
