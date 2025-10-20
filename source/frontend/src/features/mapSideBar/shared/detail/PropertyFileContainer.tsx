@@ -177,7 +177,7 @@ export const PropertyFileContainer: React.FunctionComponent<
       content: (
         <PropertyDetailsTabView
           property={{
-            ...toFormValues(props.fileProperty.property),
+            ...toFormValues(composedProperties.apiWrapper?.response),
             electoralDistrict: firstOrNull(composedProperties?.composedProperty?.electoralFeatures),
             isALR: composedProperties?.composedProperty?.alrFeatures?.length > 0,
             firstNations: {
