@@ -4,8 +4,6 @@
 name: FT Smoke Test
 env:
   Base_url: ${{ vars.BASE_URL }}
-  CloseBrowserAfterEachTest: true
-  RunHeadless: true
   Users__0__User: ${{ secrets.USER_1_USERNAME }}
   Users__0__Password: ${{ secrets.USER_1_PASSWORD }}
   Users__1__User: ${{ secrets.USER_2_USERNAME }}
