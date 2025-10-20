@@ -46,6 +46,7 @@ export interface IDocumentDetailFormProps {
 export const DocumentDetailForm: React.FunctionComponent<
   React.PropsWithChildren<IDocumentDetailFormProps>
 > = props => {
+  console.log(props.document);
   const { hasClaim } = useKeycloakWrapper();
 
   const { getOptionsByType } = useLookupCodeHelpers();
@@ -92,109 +93,106 @@ export const DocumentDetailForm: React.FunctionComponent<
     <StyledContainer>
       <LoadingBackdrop show={props.isLoading} />
       {hasClaim(Claims.DOCUMENT_VIEW) && (
-        <>
-          <Section
-            noPadding
-            header={
-              <>
-                Document Information
-                <TooltipIcon
-                  toolTipId="documentInfoToolTip"
-                  innerClassName="documentInfoToolTip"
-                  toolTip="Information you provided here will be searchable"
-                />{' '}
-              </>
-            }
-          >
-            <StyledScrollable>
-              <Formik<DocumentUpdateFormData>
-                innerRef={props.formikRef}
-                initialValues={initialFormState}
-                validationSchema={DocumentUpdateFormDataYupSchema}
-                onSubmit={async (values: DocumentUpdateFormData, { setSubmitting }) => {
-                  if (
-                    props.document?.pimsDocumentRelationship?.id &&
-                    values.documentStatusCode !== undefined
-                  ) {
-                    const request = DocumentUpdateFormData.toRequestApi(values);
-                    await props.onUpdate(request);
-                    setSubmitting(false);
-                  } else {
-                    console.error('Selected document status is not valid');
-                  }
-                }}
-              >
-                {formikProps => (
-                  <>
-                    <SectionField label="File name" labelWidth={{ xs: 4 }} required>
-                      <TooltipWrapper
-                        tooltipId="file-name-tip"
-                        tooltip="Changing the document name is not supported."
-                      >
-                        <Input field="fileName" />
-                      </TooltipWrapper>
-                    </SectionField>
-                    <SectionField label="Document type" labelWidth={{ xs: 4 }} required>
-                      <Select
-                        className="mb-0"
-                        placeholder={
-                          documentTypeOptions.length > 1 ? 'Select Document type' : undefined
-                        }
-                        field={'documentTypeId'}
-                        options={documentTypeOptions}
-                        onChange={onDocumentTypeChange}
-                        disabled={
-                          documentTypeOptions.length === 1 ||
-                          props.relationshipType === ApiGen_CodeTypes_DocumentRelationType.Templates
-                        }
-                      />
-                    </SectionField>
-                    {exists(documentTypePurpose) && (
-                      <SectionField label={null}>
-                        <StyledPurposeText>{documentTypePurpose}</StyledPurposeText>
-                      </SectionField>
-                    )}
-                    <SectionField label="Status" labelWidth={{ xs: 4 }}>
-                      <Select field="documentStatusCode" options={documentStatusTypes} />
-                    </SectionField>
-                    {props.documentTypeUpdated && (
-                      <StyledDiv>
-                        <em>
-                          Some associated metadata may be lost if the document type is changed.
-                        </em>
-                      </StyledDiv>
-                    )}
-                    <StyledH3>Details</StyledH3>
-                    <DocumentMetadataView
-                      mayanMetadata={props.mayanMetadataTypes}
-                      values={formikProps.values}
-                      errors={formikProps.errors}
+        <Section
+          noPadding
+          header={
+            <>
+              Document Information
+              <TooltipIcon
+                toolTipId="documentInfoToolTip"
+                innerClassName="documentInfoToolTip"
+                toolTip="Information you provided here will be searchable"
+              />{' '}
+            </>
+          }
+        >
+          <StyledScrollable>
+            <Formik<DocumentUpdateFormData>
+              innerRef={props.formikRef}
+              initialValues={initialFormState}
+              validationSchema={DocumentUpdateFormDataYupSchema}
+              onSubmit={async (values: DocumentUpdateFormData, { setSubmitting }) => {
+                if (
+                  props.document?.pimsDocumentRelationship?.id &&
+                  values.documentStatusCode !== undefined
+                ) {
+                  const request = DocumentUpdateFormData.toRequestApi(values);
+                  await props.onUpdate(request);
+                  setSubmitting(false);
+                } else {
+                  console.error('Selected document status is not valid');
+                }
+              }}
+            >
+              {formikProps => (
+                <>
+                  {console.log(formikProps.values)}
+                  <SectionField label="File name" labelWidth={{ xs: 4 }} required>
+                    <TooltipWrapper
+                      tooltipId="file-name-tip"
+                      tooltip="Changing the document name is not supported."
+                    >
+                      <Input field="fileName" />
+                    </TooltipWrapper>
+                  </SectionField>
+                  <SectionField label="Document type" labelWidth={{ xs: 4 }} required>
+                    <Select
+                      className="mb-0"
+                      placeholder={
+                        documentTypeOptions.length > 1 ? 'Select Document type' : undefined
+                      }
+                      field={'documentTypeId'}
+                      options={documentTypeOptions}
+                      onChange={onDocumentTypeChange}
+                      disabled={
+                        documentTypeOptions.length === 1 ||
+                        props.relationshipType === ApiGen_CodeTypes_DocumentRelationType.Templates
+                      }
                     />
-                    <div className="pt-5">Do you want to proceed?</div>
-                    <hr />
-                    <Row className="justify-content-end pt-4">
-                      <Col xs="auto">
-                        <Button
-                          variant="secondary"
-                          type="button"
-                          onClick={props.onCancel}
-                          className="px-5"
-                        >
-                          No
-                        </Button>
-                      </Col>
-                      <Col xs="auto">
-                        <Button type="submit" onClick={formikProps.submitForm} className="px-5">
-                          Yes
-                        </Button>
-                      </Col>
-                    </Row>
-                  </>
-                )}
-              </Formik>
-            </StyledScrollable>
-          </Section>
-        </>
+                  </SectionField>
+                  {exists(documentTypePurpose) && (
+                    <SectionField label={null}>
+                      <StyledPurposeText>{documentTypePurpose}</StyledPurposeText>
+                    </SectionField>
+                  )}
+                  <SectionField label="Status" labelWidth={{ xs: 4 }}>
+                    <Select field="documentStatusCode" options={documentStatusTypes} />
+                  </SectionField>
+                  {props.documentTypeUpdated && (
+                    <StyledDiv>
+                      <em>Some associated metadata may be lost if the document type is changed.</em>
+                    </StyledDiv>
+                  )}
+                  <StyledH3>Details</StyledH3>
+                  <DocumentMetadataView
+                    mayanMetadata={props.mayanMetadataTypes}
+                    values={formikProps.values}
+                    errors={formikProps.errors}
+                  />
+                  <div className="pt-5">Do you want to proceed?</div>
+                  <hr />
+                  <Row className="justify-content-end pt-4">
+                    <Col xs="auto">
+                      <Button
+                        variant="secondary"
+                        type="button"
+                        onClick={props.onCancel}
+                        className="px-5"
+                      >
+                        No
+                      </Button>
+                    </Col>
+                    <Col xs="auto">
+                      <Button type="submit" onClick={formikProps.submitForm} className="px-5">
+                        Yes
+                      </Button>
+                    </Col>
+                  </Row>
+                </>
+              )}
+            </Formik>
+          </StyledScrollable>
+        </Section>
       )}
     </StyledContainer>
   );

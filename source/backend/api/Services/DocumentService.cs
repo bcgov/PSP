@@ -301,7 +301,7 @@ namespace Pims.Api.Services
                 documentRepository.CommitTransaction();
             }
 
-            if (existingDocument.FileName != updateRequest.FileName)
+            if (existingDocument.FileName != updateRequest.FileName && existingDocument.MayanId.HasValue)
             {
                 var updateExtension = Path.GetExtension(updateRequest.FileName);
                 var existingExtension = Path.GetExtension(existingDocument.FileName);
@@ -310,7 +310,7 @@ namespace Pims.Api.Services
                     throw new BadRequestException("Updating a document's extension is not supported.");
                 }
                 var currentMayanDocument = await documentStorageRepository.TryGetDocumentAsync(existingDocument.MayanId.Value);
-                if (currentMayanDocument.Status != ExternalResponseStatus.Success || currentMayanDocument?.Payload?.FileLatest?.Id == null)
+                if (currentMayanDocument.Payload?.FileLatest?.Id == null || currentMayanDocument.Status != ExternalResponseStatus.Success)
                 {
                     throw GetMayanResponseError(currentMayanDocument.Message);
                 }

@@ -207,7 +207,9 @@ export class DocumentUpdateFormData {
     metadataTypes: ApiGen_Mayan_DocumentTypeMetadataType[],
   ): DocumentUpdateFormData {
     const model = new DocumentUpdateFormData();
-    model.fileName = composedDocument.documentDetail?.file_latest?.filename;
+    model.fileName =
+      composedDocument?.documentDetail?.file_latest?.filename ??
+      composedDocument?.pimsDocumentRelationship?.document?.fileName;
     model.documentId = composedDocument.pimsDocumentRelationship?.document?.id || 0;
     model.mayanDocumentId =
       composedDocument.pimsDocumentRelationship?.document?.mayanDocumentId || 0;
