@@ -38,9 +38,9 @@ jobs:
       - name: 🚀 Run Cucumber Smoke Tests
         run: npx cucumber-js --tags @smokeTest
 
-      - name: 📝 Upload Test Report (Optional)
-        if: always() # Run this step even if the tests fail
-        uses: actions/upload-artifact@v4
-        with:
-          name: cucumber-report
-          path: report/cucumber-report.html
+      #- name: 📝 Upload Test Report
+       # if: always() # Run this step even if the tests fail
+       # uses: actions/upload-artifact@v4
+       # with:
+        #  name: cucumber-report
+        #  path: report/cucumber-report.html
