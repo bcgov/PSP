@@ -671,7 +671,7 @@ exports[`CreatePersonForm > renders as expected 1`] = `
                     >
                       <button
                         class="c9 Button c10 btn btn-link"
-                        data-testid="remove-button"
+                        data-testid="email-remove-button-0"
                         type="button"
                       >
                         <div
@@ -710,6 +710,7 @@ exports[`CreatePersonForm > renders as expected 1`] = `
                 </div>
                 <button
                   class="c9 Button btn btn-link"
+                  data-testid="add-email-button"
                   type="button"
                 >
                   <div
@@ -813,7 +814,7 @@ exports[`CreatePersonForm > renders as expected 1`] = `
                   >
                     <button
                       class="c9 Button c10 btn btn-link"
-                      data-testid="remove-button"
+                      data-testid="phone-delete-button-0"
                       type="button"
                     >
                       <div
@@ -851,6 +852,7 @@ exports[`CreatePersonForm > renders as expected 1`] = `
                 </div>
                 <button
                   class="c9 Button btn btn-link"
+                  data-testid="add-phone-button"
                   type="button"
                 >
                   <div

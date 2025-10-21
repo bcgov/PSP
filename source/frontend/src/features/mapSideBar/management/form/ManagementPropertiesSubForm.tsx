@@ -10,7 +10,9 @@ import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFe
 import { Section } from '@/components/common/Section/Section';
 import SelectedPropertyHeaderRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyHeaderRow';
 import SelectedPropertyRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyRow';
+import useDraftMarkerSynchronizer from '@/hooks/useDraftMarkerSynchronizer';
 import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
+import { featuresetToLocationBoundaryDataset } from '@/utils';
 import { addPropertiesToCurrentFile } from '@/utils/propertyUtils';
 import { exists, firstOrNull } from '@/utils/utils';
 
@@ -30,6 +32,12 @@ const ManagementPropertiesSubForm: React.FunctionComponent<ManagementPropertiesS
 
   const { selectedFeatures, processCreation, mapLocationFeatureDataset, prepareForCreation } =
     useMapStateMachine();
+
+  useDraftMarkerSynchronizer(
+    formikProps.values.fileProperties.map(p =>
+      featuresetToLocationBoundaryDataset(p.toFeatureDataset()),
+    ),
+  );
 
   // Get PropertyForms with addresses for all selected features
   const { featuresWithAddresses } = useFeatureDatasetsWithAddresses(selectedFeatures ?? []);
@@ -85,13 +93,13 @@ const ManagementPropertiesSubForm: React.FunctionComponent<ManagementPropertiesS
   return (
     <StyledComponentWrapper>
       <div className="py-2">
-        Select one or more properties that you want to include in this disposition. You can choose a
-        location from the map, or search by other criteria.
+        Select one or more properties that you want to include in this management file. You can
+        choose a location from the map, or search by other criteria.
       </div>
 
       <FieldArray name="fileProperties">
         {({ remove }) => (
-          <Section header="Selected properties">
+          <Section header="Selected Properties">
             <AddPropertiesGuide />
             {exists(selectedFeatureDataset?.parcelFeature) && (
               <StyledButtonWrapper>

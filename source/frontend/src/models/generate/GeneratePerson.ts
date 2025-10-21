@@ -5,8 +5,9 @@ import { formatNames } from '@/utils/personUtils';
 
 import { ApiGen_Concepts_Person } from '../api/generated/ApiGen_Concepts_Person';
 import { Api_GenerateAddress } from './GenerateAddress';
+import { Api_GenerateContact } from './GenerateOrganization';
 
-export class Api_GeneratePerson {
+export class Api_GeneratePerson implements Api_GenerateContact {
   given_name: string;
   middle_names: string;
   last_name: string;

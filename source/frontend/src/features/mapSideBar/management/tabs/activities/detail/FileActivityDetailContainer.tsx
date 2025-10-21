@@ -39,6 +39,7 @@ export const FileActivityDetailContainer: React.FunctionComponent<
     fetchMinistryContacts,
     fetchPartiesContact,
     fetchProviderContact,
+    fetchRequestorContact,
     isLoading: isContactLoading,
   } = useActivityContactRetriever();
 
@@ -66,6 +67,7 @@ export const FileActivityDetailContainer: React.FunctionComponent<
           }
         }
         await fetchProviderContact(retrieved);
+        await fetchRequestorContact(retrieved);
 
         const propertyIds = uniq(retrieved.activityProperties?.flatMap(ap => ap.propertyId));
         const propertiesResponse = await getAllPropertiesById(propertyIds);
@@ -82,6 +84,7 @@ export const FileActivityDetailContainer: React.FunctionComponent<
       fetchMinistryContacts,
       fetchPartiesContact,
       fetchProviderContact,
+      fetchRequestorContact,
       getManagementActivity,
       getAllPropertiesById,
     ],

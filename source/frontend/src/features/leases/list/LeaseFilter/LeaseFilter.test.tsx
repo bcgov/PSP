@@ -1,15 +1,13 @@
-import userEvent from '@testing-library/user-event';
-
 import { ILeaseFilter } from '@/features/leases';
+import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
 import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
 import { getUserMock } from '@/mocks/user.mock';
-import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, fillInput, render, RenderOptions } from '@/utils/test-utils';
-
-import { ILeaseFilterProps, LeaseFilter } from './LeaseFilter';
-import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
 import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
+
+import { ILeaseFilterProps, LeaseFilter } from './LeaseFilter';
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: [] },
@@ -46,12 +44,12 @@ vi.mocked(useApiLeases).mockReturnValue({
   getLeaseRenewals: vi.fn(),
   getLeaseStakeholderTypes: vi.fn(),
   putLeaseProperties: vi.fn(),
-  getAllLeaseFileTeamMembers: vi.fn(),
+  getAllLeaseFileTeamMembers: vi.fn().mockResolvedValue({ data: [] }),
   getLeaseAtTime: vi.fn(),
 });
 
 // render component under test
-const setup = (
+const setup = async (
   renderOptions: RenderOptions & ILeaseFilterProps = { store: storeState, setFilter },
 ) => {
   const { filter, setFilter: setFilterFn, ...rest } = renderOptions;
@@ -59,6 +57,9 @@ const setup = (
     ...rest,
     claims: [],
   });
+  // wait for effects to run
+  await act(async () => {});
+
   const searchButton = utils.getByTestId('search');
   const resetButton = utils.getByTestId('reset-button');
   return { searchButton, resetButton, setFilter: setFilterFn, ...utils };
@@ -70,12 +71,12 @@ describe('Lease Filter', () => {
   });
 
   it('matches snapshot', async () => {
-    const { asFragment } = setup();
+    const { asFragment } = await setup();
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('searches by pid', async () => {
-    const { container, searchButton, setFilter } = setup();
+    const { container, searchButton, setFilter } = await setup();
 
     fillInput(container, 'searchBy', 'pid', 'select');
     fillInput(container, 'pid', '123');
@@ -105,12 +106,13 @@ describe('Lease Filter', () => {
         details: '',
         leaseTeamOrganizationId: undefined,
         leaseTeamPersonId: null,
+        isReceivable: null,
       }),
     );
   });
 
   it('searches by pin', async () => {
-    const { container, searchButton, setFilter } = setup();
+    const { container, searchButton, setFilter } = await setup();
 
     fillInput(container, 'searchBy', 'pin', 'select');
     fillInput(container, 'pin', '123');
@@ -140,12 +142,13 @@ describe('Lease Filter', () => {
         details: '',
         leaseTeamOrganizationId: undefined,
         leaseTeamPersonId: null,
+        isReceivable: null,
       }),
     );
   });
 
   it('searches by L-file number', async () => {
-    const { container, searchButton, setFilter } = setup();
+    const { container, searchButton, setFilter } = await setup();
 
     fillInput(container, 'searchBy', 'lFileNo', 'select');
     fillInput(container, 'lFileNo', '123');
@@ -175,12 +178,13 @@ describe('Lease Filter', () => {
         details: '',
         leaseTeamOrganizationId: undefined,
         leaseTeamPersonId: null,
+        isReceivable: null,
       }),
     );
   });
 
   it('searches tenant name', async () => {
-    const { container, searchButton, setFilter } = setup();
+    const { container, searchButton, setFilter } = await setup();
 
     fillInput(container, 'searchBy', 'pid', 'select');
     fillInput(container, 'tenantName', 'Chester');
@@ -210,12 +214,26 @@ describe('Lease Filter', () => {
         details: '',
         leaseTeamOrganizationId: undefined,
         leaseTeamPersonId: null,
+        isReceivable: null,
+      }),
+    );
+  });
+
+  it('searches by lease payable/receivable', async () => {
+    const { container, searchButton, setFilter } = await setup();
+
+    fillInput(container, 'isReceivable', 'true', 'select');
+    await act(async () => userEvent.click(searchButton));
+
+    expect(setFilter).toHaveBeenCalledWith(
+      expect.objectContaining<Partial<ILeaseFilter>>({
+        isReceivable: 'true',
       }),
     );
   });
 
   it('resets the filter when reset button is clicked', async () => {
-    const { container, resetButton, setFilter } = setup();
+    const { container, resetButton, setFilter } = await setup();
 
     fillInput(container, 'searchBy', 'pid', 'select');
     fillInput(container, 'pid', 'foo-bar-baz');
@@ -245,6 +263,7 @@ describe('Lease Filter', () => {
         details: '',
         leaseTeamOrganizationId: null,
         leaseTeamPersonId: null,
+        isReceivable: null,
       }),
     );
   });

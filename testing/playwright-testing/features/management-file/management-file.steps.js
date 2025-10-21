@@ -1,5 +1,5 @@
 const { Given, When, Then } = require("@cucumber/cucumber");
-const mgmFiles = require("../../data/managementFiles.json");
+const mgmFiles = require("../../data/ManagementFiles.json");
 const {
   splitStringToArray,
   clickCancelButton,

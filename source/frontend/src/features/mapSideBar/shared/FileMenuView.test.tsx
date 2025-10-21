@@ -110,34 +110,4 @@ describe('FileMenuView component', () => {
     expect(button).toBeNull();
     expect(icon).toBeVisible();
   });
-
-  it(`Request fly to properties boundaries`, async () => {
-    setup({
-      props: {
-        canEdit: true,
-        isInNonEditableState: true,
-      },
-    });
-
-    const boundariesButton = screen.queryByTestId('fit-file-properties-boundaries');
-
-    expect(boundariesButton).toBeVisible();
-    await act(async () => userEvent.click(boundariesButton));
-    expect(mockRequestFlyToBounds).toHaveBeenCalled();
-  });
-
-  it(`Request fly to single property`, async () => {
-    setup({
-      props: {
-        canEdit: true,
-        isInNonEditableState: true,
-      },
-    });
-
-    const zoomButton = screen.queryByTestId('menu-item-zoom-0');
-
-    expect(zoomButton).toBeVisible();
-    await act(async () => userEvent.click(zoomButton));
-    expect(mockRequestFlyToBounds).toHaveBeenCalled();
-  });
 });

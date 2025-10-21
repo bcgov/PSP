@@ -8,7 +8,7 @@ import {
   IContactSearchResult,
 } from '@/interfaces';
 import { ApiGen_CodeTypes_AreaUnitTypes } from '@/models/api/generated/ApiGen_CodeTypes_AreaUnitTypes';
-import { ApiGen_CodeTypes_LeaseAccountTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseAccountTypes';
+import { ApiGen_CodeTypes_LeasePaymentReceivableTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePaymentReceivableTypes';
 import { ApiGen_CodeTypes_LeasePurposeTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePurposeTypes';
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
@@ -271,7 +271,7 @@ export class FormLeaseProperty {
   areaUnitTypeCode: string;
   displayOrder: number | null;
 
-  private constructor(leaseId?: number | null) {
+  constructor(leaseId?: number | null) {
     this.leaseId = leaseId ?? null;
     this.landArea = 0;
     this.areaUnitTypeCode = ApiGen_CodeTypes_AreaUnitTypes.M2;
@@ -297,6 +297,12 @@ export class FormLeaseProperty {
   public static fromFeatureDataset(mapProperty: SelectedFeatureDataset): FormLeaseProperty {
     const model = new FormLeaseProperty();
     model.property = PropertyForm.fromFeatureDataset(mapProperty);
+    return model;
+  }
+
+  public static fromPropertyForm(propertyForm: PropertyForm): FormLeaseProperty {
+    const model = new FormLeaseProperty();
+    model.property = new PropertyForm(propertyForm);
     return model;
   }
 
@@ -408,7 +414,7 @@ export const getDefaultFormLease: () => LeaseFormModel = () =>
     hasDigitalLicense: null,
     hasPhysicalLicense: null,
     fileStatusTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_LeaseStatusTypes.DRAFT),
-    paymentReceivableType: toTypeCodeNullable(ApiGen_CodeTypes_LeaseAccountTypes.RCVBL),
+    paymentReceivableType: toTypeCodeNullable(ApiGen_CodeTypes_LeasePaymentReceivableTypes.RCVBL),
     leasePurposes: [],
     programType: null,
     type: null,

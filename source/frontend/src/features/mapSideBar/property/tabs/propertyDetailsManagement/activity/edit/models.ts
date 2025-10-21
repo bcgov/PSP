@@ -8,7 +8,7 @@ import { ApiGen_Concepts_ManagementActivityInvolvedParty } from '@/models/api/ge
 import { ApiGen_Concepts_ManagementActivityProperty } from '@/models/api/generated/ApiGen_Concepts_ManagementActivityProperty';
 import { ApiGen_Concepts_PropertyMinistryContact } from '@/models/api/generated/ApiGen_Concepts_PropertyMinistryContact';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
-import { exists, isValidIsoDateTime } from '@/utils';
+import { exists, isNumber, isValidId, isValidIsoDateTime } from '@/utils';
 import { emptyStringtoNullable, toTypeCodeNullable } from '@/utils/formUtils';
 
 import { ManagementActivitySubTypeModel } from '../models/ManagementActivitySubType';
@@ -113,13 +113,12 @@ export class PropertyActivityFormModel {
   activitySubtypeCodes: ManagementActivitySubTypeModel[] = [];
   activityStatusCode = '';
   requestedDate = '';
-  requestorPersonId: number | null;
-  requestorOrganizationId: number | null;
-  requestorPrimaryContactId: number | null;
+  requestorOrgPrimaryContact = '';
   completionDate = '';
   description = '';
   ministryContacts: (IContactSearchResult | null)[] = [null];
   requestedSource = '';
+  requestor: IContactSearchResult | null = null;
   involvedParties: (IContactSearchResult | null)[] = [null];
   serviceProvider: IContactSearchResult | null = null;
   invoices: ActivityInvoiceFormModel[] = [];
@@ -142,9 +141,15 @@ export class PropertyActivityFormModel {
       activitySubTypeCodes: this.activitySubtypeCodes?.map(x => x.toApi(this.id)) ?? [],
       activityStatusTypeCode: toTypeCodeNullable(this.activityStatusCode),
       requestAddedDateOnly: this.requestedDate,
-      requestorPersonId: this.requestorPersonId,
-      requestorOrganizationId: this.requestorOrganizationId,
-      requestorPrimaryContactId: this.requestorPrimaryContactId,
+      requestorPersonId: this.requestor?.personId ?? null,
+      requestorPerson: null,
+      requestorOrganizationId: this.requestor?.organizationId ?? null,
+      requestorOrganization: null,
+      requestorPrimaryContactId:
+        !!this.requestorOrgPrimaryContact && isNumber(+this.requestorOrgPrimaryContact)
+          ? Number(this.requestorOrgPrimaryContact)
+          : null,
+      requestorPrimaryContact: null,
       completionDateOnly: emptyStringtoNullable(this.completionDate),
       description: this.description,
       requestSource: this.requestedSource,
@@ -223,6 +228,14 @@ export class PropertyActivityFormModel {
         );
       }
       formModel.requestedSource = model.requestSource || '';
+      formModel.requestor = fromApiPersonOrApiOrganization(
+        model.requestorPerson,
+        model.requestorOrganization,
+      );
+
+      if (isValidId(model.requestorPrimaryContactId)) {
+        formModel.requestorOrgPrimaryContact = model.requestorPrimaryContactId.toString();
+      }
       if (exists(model.involvedParties) && model.involvedParties.length > 0) {
         formModel.involvedParties = model.involvedParties.map(c =>
           fromApiPersonOrApiOrganization(c.person, c.organization),

@@ -84,6 +84,12 @@ class ManagementFileDetails {
     }
   }
 
+  async cancelManagementFile() {
+    await this.page
+      .locator("//div[contains(text(),'Cancel')]/parent::button")
+      .click();
+  }
+
   async createMinimumManagementFileDetails(managementFile) {
     await this.page
       .locator("#input-fileName")
@@ -199,10 +205,41 @@ class ManagementFileDetails {
     await expect(
       this.page.locator("label", { hasText: "Funding" })
     ).toBeVisible();
-    await expect(this.page.locator("#input-fundingTypeCode")).toBeVisible();
+
+    const fundingSelect = await this.page.locator("#input-fundingTypeCode");
+    expect(fundingSelect).toBeVisible();
+
+    const fundingOptions = await fundingSelect.locator("option").count();
+    expect(fundingOptions).toBeGreaterThan(0);
 
     //Properties
-    await this.sharedFileProperties.verifyPropertiesToIncludeInFileInitForm();
+    await expect(
+      this.page.locator(
+        "//h2/div/div[text()='Properties to include in this file:']"
+      )
+    ).toBeVisible();
+    await expect(
+      this.page.locator(
+        "//div[contains(text(),'Select one or more properties that you want to include in this management file. You can choose a location from the map, or search by other criteria.')]"
+      )
+    ).toBeVisible();
+    await expect(
+      this.page.locator("//h2/div/div[text()='Selected Properties']")
+    ).toBeVisible();
+    await expect(
+      this.page.locator("//div[contains(text(),'New workflow')]")
+    ).toBeVisible();
+    await expect(
+      this.page.locator("//div[contains(text(),'Identifier')]")
+    ).toBeVisible();
+    await expect(
+      this.page.locator(
+        "//div[contains(text(),'Provide a descriptive name for this land')]"
+      )
+    ).toBeVisible();
+    await expect(
+      this.page.locator("//span[contains(text(),'No Properties selected')]")
+    ).toBeVisible();
 
     //Management Details
     await expect(
@@ -259,7 +296,15 @@ class ManagementFileDetails {
     ).toBeVisible();
     await expect(this.page.locator("#input-legacyFileNum")).toBeVisible();
     await expect(this.page.locator("label:has-text('Purpose')")).toBeVisible();
-    await expect(this.page.locator("#input-purposeTypeCode")).toBeVisible();
+
+    const purposeSelectElement = await this.page.locator(
+      "#input-purposeTypeCode"
+    );
+    await expect(purposeSelectElement).toBeVisible();
+
+    const purposeOptions = await purposeSelectElement.locator("option").count();
+    expect(purposeOptions).toBeGreaterThan(0);
+
     await expect(
       this.page.locator("label:has-text('Additional details')")
     ).toBeVisible();
@@ -379,5 +424,4 @@ class ManagementFileDetails {
     // }
   }
 }
-
 module.exports = ManagementFileDetails;
