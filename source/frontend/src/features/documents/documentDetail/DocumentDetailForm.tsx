@@ -46,7 +46,6 @@ export interface IDocumentDetailFormProps {
 export const DocumentDetailForm: React.FunctionComponent<
   React.PropsWithChildren<IDocumentDetailFormProps>
 > = props => {
-  console.log(props.document);
   const { hasClaim } = useKeycloakWrapper();
 
   const { getOptionsByType } = useLookupCodeHelpers();
@@ -102,7 +101,7 @@ export const DocumentDetailForm: React.FunctionComponent<
                 toolTipId="documentInfoToolTip"
                 innerClassName="documentInfoToolTip"
                 toolTip="Information you provided here will be searchable"
-              />{' '}
+              />
             </>
           }
         >
@@ -126,11 +125,10 @@ export const DocumentDetailForm: React.FunctionComponent<
             >
               {formikProps => (
                 <>
-                  {console.log(formikProps.values)}
                   <SectionField label="File name" labelWidth={{ xs: 4 }} required>
                     <TooltipWrapper
                       tooltipId="file-name-tip"
-                      tooltip="Changing the document name is not supported."
+                      tooltip="Changing the document extension is not supported."
                     >
                       <Input field="fileName" />
                     </TooltipWrapper>
