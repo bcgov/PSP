@@ -55,7 +55,7 @@ export class FormStakeholder {
   public readonly original?: IContactSearchResult;
   public readonly provinceState?: string;
 
-  public static toContactSearchResult = (model: FormStakeholder): IContactSearchResult => {
+  public static toContactSearchResult = (model: FormStakeholder): IContactSearchResult | null => {
     if (!model.id) {
       throw Error('Invalid tenant id');
     }
@@ -76,7 +76,7 @@ export class FormStakeholder {
       email: null,
     };
 
-    if (model.personId) {
+    if (isValidId(model.personId)) {
       return {
         ...contact,
         personId: model.personId,
@@ -85,13 +85,15 @@ export class FormStakeholder {
         firstName: null,
         middleNames: null,
       };
-    } else if (model.organizationId) {
+    } else if (isValidId(model.organizationId)) {
       return {
         ...contact,
         organizationId: model.organizationId,
         organization: null,
       };
     }
+
+    return null;
   };
 
   public static toApi(model: FormStakeholder): ApiGen_Concepts_LeaseStakeholder {

@@ -14,6 +14,7 @@ import { Claims } from '@/constants';
 import { LeaseFormModel } from '@/features/leases/models';
 import { IContactSearchResult } from '@/interfaces';
 import { ApiGen_Concepts_LeaseStakeholderType } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholderType';
+import { exists } from '@/utils';
 
 import { AddLeaseTenantYupSchema } from './AddLeaseStakeholderYupSchema';
 import getColumns from './columns';
@@ -62,7 +63,9 @@ export const AddLeaseStakeholderForm: React.FunctionComponent<
       type => type.isPayableRelated === isPayableLease && type.isDisabled === false,
     ) ?? [];
   const onRemove = (remainingTenants: FormStakeholder[]) => {
-    const remainingContacts = remainingTenants.map(t => FormStakeholder.toContactSearchResult(t));
+    const remainingContacts = remainingTenants
+      .map(t => FormStakeholder.toContactSearchResult(t))
+      .filter(exists);
     setSelectedStakeholders(remainingContacts);
     setSelectedContacts(remainingContacts);
   };
@@ -145,7 +148,9 @@ export const AddLeaseStakeholderForm: React.FunctionComponent<
                   handleModalCancel={() => {
                     setShowContactManager(false);
                     setSelectedContacts(
-                      selectedStakeholders.map(t => FormStakeholder.toContactSearchResult(t)),
+                      selectedStakeholders
+                        .map(t => FormStakeholder.toContactSearchResult(t))
+                        .filter(exists),
                     );
                   }}
                   showActiveSelector={true}
