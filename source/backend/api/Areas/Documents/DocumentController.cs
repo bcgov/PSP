@@ -67,7 +67,7 @@ namespace Pims.Api.Controllers
         }
 
         /// <summary>
-        /// Updates document's type, status and metadata.
+        /// Updates document's name, type, status and metadata.
         /// </summary>
         /// <param name="documentId">Used to identify document.</param>
         /// <param name="updateRequest">Contains information about the document metadata.</param>
