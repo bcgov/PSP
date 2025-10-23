@@ -17,7 +17,7 @@ Scenario: 02._Management_File_Properties
 
 Scenario: 03._Management_Files_Digital_Documents
 	Given I create a new Management File from row number 6
-	When I create Digital Documents for a "Management File" row number 14
+	When I create Digital Documents for a "Management File" from row number 14
 	And  I edit a Digital Document for a "Management File" from row number 15
 	Then A new Management file is created or updated successfully
 
@@ -41,11 +41,11 @@ Scenario: 06._Management_Activities_Tab
 Scenario: 07._Management_Activity_Digital_Documents
 	Given I create a new Management File from row number 10
 	When I insert activities to the Management Activities Tab
-	And I create Digital Documents for a Management Activity from row number 14
+	And I create Digital Documents for a "Management Activity" from row number 14
 	Then A new Management file is created or updated successfully
 
 Scenario: 08._Management_Property_Documents
 	Given I create a new Management File from row number 10
 	When I add Properties to the Management File
-	And I create Digital Documents for a Management Activity from row number 14
+	And I create Digital Documents for a "Management Activity" from row number 14
 	Then A new Management file is created or updated successfully

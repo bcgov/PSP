@@ -290,7 +290,7 @@ this.ScenarioInitialize(scenarioInfo);
  await testRunner.GivenAsync("I create a new Acquisition File from row number 8", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 33
- await testRunner.WhenAsync("I create Digital Documents for a \"Acquisition File\" row number 4", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+ await testRunner.WhenAsync("I create Digital Documents for a \"Acquisition File\" from row number 4", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 34
  await testRunner.AndAsync("I edit a Digital Document for a \"Acquisition File\" from row number 7", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");

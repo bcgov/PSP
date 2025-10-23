@@ -244,7 +244,7 @@ const renderActions = (
 
           {hasClaim(Claims.DOCUMENT_DELETE) && !showParentInformation && (
             <StyledRemoveLinkButton
-              data-testid="document-delete-button"
+              data-testid={`document-delete-button-${index}`}
               icon={<FaTrash id={`document-delete-${index}`} size={21} title="document delete" />}
               onClick={() => original?.id && onDelete(DocumentRow.toApi(original))}
             ></StyledRemoveLinkButton>
@@ -258,7 +258,7 @@ const renderActions = (
         {hasClaim(Claims.DOCUMENT_VIEW) && canViewDocument && (
           <ViewButton
             id={`document-view-${index}`}
-            data-testId="document-view-button"
+            data-testId={`document-view-button-${index}`}
             icon={<FaEye size={21} title="document view details" />}
             onClick={() => original?.id && onViewDetails(DocumentRow.toApi(original))}
           ></ViewButton>
@@ -266,7 +266,7 @@ const renderActions = (
 
         {hasClaim(Claims.DOCUMENT_DELETE) && !showParentInformation && canEditDocuments && (
           <StyledRemoveLinkButton
-            data-testid="document-delete-button"
+            data-testid={`document-delete-button-${index}`}
             icon={<FaTrash size={21} id={`document-delete-${index}`} title="document delete" />}
             onClick={() => original?.id && onDelete(DocumentRow.toApi(original))}
           ></StyledRemoveLinkButton>

@@ -503,6 +503,7 @@ exports[`SearchContainer component > renders as expected 1`] = `
     </div>
     <div
       class="c1 form-section my-0 py-0"
+      data-testid="pmbc-search-results-section"
     >
       <h2
         class="c3"
@@ -596,6 +597,7 @@ exports[`SearchContainer component > renders as expected 1`] = `
     </div>
     <div
       class="c1 form-section my-0 py-0"
+      data-testid="pims-search-results-section"
     >
       <h2
         class="c3"

@@ -196,6 +196,7 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
           }
           isCollapsable
           initiallyExpanded
+          data-testid="pmbc-search-results-section"
         >
           <ParcelListContainer View={ParcelListView} parcels={propertyProjections} />
         </Section>
@@ -208,6 +209,7 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
           }
           isCollapsable
           initiallyExpanded
+          data-testid="pims-search-results-section"
         >
           <ParcelListContainer View={ParcelListView} parcels={pimsPropertyProjections} />
         </Section>

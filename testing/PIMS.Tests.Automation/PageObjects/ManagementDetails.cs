@@ -27,7 +27,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By managementFileHeaderStatusContent = By.XPath("//b[contains(text(),'File')]/parent::span/following-sibling::div");
 
         //Create / Update / View Management File
-        private readonly By createManagementTitle = By.XPath("//h1[contains(text(),'Create Management File')]");
+        private readonly By createManagementTitle = By.CssSelector("div[data-testid='form-title']");
         private readonly By viewManagementTitle = By.XPath("//h1[contains(text(),'Management File')]");
         private readonly By updateManagementTitle = By.XPath("//h1[contains(text(),'Update Management File')]");
 
@@ -246,7 +246,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
 
             //Create Title
-            AssertTrueIsDisplayed(createManagementTitle);
+            AssertTrueContentEquals(createManagementTitle, "Create Management File");
 
             //Project
             AssertTrueIsDisplayed(managementFileProjectSubtitle);

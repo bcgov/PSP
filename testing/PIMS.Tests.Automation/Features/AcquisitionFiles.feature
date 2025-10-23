@@ -30,7 +30,7 @@ Scenario: 04._Acquisition_Checklist_Tab
 
 Scenario: 05._Acquisition_Files_Digital_Documents
 	Given I create a new Acquisition File from row number 8
-	When I create Digital Documents for a "Acquisition File" row number 4
+	When I create Digital Documents for a "Acquisition File" from row number 4
 	And  I edit a Digital Document for a "Acquisition File" from row number 7
 	Then A new Acquisition file is created successfully
 

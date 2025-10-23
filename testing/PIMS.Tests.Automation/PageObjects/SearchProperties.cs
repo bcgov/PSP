@@ -51,7 +51,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By search1stPMBCResultCreateManagementOption = By.CssSelector("div[data-testid='more-options-menu'] a[aria-label='Create Management File']");
         private readonly By search1stPMBCResultCreateLeaseOption = By.CssSelector("div[data-testid='more-options-menu'] a[aria-label='Create Lease File']");
         private readonly By search1stPMBCResultCreateDispositionOption = By.CssSelector("div[data-testid='more-options-menu'] a[aria-label='Create Disposition File']");
-        private readonly By search1stPMBCResultAddToFileOption = By.CssSelector("div[data-testid='more-options-menu'] a[aria-label='Add to Open File']");
+        private readonly By search1stPMBCResultAddToFileOption = By.CssSelector("div[data-testid='pmbc-search-results-section'] div[data-testid='search-property-0'] div[data-testid='more-options-menu'] a[aria-label='Add to Open File']");
 
         private readonly By search1stPIMSResult = By.XPath("//div[text()='Results (PIMS)']/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div[@data-testid='search-property-0']/div[1]/div");
         private readonly By search1stPIMSResultEllipsisBttn = By.XPath("//div[text()='Results (PIMS)']/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div[@data-testid='search-property-0']/div[2]/div/div/button");
