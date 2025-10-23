@@ -7,6 +7,7 @@ import { ApiGen_Concepts_DocumentMetadataUpdate } from './ApiGen_Concepts_Docume
 // LINK: @backend/apimodels/Models/Requests/Document/UpdateMetadata/DocumentUpdateRequest.cs
 export interface ApiGen_Requests_DocumentUpdateRequest {
   documentId: number;
+  fileName: string | null;
   mayanDocumentId: number;
   documentTypeId: number;
   documentStatusCode: string | null;

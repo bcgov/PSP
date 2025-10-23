@@ -12,7 +12,7 @@ import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/Ap
 import { ApiGen_Mayan_MetadataType } from '@/models/api/generated/ApiGen_Mayan_MetadataType';
 import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { mockKeycloak, render, RenderOptions } from '@/utils/test-utils';
+import { mockKeycloak, prettyDOM, render, RenderOptions } from '@/utils/test-utils';
 
 import { ComposedDocument, DocumentUpdateFormData } from '../ComposedDocument';
 import { DocumentDetailForm, IDocumentDetailFormProps } from './DocumentDetailForm';
@@ -217,8 +217,8 @@ describe('DocumentDetailForm component', () => {
   });
 
   it('renders the file name', async () => {
-    const { getAllByText } = await setup({});
-    const textarea = getAllByText('NewFile.doc')[0];
+    const { getAllByDisplayValue } = await setup({});
+    const textarea = getAllByDisplayValue('NewFile.doc')[0];
 
     expect(textarea).toBeVisible();
   });
