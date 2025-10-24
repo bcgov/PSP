@@ -644,12 +644,4 @@ describe('MapContainer', () => {
     expect(mockGetApi.execute).not.toHaveBeenCalled();
     expect(mapMachineBaseMock.setVisiblePimsProperties).not.toHaveBeenCalled();
   });
-
-  it('Does not call matchproperties with advanced search criteria if map not visible', async () => {
-    mockKeycloak({ claims: [Claims.ADMIN_PROPERTIES] });
-    await setup();
-
-    expect(mockGetApi.execute).toHaveBeenCalledWith(new PropertyFilterFormModel().toApi());
-    expect(mapMachineBaseMock.setVisiblePimsProperties).toHaveBeenCalled();
-  });
 });

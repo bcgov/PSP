@@ -6,7 +6,7 @@ import Col from 'react-bootstrap/Col';
 import { toast } from 'react-toastify';
 
 import { ResetButton, SearchButton } from '@/components/common/buttons';
-import { Form, Input, Select } from '@/components/common/form';
+import { Form, Input, ProjectSelector, Select } from '@/components/common/form';
 import { getFeatureLatLng } from '@/components/maps/leaflet/Layers/PointClusterer';
 import { TableSort } from '@/components/Table/TableSort';
 import { IGeographicNamesProperties } from '@/hooks/pims-api/interfaces/IGeographicNamesProperties';
@@ -94,6 +94,10 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
       label: 'Survey Parcel',
       value: 'surveyParcel',
     });
+    searchOptions.push({
+      label: 'Project',
+      value: 'project',
+    });
   }
 
   return (
@@ -127,6 +131,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                   setFieldValue('township', null);
                   setFieldValue('range', null);
                   setFieldValue('district', null);
+                  setFieldValue('project', null);
                   if (e.target.value === 'coordinates') {
                     setFieldValue('coordinates', new DmsCoordinates());
                   } else {
@@ -237,6 +242,11 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                 </Row>
               </>
             )}
+            {values.searchBy === 'project' && (
+              <Col xs="12">
+                <ProjectSelector field="project" />
+              </Col>
+            )}
           </Row>
           <Row className="pt-2">
             <Col xs="auto">
@@ -255,6 +265,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                     values.section ||
                     values.range ||
                     values.district ||
+                    values.project ||
                     (values.searchBy === 'coordinates' && isValid)
                   )
                 }
