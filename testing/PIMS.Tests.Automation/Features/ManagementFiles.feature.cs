@@ -219,7 +219,7 @@ this.ScenarioInitialize(scenarioInfo);
  await testRunner.GivenAsync("I create a new Management File from row number 6", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 20
- await testRunner.WhenAsync("I create Digital Documents for a \"Management File\" row number 14", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+ await testRunner.WhenAsync("I create Digital Documents for a \"Management File\" from row number 14", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 21
  await testRunner.AndAsync("I edit a Digital Document for a \"Management File\" from row number 15", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -355,7 +355,7 @@ this.ScenarioInitialize(scenarioInfo);
  await testRunner.WhenAsync("I insert activities to the Management Activities Tab", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 44
- await testRunner.AndAsync("I create Digital Documents for a Management Activity from row number 14", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync("I create Digital Documents for a \"Management Activity\" from row number 14", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 45
  await testRunner.ThenAsync("A new Management file is created or updated successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
@@ -389,7 +389,7 @@ this.ScenarioInitialize(scenarioInfo);
  await testRunner.WhenAsync("I add Properties to the Management File", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 50
- await testRunner.AndAsync("I create Digital Documents for a Management Activity from row number 14", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync("I create Digital Documents for a \"Management Activity\" from row number 14", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 51
  await testRunner.ThenAsync("A new Management file is created or updated successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");

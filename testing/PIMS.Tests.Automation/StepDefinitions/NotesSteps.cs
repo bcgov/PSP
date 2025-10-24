@@ -89,6 +89,35 @@ namespace PIMS.Tests.Automation.StepDefinitions
             notes.DeleteLastSecondNote();
         }
 
+        [StepDefinition(@"I edit a Note on the Notes Tab for a Property or Management File from row number (.*)")]
+        public void EditPropNotesTab(int rowNumber)
+        {
+            /* TEST COVERAGE: PSP-4020, PSP-5506, PSP-5507 */
+
+            //Navigate to the Notes Tab
+            notes.NavigateNotesTab();
+
+            //Edit note
+            PopulateNotes(rowNumber);
+            notes.ViewSecondNoteDetails();
+            notes.VerifyNotesEditForm();
+            notes.EditNote(notesData[0]);
+
+            //Cancel note's update
+            notes.CancelNote();
+
+            //Edit note
+            notes.ViewSecondNoteDetails();
+            notes.EditNote(notesData[0]);
+
+            //Save changes
+            notes.SaveNote();
+
+            //Delete Note
+            notesCount = notes.NotesTabCount();
+            notes.DeleteLastSecondNote();
+        }
+
         private void PopulateNotes(int rowNumber)
         {
             System.Data.DataTable notesSheet = ExcelDataContext.GetInstance().Sheets["Notes"]!;

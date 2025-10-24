@@ -179,7 +179,7 @@ describe('Document List View', () => {
       documentResults: documentRows,
       claims: [Claims.DOCUMENT_ADD, Claims.DOCUMENT_DELETE, Claims.DOCUMENT_VIEW],
     });
-    const deleteButtonTooltip = await findAllByTestId('document-delete-button');
+    const deleteButtonTooltip = await findAllByTestId('document-delete-button-0');
     await act(async () => userEvent.click(deleteButtonTooltip[0]));
 
     const continueButton = await screen.findByText('Yes');

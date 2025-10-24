@@ -141,19 +141,11 @@ namespace PIMS.Tests.Automation.PageObjects
             ChooseSpecificSelectOption(stakeholderType1stSelect, stakeholder.StakeholderType);
         }
 
-        public void DeleteFirstStakeholder()
+        public void DeleteNthStakeholder(int index)
         {
             Wait();
-            webDriver.FindElement(stakeholder1stStakeholderList).Click();
-        }
-
-        public void DeleteLastStakeholder()
-        {
-            Wait();
-
-            var totalStakeholderSelected = webDriver.FindElements(stakeholderTotalSelected).Count;
-            var deleteLastTenant = By.CssSelector("div[data-testid='selected-items'] div[class='tr-wrapper']:nth-child("+ totalStakeholderSelected +") button[title='Click to remove']");
-            webDriver.FindElement(deleteLastTenant).Click();
+            var nthStakeholderRemoveButton = By.CssSelector("div[data-testid='selected-items'] div[class='tr-wrapper']:nth-child("+ index +") button[title='Click to remove']");
+            webDriver.FindElement(nthStakeholderRemoveButton).Click();
         }
 
         public void EditStakeholder(Stakeholder tenant)
@@ -172,7 +164,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             Wait();
             //If primary contact hasn't been selected for any of the tenants
-            if (webDriver.FindElements(stakeholderModal).Count > 0)
+            if (webDriver.FindElements(stakeholderModal).Count > 0 && sharedModals.ModalHeader() == "Confirm save")
             {
                 Assert.True(sharedModals.ModalHeader() == "Confirm save");
                 Assert.True(webDriver.FindElement(stakeholderModalSave2ndParagraph).Text == "Do you wish to save without providing a primary contact?");

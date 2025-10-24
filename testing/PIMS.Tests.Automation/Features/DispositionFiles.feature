@@ -29,7 +29,7 @@ Scenario: 04._Disposition_Offers_and_Sale_Tab
 
 Scenario: 05._Disposition_Files_Digital_Documents
 	Given I create a new Disposition File from row number 10
-	When I create Digital Documents for a "Disposition File" row number 12
+	When I create Digital Documents for a "Disposition File" from row number 12
 	And  I edit a Digital Document for a "Disposition File" from row number 13
 	Then A new Disposition file is created successfully
 

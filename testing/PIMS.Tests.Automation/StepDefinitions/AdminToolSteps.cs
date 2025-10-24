@@ -176,7 +176,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             digitalDocuments.SaveDigitalDocumentUpload();
 
             //Verify Document List
-            digitalDocuments.VerifyDocumentsListView();
+            digitalDocuments.VerifyFileDocumentsListView();
 
             //Add new template
             cdogsTemplates.AddNewTemplate();
