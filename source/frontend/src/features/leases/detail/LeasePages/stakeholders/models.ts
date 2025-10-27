@@ -56,27 +56,28 @@ export class FormStakeholder {
   public readonly provinceState?: string;
 
   public static toContactSearchResult = (model: FormStakeholder): IContactSearchResult | null => {
-    if (!model.id) {
+    if (!exists(model?.id)) {
       throw Error('Invalid tenant id');
     }
 
-    if (model.original) {
+    if (exists(model?.original)) {
       return model.original;
     }
+
     const contact = {
-      id: model.id,
-      summary: model.summary,
+      id: model?.id,
+      summary: model?.summary,
 
-      mailingAddress: model.mailingAddress?.streetAddress1,
-      municipalityName: model.municipalityName,
+      mailingAddress: model?.mailingAddress?.streetAddress1,
+      municipalityName: model?.municipalityName,
 
-      provinceState: model.provinceState,
+      provinceState: model?.provinceState,
       isDisabled: false,
       organizationName: null,
       email: null,
     };
 
-    if (isValidId(model.personId)) {
+    if (isValidId(model?.personId)) {
       return {
         ...contact,
         personId: model.personId,
@@ -85,7 +86,7 @@ export class FormStakeholder {
         firstName: null,
         middleNames: null,
       };
-    } else if (isValidId(model.organizationId)) {
+    } else if (isValidId(model?.organizationId)) {
       return {
         ...contact,
         organizationId: model.organizationId,
