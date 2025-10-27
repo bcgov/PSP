@@ -2052,6 +2052,7 @@ export const mockDocumentMetadata = (): ApiGen_Mayan_DocumentMetadata[] => [
         timestamp: '',
         file: '',
         checksum: '',
+        document_id: 99,
       },
       id: 1,
       document_type: {

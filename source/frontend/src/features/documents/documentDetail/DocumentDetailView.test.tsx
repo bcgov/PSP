@@ -62,6 +62,7 @@ const documentTypeMetadata: ApiGen_Mayan_DocumentMetadata[] = [
         timestamp: '',
         checksum: '',
         file: '',
+        document_id: 99,
       },
       id: 1,
       document_type: {

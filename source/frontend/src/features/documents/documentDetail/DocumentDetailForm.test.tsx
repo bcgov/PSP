@@ -12,7 +12,7 @@ import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/Ap
 import { ApiGen_Mayan_MetadataType } from '@/models/api/generated/ApiGen_Mayan_MetadataType';
 import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { mockKeycloak, prettyDOM, render, RenderOptions } from '@/utils/test-utils';
+import { mockKeycloak, render, RenderOptions } from '@/utils/test-utils';
 
 import { ComposedDocument, DocumentUpdateFormData } from '../ComposedDocument';
 import { DocumentDetailForm, IDocumentDetailFormProps } from './DocumentDetailForm';
@@ -84,6 +84,7 @@ const documentMetadata: ApiGen_Mayan_DocumentMetadata[] = [
         timestamp: '',
         checksum: '',
         file: '',
+        document_id: 99,
       },
       id: 1,
       document_type: documentTypes[0],
