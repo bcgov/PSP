@@ -19,7 +19,7 @@ namespace PIMS.Tests.Automation.PageObjects
         protected PageObjectBase(IWebDriver webDriver)
         {
             this.webDriver = webDriver;
-            wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(120));
+            wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(60));
         }
 
         protected virtual void Wait(int milliseconds = 3000) => Thread.Sleep(milliseconds);
@@ -120,24 +120,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
             js.ExecuteScript("arguments[0].scrollIntoView();", selectedOption);
             selectedOption.Click();
-        }
-
-        protected void ChooseSpecificSelectOption2(By parentElement, string option)
-        {
-            Wait();
-
-            var js = (IJavaScriptExecutor)webDriver;
-
-            SelectElement selectElement = new SelectElement(webDriver.FindElement(parentElement));
-            selectElement.SelectByText(option);
-            //wait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(selectElement.FindElements(By.TagName("option"))));
-
-            //var childrenElements = selectElement.FindElements(By.TagName("option"));
-            //var selectedOption = childrenElements.Should().ContainSingle(b => b.Text.Equals(option)).Subject;
-
-            //js.ExecuteScript("arguments[0].scrollIntoView();", selectedOption);
-
-            //selectedOption.Click();
         }
 
         protected void ChooseSpecificRadioButton(By parentName, string option)
@@ -300,12 +282,20 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.Contains(text, webDriver.FindElement(elementBy).Text);
         }
 
+        protected void AssertTrueElementContainsAnyOf(By elementBy, IEnumerable<string> texts)
+        {
+            WaitUntilVisible(elementBy);
+
+            string elementText = webDriver.FindElement(elementBy).Text;
+            bool isContained = texts.Any(text => elementText.Contains(text));
+
+            Assert.True(isContained);
+        }
+
         protected string TransformDateFormat(string date)
         {
             if (date == "")
-            {
                 return "";
-            }
             else
             {
                 var dateObject = DateTime.Parse(date);
@@ -316,9 +306,7 @@ namespace PIMS.Tests.Automation.PageObjects
         protected string TransformCurrencyFormat(string amount)
         {
             if (amount == "")
-            {
                 return "$0.00";
-            }
             else
             {
                 decimal value = decimal.Parse(amount);
@@ -387,7 +375,7 @@ namespace PIMS.Tests.Automation.PageObjects
             return splittedProject[0] + " - " + splittedProject[1];
         }
 
-        protected string TransformListToText(List<string> list)
+        protected static string TransformListToText(List<string> list)
         {
             string result = "";
 
@@ -397,7 +385,6 @@ namespace PIMS.Tests.Automation.PageObjects
                     result = result + list[i];
                 else
                     result = result + list[i] + ", ";
-
             }
 
             return result;
@@ -408,9 +395,8 @@ namespace PIMS.Tests.Automation.PageObjects
             var result = new List<string>();
             var projectNames = webDriver.FindElements(element);
             foreach (var projectName in projectNames)
-            {
                 result.Add(projectName.Text);
-            }
+            
             result.Sort();
             return result;
         }
@@ -427,9 +413,8 @@ namespace PIMS.Tests.Automation.PageObjects
             var parentElement = webDriver.FindElement(element);
             var childrenElements = parentElement.FindElements(By.TagName("span"));
             foreach (var childElement in childrenElements)
-            {
                 result.Add(childElement.Text);
-            }
+            
             result.Sort();
             return result;
         }

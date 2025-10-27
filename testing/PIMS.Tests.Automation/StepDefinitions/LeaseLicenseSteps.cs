@@ -1261,7 +1261,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             for (int i = startRow; i < startRow + rowsCount; i++)
             {
-                TeamMember teamMember = new TeamMember();
+                TeamMember teamMember = new();
                 teamMember.TeamMemberRole = ExcelDataContext.ReadData(i, "TeamMemberRole");
                 teamMember.TeamMemberContactName = ExcelDataContext.ReadData(i, "TeamMemberContactName");
                 teamMember.TeamMemberContactType = ExcelDataContext.ReadData(i, "TeamMemberContactType");
@@ -1444,7 +1444,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             for (int i = startRow; i < startRow + rowsCount; i++)
             {
-                Compensation compensation = new Compensation();
+                Compensation compensation = new();
 
                 compensation.CompensationAmount = ExcelDataContext.ReadData(i, "CompensationAmount");
                 compensation.CompensationGSTAmount = ExcelDataContext.ReadData(i, "CompensationGSTAmount");
@@ -1482,7 +1482,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             for (int i = startRow; i < startRow + rowsCount; i++)
             {
-                CompensationActivity activity = new CompensationActivity();
+                CompensationActivity activity = new();
 
                 activity.ActCodeDescription = ExcelDataContext.ReadData(i, "ActCodeDescription");
                 activity.ActAmount = ExcelDataContext.ReadData(i, "ActAmount");

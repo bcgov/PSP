@@ -224,8 +224,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I update an Acquisition File's Properties from row number (.*)")]
         public void UpdateProperties(int rowNumber)
         {
-            /* TEST COVERAGE:  PSP-4590, PSP-4591, PSP-4600, PSP-4689, PSP-5003, PSP-5006, PSP-5007  */
-
             PopulateAcquisitionFile(rowNumber);
 
             //Search for an existing Acquisition File
@@ -252,14 +250,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
             sharedFileProperties.SaveFileProperties();
 
             //Select 1st Property
-            sharedFileProperties.SelectFirstPropertyOptionFromFile();
+            sharedFileProperties.SelectNthPropertyOptionFromFile(0);
         }
 
         [StepDefinition(@"I create Takes within Acquisition File's Properties")]
         public void CreateTakes()
         {
             //Select 1st Property
-            sharedFileProperties.SelectFirstPropertyOptionFromFile();
+            sharedFileProperties.SelectNthPropertyOptionFromFile(0);
 
             for (int i = 0; i < acquisitionFile.AcquisitionTakes.Count; i++)
             {
@@ -1289,7 +1287,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             for (int i = startRow; i < startRow + rowsCount; i++)
             {
-                TeamMember teamMember = new TeamMember();
+                TeamMember teamMember = new();
                 teamMember.TeamMemberRole = ExcelDataContext.ReadData(i, "TeamMemberRole");
                 teamMember.TeamMemberContactName = ExcelDataContext.ReadData(i, "TeamMemberContactName");
                 teamMember.TeamMemberContactType = ExcelDataContext.ReadData(i, "TeamMemberContactType");
@@ -1306,7 +1304,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             for (int i = startRow; i < startRow + rowsCount; i++)
             {
-                AcquisitionOwner owner = new AcquisitionOwner();
+                AcquisitionOwner owner = new();
                 owner.OwnerContactType = ExcelDataContext.ReadData(i, "OwnerContactType");
                 owner.OwnerIsPrimary = bool.Parse(ExcelDataContext.ReadData(i, "OwnerIsPrimary"));
                 owner.OwnerGivenNames = ExcelDataContext.ReadData(i, "OwnerGivenNames");
@@ -1337,7 +1335,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             for (int i = startRow; i < startRow + rowsCount; i++)
             {
-                Take take = new Take();
+                Take take = new();
 
                 take.TakeType = ExcelDataContext.ReadData(i, "TakeType");
                 take.TakeStatus = ExcelDataContext.ReadData(i, "TakeStatus");
@@ -1383,7 +1381,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             for (int i = startRow; i < startRow + rowsCount; i++)
             {
-                AcquisitionAgreement agreement = new AcquisitionAgreement();
+                AcquisitionAgreement agreement = new();
 
                 agreement.AgreementStatus = ExcelDataContext.ReadData(i, "AgreementStatus");
                 agreement.AgreementCancellationReason = ExcelDataContext.ReadData(i, "AgreementCancellationReason");
@@ -1409,7 +1407,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             for (int i = startRow; i < startRow + rowsCount; i++)
             {
-                AcquisitionStakeholder stakeholder = new AcquisitionStakeholder();
+                AcquisitionStakeholder stakeholder = new();
 
                 stakeholder.StakeholderType = ExcelDataContext.ReadData(i, "StakeholderType");
                 stakeholder.InterestHolder = ExcelDataContext.ReadData(i, "InterestHolder");
@@ -1430,7 +1428,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             for (int i = startRow; i < startRow + rowsCount; i++)
             {
-                Compensation compensation = new Compensation();
+                Compensation compensation = new();
 
                 compensation.CompensationAmount = ExcelDataContext.ReadData(i, "CompensationAmount");
                 compensation.CompensationGSTAmount = ExcelDataContext.ReadData(i, "CompensationGSTAmount");
@@ -1468,7 +1466,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             for (int i = startRow; i < startRow + rowsCount; i++)
             {
-                CompensationActivity activity = new CompensationActivity();
+                CompensationActivity activity = new();
 
                 activity.ActCodeDescription = ExcelDataContext.ReadData(i, "ActCodeDescription");
                 activity.ActAmount = ExcelDataContext.ReadData(i, "ActAmount");
@@ -1487,7 +1485,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             for (int i = startRow; i < startRow + rowsCount; i++)
             {
-                AcquisitionExpropriationDateHistory expropriation = new AcquisitionExpropriationDateHistory();
+                AcquisitionExpropriationDateHistory expropriation = new();
 
                 expropriation.ExpropriationDateHistoryOwner = ExcelDataContext.ReadData(i, "ExpropriationDateHistoryOwner");
                 expropriation.ExpropriationDateHistoryOwnerDisplay = ExcelDataContext.ReadData(i, "ExpropriationDateHistoryOwnerDisplay");
@@ -1505,7 +1503,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             for (int i = startRow; i < startRow + rowsCount; i++)
             {
-                AcquisitionExpropriationForm8 expropriation = new AcquisitionExpropriationForm8();
+                AcquisitionExpropriationForm8 expropriation = new();
 
                 expropriation.Form8Payee = ExcelDataContext.ReadData(i, "Form8Payee");
                 expropriation.Form8PayeeDisplay = ExcelDataContext.ReadData(i, "Form8PayeeDisplay");
@@ -1528,7 +1526,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             for (int i = startRow; i < startRow + rowsCount; i++)
             {
-                ExpropriationPayment payment = new ExpropriationPayment();
+                ExpropriationPayment payment = new();
 
                 payment.ExpPaymentItem = ExcelDataContext.ReadData(i, "ExpPaymentItem");
                 payment.ExpPaymentAmount = ExcelDataContext.ReadData(i, "ExpPaymentAmount");

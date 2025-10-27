@@ -215,7 +215,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             sharedFileProperties.SaveFileProperties();
 
             //Select 1st Property
-            sharedFileProperties.SelectFirstPropertyOptionFromFile();
+            sharedFileProperties.SelectNthPropertyOptionFromFile(0);
         }
 
         [StepDefinition(@"I insert Checklist information to an Disposition File")]
@@ -766,7 +766,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             for (int i = startRow; i < startRow + rowsCount; i++)
             {
-                TeamMember teamMember = new TeamMember();
+                TeamMember teamMember = new();
                 teamMember.TeamMemberRole = ExcelDataContext.ReadData(i, "TeamMemberRole");
                 teamMember.TeamMemberContactName = ExcelDataContext.ReadData(i, "TeamMemberContactName");
                 teamMember.TeamMemberContactType = ExcelDataContext.ReadData(i, "TeamMemberContactType");
@@ -783,7 +783,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             for (int i = startRow; i < startRow + rowsCount; i++)
             {
-                DispositionOfferAndSale offerAndSale = new DispositionOfferAndSale();
+                DispositionOfferAndSale offerAndSale = new();
                 offerAndSale.OfferOfferStatus = ExcelDataContext.ReadData(i, "OfferOfferStatus");
                 offerAndSale.OfferOfferName = ExcelDataContext.ReadData(i, "OfferOfferName");
                 offerAndSale.OfferOfferDate = ExcelDataContext.ReadData(i, "OfferOfferDate");
@@ -802,7 +802,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             for (int i = startRow; i < startRow + rowsCount; i++)
             {
-                PurchaseMember purchaseMember = new PurchaseMember();
+                PurchaseMember purchaseMember = new();
                 purchaseMember.PurchaserName = ExcelDataContext.ReadData(i, "PurchaserName");
                 purchaseMember.PurchaseMemberContactType = ExcelDataContext.ReadData(i, "PurchaseMemberContactType");
                 purchaseMember.PurchaseMemberPrimaryContact = ExcelDataContext.ReadData(i, "PurchaseMemberPrimaryContact");

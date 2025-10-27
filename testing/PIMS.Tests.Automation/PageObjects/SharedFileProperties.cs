@@ -138,6 +138,13 @@ namespace PIMS.Tests.Automation.PageObjects
 
         }
 
+        public void DisableEnableProperty(int index, string status)
+        {
+            Wait();
+            var propertystatusSelectElement = By.CssSelector("input-properties."+ index +".isActive");
+            ChooseSpecificSelectOption(propertystatusSelectElement, status);
+        }
+
         public void SaveFileProperties()
         {
             Wait();
@@ -178,6 +185,12 @@ namespace PIMS.Tests.Automation.PageObjects
                 }
                     Wait();
             }
+        }
+
+        public void VerifyErrorCannotDeletePropertyInActivity()
+        {
+            WaitUntilVisible(propertiesFileConfirmationModal);
+            Assert.Equal("This property cannot be deleted as it is part of an activity in this file\n", sharedModals.ModalContent());
         }
     }
 }

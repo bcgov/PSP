@@ -255,7 +255,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void SelectFirstPMBCResult(string action = "")
         {
             Wait();
-            Actions hoverAction = new Actions(webDriver);
+            Actions hoverAction = new(webDriver);
             hoverAction.MoveToElement(webDriver.FindElement(search1stPMBCResult)).MoveToElement(webDriver.FindElement(search1stPMBCResultEllipsisBttn)).Click().Build().Perform();
 
             switch (action)
@@ -292,7 +292,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void SelectSecondPMBCResult(string action = "")
         {
             Wait();
-            Actions hoverAction = new Actions(webDriver);
+            Actions hoverAction = new(webDriver);
             hoverAction.MoveToElement(webDriver.FindElement(search2ndPMBCResult)).MoveToElement(webDriver.FindElement(search2ndPMBCResultEllipsisBttn)).Click().Build().Perform();
 
             switch (action)
@@ -321,7 +321,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void SelectFirstPIMSResultToFile()
         {
             Wait();
-            Actions action = new Actions(webDriver);
+            Actions action = new(webDriver);
             action.MoveToElement(webDriver.FindElement(search1stPIMSResult)).MoveToElement(webDriver.FindElement(search1stPIMSResultEllipsisBttn)).Click().Build().Perform();
             webDriver.FindElement(search1stPMBCResultAddToFileOption).Click();
         }

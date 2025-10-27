@@ -585,7 +585,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             for (int i = startRow; i < startRow + rowsCount; i++)
             {
-                HistoricalFile historicalFile = new HistoricalFile();
+                HistoricalFile historicalFile = new();
                 historicalFile.HistoricalFileNumber = ExcelDataContext.ReadData(i, "PropertyHistoricalFileNumber");
                 historicalFile.HistoricalFileType = ExcelDataContext.ReadData(i, "PropertyHistoricalFileType");
                 historicalFile.HistoricalFileOtherDetails = ExcelDataContext.ReadData(i, "PropertyHistoricalFileOtherDetails");
@@ -652,7 +652,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             for (int i = startRow; i < startRow + rowsCount; i++)
             {
-                PropertyContact propertyContact = new PropertyContact();
+                PropertyContact propertyContact = new();
                 propertyContact.PropertyContactFullName = ExcelDataContext.ReadData(i, "PropertyContactFullName");
                 propertyContact.PropertyContactType = ExcelDataContext.ReadData(i, "PropertyContactType");
                 propertyContact.PropertyPrimaryContact = ExcelDataContext.ReadData(i, "PropertyPrimaryContact");
@@ -669,7 +669,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             for (int i = startRow; i < startRow + rowsCount; i++)
             {
-                PropertyActivity propertyActivity = new PropertyActivity();
+                PropertyActivity propertyActivity = new();
                
                 propertyActivity.PropertyActivityType = ExcelDataContext.ReadData(i, "PropertyActivityType");
                 propertyActivity.PropertyActivitySubTypeList = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "PropertyActivitySubType"));
@@ -704,7 +704,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             for (int i = startRow; i < startRow + rowsCount; i++)
             {
-                ManagementPropertyActivityInvoice invoice = new ManagementPropertyActivityInvoice();
+                ManagementPropertyActivityInvoice invoice = new();
 
                 invoice.PropertyActivityInvoiceNumber = ExcelDataContext.ReadData(i, "PropertyActivityInvoiceNumber");
                 invoice.PropertyActivityInvoiceDate = ExcelDataContext.ReadData(i, "PropertyActivityInvoiceDate");

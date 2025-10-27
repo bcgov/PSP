@@ -421,7 +421,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             for (int i = startRow; i <= startRow + rowsCount; i++)
             {
-                PropertyResearch propertyResearch = new PropertyResearch();
+                PropertyResearch propertyResearch = new();
                 propertyResearch.DescriptiveName = ExcelDataContext.ReadData(i, "DescriptiveName");
                 propertyResearch.PropertyResearchPurpose = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "PropertyResearchPurpose"));
                 propertyResearch.LegalOpinionRequest = ExcelDataContext.ReadData(i, "LegalOpinionRequest");
