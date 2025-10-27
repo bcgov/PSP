@@ -77,12 +77,6 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(fileEditPropertiesBttn).Click();
         }
 
-        public void SelectFirstPropertyOptionFromFile()
-        {
-            Wait();
-            webDriver.FindElement(acquisitionProperty1stPropLink).Click();
-        }
-
         public void SelectNthPropertyOptionFromFile(int elementIdx)
         {
             By chosenProperty = By.CssSelector("div[data-testid='menu-item-property-" + elementIdx + "']");
@@ -185,6 +179,12 @@ namespace PIMS.Tests.Automation.PageObjects
                 }
                     Wait();
             }
+        }
+
+        public void VerifyInitStatusProperties()
+        {
+            Wait();
+
         }
 
         public void VerifyErrorCannotDeletePropertyInActivity()

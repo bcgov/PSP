@@ -98,66 +98,68 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
             (labelledProperties: { label: string; properties: ApiGen_Concepts_FileProperty[] }) => {
               return (
                 <React.Fragment key={`menu-label-${labelledProperties.label}`}>
-                  {labelledProperties.label}
-                  {sortedProperties
-                    .filter(sp => labelledProperties.properties.includes(sp))
-                    .map((fileProperty: ApiGen_Concepts_FileProperty, index: number) => {
-                      const propertyName = getFilePropertyName(fileProperty);
-                      return (
-                        <StyledPropertyRowWrapper
-                          key={`menu-item-row-${fileProperty?.id ?? index}`}
-                          data-testid={`menu-item-row-${fileProperty?.id ?? index}`}
-                          className={cx({
-                            selected: currentFilePropertyId === fileProperty?.id,
-                          })}
-                          onClick={() => {
-                            if (currentFilePropertyId !== fileProperty?.id) {
-                              onSelectProperty(fileProperty.id);
-                            }
-                          }}
-                        >
-                          <div>
-                            {currentFilePropertyId === fileProperty?.id && <FaCaretRight />}
-                          </div>
+                  <div data-testid={`${labelledProperties.label}-section`}>
+                    {labelledProperties.label}
+                    {sortedProperties
+                      .filter(sp => labelledProperties.properties.includes(sp))
+                      .map((fileProperty: ApiGen_Concepts_FileProperty, index: number) => {
+                        const propertyName = getFilePropertyName(fileProperty);
+                        return (
+                          <StyledPropertyRowWrapper
+                            key={`menu-item-row-${fileProperty?.id ?? index}`}
+                            data-testid={`menu-item-row-${fileProperty?.id ?? index}`}
+                            className={cx({
+                              selected: currentFilePropertyId === fileProperty?.id,
+                            })}
+                            onClick={() => {
+                              if (currentFilePropertyId !== fileProperty?.id) {
+                                onSelectProperty(fileProperty.id);
+                              }
+                            }}
+                          >
+                            <div>
+                              {currentFilePropertyId === fileProperty?.id && <FaCaretRight />}
+                            </div>
 
-                          <div>
-                            {fileProperty?.isActive !== false ? (
-                              <StyledIconWrapper
-                                className={cx({
-                                  selected: currentFilePropertyId === fileProperty?.id,
-                                })}
-                              >
-                                {sortedProperties.indexOf(fileProperty) + 1}
-                              </StyledIconWrapper>
-                            ) : (
-                              <StyledDisabledIconWrapper>
-                                {sortedProperties.indexOf(fileProperty) + 1}
-                              </StyledDisabledIconWrapper>
-                            )}
-                          </div>
+                            <div>
+                              {fileProperty?.isActive !== false ? (
+                                <StyledIconWrapper
+                                  className={cx({
+                                    selected: currentFilePropertyId === fileProperty?.id,
+                                  })}
+                                >
+                                  {sortedProperties.indexOf(fileProperty) + 1}
+                                </StyledIconWrapper>
+                              ) : (
+                                <StyledDisabledIconWrapper>
+                                  {sortedProperties.indexOf(fileProperty) + 1}
+                                </StyledDisabledIconWrapper>
+                              )}
+                            </div>
 
-                          <OverflowTip>
-                            {currentFilePropertyId === fileProperty?.id ? (
-                              <OverflowTip fullText={propertyName.value}>
-                                {propertyName.value}
-                              </OverflowTip>
-                            ) : (
-                              <OverflowTip
-                                fullText={propertyName.value}
-                                valueTestId={`menu-item-property-${index}`}
-                              ></OverflowTip>
-                            )}
-                          </OverflowTip>
+                            <OverflowTip>
+                              {currentFilePropertyId === fileProperty?.id ? (
+                                <OverflowTip fullText={propertyName.value}>
+                                  {propertyName.value}
+                                </OverflowTip>
+                              ) : (
+                                <OverflowTip
+                                  fullText={propertyName.value}
+                                  valueTestId={`menu-item-property-${index}`}
+                                ></OverflowTip>
+                              )}
+                            </OverflowTip>
 
-                          <StyledPropertyRowZoom>
-                            <ZoomToLocation
-                              icon={ZoomIconType.single}
-                              pimsProperties={[fileProperty?.property]}
-                            />
-                          </StyledPropertyRowZoom>
-                        </StyledPropertyRowWrapper>
-                      );
-                    })}
+                            <StyledPropertyRowZoom>
+                              <ZoomToLocation
+                                icon={ZoomIconType.single}
+                                pimsProperties={[fileProperty?.property]}
+                              />
+                            </StyledPropertyRowZoom>
+                          </StyledPropertyRowWrapper>
+                        );
+                      })}
+                  </div>
                 </React.Fragment>
               );
             },

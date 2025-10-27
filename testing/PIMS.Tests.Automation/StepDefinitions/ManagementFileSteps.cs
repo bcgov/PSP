@@ -164,6 +164,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Verify properties view and status
 
+            //Verify System notes
+
         }
 
         [StepDefinition(@"I update a Management File's Properties from row number (.*)")]

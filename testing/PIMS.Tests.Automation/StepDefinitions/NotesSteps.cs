@@ -1,9 +1,6 @@
 ﻿
 using OpenQA.Selenium;
-using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
-using PIMS.Tests.Automation.PageObjects;
-using System.Data;
 
 namespace PIMS.Tests.Automation.StepDefinitions
 {

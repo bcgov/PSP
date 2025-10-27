@@ -28,6 +28,9 @@ namespace PIMS.Tests.Automation.PageObjects
         private By note2ndDeleteNoteBttn = By.CssSelector("div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(2) div[role='cell']:nth-child(4) div button[title='Delete Note']");
         private By note2ndNoteContent = By.CssSelector("div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='tr'] div[class='td']:nth-child(2)");
 
+        //Notes 2nd Table Elements
+
+
         //Notes Add new notes Details Elements
         private By notesAddDetailsHeader = By.XPath("//div[@class='modal-title h4']");
         private By notesAddDetailsLabel = By.XPath("//label[contains(text(),'Type a note')]");
@@ -173,6 +176,13 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueIsDisplayed(notesTabTableBody);
             else
                 AssertTrueIsDisplayed(notesTabTableNoContent);
+        }
+
+        public void VerifyManagementNotesTab()
+        {
+            VerifyNotesTabListView();
+
+
         }
 
         public int NotesTabCount()
