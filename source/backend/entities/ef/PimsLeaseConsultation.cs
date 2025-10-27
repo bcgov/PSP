@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Describes a consultation with the person or organization associate3d with a lease.
+/// </summary>
 [Table("PIMS_LEASE_CONSULTATION")]
 [Index("ConsultationOutcomeTypeCode", Name = "LESCON_CONSULTATION_OUTCOME_TYPE_CODE_IDX")]
 [Index("ConsultationStatusTypeCode", Name = "LESCON_CONSULTATION_STATUS_TYPE_CODE_IDX")]

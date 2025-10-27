@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Describes the information required to identify an individual, such as name and birth date.
+/// </summary>
 [Table("PIMS_PERSON")]
 public partial class PimsPerson
 {

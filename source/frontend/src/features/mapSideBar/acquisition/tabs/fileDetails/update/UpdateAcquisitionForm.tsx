@@ -91,10 +91,8 @@ const AcquisitionDetailSubForm: React.FC<{
   const acquisitionProgressStatusTypesOptions = getByType(
     API.ACQUISITION_PROGRESS_STATUS_TYPES,
   ).map(x => ProgressStatusModel.fromLookup(x));
-  const acquisitionAppraisalStatusTypes = getOptionsByType(API.ACQUISITION_APPRAISAL_STATUS_TYPES);
-  const acquisitionLegalSurveyStatusTypes = getOptionsByType(
-    API.ACQUISITION_LEGALSURVEY_STATUS_TYPES,
-  );
+  const acquisitionAppraisalStatusTypes = getOptionsByType(API.FILE_APPRAISAL_STATUS_TYPES);
+  const acquisitionLegalSurveyStatusTypes = getOptionsByType(API.FILE_LEGALSURVEY_STATUS_TYPES);
   const acquisitionTakingStatusTypesOptions = getByType(API.ACQUISITION_TAKING_STATUS_TYPES).map(
     x => TakingTypeStatusModel.fromLookup(x),
   );

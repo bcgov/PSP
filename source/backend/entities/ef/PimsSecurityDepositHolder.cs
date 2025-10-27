@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Many-to-many entity that associates the security deposit on a lease/license with a person or organization.
+/// </summary>
 [Table("PIMS_SECURITY_DEPOSIT_HOLDER")]
 [Index("OrganizationId", Name = "SCDPHL_ORGANIZATION_ID_IDX")]
 [Index("PersonId", Name = "SCDPHL_PERSON_ID_IDX")]

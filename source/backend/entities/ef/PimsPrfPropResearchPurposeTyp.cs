@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Describes one or more research purpose types for a property research file.
+/// </summary>
 [Table("PIMS_PRF_PROP_RESEARCH_PURPOSE_TYP")]
 [Index("PropertyResearchFileId", Name = "PRSPRP_PROPERTY_RESEARCH_FILE_ID_IDX")]
 [Index("PropResearchPurposeTypeCode", "PropertyResearchFileId", Name = "PRSPRP_PROP_PURPOSE_TUC", IsUnique = true)]
@@ -23,7 +26,7 @@ public partial class PimsPrfPropResearchPurposeTyp
     /// Foreign key to the PIMS_PROPERTY_RESEARCH_FILE table.
     /// </summary>
     [Column("PROPERTY_RESEARCH_FILE_ID")]
-    public long? PropertyResearchFileId { get; set; }
+    public long PropertyResearchFileId { get; set; }
 
     /// <summary>
     /// Foreign key to the PIMS_PROP_RESEARCH_PURPOSE_TYPE table.

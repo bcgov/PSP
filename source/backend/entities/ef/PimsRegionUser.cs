@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Many-to-many entity that associates a user with a Ministry region.
+/// </summary>
 [Table("PIMS_REGION_USER")]
 [Index("RegionCode", Name = "RGNUSR_REGION_CODE_IDX")]
 [Index("UserId", "RegionCode", Name = "RGNUSR_REGION_USER_TUC", IsUnique = true)]

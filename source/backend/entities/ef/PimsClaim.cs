@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Contains the name and description of the keycloak claim available for assignment to roles.  Current values include: - acquisitionfile-add: Ability to add new acquisition files. - acquisitionfile-delete: Ability to delete acquisition files. - acquisitionfi
+/// </summary>
 [Table("PIMS_CLAIM")]
 [Index("ClaimUid", Name = "CLMTYP_CLAIM_UID_IDX")]
 [Index("KeycloakRoleId", Name = "CLMTYP_KEYCLOAK_ROLE_ID_IDX")]

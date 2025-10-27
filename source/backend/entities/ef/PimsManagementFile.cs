@@ -16,6 +16,7 @@ namespace Pims.Dal.Entities;
 [Index("ManagementFileStatusTypeCode", Name = "MGMTFL_MANAGEMENT_FILE_STATUS_TYPE_CODE_IDX")]
 [Index("ProductId", Name = "MGMTFL_PRODUCT_ID_IDX")]
 [Index("ProjectId", Name = "MGMTFL_PROJECT_ID_IDX")]
+[Index("RegionCode", Name = "MGMTFL_REGION_CODE_IDX")]
 public partial class PimsManagementFile
 {
     /// <summary>
@@ -59,6 +60,12 @@ public partial class PimsManagementFile
     [Column("MANAGEMENT_FILE_PURPOSE_TYPE_CODE")]
     [StringLength(20)]
     public string ManagementFilePurposeTypeCode { get; set; }
+
+    /// <summary>
+    /// Foreign key to the PIMS_REGION table.
+    /// </summary>
+    [Column("REGION_CODE")]
+    public short? RegionCode { get; set; }
 
     /// <summary>
     /// Unique name given to the management file.
@@ -215,4 +222,8 @@ public partial class PimsManagementFile
     [ForeignKey("ProjectId")]
     [InverseProperty("PimsManagementFiles")]
     public virtual PimsProject Project { get; set; }
+
+    [ForeignKey("RegionCode")]
+    [InverseProperty("PimsManagementFiles")]
+    public virtual PimsRegion RegionCodeNavigation { get; set; }
 }

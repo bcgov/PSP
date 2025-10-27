@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Entity that contains a description of the available roles that a user can request for access to the systems.  Current values are: - Acquisition functional: Access to create, read, update Acquisition files. - Acquisition read-only: Access to read Acquisiti
+/// </summary>
 [Table("PIMS_ROLE")]
 [Index("KeycloakGroupId", Name = "ROLE_KEYCLOAK_GROUP_ID_IDX")]
 [Index("RoleUid", Name = "ROLE_ROLE_UID_IDX")]

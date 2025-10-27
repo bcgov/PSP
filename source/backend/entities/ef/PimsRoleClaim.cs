@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Associates a role with a keycloak claim.
+/// </summary>
 [Table("PIMS_ROLE_CLAIM")]
 [Index("ClaimId", Name = "ROLCLM_CLAIM_ID_IDX")]
 [Index("RoleId", "ClaimId", Name = "ROLCLM_ROLE_CLAIM_TUC", IsUnique = true)]

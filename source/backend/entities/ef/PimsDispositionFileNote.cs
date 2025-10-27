@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Contains the relationship between a disposition file and an associated note.
+/// </summary>
 [Table("PIMS_DISPOSITION_FILE_NOTE")]
 [Index("DispositionFileId", Name = "DSPNOT_DISPOSITION_FILE_ID_IDX")]
 [Index("DispositionFileId", "NoteId", Name = "DSPNOT_DISPOSITION_NOTE_TUC", IsUnique = true)]

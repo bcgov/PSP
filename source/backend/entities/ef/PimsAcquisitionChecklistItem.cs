@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Table to provide multiple acquisition checklist items for an acquisition file.
+/// </summary>
 [Table("PIMS_ACQUISITION_CHECKLIST_ITEM")]
 [Index("AcquisitionFileId", Name = "ACQCKI_ACQUISITION_FILE_ID_IDX")]
 [Index("AcqChklstItemTypeCode", Name = "ACQCKI_ACQ_CHKLST_ITEM_TYPE_CODE_IDX")]

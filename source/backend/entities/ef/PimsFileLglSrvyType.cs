@@ -7,21 +7,21 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Describes the type of lease/license.  Current values are: - Amending Agreement - Building Lease (receivable) - Licence to Construct - Licence of Occupation (BCTFA fee simple) - Licence of Occupation (BCTFA fee simple) - Licence of Occupation (HMK fee simp
+/// Codified values for the acquisition file legal survey type.
 /// </summary>
-[Table("PIMS_LEASE_LICENSE_TYPE")]
-public partial class PimsLeaseLicenseType
+[Table("PIMS_FILE_LGL_SRVY_TYPE")]
+public partial class PimsFileLglSrvyType
 {
     /// <summary>
-    /// Code value of the lease/license type.
+    /// Code value of the acquisition file legal survey type.
     /// </summary>
     [Key]
-    [Column("LEASE_LICENSE_TYPE_CODE")]
+    [Column("FILE_LGL_SRVY_TYPE_CODE")]
     [StringLength(20)]
-    public string LeaseLicenseTypeCode { get; set; }
+    public string FileLglSrvyTypeCode { get; set; }
 
     /// <summary>
-    /// Description of the lease/license type.
+    /// Description of the acquisition file legal survey type.
     /// </summary>
     [Required]
     [Column("DESCRIPTION")]
@@ -74,6 +74,9 @@ public partial class PimsLeaseLicenseType
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    [InverseProperty("LeaseLicenseTypeCodeNavigation")]
+    [InverseProperty("FileLglSrvyTypeCodeNavigation")]
+    public virtual ICollection<PimsAcquisitionFile> PimsAcquisitionFiles { get; set; } = new List<PimsAcquisitionFile>();
+
+    [InverseProperty("FileLglSrvyTypeCodeNavigation")]
     public virtual ICollection<PimsLease> PimsLeases { get; set; } = new List<PimsLease>();
 }

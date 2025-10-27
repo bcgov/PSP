@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Table that contains the physical address location of a property, organization, or person.
+/// </summary>
 [Table("PIMS_ADDRESS")]
 [Index("CountryId", Name = "ADDRSS_COUNTRY_ID_IDX")]
 [Index("DistrictCode", Name = "ADDRSS_DISTRICT_CODE_IDX")]

@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Contains the various types of insurance available for a lease.  The current values are: - Sudden and Accidental Coverage - Aircraft Liability Coverage - Commercial General Liability (CGL) - Marine Liability Coverage - Other Insurance Coverage - Unmanned A
+/// </summary>
 [Table("PIMS_INSURANCE_TYPE")]
 public partial class PimsInsuranceType
 {

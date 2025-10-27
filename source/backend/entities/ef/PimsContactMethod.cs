@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Contains the multiple contact methods that are assigned to a person or organization.
+/// </summary>
 [Table("PIMS_CONTACT_METHOD")]
 [Index("ContactMethodTypeCode", Name = "CNTMTH_CONTACT_METHOD_TYPE_CODE_IDX")]
 [Index("OrganizationId", Name = "CNTMTH_ORGANIZATION_ID_IDX")]

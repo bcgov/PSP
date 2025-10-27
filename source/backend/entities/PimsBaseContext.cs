@@ -34,11 +34,7 @@ public partial class PimsBaseContext : DbContext
 
     public virtual DbSet<PimsAcqFileAcqProgressHist> PimsAcqFileAcqProgressHists { get; set; }
 
-    public virtual DbSet<PimsAcqFileAppraisalType> PimsAcqFileAppraisalTypes { get; set; }
-
     public virtual DbSet<PimsAcqFileExpropRiskType> PimsAcqFileExpropRiskTypes { get; set; }
-
-    public virtual DbSet<PimsAcqFileLglSrvyType> PimsAcqFileLglSrvyTypes { get; set; }
 
     public virtual DbSet<PimsAcqFileProgessType> PimsAcqFileProgessTypes { get; set; }
 
@@ -265,6 +261,10 @@ public partial class PimsBaseContext : DbContext
     public virtual DbSet<PimsExpropriationVestingHist> PimsExpropriationVestingHists { get; set; }
 
     public virtual DbSet<PimsFenceType> PimsFenceTypes { get; set; }
+
+    public virtual DbSet<PimsFileAppraisalType> PimsFileAppraisalTypes { get; set; }
+
+    public virtual DbSet<PimsFileLglSrvyType> PimsFileLglSrvyTypes { get; set; }
 
     public virtual DbSet<PimsFinancialActivityCode> PimsFinancialActivityCodes { get; set; }
 
@@ -768,6 +768,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_ACCESS_REQUEST", tb =>
                 {
+                    tb.HasComment("Many-to-many entity to track user access requests for specific roles.");
                     tb.HasTrigger("PIMS_ACRQST_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_ACRQST_I_S_I_TR");
                     tb.HasTrigger("PIMS_ACRQST_I_S_U_TR");
@@ -843,6 +844,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_ACCESS_REQUEST_ORGANIZATION", tb =>
                 {
+                    tb.HasComment("Table to track user access requests for an organization's data.");
                     tb.HasTrigger("PIMS_ACRQOR_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_ACRQOR_I_S_I_TR");
                     tb.HasTrigger("PIMS_ACRQOR_I_S_U_TR");
@@ -905,6 +907,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_ACCESS_REQUEST_STATUS_TYPE", tb =>
                 {
+                    tb.HasComment("Code table used to select and describe the progess of the user access request.  Current values are:  - Access Request approved - Access Request denied - Access Request initiated but receipt not acknowedged - Access Request requires additional information");
                     tb.HasTrigger("PIMS_ARQSTT_I_S_I_TR");
                     tb.HasTrigger("PIMS_ARQSTT_I_S_U_TR");
                 });
@@ -1015,6 +1018,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_ACQ_FILE_ACQ_FL_TAKE_TYP", tb =>
                 {
+                    tb.HasComment("Table to provide multiple acquisition take types for an acquisition file.");
                     tb.HasTrigger("PIMS_AQFATT_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_AQFATT_I_S_I_TR");
                     tb.HasTrigger("PIMS_AQFATT_I_S_U_TR");
@@ -1080,6 +1084,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_ACQ_FILE_ACQ_PROGRESS", tb =>
                 {
+                    tb.HasComment("Table to provide multiple acquisition progress types for an acquisition file.");
                     tb.HasTrigger("PIMS_AQFFLP_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_AQFFLP_I_S_I_TR");
                     tb.HasTrigger("PIMS_AQFFLP_I_S_U_TR");
@@ -1139,38 +1144,6 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
         });
 
-        modelBuilder.Entity<PimsAcqFileAppraisalType>(entity =>
-        {
-            entity.HasKey(e => e.AcqFileAppraisalTypeCode).HasName("AFAPPRT_PK");
-
-            entity.ToTable("PIMS_ACQ_FILE_APPRAISAL_TYPE", tb =>
-                {
-                    tb.HasComment("Codified values for the acquisition file appraisal type.");
-                    tb.HasTrigger("PIMS_AFAPPRT_I_S_I_TR");
-                    tb.HasTrigger("PIMS_AFAPPRT_I_S_U_TR");
-                });
-
-            entity.Property(e => e.AcqFileAppraisalTypeCode).HasComment("Code value of the acquisition file appraisal type.");
-            entity.Property(e => e.ConcurrencyControlNumber)
-                .HasDefaultValue(1L)
-                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
-            entity.Property(e => e.DbCreateTimestamp)
-                .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the record was created.");
-            entity.Property(e => e.DbCreateUserid)
-                .HasDefaultValueSql("(user_name())")
-                .HasComment("The user or proxy account that created the record.");
-            entity.Property(e => e.DbLastUpdateTimestamp)
-                .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the record was created or last updated.");
-            entity.Property(e => e.DbLastUpdateUserid)
-                .HasDefaultValueSql("(user_name())")
-                .HasComment("The user or proxy account that created or last updated the record.");
-            entity.Property(e => e.Description).HasComment("Description of the acquisition file appraisal type.");
-            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
-        });
-
         modelBuilder.Entity<PimsAcqFileExpropRiskType>(entity =>
         {
             entity.HasKey(e => e.AcqFileExpropRiskTypeCode).HasName("AFEXRT_PK");
@@ -1199,38 +1172,6 @@ public partial class PimsBaseContext : DbContext
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the acquisition file expropriation risk type.");
-            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
-        });
-
-        modelBuilder.Entity<PimsAcqFileLglSrvyType>(entity =>
-        {
-            entity.HasKey(e => e.AcqFileLglSrvyTypeCode).HasName("AFLSVT_PK");
-
-            entity.ToTable("PIMS_ACQ_FILE_LGL_SRVY_TYPE", tb =>
-                {
-                    tb.HasComment("Codified values for the acquisition file legal survey type.");
-                    tb.HasTrigger("PIMS_AFLSVT_I_S_I_TR");
-                    tb.HasTrigger("PIMS_AFLSVT_I_S_U_TR");
-                });
-
-            entity.Property(e => e.AcqFileLglSrvyTypeCode).HasComment("Code value of the acquisition file legal survey type.");
-            entity.Property(e => e.ConcurrencyControlNumber)
-                .HasDefaultValue(1L)
-                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
-            entity.Property(e => e.DbCreateTimestamp)
-                .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the record was created.");
-            entity.Property(e => e.DbCreateUserid)
-                .HasDefaultValueSql("(user_name())")
-                .HasComment("The user or proxy account that created the record.");
-            entity.Property(e => e.DbLastUpdateTimestamp)
-                .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the record was created or last updated.");
-            entity.Property(e => e.DbLastUpdateUserid)
-                .HasDefaultValueSql("(user_name())")
-                .HasComment("The user or proxy account that created or last updated the record.");
-            entity.Property(e => e.Description).HasComment("Description of the acquisition file legal survey type.");
             entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
             entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
@@ -1369,6 +1310,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_ACQUISITION_CHECKLIST_ITEM", tb =>
                 {
+                    tb.HasComment("Table to provide multiple acquisition checklist items for an acquisition file.");
                     tb.HasTrigger("PIMS_ACQCKI_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_ACQCKI_I_S_I_TR");
                     tb.HasTrigger("PIMS_ACQCKI_I_S_U_TR");
@@ -1450,9 +1392,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.AcquisitionFileId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_FILE_ID_SEQ])")
                 .HasComment("System-generated unique surrogate primary key.");
-            entity.Property(e => e.AcqFileAppraisalTypeCode).HasComment("Foreign key to the PIMS_ACQ_FILE_APPRAISAL_TYPE table.");
             entity.Property(e => e.AcqFileExpropRiskTypeCode).HasComment("Foreign key to the PIMS_ACQ_FILE_EXPROP_RISK_TYPE table.");
-            entity.Property(e => e.AcqFileLglSrvyTypeCode).HasComment("Foreign key to the PIMS_ACQ_FILE_LGL_SRVY_TYPE table.");
             entity.Property(e => e.AcqPhysFileStatusTypeCode).HasComment("Foreign key to the PIMS_ACQ_PHYS_FILE_STATUS_TYPE table.");
             entity.Property(e => e.AcquisitionFileStatusTypeCode).HasComment("Foreign key to the PIMS_ACQUISITION_FILE_STATUS_TYPE table.");
             entity.Property(e => e.AcquisitionFundingTypeCode).HasComment("Foreign key to the PIMS_ACQUISITION_FUNDING_TYPE table.");
@@ -1497,6 +1437,8 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.DeliveryDate).HasComment("Date of file delivery.");
             entity.Property(e => e.EstCompletionDt).HasComment("Estimated date by which the acquisition would be completed.");
+            entity.Property(e => e.FileAppraisalTypeCode).HasComment("Foreign key to the PIMS_ACQ_FILE_APPRAISAL_TYPE table.");
+            entity.Property(e => e.FileLglSrvyTypeCode).HasComment("Foreign key to the PIMS_ACQ_FILE_LGL_SRVY_TYPE table.");
             entity.Property(e => e.FileName).HasComment("Descriptive name given to the acquisition file.");
             entity.Property(e => e.FileNo)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_FILE_NO_SEQ])")
@@ -1520,11 +1462,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.SubfileInterestTypeCode).HasComment("Foreign key to the PIMS_SUBFILE_INTEREST_TYPE table.");
             entity.Property(e => e.TotalAllowableCompensation).HasComment("The maximum allowable compensation for the acquisition file.  This amount should not be exceeded by the total of all assiciated H120's.");
 
-            entity.HasOne(d => d.AcqFileAppraisalTypeCodeNavigation).WithMany(p => p.PimsAcquisitionFiles).HasConstraintName("PIM_AFAPPRT_PIM_ACQNFL_FK");
-
             entity.HasOne(d => d.AcqFileExpropRiskTypeCodeNavigation).WithMany(p => p.PimsAcquisitionFiles).HasConstraintName("PIM_AFEXRT_PIM_ACQNFL_FK");
-
-            entity.HasOne(d => d.AcqFileLglSrvyTypeCodeNavigation).WithMany(p => p.PimsAcquisitionFiles).HasConstraintName("PIM_AFLSVT_PIM_ACQNFL_FK");
 
             entity.HasOne(d => d.AcqPhysFileStatusTypeCodeNavigation).WithMany(p => p.PimsAcquisitionFiles).HasConstraintName("PIM_ACQPFS_PIM_ACQNFL_FK");
 
@@ -1537,6 +1475,10 @@ public partial class PimsBaseContext : DbContext
             entity.HasOne(d => d.AcquisitionTypeCodeNavigation).WithMany(p => p.PimsAcquisitionFiles)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("PIM_ACQTYP_PIM_ACQNFL_FK");
+
+            entity.HasOne(d => d.FileAppraisalTypeCodeNavigation).WithMany(p => p.PimsAcquisitionFiles).HasConstraintName("PIM_FLAPPT_PIM_ACQNFL_FK");
+
+            entity.HasOne(d => d.FileLglSrvyTypeCodeNavigation).WithMany(p => p.PimsAcquisitionFiles).HasConstraintName("PIM_FLLSVT_PIM_ACQNFL_FK");
 
             entity.HasOne(d => d.PrntAcquisitionFile).WithMany(p => p.InversePrntAcquisitionFile).HasConstraintName("PIM_ACQNFL_PIM_ACQNFL_FK");
 
@@ -2030,6 +1972,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_ADDRESS", tb =>
                 {
+                    tb.HasComment("Table that contains the physical address location of a property, organization, or person.");
                     tb.HasTrigger("PIMS_ADDRSS_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_ADDRSS_I_S_I_TR");
                     tb.HasTrigger("PIMS_ADDRSS_I_S_U_TR");
@@ -2102,6 +2045,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_ADDRESS_USAGE_TYPE", tb =>
                 {
+                    tb.HasComment("Specifies the type of physical address.  Currrent values are: - Billing address - ETL unknown address - Proof of insurance address - Mailing address - Mailing address - Physical address - Property notification address - Rental payment address - Property a");
                     tb.HasTrigger("PIMS_ADUSGT_I_S_I_TR");
                     tb.HasTrigger("PIMS_ADUSGT_I_S_U_TR");
                 });
@@ -2495,6 +2439,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_CLAIM", tb =>
                 {
+                    tb.HasComment("Contains the name and description of the keycloak claim available for assignment to roles.  Current values include: - acquisitionfile-add: Ability to add new acquisition files. - acquisitionfile-delete: Ability to delete acquisition files. - acquisitionfi");
                     tb.HasTrigger("PIMS_CLMTYP_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_CLMTYP_I_S_I_TR");
                     tb.HasTrigger("PIMS_CLMTYP_I_S_U_TR");
@@ -2981,6 +2926,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_CONTACT_METHOD", tb =>
                 {
+                    tb.HasComment("Contains the multiple contact methods that are assigned to a person or organization.");
                     tb.HasTrigger("PIMS_CNTMTH_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_CNTMTH_I_S_I_TR");
                     tb.HasTrigger("PIMS_CNTMTH_I_S_U_TR");
@@ -3047,6 +2993,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_CONTACT_METHOD_TYPE", tb =>
                 {
+                    tb.HasComment("Describes the type fo contact methods availabvle for a person or organization.  Current values are: - Facsimile machine - Personal email - Personal mobile phone - Personal phone - Work email - Work mobile phone - Work phone");
                     tb.HasTrigger("PIMS_CNTMTT_I_S_I_TR");
                     tb.HasTrigger("PIMS_CNTMTT_I_S_U_TR");
                 });
@@ -3288,6 +3235,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_DISPOSITION_CHECKLIST_ITEM", tb =>
                 {
+                    tb.HasComment("Table to provide multiple disposition checklist items for a disposition file.");
                     tb.HasTrigger("PIMS_DSPCKI_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_DSPCKI_I_S_I_TR");
                     tb.HasTrigger("PIMS_DSPCKI_I_S_U_TR");
@@ -3462,6 +3410,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_DISPOSITION_FILE_DOCUMENT", tb =>
                 {
+                    tb.HasComment("Contains the relationship between a disposition file and an associated document.");
                     tb.HasTrigger("PIMS_DSPDOC_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_DSPDOC_I_S_I_TR");
                     tb.HasTrigger("PIMS_DSPDOC_I_S_U_TR");
@@ -3539,6 +3488,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_DISPOSITION_FILE_NOTE", tb =>
                 {
+                    tb.HasComment("Contains the relationship between a disposition file and an associated note.");
                     tb.HasTrigger("PIMS_DSPNOT_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_DSPNOT_I_S_I_TR");
                     tb.HasTrigger("PIMS_DSPNOT_I_S_U_TR");
@@ -4184,6 +4134,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_DISTRICT", tb =>
                 {
+                    tb.HasComment("Contains the district codes for the Ministry.  Current values are: - Lower Mainland District - Vancouver Island District - Rocky Mountain District - West Kootenay District - Okanagan-Shuswap District - Thompson-Nicola District - Cariboo District - Peace D");
                     tb.HasTrigger("PIMS_DSTRCT_I_S_I_TR");
                     tb.HasTrigger("PIMS_DSTRCT_I_S_U_TR");
                 });
@@ -4291,6 +4242,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_DOCUMENT_CATEGORY_SUBTYPE", tb =>
                 {
+                    tb.HasComment("Contains the relationship between the document type and the document");
                     tb.HasTrigger("PIMS_DCCTSB_I_S_I_TR");
                     tb.HasTrigger("PIMS_DCCTSB_I_S_U_TR");
                 });
@@ -5258,6 +5210,70 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
+        modelBuilder.Entity<PimsFileAppraisalType>(entity =>
+        {
+            entity.HasKey(e => e.FileAppraisalTypeCode).HasName("FLAPPT_PK");
+
+            entity.ToTable("PIMS_FILE_APPRAISAL_TYPE", tb =>
+                {
+                    tb.HasComment("Codified values for the acquisition file appraisal type.");
+                    tb.HasTrigger("PIMS_FLAPPT_I_S_I_TR");
+                    tb.HasTrigger("PIMS_FLAPPT_I_S_U_TR");
+                });
+
+            entity.Property(e => e.FileAppraisalTypeCode).HasComment("Code value of the acquisition file appraisal type.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.Description).HasComment("Description of the acquisition file appraisal type.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
+        });
+
+        modelBuilder.Entity<PimsFileLglSrvyType>(entity =>
+        {
+            entity.HasKey(e => e.FileLglSrvyTypeCode).HasName("FLLSVT_PK");
+
+            entity.ToTable("PIMS_FILE_LGL_SRVY_TYPE", tb =>
+                {
+                    tb.HasComment("Codified values for the acquisition file legal survey type.");
+                    tb.HasTrigger("PIMS_FLLSVT_I_S_I_TR");
+                    tb.HasTrigger("PIMS_FLLSVT_I_S_U_TR");
+                });
+
+            entity.Property(e => e.FileLglSrvyTypeCode).HasComment("Code value of the acquisition file legal survey type.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.Description).HasComment("Description of the acquisition file legal survey type.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
+        });
+
         modelBuilder.Entity<PimsFinancialActivityCode>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("FINACT_PK");
@@ -5560,6 +5576,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_INSURANCE", tb =>
                 {
+                    tb.HasComment("Contains the type(s) of insurance that are associated with a lease.");
                     tb.HasTrigger("PIMS_INSRNC_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_INSRNC_I_S_I_TR");
                     tb.HasTrigger("PIMS_INSRNC_I_S_U_TR");
@@ -5636,6 +5653,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_INSURANCE_TYPE", tb =>
                 {
+                    tb.HasComment("Contains the various types of insurance available for a lease.  The current values are: - Sudden and Accidental Coverage - Aircraft Liability Coverage - Commercial General Liability (CGL) - Marine Liability Coverage - Other Insurance Coverage - Unmanned A");
                     tb.HasTrigger("PIMS_INSPYT_I_S_I_TR");
                     tb.HasTrigger("PIMS_INSPYT_I_S_U_TR");
                 });
@@ -5818,6 +5836,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_INTHLDR_PROP_INTEREST", tb =>
                 {
+                    tb.HasComment("Associates a acquisition property, an interest holder and the interest holder's type of interst in the acquisition of the property.");
                     tb.HasTrigger("PIMS_IHPRIN_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_IHPRIN_I_S_I_TR");
                     tb.HasTrigger("PIMS_IHPRIN_I_S_U_TR");
@@ -5996,6 +6015,8 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.DocumentationReference).HasComment("Location of documents pertianing to the lease/license");
             entity.Property(e => e.FeeDeterminationNote).HasComment("Note associated with fee determination.");
+            entity.Property(e => e.FileAppraisalTypeCode).HasComment("Foreign key to the PIMS_FILE_APPRAISAL_TYPE table.");
+            entity.Property(e => e.FileLglSrvyTypeCode).HasComment("Foreign key to the PIMS_FILE_LGL_SRVY_TYPE table.");
             entity.Property(e => e.HasDigitalFile).HasComment("Indicator that digital file exists");
             entity.Property(e => e.HasDigitalLicense).HasComment("Indicator that digital license exists");
             entity.Property(e => e.HasPhysicalFile).HasComment("Indicator that phyical file exists");
@@ -6041,6 +6062,10 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.TfaFileNo).HasComment("Sourced from t_fileMain.TFA_File_Number");
             entity.Property(e => e.TfaFileNumber).HasComment("Sourced from t_fileMain.TFA_File_Number || - || t_fileSub.Subfile_Sequence_Code");
             entity.Property(e => e.TotalAllowableCompensation).HasComment("The maximum allowable compensation for the lease.  This amount should not be exceeded by the total of all assiciated H120's.");
+
+            entity.HasOne(d => d.FileAppraisalTypeCodeNavigation).WithMany(p => p.PimsLeases).HasConstraintName("PIM_FLAPPT_PIM_LEASE_FK");
+
+            entity.HasOne(d => d.FileLglSrvyTypeCodeNavigation).WithMany(p => p.PimsLeases).HasConstraintName("PIM_FLLSVT_PIM_LEASE_FK");
 
             entity.HasOne(d => d.LeaseInitiatorTypeCodeNavigation).WithMany(p => p.PimsLeases).HasConstraintName("PIM_LINITT_PIM_LEASE_FK");
 
@@ -6233,6 +6258,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_LEASE_CONSULTATION", tb =>
                 {
+                    tb.HasComment("Describes a consultation with the person or organization associate3d with a lease.");
                     tb.HasTrigger("PIMS_LESCON_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_LESCON_I_S_I_TR");
                     tb.HasTrigger("PIMS_LESCON_I_S_U_TR");
@@ -6443,6 +6469,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_LEASE_LEASE_PURPOSE", tb =>
                 {
+                    tb.HasComment("Associates lease with the purpose(s) of the lease,");
                     tb.HasTrigger("PIMS_LLPURP_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_LLPURP_I_S_I_TR");
                     tb.HasTrigger("PIMS_LLPURP_I_S_U_TR");
@@ -6592,6 +6619,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_LEASE_LICENSE_TYPE", tb =>
                 {
+                    tb.HasComment("Describes the type of lease/license.  Current values are: - Amending Agreement - Building Lease (receivable) - Licence to Construct - Licence of Occupation (BCTFA fee simple) - Licence of Occupation (BCTFA fee simple) - Licence of Occupation (HMK fee simp");
                     tb.HasTrigger("PIMS_LELIST_I_S_I_TR");
                     tb.HasTrigger("PIMS_LELIST_I_S_U_TR");
                 });
@@ -6693,6 +6721,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_LEASE_PAY_RVBL_TYPE", tb =>
                 {
+                    tb.HasComment("Describes the payable or receivable type of lease/license.  Current values are: - Payable (BCTFA as tenant) - Payable (MOTT as tenant) - Receivable");
                     tb.HasTrigger("PIMS_LSPRTY_I_S_I_TR");
                     tb.HasTrigger("PIMS_LSPRTY_I_S_U_TR");
                 });
@@ -7786,6 +7815,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.ManagementFileStatusTypeCode).HasComment("Foreign key to the PIMS_MANAGEMENT_FILE_STATUS_TYPE table.");
             entity.Property(e => e.ProductId).HasComment("Foreign key to the PIMS_PRODUCT table.");
             entity.Property(e => e.ProjectId).HasComment("Foreign key to the PIMS_PROJECT table.");
+            entity.Property(e => e.RegionCode).HasComment("Foreign key to the PIMS_REGION table.");
 
             entity.HasOne(d => d.AcquisitionFundingTypeCodeNavigation).WithMany(p => p.PimsManagementFiles).HasConstraintName("PIM_ACQFTY_PIM_MGMTFL_FK");
 
@@ -7800,6 +7830,8 @@ public partial class PimsBaseContext : DbContext
             entity.HasOne(d => d.Product).WithMany(p => p.PimsManagementFiles).HasConstraintName("PIM_PRODCT_PIM_MGMTFL_FK");
 
             entity.HasOne(d => d.Project).WithMany(p => p.PimsManagementFiles).HasConstraintName("PIM_PROJCT_PIM_MGMTFL_FK");
+
+            entity.HasOne(d => d.RegionCodeNavigation).WithMany(p => p.PimsManagementFiles).HasConstraintName("PIM_REGION_PIM_MGMTFL_FK");
         });
 
         modelBuilder.Entity<PimsManagementFileContact>(entity =>
@@ -8493,6 +8525,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_MGMT_ACTIVITY_DOCUMENT", tb =>
                 {
+                    tb.HasComment("Associates the document(s) associated with (possibly multple) management activities.");
                     tb.HasTrigger("PIMS_MGACDC_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_MGACDC_I_S_I_TR");
                     tb.HasTrigger("PIMS_MGACDC_I_S_U_TR");
@@ -8727,6 +8760,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_ORG_IDENTIFIER_TYPE", tb =>
                 {
+                    tb.HasComment("Describes the type of identifier for an organization.  Current values are: - A BC electronic identifier that allows businesses to connect to the BC Government to manage a variety of company information - A Government organization identifier - A global uni");
                     tb.HasTrigger("PIMS_ORGIDT_I_S_I_TR");
                     tb.HasTrigger("PIMS_ORGIDT_I_S_U_TR");
                 });
@@ -8899,6 +8933,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_ORGANIZATION_TYPE", tb =>
                 {
+                    tb.HasComment("Describes the type of organization.  Current values are: - BC District Office - BC Ministry - BC Regional Office - First Nations - Other - Partnership - Private owner - Railway corporation - Real estate corporation");
                     tb.HasTrigger("PIMS_ORGTYP_I_S_I_TR");
                     tb.HasTrigger("PIMS_ORGTYP_I_S_U_TR");
                 });
@@ -8962,6 +8997,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_PERSON", tb =>
                 {
+                    tb.HasComment("Describes the information required to identify an individual, such as name and birth date.");
                     tb.HasTrigger("PIMS_PERSON_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_PERSON_I_S_I_TR");
                     tb.HasTrigger("PIMS_PERSON_I_S_U_TR");
@@ -9098,6 +9134,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_PERSON_ORGANIZATION", tb =>
                 {
+                    tb.HasComment("Associates a person with an organization");
                     tb.HasTrigger("PIMS_PERORG_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_PERORG_I_S_I_TR");
                     tb.HasTrigger("PIMS_PERORG_I_S_U_TR");
@@ -9189,6 +9226,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_PRF_PROP_RESEARCH_PURPOSE_TYP", tb =>
                 {
+                    tb.HasComment("Describes one or more research purpose types for a property research file.");
                     tb.HasTrigger("PIMS_PRSPRP_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_PRSPRP_I_S_I_TR");
                     tb.HasTrigger("PIMS_PRSPRP_I_S_U_TR");
@@ -9239,7 +9277,9 @@ public partial class PimsBaseContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("PIM_RRESPT_PIM_PRSPRP_FK");
 
-            entity.HasOne(d => d.PropertyResearchFile).WithMany(p => p.PimsPrfPropResearchPurposeTyps).HasConstraintName("PIM_PRSCRC_PIM_PRSPRP_FK");
+            entity.HasOne(d => d.PropertyResearchFile).WithMany(p => p.PimsPrfPropResearchPurposeTyps)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("PIM_PRSCRC_PIM_PRSPRP_FK");
         });
 
         modelBuilder.Entity<PimsPrfPropResearchPurposeTypHist>(entity =>
@@ -9403,6 +9443,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_PROJECT_DOCUMENT", tb =>
                 {
+                    tb.HasComment("A many-to-many entity that associates a project with a document.");
                     tb.HasTrigger("PIMS_PRJDOC_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_PRJDOC_I_S_I_TR");
                     tb.HasTrigger("PIMS_PRJDOC_I_S_U_TR");
@@ -9480,6 +9521,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_PROJECT_NOTE", tb =>
                 {
+                    tb.HasComment("A many-to-many entity that associates a project with a note.");
                     tb.HasTrigger("PIMS_PRJNOT_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_PRJNOT_I_S_I_TR");
                     tb.HasTrigger("PIMS_PRJNOT_I_S_U_TR");
@@ -9657,6 +9699,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_PROJECT_PRODUCT", tb =>
                 {
+                    tb.HasComment("A many-to-many entity that associates a project with a product.");
                     tb.HasTrigger("PIMS_PRJPRD_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_PRJPRD_I_S_I_TR");
                     tb.HasTrigger("PIMS_PRJPRD_I_S_U_TR");
@@ -9758,6 +9801,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_PROP_ACQ_FL_COMP_REQ", tb =>
                 {
+                    tb.HasComment("A many-to-many entity that associates an acquisition file with a compensation requisition.");
                     tb.HasTrigger("PIMS_PACMRQ_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_PACMRQ_I_S_I_TR");
                     tb.HasTrigger("PIMS_PACMRQ_I_S_U_TR");
@@ -9827,6 +9871,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_PROP_INTHLDR_INTEREST_TYP", tb =>
                 {
+                    tb.HasComment("A many-to-many entity that associates an acquisition interest holder's property with one or more interest types.");
                     tb.HasTrigger("PIMS_PIHITY_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_PIHITY_I_S_I_TR");
                     tb.HasTrigger("PIMS_PIHITY_I_S_U_TR");
@@ -10891,6 +10936,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_PROPERTY_LEASE", tb =>
                 {
+                    tb.HasComment("A many-to-many entity that associates a propert with a lease.");
                     tb.HasTrigger("PIMS_PROPLS_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_PROPLS_I_S_I_TR");
                     tb.HasTrigger("PIMS_PROPLS_I_S_U_TR");
@@ -11162,6 +11208,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_PROPERTY_ORGANIZATION", tb =>
                 {
+                    tb.HasComment("A many-to-many entity that associates a property with an organizattion.");
                     tb.HasTrigger("PIMS_PRPORG_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_PRPORG_I_S_I_TR");
                     tb.HasTrigger("PIMS_PRPORG_I_S_U_TR");
@@ -11428,6 +11475,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_PROPERTY_TYPE", tb =>
                 {
+                    tb.HasComment("Code table to describe the type of property.  Current values include: - Buiding - Crown - Federal - Surveyed - Crown - Federal - Unsurveyed - Crown - Provincial - Surveyed - Crown - Provincial - Unsurveyed - Hwy / Road - Land - Parks - Reserve (IR) - Stra");
                     tb.HasTrigger("PIMS_PRPTYP_I_S_I_TR");
                     tb.HasTrigger("PIMS_PRPTYP_I_S_U_TR");
                 });
@@ -11509,6 +11557,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_REGION", tb =>
                 {
+                    tb.HasComment("Contains the Ministry's regions.  Current values are: - South Coast Region - Southern Interior Region - Northern Region - Cannot determine");
                     tb.HasTrigger("PIMS_REGION_I_S_I_TR");
                     tb.HasTrigger("PIMS_REGION_I_S_U_TR");
                 });
@@ -11542,6 +11591,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_REGION_USER", tb =>
                 {
+                    tb.HasComment("Many-to-many entity that associates a user with a Ministry region.");
                     tb.HasTrigger("PIMS_RGNUSR_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_RGNUSR_I_S_I_TR");
                     tb.HasTrigger("PIMS_RGNUSR_I_S_U_TR");
@@ -11945,6 +11995,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_RESEARCH_FILE_PURPOSE", tb =>
                 {
+                    tb.HasComment("Many-to-many entity that associates a research file with a purpose type.");
                     tb.HasTrigger("PIMS_RSFLPR_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_RSFLPR_I_S_I_TR");
                     tb.HasTrigger("PIMS_RSFLPR_I_S_U_TR");
@@ -12153,6 +12204,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_ROLE", tb =>
                 {
+                    tb.HasComment("Entity that contains a description of the available roles that a user can request for access to the systems.  Current values are: - Acquisition functional: Access to create, read, update Acquisition files. - Acquisition read-only: Access to read Acquisiti");
                     tb.HasTrigger("PIMS_ROLE_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_ROLE_I_S_I_TR");
                     tb.HasTrigger("PIMS_ROLE_I_S_U_TR");
@@ -12203,6 +12255,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_ROLE_CLAIM", tb =>
                 {
+                    tb.HasComment("Associates a role with a keycloak claim.");
                     tb.HasTrigger("PIMS_ROLCLM_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_ROLCLM_I_S_I_TR");
                     tb.HasTrigger("PIMS_ROLCLM_I_S_U_TR");
@@ -12349,6 +12402,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_SECURITY_DEPOSIT_HOLDER", tb =>
                 {
+                    tb.HasComment("Many-to-many entity that associates the security deposit on a lease/license with a person or organization.");
                     tb.HasTrigger("PIMS_SCDPHL_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_SCDPHL_I_S_I_TR");
                     tb.HasTrigger("PIMS_SCDPHL_I_S_U_TR");
@@ -12489,6 +12543,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_SECURITY_DEPOSIT_RETURN_HOLDER", tb =>
                 {
+                    tb.HasComment("Many-to-many entity that associates the security deposit return on a lease/license with a person or organization.");
                     tb.HasTrigger("PIMS_SCDPRH_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_SCDPRH_I_S_I_TR");
                     tb.HasTrigger("PIMS_SCDPRH_I_S_U_TR");
@@ -12559,6 +12614,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_SECURITY_DEPOSIT_TYPE", tb =>
                 {
+                    tb.HasComment("Entity that describes the type of secutiry deposit for a lease or license.  Current cvalues include: - Other deposit - Pet deposit - Security deposit");
                     tb.HasTrigger("PIMS_SECDPT_I_S_I_TR");
                     tb.HasTrigger("PIMS_SECDPT_I_S_U_TR");
                 });
@@ -12590,6 +12646,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_STATIC_VARIABLE", tb =>
                 {
+                    tb.HasComment("Entity that contains information used by the system for operations.  Current values are:  - CLIENT: 034 - DBVERSION: 111.00 - FYEND: 31/03/2026 - FYSTART: 01/04/2025 - GST: 5.0 - PST: 7.0");
                     tb.HasTrigger("PIMS_STAVBL_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_STAVBL_I_S_I_TR");
                     tb.HasTrigger("PIMS_STAVBL_I_S_U_TR");
@@ -14067,9 +14124,6 @@ public partial class PimsBaseContext : DbContext
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_LEASE_RENEWAL_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_LEASE_STAKEHOLDER_COMP_REQ_H_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_LEASE_STAKEHOLDER_COMP_REQ_ID_SEQ")
