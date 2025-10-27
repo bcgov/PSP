@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Contains the type(s) of insurance that are associated with a lease.
+/// </summary>
 [Table("PIMS_INSURANCE")]
 [Index("InsuranceTypeCode", Name = "INSRNC_INSURANCE_TYPE_CODE_IDX")]
 [Index("LeaseId", Name = "INSRNC_LEASE_ID_IDX")]

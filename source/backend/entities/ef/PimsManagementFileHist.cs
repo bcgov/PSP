@@ -43,6 +43,9 @@ public partial class PimsManagementFileHist
     [StringLength(20)]
     public string ManagementFilePurposeTypeCode { get; set; }
 
+    [Column("REGION_CODE")]
+    public short? RegionCode { get; set; }
+
     [Required]
     [Column("FILE_NAME")]
     [StringLength(500)]

@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Contains the relationship between a disposition file and an associated document.
+/// </summary>
 [Table("PIMS_DISPOSITION_FILE_DOCUMENT")]
 [Index("DispositionFileId", "DocumentId", Name = "DSPDOC_DISPOSITION_DOCUMENT_TUC", IsUnique = true)]
 [Index("DispositionFileId", Name = "DSPDOC_DISPOSITION_FILE_ID_IDX")]

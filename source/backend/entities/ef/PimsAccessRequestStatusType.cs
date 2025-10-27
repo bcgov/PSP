@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Code table used to select and describe the progess of the user access request.  Current values are:  - Access Request approved - Access Request denied - Access Request initiated but receipt not acknowedged - Access Request requires additional information
+/// </summary>
 [Table("PIMS_ACCESS_REQUEST_STATUS_TYPE")]
 public partial class PimsAccessRequestStatusType
 {

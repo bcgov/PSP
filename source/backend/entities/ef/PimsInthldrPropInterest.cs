@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Associates a acquisition property, an interest holder and the interest holder&apos;s type of interst in the acquisition of the property.
+/// </summary>
 [Table("PIMS_INTHLDR_PROP_INTEREST")]
 [Index("InterestHolderId", Name = "IHPRIN_INTEREST_HOLDER_ID_IDX")]
 [Index("PropertyAcquisitionFileId", Name = "IHPRIN_PROPERTY_ACQUISITION_FILE_ID_IDX")]

@@ -11,7 +11,6 @@ namespace Pims.Dal.Entities;
 /// </summary>
 [Table("PIMS_LEASE_LICENSE_TEAM")]
 [Index("LeaseId", Name = "LSLITM_LEASE_ID_IDX")]
-[Index("LeaseId", "LlTeamProfileTypeCode", Name = "LSLITM_LEASE_TEAM_PROFILE_TUC", IsUnique = true)]
 [Index("OrganizationId", Name = "LSLITM_ORGANIZATION_ID_IDX")]
 [Index("PersonId", Name = "LSLITM_PERSON_ID_IDX")]
 [Index("PrimaryContactId", Name = "LSLITM_PRIMARY_CONTACT_ID_IDX")]

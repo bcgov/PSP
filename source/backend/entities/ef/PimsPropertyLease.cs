@@ -7,6 +7,9 @@ using NetTopologySuite.Geometries;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// A many-to-many entity that associates a propert with a lease.
+/// </summary>
 [Table("PIMS_PROPERTY_LEASE")]
 [Index("LeaseId", Name = "PROPLS_LEASE_ID_IDX")]
 [Index("PropertyId", Name = "PROPLS_PROPERTY_ID_IDX")]

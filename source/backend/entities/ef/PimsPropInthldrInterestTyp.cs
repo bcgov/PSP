@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// A many-to-many entity that associates an acquisition interest holder&apos;s property with one or more interest types.
+/// </summary>
 [Table("PIMS_PROP_INTHLDR_INTEREST_TYP")]
 [Index("InterestHolderInterestTypeCode", Name = "PIHITY_INTEREST_HOLDER_INTEREST_TYPE_CODE_IDX")]
 [Index("PimsInthldrPropInterestId", Name = "PIHITY_PIMS_INTHLDR_PROP_INTEREST_ID_IDX")]

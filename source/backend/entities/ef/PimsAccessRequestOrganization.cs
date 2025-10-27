@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Table to track user access requests for an organization&apos;s data.
+/// </summary>
 [Table("PIMS_ACCESS_REQUEST_ORGANIZATION")]
 [Index("AccessRequestId", Name = "ACRQOR_ACCESS_REQUEST_ID_IDX")]
 [Index("OrganizationId", "AccessRequestId", Name = "ACRQOR_ORGANIZATION_ACCESS_REQUEST_TUC", IsUnique = true)]

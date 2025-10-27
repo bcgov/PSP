@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Specifies the type of physical address.  Currrent values are: - Billing address - ETL unknown address - Proof of insurance address - Mailing address - Mailing address - Physical address - Property notification address - Rental payment address - Property a
+/// </summary>
 [Table("PIMS_ADDRESS_USAGE_TYPE")]
 public partial class PimsAddressUsageType
 {

@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Many-to-many entity that associates a research file with a purpose type.
+/// </summary>
 [Table("PIMS_RESEARCH_FILE_PURPOSE")]
 [Index("ResearchFileId", Name = "RSFLPR_RESEARCH_FILE_ID_IDX")]
 [Index("ResearchPurposeTypeCode", Name = "RSFLPR_RESEARCH_PURPOSE_TYPE_CODE_IDX")]

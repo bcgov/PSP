@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Table to provide multiple disposition checklist items for a disposition file.
+/// </summary>
 [Table("PIMS_DISPOSITION_CHECKLIST_ITEM")]
 [Index("ChklstItemStatusTypeCode", Name = "DSPCKI_CHKLST_ITEM_STATUS_TYPE_CODE_IDX")]
 [Index("DispositionFileId", Name = "DSPCKI_DISPOSITION_FILE_ID_IDX")]

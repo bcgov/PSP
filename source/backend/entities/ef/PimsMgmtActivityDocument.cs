@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Associates the document(s) associated with (possibly multple) management activities.
+/// </summary>
 [Table("PIMS_MGMT_ACTIVITY_DOCUMENT")]
 [Index("DocumentId", Name = "MGACDC_DOCUMENT_ID_IDX")]
 [Index("ManagementActivityId", Name = "MGACDC_MANAGEMENT_ACTIVITY_ID_IDX")]

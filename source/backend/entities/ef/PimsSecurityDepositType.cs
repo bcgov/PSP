@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Entity that describes the type of secutiry deposit for a lease or license.  Current cvalues include: - Other deposit - Pet deposit - Security deposit
+/// </summary>
 [Table("PIMS_SECURITY_DEPOSIT_TYPE")]
 public partial class PimsSecurityDepositType
 {

@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Contains the Ministry&apos;s regions.  Current values are: - South Coast Region - Southern Interior Region - Northern Region - Cannot determine
+/// </summary>
 [Table("PIMS_REGION")]
 public partial class PimsRegion
 {
@@ -87,6 +90,9 @@ public partial class PimsRegion
 
     [InverseProperty("RegionCodeNavigation")]
     public virtual ICollection<PimsLease> PimsLeases { get; set; } = new List<PimsLease>();
+
+    [InverseProperty("RegionCodeNavigation")]
+    public virtual ICollection<PimsManagementFile> PimsManagementFiles { get; set; } = new List<PimsManagementFile>();
 
     [InverseProperty("RegionCodeNavigation")]
     public virtual ICollection<PimsOrganization> PimsOrganizations { get; set; } = new List<PimsOrganization>();

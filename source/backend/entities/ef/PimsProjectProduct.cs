@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// A many-to-many entity that associates a project with a product.
+/// </summary>
 [Table("PIMS_PROJECT_PRODUCT")]
 [Index("ProductId", Name = "PRJPRD_PRODUCT_ID_IDX")]
 [Index("ProjectId", Name = "PRJPRD_PROJECT_ID_IDX")]

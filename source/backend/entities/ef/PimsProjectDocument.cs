@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// A many-to-many entity that associates a project with a document.
+/// </summary>
 [Table("PIMS_PROJECT_DOCUMENT")]
 [Index("DocumentId", Name = "PRJDOC_DOCUMENT_ID_IDX")]
 [Index("DocumentId", "ProjectId", Name = "PRJDOC_PROJECT_DOCUMENT_TUC", IsUnique = true)]

@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Entity that contains information used by the system for operations.  Current values are:  - CLIENT: 034 - DBVERSION: 111.00 - FYEND: 31/03/2026 - FYSTART: 01/04/2025 - GST: 5.0 - PST: 7.0
+/// </summary>
 [Table("PIMS_STATIC_VARIABLE")]
 public partial class PimsStaticVariable
 {

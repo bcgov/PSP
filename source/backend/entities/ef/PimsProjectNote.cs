@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// A many-to-many entity that associates a project with a note.
+/// </summary>
 [Table("PIMS_PROJECT_NOTE")]
 [Index("NoteId", Name = "PRJNOT_NOTE_ID_IDX")]
 [Index("ProjectId", Name = "PRJNOT_PROJECT_ID_IDX")]

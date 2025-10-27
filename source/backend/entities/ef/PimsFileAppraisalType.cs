@@ -7,21 +7,21 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Describes the type of lease/license.  Current values are: - Amending Agreement - Building Lease (receivable) - Licence to Construct - Licence of Occupation (BCTFA fee simple) - Licence of Occupation (BCTFA fee simple) - Licence of Occupation (HMK fee simp
+/// Codified values for the acquisition file appraisal type.
 /// </summary>
-[Table("PIMS_LEASE_LICENSE_TYPE")]
-public partial class PimsLeaseLicenseType
+[Table("PIMS_FILE_APPRAISAL_TYPE")]
+public partial class PimsFileAppraisalType
 {
     /// <summary>
-    /// Code value of the lease/license type.
+    /// Code value of the acquisition file appraisal type.
     /// </summary>
     [Key]
-    [Column("LEASE_LICENSE_TYPE_CODE")]
+    [Column("FILE_APPRAISAL_TYPE_CODE")]
     [StringLength(20)]
-    public string LeaseLicenseTypeCode { get; set; }
+    public string FileAppraisalTypeCode { get; set; }
 
     /// <summary>
-    /// Description of the lease/license type.
+    /// Description of the acquisition file appraisal type.
     /// </summary>
     [Required]
     [Column("DESCRIPTION")]
@@ -74,6 +74,9 @@ public partial class PimsLeaseLicenseType
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    [InverseProperty("LeaseLicenseTypeCodeNavigation")]
+    [InverseProperty("FileAppraisalTypeCodeNavigation")]
+    public virtual ICollection<PimsAcquisitionFile> PimsAcquisitionFiles { get; set; } = new List<PimsAcquisitionFile>();
+
+    [InverseProperty("FileAppraisalTypeCodeNavigation")]
     public virtual ICollection<PimsLease> PimsLeases { get; set; } = new List<PimsLease>();
 }

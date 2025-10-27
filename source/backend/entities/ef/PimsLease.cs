@@ -10,6 +10,8 @@ namespace Pims.Dal.Entities;
 /// Details of a lease that is inventoried in PIMS system.
 /// </summary>
 [Table("PIMS_LEASE")]
+[Index("FileAppraisalTypeCode", Name = "LEASE_FILE_APPRAISAL_TYPE_CODE_IDX")]
+[Index("FileLglSrvyTypeCode", Name = "LEASE_FILE_LGL_SRVY_TYPE_CODE_IDX")]
 [Index("LeaseInitiatorTypeCode", Name = "LEASE_LEASE_INITIATOR_TYPE_CODE_IDX")]
 [Index("LeaseLicenseTypeCode", Name = "LEASE_LEASE_LICENSE_TYPE_CODE_IDX")]
 [Index("LeasePayRvblTypeCode", Name = "LEASE_LEASE_PAY_RVBL_TYPE_CODE_IDX")]
@@ -95,6 +97,20 @@ public partial class PimsLease
     /// </summary>
     [Column("PRODUCT_ID")]
     public long? ProductId { get; set; }
+
+    /// <summary>
+    /// Foreign key to the PIMS_FILE_APPRAISAL_TYPE table.
+    /// </summary>
+    [Column("FILE_APPRAISAL_TYPE_CODE")]
+    [StringLength(20)]
+    public string FileAppraisalTypeCode { get; set; }
+
+    /// <summary>
+    /// Foreign key to the PIMS_FILE_LGL_SRVY_TYPE table.
+    /// </summary>
+    [Column("FILE_LGL_SRVY_TYPE_CODE")]
+    [StringLength(20)]
+    public string FileLglSrvyTypeCode { get; set; }
 
     /// <summary>
     /// Generated identifying lease/licence number
@@ -398,6 +414,14 @@ public partial class PimsLease
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
+
+    [ForeignKey("FileAppraisalTypeCode")]
+    [InverseProperty("PimsLeases")]
+    public virtual PimsFileAppraisalType FileAppraisalTypeCodeNavigation { get; set; }
+
+    [ForeignKey("FileLglSrvyTypeCode")]
+    [InverseProperty("PimsLeases")]
+    public virtual PimsFileLglSrvyType FileLglSrvyTypeCodeNavigation { get; set; }
 
     [ForeignKey("LeaseInitiatorTypeCode")]
     [InverseProperty("PimsLeases")]

@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// A many-to-many entity that associates a property with an organizattion.
+/// </summary>
 [Table("PIMS_PROPERTY_ORGANIZATION")]
 [Index("OrganizationId", Name = "PRPORG_ORGANIZATION_ID_IDX")]
 [Index("PropertyId", Name = "PRPORG_PROPERTY_ID_IDX")]
