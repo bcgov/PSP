@@ -1,7 +1,6 @@
 ﻿using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
-using PIMS.Tests.Automation.PageObjects;
 
 namespace PIMS.Tests.Automation.StepDefinitions
 {
@@ -156,7 +155,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             sharedFileProperties.NavigateToAddPropertiesToFile();
 
             //Verify initial state of properties
-
+            Assert.True(sharedFileProperties.ActivePropertiesCount() == managementFile.prope
 
             //Disable a property
 
@@ -483,6 +482,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 PopulateTeamsCollection(managementFile.ManagementTeamStartRow, managementFile.ManagementTeamCount);
 
             //Properties Search
+            managementFile.ManagementTotalProperties = int.Parse(ExcelDataContext.ReadData(rowNumber, "ManagementTotalProperties"));
             managementFile.ManagementSearchPropertiesIndex = int.Parse(ExcelDataContext.ReadData(rowNumber, "ManagementSearchPropertiesIndex"));
             if (managementFile.ManagementSearchPropertiesIndex > 0)
             {
