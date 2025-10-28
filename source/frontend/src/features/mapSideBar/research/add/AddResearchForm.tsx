@@ -23,8 +23,11 @@ const AddResearchForm: React.FC<IAddResearchFormProps> = props => {
             <strong>Name this research file:</strong>
           </Col>
           <Col xs="auto">
-            <LargeInput field="name" placeholder="Road name - Descriptive text" />A unique file
-            number will be generated for this research file on save.
+            <LargeInput
+              field="name"
+              placeholder="Road name - MOTT District - Location or description"
+            />
+            A unique file number will be generated for this research file on save.
           </Col>
         </Row>
         <ResearchFileNameGuide />
