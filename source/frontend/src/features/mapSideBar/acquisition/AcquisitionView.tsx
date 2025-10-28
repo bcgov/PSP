@@ -21,6 +21,7 @@ import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTy
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { stripTrailingSlash } from '@/utils';
+import { isAcquisitionFile } from '@/utils/fileUtils';
 
 import { useFilePropertyIdFromUrl } from '../../../hooks/useFilePropertyIdFromUrl';
 import { SideBarContext } from '../context/sidebarContext';
@@ -33,7 +34,6 @@ import SidebarFooter from '../shared/SidebarFooter';
 import { StyledFormWrapper } from '../shared/styles';
 import UpdateProperties from '../shared/update/properties/UpdateProperties';
 import { AcquisitionContainerState } from './AcquisitionContainer';
-import { isAcquisitionFile } from './add/models';
 import AcquisitionHeader from './common/AcquisitionHeader';
 import AcquisitionGenerateContainer from './common/GenerateForm/AcquisitionGenerateContainer';
 import GenerateFormView from './common/GenerateForm/GenerateFormView';
