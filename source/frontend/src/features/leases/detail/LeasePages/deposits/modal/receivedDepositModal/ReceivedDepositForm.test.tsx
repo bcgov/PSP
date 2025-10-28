@@ -95,7 +95,9 @@ describe('ReceivedDepositForm component', () => {
     await act(async () => {
       await fillInput(container, 'description', '', 'textarea');
     });
-    expect(await findByText(/Description required when Deposit type "Other" is selected/i)).toBeVisible();
+    expect(
+      await findByText(/Description required when Deposit type "Other" is selected/i),
+    ).toBeVisible();
   });
 
   it('should validate character limits', async () => {
