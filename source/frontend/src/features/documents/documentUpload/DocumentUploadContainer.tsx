@@ -16,9 +16,9 @@ import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/Ap
 import { ApiGen_Requests_DocumentUploadRelationshipResponse } from '@/models/api/generated/ApiGen_Requests_DocumentUploadRelationshipResponse';
 import { exists } from '@/utils';
 
-import { BatchUploadFormModel, BatchUploadResponseModel } from '../ComposedDocument';
 import { useDocumentProvider } from '../hooks/useDocumentProvider';
 import { useDocumentRelationshipProvider } from '../hooks/useDocumentRelationshipProvider';
+import { BatchUploadFormModel, BatchUploadResponseModel } from '../models';
 import { IDocumentUploadFormProps } from './DocumentUploadForm';
 
 export interface IDocumentUploadContainerProps {

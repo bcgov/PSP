@@ -22,9 +22,10 @@ import { ApiGen_Requests_DocumentUpdateRequest } from '@/models/api/generated/Ap
 import { exists } from '@/utils/utils';
 
 import { StyledH3, StyledScrollable } from '../commonStyles';
-import { ComposedDocument, DocumentUpdateFormData } from '../ComposedDocument';
 import { DocumentMetadataView } from '../DocumentMetadataView';
 import { StyledContainer } from '../list/styles';
+import { DocumentUpdateFormData } from '../models';
+import { ComposedDocument } from '../models/ComposedDocument';
 import { DocumentUpdateFormDataYupSchema } from './DocumentUpdateFormDataYupSchema';
 
 export interface IDocumentDetailFormProps {

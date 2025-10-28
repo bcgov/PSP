@@ -10,8 +10,8 @@ import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { mockKeycloak, render, RenderOptions } from '@/utils/test-utils';
 
-import { ComposedDocument } from '../ComposedDocument';
 import { DocumentDetailView, IDocumentDetailsViewProps } from './DocumentDetailView';
+import { ComposedDocument } from '../models/ComposedDocument';
 
 // mock auth library
 
@@ -108,6 +108,7 @@ const mockDocument: ComposedDocument = {
       appCreateUserGuid: null,
     },
     parentId: null,
+    parentNameOrNumber: null,
     relationshipType: ApiGen_CodeTypes_DocumentRelationType.AcquisitionFiles,
     appCreateTimestamp: EpochIsoDateTime,
     appLastUpdateTimestamp: EpochIsoDateTime,

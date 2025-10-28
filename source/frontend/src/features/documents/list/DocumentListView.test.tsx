@@ -20,8 +20,8 @@ import {
   userEvent,
 } from '@/utils/test-utils';
 
-import { DocumentRow } from '../ComposedDocument';
 import { DocumentListView, IDocumentListViewProps } from './DocumentListView';
+import { DocumentRow } from '../models/DocumentRow';
 
 const mockAxios = new MockAdapter(axios);
 const storeState = {

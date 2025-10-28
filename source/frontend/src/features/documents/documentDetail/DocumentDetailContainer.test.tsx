@@ -3,7 +3,6 @@ import { createMemoryHistory } from 'history';
 import { Claims } from '@/constants';
 import { useDocumentProvider } from '@/features/documents/hooks/useDocumentProvider';
 import {
-  mockDocumentResponse,
   mockDocumentTypeMetadataBcAssessment,
   mockDocumentTypesAcquisition,
   mockDocumentTypesAll,
@@ -15,8 +14,9 @@ import { ApiGen_System_HttpStatusCode } from '@/models/api/generated/ApiGen_Syst
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, getByName, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
-import { DocumentRow } from '../ComposedDocument';
 import { DocumentDetailContainer, IDocumentDetailContainerProps } from './DocumentDetailContainer';
+import { DocumentRow } from '../models/DocumentRow';
+import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -54,6 +54,59 @@ const mockDocumentApi = {
   getDocumentFilePageListLoading: false,
 };
 
+const mockDocumentAcquisitionRelationship: ApiGen_Concepts_DocumentRelationship = {
+  id: 26,
+  parentId: '64',
+  parentNameOrNumber: '01-1-01',
+  document: {
+    id: 22,
+    fileName: 'Form12_Carbone_Template.docx',
+    documentType: {
+      id: 41,
+      documentType: 'BCASSE',
+      documentTypeDescription: 'BC assessment search',
+      documentTypePurpose: null,
+      mayanId: 84,
+      isDisabled: false,
+      appCreateTimestamp: '2025-10-27T22:09:06.29',
+      appLastUpdateTimestamp: '2025-10-27T22:12:24.617',
+      appLastUpdateUserid: 'EHERRERA',
+      appCreateUserid: 'EHERRERA',
+      appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
+      appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
+      rowVersion: 2,
+    },
+    statusTypeCode: {
+      id: 'FINAL',
+      description: 'Final',
+      isDisabled: false,
+      displayOrder: 5,
+    },
+    documentQueueStatusTypeCode: {
+      id: 'SUCCESS',
+      description: 'Success',
+      isDisabled: false,
+      displayOrder: 5,
+    },
+    mayanDocumentId: 3,
+    appCreateTimestamp: '2025-10-27T22:16:45.133',
+    appLastUpdateTimestamp: '2025-10-27T22:17:00.783',
+    appLastUpdateUserid: 'service',
+    appCreateUserid: 'EHERRERA',
+    appLastUpdateUserGuid: '00000000-0000-0000-0000-000000000000',
+    appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
+    rowVersion: 2,
+  },
+  relationshipType: ApiGen_CodeTypes_DocumentRelationType.AcquisitionFiles,
+  appCreateTimestamp: '2025-10-27T22:16:45.2',
+  appLastUpdateTimestamp: '2025-10-27T22:16:45.2',
+  appLastUpdateUserid: 'EHERRERA',
+  appCreateUserid: 'EHERRERA',
+  appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
+  appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
+  rowVersion: 1,
+};
+
 vi.mock('@/features/documents/hooks/useDocumentProvider');
 vi.mocked(useDocumentProvider).mockReturnValue(mockDocumentApi);
 
@@ -64,10 +117,7 @@ describe('DocumentDetailContainer component', () => {
   ) => {
     const utils = render(
       <DocumentDetailContainer
-        pimsDocument={
-          renderOptions?.props?.pimsDocument ??
-          DocumentRow.fromApi(mockDocumentResponse(), ApiGen_CodeTypes_DocumentRelationType.Leases)
-        }
+        pimsDocumentRelationship={renderOptions?.props?.pimsDocumentRelationship ?? mockDocumentAcquisitionRelationship}
         relationshipType={
           renderOptions?.props?.relationshipType ??
           ApiGen_CodeTypes_DocumentRelationType.AcquisitionFiles

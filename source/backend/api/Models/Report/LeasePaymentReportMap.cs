@@ -5,7 +5,6 @@ using Pims.Api.Services;
 using Pims.Core.Helpers;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
-using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Report.Lease
 {
@@ -13,7 +12,7 @@ namespace Pims.Api.Models.Report.Lease
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.PimsLeasePayment, LeasePaymentReportModel>()
+            config.NewConfig<PimsLeasePayment, LeasePaymentReportModel>()
                 .Map(dest => dest.Region, src => src.LeasePeriod.Lease.RegionCodeNavigation != null ? src.LeasePeriod.Lease.RegionCodeNavigation.Description : string.Empty)
                 .Map(dest => dest.LFileNumber, src => src.LeasePeriod.Lease.LFileNo)
                 .Map(dest => dest.HistoricalFiles, src => GetHistoricalFileNumbers(src.LeasePeriod.Lease))

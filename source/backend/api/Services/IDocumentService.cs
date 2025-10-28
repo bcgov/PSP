@@ -3,13 +3,14 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Pims.Api.Models;
 using Pims.Api.Models.CodeTypes;
-
+using Pims.Api.Models.Concepts.Document;
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
 using Pims.Api.Models.Requests.Document.UpdateMetadata;
 using Pims.Api.Models.Requests.Document.Upload;
 using Pims.Api.Models.Requests.Http;
 using Pims.Dal.Entities;
+using Pims.Dal.Entities.Models;
 
 namespace Pims.Api.Services
 {
@@ -18,7 +19,9 @@ namespace Pims.Api.Services
     /// </summary>
     public interface IDocumentService
     {
-        Task<ExternalResponse<QueryResponse<DocumentTypeModel>>> GetStorageDocumentTypes(string ordering = "", int? page = null, int? pageSize = null);
+        Paged<PimsDocument> GetPage(DocumentSearchFilterModel filter);
+
+        Task<ExternalResponse<QueryResponse<Models.Mayan.Document.DocumentTypeModel>>> GetStorageDocumentTypes(string ordering = "", int? page = null, int? pageSize = null);
 
         Task<ExternalResponse<QueryResponse<DocumentTypeMetadataTypeModel>>> GetDocumentTypeMetadataType(long mayanDocumentTypeId, string ordering = "", int? page = null, int? pageSize = null);
 

@@ -28,10 +28,7 @@ namespace Pims.Dal.Helpers.Extensions
         public static string FormatFullAddressString(this PimsAddress address)
         {
             StringBuilder stringBuilder = new();
-            if (address is null)
-            {
-                throw new ArgumentNullException(nameof(address));
-            }
+            ArgumentNullException.ThrowIfNull(address);
             if (!string.IsNullOrEmpty(address.StreetAddress1))
             {
                 stringBuilder.Append(address.StreetAddress1);

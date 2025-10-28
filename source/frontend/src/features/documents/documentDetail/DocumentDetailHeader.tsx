@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 import { SectionField } from '@/components/common/Section/SectionField';
 
-import { ComposedDocument } from '../ComposedDocument';
 import DownloadDocumentButton from '../DownloadDocumentButton';
+import { ComposedDocument } from '../models/ComposedDocument';
 
 interface IDocumentDetailHeaderProps {
   document: ComposedDocument;

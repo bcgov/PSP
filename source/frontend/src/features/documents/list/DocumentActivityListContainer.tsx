@@ -9,8 +9,8 @@ import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/Api
 import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 import { exists, getApiPropertyName, relationshipTypeToPathName } from '@/utils';
 
-import { DocumentRow } from '../ComposedDocument';
 import { useDocumentRelationshipProvider } from '../hooks/useDocumentRelationshipProvider';
+import { DocumentRow } from '../models/DocumentRow';
 import { IDocumentListContainerProps } from './DocumentListContainer';
 import DocumentListView from './DocumentListView';
 import { DocRelation } from './models';
