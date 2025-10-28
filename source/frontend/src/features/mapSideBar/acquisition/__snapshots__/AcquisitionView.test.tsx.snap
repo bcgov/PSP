@@ -1030,7 +1030,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                   >
                     <button
                       class="c4 Button btn btn-link"
-                      title="Fit boundaries button"
+                      title="Fit boundaries"
                       type="button"
                     >
                       <div
@@ -1088,7 +1088,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                   >
                     <button
                       class="c4 Button btn btn-link"
-                      title="Fit boundaries button"
+                      title="Fit boundaries"
                       type="button"
                     >
                       <div
@@ -1138,7 +1138,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                   >
                     <button
                       class="c4 Button btn btn-link"
-                      title="Fit boundaries button"
+                      title="Fit boundaries"
                       type="button"
                     >
                       <div

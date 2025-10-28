@@ -470,7 +470,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
               >
                 <button
                   class="c3 Button btn btn-link"
-                  title="Fit boundaries button"
+                  title="Fit boundaries"
                   type="button"
                 >
                   <div
@@ -744,7 +744,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
           >
             <button
               class="c3 Button btn btn-link"
-              title="Fit boundaries button"
+              title="Fit boundaries"
               type="button"
             >
               <div
@@ -941,7 +941,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
           >
             <button
               class="c3 Button btn btn-link"
-              title="Fit boundaries button"
+              title="Fit boundaries"
               type="button"
             >
               <div
