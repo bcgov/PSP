@@ -52,9 +52,9 @@ export class FormLeaseDeposit {
     return {
       id: this.id ?? null,
       leaseId: this.leaseId ?? 0,
-      description: this.description,
+      description: this.description ?? null,
       amountPaid: this.amountPaid === '' ? 0 : this.amountPaid,
-      depositDateOnly: this.depositDate,
+      depositDateOnly: this.depositDate === '' ? null : this.depositDate,
       depositType: toTypeCodeNullable(this.depositTypeCode),
       otherTypeDescription: this.otherTypeDescription === '' ? null : this.otherTypeDescription,
       contactHolder: this.contactHolder !== undefined ? toContact(this.contactHolder) : null,

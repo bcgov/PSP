@@ -76,19 +76,26 @@ describe('ReceivedDepositForm component', () => {
     expect(await findByText(/Deposit Type is required/i)).toBeVisible();
 
     await act(async () => {
+      await fillInput(container, 'contactHolder', '');
+    });
+    expect(await findByText(/Deposit Holder is required/i)).toBeVisible();
+  });
+
+  it('should require description if type is Other', async () => {
+    const { container, findByText } = setup({ initialValues });
+
+    await act(async () => {
+      await fillInput(container, 'depositTypeCode', 'OTHER', 'select');
+    });
+
+    await act(async () => {
+      await fillInput(container, 'otherTypeDescription', fakeText(20));
+    });
+
+    await act(async () => {
       await fillInput(container, 'description', '', 'textarea');
     });
-    expect(await findByText(/Description is required/i)).toBeVisible();
-
-    await act(async () => {
-      await fillInput(container, 'amountPaid', '');
-    });
-    expect(await findByText(/Deposit amount is required/i)).toBeVisible();
-
-    await act(async () => {
-      await fillInput(container, 'depositDate', '');
-    });
-    expect(await findByText(/Deposit Date is required/i)).toBeVisible();
+    expect(await findByText(/Description required when Deposit type "Other" is selected/i)).toBeVisible();
   });
 
   it('should validate character limits', async () => {

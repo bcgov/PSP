@@ -69,18 +69,18 @@ export const ReceivedDepositForm: React.FunctionComponent<
               <InlineInput field="otherTypeDescription" required />
             </SectionField>
           )}
-          <SectionField label="Description" labelWidth={{ xs: 12 }} required>
-            <TextArea rows={4} field="description" required />
+          <SectionField label="Description" labelWidth={{ xs: 12 }}>
+            <TextArea rows={4} field="description" />
           </SectionField>
           <Row>
             <Col xs="6">
-              <SectionField label="Deposit amount" labelWidth={{ xs: 12 }} required>
-                <FastCurrencyInput formikProps={formikProps} field="amountPaid" required />
+              <SectionField label="Deposit amount" labelWidth={{ xs: 12 }}>
+                <FastCurrencyInput formikProps={formikProps} field="amountPaid" />
               </SectionField>
             </Col>
             <Col xs="6">
-              <SectionField label="Paid date" labelWidth={{ xs: 12 }} required>
-                <FastDatePicker formikProps={formikProps} field="depositDate" required />
+              <SectionField label="Paid date" labelWidth={{ xs: 12 }}>
+                <FastDatePicker formikProps={formikProps} field="depositDate" />
               </SectionField>
             </Col>
           </Row>
