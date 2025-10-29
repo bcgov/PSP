@@ -71,6 +71,7 @@ export const getMockResearchFile = (): ApiGen_Concepts_ResearchFile => ({
       isLegalOpinionObtained: null,
       file: null,
       location: null,
+      boundary: null,
     },
   ],
   requestDate: '2022-04-14T00:00:00',
@@ -155,6 +156,7 @@ export const getEmptyResearchFileProperty = (): ApiGen_Concepts_ResearchFileProp
   researchSummary: null,
   location: null,
   isActive: null,
+  boundary: null,
   ...getEmptyBaseAudit(),
 });
 
@@ -198,4 +200,5 @@ export const getMockResearchFileProperty = (
   displayOrder: null,
   property: null,
   location: null,
+  boundary: null,
 });

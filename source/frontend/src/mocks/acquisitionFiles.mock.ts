@@ -167,6 +167,7 @@ export const mockAcquisitionFileResponse = (
       file: null,
       propertyName: null,
       location: null,
+      boundary: null,
       rowVersion: 1,
     },
     {
@@ -212,6 +213,7 @@ export const mockAcquisitionFileResponse = (
       file: null,
       propertyName: null,
       location: null,
+      boundary: null,
     },
   ],
   acquisitionTeam: [

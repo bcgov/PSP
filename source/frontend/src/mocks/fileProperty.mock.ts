@@ -13,6 +13,7 @@ export const getEmptyFileProperty = (): ApiGen_Concepts_FileProperty => {
     fileId: 0,
     file: null,
     location: null,
+    boundary: null,
     ...getEmptyBaseAudit(),
   };
 };
@@ -27,6 +28,7 @@ export const getEmptyLeaseFileProperty = (): ApiGen_Concepts_PropertyLease => {
     fileId: 0,
     propertyName: '',
     location: undefined,
+    boundary: null,
     displayOrder: 0,
     property: undefined,
     propertyId: 0,
