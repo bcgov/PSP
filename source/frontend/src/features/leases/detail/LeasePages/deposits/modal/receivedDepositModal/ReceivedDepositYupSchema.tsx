@@ -1,6 +1,7 @@
 import * as Yup from 'yup';
 
 import { MAX_SQL_MONEY_SIZE } from '@/constants/API';
+import { ApiGen_CodeTypes_LeaseSecurityDepositTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseSecurityDepositTypes';
 
 export const ReceivedDepositYupSchema = Yup.object().shape({
   depositTypeCode: Yup.string().required('Deposit Type is required'),
@@ -12,7 +13,8 @@ export const ReceivedDepositYupSchema = Yup.object().shape({
     otherwise: Yup.string().nullable(),
   }),
   description: Yup.string().when('depositTypeCode', {
-    is: (depositTypeCode: string) => depositTypeCode && depositTypeCode === 'OTHER',
+    is: (depositTypeCode: string) =>
+      depositTypeCode && depositTypeCode === ApiGen_CodeTypes_LeaseSecurityDepositTypes.OTHER,
     then: Yup.string()
       .required('Description required when Deposit type "Other" is selected')
       .max(2000, 'Description must be at most 2000 characters'),

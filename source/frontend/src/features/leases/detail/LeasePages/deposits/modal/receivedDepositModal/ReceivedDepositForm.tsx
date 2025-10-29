@@ -10,6 +10,7 @@ import { ContactManagerModal } from '@/components/contact/ContactManagerModal';
 import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { IContactSearchResult } from '@/interfaces';
+import { ApiGen_CodeTypes_LeaseSecurityDepositTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseSecurityDepositTypes';
 import { isValidString } from '@/utils';
 
 import { FormLeaseDeposit } from '../../models/FormLeaseDeposit';
@@ -58,13 +59,17 @@ export const ReceivedDepositForm: React.FunctionComponent<
               required
               onChange={() => {
                 const depositTypeCode = formikProps.values?.depositTypeCode;
-                if (isValidString(depositTypeCode) && depositTypeCode !== 'OTHER') {
+                if (
+                  isValidString(depositTypeCode) &&
+                  depositTypeCode !== ApiGen_CodeTypes_LeaseSecurityDepositTypes.OTHER
+                ) {
                   formikProps.setFieldValue('otherTypeDescription', '');
                 }
               }}
             ></Select>
           </SectionField>
-          {formikProps.values?.depositTypeCode === 'OTHER' && (
+          {formikProps.values?.depositTypeCode ===
+            ApiGen_CodeTypes_LeaseSecurityDepositTypes.OTHER && (
             <SectionField label="Describe other" labelWidth={{ xs: 3 }} required>
               <InlineInput field="otherTypeDescription" required />
             </SectionField>
