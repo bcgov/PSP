@@ -7,24 +7,39 @@ export const ResearchFileNameGuide: FunctionComponent<PropsWithChildren<unknown>
     return (
       <>
         <p className="mb-4">
-          Provide a predictable research file name that will be easy to search for. Recommended
-          format is to use the road name(s) followed by some descriptive text that may include (but
-          not limited to) one or more of the following:
+          The recommended format for naming Research files is to provide the Road name, followed by
+          the corresponding MOTT District, followed by supporting descriptive text.
+        </p>
+        <p className="mb-4">
+          If the road name is not available /applicable, use supporting descriptive text that
+          identifies the location and enables searchability of the file in the future.
+        </p>
+        <p className="mb-4">
+          Descriptive text may include (but is not limited to) one or more of the following:
         </p>
         <ul>
-          <li>Ministry project name</li>
-          <li>Name of the area</li>
-          <li>Name of the MOTT highway district</li>
-          <li>Name of the enquirer</li>
-          <li>Legal description</li>
+          <li>Project name</li>
+          <li>Road intersection (or similar unique reference)</li>
+          <li>Geographic area (municipality/regional district/unincorporated area)</li>
+          <li>Legal description (District lot, Section, Plan)</li>
         </ul>
-        <p className="mb-4 mt-3">
-          If the road name is not available /applicable, the descriptive text should make the
-          research file easy to search for in the future
+        <p className="mb-4">
+          <i>Examples:</i>
         </p>
+        <ul>
+          <li>
+            <i>Hwy 16 – Skeena District – New Hazelton to College St</i>
+          </li>
+          <li>
+            <i>Hwy 97 – Okanagan Shuswap – Smith property</i>
+          </li>
+          <li>
+            <i>Plywood Rd – Cariboo District – DL 222</i>
+          </li>
+        </ul>
         <p>
-          <b>Note:</b> This name does not need to be entirely unique, as a unique file number will
-          be generated for your research file when you save it.
+          <b>Note:</b> a unique file number will be generated for your research file when you save
+          it.
         </p>
       </>
     );
