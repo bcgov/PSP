@@ -15,7 +15,6 @@ import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, getByName, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
 import { DocumentDetailContainer, IDocumentDetailContainerProps } from './DocumentDetailContainer';
-import { DocumentRow } from '../models/DocumentRow';
 import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
 
 const history = createMemoryHistory();

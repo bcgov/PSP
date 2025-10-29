@@ -1,5 +1,5 @@
 import { Claims } from '@/constants/claims';
-import { getByTestId, render, RenderOptions } from '@/utils/test-utils';
+import { render, RenderOptions } from '@/utils/test-utils';
 import { DocumentSearchResults, IDocumentSearchResultsProps } from './DocumentSearchResults';
 import { mockDocumentSearchResultsResponse } from '@/mocks/documents.mock';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';

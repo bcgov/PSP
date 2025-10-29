@@ -1,6 +1,5 @@
-import { act, fillInput, render, RenderOptions, waitFor } from '@/utils/test-utils';
+import { render, RenderOptions, waitFor } from '@/utils/test-utils';
 import DocumentSearchFilter from './DocumentSearchFilter';
-import { Claims } from '@/constants/index';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { mockDocumentTypesResponse } from '@/mocks/documents.mock';
