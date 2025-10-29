@@ -7,60 +7,85 @@ namespace PIMS.Tests.Automation.PageObjects
     public class Notes : PageObjectBase
     {
         //Notes Tab Elements
-        private By notesTabLink = By.XPath("//nav[@role='tablist']/a[contains(text(),'Notes')]");
-        private By notesTabTitle = By.XPath("//h2/div/div/div/div[contains(text(),'Notes')]");
-        private By notesTabAddBttn = By.XPath("//div[@class='tab-content']/div[@role='tabpanel']/div/h2/div/div/div/div/button");
+        private readonly By notesTabLink = By.XPath("//nav[@role='tablist']/a[contains(text(),'Notes')]");
+        private readonly By notesTabTitle = By.XPath("//h2/div/div/div/div[contains(text(),'Notes')]");
+        private readonly By notesTabAddBttn = By.XPath("//div[@class='tab-content']/div[@role='tabpanel']/div/h2/div/div/div/div/button");
 
         //Notes Tab Table Header
-        private By notesTabTableHeaderNoteColumn = By.XPath("//div[@data-testid='notesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Note')]");
-        private By notesTabTableHeaderCreatedDateColumn = By.XPath("//div[@data-testid='notesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Created date')]");
-        private By notesTabTableHeaderUpdatedByColumn = By.XPath("//div[@data-testid='notesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Last updated by')]");
-        private By notesTabTableNoContent = By.XPath("//div[contains(text(),'No matching Notes found')]");
-        private By notesTabTableBody = By.XPath("//div[@data-testid='notesTable']/div[@class='tbody']");
-        private By notesTabTableContentTotal = By.XPath("//div[@data-testid='notesTable']/div[@class='tbody']/div[@class='tr-wrapper']");
+        private readonly By notesTabTableHeaderNoteColumn = By.XPath("//div[@data-testid='main-notes-section']/div/div[@data-testid='notesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Note')]");
+        private readonly By notesTabTableHeaderCreatedDateColumn = By.XPath("//div[@data-testid='main-notes-section']/div/div[@data-testid='notesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Created date')]");
+        private readonly By notesTabTableHeaderUpdatedByColumn = By.XPath("//div[@data-testid='main-notes-section']/div/div[@data-testid='notesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Last updated by')]");
+        private readonly By notesTabTableNoContent = By.XPath("//div[contains(text(),'No matching Notes found')]");
+        private readonly By notesTabTableBody = By.XPath("//div[@data-testid='main-notes-section']/div/div[@data-testid='notesTable']/div[@class='tbody']");
+        private readonly By notesTabTableContentTotal = By.XPath("//div[@data-testid='main-notes-section']/div/div[@data-testid='notesTable']/div[@class='tbody']/div[@class='tr-wrapper']");
 
-        private By notesTab2ndResultViewBttn = By.XPath("//div[@data-testid='notesTable']/div[@class='tbody']/div[@class='tr-wrapper'][2]/div/div[4]/div/button[@title='View Note']");
-        private By notesTab1stResultDeleteBttn = By.XPath("//div[@data-testid='notesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[4]/div/button[@title='Delete Note']");
+        private readonly By notesTab2ndResultViewBttn = By.XPath("//div[@data-testid='notesTable']/div[@class='tbody']/div[@class='tr-wrapper'][2]/div/div[4]/div/button[@title='View Note']");
 
         //Notes 1st result Elements
-        private By note1stViewNoteBttn = By.CssSelector("div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[role='cell']:nth-child(4) div button[title='View Note']");
-        private By note1stNoteContent = By.CssSelector("div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper'] div:nth-child(1) div:nth-child(1)");
-        private By note2ndDeleteNoteBttn = By.CssSelector("div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(2) div[role='cell']:nth-child(4) div button[title='Delete Note']");
-        private By note2ndNoteContent = By.CssSelector("div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='tr'] div[class='td']:nth-child(2)");
+        private readonly By note1stNoteContent = By.CssSelector("div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper'] div:nth-child(1) div:nth-child(1)");
+        private readonly By note2ndDeleteNoteBttn = By.CssSelector("div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(2) div[role='cell']:nth-child(4) div button[title='Delete Note']");
 
-        //Notes 2nd Table Elements
+        //Property Notes Table Elements
+        private readonly By propNotesTableTitle = By.XPath("//div[@data-testid='property-notes-summary']/h2/div/div/div/div/div[text()='Property Notes']");
+        private readonly By propNotesTooltip = By.CssSelector("span[data-testid='tooltip-icon-property-note-summary']");
+        private readonly By propNotesPropNameColumn = By.CssSelector("div[data-testid='property-notes-summary'] div[data-testid='notesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(1) div");
+        private readonly By propNotesPropNoteColumn = By.CssSelector("div[data-testid='property-notes-summary'] div[data-testid='notesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(2) div");
+        private readonly By propNotesPropCreatedDateColumn = By.CssSelector("div[data-testid='property-notes-summary'] div[data-testid='notesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(3) div");
+        private readonly By propNotesPropCreatedSortBttn = By.CssSelector("div[data-testid='sort-column-appCreateTimestamp']");
+        private readonly By propNotesPropUpdatedByColumn = By.CssSelector("div[data-testid='property-notes-summary'] div[data-testid='notesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(4) div");
+        private readonly By propNotesPropUpdatedBySortBttn = By.CssSelector("div[data-testid='sort-column-appLastUpdateUserid']");
+        private readonly By propNotesPropActionsColumn = By.CssSelector("div[data-testid='property-notes-summary'] div[data-testid='notesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(5) div");
 
+        private readonly By propNotesTableName1stContent = By.CssSelector("div[data-testid='property-notes-summary'] div[data-testid='notesTable'] div[class='tbody'] div[role='tr-wrapper']:first-child div[role='cell']:nth-child(1) span");
+        private readonly By propNotesTableNote1stContent = By.CssSelector("div[data-testid='property-notes-summary'] div[data-testid='notesTable'] div[class='tbody'] div[role='tr-wrapper']:first-child div[role='cell']:nth-child(2)");
+        private readonly By propNotesTableCreatedDate1stContent = By.CssSelector("div[data-testid='property-notes-summary'] div[data-testid='notesTable'] div[class='tbody'] div[role='tr-wrapper']:first-child div[role='cell']:nth-child(3)");
+        private readonly By propNotesTableLastUpdated1stContent = By.CssSelector("div[data-testid='property-notes-summary'] div[data-testid='notesTable'] div[class='tbody'] div[role='tr-wrapper']:first-child div[role='cell']:nth-child(4)");
+        private readonly By propNotesTableViewBttn1stContent = By.CssSelector("div[data-testid='property-notes-summary'] div[data-testid='notesTable'] div[class='tbody'] div[role='tr-wrapper']:first-child div[role='cell']:nth-child(5) button[title='View Note']");
+
+        //Management Notes Table Elements
+        private readonly By mgmtNotesTableTitle = By.XPath("//div[@data-testid='management-notes-summary']/h2/div/div/div/div/div[text()='Management File Notes']");
+        private readonly By mgmtNotesPropNameColumn = By.CssSelector("div[data-testid='management-notes-summary'] div[data-testid='notesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(1) div");
+        private readonly By mgmtNotesPropNoteColumn = By.CssSelector("div[data-testid='management-notes-summary'] div[data-testid='notesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(2) div");
+        private readonly By mgmtNotesPropCreatedDateColumn = By.CssSelector("div[data-testid='management-notes-summary'] div[data-testid='notesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(3) div");
+        private readonly By mgmtNotesPropUpdatedByColumn = By.CssSelector("div[data-testid='management-notes-summary'] div[data-testid='notesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(4) div");
+        private readonly By mgmtNotesPropActionsColumn = By.CssSelector("div[data-testid='management-notes-summary'] div[data-testid='notesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(5) div");
+
+        private readonly By mgmtNotesTableName1stContent = By.CssSelector("div[data-testid='management-notes-summary'] div[data-testid='notesTable'] div[class='tbody'] div[role='tr-wrapper']:first-child div[role='cell']:nth-child(1) span");
+        private readonly By mgmtNotesTableNote1stContent = By.CssSelector("div[data-testid='management-notes-summary'] div[data-testid='notesTable'] div[class='tbody'] div[role='tr-wrapper']:first-child div[role='cell']:nth-child(2)");
+        private readonly By mgmtNotesTableCreatedDate1stContent = By.CssSelector("div[data-testid='management-notes-summary'] div[data-testid='notesTable'] div[class='tbody'] div[role='tr-wrapper']:first-child div[role='cell']:nth-child(3)");
+        private readonly By mgmtNotesTableLastUpdated1stContent = By.CssSelector("div[data-testid='management-notes-summary'] div[data-testid='notesTable'] div[class='tbody'] div[role='tr-wrapper']:first-child div[role='cell']:nth-child(4)");
+        private readonly By mgmtNotesTableViewBttn1stContent = By.CssSelector("div[data-testid='management-notes-summary'] div[data-testid='notesTable'] div[class='tbody'] div[role='tr-wrapper']:first-child div[role='cell']:nth-child(5) button[title='View Note']");
 
         //Notes Add new notes Details Elements
-        private By notesAddDetailsHeader = By.XPath("//div[@class='modal-title h4']");
-        private By notesAddDetailsLabel = By.XPath("//label[contains(text(),'Type a note')]");
-        private By notesAddDetailsTextarea = By.Id("input-note.note");
-        private By notesAddDetailsSaveBttn = By.CssSelector("button[title='ok-modal']");
-        private By notesAddDetailsCancelBttn = By.CssSelector("button[title='cancel-modal']");
+        private readonly By notesAddDetailsHeader = By.XPath("//div[@class='modal-title h4']");
+        private readonly By notesAddDetailsLabel = By.XPath("//label[contains(text(),'Type a note')]");
+        private readonly By notesAddDetailsTextarea = By.Id("input-note.note");
+        private readonly By notesAddDetailsSaveBttn = By.CssSelector("button[title='ok-modal']");
+        private readonly By notesAddDetailsCancelBttn = By.CssSelector("button[title='cancel-modal']");
 
         //Notes Edit Details Elements
-        private By notesEditCreatedLabel = By.XPath("//div[@class='modal-content']/div[@class='modal-body']/div/div/div[contains(text(),'Created')]");
-        private By notesEditCreatedDate = By.XPath("//div[@class='modal-content']/div[@class='modal-body']/div/div/div[contains(text(),'Created')]/following-sibling::div/span/strong");
-        private By notesEditCreatedBy = By.XPath("//div[@class='modal-content']/div[@class='modal-body']/div/div/div[contains(text(),'Created')]/following-sibling::div/span/span");
-        private By notesEditUpdatedLabel = By.XPath("//div[@class='modal-content']/div[@class='modal-body']/div/div/div[contains(text(),'Last updated')]");
-        private By notesEditUpdatedDate = By.XPath("//div[@class='modal-content']/div[@class='modal-body']/div/div/div[contains(text(),'Last updated')]/following-sibling::div/span/strong");
-        private By notesEditUpdatedBy = By.XPath("//div[@class='modal-content']/div[@class='modal-body']/div/div/div[contains(text(),'Last updated')]/following-sibling::div/span/span");
-        private By notedEditBttn = By.CssSelector("button[aria-label='edit']");
-        private By noteEditViewTextarea = By.CssSelector("textarea[title='Note']");
-        private By noteEditTextarea = By.Id("input-note");
+        private readonly By notesEditCreatedLabel = By.XPath("//div[@class='modal-content']/div[@class='modal-body']/div/div/div[contains(text(),'Created')]");
+        private readonly By notesEditCreatedDate = By.XPath("//div[@class='modal-content']/div[@class='modal-body']/div/div/div[contains(text(),'Created')]/following-sibling::div/span/strong");
+        private readonly By notesEditCreatedBy = By.XPath("//div[@class='modal-content']/div[@class='modal-body']/div/div/div[contains(text(),'Created')]/following-sibling::div/span/span");
+        private readonly By notesEditUpdatedLabel = By.XPath("//div[@class='modal-content']/div[@class='modal-body']/div/div/div[contains(text(),'Last updated')]");
+        private readonly By notesEditUpdatedDate = By.XPath("//div[@class='modal-content']/div[@class='modal-body']/div/div/div[contains(text(),'Last updated')]/following-sibling::div/span/strong");
+        private readonly By notesEditUpdatedBy = By.XPath("//div[@class='modal-content']/div[@class='modal-body']/div/div/div[contains(text(),'Last updated')]/following-sibling::div/span/span");
+        private readonly By notedEditBttn = By.CssSelector("button[aria-label='edit']");
+        private readonly By noteEditViewTextarea = By.CssSelector("textarea[title='Note']");
+        private readonly By noteEditTextarea = By.Id("input-note");
 
         //Notes Cancel pop-up Elements
-        private By notesCancelPopupContent = By.XPath("//div[contains(text(),'Confirm Changes')]/parent::div/parent::div");
-        private By notesCancelPopupHeader = By.XPath("//div[contains(text(),'Confirm Changes')]");
-        private By notesCancelPopupBody = By.XPath("//div[contains(text(),'Confirm Changes')]/parent::div/following-sibling::div[@class='modal-body']");
-        private By notesCancelOkBttn = By.XPath("//div[contains(text(),'Confirm Changes')]/parent::div/parent::div/div/div[@class='button-wrap']/button[@title='ok-modal']");
+        private readonly By notesCancelPopupContent = By.XPath("//div[contains(text(),'Confirm Changes')]/parent::div/parent::div");
+        private readonly By notesCancelPopupHeader = By.XPath("//div[contains(text(),'Confirm Changes')]");
+        private readonly By notesCancelPopupBody = By.XPath("//div[contains(text(),'Confirm Changes')]/parent::div/following-sibling::div[@class='modal-body']");
+        private readonly By notesCancelOkBttn = By.XPath("//div[contains(text(),'Confirm Changes')]/parent::div/parent::div/div/div[@class='button-wrap']/button[@title='ok-modal']");
 
         //Notes Delete pop-up Elements
-        private By notesDeletePopupHeader = By.CssSelector("div[class='modal-header'] div[class='modal-title h4']");
-        private By notesDeletePopupBody = By.CssSelector("div[class='modal-body']");
-        private By notesDeleteOkBttn = By.XPath("//div[contains(text(),'Delete Note')]/parent::div/parent::div/div/div[@class='button-wrap']/button[@title='ok-modal']");
+        private readonly By notesDeletePopupHeader = By.CssSelector("div[class='modal-header'] div[class='modal-title h4']");
+        private readonly By notesDeletePopupBody = By.CssSelector("div[class='modal-body']");
+        private readonly By notesDeleteOkBttn = By.XPath("//div[contains(text(),'Delete Note')]/parent::div/parent::div/div/div[@class='button-wrap']/button[@title='ok-modal']");
 
-        SharedModals sharedModals;
+        readonly SharedModals sharedModals;
 
         public Notes(IWebDriver webDriver) : base(webDriver)
         {
@@ -178,11 +203,56 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueIsDisplayed(notesTabTableNoContent);
         }
 
-        public void VerifyManagementNotesTab()
+        public void VerifyManagementNotesTab(string feature)
         {
             VerifyNotesTabListView();
 
+            if (feature == "Property")
+            {
+                //Second Table from Properties notes
+                AssertTrueIsDisplayed(propNotesTableTitle);
+                AssertTrueIsDisplayed(propNotesTooltip);
+                AssertTrueContentEquals(propNotesPropNameColumn, "Property Name");
+                AssertTrueContentEquals(propNotesPropNoteColumn, "Note");
+                AssertTrueContentEquals(propNotesPropCreatedDateColumn, "Created date");
+                AssertTrueIsDisplayed(propNotesPropCreatedSortBttn);
+                AssertTrueContentEquals(propNotesPropUpdatedByColumn, "Last updated by");
+                AssertTrueIsDisplayed(propNotesPropUpdatedBySortBttn);
+                AssertTrueContentEquals(propNotesPropActionsColumn, "Actions");
+            }
+            else
+            {
+                //Second Table from Management notes
+                AssertTrueIsDisplayed(mgmtNotesTableTitle);
+                AssertTrueIsDisplayed(propNotesTooltip);
+                AssertTrueContentEquals(mgmtNotesPropNameColumn, "Property Name");
+                AssertTrueContentEquals(mgmtNotesPropNoteColumn, "Note");
+                AssertTrueContentEquals(mgmtNotesPropCreatedDateColumn, "Created date");
+                AssertTrueIsDisplayed(propNotesPropCreatedSortBttn);
+                AssertTrueContentEquals(mgmtNotesPropUpdatedByColumn, "Last updated by");
+                AssertTrueIsDisplayed(propNotesPropUpdatedBySortBttn);
+                AssertTrueContentEquals(mgmtNotesPropActionsColumn, "Actions");
+            }
+        }
 
+        public void VerifySecondaryNotesListContent(string feature, string note)
+        {
+            if (feature == "Property")
+            {
+                AssertTrueContentNotEquals(propNotesTableName1stContent, "");
+                AssertTrueContentEquals(propNotesTableNote1stContent, note);
+                AssertTrueContentNotEquals(propNotesTableCreatedDate1stContent, "");
+                AssertTrueContentNotEquals(propNotesTableLastUpdated1stContent, "");
+                AssertTrueIsDisplayed(propNotesTableViewBttn1stContent); 
+            }
+            else
+            {
+                AssertTrueContentNotEquals(mgmtNotesTableName1stContent, "");
+                AssertTrueContentEquals(mgmtNotesTableNote1stContent, note);
+                AssertTrueContentNotEquals(mgmtNotesTableCreatedDate1stContent, "");
+                AssertTrueContentNotEquals(mgmtNotesTableLastUpdated1stContent, "");
+                AssertTrueIsDisplayed(mgmtNotesTableViewBttn1stContent); 
+            }
         }
 
         public int NotesTabCount()
@@ -203,6 +273,13 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait();
             AssertTrueContentEquals(note1stNoteContent, "Compensation Requisition with # " + CompensationNbr + ", changed status from '"+ fromStatus +"' to '" + toStatus + "'");
+        }
+
+        public void VerifyAutomaticNotesPropertyStatus(string status)
+        {
+            Wait();
+            AssertTrueElementContains(note1stNoteContent, "Management File property");
+            AssertTrueElementContains(note1stNoteContent, status);
         }
     }
 }

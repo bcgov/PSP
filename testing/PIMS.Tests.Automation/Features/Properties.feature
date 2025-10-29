@@ -29,7 +29,7 @@ Scenario: 04._Property_Documents_Tab
 Scenario: 05._Property_Notes_Tab
 	Given I review a Property's Information from row number 3
 	When I create a new Note on the Notes Tab from row number 13
-	And I edit a Note on the Notes Tab for a Property or Management File from row number 14
+	And I edit a Note on the Notes Tab for a "Property" from row number 14
 	Then A Property Information is saved successfully
 
 Scenario: 06._Property_Management_Activity_Digital_Documents

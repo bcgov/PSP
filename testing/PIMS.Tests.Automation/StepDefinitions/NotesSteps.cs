@@ -10,6 +10,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly Notes notes;
         private readonly SharedPagination sharedPagination;
         private readonly GenericSteps genericSteps;
+        private readonly ManagementDetails management;
+        private readonly SharedFileProperties property;
 
         private List<string> notesData;
         private int notesCount;
@@ -19,6 +21,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             notes = new Notes(driver);
             sharedPagination = new SharedPagination(driver);
             genericSteps = new GenericSteps(driver);
+            management = new ManagementDetails(driver);
+            property = new SharedFileProperties(driver);
             notesData = new List<string>();
             notesCount = 0;
         }
@@ -26,8 +30,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I create a new Note on the Notes Tab from row number (.*)")]
         public void CreateNotesTab(int rowNumber)
         {
-            /* TEST COVERAGE: PSP-5332, PSP-5505 */
-
             //Navigate to the Notes Tab
             notes.NavigateNotesTab();
             notes.VerifyNotesTabListView();
@@ -86,8 +88,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             notes.DeleteLastSecondNote();
         }
 
-        [StepDefinition(@"I edit a Note on the Notes Tab for a Property or Management File from row number (.*)")]
-        public void EditPropNotesTab(int rowNumber)
+        [StepDefinition(@"I edit a Note on the Notes Tab for a ""(.*)"" from row number (.*)")]
+        public void EditPropNotesTab(int rowNumber, string feature)
         {
             /* TEST COVERAGE: PSP-4020, PSP-5506, PSP-5507 */
 
@@ -96,6 +98,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Edit note
             PopulateNotes(rowNumber);
+            notes.VerifyManagementNotesTab(feature);
             notes.ViewSecondNoteDetails();
             notes.VerifyNotesEditForm();
             notes.EditNote(notesData[0]);
@@ -113,6 +116,29 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Delete Note
             notesCount = notes.NotesTabCount();
             notes.DeleteLastSecondNote();
+
+            if (feature == "Property")
+            {
+                //Navigate to Management Section
+                management.NavigateToManagementFileSection();
+
+                //Navigate to its Notes Tab
+                notes.NavigateNotesTab();
+
+                //Verify the Property's notes section
+                notes.VerifySecondaryNotesListContent("Property", notesData[0]);
+            }
+            else
+            {
+                //Navigate to Property Section
+                property.SelectNthPropertyOptionFromFile(0);
+
+                //Navigate to its Notes Tab
+                notes.NavigateNotesTab();
+
+                //Verify the Management's notes section
+                notes.VerifySecondaryNotesListContent("Management", notesData[0]);
+            }
         }
 
         private void PopulateNotes(int rowNumber)

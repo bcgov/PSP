@@ -16,7 +16,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly SharedPagination sharedPagination;
         private readonly SearchProperties searchProperties;
         private readonly AcquisitionTakes acquisitionTakes;
-        private readonly PropertyInformation propertyInformation;
         private readonly AcquisitionChecklist checklist;
         private readonly AcquisitionAgreements agreements;
         private readonly AcquisitionStakeholders stakeholders;
@@ -42,7 +41,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             sharedPagination = new SharedPagination(driver);
             searchProperties = new SearchProperties(driver);
             acquisitionTakes = new AcquisitionTakes(driver);
-            propertyInformation = new PropertyInformation(driver);
             checklist = new AcquisitionChecklist(driver);
             agreements = new AcquisitionAgreements(driver);
             stakeholders = new AcquisitionStakeholders(driver);

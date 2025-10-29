@@ -27,7 +27,7 @@ Scenario: 03._Management_Files_Digital_Documents
 Scenario: 04._Management_File_Notes
 	Given I create a new Management File from row number 7
 	When  I create a new Note on the Notes Tab from row number 11
-	And  I edit a Note on the Notes Tab from row number 12
+	And  I edit a Note on the Notes Tab for a "Management File" from row number 12
 	Then A new Management file is created or updated successfully
 
 Scenario: 05._Management_Files_List_View

@@ -155,16 +155,21 @@ namespace PIMS.Tests.Automation.StepDefinitions
             sharedFileProperties.NavigateToAddPropertiesToFile();
 
             //Verify initial state of properties
-            Assert.True(sharedFileProperties.ActivePropertiesCount() == managementFile.prope
+            Assert.True(sharedFileProperties.ActivePropertiesCount() == managementFile.ManagementTotalProperties);
 
             //Disable a property
+            sharedFileProperties.DisableEnableProperty(0, "Inactive");
 
             //Save changes
+            sharedFileProperties.SaveFileProperties();
 
             //Verify properties view and status
+            Assert.True(sharedFileProperties.ActivePropertiesCount() == managementFile.ManagementTotalProperties -1);
+            Assert.True(sharedFileProperties.InactivePropertiesCount() == 1);
 
             //Verify System notes
-
+            notes.NavigateNotesTab();
+            notes.VerifyAutomaticNotesPropertyStatus("Disabled");
         }
 
         [StepDefinition(@"I update a Management File's Properties from row number (.*)")]
