@@ -149,7 +149,6 @@ namespace Pims.Api.Services
         public Paged<PimsDocument> GetPage(DocumentSearchFilterModel filter)
         {
             Logger.LogInformation("Searching for documents...");
-            Logger.LogDebug("Document search with filter: {filter}", filter);
 
             User.ThrowIfNotAuthorized(Permissions.DocumentView);
 

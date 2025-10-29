@@ -49,7 +49,7 @@ namespace Pims.Api.Test.Controllers
             this._service.Setup(m => m.GetPimsDocumentTypes()).Returns(new List<PimsDocumentTyp>());
 
             // Act
-            var result = this._controller.GetAllDocumentTypes();
+            _ = this._controller.GetAllDocumentTypes();
 
             // Assert
             this._service.Verify(m => m.GetPimsDocumentTypes(), Times.Once());
