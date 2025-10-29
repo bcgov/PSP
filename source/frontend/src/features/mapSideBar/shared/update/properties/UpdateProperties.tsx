@@ -45,6 +45,7 @@ export interface IUpdatePropertiesProps {
   confirmBeforeAddMessage?: React.ReactNode;
   formikRef?: React.RefObject<FormikProps<any>>;
   disableProperties?: boolean;
+  canUploadShapefiles?: boolean;
 }
 
 export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> = props => {
@@ -280,6 +281,7 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
                         index={index}
                         property={property.toFeatureDataset()}
                         showDisable={props.disableProperties}
+                        showUploadShapefile={props.canUploadShapefiles}
                       />
                     ))}
                     {formikProps.values.properties.length === 0 && (

@@ -1,6 +1,7 @@
 import { getIn, useFormikContext } from 'formik';
 import { useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
+import { ImUpload } from 'react-icons/im';
 import { RiDragMove2Line } from 'react-icons/ri';
 import styled from 'styled-components';
 
@@ -10,6 +11,7 @@ import { InlineInput } from '@/components/common/form/styles';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import OverflowTip from '@/components/common/OverflowTip';
+import { TooltipWrapper } from '@/components/common/TooltipWrapper';
 import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
 import DraftCircleNumber from '@/components/propertySelector/selectedPropertyList/DraftCircleNumber';
 import { withNameSpace } from '@/utils/formUtils';
@@ -22,6 +24,7 @@ export interface ISelectedPropertyRowProps {
   nameSpace?: string;
   onRemove: () => void;
   showDisable?: boolean;
+  showUploadShapefile?: boolean;
   property: SelectedFeatureDataset;
 }
 
@@ -30,6 +33,7 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
   onRemove,
   index,
   showDisable,
+  showUploadShapefile,
   property,
 }) => {
   const mapMachine = useMapStateMachine();
@@ -92,7 +96,7 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
           ></Select>
         </Col>
       )}
-      <Col md={1} className="pl-3">
+      <StyledActionsCol xs="auto" className="pl-3">
         <StyledIconButton
           title="move-pin-location"
           onClick={() => {
@@ -102,20 +106,43 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
         >
           <RiDragMove2Line size={22} />
         </StyledIconButton>
-      </Col>
-      <Col md={1}>
-        <RemoveButton
-          onRemove={onRemove}
-          fontSize="1.4rem"
-          data-testId={'delete-property-' + index}
-        />
-      </Col>
+        {showUploadShapefile && (
+          <TooltipWrapper tooltip="Upload shapefile" tooltipId={'upload-shapefile-' + index}>
+            <StyledIconButton
+              onClick={() => {
+                // TODO: implement shapefile upload
+              }}
+              data-testid={'upload-shapefile-' + index}
+            >
+              <ImUpload size={18} />
+            </StyledIconButton>
+          </TooltipWrapper>
+        )}
+        <StyledSpacingWrapper>
+          <RemoveButton
+            onRemove={onRemove}
+            fontSize="1.4rem"
+            data-testId={'delete-property-' + index}
+          />
+        </StyledSpacingWrapper>
+      </StyledActionsCol>
     </StyledRow>
   );
 };
 
 const StyledRow = styled(Row)`
   min-height: 4.5rem;
+`;
+
+const StyledActionsCol = styled(Col)`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+`;
+
+const StyledSpacingWrapper = styled.div`
+  padding-left: 1.2rem;
 `;
 
 export default SelectedPropertyRow;

@@ -130,6 +130,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
               </>
             }
             canRemove={canRemove}
+            canUploadShapefiles={true}
             formikRef={formikRef}
           />
         )}
