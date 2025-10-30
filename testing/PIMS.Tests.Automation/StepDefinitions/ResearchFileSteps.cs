@@ -135,6 +135,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Save Research File
             researchFiles.SaveResearchFile();
 
+            //Verify properties order
+            sharedFileProperties.VerifyInsertedPropsOrder(researchFile.SearchProperties.DisplayingList);
+
             //Add Property Research Information
             if (researchFile.PropertyResearchRowCount != 0 && researchFile.PropertyResearchRowStart != 0)
             {
@@ -405,6 +408,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 researchFile.SearchProperties.SurveyParcel.Section = ExcelDataContext.ReadData(researchFile.SearchPropertiesIndex, "SurveySection");
                 researchFile.SearchProperties.SurveyParcel.Township = ExcelDataContext.ReadData(researchFile.SearchPropertiesIndex, "SurveyTownship");
                 researchFile.SearchProperties.SurveyParcel.Range = ExcelDataContext.ReadData(researchFile.SearchPropertiesIndex, "SurveyRange");
+                researchFile.SearchProperties.DisplayingList = genericSteps.PopulateLists(ExcelDataContext.ReadData(researchFile.SearchPropertiesIndex, "DisplayingList"));
+
             }
             if (researchFile.PropertyResearchRowCount != 0 && researchFile.PropertyResearchRowStart != 0)
             {

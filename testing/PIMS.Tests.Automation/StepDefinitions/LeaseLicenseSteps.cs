@@ -131,6 +131,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Save the new license details
             leaseDetails.SaveLicense();
+
+            //Verify properties order
+            sharedFileProperties.VerifyInsertedPropsOrder(lease.SearchProperties.DisplayingList);
         }
 
         [StepDefinition(@"I update a Lease's Details from row number (.*)")]
@@ -1086,6 +1089,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 lease.SearchProperties.SurveyParcel.Township = ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "SurveyTownship");
                 lease.SearchProperties.SurveyParcel.Range = ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "SurveyRange");
                 lease.SearchProperties.MultiplePIDS = genericSteps.PopulateLists(ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "MultiplePIDS"));
+                lease.SearchProperties.DisplayingList = genericSteps.PopulateLists(ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "DisplayingList"));
+
             }
 
             lease.LeasePropertyDetailsStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "LeasePropertyDetailsStartRow"));

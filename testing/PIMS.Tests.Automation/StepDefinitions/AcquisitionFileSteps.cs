@@ -217,6 +217,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Save Research File
             sharedFileProperties.SaveFileProperties();
+
+            //Verify properties order
+            sharedFileProperties.VerifyInsertedPropsOrder(acquisitionFile.AcquisitionSearchProperties.DisplayingList);
         }
 
         [StepDefinition(@"I update an Acquisition File's Properties from row number (.*)")]
@@ -1174,6 +1177,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 acquisitionFile.AcquisitionSearchProperties.SurveyParcel.District = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "SurveyDistrict");
                 acquisitionFile.AcquisitionSearchProperties.SurveyParcel.Township = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "SurveyTownship");
                 acquisitionFile.AcquisitionSearchProperties.SurveyParcel.Range = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "SurveyRange");
+                acquisitionFile.AcquisitionSearchProperties.DisplayingList = genericSteps.PopulateLists(ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "DisplayingList"));
             }
 
             //Acquisition's Properties' Takes

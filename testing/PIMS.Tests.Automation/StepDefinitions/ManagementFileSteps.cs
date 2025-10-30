@@ -146,6 +146,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Save Research File
             sharedFileProperties.SaveFileProperties();
+
+            //Verify properties order
+            sharedFileProperties.VerifyInsertedPropsOrder(managementFile.ManagementSearchProperties.DisplayingList);
         }
 
         [StepDefinition(@"I disable a property")]
@@ -512,7 +515,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 managementFile.ManagementSearchProperties.SurveyParcel.Section = ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "SurveySection");
                 managementFile.ManagementSearchProperties.SurveyParcel.Township = ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "SurveyTownship");
                 managementFile.ManagementSearchProperties.SurveyParcel.Range = ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "SurveyRange");
-
+                managementFile.ManagementSearchProperties.DisplayingList = genericSteps.PopulateLists(ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "DisplayingList"));
             }
 
             //Management Activities
