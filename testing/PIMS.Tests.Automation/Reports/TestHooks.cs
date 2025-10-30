@@ -144,7 +144,7 @@ namespace PIMS.Tests.Automation.Reports
 
         private IWebDriver CreateChromeWebDriver()
         {
-            ChromeOptions options = new ChromeOptions();
+            ChromeOptions options = new();
             
             options.AddExcludedArgument("enable-automation");
             options.AddArgument("--incognito");

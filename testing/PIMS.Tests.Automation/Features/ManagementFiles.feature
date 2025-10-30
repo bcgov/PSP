@@ -12,19 +12,22 @@ Scenario: 01._Management_File_Details
 Scenario: 02._Management_File_Properties
 	Given I create a new Management File from row number 3
 	When I add Properties to the Management File
+	And I disable a property
 	And I update a Management File's Properties from row number 4
 	Then A new Management file is created or updated successfully
 
 Scenario: 03._Management_Files_Digital_Documents
 	Given I create a new Management File from row number 6
-	When I create Digital Documents for a "Management File" from row number 14
+	When I add Properties to the Management File
+	And I create Digital Documents for a "Management File" from row number 14
+	And I checked related file documents on properties documents
 	And  I edit a Digital Document for a "Management File" from row number 15
 	Then A new Management file is created or updated successfully
 
 Scenario: 04._Management_File_Notes
 	Given I create a new Management File from row number 7
 	When  I create a new Note on the Notes Tab from row number 11
-	And  I edit a Note on the Notes Tab from row number 12
+	And  I edit a Note on the Notes Tab for a "Management File" from row number 12
 	Then A new Management file is created or updated successfully
 
 Scenario: 05._Management_Files_List_View
@@ -42,10 +45,15 @@ Scenario: 07._Management_Activity_Digital_Documents
 	Given I create a new Management File from row number 10
 	When I insert activities to the Management Activities Tab
 	And I create Digital Documents for a "Management Activity" from row number 14
-	Then A new Management file is created or updated successfully
+	Then The related documents appeared as expected
 
-Scenario: 08._Management_Property_Documents
-	Given I create a new Management File from row number 10
+Scenario: 08._Management_Activities_List_View
+	Given I search for an existing Management File from row number 2
+	Then Expected Management File Content is displayed on Management File Table
+
+Scenario: 09._Management_Properties_Error_Delete
+	Given I create a new Management File from row number 3
 	When I add Properties to the Management File
-	And I create Digital Documents for a "Management Activity" from row number 14
-	Then A new Management file is created or updated successfully
+	And I insert activities to the Management Activities Tab
+	And I delete a property associated to an activity
+	Then An error from deleting a property attached to an activity appears

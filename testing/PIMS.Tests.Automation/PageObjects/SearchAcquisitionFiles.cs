@@ -21,6 +21,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By searchAcquisitionFileTeamMember1stOption = By.CssSelector("div[id='multiselect-acquisitionTeamMembers'] ul[class='optionContainer'] li:nth-child(1)");
         private readonly By searchAcquisitionFileStatusSelect = By.Id("input-acquisitionFileStatusTypeCode");
         private readonly By searchAcquisitionFileProjectInput = By.Id("input-projectNameOrNumber");
+        private readonly By searchAcquisitionFileOwnerInput = By.Id("input-ownerName");
         private readonly By searchAcquisitionFileSearchButton = By.Id("search-button");
         private readonly By searchAcquisitionFileResetButton = By.Id("reset-button");
         private readonly By searchAcquisitionFileCreateNewButton = By.XPath("//div[contains(text(),'Create an Acquisition File')]/parent::button");
@@ -68,18 +69,6 @@ namespace PIMS.Tests.Automation.PageObjects
             FocusAndClick(searchAcquisitionButton);
         }
 
-        public void SearchAcquisitionFileByAFile(string AFile)
-        {
-            WaitUntilTableSpinnerDisappear();
-
-            WaitUntilVisible(searchAcquisitionFileNameInput);
-            webDriver.FindElement(searchAcquisitionFileNameInput).SendKeys(AFile);
-            ChooseSpecificSelectOption(searchAcquisitionFileStatusSelect, "All Status");
-
-            Wait(2000);
-            FocusAndClick(searchAcquisitionFileSearchButton);
-        }
-
         public void OrderByAcquisitionFileNumber()
         {
             Wait();
@@ -116,7 +105,8 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(searchAcquisitionFileHeaderCode);
         }
 
-        public void FilterAcquisitionFiles(string pid = "", string pin = "", string address = "", string name = "", string teamMember = "", string status = "", string project = "")
+        public void FilterAcquisitionFiles(string pid = "", string pin = "", string address = "", string name = "", string teamMember = "",
+            string status = "", string project = "", string owner = "")
         {
             Wait(5000);
             webDriver.FindElement(searchAcquisitionFileResetButton).Click();
@@ -153,7 +143,10 @@ namespace PIMS.Tests.Automation.PageObjects
                 ChooseSpecificSelectOption(searchAcquisitionFileStatusSelect, status);
 
             if (project != "")
-                webDriver.FindElement(searchAcquisitionFileProjectInput).SendKeys(project);
+                webDriver.FindElement(searchAcquisitionFileOwnerInput).SendKeys(project);
+
+            if(owner != "")
+                webDriver.FindElement(searchAcquisitionFileTeamMemberSelect).SendKeys(owner);
 
             webDriver.FindElement(searchAcquisitionFileSearchButton).Click();
         }
@@ -201,6 +194,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(searchAcquisitionFileStatusSelect);
             AssertTrueIsDisplayed(searchAcquisitionFileNameInput);
             AssertTrueIsDisplayed(searchAcquisitionFileProjectInput);
+            AssertTrueIsDisplayed(searchAcquisitionFileOwnerInput);
             AssertTrueIsDisplayed(searchAcquisitionFileSearchButton);
             AssertTrueIsDisplayed(searchAcquisitionFileResetButton);
             AssertTrueIsDisplayed(searchAcquisitionFileCreateNewButton);

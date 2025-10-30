@@ -6,7 +6,7 @@ namespace PIMS.Tests.Automation.PageObjects
     public class DigitalDocuments: PageObjectBase
     {
         //Documents Tab Element
-        private readonly By documentsTab = By.CssSelector("a[data-rb-event-key='documents']");
+        private readonly By documentsTab = By.CssSelector("a[data-rb-event-key='document']");
         private readonly By propsDocumentsTab = By.CssSelector("a[data-rb-event-key='document']");
 
         //Upload Documents Dialog General Elements
@@ -266,7 +266,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Main Documents Table
         private readonly By documentsTitle = By.XPath("//span[contains(text(),'File Documents')]");
-        private readonly By propDocumentsTitle = By.CssSelector("//span[contains(text(),'Property Documents')]");
+        private readonly By propDocumentsTitle = By.XPath("//span[contains(text(),'Property Documents')]");
         private readonly By addDocumentBttn = By.XPath("//button[@data-testid='refresh-button']/preceding-sibling::button");
         private readonly By refresh1stTableBttn = By.CssSelector("div[data-testid='main-document-list'] button[id='refresh-button']");
         private readonly By documentsTableColumnType = By.CssSelector("div[data-testid='main-document-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(1) div[class='sortable-column']");
@@ -289,7 +289,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By adhocDocumentFilterResetBttn = By.CssSelector("div[data-testid='adhoc-properties-documents-list'] button[data-testid='reset-button']");
 
         //Ad-hoc Files Documents Table
-        private readonly By adhocDocumentsTitle = By.XPath("//span[contains(text(),'PIMS Files Documents')]");
+        private readonly By adhocDocumentsTitle = By.XPath("//span[contains(text(),'Related Documents')]");
         private readonly By adhocDocumentsrefreshTableBttn = By.CssSelector("div[data-testid='adhoc-properties-documents-list'] button[id='refresh-button']");
         private readonly By adhocDocumentsTableColumnAssociation = By.CssSelector("div[data-testid='adhoc-properties-documents-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(1) div[class='sortable-column']");
         private readonly By adhocDocumentsTableColumnAssocSort = By.CssSelector("div[data-testid='adhoc-properties-documents-list'] div[data-testid='sort-column-parentName']");
@@ -313,21 +313,21 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By PIMSDocumentFilterResetBttn = By.CssSelector("div[data-testid='pims-files-document-list'] button[data-testid='reset-button']");
 
         //PIMS Files Documents Table
-        private readonly By PIMSdocumentsTitle = By.XPath("//span[contains(text(),'Related Documents')]");
-        private readonly By PIMSdocumentsrefreshTableBttn = By.CssSelector("div[data-testid='pims-files-document-list'] button[id='refresh-button']");
-        private readonly By PIMSdocumentsTableColumnFile = By.CssSelector("div[data-testid='pims-files-document-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(1) div[class='sortable-column']");
-        private readonly By PIMSdocumentsTableColumnFileSort = By.CssSelector("div[data-testid='pims-files-document-list'] div[data-testid=sort-column-parentName']");
-        private readonly By PIMSdocumentsTableColumnFileType = By.CssSelector("div[data-testid='pims-files-document-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(2) div[class='sortable-column']");
-        private readonly By PIMSdocumentsTableColumnFileTypeSort = By.CssSelector("div[data-testid='pims-files-document-list'] div[data-testid='sort-column-relationshipType']");
-        private readonly By PIMSdocumentsTableColumnType = By.CssSelector("div[data-testid='pims-files-document-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(3) div[class='sortable-column']");
-        private readonly By PIMSdocumentsTableColumnTypeSort = By.CssSelector("div[data-testid='pims-files-document-list']  div[data-testid='sort-column-documentType']");
-        private readonly By PIMSdocumentsTableColumnName = By.CssSelector("div[data-testid='pims-files-document-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(4) div[class='sortable-column']");
-        private readonly By PIMSdocumentsTableColumnNameSort = By.CssSelector("div[data-testid='pims-files-document-list'] div[data-testid='sort-column-fileName']");
-        private readonly By PIMSdocumentsTableColumnUploaded = By.CssSelector("div[data-testid='pims-files-document-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(5) div[class='sortable-column']");
-        private readonly By PIMSdocumentsTableColumnUploadedSort = By.CssSelector("div[data-testid='pims-files-document-list'] div[data-testid='sort-column-appCreateTimestamp']");
-        private readonly By PIMSdocumentsTableColumnStatus = By.CssSelector("div[data-testid='pims-files-document-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(6) div[class='sortable-column']");
-        private readonly By PIMSdocumentsTableColumnStatusSort = By.CssSelector("div[data-testid='pims-files-document-list'] div[data-testid='sort-column-statusTypeCode']");
-        private readonly By PIMSdocumentsTableColumnActions = By.CssSelector("div[data-testid='pims-files-document-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(7) div[class='sortable-column']");
+        private readonly By PIMSDocumentsTitle = By.XPath("//span[contains(text(),'PIMS Files Documents')]");
+        private readonly By PIMSDocumentsrefreshTableBttn = By.CssSelector("div[data-testid='pims-files-document-list'] button[id='refresh-button']");
+        private readonly By PIMSDocumentsTableColumnFile = By.CssSelector("div[data-testid='pims-files-document-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(1) div[class='sortable-column']");
+        private readonly By PIMSDocumentsTableColumnFileSort = By.CssSelector("div[data-testid='pims-files-document-list'] div[data-testid='sort-column-parentName']");
+        private readonly By PIMSDocumentsTableColumnFileType = By.CssSelector("div[data-testid='pims-files-document-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(2) div[class='sortable-column']");
+        private readonly By PIMSDocumentsTableColumnFileTypeSort = By.CssSelector("div[data-testid='pims-files-document-list'] div[data-testid='sort-column-relationshipType']");
+        private readonly By PIMSDocumentsTableColumnType = By.CssSelector("div[data-testid='pims-files-document-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(3) div[class='sortable-column']");
+        private readonly By PIMSDocumentsTableColumnTypeSort = By.CssSelector("div[data-testid='pims-files-document-list']  div[data-testid='sort-column-documentType']");
+        private readonly By PIMSDocumentsTableColumnName = By.CssSelector("div[data-testid='pims-files-document-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(4) div[class='sortable-column']");
+        private readonly By PIMSDocumentsTableColumnNameSort = By.CssSelector("div[data-testid='pims-files-document-list'] div[data-testid='sort-column-fileName']");
+        private readonly By PIMSDocumentsTableColumnUploaded = By.CssSelector("div[data-testid='pims-files-document-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(5) div[class='sortable-column']");
+        private readonly By PIMSDocumentsTableColumnUploadedSort = By.CssSelector("div[data-testid='pims-files-document-list'] div[data-testid='sort-column-appCreateTimestamp']");
+        private readonly By PIMSDocumentsTableColumnStatus = By.CssSelector("div[data-testid='pims-files-document-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(6) div[class='sortable-column']");
+        private readonly By PIMSDocumentsTableColumnStatusSort = By.CssSelector("div[data-testid='pims-files-document-list'] div[data-testid='sort-column-statusTypeCode']");
+        private readonly By PIMSDocumentsTableColumnActions = By.CssSelector("div[data-testid='pims-files-document-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(7) div[class='sortable-column']");
        
         //Activities Documents List 1st Result Elements
         private readonly By documentTableResults1stDocumentTypeContent = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[1]");
@@ -1090,7 +1090,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(documentsTableColumnActions);
         }
 
-        public void VerifyPropertyDocumentsListView()
+        public void VerifyManagementFilesDocumentsListView()
         {
             Wait();
 
@@ -1113,34 +1113,34 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(documentsTableColumnStatusSort);
             AssertTrueIsDisplayed(documentsTableColumnActions);
 
-            AssertTrueIsDisplayed(PIMSdocumentsTitle);
+            AssertTrueIsDisplayed(adhocDocumentsTitle);
             AssertTrueIsDisplayed(PIMSDocumentFilterTypeSelect);
             AssertTrueIsDisplayed(PIMSDocumentFilterStatusSelect);
             AssertTrueIsDisplayed(PIMSDocumentFilterNameInput);
             AssertTrueIsDisplayed(PIMSDocumentFilterSearchBttn);
             AssertTrueIsDisplayed(PIMSDocumentFilterResetBttn);
 
-            AssertTrueIsDisplayed(PIMSdocumentsrefreshTableBttn);
-            AssertTrueIsDisplayed(PIMSdocumentsTableColumnFile);
-            AssertTrueIsDisplayed(PIMSdocumentsTableColumnFileSort);
-            AssertTrueIsDisplayed(PIMSdocumentsTableColumnFileType);
-            AssertTrueIsDisplayed(PIMSdocumentsTableColumnFileTypeSort);
-            AssertTrueIsDisplayed(PIMSdocumentsTableColumnType);
-            AssertTrueIsDisplayed(PIMSdocumentsTableColumnTypeSort);
-            AssertTrueIsDisplayed(PIMSdocumentsTableColumnName);
-            AssertTrueIsDisplayed(PIMSdocumentsTableColumnNameSort);
-            AssertTrueIsDisplayed(PIMSdocumentsTableColumnUploaded);
-            AssertTrueIsDisplayed(PIMSdocumentsTableColumnUploadedSort);
-            AssertTrueIsDisplayed(PIMSdocumentsTableColumnStatus);
-            AssertTrueIsDisplayed(PIMSdocumentsTableColumnStatusSort);
-            AssertTrueIsDisplayed(PIMSdocumentsTableColumnActions);
+            AssertTrueIsDisplayed(adhocDocumentsrefreshTableBttn);
+            AssertTrueIsDisplayed(adhocDocumentsTableColumnAssociation);
+            AssertTrueIsDisplayed(adhocDocumentsTableColumnAssocSort);
+            AssertTrueIsDisplayed(adhocDocumentsTableColumnAssocType);
+            AssertTrueIsDisplayed(adhocDocumentsTableColumnAssocTypeSort);
+            AssertTrueIsDisplayed(adhocDocumentsTableColumnType);
+            AssertTrueIsDisplayed(adhocDocumentsTableColumnTypeSort);
+            AssertTrueIsDisplayed(adhocDocumentsTableColumnName);
+            AssertTrueIsDisplayed(adhocDocumentsTableColumnNameSort);
+            AssertTrueIsDisplayed(adhocDocumentsTableColumnUploaded);
+            AssertTrueIsDisplayed(adhocDocumentsTableColumnUploadedSort);
+            AssertTrueIsDisplayed(adhocDocumentsTableColumnStatus);
+            AssertTrueIsDisplayed(adhocDocumentsTableColumnStatusSort);
+            AssertTrueIsDisplayed(adhocDocumentsTableColumnActions);
         }
 
-        public void VerifyManagementFilesDocumentsListView()
+        public void VerifyPropertyDocumentsListView()
         {
-            WaitUntilVisible(documentFilterTypeSelect);
+            WaitUntilVisible(propDocumentsTitle);
 
-            AssertTrueIsDisplayed(documentsTitle);
+            AssertTrueIsDisplayed(propDocumentsTitle);
             AssertTrueIsDisplayed(addDocumentBttn);
             AssertTrueIsDisplayed(refresh1stTableBttn);
 
@@ -1159,27 +1159,27 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(documentsTableColumnStatusSort);
             AssertTrueIsDisplayed(documentsTableColumnActions);
 
-            AssertTrueIsDisplayed(adhocDocumentsTitle);
-            AssertTrueIsDisplayed(adhocDocumentFilterTypeSelect);
-            AssertTrueIsDisplayed(adhocDocumentFilterStatusSelect);
-            AssertTrueIsDisplayed(adhocDocumentFilterNameInput);
-            AssertTrueIsDisplayed(adhocDocumentFilterSearchBttn);
-            AssertTrueIsDisplayed(adhocDocumentFilterResetBttn);
+            AssertTrueIsDisplayed(PIMSDocumentsTitle);
+            AssertTrueIsDisplayed(PIMSDocumentFilterTypeSelect);
+            AssertTrueIsDisplayed(PIMSDocumentFilterStatusSelect);
+            AssertTrueIsDisplayed(PIMSDocumentFilterNameInput);
+            AssertTrueIsDisplayed(PIMSDocumentFilterSearchBttn);
+            AssertTrueIsDisplayed(PIMSDocumentFilterResetBttn);
 
-            AssertTrueIsDisplayed(adhocDocumentsrefreshTableBttn);
-            AssertTrueIsDisplayed(adhocDocumentsTableColumnAssociation);
-            AssertTrueIsDisplayed(adhocDocumentsTableColumnAssocSort);
-            AssertTrueIsDisplayed(adhocDocumentsTableColumnAssocType);
-            AssertTrueIsDisplayed(adhocDocumentsTableColumnAssocTypeSort);
-            AssertTrueIsDisplayed(adhocDocumentsTableColumnType);
-            AssertTrueIsDisplayed(adhocDocumentsTableColumnTypeSort);
-            AssertTrueIsDisplayed(adhocDocumentsTableColumnName);
-            AssertTrueIsDisplayed(adhocDocumentsTableColumnNameSort);
-            AssertTrueIsDisplayed(adhocDocumentsTableColumnUploaded);
-            AssertTrueIsDisplayed(adhocDocumentsTableColumnUploadedSort);
-            AssertTrueIsDisplayed(adhocDocumentsTableColumnStatus);
-            AssertTrueIsDisplayed(adhocDocumentsTableColumnStatusSort);
-            AssertTrueIsDisplayed(adhocDocumentsTableColumnActions);
+            AssertTrueIsDisplayed(PIMSDocumentsrefreshTableBttn);
+            AssertTrueIsDisplayed(PIMSDocumentsTableColumnFile);
+            AssertTrueIsDisplayed(PIMSDocumentsTableColumnFileSort);
+            AssertTrueIsDisplayed(PIMSDocumentsTableColumnFileType);
+            AssertTrueIsDisplayed(PIMSDocumentsTableColumnFileTypeSort);
+            AssertTrueIsDisplayed(PIMSDocumentsTableColumnType);
+            AssertTrueIsDisplayed(PIMSDocumentsTableColumnTypeSort);
+            AssertTrueIsDisplayed(PIMSDocumentsTableColumnName);
+            AssertTrueIsDisplayed(PIMSDocumentsTableColumnNameSort);
+            AssertTrueIsDisplayed(PIMSDocumentsTableColumnUploaded);
+            AssertTrueIsDisplayed(PIMSDocumentsTableColumnUploadedSort);
+            AssertTrueIsDisplayed(PIMSDocumentsTableColumnStatus);
+            AssertTrueIsDisplayed(PIMSDocumentsTableColumnStatusSort);
+            AssertTrueIsDisplayed(PIMSDocumentsTableColumnActions);
         }
 
         public void VerifyPaginationElements()
@@ -1188,6 +1188,36 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(documentMenuPagination);
             AssertTrueIsDisplayed(documentPaginationPrevPageLink);
             AssertTrueIsDisplayed(documentPaginationNextPageLink);
+        }
+
+        public void VerifyAdhocDocumentsList(DigitalDocument document, int index)
+        {
+            Wait();
+            WaitUntilSpinnerDisappear();
+
+            var elementIndex = index +1;
+
+            AssertTrueContentNotEquals(By.CssSelector("div[data-testid='adhoc-properties-documents-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ elementIndex +") div[role='cell']:nth-child(1) button div"), "");
+            AssertTrueElementContainsAnyOf(By.CssSelector("div[data-testid='adhoc-properties-documents-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ elementIndex +") div[role='cell']:nth-child(2)"), new List<string> { "ManagementActivities", "Properties" });
+            AssertTrueElementContains(By.CssSelector("div[data-testid='adhoc-properties-documents-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ elementIndex +") div[role='cell']:nth-child(3)"), document.DocumentType);
+            AssertTrueContentNotEquals(By.CssSelector("div[data-testid='adhoc-properties-documents-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ elementIndex +") div[role='cell']:nth-child(4) div span"), "");
+            AssertTrueContentNotEquals(By.CssSelector("div[data-testid='adhoc-properties-documents-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ elementIndex +") div[role='cell']:nth-child(5) div"), "");
+            AssertTrueElementContains(By.CssSelector("div[data-testid='adhoc-properties-documents-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ elementIndex +") div[role='cell']:nth-child(6)"), document.DocumentStatus);
+        }
+
+        public void VerifyPIMSFilesDocumentsList(DigitalDocument document, int index)
+        {
+            Wait();
+            WaitUntilSpinnerDisappear();
+
+            var elementIndex = index +1;
+
+            AssertTrueContentNotEquals(By.CssSelector("div[data-testid='pims-files-document-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ elementIndex +") div[role='cell']:nth-child(1) button div"), "");
+            AssertTrueElementContains(By.CssSelector("div[data-testid='pims-files-document-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ elementIndex +") div[role='cell']:nth-child(2)"), "ManagementFiles");
+            AssertTrueElementContains(By.CssSelector("div[data-testid='pims-files-document-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ elementIndex +") div[role='cell']:nth-child(3)"), document.DocumentType);
+            AssertTrueContentNotEquals(By.CssSelector("div[data-testid='pims-files-document-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ elementIndex +") div[role='cell']:nth-child(4) div span"), "");
+            AssertTrueContentNotEquals(By.CssSelector("div[data-testid='pims-files-document-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ elementIndex +") div[role='cell']:nth-child(5) div"), "");
+            AssertTrueElementContains(By.CssSelector("div[data-testid='pims-files-document-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ elementIndex +") div[role='cell']:nth-child(6)"), document.DocumentStatus);
         }
 
         public void VerifyDocumentDetailsViewForm(DigitalDocument document)
