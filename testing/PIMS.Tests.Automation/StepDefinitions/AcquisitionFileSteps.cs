@@ -146,7 +146,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Search for an existing Acquisition File
             searchAcquisitionFiles.NavigateToSearchAcquisitionFile();
-            searchAcquisitionFiles.SearchAcquisitionFileByAFile(acquisitionFileCode);
+            searchAcquisitionFiles.FilterAcquisitionFiles(name: acquisitionFileCode);
             searchAcquisitionFiles.SelectFirstOption();
 
             //Update existing Acquisition file
@@ -229,7 +229,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Search for an existing Acquisition File
             searchAcquisitionFiles.NavigateToSearchAcquisitionFile();
-            searchAcquisitionFiles.SearchAcquisitionFileByAFile(acquisitionFileCode);
+            searchAcquisitionFiles.FilterAcquisitionFiles(name: acquisitionFileCode);
             searchAcquisitionFiles.SelectFirstOption();
 
             //Navigate to Edit Acquisition File's Properties
@@ -295,7 +295,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Search for an existing Acquisition File
             searchAcquisitionFiles.NavigateToSearchAcquisitionFile();
-            searchAcquisitionFiles.SearchAcquisitionFileByAFile(acquisitionFileCode);
+            searchAcquisitionFiles.FilterAcquisitionFiles(name: acquisitionFileCode);
             searchAcquisitionFiles.SelectFirstOption();
 
             //Choose Take's Property
@@ -391,7 +391,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Search for an existing Acquisition File
             searchAcquisitionFiles.NavigateToSearchAcquisitionFile();
-            searchAcquisitionFiles.SearchAcquisitionFileByAFile(acquisitionFileCode);
+            searchAcquisitionFiles.FilterAcquisitionFiles(name: acquisitionFileCode);
             searchAcquisitionFiles.SelectFirstOption();
 
             //Navigate to Agreements Tab
@@ -498,7 +498,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Search for an existing Acquisition File
             searchAcquisitionFiles.NavigateToSearchAcquisitionFile();
-            searchAcquisitionFiles.SearchAcquisitionFileByAFile(acquisitionFileCode);
+            searchAcquisitionFiles.FilterAcquisitionFiles(name: acquisitionFileCode);
             searchAcquisitionFiles.SelectFirstOption();
 
             //Navigate to Stakeholders Tab
@@ -633,7 +633,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Search for an existing Acquisition File
             searchAcquisitionFiles.NavigateToSearchAcquisitionFile();
-            searchAcquisitionFiles.SearchAcquisitionFileByAFile(acquisitionFileCode);
+            searchAcquisitionFiles.FilterAcquisitionFiles(name: acquisitionFileCode);
             searchAcquisitionFiles.SelectFirstOption();
 
             //Navigate to Compensation Tab
@@ -780,7 +780,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Search for an existing Acquisition File
             searchAcquisitionFiles.NavigateToSearchAcquisitionFile();
-            searchAcquisitionFiles.SearchAcquisitionFileByAFile(acquisitionFileCode);
+            searchAcquisitionFiles.FilterAcquisitionFiles(name: acquisitionFileCode);
             searchAcquisitionFiles.SelectFirstOption();
 
             //Update type of Acquisition File
@@ -1009,7 +1009,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public void NewAcquisitionFileCreated()
         {
             searchAcquisitionFiles.NavigateToSearchAcquisitionFile();
-            searchAcquisitionFiles.SearchAcquisitionFileByAFile(acquisitionFileCode);
+            searchAcquisitionFiles.FilterAcquisitionFiles(name: acquisitionFileCode);
 
             Assert.True(searchAcquisitionFiles.SearchFoundResults());
         }
@@ -1074,7 +1074,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchAcquisitionFiles.NavigateToSearchAcquisitionFile();
 
             //Search for Main Acquisition File
-            searchAcquisitionFiles.SearchAcquisitionFileByAFile(linkedFilesCode);
+            searchAcquisitionFiles.FilterAcquisitionFiles(name: linkedFilesCode);
             searchAcquisitionFiles.SelectFirstOption();
 
             //Navigate to Compensation Requisition Tab
