@@ -643,6 +643,20 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   max-width: 60rem;
 }
 
+.c42 {
+  border: none;
+}
+
+.c42 .card-body {
+  padding: 0;
+}
+
+.c43 {
+  overflow: hidden;
+  white-space: break-spaces;
+  word-break: break-all;
+}
+
 @media only screen and (max-width:1199px) {
   .c0.expanded {
     min-width: 70rem;
@@ -1346,7 +1360,31 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="c41 text-left col"
                               />
                             </div>
-                            a request description
+                            <div
+                              class="c42 card"
+                              style="padding: 0px;"
+                            >
+                              <div
+                                class="card-body"
+                              >
+                                <div
+                                  class="card-body"
+                                  style="padding: 0px;"
+                                >
+                                  <p
+                                    class="card-text"
+                                    style="padding: 0px; word-break: break-all;"
+                                  >
+                                    <label
+                                      class="c43"
+                                      style="max-height: fit-content;"
+                                    >
+                                      a request description
+                                    </label>
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
                         <div
@@ -1404,7 +1442,31 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="c41 text-left col"
                               />
                             </div>
-                            A research result
+                            <div
+                              class="c42 card"
+                              style="padding: 0px;"
+                            >
+                              <div
+                                class="card-body"
+                              >
+                                <div
+                                  class="card-body"
+                                  style="padding: 0px;"
+                                >
+                                  <p
+                                    class="card-text"
+                                    style="padding: 0px; word-break: break-all;"
+                                  >
+                                    <label
+                                      class="c43"
+                                      style="max-height: fit-content;"
+                                    >
+                                      A research result
+                                    </label>
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
                         <div
@@ -1462,7 +1524,31 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="c41 text-left col"
                               />
                             </div>
-                            An expropriation note
+                            <div
+                              class="c42 card"
+                              style="padding: 0px;"
+                            >
+                              <div
+                                class="card-body"
+                              >
+                                <div
+                                  class="card-body"
+                                  style="padding: 0px;"
+                                >
+                                  <p
+                                    class="card-text"
+                                    style="padding: 0px; word-break: break-all;"
+                                  >
+                                    <label
+                                      class="c43"
+                                      style="max-height: fit-content;"
+                                    >
+                                      An expropriation note
+                                    </label>
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
