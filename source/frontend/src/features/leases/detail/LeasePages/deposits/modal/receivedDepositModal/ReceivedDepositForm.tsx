@@ -9,6 +9,7 @@ import { SectionField } from '@/components/common/Section/SectionField';
 import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
 import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { ApiGen_CodeTypes_LeaseSecurityDepositTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseSecurityDepositTypes';
 import { isValidString } from '@/utils';
 
 import { FormLeaseDeposit } from '../../models/FormLeaseDeposit';
@@ -51,29 +52,33 @@ export const ReceivedDepositForm: React.FunctionComponent<
               required
               onChange={() => {
                 const depositTypeCode = formikProps.values?.depositTypeCode;
-                if (isValidString(depositTypeCode) && depositTypeCode !== 'OTHER') {
+                if (
+                  isValidString(depositTypeCode) &&
+                  depositTypeCode !== ApiGen_CodeTypes_LeaseSecurityDepositTypes.OTHER
+                ) {
                   formikProps.setFieldValue('otherTypeDescription', '');
                 }
               }}
             ></Select>
           </SectionField>
-          {formikProps.values?.depositTypeCode === 'OTHER' && (
+          {formikProps.values?.depositTypeCode ===
+            ApiGen_CodeTypes_LeaseSecurityDepositTypes.OTHER && (
             <SectionField label="Describe other" labelWidth={{ xs: 3 }} required>
               <InlineInput field="otherTypeDescription" required />
             </SectionField>
           )}
-          <SectionField label="Description" labelWidth={{ xs: 12 }} required>
-            <TextArea rows={4} field="description" required />
+          <SectionField label="Description" labelWidth={{ xs: 12 }}>
+            <TextArea rows={4} field="description" />
           </SectionField>
           <Row>
             <Col xs="6">
-              <SectionField label="Deposit amount" labelWidth={{ xs: 12 }} required>
-                <FastCurrencyInput formikProps={formikProps} field="amountPaid" required />
+              <SectionField label="Deposit amount" labelWidth={{ xs: 12 }}>
+                <FastCurrencyInput formikProps={formikProps} field="amountPaid" />
               </SectionField>
             </Col>
             <Col xs="6">
-              <SectionField label="Paid date" labelWidth={{ xs: 12 }} required>
-                <FastDatePicker formikProps={formikProps} field="depositDate" required />
+              <SectionField label="Paid date" labelWidth={{ xs: 12 }}>
+                <FastDatePicker formikProps={formikProps} field="depositDate" />
               </SectionField>
             </Col>
           </Row>

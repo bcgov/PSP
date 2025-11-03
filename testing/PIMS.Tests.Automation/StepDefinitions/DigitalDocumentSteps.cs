@@ -10,6 +10,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
     {
         private readonly DigitalDocuments digitalDocumentsTab;
         private readonly SharedPagination sharedPagination;
+        private readonly ManagementDetails managementFilesDetails;
         private readonly IEnumerable<DocumentFile> documentFiles;
         private int documentsRowStart;
         private int documentsRowsQuantity;
@@ -20,6 +21,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             digitalDocumentsTab = new DigitalDocuments(driver);
             sharedPagination = new SharedPagination(driver);
+            managementFilesDetails = new ManagementDetails(driver);
             documentFiles = UploadFileDocuments();
             documentsRowStart = 0;
             documentsRowsQuantity = 0;
@@ -199,8 +201,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I edit a Digital Document for a ""(.*)"" from row number (.*)")]
         public void UpdateDigitalDocuments(string fileType, int rowNumber)
         {
-            /* TEST COVERAGE: PSP-4026, PSP-4027, PSP-4030, PSP-4168, PSP-4335, PSP-4336, PSP-4338, PSP-5417, PSP-5418, PSP-5420, PSP-5436, PSP-5437, PSP-5439, PSP-5459,
-             *                PSP-5762, PSP-5765, PSP-5930 */
+            //Navigate back to the file section
+
 
             //Access the documents tab
             digitalDocumentsTab.NavigateDocumentsTab();
@@ -212,7 +214,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             digitalDocumentsTab.AddNewDocumentButton();
             //digitalDocumentsTab.InsertDocumentTypeStatus(digitalDocumentList[0]);
 
-            Random random = new Random();
+            Random random = new();
             var index2 = random.Next(0, documentFiles.Count());
             var document2 = documentFiles.ElementAt(index2);
 
@@ -241,7 +243,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Verify Details View Form
             digitalDocumentsTab.View1stDocument();
-            //digitalDocumentsTab.VerifyDocumentDetailsUpdateViewForm(digitalDocumentList[0]);
+            digitalDocumentsTab.VerifyDocumentDetailsViewForm(digitalDocumentList[0]);
 
             //Close Digital Documents Details View
             digitalDocumentsTab.CloseDigitalDocumentViewDetails();
@@ -317,7 +319,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             digitalDocumentsTab.AddNewDocumentButton();
             //digitalDocumentsTab.InsertDocumentTypeStatus(digitalDocumentList[0]);
 
-            Random random = new Random();
+            Random random = new();
             var index2 = random.Next(0, documentFiles.Count());
             var document2 = documentFiles.ElementAt(index2);
 
@@ -408,6 +410,31 @@ namespace PIMS.Tests.Automation.StepDefinitions
             digitalDocumentsTab.Delete1stDocument();
         }
 
+        [StepDefinition(@"I checked related file documents on properties documents")]
+        public void VerifyDocumentsListonProperties()
+        {
+            //Navigate to the Property File Documents Tab
+            digitalDocumentsTab.NavigateDocumentsTab();
+
+            //Verify on related documents list view the previously attached documents
+            for (var m = 0; m < digitalDocumentList.Count; m++)
+                digitalDocumentsTab.VerifyPIMSFilesDocumentsList(digitalDocumentList[m], m);
+
+            //Navigate back the Management File section
+            managementFilesDetails.NavigateToManagementFileSection();
+        }
+
+        [StepDefinition(@"The related documents appeared as expected")]
+        public void VerifyRelatedDocumentsList()
+        {
+            //Navigate to the Management File Documents Tab
+            digitalDocumentsTab.NavigateDocumentsTab();
+
+            //Verify on related documents list view the previously attached documents
+            for (var m = 0; m < digitalDocumentList.Count; m++)
+                digitalDocumentsTab.VerifyAdhocDocumentsList(digitalDocumentList[m], m);
+        }
+
         public List<DocumentFile> UploadFileDocuments()
         {
             var digitalJPG = new DocumentFile();
@@ -486,7 +513,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             System.Data.DataTable documentDetailsSheet = ExcelDataContext.GetInstance().Sheets["DocumentsDetails"]!;
             ExcelDataContext.PopulateInCollection(documentDetailsSheet);
 
-            DigitalDocument digitalDocument = new DigitalDocument();
+            DigitalDocument digitalDocument = new();
 
             digitalDocument.DocumentType = ExcelDataContext.ReadData(rowNumber, "DocumentType");
             digitalDocument.DocumentStatus = ExcelDataContext.ReadData(rowNumber, "DocumentStatus");

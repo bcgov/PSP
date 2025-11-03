@@ -7,10 +7,10 @@ namespace PIMS.Tests.Automation.Data
     public class ExcelDataContext
     {
         // creating an object of ExcelDataContext
-        private static ExcelDataContext instance = new ExcelDataContext();
+        private static ExcelDataContext instance = new();
 
         //Creating the collection we will use to store data 
-        private static List<DataCollection> dataCollection = new List<DataCollection>();
+        private static List<DataCollection> dataCollection = new();
 
         private ExcelDataContext()
         {
@@ -45,7 +45,7 @@ namespace PIMS.Tests.Automation.Data
             {
                 for (int col = 0; col < ExcelSheetFile.Columns.Count; col++)
                 {
-                    DataCollection dtTable = new DataCollection()
+                    DataCollection dtTable = new()
                     {
                         RowNumber = row,
                         ColumnName = ExcelSheetFile.Columns[col].ColumnName,

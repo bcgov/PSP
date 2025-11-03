@@ -194,7 +194,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             while (ExcelDataContext.ReadData(destinationIndex, "PropertyHistoryType") == "Destination")
             {
-                PropertyHistory destinationProperty = new PropertyHistory();
+                PropertyHistory destinationProperty = new();
 
                 destinationProperty.PropertyHistoryIdentifier = ExcelDataContext.ReadData(destinationIndex, "PropertyHistoryIdentifier");
                 destinationProperty.PropertyHistoryPlan = ExcelDataContext.ReadData(destinationIndex, "PropertyHistoryPlan");
@@ -218,7 +218,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             while (ExcelDataContext.ReadData(sourceIndex, "PropertyHistoryType") == "Source")
             {
-                PropertyHistory sourceProperty = new PropertyHistory();
+                PropertyHistory sourceProperty = new();
 
                 sourceProperty.PropertyHistoryIdentifier = ExcelDataContext.ReadData(sourceIndex, "PropertyHistoryIdentifier");
                 sourceProperty.PropertyHistoryPlan = ExcelDataContext.ReadData(sourceIndex, "PropertyHistoryPlan");

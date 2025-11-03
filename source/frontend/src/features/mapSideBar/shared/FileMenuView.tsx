@@ -97,7 +97,10 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
           .map(
             (labelledProperties: { label: string; properties: ApiGen_Concepts_FileProperty[] }) => {
               return (
-                <React.Fragment key={`menu-label-${labelledProperties.label}`}>
+                <div
+                  data-testid={`${labelledProperties.label}-section`}
+                  key={`menu-label-${labelledProperties.label}`}
+                >
                   {labelledProperties.label}
                   {sortedProperties
                     .filter(sp => labelledProperties.properties.includes(sp))
@@ -158,7 +161,7 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
                         </StyledPropertyRowWrapper>
                       );
                     })}
-                </React.Fragment>
+                </div>
               );
             },
           )}

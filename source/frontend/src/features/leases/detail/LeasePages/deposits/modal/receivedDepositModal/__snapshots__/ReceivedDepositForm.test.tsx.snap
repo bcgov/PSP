@@ -333,10 +333,10 @@ exports[`ReceivedDepositForm component > renders as expected 1`] = `
         </label>
       </div>
       <div
-        class="c1 required text-left col"
+        class="c1 text-left col"
       >
         <div
-          class="required textarea input form-group"
+          class="textarea input form-group"
         >
           <textarea
             class="form-control"
@@ -368,10 +368,10 @@ exports[`ReceivedDepositForm component > renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c1 required text-left col"
+            class="c1 text-left col"
           >
             <div
-              class="required form-group"
+              class="form-group"
             >
               <div
                 class="input-tooltip-wrapper"
@@ -382,7 +382,6 @@ exports[`ReceivedDepositForm component > renders as expected 1`] = `
                   inputmode="numeric"
                   name="amountPaid"
                   placeholder=""
-                  required=""
                   type="text"
                   value=""
                 />
@@ -407,10 +406,10 @@ exports[`ReceivedDepositForm component > renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c1 required text-left col"
+            class="c1 text-left col"
           >
             <div
-              class="c2 required form-group"
+              class="c2 form-group"
             >
               <div
                 class="react-datepicker-wrapper d-block"
@@ -433,7 +432,6 @@ exports[`ReceivedDepositForm component > renders as expected 1`] = `
                     id="datepicker-depositDate"
                     name="depositDate"
                     placeholder="MMM DD, YYYY"
-                    required=""
                     type="text"
                     value=""
                   />
@@ -862,10 +860,10 @@ exports[`ReceivedDepositForm component > renders with data as expected 1`] = `
         </label>
       </div>
       <div
-        class="c1 required text-left col"
+        class="c1 text-left col"
       >
         <div
-          class="required textarea input form-group"
+          class="textarea input form-group"
         >
           <textarea
             class="form-control"
@@ -897,10 +895,10 @@ exports[`ReceivedDepositForm component > renders with data as expected 1`] = `
             </label>
           </div>
           <div
-            class="c1 required text-left col"
+            class="c1 text-left col"
           >
             <div
-              class="required form-group"
+              class="form-group"
             >
               <div
                 class="input-tooltip-wrapper"
@@ -911,7 +909,6 @@ exports[`ReceivedDepositForm component > renders with data as expected 1`] = `
                   inputmode="numeric"
                   name="amountPaid"
                   placeholder=""
-                  required=""
                   type="text"
                   value=""
                 />
@@ -936,10 +933,10 @@ exports[`ReceivedDepositForm component > renders with data as expected 1`] = `
             </label>
           </div>
           <div
-            class="c1 required text-left col"
+            class="c1 text-left col"
           >
             <div
-              class="c2 required form-group"
+              class="c2 form-group"
             >
               <div
                 class="react-datepicker-wrapper d-block"
@@ -962,7 +959,6 @@ exports[`ReceivedDepositForm component > renders with data as expected 1`] = `
                     id="datepicker-depositDate"
                     name="depositDate"
                     placeholder="MMM DD, YYYY"
-                    required=""
                     type="text"
                     value=""
                   />

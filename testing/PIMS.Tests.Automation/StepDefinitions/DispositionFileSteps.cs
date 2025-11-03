@@ -7,6 +7,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
     [Binding]
     public class DispositionFileSteps
     {
+        private readonly GenericSteps genericSteps;
         private readonly LoginSteps loginSteps;
         private readonly DispositionFileDetails dispositionFileDetails;
         private readonly SearchDispositionFiles searchDispositionFiles;
@@ -24,6 +25,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         public DispositionFileSteps(IWebDriver driver)
         {
+            genericSteps = new GenericSteps(driver);
             loginSteps = new LoginSteps(driver);
             dispositionFileDetails = new DispositionFileDetails(driver);
             searchDispositionFiles = new SearchDispositionFiles(driver);
@@ -186,6 +188,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Save Research File
             sharedFileProperties.SaveFileProperties();
+
+            //Verify properties order
+            sharedFileProperties.VerifyInsertedPropsOrder(dispositionFile.DispositionSearchProperties.DisplayingList);
         }
 
         [StepDefinition(@"I update a Disposition File's Properties from row number (.*)")]
@@ -215,7 +220,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             sharedFileProperties.SaveFileProperties();
 
             //Select 1st Property
-            sharedFileProperties.SelectFirstPropertyOptionFromFile();
+            sharedFileProperties.SelectNthPropertyOptionFromFile(0);
         }
 
         [StepDefinition(@"I insert Checklist information to an Disposition File")]
@@ -667,6 +672,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 dispositionFile.DispositionSearchProperties.SurveyParcel.Section = ExcelDataContext.ReadData(dispositionFile.DispositionSearchPropertiesIndex, "SurveySection");
                 dispositionFile.DispositionSearchProperties.SurveyParcel.Township = ExcelDataContext.ReadData(dispositionFile.DispositionSearchPropertiesIndex, "SurveyTownship");
                 dispositionFile.DispositionSearchProperties.SurveyParcel.Range = ExcelDataContext.ReadData(dispositionFile.DispositionSearchPropertiesIndex, "SurveyRange");
+                dispositionFile.DispositionSearchProperties.DisplayingList = genericSteps.PopulateLists(ExcelDataContext.ReadData(dispositionFile.DispositionSearchPropertiesIndex, "DisplayingList"));
+
             }
 
             //Disposition File Checklist
@@ -766,7 +773,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             for (int i = startRow; i < startRow + rowsCount; i++)
             {
-                TeamMember teamMember = new TeamMember();
+                TeamMember teamMember = new();
                 teamMember.TeamMemberRole = ExcelDataContext.ReadData(i, "TeamMemberRole");
                 teamMember.TeamMemberContactName = ExcelDataContext.ReadData(i, "TeamMemberContactName");
                 teamMember.TeamMemberContactType = ExcelDataContext.ReadData(i, "TeamMemberContactType");
@@ -783,7 +790,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             for (int i = startRow; i < startRow + rowsCount; i++)
             {
-                DispositionOfferAndSale offerAndSale = new DispositionOfferAndSale();
+                DispositionOfferAndSale offerAndSale = new();
                 offerAndSale.OfferOfferStatus = ExcelDataContext.ReadData(i, "OfferOfferStatus");
                 offerAndSale.OfferOfferName = ExcelDataContext.ReadData(i, "OfferOfferName");
                 offerAndSale.OfferOfferDate = ExcelDataContext.ReadData(i, "OfferOfferDate");
@@ -802,7 +809,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             for (int i = startRow; i < startRow + rowsCount; i++)
             {
-                PurchaseMember purchaseMember = new PurchaseMember();
+                PurchaseMember purchaseMember = new();
                 purchaseMember.PurchaserName = ExcelDataContext.ReadData(i, "PurchaserName");
                 purchaseMember.PurchaseMemberContactType = ExcelDataContext.ReadData(i, "PurchaseMemberContactType");
                 purchaseMember.PurchaseMemberPrimaryContact = ExcelDataContext.ReadData(i, "PurchaseMemberPrimaryContact");
