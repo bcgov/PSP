@@ -1133,6 +1133,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
             class="form-control"
             id="input-requestDescription"
             name="requestDescription"
+            required=""
             style="word-break: break-all;"
             title="a request description"
           >
@@ -1230,6 +1231,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
             class="form-control"
             id="input-researchResult"
             name="researchResult"
+            required=""
             style="word-break: break-all;"
             title="A research result"
           >
@@ -1350,6 +1352,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
             class="form-control"
             id="input-expropriationNotes"
             name="expropriationNotes"
+            required=""
             style="word-break: break-all;"
             title="An expropriation note"
           >

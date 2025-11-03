@@ -1312,6 +1312,7 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
               class="form-control"
               id="input-requestDescription"
               name="requestDescription"
+              required=""
               style="word-break: break-all;"
               title="a request description"
             >
@@ -1409,6 +1410,7 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
               class="form-control"
               id="input-researchResult"
               name="researchResult"
+              required=""
               style="word-break: break-all;"
               title="A research result"
             >
@@ -1529,6 +1531,7 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
               class="form-control"
               id="input-expropriationNotes"
               name="expropriationNotes"
+              required=""
               style="word-break: break-all;"
               title="An expropriation note"
             >
