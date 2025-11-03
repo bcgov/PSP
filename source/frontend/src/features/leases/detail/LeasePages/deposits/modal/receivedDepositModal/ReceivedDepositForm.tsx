@@ -36,6 +36,7 @@ export const ReceivedDepositForm: React.FunctionComponent<
         onSave(values);
       }}
       initialValues={initialValues}
+      validateOnChange={false}
     >
       {formikProps => (
         <form className="mx-3">
@@ -92,6 +93,8 @@ export const ReceivedDepositForm: React.FunctionComponent<
               field="contactHolder"
               View={ContactInputView}
               restrictContactType={RestrictContactType.ALL}
+              displayErrorAsTooltip={false}
+              required={true}
             />
           </SectionField>
           <div style={{ marginTop: 24 }}>
