@@ -195,6 +195,8 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilVisible(propertiesFileConfirmationModal);
             Assert.Equal("This property cannot be deleted as it is part of an activity in this file\n", sharedModals.ModalContent());
+        }
+
         public void VerifyInsertedPropsOrder(List<string> propertiesList)
         {
             for (int i = 0; i < propertiesList.Count; i++)
