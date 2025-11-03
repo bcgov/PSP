@@ -1,15 +1,14 @@
 import { Formik, FormikProps } from 'formik';
-import { useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 
 import { FastCurrencyInput, FastDatePicker, Select, TextArea } from '@/components/common/form';
-import { ContactInput } from '@/components/common/form/ContactInput';
+import { ContactInputContainer } from '@/components/common/form/ContactInput/ContactInputContainer';
+import ContactInputView from '@/components/common/form/ContactInput/ContactInputView';
 import { InlineInput } from '@/components/common/form/styles';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { ContactManagerModal } from '@/components/contact/ContactManagerModal';
+import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
 import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
-import { IContactSearchResult } from '@/interfaces';
 import { isValidString } from '@/utils';
 
 import { FormLeaseDeposit } from '../../models/FormLeaseDeposit';
@@ -24,12 +23,6 @@ export interface IReceivedDepositFormProps {
 export const ReceivedDepositForm: React.FunctionComponent<
   React.PropsWithChildren<IReceivedDepositFormProps>
 > = ({ initialValues, formikRef, onSave }) => {
-  const initialContacts =
-    initialValues.contactHolder !== undefined ? [initialValues.contactHolder] : [];
-  const [selectedContacts, setSelectedContacts] = useState<IContactSearchResult[]>(initialContacts);
-
-  const [showContactManager, setShowContactManager] = useState(false);
-
   const lookups = useLookupCodeHelpers();
   const depositTypeOptions = lookups.getOptionsByType(API.SECURITY_DEPOSIT_TYPES);
 
@@ -90,30 +83,15 @@ export const ReceivedDepositForm: React.FunctionComponent<
             contentWidth={{ xs: 9 }}
             required
           >
-            <ContactInput
+            <ContactInputContainer
               field="contactHolder"
-              setShowContactManager={setShowContactManager}
-              onClear={() => {
-                formikProps.setFieldValue('contactHolder', undefined);
-                setSelectedContacts([]);
-              }}
-              required
+              View={ContactInputView}
+              restrictContactType={RestrictContactType.ALL}
             />
           </SectionField>
           <div style={{ marginTop: 24 }}>
             <p>Do you want to save it?</p>
           </div>
-          <ContactManagerModal
-            display={showContactManager}
-            setDisplay={setShowContactManager}
-            setSelectedRows={setSelectedContacts}
-            selectedRows={selectedContacts}
-            handleModalOk={() => {
-              formikProps.setFieldValue('contactHolder', selectedContacts[0]);
-              setShowContactManager(false);
-            }}
-            isSingleSelect
-          />
         </form>
       )}
     </Formik>
