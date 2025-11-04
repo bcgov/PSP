@@ -40,6 +40,9 @@ export const SideNavBar = styled.div`
   }
   .nav-link {
     padding: 0.8rem 1.6rem;
+    &:hover {
+      text-decoration: none;
+    }
   }
 `;
 
