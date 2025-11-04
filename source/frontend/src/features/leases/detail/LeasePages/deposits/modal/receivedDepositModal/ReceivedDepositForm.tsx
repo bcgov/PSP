@@ -68,8 +68,22 @@ export const ReceivedDepositForm: React.FunctionComponent<
               <InlineInput field="otherTypeDescription" required />
             </SectionField>
           )}
-          <SectionField label="Description" labelWidth={{ xs: 12 }}>
-            <TextArea rows={4} field="description" />
+          <SectionField
+            label="Description"
+            labelWidth={{ xs: 12 }}
+            required={
+              formikProps.values?.depositTypeCode ===
+              ApiGen_CodeTypes_LeaseSecurityDepositTypes.OTHER
+            }
+          >
+            <TextArea
+              rows={4}
+              field="description"
+              required={
+                formikProps.values?.depositTypeCode ===
+                ApiGen_CodeTypes_LeaseSecurityDepositTypes.OTHER
+              }
+            />
           </SectionField>
           <Row>
             <Col xs="6">
