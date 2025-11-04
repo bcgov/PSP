@@ -901,7 +901,7 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
                       class="col-11 col"
                     >
                       <div
-                        class="form-group"
+                        class="input form-group"
                       >
                         <div
                           class="row"
@@ -1015,7 +1015,7 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
                       class="col-11 col"
                     >
                       <div
-                        class="form-group"
+                        class="input form-group"
                       >
                         <div
                           class="row"
@@ -1097,7 +1097,7 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
                       class="col-11 col"
                     >
                       <div
-                        class="form-group"
+                        class="input form-group"
                       >
                         <div
                           class="row"
@@ -1183,7 +1183,7 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
                   class="c10 text-left col-7"
                 >
                   <div
-                    class="form-group"
+                    class="input form-group"
                   >
                     <div
                       class="row"

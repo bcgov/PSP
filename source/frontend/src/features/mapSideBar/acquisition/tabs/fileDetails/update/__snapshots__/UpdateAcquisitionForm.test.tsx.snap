@@ -1946,7 +1946,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
             data-testid="contact-input"
           >
             <div
-              class="form-group"
+              class="input form-group"
             >
               <div
                 class="row"
@@ -2143,7 +2143,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
             data-testid="contact-input"
           >
             <div
-              class="form-group"
+              class="input form-group"
             >
               <div
                 class="row"
@@ -3883,7 +3883,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
             class="c3 text-left col"
           >
             <div
-              class="form-group"
+              class="input form-group"
             >
               <div
                 class="row"
@@ -4003,7 +4003,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
             class="c3 text-left col"
           >
             <div
-              class="form-group"
+              class="input form-group"
             >
               <div
                 class="row"

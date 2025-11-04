@@ -241,6 +241,7 @@ exports[`ReceivedDepositForm component > renders as expected 1`] = `
   padding-bottom: 0.8rem;
   padding-left: 1.2rem;
   padding-right: 2.8rem;
+  word-break: break-all;
   background-image: none;
   color: #9F9D9C;
   border: #606060 solid 0.1rem;
@@ -488,6 +489,7 @@ exports[`ReceivedDepositForm component > renders as expected 1`] = `
             >
               <button
                 class="c5 Button Button--icon-only px-2 btn btn-primary"
+                title="Select Contact"
                 type="button"
               >
                 <div
@@ -511,6 +513,7 @@ exports[`ReceivedDepositForm component > renders as expected 1`] = `
             </div>
           </div>
         </div>
+        <div />
       </div>
     </div>
     <div
@@ -520,7 +523,6 @@ exports[`ReceivedDepositForm component > renders as expected 1`] = `
         Do you want to save it?
       </p>
     </div>
-    <div />
   </form>
 </DocumentFragment>
 `;
