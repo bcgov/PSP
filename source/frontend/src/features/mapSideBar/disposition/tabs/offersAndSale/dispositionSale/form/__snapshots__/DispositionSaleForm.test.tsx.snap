@@ -375,7 +375,7 @@ exports[`DispositionSaleForm  component > renders as expected 1`] = `
           class="c3 text-left col-6"
         >
           <div
-            class="form-group"
+            class="input form-group"
           >
             <div
               class="row"
@@ -449,7 +449,7 @@ exports[`DispositionSaleForm  component > renders as expected 1`] = `
           class="c3 text-left col-6"
         >
           <div
-            class="form-group"
+            class="input form-group"
           >
             <div
               class="row"
