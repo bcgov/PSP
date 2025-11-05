@@ -42,16 +42,14 @@ describe('ResearchSummaryView component', () => {
   });
 
   it('does not render the edit button if the user does not have research edit permissions', async () => {
-    const { queryByTitle } = await setup(
-      {
-        props: {
+    const { queryByTitle } = await setup({
+      props: {
         researchFile: getMockResearchFile(),
         setEditMode,
         isFileFinalStatus: false,
-        },
-        claims: [],
       },
-    );
+      claims: [],
+    });
     await waitForEffects();
     const editResearchFile = queryByTitle('Edit research file');
     expect(editResearchFile).toBeNull();
