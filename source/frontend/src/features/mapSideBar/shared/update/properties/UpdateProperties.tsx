@@ -19,6 +19,7 @@ import SelectedPropertyHeaderRow from '@/components/propertySelector/selectedPro
 import SelectedPropertyRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyRow';
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
+import { UploadResponseModel } from '@/features/properties/shapeUpload/models';
 import { useEditPropertiesMode } from '@/hooks/useEditPropertiesMode';
 import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
@@ -281,7 +282,17 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
                         index={index}
                         property={property.toFeatureDataset()}
                         showDisable={props.disableProperties}
-                        showUploadShapefile={props.canUploadShapefiles}
+                        canUploadShapefile={props.canUploadShapefiles}
+                        onUploadShapefile={(result: UploadResponseModel | null) => {
+                          // Update the property boundary based on the uploaded shapefile
+                          if (exists(result)) {
+                            if (result.isSuccess && exists(result.boundary)) {
+                              const updatedFormProperty = new PropertyForm(property);
+                              updatedFormProperty.fileBoundary = result.boundary;
+                              replace(index, updatedFormProperty);
+                            }
+                          }
+                        }}
                       />
                     ))}
                     {formikProps.values.properties.length === 0 && (
